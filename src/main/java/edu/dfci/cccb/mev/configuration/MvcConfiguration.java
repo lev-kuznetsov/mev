@@ -116,6 +116,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
   @Override
   public void addResourceHandlers (ResourceHandlerRegistry registry) {
     super.addResourceHandlers (registry);
-    registry.addResourceHandler ("/resources/static/**").addResourceLocations ("classpath:/META-INF/resources/");
+    registry.addResourceHandler ("/resources/static/**").addResourceLocations ("classpath:/META-INF/resources/",
+                                                                               "/META-INF/resources/");
   }
 }

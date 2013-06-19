@@ -98,15 +98,6 @@ public class MatrixController {
   @ModelAttribute ("matrices")
   @SneakyThrows ({ ParseException.class, IOException.class })
   public Map<String, RealMatrix> createMatrixMap () {
-    return new HashMap<String, RealMatrix> () {
-      private static final long serialVersionUID = 1L;
-
-      {
-        put ("my-matrix", new HugeRealMatrix (new FileInputStream ("/Users/levk/Documents/affy.noannot.txt"),
-                                              "\t,".toCharArray (),
-                                              "\n".toCharArray (),
-                                              NumberFormat.getNumberInstance ()));
-      }
-    };
+    return new HashMap<String, RealMatrix> ();
   }
 }
