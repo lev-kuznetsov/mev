@@ -19,7 +19,6 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.NumberFormat;
@@ -27,7 +26,6 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.math3.linear.RealMatrix;
@@ -96,7 +94,6 @@ public class MatrixController {
   }
 
   @ModelAttribute ("matrices")
-  @SneakyThrows ({ ParseException.class, IOException.class })
   public Map<String, RealMatrix> createMatrixMap () {
     return new HashMap<String, RealMatrix> ();
   }
