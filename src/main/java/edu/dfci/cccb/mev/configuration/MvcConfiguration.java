@@ -27,6 +27,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.accept.ContentNegotiationManager;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -69,6 +70,20 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     return new ContentNegotiatingViewResolver () {
       {
         setContentNegotiationManager (manager);
+      }
+    };
+  }
+  
+  /**
+   * Multipart resolver for file upload
+   * 
+   * @return
+   */
+  @Bean
+  public CommonsMultipartResolver multipartResolver () {
+    return new CommonsMultipartResolver () {
+      {
+        setMaxUploadSize (10000000);
       }
     };
   }
