@@ -18,6 +18,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 import static org.springframework.http.MediaType.TEXT_HTML;
 
+import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.math3.linear.RealMatrix;
@@ -37,8 +39,14 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 
 import us.levk.math.linear.util.RealMatrixJsonSerializer;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+
+import edu.dfci.cccb.mev.beans.Matrices;
 
 /**
  * @author levk
@@ -61,6 +69,11 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
    * InternalResourceViewResolver () { { setViewClass (JstlView.class);
    * setSuffix (".jsp"); setPrefix ("/WEB-INF/views/"); setOrder (0); } }; } */
 
+  @Bean
+  public Matrices matrices () {
+    return new Matrices ();
+  }
+  
   /**
    * Create the CNVR. Get Spring to inject the ContentNegotiationManager created
    * by the configurer (see previous method).
@@ -73,7 +86,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
       }
     };
   }
-  
+
   /**
    * Multipart resolver for file upload
    * 
@@ -112,13 +125,43 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
    * @see
    * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
    * #configureMessageConverters(java.util.List) */
+  @SuppressWarnings ("rawtypes")
   @Override
   public void configureMessageConverters (List<HttpMessageConverter<?>> converters) {
     super.configureMessageConverters (converters);
     converters.add (new MappingJackson2HttpMessageConverter () {
       {
         setObjectMapper (new ObjectMapper ().registerModule (new SimpleModule ().addSerializer (RealMatrix.class,
-                                                                                                new RealMatrixJsonSerializer ())));
+                                                                                                new RealMatrixJsonSerializer ())
+                                                                                .addSerializer (String.class,
+                                                                                                new JsonSerializer<String> () {
+
+                                                                                                  @Override
+                                                                                                  public void serialize (String value,
+                                                                                                                         JsonGenerator jgen,
+                                                                                                                         SerializerProvider provider) throws IOException,
+                                                                                                                                                     JsonProcessingException {
+                                                                                                    jgen.writeStartObject ();
+                                                                                                    jgen.writeString (value);
+                                                                                                    jgen.writeEndObject ();
+                                                                                                  }
+                                                                                })
+                                                                                .addSerializer (Collection.class,
+                                                                                                new JsonSerializer<Collection> () {
+
+                                                                                                  @Override
+                                                                                                  public void serialize (Collection value,
+                                                                                                                         JsonGenerator jgen,
+                                                                                                                         SerializerProvider provider) throws IOException,
+                                                                                                                                                     JsonProcessingException {
+                                                                                                    jgen.writeStartObject ();
+                                                                                                    jgen.writeArrayFieldStart ("values");
+                                                                                                    for (Object o : value)
+                                                                                                      jgen.writeObject (o);
+                                                                                                    jgen.writeEndArray ();
+                                                                                                    jgen.writeEndObject ();
+                                                                                                  }
+                                                                                })));
       }
     });
   }

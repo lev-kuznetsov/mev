@@ -12,28 +12,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.controllers;
+package edu.dfci.cccb.mev.domain;
 
-import lombok.extern.log4j.Log4j;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.List;
 
 /**
  * @author levk
- * 
+ *
  */
-@Controller
-@RequestMapping ({ "/", "/home" })
-@Log4j
-public class HomeController {
+public abstract class DecoratedMatrixSkeleton {
 
-  @RequestMapping (method = RequestMethod.GET)
-  public @ResponseBody
-  String home () {
-    log.debug ("Returning home body");
-    return "<b>hello world!</b>";
+  public abstract class Data {
+    public abstract int rows ();
+    public abstract int columns ();
+    public abstract List<Double> values ();
   }
+  
+  public abstract Data data ();
+  
+  public abstract class Decoration {
+    public abstract String name ();
+    public abstract String value ();
+  }
+  
+  public abstract class Decorations {
+    public abstract List<Decoration> rows ();
+    public abstract List<Decoration> columns ();
+  }
+  
+  public abstract Decorations decorations ();
 }

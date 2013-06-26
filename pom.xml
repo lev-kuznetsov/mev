@@ -18,6 +18,10 @@
 
     <org.slf4j.version>1.7.2</org.slf4j.version>
     <org.springframework.version>3.2.2.RELEASE</org.springframework.version>
+    <angularjs.version>1.1.4</angularjs.version>
+    <d3js.version>3.1.5</d3js.version>
+    <jquery.version>2.0.2</jquery.version>
+    <foundation.version>4.0.4</foundation.version>
 
     <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
     <maven-war-plugin.version>2.3</maven-war-plugin.version>
@@ -79,28 +83,30 @@
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
 
-    <!-- JQuery -->
+    <!-- WebJars -->
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>foundation</artifactId>
+      <version>${foundation.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>jquery</artifactId>
-      <version>2.0.2</version>
+      <version>${jquery.version}</version>
     </dependency>
-
-    <!-- D3js -->
 
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>d3js</artifactId>
-      <version>3.1.5</version>
+      <version>${d3js.version}</version>
     </dependency>
-
-    <!-- AngularJS -->
 
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>angularjs</artifactId>
-      <version>1.1.4</version>
+      <version>${angularjs.version}</version>
     </dependency>
 
     <!-- Spring -->

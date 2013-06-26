@@ -12,28 +12,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.controllers;
+package edu.dfci.cccb.mev.beans;
 
-import lombok.extern.log4j.Log4j;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.Locale;
 
 /**
+ * This exception is thrown by REST methods when a specified URL doesn't have
+ * a matrix associated with it
+ * 
  * @author levk
  * 
  */
-@Controller
-@RequestMapping ({ "/", "/home" })
-@Log4j
-public class HomeController {
+// TODO: Attach actual internationalization
+public class MatrixNotFoundException extends Exception {
+  private static final long serialVersionUID = 1L;
 
-  @RequestMapping (method = RequestMethod.GET)
-  public @ResponseBody
-  String home () {
-    log.debug ("Returning home body");
-    return "<b>hello world!</b>";
+  @SuppressWarnings ("unused")
+  private final String matrix;
+
+  public MatrixNotFoundException (String matrix) {
+    super ("Could not find matrix " + matrix + " in the session");
+    this.matrix = matrix;
+  }
+  
+  public String getLocalizedMessage (Locale locale) {
+    return getMessage ();
   }
 }

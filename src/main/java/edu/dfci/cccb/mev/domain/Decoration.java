@@ -12,28 +12,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.controllers;
-
-import lombok.extern.log4j.Log4j;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+package edu.dfci.cccb.mev.domain;
 
 /**
- * @author levk
+ * Flag for DAO classes
  * 
+ * @author levk
+ *
  */
-@Controller
-@RequestMapping ({ "/", "/home" })
-@Log4j
-public class HomeController {
+public interface Decoration {
 
-  @RequestMapping (method = RequestMethod.GET)
-  public @ResponseBody
-  String home () {
-    log.debug ("Returning home body");
-    return "<b>hello world!</b>";
-  }
 }

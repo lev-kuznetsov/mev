@@ -15,33 +15,32 @@
 package edu.dfci.cccb.mev.controllers;
 
 import static java.lang.Math.min;
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
-
-import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.math3.linear.RealMatrix;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import us.levk.math.linear.HugeRealMatrix;
+import edu.dfci.cccb.mev.beans.Matrices;
+import edu.dfci.cccb.mev.beans.MatrixNotFoundException;
 
 /**
  * Matrix controller
@@ -51,9 +50,9 @@ import us.levk.math.linear.HugeRealMatrix;
  */
 @Controller
 @RequestMapping ("/matrix")
-@SessionAttributes ({ "matrices" })
-@Log4j
 public class MatrixController {
+
+  @Autowired private Matrices matrices;
 
   /**
    * Gets a matrix (or submatrix thereof) under specified path.
@@ -72,16 +71,13 @@ public class MatrixController {
    */
   @RequestMapping (value = "/{matrix}", method = GET)
   @ResponseBody
-  public RealMatrix matrix (@ModelAttribute ("matrices") Map<String, RealMatrix> matrices,
-                            @PathVariable ("matrix") String matrix,
+  public RealMatrix matrix (@PathVariable ("matrix") String matrix,
                             @RequestParam (value = "row", required = false) Integer row,
                             @RequestParam (value = "column", required = false) Integer column,
                             @RequestParam (value = "rows", required = false) Integer rows,
                             @RequestParam (value = "columns", required = false) Integer columns) throws MatrixNotFoundException {
     RealMatrix result = matrices.get (matrix);
-    if (result == null)
-      throw new MatrixNotFoundException (matrix);
-    else if (row != null && column != null) {
+    if (row != null && column != null) {
       if (row >= result.getRowDimension () || column >= result.getColumnDimension ())
         return null;
       if (rows == null || columns == null)
@@ -105,17 +101,11 @@ public class MatrixController {
    * @throws ParseException
    */
   @RequestMapping (value = "/{matrix}", method = PUT)
-  @ResponseBody
-  public String put (@ModelAttribute ("matrices") Map<String, RealMatrix> matrices,
-                     @PathVariable ("matrix") String matrix,
-                     @RequestParam MultipartFile file) throws IOException, ParseException {
+  @ResponseStatus (OK)
+  public void put (@PathVariable ("matrix") String matrix,
+                   @RequestParam ("file") MultipartFile file) throws IOException, ParseException {
     try (InputStream in = file.getInputStream ()) {
-      matrices.put (matrix, new HugeRealMatrix (in,
-                                                "\t,".toCharArray (),
-                                                "\n".toCharArray (),
-                                                NumberFormat.getNumberInstance ()));
-      log.debug ("Added /matrix/" + matrix);
-      return matrix;
+      matrices.put (matrix, in);
     }
   }
 
@@ -128,10 +118,8 @@ public class MatrixController {
    */
   @RequestMapping (value = "/{matrix}", method = DELETE)
   @ResponseStatus (OK)
-  public void delete (@ModelAttribute ("matrices") Map<String, RealMatrix> matrices,
-                      @PathVariable ("matrix") String matrix) throws MatrixNotFoundException {
-    if (null == matrices.remove (matrix))
-      throw new MatrixNotFoundException (matrix);
+  public void delete (@PathVariable ("matrix") String matrix) throws MatrixNotFoundException, IOException {
+    matrices.delete (matrix);
   }
 
   /**
@@ -143,18 +131,16 @@ public class MatrixController {
    * @return
    * @throws IOException
    * @throws ParseException
+   * @throws InterruptedException
    */
   @RequestMapping (method = POST)
   @ResponseBody
-  public String add (@ModelAttribute ("matrices") Map<String, RealMatrix> matrices,
-                     @RequestParam MultipartFile file) throws IOException, ParseException {
-    String name = file.getName ();
-    if (matrices.containsKey (name)) {
-      int suffix = 1;
-      for (; matrices.containsKey (name + "_" + suffix); suffix++);
-      name = name + "_" + suffix;
+  public String add (@RequestParam ("file") MultipartFile file) throws IOException,
+                                                               ParseException,
+                                                               InterruptedException {
+    try (InputStream in = file.getInputStream ()) {
+      return matrices.add (file.getName (), in);
     }
-    return put (matrices, name, file);
   }
 
   /**
@@ -165,30 +151,20 @@ public class MatrixController {
    */
   @RequestMapping (method = GET)
   @ResponseBody
-  public Collection<String> matrices (@ModelAttribute ("matrices") Map<String, RealMatrix> matrices) {
-    return matrices.keySet ();
+  public Collection<String> matrices () {
+    return matrices.list ();
   }
 
   /**
-   * Creates a new matrix map for the session
-   * 
-   * @return
-   */
-  @ModelAttribute ("matrices")
-  public Map<String, RealMatrix> createMatrixMap () {
-    return new HashMap<String, RealMatrix> ();
-  }
-
-  /**
-   * Handles calls to non-existant matrix URLs
+   * Handles calls to non-existent matrix URLs
    * 
    * @param e
    * @return
    */
   @ExceptionHandler (MatrixNotFoundException.class)
-  @ResponseStatus (value = NOT_FOUND, reason = "Non-existant matrix key")
+  @ResponseStatus (value = NOT_FOUND, reason = "Matrix key not found")
   @ResponseBody
   public String handleNotFound (MatrixNotFoundException e, Locale locale) {
-    return e.getLocalizedMessage ();
+    return e.getLocalizedMessage (locale);
   }
 }
