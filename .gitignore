@@ -1,13 +1,25 @@
-*.class
+# Compiled source #
+**.class
 
 # Package Files #
-*.war
-*.ear
+**.war
+**.ear
+**.zip
 
-# Eclipse
+# Test Third-Party Javascript Libraries #
+src/**/html/**/lib/*
+
+# Others #
+
+**.eclipse
+=======
+
+# IDE Generated Files
 .project
 .classpath
 .settings/
+**.swp
+**.orig
 
 # Maven target
 target/
