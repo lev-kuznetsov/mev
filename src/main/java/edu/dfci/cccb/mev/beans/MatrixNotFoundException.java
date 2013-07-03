@@ -17,24 +17,23 @@ package edu.dfci.cccb.mev.beans;
 import java.util.Locale;
 
 /**
- * This exception is thrown by REST methods when a specified URL doesn't have
- * a matrix associated with it
+ * This exception is thrown by REST methods when a specified URL doesn't have a
+ * matrix associated with it
  * 
  * @author levk
  * 
  */
-// TODO: Attach actual internationalization
+// TODO: Attach actual internationalization, move off to a separate module
 public class MatrixNotFoundException extends Exception {
   private static final long serialVersionUID = 1L;
 
-  @SuppressWarnings ("unused")
-  private final String matrix;
+  @SuppressWarnings ("unused") private final String matrix;
 
   public MatrixNotFoundException (String matrix) {
-    super ("Could not find matrix " + matrix + " in the session");
+    super ("No matrix keyed " + matrix + " found");
     this.matrix = matrix;
   }
-  
+
   public String getLocalizedMessage (Locale locale) {
     return getMessage ();
   }

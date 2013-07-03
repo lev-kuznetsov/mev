@@ -14,18 +14,19 @@
  */
 package edu.dfci.cccb.mev.configuration;
 
+import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLASS;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 import static org.springframework.http.MediaType.TEXT_HTML;
+import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 
-import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.math3.linear.RealMatrix;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.accept.ContentNegotiationManager;
@@ -39,11 +40,7 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 
 import us.levk.math.linear.util.RealMatrixJsonSerializer;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import edu.dfci.cccb.mev.beans.Matrices;
@@ -57,23 +54,19 @@ import edu.dfci.cccb.mev.beans.Matrices;
 @ComponentScan ("edu.dfci.cccb.mev")
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
-  /* @Bean public ViewResolver negotiatingViewResolver () { return new
-   * ContentNegotiatingViewResolver () { { setContentNegotiationManager (new
-   * ContentNegotiationManager (new PathExtensionContentNegotiationStrategy (new
-   * HashMap<String, MediaType> () { private static final long serialVersionUID
-   * = 1L; { put ("json", APPLICATION_JSON); put ("xml", APPLICATION_XML); }
-   * }))); setDefaultViews (asList ((View) new MappingJackson2JsonView (),
-   * (View) new MarshallingView (new Jaxb2Marshaller () { { setPackagesToScan
-   * (new String[] { "edu.dfci.cccb.mev" }); } }))); setOrder (1); } }; }
-   * @Bean public ViewResolver defaultViewResolver () { return new
-   * InternalResourceViewResolver () { { setViewClass (JstlView.class);
-   * setSuffix (".jsp"); setPrefix ("/WEB-INF/views/"); setOrder (0); } }; } */
-
+  /**
+   * Creates the session scoped matrix holding bean
+   * 
+   * @return
+   */
+  // TODO: Move this out to a different config file to prepare to separate
+  // heatmaps into its own module
   @Bean
+  @Scope (value = SCOPE_SESSION, proxyMode = TARGET_CLASS)
   public Matrices matrices () {
     return new Matrices ();
   }
-  
+
   /**
    * Create the CNVR. Get Spring to inject the ContentNegotiationManager created
    * by the configurer (see previous method).
@@ -109,7 +102,6 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
    * .ContentNegotiationConfigurer) */
   @Override
   public void configureContentNegotiation (ContentNegotiationConfigurer configurer) {
-    super.configureContentNegotiation (configurer);
     configurer.favorPathExtension (true)
               .favorParameter (true)
               .parameterName ("mediaType")
@@ -125,43 +117,13 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
    * @see
    * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
    * #configureMessageConverters(java.util.List) */
-  @SuppressWarnings ("rawtypes")
+  // TODO: This should go into a separate config for heatmaps
   @Override
   public void configureMessageConverters (List<HttpMessageConverter<?>> converters) {
-    super.configureMessageConverters (converters);
     converters.add (new MappingJackson2HttpMessageConverter () {
       {
         setObjectMapper (new ObjectMapper ().registerModule (new SimpleModule ().addSerializer (RealMatrix.class,
-                                                                                                new RealMatrixJsonSerializer ())
-                                                                                .addSerializer (String.class,
-                                                                                                new JsonSerializer<String> () {
-
-                                                                                                  @Override
-                                                                                                  public void serialize (String value,
-                                                                                                                         JsonGenerator jgen,
-                                                                                                                         SerializerProvider provider) throws IOException,
-                                                                                                                                                     JsonProcessingException {
-                                                                                                    jgen.writeStartObject ();
-                                                                                                    jgen.writeString (value);
-                                                                                                    jgen.writeEndObject ();
-                                                                                                  }
-                                                                                })
-                                                                                .addSerializer (Collection.class,
-                                                                                                new JsonSerializer<Collection> () {
-
-                                                                                                  @Override
-                                                                                                  public void serialize (Collection value,
-                                                                                                                         JsonGenerator jgen,
-                                                                                                                         SerializerProvider provider) throws IOException,
-                                                                                                                                                     JsonProcessingException {
-                                                                                                    jgen.writeStartObject ();
-                                                                                                    jgen.writeArrayFieldStart ("values");
-                                                                                                    for (Object o : value)
-                                                                                                      jgen.writeObject (o);
-                                                                                                    jgen.writeEndArray ();
-                                                                                                    jgen.writeEndObject ();
-                                                                                                  }
-                                                                                })));
+                                                                                                new RealMatrixJsonSerializer ())));
       }
     });
   }
@@ -173,7 +135,6 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
    * (org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry) */
   @Override
   public void addResourceHandlers (ResourceHandlerRegistry registry) {
-    super.addResourceHandlers (registry);
     registry.addResourceHandler ("/resources/static/**").addResourceLocations ("classpath:/META-INF/resources/",
                                                                                "/META-INF/resources/");
   }

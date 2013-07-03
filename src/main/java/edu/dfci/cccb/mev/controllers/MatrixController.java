@@ -17,6 +17,7 @@ package edu.dfci.cccb.mev.controllers;
 import static java.lang.Math.min;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.UNSUPPORTED_MEDIA_TYPE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -50,6 +51,7 @@ import edu.dfci.cccb.mev.beans.MatrixNotFoundException;
  */
 @Controller
 @RequestMapping ("/matrix")
+// TODO: Move this off into a separate module
 public class MatrixController {
 
   @Autowired private Matrices matrices;
@@ -156,15 +158,91 @@ public class MatrixController {
   }
 
   /**
+   * Gets all the decoration types for a particular matrix, resultant JSON
+   * object is an array of arrays sorted by dimension
+   * 
+   * @param matrix
+   * @return
+   * @throws MatrixNotFoundException
+   */
+  @RequestMapping (value = "/{matrix}/decoration", method = GET)
+  @ResponseBody
+  public Collection<Collection<String>> decorations (@PathVariable ("matrix") String matrix) throws MatrixNotFoundException {
+    return matrices.decorations (matrix);
+  }
+
+  /**
+   * Decorates a particular vector
+   * 
+   * @param matrix
+   * @param dimension
+   * @param index
+   * @param name
+   * @param decoration
+   * @throws MatrixNotFoundException
+   */
+  @RequestMapping (value = "/{matrix}/decoration/{dimension}/{index}/{name}", method = PUT)
+  @ResponseBody
+  public void decorate (@PathVariable ("matrix") String matrix,
+                        @PathVariable ("dimension") String dimension,
+                        @PathVariable ("index") int index,
+                        @PathVariable ("name") String name,
+                        @RequestParam ("decoration") String decoration) throws MatrixNotFoundException {
+    matrices.decorate (matrix, toDimension (dimension), name, index, decoration);
+  }
+
+  /**
+   * Gets a specific decoration given the attributes
+   * 
+   * @param matrix
+   * @param dimension
+   * @param index
+   * @param name
+   * @return
+   * @throws MatrixNotFoundException
+   */
+  @RequestMapping (value = "/{matrix}/decoration/{dimension}/{index}/{name}", method = GET)
+  @ResponseBody
+  public String decoration (@PathVariable ("matrix") String matrix,
+                            @PathVariable ("dimension") String dimension,
+                            @PathVariable ("index") int index,
+                            @PathVariable ("name") String name) throws MatrixNotFoundException {
+    return matrices.decoration (matrix, toDimension (dimension), index, name);
+  }
+
+  /**
    * Handles calls to non-existent matrix URLs
    * 
    * @param e
    * @return
    */
   @ExceptionHandler (MatrixNotFoundException.class)
-  @ResponseStatus (value = NOT_FOUND, reason = "Matrix key not found")
-  @ResponseBody
-  public String handleNotFound (MatrixNotFoundException e, Locale locale) {
-    return e.getLocalizedMessage (locale);
+  @ResponseStatus (value = NOT_FOUND, reason = "Bad matrix key")
+  public void handleNotFound (MatrixNotFoundException e, Locale locale) {}
+
+  /**
+   * Handles bad matrix data files
+   * 
+   * @param e
+   * @param locale
+   */
+  @ExceptionHandler (ParseException.class)
+  @ResponseStatus (value = UNSUPPORTED_MEDIA_TYPE, reason = "Bad matrix data")
+  public void handleParseFailure (ParseException e, Locale locale) {}
+
+  /**
+   * Converts from string to a particular dimension for decorations, allowed
+   * values are "row", "column", or a numerical representation.
+   * 
+   * @param dimension
+   * @return
+   */
+  private int toDimension (String dimension) {
+    if ("row".equals (dimension))
+      return 0;
+    else if ("column".equals (dimension))
+      return 1;
+    else
+      return Integer.parseInt (dimension);
   }
 }

@@ -14,17 +14,17 @@
  */
 package edu.dfci.cccb.mev.beans;
 
-import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLASS;
-import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import lombok.Data;
 import lombok.SneakyThrows;
@@ -32,7 +32,6 @@ import lombok.Synchronized;
 import lombok.experimental.Accessors;
 
 import org.apache.commons.math3.linear.RealMatrix;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import us.levk.math.linear.HugeRealMatrix;
@@ -44,27 +43,120 @@ import us.levk.math.linear.HugeRealMatrix;
  * 
  */
 @Component
-@Scope (value = SCOPE_SESSION, proxyMode = TARGET_CLASS)
 public class Matrices implements Closeable {
 
   /**
    * Holds references to matrices based on string keys
    */
   private Map<String, MatrixData<? extends RealMatrix>> matrices = new HashMap<> ();
-  
+
   @Data
   @Accessors (fluent = true, chain = false)
-  private class MatrixData<T extends RealMatrix> implements Closeable {
+  private class MatrixData <T extends RealMatrix> implements Closeable {
     private final T matrix;
 
+    private final List<Map<String, List<String>>> decorations = new ArrayList<Map<String, List<String>>> () {
+      private static final long serialVersionUID = 1L;
+
+      @Override
+      @Synchronized
+      public Map<String, List<String>> get (int index) {
+        for (; index < size () - 1; add (new HashMap<String, List<String>> () {
+          private static final long serialVersionUID = 1L;
+
+          @Override
+          @Synchronized
+          public List<String> get (Object key) {
+            List<String> result = super.get (key);
+            if (result == null)
+              put ((String) key, result = new ArrayList<String> () {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                @Synchronized
+                public String set (int index, String element) {
+                  for (; index < size () - 1; add (null));
+                  return super.set (index, element);
+                }
+              });
+            return result;
+          }
+
+          @Override
+          @Synchronized
+          public List<String> put (String key, List<String> value) {
+            return super.put (key, value);
+          }
+        }));
+        return super.get (index);
+      }
+    };
+
     /* (non-Javadoc)
-     * @see java.io.Closeable#close()
-     */
+     * @see java.io.Closeable#close() */
     @Override
     public void close () throws IOException {
       if (matrix instanceof Closeable)
         ((Closeable) matrix).close ();
     }
+  }
+
+  /**
+   * Gets the names (or types) of all the decorations for a particular matrix
+   * 
+   * @param matrix
+   * @return
+   * @throws MatrixNotFoundException
+   */
+  public Collection<Collection<String>> decorations (String matrix) throws MatrixNotFoundException {
+    Collection<Collection<String>> result = new ArrayList<Collection<String>> ();
+    for (Map<String, List<String>> dimension : getData (matrix).decorations ())
+      result.add (dimension.keySet ());
+    return result;
+  }
+
+  /**
+   * Decorates a particular matrix with the given attributes
+   * 
+   * @param matrix
+   * @param dimension
+   * @param name
+   * @param index
+   * @param decoration
+   * @throws MatrixNotFoundException
+   */
+  public void decorate (String matrix, int dimension, String name, int index, String decoration) throws MatrixNotFoundException {
+    getData (matrix).decorations ().get (dimension).get (name).set (index, decoration);
+  }
+
+  /**
+   * Gets all the decorations for a particular vector
+   * 
+   * @param matrix
+   * @param dimension
+   * @param index
+   * @return
+   * @throws MatrixNotFoundException
+   */
+  public Collection<String> decoration (String matrix, int dimension, int index) throws MatrixNotFoundException {
+    Collection<String> result = new ArrayList<String> ();
+    for (Entry<String, List<String>> decoration : getData (matrix).decorations ().get (dimension).entrySet ())
+      result.add (decoration.getValue ().get (index));
+    return result;
+  }
+
+  /**
+   * Gets a specific decoration for a particular vector
+   * 
+   * @param matrix
+   * @param dimension
+   * @param index
+   * @param name
+   * @return
+   * @throws MatrixNotFoundException
+   */
+  public String decoration (String matrix, int dimension, int index, String name) throws MatrixNotFoundException {
+    return getData (matrix).decorations ().get (dimension).get (name).get (index);
   }
 
   /**
@@ -84,11 +176,7 @@ public class Matrices implements Closeable {
    * @throws MatrixNotFoundException
    */
   public RealMatrix get (String key) throws MatrixNotFoundException {
-    MatrixData<?> result = matrices.get (key);
-    if (result == null)
-      throw new MatrixNotFoundException (key);
-    else
-      return result.matrix ();
+    return getData (key).matrix ();
   }
 
   /**
@@ -124,8 +212,9 @@ public class Matrices implements Closeable {
    * @return
    */
   @Synchronized
-  @SneakyThrows (IOException.class)
-  // Will never happen, IOException is part of the Closeable on ejection
+  @SneakyThrows (IOException.class /* Will never happen, IOException is part of
+                                    * the Closeable on ejection, no ejection
+                                    * happens on addition */)
   public <T extends RealMatrix> String add (String key, T matrix) {
     if (matrices.containsKey (key)) {
       int index = key.length ();
@@ -200,5 +289,13 @@ public class Matrices implements Closeable {
                                "\t,".toCharArray (),
                                "\n".toCharArray (),
                                NumberFormat.getNumberInstance ());
+  }
+
+  private MatrixData<?> getData (String key) throws MatrixNotFoundException {
+    MatrixData<?> result = matrices.get (key);
+    if (result == null)
+      throw new MatrixNotFoundException (key);
+    else
+      return result;
   }
 }
