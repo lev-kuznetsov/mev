@@ -12,9 +12,11 @@ angular.module('myApp.controllers', []).
     
       //Send HTTP Request to import data
       
-    $http.get('data/' + $scope.matrixLocation).success(function (data) {
-       $scope.dataset = data;	
-	});
+    $http.get('data/' + $scope.matrixLocation).
+    
+      success(function (data) {
+        $scope.dataset = data;	
+	  });
     
       //Somehow handle http request failure
 

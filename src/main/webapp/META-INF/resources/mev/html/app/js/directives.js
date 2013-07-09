@@ -16,14 +16,14 @@ angular.module('myApp.directives', []).
     return {
       restrict: 'E',
       scope: {
-        inputdata:"@",
-        inputrows:"@",
-        inputcolumns:"@"
+        inputdata:"=",
+        inputrows:"=",
+        inputcolumns:"="
       },
       template: '<div><p>{{inputdata}}</p></div>',
       link: function (scope, element, attrs) {
 		  
-        attrs.$observe('inputdata', function(foo) {
+        scope.$watch('inputdata', function(newdata, olddata) {
           
           //Debug flag for printing variables to javascript console
           var debug = true;
@@ -48,8 +48,8 @@ angular.module('myApp.directives', []).
           
           if (debug) {
             // Debug Flag for Input Data
-            console.log("scope.inputdata: ");
-            console.log(scope.inputdata);
+            console.log("Input Data: ");
+            console.log(newdata);
             console.log(typeof scope.inputcolumns)
             console.log(typeof scope.inputrows)
           }
@@ -80,13 +80,14 @@ angular.module('myApp.directives', []).
                       .attr("height", visParams.height);
 						
           svg.selectAll("rect")
-             .data(scope.inputdata.data)
+             .data(scope.inputdata)
              .enter()
              .append("rect")
              .attr("height", cellParams.height)
              .attr("width", cellParams.width)
              .attr("x", function(d, i) {
-	           return xCellScale(i,scope.inputcolumns)
+               var output = scope.xCellScale(i, scope.inputcolumns);
+               return output;
              })
              .attr("y", function(d, i) {
 	           return yCellScale(i,scope.inputcolumns);
@@ -98,19 +99,19 @@ angular.module('myApp.directives', []).
            var xCellScale = function(index, cols) {
                var output = (index%cols)*(cellParams.width+cellParams.padding);
                return output;
-            }
+            };
 
             var yCellScale = function(index, cols) {
               var output = Math.floor(index/cols) * (cellParams.height+cellParams.padding);
               return output;
-            }
+            };
 
             var colorCellScale = function(j) {	 
               var output = d3.scale.pow()
                            .domain([d3.min(scope.inputdata.data), d3.max(scope.inputdata.data)])
                            .rangeRound([0, 255]);
               return output(j);
-            }
+            };
 
         });
 		  
