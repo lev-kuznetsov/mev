@@ -43,8 +43,8 @@ angular.module('myApp.directives', []).
 
           //Probably need to update this to have a constant visualization
           //window size
-          vis_params.width = (dataset.columns * (cell_params.width+cell_params.padding)) + (vis_params.vertical_padding*2);
-          vis_params.height = (dataset.rows * (cell_params.height+cell_params.padding)) + (vis_params.horizontal_padding*2);
+          visParams.width = (dataset.columns * (cell_params.width+cell_params.padding)) + (visParams.vertical_padding*2);
+          visParams.height = (dataset.rows * (cell_params.height+cell_params.padding)) + (visParams.horizontal_padding*2);
 
           
           if (debug) {
@@ -65,20 +65,20 @@ angular.module('myApp.directives', []).
           
           if (debug) {
             // Debug flag for Vis Params 
-            console.log("Vis_Params:")
-            console.log(vis_params)
-            console.log("Width: " + vis_params.width + " (" + typeof vis_params.width + ")");
-            console.log("Height: " + vis_params.height + " (" + typeof vis_params.height + ")");
-            console.log("HR Padding: " + vis_params.horizontal_padding + " (" + typeof vis_params.horizontal_padding + ")");
-            console.log("VR Padding: " + vis_params.vertical_padding + " (" + typeof vis_params.vertical_padding + ")");
+            console.log("visParams:")
+            console.log(visParams)
+            console.log("Width: " + visParams.width + " (" + typeof visParams.width + ")");
+            console.log("Height: " + visParams.height + " (" + typeof visParams.height + ")");
+            console.log("HR Padding: " + visParams.horizontal_padding + " (" + typeof visParams.horizontal_padding + ")");
+            console.log("VR Padding: " + visParams.vertical_padding + " (" + typeof visParams.vertical_padding + ")");
           }
           
           //Visualization Generation
           
           var svg = d3.select(element[0])
                       .append("svg")
-                      .attr("width", vis_params.width)
-                      .attr("height", vis_params.height);
+                      .attr("width", visParams.width)
+                      .attr("height", visParams.height);
 						
           svg.selectAll("rect")
              .data(dataset.data)
