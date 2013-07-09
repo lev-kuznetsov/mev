@@ -20,7 +20,6 @@ angular.module('myApp.directives', []).
         inputrows:"=",
         inputcolumns:"="
       },
-      template: '<div><p>{{inputdata}}</p></div>',
       link: function (scope, element, attrs) {
 		  
         scope.$watch('inputdata', function(newdata, olddata) {
@@ -28,9 +27,9 @@ angular.module('myApp.directives', []).
           //Debug flag for printing variables to javascript console
           var debug = true;
           var cellParams = {
-            width: 20,
-            height: 20,
-            padding: 10
+            width: 40,
+            height: 40,
+            padding: 3
           };
           
           var visParams = {
@@ -78,7 +77,22 @@ angular.module('myApp.directives', []).
                       .append("svg")
                       .attr("width", visParams.width)
                       .attr("height", visParams.height);
-						
+          var xCellScale = function(index, cols) {
+            return (index%cols)*(cellParams.width+cellParams.padding);
+          }
+          
+          var yCellScale = function(index, cols) {
+            var output = Math.floor(index/cols) * (cellParams.height+cellParams.padding);
+            return output;
+          };
+
+          var colorCellScale = function(j) {	 
+            var output = d3.scale.linear()
+                           .domain([d3.min(scope.inputdata), d3.max(scope.inputdata)])
+                           .rangeRound([0, 255]);
+            return output(j);
+          };
+          
           svg.selectAll("rect")
              .data(scope.inputdata)
              .enter()
@@ -86,7 +100,7 @@ angular.module('myApp.directives', []).
              .attr("height", cellParams.height)
              .attr("width", cellParams.width)
              .attr("x", function(d, i) {
-               var output = scope.xCellScale(i, scope.inputcolumns);
+               var output = xCellScale(i, scope.inputcolumns);
                return output;
              })
              .attr("y", function(d, i) {
@@ -95,23 +109,6 @@ angular.module('myApp.directives', []).
              .attr("fill", function(d) {
                return "rgb(" + "0" + "," + colorCellScale(d) + ", 0 )"
              });
-
-           var xCellScale = function(index, cols) {
-               var output = (index%cols)*(cellParams.width+cellParams.padding);
-               return output;
-            };
-
-            var yCellScale = function(index, cols) {
-              var output = Math.floor(index/cols) * (cellParams.height+cellParams.padding);
-              return output;
-            };
-
-            var colorCellScale = function(j) {	 
-              var output = d3.scale.pow()
-                           .domain([d3.min(scope.inputdata.data), d3.max(scope.inputdata.data)])
-                           .rangeRound([0, 255]);
-              return output(j);
-            };
 
         });
 		  
