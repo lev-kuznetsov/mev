@@ -21,6 +21,7 @@ angular.module('myApp.directives', []).
         cellHeight: "@",
         cellPadding: "@"
       },
+      template: "<div><p>{{inputData.title}}</p></div>",
       link: function (scope, element, attrs) {
 		  
         attrs.$observe('inputData', function(dataset) {
