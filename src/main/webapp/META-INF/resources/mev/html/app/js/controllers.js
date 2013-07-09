@@ -12,7 +12,7 @@ angular.module('myApp.controllers', []).
     
       //Send HTTP Request to import data
       
-    $http.get('matrix/' + $scope.matrixLocation).success(function (data) {
+    $http.get('data/' + $scope.matrixLocation).success(function (data) {
        $scope.dataset = data;	
 	});
     

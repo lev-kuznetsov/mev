@@ -16,22 +16,21 @@ angular.module('myApp.directives', []).
     return {
       restrict: 'E',
       scope: {
-        inputData: "@",
-        cellWidth: "@",
-        cellHeight: "@",
-        cellPadding: "@"
+        inputdata:"@",
+        inputrows:"@",
+        inputcolumns:"@"
       },
-      template: "<div><p>{{inputData.title}}</p></div>",
+      template: '<div><p>{{inputdata}}</p></div>',
       link: function (scope, element, attrs) {
 		  
-        attrs.$observe('inputData', function(dataset) {
+        attrs.$observe('inputdata', function(foo) {
           
           //Debug flag for printing variables to javascript console
           var debug = true;
           var cellParams = {
-            width: scope.cellWidth,
-            height: scope.cellHeight,
-            padding: scope.cellPadding
+            width: 20,
+            height: 20,
+            padding: 10
           };
           
           var visParams = {
@@ -43,24 +42,24 @@ angular.module('myApp.directives', []).
 
           //Probably need to update this to have a constant visualization
           //window size
-          visParams.width = (dataset.columns * (cell_params.width+cell_params.padding)) + (visParams.vertical_padding*2);
-          visParams.height = (dataset.rows * (cell_params.height+cell_params.padding)) + (visParams.horizontal_padding*2);
+          visParams.width = (scope.inputcolumns * (cellParams.width+cellParams.padding)) + (visParams.vertical_padding*2);
+          visParams.height = (scope.inputrows * (cellParams.height+cellParams.padding)) + (visParams.horizontal_padding*2);
 
           
           if (debug) {
             // Debug Flag for Input Data
-            console.log("Dataset: ");
-            console.log(dataset);
-            console.log(typeof dataset.columns)
-            console.log(typeof dataset.rows)
+            console.log("scope.inputdata: ");
+            console.log(scope.inputdata);
+            console.log(typeof scope.inputcolumns)
+            console.log(typeof scope.inputrows)
           }
 
           if (debug) {
             // Debug Flag for Cell Params Values
             console.log("Cell Parameters:")
             console.log(cellParams)
-            console.log("Cell Width: " + cellParams.width + " (" + typeof cell_params.width + ")");
-            console.log("Cell Height: " + cellParams.height + " (" + typeof cell_params.height + ")");
+            console.log("Cell Width: " + cellParams.width + " (" + typeof cellParams.width + ")");
+            console.log("Cell Height: " + cellParams.height + " (" + typeof cellParams.height + ")");
           }
           
           if (debug) {
@@ -81,34 +80,34 @@ angular.module('myApp.directives', []).
                       .attr("height", visParams.height);
 						
           svg.selectAll("rect")
-             .data(dataset.data)
+             .data(scope.inputdata.data)
              .enter()
              .append("rect")
-             .attr("height", cell_params.height)
-             .attr("width", cell_params.width)
+             .attr("height", cellParams.height)
+             .attr("width", cellParams.width)
              .attr("x", function(d, i) {
-	           return xCellScale(i,dataset.columns)
+	           return xCellScale(i,scope.inputcolumns)
              })
              .attr("y", function(d, i) {
-	           return yCellScale(i,dataset.columns);
+	           return yCellScale(i,scope.inputcolumns);
              })
              .attr("fill", function(d) {
                return "rgb(" + "0" + "," + colorCellScale(d) + ", 0 )"
              });
 
            var xCellScale = function(index, cols) {
-               var output = (index%cols)*(cell_params.width+cell_params.padding);
+               var output = (index%cols)*(cellParams.width+cellParams.padding);
                return output;
             }
 
             var yCellScale = function(index, cols) {
-              var output = Math.floor(index/cols) * (cell_params.height+cell_params.padding);
+              var output = Math.floor(index/cols) * (cellParams.height+cellParams.padding);
               return output;
             }
 
             var colorCellScale = function(j) {	 
               var output = d3.scale.pow()
-                           .domain([d3.min(dataset.data), d3.max(dataset.data)])
+                           .domain([d3.min(scope.inputdata.data), d3.max(scope.inputdata.data)])
                            .rangeRound([0, 255]);
               return output(j);
             }
