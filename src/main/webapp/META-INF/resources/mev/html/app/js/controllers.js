@@ -8,7 +8,7 @@ angular.module('myApp.controllers', []).
   }])
   .controller('MyCtrl2', [function() {
 
-  }]);
+  }])
   .controller('controllerUpload', [function($scope){
     //Function to upload files
     $scope.sendFile = function(){
@@ -45,4 +45,4 @@ angular.module('myApp.controllers', []).
         return false; //This command is used to prevent any page navigation during form submission to ensure ajax experience.
       });	
     };
-  };
+  }]);
