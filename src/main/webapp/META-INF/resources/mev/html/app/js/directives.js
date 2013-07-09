@@ -9,7 +9,7 @@ angular.module('myApp.directives', []).
       elm.text(version);
     };
   }]).
-  directive('visHeatmap', ['', function() {
+  directive('visHeatmap', [function() {
   /* Heatmap visualization function.
   * 
   */
@@ -113,10 +113,6 @@ angular.module('myApp.directives', []).
             }
 
         });
-        
-        scope.$watch("cellWidth", function(cellWidth) {
-			
-		});
 		  
       }
     }
