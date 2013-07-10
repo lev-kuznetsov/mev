@@ -1,5 +1,39 @@
 <h1>Title</h1>
 
-<vis-Heatmap inputData="dataset.data" inputRows="dataset.rows" inputColumns="dataset.columns"></vis-Heatmap>
+<div class="row">
+  <div class="span8">
+    <vis-Heatmap 
+        inputData="dataset"
+        inputColor="colorscheme"
+        inputSize="cellsize"></vis-Heatmap>
+  </div>
+  <div class="span4">
+	<!--Color Scheme -->
+    <div class="row">
+      <div class="btn-group">
+        <button class="btn" ng-click="setColorScheme(0)">Red-Green</button>
+        <button class="btn" ng-click="setColorScheme(1)">Yellow-Blue</button>
+      </div>
+      {{colorscheme}}
+    </div>
+    <!-- Cell Size -->
+    <div class="row">
+      <div class="btn-group">
+        <button class="btn" ng-click="setCellSize(0)">Small</button>
+        <button class="btn" ng-click="setCellSize(1)">Med</button>
+        <button class="btn" ng-click="setCellSize(2)">Large</button>
+      </div>
+      {{cellsize}}
+    </div>
+    
+    <!-- Heatmap Navigation -->
+    <div class="row">
+      <div class="btn-group">
+        <button class="btn"><i class="icon-chevron-down"></i></button>
+        <button class="btn"><i class="icon-chevron-up"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
