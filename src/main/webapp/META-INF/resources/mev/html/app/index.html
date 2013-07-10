@@ -4,13 +4,23 @@
   <meta charset="utf-8">
   <title>My AngularJS App</title>
   <link rel="stylesheet" href="css/app.css"/>
+  <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"/>
 </head>
 <body>
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-  </ul>
+	
+  <!-- Navbar -->
+  <div class="navbar navbar-inverse">
+    <div class="navbar-inner">
+      <a class="brand" href="#">WebMev</a>
+      <ul class="nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+      </ul>
+    </div>
+  </div>
 
+  <!-- View -->
   <div ng-view></div>
 
   <div>Angular seed app: v<span app-version></span></div>
@@ -18,7 +28,8 @@
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
   -->
-  
+  <!--Bootstrap -->
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
   <!--D3-->
   <script src="lib/d3/d3.js"></script>
   
