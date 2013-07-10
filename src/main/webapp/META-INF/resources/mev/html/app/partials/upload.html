@@ -1,14 +1,37 @@
-<div>
-  <form id="myform" name="form" action="set/to/server/file" enctype="multipart/form-data" method="post">
-    <div class="uploader" >
-      <input type="file" name="upload" />
-      <button type="submit" ng-click="sendFile()" style="display:block;">Submit</button>
-      <div class="progressbar">
-        <div id="percent">0%</div>
-        <div id="bar"></div>
-      </div>
-    </div>
-  </form>
-  <div id="output"></div>
-</div> 
-hjhjhjhjjhj
+<html>
+  <head>
+    <style>
+    .progressbar
+      {
+        position:relative;
+        width:400px;
+        height:20px;
+        border:1px;
+        border-style:solid;
+        border-radius: 3px 3px 3px 3px;
+      }
+      .percent
+      {
+        position:absolute;
+        display:inline-block;
+        top:3px;
+        left:48%;
+      }		
+      .bar
+      {
+        background-color: #B4F5B4;
+        border-radius: 3px 3px 3px 3px;
+        height: 20px;
+        width: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div ng-controller="controllerUpload">
+			<div ng-repeat="input in inputs" ng-bind-html-unsafe="input.html"></div>
+			<button ng-click="addInput()">Add More Inputs</button>
+			<button ng-click="sendFile(0)">Submit Files</button>
+      <div id="output"></div>
+    </div> 
+  </body>
+</html>
