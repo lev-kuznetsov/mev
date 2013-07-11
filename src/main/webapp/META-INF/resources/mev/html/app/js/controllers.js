@@ -12,13 +12,22 @@ angular.module('myApp.controllers', []).
     
       //Send HTTP Request to import data
       
-    $http.get('data/' + $scope.matrixLocation).
+    $http.get('data/' + $scope.matrixLocation + '.json').
     
       success(function (data) {
-        $scope.dataset = data;	
+        $scope.dataset = data;
+        $scope.colorscheme = 0;
+        $scope.cellsize = 1;
 	  });
     
       //Somehow handle http request failure
+    $scope.setColorScheme = function(colorcode) {
+		$scope.colorscheme = colorcode;
+	}
+	
+	$scope.setCellSize = function(sizecode) {
+		$scope.cellsize = sizecode;
+	}
 
   }])
   .controller('MyCtrl2', [function() {
