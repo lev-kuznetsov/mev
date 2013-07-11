@@ -2,20 +2,25 @@
 <html lang="en" ng-app="myApp">
 <head>
   <meta charset="utf-8">
-  <title>My AngularJS App</title>
+  <title>WebMev: Online Bioinformatics Data Presentation</title>
   <link rel="stylesheet" href="css/app.css"/>
   <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"/>
 </head>
 <body>
-	
+  
+  <div class="row">
+  
+	<img src="img/cccb-logo.jpg" class="img-polaroid">
+  
+  </div>
   <!-- Navbar -->
-  <div class="navbar navbar-inverse">
+  <div class="navbar">
     <div class="navbar-inner">
       <a class="brand" href="#">WebMev</a>
       <ul class="nav">
         <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
+        <li><a href="#/about">About</a></li>
+        <li><a href="#/help">Help</a></li>
       </ul>
     </div>
   </div>
@@ -23,7 +28,7 @@
   <!-- View -->
   <div ng-view></div>
 
-  <div>Angular seed app: v<span app-version></span></div>
+  <div><span app-version></span></div>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
