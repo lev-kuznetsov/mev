@@ -30,6 +30,14 @@ angular.module('myApp.controllers', []).
 	}
 
   }])
-  .controller('MyCtrl2', [function() {
-
+  .controller('AnalyzeCtrl', ['$scope', '$http', function($scope, $http) {
+    
+    //Get visualization json
+    $http.get('data/visualization_data.json').
+    
+      success(function (data) {
+        $scope.visualization_data = data;
+	  });
+	//Error handling
+    //Get data json
   }]);
