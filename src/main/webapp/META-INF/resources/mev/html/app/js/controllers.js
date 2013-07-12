@@ -36,14 +36,15 @@ angular.module('myApp.controllers', []).
     $http.get('data/visualization_data.json').
     
       success(function (data) {
-        $scope.visualization_data = data;
+        $scope.visualizationdata = data;
 	});
 	  
 	$http.get('data/upload_data.json').
     
       success(function (data) {
-        $scope.upload_data = data;
+        $scope.uploaddata = data;
 	});
+
 	//Error handling
     //Get data json
   }]);

@@ -39,4 +39,25 @@ describe('myApp controllers', function(){
 	  
   });
   
+  describe('AnalyzeCtrl', function() {
+	
+    var scope, ctrl, $httpBackend;
+	  
+    beforeEach(inject(function($rootScope, $controller) {
+		
+      scope = $rootScope.$new(),
+      ctrl = $controller('HeatmapCtrl', {$scope: scope});
+            
+    }));
+    
+    it('should load visualization data', function() {
+      expect(scope.matrixLocation).toBeUndefined();
+    });
+    
+    it('should load uploads data', function() {
+      //feature pending
+    });
+	  
+  });
+  
 });
