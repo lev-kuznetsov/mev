@@ -1,7 +1,7 @@
 <html>
   <head>
     <style>
-    .progressbar
+			#progressbar
       {
         position:relative;
         width:400px;
@@ -10,14 +10,14 @@
         border-style:solid;
         border-radius: 3px 3px 3px 3px;
       }
-      .percent
+			#percent
       {
         position:absolute;
         display:inline-block;
         top:3px;
         left:48%;
       }		
-      .bar
+      #bar
       {
         background-color: #B4F5B4;
         border-radius: 3px 3px 3px 3px;
@@ -28,10 +28,13 @@
   </head>
   <body>
     <div ng-controller="controllerUpload">
-			<div ng-repeat="input in inputs" ng-bind-html-unsafe="input.html"></div>
-			<button ng-click="addInput()">Add More Inputs</button>
+			<input id="file" type="file" name="upload" />
 			<button ng-click="sendFile(0)">Submit Files</button>
-      <div id="output"></div>
+			<div id="progressbar">
+				<div id="bar"></div>
+				<div id="percent"></div>
+			</div>
+      <div id="output">{{output}}</div>
     </div> 
   </body>
 </html>
