@@ -37,7 +37,13 @@ angular.module('myApp.controllers', []).
     
       success(function (data) {
         $scope.visualization_data = data;
-	  });
+	});
+	  
+	$http.get('data/upload_data.json').
+    
+      success(function (data) {
+        $scope.upload_data = data;
+	});
 	//Error handling
     //Get data json
   }]);
