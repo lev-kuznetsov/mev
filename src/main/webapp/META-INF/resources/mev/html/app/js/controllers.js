@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 /* Controllers */
 
@@ -35,19 +35,20 @@ angular.module('myApp.controllers', []).
     //Get visualization json
     $http.get('data/visualization_data.json').
     
-      success(function (data) {
+	success(function (data) {
         $scope.visualizationdata = data;
 	});
 	  
 	$http.get('data/upload_data.json').
-    
-      success(function (data) {
-        $scope.uploaddata = data;
-  }])
-  .controller('controllerUpload', ['$scope', function($scope){
+		  success(function (data) {
+			  $scope.uploaddata = data;
+		  });
+      
+	}])
+	.controller('UploadCtrl', ['$scope', function($scope){
 		$scope.output = "Select your file to upload.";
         //Function to upload files
-        $scope.sendFile = function(){
+        $scope.sendFile = function() {
 			//Variable declarations
 			var input = document.getElementById("file");
 			var bar = document.getElementById("bar"); //DOM element of the growing progress bar
