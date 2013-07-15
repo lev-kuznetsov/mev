@@ -34,7 +34,7 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
 		controller: 'HeatmapCtrl'});
 	$routeProvider.when('/upload', {
 		templateUrl: 'partials/upload.html', 
-		controller: 'controllerUpload'});
+		controller: 'UploadCtrl'});
     $routeProvider.otherwise({redirectTo: '/home'});
 
   }]);
