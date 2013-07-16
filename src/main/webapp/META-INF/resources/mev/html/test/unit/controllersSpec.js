@@ -59,5 +59,59 @@ describe('myApp controllers', function(){
     });
 	  
   });
+
+  describe('GeneSelectCtrl', [function() {
+    
+    var scope, ctrl, $httpBackend;
+   
+    beforeEach(inject(function() {
+
+      $httpBackend = _$httpBackend_;
+      scope = $rootScope.$new();
+      scope.dataset = "testdataset";
+      $httpBackend.expectGET('data/testdataset-1')
+                  .respond([
+                     {genes:[
+
+                       {
+                         name:"test1",
+                         symbol:"TEST1",
+                         description:"This is the test1",
+                         ensembleId: "TEST1ID"
+                         pathways: "Test, Test, test"
+                       },
+                       {
+                         name:"test2",
+                         symbol:"TEST2",
+                         description:"This is the test2",
+                         ensembleId: "TEST2ID"
+                         pathways: "Test2, Test2, test2"
+                       } 
+
+                     ]},
+                     {maxPage: 2},
+                     {nearbyPages: []},
+                  ]);
+
+      ctrl = $controller(GeneSelectCtrl, {$scope: scope});
+    }));
+    
+    it('should set the default page to 1', function() {
+
+    });
+
+    it('should have an empty default marked genes list', function() {
+
+    });
+
+    it('should have an empty default searched genes list', function() {
+
+    });
+
+    it('should download the first 20 genes', function() {
+
+    });
+
+  });
   
 });

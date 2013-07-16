@@ -2,8 +2,8 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', []).
-  controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
+angular.module('myApp.controllers', [])
+  .controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
     
     //Import Matrix Location Routing Parameter
     $scope.matrixLocation = $routeParams.matrixLocation;
@@ -45,7 +45,7 @@ angular.module('myApp.controllers', []).
 		  });
       
 	}])
-	.controller('UploadCtrl', ['$scope', function($scope){
+  .controller('UploadCtrl', ['$scope', function($scope){
 		$scope.output = "Select your file to upload.";
         //Function to upload files
         $scope.sendFile = function() {
@@ -80,4 +80,62 @@ angular.module('myApp.controllers', []).
 			xhr.open('POST', 'http://bioed.bu.edu/cgi-bin/students_13/correiak/upload.py', true); //Action (2nd parameter) is currently set to my school webspace for testing purposes. To be changed.
 			xhr.send(formdata);
       };
-    }]);
+  }])
+  .controller('GeneSelectCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+    
+    //Variables
+    $scope.dataset = $routeParams.dataset;
+    $scope.currentPage = 1;
+    $scope.genesCurrentPage = [];
+    $scope.nearbyPages = [];
+    $scope.genesSearched = [];
+    $scope.genesMarked = [];
+    $scope.geneQuery = [];
+    $scope.pageMax = [];
+    
+    //Functions
+    $scope.pageUp = function() {
+        if ($scope.currentPage < $scope.pageMax) {
+           $scope.getPage($scope.currentPage + 1);
+        }
+    };
+    $scope.pageDown = function() {
+        if ($scope.currentPage < 1) {
+           $scope.getPage($scope.currentPage-1);
+        }
+    };
+    $scope.pageDown = function() {
+
+    };
+    $scope.searchGene = function(query) {
+        $http.get('data/' + $scope.dataset + 'q=' + query)
+             .success(function(data) {
+                 $scope.genesSearched = data;
+             });
+    });
+
+    $scope.getPage = function(pageId) {
+        $http.get('data/' + $scope.dataset + '-' + pageId)
+             .success(function(data) {
+               $scope.genesCurrentPage = data.genes;
+               $scope.maxPage = data.maxPage;
+               $scope.nearbyPages = data.nearbyPages;
+               $scope.currentPage = pageId;
+             });
+    };
+
+    $scope.addMark = function(geneMark) {
+        $http.post('data/' + $scope.dataset + '/marks/' geneMark);
+
+    });
+
+    $scope.getMarks = function() {
+        $http.get('data/' + $scope.dataset + '/marks')
+             .success(function(data) {
+               $scope.genesMarked = data;
+             });
+    });
+    //http request for current page of genes (20 max) with listener for gene add click
+    $scope.getPage(1);
+
+  }]);
