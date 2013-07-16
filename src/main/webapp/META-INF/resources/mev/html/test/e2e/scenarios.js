@@ -10,9 +10,7 @@ describe('my app', function() {
       browser().navigateTo('../../app/index.html/#geneselect/testdataset');
     });
 
-    it('should download first 20 genes', function() {
 
-    });
 
     it('should return a list of genes that are searched', function() {
 
@@ -39,7 +37,6 @@ describe('my app', function() {
     });
 
     it('should add marked files to the gene marker table', function() {
-
 
     });
 
