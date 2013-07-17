@@ -86,12 +86,6 @@ angular.module('myApp.controllers', [])
     //Variables
     $scope.dataset = $routeParams.dataset;
     $scope.currentPage = 1;
-    $scope.genesCurrentPage = [];
-    $scope.nearbyPages = [];
-    $scope.genesSearched = [];
-    $scope.genesMarked = [];
-    $scope.geneQuery = [];
-    $scope.pageMax = [];
     
     //Functions
     $scope.pageUp = function() {
@@ -100,42 +94,43 @@ angular.module('myApp.controllers', [])
         }
     };
     $scope.pageDown = function() {
-        if ($scope.currentPage < 1) {
+        if ($scope.currentPage > 1) {
            $scope.getPage($scope.currentPage-1);
         }
     };
-    $scope.pageDown = function() {
 
-    };
     $scope.searchGene = function(query) {
-        $http.get('data/' + $scope.dataset + 'q=' + query)
+        $http.get('data/' + $scope.dataset + '/q=' + query)
              .success(function(data) {
                  $scope.genesSearched = data;
              });
-    });
+    };
 
     $scope.getPage = function(pageId) {
         $http.get('data/' + $scope.dataset + '-' + pageId)
              .success(function(data) {
                $scope.genesCurrentPage = data.genes;
-               $scope.maxPage = data.maxPage;
+               $scope.pageMax = data.maxPage;
                $scope.nearbyPages = data.nearbyPages;
                $scope.currentPage = pageId;
              });
     };
 
     $scope.addMark = function(geneMark) {
-        $http.post('data/' + $scope.dataset + '/marks/' geneMark);
+        $http.post('data/' + $scope.dataset + '/marks', geneMark)
+             .success(function() {
+                $scope.getMarks();
+             });
 
-    });
+    };
 
     $scope.getMarks = function() {
         $http.get('data/' + $scope.dataset + '/marks')
              .success(function(data) {
                $scope.genesMarked = data;
              });
-    });
+    };
     //http request for current page of genes (20 max) with listener for gene add click
     $scope.getPage(1);
-
+    
   }]);
