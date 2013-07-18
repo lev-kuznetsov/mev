@@ -17,16 +17,11 @@ angular.module('myApp.controllers', []).
       success(function (data) {
         $scope.dataset = data;
         $scope.colorscheme = 0;
-        $scope.cellsize = 1;
 	  });
     
       //Somehow handle http request failure
     $scope.setColorScheme = function(colorcode) {
 		$scope.colorscheme = colorcode;
-	}
-	
-	$scope.setCellSize = function(sizecode) {
-		$scope.cellsize = sizecode;
 	}
 
   }])
