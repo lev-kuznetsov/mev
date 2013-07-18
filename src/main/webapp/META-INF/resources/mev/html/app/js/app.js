@@ -29,12 +29,15 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
 		templateUrl: 'partials/help-view.html', 
 		controller: 'HelpCtrl'});
 		
-    $routeProvider.when('/heatmap/:matrixLocation', {
+	$routeProvider.when('/heatmap/:matrixLocation', {
 		templateUrl: 'partials/heatmap-view.html', 
 		controller: 'HeatmapCtrl'});
 	$routeProvider.when('/upload', {
 		templateUrl: 'partials/upload.html', 
 		controller: 'UploadCtrl'});
+	$routeProvider.when('/geneselect/:dataset', {
+		templateUrl: 'partials/genelib-view.html', 
+		controller: 'GeneSelectCtrl'});
     $routeProvider.otherwise({redirectTo: '/home'});
 
   }]);

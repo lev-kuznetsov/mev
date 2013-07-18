@@ -17,17 +17,17 @@ angular.module('myApp.directives', []).
         inputdata:"=",
         inputcolor:"="
       },
-      
+
       link: function (scope, element, attrs) {
 		
 		var debug = true;
 		
 		scope.visParams = {
-            width : 600,
-            height : 900,
-            horizontal_padding : 30,
-            vertical_padding : 10
-        };
+			width : 600,
+			height : 900,
+			horizontal_padding : 30,
+			vertical_padding : 10
+		};
         
         scope.cellParams = {
             width: 0,
@@ -117,7 +117,21 @@ angular.module('myApp.directives', []).
 			
 			return output;
 		}
-        
+
+		var xPosition = function() {
+			output = d3.scale.ordinal()
+				.domain(d3.range(scope.inputdata.columns))
+				.rangeRoundBands([0, scope.visParams.width], .05)
+			return scope.visParams.width - output;
+		}
+
+		var yPosition = function() {
+			output = d3.scale.ordinal()
+				.domain(d3.range(scope.inputdata.rows))
+				.rangeRoundBands([0, scope.visParams.height], .05)
+			return output;
+		}
+
         var buildVisualization = function () {
 		    
 		    svg.selectAll("rect")
