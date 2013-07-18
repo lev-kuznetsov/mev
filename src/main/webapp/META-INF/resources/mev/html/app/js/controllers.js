@@ -4,25 +4,52 @@
 
 angular.module('myApp.controllers', [])
   .controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
-    
-    //Import Matrix Location Routing Parameter
+
     $scope.matrixLocation = $routeParams.matrixLocation;
+    $scope.markedRows = [];
+    $scope.vizcolor = 0;
+    $scope.colors = [0, 1];
     
-    //Watch a change in route parameter?
-    
-      //Send HTTP Request to import data
-      
-    $http.get('data/' + $scope.matrixLocation + '.json').
-    
-      success(function (data) {
-        $scope.dataset = data;
-        $scope.colorscheme = 0;
-	  });
-    
-      //Somehow handle http request failure
-    $scope.setColorScheme = function(colorcode) {
-		$scope.colorscheme = colorcode;
+    $scope.updateColor = function(newcolor) {
+		if ($scope.colors.indexOf(newcolor) != -1) {
+			$scope.vizcolor = newcolor;
+		}
 	}
+	
+	$scope.requestPage = function(page) {
+		if (page < $scope.maxpage && page >= 0) {
+			$http.get('data/subs/' + $scope.matrixLocation + '-' + page + '.json')
+             .success(function (data) {
+                $scope.data = data.data;
+                $scope.view = 'page';
+                $scope.currentpage = page;
+                $scope.maxpage = data.maxpage
+	         });
+		}
+	}
+	
+    $scope.storeRow = function(inputrow) {
+        $scope.markedRows.push(inputrow);	
+	}
+	
+	$scope.removeRow = function(outputrow) {
+		var outputrowindex = $scope.markedRows.indexOf(outputrow);
+        $scope.markedRows.splice(outputrowindex, 1);	
+	}
+	
+    $scope.requestAll = function() {
+	
+        $http.get('data/subs/' + $scope.matrixLocation + '-0.json')
+             .success(function (data) {
+                $scope.data = data.data;
+                $scope.view = 'all';
+                $scope.currentpage = 0;
+                $scope.maxpage = data.maxpage
+	         });
+	}
+	
+	$scope.requestAll();
+
 
   }])
   .controller('AnalyzeCtrl', ['$scope', '$http', function($scope, $http) {

@@ -17,16 +17,16 @@ describe('myApp controllers', function(){
       var $controller = $injector.get('$controller');
 
 
-      $httpBackend.whenGET('data/subs/undefined-0')
+      $httpBackend.whenGET('data/subs/undefined-0.json')
           .respond({
 		      data: "test",
-		      maxpage: "test"
+		      maxpage: 2
           });
           
-      $httpBackend.whenGET('data/subs/undefined-1')
+      $httpBackend.whenGET('data/subs/undefined-1.json')
           .respond({
               data: 'test',
-              maxpage: 'test',
+              maxpage: 2
            });
   
       
@@ -43,16 +43,16 @@ describe('myApp controllers', function(){
       
     });
     
-    it('should fetch data and store ininitial vars when requestAll is called', function() {
+    it('should fetch data and store ininitial vars when page is loaded', function() {
 
-       $httpBackend.expectGET('data/subs/undefined-0');
+       $httpBackend.expectGET('data/subs/undefined-0.json');
        var controller = createController();
        $httpBackend.flush();
-       
+
        expect($rootScope.data).toBe('test');
-       expect($rootScope.maxpage).toBe('test');
+       expect($rootScope.maxpage).toBe(2);
        expect($rootScope.view).toBe('all');
-       expect($rootScope.currentpage).toBe('0');
+       expect($rootScope.currentpage).toBe(0);
 
     });
     
@@ -62,18 +62,18 @@ describe('myApp controllers', function(){
        $httpBackend.flush();
        
        expect($rootScope.data).toBe('test');
-       expect($rootScope.maxpage).toBe('test');
-       expect($rootScope.view).toBe('All');
-       expect($rootScope.currentpage).toBe('0');
+       expect($rootScope.maxpage).toBe(2);
+       expect($rootScope.view).toBe('all');
+       expect($rootScope.currentpage).toBe(0);
        
-       $httpBackend.expectGET('data/subs/undefined-1');
+       $httpBackend.expectGET('data/subs/undefined-1.json');
        $rootScope.requestPage(1);
        $httpBackend.flush();
        
        expect($rootScope.data).toBe('test');
-       expect($rootScope.maxpage).toBe('test');
+       expect($rootScope.maxpage).toBe(2);
        expect($rootScope.view).toBe('page');
-       expect($rootScope.currentpage).toBe('1');
+       expect($rootScope.currentpage).toBe(1);
        
     });
     
