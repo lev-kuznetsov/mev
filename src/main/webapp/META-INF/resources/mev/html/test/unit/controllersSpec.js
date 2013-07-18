@@ -5,13 +5,124 @@
 describe('myApp controllers', function(){
 	
   beforeEach(module('myApp.controllers'));
-
-  describe('HeatmapCtrl', function() {
-	
-  });
   
-  describe('AnalyzeCtrl', function() {
-	  
+  describe('HeatmapCtrl', function() {
+    
+    var $rootScope, createController, $httpBackend;
+   
+    beforeEach(inject(function($injector) {
+
+      $httpBackend = $injector.get('$httpBackend');
+      $rootScope = $injector.get('$rootScope');
+      var $controller = $injector.get('$controller');
+
+
+      $httpBackend.whenGET('data/subs/undefined-0')
+          .respond({
+		      data: "test",
+		      maxpage: "test"
+          });
+          
+      $httpBackend.whenGET('data/subs/undefined-1')
+          .respond({
+              data: 'test',
+              maxpage: 'test',
+           });
+  
+      
+      createController = function() {
+        $controller('HeatmapCtrl', {'$scope': $rootScope});
+      };
+
+    }));
+
+    afterEach(function() {
+		
+      $httpBackend.verifyNoOutstandingExpectation();
+      $httpBackend.verifyNoOutstandingRequest();
+      
+    });
+    
+    it('should fetch data and store ininitial vars when requestAll is called', function() {
+
+       $httpBackend.expectGET('data/subs/undefined-0');
+       var controller = createController();
+       $httpBackend.flush();
+       
+       expect($rootScope.data).toBe('test');
+       expect($rootScope.maxpage).toBe('test');
+       expect($rootScope.view).toBe('all');
+       expect($rootScope.currentpage).toBe('0');
+
+    });
+    
+    it('should fetch paged data and store into dataset when requestPage is called', function() {
+
+       var controller = createController();
+       $httpBackend.flush();
+       
+       expect($rootScope.data).toBe('test');
+       expect($rootScope.maxpage).toBe('test');
+       expect($rootScope.view).toBe('All');
+       expect($rootScope.currentpage).toBe('0');
+       
+       $httpBackend.expectGET('data/subs/undefined-1');
+       $rootScope.requestPage(1);
+       $httpBackend.flush();
+       
+       expect($rootScope.data).toBe('test');
+       expect($rootScope.maxpage).toBe('test');
+       expect($rootScope.view).toBe('page');
+       expect($rootScope.currentpage).toBe('1');
+       
+    });
+    
+    it('should update vizColor when updateColor is called', function() {
+		
+		var controller = createController();
+        $httpBackend.flush();
+		
+        expect($rootScope.vizcolor).toBe(0);
+        $rootScope.updateColor(1);
+        expect($rootScope.vizcolor).toBe(1);
+        
+    });
+    
+    it('should not allow vizColor to be an undefined class', function() {
+		
+		var controller = createController();
+        $httpBackend.flush();
+		
+        expect($rootScope.vizcolor).toBe(0);
+        $rootScope.updateColor(20);
+        expect($rootScope.vizcolor).toBe(0);
+        
+    });
+
+    it('should store selected row data into markedRows when storeRow is called', function() {
+		
+		var controller = createController();
+        $httpBackend.flush();
+        
+	    expect(typeof $rootScope.markedRows[0]).toBe('undefined');
+        $rootScope.storeRow('testrow');
+        expect($rootScope.markedRows).toContain('testrow');
+        
+    });
+    
+    it('should remove the row data index from markedRows when removeRow is called with index parameter', function() {
+        
+        var controller = createController();
+        $httpBackend.flush();
+        
+        $rootScope.storeRow('testrow');
+        $rootScope.storeRow('testrow2');
+        $rootScope.removeRow('testrow');
+        expect($rootScope.markedRows).not.toContain('testrow');
+        
+    });
+   
+   
   });
 
   describe('GeneSelectCtrl', function() {
@@ -64,14 +175,18 @@ describe('myApp controllers', function(){
 
 
       createController = function() {
+		  
           $controller('GeneSelectCtrl', {'$scope': $rootScope});
+          
       };
 
     }));
 
     afterEach(function() {
+
       $httpBackend.verifyNoOutstandingExpectation();
       $httpBackend.verifyNoOutstandingRequest();
+   
     });
 
     
@@ -113,6 +228,7 @@ describe('myApp controllers', function(){
     });
     
     it('should page up and page down when respective functions are called', function() {
+		
         var controller = createController();
         $httpBackend.flush();
         
@@ -128,9 +244,11 @@ describe('myApp controllers', function(){
         $httpBackend.flush();
         
         expect($rootScope.currentPage).toBe(1);
+        
     });
     
     it('should not update page up when currently on page 1', function() {
+		
         var controller = createController();
         $httpBackend.flush();
         
@@ -139,9 +257,11 @@ describe('myApp controllers', function(){
         $rootScope.pageDown();
         
         expect($rootScope.currentPage).toBe(1);
+        
     });
     
     it('should not update page down when currently on max page', function() {
+		
         var controller = createController();
         $httpBackend.flush();
         
