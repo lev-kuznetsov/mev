@@ -4,41 +4,40 @@
 
 describe('my app', function() {
 
-  beforeEach(function() {
-    browser().navigateTo('../../app/index.html');
-  });
-
-
-  it('should automatically redirect to /view1 when location hash/fragment is empty', function() {
-    expect(browser().location().url()).toBe("/view1");
-  });
-
-
-  describe('view1', function() {
+  describe('Gene Selector view', function() {
 
     beforeEach(function() {
-      browser().navigateTo('#/view1');
+      browser().navigateTo('../../app/index.html/#geneselect/testdataset');
     });
 
 
-    it('should render view1 when user navigates to /view1', function() {
-      expect(element('[ng-view] p:first').text()).
-        toMatch(/partial for view 1/);
+
+    it('should return a list of genes that are searched', function() {
+
+    });
+    it('should return a list of genes that are searched via CSV', function() {
+
     });
 
-  });
+    it('should return nothing if a gene in the search query doesnt match', function() {
 
-
-  describe('view2', function() {
-
-    beforeEach(function() {
-      browser().navigateTo('#/view2');
     });
 
+    it('should update current pages when getPage is clicked', function() {
 
-    it('should render view2 when user navigates to /view2', function() {
-      expect(element('[ng-view] p:first').text()).
-        toMatch(/partial for view 2/);
+    });
+    it('should update maximum pages when getPage is clicked', function() {
+
+    });
+    it('should update nearby pages when getPage is clicked', function() {
+
+    });
+    it('should update current page number when getPage is clicked', function() {
+
+    });
+
+    it('should add marked files to the gene marker table', function() {
+
     });
 
   });
