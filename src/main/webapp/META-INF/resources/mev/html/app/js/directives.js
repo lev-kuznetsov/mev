@@ -2,7 +2,6 @@
 
 /* Directives */
 
-
 angular.module('myApp.directives', [])
 .directive('appVersion', ['version', function(version) {
 	return function(scope, elm, attrs) {
@@ -16,175 +15,169 @@ angular.module('myApp.directives', [])
 		restrict: 'E',
 		scope: {
 			inputdata:"=",
-			inputcolor:"="
+			inputcolor:"=",
+			addrow:"&"
 		},
+		template:'{{outputinfo}}',
 		link: function (scope, element, attrs) {
 			
-			scope.$watch('inputdata', function(newdata, olddata) {
-				
-				scope.visparams = {
+				var visparams = {
 					width : 600,
 					height : 700,
 					columnlabelgutter : 80,
 					rowlabelgutter : 80,
 				};
-
-				scope.heldcolumns = 0;
-				scope.heldrows = 0;
-				scope.helddata = 0;
-				scope.cellXPosition = 0;
-				scope.cellYPosition = 0;
 				
-				scope.colorScaleForward = 0;
-				scope.colorScaleReverse = 0;
-				scope.greenColorControl = 0;
-				scope.blueColorControl = 0;
-				scope.redColorControl = 0;
+				var vis = d3.select(element[0])
+					.append("svg")
+					.attr("width", visparams.width )
+					.attr("height", visparams.height);
+			
+			scope.$watch('inputdata', function(newdata, olddata) {
+				
+				vis.selectAll('*').remove();
+				
+				if (!newdata) {
+					return;
+				}
+				    
+				var values = newdata.data.map(function(x){return x.value});
 				
 				var threshold = 150;
 				
-				var buildvisualization = function() {
-					
-					svg.selectAll("rect")
-						.data(scope.helddata)
+				var colorScaleForward = function(j) {	 
+					var value = d3.scale.linear()
+						.domain([d3.min(values), d3.max(values)])
+						.rangeRound([0, 255]);
+					var output = 0;
+					if (value(j) >= threshold ) {
+						var layer2 = d3.scale.linear()
+							.domain([125,255])
+							.rangeRound([0,255]);
+						output = layer2(value(j));  	
+					}
+					return output;
+				};
+
+				var colorScaleReverse = function(j) {	 
+					var value = d3.scale.linear()
+						.domain([d3.min(values), d3.max(values)])
+						.rangeRound([255, 0]);
+					var output = 0;
+					if ( value(j) >= threshold ) {
+						var layer2 = d3.scale.linear()
+							.domain([255,125])
+							.rangeRound([255, 0]);
+						output = layer2(value(j));  	
+					}
+					return output;
+				};
+
+				var redColorControl = function(j, code) {
+					var output = 0;
+					if (code == 0) {
+						output = colorScaleForward(j);
+					} else {
+						output = colorScaleForward(j);
+					}
+					return output;
+					};
+
+					var blueColorControl = function(j, code) {
+					var output = 0;
+					if (code == 1) {
+						output = colorScaleReverse(j);
+					}
+					return output;
+				};
+
+				var greenColorControl = function(j, code) {
+					var output = 0;
+
+					if (code == 0) {
+						output = colorScaleReverse(j);
+					} else {
+						output = colorScaleForward(j);
+					}
+
+					return output;
+				};
+				
+				var cellXPosition = d3.scale.ordinal()
+						.domain(newdata.columnlabels)
+						.rangeRoundBands([visparams.rowlabelgutter, visparams.width]);
+								
+				var cellYPosition = d3.scale.ordinal()
+						.domain(newdata.rowlabels)
+						.rangeRoundBands([visparams.columnlabelgutter, visparams.height]);
+
+				var squares = vis.selectAll("rect")
+						.data(newdata.data)
 						.enter()
 						.append("rect")
 						.attr({
-							"height": function(){
-								return .95*(scope.cellYPosition(1) - scope.cellYPosition(0));
+							"height": function(d){
+								return .98*(cellYPosition(newdata.rowlabels[1]) - cellYPosition(newdata.rowlabels[0]));
 							},
-							"width": function(){
-								return .95*(scope.cellXPosition(1) - scope.cellXPosition(0));
+							"width": function(d){
+								return .98*(cellXPosition(newdata.columnlabels[1]) - cellXPosition(newdata.columnlabels[0]));
 							},
-							"x": function(d, i) {
-								return scope.cellXPosition(i%scope.heldcolumns);
-							},
-							"y": function(d, i) {
-								return scope.cellYPosition(Math.floor(i/scope.heldcolumns));
-							},
+							"x": function(d, i) { return cellXPosition(d.col); },
+							"y": function(d, i) { return cellYPosition(d.row); },
 							"fill": function(d) {
-								return "rgb(" + scope.redColorControl(d, scope.inputcolor) + "," + scope.greenColorControl(d, scope.inputcolor) + ","+ scope.blueColorControl(d, scope.inputcolor)+")";
-							},
-							"value": function(d) {
-								return d;
-							},
-							"index": function(d, i) {
-								return i;
-							},
-							"row": function(d, i) {
-								return Math.floor(i/scope.heldcolumns);
-							},
-							"column": function(d, i) {
-								return i%scope.heldcolumns;
-							},
-							
-						});
-						
-					svg.selectAll("text")
-						.data(scope.heldrowlabels)
-						.enter()
-						.append("text")
-						.text(function(d, i){
-							return scope.heldrowlabels[i]
-						})
-						.attr({
-							"x": function(d, i) {
-								return scope.cellXPosition(0) - scope.visparams.rowlabelgutter;
-							},
-							"y": function(d, i) {
-								return scope.cellYPosition(i) +15;
-							},
-							"text-align": "center"
-						});
-						
-					var xAxis = d3.svg.axis().scale(scope.cellXPosition).orient("bottom");
-
-					svg.append('g').call(xAxis);
-				}
-
-				if (typeof olddata == 'undefined' && typeof newdata == 'object') {
-					
-					scope.heldcolumns = scope.inputdata.columns;
-					scope.heldrows = scope.inputdata.rows;
-					scope.heldcolumnlabels = scope.inputdata.columnlabels;
-					scope.heldrowlabels = scope.inputdata.rowlabels;
-					scope.helddata = scope.inputdata.data;
-					
-					var svg = d3.select(element[0])
-						.append("svg")
-						.attr("width", scope.visparams.width )
-						.attr("height", scope.visparams.height);
-						
-					scope.colorScaleForward = function(j) {	 
-						var value = d3.scale.linear()
-							.domain([d3.min(scope.helddata), d3.max(scope.helddata)])
-							.rangeRound([0, 255]);
-						var output = 0;
-						if (value(j) >= threshold ) {
-							var layer2 = d3.scale.linear()
-								.domain([125,255])
-								.rangeRound([0,255]);
-							output = layer2(value(j));  	
-						}
-						return output;
-					};
-
-					scope.colorScaleReverse = function(j) {	 
-						var value = d3.scale.linear()
-							.domain([d3.min(scope.helddata), d3.max(scope.helddata)])
-							.rangeRound([255, 0]);
-						var output = 0;
-						if ( value(j) >= threshold ) {
-							var layer2 = d3.scale.linear()
-								.domain([255,125])
-								.rangeRound([255, 0]);
-							output = layer2(value(j));  	
-						}
-						return output;
-					};
-
-					scope.redColorControl = function(j, code) {
-						var output = 0;
-						if (code == 0) {
-							output = scope.colorScaleForward(j);
-						} else {
-							output = scope.colorScaleForward(j);
-						}
-						return output;
-					};
-
-					scope.blueColorControl = function(j, code) {
-						var output = 0;
-						if (code == 1) {
-							output = scope.colorScaleReverse(j);
-						}
-						return output;
-					};
-
-					scope.greenColorControl = function(j, code) {
-						var output = 0;
-
-						if (code == 0) {
-							output = scope.colorScaleReverse(j);
-						} else {
-							output = scope.colorScaleForward(j);
-						}
-
-						return output;
-					};
-					
-					
-					scope.cellXPosition = d3.scale.ordinal()
-						.domain(d3.range(scope.heldcolumns))
-						.rangeRoundBands([scope.visparams.rowlabelgutter, scope.visparams.width], .05);
+								return "rgb(" + redColorControl(d.value, 0) + "," + greenColorControl(d.value, 0) + ","+ blueColorControl(d.value, 0)+")";
 								
-					scope.cellYPosition = d3.scale.ordinal()
-						.domain(d3.range(scope.heldrows))
-						.rangeRoundBands([scope.visparams.columnlabelgutter, scope.visparams.height], .05);
-					
-					buildvisualization();
-
+							},
+							"value": function(d) { return d.value; },
+							"index": function(d, i) { return i; },
+							"row": function(d, i) { return d.row; },
+							"column": function(d, i) { return d.col; }
+						})
+						.on('mouseover', function(d) {
+							vis.append("text")
+								.attr({
+									"id": "tooltip",
+									"x": cellXPosition(d.col),
+									"y": cellYPosition(d.row) + 40,
+								})
+								.text(d.row + " " + d.col);
+						})
+						.on('mouseout', function() { d3.select('#tooltip').remove(); })
+						.on('click', function(d) {
+							scope.addrow(d);
+							console.log("click")
+						});
+						
+				var xAxis = d3.svg.axis().scale(cellXPosition).orient("bottom");
+				var yAxis = d3.svg.axis().scale(cellYPosition).orient("left");
+				
+				vis.append('g').attr("transform", "translate(0,"+ (visparams.rowlabelgutter - 20) +")").call(xAxis);
+				vis.append('g').attr("transform", "translate(" + (visparams.columnlabelgutter) +",0)").call(yAxis);
+				
+				function changeColor() {
+				
+					vis.selectAll('rect')
+						.transition()
+						.duration(500)
+						.attr({
+							"fill": function(d) {
+								return "rgb(" + redColorControl(d.value, 1) + "," + greenColorControl(d.value, 1) + ","+ blueColorControl(d.value, 1)+")";
+							}
+						});
+				};
+			});
+			
+			scope.$watch('inputcolor', function(newdata, olddata) {
+				
+				if (newdata == olddata) {
+					return;
+				} 
+				if (newdata) {
+					changeColor();
 				}
+				
+				
+				
 			});
 		}
 	}

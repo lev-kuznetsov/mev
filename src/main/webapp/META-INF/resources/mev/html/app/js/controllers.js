@@ -9,6 +9,7 @@ angular.module('myApp.controllers', [])
     $scope.markedRows = [];
     $scope.vizcolor = 0;
     $scope.colors = [0, 1];
+    $scope.hoverdata = 0;
     
     $scope.updateColor = function(newcolor) {
 		if ($scope.colors.indexOf(newcolor) != -1) {
