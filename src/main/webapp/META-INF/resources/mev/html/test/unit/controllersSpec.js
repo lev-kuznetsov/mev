@@ -49,7 +49,7 @@ describe('myApp controllers', function(){
        var controller = createController();
        $httpBackend.flush();
 
-       expect($rootScope.data).toBe('test');
+       expect($rootScope.heatmapdata).toBe('test');
        expect($rootScope.maxpage).toBe(2);
        expect($rootScope.view).toBe('all');
        expect($rootScope.currentpage).toBe(0);
@@ -61,7 +61,7 @@ describe('myApp controllers', function(){
        var controller = createController();
        $httpBackend.flush();
        
-       expect($rootScope.data).toBe('test');
+       expect($rootScope.heatmapdata).toBe('test');
        expect($rootScope.maxpage).toBe(2);
        expect($rootScope.view).toBe('all');
        expect($rootScope.currentpage).toBe(0);
@@ -70,7 +70,7 @@ describe('myApp controllers', function(){
        $rootScope.requestPage(1);
        $httpBackend.flush();
        
-       expect($rootScope.data).toBe('test');
+       expect($rootScope.heatmapdata).toBe('test');
        expect($rootScope.maxpage).toBe(2);
        expect($rootScope.view).toBe('page');
        expect($rootScope.currentpage).toBe(1);

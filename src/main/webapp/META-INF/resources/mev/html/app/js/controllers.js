@@ -19,11 +19,12 @@ angular.module('myApp.controllers', [])
 	$scope.requestPage = function(page) {
 		if (page < $scope.maxpage && page >= 0) {
 			$http.get('data/subs/' + $scope.matrixLocation + '-' + page + '.json')
-             .success(function (data) {
-                $scope.data = data.data;
+             .success(function (returnobject) {
+                $scope.heatmapdata = returnobject.data;
                 $scope.view = 'page';
                 $scope.currentpage = page;
-                $scope.maxpage = data.maxpage
+                $scope.maxpage = returnobject.maxpage;
+                $scope.viztitle = returnobject.title;
 	         });
 		}
 	}
@@ -40,11 +41,12 @@ angular.module('myApp.controllers', [])
     $scope.requestAll = function() {
 	
         $http.get('data/subs/' + $scope.matrixLocation + '-0.json')
-             .success(function (data) {
-                $scope.data = data.data;
+             .success(function (returnobject) {
+                $scope.heatmapdata = returnobject.data;
                 $scope.view = 'all';
                 $scope.currentpage = 0;
-                $scope.maxpage = data.maxpage
+                $scope.maxpage = returnobject.maxpage;
+                $scope.viztitle = returnobject.title;
 	         });
 	}
 	
