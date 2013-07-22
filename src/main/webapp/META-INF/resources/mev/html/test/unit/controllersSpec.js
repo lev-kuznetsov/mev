@@ -43,6 +43,34 @@ describe('myApp controllers', function(){
       
     });
     
+    it('should not add dupicate rows to the marked rows object', function() {
+	   $httpBackend.expectGET('data/subs/undefined-0.json');
+       var controller = createController();
+       $httpBackend.flush();
+       
+       expect($rootScope.markedRows.length).toBe(0);
+       $rootScope.storeRow('testrow');
+       $rootScope.storeRow('testrow2');
+       $rootScope.storeRow('testrow');
+       
+       expect($rootScope.markedRows.length).toBe(2);
+       
+	});
+	
+	it('should not remove a row from the marked rows object if an attempt is made to remove a nonexisting row', function() {
+	   
+	   $httpBackend.expectGET('data/subs/undefined-0.json');
+       var controller = createController();
+       $httpBackend.flush();
+       
+       expect($rootScope.markedRows.length).toBe(0);
+       $rootScope.storeRow({name:'testrow', icon:"blank"});
+       $rootScope.storeRow({name:'testrow2', icon:"blank"});
+       $rootScope.removeRow('testrow3');
+       
+       expect($rootScope.markedRows.length).toBe(2);
+	});
+    
     it('should fetch data and store ininitial vars when page is loaded', function() {
 
        $httpBackend.expectGET('data/subs/undefined-0.json');

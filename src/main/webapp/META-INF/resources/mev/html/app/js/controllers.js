@@ -31,12 +31,17 @@ angular.module('myApp.controllers', [])
 	}
 	
     $scope.storeRow = function(inputrow) {
-        $scope.markedRows.push(inputrow);	
+		var possibleindex = $scope.markedRows.indexOf(inputrow);
+		if (possibleindex == -1) {
+			$scope.markedRows.push(inputrow);
+		}	
 	}
 	
 	$scope.removeRow = function(outputrow) {
 		var outputrowindex = $scope.markedRows.indexOf(outputrow);
-        $scope.markedRows.splice(outputrowindex, 1);	
+		if (outputrowindex != -1) {
+			$scope.markedRows.splice(outputrowindex, 1);
+		}	
 	}
 	
     $scope.requestAll = function() {

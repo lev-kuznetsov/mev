@@ -16,9 +16,8 @@ angular.module('myApp.directives', [])
 		scope: {
 			inputdata:"=",
 			inputcolor:"=",
-			addrow:"&"
+			pushtomarked:"&"
 		},
-		template:'{{outputinfo}}',
 		link: function (scope, element, attrs) {
 			
 				var visparams = {
@@ -34,7 +33,7 @@ angular.module('myApp.directives', [])
 					.attr("height", visparams.height);
 			
 			scope.$watch('inputdata', function(newdata, olddata) {
-				
+							
 				vis.selectAll('*').remove();
 				
 				if (!newdata) {
@@ -140,12 +139,18 @@ angular.module('myApp.directives', [])
 									"x": cellXPosition(d.col),
 									"y": cellYPosition(d.row) + 40,
 								})
-								.text(d.row + " " + d.col);
+								.text("Gene: " + d.row + " Point: " + d.col + "\n Value: " + d.value);
 						})
 						.on('mouseout', function() { d3.select('#tooltip').remove(); })
 						.on('click', function(d) {
-							scope.addrow(d);
-							console.log("click")
+								
+							scope.$apply( function() {
+								
+								scope.pushtomarked({input:d.row});
+							
+							});							
+							
+							console.log("click");
 						});
 						
 				var xAxis = d3.svg.axis().scale(cellXPosition).orient("bottom");

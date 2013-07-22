@@ -5,8 +5,9 @@
 		    <vis-Heatmap 
 				inputdata="heatmapdata"
 				inputcolor="vizcolor"
-				addrow="storeRow(input)">
+				pushtomarked="storeRow(input)">
 			</vis-Heatmap>
+
 		</div>
 		
 		<!--End Visualization Column -->
@@ -47,12 +48,11 @@
 
 					<tbody>
 						<tr ng-repeat="gene in markedRows">
-							<td>{{gene}</td>
-							<td><i class={{gene}}></i></td>
+							<td>{{gene}}</td>
+							<td><button class="btn" ng-click="removeRow(gene)"><i class='icon-remove'></i></button></td>
 						</tr>
 					</tbody>
 				</table>
-				{{markedRows}}
 			</div>
 			
 		</div>
