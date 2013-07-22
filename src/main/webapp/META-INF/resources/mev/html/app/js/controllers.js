@@ -7,9 +7,10 @@ angular.module('myApp.controllers', [])
 
     $scope.matrixLocation = $routeParams.matrixLocation;
     $scope.markedRows = [];
-    $scope.vizcolor = 0;
-    $scope.colors = [0, 1];
+    $scope.vizcolor = "red";
+    $scope.colors = ["red", "blue"];
     $scope.hoverdata = 0;
+    $scope.view = "";
     
     $scope.updateColor = function(newcolor) {
 		if ($scope.colors.indexOf(newcolor) != -1) {
@@ -22,13 +23,14 @@ angular.module('myApp.controllers', [])
 	}
 	
 	$scope.requestPage = function(page) {
-		if (page < $scope.maxpage && page >= 0) {
+		if (page <= $scope.maxpage && page >= 0) {
 			$http.get('data/subs/' + $scope.matrixLocation + '-' + page + '.json')
              .success(function (returnobject) {
                 $scope.heatmapdata = returnobject.data;
                 $scope.view = 'page';
                 $scope.currentpage = page;
-                $scope.maxpage = returnobject.maxpage;
+                $scope.maxpage = returnobject.pages.length - 1;
+                $scope.allpages = returnobject.pages;
                 $scope.viztitle = returnobject.title;
 	         });
 		}
@@ -55,7 +57,8 @@ angular.module('myApp.controllers', [])
                 $scope.heatmapdata = returnobject.data;
                 $scope.view = 'all';
                 $scope.currentpage = 0;
-                $scope.maxpage = returnobject.maxpage;
+                $scope.maxpage = returnobject.pages.length - 1;
+                $scope.allpages = returnobject.pages;
                 $scope.viztitle = returnobject.title;
 	         });
 	}

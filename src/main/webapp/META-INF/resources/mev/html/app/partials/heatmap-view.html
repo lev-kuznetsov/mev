@@ -14,13 +14,8 @@
 		<div class="span4">
 			
 		    <div class="row">	
-				<div class="pagination">
-				  <ul>
-					<li><a href="#">Prev</a></li>
-					<li class="active"><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">Next</a></li>
-				  </ul>
+				<div class="btn-group">
+					<button class="btn" ng-repeat='page in allpages' ng-click="requestPage(page.index)">{{page.title}}</button>
 				</div>
 		    </div>
 
@@ -32,13 +27,14 @@
 			
 			<div class="row">
 				<div class="btn-group">
-					<button class="btn" ng-click="updateColor(0)">Red-Green</button>
-					<button class="btn" ng-click="updateColor(1)">Yellow-Blue</button>
+					<button class="btn" ng-click="updateColor('red')">Red-Green</button>
+					<button class="btn" ng-click="updateColor('blue')">Yellow-Blue</button>
 				</div>
 			</div>
+			
 			<!-- End Color Scheme Selection -->
 			<div class="row">
-				<h2>Selected Rows</h2>
+				<p class="lead">Selected Rows:</p>
 				<table class="table table-striped">
 
 					<thead>
@@ -54,7 +50,7 @@
 					</tbody>
 				</table>
 				<button class="btn" ng-click="clearAllRows()">Clear All</button>
-				<button class="btn" >Save Selections</button>
+				<button class="btn" ng-click="">Save Selections</button>
 			</div>
 			
 		</div>

@@ -74,7 +74,7 @@ angular.module('myApp.directives', [])
 
 				var redColorControl = function(j, code) {
 					var output = 0;
-					if (code == 0) {
+					if (code == "red") {
 						output = colorScaleForward(j);
 					} else {
 						output = colorScaleForward(j);
@@ -82,9 +82,9 @@ angular.module('myApp.directives', [])
 					return output;
 					};
 
-					var blueColorControl = function(j, code) {
+				var blueColorControl = function(j, code) {
 					var output = 0;
-					if (code == 1) {
+					if (code == "blue") {
 						output = colorScaleReverse(j);
 					}
 					return output;
@@ -93,7 +93,7 @@ angular.module('myApp.directives', [])
 				var greenColorControl = function(j, code) {
 					var output = 0;
 
-					if (code == 0) {
+					if (code == "red") {
 						output = colorScaleReverse(j);
 					} else {
 						output = colorScaleForward(j);
@@ -124,7 +124,7 @@ angular.module('myApp.directives', [])
 							"x": function(d, i) { return cellXPosition(d.col); },
 							"y": function(d, i) { return cellYPosition(d.row); },
 							"fill": function(d) {
-								return "rgb(" + redColorControl(d.value, 0) + "," + greenColorControl(d.value, 0) + ","+ blueColorControl(d.value, 0)+")";
+								return "rgb(" + redColorControl(d.value, scope.inputcolor) + "," + greenColorControl(d.value, scope.inputcolor) + ","+ blueColorControl(d.value, scope.inputcolor)+")";
 								
 							},
 							"value": function(d) { return d.value; },
@@ -142,15 +142,10 @@ angular.module('myApp.directives', [])
 								.text("Gene: " + d.row + " Point: " + d.col + "\n Value: " + d.value);
 						})
 						.on('mouseout', function() { d3.select('#tooltip').remove(); })
-						.on('click', function(d) {
-								
+						.on('click', function(d) {	
 							scope.$apply( function() {
-								
 								scope.pushtomarked({input:d.row});
-							
 							});							
-							
-							console.log("click");
 						});
 						
 				var xAxis = d3.svg.axis().scale(cellXPosition).orient("bottom");
@@ -159,26 +154,29 @@ angular.module('myApp.directives', [])
 				vis.append('g').attr("transform", "translate(0,"+ (visparams.rowlabelgutter - 20) +")").call(xAxis);
 				vis.append('g').attr("transform", "translate(" + (visparams.columnlabelgutter) +",0)").call(yAxis);
 				
-				function changeColor() {
+				scope.changeColor = function(newcolor) {
 				
 					vis.selectAll('rect')
 						.transition()
 						.duration(500)
 						.attr({
 							"fill": function(d) {
-								return "rgb(" + redColorControl(d.value, 1) + "," + greenColorControl(d.value, 1) + ","+ blueColorControl(d.value, 1)+")";
+								return "rgb(" + redColorControl(d.value, newcolor) + "," + greenColorControl(d.value, newcolor) + ","+ blueColorControl(d.value, newcolor)+")";
 							}
 						});
 				};
 			});
 			
 			scope.$watch('inputcolor', function(newdata, olddata) {
-				
+
 				if (newdata == olddata) {
 					return;
 				} 
-				if (newdata) {
-					changeColor();
+				if (!newdata) {
+				    return;	
+				}
+				else {
+					scope.changeColor(newdata)
 				}
 				
 				

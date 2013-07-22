@@ -20,13 +20,39 @@ describe('myApp controllers', function(){
       $httpBackend.whenGET('data/subs/undefined-0.json')
           .respond({
 		      data: "test",
-		      maxpage: 2
+		      maxpage: 2,
+		      pages: [
+					{
+					  "index": "All",
+					  "class": ""
+					},
+					{
+					  "index": "1",
+					  "class": ""
+					},
+					{
+					  "index": "2",
+					  "class": "active"
+					}]
           });
           
       $httpBackend.whenGET('data/subs/undefined-1.json')
           .respond({
               data: 'test',
-              maxpage: 2
+              maxpage: 2,
+              pages: [
+					{
+					  "index": "All",
+					  "class": ""
+					},
+					{
+					  "index": "1",
+					  "class": ""
+					},
+					{
+					  "index": "2",
+					  "class": "active"
+					}]
            });
   
       
@@ -120,9 +146,9 @@ describe('myApp controllers', function(){
 		var controller = createController();
         $httpBackend.flush();
 		
-        expect($rootScope.vizcolor).toBe(0);
-        $rootScope.updateColor(1);
-        expect($rootScope.vizcolor).toBe(1);
+        expect($rootScope.vizcolor).toBe("red");
+        $rootScope.updateColor("blue");
+        expect($rootScope.vizcolor).toBe("blue");
         
     });
     
@@ -132,7 +158,7 @@ describe('myApp controllers', function(){
         $httpBackend.flush();
 
         $rootScope.updateColor(20);
-        expect($rootScope.vizcolor).toBe(0);
+        expect($rootScope.vizcolor).toBe("red");
         
     });
 
