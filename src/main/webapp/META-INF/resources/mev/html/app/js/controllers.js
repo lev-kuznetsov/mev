@@ -17,6 +17,10 @@ angular.module('myApp.controllers', [])
 		}
 	}
 	
+	$scope.clearAllRows = function() {
+		$scope.markedRows = [];
+	}
+	
 	$scope.requestPage = function(page) {
 		if (page < $scope.maxpage && page >= 0) {
 			$http.get('data/subs/' + $scope.matrixLocation + '-' + page + '.json')

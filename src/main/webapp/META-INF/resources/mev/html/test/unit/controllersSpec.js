@@ -48,13 +48,28 @@ describe('myApp controllers', function(){
        var controller = createController();
        $httpBackend.flush();
        
-       expect($rootScope.markedRows.length).toBe(0);
        $rootScope.storeRow('testrow');
        $rootScope.storeRow('testrow2');
        $rootScope.storeRow('testrow');
        
        expect($rootScope.markedRows.length).toBe(2);
        
+	});
+	
+	it('should clear all marked rows when clearAllRows is called', function() {
+		
+		$httpBackend.expectGET('data/subs/undefined-0.json');
+		var controller = createController();
+		$httpBackend.flush();
+
+		$rootScope.storeRow('testrow');
+		$rootScope.storeRow('testrow2');
+		$rootScope.storeRow('testrow3');
+		
+		$rootScope.clearAllRows();
+		expect($rootScope.markedRows.length).toBe(0);
+		
+		
 	});
 	
 	it('should not remove a row from the marked rows object if an attempt is made to remove a nonexisting row', function() {
@@ -64,8 +79,8 @@ describe('myApp controllers', function(){
        $httpBackend.flush();
        
        expect($rootScope.markedRows.length).toBe(0);
-       $rootScope.storeRow({name:'testrow', icon:"blank"});
-       $rootScope.storeRow({name:'testrow2', icon:"blank"});
+       $rootScope.storeRow('testrow');
+       $rootScope.storeRow('testrow2');
        $rootScope.removeRow('testrow3');
        
        expect($rootScope.markedRows.length).toBe(2);
@@ -88,11 +103,6 @@ describe('myApp controllers', function(){
 
        var controller = createController();
        $httpBackend.flush();
-       
-       expect($rootScope.heatmapdata).toBe('test');
-       expect($rootScope.maxpage).toBe(2);
-       expect($rootScope.view).toBe('all');
-       expect($rootScope.currentpage).toBe(0);
        
        $httpBackend.expectGET('data/subs/undefined-1.json');
        $rootScope.requestPage(1);
@@ -120,8 +130,7 @@ describe('myApp controllers', function(){
 		
 		var controller = createController();
         $httpBackend.flush();
-		
-        expect($rootScope.vizcolor).toBe(0);
+
         $rootScope.updateColor(20);
         expect($rootScope.vizcolor).toBe(0);
         
@@ -132,7 +141,6 @@ describe('myApp controllers', function(){
 		var controller = createController();
         $httpBackend.flush();
         
-	    expect(typeof $rootScope.markedRows[0]).toBe('undefined');
         $rootScope.storeRow('testrow');
         expect($rootScope.markedRows).toContain('testrow');
         
