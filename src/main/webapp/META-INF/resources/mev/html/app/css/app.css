@@ -1,5 +1,25 @@
 /* app css stylesheet */
 
+/* Effeckts Overwrites */
+body {
+  background: #FFFFFF;
+  font-family: Sans-serif;
+  overflow-x: hidden;
+  padding: 4rem;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover,
+a:active {
+  color: black;
+}
+
+/* End Effeckts Overwrites */
+
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;

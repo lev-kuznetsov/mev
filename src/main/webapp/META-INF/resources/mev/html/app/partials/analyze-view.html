@@ -1,4 +1,3 @@
-
 <div class="page-header">
 	    <h2>
           Analyze Data 
@@ -11,18 +10,15 @@
 <div class="container">
 	<div class="row">
 		<div class="span6">
-			<div class="row">
-				<p class="lead">Upload New</p>
-				<p>Upload new data to create stunning visualizations and view them on any internet connected device</p>
-				<p>Select File</p>
-				<button type="submit" class="btn">Upload</button>
-			</div>
-			<!--End Upload Row -->
-			<div class="row">
-				<div class="span3 offset1">
-					<textarea rows="6"></textarea>
+			<div id="fileup" ng-controller="UploadCtrl">
+				<input id="file" type="file" name="upload" />
+				<button ng-click="sendFile(0)">Submit Files</button>
+				<div id="progressbar">
+					<div id="bar"></div>
+					<div id="percent"></div>
 				</div>
-			</div>
+				<div id="output">{{output}}</div>
+			</div> 
 		</div>
 		<!--End First Column -->
 		<div class="span6">
