@@ -70,6 +70,7 @@ describe('myApp controllers', function(){
     });
     
     it('should not add dupicate rows to the marked rows object', function() {
+
 	   $httpBackend.expectGET('data/subs/undefined-0.json');
        var controller = createController();
        $httpBackend.flush();
@@ -202,6 +203,68 @@ describe('myApp controllers', function(){
           $controller('GeneSelectCtrl', {'$scope': $rootScope});
           
       };
+      
+      $httpBackend.whenGET('projects/undefined.json?page=2')
+          .respond({
+
+              
+			"fields": [
+			    {
+				    "name": "Name",
+			    	"reference": "name",
+			    	"type": "string"
+			    },
+			    {
+                    "name": "Ensemble ID",
+                    "reference": "ensembleid",
+                    "type": "string"
+                }
+			],
+			"tuples": [
+	    		{
+                    "name": "BGD3",
+                    "ensembleid": "GFD1"
+                },
+                {
+                    "name": "BGD4",
+                    "ensembleid": "GFD1"
+                }
+            ],
+            "page_id": 2,
+            "total_pages": 2
+            
+          });
+          
+      $httpBackend.whenGET('projects/undefined.json')
+          .respond({
+
+              
+			"fields": [
+			    {
+				    "name": "Name",
+			    	"reference": "name",
+			    	"type": "string"
+			    },
+			    {
+                    "name": "Ensemble ID",
+                    "reference": "ensembleid",
+                    "type": "string"
+                }
+			],
+			"tuples": [
+	    		{
+                    "name": "BGD1",
+                    "ensembleid": "GFD1"
+                },
+                {
+                    "name": "BGD2",
+                    "ensembleid": "GFzu1"
+                }
+            ],
+            "page_id": 1,
+            "total_pages": 2
+            
+          });
 
     }));
 
@@ -214,11 +277,26 @@ describe('myApp controllers', function(){
 
     
     it('should send a request to download the initial page of data and update vars', function() {
+		
+		$httpBackend.expectGET('projects/undefined.json');
         var controller = createController();
         $httpBackend.flush();
+        
+        expect($rootScope.fields[0]["name"]).toBe("Name");
+        expect($rootScope.currentpage).toBe(1)
+        
     });
 
-    it('should fail gracefully when a request for page is not available', function() {
+    it('should not make a request for a page that is not available', function() {
+
+        var controller = createController();
+        $httpBackend.flush();
+        
+        $httpBackend.expectGET('projects/undefined.json?page=3');
+        $rootScope.getPage("3");
+        $httpBackend.flush();
+        
+        expect($rootScope.currentpage).toBe(1);
 
     });
     
@@ -226,49 +304,71 @@ describe('myApp controllers', function(){
       
         var controller = createController();
         $httpBackend.flush();
-      
+        
+        $rootScope.markRow("BGD1");
+        expect($rootScope.markedRows.indexOf("BGD1")).not.toBe(-1);
+
     });
 
     it('should update marked genes when user asks to remove genes is called', function() {
 
         var controller = createController();
         $httpBackend.flush();
+        
+        $rootScope.markRow("BGD1");
+        $rootScope.markRow("BGD2");
+        $rootScope.removeRow("BGD1");
+        expect($rootScope.markedRows.indexOf("BGD1")).toBe(-1);
+        
     });
     
     it('should update genes list when filter is applied', function() {
 
         var controller = createController();
         $httpBackend.flush();
+        
+        $httpBackend.expectGET('projects/undefined.json?ensembleid=GFzu1');
+        $rootScope.searchFilter("ensembleid=GFzu1");
+        $httpBackend.flush();
+        
+        expect($rootScope.tuples[0]["name"]).toBe("BGD2");
+        expect($rootScope.tuples.length).toBe(1);
+        
     });
 	
-    it('should fail gracefully when filter request is sent and no objects are received', function() {
+    it('should return nothing when filter request is sent and no objects are received', function() {
+		
         var controller = createController();
         $httpBackend.flush();
 
     });
     
     it('should page up when user requests', function() {
+		
         var controller = createController();
         $httpBackend.flush();
+        
+        $httpBackend.expectGET('projects/undefined.json?page=2');
+        $rootScope.getPage("2");
+        $httpBackend.flush();
+        
+        expect($rootScope.currentpage).toBe(2);
     
     });
 
     it('should page down when user requests', function() {
+		
         var controller = createController();
         $httpBackend.flush();
+        
+        $rootScope.getPage("2");
+        $httpBackend.flush();
+        $rootScope.getPage("1");
+        $httpBackend.flush();
+        
+        expect($rootScope.currentpage).toBe(1);
+    
 
-    });
-    
-    it('should not update page down when currently on page 1', function() {
-        var controller = createController();
-        $httpBackend.flush();
-		
-    });
-    
-    it('should not update page up when currently on max page', function() {
-        var controller = createController();
-        $httpBackend.flush();
-		
     });
     
   });
