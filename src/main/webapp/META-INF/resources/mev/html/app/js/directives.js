@@ -8,6 +8,20 @@ angular.module('myApp.directives', [])
 	  elm.text(version);
 	};
 }])
+.directive('filterBox', [function() {
+	return {
+		
+		restrict: 'E',
+		scope: {
+			inputfield: "="
+		},
+		template: "",
+		link:function (scope,element, attrs) {
+			
+			
+		}
+	}
+}])
 .directive('visHeatmap', [function() {
 
 	return {

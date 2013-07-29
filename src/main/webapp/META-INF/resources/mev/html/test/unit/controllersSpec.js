@@ -203,8 +203,31 @@ describe('myApp controllers', function(){
           $controller('GeneSelectCtrl', {'$scope': $rootScope});
           
       };
+      $httpBackend.whenGET('projects/undefined?ensembleid=GFzu1&format=json&page=1')
+          .respond({
+			 	"fields": [
+			        {
+			    	    "name": "Name",
+		    	    	"reference": "name",
+		    	    	"type": "string"
+			        },
+			        {
+                        "name": "Ensemble ID",
+                        "reference": "ensembleid",
+                        "type": "string"
+                    }
+			    ],
+			    "tuples": [
+                    {
+                        "name": "BGD2",
+                        "ensembleid": "GFzu1"
+                    }
+                ],
+                "page_id": 1,
+                "total_pages": 2 
+		  });
       
-      $httpBackend.whenGET('projects/undefined.json?page=2')
+      $httpBackend.whenGET('projects/undefined?format=json&page=2')
           .respond({
 
               
@@ -235,7 +258,10 @@ describe('myApp controllers', function(){
             
           });
           
-      $httpBackend.whenGET('projects/undefined.json')
+      $httpBackend.whenGET('projects/undefined?format=json&page=1&testkey2=testvalue2')
+          .respond({});
+          
+      $httpBackend.whenGET('projects/undefined?format=json&page=1')
           .respond({
 
               
@@ -278,7 +304,7 @@ describe('myApp controllers', function(){
     
     it('should send a request to download the initial page of data and update vars', function() {
 		
-		$httpBackend.expectGET('projects/undefined.json');
+		$httpBackend.expectGET('projects/undefined?format=json&page=1');
         var controller = createController();
         $httpBackend.flush();
         
@@ -292,10 +318,7 @@ describe('myApp controllers', function(){
         var controller = createController();
         $httpBackend.flush();
         
-        $httpBackend.expectGET('projects/undefined.json?page=3');
         $rootScope.getPage("3");
-        $httpBackend.flush();
-        
         expect($rootScope.currentpage).toBe(1);
 
     });
@@ -309,6 +332,20 @@ describe('myApp controllers', function(){
         expect($rootScope.markedRows.indexOf("BGD1")).not.toBe(-1);
 
     });
+    
+    it('should clear filter values from filter options in getpageparams when purge is called', function () {
+		var controller = createController();
+        $httpBackend.flush();
+        
+        $rootScope.pushToParams("testkey", "testvalue");
+        $rootScope.pushToParams("testkey2", "testvalue2");
+        $rootScope.pushToParams("testkey3", "testvalue3");
+        $rootScope.purgeParams()
+        
+        expect($rootScope.getPageParams["testkey"]).toBeUndefined();
+        expect($rootScope.getPageParams["testkey2"]).toBeUndefined();
+        expect($rootScope.getPageParams["testkey3"]).toBeUndefined();
+	});
 
     it('should update marked genes when user asks to remove genes is called', function() {
 
@@ -327,8 +364,9 @@ describe('myApp controllers', function(){
         var controller = createController();
         $httpBackend.flush();
         
-        $httpBackend.expectGET('projects/undefined.json?ensembleid=GFzu1');
-        $rootScope.searchFilter("ensembleid=GFzu1");
+        $httpBackend.expectGET('projects/undefined?ensembleid=GFzu1&format=json&page=1');
+        $rootScope.getPageParams["ensembleid"] = "GFzu1";
+        $rootScope.getPage(1);
         $httpBackend.flush();
         
         expect($rootScope.tuples[0]["name"]).toBe("BGD2");
@@ -348,12 +386,47 @@ describe('myApp controllers', function(){
         var controller = createController();
         $httpBackend.flush();
         
-        $httpBackend.expectGET('projects/undefined.json?page=2');
+        $httpBackend.expectGET('projects/undefined?format=json&page=2');
         $rootScope.getPage("2");
         $httpBackend.flush();
         
         expect($rootScope.currentpage).toBe(2);
     
+    });
+    
+    it('should call getPage with correct parameters', function() {
+		
+        var controller = createController();
+        $httpBackend.flush();
+        
+        $rootScope.pushToParams("testkey", "testvalue");
+        $rootScope.pushToParams("testkey2", "testvalue2");
+        $rootScope.pullFromParams("testkey");
+        $httpBackend.expectGET('projects/undefined?format=json&page=1&testkey2=testvalue2')
+        $rootScope.getPage("1")
+        $httpBackend.flush();
+    
+    });
+    
+    it('should add keys to request object when add keys function is called', function() {
+		
+        var controller = createController();
+        $httpBackend.flush();
+        
+        $rootScope.pushToParams("testkey", "testvalue");
+        expect($rootScope.getPageParams["testkey"]).not.toBeUndefined;
+    });
+    
+    it('should remove keys to request object when remove keys function is called', function() {
+		
+        var controller = createController();
+        $httpBackend.flush();
+        
+        $rootScope.pushToParams("testkey", "testvalue");
+        $rootScope.pushToParams("testkey2", "testvalue2");
+        $rootScope.pullFromParams("testkey");
+        expect($rootScope.getPageParams["testkey"]).toBeUndefined;
+        
     });
 
     it('should page down when user requests', function() {
