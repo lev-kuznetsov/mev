@@ -209,12 +209,12 @@ describe('myApp controllers', function(){
 			        {
 			    	    "name": "Name",
 		    	    	"reference": "name",
-		    	    	"type": "string"
+		    	    	"type": "nominal"
 			        },
 			        {
                         "name": "Ensemble ID",
                         "reference": "ensembleid",
-                        "type": "string"
+                        "type": "nominal"
                     }
 			    ],
 			    "tuples": [
@@ -235,12 +235,12 @@ describe('myApp controllers', function(){
 			    {
 				    "name": "Name",
 			    	"reference": "name",
-			    	"type": "string"
+			    	"type": "nominal"
 			    },
 			    {
                     "name": "Ensemble ID",
                     "reference": "ensembleid",
-                    "type": "string"
+                    "type": "nominal"
                 }
 			],
 			"tuples": [
@@ -269,12 +269,12 @@ describe('myApp controllers', function(){
 			    {
 				    "name": "Name",
 			    	"reference": "name",
-			    	"type": "string"
+			    	"type": "nominal"
 			    },
 			    {
                     "name": "Ensemble ID",
                     "reference": "ensembleid",
-                    "type": "string"
+                    "type": "nominal"
                 }
 			],
 			"tuples": [
