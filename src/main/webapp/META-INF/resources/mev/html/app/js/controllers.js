@@ -127,6 +127,7 @@ angular.module('myApp.controllers', [])
     
     //Functions
     $scope.pushToParams = function(key, value) {
+		console.log("clicked");
 	    $scope.getPageParams[key]=value;	
 	}
 	
@@ -142,12 +143,14 @@ angular.module('myApp.controllers', [])
 		if (pagenum < 0 || pagenum > $scope.totalpages) {
 		
 		} else {
-
+            
+            $scope.getPageParams["id"] = $scope.project;
 		    $scope.getPageParams["page"] = pagenum;
 		    $scope.getPageParams["format"] = "json";
+		    
 		    $http({
 				method:"GET", 
-				url:'projects/' + $scope.project,
+				url:'data/geneset',
 				params: $scope.getPageParams,
 			})
 			.success( function(data) {

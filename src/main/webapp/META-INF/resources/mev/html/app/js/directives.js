@@ -8,16 +8,89 @@ angular.module('myApp.directives', [])
 	  elm.text(version);
 	};
 }])
-.directive('filterBox', [function() {
+.directive('nominalFilter', [function() {
 	return {
 		
 		restrict: 'E',
 		scope: {
-			inputfield: "="
+			inputfield: "=",
+			pushToParams: "&",
+			pullFromParams: "&"
+		},
+		template: '<input type="text" ng-model="selectedfilter">' +
+		          '<button class="btn" ng-click="pushToParams({key:inputfield.reference, value:selectedfilter})">Apply</button>' +
+		          '<button class="btn" ng-click="pullFromParams({key:inputfield.reference})">Clear</button>',
+		link:function (scope,element, attrs) {
+			
+		}
+	}
+}])
+.directive('ordinalFilter', [function() {
+	return {
+		
+		restrict: 'E',
+		scope: {
+			inputfield: "=",
+			pushToParams: "&",
+			clearFunction: "&"
+		},
+		template: '<input type="text" ng-model="selectedfilter">' +
+		          '<button class="btn" ng-click="pushToParams({key:inputfield.reference, value:selectedfilter})">Apply</button>' +
+		          '<button class="btn" ng-click="pullFromParams({key:inputfield.reference})">Clear</button>',
+		link:function (scope,element, attrs) {
+			
+			
+		}
+	}
+}])
+.directive('quantitativeFilter', [function() {
+	return {
+		
+		restrict: 'E',
+		scope: {
+			inputfield: "=",
+			pushToParams: "&",
+			clearFunction: "&"
 		},
 		template: "",
 		link:function (scope,element, attrs) {
 			
+			
+		}
+	}
+}])
+.directive('filterSelector', ['$compile', function(compile) {
+	return {
+		
+		restrict: 'C',
+		scope: {
+			inputfield: "=",
+			pushToParams: "&",
+			clearFunction: "&"
+		},
+		template: "<div class='holder'></div>",
+		link: function (scope,element, attrs) {
+			
+			if (!compile || !scope) {
+				return
+			}
+			
+			if (scope.inputfield.info.type == "nominal") {
+				var el = compile(
+				//"<nominal-filter pushToParams='pushToParams(key, value)'"+
+				//" pullFromParams='pullFromParams(key)'>"
+				"<hr>"+
+				"<p class='lead'>{{inputfield.name}}</p>" +
+				"<input type='text' ng-model='selectedfilter'>" +
+		        "<button class='btn' ng-click='pushToParams({key:inputfield.reference, value:selectedfilter})'>Apply</button>" +
+		        "<button class='btn' ng-click='pullFromParams({key:inputfield.reference})'>Clear</button>"
+				)(scope);
+				$('.holder', element).append(el);
+			} else if (scope.inputfield.info.type == "quantitative") {
+				console.log("inside quant");
+			} else if (scope.inputfield.info.type == "ordinal") {
+				console.log("inside ordinal");
+			}
 			
 		}
 	}

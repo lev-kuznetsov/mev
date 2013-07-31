@@ -203,18 +203,22 @@ describe('myApp controllers', function(){
           $controller('GeneSelectCtrl', {'$scope': $rootScope});
           
       };
-      $httpBackend.whenGET('projects/undefined?ensembleid=GFzu1&format=json&page=1')
+      $httpBackend.whenGET('data/geneset?ensembleid=GFzu1&format=json&page=1')
           .respond({
 			 	"fields": [
 			        {
 			    	    "name": "Name",
 		    	    	"reference": "name",
-		    	    	"type": "nominal"
+		    	    	"info": {
+			    	        "type": "nominal"
+			    	    }
 			        },
 			        {
                         "name": "Ensemble ID",
                         "reference": "ensembleid",
-                        "type": "nominal"
+                        "info": {
+			    	        "type": "nominal"
+			    	    }
                     }
 			    ],
 			    "tuples": [
@@ -227,7 +231,7 @@ describe('myApp controllers', function(){
                 "total_pages": 2 
 		  });
       
-      $httpBackend.whenGET('projects/undefined?format=json&page=2')
+      $httpBackend.whenGET('data/geneset?format=json&page=2')
           .respond({
 
               
@@ -235,12 +239,16 @@ describe('myApp controllers', function(){
 			    {
 				    "name": "Name",
 			    	"reference": "name",
-			    	"type": "nominal"
+			    	"info": {
+			    	    "type": "nominal"
+			    	}
 			    },
 			    {
                     "name": "Ensemble ID",
                     "reference": "ensembleid",
-                    "type": "nominal"
+                    "info": {
+			    	    "type": "nominal"
+			    	}
                 }
 			],
 			"tuples": [
@@ -258,10 +266,10 @@ describe('myApp controllers', function(){
             
           });
           
-      $httpBackend.whenGET('projects/undefined?format=json&page=1&testkey2=testvalue2')
+      $httpBackend.whenGET('data/geneset?format=json&page=1&testkey2=testvalue2')
           .respond({});
           
-      $httpBackend.whenGET('projects/undefined?format=json&page=1')
+      $httpBackend.whenGET('data/geneset?format=json&page=1')
           .respond({
 
               
@@ -269,12 +277,16 @@ describe('myApp controllers', function(){
 			    {
 				    "name": "Name",
 			    	"reference": "name",
-			    	"type": "nominal"
+			    	"info": {
+			    	    "type": "nominal"
+			    	}
 			    },
 			    {
                     "name": "Ensemble ID",
                     "reference": "ensembleid",
-                    "type": "nominal"
+                    "info": {
+			    	    "type": "nominal"
+			    	}
                 }
 			],
 			"tuples": [
@@ -304,7 +316,7 @@ describe('myApp controllers', function(){
     
     it('should send a request to download the initial page of data and update vars', function() {
 		
-		$httpBackend.expectGET('projects/undefined?format=json&page=1');
+		$httpBackend.expectGET('data/geneset?format=json&page=1');
         var controller = createController();
         $httpBackend.flush();
         
@@ -312,6 +324,16 @@ describe('myApp controllers', function(){
         expect($rootScope.currentpage).toBe(1)
         
     });
+    
+    it('should overwrite new get params when push to params on a field is updated', function() {
+		var controller = createController();
+        $httpBackend.flush();
+        
+        $rootScope.pushToParams("testkey", "testvalue");
+        $rootScope.pushToParams("testkey", "testvalue2");
+        
+        expect($rootScope.getPageParams["testkey"]).toBe("testvalue2");
+	});
 
     it('should not make a request for a page that is not available', function() {
 
@@ -364,7 +386,7 @@ describe('myApp controllers', function(){
         var controller = createController();
         $httpBackend.flush();
         
-        $httpBackend.expectGET('projects/undefined?ensembleid=GFzu1&format=json&page=1');
+        $httpBackend.expectGET('data/geneset?ensembleid=GFzu1&format=json&page=1');
         $rootScope.getPageParams["ensembleid"] = "GFzu1";
         $rootScope.getPage(1);
         $httpBackend.flush();
@@ -386,7 +408,7 @@ describe('myApp controllers', function(){
         var controller = createController();
         $httpBackend.flush();
         
-        $httpBackend.expectGET('projects/undefined?format=json&page=2');
+        $httpBackend.expectGET('data/geneset?format=json&page=2');
         $rootScope.getPage("2");
         $httpBackend.flush();
         
@@ -402,7 +424,7 @@ describe('myApp controllers', function(){
         $rootScope.pushToParams("testkey", "testvalue");
         $rootScope.pushToParams("testkey2", "testvalue2");
         $rootScope.pullFromParams("testkey");
-        $httpBackend.expectGET('projects/undefined?format=json&page=1&testkey2=testvalue2')
+        $httpBackend.expectGET('data/geneset?format=json&page=1&testkey2=testvalue2')
         $rootScope.getPage("1")
         $httpBackend.flush();
     
