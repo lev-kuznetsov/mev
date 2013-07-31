@@ -14,12 +14,9 @@
  */
 package edu.dfci.cccb.mev.controllers;
 
-import lombok.extern.log4j.Log4j;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author levk
@@ -27,13 +24,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping ({ "/", "/home" })
-@Log4j
 public class HomeController {
 
   @RequestMapping (method = RequestMethod.GET)
-  public @ResponseBody
-  String home () {
-    log.debug ("Returning home body");
-    return "<b>hello world!</b>";
+  public String home () {
+    return "home";
   }
 }
