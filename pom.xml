@@ -235,7 +235,7 @@
 
     <repository>
       <id>lev-kuznetsov</id>
-      <url>https://github.com/lev-kuznetsov/m2/snapshots</url>
+      <url>https://github.com/lev-kuznetsov/m2/tree/master/releases/</url>
     </repository>
 
   </repositories>
