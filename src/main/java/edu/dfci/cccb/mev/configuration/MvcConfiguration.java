@@ -20,7 +20,10 @@ import static org.springframework.http.MediaType.APPLICATION_XML;
 import static org.springframework.http.MediaType.TEXT_HTML;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 
+import java.io.IOException;
 import java.util.List;
+
+import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.math3.linear.RealMatrix;
 import org.springframework.context.annotation.Bean;
@@ -38,9 +41,11 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 
-import us.levk.math.linear.util.RealMatrixJsonSerializer;
-
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import edu.dfci.cccb.mev.beans.Matrices;
@@ -52,6 +57,7 @@ import edu.dfci.cccb.mev.beans.Matrices;
 @Configuration
 @EnableWebMvc
 @ComponentScan ("edu.dfci.cccb.mev")
+@Log4j
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
   /**
@@ -123,7 +129,44 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     converters.add (new MappingJackson2HttpMessageConverter () {
       {
         setObjectMapper (new ObjectMapper ().registerModule (new SimpleModule ().addSerializer (RealMatrix.class,
-                                                                                                new RealMatrixJsonSerializer ())));
+                                                                                                new JsonSerializer<RealMatrix> () {
+
+                                                                                                  @Override
+                                                                                                  public void serialize (RealMatrix value,
+                                                                                                                         JsonGenerator jgen,
+                                                                                                                         SerializerProvider provider) throws IOException,
+                                                                                                                                                     JsonProcessingException {
+                                                                                                    if (log.isDebugEnabled ())
+                                                                                                      log.debug ("Serializing matrix "
+                                                                                                                 + value
+                                                                                                                 + " to JSON");
+                                                                                                    jgen.writeStartObject ();
+                                                                                                    jgen.writeNumberField ("rows",
+                                                                                                                           value == null
+                                                                                                                                        ? 0
+                                                                                                                                        : value.getRowDimension ());
+                                                                                                    jgen.writeNumberField ("columns",
+                                                                                                                           value == null
+                                                                                                                                        ? 0
+                                                                                                                                        : value.getColumnDimension ());
+                                                                                                    jgen.writeArrayFieldStart ("data");
+                                                                                                    if (value != null) {
+                                                                                                      for (int column =
+                                                                                                                        0; column < value.getColumnDimension (); column++)
+                                                                                                        for (int row =
+                                                                                                                       0; row < value.getRowDimension (); row++)
+                                                                                                          jgen.writeNumber (value.getEntry (row,
+                                                                                                                                            column));
+                                                                                                      jgen.writeEndArray ();
+                                                                                                    }
+                                                                                                    jgen.writeEndObject ();
+                                                                                                  }
+
+                                                                                                  @Override
+                                                                                                  public Class<RealMatrix> handledType () {
+                                                                                                    return RealMatrix.class;
+                                                                                                  }
+                                                                                                })));
       }
     });
   }
