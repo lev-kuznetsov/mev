@@ -149,9 +149,8 @@ angular.module('myApp.controllers', [])
 		    
 		    $http({
 				method:"GET", 
-				//url:'data/geneset',
-				//params: $scope.getPageParams,
-				url:'data/geneselecttest.json'
+				url:'data/geneset',
+				params: $scope.getPageParams,
 			})
 			.success( function(data) {
 				$scope.tuples = data.tuples;
