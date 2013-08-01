@@ -27,14 +27,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import lombok.Getter;
-import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.math3.linear.RealMatrix;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
@@ -43,7 +38,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.accept.ContentNegotiationManager;
@@ -75,8 +69,21 @@ import edu.dfci.cccb.mev.beans.Matrices;
 @Configuration
 @EnableWebMvc
 @ComponentScan ("edu.dfci.cccb.mev")
-@Log4j
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
+
+  /**
+   * Loads build properties as an application accessible bean
+   * 
+   * @return
+   */
+  @Bean (name = "buildProperties")
+  public PropertiesFactoryBean globalBuildProperties () {
+    return new PropertiesFactoryBean () {
+      {
+        setLocation (new ClassPathResource ("build.properties"));
+      }
+    };
+  }
 
   /**
    * Creates the session scoped matrix holding bean
@@ -114,15 +121,6 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     return new CommonsMultipartResolver () {
       {
         setMaxUploadSize (10000000);
-      }
-    };
-  }
-
-  @Bean (name = "buildProperties")
-  public PropertiesFactoryBean globalBuildProperties () {
-    return new PropertiesFactoryBean () {
-      {
-        setLocation (new ClassPathResource ("build.properties"));
       }
     };
   }

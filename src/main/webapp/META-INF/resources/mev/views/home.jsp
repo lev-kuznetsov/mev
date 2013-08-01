@@ -97,7 +97,7 @@
   <script src="/resources/static/webjars/angularjs/${buildProperties['angularjs.version']}/angular.min.js"></script>
   <script src="js/app.js"></script>
   <script src="js/services.js"></script>
-  <script src="js/controllers.js"></script>
+  <script src="/resources/static/mev/js/controllers.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
 </body>
