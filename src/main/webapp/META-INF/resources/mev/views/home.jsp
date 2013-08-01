@@ -7,8 +7,8 @@
   
 
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"/>
-  <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-responsive.css"/>
+  <link rel="stylesheet" href="/resources/static/webjars/bootstrap/${buildProperties['bootstrap.version']}/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/resources/static/webjars/bootstrap/${buildProperties['bootstrap.version']}/css/bootstrap-responsive.css"/>
 
   <!-- Effeckt -->
   <link rel="stylesheet" href="lib/effeckt/css/demo/demo.autoprefixed.css">
@@ -82,19 +82,19 @@
   </div>
 
   <!--Bootstrap -->
-  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/resources/static/webjars/bootstrap/${buildProperties['bootstrap.version']}/js/bootstrap.min.js"></script>
   <!--D3-->
-  <script src="/resources/static/webjars/d3js/3.1.5/d3.min.js"></script>
+  <script src="/resources/static/webjars/d3js/${buildProperties['d3.version']}/d3.min.js"></script>
   
   <!-- Effeckt -->
   
-  <script src="/resources/static/webjars/jquery/2.0.2/jquery.min.js"></script> <!-- was 2.0.3 -->
+  <script src="/resources/static/webjars/jquery/${buildProperties['jquery.version']}/jquery.min.js"></script>
   
-  <script>window.jQuery || document.write('<script src="/resources/static/webjars/jquery/2.0.2/jquery.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="/resources/static/webjars/jquery/${buildProperties['jquery.version']}/jquery.min.js"><\/script>')</script>
   <script src="lib/effeckt/js/modules/off-screen-nav.js"></script>
   
   <!--Angular-->
-  <script src="/resources/static/webjars/angularjs/1.1.4/angular.min.js"></script> <!-- was 1.0.7 -->
+  <script src="/resources/static/webjars/angularjs/${buildProperties['angularjs.version']}/angular.min.js"></script>
   <script src="js/app.js"></script>
   <script src="js/services.js"></script>
   <script src="js/controllers.js"></script>
