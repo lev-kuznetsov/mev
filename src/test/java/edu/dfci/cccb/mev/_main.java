@@ -14,15 +14,6 @@
  */
 package edu.dfci.cccb.mev;
 
-import java.io.FileInputStream;
-import java.text.NumberFormat;
-
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-
-import us.levk.math.linear.HugeRealMatrix;
-import us.levk.math.linear.util.RealMatrixJsonSerializer;
-
 /**
  * @author levk
  * 
@@ -30,12 +21,5 @@ import us.levk.math.linear.util.RealMatrixJsonSerializer;
 public class _main {
 
   public static void main (String[] args) throws Exception {
-    try (HugeRealMatrix m = new HugeRealMatrix (new FileInputStream ("/Users/levk/Documents/affy.noannot.txt"),
-                                                "\t,".toCharArray (),
-                                                "\n".toCharArray (),
-                                                NumberFormat.getNumberInstance ());
-         JsonGenerator g = new JsonFactory ().createGenerator (System.out)) {
-      new RealMatrixJsonSerializer ().serialize (m, g, null);
-    }
   }
 }

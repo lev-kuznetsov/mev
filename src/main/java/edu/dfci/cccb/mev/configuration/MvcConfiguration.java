@@ -18,9 +18,20 @@ import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLAS
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 import static org.springframework.http.MediaType.TEXT_HTML;
+import static org.springframework.http.MediaType.TEXT_PLAIN;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.math3.linear.RealMatrix;
 import org.springframework.context.annotation.Bean;
@@ -31,16 +42,22 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.AbstractView;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import us.levk.math.linear.util.RealMatrixJsonSerializer;
-
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import edu.dfci.cccb.mev.beans.Matrices;
@@ -52,6 +69,7 @@ import edu.dfci.cccb.mev.beans.Matrices;
 @Configuration
 @EnableWebMvc
 @ComponentScan ("edu.dfci.cccb.mev")
+@Log4j
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
   /**
@@ -94,6 +112,60 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     };
   }
 
+  @Bean (name = "jspViewResolver")
+  public InternalResourceViewResolver jspViewResolver () {
+    return new InternalResourceViewResolver () {
+      {
+        setPrefix ("META-INF/resources/mev/views/");
+        setSuffix (".jsp");
+        setOrder (2);
+      }
+    };
+  }
+
+  @Bean (name = "jsonViewResolver")
+  public ViewResolver jsonViewResolver () {
+    return new ViewResolver () {
+
+      @Override
+      public View resolveViewName (String viewName, Locale locale) throws Exception {
+        return new MappingJackson2JsonView () {
+          {
+            setPrettyPrint (true);
+          }
+        };
+      }
+    };
+  }
+
+  // TODO: This should go into a separate config for heatmaps
+  @Bean (name = "tsvViewResolver")
+  public ViewResolver tsvViewResolver () {
+    return new ViewResolver () {
+
+      @Override
+      public View resolveViewName (String viewName, Locale locale) throws Exception {
+        return new AbstractView () {
+
+          @Override
+          protected void renderMergedOutputModel (Map<String, Object> model,
+                                                  HttpServletRequest request,
+                                                  HttpServletResponse response) throws Exception {
+            PrintStream out = new PrintStream (response.getOutputStream ());
+            for (Entry<String, Object> entry : model.entrySet ())
+              if (entry.getValue () instanceof RealMatrix) {
+                RealMatrix matrix = (RealMatrix) entry.getValue ();
+                for (int column = 0, columns = matrix.getColumnDimension (); column < columns; column++)
+                  for (int row = 0, rows = matrix.getRowDimension (); row < rows; row++)
+                    out.print (matrix.getEntry (row, column) + (column == columns - 1 ? "\n" : "\t"));
+                return;
+              }
+          }
+        };
+      }
+    };
+  }
+
   /* (non-Javadoc)
    * @see
    * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
@@ -104,12 +176,13 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
   public void configureContentNegotiation (ContentNegotiationConfigurer configurer) {
     configurer.favorPathExtension (true)
               .favorParameter (true)
-              .parameterName ("mediaType")
+              .parameterName ("format")
               .ignoreAcceptHeader (true)
               .useJaf (false)
               .defaultContentType (TEXT_HTML)
               .mediaType ("html", TEXT_HTML)
               .mediaType ("xml", APPLICATION_XML)
+              .mediaType ("tsv", TEXT_PLAIN)
               .mediaType ("json", APPLICATION_JSON);
   }
 
@@ -118,12 +191,44 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
    * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
    * #configureMessageConverters(java.util.List) */
   // TODO: This should go into a separate config for heatmaps
-  @Override
+ /* @Override
   public void configureMessageConverters (List<HttpMessageConverter<?>> converters) {
     converters.add (new MappingJackson2HttpMessageConverter () {
       {
-        setObjectMapper (new ObjectMapper ().registerModule (new SimpleModule ().addSerializer (RealMatrix.class,
-                                                                                                new RealMatrixJsonSerializer ())));
+        setObjectMapper (new ObjectMapper ().registerModule (new SimpleModule () {
+          private static final long serialVersionUID = 1L;
+
+          {
+            addSerializer (RealMatrix.class,
+                           new JsonSerializer<RealMatrix> () {
+
+                             @Override
+                             public void serialize (RealMatrix value,
+                                                    JsonGenerator jgen,
+                                                    SerializerProvider provider) throws IOException,
+                                                                                JsonProcessingException {
+                               if (log.isDebugEnabled ())
+                                 log.debug ("Serializing matrix " + value + " to JSON");
+                               jgen.writeStartObject ();
+                               jgen.writeNumberField ("rows", value == null ? 0 : value.getRowDimension ());
+                               jgen.writeNumberField ("columns", value == null ? 0 : value.getColumnDimension ());
+                               jgen.writeArrayFieldStart ("data");
+                               if (value != null) {
+                                 for (int column = 0; column < value.getColumnDimension (); column++)
+                                   for (int row = 0; row < value.getRowDimension (); row++)
+                                     jgen.writeNumber (value.getEntry (row, column));
+                                 jgen.writeEndArray ();
+                               }
+                               jgen.writeEndObject ();
+                             }
+
+                             @Override
+                             public Class<RealMatrix> handledType () {
+                               return RealMatrix.class;
+                             }
+                           });
+          }
+        }));
       }
     });
   }
