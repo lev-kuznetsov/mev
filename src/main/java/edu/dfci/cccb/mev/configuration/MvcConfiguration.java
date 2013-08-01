@@ -27,17 +27,23 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.Getter;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.math3.linear.RealMatrix;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.accept.ContentNegotiationManager;
@@ -112,13 +118,23 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     };
   }
 
+  @Bean (name = "buildProperties")
+  public PropertiesFactoryBean globalBuildProperties () {
+    return new PropertiesFactoryBean () {
+      {
+        setLocation (new ClassPathResource ("build.properties"));
+      }
+    };
+  }
+
   @Bean (name = "jspViewResolver")
-  public InternalResourceViewResolver jspViewResolver () {
+  public ViewResolver jspViewResolver () {
     return new InternalResourceViewResolver () {
       {
         setPrefix ("META-INF/resources/mev/views/");
         setSuffix (".jsp");
         setOrder (2);
+        setExposedContextBeanNames (new String[] { "buildProperties" });
       }
     };
   }
@@ -191,49 +207,24 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
    * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
    * #configureMessageConverters(java.util.List) */
   // TODO: This should go into a separate config for heatmaps
- /* @Override
-  public void configureMessageConverters (List<HttpMessageConverter<?>> converters) {
-    converters.add (new MappingJackson2HttpMessageConverter () {
-      {
-        setObjectMapper (new ObjectMapper ().registerModule (new SimpleModule () {
-          private static final long serialVersionUID = 1L;
-
-          {
-            addSerializer (RealMatrix.class,
-                           new JsonSerializer<RealMatrix> () {
-
-                             @Override
-                             public void serialize (RealMatrix value,
-                                                    JsonGenerator jgen,
-                                                    SerializerProvider provider) throws IOException,
-                                                                                JsonProcessingException {
-                               if (log.isDebugEnabled ())
-                                 log.debug ("Serializing matrix " + value + " to JSON");
-                               jgen.writeStartObject ();
-                               jgen.writeNumberField ("rows", value == null ? 0 : value.getRowDimension ());
-                               jgen.writeNumberField ("columns", value == null ? 0 : value.getColumnDimension ());
-                               jgen.writeArrayFieldStart ("data");
-                               if (value != null) {
-                                 for (int column = 0; column < value.getColumnDimension (); column++)
-                                   for (int row = 0; row < value.getRowDimension (); row++)
-                                     jgen.writeNumber (value.getEntry (row, column));
-                                 jgen.writeEndArray ();
-                               }
-                               jgen.writeEndObject ();
-                             }
-
-                             @Override
-                             public Class<RealMatrix> handledType () {
-                               return RealMatrix.class;
-                             }
-                           });
-          }
-        }));
-      }
-    });
-  }
-
-  /* (non-Javadoc)
+  /* @Override public void configureMessageConverters
+   * (List<HttpMessageConverter<?>> converters) { converters.add (new
+   * MappingJackson2HttpMessageConverter () { { setObjectMapper (new
+   * ObjectMapper ().registerModule (new SimpleModule () { private static final
+   * long serialVersionUID = 1L; { addSerializer (RealMatrix.class, new
+   * JsonSerializer<RealMatrix> () {
+   * @Override public void serialize (RealMatrix value, JsonGenerator jgen,
+   * SerializerProvider provider) throws IOException, JsonProcessingException {
+   * if (log.isDebugEnabled ()) log.debug ("Serializing matrix " + value +
+   * " to JSON"); jgen.writeStartObject (); jgen.writeNumberField ("rows", value
+   * == null ? 0 : value.getRowDimension ()); jgen.writeNumberField ("columns",
+   * value == null ? 0 : value.getColumnDimension ()); jgen.writeArrayFieldStart
+   * ("data"); if (value != null) { for (int column = 0; column <
+   * value.getColumnDimension (); column++) for (int row = 0; row <
+   * value.getRowDimension (); row++) jgen.writeNumber (value.getEntry (row,
+   * column)); jgen.writeEndArray (); } jgen.writeEndObject (); }
+   * @Override public Class<RealMatrix> handledType () { return
+   * RealMatrix.class; } }); } })); } }); } /* (non-Javadoc)
    * @see
    * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
    * #addResourceHandlers
