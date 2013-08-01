@@ -124,11 +124,10 @@ angular.module('myApp.controllers', [])
     $scope.project = $routeParams.project;
     $scope.markedRows = []
     $scope.getPageParams = {};
-    
+
     //Functions
     $scope.pushToParams = function(key, value) {
-		console.log("clicked");
-	    $scope.getPageParams[key]=value;	
+	    $scope.getPageParams[key]=value;
 	}
 	
 	$scope.pullFromParams = function(key) {
@@ -150,8 +149,9 @@ angular.module('myApp.controllers', [])
 		    
 		    $http({
 				method:"GET", 
-				url:'data/geneset',
-				params: $scope.getPageParams,
+				//url:'data/geneset',
+				//params: $scope.getPageParams,
+				url:'data/geneselecttest.json'
 			})
 			.success( function(data) {
 				$scope.tuples = data.tuples;

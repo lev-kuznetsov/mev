@@ -8,64 +8,14 @@ angular.module('myApp.directives', [])
 	  elm.text(version);
 	};
 }])
-.directive('nominalFilter', [function() {
-	return {
-		
-		restrict: 'E',
-		scope: {
-			inputfield: "=",
-			pushToParams: "&",
-			pullFromParams: "&"
-		},
-		template: '<input type="text" ng-model="selectedfilter">' +
-		          '<button class="btn" ng-click="pushToParams({key:inputfield.reference, value:selectedfilter})">Apply</button>' +
-		          '<button class="btn" ng-click="pullFromParams({key:inputfield.reference})">Clear</button>',
-		link:function (scope,element, attrs) {
-			
-		}
-	}
-}])
-.directive('ordinalFilter', [function() {
-	return {
-		
-		restrict: 'E',
-		scope: {
-			inputfield: "=",
-			pushToParams: "&",
-			clearFunction: "&"
-		},
-		template: '<input type="text" ng-model="selectedfilter">' +
-		          '<button class="btn" ng-click="pushToParams({key:inputfield.reference, value:selectedfilter})">Apply</button>' +
-		          '<button class="btn" ng-click="pullFromParams({key:inputfield.reference})">Clear</button>',
-		link:function (scope,element, attrs) {
-			
-			
-		}
-	}
-}])
-.directive('quantitativeFilter', [function() {
-	return {
-		
-		restrict: 'E',
-		scope: {
-			inputfield: "=",
-			pushToParams: "&",
-			clearFunction: "&"
-		},
-		template: "",
-		link:function (scope,element, attrs) {
-			
-			
-		}
-	}
-}])
 .directive('filterSelector', ['$compile', function(compile) {
 	return {
 		
 		restrict: 'C',
 		scope: {
 			inputfield: "=",
-			pushToParams: "&",
+			pushToParamsIn: "&",
+			pullFromParamsIn: "&",
 			clearFunction: "&"
 		},
 		template: "<div class='holder'></div>",
@@ -76,20 +26,53 @@ angular.module('myApp.directives', [])
 			}
 			
 			if (scope.inputfield.info.type == "nominal") {
+			
 				var el = compile(
-				//"<nominal-filter pushToParams='pushToParams(key, value)'"+
-				//" pullFromParams='pullFromParams(key)'>"
-				"<hr>"+
-				"<p class='lead'>{{inputfield.name}}</p>" +
-				"<input type='text' ng-model='selectedfilter'>" +
-		        "<button class='btn' ng-click='pushToParams({key:inputfield.reference, value:selectedfilter})'>Apply</button>" +
-		        "<button class='btn' ng-click='pullFromParams({key:inputfield.reference})'>Clear</button>"
+					"<hr>"+
+					"<p>{{inputfield.name}}</p>" +
+					'<div class="input-prepend">'+
+      					'<span class="add-on"><i class="icon-search"></i></span>'+
+      					'<input class="span2" ng-model="selectedfilter" type="text">'+
+    				"</div>"+
+					"<button class='btn' ng-click='pushToParamsIn({key:inputfield.reference, value:selectedfilter})'>Apply</button>" +
+		        	"<button class='btn' ng-click='pullFromParamsIn({key:inputfield.reference})'>Clear</button>"
 				)(scope);
 				$('.holder', element).append(el);
+				
 			} else if (scope.inputfield.info.type == "quantitative") {
-				console.log("inside quant");
+				var selectedfilter = function(right, left) {
+					return "[" + right + "," + left + "]";
+				}
+				var el = compile(
+					"<hr>" +
+					"<p>{{inputfield.name}}</p>" +
+					'Range:<br>'+
+					'<input type="text" ng-model="rightbound" class="input-small" placeholder="Left Bound">'+
+					'<input type="text" ng-model="leftbound" class="input-small" placeholder="Right Bound"><br>'+
+					"<button class='btn' ng-click='pushToParamsIn({key:inputfield.reference, value:selectedfilter(leftbound, rightbound\)})'>Apply</button>" +
+		        	"<button class='btn' ng-click='pullFromParamsIn({key:inputfield.reference})'>Clear</button>"
+				)(scope);
+				$('.holder', element).append(el);
 			} else if (scope.inputfield.info.type == "ordinal") {
-				console.log("inside ordinal");
+			    scope.selectedfilter = "Filter on:"
+			    var applyfilter = function(selection) {
+			      scope.pushToParamsIn({key:inputfield.reference, value:selection});
+			    }
+				var el = compile(
+					"<hr>"+
+					"<p>{{inputfield.name}}</p>" +
+					"<div class='btn-group'>"+
+					  "<button class='btn'>{{selectedfilter}}</button>"+
+					  "<button class='btn dropdown-toggle' data-toggle='dropdown'>"+
+					     "<span class='caret'></span>"+
+					  "</button>"+
+					  "<ul class='dropdown-menu'>"+
+					    "<li ng-repeat='class in inputfield.info.range' ng-click='applyfilter({{class}})'>{{class}}</li>"+
+					  "</ul>"+
+					"</div>"
+				)(scope);
+				$('.holder', element).append(el);
+				
 			}
 			
 		}
