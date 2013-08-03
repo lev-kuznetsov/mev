@@ -14,24 +14,24 @@
  */
 package edu.dfci.cccb.mev.controllers;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * @author levk
  * 
  */
-@Controller
-public class HomeController {
+@ControllerAdvice
+public class HomeAdvice {
 
-  @RequestMapping (value = { "/", "/home" }, method = RequestMethod.GET)
-  public String home () {
-    return "home";
-  }
-  
-  @RequestMapping
-  public String unbound () throws UnboundMappingException {
-    throw new UnboundMappingException ();
+  @ExceptionHandler (UnboundMappingException.class)
+  @ResponseStatus (NOT_FOUND)
+  @ResponseBody
+  public String unbound (UnboundMappingException e) {
+    return e.getLocalizedMessage ();
   }
 }

@@ -12,26 +12,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.controllers;
+package edu.dfci.cccb.mev.domain;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import lombok.Getter;
 
 /**
  * @author levk
  * 
  */
-@Controller
-public class HomeController {
+// TODO: attach internationalization
+public class InvalidDimensionException extends Exception {
+  private static final long serialVersionUID = 1L;
 
-  @RequestMapping (value = { "/", "/home" }, method = RequestMethod.GET)
-  public String home () {
-    return "home";
+  private final @Getter String dimension;
+
+  public InvalidDimensionException (String dimension) {
+    super ("Invalid dimension " + dimension + " specified");
+    this.dimension = dimension;
   }
-  
-  @RequestMapping
-  public String unbound () throws UnboundMappingException {
-    throw new UnboundMappingException ();
+
+  @Override
+  public String getLocalizedMessage () {
+    // TODO: use LocaleContextHolder to get the request locale
+    return super.getLocalizedMessage ();
   }
 }

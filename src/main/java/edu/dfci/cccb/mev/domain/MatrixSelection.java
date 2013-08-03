@@ -12,26 +12,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.controllers;
+package edu.dfci.cccb.mev.domain;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import lombok.Getter;
+import lombok.experimental.Accessors;
+import lombok.experimental.ExtensionMethod;
 
 /**
  * @author levk
- * 
+ *
  */
-@Controller
-public class HomeController {
+@Accessors (fluent = true, chain = false)
+@ExtensionMethod (Collections.class)
+public class MatrixSelection {
 
-  @RequestMapping (value = { "/", "/home" }, method = RequestMethod.GET)
-  public String home () {
-    return "home";
-  }
+  private final @Getter Map<String, String> attributes;
+  private final @Getter List<Integer> indecis;
   
-  @RequestMapping
-  public String unbound () throws UnboundMappingException {
-    throw new UnboundMappingException ();
+  public MatrixSelection (Map<String, String> attributes, List<Integer> indecis) {
+    this.attributes = attributes.unmodifiableMap ();
+    this.indecis = indecis.unmodifiableList ();
   }
 }

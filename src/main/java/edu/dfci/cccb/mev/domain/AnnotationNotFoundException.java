@@ -12,26 +12,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.controllers;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+package edu.dfci.cccb.mev.domain;
 
 /**
  * @author levk
- * 
+ *
  */
-@Controller
-public class HomeController {
+public class AnnotationNotFoundException extends Exception {
+  private static final long serialVersionUID = 1L;
 
-  @RequestMapping (value = { "/", "/home" }, method = RequestMethod.GET)
-  public String home () {
-    return "home";
+  @SuppressWarnings ("unused") private final String type;
+  
+  public AnnotationNotFoundException (String type) {
+    super ("No annotation keyed " + type + " found");
+    this.type = type;
   }
   
-  @RequestMapping
-  public String unbound () throws UnboundMappingException {
-    throw new UnboundMappingException ();
+  public String getLocalistMessage (String locale) {
+    return getMessage ();
   }
 }

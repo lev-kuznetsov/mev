@@ -12,10 +12,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.domain;
+
+import lombok.Getter;
+
 /**
- * Beans
- * 
  * @author levk
- *
+ * 
  */
-package edu.dfci.cccb.mev.beans;
+// TODO: attach internationalization
+public class HeatmapNotFoundException extends Exception {
+  private static final long serialVersionUID = 1L;
+
+  private final @Getter String id;
+
+  public HeatmapNotFoundException (String id) {
+    super ("No heatmap keyed " + id + " found");
+    this.id = id;
+  }
+
+  @Override
+  public String getLocalizedMessage () {
+    // TODO: use LocaleContextHolder to get the request locale
+    return super.getLocalizedMessage ();
+  }
+}

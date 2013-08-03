@@ -12,29 +12,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.beans;
+package edu.dfci.cccb.mev.controllers;
 
-import java.util.Locale;
+import java.util.ResourceBundle;
+
+import org.springframework.context.i18n.LocaleContextHolder;
+
+import lombok.Getter;
 
 /**
- * This exception is thrown by REST methods when a specified URL doesn't have a
- * matrix associated with it
- * 
  * @author levk
- * 
+ *
  */
-// TODO: Attach actual internationalization, move off to a separate module
-public class MatrixNotFoundException extends Exception {
+public class UnboundMappingException extends Exception {
   private static final long serialVersionUID = 1L;
 
-  @SuppressWarnings ("unused") private final String matrix;
-
-  public MatrixNotFoundException (String matrix) {
-    super ("No matrix keyed " + matrix + " found");
-    this.matrix = matrix;
+  private final @Getter String url;
+  
+  public UnboundMappingException (String url) {
+    super ("Unbound URL" + url);
+    this.url = url;
   }
-
-  public String getLocalizedMessage (Locale locale) {
-    return getMessage ();
+  
+  public UnboundMappingException () {
+    super ("Unbound URL");
+    url = null;
+  }
+  
+  /* (non-Javadoc)
+   * @see java.lang.Throwable#getLocalizedMessage()
+   */
+  @Override
+  public String getLocalizedMessage () {
+    return ResourceBundle.getBundle ("i18n.home", LocaleContextHolder.getLocale ()).getString ("global.unbound");
   }
 }

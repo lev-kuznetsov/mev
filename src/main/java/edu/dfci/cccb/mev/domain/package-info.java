@@ -12,26 +12,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.controllers;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 /**
- * @author levk
+ * Domain
  * 
+ * @author levk
+ *
  */
-@Controller
-public class HomeController {
-
-  @RequestMapping (value = { "/", "/home" }, method = RequestMethod.GET)
-  public String home () {
-    return "home";
-  }
-  
-  @RequestMapping
-  public String unbound () throws UnboundMappingException {
-    throw new UnboundMappingException ();
-  }
-}
+package edu.dfci.cccb.mev.domain;
