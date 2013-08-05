@@ -6,7 +6,7 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
   config(['$routeProvider', function($routeProvider) {
 	  
 	$routeProvider.when('/home', {
-		templateUrl: 'partials/home-view.html'
+		templateUrl: 'partials/home-view.html' // '/views/partials/analyze'
 		});
 		
 	$routeProvider.when('/about', {

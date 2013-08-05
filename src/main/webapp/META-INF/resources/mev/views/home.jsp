@@ -13,7 +13,7 @@
   <!-- Effeckt -->
   <link rel="stylesheet" href="lib/effeckt/css/demo/demo.autoprefixed.css">
   <link rel="stylesheet" href="lib/effeckt/css/modules/off-screen-nav.css"/>
-  <link rel="stylesheet" href="css/app.css"/>
+  <link rel="stylesheet" href="/resources/static/mev/css/app.css"/>
 </head>
 <body>
   <div class="row">
@@ -95,10 +95,10 @@
   
   <!--Angular-->
   <script src="/resources/static/webjars/angularjs/${buildProperties['angularjs.version']}/angular.min.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/services.js"></script>
+  <script src="/resources/static/mev/js/app.js"></script>
+  <script src="/resources/static/mev/js/services.js"></script>
   <script src="/resources/static/mev/js/controllers.js"></script>
-  <script src="js/filters.js"></script>
-  <script src="js/directives.js"></script>
+  <script src="/resources/static/mev/js/filters.js"></script>
+  <script src="/resources/static/mev/js/directives.js"></script>
 </body>
 </html>

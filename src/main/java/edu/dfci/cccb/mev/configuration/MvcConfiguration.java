@@ -117,6 +117,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     };
   }
 
+  // TODO: Move this off to a separate heatmap config
   @Bean (name = "heatmapBuilder")
   public Heatmap.Builder heatmapBuilder () {
     return new Heatmap.Builder ().allowComments (false).allowEmptyLines (false).annotationProcessor (null);
