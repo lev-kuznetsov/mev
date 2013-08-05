@@ -14,25 +14,15 @@
  */
 package edu.dfci.cccb.mev.controllers;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 /**
  * @author levk
- * 
+ *
  */
-@Controller
-public class HomeController {
+// TODO: attach internationalization
+public class InvalidHeatmapFormatException extends Exception {
+  private static final long serialVersionUID = 1L;
 
-  @RequestMapping (value = { "/", "/home" }, method = RequestMethod.GET)
-  public String home () {
-    return "home";
+  public InvalidHeatmapFormatException (Exception cause) {
+    super (cause);
   }
-  
-  // TODO: Fix this, this is supposed to overwrite container default 404, but I get 404s on static resources
-  //@RequestMapping
-  //public String unbound () throws UnboundMappingException {
-  //  throw new UnboundMappingException ();
-  //}
 }

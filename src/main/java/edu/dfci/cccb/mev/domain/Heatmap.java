@@ -20,20 +20,37 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
+import static org.supercsv.prefs.CsvPreference.TAB_PREFERENCE;
+import static java.lang.Integer.MAX_VALUE;
 
+import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.Synchronized;
+import lombok.experimental.Accessors;
 
 import org.apache.commons.math3.linear.RealMatrix;
+import org.supercsv.cellprocessor.ParseDouble;
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.io.CsvListReader;
+
+import us.levk.math.linear.HugeRealMatrix;
 
 /**
  * @author levk
@@ -46,6 +63,12 @@ public class Heatmap implements Closeable {
   private List<Map<String, ?>> columnAnnotations = new ArrayList<Map<String, ?>> ();
   private List<Map<String, Map<String, String>>> rowSelections = new SelectionHolderList ();
   private List<Map<String, Map<String, String>>> columnSelections = new SelectionHolderList ();
+
+  /**
+   * Constructs empty heatmap; this is not very useful as the Heatmap object is
+   * immutable
+   */
+  protected Heatmap () {}
 
   /**
    * Gets subset of the data
@@ -62,7 +85,11 @@ public class Heatmap implements Closeable {
     startRow = max (startRow, 0);
     startRow = min (startRow, data.getRowDimension () - 1);
     endRow = max (endRow, startRow);
-    endRow = min (endRow, data.getColumnDimension () - 1);
+    endRow = min (endRow, data.getRowDimension () - 1);
+    startColumn = max (startColumn, 0);
+    startColumn = min (startColumn, data.getColumnDimension () - 1);
+    endColumn = max (endColumn, startColumn);
+    endColumn = min (endColumn, data.getColumnDimension () - 1);
     return new MatrixData (data.getSubMatrix (startRow, endRow, startColumn, endColumn));
   }
 
@@ -110,34 +137,84 @@ public class Heatmap implements Closeable {
     return getAnnotation (columnAnnotations, index, type);
   }
 
+  /**
+   * Get all row selection ids
+   * 
+   * @return
+   */
   public Collection<String> getRowSelectionIds () {
     return getSelectionIds (rowSelections);
   }
-  
+
+  /**
+   * Get all column selection ids
+   * 
+   * @return
+   */
   public Collection<String> getColumnSelectionIds () {
     return getSelectionIds (columnSelections);
   }
-  
+
+  /**
+   * Get row selection indecis
+   * 
+   * @param id
+   * @param start
+   * @param end
+   * @return
+   */
   public MatrixSelection getRowSelection (String id, int start, int end) {
     return getSelection (rowSelections, start, end, id);
   }
 
+  /**
+   * Get column selection indecis
+   * 
+   * @param id
+   * @param start
+   * @param end
+   * @return
+   */
   public MatrixSelection getColumnSelection (String id, int start, int end) {
     return getSelection (columnSelections, start, end, id);
   }
 
+  /**
+   * Set row selection
+   * 
+   * @param id
+   * @param selection
+   * @throws IndexOutOfBoundsException
+   */
   public void setRowSelection (String id, MatrixSelection selection) throws IndexOutOfBoundsException {
     setSelection (rowSelections, id, selection);
   }
 
+  /**
+   * Set columns selection
+   * 
+   * @param id
+   * @param selection
+   * @throws IndexOutOfBoundsException
+   */
   public void setColumnSelection (String id, MatrixSelection selection) throws IndexOutOfBoundsException {
     setSelection (columnSelections, id, selection);
   }
 
+  /**
+   * Delete row selection
+   * 
+   * @param id
+   */
   public void deleteRowSelection (String id) {
     deleteSelection (rowSelections, id);
   }
 
+  /**
+   * Delete column selection
+   * 
+   * @param id
+   */
   public void deleteColumnSelections (String id) {
     deleteSelection (columnSelections, id);
   }
@@ -150,8 +227,110 @@ public class Heatmap implements Closeable {
       ((Closeable) data).close ();
   }
 
+  @Accessors (fluent = true, chain = true)
   public static class Builder {
+    private @Getter @Setter boolean allowComments = false;
+    private @Getter @Setter boolean allowEmptyLines = false;
+    private @Getter @Setter boolean assumeSingleColumnAnnotation = true;
+    private @Getter @Setter CellProcessor valueProcessor = new ParseDouble ();
+    private @Getter @Setter CellProcessor annotationProcessor = null;
+    private @Getter @Setter String delimiterRegex = "\t";
+    private @Getter @Setter List<String> columnAnnotationTypes = asList ("column");
+    private @Getter @Setter List<String> rowAnnotationTypes = new AbstractList<String> () {
 
+      @Override
+      public String get (int index) {
+        return "annotation-" + index;
+      }
+
+      @Override
+      public int size () {
+        return MAX_VALUE;
+      }
+    };
+
+    public Heatmap build (InputStream input) throws IOException {
+      BufferedReader reader = new BufferedReader (new InputStreamReader (input));
+      String[] fields = reader.readLine ().split (delimiterRegex);
+      final CellProcessor[] processors = new CellProcessor[fields.length];
+      int index = 0;
+      for (; index < fields.length && "".equals (fields[index]); index++)
+        processors[index] = annotationProcessor;
+      final int lastRowAnnotationIndex = index;
+      final List<Map<String, ?>> columnAnnotations = new ArrayList<Map<String, ?>> ();
+      final List<Map<String, ?>> rowAnnotations = new ArrayList<Map<String, ?>> ();
+      for (; index < fields.length; index++) {
+        processors[index] = valueProcessor;
+        columnAnnotations.add (new HashMap<String, String> () {
+          private static final long serialVersionUID = 1L;
+
+          private Map<String, ?> initialize (String annotation) {
+            put (columnAnnotationTypes.get (0), annotation);
+            return this;
+          }
+        }.initialize (fields[index]));
+      }
+
+      @RequiredArgsConstructor
+      class IOExceptionHolder extends RuntimeException {
+        private static final long serialVersionUID = 1L;
+
+        private final @Getter IOException wrapped;
+      };
+
+      HugeRealMatrix data = null;
+      try (final CsvListReader csvReader = new CsvListReader (reader, TAB_PREFERENCE)) {
+        data = new HugeRealMatrix (new Iterator<Double> () {
+
+          private Iterator<Object> current = null;
+
+          @Override
+          public void remove () {
+            throw new UnsupportedOperationException ();
+          }
+
+          @Override
+          public Double next () {
+            if (!hasNext ())
+              throw new NoSuchElementException ();
+            else
+              return (Double) current.next ();
+          }
+
+          @Override
+          public boolean hasNext () {
+            if (current != null && current.hasNext ())
+              return true;
+            try {
+              final List<Object> row = csvReader.read (processors);
+              if (row == null)
+                return false;
+              rowAnnotations.add (new HashMap<String, String> () {
+                private static final long serialVersionUID = 1L;
+
+                {
+                  for (int index = 0; index <= lastRowAnnotationIndex; index++)
+                    put (rowAnnotationTypes.get (index), row.get (index).toString ());
+                }
+              });
+              current = row.subList (lastRowAnnotationIndex, row.size ()).iterator ();
+              return true;
+            } catch (IOException e) {
+              throw new IOExceptionHolder (e);
+            }
+          }
+        }, index - lastRowAnnotationIndex);
+        Heatmap result = new Heatmap ();
+        result.data = data;
+        result.rowAnnotations = rowAnnotations;
+        result.columnAnnotations = columnAnnotations;
+        return result;
+      } catch (IOExceptionHolder e) {
+        if (data != null)
+          data.close ();
+        throw e.wrapped ();
+      }
+    }
   }
 
   private Collection<String> getAnnotationTypes (List<Map<String, ?>> dimmension) {
@@ -198,7 +377,7 @@ public class Heatmap implements Closeable {
       result.addAll (index.keySet ());
     return result;
   }
-  
+
   private MatrixSelection getSelection (List<Map<String, Map<String, String>>> dimension, int start, int end, String id) {
     List<Integer> indecis = new ArrayList<Integer> ();
     Map<String, String> attributes = null;

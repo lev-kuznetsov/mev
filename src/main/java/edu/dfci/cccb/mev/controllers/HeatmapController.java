@@ -19,13 +19,14 @@ import static java.util.UUID.randomUUID;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.UNSUPPORTED_MEDIA_TYPE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
+import java.io.IOException;
 import java.util.Collection;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import edu.dfci.cccb.mev.domain.AnnotationNotFoundException;
+import edu.dfci.cccb.mev.domain.Heatmap;
 import edu.dfci.cccb.mev.domain.HeatmapNotFoundException;
 import edu.dfci.cccb.mev.domain.Heatmaps;
 import edu.dfci.cccb.mev.domain.InvalidDimensionException;
@@ -54,6 +56,7 @@ import edu.dfci.cccb.mev.domain.MatrixSelection;
 public class HeatmapController {
 
   private @Autowired Heatmaps heatmaps;
+  private @Autowired Heatmap.Builder heatmapBuilder;
 
   // GET
 
@@ -146,7 +149,7 @@ public class HeatmapController {
   @RequestMapping (params = "format=tsv", method = POST)
   @ResponseBody
   public String add (@RequestParam ("filedata") MultipartFile data,
-                     @RequestParam ("name") String name) {
+                     @RequestParam ("name") String name) throws InvalidHeatmapFormatException {
     String id = name;
     if (heatmaps.contains (id))
       for (int count = 1; heatmaps.contains (id = name + "-" + count); count++);
@@ -171,12 +174,12 @@ public class HeatmapController {
   @RequestMapping (value = "/{id}", params = "format=tsv", method = PUT)
   @ResponseStatus (OK)
   public void put (@PathVariable ("id") String id,
-                   @RequestParam ("filedata") MultipartFile data) { // TODO:
-                                                                    // throw
-                                                                    // stuff on
-                                                                    // parse
-                                                                    // failure
-    // heatmaps.put (id, null); // TODO: USE THE BUILDER
+                   @RequestParam ("filedata") MultipartFile data) throws InvalidHeatmapFormatException {
+    try {
+      heatmaps.put (id, heatmapBuilder.build (data.getInputStream ()));
+    } catch (IOException | RuntimeException e) {
+      throw new InvalidHeatmapFormatException (e);
+    }
   }
 
   @RequestMapping (value = "/{hm-id}/selection/{dimension}/{s-id}", method = PUT)
@@ -224,14 +227,21 @@ public class HeatmapController {
                       IndexOutOfBoundsException.class })
   @ResponseStatus (NOT_FOUND)
   @ResponseBody
-  public String handeNotFoundException (Exception e, Locale locale) {
+  public String handeNotFoundException (Exception e) {
     return e.getLocalizedMessage ();
   }
 
   @ExceptionHandler (InvalidDimensionException.class)
   @ResponseStatus (BAD_REQUEST)
   @ResponseBody
-  public String handeBadRequestException (InvalidDimensionException e, Locale locale) {
+  public String handeBadRequestException (InvalidDimensionException e) {
+    return e.getLocalizedMessage ();
+  }
+
+  @ExceptionHandler (InvalidHeatmapFormatException.class)
+  @ResponseStatus (UNSUPPORTED_MEDIA_TYPE)
+  @ResponseBody
+  public String handleBadDataException (InvalidHeatmapFormatException e) {
     return e.getLocalizedMessage ();
   }
 

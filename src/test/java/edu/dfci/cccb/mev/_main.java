@@ -14,6 +14,13 @@
  */
 package edu.dfci.cccb.mev;
 
+import java.io.ByteArrayInputStream;
+
+import org.supercsv.cellprocessor.ParseDouble;
+
+import edu.dfci.cccb.mev.domain.Heatmap;
+import edu.dfci.cccb.mev.domain.Heatmap.Builder;
+
 /**
  * @author levk
  * 
@@ -21,5 +28,14 @@ package edu.dfci.cccb.mev;
 public class _main {
 
   public static void main (String[] args) throws Exception {
+    try (Heatmap m = new Builder ().allowComments (false)
+                                   .allowEmptyLines (false)
+                                   .annotationProcessor (null)
+                                   .valueProcessor (new ParseDouble ())
+                                   .build (new ByteArrayInputStream (("\t\tone\ttwo\tthree\n" +
+                                                                      "uno1\tuno2\t1\t2\t3\n" +
+                                                                      "duo1\tduo2\t4\t5\t6").getBytes ()))) {
+      System.out.println (m.getData (0, 50, 0, 50).values ());
+    }
   }
 }

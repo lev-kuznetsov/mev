@@ -38,6 +38,8 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import edu.dfci.cccb.mev.domain.Heatmap;
+
 /**
  * @author levk
  * 
@@ -113,6 +115,11 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         };
       }
     };
+  }
+
+  @Bean (name = "heatmapBuilder")
+  public Heatmap.Builder heatmapBuilder () {
+    return new Heatmap.Builder ().allowComments (false).allowEmptyLines (false).annotationProcessor (null);
   }
 
   /* (non-Javadoc)

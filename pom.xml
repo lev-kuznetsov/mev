@@ -81,8 +81,6 @@
           </excludes>
           <jswarn>false</jswarn>
           <nosuffix>false</nosuffix>
-          <!-- sourceDirectory>${basedir}/src/main/webapp/META-INF/resources/mev/js</sourceDirectory -->
-          <!-- outputDirectory>/Users/levk/tmp</outputDirectory -->
           <aggregations>
             <aggregation>
               <insertNewLine>true</insertNewLine>
@@ -112,6 +110,14 @@
 
   <dependencies>
 
+    <!-- SuperCSV -->
+
+    <dependency>
+      <groupId>net.sf.supercsv</groupId>
+      <artifactId>super-csv</artifactId>
+      <version>2.1.0</version>
+    </dependency>
+
     <!-- Jackson 2 -->
 
     <dependency>
@@ -139,7 +145,7 @@
     <dependency>
       <groupId>us.levk</groupId>
       <artifactId>math</artifactId>
-      <version>0.0.2</version>
+      <version>0.0.3</version>
     </dependency>
 
     <!-- WebJars -->

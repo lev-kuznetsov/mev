@@ -14,12 +14,13 @@
  */
 package edu.dfci.cccb.mev.domain;
 
-import java.util.ArrayList;
+import java.util.AbstractList;
 import java.util.List;
 
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
+import org.apache.commons.math3.exception.OutOfRangeException;
 import org.apache.commons.math3.linear.RealMatrix;
 
 /**
@@ -59,10 +60,27 @@ public class MatrixData {
    * @return
    */
   public List<Double> values () {
-    List<Double> result = new ArrayList<Double> (rows () * columns ());
-    for (int row = 0, rows = rows (); row < rows; rows++)
-      for (int column = 0, columns = columns (); column < columns; column++)
-        result.add (data.getEntry (row, column));
-    return result;
+    return new AbstractList<Double> () {
+
+      /* (non-Javadoc)
+       * @see java.util.AbstractList#get(int)
+       */
+      @Override
+      public Double get (int index) {
+        try {
+          return data.getEntry (index / data.getColumnDimension (), index % data.getColumnDimension ());
+        } catch (OutOfRangeException e) {
+          throw new IndexOutOfBoundsException ();
+        }
+      }
+
+      /* (non-Javadoc)
+       * @see java.util.AbstractCollection#size()
+       */
+      @Override
+      public int size () {
+        return data.getColumnDimension () * data.getRowDimension ();
+      }
+    };
   }
 }
