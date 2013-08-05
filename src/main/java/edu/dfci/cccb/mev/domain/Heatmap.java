@@ -16,12 +16,12 @@ package edu.dfci.cccb.mev.domain;
 
 import static edu.dfci.cccb.mev.domain.MatrixAnnotation.Meta.CATEGORICAL;
 import static edu.dfci.cccb.mev.domain.MatrixAnnotation.Meta.QUANTITATIVE;
+import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.supercsv.prefs.CsvPreference.TAB_PREFERENCE;
-import static java.lang.Integer.MAX_VALUE;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -43,7 +44,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.Synchronized;
+import lombok.ToString;
 import lombok.experimental.Accessors;
+import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.math3.linear.RealMatrix;
 import org.supercsv.cellprocessor.ParseDouble;
@@ -56,6 +59,8 @@ import us.levk.math.linear.HugeRealMatrix;
  * @author levk
  * 
  */
+@ToString
+@Log4j
 public class Heatmap implements Closeable {
 
   private RealMatrix data;
@@ -252,6 +257,8 @@ public class Heatmap implements Closeable {
     public Heatmap build (InputStream input) throws IOException {
       BufferedReader reader = new BufferedReader (new InputStreamReader (input));
       String[] fields = reader.readLine ().split (delimiterRegex);
+      if (log.isDebugEnabled ())
+        log.debug ("Parsing matrix with header: " + Arrays.toString (fields));
       final CellProcessor[] processors = new CellProcessor[fields.length];
       int index = 0;
       for (; index < fields.length && "".equals (fields[index]); index++)
@@ -309,7 +316,7 @@ public class Heatmap implements Closeable {
                 private static final long serialVersionUID = 1L;
 
                 {
-                  for (int index = 0; index <= lastRowAnnotationIndex; index++)
+                  for (int index = 0; index < lastRowAnnotationIndex; index++)
                     put (rowAnnotationTypes.get (index), row.get (index).toString ());
                 }
               });
@@ -326,7 +333,7 @@ public class Heatmap implements Closeable {
         result.columnAnnotations = columnAnnotations;
         return result;
       } catch (IOExceptionHolder e) {
-        if (data != null)
+        if (data instanceof Closeable)
           data.close ();
         throw e.wrapped ();
       }

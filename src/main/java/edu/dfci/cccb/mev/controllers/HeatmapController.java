@@ -24,9 +24,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import java.io.IOException;
 import java.util.Collection;
+
+import lombok.extern.log4j.Log4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,8 +54,10 @@ import edu.dfci.cccb.mev.domain.MatrixSelection;
  * @author levk
  * 
  */
+// TODO: This should go into a separate heatmap package
 @Controller
 @RequestMapping ("/heatmap")
+@Log4j
 public class HeatmapController {
 
   private @Autowired Heatmaps heatmaps;
@@ -171,12 +176,15 @@ public class HeatmapController {
 
   // PUT
 
-  @RequestMapping (value = "/{id}", params = "format=tsv", method = PUT)
+  @RequestMapping (value = "/{id}", params = "format=tsv", method = PUT, produces = APPLICATION_JSON_VALUE)
   @ResponseStatus (OK)
   public void put (@PathVariable ("id") String id,
                    @RequestParam ("filedata") MultipartFile data) throws InvalidHeatmapFormatException {
     try {
-      heatmaps.put (id, heatmapBuilder.build (data.getInputStream ()));
+      Heatmap heatmap = heatmapBuilder.build (data.getInputStream ());
+      heatmaps.put (id, heatmap);
+      if (log.isDebugEnabled ())
+        log.debug ("Put heatmap " + heatmap + " keyed " + id);
     } catch (IOException | RuntimeException e) {
       throw new InvalidHeatmapFormatException (e);
     }

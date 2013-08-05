@@ -23,6 +23,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.math3.exception.OutOfRangeException;
 import org.apache.commons.math3.linear.RealMatrix;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 /**
  * @author levk
  * 
@@ -41,6 +43,7 @@ public class MatrixData {
    * 
    * @return
    */
+  @JsonView
   public int rows () {
     return data.getRowDimension ();
   }
@@ -50,6 +53,7 @@ public class MatrixData {
    * 
    * @return
    */
+  @JsonView
   public int columns () {
     return data.getColumnDimension ();
   }
@@ -59,6 +63,7 @@ public class MatrixData {
    * 
    * @return
    */
+  @JsonView
   public List<Double> values () {
     return new AbstractList<Double> () {
 

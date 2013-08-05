@@ -17,6 +17,8 @@ package edu.dfci.cccb.mev.domain;
 import java.util.Collection;
 import java.util.Collections;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -34,10 +36,10 @@ import lombok.experimental.ExtensionMethod;
 @EqualsAndHashCode
 public class MatrixAnnotation<T> {
 
-  private @Getter final String type;
-  private @Getter final T value;
-  private @Getter final Meta meta;
-  private @Getter final Collection<? extends T> range;
+  private @Getter @JsonView final String type;
+  private @Getter @JsonView final T value;
+  private @Getter @JsonView final Meta meta;
+  private @Getter @JsonView final Collection<? extends T> range;
   
   @RequiredArgsConstructor
   public static enum Meta {

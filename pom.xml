@@ -88,6 +88,7 @@
               <inputDir>${basedir}/src/main/webapp/META-INF/resources/mev/js/controllers</inputDir>
               <includes>
                 <include>${basedir}/LICENSE.txt</include>
+                <include>../controller-head.js</include>
                 <include>**/*.js</include>
               </includes>
             </aggregation>

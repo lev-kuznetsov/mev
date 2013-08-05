@@ -18,6 +18,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import lombok.experimental.ExtensionMethod;
@@ -30,8 +32,8 @@ import lombok.experimental.ExtensionMethod;
 @ExtensionMethod (Collections.class)
 public class MatrixSelection {
 
-  private final @Getter Map<String, String> attributes;
-  private final @Getter List<Integer> indecis;
+  private @Getter @JsonView final Map<String, String> attributes;
+  private @Getter @JsonView final List<Integer> indecis;
   
   public MatrixSelection (Map<String, String> attributes, List<Integer> indecis) {
     this.attributes = attributes.unmodifiableMap ();

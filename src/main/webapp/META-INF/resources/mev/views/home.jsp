@@ -11,8 +11,8 @@
   <link rel="stylesheet" href="/resources/static/webjars/bootstrap/${buildProperties['bootstrap.version']}/css/bootstrap-responsive.css"/>
 
   <!-- Effeckt -->
-  <link rel="stylesheet" href="lib/effeckt/css/demo/demo.autoprefixed.css">
-  <link rel="stylesheet" href="lib/effeckt/css/modules/off-screen-nav.css"/>
+  <link rel="stylesheet" href="/resources/static/mev/css/effeckt/demo/demo.autoprefixed.css">
+  <link rel="stylesheet" href="/resources/static/mev/css/effeckt/modules/off-screen-nav.css"/>
   <link rel="stylesheet" href="/resources/static/mev/css/app.css"/>
 </head>
 <body>
@@ -56,7 +56,7 @@
   <div class="footer">
 	<div class="row">
 	<div class="span2 offset 1">
-	  <a href="http://cccb.dfci.harvard.edu/"><img src="img/cccb-logo.jpg" class="img-polaroid"></a>
+	  <a href="http://cccb.dfci.harvard.edu/"><img src="/resources/static/mev/img/cccb-logo.jpg" class="img-polaroid"></a>
 	</div>
 	<div class="span2 offset1">
 		<p class="lead">Product</p>
@@ -91,7 +91,7 @@
   <script src="/resources/static/webjars/jquery/${buildProperties['jquery.version']}/jquery.min.js"></script>
   
   <script>window.jQuery || document.write('<script src="/resources/static/webjars/jquery/${buildProperties['jquery.version']}/jquery.min.js"><\/script>')</script>
-  <script src="lib/effeckt/js/modules/off-screen-nav.js"></script>
+  <script src="/resources/static/mev/js/effeckt/modules/off-screen-nav.js"></script>
   
   <!--Angular-->
   <script src="/resources/static/webjars/angularjs/${buildProperties['angularjs.version']}/angular.min.js"></script>

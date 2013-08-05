@@ -16,7 +16,7 @@
 <div class="row">
   <div class="span12">
     <div class="span4">
-      <img src="img/large300.png">
+      <img src="/resources/static/mev/img/large300.png">
     </div>
     <div class="span4">
       <p> 
@@ -42,7 +42,7 @@ Maecenas sed diam eget risus varius blandit sit amet non magna. Donec id elit no
 <div class="row">
   <div class="span12">
     <div class="span4">
-      <img src="img/large300.png">
+      <img src="/resources/static/mev/img/large300.png">
     </div>
     <div class="span4">
       <p> 
