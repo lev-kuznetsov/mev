@@ -92,7 +92,9 @@ angular.module('myApp.controllers', [])
 			var percent = document.getElementById("percent"); //Value reported inside progress bar
 			var upfile = input.files[0]; //Assign file object of the input file to a variable
 			var formdata = new FormData; //Dynamically create a new form
-			formdata.append('upload', upfile); //Append file object to the form
+			formdata.append('filedata', upfile); //Append file object to the form
+			formdata.append('format', 'tsv');
+			formdata.append('name', 'tsv');
 			$scope.output = "Uploading..."; //Alert user that uploading has begun
 			//AJAX code
 			var xhr = new XMLHttpRequest();
@@ -114,7 +116,7 @@ angular.module('myApp.controllers', [])
 				};
 			};
 			//Send the uploaded file.
-			xhr.open('POST', 'http://bioed.bu.edu/cgi-bin/students_13/correiak/upload.py', true); //Action (2nd parameter) is currently set to my school webspace for testing purposes. To be changed.
+			xhr.open('POST', '/heatmap', true);
 			xhr.send(formdata);
       };
   }])
