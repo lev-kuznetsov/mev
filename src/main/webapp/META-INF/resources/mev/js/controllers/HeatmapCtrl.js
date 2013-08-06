@@ -119,7 +119,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	
 	//Initial call for values
 	
-	$scope.pullPage(1, 40, 1, 40)
+	$scope.pullPage(0, 39, 0, 39)
 	$scope.transformData();
 	
 }]);
