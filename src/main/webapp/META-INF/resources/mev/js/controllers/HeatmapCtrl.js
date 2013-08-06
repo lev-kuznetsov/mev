@@ -19,7 +19,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	};
 	
 	$scope.markRow = function(inputindecies, inputdimension, inputgroup, inputname) {
-	
+
 		$http({
 			method:"PUT",
 			url:"heatmap/"+$scope.matrixlocation+"/selection/" + inputdimension,
@@ -33,7 +33,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		.success( function(data) {
 			return;
 		});
-		
+
 	}
 	
 	//pull page function
@@ -89,7 +89,6 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 				$scope.heatmaprows.push(data);
 			});
 		}
-
 
 	};
 	

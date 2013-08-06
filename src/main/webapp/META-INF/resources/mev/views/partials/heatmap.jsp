@@ -3,9 +3,9 @@
 		
 		<div class="span8">
 		    <vis-Heatmap 
-				inputdata="heatmapdata"
-				inputcolor="vizcolor"
-				pushtomarked="storeRow(input)">
+				inputdata="transformeddata"
+				inputcolor="0"
+				pushtomarked="markRow(inputindecies, inputdimension, inputgroup, inputname)">
 			</vis-Heatmap>
 
 		</div>
