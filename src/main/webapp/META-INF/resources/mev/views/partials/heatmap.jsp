@@ -5,7 +5,7 @@
 		    <vis-Heatmap 
 				inputdata="transformeddata"
 				inputcolor="0"
-				pushtomarked="markRow(inputindecies, inputdimension, inputgroup, inputname)">
+				pushtomarked="markRow(inputindecies, inputdimension)">
 			</vis-Heatmap>
 
 		</div>

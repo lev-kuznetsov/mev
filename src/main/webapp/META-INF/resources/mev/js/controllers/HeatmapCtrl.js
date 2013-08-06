@@ -6,6 +6,8 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	$scope.heatmaprows = [];
 	$scope.transformeddata = [];
 	$scope.selectedrows = [];
+	$scope.inputname = [];
+	$scope.inputgroup =[];
 	
 	$scope.transformData = function() {
 		for (index = 0; index < $scope.heatmapcells.values.length; index++) {
@@ -18,15 +20,15 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		}
 	};
 	
-	$scope.markRow = function(inputindecies, inputdimension, inputgroup, inputname) {
+	$scope.markRow = function(inputindecies, inputdimension) {
 
 		$http({
 			method:"PUT",
 			url:"heatmap/"+$scope.matrixlocation+"/selection/" + inputdimension,
 			params: {
 				format:"json",
-				name: inputname,
-				color: inputgroup,
+				name: $scope.inputname,
+				color: $scope.inputgroup,
 				indecies: inputindecies
 			}
 		})
