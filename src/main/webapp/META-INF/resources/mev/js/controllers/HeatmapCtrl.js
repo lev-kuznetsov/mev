@@ -5,61 +5,36 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	$scope.heatmapcolumns = [];
 	$scope.heatmaprows = [];
 	$scope.transformeddata = [];
-	
-	//Initial call for values
-	$http({
-		method:"GET",
-		url:"heatmap/"+$scope.matrixlocation+"/data",
-		params: {
-			format:"json"
-		}
-	})
-	.success( function(data) {
-		$scope.heatmapcells = data;
-	});
-
-	$http({
-		method:"GET",
-		url:"heatmap/"+$scope.matrixlocation+"/annotation/dimension",
-		params: {
-			format:"json",
-			dimension:"column"
-		}
-	})
-	.success( function(data) {
-		$scope.heatmapcolumns = data;
-	});
-
-
-	$http({
-		method:"GET",
-		url:"heatmap/"+$scope.matrixlocation+"/annotation/dimension",
-		params: {
-			format:"json",
-			dimension:"row"
-		}
-	})
-	.success( function(data) {
-		$scope.heatmaprows = data;
-	});
+	$scope.selectedrows = [];
 	
 	$scope.transformData = function() {
-		
 		for (index = 0; index < $scope.heatmapcells.values.length; index++) {
-		
 			inputobj = {
 				value: $scope.heatmapcells.values[index],
 				row: $scope.heatmaprows[Math.floor(index/$scope.heatmapcolumns.length)],
 				col: $scope.heatmapcolumns[index%$scope.heatmapcolumns.length]
 			}
-			
 			$scope.transformeddata.push(inputobj);
-			
-			);
-		
 		}
-		
 	};
+	
+	$scope.markRow = function(inputindecies, inputdimension, inputgroup, inputname) {
+	
+		$http({
+			method:"PUT",
+			url:"heatmap/"+$scope.matrixlocation+"/selection/" + inputdimension,
+			params: {
+				format:"json",
+				name: inputname,
+				color: inputgroup,
+				indecies: inputindecies
+			}
+		})
+		.success( function(data) {
+			return;
+		});
+		
+	}
 	
 	//pull page function
 	$scope.pullPage = function(startrow, endrow, startcol, endcol) {
@@ -115,13 +90,46 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 			});
 		}
 
-		
+
 	};
 	
-	$scope.pushToMarked = function() {
-		
-	};
+	//Initial call for values
+	$http({
+		method:"GET",
+		url:"heatmap/"+$scope.matrixlocation+"/data",
+		params: {
+			format:"json"
+		}
+	})
+	.success( function(data) {
+		$scope.heatmapcells = data;
+	});
 
+	$http({
+		method:"GET",
+		url:"heatmap/"+$scope.matrixlocation+"/annotation/dimension",
+		params: {
+			format:"json",
+			dimension:"column"
+		}
+	})
+	.success( function(data) {
+		$scope.heatmapcolumns = data;
+	});
+
+
+	$http({
+		method:"GET",
+		url:"heatmap/"+$scope.matrixlocation+"/annotation/dimension",
+		params: {
+			format:"json",
+			dimension:"row"
+		}
+	})
+	.success( function(data) {
+		$scope.heatmaprows = data;
+	});
+	
 }]);
 
 
