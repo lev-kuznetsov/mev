@@ -131,6 +131,8 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		$scope.heatmaprows = data;
 	});
 	
+	$scope.transformData();
+	
 }]);
 
 
