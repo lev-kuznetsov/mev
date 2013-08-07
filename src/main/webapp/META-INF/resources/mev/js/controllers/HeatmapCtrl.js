@@ -9,7 +9,44 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	$scope.transformeddata = [];
 	$scope.selectedrows = [];
 	$scope.inputname = [];
-	$scope.inputgroup =[];
+	$scope.inputgroup = [];
+	$scope.curstartrow = 0;
+	$scope.curendrow = 0;
+	$scope.curstartcol = 39;
+	$scope.curendcol = 39;
+	
+	$scope.pageUp = function() {
+		
+		++$scope.curstartrow;
+		++$scope.curendrow;
+		$scope.pullPage();
+		
+	}
+	
+	$scope.pageDown = function() {
+		
+		--$scope.curstartrow;
+		--$scope.curendrow;
+		$scope.pullPage();
+		
+	}
+	
+	$scope.pageLeft = function() {
+		
+		--$scope.curstartcol;
+		--$scope.curendcol;
+		$scope.pullPage();
+		
+	}
+	
+	$scope.pageRight = function() {
+		
+		++$scope.curstartcol;
+		++$scope.curendcol;
+		$scope.pullPage();
+		
+	}
+	
 	
 	$scope.transformData = function() {
 		for (index = 0; index < $scope.heatmapcells.values.length; index++) {
@@ -41,7 +78,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	}
 	
 	//pull page function
-	$scope.pullPage = function(startrow, endrow, startcol, endcol) {
+	$scope.pullPage = function() {
 
 		if (!scope.matrixlocation) {
 			return;
@@ -52,10 +89,10 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 			url:"heatmap/"+$scope.matrixlocation+"/data",
 			params: {
 				format:"json",
-				startRow:startrow,
-				endRow:endrow,
-				startColumn:startcol,
-				endColumn:endcol
+				startRow:curstartrow,
+				endRow:curendrow,
+				startColumn:curstartcol,
+				endColumn:curendcol
 			}
 		})
 		.success( function(data) {
@@ -85,7 +122,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		});
 
 		var heatmapcolshold = [];
-		for (var eachcol=startcol; eachcol<endcol; eachcol++) {
+		for (var eachcol=curstartcol; eachcol<curendcol; eachcol++) {
 			$http({
 				method:"GET",
 				url:"heatmap/"+$scope.matrixlocation+"/annotation/column/" +eachcol+ "/" + $scope.heatmapcolumnannotations[0],
@@ -100,7 +137,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		$scope.heatmapcolumns = heatmapcolshold;
 		
 		var heatmaprowshold = [];
-		for (var eachrow=startrow; eachrow<endrow; eachrow++) {
+		for (var eachrow=curstartrow; eachrow<curendrow; eachrow++) {
 			$http({
 				method:"GET",
 				url:"heatmap/"+$scope.matrixlocation+"/annotation/row/" +eachrow+ "/" + $scope.heatmaprownotations[0],
@@ -119,7 +156,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	
 	//Initial call for values
 	
-	$scope.pullPage(0, 39, 0, 39)
+	$scope.pullPage()
 	$scope.transformData();
 	
 }]);
