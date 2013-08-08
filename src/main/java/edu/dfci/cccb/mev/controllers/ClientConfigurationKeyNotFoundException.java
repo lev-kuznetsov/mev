@@ -14,21 +14,28 @@
  */
 package edu.dfci.cccb.mev.controllers;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.Getter;
 
 /**
  * @author levk
- * 
+ *
  */
-@Controller
-public class PartialsController {
+// TODO: Attach internationalization
+public class ClientConfigurationKeyNotFoundException extends Exception {
+  private static final long serialVersionUID = 1L;
 
-  @RequestMapping (value = "/views/partials/{view}", method = GET)
-  public String partial (@PathVariable ("view") String view) {
-    return "partials/" + view;
+  private final @Getter String key;
+  
+  public ClientConfigurationKeyNotFoundException (String key) {
+    super ("Configuration key " + key + " not found");
+    this.key = key;
+  }
+  
+  /* (non-Javadoc)
+   * @see java.lang.Throwable#getLocalizedMessage()
+   */
+  @Override
+  public String getLocalizedMessage () {
+    return getMessage ();
   }
 }
