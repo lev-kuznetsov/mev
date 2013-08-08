@@ -4,7 +4,6 @@ ctrl.controller('AnalyzeCtrl', ['$scope', '$routeParams', '$http', function($sco
 	
 	$scope.retrieveHeatmaps = function() {
 
-		alert('before get heatmap/');	
 		$http({
 				method:"GET",
 				url:"heatmap/",
@@ -14,7 +13,6 @@ ctrl.controller('AnalyzeCtrl', ['$scope', '$routeParams', '$http', function($sco
 			})
 			.success( function(data) {
 				$scope.heatmaplist = data
-				alert($scope.heatmaplist);
 			});
 	};
 	
@@ -49,13 +47,11 @@ ctrl.controller('AnalyzeCtrl', ['$scope', '$routeParams', '$http', function($sco
 					});
 					bar.style.width = "100%";
 					percent.innerHTML = "100%";
-					alert('send completed');
 					
 				};
 			};
 			//Send the uploaded file.
 			xhr.open('POST', '/heatmap', true);
-			alert('before send');
 			xhr.send(formdata);
 			
 
