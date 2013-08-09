@@ -375,6 +375,7 @@ public class Heatmap implements Closeable {
     return new MatrixAnnotation (type,
                                  dimension.get (index).get (type),
                                  isQuantitative ? QUANTITATIVE : CATEGORICAL,
+                                 index,
                                  isQuantitative ? asList (min, max) : categorical);
   }
 
