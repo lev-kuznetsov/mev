@@ -14,15 +14,11 @@
  */
 package edu.dfci.cccb.mev.domain;
 
-import static java.util.Collections.emptyList;
-
 import java.util.AbstractList;
 import java.util.List;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.Accessors;
 
 import org.apache.commons.math3.exception.OutOfRangeException;
 import org.apache.commons.math3.linear.RealMatrix;
@@ -37,18 +33,31 @@ import com.fasterxml.jackson.annotation.JsonView;
 @EqualsAndHashCode
 public class MatrixData {
 
+  public static final MatrixData EMPTY_MATRIX_DATA = new MatrixData (null);
+
   /**
    * Matrix data
    */
   private final RealMatrix data;
 
-  @Data
-  @Accessors (fluent = true, chain = true)
-  public class MatrixValue {
+  /**
+   * Gets number of rows
+   * 
+   * @return
+   */
+  @JsonView
+  public int rows () {
+    return data == null ? 0 : data.getRowDimension ();
+  }
 
-    private final @JsonView int row;
-    private final @JsonView int column;
-    private final @JsonView double value;
+  /**
+   * Gets number of columns
+   * 
+   * @return
+   */
+  @JsonView
+  public int columns () {
+    return data == null ? 0 : data.getColumnDimension ();
   }
 
   /**
@@ -57,17 +66,16 @@ public class MatrixData {
    * @return
    */
   @JsonView
-  public List<MatrixValue> values () {
-    return new AbstractList<MatrixValue> () {
+  public List<Double> values () {
+    return new AbstractList<Double> () {
 
       /* (non-Javadoc)
        * @see java.util.AbstractList#get(int) */
       @Override
-      public MatrixValue get (int index) {
+      public Double get (int index) {
+        if (data == null) throw new IndexOutOfBoundsException ();
         try {
-          return new MatrixValue (index / data.getColumnDimension (),
-                                  index % data.getColumnDimension (),
-                                  data.getEntry (index / data.getColumnDimension (), index % data.getColumnDimension ()));
+          return data.getEntry (index / data.getColumnDimension (), index % data.getColumnDimension ());
         } catch (OutOfRangeException e) {
           throw new IndexOutOfBoundsException ();
         }
@@ -77,16 +85,8 @@ public class MatrixData {
        * @see java.util.AbstractCollection#size() */
       @Override
       public int size () {
-        return data.getColumnDimension () * data.getRowDimension ();
+        return data == null ? 0 : data.getColumnDimension () * data.getRowDimension ();
       }
     };
   }
-  
-  public static final MatrixData EMPTY_MATRIX_DATA = new MatrixData (null) {
-
-    @Override
-    public List<MatrixValue> values () {
-      return emptyList ();
-    }
-  };
 }

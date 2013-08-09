@@ -27,7 +27,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import lombok.extern.log4j.Log4j;
 
@@ -108,20 +110,24 @@ public class HeatmapController {
       throw new InvalidDimensionException (dimension);
   }
 
-  @RequestMapping (value = "/{id}/annotation/{dimension}/{index}/{type}", method = GET)
+  @RequestMapping (value = "/{id}/annotation/{dimension}/{startIndex}-{endIndex}/{type}", method = GET)
   @ResponseBody
-  public MatrixAnnotation<?> annotation (@PathVariable ("id") String id,
+  public List<MatrixAnnotation<?>> annotation (@PathVariable ("id") String id,
                                          @PathVariable ("dimension") String dimension,
-                                         @PathVariable ("index") int index,
+                                         @PathVariable ("startIndex") int startIndex,
+                                         @PathVariable ("endIndex") int endIndex,
                                          @PathVariable ("type") String type) throws HeatmapNotFoundException,
                                                                             InvalidDimensionException,
                                                                             AnnotationNotFoundException {
+    List<MatrixAnnotation<?>> result = new ArrayList<> ();
+    for (int index = startIndex; index < endIndex; index++)
     if (isRow (dimension))
-      return heatmaps.get (id).getRowAnnotation (index, type);
+      result.add (heatmaps.get (id).getRowAnnotation (index, type));
     else if (isColumn (dimension))
-      return heatmaps.get (id).getColumnAnnotation (index, type);
+      result.add (heatmaps.get (id).getColumnAnnotation (index, type));
     else
       throw new InvalidDimensionException (dimension);
+    return result;
   }
 
   @RequestMapping (value = "/{id}/selection/{dimension}", method = GET)
