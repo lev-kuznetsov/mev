@@ -351,11 +351,11 @@ public class Heatmap implements Closeable {
                                                    int startIndex, int endIndex,
                                                    String type) throws AnnotationNotFoundException {
     endIndex = max (endIndex, 0);
-    endIndex = min (endIndex, dimension.size ());
+    endIndex = min (endIndex, dimension.size () - 1);
     startIndex = max (0, startIndex);
     startIndex = min (startIndex, endIndex);
     List<MatrixAnnotation<?>> result = new ArrayList<> ();
-    for (int index = startIndex; index < endIndex; index++) {
+    for (int index = startIndex; index <= endIndex; index++) {
       Number min = Double.MAX_VALUE;
       Number max = Double.MIN_VALUE;
       Set<Object> categorical = new HashSet<> ();
