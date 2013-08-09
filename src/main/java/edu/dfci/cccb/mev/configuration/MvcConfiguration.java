@@ -25,6 +25,7 @@ import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -47,8 +48,9 @@ import edu.dfci.cccb.mev.domain.Heatmap;
 @Configuration
 @EnableWebMvc
 @ComponentScan ("edu.dfci.cccb.mev")
+@PropertySource ("classpath:default-client-configuration.properties")
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
-
+  
   /**
    * Loads build properties as an application accessible bean
    * 
@@ -67,7 +69,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
    * Create the CNVR. Get Spring to inject the ContentNegotiationManager created
    * by the configurer (see previous method).
    */
-  @Bean
+  @Bean (name = "contentNegotiatingViewResolver ")
   public ViewResolver contentNegotiatingViewResolver (final ContentNegotiationManager manager) {
     return new ContentNegotiatingViewResolver () {
       {
@@ -81,7 +83,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
    * 
    * @return
    */
-  @Bean
+  @Bean (name = "multipartResolver")
   public CommonsMultipartResolver multipartResolver () {
     return new CommonsMultipartResolver () {
       {
@@ -90,18 +92,28 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     };
   }
 
+  /**
+   * JSP view resolver
+   * 
+   * @return
+   */
   @Bean (name = "jspViewResolver")
   public ViewResolver jspViewResolver () {
     return new InternalResourceViewResolver () {
       {
-        setPrefix ("META-INF/resources/mev/views/");
+        setPrefix ("/META-INF/resources/mev/views/");
         setSuffix (".jsp");
         setOrder (2);
-        setExposedContextBeanNames (new String[] { "buildProperties" });
+        setExposeContextBeansAsAttributes (true);
       }
     };
   }
 
+  /**
+   * JSON view resolver
+   * 
+   * @return
+   */
   @Bean (name = "jsonViewResolver")
   public ViewResolver jsonViewResolver () {
     return new ViewResolver () {
@@ -117,6 +129,11 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     };
   }
 
+  /**
+   * Heatmap container bean
+   * 
+   * @return
+   */
   // TODO: Move this off to a separate heatmap config
   @Bean (name = "heatmapBuilder")
   public Heatmap.Builder heatmapBuilder () {
@@ -143,9 +160,14 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
               .mediaType ("json", APPLICATION_JSON);
   }
 
+  /* (non-Javadoc)
+   * @see
+   * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
+   * #addResourceHandlers
+   * (org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry) */
   @Override
   public void addResourceHandlers (ResourceHandlerRegistry registry) {
-    registry.addResourceHandler ("/resources/static/**").addResourceLocations ("classpath:/META-INF/resources/",
-                                                                               "/META-INF/resources/");
+    registry.addResourceHandler ("/resources/static/**")
+            .addResourceLocations ("classpath:/META-INF/resources/", "/META-INF/resources/");
   }
 }

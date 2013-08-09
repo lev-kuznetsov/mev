@@ -78,6 +78,10 @@ public class HeatmapController {
                           @RequestParam (value = "endRow", required = false) Integer endRow,
                           @RequestParam (value = "startColumn", required = false) Integer startColumn,
                           @RequestParam (value = "endColumn", required = false) Integer endColumn) throws HeatmapNotFoundException {
+    if (log.isDebugEnabled ())
+      log.debug ("Serving request for data for heatmap "
+                 + id + " starting row " + startRow + " ending row " + endRow + " startingColumn " + startColumn
+                 + " ending column " + endColumn);
     return (startRow == null || endRow == null || startColumn == null || endColumn == null)
                                                                                            ? heatmaps.get (id)
                                                                                                      .getData (0,
