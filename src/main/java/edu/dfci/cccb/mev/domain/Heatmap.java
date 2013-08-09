@@ -351,7 +351,7 @@ public class Heatmap implements Closeable {
                                                    int startIndex, int endIndex,
                                                    String type) throws AnnotationNotFoundException {
     endIndex = max (endIndex, 0);
-    endIndex = min (endIndex, dimension.size () - 1);
+    endIndex = min (endIndex, dimension.size ());
     startIndex = max (0, startIndex);
     startIndex = min (startIndex, endIndex);
     List<MatrixAnnotation<?>> result = new ArrayList<> ();
