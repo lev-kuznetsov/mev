@@ -14,11 +14,15 @@
  */
 package edu.dfci.cccb.mev.domain;
 
+import static java.util.Collections.emptyList;
+
 import java.util.AbstractList;
 import java.util.List;
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 
 import org.apache.commons.math3.exception.OutOfRangeException;
 import org.apache.commons.math3.linear.RealMatrix;
@@ -38,24 +42,13 @@ public class MatrixData {
    */
   private final RealMatrix data;
 
-  /**
-   * Gets number of rows
-   * 
-   * @return
-   */
-  @JsonView
-  public int rows () {
-    return data.getRowDimension ();
-  }
+  @Data
+  @Accessors (fluent = true, chain = true)
+  public class MatrixValue {
 
-  /**
-   * Gets number of columns
-   * 
-   * @return
-   */
-  @JsonView
-  public int columns () {
-    return data.getColumnDimension ();
+    private final @JsonView int row;
+    private final @JsonView int column;
+    private final @JsonView double value;
   }
 
   /**
@@ -64,28 +57,36 @@ public class MatrixData {
    * @return
    */
   @JsonView
-  public List<Double> values () {
-    return new AbstractList<Double> () {
+  public List<MatrixValue> values () {
+    return new AbstractList<MatrixValue> () {
 
       /* (non-Javadoc)
-       * @see java.util.AbstractList#get(int)
-       */
+       * @see java.util.AbstractList#get(int) */
       @Override
-      public Double get (int index) {
+      public MatrixValue get (int index) {
         try {
-          return data.getEntry (index / data.getColumnDimension (), index % data.getColumnDimension ());
+          return new MatrixValue (index / data.getColumnDimension (),
+                                  index % data.getColumnDimension (),
+                                  data.getEntry (index / data.getColumnDimension (), index % data.getColumnDimension ()));
         } catch (OutOfRangeException e) {
           throw new IndexOutOfBoundsException ();
         }
       }
 
       /* (non-Javadoc)
-       * @see java.util.AbstractCollection#size()
-       */
+       * @see java.util.AbstractCollection#size() */
       @Override
       public int size () {
         return data.getColumnDimension () * data.getRowDimension ();
       }
     };
   }
+  
+  public static final MatrixData EMPTY_MATRIX_DATA = new MatrixData (null) {
+
+    @Override
+    public List<MatrixValue> values () {
+      return emptyList ();
+    }
+  };
 }

@@ -20,8 +20,8 @@ import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
 import static org.supercsv.prefs.CsvPreference.TAB_PREFERENCE;
+import static edu.dfci.cccb.mev.domain.MatrixData.EMPTY_MATRIX_DATA;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -404,24 +404,6 @@ public class Heatmap implements Closeable {
     for (Map<String, Map<String, String>> selections : dimension)
       selections.remove (id);
   }
-
-  private static final MatrixData EMPTY_MATRIX_DATA = new MatrixData (null) {
-
-    @Override
-    public int rows () {
-      return 0;
-    }
-
-    @Override
-    public int columns () {
-      return 0;
-    }
-
-    @Override
-    public List<Double> values () {
-      return emptyList ();
-    }
-  };
 
   private class SelectionHolderList extends ArrayList<Map<String, Map<String, String>>> {
     private static final long serialVersionUID = 1L;
