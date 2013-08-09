@@ -124,9 +124,9 @@ public class Heatmap implements Closeable {
    * @param type
    * @return
    */
-  public MatrixAnnotation<?> getRowAnnotation (int index,
-                                               String type) throws AnnotationNotFoundException {
-    return getAnnotation (rowAnnotations, index, type);
+  public List<MatrixAnnotation<?>> getRowAnnotation (int startIndex, int endIndex,
+                                                     String type) throws AnnotationNotFoundException {
+    return getAnnotation (rowAnnotations, startIndex, endIndex, type);
   }
 
   /**
@@ -137,9 +137,9 @@ public class Heatmap implements Closeable {
    * @param type
    * @return
    */
-  public MatrixAnnotation<?> getColumnAnnotation (int index,
-                                                  String type) throws AnnotationNotFoundException {
-    return getAnnotation (columnAnnotations, index, type);
+  public List<MatrixAnnotation<?>> getColumnAnnotation (int startIndex, int endIndex,
+                                                        String type) throws AnnotationNotFoundException {
+    return getAnnotation (columnAnnotations, startIndex, endIndex, type);
   }
 
   /**
@@ -333,8 +333,7 @@ public class Heatmap implements Closeable {
         result.columnAnnotations = columnAnnotations;
         return result;
       } catch (IOExceptionHolder e) {
-        if (data instanceof Closeable)
-          data.close ();
+        data.close ();
         throw e.wrapped ();
       }
     }
@@ -348,35 +347,40 @@ public class Heatmap implements Closeable {
   }
 
   @SuppressWarnings ({ "rawtypes", "unchecked" })
-  private MatrixAnnotation<?> getAnnotation (List<Map<String, ?>> dimension,
-                                             int index,
-                                             String type) throws AnnotationNotFoundException {
-    if (index < 0 || index >= dimension.size ())
-      throw new IndexOutOfBoundsException ();
-    Number min = Double.MAX_VALUE;
-    Number max = Double.MIN_VALUE;
-    Set<Object> categorical = new HashSet<> ();
-    boolean isQuantitative = true;
-    for (Map<String, ?> entry : dimension) {
-      Object value = entry.get (type);
-      if (value == null)
-        throw new AnnotationNotFoundException (type);
-      if (isQuantitative)
-        if (value instanceof Number) {
-          Number number = (Number) value;
-          if (min.doubleValue () >= number.doubleValue ())
-            min = number;
-          if (max.doubleValue () <= number.doubleValue ())
-            max = number;
-        } else
-          isQuantitative = false;
-      categorical.add (value);
+  private List<MatrixAnnotation<?>> getAnnotation (List<Map<String, ?>> dimension,
+                                                   int startIndex, int endIndex,
+                                                   String type) throws AnnotationNotFoundException {
+    endIndex = max (endIndex, 0);
+    endIndex = min (endIndex, dimension.size () - 1);
+    startIndex = max (0, startIndex);
+    startIndex = min (startIndex, endIndex);
+    List<MatrixAnnotation<?>> result = new ArrayList<> ();
+    for (int index = startIndex; index < endIndex; index++) {
+      Number min = Double.MAX_VALUE;
+      Number max = Double.MIN_VALUE;
+      Set<Object> categorical = new HashSet<> ();
+      boolean isQuantitative = true;
+      for (Map<String, ?> entry : dimension) {
+        Object value = entry.get (type);
+        if (value == null)
+          throw new AnnotationNotFoundException (type);
+        if (isQuantitative)
+          if (value instanceof Number) {
+            Number number = (Number) value;
+            if (min.doubleValue () >= number.doubleValue ())
+              min = number;
+            if (max.doubleValue () <= number.doubleValue ())
+              max = number;
+          } else
+            isQuantitative = false;
+        categorical.add (value);
+      }
+      result.add (new MatrixAnnotation (type,
+                                        dimension.get (index).get (type),
+                                        isQuantitative ? QUANTITATIVE : CATEGORICAL,
+                                        isQuantitative ? asList (min, max) : categorical));
     }
-    return new MatrixAnnotation (type,
-                                 dimension.get (index).get (type),
-                                 isQuantitative ? QUANTITATIVE : CATEGORICAL,
-                                 index,
-                                 isQuantitative ? asList (min, max) : categorical);
+    return result;
   }
 
   private Collection<String> getSelectionIds (List<Map<String, Map<String, String>>> dimension) {

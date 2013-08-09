@@ -39,7 +39,6 @@ public class MatrixAnnotation <T> {
   private @Getter @JsonView final String type;
   private @Getter @JsonView final T value;
   private @Getter @JsonView final Meta meta;
-  private @Getter @JsonView final int index;
   private @Getter @JsonView final Collection<? extends T> range;
 
   @RequiredArgsConstructor
@@ -55,11 +54,10 @@ public class MatrixAnnotation <T> {
     }
   }
 
-  public MatrixAnnotation (String type, T value, Meta meta, int index, Collection<? extends T> range) {
+  public MatrixAnnotation (String type, T value, Meta meta, Collection<? extends T> range) {
     this.type = type;
     this.value = value;
     this.meta = meta;
-    this.index = index;
     this.range = range.unmodifiableCollection ();
   }
 }

@@ -48,3 +48,8 @@ a:active {
   content: "";
   padding: 0;
 }
+
+.build {
+  font-size: 70%;
+  color: gray;
+}
