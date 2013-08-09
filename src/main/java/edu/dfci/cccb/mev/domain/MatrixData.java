@@ -33,6 +33,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 @EqualsAndHashCode
 public class MatrixData {
 
+  public static final MatrixData EMPTY_MATRIX_DATA = new MatrixData (null);
+
   /**
    * Matrix data
    */
@@ -45,7 +47,7 @@ public class MatrixData {
    */
   @JsonView
   public int rows () {
-    return data.getRowDimension ();
+    return data == null ? 0 : data.getRowDimension ();
   }
 
   /**
@@ -55,7 +57,7 @@ public class MatrixData {
    */
   @JsonView
   public int columns () {
-    return data.getColumnDimension ();
+    return data == null ? 0 : data.getColumnDimension ();
   }
 
   /**
@@ -68,10 +70,10 @@ public class MatrixData {
     return new AbstractList<Double> () {
 
       /* (non-Javadoc)
-       * @see java.util.AbstractList#get(int)
-       */
+       * @see java.util.AbstractList#get(int) */
       @Override
       public Double get (int index) {
+        if (data == null) throw new IndexOutOfBoundsException ();
         try {
           return data.getEntry (index / data.getColumnDimension (), index % data.getColumnDimension ());
         } catch (OutOfRangeException e) {
@@ -80,11 +82,10 @@ public class MatrixData {
       }
 
       /* (non-Javadoc)
-       * @see java.util.AbstractCollection#size()
-       */
+       * @see java.util.AbstractCollection#size() */
       @Override
       public int size () {
-        return data.getColumnDimension () * data.getRowDimension ();
+        return data == null ? 0 : data.getColumnDimension () * data.getRowDimension ();
       }
     };
   }

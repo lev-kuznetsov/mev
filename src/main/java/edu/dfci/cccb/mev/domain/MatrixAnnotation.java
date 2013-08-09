@@ -29,35 +29,37 @@ import lombok.experimental.ExtensionMethod;
  * A value type for a single matrix annotation
  * 
  * @author levk
- *
+ * 
  */
 @ExtensionMethod (Collections.class)
 @Accessors (fluent = true, chain = false)
 @EqualsAndHashCode
-public class MatrixAnnotation<T> {
+public class MatrixAnnotation <T> {
 
   private @Getter @JsonView final String type;
   private @Getter @JsonView final T value;
   private @Getter @JsonView final Meta meta;
+  private @Getter @JsonView final int index;
   private @Getter @JsonView final Collection<? extends T> range;
-  
+
   @RequiredArgsConstructor
   public static enum Meta {
     QUANTITATIVE ("quantitative"),
     CATEGORICAL ("categorical");
-    
+
     private final @Getter String meta;
-    
+
     @Override
     public String toString () {
       return meta;
     }
   }
-  
-  public MatrixAnnotation (String type, T value, Meta meta, Collection<? extends T> range) {
+
+  public MatrixAnnotation (String type, T value, Meta meta, int index, Collection<? extends T> range) {
     this.type = type;
     this.value = value;
     this.meta = meta;
+    this.index = index;
     this.range = range.unmodifiableCollection ();
   }
 }
