@@ -100,5 +100,7 @@
   <script src="/resources/static/mev/js/controllers.js"></script>
   <script src="/resources/static/mev/js/filters.js"></script>
   <script src="/resources/static/mev/js/directives.js"></script>
+  
+  <div class="build">Build: ${buildProperties['revision']}
 </body>
 </html>

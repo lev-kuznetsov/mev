@@ -27,7 +27,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -113,21 +112,18 @@ public class HeatmapController {
   @RequestMapping (value = "/{id}/annotation/{dimension}/{startIndex}-{endIndex}/{type}", method = GET)
   @ResponseBody
   public List<MatrixAnnotation<?>> annotation (@PathVariable ("id") String id,
-                                         @PathVariable ("dimension") String dimension,
-                                         @PathVariable ("startIndex") int startIndex,
-                                         @PathVariable ("endIndex") int endIndex,
-                                         @PathVariable ("type") String type) throws HeatmapNotFoundException,
-                                                                            InvalidDimensionException,
-                                                                            AnnotationNotFoundException {
-    List<MatrixAnnotation<?>> result = new ArrayList<> ();
-    for (int index = startIndex; index < endIndex; index++)
-    if (isRow (dimension))
-      result.add (heatmaps.get (id).getRowAnnotation (index, type));
-    else if (isColumn (dimension))
-      result.add (heatmaps.get (id).getColumnAnnotation (index, type));
-    else
-      throw new InvalidDimensionException (dimension);
-    return result;
+                                               @PathVariable ("dimension") String dimension,
+                                               @PathVariable ("startIndex") int startIndex,
+                                               @PathVariable ("endIndex") int endIndex,
+                                               @PathVariable ("type") String type) throws HeatmapNotFoundException,
+                                                                                  InvalidDimensionException,
+                                                                                  AnnotationNotFoundException {
+      if (isRow (dimension))
+        return heatmaps.get (id).getRowAnnotation (startIndex, endIndex, type);
+      else if (isColumn (dimension))
+        return heatmaps.get (id).getColumnAnnotation (startIndex, endIndex, type);
+      else
+        throw new InvalidDimensionException (dimension);
   }
 
   @RequestMapping (value = "/{id}/selection/{dimension}", method = GET)
