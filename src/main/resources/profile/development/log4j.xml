@@ -5,14 +5,14 @@
     <param name="threshold" value="warn" />
     <param name="target" value="System.err" />
     <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="[%p] : %m%n" />
+      <param name="ConversionPattern" value="${log4j.pattern}" />
     </layout>
   </appender>
   <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
     <param name="threshold" value="debug" />
     <param name="target" value="System.out" />
     <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="[%p] : %m%n" />
+      <param name="ConversionPattern" value="${log4j.pattern}" />
     </layout>
     <filter class="org.apache.log4j.varia.LevelRangeFilter">
       <param name="LevelMin" value="debug" />

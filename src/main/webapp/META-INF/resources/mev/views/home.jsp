@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WebMev: Online Bioinformatics Data Presentation</title>
-  
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="/resources/static/webjars/bootstrap/${buildProperties['bootstrap.version']}/css/bootstrap.min.css"/>
@@ -14,6 +13,18 @@
   <link rel="stylesheet" href="/resources/static/mev/css/effeckt/demo/demo.autoprefixed.css">
   <link rel="stylesheet" href="/resources/static/mev/css/effeckt/modules/off-screen-nav.css"/>
   <link rel="stylesheet" href="/resources/static/mev/css/app.css"/>
+  
+  <!-- Log4javascript -->
+  <script src="/resources/static/webjars/log4javascript/${buildProperties['log4javascript.version']}/log4javascript.js"></script>
+  <script type="text/javascript">
+    var consoleAppender = new log4javascript.BrowserConsoleAppender();
+    var patternLayout = new log4javascript.PatternLayout("${log4j.pattern}");
+    consoleAppender.setLayout(patternLayout);
+
+    var log = log4javascript.getRootLogger();
+    log.addAppender(consoleAppender);
+    log.setLevel(log4javascript.Level.ALL);
+  </script>
 </head>
 <body>
   <div class="row">
@@ -31,7 +42,7 @@
       </ul>
     </div>
   </div>
-  
+
   <nav class="effeckt-off-screen-nav" id="effeckt-off-screen-nav">
     <h4>
 	  Menu
@@ -46,7 +57,7 @@
       <li><a href="#/help">Help</a></li>
     </ul>
   </nav>
- 
+
   <!-- View -->
 
   <div ng-view></div>
@@ -87,12 +98,11 @@
   <script src="/resources/static/webjars/d3js/${buildProperties['d3.version']}/d3.min.js"></script>
   
   <!-- Effeckt -->
-  
   <script src="/resources/static/webjars/jquery/${buildProperties['jquery.version']}/jquery.min.js"></script>
-  
+
   <script>window.jQuery || document.write('<script src="/resources/static/webjars/jquery/${buildProperties['jquery.version']}/jquery.min.js"><\/script>')</script>
   <script src="/resources/static/mev/js/effeckt/modules/off-screen-nav.js"></script>
-  
+
   <!--Angular-->
   <script src="/resources/static/webjars/angularjs/${buildProperties['angularjs.version']}/angular.min.js"></script>
   <script src="/resources/static/mev/js/app.js"></script>
@@ -100,7 +110,7 @@
   <script src="/resources/static/mev/js/controllers.js"></script>
   <script src="/resources/static/mev/js/filters.js"></script>
   <script src="/resources/static/mev/js/directives.js"></script>
-  
-  <div class="build">Build: ${buildProperties['revision']}
+
+  <div class="build">Build: ${buildProperties['revision']}</div>
 </body>
 </html>
