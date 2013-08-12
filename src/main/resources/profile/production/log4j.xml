@@ -3,7 +3,7 @@
 <log4j:configuration>
   <appender name="log" class="org.apache.log4j.RollingFileAppender">
     <param name="threshold" value="debug" />
-    <param name="file" value="/cbhomes/levk/var/log/mev.log" />
+    <param name="file" value="${log.file.location}" />
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern" value="${log4j.pattern}" />
     </layout>

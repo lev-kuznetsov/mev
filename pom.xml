@@ -4,7 +4,7 @@
 
   <groupId>edu.dfci.cccb</groupId>
   <artifactId>mev</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>ASHA-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <name>MultiExperiment Viewer</name>
@@ -64,6 +64,7 @@
       <properties>
         <jetty.port>8888</jetty.port>
         <jetty.stop.port>18888</jetty.stop.port>
+        <log.file.location>/cbhomes/levk/var/log/mev.log</log.file.location>
       </properties>
     </profile>
 
