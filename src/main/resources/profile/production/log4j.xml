@@ -1,27 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd" >
 <log4j:configuration>
-  <appender name="stderr" class="org.apache.log4j.ConsoleAppender">
-    <param name="threshold" value="warn" />
-    <param name="target" value="System.err" />
-    <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="${log4j.pattern}" />
-    </layout>
-  </appender>
-  <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+  <appender name="log" class="org.apache.log4j.RollingFileAppender">
     <param name="threshold" value="debug" />
-    <param name="target" value="System.out" />
+    <param name="file" value="/cbhomes/levk/var/log/mev.log" />
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern" value="${log4j.pattern}" />
     </layout>
-    <filter class="org.apache.log4j.varia.LevelRangeFilter">
-      <param name="LevelMin" value="debug" />
-      <param name="LevelMax" value="info" />
-    </filter>
   </appender>
   <root>
     <priority value="debug"></priority>
-    <appender-ref ref="stderr" />
-    <appender-ref ref="stdout" />
+    <appender-ref ref="log" />
   </root>
 </log4j:configuration>
