@@ -16,15 +16,7 @@
   
   <!-- Log4javascript -->
   <script src="/resources/static/webjars/log4javascript/${buildProperties['log4javascript.version']}/log4javascript.js"></script>
-  <script type="text/javascript">
-    var consoleAppender = new log4javascript.BrowserConsoleAppender();
-    var patternLayout = new log4javascript.PatternLayout("${log4j.pattern}");
-    consoleAppender.setLayout(patternLayout);
-
-    var log = log4javascript.getRootLogger();
-    log.addAppender(consoleAppender);
-    log.setLevel(log4javascript.Level.ALL);
-  </script>
+  <script src="/log4javascript"></script>
 </head>
 <body>
   <div class="row">

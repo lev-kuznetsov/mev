@@ -11,8 +11,6 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <log4j.pattern>[%p] : %m%n</log4j.pattern>
-
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <java.source.version>1.7</java.source.version>
@@ -46,6 +44,7 @@
         </resources>
       </build>
       <properties>
+        <log4j.pattern>[%p] : %m%n</log4j.pattern>
         <jetty.port>8080</jetty.port>
         <jetty.stop.port>18080</jetty.stop.port>
       </properties>
@@ -62,6 +61,7 @@
         </resources>
       </build>
       <properties>
+        <log4j.pattern>[%p] : %m%n</log4j.pattern>
         <jetty.port>8888</jetty.port>
         <jetty.stop.port>18888</jetty.stop.port>
         <log.file.location>/cbhomes/levk/var/log/mev.log</log.file.location>
@@ -272,6 +272,14 @@
       <artifactId>org.springframework.test</artifactId>
       <version>${org.springframework.version}</version>
       <scope>test</scope>
+    </dependency>
+
+    <!-- Spring extensions -->
+
+    <dependency>
+      <groupId>us.levk</groupId>
+      <artifactId>spring</artifactId>
+      <version>0.0.3</version>
     </dependency>
 
     <!-- Code generation -->

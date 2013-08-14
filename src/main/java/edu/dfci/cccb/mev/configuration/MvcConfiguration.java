@@ -14,6 +14,7 @@
  */
 package edu.dfci.cccb.mev.configuration;
 
+import static org.apache.log4j.Level.toLevel;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 import static org.springframework.http.MediaType.TEXT_HTML;
@@ -21,11 +22,13 @@ import static org.springframework.http.MediaType.TEXT_PLAIN;
 
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -35,10 +38,12 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import us.levk.spring.web.log4javascript.controllers.Log4JavascriptController;
 import edu.dfci.cccb.mev.domain.Heatmap;
 
 /**
@@ -48,9 +53,13 @@ import edu.dfci.cccb.mev.domain.Heatmap;
 @Configuration
 @EnableWebMvc
 @ComponentScan ("edu.dfci.cccb.mev")
-@PropertySource ("classpath:default-client-configuration.properties")
+@PropertySource ({
+                  "classpath:/configuration/default-client-configuration.properties",
+                  "classpath:/configuration/client-logging.properties" })
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
-  
+
+  private @Autowired Environment environment;
+
   /**
    * Loads build properties as an application accessible bean
    * 
@@ -169,5 +178,44 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
   public void addResourceHandlers (ResourceHandlerRegistry registry) {
     registry.addResourceHandler ("/resources/static/**")
             .addResourceLocations ("classpath:/META-INF/resources/", "/META-INF/resources/");
+  }
+
+  /**
+   * Simple URL handler mapping bean used for utility controllers
+   * 
+   * @return
+   */
+  @Bean (name = "simpleUrlHandlerMapping")
+  public SimpleUrlHandlerMapping simpleUrlHandlerMapping () {
+    return new SimpleUrlHandlerMapping () {
+      {
+        // log4javascript
+        Log4JavascriptController controller;
+        controller = new Log4JavascriptController (environment.getProperty ("log4javascript.mapping"));
+        controller.setRootVariableName (environment.getProperty ("log4javascript.root.log.variable"));
+        controller.setRootLevel (toLevel (environment.getProperty ("log4javascript.root.log.level")));
+        if (environment.getProperty ("log4javascript.console.enabled", Boolean.class))
+          controller.enableConsoleAppender (environment.getProperty ("log4javascript.console.pattern"));
+        else
+          controller.disableConsoleAppender ();
+        if (environment.getProperty ("log4javascript.logback.enabled", Boolean.class))
+          controller.enableLogbackAppender ();
+        else
+          controller.disableLogbackAppender ();
+        if (environment.getProperty ("log4javascript.popup.enabled", Boolean.class))
+          controller.enablePopupAppender (environment.getProperty ("log4javascript.popup.pattern"));
+        else
+          controller.disablePopupAppender ();
+        if (environment.getProperty ("log4javascript.alert.enabled", Boolean.class))
+          controller.enableAlertAppender ();
+        else
+          controller.disableAlertAppender ();
+        if (environment.getProperty ("log4javascript.inpage.enabled", Boolean.class))
+          controller.enableInpageAppender (environment.getProperty ("log4javascript.inpage.pattern"));
+        else
+          controller.disableInpageAppender ();
+        controller.configure (this);
+      }
+    };
   }
 }

@@ -17,6 +17,7 @@ package edu.dfci.cccb.mev.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,14 +35,14 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
  * 
  */
 @Controller
-@RequestMapping ("/configuration")
+@RequestMapping ("/preferences")
 public class ClientConfigurationController {
 
   private @Autowired ClientConfiguration configuration;
 
-  @RequestMapping (method = GET)
+  @RequestMapping (value = "/{key}", method = GET)
   @ResponseBody
-  public String get (@RequestParam ("key") String key) throws ClientConfigurationKeyNotFoundException {
+  public String get (@PathVariable ("key") String key) throws ClientConfigurationKeyNotFoundException {
     String result = configuration.get (key);
     if (result == null)
       throw new ClientConfigurationKeyNotFoundException (key);
@@ -49,10 +50,9 @@ public class ClientConfigurationController {
       return result;
   }
 
-  @RequestMapping (method = PUT)
+  @RequestMapping (value = "/key", method = PUT)
   @ResponseStatus (OK)
-  public void put (@RequestParam ("key") String key,
-                   @RequestParam ("value") String value) throws ClientConfigurationKeyNotFoundException {
+  public void put (@PathVariable ("key") String key, @RequestParam ("value") String value) {
     configuration.put (key, value);
   }
 
