@@ -17,13 +17,18 @@ package edu.dfci.cccb.mev.domain;
 import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLASS;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Getter;
+import lombok.experimental.Accessors;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 /**
  * @author levk
@@ -31,34 +36,25 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope (value = SCOPE_SESSION, proxyMode = TARGET_CLASS)
-public class Heatmaps {
+@Accessors (fluent = true)
+public class History {
 
-  private final Map<String, Heatmap> heatmaps = new HashMap<> ();
-  
-  private @Autowired History history;
+  private List<LogEntry> log = new ArrayList<LogEntry> ();
 
-  public Collection<String> list () {
-    return heatmaps.keySet ();
-  }
+  private @Getter @JsonView List<LogEntry> history = new AbstractList<LogEntry> () {
 
-  public Heatmap get (String id) throws HeatmapNotFoundException {
-    Heatmap result = heatmaps.get (id);
-    if (result == null)
-      throw new HeatmapNotFoundException (id);
-    return result;
-  }
-  
-  public boolean contains (String id) {
-    return heatmaps.containsKey (id);
-  }
+    @Override
+    public LogEntry get (int index) {
+      return log.get (index);
+    }
 
-  public void delete (String id) throws HeatmapNotFoundException {
-    if (heatmaps.remove (id) == null)
-      throw new HeatmapNotFoundException (id);
-  }
-  
-  public void put (String id, Heatmap heatmap) {
-    history.log ("Added heatmap " + id);
-    heatmaps.put (id, heatmap);
+    @Override
+    public int size () {
+      return log.size ();
+    }
+  };
+
+  public void log (String action) {
+    log.add (new LogEntry (new Date (), action));
   }
 }
