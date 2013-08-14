@@ -103,6 +103,6 @@
   <script src="/resources/static/mev/js/filters.js"></script>
   <script src="/resources/static/mev/js/directives.js"></script>
 
-  <div class="build">Build: ${buildProperties['revision']}</div>
+  <div><div class="build">Build: ${buildProperties['revision']}<br>Commit: ${gitProperties['git.commit.id.abbrev']}</div></div>
 </body>
 </html>

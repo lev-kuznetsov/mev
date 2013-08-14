@@ -20,7 +20,7 @@
     <org.springframework.version>3.2.2.RELEASE</org.springframework.version>
     <jackson.version>2.2.2</jackson.version>
     <us.levk.spring.version>0.0.4</us.levk.spring.version>
-    
+
     <angularjs.version>1.1.4</angularjs.version>
     <d3.version>3.1.5</d3.version>
     <jquery.version>2.0.3</jquery.version>
@@ -164,6 +164,32 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>pl.project13.maven</groupId>
+        <artifactId>git-commit-id-plugin</artifactId>
+        <version>2.1.5</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>revision</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <prefix>git</prefix>
+          <dateFormat>dd.MM.yyyy '@' HH:mm:ss z</dateFormat>
+          <verbose>false</verbose>
+          <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+          <skipPoms>true</skipPoms>
+          <generateGitPropertiesFile>true</generateGitPropertiesFile>
+          <generateGitPropertiesFilename>${project.build.directory}/${project.build.finalName}/WEB-INF/classes/git.properties</generateGitPropertiesFilename>
+          <failOnNoGitDirectory>false</failOnNoGitDirectory>
+          <gitDescribe>
+            <skip>true</skip>
+          </gitDescribe>
+        </configuration>
       </plugin>
 
     </plugins>

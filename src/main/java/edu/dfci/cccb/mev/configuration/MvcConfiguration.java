@@ -73,6 +73,20 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
       }
     };
   }
+  
+  /**
+   * Commit id properties
+   * 
+   * @return
+   */
+  @Bean (name = "gitProperties")
+  public PropertiesFactoryBean gitProperties () {
+    return new PropertiesFactoryBean () {
+      {
+        setLocation (new ClassPathResource ("git.properties"));
+      }
+    };
+  }
 
   /**
    * Create the CNVR. Get Spring to inject the ContentNegotiationManager created
