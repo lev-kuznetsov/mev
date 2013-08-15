@@ -184,7 +184,7 @@
           <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
           <skipPoms>true</skipPoms>
           <generateGitPropertiesFile>true</generateGitPropertiesFile>
-          <generateGitPropertiesFilename>${project.build.directory}/${project.build.finalName}/WEB-INF/classes/git.properties</generateGitPropertiesFilename>
+          <generateGitPropertiesFilename>target/${project.build.finalName}/WEB-INF/classes/git.properties</generateGitPropertiesFilename>
           <failOnNoGitDirectory>false</failOnNoGitDirectory>
           <gitDescribe>
             <skip>true</skip>

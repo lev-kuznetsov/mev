@@ -91,17 +91,24 @@ angular.module('myApp.directives', [])
 		},
 		link: function (scope, element, attrs) {
 			
-				var visparams = {
-					width : 600,
-					height : 700,
-					columnlabelgutter : 80,
-					rowlabelgutter : 80,
-				};
-				
-				var vis = d3.select(element[0])
-					.append("svg")
-					.attr("width", visparams.width )
-					.attr("height", visparams.height);
+			var visparams = {
+				width : 600,
+				height : 700,
+				columnlabelgutter : 80,
+				rowlabelgutter : 80,
+			};
+			
+			var vis = d3.select(element[0])
+				.append("svg")
+				.attr("width", visparams.width )
+				.attr("height", visparams.height)
+				.append("g")
+					.call(d3.behavior.zoom().scaleExtent([1, 10]).on("zoom", zoom))
+				.append("g");
+			
+			function zoom() {
+				vis.attr("transform", "translate(" + d3.event.translate + ")scale(" +d3.event.scale + ")");
+			}
 			
 			scope.$watch('inputdata', function(newdata, olddata) {
 							
