@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import edu.dfci.cccb.mev.controllers.ClientConfigurationKeyNotFoundException;
+import edu.dfci.cccb.mev.controllers.PreferenceKeyNotFoundException;
 
 /**
  * @author levk
@@ -35,22 +35,21 @@ import edu.dfci.cccb.mev.controllers.ClientConfigurationKeyNotFoundException;
 @Component
 @Scope (value = SCOPE_SESSION, proxyMode = TARGET_CLASS)
 @Log4j
-public class ClientConfiguration {
+public class Preferences {
 
   private @Autowired Environment defaultConfiguration;
-  private Properties properties = new Properties ();
 
-  public String get (String key) throws ClientConfigurationKeyNotFoundException {
+  public String get (String key, Properties clientPreferences) throws PreferenceKeyNotFoundException {
     if (log.isDebugEnabled ())
       log.debug ("Looking up configuration key " + key);
-    String result = properties.getProperty (key, defaultConfiguration.getProperty (key));
+    String result = clientPreferences.getProperty (key, defaultConfiguration.getProperty (key));
     if (result == null)
-      throw new ClientConfigurationKeyNotFoundException (key);
+      throw new PreferenceKeyNotFoundException (key);
     else
       return result;
   }
   
-  public void put (String key, String value) {
-    properties.put (key, value);
+  public void put (String key, String value, Properties clientPreferences) {
+    clientPreferences.put (key, value);
   }
 }

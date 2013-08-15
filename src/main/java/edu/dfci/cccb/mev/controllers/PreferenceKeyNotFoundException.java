@@ -21,12 +21,12 @@ import lombok.Getter;
  *
  */
 // TODO: Attach internationalization
-public class ClientConfigurationKeyNotFoundException extends Exception {
+public class PreferenceKeyNotFoundException extends Exception {
   private static final long serialVersionUID = 1L;
 
   private final @Getter String key;
   
-  public ClientConfigurationKeyNotFoundException (String key) {
+  public PreferenceKeyNotFoundException (String key) {
     super ("Configuration key " + key + " not found");
     this.key = key;
   }
