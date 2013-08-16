@@ -20,6 +20,7 @@ import static org.springframework.http.MediaType.APPLICATION_XML;
 import static org.springframework.http.MediaType.TEXT_HTML;
 import static org.springframework.http.MediaType.TEXT_PLAIN;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.accept.ContentNegotiationManager;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
@@ -44,6 +46,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import us.levk.spring.web.log4javascript.controllers.Log4JavascriptController;
+import us.levk.spring.web.method.CookiesHandlerArgumentResolver;
 import edu.dfci.cccb.mev.domain.Heatmap;
 
 /**
@@ -73,7 +76,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
       }
     };
   }
-  
+
   /**
    * Commit id properties
    * 
@@ -153,6 +156,45 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
   }
 
   /**
+   * Simple URL handler mapping bean used for utility controllers
+   * 
+   * @return
+   */
+  @Bean (name = "simpleUrlHandlerMapping")
+  public SimpleUrlHandlerMapping simpleUrlHandlerMapping () {
+    return new SimpleUrlHandlerMapping () {
+      {
+        // log4javascript
+        Log4JavascriptController controller;
+        controller = new Log4JavascriptController (environment.getProperty ("log4javascript.mapping"));
+        controller.setRootVariableName (environment.getProperty ("log4javascript.root.log.variable"));
+        controller.setRootLevel (toLevel (environment.getProperty ("log4javascript.root.log.level")));
+        if (environment.getProperty ("log4javascript.console.enabled", Boolean.class))
+          controller.enableConsoleAppender (environment.getProperty ("log4javascript.console.pattern"));
+        else
+          controller.disableConsoleAppender ();
+        if (environment.getProperty ("log4javascript.logback.enabled", Boolean.class))
+          controller.enableLogbackAppender ();
+        else
+          controller.disableLogbackAppender ();
+        if (environment.getProperty ("log4javascript.popup.enabled", Boolean.class))
+          controller.enablePopupAppender (environment.getProperty ("log4javascript.popup.pattern"));
+        else
+          controller.disablePopupAppender ();
+        if (environment.getProperty ("log4javascript.alert.enabled", Boolean.class))
+          controller.enableAlertAppender ();
+        else
+          controller.disableAlertAppender ();
+        if (environment.getProperty ("log4javascript.inpage.enabled", Boolean.class))
+          controller.enableInpageAppender (environment.getProperty ("log4javascript.inpage.pattern"));
+        else
+          controller.disableInpageAppender ();
+        controller.configure (this);
+      }
+    };
+  }
+
+  /**
    * Heatmap container bean
    * 
    * @return
@@ -194,42 +236,12 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
             .addResourceLocations ("classpath:/META-INF/resources/", "/META-INF/resources/");
   }
 
-  /**
-   * Simple URL handler mapping bean used for utility controllers
-   * 
-   * @return
-   */
-  @Bean (name = "simpleUrlHandlerMapping")
-  public SimpleUrlHandlerMapping simpleUrlHandlerMapping () {
-    return new SimpleUrlHandlerMapping () {
-      {
-        // log4javascript
-        Log4JavascriptController controller;
-        controller = new Log4JavascriptController (environment.getProperty ("log4javascript.mapping"));
-        controller.setRootVariableName (environment.getProperty ("log4javascript.root.log.variable"));
-        controller.setRootLevel (toLevel (environment.getProperty ("log4javascript.root.log.level")));
-        if (environment.getProperty ("log4javascript.console.enabled", Boolean.class))
-          controller.enableConsoleAppender (environment.getProperty ("log4javascript.console.pattern"));
-        else
-          controller.disableConsoleAppender ();
-        if (environment.getProperty ("log4javascript.logback.enabled", Boolean.class))
-          controller.enableLogbackAppender ();
-        else
-          controller.disableLogbackAppender ();
-        if (environment.getProperty ("log4javascript.popup.enabled", Boolean.class))
-          controller.enablePopupAppender (environment.getProperty ("log4javascript.popup.pattern"));
-        else
-          controller.disablePopupAppender ();
-        if (environment.getProperty ("log4javascript.alert.enabled", Boolean.class))
-          controller.enableAlertAppender ();
-        else
-          controller.disableAlertAppender ();
-        if (environment.getProperty ("log4javascript.inpage.enabled", Boolean.class))
-          controller.enableInpageAppender (environment.getProperty ("log4javascript.inpage.pattern"));
-        else
-          controller.disableInpageAppender ();
-        controller.configure (this);
-      }
-    };
+  /* (non-Javadoc)
+   * @see
+   * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
+   * #addArgumentResolvers(java.util.List) */
+  @Override
+  public void addArgumentResolvers (List<HandlerMethodArgumentResolver> argumentResolvers) {
+    argumentResolvers.add (new CookiesHandlerArgumentResolver ());
   }
 }
