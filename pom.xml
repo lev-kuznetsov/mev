@@ -18,6 +18,7 @@
 
     <org.slf4j.version>1.7.2</org.slf4j.version>
     <org.springframework.version>3.2.2.RELEASE</org.springframework.version>
+    <org.springframework.batch.version>2.2.1.RELEASE</org.springframework.batch.version>
     <jackson.version>2.2.2</jackson.version>
     <us.levk.spring.version>0.0.5</us.levk.spring.version>
 
@@ -192,6 +193,16 @@
         </configuration>
       </plugin>
 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <version>2.9</version>
+        <configuration>
+          <downloadSources>true</downloadSources>
+          <downloadJavadocs>true</downloadJavadocs>
+        </configuration>
+      </plugin>
+
     </plugins>
 
   </build>
@@ -295,11 +306,18 @@
       <version>${org.springframework.version}</version>
     </dependency>
 
+    <!-- Spring Batch -->
+
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>org.springframework.test</artifactId>
-      <version>${org.springframework.version}</version>
-      <scope>test</scope>
+      <groupId>org.springframework.batch</groupId>
+      <artifactId>spring-batch-core</artifactId>
+      <version>${org.springframework.batch.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.batch</groupId>
+      <artifactId>spring-batch-infrastructure</artifactId>
+      <version>${org.springframework.batch.version}</version>
     </dependency>
 
     <!-- Spring extensions -->
@@ -367,6 +385,24 @@
       <groupId>junit</groupId>
       <artifactId>junit-dep</artifactId>
       <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Spring unit tests -->
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>org.springframework.test</artifactId>
+      <version>${org.springframework.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Spring Batch unit tests -->
+
+    <dependency>
+      <groupId>org.springframework.batch</groupId>
+      <artifactId>spring-batch-test</artifactId>
+      <version>${org.springframework.batch.version}</version>
       <scope>test</scope>
     </dependency>
 

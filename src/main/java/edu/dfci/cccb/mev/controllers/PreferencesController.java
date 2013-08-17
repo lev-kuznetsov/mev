@@ -62,7 +62,7 @@ public class PreferencesController {
   private @Getter @Setter String domain = null;
   private @Getter @Setter boolean httpOnly = true;
   private int maxAge = (int) SECONDS.convert (30, DAYS);
-  private @Getter @Setter String path = "/mev";
+  private @Getter @Setter String path = "/preferences";
   private @Getter @Setter boolean secure = true;
 
   public long maxAge (TimeUnit unit) {
