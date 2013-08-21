@@ -6,7 +6,7 @@
   <title>WebMev: Online Bioinformatics Data Presentation</title>
 
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="/resources/static/webjars/bootstrap/${buildProperties['bootstrap.version']}/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/resources/static/webjars/bootstrap/${buildProperties['bootstrap.version']}/css/bootstrap.css"/>
   <link rel="stylesheet" href="/resources/static/webjars/bootstrap/${buildProperties['bootstrap.version']}/css/bootstrap-responsive.css"/>
 
   <!-- Effeckt -->
@@ -16,7 +16,7 @@
   
   <!-- Log4javascript -->
   <script src="/resources/static/webjars/log4javascript/${buildProperties['log4javascript.version']}/log4javascript.js"></script>
-  <script src="/log4javascript"></script>
+  <script src="${clientLoggingProperties['log4javascript.mapping']}"></script>
 </head>
 <body>
   <div class="row">
@@ -85,18 +85,18 @@
   </div>
 
   <!--Bootstrap -->
-  <script src="/resources/static/webjars/bootstrap/${buildProperties['bootstrap.version']}/js/bootstrap.min.js"></script>
+  <script src="/resources/static/webjars/bootstrap/${buildProperties['bootstrap.version']}/js/bootstrap.js"></script>
   <!--D3-->
-  <script src="/resources/static/webjars/d3js/${buildProperties['d3.version']}/d3.min.js"></script>
+  <script src="/resources/static/webjars/d3js/${buildProperties['d3.version']}/d3.js"></script>
   
   <!-- Effeckt -->
   <script src="/resources/static/webjars/jquery/${buildProperties['jquery.version']}/jquery.min.js"></script>
 
-  <script>window.jQuery || document.write('<script src="/resources/static/webjars/jquery/${buildProperties['jquery.version']}/jquery.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="/resources/static/webjars/jquery/${buildProperties['jquery.version']}/jquery.js"><\/script>')</script>
   <script src="/resources/static/mev/js/effeckt/modules/off-screen-nav.js"></script>
 
   <!--Angular-->
-  <script src="/resources/static/webjars/angularjs/${buildProperties['angularjs.version']}/angular.min.js"></script>
+  <script src="/resources/static/webjars/angularjs/${buildProperties['angularjs.version']}/angular.js"></script>
   <script src="/resources/static/mev/js/app.js"></script>
   <script src="/resources/static/mev/js/services.js"></script>
   <script src="/resources/static/mev/js/controllers.js"></script>
