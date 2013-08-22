@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.accept.ContentNegotiationManager;
@@ -58,7 +59,8 @@ import edu.dfci.cccb.mev.domain.Heatmap;
 @ComponentScan ("edu.dfci.cccb.mev")
 @PropertySource ({
                   "classpath:/configuration/default-client-configuration.properties",
-                  "classpath:/configuration/client-logging.properties" })
+                  "classpath:/configuration/client-logging.properties",
+                  "classpath:/configuration/profile.properties" })
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
   private @Autowired Environment environment;
@@ -77,16 +79,30 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     };
   }
 
-  /**
-   * Commit id properties
-   * 
-   * @return
-   */
-  @Bean (name = "gitProperties")
-  public PropertiesFactoryBean gitProperties () {
+  @Bean (name = "clientLoggingProperties")
+  public PropertiesFactoryBean clientLoggingProperties () {
     return new PropertiesFactoryBean () {
       {
-        setLocation (new ClassPathResource ("git.properties"));
+        setLocation (new ClassPathResource ("configuration/client-logging.properties"));
+      }
+    };
+  }
+
+  @Bean (name = "profileProperties")
+  public PropertiesFactoryBean profileProperties () {
+    return new PropertiesFactoryBean () {
+      {
+        setLocation (new ClassPathResource ("configuration/profile.properties"));
+      }
+    };
+  }
+
+  @Bean (name = "messageSource")
+  public ReloadableResourceBundleMessageSource messageSource () {
+    return new ReloadableResourceBundleMessageSource () {
+      {
+        setBasename ("classpath:i18n/home");
+        setDefaultEncoding ("UTF-8");
       }
     };
   }
