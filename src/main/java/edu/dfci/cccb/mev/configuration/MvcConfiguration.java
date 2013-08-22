@@ -129,7 +129,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
   public CommonsMultipartResolver multipartResolver () {
     return new CommonsMultipartResolver () {
       {
-        setMaxUploadSize (10000000);
+        setMaxUploadSize (10000000000L);
       }
     };
   }
