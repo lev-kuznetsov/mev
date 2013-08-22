@@ -1,4 +1,4 @@
-ctrl.controller('AnalyzeCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
+ctrl.controller('AnalyzeCtrl', ['$scope', '$rootScope', '$routeParams', '$http', function($scope, $rootScope, $routeParams, $http) {
 
 	$scope.heatmaplist = [];
 	
@@ -12,7 +12,8 @@ ctrl.controller('AnalyzeCtrl', ['$scope', '$routeParams', '$http', function($sco
 				}
 			})
 			.success( function(data) {
-				$scope.heatmaplist = data
+				$scope.heatmaplist = data;
+				$rootScope.menuheatmaplist = data;
 			});
 	};
 	
