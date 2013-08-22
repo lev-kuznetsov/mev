@@ -27,6 +27,7 @@
     <jquery.version>2.0.3</jquery.version>
     <bootstrap.version>2.3.2</bootstrap.version>
     <log4javascript.version>1.4.5</log4javascript.version>
+    <retinajs.version>0.0.2</retinajs.version>
 
     <jetty.version>8.1.10.v20130312</jetty.version>
   </properties>
@@ -194,8 +195,7 @@
           <verbose>false</verbose>
           <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
           <skipPoms>true</skipPoms>
-          <generateGitPropertiesFile>true</generateGitPropertiesFile>
-          <generateGitPropertiesFilename>target/${project.build.finalName}/WEB-INF/classes/git.properties</generateGitPropertiesFilename>
+          <generateGitPropertiesFile>false</generateGitPropertiesFile>
           <failOnNoGitDirectory>false</failOnNoGitDirectory>
           <gitDescribe>
             <skip>true</skip>
@@ -287,6 +287,12 @@
       <groupId>org.webjars</groupId>
       <artifactId>log4javascript</artifactId>
       <version>${log4javascript.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>retinajs</artifactId>
+      <version>${retinajs.version}</version>
     </dependency>
 
     <!-- Spring -->
