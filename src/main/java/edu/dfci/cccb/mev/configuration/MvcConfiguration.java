@@ -127,11 +127,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
    */
   @Bean (name = "multipartResolver")
   public CommonsMultipartResolver multipartResolver () {
-    return new CommonsMultipartResolver () {
-      {
-        setMaxUploadSize (10000000);
-      }
-    };
+    return new CommonsMultipartResolver ();
   }
 
   /**
