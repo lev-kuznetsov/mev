@@ -14,7 +14,6 @@
  */
 package edu.dfci.cccb.mev.configuration;
 
-import static org.apache.log4j.Level.toLevel;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 import static org.springframework.http.MediaType.TEXT_HTML;
@@ -23,6 +22,9 @@ import static org.springframework.http.MediaType.TEXT_PLAIN;
 import java.util.List;
 import java.util.Locale;
 
+import lombok.experimental.ExtensionMethod;
+
+import org.apache.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
@@ -61,6 +63,7 @@ import edu.dfci.cccb.mev.domain.Heatmap;
                   "classpath:/configuration/default-client-configuration.properties",
                   "classpath:/configuration/client-logging.properties",
                   "classpath:/configuration/profile.properties" })
+@ExtensionMethod (Level.class)
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
   private @Autowired Environment environment;
@@ -180,25 +183,28 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         Log4JavascriptController controller;
         controller = new Log4JavascriptController (environment.getProperty ("log4javascript.mapping"));
         controller.setRootVariableName (environment.getProperty ("log4javascript.root.log.variable"));
-        controller.setRootLevel (toLevel (environment.getProperty ("log4javascript.root.log.level")));
+        controller.setRootLevel (environment.getProperty ("log4javascript.root.log.level").toLevel ());
         if (environment.getProperty ("log4javascript.console.enabled", Boolean.class))
-          controller.enableConsoleAppender (environment.getProperty ("log4javascript.console.pattern"));
+          controller.enableConsoleAppender (environment.getProperty ("log4javascript.console.pattern"),
+                                            environment.getProperty ("log4javascript.console.threshold").toLevel ());
         else
           controller.disableConsoleAppender ();
         if (environment.getProperty ("log4javascript.logback.enabled", Boolean.class))
-          controller.enableLogbackAppender ();
+          controller.enableLogbackAppender (environment.getProperty ("log4javascript.logback.threshold").toLevel ());
         else
           controller.disableLogbackAppender ();
         if (environment.getProperty ("log4javascript.popup.enabled", Boolean.class))
-          controller.enablePopupAppender (environment.getProperty ("log4javascript.popup.pattern"));
+          controller.enablePopupAppender (environment.getProperty ("log4javascript.popup.pattern"),
+                                          environment.getProperty ("log4javascript.popup.threshold").toLevel ());
         else
           controller.disablePopupAppender ();
         if (environment.getProperty ("log4javascript.alert.enabled", Boolean.class))
-          controller.enableAlertAppender ();
+          controller.enableAlertAppender (environment.getProperty ("log4javascript.alert.threshold").toLevel ());
         else
           controller.disableAlertAppender ();
         if (environment.getProperty ("log4javascript.inpage.enabled", Boolean.class))
-          controller.enableInpageAppender (environment.getProperty ("log4javascript.inpage.pattern"));
+          controller.enableInpageAppender (environment.getProperty ("log4javascript.inpage.pattern"),
+                                           environment.getProperty ("log4javascript.inpage.threshold").toLevel ());
         else
           controller.disableInpageAppender ();
         controller.configure (this);

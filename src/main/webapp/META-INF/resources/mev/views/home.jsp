@@ -112,6 +112,9 @@
   <script src="/resources/static/mev/js/controllers.js"></script>
   <script src="/resources/static/mev/js/filters.js"></script>
   <script src="/resources/static/mev/js/directives.js"></script>
+  
+  <!-- Dropzone -->
+  <script src="/resources/static/webjars/dropzone/${buildProperties['dropzone.version']}/${profileProperties['dropzone.source']}"></script>
 
   <div><div class="build">Build: ${buildProperties['version']} Commit: ${buildProperties['git.commit.id']}</div></div>
 </body>

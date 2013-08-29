@@ -20,7 +20,7 @@
     <org.springframework.version>3.2.4.RELEASE</org.springframework.version>
     <org.springframework.batch.version>2.2.1.RELEASE</org.springframework.batch.version>
     <jackson.version>2.2.2</jackson.version>
-    <us.levk.spring.version>0.0.5</us.levk.spring.version>
+    <us.levk.spring.version>0.0.7</us.levk.spring.version>
 
     <angularjs.version>1.1.4</angularjs.version>
     <d3.version>3.1.5</d3.version>
@@ -28,6 +28,7 @@
     <bootstrap.version>2.3.2</bootstrap.version>
     <log4javascript.version>1.4.5</log4javascript.version>
     <retinajs.version>0.0.2</retinajs.version>
+    <dropzone.version>3.7.1</dropzone.version>
 
     <jetty.version>8.1.10.v20130312</jetty.version>
   </properties>
@@ -87,6 +88,15 @@
       </resource>
 
     </resources>
+
+    <testResources>
+
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+
+    </testResources>
 
     <plugins>
 
@@ -295,6 +305,12 @@
       <version>${retinajs.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>us.levk</groupId>
+      <artifactId>dropzone</artifactId>
+      <version>3.7.1</version>
+    </dependency>
+
     <!-- Spring -->
 
     <dependency>
@@ -349,7 +365,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>0.11.8</version>
+      <version>0.12.0</version>
     </dependency>
 
     <!-- Logging -->
@@ -381,10 +397,17 @@
 
     <!-- Servlet API -->
 
-    <dependency>
+    <!--  dependency>
       <groupId>javax</groupId>
-      <artifactId>javaee-api</artifactId>
+      <artifactId>javaee-web-api</artifactId>
       <version>6.0</version>
+      <scope>provided</scope>
+    </dependency-->
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.0.1</version>
       <scope>provided</scope>
     </dependency>
 
@@ -419,6 +442,57 @@
       <groupId>org.springframework.batch</groupId>
       <artifactId>spring-batch-test</artifactId>
       <version>${org.springframework.batch.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Jetty server for testing -->
+
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-server</artifactId>
+      <version>${jetty.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-servlet</artifactId>
+      <version>${jetty.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-webapp</artifactId>
+      <version>${jetty.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-servlets</artifactId>
+      <version>${jetty.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-plus</artifactId>
+      <version>${jetty.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-jsp</artifactId>
+      <version>${jetty.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-annotations</artifactId>
+      <version>${jetty.version}</version>
       <scope>test</scope>
     </dependency>
 

@@ -22,8 +22,6 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-//import us.levk.tools.springframework.resources.configuration.ResourceHandlerConfigurer;
-
 /**
  * @author levk
  * 
