@@ -71,18 +71,15 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 
 		$scope.transformeddata = {data:[]};
 		
-		
-		
-		for (var index = 0; index < $scope.heatmapcells.length; ++index) {
-
-				
-				var inputobj = {
-					value: $scope.heatmapcells[index],
-					row: $scope.heatmaprows[Math.floor(index/($scope.heatmapcolumns.length))]['value'],
-					col: $scope.heatmapcolumns[index%($scope.heatmapcolumns.length)]['value']
-				}
-				$scope.transformeddata.data.push(inputobj);
-		}
+		$scope.transformeddata.data = $scope.heatmapcells.map(function(cell, index){
+			
+			return {
+				value: cell,
+				row: $scope.heatmaprows[Math.floor(index/($scope.heatmapcolumns.length))]['value'],
+				col: $scope.heatmapcolumns[index%($scope.heatmapcolumns.length)]['value']
+			}
+			
+		})
 		
 		$scope.transformeddata.columnlabels = $scope.heatmapcolumns.map(function(d) { return d.value;});
 		$scope.transformeddata.rowlabels = $scope.heatmaprows.map(function(d) { return d.value;});
