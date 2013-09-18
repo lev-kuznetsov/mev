@@ -1,63 +1,68 @@
 ctrl.controller('GeneSelectCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
-    
-    //Variables
-    $scope.project = $routeParams.project;
-    $scope.markedRows = []
-    $scope.getPageParams = {};
 
-    //Functions
-    $scope.pushToParams = function(key, value) {
-	    $scope.getPageParams[key]=value;
+	
+	$scope.tuples = [["GNDE3", "23", "yes"],
+	                ["GNDE4", "15", "no"],
+	                ["GNDE5", "18", "yes"],
+	                ["GNDE7", "5", "no"],
+	                ["GNDE12", "26", "no"]];
+	
+	$scope.headers = ["Column1", "Column2", "Column3"];
+	
+	$scope.fieldFilters = [];
+	
+	$scope.remAll = function() {
+		$scope.fieldFilters =[];
 	}
 	
-	$scope.pullFromParams = function(key) {
-	    delete $scope.getPageParams[key];	
-	}
-	
-	$scope.purgeParams = function() {
-	    $scope.getPageParams = {};	
-	}
-	
-    $scope.getPage = function(pagenum) {
-		if (pagenum < 0 || pagenum > $scope.totalpages) {
-		
-		} else {
-            
-            $scope.getPageParams["id"] = $scope.project;
-		    $scope.getPageParams["page"] = pagenum;
-		    $scope.getPageParams["format"] = "json";
-		    
-		    $http({
-				method:"GET", 
-				url:'data/geneset',
-				params: $scope.getPageParams,
+	$scope.remFilter = function(input){
+		console.log(input)
+		if ($scope.fieldFilters.length >= 1) {
+			$scope.fieldFilters = $scope.fieldFilters.filter( function(filt){
+				return filt.variable != input.variable
 			})
-			.success( function(data) {
-				$scope.tuples = data.tuples;
-				$scope.fields = data.fields;
-				$scope.currentpage = data.page_id;
-				$scope.totalpages = data.total_pages;
-			});
-		 }
-    }
-    
-    $scope.markRow = function(row) {
-	
-		if ($scope.markedRows.indexOf(row) == -1) {
-			$scope.markedRows.push(row);
 		}
 		
 	}
 	
-	$scope.removeRow = function(row) {
+	$scope.addFilter = function(input){
+
+		if ($scope.fieldFilters.indexOf(input) < 0) {
+			$scope.fieldFilters.push({variable:input, value:"Insert Value", operator:"="});
+		}
+		
+	}
 	
-		var rowindex = $scope.markedRows.indexOf(row);
-		if (rowindex != -1) {
-			$scope.markedRows.splice(rowindex, 1);
-		}	
+	$scope.queryOptions = [];
+	
+	$scope.reqQuery = function(reqPage) {
+		
+		if (queryOptions) {
+			
+			console.log($scope.queryOptions)
+			
+			$http({
+				method:"PUT",
+				//url:"heatmap/"+$routeParams.geneset+"/annotation/"+"row"+ "/filter",
+				params: {
+					format:"json",
+					page: reqPage,
+					request: $scope.queryOptions
+				}
+			})
+			.success( function(data) {
+				$scope.tuples = data;
+			})
+			.error(function(){
+				alert("error!")
+			});
+			
+		}
+		
+		
 		
 	}
 
-   $scope.getPage(1);
+
     
-  }]);
+}]);
