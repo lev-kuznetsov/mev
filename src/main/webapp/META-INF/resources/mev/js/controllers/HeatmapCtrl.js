@@ -71,6 +71,8 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 
 		$scope.transformeddata = {data:[]};
 		
+		
+		
 		for (var index = 0; index < $scope.heatmapcells.length; ++index) {
 
 				
