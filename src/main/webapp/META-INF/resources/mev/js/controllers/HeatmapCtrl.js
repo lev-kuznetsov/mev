@@ -120,13 +120,10 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 
 		$http({
 			method:"GET",
-			url:"heatmap/"+$scope.matrixlocation+"/data",
+			url:"heatmap/"+$scope.matrixlocation+"/data/"+"["+$scope.curstartrow+":"
+				+$scope.curendrow+","+$scope.curstartcol+":"+$scope.curendcol+"]",
 			params: {
-				format:"json",
-				startRow:$scope.curstartrow,
-				endRow:$scope.curendrow,
-				startColumn:$scope.curstartcol,
-				endColumn:$scope.curendcol
+				format:"json"
 			}
 		})
 		.success( function(data) {
