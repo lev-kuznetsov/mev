@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row">
 		
-		<div class="span8">
+		<div class="span7">
 		    <vis-Heatmap 
 				inputdata="transformeddata"
 				inputcolor="red"
@@ -19,7 +19,7 @@
 		</div>
 		
 		<!--End Visualization Column -->
-		<div class="span4">
+		<div class="span3 offset1">
 			
 		    <div class="row">
 		    	<p>
@@ -37,9 +37,33 @@
 		 	   <vis-Ranged-Bar 
 					inputdata="selectedcells"
 				</vis-Ranged-Bar>
-		    	{{selectedcells}}
 		    </div>
-			
+		    
+		    <div class="row">
+				
+				<div class="row">
+					<input id="file" type="file" multiple name="upload" />
+				</div>
+				
+				<div class="row">
+					<div class="progress progress-striped active" id="progbox" style="visibility: hidden;">
+						<div class="bar" id="progbar"></div>
+						
+					</div>
+				</div>
+				
+				<div class="row">
+					<button class="btn btn-small btn-primary" ng-click="sendRowFile(0)">Submit Row Annotations</button>
+					<div id="rowoutput"></div>
+				</div>
+				
+				<div class="row">
+					<button class="btn btn-small btn-primary" ng-click="sendColFile(0)">Submit Column Annotations</button>
+					<div id="coloutput"></div>
+				</div>
+				
+			</div>
+						
 		</div>
 		<!--End Column 2 -->
 	</div>
