@@ -9,45 +9,41 @@ ctrl.controller('GeneSelectCtrl', ['$scope', '$http', '$routeParams', function($
 	
 	$scope.headers = ["Column1", "Column2", "Column3"];
 	
-	$scope.fieldFilters = [];
+	$scope.fieldFilters = new Array;
 	
 	$scope.remAll = function() {
-		$scope.fieldFilters =[];
-	}
+		$scope.fieldFilters = [];
+	};
 	
 	$scope.remFilter = function(input){
-		console.log(input)
+		
 		if ($scope.fieldFilters.length >= 1) {
 			$scope.fieldFilters = $scope.fieldFilters.filter( function(filt){
 				return filt.variable != input.variable
 			})
 		}
 		
-	}
+	};
 	
 	$scope.addFilter = function(input){
-
-		if ($scope.fieldFilters.indexOf(input) < 0) {
+		
+		if ($scope.fieldFilters.filter(function(filt) {return filt.variable == input}).length == 0) {
 			$scope.fieldFilters.push({variable:input, value:"Insert Value", operator:"="});
 		}
 		
-	}
-	
-	$scope.queryOptions = [];
+	};
 	
 	$scope.reqQuery = function(reqPage) {
 		
-		if (queryOptions) {
-			
-			console.log($scope.queryOptions)
+		if ($scope.fieldFilters.length > 0) {
 			
 			$http({
 				method:"PUT",
-				//url:"heatmap/"+$routeParams.geneset+"/annotation/"+"row"+ "/filter",
+				url:"heatmap/"+$routeParams.geneset+"/annotation/"+"row"+ "/filter",
 				params: {
 					format:"json",
 					page: reqPage,
-					request: $scope.queryOptions
+					request: $scope.fieldFilters
 				}
 			})
 			.success( function(data) {
@@ -59,9 +55,7 @@ ctrl.controller('GeneSelectCtrl', ['$scope', '$http', '$routeParams', function($
 			
 		}
 		
-		
-		
-	}
+	};
 
 
     

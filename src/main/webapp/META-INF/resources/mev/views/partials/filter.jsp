@@ -13,7 +13,7 @@
 				<div class="row">
 					<p>{{field.variable}}</p><i class="icon-remove" ng-click="remFilter(field)"></i>
 					
-					<tuple-Selector inputfield="field" pushToQuery="updateQuery"></tuple-Selector>
+					<tuple-Selector inputfield="field"></tuple-Selector>
 					
 				</div>
 			</li>
