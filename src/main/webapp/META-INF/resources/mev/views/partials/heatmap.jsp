@@ -53,12 +53,12 @@
 				</div>
 				
 				<div class="row">
-					<button class="btn btn-small btn-primary" ng-click="sendRowFile(0)">Submit Row Annotations</button>
+					<button class="btn btn-small btn-primary" ng-click="sendRowFile()">Submit Row Annotations</button>
 					<div id="rowoutput"></div>
 				</div>
 				
 				<div class="row">
-					<button class="btn btn-small btn-primary" ng-click="sendColFile(0)">Submit Column Annotations</button>
+					<button class="btn btn-small btn-primary" ng-click="sendColFile()">Submit Column Annotations</button>
 					<div id="coloutput"></div>
 				</div>
 				
