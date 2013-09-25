@@ -6,8 +6,8 @@
 				inputdata="transformeddata"
 				inputcolor="red"
 				showlabels="true"
-				width="800"
-				height="800"
+				width="700"
+				height="700"
 				marginleft="80"
 				marginright="80"
 				margintop="80"
@@ -15,7 +15,6 @@
 				celllink="selectedcells"
 				pushtomarked="markRow(inputindecies, inputdimension)">
 			</vis-Heatmap>
-
 		</div>
 		
 		<!--End Visualization Column -->
