@@ -19,6 +19,7 @@ import javax.sql.DataSource;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import lombok.experimental.ExtensionMethod;
 import lombok.extern.log4j.Log4j;
 
 import org.eobjects.metamodel.BatchUpdateScript;
@@ -51,6 +52,7 @@ import org.eobjects.metamodel.util.SimpleTableDef;
 import edu.dfci.cccb.mev.domain.MatrixAnnotation;
 
 @Log4j
+@ExtensionMethod (Arrays.class)
 public class AnnotationDataAccessLayer implements Closeable {
   private final UpdateableDataContext dbDataContext;
   private final String dataNamespace;
@@ -87,10 +89,13 @@ public class AnnotationDataAccessLayer implements Closeable {
 
   public boolean setAnnotations (InputStream data) {
     DataContext csvDataContext = DataContextFactory.createCsvDataContext (data, '\t', ' ');
+    log.debug ("csvDataContext=" + csvDataContext);
 
     // get the one and only table (csv)
     Schema csvSchema = csvDataContext.getDefaultSchema ();
+    log.debug ("csvSchema=" + csvSchema);
     Table[] tables = csvSchema.getTables ();
+    log.debug ("tables=" + tables.toString ());
     assert tables.length == 1;
     Table table = tables[0];
 
@@ -101,6 +106,7 @@ public class AnnotationDataAccessLayer implements Closeable {
 
     Table csvTable = table;
     Table dbTable = getTableByName (dbDataContext, currentTableName);
+    log.debug ("Importing " + csvTable + " into " + dbTable);
     return importTable (dbDataContext, dbTable, csvDataContext, csvTable);
   }
 
@@ -334,7 +340,7 @@ public class AnnotationDataAccessLayer implements Closeable {
               rib = rib.value (INDEX_COL_NAME, mev_index_counter++);
             }
 
-            log.debug (debug + rib.toSql ());
+            //log.debug (debug + " : " + rib.toSql ());
             rib.execute ();
           }
         }
@@ -370,7 +376,7 @@ public class AnnotationDataAccessLayer implements Closeable {
             RowInsertionBuilder rib = callback.insertInto (targetTable);
             // iterate through columns
             for (SelectItem si : row.getSelectItems ()) {
-              log.debug (row.getValue (si) + "\t");
+              //log.debug (row.getValue (si) + "\t");
               // the first column is the annotationId
               if (si.getColumn ().getColumnNumber () == 0) {
                 Query lookupAnnIndexQuery = targetDataContext.query ()
