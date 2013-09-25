@@ -244,7 +244,10 @@ drct.directive('visHeatmap', [function() {
 						})
 						.on("click", function(d){
 							scope.$apply(function(){
-								scope.celllink = {gene:d.row, sample:d.col, value:d.value};
+								scope.celllink = {
+									range: d3.extent(newdata.data, function(x){return x.value} ),
+									cell:{gene:d.row, sample:d.col, value:d.value}
+								};
 							})
 						});
 

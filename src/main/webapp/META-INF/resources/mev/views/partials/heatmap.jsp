@@ -34,6 +34,9 @@
 				</p>
 		    </div>
 		    <div class="row" >
+		 	   <vis-Ranged-Bar 
+					inputdata="selectedcells"
+				</vis-Ranged-Bar>
 		    	{{selectedcells}}
 		    </div>
 			
