@@ -27,11 +27,21 @@ ctrl.controller('GeneSelectCtrl', ['$scope', '$http', '$routeParams', function($
 	
 	$scope.addFilter = function(input){
 		
-		if ($scope.fieldFilters.filter(function(filt) {return filt.variable == input}).length == 0) {
-			$scope.fieldFilters.push({variable:input, value:"Insert Value", operator:"="});
+		if ($scope.fieldFilters.filter(function(filt) {return filt.variable == input.variable}).length == 0) {
+			$scope.fieldFilters.push(input);
+		} else {
+			alert("You have already selected a filter for this attribute. Remove it first.");
 		}
 		
+		$scope.modalinput = {variable:undefined, value:"Insert Value", operator:"="};
+		
 	};
+	
+	$scope.modalinput = {variable:undefined, value:"Insert Value", operator:"="};
+	
+	$scope.selectfilter = function(input){
+		$scope.modalinput = {variable:input, value:"Insert Value", operator:"="};
+	}
 	
 	$scope.reqQuery = function(reqPage) {
 		

@@ -16,7 +16,7 @@ drct.directive('tupleSelector', ['$compile', function(compile) {
 			})
 			
 			scope.$watch('operator', function(newdata, olddata) {
-				scope.inputfield.operator = newdata;
+					scope.inputfield.operator = newdata;
 			})
 		}
 	}
