@@ -20,7 +20,7 @@
     </filter>
   </appender>
   <logger name="org.eobjects.metamodel">
-    <level value="info"/> 
+    <level value="info" />
   </logger>
   <root>
     <priority value="debug"></priority>
