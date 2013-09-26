@@ -7,6 +7,19 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	$scope.curendcol = 39;
 	var firstpull = true;
 	var pullallow = true;
+	$scope.matrixsummary = undefined;
+	
+	$http({
+		method:"PUT",
+		url:"heatmap/"+$scope.matrixlocation+"/summary/",
+		params: {
+			format:"json",
+		}
+	})
+	.success( function(data) {
+		$scope.matrixsummary = data;
+		
+	});
 	
 	$scope.selectedcells = new Array;
 	
@@ -85,7 +98,8 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		
 		$scope.transformeddata.columnlabels = $scope.heatmapcolumns.map(function(d) { return d.value;});
 		$scope.transformeddata.rowlabels = $scope.heatmaprows.map(function(d) { return d.value;});
-		
+		$scope.transformeddata.matrixsummary = $scope.matrixsummary;
+
 		firstpull = false;
 
 	};
