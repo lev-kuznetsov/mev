@@ -36,6 +36,10 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	}
 	
 	$scope.pageDown = function() {
+
+		if (($scope.matrixsummary.rows - 1) == $scope.curendrow) {
+			return;
+		}
 		
 		++$scope.curstartrow;
 		++$scope.curendrow;
@@ -56,6 +60,10 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	}
 	
 	$scope.pageRight = function() {
+		
+		if (($scope.matrixsummary.columns - 1) == $scope.curendcol) {
+			return;
+		}
 		
 		++$scope.curstartcol;
 		++$scope.curendcol;
