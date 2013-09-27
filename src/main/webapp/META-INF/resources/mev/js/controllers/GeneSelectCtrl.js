@@ -86,7 +86,7 @@ ctrl.controller('GeneSelectCtrl', ['$scope', '$http', '$routeParams', '$q', func
 	
 	
 	$scope.changeDimension = function(input){
-		
+		console.log(input)
 		$scope.dimension = input;
 		annotations.get();
 		getTuples(0, $scope.matrixsummary[($scope.dimension + "s")]);
