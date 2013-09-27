@@ -9,7 +9,10 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	var pullallow = true;
 	$scope.matrixsummary = undefined;
 	$scope.selections = {};
-	$scope.selected = []
+	$scope.selected = {
+		rows: [],
+		columns: []
+	};
 	
 	$http({
 		method:"PUT",
@@ -148,6 +151,8 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 
 	};
 	
+	$scope.pushSelections = function
+	
 	//pull page function
 	$scope.pullPage = function() {
 
@@ -232,6 +237,8 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	//Initial call for values
 	
 	$scope.pullPage();
+	$scope.pullSelections("column");
+	$scope.pullSelections("rows");
 	
 	$scope.sendRowFile = function() {
 			//Variable declarations
