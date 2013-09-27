@@ -8,6 +8,8 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	var firstpull = true;
 	var pullallow = true;
 	$scope.matrixsummary = undefined;
+	$scope.selections = {};
+	$scope.selected = []
 	
 	$http({
 		method:"PUT",
@@ -129,6 +131,24 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		});
 
 	}
+	
+	$scope.pullSelections = function(inputdimension) {
+
+		$http({
+			method:"GET",
+			url:"heatmap/"+$scope.matrixlocation+"/selection/" + inputdimension,
+			params: {
+				format:"json"
+			}
+		})
+		.success( function(data) {
+			$scope.selections[inputdimension] = data;
+			console.log($scope.selections[inputdimension])
+		});
+
+	};
+	
+	$scope.pullSelections("row")
 	
 	//pull page function
 	$scope.pullPage = function() {
