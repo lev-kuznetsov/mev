@@ -148,8 +148,6 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 
 	};
 	
-	$scope.pullSelections("row")
-	
 	//pull page function
 	$scope.pullPage = function() {
 
