@@ -162,6 +162,10 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		
 	};
 	
+	$scope.selectedcells.row = ['blah', 'blah2', 'blah3'];
+	
+	$scope.pushSelections("tester", "row");
+	
 	//pull page function
 	$scope.pullPage = function() {
 
