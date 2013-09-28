@@ -8,6 +8,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	var firstpull = true;
 	var pullallow = true;
 	$scope.matrixsummary = undefined;
+	$scope.selectionname = undefined;
 	
 	$scope.selectedcells = new Object();
 
@@ -130,13 +131,11 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		})
 		.success( function(data) {
 			$scope.selections[inputdimension] = data;
-			console.log($scope.selections[inputdimension])
+			
+			console.log( $scope.selections[inputdimension] )
 		});
 
 	};
-	
-	
-	
 	
 	
 	$scope.pushSelections = function(selectionname, dimension) {
@@ -144,27 +143,23 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		if ($scope.selectedcells[dimension]) {
 			$http({
 				method:"PUT",
-				url:"heatmap/"+$scope.matrixlocation+"/selection/"+dimension+"s"+"/"+selectionname,
+				url:"heatmap/"+$scope.matrixlocation+"/selection/"+dimension+"/"+selectionname,
 				params: {
 					format:"json",
-					selection: $scope.selectedcells[dimension][0]
+					selection: $scope.selectedcells[dimension]
 				}
 			})
 			.success( function(data) {
 				alert("Added!");
 				
 				$scope.pullSelections(dimension);
-				
+				$scope.selectionname = undefined;
 				
 			});
 		}
 		
 		
 	};
-	
-	$scope.selectedcells.row = ['blah', 'blah2', 'blah3'];
-	
-	$scope.pushSelections("tester", "row");
 	
 	//pull page function
 	$scope.pullPage = function() {

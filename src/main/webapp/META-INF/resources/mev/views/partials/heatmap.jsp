@@ -62,9 +62,54 @@
 				</div>
 				
 			</div>
+			
+			<div class="row">
+				<button class="btn btn-block btn-primary" data-target="#myRowModal" data-toggle="modal">Add Row Selection </button>
+				<button class="btn btn-block btn-primary" data-target="#myColumnModal" data-toggle="modal">Add Column Selection </button>
+			</div>
 						
 		</div>
 		<!--End Column 2 -->
 	</div>
 
+</div>
+
+<div id="myRowModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">Add New Filter</h3>
+  </div>
+  
+  <div class="modal-body">
+  
+		<p>Name:</p><input ng-model='selectionname' />
+
+  </div>
+  
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary"  data-dismiss="modal" aria-hidden="true" ng-click="pushSelections(selectionname, 'row') ">Add Row Selection</button>
+  </div>
+  
+</div>
+
+<div id="myColumnModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">Add New Filter</h3>
+  </div>
+  
+  <div class="modal-body">
+  
+		<p>Name:</p><input ng-model='selectionname' />
+
+  </div>
+  
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary"  data-dismiss="modal" aria-hidden="true" ng-click="pushSelections(selectionname, 'column')">Add Column Selection</button>
+  </div>
+  
 </div>
