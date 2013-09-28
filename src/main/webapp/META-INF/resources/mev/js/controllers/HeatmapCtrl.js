@@ -131,8 +131,6 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		})
 		.success( function(data) {
 			$scope.selections[inputdimension] = data;
-			
-			console.log( $scope.selections[inputdimension] )
 		});
 
 	};
