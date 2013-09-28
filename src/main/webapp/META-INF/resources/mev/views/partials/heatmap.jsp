@@ -37,35 +37,48 @@
 					inputdata="selectedcells"
 				</vis-Ranged-Bar>
 		    </div>
-		    
-		    <div class="row">
-				
-				<div class="row">
-					<input id="file" type="file" multiple name="upload" />
-				</div>
-				
-				<div class="row">
-					<div class="progress progress-striped active" id="progbox" style="visibility: hidden;">
-						<div class="bar" id="progbar"></div>
+			
+			<div class="accordion" id="accordion2">
+			
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+							Annotations
+						</a>
+					</div>
+					<div id="collapseOne" class="accordion-body collapse">
+						<div class="accordion-inner">
 						
+							<input id="file" type="file" multiple name="upload" />
+
+							<div class="progress progress-striped active" id="progbox" style="visibility: hidden;">
+								<div class="bar" id="progbar"></div>
+								
+							</div>
+						
+							<button class="btn btn-block btn-primary" ng-click="sendRowFile()">Submit Row Annotations</button>
+							<button class="btn btn-block btn-primary" ng-click="sendColFile()">Submit Column Annotations</button>
+							
+							<div id="rowoutput"></div>
+							<div id="coloutput"></div>
+						</div>
 					</div>
 				</div>
 				
-				<div class="row">
-					<button class="btn btn-small btn-primary" ng-click="sendRowFile()">Submit Row Annotations</button>
-					<div id="rowoutput"></div>
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+							Selections
+						</a>
+					</div>
+					<div id="collapseTwo" class="accordion-body collapse">
+						<div class="accordion-inner">
+							<button class="btn btn-block btn-primary" data-target="#myRowModal" data-toggle="modal">Add Row Selection </button>
+							<button class="btn btn-block btn-primary" data-target="#myColumnModal" data-toggle="modal">Add Column Selection </button>
+						</div>
+					</div>
 				</div>
 				
-				<div class="row">
-					<button class="btn btn-small btn-primary" ng-click="sendColFile()">Submit Column Annotations</button>
-					<div id="coloutput"></div>
-				</div>
-				
-			</div>
-			
-			<div class="row">
-				<button class="btn btn-block btn-primary" data-target="#myRowModal" data-toggle="modal">Add Row Selection </button>
-				<button class="btn btn-block btn-primary" data-target="#myColumnModal" data-toggle="modal">Add Column Selection </button>
 			</div>
 						
 		</div>
