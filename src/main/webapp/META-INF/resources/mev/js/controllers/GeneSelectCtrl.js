@@ -8,6 +8,8 @@ ctrl.controller('GeneSelectCtrl', ['$scope', '$http', '$routeParams', '$q', func
 	$scope.page = 0;
 	$scope.range = [0, 100];
 	
+	$scope.totalrows = 100;
+	
 	function tuple(name) {
 		this.name = name;
 		this.data = [];
@@ -53,9 +55,58 @@ ctrl.controller('GeneSelectCtrl', ['$scope', '$http', '$routeParams', '$q', func
 		}
 	})
 	.success( function(data) {
+		
 		$scope.matrixsummary = data;
-		getTuples(0, $scope.matrixsummary[($scope.dimension + "s")]);
+		
+		if ($scope.totalrows%$scope.matrixsummary[($scope.dimension + "s")] > 0) {
+			$scope.totalpages = Math.floor( ($scope.totalrows/$scope.matrixsummary[($scope.dimension + "s")]) + 1 );
+		} else {
+			$scope.totalpages = ($scope.totalrows/$scope.matrixsummary[($scope.dimension + "s")]);
+		};
+		
+		getPage(0);
 	});
+	
+	
+	
+	function getPage(page) {
+		
+		var arr = [0, 0];
+		
+		if (page == 0) {
+			arr = d3.range(0, $scope.totalrows);
+		} else {
+			arr = d3.range( page * $scope.totalrows, (page + 1) * $scope.totalrows);
+		}
+		
+		$q.all(arr.map(function(rowid){	
+			
+			return $http({
+				method:"GET",
+				url:"heatmap/"+$routeParams.dataset+"/annotation/" + $scope.dimension + "/"+ rowid,
+				params: {
+					format:"json",
+				}
+			})
+			.success( function(data) {
+				
+				return data;
+				
+			});
+			
+		}))
+		.then(function(datas){
+			
+			$scope.page = page;
+			
+			$scope.tuples = datas.map(function(data){
+				return data.data;
+			});
+			
+			
+		});
+		
+	}
 	
 	function getTuples(startind, endind){
 	
@@ -89,7 +140,7 @@ ctrl.controller('GeneSelectCtrl', ['$scope', '$http', '$routeParams', '$q', func
 		console.log(input)
 		$scope.dimension = input;
 		annotations.get();
-		getTuples(0, $scope.matrixsummary[($scope.dimension + "s")]);
+		getPage(0);
 		
 	}
 
