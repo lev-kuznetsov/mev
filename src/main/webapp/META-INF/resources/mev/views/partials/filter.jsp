@@ -5,15 +5,6 @@
 </div>
 
 <div class="row">
-
-	<div class="btn-group">
-		<button class="btn" ng-click="changeDimension('row')">Rows</button>
-		<button class="btn" ng-click="changeDimension('column')">Columns</button>
-	</div>
-
-</div>
-
-<div class="row">
 	<div class="span3">
 
 		<ul class="thumbnails">
@@ -43,6 +34,16 @@
 	
 	<!-- Data Table -->
 	<div class="span8">
+	
+		<div class="row">
+		
+			<div class="btn-group">
+				<button class="btn" ng-click="changeDimension('row')">Rows</button>
+				<button class="btn" ng-click="changeDimension('column')">Columns</button>
+			</div>
+		
+		</div>
+	
 	    <table class='table table-hover table-bordered'>
 	    	<thead>
 		        <tr>
