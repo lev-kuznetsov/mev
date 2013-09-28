@@ -6,6 +6,10 @@ ctrl.controller('GeneSelectCtrl', ['$scope', '$http', '$routeParams', '$q', func
 	$scope.headers = null;
 	$scope.dimension = "row";
 	$scope.page = 0;
+	$scope.totalpages = 0;
+	
+	$scope.nearbypages = [];
+	
 	$scope.range = [0, 100];
 	
 	$scope.totalrows = 100;
