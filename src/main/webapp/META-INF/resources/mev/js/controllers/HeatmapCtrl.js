@@ -9,6 +9,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	var pullallow = true;
 	$scope.matrixsummary = undefined;
 	$scope.selectionname = undefined;
+	$scope.analyzeOptions = ["diff", "blah", "Jawn"]
 	
 	$scope.selectedcells = new Object();
 
@@ -29,6 +30,11 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		$scope.pullSelections("row");
 	});
 	
+	$scope.analyzeRequester = function(selectionAnalysis, selection1, selection2) {
+		
+		
+		
+	}
 	
 	
 	$scope.pageUp = function() {
