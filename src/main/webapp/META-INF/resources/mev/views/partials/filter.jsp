@@ -46,20 +46,22 @@
 			</ul>
 		</div>
 	
-	    <table class='table table-hover table-bordered'>
-	    	<thead>
-		        <tr>
-		          <th ng-repeat="header in headers">{{header}}<i class="icon-plus-sign" data-target="#myModal" data-toggle="modal" ng-click="selectfilter( header )"></i></th>
-		        </tr>
-	    	</thead>
-	    	<tbody>
-	        	<tr ng-repeat="row in tuples">
-	            	<td ng-repeat="cell in row">
-	              		{{cell.value}}
-	            	</td>
-	    		</tr>
-	    	</tbody>
-	    </table>
+		<div id="filtertable">
+		    <table class="table table-hover table-bordered">
+		    	<thead>
+			        <tr>
+			          <th ng-repeat="header in headers">{{header}}<i class="icon-plus-sign" data-target="#myModal" data-toggle="modal" ng-click="selectfilter( header )"></i></th>
+			        </tr>
+		    	</thead>
+		    	<tbody>
+		        	<tr ng-repeat="row in tuples">
+		            	<td ng-repeat="cell in row">
+		              		{{cell.value}}
+		            	</td>
+		    		</tr>
+		    	</tbody>
+			</table>
+		</div>
 	</div>
 	
 </div>
