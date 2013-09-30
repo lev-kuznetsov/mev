@@ -34,14 +34,16 @@
 	
 	<!-- Data Table -->
 	<div class="span8">
-	
-		<div class="row">
 		
-			<div class="btn-group">
-				<button class="btn" ng-click="changeDimension('row')">Rows</button>
-				<button class="btn" ng-click="changeDimension('column')">Columns</button>
-			</div>
+		<div class="btn-group">
+			<button class="btn" ng-click="changeDimension('row')">Rows</button>
+			<button class="btn" ng-click="changeDimension('column')">Columns</button>
+		</div>
 		
+		<div class="pagination pagination-right">
+			<ul>
+				<li ng-repeat="page in nearbypages" ><a ng-click="getPage(page)">{{page + 1}}</a></li> 
+			</ul>
 		</div>
 	
 	    <table class='table table-hover table-bordered'>
