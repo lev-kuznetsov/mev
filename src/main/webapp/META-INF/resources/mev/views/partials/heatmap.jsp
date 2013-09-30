@@ -106,13 +106,13 @@
 							
 							<select ng-model="selection1"> 
 							
-								<option ng-repeat="selection for selections.row" value="{{selection}}"> {{selection}} </option>
+								<option ng-repeat="selection in selections.row" value="{{selection}}"> {{selection}} </option>
 							
 							</select>
 							
 							<select ng-model="selection2"> 
 							
-								<option ng-repeat="selection for selections.column" value="{{selection}}"> {{selection}} </option>
+								<option ng-repeat="selection in selections.column" value="{{selection}}"> {{selection}} </option>
 							
 							</select>
 							
