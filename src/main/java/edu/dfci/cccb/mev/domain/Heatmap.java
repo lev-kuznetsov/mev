@@ -487,7 +487,7 @@ public class Heatmap implements Closeable {
   }
 
   private void setSelection (List<Map<String, Map<String, String>>> dimension, String id, MatrixSelection selection) {
-    for (int index : selection.indecis ())
+    for (int index : selection.indices ())
       dimension.get (index).put (id, selection.attributes ());
   }
 
