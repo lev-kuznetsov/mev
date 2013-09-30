@@ -12,7 +12,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	
 	$scope.selectedcells = new Object();
 
-	$scope.selections = [];
+	$scope.selections = new Object();//{"row":[], "column":[]};
 	
 	$http({
 		method:"PUT",
@@ -134,8 +134,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		});
 
 	};
-	
-	
+
 	$scope.pushSelections = function(selectionname, dimension) {
 		
 		if ($scope.selectedcells[dimension]) {
@@ -143,9 +142,9 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 				method:"PUT",
 				url:"heatmap/"+$scope.matrixlocation+"/selection/"+dimension+"/"+selectionname,
 				params: {
-					format:"json",
-					selection: $scope.selectedcells[dimension]
-				}
+					format:"json"
+				},
+				data: '{"attributes": {"name":'+ selectionname +'}, "indices":['+$scope.selectedcells[dimension]+ ']}'
 			})
 			.success( function(data) {
 				alert("Added!");
@@ -367,5 +366,3 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	
 	
 }]);
-
-

@@ -73,6 +73,16 @@
 					</div>
 					<div id="collapseTwo" class="accordion-body collapse">
 						<div class="accordion-inner">
+						
+							<p>Your Row Selections:</p>
+							
+							<p ng-repeat="selection in selections['row']">{{selection}}</p>
+							
+							
+							<p>Your Column Selections:</p>
+							
+							<p ng-repeat="selection in selections['column']">{{selection}}</p>
+							
 							<button class="btn btn-block btn-primary" data-target="#myRowModal" data-toggle="modal">Add Row Selection </button>
 							<button class="btn btn-block btn-primary" data-target="#myColumnModal" data-toggle="modal">Add Column Selection </button>
 						</div>
@@ -124,5 +134,4 @@
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     <button class="btn btn-primary"  data-dismiss="modal" aria-hidden="true" ng-click="pushSelections(selectionname, 'column')">Add Column Selection</button>
   </div>
-  
 </div>
