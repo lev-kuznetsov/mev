@@ -674,8 +674,7 @@ public class Heatmap implements Closeable {
     }
   }
 
-  @SuppressWarnings ("unused")
-  private void toStream (final Object rowSeparator, final Object columnSeparator, final ObjectOutput out) throws IOException {
+  public void toStream (final Object rowSeparator, final Object columnSeparator, final ObjectOutput out) throws IOException {
     data.walkInRowOrder (new RealMatrixPreservingVisitor () {
       @Override
       @SneakyThrows (IOException.class)
