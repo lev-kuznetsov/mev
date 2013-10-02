@@ -75,6 +75,7 @@ import us.levk.math.linear.HugeRealMatrix;
 import us.levk.util.io.implementation.Provisional;
 import us.levk.util.io.support.Provisionals;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -652,6 +653,24 @@ public class Heatmap implements Closeable {
       return new EucledianDistanceClusterer ().eucledian (data);
     default:
       throw new IllegalArgumentException ();
+    }
+  }
+
+  public static class JsonCluster {
+    public @Getter @Setter @JsonView int id;
+    public @Getter @Setter @JsonView double d;
+    public @Getter @Setter @JsonView JsonCluster[] children;
+
+    public static JsonCluster from (Cluster cluster) {
+      JsonCluster result = new JsonCluster ();
+      result.setId (cluster.id ());
+      result.setD (cluster.d ());
+      result.setChildren (cluster.children () == null
+                                                     ? null
+                                                     : new JsonCluster[] {
+                                                                          from (cluster.children ()[0]),
+                                                                          from (cluster.children ()[1]) });
+      return result;
     }
   }
 
