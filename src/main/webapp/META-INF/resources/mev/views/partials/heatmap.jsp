@@ -128,7 +128,7 @@
   
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary"  data-dismiss="modal" aria-hidden="true" ng-click="pushSelections(selectionname, 'row') ">Add Row Selection</button>
+    <button class="btn btn-primary"  data-dismiss="modal" aria-hidden="true" ng-click="pushSelections('row') ">Add Row Selection</button>
   </div>
   
 </div>
@@ -148,7 +148,7 @@
   
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary"  data-dismiss="modal" aria-hidden="true" ng-click="pushSelections(selectionname, 'column')">Add Column Selection</button>
+    <button class="btn btn-primary"  data-dismiss="modal" aria-hidden="true" ng-click="pushSelections('column')">Add Column Selection</button>
   </div>
 </div>
 
@@ -187,13 +187,13 @@
   
 		<select ng-model="LimmaSelection1"> 
 							
-			<option ng-repeat="selection in selections.column" value="{{selection}}"> {{selection}} </option>
+			<option ng-repeat="selection in selections.row.concat(selections.column)" value="{{selection}}"> {{selection}} </option>
 							
 		</select>
 		
 		<select ng-model="LimmaSelection2"> 
 							
-			<option ng-repeat="selection in selections.column" value="{{selection}}"> {{selection}} </option>
+			<option ng-repeat="selection in selections.row.concat(selections.column)" value="{{selection}}"> {{selection}} </option>
 							
 		</select>
 		
@@ -202,6 +202,8 @@
 			<option ng-repeat="option in ['significant', 'full', 'rnk']" value="{{option}}"> {{option}} </option>
 							
 		</select>
+		
+		{{selections}}
 
   </div>
   
