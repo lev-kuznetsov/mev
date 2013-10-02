@@ -36,6 +36,8 @@ drct.directive('visHeatmap', [function() {
 
 			scope.$watch('inputdata', function(newdata, olddata) {
 				
+				scope.celllink.row = [1, 2, 3, 4]
+				
 				if (newdata == olddata | !newdata) {
 					return;
 				}
