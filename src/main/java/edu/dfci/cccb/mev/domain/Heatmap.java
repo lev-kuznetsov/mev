@@ -98,8 +98,8 @@ public class Heatmap implements Closeable {
   private Annotations columnAnnotations;
   private List<Map<String, Map<String, String>>> rowSelections = new SelectionHolderList ();
   private List<Map<String, Map<String, String>>> columnSelections = new SelectionHolderList ();
-  private @Getter Cluster rowClusters = null;
-  private @Getter Cluster columnClusters = null;
+  private @Getter JsonCluster rowClusters = null;
+  private @Getter JsonCluster columnClusters = null;
 
   private final LoadingCache<Pair<String, String>, Triplet<Provisional, Provisional, Provisional>> limma =
                                                                                                            CacheBuilder.newBuilder ()
@@ -352,7 +352,7 @@ public class Heatmap implements Closeable {
       try {
         result = new Heatmap ();
         result.data = new HugeRealMatrix (data.getColumnDimension (), data.getRowDimension ());
-        result.columnClusters = root;
+        result.columnClusters = JsonCluster.from (root);
         reorderByColumnCluster (result.data, root, data, indexer ());
         return result;
       } catch (RuntimeException | Error e) {
@@ -375,7 +375,7 @@ public class Heatmap implements Closeable {
       try {
         result = new Heatmap ();
         result.data = new HugeRealMatrix (data.getColumnDimension (), data.getRowDimension ());
-        result.rowClusters = root;
+        result.rowClusters = JsonCluster.from (root);
         reorderByRowCluster (result.data, root, data, indexer ());
         return result;
       } catch (RuntimeException | Error e) {
