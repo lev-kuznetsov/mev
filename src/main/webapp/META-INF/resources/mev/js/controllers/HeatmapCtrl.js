@@ -53,7 +53,9 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 
 		$http({
 			method:"GET",
-			url:"heatmap/"+$scope.matrixlocation+"/analysis/limma" + "(" + $scope.LimmaSelection1 + "," + $scope.LimmaSelection2 + ")",
+			url:"heatmap/"+$scope.matrixlocation+"/analysis/limma" 
+				+ "(" + $scope.LimmaSelection1 + "," + $scope.LimmaSelection2 + ")"
+				+ "/" + $scope.LimmaOutputOption,
 			params: {
 				format:"json",
 				

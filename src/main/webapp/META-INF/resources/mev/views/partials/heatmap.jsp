@@ -99,7 +99,7 @@
 						<div class="accordion-inner">
 							
 							<button class="btn btn-block btn-primary" data-target="#EuclideanClusteringModal" data-toggle="modal">Euclidean Cluster</button>
-							<button class="btn btn-block btn-primary" data-target="#LIMMAModalModal" data-toggle="modal">Limma Analyze</button>
+							<button class="btn btn-block btn-primary" data-target="#LIMMAModal" data-toggle="modal">Limma Analyze</button>
 														
 						</div>
 					</div>
@@ -194,6 +194,12 @@
 		<select ng-model="LimmaSelection2"> 
 							
 			<option ng-repeat="selection in selections.column" value="{{selection}}"> {{selection}} </option>
+							
+		</select>
+		
+		<select ng-model="LimmaOutputOption"> 
+							
+			<option ng-repeat="option in ['significant', 'full', 'rnk']" value="{{option}}"> {{option}} </option>
 							
 		</select>
 
