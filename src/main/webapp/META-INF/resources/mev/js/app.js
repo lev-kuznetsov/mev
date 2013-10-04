@@ -9,6 +9,7 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
 		templateUrl: '/views/partials/home',
 		});
 		
+	/*	Vestigial Pages. Will re-add later
 	$routeProvider.when('/about', {
 		templateUrl: '/views/partials/about'});
 		
@@ -23,7 +24,8 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
 		
 	$routeProvider.when('/tutorial', {
 		templateUrl: '/views/partials/tutorial'});
-
+	*/
+	
 	$routeProvider.when('/heatmap/:matrixLocation', {
 		templateUrl: '/views/partials/heatmap', 
 		controller: 'HeatmapCtrl'});

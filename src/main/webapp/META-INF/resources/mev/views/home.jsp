@@ -48,15 +48,9 @@
 
     <ul>
 	  <li><a data-target="#UploadModal" data-toggle="modal">Upload New File</a></li>
-								
-      <li><a href="#/analyze"><spring:message code="home.analyze"/></a></li>
-      <li><a href="#/features"><spring:message code="home.features"/></a></li>
-      <li><a href="#/news"><spring:message code="home.news"/></a></li>
-      <li><a href="#/about"><spring:message code="home.about"/></a></li>
-      <li><a href="#/help"><spring:message code="home.help"/></a></li>
     </ul>
     
-    <h4> Uploads </h4>
+    <h4> Datasets: </h4>
     <ul>
       <li ng-repeat="visualization in menuheatmaplist"><a href="#/heatmap/{{visualization}}">{{visualization}}</a></li>
     </ul>
