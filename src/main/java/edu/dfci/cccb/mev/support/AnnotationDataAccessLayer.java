@@ -57,7 +57,7 @@ public class AnnotationDataAccessLayer implements Closeable {
   private final UpdateableDataContext dbDataContext;
   private final String dataNamespace;
   private static final String INDEX_COL_NAME = "mev_index";
-  private static final String ANNOTATION_ID_COLUMN_NAME = "annotationId";
+  private static final String ANNOTATION_ID_COLUMN_NAME = "column";
 
   private int reloadCounter = 0;
   private String currentTableName = "";
@@ -391,10 +391,11 @@ public class AnnotationDataAccessLayer implements Closeable {
           for (Row originalRow; originalDataSet.next (); count++) {
             originalRow = originalDataSet.getRow ();
             Object annotationId = originalRow.getValue (annotationIdColumn);
-            try (DataSet mergingDataSet = sourceDataContext.executeQuery (sourceDataContext.query ()
+            try (DataSet mergingDataSet =
+                                          sourceDataContext.executeQuery (sourceDataContext.query ()
                                                                                            .from (sourceTable)
                                                                                            .selectAll ()
-                                                                                           .where (mergingIdColumn)
+                                                                                           .where (mergingIdColumn.getName ())
                                                                                            .eq (annotationId)
                                                                                            .toQuery ())) {
               RowInsertionBuilder insert = callback.insertInto (targetTable);
@@ -402,8 +403,10 @@ public class AnnotationDataAccessLayer implements Closeable {
                 insert.value (originalItem.getColumn ().getName (), originalRow.getValue (originalItem.getColumn ()));
               for (; mergingDataSet.next (); log.debug (mergingDataSet.getRow ()))
                 for (SelectItem mergingItem : mergingDataSet.getRow ().getSelectItems ())
-                  insert.value (mergingItem.getColumn ().getName (),
-                                mergingDataSet.getRow ().getValue (mergingItem.getColumn ()));
+                  if (!"".equals (mergingItem.getColumn ().getName ()))
+                    insert.value (mergingItem.getColumn ().getName (),
+                                  mergingDataSet.getRow ().getValue (mergingItem.getColumn ()));
+              log.debug (insert.toSql ());
               insert.execute ();
             }
           }
