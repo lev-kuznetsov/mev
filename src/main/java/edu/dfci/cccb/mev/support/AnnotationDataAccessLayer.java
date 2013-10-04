@@ -43,12 +43,14 @@ import org.eobjects.metamodel.query.LogicalOperator;
 import org.eobjects.metamodel.query.OperatorType;
 import org.eobjects.metamodel.query.Query;
 import org.eobjects.metamodel.query.SelectItem;
+import org.eobjects.metamodel.query.builder.SatisfiedSelectBuilder;
 import org.eobjects.metamodel.schema.Column;
 import org.eobjects.metamodel.schema.ColumnType;
 import org.eobjects.metamodel.schema.Schema;
 import org.eobjects.metamodel.schema.Table;
 import org.eobjects.metamodel.util.SimpleTableDef;
 
+import edu.dfci.cccb.mev.domain.AnnotationSearchTerm;
 import edu.dfci.cccb.mev.domain.MatrixAnnotation;
 
 @Log4j
@@ -199,6 +201,26 @@ public class AnnotationDataAccessLayer implements Closeable {
     return result;
   }
 
+  public List<Integer> findByValue (AnnotationSearchTerm[] search) {
+    List<Integer> result = new ArrayList<> ();
+    
+    SatisfiedSelectBuilder<?> b = dbDataContext.query ().from (currentTableName).selectAll ();
+    Column index = dbDataContext.getDefaultSchema ().getTableByName (currentTableName).getColumnByName (INDEX_COL_NAME);
+    
+    for (AnnotationSearchTerm term : search)
+      b.where (term.getAttribute ()).like (term.getOperand ());
+    
+    try (DataSet found = b.execute ()) {
+      while (found.next ()) {
+        Row row = found.getRow ();
+        Object i = row.getValue (index);
+        log.debug ("Found index " + i);
+        result.add (Integer.valueOf (i.toString ()));
+      }
+    }
+    return result;
+  }
+  
   private boolean importTable (UpdateableDataContext targetDataContext,
                                Table targetTable,
                                DataContext sourceDataContext,
