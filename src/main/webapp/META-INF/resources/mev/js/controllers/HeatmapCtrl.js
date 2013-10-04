@@ -12,7 +12,8 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 	$scope.analyzeOptions = ["LIMMA", "EuclideanClustering"]
 	
 	$scope.selectedcells = new Object();
-
+	$scope.selectedcells.row = [];
+	$scope.selectedcells.column = [];
 	$scope.selections = new Object();
 	
 	$http({
@@ -30,7 +31,23 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		$scope.pullSelections("column");
 		$scope.pullSelections("row");
 		
-		console.log("Downloaded Matrix data", data)
+		
+		if ($scope.matrixsummary.columnClustered) {
+			
+			$http({
+				method:"GET",
+				url:"heatmap/"+$scope.matrixlocation+"/analysis/EuclidianClustering" + "/" + "column",
+				params: {
+					format:"json",
+				
+				}
+			})
+			.success( function(data) {
+				$scope.downloadedtree = data;
+				$scope.transformData();
+			})
+			
+		}
 		
 	});
 	
@@ -45,7 +62,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 			}
 		})
 		.success( function(data) {
-			alert("Success! Please wait for your analysis to complete.")
+			alert("Clustering analysis complete!")
 		})
 		.error( function(data) {
 		    alert("Something went wrong, please contact us if the problem persists.");	
@@ -236,25 +253,6 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 			$scope.heatmapcells = data.values;
 			$scope.transformData();
 		});
-		
-		if ($scope.matrixsummary.columnClustered) {
-			
-			console.log("Inside Column Clustered")
-			
-			$http({
-				method:"GET",
-				url:"heatmap/"+$scope.matrixlocation+"/analysis/EuclidianClustering" + "/" + "column",
-				params: {
-					format:"json",
-				
-				}
-			})
-			.success( function(data) {
-				$scope.downloadedtree = data;
-				$scope.transformData();
-			})
-			
-		}
 		
 		$http({
 			method:"GET",
