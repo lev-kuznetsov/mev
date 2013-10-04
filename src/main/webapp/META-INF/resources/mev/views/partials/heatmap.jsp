@@ -202,8 +202,6 @@
 			<option ng-repeat="option in ['significant', 'full', 'rnk']" value="{{option}}"> {{option}} </option>
 							
 		</select>
-		
-		{{selections}}
 
   </div>
   
