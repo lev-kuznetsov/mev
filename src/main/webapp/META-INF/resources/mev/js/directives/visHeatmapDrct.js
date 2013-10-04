@@ -396,9 +396,11 @@ drct.directive('visHeatmap', [function() {
 						.on("click", leftclick);
 					
 				}
-					
+				
+				
+				
 				if (newdata.tree.top) { //only goes here if tree information is built into system
-					
+					console.log("made it inside logic statement");
 					var toptreewidth = width;
 					var toptreeheight = margin.top;
 					

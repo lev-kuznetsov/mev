@@ -23,11 +23,15 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		}
 	})
 	.success( function(data) {
+
 		$scope.matrixsummary = data;
 		
 		
 		$scope.pullSelections("column");
 		$scope.pullSelections("row");
+		
+		console.log("Downloaded Matrix data", data)
+		
 	});
 	
 	$scope.analyzeEuclideanRequester = function() {
@@ -41,7 +45,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 			}
 		})
 		.success( function(data) {
-			Alert("Success! Please wait for your analysis to complete.")
+			alert("Success! Please wait for your analysis to complete.")
 		})
 		.error( function(data) {
 		    alert("Something went wrong, please contact us if the problem persists.");	
@@ -138,6 +142,10 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 				return;
 			}
 		}
+		
+		if ($scope.matrixsummary.columnClustered && !$scope.downloadedtree) {
+				return;
+		}
 
 		$scope.transformeddata = {data:[], tree:{}};
 		
@@ -154,6 +162,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 		$scope.transformeddata.columnlabels = $scope.heatmapcolumns.map(function(d) { return d.value;});
 		$scope.transformeddata.rowlabels = $scope.heatmaprows.map(function(d) { return d.value;});
 		$scope.transformeddata.matrixsummary = $scope.matrixsummary;
+		$scope.transformeddata.tree.top = $scope.downloadedtree
 
 		firstpull = false;
 
@@ -172,6 +181,12 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 			$scope.selections[inputdimension] = data;
 		});
 
+	};
+	
+	$scope.requestTopTree = function() {
+	
+
+		
 	};
 
 	$scope.pushSelections = function(dimension) {
@@ -221,6 +236,25 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 			$scope.heatmapcells = data.values;
 			$scope.transformData();
 		});
+		
+		if ($scope.matrixsummary.columnClustered) {
+			
+			console.log("Inside Column Clustered")
+			
+			$http({
+				method:"GET",
+				url:"heatmap/"+$scope.matrixlocation+"/analysis/EuclidianClustering" + "/" + "column",
+				params: {
+					format:"json",
+				
+				}
+			})
+			.success( function(data) {
+				$scope.downloadedtree = data;
+				$scope.transformData();
+			})
+			
+		}
 		
 		$http({
 			method:"GET",
@@ -273,9 +307,6 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', function($sco
 			});
 			
 		});
-		
-			
-
 		
 	};
 	
