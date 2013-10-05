@@ -225,10 +225,10 @@ drct.directive('visHeatmap', [function() {
 						.attr({
 							"class": "cells",
 							"height": function(d){
-								return .95*( cellYPosition.rangeBand() );
+								return 1*( cellYPosition.rangeBand() );
 							},
 							"width": function(d){
-								return .95*( cellXPosition.rangeBand() );
+								return 1*( cellXPosition.rangeBand() );
 							},
 							"x": function(d, i) { return cellXPositionLin( indexXMapper(d.col) ); },
 							"y": function(d, i) { return cellYPositionLin( indexYMapper(d.row) ); },
