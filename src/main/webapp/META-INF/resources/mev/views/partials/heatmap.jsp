@@ -258,6 +258,14 @@
 	</div>
 	
 	<div class="tab-pane" id="infopane">
+	
+			<p>Your Row Selections:</p>
+			<p ng-repeat="selection in selections['row']">{{selection}}</p>
+			
+			
+			<p>Your Column Selections:</p>
+			<p ng-repeat="selection in selections['column']">{{selection}}</p>
+			
 		
 		<input id="file" type="file" multiple name="upload" />
 
@@ -266,22 +274,15 @@
 			
 		</div>
 	
-		<button class="btn btn-block btn-primary" ng-click="sendRowFile()">Submit Row Annotations</button>
-		<button class="btn btn-block btn-primary" ng-click="sendColFile()">Submit Column Annotations</button>
+		<button class="btn btn-primary" ng-click="sendRowFile()">Submit Row Annotations</button>
+		<button class="btn btn-primary" ng-click="sendColFile()">Submit Column Annotations</button>
 		
 		
 		
 		<div id="rowoutput"></div>
 		<div id="coloutput"></div>
 		
-							<p>Your Row Selections:</p>
-							
-							<p ng-repeat="selection in selections['row']">{{selection}}</p>
-							
-							
-							<p>Your Column Selections:</p>
-							
-							<p ng-repeat="selection in selections['column']">{{selection}}</p>
+						
 
 	</div>
 
