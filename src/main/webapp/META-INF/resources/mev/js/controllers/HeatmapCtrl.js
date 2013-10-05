@@ -1,6 +1,6 @@
 ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', '$rootScope', function($scope, $routeParams, $http, $rootScope) {
 
-	$scope.matrixlocation = $routeParams.matrixLocation;
+	$scope.matrixlocation = $routeParams.dataset;
 	$scope.curstartrow = 0;
 	$scope.curendrow = 80;
 	$scope.curstartcol = 0;
