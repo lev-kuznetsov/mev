@@ -26,6 +26,7 @@ ctrl.controller('GeneSelectCtrl', ['$scope', '$http', '$routeParams', '$q', func
 		})
 		.success( function(data) {
 			
+			
 			$scope.matrixsummary = data;
 			
 			if ($scope.totalrows%$scope.matrixsummary[($scope.dimension + "s")] > 0) {
