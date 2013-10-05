@@ -12,7 +12,7 @@ ctrl.controller('GeneSelectCtrl', ['$scope', '$http', '$routeParams', '$q', func
 	
 	$scope.range = [0, 100];
 	
-	$scope.totalrows = 100;
+	$scope.totalrows = 50;
 	
 	
 	function pullSummary() {
@@ -120,7 +120,6 @@ ctrl.controller('GeneSelectCtrl', ['$scope', '$http', '$routeParams', '$q', func
 			});
 			
 			if (page < 3) {
-				console.log("inside less than");
 				
 				$scope.nearbypages = [0, 1, 2, 3, 4]
 				

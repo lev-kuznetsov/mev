@@ -2,7 +2,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', '$rootScope',
 
 	$scope.matrixlocation = $routeParams.dataset;
 	$scope.curstartrow = 0;
-	$scope.curendrow = 80;
+	$scope.curendrow = 100;
 	$scope.curstartcol = 0;
 	$scope.curendcol = 80;
 	var firstpull = true;
