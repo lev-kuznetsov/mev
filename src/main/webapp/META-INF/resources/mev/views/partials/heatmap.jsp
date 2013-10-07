@@ -49,7 +49,7 @@
 					inputdata="transformeddata"
 					inputcolor="red"
 					showlabels="true"
-					width="800"
+					width="1000"
 					height="900"
 					marginleft="80"
 					marginright="80"
