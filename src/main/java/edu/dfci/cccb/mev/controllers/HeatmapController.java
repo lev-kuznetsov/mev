@@ -368,7 +368,7 @@ public class HeatmapController {
                       IndexOutOfBoundsException.class })
   @ResponseStatus (NOT_FOUND)
   @ResponseBody
-  public String handeNotFoundException (Exception e) {
+  public String handleNotFoundException (Exception e) {
     log.warn ("Unbound resource", e);
     return e.getLocalizedMessage ();
   }
@@ -376,7 +376,7 @@ public class HeatmapController {
   @ExceptionHandler (InvalidDimensionException.class)
   @ResponseStatus (BAD_REQUEST)
   @ResponseBody
-  public String handeBadRequestException (InvalidDimensionException e) {
+  public String handleBadRequestException (InvalidDimensionException e) {
     log.warn ("Bad REST call", e);
     return e.getLocalizedMessage ();
   }
