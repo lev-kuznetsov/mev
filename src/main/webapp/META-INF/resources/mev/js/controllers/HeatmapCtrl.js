@@ -41,6 +41,7 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', '$rootScope',
 
 		$scope.matrixsummary = data;
 		
+		console.log(data);
 		
 		$scope.pullSelections("column");
 		$scope.pullSelections("row");
@@ -87,22 +88,13 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', '$rootScope',
 	
 	$scope.analyzeLimmaRequester = function() {
 
-		$http({
-			method:"GET",
-			url:"heatmap/"+$scope.matrixlocation+"/analysis/limma" 
+		var inputurl = "heatmap/"+$scope.matrixlocation+"/analysis/limma" 
 				+ "(" +$scope.LimmaDimension + "," + $scope.LimmaSelection1 + "," + $scope.LimmaSelection2 + ")"
-				+ "/" + $scope.LimmaOutputOption,
-			params: {
-				format:"json",
-				
-			}
-		})
-		.success( function(data) {
-			alert("Success! Please wait for your analysis to complete.")
-		})
-		.error( function(data) {
-		    alert("Something went wrong, please contact us if the problem persists.");	
-		});
+				+ "/" + $scope.LimmaOutputOption;
+
+		
+			$("body").append("<iframe src='" + inputurl + "' style='display: none;' ></iframe>")
+		
 		
 	}
 	
