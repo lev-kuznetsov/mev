@@ -224,8 +224,14 @@ ctrl.controller('GeneSelectCtrl', ['$scope', '$http', '$routeParams', '$q', func
 			})
 			
 		})).then(function(indiceslist) {
+
+			console.log(indiceslist);
+
+			var arr = indiceslist[0].data;
 			
-			var arr = indiceslist;
+			arr = arr.filter(function(obj, index) {
+				return (index < 50)	
+			})
 		
 			$q.all(arr.map(function(rowid){	
 				
