@@ -23,6 +23,7 @@ import static org.springframework.http.HttpStatus.UNSUPPORTED_MEDIA_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
@@ -229,7 +230,7 @@ public class HeatmapController {
       return clustered.getColumnClusters ();
   }
 
-  @RequestMapping (value = "/{id}/analysis/limma({dimension},{experiment},{control})/{output}", method = GET)
+  @RequestMapping (value = "/{id}/analysis/limma({dimension},{experiment},{control})/{output}", method = { GET, HEAD })
   @ResponseStatus (OK)
   public void limma (@PathVariable ("id") String id,
                      @PathVariable ("experiment") String experiment,
