@@ -23,13 +23,17 @@ import static org.springframework.http.HttpStatus.UNSUPPORTED_MEDIA_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -229,7 +233,7 @@ public class HeatmapController {
       return clustered.getColumnClusters ();
   }
 
-  @RequestMapping (value = "/{id}/analysis/limma({dimension},{experiment},{control})/{output}", method = GET)
+  @RequestMapping (value = "/{id}/analysis/limma({dimension},{experiment},{control})/{output}", method = { GET, HEAD })
   @ResponseStatus (OK)
   public void limma (@PathVariable ("id") String id,
                      @PathVariable ("experiment") String experiment,
@@ -251,6 +255,17 @@ public class HeatmapController {
       throw new InvalidDimensionException (dimension);
     IOUtils.copy (new FileInputStream (limma),
                   response.getOutputStream ());
+    response.flushBuffer ();
+  }
+
+  @RequestMapping (value = "/{id}/download", method = GET)
+  @ResponseStatus (OK)
+  public void download (@PathVariable ("id") String id, HttpServletResponse response) throws HeatmapNotFoundException,
+                                                                                     IOException,
+                                                                                     AnnotationNotFoundException {
+    response.setContentType ("text/plain");
+    response.setHeader ("Content-Disposition", "attachment;filename=" + id + ".txt");
+    heatmaps.get (id).toStream (response.getOutputStream ());
     response.flushBuffer ();
   }
 
@@ -368,7 +383,7 @@ public class HeatmapController {
                       IndexOutOfBoundsException.class })
   @ResponseStatus (NOT_FOUND)
   @ResponseBody
-  public String handeNotFoundException (Exception e) {
+  public String handleNotFoundException (Exception e) {
     log.warn ("Unbound resource", e);
     return e.getLocalizedMessage ();
   }
@@ -376,7 +391,7 @@ public class HeatmapController {
   @ExceptionHandler (InvalidDimensionException.class)
   @ResponseStatus (BAD_REQUEST)
   @ResponseBody
-  public String handeBadRequestException (InvalidDimensionException e) {
+  public String handleBadRequestException (InvalidDimensionException e) {
     log.warn ("Bad REST call", e);
     return e.getLocalizedMessage ();
   }

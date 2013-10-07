@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectOutput;
+import java.io.OutputStream;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -658,8 +659,10 @@ public class Heatmap implements Closeable {
     }
 
     public Heatmap build (final MultipartFile file) throws IOException {
-      final InputStream input = file.getInputStream ();
-      final long size = file.getSize ();
+      return build (file.getInputStream (), file.getSize (), file.getOriginalFilename ());
+    }
+    
+    public Heatmap build (final InputStream input, final long size, final String name) throws IOException {
       log.debug ("Building heatmap from " + size + " bytes of uploaded data");
       BufferedReader reader = new BufferedReader (new InputStreamReader (new InputStream () {
         private final InputStream in = new BufferedInputStream (input);
@@ -683,14 +686,14 @@ public class Heatmap implements Closeable {
           if (result < 0) {
             if (!complete) {
               complete = true;
-              log.debug ("Processing uploaded file " + file.getOriginalFilename () + " is complete");
+              log.debug ("Processing uploaded file " + name + " is complete");
             }
           } else {
             count++;
             if (logUpdateThresholds.size () > 0)
               if (((double) count) * 100 / size > logUpdateThresholds.get (0)) {
                 log.debug ("Processing uploaded file "
-                           + file.getOriginalFilename () + " is " + logUpdateThresholds.get (0) + "% complete");
+                           + name + " is " + logUpdateThresholds.get (0) + "% complete");
                 logUpdateThresholds.remove (0);
               }
           }
@@ -915,6 +918,18 @@ public class Heatmap implements Closeable {
         return 0;
       }
     });
+  }
+  
+  public void toStream (OutputStream out) throws IOException, AnnotationNotFoundException {
+    out.write ("id".getBytes ());
+    for (int column = 0; column < getSummary ().columns (); column++)
+      out.write (("\t" + getColumnAnnotation (column).get (0).value ()).getBytes ());
+    for (int row = 0; row < getSummary ().rows (); row++) {
+      out.write (("\n" + getRowAnnotation (row).get (0).value ()).getBytes ());
+      for (int column = 0; column < getSummary ().columns (); column++)
+        out.write (("\t" + data.getEntry (row, column)).getBytes ());
+      out.write ('\n');
+    }
   }
 
   private List<Integer> reorderedIndices (final Cluster cluster) {

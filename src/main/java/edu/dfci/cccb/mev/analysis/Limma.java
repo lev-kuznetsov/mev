@@ -21,12 +21,12 @@ import static org.apache.log4j.Level.TRACE;
 import static org.apache.log4j.Level.WARN;
 import static us.levk.util.io.support.Provisionals.file;
 
-//import java.io.ByteArrayInputStream;
-//import java.io.ByteArrayOutputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
-//import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -34,12 +34,11 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Iterator;
 
-//import javax.script.ScriptEngine;
-//import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import lombok.extern.log4j.Log4j;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Level;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -52,6 +51,11 @@ import edu.dfci.cccb.mev.domain.AnnotationNotFoundException;
 import edu.dfci.cccb.mev.domain.Heatmap;
 import edu.dfci.cccb.mev.domain.MatrixAnnotation;
 import edu.dfci.cccb.mev.domain.MatrixSelection;
+//import java.io.ByteArrayInputStream;
+//import java.io.ByteArrayOutputStream;
+//import java.io.InputStreamReader;
+//import javax.script.ScriptEngine;
+//import javax.script.ScriptEngineManager;
 
 /**
  * @author levk
@@ -60,7 +64,8 @@ import edu.dfci.cccb.mev.domain.MatrixSelection;
 @Log4j
 public class Limma {
 
-  //private static final ScriptEngine r = new ScriptEngineManager ().getEngineByName ("R");
+  // private static final ScriptEngine r = new ScriptEngineManager
+  // ().getEngineByName ("R");
   private static final String script = "edu/dfci/cccb/mev/analysis/limma.R.vm";
   private static final VelocityEngine velocity = new VelocityEngine () {
     {
@@ -117,12 +122,18 @@ public class Limma {
                                                AnnotationNotFoundException {
     try (final Provisional input = file ();
          final Provisional configuration = file ();
-         final Provisional script = file ()) {
+         final Provisional script = file ();
+         final OutputStreamWriter writer = new OutputStreamWriter (new FileOutputStream (script))) {
       if ("row".equals (dimension))
         configureRows (new FileOutputStream (configuration), heatmap, selection1, selection2);
       else
         configureColumns (new FileOutputStream (configuration), heatmap, selection1, selection2);
-      dump (new FileOutputStream (input), heatmap);
+      heatmap.toStream (new FileOutputStream (input));
+      if (log.isDebugEnabled ())
+        try (BufferedReader readBack = new BufferedReader (new FileReader (input))) {
+          log.debug ("Dump line 1: \"" + readBack.readLine () + "\"");
+          log.debug ("Dump line 2: \"" + readBack.readLine () + "\"");
+        }
       velocity.getTemplate (Limma.script).merge (new VelocityContext (new HashMap<String, String> () {
         private static final long serialVersionUID = 1L;
 
@@ -138,9 +149,21 @@ public class Limma {
           put ("rnk", rnk.getAbsolutePath ());
         }
       }),
-                                                 new OutputStreamWriter (new FileOutputStream (script)));
-      Runtime.getRuntime ().exec ("Rscript " + script.getAbsolutePath ());
-      //r.eval (new InputStreamReader (new ByteArrayInputStream (script.toByteArray ())));
+                                                 writer);
+      writer.flush ();
+      Process r = Runtime.getRuntime ().exec ("Rscript " + script.getAbsolutePath ());
+      try {
+        r.waitFor ();
+      } catch (InterruptedException e) {
+        log.error ("Interrupted while waiting for R", e);
+      }
+      if (log.isDebugEnabled ()) {
+        ByteArrayOutputStream listing = new ByteArrayOutputStream ();
+        IOUtils.copy (r.getErrorStream (), listing);
+        log.debug ("Return value " + r.exitValue () + " error output:\n" + listing.toString ());
+      }
+      // r.eval (new InputStreamReader (new ByteArrayInputStream
+      // (script.toByteArray ())));
     }
   }
 
@@ -164,39 +187,5 @@ public class Limma {
       out.println (index + "\t"
                    + (first.getIndices ().contains (index) ? 1 : (second.getIndices ().contains (index) ? 0 : -1)));
     out.flush ();
-  }
-
-  private static void dump (final OutputStream data, final Heatmap heatmap) throws IOException,
-                                                                           AnnotationNotFoundException {
-    final String newline = System.getProperty ("line.separator", "\n"), tab = "\t";
-    StringBuffer header = new StringBuffer ();
-    for (MatrixAnnotation<?> column : heatmap.getColumnAnnotation (0, heatmap.getSummary ().columns () - 1, "COLUMN"))
-      header.append (tab).append (column.attribute ());
-    data.write (header.append (newline).toString ().getBytes ());
-    heatmap.toStream (newline,
-                      new Object () {
-                        private Iterator<MatrixAnnotation<?>> rows = heatmap.getRowAnnotation (0,
-                                                                                               heatmap.getSummary ()
-                                                                                                      .rows (),
-                                                                                               "annotation-0")
-                                                                            .iterator ();
-
-                        /* (non-Javadoc)
-                         * @see java.lang.Object#toString() */
-                        @Override
-                        public String toString () {
-                          return rows.next ().toString () + tab;
-                        }
-                      },
-                      new ObjectOutputStream () {
-                        /* (non-Javadoc)
-                         * @see
-                         * java.io.ObjectOutputStream#writeObjectOverride(java
-                         * .lang.Object) */
-                        @Override
-                        protected void writeObjectOverride (Object obj) throws IOException {
-                          data.write (obj.toString ().getBytes ());
-                        }
-                      });
   }
 }
