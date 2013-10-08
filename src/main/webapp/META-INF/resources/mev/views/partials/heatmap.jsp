@@ -111,7 +111,7 @@
 			<div class="span7">
 				<vis-Heatmap 
 					inputdata="transformeddata"
-					inputcolor="{{heatmapcolor}}"
+					inputcolor="blue"
 					showlabels="true"
 					width="1000"
 					height="900"
