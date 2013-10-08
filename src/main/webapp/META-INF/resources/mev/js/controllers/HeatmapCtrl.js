@@ -107,6 +107,26 @@ ctrl.controller('HeatmapCtrl', ['$scope', '$routeParams', '$http', '$rootScope',
 		
 	}
 	
+	$scope.analyzeLimmaViewRequester = function(LimmaDimension, LimmaSelection1, LimmaSelection2, LimmaOutputOption) {
+		
+		$http({
+				method:"GET",
+				url:"heatmap/"+$scope.matrixlocation+"/analysis/limmaView" 
+				+ "(" +LimmaDimension + "," + LimmaSelection1 + "," + LimmaSelection2 + ")"
+				+ "/" + LimmaOutputOption,
+				params: {
+					format:"json"
+				},
+				data: '{"attributes": {"name":"'+ $scope.selectionname +'"}, "indices":['+$scope.selectedcells[dimension]+ ']}'
+			})
+			.success( function(data) {
+				
+				$scope.limmaviewtablerows = data;
+				
+			});
+		
+	}
+	
 	$scope.pageUp = function() {
 		
 		if ($scope.curstartrow == 0) {
