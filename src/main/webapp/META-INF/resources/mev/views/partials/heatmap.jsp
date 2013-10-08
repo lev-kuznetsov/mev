@@ -170,11 +170,11 @@
 		
 				<div class="accordion-group">
 					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" data-parent="#filteraccordion" href="#filtercollapseOne">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#filteraccordion" href="#filterCollapseOne">
 							Upload Annotations
 						</a>
 					</div>
-					<div id="filtercollapseOne" class="accordion-body collapse">
+					<div id="filterCollapseOne" class="accordion-body collapse">
 						<div class="accordion-inner">
 						
 							<input id="file" type="file" multiple name="upload" />
@@ -192,6 +192,40 @@
 						</div>
 					</div>
 				</div>
+				
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#filteraccordion" href="#filterCollapseTwo">
+							LIMMA
+						</a>
+					</div>
+					<div id="filterCollapseTwo" class="accordion-body collapse">
+						<div class="accordion-inner">
+						
+							<select ng-model="LimmaDimension">
+								<option ng-repeat="dimension in ['column', 'row']" value="{{dimension}}"> {{dimension}} </option>		
+							</select>
+						
+							<select ng-model="LimmaSelection1">
+								<option ng-repeat="selection in selections.row.concat(selections.column)" value="{{selection}}"> {{selection}} </option>
+							</select>
+							
+							<select ng-model="LimmaSelection2">	
+								<option ng-repeat="selection in selections.row.concat(selections.column)" value="{{selection}}"> {{selection}} </option>
+							</select>
+							
+							<input type='text' value="Significance Alpha" />
+							
+							<select ng-model="LimmaOutputOption">
+								<option ng-repeat="option in ['significant', 'full', 'rnk']" value="{{option}}"> {{option}} </option>
+							</select>
+							
+							<button class="btn btn-primary btn-block" ng-click="analyzeLimmaRequester()">Analyze</button>
+													
+						</div>
+					</div>
+				</div>
+				
 				
 			</div>
 			
