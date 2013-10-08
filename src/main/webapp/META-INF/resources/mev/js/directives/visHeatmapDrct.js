@@ -445,7 +445,7 @@ drct.directive('visHeatmap', [function() {
 				
 
 					var topclick = function(d){
-						console.log("topclick called");
+						
 						
 						var nColor = '#ffffff'; //Initial nonselected color of a node.
 						var pColor = '#cccccc'; //Initial nonselected color of a branch.
