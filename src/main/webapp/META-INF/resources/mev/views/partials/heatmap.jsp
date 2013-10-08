@@ -89,10 +89,10 @@
 										<option ng-repeat="selection in selections.row.concat(selections.column)" value="{{selection}}"> {{selection}} </option>
 									</select>
 									
-									<input type='text' value="Significance Alpha" />
+									<input type='text' value="0.2" />
 									
 									<select ng-model="LimmaOutputOption">
-										<option ng-repeat="option in ['significant', 'full', 'rnk']" value="{{option}}"> {{option}} </option>
+										<option ng-repeat="option in ['significant', 'full']" value="{{option}}"> {{option}} </option>
 									</select>
 									
 									<button class="btn btn-primary" ng-click="analyzeLimmaRequester()">Analyze</button>
@@ -214,10 +214,10 @@
 								<option ng-repeat="selection in selections.row.concat(selections.column)" value="{{selection}}"> {{selection}} </option>
 							</select>
 							
-							<input type='text' value="Significance Alpha" />
+							<input type='text' value="0.2" />
 							
 							<select ng-model="LimmaOutputOption">
-								<option ng-repeat="option in ['significant', 'full', 'rnk']" value="{{option}}"> {{option}} </option>
+								<option ng-repeat="option in ['significant', 'full']" value="{{option}}"> {{option}} </option>
 							</select>
 							
 							<button class="btn btn-primary btn-block" ng-click="analyzeLimmaRequester()">Analyze</button>
@@ -357,10 +357,10 @@
 									<option ng-repeat="selection in selections.row.concat(selections.column)" value="{{selection}}"> {{selection}} </option>
 								</select>
 								
-								<input type='text' value="Significance Alpha" />
+								<input type='text' value="0.2" />
 								
 								<select ng-model="LimmaOutputOption">
-									<option ng-repeat="option in ['significant', 'full', 'rnk']" value="{{option}}"> {{option}} </option>
+									<option ng-repeat="option in ['significant', 'full']" value="{{option}}"> {{option}} </option>
 								</select>
 								
 								<button class="btn btn-primary btn-block" ng-click="analyzeLimmaRequester()">Analyze</button>
