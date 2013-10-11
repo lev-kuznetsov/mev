@@ -465,20 +465,7 @@ public class AnnotationDataAccessLayer implements Closeable {
   }
 
   private void closeCleanup () {
-    dbDataContext.executeUpdate (new BatchUpdateScript () {
-
-      @Override
-      public void run (UpdateCallback callback) {
-        DataContext dc = callback.getDataContext ();
-
-        for (String tableName : dc.getDefaultSchema ().getTableNames ()) {
-          if (tableName.startsWith (dataNamespace, 0)) {
-            log.debug ("Dropping table " + tableName + " on close");
-            callback.dropTable (dc.getDefaultSchema (), tableName).execute ();
-          }
-        }
-      }
-    });
+    dropTable (dbDataContext, currentTableName);
   }
 
   private Table getTableByName (DataContext dataContext, String tableName) {
