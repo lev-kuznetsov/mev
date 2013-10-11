@@ -115,6 +115,7 @@ public class AnnotationDataAccessLayer implements Closeable {
 
   public Collection<String> getColumnNames () {
     Table dbTable = getTableByName (dbDataContext, currentTableName);
+    log.debug ("Getting column names for " + currentTableName + " actual table " + dbTable);
     ArrayList<String> columnNames = new ArrayList<String> ();
     for (String columnName : dbTable.getColumnNames ()) {
       if (!columnName.equalsIgnoreCase (INDEX_COL_NAME))
@@ -320,6 +321,7 @@ public class AnnotationDataAccessLayer implements Closeable {
 
       @Override
       public void run (UpdateCallback callback) {
+        log.debug ("Dropping table " + targetTableName);
         callback.dropTable (targetDataContext.getDefaultSchema (), targetTableName).execute ();
       }
     });
