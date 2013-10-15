@@ -444,7 +444,7 @@ drct.directive('visHeatmap', [function() {
 					var topelbow = function(d, i){
 						
 						return "M" + (d.target.x + margin.left )  + "," + (topscaling(d.target.d))
-						+ "V" + (topscaling(d.target.d)) + "H" +  ( d.source.x + margin.left  );
+						+ "V" + (topscaling(d.source.d)) + "H" +  ( d.source.x + margin.left  );
 					};
 					
 				
