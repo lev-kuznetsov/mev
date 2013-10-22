@@ -21,6 +21,9 @@
     <spring.version>4.0.0.M3</spring.version>
     <jackson.version>2.2.2</jackson.version>
 
+    <spring-extensions.version>0.1.0-20131022.143949-1</spring-extensions.version>
+    <runtime-util.version>0.0.1-20131022.145607-1</runtime-util.version>
+
     <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
     <jetty.version>8.1.10.v20130312</jetty.version>
@@ -108,12 +111,22 @@
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
 
-    <!-- Runtime Utilities -->
-
     <dependency>
       <groupId>us.levk</groupId>
       <artifactId>runtime-util</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>${runtime-util.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>us.levk</groupId>
+      <artifactId>spring</artifactId>
+      <version>${spring-extensions.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>us.levk</groupId>
+          <artifactId>runtime-util</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- FreeMarker -->
@@ -220,20 +233,6 @@
       <version>${spring.version}</version>
     </dependency>
 
-    <!-- Spring extensions -->
-
-    <dependency>
-      <groupId>us.levk</groupId>
-      <artifactId>spring</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
-      <exclusions>
-        <exclusion>
-          <groupId>us.levk</groupId>
-          <artifactId>runtime-util</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
     <!-- Code generation -->
 
     <dependency>
@@ -305,6 +304,12 @@
       <id>spring.milestone</id>
       <name>Spring Milestone Repository</name>
       <url>http://maven.springframework.org/milestone</url>
+    </repository>
+
+    <repository>
+      <id>us.levk</id>
+      <name>Modular Libraries</name>
+      <url>https://raw.github.com/lev-kuznetsov/m2/master/releases</url>
     </repository>
 
   </repositories>
