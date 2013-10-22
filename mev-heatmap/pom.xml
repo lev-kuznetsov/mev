@@ -251,7 +251,7 @@
       <id>us.levk</id>
       <name>Modular Libraries</name>
       <url>https://raw.github.com/lev-kuznetsov/m2/master/releases</url>
-    <repository>
+    </repository>
 
   </repositories>
 
