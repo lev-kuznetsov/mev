@@ -20,6 +20,7 @@
     <org.slf4j.version>1.7.2</org.slf4j.version>
     <spring.version>4.0.0.M3</spring.version>
     <spring-extensions.version>0.1.0-20131022.143949-1</spring-extensions.version>
+    <runtime-util.version>0.0.1-20131022.145607-1</runtime-util.version>
 
     <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
@@ -79,7 +80,7 @@
     <dependency>
       <groupId>us.levk</groupId>
       <artifactId>runtime-util</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>${runtime-util.version}</version>
     </dependency>
 
     <dependency>
@@ -245,6 +246,12 @@
       <name>Spring Milestone Repository</name>
       <url>http://maven.springframework.org/milestone</url>
     </repository>
+
+    <repository>
+      <id>us.levk</id>
+      <name>Modular Libraries</name>
+      <url>https://raw.github.com/lev-kuznetsov/m2/master/releases</url>
+    <repository>
 
   </repositories>
 
