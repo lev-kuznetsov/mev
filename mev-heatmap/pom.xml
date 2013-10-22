@@ -19,6 +19,7 @@
 
     <org.slf4j.version>1.7.2</org.slf4j.version>
     <spring.version>4.0.0.M3</spring.version>
+    <spring-extensions.version>0.1.0-20131022.143949-1</spring-extensions.version>
 
     <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
@@ -84,7 +85,7 @@
     <dependency>
       <groupId>us.levk</groupId>
       <artifactId>spring</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>${spring-extensions.version}</version>
     </dependency>
 
     <!-- Tuples -->
