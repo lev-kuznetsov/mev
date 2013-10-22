@@ -19,6 +19,7 @@
 
     <org.slf4j.version>1.7.2</org.slf4j.version>
     <spring.version>4.0.0.M3</spring.version>
+
     <spring-extensions.version>0.1.0-20131022.143949-1</spring-extensions.version>
     <runtime-util.version>0.0.1-20131022.145607-1</runtime-util.version>
 
