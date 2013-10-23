@@ -14,12 +14,14 @@
  */
 package edu.dfci.cccb.mev.core.support;
 
+import static java.lang.Class.forName;
+import static java.util.Arrays.asList;
+import static us.levk.util.runtime.support.Annotations.brief;
+
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
-import lombok.experimental.ExtensionMethod;
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
@@ -28,7 +30,6 @@ import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
 import us.levk.spring.context.support.FullClassPathScanningCandidateComponentProvider;
-import us.levk.util.runtime.support.Annotations;
 import edu.dfci.cccb.mev.api.annotation.Plugin;
 
 /**
@@ -36,13 +37,11 @@ import edu.dfci.cccb.mev.api.annotation.Plugin;
  * 
  */
 @Log4j
-@ExtensionMethod ({ Annotations.class, Arrays.class })
 public class MevContextHolder {
 
   private static MevContext context = new MevContext () {
 
     private final Collection<Class<?>> configurations = new HashSet<> ();
-    private final Collection<Class<?>> views = new HashSet<> ();
 
     {
       log.info ("Initializing MeV context");
@@ -56,8 +55,8 @@ public class MevContextHolder {
           protected boolean isCandidateComponent (AnnotatedBeanDefinition beanDefinition) {
             return true;
           }
-          
-          protected boolean isCandidateComponent(MetadataReader metadataReader) {
+
+          protected boolean isCandidateComponent (MetadataReader metadataReader) {
             try {
               return super.isCandidateComponent (metadataReader);
             } catch (IOException e) {
@@ -66,15 +65,14 @@ public class MevContextHolder {
           }
         }.findCandidateComponents ())
           try {
-            Class<?> clazz = Class.forName (declaration.getBeanClassName ());
+            Class<?> clazz = forName (declaration.getBeanClassName ());
             if (clazz != null) {
               Package packege = clazz.getPackage ();
               if (packege != null) {
                 Plugin plugin = packege.getAnnotation (Plugin.class);
                 if (plugin != null) {
-                  log.info ("Found " + plugin.brief () + " in " + packege);
-                  configurations.addAll (plugin.configurations ().asList ());
-                  views.addAll (plugin.views ().asList ());
+                  log.info ("Found " + brief (plugin) + " in " + packege);
+                  configurations.addAll (asList (plugin.configurations ()));
                 }
               }
             }
@@ -84,11 +82,6 @@ public class MevContextHolder {
       } catch (ClassNotFoundException e) {
         log.error ("Failed on candidate check", e);
       }
-    }
-
-    @Override
-    public Collection<Class<?>> views () {
-      return views;
     }
 
     @Override

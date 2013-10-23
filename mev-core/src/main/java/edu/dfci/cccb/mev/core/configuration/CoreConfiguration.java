@@ -14,14 +14,16 @@
  */
 package edu.dfci.cccb.mev.core.configuration;
 
-import org.springframework.context.annotation.Bean;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.servlet.view.XmlViewResolver;
+
+import us.levk.spring.web.view.BeanMapHotPlugViewResolver;
 
 /**
  * @author levk
@@ -32,14 +34,11 @@ import org.springframework.web.servlet.view.XmlViewResolver;
                 useDefaultFilters = false,
                 includeFilters = @Filter ({ Controller.class, ControllerAdvice.class }))
 public class CoreConfiguration {
-  
-  @Bean
-  public XmlViewResolver coreXmlViewResolver () {
-    return new XmlViewResolver () {
-      {
-        setLocation (new ClassPathResource ("/edu/dfci/cccb/mev/core/views/views.xml"));
-        setOrder (LOWEST_PRECEDENCE);
-      }
-    };
+
+  private @Inject BeanMapHotPlugViewResolver viewResolver;
+
+  @PostConstruct
+  public void registerViews () {
+    viewResolver.addAnnotatedClasses (CoreViews.class);
   }
 }

@@ -23,6 +23,4 @@ import java.util.Collection;
 public interface MevContext {
 
   Collection<Class<?>> configurations ();
-
-  Collection<Class<?>> views ();
 }

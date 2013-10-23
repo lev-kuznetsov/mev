@@ -21,7 +21,7 @@
     <spring.version>4.0.0.M3</spring.version>
     <jackson.version>2.2.2</jackson.version>
 
-    <spring-extensions.version>0.1.0-20131022.143949-1</spring-extensions.version>
+    <spring-extensions.version>0.1.0-20131023.033523-2</spring-extensions.version>
     <runtime-util.version>0.0.1-20131022.145607-1</runtime-util.version>
 
     <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>

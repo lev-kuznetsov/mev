@@ -12,36 +12,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.api.annotation;
+package edu.dfci.cccb.mev.heatmap.configuration;
 
-import static edu.dfci.cccb.mev.api.annotation.Status.INCUBATION;
-import static java.lang.annotation.ElementType.PACKAGE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
 
 /**
- * Defines an MeV plugin
- * 
  * @author levk
+ *
  */
-@Retention (RUNTIME)
-@Target (PACKAGE)
-public @interface Plugin {
+public class HeatmapViews {
 
-  /**
-   * API version
-   */
-  Version version ();
-
-  /**
-   * Status of a plugin, defaults to INCUBATION
-   */
-  Status status () default INCUBATION;
-
-  /**
-   * Spring configuration files to use
-   */
-  Class<?>[] configurations () default {};
+  @Bean
+  public FreeMarkerView heatmap () {
+    FreeMarkerView view = new FreeMarkerView ();
+    view.setUrl ("/edu/dfci/cccb/mev/heatmap/views/heatmap.ftl");
+    return view;
+  }
 }

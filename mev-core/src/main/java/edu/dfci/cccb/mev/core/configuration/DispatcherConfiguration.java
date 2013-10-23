@@ -23,6 +23,7 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import lombok.ToString;
 import lombok.experimental.ExtensionMethod;
 
 import org.springframework.context.annotation.Bean;
@@ -41,6 +42,7 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import us.levk.spring.web.view.BeanMapHotPlugViewResolver;
 import us.levk.util.runtime.support.Classes;
 import ch.lambdaj.Lambda;
 
@@ -51,6 +53,7 @@ import ch.lambdaj.Lambda;
 @EnableWebMvc
 @Configuration
 @ExtensionMethod ({ Collections.class, Lambda.class, Arrays.class, Classes.class })
+@ToString
 public class DispatcherConfiguration extends WebMvcConfigurerAdapter {
 
   private @Inject Environment environment;
@@ -66,7 +69,7 @@ public class DispatcherConfiguration extends WebMvcConfigurerAdapter {
   /**
    * Create the CNVR
    */
-  @Bean (name = "contentNegotiatingViewResolver ")
+  @Bean
   public ViewResolver contentNegotiatingViewResolver (final ContentNegotiationManager manager) {
     return new ContentNegotiatingViewResolver () {
       {
@@ -78,7 +81,7 @@ public class DispatcherConfiguration extends WebMvcConfigurerAdapter {
   /**
    * Multipart resolver for file upload
    */
-  @Bean (name = "multipartResolver")
+  @Bean
   public CommonsMultipartResolver multipartResolver () {
     return new CommonsMultipartResolver () {
       {
@@ -99,12 +102,24 @@ public class DispatcherConfiguration extends WebMvcConfigurerAdapter {
       }
     };
   }
-  
 
+  @Bean
+  public BeanMapHotPlugViewResolver beanMapHotPlugViewResolver () {
+    return new BeanMapHotPlugViewResolver ();
+  }
+  
+  /**
+   * XML view resolver
+   */
+  //@Bean
+  //public MultipleXmlViewResolver xmlViewResolver () {
+    //return new MultipleXmlViewResolver ();
+  //}
+  
   /**
    * JSON view resolver
    */
-  @Bean (name = "jsonViewResolver")
+  @Bean
   public ViewResolver jsonViewResolver () {
     return new ViewResolver () {
 

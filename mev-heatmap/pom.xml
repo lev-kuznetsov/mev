@@ -20,7 +20,7 @@
     <org.slf4j.version>1.7.2</org.slf4j.version>
     <spring.version>4.0.0.M3</spring.version>
 
-    <spring-extensions.version>0.1.0-20131022.143949-1</spring-extensions.version>
+    <spring-extensions.version>0.1.0-20131023.033523-2</spring-extensions.version>
     <runtime-util.version>0.0.1-20131022.145607-1</runtime-util.version>
 
     <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
@@ -115,6 +115,14 @@
       <version>0.0.2-SNAPSHOT</version>
     </dependency>
 
+    <!-- JSR-330 -->
+
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+      <version>1</version>
+    </dependency>
+
     <!-- Spring -->
 
     <dependency>
@@ -171,7 +179,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>0.11.8</version>
+      <version>0.12.0</version>
     </dependency>
 
     <dependency>

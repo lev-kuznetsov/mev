@@ -16,19 +16,21 @@ package edu.dfci.cccb.mev.heatmap.configuration;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.XmlViewResolver;
 
+import us.levk.spring.web.view.BeanMapHotPlugViewResolver;
 import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
 import edu.dfci.cccb.mev.heatmap.domain.Workspace;
 import edu.dfci.cccb.mev.heatmap.support.AreaMethodArgumentResolver;
@@ -50,15 +52,12 @@ public class HeatmapConfiguration extends WebMvcConfigurerAdapter {
   {
     log.info ("Loading configuration for heatmap plugin");
   }
-  
-  @Bean
-  public XmlViewResolver heatmapXmlViewResolver () {
-    return new XmlViewResolver () {
-      {
-        setLocation (new ClassPathResource ("/edu/dfci/cccb/mev/heatmap/views/views.xml"));
-        setOrder (LOWEST_PRECEDENCE);
-      }
-    };
+
+  private @Inject BeanMapHotPlugViewResolver viewResolver;
+
+  @PostConstruct
+  public void registerViews () {
+    viewResolver.addAnnotatedClasses (HeatmapViews.class);
   }
 
   // FIXME: stub
