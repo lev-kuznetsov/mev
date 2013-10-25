@@ -20,7 +20,7 @@
     <org.slf4j.version>1.7.2</org.slf4j.version>
     <spring.version>4.0.0.M3</spring.version>
 
-    <spring-extensions.version>0.1.0-20131023.033523-2</spring-extensions.version>
+    <spring-extensions.version>0.1.0-SNAPSHOT</spring-extensions.version>
     <runtime-util.version>0.0.1-20131022.145607-1</runtime-util.version>
 
     <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
@@ -69,6 +69,11 @@
 
       <resource>
         <directory>src/main/views</directory>
+        <filtering>false</filtering>
+      </resource>
+      
+      <resource>
+        <directory>src/main/javascript</directory>
         <filtering>false</filtering>
       </resource>
 

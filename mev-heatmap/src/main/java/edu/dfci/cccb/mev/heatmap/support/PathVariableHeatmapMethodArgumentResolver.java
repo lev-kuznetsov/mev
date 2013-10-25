@@ -15,6 +15,9 @@
 package edu.dfci.cccb.mev.heatmap.support;
 
 import static org.springframework.web.bind.annotation.ValueConstants.DEFAULT_NONE;
+
+import javax.inject.Inject;
+
 import lombok.experimental.ExtensionMethod;
 import lombok.extern.log4j.Log4j;
 
@@ -41,6 +44,7 @@ public class PathVariableHeatmapMethodArgumentResolver extends PathVariableMetho
 
   private Workspace workspace;
 
+  @Inject
   public PathVariableHeatmapMethodArgumentResolver (Workspace workspace) {
     this.workspace = workspace;
   }

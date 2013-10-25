@@ -16,11 +16,17 @@ package edu.dfci.cccb.mev.core.configuration;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.TEXT_HTML;
+import static us.levk.spring.web.view.Views.freemarker;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import lombok.ToString;
@@ -29,6 +35,9 @@ import lombok.experimental.ExtensionMethod;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamSource;
+import org.springframework.core.io.Resource;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -43,6 +52,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import us.levk.spring.web.view.BeanMapHotPlugViewResolver;
+import us.levk.spring.web.view.Views.AbstractViewBuilder.AbstractUrlBasedViewBuilder.AbstractTemplateViewBuilder.FreeMarkerViewBuilder;
 import us.levk.util.runtime.support.Classes;
 import ch.lambdaj.Lambda;
 
@@ -92,7 +102,10 @@ public class DispatcherConfiguration extends WebMvcConfigurerAdapter {
       }
     };
   }
-  
+
+  /**
+   * FTL configuration
+   */
   @Bean
   public FreeMarkerConfigurer freeMarkerConfiguration () {
     return new FreeMarkerConfigurer () {
@@ -103,19 +116,48 @@ public class DispatcherConfiguration extends WebMvcConfigurerAdapter {
     };
   }
 
+  /**
+   * FTL view builder
+   */
+  @Bean
+  public FreeMarkerViewBuilder freeMarkerViewBuilder () {
+    return freemarker ();
+  }
+
+  /**
+   * Hot plug view resolver, plugins will autowire this bean and inject views
+   * during {@link PostConstruct}
+   */
   @Bean
   public BeanMapHotPlugViewResolver beanMapHotPlugViewResolver () {
     return new BeanMapHotPlugViewResolver ();
   }
-  
-  /**
-   * XML view resolver
-   */
-  //@Bean
-  //public MultipleXmlViewResolver xmlViewResolver () {
-    //return new MultipleXmlViewResolver ();
-  //}
-  
+
+  @Bean
+  public Map<String, Collection<InputStreamSource>> javascriptSourceHotPlugMap () {
+    return new ConcurrentHashMap<String, Collection<InputStreamSource>> () {
+      private static final long serialVersionUID = 1L;
+
+      /* (non-Javadoc)
+       * @see java.util.concurrent.ConcurrentHashMap#get(java.lang.Object)
+       */
+      @Override
+      public Collection<InputStreamSource> get (Object key) {
+        return putIfAbsent ((String) key, new LinkedList<InputStreamSource> ());
+      }
+    };
+  }
+
+  @Bean
+  public Resource[] application () {
+    return new Resource[] { new ClassPathResource ("/edu/dfci/cccb/mev/core/javascript/application.js") };
+  }
+
+  @Bean
+  public Resource[] heatmap () {
+    return new Resource[] { new ClassPathResource ("/edu/dfci/cccb/mev/heatmap/javascript/heatmap.js") };
+  }
+
   /**
    * JSON view resolver
    */
@@ -159,7 +201,11 @@ public class DispatcherConfiguration extends WebMvcConfigurerAdapter {
    * (org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry) */
   @Override
   public void addResourceHandlers (ResourceHandlerRegistry registry) {
-    registry.addResourceHandler ("/resources/static/**")
-            .addResourceLocations ("classpath:/META-INF/resources/", "/META-INF/resources/");
+    registry.addResourceHandler ("/resources/library/**").addResourceLocations ("classpath:/META-INF/resources/webjars/");
+    registry.addResourceHandler ("/resources/heatmap/**").addResourceLocations ("classpath:/edu/dfci/cccb/mev/heatmap/javascript/");
+    /*
+     *../heatmap/javascript/injector.js
+     * 
+     */
   }
 }

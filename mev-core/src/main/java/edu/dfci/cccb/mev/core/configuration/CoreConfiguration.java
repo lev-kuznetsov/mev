@@ -41,4 +41,8 @@ public class CoreConfiguration {
   public void registerViews () {
     viewResolver.addAnnotatedClasses (CoreViews.class);
   }
+  
+  @PostConstruct
+  public void registerJavascript () {
+  }
 }

@@ -12,23 +12,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.core.controllers;
+package edu.dfci.cccb.mev.core.configuration;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 /**
  * @author levk
- *
+ * 
  */
-@Controller
-@RequestMapping ({ "/", "/home", "/index" })
-public class Home {
+public class CoreJavascript {
 
-  @RequestMapping (method = GET)
-  public String home () {
-    return "home";
+  @Bean
+  public Resource application () {
+    return new ClassPathResource ("/edu/dfci/cccb/mev/core/javascript/application.js");
   }
 }

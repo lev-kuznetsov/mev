@@ -14,19 +14,23 @@
  */
 package edu.dfci.cccb.mev.heatmap.configuration;
 
+import javax.inject.Inject;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
+
+import us.levk.spring.web.view.Views.AbstractViewBuilder.AbstractUrlBasedViewBuilder.AbstractTemplateViewBuilder.FreeMarkerViewBuilder;
 
 /**
  * @author levk
  *
  */
 public class HeatmapViews {
+  
+  private @Inject FreeMarkerViewBuilder builder;
 
   @Bean
   public FreeMarkerView heatmap () {
-    FreeMarkerView view = new FreeMarkerView ();
-    view.setUrl ("/edu/dfci/cccb/mev/heatmap/views/heatmap.ftl");
-    return view;
+    return builder.url ("/edu/dfci/cccb/mev/heatmap/views/heatmap.ftl").build ();
   }
 }

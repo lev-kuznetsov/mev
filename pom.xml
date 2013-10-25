@@ -8,14 +8,243 @@
   <packaging>pom</packaging>
 
   <name>MultiExperiment Viewer</name>
-  <url>http://maven.apache.org</url>
+  <url>http://github.com/dfci-cccb/mev</url>
 
   <modules>
-    <module>mev-api</module>
+    <!--module>mev-api</module>
     <module>mev-heatmap</module>
+    <module>mev-core</module-->
 
-    <!-- Core should be built last -->
-    <module>mev-core</module>
+    <!-- NEW STRUCTURE -->
+
+    <module>api</module>
+    <module>heatmap</module>
+    <module>web</module>
   </modules>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <java.source.version>1.7</java.source.version>
+    <java.target.version>1.7</java.target.version>
+
+    <org.slf4j.version>1.7.2</org.slf4j.version>
+    <log4j.version>1.2.17</log4j.version>
+    <lombok.version>0.12.0</lombok.version>
+    <lambdaj.version>2.3.3</lambdaj.version>
+
+    <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
+    <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+  </properties>
+
+  <profiles>
+
+    <profile>
+      <id>server</id>
+
+      <properties>
+        <spring.version>4.0.0.M3</spring.version>
+      </properties>
+
+      <repositories>
+
+        <repository>
+          <id>java.net</id>
+          <name>Oracle Repository</name>
+          <url>http://download.java.net/maven/2</url>
+        </repository>
+
+        <repository>
+          <id>spring.milestone</id>
+          <name>Spring Milestone Repository</name>
+          <url>http://maven.springframework.org/milestone</url>
+        </repository>
+
+      </repositories>
+
+      <dependencies>
+
+        <!-- Servlet API -->
+
+        <dependency>
+          <groupId>javax</groupId>
+          <artifactId>javaee-web-api</artifactId>
+          <version>6.0</version>
+          <scope>provided</scope>
+        </dependency>
+
+        <!-- Spring -->
+
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+          <version>${spring.version}</version>
+          <exclusions>
+            <!-- Exclude Commons Logging in favor of SLF4j -->
+            <exclusion>
+              <groupId>commons-logging</groupId>
+              <artifactId>commons-logging</artifactId>
+            </exclusion>
+          </exclusions>
+        </dependency>
+
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context-support</artifactId>
+          <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-web</artifactId>
+          <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-webmvc</artifactId>
+          <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-expression</artifactId>
+          <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-orm</artifactId>
+          <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-tx</artifactId>
+          <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-aop</artifactId>
+          <version>${spring.version}</version>
+        </dependency>
+
+      </dependencies>
+
+    </profile><!-- /server -->
+
+    <profile>
+
+      <id>client</id>
+      <!-- TODO: common webjars? -->
+
+    </profile><!-- /client -->
+
+  </profiles>
+
+  <dependencies>
+
+    <!-- @Inject -->
+
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+      <version>1</version>
+    </dependency>
+
+    <!-- Logging -->
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${org.slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>${org.slf4j.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${org.slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+
+    <!-- Code generation -->
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.googlecode.lambdaj</groupId>
+      <artifactId>lambdaj</artifactId>
+      <version>${lambdaj.version}</version>
+    </dependency>
+
+    <!-- JUnit -->
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit-dep</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <source>${java.source.version}</source>
+          <target>${java.target.version}</target>
+          <showDeprecation>true</showDeprecation>
+          <showWarnings>true</showWarnings>
+          <fork>true</fork>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>${maven-source-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+
+  </build>
 
 </project>

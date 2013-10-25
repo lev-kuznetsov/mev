@@ -22,7 +22,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,7 @@ public class HeatmapController {
 
   private Workspace workspace;
 
-  @Autowired
+  @Inject
   public HeatmapController (Workspace workspace) {
     this.workspace = workspace;
   }

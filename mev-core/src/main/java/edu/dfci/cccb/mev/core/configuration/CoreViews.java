@@ -14,19 +14,23 @@
  */
 package edu.dfci.cccb.mev.core.configuration;
 
+import javax.inject.Inject;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
 
+import us.levk.spring.web.view.Views.AbstractViewBuilder.AbstractUrlBasedViewBuilder.AbstractTemplateViewBuilder.FreeMarkerViewBuilder;
+
 /**
  * @author levk
- *
+ * 
  */
 public class CoreViews {
 
+  private @Inject FreeMarkerViewBuilder builder;
+
   @Bean
   public FreeMarkerView home () {
-    FreeMarkerView view = new FreeMarkerView ();
-    view.setUrl ("/edu/dfci/cccb/mev/core/views/home.ftl");
-    return view;
+    return builder.url ("/edu/dfci/cccb/mev/core/views/home.ftl").build ();
   }
 }

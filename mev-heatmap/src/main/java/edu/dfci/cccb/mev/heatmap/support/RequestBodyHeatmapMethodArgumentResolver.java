@@ -17,6 +17,8 @@ package edu.dfci.cccb.mev.heatmap.support;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.inject.Inject;
+
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.core.MethodParameter;
@@ -45,6 +47,7 @@ public class RequestBodyHeatmapMethodArgumentResolver extends RequestParamMethod
    * @param beanFactory
    * @param useDefaultResolution
    */
+  @Inject
   public RequestBodyHeatmapMethodArgumentResolver (Builder builder) {
     super (null, false);
     this.builder = builder;

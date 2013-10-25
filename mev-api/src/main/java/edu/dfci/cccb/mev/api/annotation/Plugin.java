@@ -44,4 +44,7 @@ public @interface Plugin {
    * Spring configuration files to use
    */
   Class<?>[] configurations () default {};
+
+  
+  String javascriptInjectorUrl () default "";
 }

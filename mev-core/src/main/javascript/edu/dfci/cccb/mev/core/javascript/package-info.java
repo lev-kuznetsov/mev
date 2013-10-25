@@ -12,23 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.core.controllers;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 /**
  * @author levk
  *
  */
-@Controller
-@RequestMapping ({ "/", "/home", "/index" })
-public class Home {
-
-  @RequestMapping (method = GET)
-  public String home () {
-    return "home";
-  }
-}
+package edu.dfci.cccb.mev.core.javascript;
