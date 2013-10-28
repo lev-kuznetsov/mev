@@ -16,15 +16,4 @@
  * @author levk
  *
  */
-@Client (resources = {
-                      @Resources (export = "/resources/heatmap/javascript",
-                                  classpath = "/edu/dfci/cccb/mev/heatmap/client/javascript"),
-                      @Resources (export = "/resources/heatmap/style", classpath = "/edu/dfci/cccb/mev/heatmap/client/style") },
-         javascript = @Javascript (injector = "/resources/heatmap/javascript/main.js"),
-         views = {})
-package edu.dfci.cccb.mev.heatmap.client;
-
-import edu.dfci.cccb.mev.api.client.annotation.Client;
-import edu.dfci.cccb.mev.api.client.annotation.Client.Javascript;
-import edu.dfci.cccb.mev.api.client.annotation.Client.Resources;
-
+package edu.dfci.cccb.mev.web.context;

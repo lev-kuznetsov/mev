@@ -21,6 +21,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import edu.dfci.cccb.mev.api.client.annotation.view.Language;
+
 /**
  * @author levk
  * 
@@ -50,7 +52,9 @@ public @interface Client {
   @Retention (RUNTIME)
   @Target (ANNOTATION_TYPE)
   public @interface Views {
-    Class<?> beans ();
+    Language language ();
+
+    String[] classpath ();
   }
 
   Views[] views () default {};

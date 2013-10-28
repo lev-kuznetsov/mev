@@ -12,19 +12,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.web.context;
+
+import edu.dfci.cccb.mev.api.client.annotation.ClientContext;
+import edu.dfci.cccb.mev.api.server.annotation.ServerContext;
+
 /**
  * @author levk
- *
+ * 
  */
-@Client (resources = {
-                      @Resources (export = "/resources/heatmap/javascript",
-                                  classpath = "/edu/dfci/cccb/mev/heatmap/client/javascript"),
-                      @Resources (export = "/resources/heatmap/style", classpath = "/edu/dfci/cccb/mev/heatmap/client/style") },
-         javascript = @Javascript (injector = "/resources/heatmap/javascript/main.js"),
-         views = {})
-package edu.dfci.cccb.mev.heatmap.client;
+public final class MevContextHolder {
 
-import edu.dfci.cccb.mev.api.client.annotation.Client;
-import edu.dfci.cccb.mev.api.client.annotation.Client.Javascript;
-import edu.dfci.cccb.mev.api.client.annotation.Client.Resources;
+  private static MevContext context = new MevContext ();
 
+  public ClientContext client () {
+    return context;
+  }
+
+  public ServerContext server () {
+    return context;
+  }
+
+  public static MevContextHolder holder () {
+    return new MevContextHolder ();
+  }
+
+  private MevContextHolder () {}
+}

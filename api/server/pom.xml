@@ -22,12 +22,6 @@
   <repositories>
 
     <repository>
-      <id>java.net</id>
-      <name>Oracle Repository</name>
-      <url>http://download.java.net/maven/2</url>
-    </repository>
-
-    <repository>
       <id>spring.milestone</id>
       <name>Spring Milestone Repository</name>
       <url>http://maven.springframework.org/milestone</url>
@@ -36,15 +30,6 @@
   </repositories>
 
   <dependencies>
-
-    <!-- Servlet API -->
-
-    <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-web-api</artifactId>
-      <version>6.0</version>
-      <scope>provided</scope>
-    </dependency>
 
     <!-- Spring -->
 
