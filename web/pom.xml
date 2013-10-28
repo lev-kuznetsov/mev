@@ -2,10 +2,8 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>edu.dfci.cccb</groupId>
   <artifactId>mev-web</artifactId>
-  <version>BAYLIE-SNAPSHOT</version>
-  <packaging>pom</packaging>
+  <packaging>war</packaging>
 
   <name>MeV Heatmap Plugin</name>
   <url>http://github.com/dfci-cccb/mev</url>
@@ -15,4 +13,30 @@
     <artifactId>mev</artifactId>
     <version>BAYLIE-SNAPSHOT</version>
   </parent>
+
+  <dependencies>
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-api-client</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-api-server</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-heatmap-client</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-heatmap-server</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
 </project>
