@@ -12,10 +12,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.heatmap.client.controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 /**
- * Individual views are wired up at {@link edu.dfci.cccb.mev.heatmap.client.configuration.Views}
- * 
  * @author levk
  *
  */
-package edu.dfci.cccb.mev.heatmap.client.views;
+@Controller
+@RequestMapping ("/heatmap")
+public class HeatmapView {
+
+  @RequestMapping (value = "/view", method = GET)
+  public String view (Model model) {
+    return "heatmap";
+  }
+}

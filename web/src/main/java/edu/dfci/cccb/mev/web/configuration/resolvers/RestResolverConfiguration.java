@@ -12,10 +12,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.web.configuration.resolvers;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.ViewResolver;
+
+import edu.dfci.cccb.mev.web.support.JsonViewResolver;
+
 /**
- * Individual views are wired up at {@link edu.dfci.cccb.mev.heatmap.client.configuration.Views}
- * 
  * @author levk
  *
  */
-package edu.dfci.cccb.mev.heatmap.client.views;
+@Configuration
+public class RestResolverConfiguration {
+
+  @Bean
+  public ViewResolver jsonViewResolver () {
+    return new JsonViewResolver ();
+  }
+}

@@ -12,10 +12,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.web.configuration.injectors;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+
 /**
- * Individual views are wired up at {@link edu.dfci.cccb.mev.heatmap.client.configuration.Views}
- * 
  * @author levk
- *
+ * 
  */
-package edu.dfci.cccb.mev.heatmap.client.views;
+@Configuration
+@Import (JavaScriptInjectorConfiguration.class)
+public class InjectorConfigurations {}

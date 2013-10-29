@@ -23,4 +23,23 @@
     </dependency>
   </dependencies>
 
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/javascript</directory>
+        <filtering>false</filtering>
+      </resource>
+
+      <resource>
+        <directory>src/main/views</directory>
+        <filtering>false</filtering>
+      </resource>
+      
+      <resource>
+        <directory>src/main/style</directory>
+        <filtering>false</filtering>
+      </resource>
+    </resources>
+  </build>
+
 </project>

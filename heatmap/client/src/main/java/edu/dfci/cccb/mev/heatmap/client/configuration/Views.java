@@ -14,17 +14,19 @@
  */
 package edu.dfci.cccb.mev.heatmap.client.configuration;
 
+import static edu.dfci.cccb.mev.api.client.support.view.ViewBuilders.freemarker;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
+
 /**
  * @author levk
  *
  */
 public class Views {
 
-  /**
-   * 
-   */
-  public Views () {
-    // TODO Auto-generated constructor stub
+  @Bean
+  public FreeMarkerView heatmap () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/heatmap/client/views/heatmap.ftl").build ();
   }
-
 }

@@ -12,10 +12,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.api.client.support.injectors;
+
 /**
- * Individual views are wired up at {@link edu.dfci.cccb.mev.heatmap.client.configuration.Views}
- * 
  * @author levk
  *
  */
-package edu.dfci.cccb.mev.heatmap.client.views;
+public interface InjectorRegistry extends Iterable<String> {
+
+  boolean add (String location);
+}

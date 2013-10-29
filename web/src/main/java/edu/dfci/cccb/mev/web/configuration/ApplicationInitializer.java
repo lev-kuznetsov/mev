@@ -14,8 +14,6 @@
  */
 package edu.dfci.cccb.mev.web.configuration;
 
-import static edu.dfci.cccb.mev.web.context.MevContextHolder.holder;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
@@ -23,6 +21,10 @@ import javax.servlet.ServletRegistration.Dynamic;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
+
+import edu.dfci.cccb.mev.heatmap.client.configuration.HeatmapClientConfiguration;
+import edu.dfci.cccb.mev.heatmap.server.configuration.HeatmapServerConfiguration;
+import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
 
 /**
  * @author levk
@@ -38,11 +40,9 @@ public class ApplicationInitializer implements WebApplicationInitializer {
   public void onStartup (ServletContext servletContext) throws ServletException {
     AnnotationConfigWebApplicationContext mvcContext = new AnnotationConfigWebApplicationContext ();
 
-    // TODO: mev container config
-    mvcContext.register (DispatcherConfiguration.class);
-    Class<?>[] serverPlugins = holder ().server ().configurations ().toArray (new Class<?>[0]);
-    if (serverPlugins.length > 0)
-      mvcContext.register (serverPlugins);
+    mvcContext.register (DispatcherConfiguration.class, ContainerConfigurations.class);
+
+    mvcContext.register (HeatmapServerConfiguration.class, HeatmapClientConfiguration.class);
 
     Dynamic dispatcher = servletContext.addServlet ("dispatcher", new DispatcherServlet (mvcContext));
     dispatcher.setLoadOnStartup (1);

@@ -12,10 +12,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.web.configuration.container;
+
+import static edu.dfci.cccb.mev.api.client.support.view.ViewBuilders.freemarker;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
+
 /**
- * Individual views are wired up at {@link edu.dfci.cccb.mev.heatmap.client.configuration.Views}
- * 
  * @author levk
  *
  */
-package edu.dfci.cccb.mev.heatmap.client.views;
+public class Views {
+
+  @Bean
+  public FreeMarkerView home () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/home.ftl").build ();
+  }
+}

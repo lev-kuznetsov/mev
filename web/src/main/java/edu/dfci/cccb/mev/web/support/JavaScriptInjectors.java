@@ -12,10 +12,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.web.support;
+
+import java.util.ArrayList;
+
+import lombok.extern.log4j.Log4j;
+
+import edu.dfci.cccb.mev.api.client.support.injectors.InjectorRegistry;
+
 /**
- * Individual views are wired up at {@link edu.dfci.cccb.mev.heatmap.client.configuration.Views}
- * 
  * @author levk
  *
  */
-package edu.dfci.cccb.mev.heatmap.client.views;
+@Log4j
+public class JavaScriptInjectors extends ArrayList<String> implements InjectorRegistry {
+  private static final long serialVersionUID = 1L;
+  
+  /* (non-Javadoc)
+   * @see java.util.ArrayList#add(java.lang.Object)
+   */
+  @Override
+  public boolean add (String e) {
+    log.info ("Adding javascript injector at " + e);
+    return super.add (e);
+  }
+}

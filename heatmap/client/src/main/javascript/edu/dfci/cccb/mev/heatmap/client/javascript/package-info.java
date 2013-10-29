@@ -13,7 +13,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
+ * Server URL location is configured at {@link edu.dfci.cccb.mev.heatmap.client.configuration.HeatmapClientConfiguration}
+ * 
  * @author levk
- *
  */
 package edu.dfci.cccb.mev.heatmap.client.javascript;

@@ -16,8 +16,4 @@
  * @author levk
  *
  */
-@Server (configurations = HeatmapConfiguration.class)
 package edu.dfci.cccb.mev.heatmap.server;
-
-import edu.dfci.cccb.mev.api.server.annotation.Server;
-import edu.dfci.cccb.mev.heatmap.server.configuration.HeatmapConfiguration;

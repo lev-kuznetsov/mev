@@ -12,10 +12,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.api.client.support.injectors;
+
+import org.springframework.core.io.Resource;
+
 /**
- * Individual views are wired up at {@link edu.dfci.cccb.mev.heatmap.client.configuration.Views}
- * 
  * @author levk
- *
+ * 
  */
-package edu.dfci.cccb.mev.heatmap.client.views;
+public interface HotPlugViewRegistry {
+
+  HotPlugViewRegistry addXmlBeanDefinitionResources (Resource... resources);
+
+  HotPlugViewRegistry addPropertiesBeanDefinitionResources (Resource... resources);
+
+  HotPlugViewRegistry addAnnotatedClasses (Class<?>... clases);
+}
