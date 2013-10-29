@@ -31,6 +31,12 @@
 
   <dependencies>
 
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-api-common</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
     <!-- Spring -->
 
     <dependency>

@@ -38,13 +38,11 @@ public class ApplicationInitializer implements WebApplicationInitializer {
   public void onStartup (ServletContext servletContext) throws ServletException {
     AnnotationConfigWebApplicationContext mvcContext = new AnnotationConfigWebApplicationContext ();
 
-    // TODO: dispatcher config, mev container config
-
+    // TODO: mev container config
+    mvcContext.register (DispatcherConfiguration.class);
     Class<?>[] serverPlugins = holder ().server ().configurations ().toArray (new Class<?>[0]);
     if (serverPlugins.length > 0)
       mvcContext.register (serverPlugins);
-
-    // TODO: client plugins
 
     Dynamic dispatcher = servletContext.addServlet ("dispatcher", new DispatcherServlet (mvcContext));
     dispatcher.setLoadOnStartup (1);

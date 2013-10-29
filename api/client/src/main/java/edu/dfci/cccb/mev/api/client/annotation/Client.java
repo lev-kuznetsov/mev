@@ -33,13 +33,13 @@ public @interface Client {
 
   @Retention (RUNTIME)
   @Target (ANNOTATION_TYPE)
-  public @interface Resources {
+  public @interface Static {
     String[] export ();
 
     String[] classpath ();
   }
 
-  Resources[] resources () default {};
+  Static[] resources () default {};
 
   @Retention (RUNTIME)
   @Target (ANNOTATION_TYPE)
@@ -51,11 +51,13 @@ public @interface Client {
 
   @Retention (RUNTIME)
   @Target (ANNOTATION_TYPE)
-  public @interface Views {
-    Language language ();
+  public @interface View {
+    Language type ();
 
-    String[] classpath ();
+    String name ();
+
+    String classpath ();
   }
 
-  Views[] views () default {};
+  View[] views () default {};
 }

@@ -12,19 +12,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.api.client.annotation.view;
+
 /**
  * @author levk
  *
  */
-@Client (resources = {
-                      @Static (export = "/resources/heatmap/javascript",
-                                  classpath = "/edu/dfci/cccb/mev/heatmap/client/javascript"),
-                      @Static (export = "/resources/heatmap/style", classpath = "/edu/dfci/cccb/mev/heatmap/client/style") },
-         javascript = @Javascript (injector = "/resources/heatmap/javascript/main.js"),
-         views = {})
-package edu.dfci.cccb.mev.heatmap.client;
+public interface ViewRegistry {
 
-import edu.dfci.cccb.mev.api.client.annotation.Client;
-import edu.dfci.cccb.mev.api.client.annotation.Client.Javascript;
-import edu.dfci.cccb.mev.api.client.annotation.Client.Static;
-
+  void freemarker (String name, String classpath);
+}

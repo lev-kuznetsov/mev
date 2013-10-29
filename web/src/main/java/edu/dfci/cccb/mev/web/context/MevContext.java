@@ -34,8 +34,8 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
 
 import edu.dfci.cccb.mev.api.client.annotation.Client;
 import edu.dfci.cccb.mev.api.client.annotation.Client.Javascript;
-import edu.dfci.cccb.mev.api.client.annotation.Client.Resources;
-import edu.dfci.cccb.mev.api.client.annotation.Client.Views;
+import edu.dfci.cccb.mev.api.client.annotation.Client.Static;
+import edu.dfci.cccb.mev.api.client.annotation.Client.View;
 import edu.dfci.cccb.mev.api.client.annotation.ClientContext;
 import edu.dfci.cccb.mev.api.server.annotation.Server;
 import edu.dfci.cccb.mev.api.server.annotation.ServerContext;
@@ -45,14 +45,14 @@ import edu.dfci.cccb.mev.api.server.annotation.ServerContext;
 public class MevContext implements ClientContext, ServerContext {
 
   private @Getter final Collection<Class<?>> configurations;
-  private @Getter final Collection<Resources> resources;
+  private @Getter final Collection<Static> resources;
   private @Getter final Collection<Javascript> injectors;
-  private @Getter final Collection<Views> views;
+  private @Getter final Collection<View> views;
 
   {
-    Collection<Resources> resources = new HashSet<> ();
+    Collection<Static> resources = new HashSet<> ();
     Collection<Javascript> injectors = new HashSet<> ();
-    Collection<Views> views = new HashSet<> ();
+    Collection<View> views = new HashSet<> ();
     Collection<Class<?>> configurations = new HashSet<> ();
 
     for (BeanDefinition definition : new ClassPathScanningCandidateComponentProvider (false) {

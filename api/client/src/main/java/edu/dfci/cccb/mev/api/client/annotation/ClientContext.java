@@ -17,8 +17,8 @@ package edu.dfci.cccb.mev.api.client.annotation;
 import java.util.Collection;
 
 import edu.dfci.cccb.mev.api.client.annotation.Client.Javascript;
-import edu.dfci.cccb.mev.api.client.annotation.Client.Resources;
-import edu.dfci.cccb.mev.api.client.annotation.Client.Views;
+import edu.dfci.cccb.mev.api.client.annotation.Client.Static;
+import edu.dfci.cccb.mev.api.client.annotation.Client.View;
 
 /**
  * @author levk
@@ -26,9 +26,9 @@ import edu.dfci.cccb.mev.api.client.annotation.Client.Views;
  */
 public interface ClientContext {
 
-  Collection<Resources> resources ();
+  Collection<Static> resources ();
 
   Collection<Javascript> injectors ();
 
-  Collection<Views> views ();
+  Collection<View> views ();
 }
