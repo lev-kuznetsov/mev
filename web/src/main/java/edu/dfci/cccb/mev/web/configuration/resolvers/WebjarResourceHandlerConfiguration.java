@@ -15,17 +15,23 @@
 package edu.dfci.cccb.mev.web.configuration.resolvers;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * @author levk
  * 
  */
 @Configuration
-@Import ({
-          ContentNegotiationConfiguration.class,
-          MultipartUploadConfiguration.class,
-          RestResolverConfiguration.class,
-          ViewResolverConfiguration.class,
-          WebjarResourceHandlerConfiguration.class })
-public class ResolverConfigurations {}
+public class WebjarResourceHandlerConfiguration extends WebMvcConfigurerAdapter {
+
+  /* (non-Javadoc)
+   * @see
+   * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
+   * #addResourceHandlers
+   * (org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry) */
+  @Override
+  public void addResourceHandlers (ResourceHandlerRegistry registry) {
+    registry.addResourceHandler ("/library/webjars/**").addResourceLocations ("classpath:/META-INF/resources/webjars/");
+  }
+}

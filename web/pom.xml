@@ -14,6 +14,15 @@
     <version>BAYLIE-SNAPSHOT</version>
   </parent>
 
+  <properties>
+    <angularjs.version>1.1.4</angularjs.version>
+    <d3.version>3.1.5</d3.version>
+    <jquery.version>2.0.3</jquery.version>
+    <bootstrap.version>2.3.2</bootstrap.version>
+    <log4javascript.version>1.4.5</log4javascript.version>
+    <retinajs.version>0.0.2</retinajs.version>
+  </properties>
+
   <dependencies>
 
     <!-- MeV API -->
@@ -53,6 +62,44 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- Webjars -->
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery</artifactId>
+      <version>${jquery.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>d3js</artifactId>
+      <version>${d3.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>angularjs</artifactId>
+      <version>${angularjs.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>bootstrap</artifactId>
+      <version>${bootstrap.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>log4javascript</artifactId>
+      <version>${log4javascript.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>retinajs</artifactId>
+      <version>${retinajs.version}</version>
+    </dependency>
+
   </dependencies>
 
   <repositories>
@@ -88,9 +135,6 @@
         <directory>src/main/views</directory>
         <filtering>false</filtering>
       </resource>
-
-      <!--resource> <directory>src/main/style</directory> <filtering>false</filtering> 
-        </resource -->
     </resources>
 
   </build>
