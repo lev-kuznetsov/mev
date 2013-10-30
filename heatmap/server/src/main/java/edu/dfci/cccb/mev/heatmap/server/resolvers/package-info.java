@@ -12,14 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.heatmap.domain;
-
-import java.io.InputStream;
-
-public interface Content {
-  String contentType ();
-  
-  String name ();
-  
-  InputStream input () throws HeatmapException;
-}
+/**
+ * @author levk
+ *
+ */
+package edu.dfci.cccb.mev.heatmap.server.resolvers;

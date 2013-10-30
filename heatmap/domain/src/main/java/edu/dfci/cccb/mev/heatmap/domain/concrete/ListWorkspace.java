@@ -20,6 +20,7 @@ import static ch.lambdaj.Lambda.on;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import lombok.Synchronized;
 import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
@@ -38,10 +39,11 @@ public class ListWorkspace extends AbstractWorkspace {
    * @see edu.dfci.cccb.mev.heatmap.domain.Workspace#get(java.lang.String) */
   @Override
   public Heatmap get (String id) throws HeatmapNotFoundException {
-    for (Heatmap heatmap : heatmaps)
-      if (heatmap.name ().equals (id))
-        return heatmap;
-    throw new HeatmapNotFoundException ().id (id);
+    ListIterator<Heatmap> found = find (id);
+    if (found == null)
+      throw new HeatmapNotFoundException ().id (id);
+    else
+      return found.previous ();
   }
 
   /* (non-Javadoc)
@@ -51,11 +53,9 @@ public class ListWorkspace extends AbstractWorkspace {
   @Override
   @Synchronized
   public void put (Heatmap heatmap) {
-    for (Iterator<Heatmap> heatmaps = this.heatmaps.iterator (); heatmaps.hasNext ();)
-      if (heatmaps.next ().name ().equals (heatmap.name ())) {
-        heatmaps.remove ();
-        break;
-      }
+    Iterator<Heatmap> found = find (heatmap.name ());
+    if (found != null)
+      found.remove ();
     this.heatmaps.add (0, heatmap);
   }
 
@@ -64,5 +64,24 @@ public class ListWorkspace extends AbstractWorkspace {
   @Override
   public List<String> list () {
     return extract (heatmaps, on (Heatmap.class).name ());
+  }
+
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.heatmap.domain.Workspace#remove(java.lang.String) */
+  @Override
+  @Synchronized
+  public void remove (String id) throws HeatmapNotFoundException {
+    Iterator<Heatmap> found = find (id);
+    if (found == null)
+      throw new HeatmapNotFoundException ().id (id);
+    else
+      found.remove ();
+  }
+
+  private ListIterator<Heatmap> find (String id) {
+    for (ListIterator<Heatmap> heatmaps = this.heatmaps.listIterator (); heatmaps.hasNext ();)
+      if (heatmaps.next ().name ().equals (id))
+        return heatmaps;
+    return null;
   }
 }

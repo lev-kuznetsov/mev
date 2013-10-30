@@ -14,8 +14,15 @@
  */
 package edu.dfci.cccb.mev.heatmap.server.controllers;
 
+import static edu.dfci.cccb.mev.heatmap.domain.Heatmap.HEATMAP_VALID_NAME_PATTERN_EXPRESSION;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import lombok.ToString;
+
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
 
 /**
  * @author levk
@@ -23,4 +30,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping ("/heatmap")
-public class HeatmapRestController {}
+@ToString
+public class HeatmapRestController {
+
+  @RequestMapping (value = "/{id:" + HEATMAP_VALID_NAME_PATTERN_EXPRESSION + "}", method = GET)
+  public Heatmap heatmap (@PathVariable ("id") Heatmap heatmap) {
+    return heatmap;
+  }
+}

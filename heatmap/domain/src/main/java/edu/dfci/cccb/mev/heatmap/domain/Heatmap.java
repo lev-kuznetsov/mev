@@ -19,6 +19,8 @@ package edu.dfci.cccb.mev.heatmap.domain;
  * 
  */
 public interface Heatmap {
+  
+  public static final String HEATMAP_VALID_NAME_PATTERN_EXPRESSION = "[^/]+";
 
   String name ();
 

@@ -23,6 +23,8 @@ import java.util.List;
 public interface Workspace {
 
   Heatmap get (String id) throws HeatmapNotFoundException;
+  
+  void remove (String id) throws HeatmapNotFoundException;
 
   void put (Heatmap heatmap);
   
