@@ -15,4 +15,12 @@
     <version>BAYLIE-SNAPSHOT</version>
   </parent>
 
+  <dependencies>
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-api-common</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+
 </project>
