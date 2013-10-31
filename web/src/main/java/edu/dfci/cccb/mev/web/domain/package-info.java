@@ -12,19 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.api.client.support.injectors;
-
-import org.springframework.core.io.Resource;
-
 /**
  * @author levk
- * 
+ *
  */
-public interface HotPlugViewRegistry {
-
-  HotPlugViewRegistry addXmlBeanDefinitionResources (Resource... resources);
-
-  HotPlugViewRegistry addPropertiesBeanDefinitionResources (Resource... resources);
-
-  HotPlugViewRegistry addAnnotatedClasses (Class<?>... clases);
-}
+package edu.dfci.cccb.mev.web.domain;

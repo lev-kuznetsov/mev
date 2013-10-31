@@ -12,26 +12,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.web.configuration.container;
+package edu.dfci.cccb.mev.api.client.support.injectors;
 
-import static edu.dfci.cccb.mev.api.client.support.view.ViewBuilders.freemarker;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
+import org.springframework.core.io.Resource;
 
 /**
  * @author levk
- *
+ * 
  */
-public class Views {
+public interface ViewRegistrar {
 
-  @Bean
-  public FreeMarkerView home () {
-    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/home.ftl").build ();
-  }
+  ViewRegistrar registerXmlViewBeanDefinitionResources (Resource... resources);
 
-  @Bean
-  public FreeMarkerView api () {
-    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/api.ftl").build ();
-  }
+  ViewRegistrar registerPropertiesViewBeanDefinitionResources (Resource... resources);
+
+  ViewRegistrar registerAnnotatedViewBeanClasses (Class<?>... classes);
 }

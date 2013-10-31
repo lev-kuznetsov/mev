@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import edu.dfci.cccb.mev.api.client.support.injectors.HotPlugViewRegistry;
+import edu.dfci.cccb.mev.api.client.support.injectors.ViewRegistrar;
 import edu.dfci.cccb.mev.api.client.support.injectors.InjectorRegistry;
 
 /**
@@ -34,13 +34,13 @@ import edu.dfci.cccb.mev.api.client.support.injectors.InjectorRegistry;
 @Log4j
 public class HeatmapClientConfiguration extends WebMvcConfigurerAdapter {
 
-  private @Inject HotPlugViewRegistry views;
+  private @Inject ViewRegistrar views;
   private @Inject InjectorRegistry injectors;
 
   @PostConstruct
   public void registerViews () {
     log.debug ("Registering views in " + Views.class.getName () + " with " + views);
-    views.addAnnotatedClasses (Views.class);
+    views.registerAnnotatedViewBeanClasses (Views.class);
   }
 
   @PostConstruct

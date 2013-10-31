@@ -14,12 +14,18 @@
  */
 package edu.dfci.cccb.mev.heatmap.domain.prototype;
 
+import java.util.regex.Pattern;
+
+import lombok.AllArgsConstructor;
 import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
+import edu.dfci.cccb.mev.heatmap.domain.InvalidHeatmapNameException;
+import static lombok.AccessLevel.PROTECTED;
 
 /**
  * @author levk
  * 
  */
+@AllArgsConstructor (access = PROTECTED)
 public abstract class AbstractHeatmap implements Heatmap {
 
   private String name;
@@ -34,7 +40,9 @@ public abstract class AbstractHeatmap implements Heatmap {
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.heatmap.domain.Heatmap#rename(java.lang.String) */
   @Override
-  public void rename (String name) {
+  public void rename (String name) throws InvalidHeatmapNameException {
+    if (!Pattern.matches (HEATMAP_VALID_NAME_PATTERN_EXPRESSION, name))
+      throw new InvalidHeatmapNameException ().name (name);
     this.name = name;
   }
 }

@@ -32,7 +32,7 @@ import org.springframework.web.context.support.GenericWebApplicationContext;
 import org.springframework.web.context.support.WebApplicationObjectSupport;
 import org.springframework.web.servlet.View;
 
-import edu.dfci.cccb.mev.api.client.support.injectors.HotPlugViewRegistry;
+import edu.dfci.cccb.mev.api.client.support.injectors.ViewRegistrar;
 
 /**
  * @author levk
@@ -42,7 +42,7 @@ import edu.dfci.cccb.mev.api.client.support.injectors.HotPlugViewRegistry;
 @ToString
 @EqualsAndHashCode (callSuper = true)
 @Log4j
-public class MappedHotPlugViewRegistry extends WebApplicationObjectSupport implements HotPlugViewRegistry {
+public class MappedHotPlugViewRegistry extends WebApplicationObjectSupport implements ViewRegistrar {
 
   private final Map<String, View> views;
 
@@ -50,7 +50,7 @@ public class MappedHotPlugViewRegistry extends WebApplicationObjectSupport imple
    * @see edu.dfci.cccb.mev.api.client.support.view.HotPlugViewRegistry#
    * addXmlBeanDefinitionResources(org.springframework.core.io.Resource[]) */
   @Override
-  public MappedHotPlugViewRegistry addXmlBeanDefinitionResources (Resource... resources) {
+  public MappedHotPlugViewRegistry registerXmlViewBeanDefinitionResources (Resource... resources) {
     for (Resource resource : resources)
       try (GenericWebApplicationContext context = createContext ()) {
         XmlBeanDefinitionReader reader = createXmlReader (context);
@@ -69,7 +69,7 @@ public class MappedHotPlugViewRegistry extends WebApplicationObjectSupport imple
    * addPropertiesBeanDefinitionResources
    * (org.springframework.core.io.Resource[]) */
   @Override
-  public MappedHotPlugViewRegistry addPropertiesBeanDefinitionResources (Resource... resources) {
+  public MappedHotPlugViewRegistry registerPropertiesViewBeanDefinitionResources (Resource... resources) {
     for (Resource resource : resources)
       try (GenericWebApplicationContext context = createContext ()) {
         PropertiesBeanDefinitionReader reader = createPropertiesReader (context);
@@ -82,12 +82,12 @@ public class MappedHotPlugViewRegistry extends WebApplicationObjectSupport imple
       }
     return this;
   }
-
+  
   /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.api.client.support.view.HotPlugViewRegistry#
-   * addAnnotatedClasses(java.lang.Class<?>[]) */
+   * @see edu.dfci.cccb.mev.api.client.support.injectors.ViewRegistrar#registerAnnotatedViewBeanClasses(java.lang.Class<?>[])
+   */
   @Override
-  public MappedHotPlugViewRegistry addAnnotatedClasses (Class<?>... classes) {
+  public ViewRegistrar registerAnnotatedViewBeanClasses (Class<?>... classes) {
     try (GenericWebApplicationContext context = createContext ()) {
       AnnotatedBeanDefinitionReader reader = createAnnotatedReader (context);
 

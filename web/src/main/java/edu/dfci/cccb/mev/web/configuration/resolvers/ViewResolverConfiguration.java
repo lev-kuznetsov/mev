@@ -23,7 +23,7 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
-import edu.dfci.cccb.mev.api.client.support.injectors.HotPlugViewRegistry;
+import edu.dfci.cccb.mev.api.client.support.injectors.ViewRegistrar;
 import edu.dfci.cccb.mev.web.support.HotPlugViewResolver;
 import edu.dfci.cccb.mev.web.support.MappedHotPlugViewRegistry;
 
@@ -43,7 +43,7 @@ public class ViewResolverConfiguration {
   };
 
   @Bean
-  public HotPlugViewRegistry hotPlugViewRegistry () {
+  public ViewRegistrar hotPlugViewRegistry () {
     return new MappedHotPlugViewRegistry (views);
   }
 

@@ -16,6 +16,7 @@ package edu.dfci.cccb.mev.heatmap.server.controllers;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 import static org.springframework.http.HttpStatus.UNSUPPORTED_MEDIA_TYPE;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -28,6 +29,7 @@ import edu.dfci.cccb.mev.heatmap.domain.HeatmapBuilderException;
 import edu.dfci.cccb.mev.heatmap.domain.HeatmapException;
 import edu.dfci.cccb.mev.heatmap.domain.HeatmapNotFoundException;
 import edu.dfci.cccb.mev.heatmap.domain.InvalidDimensionException;
+import edu.dfci.cccb.mev.heatmap.domain.InvalidHeatmapNameException;
 
 /**
  * @author levk
@@ -54,6 +56,13 @@ public class HeatmapAdvice {
   @ResponseStatus (REQUESTED_RANGE_NOT_SATISFIABLE)
   @ResponseBody
   public HeatmapException handleBadDimension (InvalidDimensionException e) {
+    return e;
+  }
+
+  @ExceptionHandler (InvalidHeatmapNameException.class)
+  @ResponseStatus (UNPROCESSABLE_ENTITY)
+  @ResponseBody
+  public HeatmapException handleBadHeatmapName (InvalidHeatmapNameException e) {
     return e;
   }
 }

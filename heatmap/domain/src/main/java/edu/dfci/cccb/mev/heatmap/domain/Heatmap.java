@@ -24,7 +24,7 @@ public interface Heatmap {
 
   String name ();
 
-  void rename (String name);
+  void rename (String name) throws InvalidHeatmapNameException;
 
   Data data ();
 

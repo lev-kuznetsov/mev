@@ -29,7 +29,7 @@ import org.springframework.core.Ordered;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 
-import edu.dfci.cccb.mev.api.client.support.injectors.HotPlugViewRegistry;
+import edu.dfci.cccb.mev.api.client.support.injectors.ViewRegistrar;
 
 /**
  * @author levk
@@ -53,7 +53,7 @@ public class HotPlugViewResolver implements ViewResolver, Ordered {
     return result;
   }
 
-  public HotPlugViewRegistry getRegistry () {
+  public ViewRegistrar getRegistry () {
     return new MappedHotPlugViewRegistry (views);
   }
 }

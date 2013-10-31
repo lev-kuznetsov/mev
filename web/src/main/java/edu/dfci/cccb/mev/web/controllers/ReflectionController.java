@@ -12,47 +12,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.heatmap.server.controllers;
+package edu.dfci.cccb.mev.web.controllers;
 
+import static edu.dfci.cccb.mev.web.domain.RestApiDescriptor.descriptors;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
-import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
-import edu.dfci.cccb.mev.heatmap.domain.Workspace;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
  * @author levk
  * 
  */
-@RestController
-@RequestMapping ("/heatmap/rest")
-@RequiredArgsConstructor (onConstructor = @_ (@Inject))
+@Controller
 @ToString
-@EqualsAndHashCode
-public class WorkspaceRestController {
+@RequestMapping ("/api")
+@RequiredArgsConstructor (onConstructor = @_ (@Inject))
+public class ReflectionController {
 
-  private final Workspace workspace;
+  private final RequestMappingHandlerMapping mappings;
 
   @RequestMapping (method = GET)
-  public List<String> list () {
-    return workspace.list ();
-  }
-
-  @RequestMapping (method = POST)
-  public String add (@RequestParam ("matrix") Heatmap heatmap) {
-    workspace.put (heatmap);
-    return heatmap.name ();
+  public String list (Model model) {
+    model.addAttribute ("descriptors", descriptors (mappings));
+    return "api";
   }
 }
