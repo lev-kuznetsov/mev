@@ -1,0 +1,3 @@
+# This folder needs to exist for the jetty plugin
+*
+!.gitignore
