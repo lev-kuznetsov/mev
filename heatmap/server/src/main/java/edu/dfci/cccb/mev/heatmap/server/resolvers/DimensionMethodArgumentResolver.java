@@ -14,6 +14,7 @@
  */
 package edu.dfci.cccb.mev.heatmap.server.resolvers;
 
+import static edu.dfci.cccb.mev.heatmap.server.resolvers.MethodParameters.brief;
 import static edu.dfci.cccb.mev.heatmap.domain.Dimension.from;
 import static org.springframework.util.StringUtils.isEmpty;
 import lombok.ToString;
@@ -45,7 +46,7 @@ public class DimensionMethodArgumentResolver extends PathVariableMethodArgumentR
                                           : (!isEmpty (annotation.value ()) && parameter.getParameterType ()
                                                                                         .equals (Dimension.class));
     if (log.isDebugEnabled ())
-      log.debug ("Method parameter " + (supported ? "" : "not ") + "supported on parameter " + parameter);
+      log.debug ("Method parameter " + (supported ? "" : "not ") + "supported on parameter " + brief (parameter));
     return supported;
   }
 

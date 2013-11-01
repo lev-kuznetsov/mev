@@ -6,4 +6,4 @@
 
 require.config ({ baseUrl : '/library/webjars' });
 
-require (['jquery/2.0.3/jquery', 'angularjs/1.1.4/angular', 'bootstrap/2.3.2/js/bootstrap']);
+require (['jquery/2.0.3/jquery']);

@@ -29,13 +29,29 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>4.0.0.M3</version>
+      <scope>test</scope>
+    </dependency>
+
     <!-- Servlet API -->
 
     <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-web-api</artifactId>
-      <version>6.0</version>
+      <groupId>org.eclipse.jetty.orbit</groupId>
+      <artifactId>javax.servlet</artifactId>
+      <version>3.0.0.v201112011016</version>
       <scope>provided</scope>
+    </dependency>
+
+    <!-- Tests -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-heatmap-test</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>

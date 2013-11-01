@@ -14,6 +14,7 @@
  */
 package edu.dfci.cccb.mev.heatmap.server.resolvers;
 
+import static edu.dfci.cccb.mev.heatmap.server.resolvers.MethodParameters.brief;
 import static org.springframework.util.StringUtils.isEmpty;
 
 import java.io.IOException;
@@ -67,7 +68,7 @@ public class ImportHeatmapMethodArgumentResolver extends RequestParamMethodArgum
                                           : (!isEmpty (annotation.value ()) && parameter.getParameterType ()
                                                                                         .equals (Heatmap.class));
     if (log.isDebugEnabled ())
-      log.debug ("Method parameter " + (supported ? "" : "not ") + "supported on parameter " + parameter);
+      log.debug ("Method parameter " + (supported ? "" : "not ") + "supported on parameter " + brief (parameter));
     return supported;
   }
 
