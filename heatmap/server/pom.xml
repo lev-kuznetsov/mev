@@ -64,6 +64,12 @@
       <url>http://download.java.net/maven/2</url>
     </repository>
 
+    <repository>
+      <id>spring.milestone</id>
+      <name>Spring Milestone Repository</name>
+      <url>http://maven.springframework.org/milestone</url>
+    </repository>
+
   </repositories>
 
 </project>
