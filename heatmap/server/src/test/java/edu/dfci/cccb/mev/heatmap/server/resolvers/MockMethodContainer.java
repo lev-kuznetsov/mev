@@ -22,20 +22,29 @@ import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
 
 /**
  * @author levk
- *
+ * 
  */
 @Deprecated
 public class MockMethodContainer {
 
   @Deprecated
   public void mockDimension (@PathVariable ("dimension") Dimension dimension) {}
-  
+
   @Deprecated
   public void mockString (String string) {}
-  
+
   @Deprecated
   public void mockPathHeatmap (@PathVariable ("heatmap") Heatmap heatmap) {}
-  
+
   @Deprecated
   public void mockImportHeatmap (@RequestParam ("matrix") Heatmap heatmap) {}
+
+  @Deprecated
+  public void mockMisnamedPathHeatmap (@PathVariable ("junk") Heatmap heatmap) {}
+
+  @Deprecated
+  public void mockMisnamedImportHeatmap (@RequestParam ("junk") Heatmap heatmap) {}
+
+  @Deprecated
+  public void mockMisnamedDimension (@PathVariable ("junk") Dimension dimension) {}
 }

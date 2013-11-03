@@ -17,11 +17,13 @@ package edu.dfci.cccb.mev.heatmap.server.resolvers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.springframework.core.MethodParameter;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockMultipartHttpServletRequest;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -40,22 +42,33 @@ public class ImportHeatmapMethodArgumentResolverTest {
   private Heatmap heatmap;
   private MethodParameter applicable = parameter (0, MockMethodContainer.class, "mockImportHeatmap", Heatmap.class);
   private MethodParameter nonApplicable = parameter (0, MockMethodContainer.class, "mockString", String.class);
+  private MethodParameter misnamed = parameter (0, MockMethodContainer.class, "mockMisnamedImportHeatmap", Heatmap.class);
   private NativeWebRequest request = request ();
 
   {
     heatmap = new MockHeatmap ("mock");
     resolver = new ImportHeatmapMethodArgumentResolver (null, false, new MockHeatmapBuilder (heatmap));
   }
+  
+  @Test
+  public void supported () {
+    assertTrue (resolver.supportsParameter (applicable));
+  }
 
   @Test
   public void build () throws Exception {
-    assertTrue (resolver.supportsParameter (applicable));
     assertEquals ("mock", ((Heatmap) resolver.resolveArgument (applicable, null, request, null)).name ());
   }
 
   @Test
   public void notSupported () {
     assertFalse (resolver.supportsParameter (nonApplicable));
+  }
+  
+  @Test (expected = ServletRequestBindingException.class)
+  public void misnamed () throws Exception {
+    resolver.resolveArgument (misnamed, null, request (), null);
+    fail ();
   }
 
   private static MethodParameter parameter (int index, Class<?> clazz, String name, Class<?>... parameters) {
@@ -70,5 +83,9 @@ public class ImportHeatmapMethodArgumentResolverTest {
     MockMultipartHttpServletRequest request = new MockMultipartHttpServletRequest ();
     request.addFile (new MockMultipartFile ("matrix", new byte[0]));
     return new ServletWebRequest (request);
+  }
+  
+  public static void main (String[] args) throws Exception {
+    new ImportHeatmapMethodArgumentResolverTest ().misnamed ();
   }
 }

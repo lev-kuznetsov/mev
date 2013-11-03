@@ -20,6 +20,7 @@ import java.util.Map;
 import org.junit.Test;
 import org.springframework.core.MethodParameter;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -32,7 +33,7 @@ import edu.dfci.cccb.mev.heatmap.domain.InvalidDimensionException;
 
 /**
  * @author levk
- *
+ * 
  */
 @SuppressWarnings ("deprecation")
 public class DimensionMethodArgumentResolverTest {
@@ -40,52 +41,62 @@ public class DimensionMethodArgumentResolverTest {
   private DimensionMethodArgumentResolver resolver = new DimensionMethodArgumentResolver ();
   private MethodParameter applicable = parameter (0, MockMethodContainer.class, "mockDimension", Dimension.class);
   private MethodParameter nonApplicable = parameter (0, MockMethodContainer.class, "mockString", String.class);
+  private MethodParameter misnamed = parameter (0, MockMethodContainer.class, "mockMisnamedDimension", Dimension.class);
 
   @Test
-  public void row () throws Exception {
+  public void applicableSupport () {
     assertTrue (resolver.supportsParameter (applicable));
-    assertEquals (ROW, resolver.resolveArgument (applicable, null, request ("row"), null));
   }
-  
+
   @Test
-  public void column () throws Exception {
-    assertTrue (resolver.supportsParameter (applicable));
-    assertEquals (COLUMN, resolver.resolveArgument (applicable, null, request ("column"), null));
+  public void misnamedSupport () {
+    assertTrue (resolver.supportsParameter (misnamed));
   }
-  
-  @Test
-  public void x () throws Exception {
-    assertTrue (resolver.supportsParameter (applicable));
-    assertEquals (COLUMN, resolver.resolveArgument (applicable, null, request ("x"), null));
-  }
-  
-  @Test
-  public void probe () throws Exception {
-    assertTrue (resolver.supportsParameter (applicable));
-    assertEquals (ROW, resolver.resolveArgument (applicable, null, request ("probe"), null));
-  }
-  
-  @Test
-  public void gene () throws Exception {
-    assertTrue (resolver.supportsParameter (applicable));
-    assertEquals (ROW, resolver.resolveArgument (applicable, null, request ("gene"), null));
-  }
-  
-  @Test
-  public void sample () throws Exception {
-    assertTrue (resolver.supportsParameter (applicable));
-    assertEquals (COLUMN, resolver.resolveArgument (applicable, null, request ("sample"), null));
-  }
-  
+
   @Test
   public void notSupported () {
     assertFalse (resolver.supportsParameter (nonApplicable));
   }
-  
+
+  @Test
+  public void row () throws Exception {
+    assertEquals (ROW, resolver.resolveArgument (applicable, null, request ("row"), null));
+  }
+
+  @Test
+  public void column () throws Exception {
+    assertEquals (COLUMN, resolver.resolveArgument (applicable, null, request ("column"), null));
+  }
+
+  @Test
+  public void x () throws Exception {
+    assertEquals (COLUMN, resolver.resolveArgument (applicable, null, request ("x"), null));
+  }
+
+  @Test
+  public void probe () throws Exception {
+    assertEquals (ROW, resolver.resolveArgument (applicable, null, request ("probe"), null));
+  }
+
+  @Test
+  public void gene () throws Exception {
+    assertEquals (ROW, resolver.resolveArgument (applicable, null, request ("gene"), null));
+  }
+
+  @Test
+  public void sample () throws Exception {
+    assertEquals (COLUMN, resolver.resolveArgument (applicable, null, request ("sample"), null));
+  }
+
   @Test (expected = InvalidDimensionException.class)
   public void junk () throws Exception {
-    assertTrue (resolver.supportsParameter (applicable));
     resolver.resolveArgument (applicable, null, request ("junk"), null);
+    fail ();
+  }
+
+  @Test (expected = ServletRequestBindingException.class)
+  public void misnamed () throws Exception {
+    resolver.resolveArgument (misnamed, null, request ("sample"), null);
     fail ();
   }
 

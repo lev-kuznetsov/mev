@@ -57,22 +57,24 @@ public class WorkspaceHeatmapMethodArgumentResolverTest {
     workspace.put (two);
     resolver = new WorkspaceHeatmapMethodArgumentResolver (workspace);
   }
+  
+  @Test
+  public void support () {
+    assertTrue (resolver.supportsParameter (applicable));
+  }
 
   @Test
   public void one () throws Exception {
-    assertTrue (resolver.supportsParameter (applicable));
     assertEquals (one, resolver.resolveArgument (applicable, null, request ("one"), null));
   }
 
   @Test
   public void two () throws Exception {
-    assertTrue (resolver.supportsParameter (applicable));
     assertEquals (two, resolver.resolveArgument (applicable, null, request ("two"), null));
   }
 
   @Test (expected = HeatmapNotFoundException.class)
   public void junk () throws Exception {
-    assertTrue (resolver.supportsParameter (applicable));
     resolver.resolveArgument (applicable, null, request ("junk"), null);
     fail ();
   }
