@@ -11,13 +11,13 @@
   <url>http://github.com/dfci-cccb/mev</url>
 
   <modules>
-    <!--module>mev-api</module> <module>mev-heatmap</module> <module>mev-core</module -->
 
-    <!-- NEW STRUCTURE -->
+    <!-- MeV modules -->
 
     <module>api</module>
     <module>heatmap</module>
     <module>web</module>
+
   </modules>
 
   <properties>

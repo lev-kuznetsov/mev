@@ -22,8 +22,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.annotation.PreDestroy;
+
 import lombok.Synchronized;
 import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
+import edu.dfci.cccb.mev.heatmap.domain.HeatmapException;
 import edu.dfci.cccb.mev.heatmap.domain.HeatmapNotFoundException;
 import edu.dfci.cccb.mev.heatmap.domain.prototype.AbstractWorkspace;
 
@@ -31,7 +34,7 @@ import edu.dfci.cccb.mev.heatmap.domain.prototype.AbstractWorkspace;
  * @author levk
  * 
  */
-public class ListWorkspace extends AbstractWorkspace {
+public class ListWorkspace extends AbstractWorkspace implements AutoCloseable {
 
   private final List<Heatmap> heatmaps = new ArrayList<> ();
 
@@ -76,6 +79,27 @@ public class ListWorkspace extends AbstractWorkspace {
       throw new HeatmapNotFoundException ().id (id);
     else
       found.remove ();
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.AutoCloseable#close() */
+  @Override
+  @PreDestroy
+  public void close () throws Exception {
+    HeatmapException aggregator = new HeatmapException ("Aggregation of suppressed workspace closing exceptions") {
+      private static final long serialVersionUID = 1L;
+    };
+
+    for (Heatmap heatmap : heatmaps)
+      if (heatmap instanceof AutoCloseable)
+        try {
+          ((AutoCloseable) heatmap).close ();
+        } catch (Exception e) {
+          aggregator.addSuppressed (e);
+        }
+
+    if (aggregator.getSuppressed ().length > 0)
+      throw aggregator;
   }
 
   private ListIterator<Heatmap> find (String id) {

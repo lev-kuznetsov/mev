@@ -14,19 +14,16 @@
  */
 package edu.dfci.cccb.mev.heatmap.domain;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author levk
  * 
  */
-public interface Heatmap {
-  
-  public static final String HEATMAP_VALID_NAME_PATTERN_EXPRESSION = "[^/]+";
+public interface Mapper {
 
-  String name ();
+  Map<String, Integer> indices ();
 
-  void rename (String name) throws InvalidHeatmapNameException;
-
-  Data data ();
-
-  Annotation annotation (Dimension dimension);
+  List<String> ids ();
 }

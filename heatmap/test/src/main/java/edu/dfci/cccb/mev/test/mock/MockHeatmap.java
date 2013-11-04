@@ -16,6 +16,7 @@ package edu.dfci.cccb.mev.test.mock;
 
 import edu.dfci.cccb.mev.heatmap.domain.Annotation;
 import edu.dfci.cccb.mev.heatmap.domain.Data;
+import edu.dfci.cccb.mev.heatmap.domain.Dimension;
 import edu.dfci.cccb.mev.heatmap.domain.prototype.AbstractHeatmap;
 
 /**
@@ -43,7 +44,7 @@ public class MockHeatmap extends AbstractHeatmap {
    * @see edu.dfci.cccb.mev.heatmap.domain.Heatmap#annotation()
    */
   @Override
-  public Annotation annotation () {
+  public Annotation annotation (Dimension dimension) {
     return null;
   }
 }
