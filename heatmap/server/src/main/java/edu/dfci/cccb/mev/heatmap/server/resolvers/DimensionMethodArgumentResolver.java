@@ -15,6 +15,7 @@
 package edu.dfci.cccb.mev.heatmap.server.resolvers;
 
 import static edu.dfci.cccb.mev.heatmap.domain.Dimension.from;
+import static edu.dfci.cccb.mev.heatmap.server.resolvers.MethodParameters.brief;
 import static org.springframework.util.StringUtils.isEmpty;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
@@ -45,7 +46,7 @@ public class DimensionMethodArgumentResolver extends PathVariableMethodArgumentR
                                           : (!isEmpty (annotation.value ()) && parameter.getParameterType ()
                                                                                         .equals (Dimension.class));
     if (log.isDebugEnabled ())
-      log.debug ("Method parameter " + (supported ? "" : "not ") + "supported on parameter " + parameter);
+      log.debug ("Method parameter " + (supported ? "" : "not ") + "supported on parameter " + brief (parameter));
     return supported;
   }
 
@@ -56,7 +57,10 @@ public class DimensionMethodArgumentResolver extends PathVariableMethodArgumentR
    * org.springframework.web.context.request.NativeWebRequest) */
   @Override
   protected Object resolveName (String name, MethodParameter parameter, NativeWebRequest request) throws Exception {
-    Object value = super.resolveName (name, parameter, request), result = from ((String) value);
+    Object value = super.resolveName (name, parameter, request);
+    if (value == null)
+      return null;
+    Object result = from ((String) value);
     if (log.isDebugEnabled ())
       log.debug ("Resolving path variable " + name + " bound to " + value + " to dimension " + result);
     return result;

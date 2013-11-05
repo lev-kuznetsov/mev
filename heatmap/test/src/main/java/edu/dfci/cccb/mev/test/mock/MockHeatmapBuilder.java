@@ -12,21 +12,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.heatmap.domain;
+package edu.dfci.cccb.mev.test.mock;
+
+import lombok.AllArgsConstructor;
+import edu.dfci.cccb.mev.heatmap.domain.Content;
+import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
+import edu.dfci.cccb.mev.heatmap.domain.HeatmapBuilderException;
+import edu.dfci.cccb.mev.heatmap.domain.prototype.AbstractHeatmapBuilder;
 
 /**
  * @author levk
  * 
  */
-public interface Heatmap {
-  
-  public static final String HEATMAP_VALID_NAME_PATTERN_EXPRESSION = "[^/]+";
+@AllArgsConstructor
+public class MockHeatmapBuilder extends AbstractHeatmapBuilder {
 
-  String name ();
+  private Heatmap heatmap;
 
-  void rename (String name) throws InvalidHeatmapNameException;
-
-  Data data ();
-
-  Annotation annotation (Dimension dimension);
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.heatmap.domain.HeatmapBuilder#build(edu.dfci.cccb.mev
+   * .heatmap.domain.Content) */
+  @Override
+  public Heatmap build (Content content) throws HeatmapBuilderException {
+    return heatmap;
+  }
 }

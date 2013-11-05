@@ -26,8 +26,8 @@ import lombok.Getter;
  * 
  */
 public enum Dimension {
-  COLUMN ("column", "col", "x", "0"),
-  ROW ("row", "y", "1");
+  COLUMN ("column", "col", "x", "0", "sample"),
+  ROW ("row", "y", "1", "probe", "gene");
 
   private @Getter final Collection<String> aliases;
 

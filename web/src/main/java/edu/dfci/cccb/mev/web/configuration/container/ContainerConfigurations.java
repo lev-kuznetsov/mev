@@ -35,7 +35,7 @@ import edu.dfci.cccb.mev.api.client.support.injectors.InjectorRegistry;
  * 
  */
 @Configuration
-@ComponentScan (basePackages = "edu.dfci.cccb.mev.web",
+@ComponentScan (basePackages = "edu.dfci.cccb.mev.web.controllers",
                 includeFilters = @Filter (type = ANNOTATION, value = { Controller.class, ControllerAdvice.class }))
 public class ContainerConfigurations extends WebMvcConfigurerAdapter {
 

@@ -14,10 +14,15 @@
  */
 package edu.dfci.cccb.mev.heatmap.domain;
 
+import java.util.Set;
+
 /**
  * @author levk
- *
+ * 
  */
 public interface Data {
-  // TODO: api
+
+  double get (Projection... projections) throws DataException;
+
+  Set<String> ids (Dimension dimension);
 }

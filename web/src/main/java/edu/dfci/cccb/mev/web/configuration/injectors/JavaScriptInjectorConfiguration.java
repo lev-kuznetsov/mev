@@ -15,13 +15,15 @@
 package edu.dfci.cccb.mev.web.configuration.injectors;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import edu.dfci.cccb.mev.web.support.JavaScriptInjectors;
 
 /**
  * @author levk
- *
+ * 
  */
+@Configuration
 public class JavaScriptInjectorConfiguration {
 
   @Bean

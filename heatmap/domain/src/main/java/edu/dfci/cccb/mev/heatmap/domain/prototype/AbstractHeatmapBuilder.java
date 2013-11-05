@@ -12,21 +12,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.heatmap.domain;
+package edu.dfci.cccb.mev.heatmap.domain.prototype;
+
+import edu.dfci.cccb.mev.heatmap.domain.HeatmapBuilder;
 
 /**
  * @author levk
  * 
  */
-public interface Heatmap {
-  
-  public static final String HEATMAP_VALID_NAME_PATTERN_EXPRESSION = "[^/]+";
-
-  String name ();
-
-  void rename (String name) throws InvalidHeatmapNameException;
-
-  Data data ();
-
-  Annotation annotation (Dimension dimension);
-}
+public abstract class AbstractHeatmapBuilder implements HeatmapBuilder {}

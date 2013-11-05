@@ -14,6 +14,7 @@
  */
 package edu.dfci.cccb.mev.heatmap.server.resolvers;
 
+import static edu.dfci.cccb.mev.heatmap.server.resolvers.MethodParameters.brief;
 import static org.springframework.util.StringUtils.isEmpty;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ import lombok.extern.log4j.Log4j;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.core.MethodParameter;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.annotation.RequestParamMethodArgumentResolver;
@@ -67,7 +69,7 @@ public class ImportHeatmapMethodArgumentResolver extends RequestParamMethodArgum
                                           : (!isEmpty (annotation.value ()) && parameter.getParameterType ()
                                                                                         .equals (Heatmap.class));
     if (log.isDebugEnabled ())
-      log.debug ("Method parameter " + (supported ? "" : "not ") + "supported on parameter " + parameter);
+      log.debug ("Method parameter " + (supported ? "" : "not ") + "supported on parameter " + brief (parameter));
     return supported;
   }
 
@@ -78,9 +80,11 @@ public class ImportHeatmapMethodArgumentResolver extends RequestParamMethodArgum
    * org.springframework.web.context.request.NativeWebRequest) */
   @Override
   protected Object resolveName (final String name, MethodParameter parameter, final NativeWebRequest request) throws Exception {
+    final MultipartFile imported = request.getNativeRequest (MultipartRequest.class).getFile (name);
+    if (imported == null)
+      throw new MissingServletRequestParameterException (parameter.getParameterAnnotation (RequestParam.class).value (),
+                                                         Heatmap.class.getName ());
     return builder.build (new Content () {
-
-      private MultipartFile imported = request.getNativeRequest (MultipartRequest.class).getFile (name);
 
       @Override
       public String name () {

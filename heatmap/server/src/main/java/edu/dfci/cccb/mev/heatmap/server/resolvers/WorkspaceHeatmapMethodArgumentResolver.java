@@ -14,6 +14,7 @@
  */
 package edu.dfci.cccb.mev.heatmap.server.resolvers;
 
+import static edu.dfci.cccb.mev.heatmap.server.resolvers.MethodParameters.brief;
 import static org.springframework.util.StringUtils.isEmpty;
 import static org.springframework.web.bind.annotation.ValueConstants.DEFAULT_NONE;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +51,7 @@ public class WorkspaceHeatmapMethodArgumentResolver extends PathVariableMethodAr
                                           : (!isEmpty (annotation.value ()) && parameter.getParameterType ()
                                                                                         .equals (Heatmap.class));
     if (log.isDebugEnabled ())
-      log.debug ("Method parameter " + (supported ? "" : "not ") + "supported on parameter " + parameter);
+      log.debug ("Method parameter " + (supported ? "" : "not ") + "supported on parameter " + brief (parameter));
     return supported;
   }
 
@@ -82,7 +83,7 @@ public class WorkspaceHeatmapMethodArgumentResolver extends PathVariableMethodAr
     String id = (String) super.resolveName (name, parameter, request);
     if (log.isDebugEnabled ())
       log.debug ("Resolving path variable " + name + " bound to " + id
-                 + " on request " + request + " for parameter " + parameter);
+                 + " on request " + request + " for parameter " + brief (parameter));
     return workspace.get (id);
   }
 }

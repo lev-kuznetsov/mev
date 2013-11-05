@@ -16,17 +16,9 @@ package edu.dfci.cccb.mev.heatmap.domain;
 
 /**
  * @author levk
- * 
+ *
  */
-public interface Heatmap {
-  
-  public static final String HEATMAP_VALID_NAME_PATTERN_EXPRESSION = "[^/]+";
+public interface Aspect<T> {
 
-  String name ();
-
-  void rename (String name) throws InvalidHeatmapNameException;
-
-  Data data ();
-
-  Annotation annotation (Dimension dimension);
+  T visit (double value, Projection... coordinate);
 }

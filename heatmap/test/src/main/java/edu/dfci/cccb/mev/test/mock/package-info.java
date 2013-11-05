@@ -12,21 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.heatmap.domain;
-
 /**
  * @author levk
- * 
+ *
  */
-public interface Heatmap {
-  
-  public static final String HEATMAP_VALID_NAME_PATTERN_EXPRESSION = "[^/]+";
-
-  String name ();
-
-  void rename (String name) throws InvalidHeatmapNameException;
-
-  Data data ();
-
-  Annotation annotation (Dimension dimension);
-}
+package edu.dfci.cccb.mev.test.mock;
