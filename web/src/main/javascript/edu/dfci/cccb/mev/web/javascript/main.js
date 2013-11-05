@@ -9,20 +9,29 @@ require.config ({
 		jquery: ['http://codeorigin.jquery.com/jquery-2.0.3',
 		         '/library/webjars/jquery/2.0.3/jquery'],
 		angular: ['https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.min',
-		          '/library/webjars/angularjs/1.1.4/angular']
+		          '/library/webjars/angularjs/1.1.4/angular'],
+		bootstrap: ['http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min',
+		            '/library/webjars/bootstrap/2.3.2/js/bootstrap.min']
 	},
 	shim: {
 		 'angular': {
 			 exports: 'angular'
-		 }
+		 },
+		 'bootstrap': {
+			 deps:['jquery']
+		 },
+		 'bootstrap-css': {
+			 deps:['bootstrap']
+		 },
+		 
 	},
 	waitSeconds: "2"
 	
 
 });
 
-require( ['angular', 'app'], function(angular, app) {
-		
+require( ['angular', 'app', 'jquery', 'bootstrap-css', 'bootstrap'], function(angular, app, jquery) {
+
 	'use strict';
 	var $html = angular.element(document.getElementsByTagName('html')[0]);
 	angular.element().ready(function() {

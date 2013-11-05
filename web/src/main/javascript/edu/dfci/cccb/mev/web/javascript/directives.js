@@ -1,16 +1,22 @@
 define(['angular'], function(angular){
 
 	return angular.module('myApp.directives', [])
-  .directive('appVersion', ['version', function(version) {
+  .directive('appVersion', ['appVersion', function(version) {
     return function(scope, elm, attrs) {
       elm.text(version);
     };
   }])
-  .directive('appName', ['name', function(name) {
+  .directive('appName', ['appName', function(name) {
     return function(scope, elm, attrs) {
       elm.text(name);
     };
   }])
+  .directive('mainNavigation', function() {
+    return {
+      restrict: 'A',
+      templateUrl: '/container/view/elements/mainNavigation'
+    };
+  })
   .directive('menubar', function() {
     return {
       restrict: 'E',
@@ -69,7 +75,7 @@ define(['angular'], function(angular){
                         wrap.append("rect")
                                 .attr("width", r * 2)
                                 .attr("height", r * 2)
-                                .attr("fill", "none")
+                                .attr("fill", "none");
 
                         var vis = wrap.append("g")
                                 .attr("transform", "translate(" + r + "," + r + ")");
@@ -142,7 +148,9 @@ define(['angular'], function(angular){
                           .data(nodes.filter(function(n) { return n.x !== undefined; }))
                         .enter().append("g")
                           .attr("class", "node")
-                          .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+                          .attr("transform", function(d) { 
+                        	  return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; 
+                          });
 
                         node.append("circle")
                           .attr("r", 2.5);
