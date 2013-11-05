@@ -18,7 +18,7 @@ package edu.dfci.cccb.mev.heatmap.domain;
  * @author levk
  * 
  */
-public class UnsupportedAnnotationContentType extends AnnotationBuilderException {
+public class UnsupportedAnnotationContentTypeException extends AnnotationBuilderException {
   private static final long serialVersionUID = 1L;
 
   {
@@ -28,19 +28,19 @@ public class UnsupportedAnnotationContentType extends AnnotationBuilderException
   /**
    * 
    */
-  public UnsupportedAnnotationContentType () {}
+  public UnsupportedAnnotationContentTypeException () {}
 
   /**
    * @param message
    */
-  public UnsupportedAnnotationContentType (String message) {
+  public UnsupportedAnnotationContentTypeException (String message) {
     super (message);
   }
 
   /**
    * @param cause
    */
-  public UnsupportedAnnotationContentType (Throwable cause) {
+  public UnsupportedAnnotationContentTypeException (Throwable cause) {
     super (cause);
   }
 
@@ -48,7 +48,7 @@ public class UnsupportedAnnotationContentType extends AnnotationBuilderException
    * @param message
    * @param cause
    */
-  public UnsupportedAnnotationContentType (String message, Throwable cause) {
+  public UnsupportedAnnotationContentTypeException (String message, Throwable cause) {
     super (message, cause);
   }
 
@@ -58,7 +58,7 @@ public class UnsupportedAnnotationContentType extends AnnotationBuilderException
    * @param enableSuppression
    * @param writableStackTrace
    */
-  public UnsupportedAnnotationContentType (String message,
+  public UnsupportedAnnotationContentTypeException (String message,
                                            Throwable cause,
                                            boolean enableSuppression,
                                            boolean writableStackTrace) {

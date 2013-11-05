@@ -22,7 +22,7 @@ import java.util.Set;
  */
 public interface Data {
 
-  double get (Projection... projections);
+  double get (Projection... projections) throws DataException;
 
   Set<String> ids (Dimension dimension);
 }

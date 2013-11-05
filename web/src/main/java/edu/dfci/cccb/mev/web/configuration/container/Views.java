@@ -21,7 +21,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
 
 /**
  * @author levk
- *
+ * 
  */
 public class Views {
 
@@ -33,5 +33,19 @@ public class Views {
   @Bean
   public FreeMarkerView api () {
     return freemarker ().url ("/edu/dfci/cccb/mev/web/views/api.ftl").build ();
+  }
+
+  // Elements
+
+  @Bean (name = "elements/view1")
+  public FreeMarkerView elementView1 () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/view1.ftl").build ();
+  }
+
+  // Partials
+
+  @Bean (name = "partials/partial1")
+  public FreeMarkerView partial1 () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/partials/partial1.ftl").build ();
   }
 }
