@@ -16,6 +16,7 @@ package edu.dfci.cccb.mev.web.controllers;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,10 +29,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @ToString
 @RequestMapping ("/container/view")
+@Log4j
 public class PartialsController {
 
   @RequestMapping (value = "elements/{view}", method = GET)
   public String elements (@PathVariable ("view") String view) {
+    log.debug ("Getting elements view " + view);
     return "elements/" + view;
   }
 
