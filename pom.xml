@@ -16,6 +16,7 @@
 
     <module>api</module>
     <module>heatmap</module>
+    <module>annotation</module>
     <module>web</module>
 
   </modules>
