@@ -15,7 +15,7 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
-            <li><a href="#">Hierarchical</a></li>
+            <li><a data-toggle="modal" role= "button" href="#heirarchical">Hierarchical</a></li>
             <li><a href="#">K-Means</a></li>
           </ul>
         </li>
