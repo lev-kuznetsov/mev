@@ -74,6 +74,13 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
+	<!-- Annotation Server -->
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-annotation-server</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
     <!-- Servlet API -->
 
     <dependency>

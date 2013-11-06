@@ -8,8 +8,6 @@
     <#list injectors as injector><script src="${injector}"></script></#list>
   </head>
   <body>
-   Hello World 
-   
-   <menubar></menubar>
+    <b>home</b>
   </body>
 </html>

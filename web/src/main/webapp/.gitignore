@@ -1,3 +1,4 @@
 # This folder needs to exist for the jetty plugin
-*
-!.gitignore
+# DELETE EVERYTHING FROM THIS FOLDER AND REVERT TO IGNORING EVERYTHING
+#*
+#!.gitignore

@@ -41,32 +41,7 @@ public class Views {
   public FreeMarkerView elementView1 () {
     return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/view1.ftl").build ();
   }
-  
-  @Bean (name = "elements/menubar")
-  public FreeMarkerView elementMenubar () {
-    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/menubar.ftl").build ();
-  }
-  
-  @Bean (name = "elements/heirarchicalbody")
-  public FreeMarkerView elementHeirarchicalbody () {
-    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/heirarchicalbody.ftl").build ();
-  }
-  
-  @Bean (name = "elements/modal")
-  public FreeMarkerView elementModal () {
-    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/modal.ftl").build ();
-  }
-  
-  @Bean (name = "elements/prevlimmashell")
-  public FreeMarkerView elementPrevlimmashell () {
-    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/prevlimmashell.ftl").build ();
-  }
-  
-  @Bean (name = "elements/table")
-  public FreeMarkerView elementTable () {
-    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/prevlimmashell.ftl").build ();
-  }
-  
+
   // Partials
 
   @Bean (name = "partials/partial1")

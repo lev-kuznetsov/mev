@@ -66,7 +66,7 @@ public class ListWorkspace extends AbstractWorkspace implements AutoCloseable {
    * @see edu.dfci.cccb.mev.heatmap.domain.Workspace#list() */
   @Override
   public List<String> list () {
-    return extract (heatmaps, on (Heatmap.class).name ());
+	  return extract (heatmaps, on (Heatmap.class).name ());
   }
 
   /* (non-Javadoc)
