@@ -19,28 +19,37 @@ import static org.springframework.context.annotation.FilterType.ANNOTATION;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ComponentScan.Filter;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import edu.dfci.cccb.mev.api.client.support.injectors.ViewRegistrar;
 import edu.dfci.cccb.mev.api.client.support.injectors.InjectorRegistry;
+import edu.dfci.cccb.mev.api.client.support.injectors.ViewRegistrar;
+import edu.dfci.cccb.mev.web.domain.reflection.Reflection;
+import edu.dfci.cccb.mev.web.domain.reflection.concrete.SpringReflector;
 
 /**
  * @author levk
  * 
  */
 @Configuration
-@ComponentScan (basePackages = "edu.dfci.cccb.mev.web.controllers",
+@ComponentScan (basePackages = "edu.dfci.cccb.mev.web",
+                excludeFilters = @Filter (type = ANNOTATION, value = Configuration.class),
                 includeFilters = @Filter (type = ANNOTATION, value = { Controller.class, ControllerAdvice.class }))
 public class ContainerConfigurations extends WebMvcConfigurerAdapter {
 
   private @Inject ViewRegistrar views;
   private @Inject InjectorRegistry injectors;
+  
+  @Bean
+  public Reflection reflection () {
+    return new SpringReflector ();
+  }
 
   @PostConstruct
   public void registerViews () {

@@ -8,6 +8,8 @@
     <#list injectors as injector><script src="${injector}"></script></#list>
   </head>
   <body>
-    <b>home</b>
+   <div main-navigation></div>
+   
+   <ng-view></ng-view>
   </body>
 </html>

@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @ToString
 @RequestMapping ("/container/view")
-public class PartialsController {
+public class ViewController {
 
   @RequestMapping (value = "elements/{view}", method = GET)
   public String elements (@PathVariable ("view") String view) {
