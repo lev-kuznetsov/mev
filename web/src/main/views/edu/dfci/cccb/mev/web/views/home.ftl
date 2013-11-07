@@ -8,8 +8,8 @@
     <#list injectors as injector><script src="${injector}"></script></#list>
   </head>
   <body>
-   Hello World 
+   <div main-navigation></div>
    
-   <menubar></menubar>
+   <ng-view></ng-view>
   </body>
 </html>

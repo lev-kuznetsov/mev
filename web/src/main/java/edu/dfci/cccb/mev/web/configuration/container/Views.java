@@ -47,9 +47,29 @@ public class Views {
     return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/menubar.ftl").build ();
   }
   
-  @Bean (name = "elements/heirarchicalbody")
-  public FreeMarkerView elementHeirarchicalbody () {
-    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/heirarchicalbody.ftl").build ();
+  @Bean (name = "elements/expressionPanel")
+  public FreeMarkerView elementExpressionPanel () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/expressionPanel.ftl").build ();
+  }
+
+  @Bean (name = "elements/analysisPanel")
+  public FreeMarkerView elementanalysisPanel () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/analysisPanel.ftl").build ();
+  }
+  
+  @Bean (name = "elements/hierarchicalbody")
+  public FreeMarkerView elementHierarchicalbody () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/hierarchicalbody.ftl").build ();
+  }
+  
+  @Bean (name = "elements/kMeansBody")
+  public FreeMarkerView elementKMeansBody () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/kMeansBody.ftl").build ();
+  }
+  
+  @Bean (name = "elements/limmaBody")
+  public FreeMarkerView elementLimmaBody () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/limmaBody.ftl").build ();
   }
   
   @Bean (name = "elements/modal")
@@ -64,7 +84,22 @@ public class Views {
   
   @Bean (name = "elements/table")
   public FreeMarkerView elementTable () {
-    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/prevlimmashell.ftl").build ();
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/table.ftl").build ();
+  }
+  
+  @Bean (name = "elements/mainNavigation")
+  public FreeMarkerView elementMainNavigation () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/mainNavigation.ftl").build ();
+  }
+  
+  @Bean (name = "elements/heatmapPanels")
+  public FreeMarkerView elementHeatmapPanels () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/heatmapPanels.ftl").build ();
+  }
+  
+  @Bean (name = "elements/visHeatmap")
+  public FreeMarkerView elementVisHeatmap () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/visHeatmap.ftl").build ();
   }
   
   // Partials
@@ -72,5 +107,10 @@ public class Views {
   @Bean (name = "partials/partial1")
   public FreeMarkerView partial1 () {
     return freemarker ().url ("/edu/dfci/cccb/mev/web/views/partials/partial1.ftl").build ();
+  }
+  
+  @Bean (name = "partials/heatmap")
+  public FreeMarkerView heatmap () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/partials/heatmap.ftl").build ();
   }
 }
