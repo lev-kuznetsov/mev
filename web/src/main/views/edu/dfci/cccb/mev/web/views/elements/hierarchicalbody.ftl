@@ -10,7 +10,7 @@
           <div class="control-group">
             <label for="inputAnalysisName" class="control-label">Analysis Name</label>
             <div class="controls">
-              <input type="password" id="inputAnalysisName" placeholder="Ex: My_Analysis_1">
+              <input id="inputAnalysisName" placeholder="Ex: My_Analysis_1">
             </div>
           </div>
 

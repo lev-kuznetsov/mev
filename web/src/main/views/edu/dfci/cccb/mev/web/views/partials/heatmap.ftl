@@ -13,21 +13,7 @@
 
       <menubar></menubar>
 
-		<div class="row-fluid"> <!-- Start Column Expand Tabs -->
-			<div class="span3" id="leftPanel">
-				<div class="well">
-				    <button class="btn btn-primary pull-right" ng-click="expandLeft()"><i class="icon-chevron-right"></i></button>
-					Left	
-				</div>
-			</div>
-		
-			<div class="span9" id="rightPanel">
-				<div class="well">
-					<button class="btn btn-primary" ng-click="expandRight()"><i class="icon-chevron-left"></i></button>
-				    Right
-			    </div>
-			</div>
-		</div> <!--End column expand tabs -->
+		<div heatmap-Panels></div>
 
     </div>
     
@@ -37,8 +23,3 @@
 
 
 
- <!-- Modals -->
-
-  <bsmodal bindid="heirarchical" func="" header="Heirarchical Clustering">
-    <div class="modal-Heirarchical"></div>
-  </bsmodal> 

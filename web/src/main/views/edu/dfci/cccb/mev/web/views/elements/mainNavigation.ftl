@@ -2,9 +2,7 @@
   <div class="navbar-inner">
     <a class="brand" href="#"><span app-Name></span></a>
     <ul class="nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">Link</a></li>
-      <li><a href="#">Link</a></li>
+      <li ng-repeat="link in menu"><a href="{{link.url}}">{{link.value}}</a></li>
     </ul>
   </div>
 </div>
