@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>mev-annotation-server</artifactId>
+  <packaging>jar</packaging>
+
+  <name>MeV Annotation Server API</name>
+  <url>http://github.com/dfci-cccb/mev</url>
+
+  <properties>
+    <spring.version>4.0.0.M3</spring.version>
+  </properties>
+
+  <parent>
+    <groupId>edu.dfci.cccb</groupId>
+    <artifactId>mev-annotation</artifactId>
+    <version>BAYLIE-SNAPSHOT</version>
+  </parent>
+  
+  <build>
+  
+    <resources>
+    
+      <resource>
+      	<directory>src/main/webapp</directory>
+      	<filtering>false</filtering>
+      </resource>
+    
+    </resources>
+  
+  </build>
+
+  <repositories>
+
+    <repository>
+      <id>java.net</id>
+      <name>Oracle Repository</name>
+      <url>http://download.java.net/maven/2</url>
+    </repository>
+
+	<repository>
+      <!-- MIT Simily -->
+      <id>devel.kiwi-project</id>
+      <url>http://devel.kiwi-project.eu:8080/nexus/content/groups/public/</url>
+    </repository>
+    <repository>
+    	<id>dev.nightlabs.org</id>
+    	<url>http://dev.nightlabs.org/maven-repository/repo/</url>
+    </repository>
+    <repository>
+    	<!-- Marc4j 2.4 -->
+    	<id>indexdata.com</id>
+    	<url>http://maven.indexdata.com/</url>
+    </repository>
+    <!--     
+    <repository>
+		OpenCSV v.2.4 
+    	<id>nuiton.org</id>
+    	<url>http://maven.nuiton.org/nexus/content/groups/public/</url>
+    </repository>
+    -->
+    
+  </repositories>
+
+
+  <dependencies>
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-heatmap-server</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
+    <!-- Servlet API -->
+
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-web-api</artifactId>
+      <version>6.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+	<!-- OpenRefine -->
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpcore</artifactId>
+		<version>4.2.4</version>
+	</dependency>
+	<dependency>
+		<groupId>edu.mit.simile</groupId>
+		<artifactId>butterfly</artifactId>
+		<version>1.0.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.velocity</groupId>
+		<artifactId>velocity</artifactId>
+		<version>1.6.2</version>
+	</dependency>
+	<!--
+	<dependency>
+		<groupId>net.sf.opencsv</groupId>
+		<artifactId>opencsv</artifactId>
+		<version>2.3</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>net.sf.opencsv</groupId>
+		<artifactId>opencsv</artifactId>
+		<version>2.4-SNAPSHOT</version>
+	</dependency>
+	-->
+	<dependency>
+		<groupId>org.clojure</groupId>
+		<artifactId>clojure</artifactId>
+		<version>1.5.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpclient-osgi</artifactId>
+		<version>4.2.5</version>
+	</dependency>
+	<dependency>
+		<groupId>edu.mit.simile</groupId>
+		<artifactId>vicino</artifactId>
+		<version>1.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.poi</groupId>
+		<artifactId>poi-ooxml</artifactId>
+		<version>3.8-beta2</version>
+	</dependency>
+	<dependency>
+		<groupId>org.jsoup</groupId>
+		<artifactId>jsoup</artifactId>
+		<version>1.4.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.json</groupId>
+		<artifactId>json</artifactId>
+		<version>20131018</version>
+	</dependency>
+	<dependency>
+		<groupId>oauth.signpost</groupId>
+		<artifactId>signpost-core</artifactId>
+		<version>1.2.1.2</version>
+	</dependency>
+	<dependency>
+		<groupId>oauth.signpost</groupId>
+		<artifactId>signpost-commonshttp4</artifactId>
+		<version>1.2.1.2</version>
+	</dependency>
+	<dependency>
+		<groupId>org.odftoolkit</groupId>
+		<artifactId>odfdom-java</artifactId>
+		<version>0.8.7</version>
+	</dependency>
+	<dependency>
+		<groupId>commons-fileupload</groupId>
+		<artifactId>commons-fileupload</artifactId>
+		<version>1.2.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.ant</groupId>
+		<artifactId>ant</artifactId>
+		<version>1.8.2</version>
+	</dependency>
+	<dependency>
+		<groupId>org.marc4j</groupId>
+		<artifactId>marc4j</artifactId>
+		<version>2.4-SNAPSHOT</version>
+	</dependency>
+	<dependency>
+		<groupId>com.google.guava</groupId>
+		<artifactId>guava</artifactId>
+		<version>13.0</version>
+	</dependency>
+
+  </dependencies>
+
+</project>
