@@ -17,6 +17,7 @@ package edu.dfci.cccb.mev.heatmap.server.resolvers;
 import static edu.dfci.cccb.mev.heatmap.server.resolvers.MethodParameters.brief;
 import static org.springframework.util.StringUtils.isEmpty;
 import static org.springframework.web.bind.annotation.ValueConstants.DEFAULT_NONE;
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
@@ -36,6 +37,7 @@ import edu.dfci.cccb.mev.heatmap.domain.Workspace;
 @Log4j
 @RequiredArgsConstructor
 @ToString
+@EqualsAndHashCode (callSuper = false)
 public class WorkspaceHeatmapMethodArgumentResolver extends PathVariableMethodArgumentResolver {
 
   private final Workspace workspace;

@@ -102,6 +102,7 @@ public class Views {
     return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/visHeatmap.ftl").build ();
   }
   
+
   // Partials
 
   @Bean (name = "partials/partial1")

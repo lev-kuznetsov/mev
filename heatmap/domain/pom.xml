@@ -23,13 +23,21 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
-    <!-- MetaModel -->
+    <!-- MetaModel>
 
     <dependency>
       <groupId>org.eobjects.metamodel</groupId>
       <artifactId>MetaModel-full</artifactId>
       <version>3.4.5</version>
-    </dependency>
+      <exclusions>
+        <exclusion>
+          <groupId>net.sf.opencsv</groupId>
+          <artifactId>opencsv</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency-->
+    
+    
 
   </dependencies>
 

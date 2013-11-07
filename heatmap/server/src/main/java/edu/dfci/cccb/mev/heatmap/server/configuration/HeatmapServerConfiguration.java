@@ -71,6 +71,7 @@ public class HeatmapServerConfiguration extends WebMvcConfigurerAdapter {
     return null; // FIXME: stub
   }
 
+  @Override
   public void addArgumentResolvers (List<HandlerMethodArgumentResolver> argumentResolvers) {
     argumentResolvers.add (new WorkspaceHeatmapMethodArgumentResolver (workspace));
     argumentResolvers.add (new ImportHeatmapMethodArgumentResolver (beanFactory, false, heatmapBuilder));
