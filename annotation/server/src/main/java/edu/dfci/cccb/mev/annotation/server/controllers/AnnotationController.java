@@ -16,34 +16,62 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationObjectSupport;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.refine.RefineServlet;
 
-@RestController
-@RequestMapping("/annotation/")
+import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
+import edu.dfci.cccb.mev.heatmap.domain.HeatmapNotFoundException;
+import edu.dfci.cccb.mev.heatmap.domain.Workspace;
+import edu.dfci.cccb.mev.test.mock.MockHeatmap;
+
+@Controller
+@RequestMapping("/annotations")
 @Log4j
 public class AnnotationController extends WebApplicationObjectSupport {
 
 	private RefineServlet refineServlet;
 	private @Inject Environment environment;
-
+	private @Inject Workspace workspace;
+	
 	@PostConstruct
 	private void createRefineServlet() throws ServletException {
 		refineServlet = new RefineServlet();
 		refineServlet.init(new DelegatingServletConfig());
 	}
 
-	@RequestMapping("**")
-	public void handleAnnotation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		log.debug ("Handling annotation request");
+	@RequestMapping("/")
+	public ModelAndView annotationsHome(){
+		
+		try {
+			Heatmap heatmap = workspace.get("mock");
+		} catch (HeatmapNotFoundException e) {
+			workspace.put(new  MockHeatmap("mock"));
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("heatmaps", workspace.list());
+		mav.setViewName("annotations");		
+		return mav;
+		
+	}
+	
+	@RequestMapping({"/{heatmapId}/annotation/{dimension}/**"})
+	@ResponseBody
+	public void handleAnnotation(
+			@PathVariable("heatmapId") final String heatmapId, 
+			@PathVariable("dimension") final String dimension,
+			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		log.debug (String.format("Handling annotation request: %s", request.getServletPath()));
 		HttpServletRequest wrappedRequest = new HttpServletRequestWrapper(request){
 			@Override			
 			public String getPathInfo() {
-				//System.out.println("MySrevelet******:"+super.getServletPath());
-				return super.getServletPath().replace("/annotation", "");
+				return super.getServletPath().replace("/annotations/"+heatmapId+"/annotation/"+dimension, "");
 			}
 		};
 		
