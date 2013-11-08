@@ -45,7 +45,7 @@ public class ContainerConfigurations extends WebMvcConfigurerAdapter {
 
   private @Inject ViewRegistrar views;
   private @Inject InjectorRegistry injectors;
-  
+
   @Bean
   public Reflection reflection () {
     return new SpringReflector ();
