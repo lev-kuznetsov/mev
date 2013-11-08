@@ -1,5 +1,10 @@
 package edu.dfci.cccb.mev.annotation.server.controllers;
 
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -31,89 +36,86 @@ import edu.dfci.cccb.mev.heatmap.domain.Workspace;
 import edu.dfci.cccb.mev.test.mock.MockHeatmap;
 
 @Controller
-@RequestMapping("/annotations")
+@RequestMapping ("/annotations")
 @Log4j
 public class AnnotationController extends WebApplicationObjectSupport {
 
-	private RefineServlet refineServlet;
-	private @Inject Environment environment;
-	private @Inject Workspace workspace;
-	
-	@PostConstruct
-	private void createRefineServlet() throws ServletException {
-		refineServlet = new RefineServlet();
-		refineServlet.init(new DelegatingServletConfig());
-	}
+  private RefineServlet refineServlet;
+  private @Inject Environment environment;
+  private @Inject Workspace workspace;
 
-	@RequestMapping("/")
-	public ModelAndView annotationsHome(){
-		
-		try {
-			Heatmap heatmap = workspace.get("mock");
-		} catch (HeatmapNotFoundException e) {
-			workspace.put(new  MockHeatmap("mock"));
-		}
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("heatmaps", workspace.list());
-		mav.setViewName("annotations");		
-		return mav;
-		
-	}
-	
-	@RequestMapping({"/{heatmapId}/annotation/{dimension}/**"})
-	@ResponseBody
-	public void handleAnnotation(
-			@PathVariable("heatmapId") final String heatmapId, 
-			@PathVariable("dimension") final String dimension,
-			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		log.debug (String.format("Handling annotation request: %s", request.getServletPath()));
-		HttpServletRequest wrappedRequest = new HttpServletRequestWrapper(request){
-			@Override			
-			public String getPathInfo() {
-				return super.getServletPath().replace("/annotations/"+heatmapId+"/annotation/"+dimension, "");
-			}
-		};
-		
-		this.refineServlet.service(wrappedRequest, response);
-	}
+  @PostConstruct
+  private void createRefineServlet () throws ServletException {
+    refineServlet = new RefineServlet ();
+    refineServlet.init (new DelegatingServletConfig ());
+  }
 
-	/**
-	 * Internal implementation of the ServletConfig interface, to be passed to
-	 * the wrapped servlet. Delegates to ServletWrappingController fields and
-	 * methods to provide init parameters and other environment info.
-	 */
-	private class DelegatingServletConfig implements ServletConfig {
+  @RequestMapping ("/")
+  public ModelAndView annotationsHome () {
 
-		private Properties properties;
+    try {
+      Heatmap heatmap = workspace.get ("mock");
+    } catch (HeatmapNotFoundException e) {
+      workspace.put (new MockHeatmap ("mock"));
+    }
 
-		{
-			properties = new Properties();
-			properties.setProperty("refine.version",
-					environment.getProperty("refine.version", "$VERSION"));
-			properties.setProperty("refine.revision",
-					environment.getProperty("refine.revision", "$REVISION"));
-			properties.setProperty(
-					"refine.data",
-					environment.getProperty("refine.data",
-							System.getProperty("java.io.tmpdir")));
-		}
+    ModelAndView mav = new ModelAndView ();
+    mav.addObject ("heatmaps", workspace.list ());
+    mav.setViewName ("annotations");
+    return mav;
 
-		public String getServletName() {
-			return "refine";
-		}
+  }
 
-		public ServletContext getServletContext() {
-			return AnnotationController.this.getServletContext();
-		}
+  @RequestMapping (method = { GET, POST, PUT, DELETE }, value = { "/{heatmapId}/annotation/{dimension}/**" })
+  @ResponseBody
+  public void handleAnnotation (@PathVariable ("heatmapId") final String heatmapId,
+                                @PathVariable ("dimension") final String dimension,
+                                HttpServletRequest request, HttpServletResponse response) throws ServletException,
+                                                                                         IOException {
+    log.debug (String.format ("Handling annotation request: %s", request.getServletPath ()));
+    HttpServletRequest wrappedRequest = new HttpServletRequestWrapper (request) {
+      @Override
+      public String getPathInfo () {
+        return super.getServletPath ().replace ("/annotations/" + heatmapId + "/annotation/" + dimension, "");
+      }
+    };
 
-		public String getInitParameter(String paramName) {
-			return properties.getProperty(paramName);
-		}
+    this.refineServlet.service (wrappedRequest, response);
+  }
 
-		@SuppressWarnings({ "unchecked", "rawtypes" })
-		public Enumeration getInitParameterNames() {
-			return properties.keys();
-		}
-	}
+  /**
+   * Internal implementation of the ServletConfig interface, to be passed to the
+   * wrapped servlet. Delegates to ServletWrappingController fields and methods
+   * to provide init parameters and other environment info.
+   */
+  private class DelegatingServletConfig implements ServletConfig {
+
+    private Properties properties;
+
+    {
+      properties = new Properties ();
+      properties.setProperty ("refine.version",
+                              environment.getProperty ("refine.version", "$VERSION"));
+      properties.setProperty ("refine.revision", environment.getProperty ("refine.revision", "$REVISION"));
+      properties.setProperty ("refine.data",
+                              environment.getProperty ("refine.data", System.getProperty ("java.io.tmpdir")));
+    }
+
+    public String getServletName () {
+      return "refine";
+    }
+
+    public ServletContext getServletContext () {
+      return AnnotationController.this.getServletContext ();
+    }
+
+    public String getInitParameter (String paramName) {
+      return properties.getProperty (paramName);
+    }
+
+    @SuppressWarnings ({ "unchecked", "rawtypes" })
+    public Enumeration getInitParameterNames () {
+      return properties.keys ();
+    }
+  }
 }
