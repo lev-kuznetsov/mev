@@ -14,8 +14,16 @@
  */
 package edu.dfci.cccb.mev.web.configuration.resolvers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 /**
  * @author levk
@@ -28,4 +36,15 @@ import org.springframework.context.annotation.Import;
           RestResolverConfiguration.class,
           ViewResolverConfiguration.class,
           WebjarResourceHandlerConfiguration.class })
-public class ResolverConfigurations {}
+public class ResolverConfigurations {
+
+  private @Inject RequestMappingHandlerAdapter adapter;
+
+  @PostConstruct
+  private void prioritizeCustomArgumentMethodHandlers () {
+    List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<> (adapter.getArgumentResolvers ());
+    argumentResolvers.removeAll (adapter.getCustomArgumentResolvers ());
+    argumentResolvers.addAll (0, adapter.getCustomArgumentResolvers ());
+    adapter.setArgumentResolvers (argumentResolvers);
+  }
+}

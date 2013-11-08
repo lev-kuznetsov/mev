@@ -14,18 +14,17 @@
  */
 package edu.dfci.cccb.mev.web.controllers;
 
-import static edu.dfci.cccb.mev.web.domain.RestApiDescriptor.descriptors;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import javax.inject.Inject;
 
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
+import edu.dfci.cccb.mev.web.domain.reflection.Reflection;
 
 /**
  * @author levk
@@ -34,14 +33,18 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @Controller
 @ToString
 @RequestMapping ("/api")
-@RequiredArgsConstructor (onConstructor = @_ (@Inject))
 public class ReflectionController {
 
-  private final RequestMappingHandlerMapping mappings;
+  private final Reflection reflection;
+
+  @Inject
+  public ReflectionController (Reflection reflection) {
+    this.reflection = reflection;
+  }
 
   @RequestMapping (method = GET)
-  public String list (Model model) {
-    model.addAttribute ("descriptors", descriptors (mappings));
+  public String api (Model model) {
+    model.addAttribute ("reflection", reflection);
     return "api";
   }
 }
