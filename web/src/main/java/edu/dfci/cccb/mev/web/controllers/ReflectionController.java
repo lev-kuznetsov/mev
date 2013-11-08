@@ -16,13 +16,18 @@ package edu.dfci.cccb.mev.web.controllers;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import javax.inject.Inject;
 
 import lombok.ToString;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.dfci.cccb.mev.web.domain.reflection.Reflection;
 
@@ -46,5 +51,12 @@ public class ReflectionController {
   public String api (Model model) {
     model.addAttribute ("reflection", reflection);
     return "api";
+  }
+
+  @RequestMapping ("/{hello}/{world}/{rest:[^\\?]*}")
+  @ResponseBody
+  public void test (@PathVariable Map<Object, Object> vars) {
+    for (Entry<Object, Object> e : vars.entrySet ())
+      System.err.println ("**** " + e.getKey () + "=" + e.getValue ());
   }
 }

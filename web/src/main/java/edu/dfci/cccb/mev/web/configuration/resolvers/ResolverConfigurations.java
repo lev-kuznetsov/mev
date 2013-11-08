@@ -41,7 +41,7 @@ public class ResolverConfigurations {
   private @Inject RequestMappingHandlerAdapter adapter;
 
   @PostConstruct
-  private void prioritizeCustomArgumentMethodHandlers () {
+  private void prioritizeCustomArgumentMethodHandlers (RequestMappingHandlerAdapter adapter) {
     List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<> (adapter.getArgumentResolvers ());
     argumentResolvers.removeAll (adapter.getCustomArgumentResolvers ());
     argumentResolvers.addAll (0, adapter.getCustomArgumentResolvers ());
