@@ -19,6 +19,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,30 +47,20 @@ public class MockRestHeatmapDataController {
   @RequestMapping (value = "/data", method = GET)
   public Collection<HeatmapDataEntry> data () {
     Collection<HeatmapDataEntry> result = new ArrayList<> ();
-    result.add (new HeatmapDataEntry (value (), "sample-A", "gene-A", 0, 0));
-    result.add (new HeatmapDataEntry (value (), "sample-B", "gene-A", 1, 0));
-    result.add (new HeatmapDataEntry (value (), "sample-C", "gene-A", 2, 0));
-    result.add (new HeatmapDataEntry (value (), "sample-D", "gene-A", 3, 0));
 
-    result.add (new HeatmapDataEntry (value (), "sample-A", "gene-B", 0, 1));
-    result.add (new HeatmapDataEntry (value (), "sample-B", "gene-B", 1, 1));
-    result.add (new HeatmapDataEntry (value (), "sample-C", "gene-B", 2, 1));
-    result.add (new HeatmapDataEntry (value (), "sample-D", "gene-B", 3, 1));
+    int rows = random.nextInt (100) + 2;
+    int columns = random.nextInt (100) + 2;
 
-    result.add (new HeatmapDataEntry (value (), "sample-A", "gene-C", 0, 2));
-    result.add (new HeatmapDataEntry (value (), "sample-B", "gene-C", 1, 2));
-    result.add (new HeatmapDataEntry (value (), "sample-C", "gene-C", 2, 2));
-    result.add (new HeatmapDataEntry (value (), "sample-D", "gene-C", 3, 2));
+    List<String> rowKeys = new ArrayList<> (), columnKeys = new ArrayList<> ();
+    for (int row = rows; --row >= 0; rowKeys.add ("ROW-" + randomUUID ()));
+    for (int column = columns; --column >= 0; columnKeys.add ("COLUMN-" + randomUUID ()));
 
-    result.add (new HeatmapDataEntry (value (), "sample-A", "gene-D", 0, 3));
-    result.add (new HeatmapDataEntry (value (), "sample-B", "gene-D", 1, 3));
-    result.add (new HeatmapDataEntry (value (), "sample-C", "gene-D", 2, 3));
-    result.add (new HeatmapDataEntry (value (), "sample-D", "gene-D", 3, 3));
-
-    result.add (new HeatmapDataEntry (value (), "sample-A", "gene-E", 0, 4));
-    result.add (new HeatmapDataEntry (value (), "sample-B", "gene-E", 1, 4));
-    result.add (new HeatmapDataEntry (value (), "sample-C", "gene-E", 2, 4));
-    result.add (new HeatmapDataEntry (value (), "sample-D", "gene-E", 3, 4));
+    for (int row = rows; --row >= 0;)
+      for (int column = columns; --column >= 0; result.add (new HeatmapDataEntry ((random.nextDouble () - 0.5) * 6,
+                                                                                  columnKeys.get (column),
+                                                                                  rowKeys.get (row),
+                                                                                  column,
+                                                                                  row)));
     return result;
   }
 
