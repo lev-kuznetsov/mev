@@ -207,12 +207,12 @@ define (
           })
           .directive (
               'd3RadialTree',
-              [ function () {
+              ['API', function (API) {
 
                 return {
                   restrict : 'E',
                   scope : {
-                    data : '=',
+                    url : '@',
                     diameter : '@'
 
                   },
@@ -221,10 +221,10 @@ define (
                   // location
                   link : function (scope, elems, attr) {
 
-                    scope
-                        .$watch (
-                            'data',
-                            function (data) {
+                    
+                    var cluster = API.hcl.get.linear();
+                    
+                    cluster.then(function(data){
 
                               var r = scope.diameter / 2;
 
@@ -406,16 +406,13 @@ define (
 
             };
 
-          }).directive ('visHeatmap', [ function () {
+          }).directive ('visHeatmap', ['heatmapGenerator', function (generateheatmap) {
 
             return {
 
               restrict : 'A',
-              templateUrl : "/container/view/elements/visHeatmap",
+              templateUrl : "/container/view/elements/visHeatmap"
               // template:"<div></div>",
-              link : function (scope, elms, attrs) {
-
-              }
 
             };
           } ]);

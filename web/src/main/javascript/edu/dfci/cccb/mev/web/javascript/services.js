@@ -14,8 +14,15 @@ define ([ 'angular', 'd3' ], function (angular, d3) {
 
         // future feature
 
-        return [];
-      } ]).factory ('QHTTP', [ '$http', '$q', function ($http, $q) {
+        return undefined;
+        
+      } ])
+      .factory ('heatmapGenerator', [ function () {
+        return function(heatmap) {
+          
+        };
+      }])
+      .factory ('QHTTP', [ '$http', '$q', function ($http, $q) {
 
         return function (params, callback_fn, error_fn) {
           var deferred = $q.defer ();
@@ -56,7 +63,18 @@ define ([ 'angular', 'd3' ], function (angular, d3) {
           hcl: {
             radial: {
               get: function(url){
-                return null;
+                
+                var params = {
+                    method : 'GET',
+                    url : 'heatmap/' + url + '?format=json',
+                    format : 'json'
+                  };
+                  return QHTTP (params, function (d, s) {
+                    return d;
+                  }, function (d, s) {
+                    return d, s;
+                  });
+
               };
             },
             linear :{
