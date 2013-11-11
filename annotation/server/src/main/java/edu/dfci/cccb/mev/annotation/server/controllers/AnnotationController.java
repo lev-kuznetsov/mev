@@ -70,9 +70,10 @@ public class AnnotationController extends WebApplicationObjectSupport {
   @ResponseBody
   public void handleAnnotation (@PathVariable ("heatmapId") final String heatmapId,
                                 @PathVariable ("dimension") final String dimension,
-                                HttpServletRequest request, HttpServletResponse response) throws ServletException,
-                                                                                         IOException {
-    log.debug (String.format ("Handling annotation request: %s", request.getServletPath ()));
+                                HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, HeatmapNotFoundException {
+    log.debug (String.format ("Handling annotation request: %s", request.getServletPath ()));    
+    
+    
     HttpServletRequest wrappedRequest = new HttpServletRequestWrapper (request) {
       @Override
       public String getPathInfo () {
@@ -80,6 +81,11 @@ public class AnnotationController extends WebApplicationObjectSupport {
       }
     };
 
+    
+    Heatmap heatmap = workspace.get (heatmapId);
+    wrappedRequest.setAttribute ("heatmap", heatmap);
+    wrappedRequest.setAttribute ("dimension", dimension);
+    
     this.refineServlet.service (wrappedRequest, response);
   }
 

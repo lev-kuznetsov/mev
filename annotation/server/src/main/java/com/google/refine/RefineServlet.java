@@ -173,8 +173,7 @@ public class RefineServlet extends Butterfly {
 
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-        HttpSession session = request.getSession();
+                
         //logger.info("DEBUG {}", session.getId());
         //logger.info("*****DEBUG getPathInfo: {}", request.getPathInfo());
         //logger.info("*****DEBUG getServletPath: {}", request.getServletPath());
