@@ -1,6 +1,6 @@
 define (
-    [ 'angular', 'jquery', 'services' ],
-    function (angular, jq) {
+    [ 'angular', 'jquery', 'd3', 'newick', 'services' ],
+    function (angular, jq, d3, newick) {
 
       return angular
           .module ('myApp.directives', [])
@@ -96,26 +96,135 @@ define (
               }
             };
           } ])
+          .directive ('bsprevanalysis', function () {
+
+            return {
+
+              restrict : 'C',
+              scope : {
+
+                bindid : '@',
+                parentid : '@',
+                header : '@',
+                data : '@'
+
+              }
+            };
+
+          })
+          .directive ('bsTable', function () {
+
+            return {
+              scope : {
+                data : "="
+              },
+              restrict : 'E',
+              templateUrl : "/container/view/elements/table"
+
+            };
+
+          })
           .directive (
-              'visRadialTree',
+              'bsImgbutton',
               function () {
+
+                return {
+                  scope : {
+                    icon : "@",
+                    title : "@",
+                    align : "@"
+                  },
+                  restrict : 'E',
+                  template : "<button class='btn btn-success pull-{{align}}' "
+                      + "title='{{title}}'>  "
+                      + "<i class='icon-{{icon}}'></i> Download" + "</button>"
+
+                };
+
+              })
+          .directive ('prevlimma', function () {
+
+            return {
+
+              restrict : 'C',
+              templateUrl : "/container/view/elements/prevlimmashell"
+
+            };
+
+          })
+          .directive ('bsmodal', [ '$compile', function ($compile) {
+
+            return {
+
+              restrict : 'E',
+              scope : {
+
+                bindid : '@',
+                header : '@',
+                test : '@',
+                func : '&'
+
+              },
+              transclude : true,
+              templateUrl : "/container/view/elements/modal"
+
+            };
+
+          } ])
+          .directive ('modalHierarchical', function () {
+
+            return {
+              restrict : 'C',
+              templateUrl : "/container/view/elements/hierarchicalbody",
+              link : function (scope, elems, attrs) {
+                scope.types = [ {
+                  name : 'K-Means'
+                }, {
+                  name : 'K-Medians'
+                } ];
+              }
+
+            };
+
+          })
+          .directive ('modalKmeans', function () {
+
+            return {
+              restrict : 'C',
+              templateUrl : "/container/view/elements/kMeansBody"
+
+            };
+
+          })
+          .directive ('modalLimma', function () {
+
+            return {
+              restrict : 'C',
+              templateUrl : "/container/view/elements/limmaBody"
+
+            };
+
+          })
+          .directive (
+              'd3RadialTree',
+              ['API', function (API) {
 
                 return {
                   restrict : 'E',
                   scope : {
-                    data : '=',
+                    url : '@',
                     diameter : '@'
 
                   },
-                  template : '<link rel="stylesheet" href=""><div></div>', // requires
+                  template : '<div></div>', // requires
                   // css
                   // location
                   link : function (scope, elems, attr) {
 
-                    scope
-                        .$watch (
-                            'data',
-                            function (data) {
+                    
+                    var cluster = API.hcl.get.linear();
+                    
+                    cluster.then(function(data){
 
                               var r = scope.diameter / 2;
 
@@ -285,104 +394,8 @@ define (
 
                   } // end link
                 };
-              }).directive ('bsprevanalysis', function () {
 
-            return {
-
-              restrict : 'C',
-              scope : {
-
-                bindid : '@',
-                parentid : '@',
-                header : '@',
-                data : '@'
-
-              }
-            };
-
-          }).directive ('bsTable', function () {
-
-            return {
-              scope : {
-                data : "="
-              },
-              restrict : 'E',
-              templateUrl : "/container/view/elements/table"
-
-            };
-
-          }).directive (
-              'bsImgbutton',
-              function () {
-
-                return {
-                  scope : {
-                    icon : "@",
-                    title : "@",
-                    align : "@"
-                  },
-                  restrict : 'E',
-                  template : "<button class='btn btn-success pull-{{align}}' "
-                      + "title='{{title}}'>  "
-                      + "<i class='icon-{{icon}}'></i> Download" + "</button>"
-
-                };
-
-              }).directive ('prevlimma', function () {
-
-            return {
-
-              restrict : 'C',
-              templateUrl : "/container/view/elements/prevlimmashell"
-
-            };
-
-          }).directive ('bsmodal', [ '$compile', function ($compile) {
-
-            return {
-
-              restrict : 'E',
-              scope : {
-
-                bindid : '@',
-                header : '@',
-                test : '@',
-                func : '&'
-
-              },
-              transclude : true,
-              templateUrl : "/container/view/elements/modal"
-
-            };
-
-          } ]).directive ('modalHierarchical', function () {
-
-            return {
-              restrict : 'C',
-              templateUrl : "/container/view/elements/hierarchicalbody",
-              link: function(scope, elems, attrs) {
-                scope.types = [{name:'K-Means'}, {name:'K-Medians'}];
-              }
-
-            };
-
-          }).directive ('modalKmeans', function () {
-
-            return {
-              restrict : 'C',
-              templateUrl : "/container/view/elements/kMeansBody"
-
-            };
-
-          }).directive ('modalLimma', function () {
-
-            return {
-              restrict : 'C',
-              templateUrl : "/container/view/elements/limmaBody"
-
-            };
-
-          }).directive ('bsTable', function () {
+              } ]).directive ('bsTable', function () {
 
             return {
               scope : {
@@ -393,18 +406,96 @@ define (
 
             };
 
-          }).directive ('visHeatmap', [function () {
+          }).directive ('visHeatmap', ['API', function (API) {
 
             return {
 
               restrict : 'A',
-              templateUrl : "/container/view/elements/visHeatmap",
-              //template:"<div></div>",
-              link: function(scope, elms, attrs){
-                
+              //templateUrl : "/container/view/elements/visHeatmap",
+              link: function(scope, elems, attr){
+            	  
+            	scope.width = 400;
+            	scope.height = 700;
+            	scope.marginleft = 20;
+            	scope.marginright = 20;
+            	scope.margintop = 20;
+            	scope.marginbottom = 20;
+            	  
+            	API.heatmap.get('mock/data')
+            	  .then(function(data){
+            		  
+            		  var cellwidth = 10;
+            		  
+            		  var margin = {
+                              left: scope.marginleft,
+                              right: scope.marginright,
+                              top: scope.margintop,
+                              bottom: scope.marginbottom
+                      };
+                      
+                      var width = scope.width - margin.left - margin.right;
+              
+                      var height = scope.height - margin.top - margin.bottom;
+            		  
+            		  var window = d3.select(elems[0]);
+            		  
+            		  var cellXPosition = function(key) {
+            			  return cellwidth * key;
+            		  };
+            		  
+                      var cellYPosition = function(key) {
+            			  return cellwidth * key;
+            		  };
+            		  
+            		  var svg = window
+                        .append("svg")
+                        .attr("class", "chart")
+                        //.attr("pointer-events", "all")
+                        .attr("width", width + margin.left + margin.right)
+                        .attr("height", height + margin.top + margin.bottom);
+            		  
+            		  var vis = svg.append("g")
+                        .attr("class", "uncovered");
+            		  
+            		  var heatmapcells = vis.append("g")
+                        .selectAll("rect")
+                              .data(data)
+                              .enter()
+                              .append("rect");
+                              
+                      draw();
+                      
+                      function draw() {
+                    	  
+                    	  heatmapcells
+                          .attr({
+                                  "class": "cells",
+                                  "height": function(d){
+                                          return cellwidth ;
+                                  },
+                                  "width": function(d){
+                                          return cellwidth ;
+                                  },
+                                  "x": function(d, i) { return cellXPosition( d.columnOrder ); },
+                                  "y": function(d, i) { return cellYPosition( d.rowOrder ); },
+                                  "fill": function(d) {
+                                          return "rgb(0," + 255 * Math.floor(Math.sqrt( d.value*d.value ) ) + ",0)";
+                                  },
+                                  "value": function(d) { return d.value; },
+                                  "index": function(d, i) { return i; },
+                                  "row": function(d, i) { return d.rowOrder; },
+                                  "column": function(d, i) { return d.columnOrder; },
+                                  "rowKey": function(d, i) {return d.rowKey},
+                                  "columnKey": function(d, i) {return d.columnKey},
+                          }); 
+                    	  
+                      };
+            		  
+            		  
+            	  });
               }
 
             };
-          }]);
+          } ]);
 
     });
