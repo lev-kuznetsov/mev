@@ -17,10 +17,8 @@ define ([ 'angular', 'd3' ], function (angular, d3) {
         return undefined;
         
       } ])
-      .factory ('heatmapGenerator', [ function () {
-        return function(heatmap) {
-          
-        };
+      .factory ('heatmapGenerator', [function () {
+        return null;
       }])
       .factory ('QHTTP', [ '$http', '$q', function ($http, $q) {
 
