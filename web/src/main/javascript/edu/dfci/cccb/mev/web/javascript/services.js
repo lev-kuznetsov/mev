@@ -75,12 +75,12 @@ define ([ 'angular', 'd3' ], function (angular, d3) {
                     return d, s;
                   });
 
-              };
+              }
             },
             linear :{
               get: function(url){
                 return null;
-              };
+              }
             }
           }
 
