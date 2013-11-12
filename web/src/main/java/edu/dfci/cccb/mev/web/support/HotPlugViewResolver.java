@@ -14,7 +14,6 @@
  */
 package edu.dfci.cccb.mev.web.support;
 
-import static java.lang.Integer.MAX_VALUE;
 import java.util.Locale;
 import java.util.Map;
 
@@ -33,18 +32,19 @@ import edu.dfci.cccb.mev.api.client.support.injectors.ViewRegistrar;
 
 /**
  * @author levk
- *
+ * 
  */
 @RequiredArgsConstructor (onConstructor = @_ (@Inject))
 public class HotPlugViewResolver implements ViewResolver, Ordered {
 
-  private @Getter @Setter int order = MAX_VALUE;
+  private @Getter @Setter int order = LOWEST_PRECEDENCE;
   private @Getter @Setter boolean allowChaining = true;
   private final Map<String, View> views;
 
   /* (non-Javadoc)
-   * @see org.springframework.web.servlet.ViewResolver#resolveViewName(java.lang.String, java.util.Locale)
-   */
+   * @see
+   * org.springframework.web.servlet.ViewResolver#resolveViewName(java.lang
+   * .String, java.util.Locale) */
   @Override
   public View resolveViewName (String viewName, Locale locale) throws Exception {
     View result = views.get (viewName);
