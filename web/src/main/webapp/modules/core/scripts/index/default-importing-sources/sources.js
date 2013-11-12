@@ -58,6 +58,7 @@ ThisComputerImportingSourceUI.prototype.attachUI = function(bodyDiv) {
       self._controller.startImportJob(self._elmts.form, $.i18n._('core-index-import')["uploading-data"]);
     }
   });
+  self._controller.startImportJob(self._elmts.form, $.i18n._('core-index-import')["uploading-data"]);
 };
 
 ThisComputerImportingSourceUI.prototype.focus = function() {

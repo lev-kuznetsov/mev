@@ -25,11 +25,19 @@ import edu.dfci.cccb.mev.heatmap.domain.prototype.AbstractHeatmap;
  */
 public class MockHeatmap extends AbstractHeatmap {
 
+  private final Annotation columnAnnotation;
   /**
    * @param name
    */
   public MockHeatmap (String name) {
     super (name);
+    columnAnnotation=null;
+  }
+  
+  public MockHeatmap(String name, Annotation columnAnnotation){
+    super (name);
+    this.columnAnnotation=columnAnnotation;
+    
   }
 
   /* (non-Javadoc)
@@ -45,6 +53,7 @@ public class MockHeatmap extends AbstractHeatmap {
    */
   @Override
   public Annotation annotation (Dimension dimension) {
-    return null;
+    
+    return columnAnnotation;
   }
 }

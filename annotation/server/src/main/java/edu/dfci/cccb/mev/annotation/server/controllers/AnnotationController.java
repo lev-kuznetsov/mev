@@ -6,7 +6,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
@@ -29,11 +31,15 @@ import org.springframework.web.context.support.WebApplicationObjectSupport;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.refine.RefineServlet;
+import com.google.refine.io.FileProjectManager;
 
+import edu.dfci.cccb.mev.heatmap.domain.Annotation;
 import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
 import edu.dfci.cccb.mev.heatmap.domain.HeatmapNotFoundException;
 import edu.dfci.cccb.mev.heatmap.domain.Workspace;
 import edu.dfci.cccb.mev.test.mock.MockHeatmap;
+
+import static java.util.Arrays.asList;
 
 @Controller
 @RequestMapping ("/annotations")
@@ -43,7 +49,8 @@ public class AnnotationController extends WebApplicationObjectSupport {
   private RefineServlet refineServlet;
   private @Inject Environment environment;
   private @Inject Workspace workspace;
-
+  private @Inject FileProjectManager projectManager;
+  
   @PostConstruct
   private void createRefineServlet () throws ServletException {
     refineServlet = new RefineServlet ();
@@ -54,11 +61,52 @@ public class AnnotationController extends WebApplicationObjectSupport {
   public ModelAndView annotationsHome () {
 
     try {
-      Heatmap heatmap = workspace.get ("mock");
+      workspace.get ("mock");
     } catch (HeatmapNotFoundException e) {
-      workspace.put (new MockHeatmap ("mock"));
+      Heatmap mockHeatmap = new MockHeatmap (
+                                             "mock", 
+                                             new Annotation() {
+                                              
+                                              @Override
+                                              public void merge (Annotation other) {
+                                                // TODO Auto-generated method stub
+                                                
+                                              }
+                                              
+                                              @Override
+                                              public List<String> getKeys () {
+                                                // TODO Auto-generated method stub
+                                                return new ArrayList<String>(asList("a", "b", "c"));
+                                              }
+                                            });
+      
+      workspace.put (mockHeatmap);
     }
 
+
+    try {
+      workspace.get ("shmock");
+    } catch (HeatmapNotFoundException e) {
+      Heatmap mockHeatmap = new MockHeatmap (
+                                             "shmock", 
+                                             new Annotation() {
+                                              
+                                              @Override
+                                              public void merge (Annotation other) {
+                                                // TODO Auto-generated method stub
+                                                
+                                              }
+                                              
+                                              @Override
+                                              public List<String> getKeys () {
+                                                // TODO Auto-generated method stub
+                                                return new ArrayList<String>(asList("e", "f", "g"));
+                                              }
+                                            });
+      
+      workspace.put (mockHeatmap);
+    }
+    
     ModelAndView mav = new ModelAndView ();
     mav.addObject ("heatmaps", workspace.list ());
     mav.setViewName ("annotations");
@@ -79,14 +127,20 @@ public class AnnotationController extends WebApplicationObjectSupport {
       public String getPathInfo () {
         return super.getServletPath ().replace ("/annotations/" + heatmapId + "/annotation/" + dimension, "");
       }
+      
     };
 
-    
     Heatmap heatmap = workspace.get (heatmapId);
-    wrappedRequest.setAttribute ("heatmap", heatmap);
-    wrappedRequest.setAttribute ("dimension", dimension);
+    long projectId=projectManager.getProjectID (heatmap.name ()); 
+    if(wrappedRequest.getPathInfo().trim().equals("/")
+            && projectId!=-1){
+      response.sendRedirect ("project?project="+projectId);
+      return;
+    }
     
-    this.refineServlet.service (wrappedRequest, response);
+    wrappedRequest.setAttribute ("heatmap", heatmap);
+    wrappedRequest.setAttribute ("dimension", dimension);    
+    this.refineServlet.service (wrappedRequest, response);    
   }
 
   /**
