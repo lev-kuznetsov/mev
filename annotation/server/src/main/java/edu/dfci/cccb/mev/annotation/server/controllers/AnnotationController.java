@@ -131,11 +131,16 @@ public class AnnotationController extends WebApplicationObjectSupport {
     };
 
     Heatmap heatmap = workspace.get (heatmapId);
-    long projectId=projectManager.getProjectID (heatmap.name ()); 
-    if(wrappedRequest.getPathInfo().trim().equals("/")
-            && projectId!=-1){
-      response.sendRedirect ("project?project="+projectId);
-      return;
+    long projectId=projectManager.getProjectID (heatmap.name ());
+    if(projectId!=-1){
+      if(wrappedRequest.getPathInfo().trim().equals("/")){
+        if(wrappedRequest.getParameter ("reset")!=null){
+          projectManager.deleteProject (projectId);
+        }else{
+          response.sendRedirect ("project?project="+projectId);
+          return;
+        }
+      }
     }
     
     wrappedRequest.setAttribute ("heatmap", heatmap);

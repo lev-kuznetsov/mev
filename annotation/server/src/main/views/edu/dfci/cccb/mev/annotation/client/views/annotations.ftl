@@ -4,7 +4,12 @@
 <#list heatmaps as heatmap>
 <tr>
 <td>${heatmap}</td>
-<td><a href="${heatmap}/annotation/0/">column annotations</a></td>
+<td>
+<a href="${heatmap}/annotation/0/">column annotations</a>
+</td>
 </tr>
+<#list heatmap.getColumnSets() as columnSet>
+
+</#list>
 </#list>
 </table>
