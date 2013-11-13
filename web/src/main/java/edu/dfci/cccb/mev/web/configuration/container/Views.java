@@ -107,6 +107,11 @@ public class Views {
     return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/uploadDragAndDrop.ftl").build ();
   }
   
+  @Bean (name = "elements/datasetSummary")
+  public FreeMarkerView elementDatasetSummary () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/datasetSummary.ftl").build ();
+  }
+  
 
   // Partials
 

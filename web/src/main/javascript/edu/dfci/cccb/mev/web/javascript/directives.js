@@ -205,15 +205,24 @@ define (
             };
 
           })
-          .directive ('uploadDrag',  function () {
+          .directive ('uploadDrag', function () {
 
             return {
               restrict : 'C',
-              //template: "working"
               templateUrl : '/container/view/elements/uploadDragAndDrop',
             };
-            
-          } )
+
+          })
+          .directive ('datasetSummary', function () {
+            return {
+              restrict : 'A',
+              scope : {
+                datasetobj : "&"
+              },
+              templateUrl : '/container/view/elements/datasetSummary',
+            };
+
+          })
           .directive (
               'd3RadialTree',
               [
