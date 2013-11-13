@@ -205,197 +205,217 @@ define (
             };
 
           })
+          .directive ('uploadDrag',  function () {
+
+            return {
+              restrict : 'C',
+              //template: "working"
+              templateUrl : '/container/view/elements/uploadDragAndDrop',
+            };
+            
+          } )
           .directive (
               'd3RadialTree',
-              ['API', function (API) {
+              [
+                  'API',
+                  function (API) {
 
-                return {
-                  restrict : 'A',
-                  scope : {
-                    url : '@',
-                    diameter : '@'
+                    return {
+                      restrict : 'A',
+                      scope : {
+                        url : '@',
+                        diameter : '@'
 
-                  },
-                  template : '<div id="vis"></div>', // requires
-                  // css
-                  // location
-                  link : function (scope, elems, attr) {
+                      },
+                      template : '<div id="vis"></div>', // requires
+                      // css
+                      // location
+                      link : function (scope, elems, attr) {
 
-                    
-                    var cluster = API.hcl.radial.get("mock/cluster");
-                    //cluster.then(function(data){
-                    d3.text('heatmap/mock/cluster?format=newick', function(data){
-                              
-                              var r = scope.diameter / 2;
+                        var cluster = API.hcl.radial.get ("mock/cluster");
+                        // cluster.then(function(data){
+                        d3
+                            .text (
+                                'heatmap/mock/cluster?format=newick',
+                                function (data) {
 
-                              var cluster = d3.layout.cluster ().size (
-                                  [ 360, 1 ]).sort (null).value (function (d) {
-                                return d.length;
-                              }).children (function (d) {
-                                return d.branchset;
-                              }).separation (function (a, b) {
-                                return 1;
-                              });
+                                  var r = scope.diameter / 2;
 
-                              function project (d) {
-                                var r = d.y, a = (d.x - 90) / 180 * Math.PI;
-                                return [ r * Math.cos (a), r * Math.sin (a) ];
-                              }
+                                  var cluster = d3.layout.cluster ().size (
+                                      [ 360, 1 ]).sort (null).value (
+                                      function (d) {
+                                        return d.length;
+                                      }).children (function (d) {
+                                    return d.branchset;
+                                  }).separation (function (a, b) {
+                                    return 1;
+                                  });
 
-                              function cross (a, b) {
-                                return a[0] * b[1] - a[1] * b[0];
-                              }
-                              function dot (a, b) {
-                                return a[0] * b[0] + a[1] * b[1];
-                              }
+                                  function project (d) {
+                                    var r = d.y, a = (d.x - 90) / 180 * Math.PI;
+                                    return [ r * Math.cos (a), r * Math.sin (a) ];
+                                  }
 
-                              function step (d) {
-                                var s = project (d.source), m = project ({
-                                  x : d.target.x,
-                                  y : d.source.y
-                                }), t = project (d.target), r = d.source.y, sweep = d.target.x > d.source.x ? 1
-                                    : 0;
-                                return ("M" + s[0] + "," + s[1] + "A" + r + ","
-                                    + r + " 0 0," + sweep + " " + m[0] + ","
-                                    + m[1] + "L" + t[0] + "," + t[1]);
-                              }
-                              
-                              var wrap = d3.select (elems[0])
-                                  .append ("svg").attr ("width", r * 2).attr (
-                                      "height", r * 2).style (
-                                      "-webkit-backface-visibility", "hidden");
+                                  function cross (a, b) {
+                                    return a[0] * b[1] - a[1] * b[0];
+                                  }
+                                  function dot (a, b) {
+                                    return a[0] * b[0] + a[1] * b[1];
+                                  }
 
-                              // Catch mouse events in Safari.
-                              wrap.append ("rect").attr ("width", r * 2).attr (
-                                  "height", r * 2).attr ("fill", "none");
+                                  function step (d) {
+                                    var s = project (d.source), m = project ({
+                                      x : d.target.x,
+                                      y : d.source.y
+                                    }), t = project (d.target), r = d.source.y, sweep = d.target.x > d.source.x ? 1
+                                        : 0;
+                                    return ("M" + s[0] + "," + s[1] + "A" + r
+                                        + "," + r + " 0 0," + sweep + " "
+                                        + m[0] + "," + m[1] + "L" + t[0] + "," + t[1]);
+                                  }
 
-                              var vis = wrap.append ("g").attr ("transform",
-                                  "translate(" + r + "," + r + ")");
+                                  var wrap = d3.select (elems[0])
+                                      .append ("svg").attr ("width", r * 2)
+                                      .attr ("height", r * 2).style (
+                                          "-webkit-backface-visibility",
+                                          "hidden");
 
-                              var start = null, rotate = 0, div = elems[0].childNodes[1];
+                                  // Catch mouse events in Safari.
+                                  wrap.append ("rect").attr ("width", r * 2)
+                                      .attr ("height", r * 2).attr ("fill",
+                                          "none");
 
-                              function mouse (e) {
-                                return [ e.pageX - div.offsetLeft - r,
-                                    e.pageY - div.offsetTop - r ];
-                              }
+                                  var vis = wrap.append ("g").attr (
+                                      "transform",
+                                      "translate(" + r + "," + r + ")");
 
-                              wrap.on ("mousedown", function () {
-                                wrap.style ("cursor", "move");
-                                start = mouse (d3.event);
-                                d3.event.preventDefault ();
-                              });
-                              d3
-                                  .select (window)
-                                  .on (
-                                      "mouseup",
-                                      function () {
-                                        if (start) {
-                                          wrap.style ("cursor", "auto");
-                                          var m = mouse (d3.event);
-                                          var delta = Math.atan2 (cross (start,
-                                              m), dot (start, m))
-                                              * 180 / Math.PI;
-                                          rotate += delta;
-                                          if (rotate > 360)
-                                            rotate %= 360;
-                                          else if (rotate < 0)
-                                            rotate = (360 + rotate) % 360;
-                                          start = null;
-                                          wrap
-                                              .style ("-webkit-transform", null);
-                                          vis
-                                              .attr (
-                                                  "transform",
-                                                  "translate(" + r + "," + r
-                                                      + ")rotate(" + rotate
-                                                      + ")")
-                                              .selectAll ("text")
-                                              .attr (
-                                                  "text-anchor",
-                                                  function (d) {
-                                                    return (d.x + rotate) % 360 < 180 ? "start"
-                                                        : "end";
-                                                  })
-                                              .attr (
-                                                  "transform",
-                                                  function (d) {
-                                                    return "rotate("
-                                                        + (d.x - 90)
-                                                        + ")translate("
-                                                        + (r - 170 + 8)
-                                                        + ")rotate("
-                                                        + ((d.x + rotate) % 360 < 180 ? 0
-                                                            : 180) + ")";
-                                                  });
-                                        }
-                                      }).on (
-                                      "mousemove",
-                                      function () {
-                                        if (start) {
-                                          var m = mouse (d3.event);
-                                          var delta = Math.atan2 (cross (start,
-                                              m), dot (start, m))
-                                              * 180 / Math.PI;
-                                          wrap.style ("-webkit-transform",
-                                              "rotateZ(" + delta + "deg)");
-                                        }
+                                  var start = null, rotate = 0, div = elems[0].childNodes[1];
+
+                                  function mouse (e) {
+                                    return [ e.pageX - div.offsetLeft - r,
+                                        e.pageY - div.offsetTop - r ];
+                                  }
+
+                                  wrap.on ("mousedown", function () {
+                                    wrap.style ("cursor", "move");
+                                    start = mouse (d3.event);
+                                    d3.event.preventDefault ();
+                                  });
+                                  d3
+                                      .select (window)
+                                      .on (
+                                          "mouseup",
+                                          function () {
+                                            if (start) {
+                                              wrap.style ("cursor", "auto");
+                                              var m = mouse (d3.event);
+                                              var delta = Math.atan2 (cross (
+                                                  start, m), dot (start, m))
+                                                  * 180 / Math.PI;
+                                              rotate += delta;
+                                              if (rotate > 360)
+                                                rotate %= 360;
+                                              else if (rotate < 0)
+                                                rotate = (360 + rotate) % 360;
+                                              start = null;
+                                              wrap.style ("-webkit-transform",
+                                                  null);
+                                              vis
+                                                  .attr (
+                                                      "transform",
+                                                      "translate(" + r + ","
+                                                          + r + ")rotate("
+                                                          + rotate + ")")
+                                                  .selectAll ("text")
+                                                  .attr (
+                                                      "text-anchor",
+                                                      function (d) {
+                                                        return (d.x + rotate) % 360 < 180 ? "start"
+                                                            : "end";
+                                                      })
+                                                  .attr (
+                                                      "transform",
+                                                      function (d) {
+                                                        return "rotate("
+                                                            + (d.x - 90)
+                                                            + ")translate("
+                                                            + (r - 170 + 8)
+                                                            + ")rotate("
+                                                            + ((d.x + rotate) % 360 < 180 ? 0
+                                                                : 180) + ")";
+                                                      });
+                                            }
+                                          }).on (
+                                          "mousemove",
+                                          function () {
+                                            if (start) {
+                                              var m = mouse (d3.event);
+                                              var delta = Math.atan2 (cross (
+                                                  start, m), dot (start, m))
+                                                  * 180 / Math.PI;
+                                              wrap.style ("-webkit-transform",
+                                                  "rotateZ(" + delta + "deg)");
+                                            }
+                                          });
+
+                                  function phylo (n, offset) {
+                                    if (n.length != null)
+                                      offset += n.length * 115;
+                                    n.y = offset;
+                                    if (n.children)
+                                      n.children.forEach (function (n) {
+                                        phylo (n, offset);
+                                      });
+                                  }
+
+                                  var x = newick.parse (data);
+                                  var nodes = cluster.nodes (x);
+                                  phylo (nodes[0], 0);
+
+                                  var link = vis.selectAll ("path.link").data (
+                                      cluster.links (nodes)).enter ().append (
+                                      "path").attr ("class", "link").attr ("d",
+                                      step);
+
+                                  var node = vis.selectAll ("g.node").data (
+                                      nodes.filter (function (n) {
+                                        return n.x !== undefined;
+                                      })).enter ().append ("g").attr ("class",
+                                      "node").attr (
+                                      "transform",
+                                      function (d) {
+                                        return "rotate(" + (d.x - 90)
+                                            + ")translate(" + d.y + ")";
                                       });
 
-                              function phylo (n, offset) {
-                                if (n.length != null)
-                                  offset += n.length * 115;
-                                n.y = offset;
-                                if (n.children)
-                                  n.children.forEach (function (n) {
-                                    phylo (n, offset);
-                                  });
-                              }
+                                  node.append ("circle").attr ("r", 2.5);
 
-                              var x = newick.parse (data);
-                              var nodes = cluster.nodes (x);
-                              phylo (nodes[0], 0);
-
-                              var link = vis.selectAll ("path.link").data (
-                                  cluster.links (nodes)).enter ().append (
-                                  "path").attr ("class", "link").attr ("d",
-                                  step);
-
-                              var node = vis.selectAll ("g.node").data (
-                                  nodes.filter (function (n) {
-                                    return n.x !== undefined;
-                                  })).enter ().append ("g").attr ("class",
-                                  "node").attr (
-                                  "transform",
-                                  function (d) {
-                                    return "rotate(" + (d.x - 90)
-                                        + ")translate(" + d.y + ")";
+                                  var label = vis.selectAll ("text").data (
+                                      nodes
+                                          .filter (function (d) {
+                                            return d.x !== undefined
+                                                && !d.children;
+                                          })).enter ().append ("text").attr (
+                                      "dy", ".31em").attr ("text-anchor",
+                                      function (d) {
+                                        return d.x < 180 ? "start" : "end";
+                                      }).attr (
+                                      "transform",
+                                      function (d) {
+                                        return "rotate(" + (d.x - 90)
+                                            + ")translate(" + (r - 170 + 8)
+                                            + ")rotate("
+                                            + (d.x < 180 ? 0 : 180) + ")";
+                                      }).text (function (d) {
+                                    return d.name.replace (/_/g, ' ');
                                   });
 
-                              node.append ("circle").attr ("r", 2.5);
+                                }); // end data watcher
 
-                              var label = vis.selectAll ("text").data (
-                                  nodes.filter (function (d) {
-                                    return d.x !== undefined && !d.children;
-                                  })).enter ().append ("text").attr ("dy",
-                                  ".31em").attr ("text-anchor", function (d) {
-                                return d.x < 180 ? "start" : "end";
-                              }).attr (
-                                  "transform",
-                                  function (d) {
-                                    return "rotate(" + (d.x - 90)
-                                        + ")translate(" + (r - 170 + 8)
-                                        + ")rotate(" + (d.x < 180 ? 0 : 180)
-                                        + ")";
-                                  }).text (function (d) {
-                                return d.name.replace (/_/g, ' ');
-                              });
+                      } // end link
+                    };
 
-                            }); // end data watcher
-
-                  } // end link
-                };
-
-              } ]).directive ('bsTable', function () {
+                  } ]).directive ('bsTable', function () {
 
             return {
               scope : {
@@ -406,98 +426,118 @@ define (
 
             };
 
-          }).directive ('visHeatmap', ['API', function (API) {
+          }).directive (
+              'visHeatmap',
+              [
+                  'API',
+                  function (API) {
 
-            return {
+                    return {
 
-              restrict : 'A',
-              //templateUrl : "/container/view/elements/visHeatmap",
-              link: function(scope, elems, attr){
-            	  
-                
-            	scope.width = 400;
-            	scope.height = 700;
-            	scope.marginleft = 20;
-            	scope.marginright = 20;
-            	scope.margintop = 20;
-            	scope.marginbottom = 20;
-            	  
-            	API.heatmap.get('mock/data')
-            	  .then(function(data){
-            		  
-            	    
-            		  var cellwidth = 10;
-            		  
-            		  var margin = {
-                              left: scope.marginleft,
-                              right: scope.marginright,
-                              top: scope.margintop,
-                              bottom: scope.marginbottom
-                      };
-                      
-                      var width = scope.width - margin.left - margin.right;
-              
-                      var height = scope.height - margin.top - margin.bottom;
-            		  
-            		  var window = d3.select(elems[0]);
-            		  
-            		  var cellXPosition = function(key) {
-            			  return cellwidth * key;
-            		  };
-            		  
-                      var cellYPosition = function(key) {
-            			  return cellwidth * key;
-            		  };
-            		  
-            		  var svg = window
-                        .append("svg")
-                        .attr("class", "chart")
-                        //.attr("pointer-events", "all")
-                        .attr("width", width + margin.left + margin.right)
-                        .attr("height", height + margin.top + margin.bottom);
-            		  
-            		  var vis = svg.append("g")
-                        .attr("class", "uncovered");
-            		  
-            		  var heatmapcells = vis.append("g")
-                        .selectAll("rect")
-                              .data(data)
-                              .enter()
-                              .append("rect");
-                              
-                      draw();
-                      
-                      function draw() {
-                    	  
-                    	  heatmapcells
-                          .attr({
-                                  "class": "cells",
-                                  "height": function(d){
-                                          return cellwidth ;
-                                  },
-                                  "width": function(d){
-                                          return cellwidth ;
-                                  },
-                                  "x": function(d, i) { return cellXPosition( d.columnOrder ); },
-                                  "y": function(d, i) { return cellYPosition( d.rowOrder ); },
-                                  "fill": function(d) {
-                                          return "rgb(0," + 255 * Math.floor(Math.sqrt( d.value*d.value ) ) + ",0)";
-                                  },
-                                  "value": function(d) { return d.value; },
-                                  "index": function(d, i) { return i; },
-                                  "row": function(d, i) { return d.rowOrder; },
-                                  "column": function(d, i) { return d.columnOrder; },
-                                  "rowKey": function(d, i) {return d.rowKey},
-                                  "columnKey": function(d, i) {return d.columnKey},
-                          }); 
-                    	  
-                      };
-            		  
-            		  
-            	  });
-              }
+                      restrict : 'A',
+                      // templateUrl : "/container/view/elements/visHeatmap",
+                      link : function (scope, elems, attr) {
 
-            };
-          } ]);
+                        scope.width = 400;
+                        scope.height = 700;
+                        scope.marginleft = 20;
+                        scope.marginright = 20;
+                        scope.margintop = 20;
+                        scope.marginbottom = 20;
+
+                        API.heatmap.get ('mock/data').then (
+                            function (data) {
+
+                              var cellwidth = 10;
+
+                              var margin = {
+                                left : scope.marginleft,
+                                right : scope.marginright,
+                                top : scope.margintop,
+                                bottom : scope.marginbottom
+                              };
+
+                              var width = scope.width - margin.left
+                                  - margin.right;
+
+                              var height = scope.height - margin.top
+                                  - margin.bottom;
+
+                              var window = d3.select (elems[0]);
+
+                              var cellXPosition = function (key) {
+                                return cellwidth * key;
+                              };
+
+                              var cellYPosition = function (key) {
+                                return cellwidth * key;
+                              };
+
+                              var svg = window.append ("svg").attr ("class",
+                                  "chart")
+                              // .attr("pointer-events", "all")
+                              .attr ("width",
+                                  width + margin.left + margin.right)
+                                  .attr ("height",
+                                      height + margin.top + margin.bottom);
+
+                              var vis = svg.append ("g").attr ("class",
+                                  "uncovered");
+
+                              var heatmapcells = vis.append ("g").selectAll (
+                                  "rect").data (data).enter ().append ("rect");
+
+                              draw ();
+
+                              function draw () {
+
+                                heatmapcells.attr ({
+                                  "class" : "cells",
+                                  "height" : function (d) {
+                                    return cellwidth;
+                                  },
+                                  "width" : function (d) {
+                                    return cellwidth;
+                                  },
+                                  "x" : function (d, i) {
+                                    return cellXPosition (d.columnOrder);
+                                  },
+                                  "y" : function (d, i) {
+                                    return cellYPosition (d.rowOrder);
+                                  },
+                                  "fill" : function (d) {
+                                    return "rgb(0,"
+                                        + 255
+                                        * Math.floor (Math.sqrt (d.value
+                                            * d.value)) + ",0)";
+                                  },
+                                  "value" : function (d) {
+                                    return d.value;
+                                  },
+                                  "index" : function (d, i) {
+                                    return i;
+                                  },
+                                  "row" : function (d, i) {
+                                    return d.rowOrder;
+                                  },
+                                  "column" : function (d, i) {
+                                    return d.columnOrder;
+                                  },
+                                  "rowKey" : function (d, i) {
+                                    return d.rowKey
+                                  },
+                                  "columnKey" : function (d, i) {
+                                    return d.columnKey
+                                  },
+                                });
+
+                              }
+                              ;
+
+                            });
+                      }
+
+                    };
+                  } ]);
 
     });

@@ -102,6 +102,11 @@ public class Views {
     return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/visHeatmap.ftl").build ();
   }
   
+  @Bean (name = "elements/uploadDragAndDrop")
+  public FreeMarkerView elementUploadDragAndDrop () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/uploadDragAndDrop.ftl").build ();
+  }
+  
 
   // Partials
 
@@ -113,5 +118,10 @@ public class Views {
   @Bean (name = "partials/heatmap")
   public FreeMarkerView heatmap () {
     return freemarker ().url ("/edu/dfci/cccb/mev/web/views/partials/heatmap.ftl").build ();
+  }
+  
+  @Bean (name = "partials/importItems")
+  public FreeMarkerView importitems () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/partials/importItems.ftl").build ();
   }
 }
