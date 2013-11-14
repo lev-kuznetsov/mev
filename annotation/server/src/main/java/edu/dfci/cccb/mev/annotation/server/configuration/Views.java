@@ -7,8 +7,14 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
 
 public class Views {
 
+  /*
 	@Bean
 	  public FreeMarkerView annotations () {
 	    return freemarker ().url ("/edu/dfci/cccb/mev/annotation/client/views/annotations.ftl").build ();
 	  }
+	*/
+	@Bean
+  public FreeMarkerView annotations () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/annotations.ftl").build ();
+  }
 }

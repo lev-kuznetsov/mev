@@ -34,11 +34,13 @@ import com.google.refine.RefineServlet;
 import com.google.refine.io.FileProjectManager;
 
 import edu.dfci.cccb.mev.heatmap.domain.Annotation;
+import edu.dfci.cccb.mev.heatmap.domain.Dimension;
 import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
 import edu.dfci.cccb.mev.heatmap.domain.HeatmapNotFoundException;
 import edu.dfci.cccb.mev.heatmap.domain.Workspace;
+import edu.dfci.cccb.mev.heatmap.domain.concrete.DimensionHeaderSimple;
+import edu.dfci.cccb.mev.heatmap.domain.concrete.DimensionSubsetList;
 import edu.dfci.cccb.mev.test.mock.MockHeatmap;
-
 import static java.util.Arrays.asList;
 
 @Controller
@@ -64,22 +66,26 @@ public class AnnotationController extends WebApplicationObjectSupport {
       workspace.get ("mock");
     } catch (HeatmapNotFoundException e) {
       Heatmap mockHeatmap = new MockHeatmap (
-                                             "mock", 
-                                             new Annotation() {
-                                              
-                                              @Override
-                                              public void merge (Annotation other) {
-                                                // TODO Auto-generated method stub
-                                                
-                                              }
-                                              
-                                              @Override
-                                              public List<String> getKeys () {
-                                                // TODO Auto-generated method stub
-                                                return new ArrayList<String>(asList("a", "b", "c"));
-                                              }
-                                            });
-      
+                                 "mock",
+                                 new DimensionHeaderSimple<String> (
+                                     Dimension.COLUMN, 
+                                     new Annotation() { 
+                                        @Override
+                                        public void merge (Annotation other) {
+                                          // TODO Auto-generated method stub     
+                                        }
+                                        @Override
+                                        public List<String> getKeys () {
+                                          // TODO Auto-generated method stub
+                                          return new ArrayList<String>(asList("a", "b", "c"));
+                                        }
+                                    })
+                                 );
+      DimensionSubsetList testSet = new DimensionSubsetList<String>("mock-test-set", "testing mock", "#fffff");
+      testSet.add ("aaa");
+      testSet.add ("bbb");
+      testSet.add ("ccc");
+      mockHeatmap.columnHeader ().addKeyset (testSet);
       workspace.put (mockHeatmap);
     }
 
@@ -88,27 +94,33 @@ public class AnnotationController extends WebApplicationObjectSupport {
       workspace.get ("shmock");
     } catch (HeatmapNotFoundException e) {
       Heatmap mockHeatmap = new MockHeatmap (
-                                             "shmock", 
-                                             new Annotation() {
+                                 "shmock", 
+                                 new DimensionHeaderSimple<String> (
+                                         Dimension.COLUMN, 
+                                         new Annotation() {
+                                           @Override
+                                           public void merge (Annotation other) {
+                                              // TODO Auto-generated method stub
                                               
-                                              @Override
-                                              public void merge (Annotation other) {
-                                                // TODO Auto-generated method stub
-                                                
-                                              }
-                                              
-                                              @Override
-                                              public List<String> getKeys () {
-                                                // TODO Auto-generated method stub
-                                                return new ArrayList<String>(asList("e", "f", "g"));
-                                              }
-                                            });
-      
+                                           }
+                                           @Override
+                                           public List<String> getKeys () {
+                                             // TODO Auto-generated method stub
+                                              return new ArrayList<String>(asList("e", "f", "g"));
+                                           }
+                                         })
+                                );
+      DimensionSubsetList testSet = new DimensionSubsetList<String>("shmock-test-set", "testing shmock", "#55555");
+      testSet.add ("xxx");
+      testSet.add ("yyy");
+      testSet.add ("zzz");
+      mockHeatmap.columnHeader ().addKeyset (testSet);
       workspace.put (mockHeatmap);
     }
     
     ModelAndView mav = new ModelAndView ();
     mav.addObject ("heatmaps", workspace.list ());
+    mav.addObject ("workspace", workspace);
     mav.setViewName ("annotations");
     return mav;
 
