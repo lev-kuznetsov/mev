@@ -12,21 +12,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.heatmap.domain.prototype;
+package edu.dfci.cccb.mev.web.configuration.converters;
 
+import java.util.Collection;
+
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import lombok.Getter;
-import lombok.Setter;
-import edu.dfci.cccb.mev.heatmap.domain.DataBuilder;
-import edu.dfci.cccb.mev.heatmap.domain.DataParser;
-import edu.dfci.cccb.mev.heatmap.domain.HeatmapBuilder;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 /**
  * @author levk
  * 
  */
-public abstract class AbstractHeatmapBuilder implements HeatmapBuilder {
-  private @Getter @Setter (onMethod = @_ (@Inject)) DataParser parser;
-  private @Getter @Setter (onMethod = @_ (@Inject)) DataBuilder builder;
+@Configuration
+public class ConverterConfigurations {
+
+  private @Inject RequestMappingHandlerAdapter requestMappingHandlerAdapter;
+  private @Inject Collection<HttpMessageConverter<?>> converters;
+
+  @PostConstruct
+  public void registerConverters () {
+    requestMappingHandlerAdapter.getMessageConverters ().addAll (0, converters);
+  }
 }

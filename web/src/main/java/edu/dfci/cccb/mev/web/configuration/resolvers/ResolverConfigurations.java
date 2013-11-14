@@ -15,6 +15,8 @@
 package edu.dfci.cccb.mev.web.configuration.resolvers;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -39,12 +41,12 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 public class ResolverConfigurations {
 
   private @Inject RequestMappingHandlerAdapter adapter;
+  private @Inject Collection<HandlerMethodArgumentResolver> methodArgumentResolvers;
 
   @PostConstruct
   private void prioritizeCustomArgumentMethodHandlers () {
     List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<> (adapter.getArgumentResolvers ());
-    argumentResolvers.removeAll (adapter.getCustomArgumentResolvers ());
-    argumentResolvers.addAll (0, adapter.getCustomArgumentResolvers ());
+    argumentResolvers.addAll (0, new HashSet<> (methodArgumentResolvers));
     adapter.setArgumentResolvers (argumentResolvers);
   }
 }

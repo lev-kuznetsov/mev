@@ -14,13 +14,15 @@
  */
 package edu.dfci.cccb.mev.heatmap.domain;
 
-import java.util.List;
-
 /**
  * @author levk
  * 
  */
-public interface Mapper {
+public interface DataProvider <V> {
 
-  List<String> ids ();
+  boolean next () throws DataException;
+
+  Projection[] projections ();
+
+  V value ();
 }

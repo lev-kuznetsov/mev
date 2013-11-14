@@ -17,7 +17,9 @@ package edu.dfci.cccb.mev.web.configuration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
+import edu.dfci.cccb.mev.web.configuration.converters.ConverterConfigurations;
 import edu.dfci.cccb.mev.web.configuration.injectors.InjectorConfigurations;
 import edu.dfci.cccb.mev.web.configuration.resolvers.ResolverConfigurations;
 
@@ -27,5 +29,5 @@ import edu.dfci.cccb.mev.web.configuration.resolvers.ResolverConfigurations;
  */
 @Configuration
 @EnableWebMvc
-@Import ({ ResolverConfigurations.class, InjectorConfigurations.class })
-public class DispatcherConfiguration {}
+@Import ({ ResolverConfigurations.class, InjectorConfigurations.class, ConverterConfigurations.class })
+public class DispatcherConfiguration extends WebMvcConfigurationSupport {}

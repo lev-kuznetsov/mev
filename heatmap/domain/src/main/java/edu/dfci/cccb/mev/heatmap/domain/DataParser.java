@@ -14,13 +14,13 @@
  */
 package edu.dfci.cccb.mev.heatmap.domain;
 
-import java.util.List;
+import java.io.InputStream;
 
 /**
  * @author levk
- * 
+ *
  */
-public interface Mapper {
+public interface DataParser {
 
-  List<String> ids ();
+  DataProvider<?> parse (InputStream input) throws DataException;
 }

@@ -41,7 +41,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
   public void onStartup (ServletContext servletContext) throws ServletException {
     AnnotationConfigWebApplicationContext mvcContext = new AnnotationConfigWebApplicationContext ();
 
-    mvcContext.register (DispatcherConfiguration.class, /*PersistenceConfiguration.class,*/ ContainerConfigurations.class);
+    mvcContext.register (DispatcherConfiguration.class, PersistenceConfiguration.class, ContainerConfigurations.class);
 
     mvcContext.register (HeatmapServerConfiguration.class, HeatmapClientConfiguration.class);
     mvcContext.register (AnnotationServerConfiguration.class);

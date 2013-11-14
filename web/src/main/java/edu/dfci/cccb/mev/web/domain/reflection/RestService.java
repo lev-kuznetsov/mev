@@ -23,9 +23,9 @@ import java.util.Collection;
  */
 public interface RestService {
 
-  String method ();
+  Collection<String> methods ();
 
-  String url ();
+  Collection<String> urls ();
 
   Method handler ();
 
