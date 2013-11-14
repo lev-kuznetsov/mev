@@ -390,7 +390,8 @@ function init() {
       "externals/imgareaselect/jquery.imgareaselect.js",
       "externals/date.js",
       "externals/jquery.i18n.js",
-
+      "externals/colorpicker/evol.colorpicker.js",
+      
       "externals/CFInstall.min.js",
       "scripts/chrome-frame.js",
 
@@ -483,7 +484,10 @@ function init() {
       "styles/dialogs/custom-tabular-exporter-dialog.less",
 
       "styles/reconciliation/recon-dialog.less",
-      "styles/reconciliation/standard-service-panel.less"
+      "styles/reconciliation/standard-service-panel.less",
+      "externals/colorpicker/evol.colorpicker.css",
+      "externals/colorpicker/evol.colorpicker.mev-custom.css"
+      
     ]
   );
 
