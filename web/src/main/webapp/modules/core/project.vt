@@ -52,7 +52,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       </div>
       <div id="project-controls">
         <a href="./" class="button" target="_blank"><span id="or-proj-open"></span></a>
+        <a href="./?reset" class="button"><span id="or-proj-reset">Use Another File</span></a>
         <a class="button" bind="exportButton" id="export-button" href="#export"><span class="button-menu" id="or-proj-export"></span></a>
+        <a class="button" bind="exportSet" id="export-set" href="#export-set"><span id="export-set-button">Export Set</span></a>
         <a href="https://github.com/OpenRefine/OpenRefine/wiki/Documentation-For-Users" target="_blank" class="button"><span id="or-proj-help"></span></a>
       </div>
     </div>

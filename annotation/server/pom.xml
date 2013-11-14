@@ -73,6 +73,17 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-heatmap-client</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
+	<dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-heatmap-test</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
     <!-- Servlet API -->
 
     <dependency>
@@ -169,7 +180,7 @@
 	<dependency>
 		<groupId>org.marc4j</groupId>
 		<artifactId>marc4j</artifactId>
-		<version>2.4-SNAPSHOT</version>
+		<version>2.4</version>
 	</dependency>
 	<dependency>
 		<groupId>com.google.guava</groupId>

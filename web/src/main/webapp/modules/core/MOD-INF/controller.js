@@ -52,7 +52,7 @@ var templatedFiles = {
 
 function registerCommands() {
   var RS = Packages.com.google.refine.RefineServlet;
-
+  
   RS.registerCommand(module, "get-version", new Packages.com.google.refine.commands.GetVersionCommand());
 
   RS.registerCommand(module, "get-importing-configuration", new Packages.com.google.refine.commands.importing.GetImportingConfigurationCommand());
@@ -65,7 +65,8 @@ function registerCommands() {
   RS.registerCommand(module, "import-project", new Packages.com.google.refine.commands.project.ImportProjectCommand());
   RS.registerCommand(module, "export-project", new Packages.com.google.refine.commands.project.ExportProjectCommand());
   RS.registerCommand(module, "export-rows", new Packages.com.google.refine.commands.project.ExportRowsCommand());
-
+  RS.registerCommand(module, "export-set", new Packages.com.google.refine.commands.project.ExportSetCommand());
+  
   RS.registerCommand(module, "get-project-metadata", new Packages.com.google.refine.commands.project.GetProjectMetadataCommand());
   RS.registerCommand(module, "get-all-project-metadata", new Packages.com.google.refine.commands.workspace.GetAllProjectMetadataCommand());
 
@@ -442,7 +443,9 @@ function init() {
       "scripts/dialogs/scatterplot-dialog.js",
       "scripts/dialogs/templating-exporter-dialog.js",
       "scripts/dialogs/column-reordering-dialog.js",
-      "scripts/dialogs/custom-tabular-exporter-dialog.js"
+      "scripts/dialogs/custom-tabular-exporter-dialog.js",
+      
+      "scripts/dialogs/export-set-dialog.js",
     ]
   );
 

@@ -17,6 +17,8 @@ package edu.dfci.cccb.mev.test.mock;
 import edu.dfci.cccb.mev.heatmap.domain.Annotation;
 import edu.dfci.cccb.mev.heatmap.domain.Data;
 import edu.dfci.cccb.mev.heatmap.domain.Dimension;
+import edu.dfci.cccb.mev.heatmap.domain.DimensionHeader;
+import edu.dfci.cccb.mev.heatmap.domain.concrete.DimensionHeaderSimple;
 import edu.dfci.cccb.mev.heatmap.domain.prototype.AbstractHeatmap;
 
 /**
@@ -25,12 +27,27 @@ import edu.dfci.cccb.mev.heatmap.domain.prototype.AbstractHeatmap;
  */
 public class MockHeatmap extends AbstractHeatmap {
 
+  private final DimensionHeader<String> columnHeader;
+  private final DimensionHeader<String> rowHeader;
+  
+  
   /**
    * @param name
    */
+  
   public MockHeatmap (String name) {
     super (name);
+    this.columnHeader=new DimensionHeaderSimple<String> (Dimension.COLUMN, null);
+    this.rowHeader=new DimensionHeaderSimple<String> (Dimension.ROW, null);
   }
+  
+  public MockHeatmap(String name, DimensionHeader<String> columnHeader){
+    super (name);
+    this.columnHeader=columnHeader;
+    this.rowHeader=new DimensionHeaderSimple<String> (Dimension.ROW, null);
+  }
+  
+  
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.heatmap.domain.Heatmap#data()
@@ -45,6 +62,24 @@ public class MockHeatmap extends AbstractHeatmap {
    */
   @Override
   public Annotation annotation (Dimension dimension) {
-    return null;
+    return dimension==Dimension.COLUMN ?  this.columnHeader.getAnnotation () : this.rowHeader.getAnnotation ();
+  }
+  
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.heatmap.domain.Heatmap#annotation()
+   */
+  @Override
+  public DimensionHeader<String> dimensionHeader (Dimension dimension) {
+    return dimension==Dimension.COLUMN ?  this.columnHeader : this.rowHeader;
+  }
+  
+  @Override
+  public DimensionHeader<String> dimensionHeader (String dimension) {
+    return dimension.equals(Dimension.COLUMN.name ()) ?  this.columnHeader : this.rowHeader;
+  }
+  
+  @Override
+  public DimensionHeader<String> columnHeader () {
+    return this.columnHeader;
   }
 }

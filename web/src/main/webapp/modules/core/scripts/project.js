@@ -138,6 +138,7 @@ function initializeUI(uiState) {
   $('#project-permalink-button').mouseenter(function() {
     this.href = Refine.getPermanentLink();
   });
+  $('#export-set-button').click(Refine._exportSet);
 
   Refine.setTitle();
 
@@ -236,6 +237,70 @@ Refine._renameProject = function() {
     }
   });
 };
+
+Refine._exportSet = function() {
+	  var dialog = new ExportSetDialog();
+		/*
+	  var name = window.prompt("Esport set name", "open-refine-exported-set");
+	  if (name === null) {
+	    return;
+	  }
+	  name = $.trim(name);
+
+	  var form = document.createElement("form");
+	  var includeEngine = true;
+	  
+	  $(form)
+	  .css("display", "block")
+	  .attr("method", "post")
+	  .attr("action", "command/core/export-set/")	  
+
+	  $('<input />')
+	  .attr("name", "project")
+	  .attr("value", theProject.id)
+	  .appendTo(form);
+	  $('<input />')
+	  .attr("name", "format")
+	  .attr("value", "tsv")
+	  .appendTo(form);
+	  $('<input />')
+	  .attr("name", "set-name")
+	  .attr("value", name)
+	  .appendTo(form);
+	  if (includeEngine) {
+	    $('<input />')
+	    .attr("name", "engine")
+	    .attr("value", JSON.stringify(ui.browsingEngine.getJSON()))
+	    .appendTo(form);
+	  }
+	  
+	  document.body.appendChild(form);
+	  form.submit();
+	  document.body.removeChild(form);
+	  */
+	/*
+	  name = $.trim(name);
+	  if (theProject.metadata.name == name || name.length === 0) {
+	    return;
+	  }
+
+	  $.ajax({
+	    type: "POST",
+	    url: "command/core/rename-project",
+	    data: { "project" : theProject.id, "name" : name },
+	    dataType: "json",
+	    success: function (data) {
+	      if (data && typeof data.code != 'undefined' && data.code == "ok") {
+	        theProject.metadata.name = name;
+	        Refine.setTitle();
+	      } else {
+	        alert($.i18n._('core-index')["error-rename"]+" " + data.message);
+	      }
+	    }
+	  });
+	  */
+	};
+
 
 /*
  *  Utility state functions

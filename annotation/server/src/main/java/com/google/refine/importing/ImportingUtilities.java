@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.google.refine.importing;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -65,6 +66,7 @@ import org.apache.commons.fileupload.ProgressListener;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
@@ -88,6 +90,9 @@ import com.google.refine.importing.ImportingManager.Format;
 import com.google.refine.importing.UrlRewriter.Result;
 import com.google.refine.model.Project;
 import com.google.refine.util.JSONUtilities;
+
+import edu.dfci.cccb.mev.heatmap.domain.Dimension;
+import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
 
 public class ImportingUtilities {
     final static protected Logger logger = LoggerFactory.getLogger("importing-utilities");
@@ -218,6 +223,8 @@ public class ImportingUtilities {
 
         @SuppressWarnings("unchecked")
         List<FileItem> tempFiles = (List<FileItem>)upload.parseRequest(request);
+        
+        Heatmap heatmap = (Heatmap)request.getAttribute ("heatmap");
         
         progress.setProgress("Uploading data ...", -1);
         parts: for (FileItem fileItem : tempFiles) {
@@ -358,7 +365,11 @@ public class ImportingUtilities {
 
             } else { // is file content
                 String fileName = fileItem.getName();
+                  
                 if (fileName.length() > 0) {
+                    if(heatmap!=null)
+                      fileName=heatmap.name ();
+
                     long fileSize = fileItem.getSize();
                     
                     File file = allocateFile(rawDataDir, fileName);
@@ -384,6 +395,40 @@ public class ImportingUtilities {
             }
             
             stream.close();
+        }
+        
+        //ap:heatmap
+        if(uploadCount<=0){
+          
+          if(heatmap!=null){
+            String encoding = request.getCharacterEncoding();
+            if (encoding == null) {
+                encoding = "UTF-8";
+            }
+            
+            File file = allocateFile(rawDataDir, "heatmap.txt");
+            
+            JSONObject fileRecord = new JSONObject();
+            JSONUtilities.safePut(fileRecord, "origin", "heatmap");
+            JSONUtilities.safePut(fileRecord, "declaredEncoding", encoding);
+            JSONUtilities.safePut(fileRecord, "declaredMimeType", (String) null);
+            JSONUtilities.safePut(fileRecord, "format", "text");
+            JSONUtilities.safePut(fileRecord, "fileName", heatmap.name ());
+            JSONUtilities.safePut(fileRecord, "location", getRelativePath(file, rawDataDir));
+            
+            progress.setProgress("Uploading pasted heatmap text",
+                calculateProgressPercent(update.totalExpectedSize, update.totalRetrievedSize));
+            
+            StringBuilder builder = new StringBuilder (StringUtils.join (
+                                                                         heatmap.annotation (Dimension.COLUMN).getKeys (),
+                                                                         "\n"));
+            InputStream stream = new ByteArrayInputStream ( builder.toString().getBytes(encoding) );
+            
+            JSONUtilities.safePut(fileRecord, "size", saveStreamToFile(stream, file, null));
+            JSONUtilities.append(fileRecords, fileRecord);
+            
+            clipboardCount++;
+          }
         }
         
         // Delete all temp files.
