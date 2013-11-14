@@ -25,7 +25,3 @@ src/**/html/app/data/*
 # Maven target
 target/
 /target
-#/annotation
-#/api
-#/heatmap
-#/web
