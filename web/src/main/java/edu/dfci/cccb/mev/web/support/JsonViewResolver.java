@@ -26,15 +26,16 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 /**
  * @author levk
- *
+ * 
  */
 public class JsonViewResolver implements ViewResolver, Ordered {
 
-  private @Getter @Setter int order;
+  private @Getter @Setter int order = LOWEST_PRECEDENCE;
 
   /* (non-Javadoc)
-   * @see org.springframework.web.servlet.ViewResolver#resolveViewName(java.lang.String, java.util.Locale)
-   */
+   * @see
+   * org.springframework.web.servlet.ViewResolver#resolveViewName(java.lang
+   * .String, java.util.Locale) */
   @Override
   public View resolveViewName (String viewName, Locale locale) throws Exception {
     return new MappingJackson2JsonView ();
