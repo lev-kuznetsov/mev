@@ -2,4 +2,6 @@
 #export-button{
 	display:none;
 }
-
+button.facet-controls-button[bind="clusterLink"]{
+	display:none;
+}
