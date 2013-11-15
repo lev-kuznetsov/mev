@@ -177,7 +177,7 @@ function initializeUI(uiState) {
 }
 
 Refine.setTitle = function(status) {
-  var title = theProject.metadata.name + " - OpenRefine";
+  var title = theProject.metadata.name + " annotations - MEV: Multi-Experiment Viewer";
   if (status) {
     title = status + " - " + title;
   }

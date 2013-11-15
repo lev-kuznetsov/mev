@@ -67,6 +67,8 @@ Refine.DefaultImportingController.prototype._showParsingPanel = function(hasFile
   }
 
   this._createProjectUI.showCustomPanel(this._parsingPanel);
+  var title = this._projectName + " annotations - MEV: Multi-Experiment Viewer";
+  document.title = title;
 };
 
 Refine.DefaultImportingController.prototype._disposeFileSelectionPanel = function() {
