@@ -134,10 +134,13 @@ function initializeUI(uiState) {
   $("#or-proj-undoRedo").text($.i18n._('core-project')["undo-redo"]);
   $("#or-proj-ext").text($.i18n._('core-project')["extensions"]+":");
 
-  $('#project-name-button').click(Refine._renameProject);
+  
+  //ap:disable project renaming for MeV
+  //$('#project-name-button').click(Refine._renameProject);
   $('#project-permalink-button').mouseenter(function() {
     this.href = Refine.getPermanentLink();
   });
+  
   $("#export-set-button").click(Refine._exportSet);
   $("#close-button").click(Refine._close);
   Refine.setTitle();
