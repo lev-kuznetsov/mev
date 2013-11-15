@@ -486,7 +486,8 @@ function init() {
       "styles/reconciliation/recon-dialog.less",
       "styles/reconciliation/standard-service-panel.less",
       "externals/colorpicker/evol.colorpicker.css",
-      "externals/colorpicker/evol.colorpicker.mev-custom.css"
+      "externals/colorpicker/evol.colorpicker.mev-custom.css",
+      "styles/mev-openrefine.css"
       
     ]
   );
