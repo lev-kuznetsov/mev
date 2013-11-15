@@ -16,7 +16,7 @@ ExportSetDialog.prototype._createDialog = function() {
     this._elmts.exportSetButton.html($.i18n._('core-buttons')["export"]);
     this._elmts.cancelSetButton.html($.i18n._('core-buttons')["cancel"]);
     
-    this._elmts.exportSetButton.click(function() { if(self._validate()){self._export(); self._dismiss(); }});
+    this._elmts.exportSetButton.click(function() { if(self._validate()){self._exportAjax(); self._dismiss(); }});
     this._elmts.cancelSetButton.click(function() { self._dismiss(); });
     /*
     this._elmts.resetButton.click(function() {
@@ -59,6 +59,29 @@ ExportSetDialog.prototype._validate = function()
 	  return true;
 };
 
+ExportSetDialog.prototype._exportAjax = function(){
+	$.ajax({
+	    type: "POST",
+	    url: "command/core/export-set",
+	    data: { 
+	    	"project" : theProject.id, 
+	    	"name" : name,
+	    	"set-name" : this._name,
+	    	"set-description" : this._description,
+	    	"set-color" : this._color,
+	    	"engine" : JSON.stringify(ui.browsingEngine.getJSON())
+	    	},
+	    dataType: "json",
+	    success: function (data) {
+	      if (data && typeof data.code != 'undefined' && data.code == "ok") {
+	        alert("Set saved succesfully");
+	      } else {
+	        alert($.i18n._('core-index')["error-rename"]+" " + data.message);
+	      }
+	    }
+	  });
+};
+
 ExportSetDialog.prototype._export = function() {  
 
 	  var form = document.createElement("form");	  
@@ -92,30 +115,9 @@ ExportSetDialog.prototype._export = function() {
 	  .attr("value", JSON.stringify(ui.browsingEngine.getJSON()))
 	  .appendTo(form);
 	  
+	  
 	  document.body.appendChild(form);
 	  form.submit();
 	  document.body.removeChild(form);
 	  
-	/*
-	  name = $.trim(name);
-	  if (theProject.metadata.name == name || name.length === 0) {
-	    return;
-	  }
-
-	  $.ajax({
-	    type: "POST",
-	    url: "command/core/rename-project",
-	    data: { "project" : theProject.id, "name" : name },
-	    dataType: "json",
-	    success: function (data) {
-	      if (data && typeof data.code != 'undefined' && data.code == "ok") {
-	        theProject.metadata.name = name;
-	        Refine.setTitle();
-	      } else {
-	        alert($.i18n._('core-index')["error-rename"]+" " + data.message);
-	      }
-	    }
-	  });
-	  */
-
 }
