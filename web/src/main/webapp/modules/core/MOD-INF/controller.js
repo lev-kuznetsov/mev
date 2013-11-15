@@ -330,10 +330,12 @@ function init() {
 
       "scripts/index.js",
       "scripts/index/create-project-ui.js",
+      /*
+      //ap: disable open, import, and language menus for MeV
       "scripts/index/open-project-ui.js",
       "scripts/index/import-project-ui.js",
       "scripts/index/lang-settings-ui.js",
-
+	  */
       "scripts/index/default-importing-controller/controller.js",
       "scripts/index/default-importing-controller/file-selection-panel.js",
       "scripts/index/default-importing-controller/parsing-panel.js",

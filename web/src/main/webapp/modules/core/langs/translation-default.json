@@ -23,7 +23,7 @@
 		"sample-data": "sample data sets"
 	},
 	"core-index-create": {
-		"create-proj": "Create Project",
+		"create-proj": "Import Annotations",
 		"starting": "Starting",
 		"done": "Done.",
 		"min-remaining": "minutes remaining",
