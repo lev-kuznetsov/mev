@@ -109,9 +109,9 @@ public class ExportSetCommand extends Command {
           }
            */
           
-            Project project = getProject(request);
-            Engine engine = getEngine(request, project);            
+            Project project = getProject(request);            
             
+            Engine engine = getEngine(request, project);                        
             final Heatmap heatmap = (Heatmap)request.getAttribute ("heatmap");
             final DimensionSubset<String> theSet = new DimensionSubsetList<> (request.getParameter ("set-name"), request.getParameter ("set-description"), request.getParameter ("set-color"));
             
@@ -152,6 +152,7 @@ public class ExportSetCommand extends Command {
 
             FilteredRows filteredRows = engine.getAllFilteredRows();
             filteredRows.accept(project, visitor);
+            ProjectManager.getSingleton().save(true);
             respond(response, "{ \"code\" : \"ok\" }");
             
         } catch (Exception e) {
