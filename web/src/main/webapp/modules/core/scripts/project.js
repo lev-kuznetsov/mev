@@ -140,7 +140,8 @@ function initializeUI(uiState) {
   $('#project-permalink-button').mouseenter(function() {
     this.href = Refine.getPermanentLink();
   });
-  
+    
+  $("#or-proj-reset").click(Refine._reset);
   $("#export-set-button").click(Refine._exportSet);
   $("#close-button").click(Refine._close);
   Refine.setTitle();
@@ -242,12 +243,17 @@ Refine._renameProject = function() {
 };
 
 Refine._exportSet = function() {
-  var dialog = new ExportSetDialog();
+  new ExportSetDialog();
 };
 
 Refine._close = function(){
 	window.location.replace("/#/heatmap/"+theProject.metadata.name);
-}	
+};
+Refine._reset = function(){
+	if(confirm("Disgard current annotations?"))
+		window.location.replace("./?reset");	
+};
+
 
 /*
  *  Utility state functions
