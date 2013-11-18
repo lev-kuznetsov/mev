@@ -47,6 +47,23 @@ padding-top: 0px;
 font-size: 1.3em;
 }
 
+/* left panel links */
+#logo-container {
+margin: 0.5em 0 0 0;
+}
+#powered-by-openrefine{
+	color: #777;
+}
+#project-links > ul {
+padding: 0;
+margin: 0 0;
+line-height: 1em;
+font-size: 80%;
+}
+#project-links > ul > li{
+line-height: 15px;
+}
+
 /* bootstrap */
 
 /* navbar-fixed-top */
