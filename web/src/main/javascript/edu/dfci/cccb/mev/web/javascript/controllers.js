@@ -1,10 +1,12 @@
-define(['angular', 'jquery'], function(angular, $){
+define ([ 'angular', 'jquery' ], function (angular, $) {
 
-  return angular.module('myApp.controllers', []).
-  controller('HeatmapCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
-    
-    $scope.heatmapId = "Heatmap";
+  return angular.module ('myApp.controllers', []).controller ('HeatmapCtrl',
+      [ '$scope', '$routeParams', 'API', function ($scope, $routeParams, API) {
+
+        $scope.heatmapId = "Heatmap";
         
-  }]);
-  
+        API.heatmap.get('mock/data');
+
+      } ]);
+
 });

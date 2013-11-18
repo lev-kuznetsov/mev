@@ -20,6 +20,7 @@ src/**/html/app/data/*
 .settings/
 **.swp
 **.orig
+.springBeans
 
 # Maven target
 target/

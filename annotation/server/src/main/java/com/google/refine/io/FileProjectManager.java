@@ -41,8 +41,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.zip.GZIPInputStream;
+
+import javax.inject.Inject;
 
 import org.apache.tools.tar.TarEntry;
 import org.apache.tools.tar.TarInputStream;
@@ -64,6 +69,8 @@ import com.google.refine.SessionWorkspaceDir;
 import com.google.refine.history.HistoryEntryManager;
 import com.google.refine.model.Project;
 import com.google.refine.preference.TopList;
+
+import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
 
 public class FileProjectManager extends ProjectManager {
     final static protected String PROJECT_DIR_SUFFIX = ".project";
@@ -97,6 +104,25 @@ public class FileProjectManager extends ProjectManager {
     	return _workspaceDir;
     }    
     
+    @Inject private Heatmap requestHeatmap;
+    public Heatmap getRequestHeatmap () {
+      return requestHeatmap;
+    }
+    public void setRequestHeatmap (Heatmap requestHeatmap) {
+      this.requestHeatmap = requestHeatmap;
+    }
+    
+    @Override
+    public Map<Long, ProjectMetadata> getAllProjectMetadata() {
+      Map<Long, ProjectMetadata> heatmapMetadata = new HashMap<Long, ProjectMetadata>();
+      for (Entry<Long, ProjectMetadata> entry : _projectsMetadata.entrySet ()) {
+        if (entry.getValue ().getName().startsWith (requestHeatmap.name())) {
+          heatmapMetadata.put (entry.getKey (), entry.getValue ());
+        }
+        
+      }
+      return heatmapMetadata;
+    }
     /*
     protected FileProjectManager(File dir) {
         super();
@@ -450,4 +476,6 @@ public class FileProjectManager extends ProjectManager {
     public HistoryEntryManager getHistoryEntryManager(){
         return new FileHistoryEntryManager();
     }
+
+
 }

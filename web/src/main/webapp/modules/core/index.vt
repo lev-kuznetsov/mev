@@ -37,15 +37,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <meta http-equiv="X-UA-Compatible" content="IE=8;IE=9;chrome=1;">
   <title>OpenRefine</title>
   <link rel="icon" type="image/png" href="images/favicon.png">
+  <!--link type="text/css" rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" /-->  
   <script type="text/javascript" src="wirings.js"></script>
   $scriptInjection
   $styleInjection
   <script>Refine.encodings = $encodingJson; Refine.defaultEncoding = $defaultEncoding;</script>
 </head>
 <body>
+  #include("mev/mev-navbar.vt")
   <div id="header">
-    <img alt="OpenRefine" src="images/logo-openrefine-30.png" width="129" height="29" />
-    <span id="slogan"></span>
+        <div id="project-title">
+        <span id="project-name-button" class="app-path-section"></span>
+        </div>    
   </div>
   
   <div id="left-panel" class="main-layout-panel"><div id="left-panel-body">
@@ -53,13 +56,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </ul>
     
     <div id="project-links">
+      <div id="powered-by-openrefine">Powered By:</div>
       <div id="logo-container">
         <img alt="OpenRefine" src="images/logo-gem-40.png" />
         <div id="openrefine-version"></div>
       </div>
-      <ul>
-        <li><a href="https://github.com/OpenRefine/OpenRefine/wiki/Documentation-For-Users" id="or-index-help"></a></li>
-        <li><a href="about.html" id="or-index-about"></a></li>
+      <ul>      	
+        <li><a href="https://github.com/OpenRefine/OpenRefine/wiki/Documentation-For-Users" id="or-index-help" target="_blank"></a></li>
+        <li><a href="about.html" id="or-index-about" target="_blank"></a></li>
       </ul>
     </div>
   </div></div> <!-- left-panel -->

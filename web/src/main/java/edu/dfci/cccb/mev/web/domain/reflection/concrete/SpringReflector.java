@@ -14,6 +14,7 @@
  */
 package edu.dfci.cccb.mev.web.domain.reflection.concrete;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableCollection;
 
 import java.lang.reflect.Method;

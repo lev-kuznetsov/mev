@@ -134,11 +134,16 @@ function initializeUI(uiState) {
   $("#or-proj-undoRedo").text($.i18n._('core-project')["undo-redo"]);
   $("#or-proj-ext").text($.i18n._('core-project')["extensions"]+":");
 
-  $('#project-name-button').click(Refine._renameProject);
+  
+  //ap:disable project renaming for MeV
+  //$('#project-name-button').click(Refine._renameProject);
   $('#project-permalink-button').mouseenter(function() {
     this.href = Refine.getPermanentLink();
   });
-
+    
+  $("#or-proj-reset").click(Refine._reset);
+  $("#export-set-button").click(Refine._exportSet);
+  $("#close-button").click(Refine._close);
   Refine.setTitle();
 
   ui = DOM.bind($("#body"));
@@ -172,7 +177,7 @@ function initializeUI(uiState) {
 }
 
 Refine.setTitle = function(status) {
-  var title = theProject.metadata.name + " - OpenRefine";
+  var title = theProject.metadata.name + " annotations - MEV: Multi-Experiment Viewer";
   if (status) {
     title = status + " - " + title;
   }
@@ -236,6 +241,19 @@ Refine._renameProject = function() {
     }
   });
 };
+
+Refine._exportSet = function() {
+  new ExportSetDialog();
+};
+
+Refine._close = function(){
+	window.location.replace("/#/heatmap/"+theProject.metadata.name);
+};
+Refine._reset = function(){
+	if(confirm("Disgard current annotations?"))
+		window.location.replace("./?reset");	
+};
+
 
 /*
  *  Utility state functions

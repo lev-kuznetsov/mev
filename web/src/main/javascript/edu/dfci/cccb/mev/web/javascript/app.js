@@ -5,10 +5,15 @@ define(['angular', 'directives', 'services', 'controllers'], function(angular){
 	     'myApp.services',
 	     'myApp.controllers'])
 	.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-		  $routeProvider.when('/heatmap', {
+		  $routeProvider
+		  .when('/heatmap', {
 			  templateUrl: '/container/view/partials/heatmap', 
 			  controller: 'HeatmapCtrl'
-		  });
+		  })
+		  .when('/import', {
+        templateUrl: '/container/view/partials/importItems'
+      });
+		  
 		  $routeProvider.otherwise({redirectTo: '/home'});
 		  
 		  //$locationProvider.html5Mode(true);
