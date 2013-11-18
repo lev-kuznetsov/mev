@@ -1,0 +1,9 @@
+<div main-navigation="">
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <a class="brand" href="#"><span app-name="">MEV: Multi-Experiment Viewer</span></a>
+    <ul class="nav">
+      <li ng-repeat="link in menu" class="ng-scope"><a href="#" class="ng-binding">About</a></li><li ng-repeat="link in menu" class="ng-scope"><a href="#" class="ng-binding">Contact</a></li>
+    </ul>
+  </div>
+</div></div>

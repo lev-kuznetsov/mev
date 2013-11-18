@@ -134,12 +134,16 @@ function initializeUI(uiState) {
   $("#or-proj-undoRedo").text($.i18n._('core-project')["undo-redo"]);
   $("#or-proj-ext").text($.i18n._('core-project')["extensions"]+":");
 
-  $('#project-name-button').click(Refine._renameProject);
+  
+  //ap:disable project renaming for MeV
+  //$('#project-name-button').click(Refine._renameProject);
   $('#project-permalink-button').mouseenter(function() {
     this.href = Refine.getPermanentLink();
   });
-  $('#export-set-button').click(Refine._exportSet);
-
+    
+  $("#or-proj-reset").click(Refine._reset);
+  $("#export-set-button").click(Refine._exportSet);
+  $("#close-button").click(Refine._close);
   Refine.setTitle();
 
   ui = DOM.bind($("#body"));
@@ -173,7 +177,7 @@ function initializeUI(uiState) {
 }
 
 Refine.setTitle = function(status) {
-  var title = theProject.metadata.name + " - OpenRefine";
+  var title = theProject.metadata.name + " annotations - MEV: Multi-Experiment Viewer";
   if (status) {
     title = status + " - " + title;
   }
@@ -239,67 +243,16 @@ Refine._renameProject = function() {
 };
 
 Refine._exportSet = function() {
-	  var dialog = new ExportSetDialog();
-		/*
-	  var name = window.prompt("Esport set name", "open-refine-exported-set");
-	  if (name === null) {
-	    return;
-	  }
-	  name = $.trim(name);
+  new ExportSetDialog();
+};
 
-	  var form = document.createElement("form");
-	  var includeEngine = true;
-	  
-	  $(form)
-	  .css("display", "block")
-	  .attr("method", "post")
-	  .attr("action", "command/core/export-set/")	  
-
-	  $('<input />')
-	  .attr("name", "project")
-	  .attr("value", theProject.id)
-	  .appendTo(form);
-	  $('<input />')
-	  .attr("name", "format")
-	  .attr("value", "tsv")
-	  .appendTo(form);
-	  $('<input />')
-	  .attr("name", "set-name")
-	  .attr("value", name)
-	  .appendTo(form);
-	  if (includeEngine) {
-	    $('<input />')
-	    .attr("name", "engine")
-	    .attr("value", JSON.stringify(ui.browsingEngine.getJSON()))
-	    .appendTo(form);
-	  }
-	  
-	  document.body.appendChild(form);
-	  form.submit();
-	  document.body.removeChild(form);
-	  */
-	/*
-	  name = $.trim(name);
-	  if (theProject.metadata.name == name || name.length === 0) {
-	    return;
-	  }
-
-	  $.ajax({
-	    type: "POST",
-	    url: "command/core/rename-project",
-	    data: { "project" : theProject.id, "name" : name },
-	    dataType: "json",
-	    success: function (data) {
-	      if (data && typeof data.code != 'undefined' && data.code == "ok") {
-	        theProject.metadata.name = name;
-	        Refine.setTitle();
-	      } else {
-	        alert($.i18n._('core-index')["error-rename"]+" " + data.message);
-	      }
-	    }
-	  });
-	  */
-	};
+Refine._close = function(){
+	window.location.replace("/#/heatmap/"+theProject.metadata.name);
+};
+Refine._reset = function(){
+	if(confirm("Disgard current annotations?"))
+		window.location.replace("./?reset");	
+};
 
 
 /*

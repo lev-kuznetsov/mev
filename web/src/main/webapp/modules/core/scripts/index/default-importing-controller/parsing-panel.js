@@ -66,7 +66,13 @@ Refine.DefaultImportingController.prototype._showParsingPanel = function(hasFile
     this._parsingPanelElmts.projectNameInput[0].value = this._projectName;
   }
 
+  this._parsingPanelElmts.cancelButton.click(function(){
+	  history.go(-1);
+  });
   this._createProjectUI.showCustomPanel(this._parsingPanel);
+  var title = this._projectName + " annotations - MEV: Multi-Experiment Viewer";
+  document.title = title;
+  $("#project-name-button").text(this._projectName);
 };
 
 Refine.DefaultImportingController.prototype._disposeFileSelectionPanel = function() {

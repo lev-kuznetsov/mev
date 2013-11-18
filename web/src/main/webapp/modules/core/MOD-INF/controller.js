@@ -330,10 +330,12 @@ function init() {
 
       "scripts/index.js",
       "scripts/index/create-project-ui.js",
+      /*
+      //ap: disable open, import, and language menus for MeV
       "scripts/index/open-project-ui.js",
       "scripts/index/import-project-ui.js",
       "scripts/index/lang-settings-ui.js",
-
+	  */
       "scripts/index/default-importing-controller/controller.js",
       "scripts/index/default-importing-controller/file-selection-panel.js",
       "scripts/index/default-importing-controller/parsing-panel.js",
@@ -374,7 +376,8 @@ function init() {
       "styles/views/data-table-view.less", // for the preview table's styles
       "styles/index/fixed-width-parser-ui.less",
       "styles/index/xml-parser-ui.less",
-      "styles/index/json-parser-ui.less"
+      "styles/index/json-parser-ui.less",
+      "styles/mev-openrefine.css"
     ]
   );
 
@@ -390,7 +393,8 @@ function init() {
       "externals/imgareaselect/jquery.imgareaselect.js",
       "externals/date.js",
       "externals/jquery.i18n.js",
-
+      "externals/colorpicker/evol.colorpicker.js",
+      
       "externals/CFInstall.min.js",
       "scripts/chrome-frame.js",
 
@@ -483,7 +487,11 @@ function init() {
       "styles/dialogs/custom-tabular-exporter-dialog.less",
 
       "styles/reconciliation/recon-dialog.less",
-      "styles/reconciliation/standard-service-panel.less"
+      "styles/reconciliation/standard-service-panel.less",
+      "externals/colorpicker/evol.colorpicker.css",
+      "externals/colorpicker/evol.colorpicker.mev-custom.css",
+      "styles/mev-openrefine.css"
+      
     ]
   );
 
