@@ -17,6 +17,7 @@ height: 40px;
 padding: 4px 0 0 0;
 font-size: 1.6em;
 position: relative;
+float: left;
 }
 
 #header {
@@ -31,6 +32,12 @@ overflow: visible;
 	font-size: 23.5px;
 	/*line-height: 40px;*/
 	font-weight: bold;
+}
+
+#project-controls {
+position: relative;
+top: 0;
+float: right;
 }
 
 #action-area-tabs {
