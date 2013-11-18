@@ -376,7 +376,8 @@ function init() {
       "styles/views/data-table-view.less", // for the preview table's styles
       "styles/index/fixed-width-parser-ui.less",
       "styles/index/xml-parser-ui.less",
-      "styles/index/json-parser-ui.less"
+      "styles/index/json-parser-ui.less",
+      "styles/mev-openrefine.css"
     ]
   );
 
