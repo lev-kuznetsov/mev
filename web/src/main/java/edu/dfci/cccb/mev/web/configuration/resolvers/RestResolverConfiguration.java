@@ -16,19 +16,18 @@ package edu.dfci.cccb.mev.web.configuration.resolvers;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.ViewResolver;
 
 import edu.dfci.cccb.mev.web.support.JsonViewResolver;
 
 /**
  * @author levk
- *
+ * 
  */
 @Configuration
 public class RestResolverConfiguration {
 
   @Bean
-  public ViewResolver jsonViewResolver () {
+  public JsonViewResolver jsonViewResolver () {
     return new JsonViewResolver ();
   }
 }

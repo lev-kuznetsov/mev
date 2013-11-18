@@ -14,6 +14,9 @@
  */
 package edu.dfci.cccb.mev.web.configuration;
 
+import static java.io.File.separator;
+import static java.lang.System.getProperty;
+
 import java.util.Properties;
 
 import javax.inject.Inject;
@@ -44,18 +47,18 @@ public class PersistenceConfiguration {
     BasicDataSource dataSource = new BasicDataSource ();
     dataSource.setDriverClassName (environment.getProperty ("database.driver.class", "org.h2.Driver"));
     dataSource.setUrl (environment.getProperty ("database.url",
-                                                "jdbc\\:h2\\:file\\:\\"
-                                                        + System.getProperty ("java.io.tmpdir")
-                                                        + "/mev;DB_CLOSE_DELAY\\=-1"));
+                                                "jdbc:h2:file:"
+                                                        + getProperty ("java.io.tmpdir") + separator
+                                                        + "mev;DB_CLOSE_DELAY\\=-1"));
     dataSource.setUsername (environment.getProperty ("database.username", "sa"));
     dataSource.setPassword (environment.getProperty ("database.password", ""));
     return dataSource;
   }
 
   @Bean
-  public LocalSessionFactoryBean sessionFactory () {
+  public LocalSessionFactoryBean sessionFactory (DataSource dataSource) {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean ();
-    sessionFactory.setDataSource (dataSource ());
+    sessionFactory.setDataSource (dataSource);
     sessionFactory.setPackagesToScan (environment.getProperty ("session.factory.scan.packages",
                                                                String[].class,
                                                                new String[] { "edu.dfci.cccb.mev" }));
@@ -82,7 +85,7 @@ public class PersistenceConfiguration {
   }
 
   @Bean
-  public PlatformTransactionManager transactionManager () {
-    return new DataSourceTransactionManager (dataSource ());
+  public PlatformTransactionManager transactionManager (DataSource dataSource) {
+    return new DataSourceTransactionManager (dataSource);
   }
 }

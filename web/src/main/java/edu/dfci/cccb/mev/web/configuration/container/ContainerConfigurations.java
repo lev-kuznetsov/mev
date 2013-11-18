@@ -70,5 +70,7 @@ public class ContainerConfigurations extends WebMvcConfigurerAdapter {
   public void addResourceHandlers (ResourceHandlerRegistry registry) {
     registry.addResourceHandler ("/container/javascript/**")
             .addResourceLocations ("classpath:/edu/dfci/cccb/mev/web/javascript/");
+    registry.addResourceHandler ("/container/style/**")
+            .addResourceLocations ("classpath:/edu/dfci/cccb/mev/web/style/");
   }
 }

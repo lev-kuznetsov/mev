@@ -12,15 +12,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.heatmap.domain;
+package edu.dfci.cccb.mev.heatmap.domain.prototype;
 
-import java.util.List;
+import edu.dfci.cccb.mev.heatmap.domain.DataBuilder;
 
 /**
  * @author levk
  * 
  */
-public interface Mapper {
-
-  List<String> ids ();
-}
+public abstract class AbstractDataBuilder implements DataBuilder {}

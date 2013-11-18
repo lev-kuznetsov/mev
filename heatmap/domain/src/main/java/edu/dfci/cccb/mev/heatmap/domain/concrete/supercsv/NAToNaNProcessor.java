@@ -12,15 +12,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.heatmap.domain;
+package edu.dfci.cccb.mev.heatmap.domain.concrete.supercsv;
 
-import java.util.List;
+import static java.lang.Double.NaN;
+
+import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
  * @author levk
  * 
  */
-public interface Mapper {
+public class NAToNaNProcessor extends StringRegexToDoubleConstantProcessor {
 
-  List<String> ids ();
+  /**
+   * @param next
+   * @param constant
+   * @param patterns
+   */
+  public NAToNaNProcessor (CellProcessor next) {
+    super (next, NaN, "NA");
+  }
 }

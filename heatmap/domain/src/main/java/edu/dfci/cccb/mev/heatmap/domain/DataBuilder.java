@@ -14,13 +14,11 @@
  */
 package edu.dfci.cccb.mev.heatmap.domain;
 
-import java.util.List;
-
 /**
  * @author levk
  * 
  */
-public interface Mapper {
+public interface DataBuilder {
 
-  List<String> ids ();
+  Data build (DataProvider<?> provider) throws DataException;
 }

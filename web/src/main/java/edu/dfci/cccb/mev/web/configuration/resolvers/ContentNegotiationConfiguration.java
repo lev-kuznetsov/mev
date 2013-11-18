@@ -20,7 +20,6 @@ import static org.springframework.http.MediaType.TEXT_HTML;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.accept.ContentNegotiationManager;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
@@ -33,7 +32,7 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 public class ContentNegotiationConfiguration extends WebMvcConfigurerAdapter {
 
   @Bean
-  public ViewResolver contentNegotiatingViewResolver (final ContentNegotiationManager manager) {
+  public ContentNegotiatingViewResolver contentNegotiatingViewResolver (final ContentNegotiationManager manager) {
     ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver ();
     resolver.setContentNegotiationManager (manager);
     return resolver;

@@ -12,15 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.heatmap.domain;
-
-import java.util.List;
-
 /**
  * @author levk
- * 
+ *
  */
-public interface Mapper {
-
-  List<String> ids ();
-}
+package edu.dfci.cccb.mev.heatmap.domain.concrete.supercsv;

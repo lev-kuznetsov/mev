@@ -12,15 +12,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.heatmap.domain;
+package edu.dfci.cccb.mev.heatmap.domain.concrete.supercsv;
 
-import java.util.List;
+import static java.lang.Double.POSITIVE_INFINITY;
+import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
  * @author levk
- * 
+ *
  */
-public interface Mapper {
+public class InfToInfinityProcessor extends StringRegexToDoubleConstantProcessor {
 
-  List<String> ids ();
+  /**
+   * 
+   */
+  public InfToInfinityProcessor (CellProcessor next) {
+    super (next, POSITIVE_INFINITY, "Inf");
+  }
 }

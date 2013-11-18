@@ -30,6 +30,14 @@
 
   <dependencies>
 
+    <!-- Hibernate -->
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>4.2.7.SP1</version>
+    </dependency>
+
     <!-- H2 -->
 
     <dependency>
@@ -74,7 +82,7 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
-	<!-- Annotation Server -->
+    <!-- Annotation Server -->
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
       <artifactId>mev-annotation-server</artifactId>
@@ -188,6 +196,11 @@
 
       <resource>
         <directory>src/main/views</directory>
+        <filtering>false</filtering>
+      </resource>
+
+      <resource>
+        <directory>src/main/style</directory>
         <filtering>false</filtering>
       </resource>
     </resources>
