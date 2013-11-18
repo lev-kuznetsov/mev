@@ -67,11 +67,14 @@ ThisComputerImportingSourceUI.prototype.focus = function() {
 function UrlImportingSourceUI(controller) {
   this._controller = controller;
 }
+/*
+//ap:disable download from web for MeV
 Refine.DefaultImportingController.sources.push({
   "label": $.i18n._('core-index-import')["web-address"],
   "id": "download",
   "uiClass": UrlImportingSourceUI
 });
+*/
 
 UrlImportingSourceUI.prototype.attachUI = function(bodyDiv) {
   var self = this;
@@ -103,12 +106,14 @@ UrlImportingSourceUI.prototype.focus = function() {
 function ClipboardImportingSourceUI(controller) {
   this._controller = controller;
 }
+/*
+//ap:disable clipboard for MeV
 Refine.DefaultImportingController.sources.push({
   "label": $.i18n._('core-index-import')["clipboard"],
   "id": "clipboard",
   "uiClass": ClipboardImportingSourceUI
 });
-
+*/
 ClipboardImportingSourceUI.prototype.attachUI = function(bodyDiv) {
   var self = this;
 

@@ -52,6 +52,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.google.refine.ProjectManager;
+import com.google.refine.ProjectMetadata;
 import com.google.refine.browsing.Engine;
 import com.google.refine.browsing.FilteredRows;
 import com.google.refine.browsing.RowVisitor;
@@ -94,46 +95,23 @@ public class ExportSetCommand extends Command {
         logger.info (String.format("******************* EXPORT SET: %s *******************", request.getParameter ("set-name")));
         ProjectManager.getSingleton().setBusy(true);
         try {
-            Project project = getProject(request);
-            Engine engine = getEngine(request, project);
-            Properties params = getRequestParameters(request);
-            /*
-            String format = params.getProperty("format");
-            Exporter exporter = ExporterRegistry.getExporter(format);
-            if (exporter == null) {
-                exporter = new CsvExporter('\t');
-            }
             
-            String contentType = params.getProperty("contentType");
-            if (contentType == null) {
-                contentType = exporter.getContentType();
-            }
-            response.setHeader("Content-Type", contentType);
+          /*
+          try {
+              String name = request.getParameter("name");
+              ProjectMetadata pm = getProjectMetadata(request);
+              
+              pm.setName(name);
+              
+              respond(response, "{ \"code\" : \"ok\" }");
+          } catch (Exception e) {
+              respondException(response, e);
+          }
+           */
+          
+            Project project = getProject(request);            
             
-            if (exporter instanceof WriterExporter) {
-                String encoding = params.getProperty("encoding");
-                
-                response.setCharacterEncoding(encoding != null ? encoding : "UTF-8");
-                Writer writer = encoding == null ?
-                    response.getWriter() :
-                    new OutputStreamWriter(response.getOutputStream(), encoding);
-                
-                ((WriterExporter) exporter).export(project, params, engine, writer);
-                writer.close();
-            } else if (exporter instanceof StreamExporter) {
-                response.setCharacterEncoding("UTF-8");
-                
-                OutputStream stream = response.getOutputStream();
-                ((StreamExporter) exporter).export(project, params, engine, stream);
-                stream.close();
-//          } else if (exporter instanceof UrlExporter) {
-//              ((UrlExporter) exporter).export(project, options, engine);
-            } else {
-                // TODO: Should this use ServletException instead of respondException?
-                respondException(response, new RuntimeException("Unknown exporter type"));
-            }*/
-            
-            
+            Engine engine = getEngine(request, project);                        
             final Heatmap heatmap = (Heatmap)request.getAttribute ("heatmap");
             final DimensionSubset<String> theSet = new DimensionSubsetList<> (request.getParameter ("set-name"), request.getParameter ("set-description"), request.getParameter ("set-color"));
             
@@ -174,11 +152,13 @@ public class ExportSetCommand extends Command {
 
             FilteredRows filteredRows = engine.getAllFilteredRows();
             filteredRows.accept(project, visitor);
-            
+            ProjectManager.getSingleton().save(true);
+            respond(response, "{ \"code\" : \"ok\" }");
             
         } catch (Exception e) {
             // Use generic error handling rather than our JSON handling
-            throw new ServletException(e);
+            //throw new ServletException(e);
+            respondException(response, e);
         } finally {
             ProjectManager.getSingleton().setBusy(false);            
         }
