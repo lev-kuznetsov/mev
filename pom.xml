@@ -15,6 +15,7 @@
     <!-- MeV modules -->
 
     <module>api</module>
+    <module>dataset</module>
     <module>heatmap</module>
     <module>annotation</module>
     <module>web</module>
