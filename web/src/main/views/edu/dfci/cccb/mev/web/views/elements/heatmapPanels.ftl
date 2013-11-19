@@ -1,5 +1,6 @@
+
 <div class="row-fluid"> <!-- Start Column Expand Tabs -->
-	<div class="span6" id="leftPanel">
+	<div class="span6 marker" id="leftPanel">
 		<div class="well">
 		
 			<div class="row-fluid">
@@ -13,7 +14,7 @@
 		</div>
 	</div>
 
-	<div class="span6" id="rightPanel">
+	<div class="span6 marker" id="rightPanel">
 		<div class="well">
 		
 			<div class="row-fluid">

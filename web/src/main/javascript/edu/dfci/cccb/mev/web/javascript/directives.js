@@ -32,14 +32,18 @@ define (
 
                 jq ('#closeRight').hide ();
                 jq ('#closeLeft').hide ();
+                
+                var margin = "2.127659574468085%"
 
                 scope.expandLeft = function () {
 
+                  
+                  jq ('#leftPanel').attr ("class", "span12 marker");
                   jq ('#rightPanel').hide ();
                   jq ('#expandLeft').hide ();
                   jq ('#closeLeft').show ();
                   jq ('#leftPanel').show ();
-                  jq ('#leftPanel').attr ("class", "span12");
+                  
 
                 };
 
@@ -49,7 +53,8 @@ define (
                   jq ('#expandRight').hide ();
                   jq ('#closeRight').show ();
                   jq ('#rightPanel').show ();
-                  jq ('#rightPanel').attr ("class", "span12");
+                  jq ('#rightPanel').attr ("class", "span12 marker");
+                  jq ('#rightPanel').css({"margin-left": "0"})
 
                 };
 
@@ -61,8 +66,9 @@ define (
                   jq ('#expandLeft').show ();
                   jq ('#rightPanel').show ();
                   jq ('#leftPanel').show ();
-                  jq ('#leftPanel').attr ("class", "span6");
-                  jq ('#rightPanel').attr ("class", "span6");
+                  jq ('#leftPanel').attr ("class", "span6 marker");
+                  jq ('#rightPanel').attr ("class", "span6 marker");
+                  jq ('#rightPanel').css({"margin-left": margin})
 
                 };
 
