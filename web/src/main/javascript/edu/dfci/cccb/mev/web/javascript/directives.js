@@ -485,6 +485,42 @@ define (
                               var cellYPosition = function (key) {
                                 return cellwidth * key;
                               };
+                              
+                              var cellColor = function(val, type) {
+                            	  
+                            	  var color = {
+                            			  red : 0, 
+                            			  blue : 0, 
+                            			  green : 0
+                            	  }
+                            	  
+                            	  var leftshifter = d3.scale.linear()
+                            	    .domain([-3, 0])
+                            	    .rangeRound([255, 0])
+                            	  
+                            	  var rightshifter =  d3.scale.linear()
+                          	        .domain([0, 3])
+                        	        .rangeRound([0, 255])
+                        	    
+                            	  if (type) {
+                                  
+                            		  //coloring options
+                            		  
+                            	  } else {
+                            		  //default blue-yellow
+                            		  if (val <= 0) {
+                            			color.blue = leftshifter(val);
+                            			
+                            		  } else {
+                            			color.red = rightshifter(val);
+                            			color.green = rightshifter(val);
+                            		  };
+                            	  };
+                            	  
+                            	  return "rgb(" + color.red + "," +  color.green + "," + color.blue + ")" ;
+                            	  
+                            	  
+                              }
 
                               var svg = window.append ("svg").attr ("class",
                                   "chart")
@@ -519,10 +555,7 @@ define (
                                     return cellYPosition (d.rowOrder);
                                   },
                                   "fill" : function (d) {
-                                    return "rgb(0,"
-                                        + 255
-                                        * Math.floor (Math.sqrt (d.value
-                                            * d.value)) + ",0)";
+                                    return cellColor(d.value);
                                   },
                                   "value" : function (d) {
                                     return d.value;
@@ -544,8 +577,7 @@ define (
                                   },
                                 });
 
-                              }
-                              ;
+                              };
 
                             });
                       }
