@@ -242,9 +242,7 @@ define (
                         diameter : '@'
 
                       },
-                      template : '<div id="vis"></div>', // requires
-                      // css
-                      // location
+                      templateUrl : '/container/view/elements/d3RadialTree',
                       link : function (scope, elems, attr) {
 
                         var cluster = API.hcl.radial.get ("mock/cluster");
