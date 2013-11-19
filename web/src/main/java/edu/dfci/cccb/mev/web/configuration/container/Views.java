@@ -112,6 +112,10 @@ public class Views {
     return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/datasetSummary.ftl").build ();
   }
   
+  @Bean (name = "elements/d3RadialTree")
+  public FreeMarkerView elementD3RadialTree () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/d3RadialTree.ftl").build ();
+  }
 
   // Partials
 
