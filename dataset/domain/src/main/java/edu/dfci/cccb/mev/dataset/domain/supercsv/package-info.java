@@ -12,26 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.prototype;
-
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-
 /**
  * @author levk
- * 
+ *
  */
-public abstract class AbstractDimension implements Dimension {
-
-  private final Type type;
-
-  protected AbstractDimension (Type type) {
-    this.type = type;
-  }
-
-  /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.dataset.domain.contract.Dimension#type() */
-  @Override
-  public Type type () {
-    return type;
-  }
-}
+package edu.dfci.cccb.mev.dataset.domain.supercsv;

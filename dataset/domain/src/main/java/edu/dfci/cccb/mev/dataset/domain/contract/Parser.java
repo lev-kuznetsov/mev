@@ -12,26 +12,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.prototype;
+package edu.dfci.cccb.mev.dataset.domain.contract;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 
 /**
  * @author levk
  * 
  */
-public abstract class AbstractDimension implements Dimension {
+public interface Parser {
 
-  private final Type type;
+  String dimension (Type type);
 
-  protected AbstractDimension (Type type) {
-    this.type = type;
-  }
+  double value ();
 
-  /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.dataset.domain.contract.Dimension#type() */
-  @Override
-  public Type type () {
-    return type;
-  }
+  boolean next () throws DatasetBuilderException;
 }

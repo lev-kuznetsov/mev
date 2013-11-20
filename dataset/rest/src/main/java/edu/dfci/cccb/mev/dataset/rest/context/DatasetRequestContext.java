@@ -26,6 +26,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisNotFoundException;
+import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
@@ -69,9 +70,15 @@ public class DatasetRequestContext {
 
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public Selection selection (Dataset dataset, NativeWebRequest request) throws SelectionNotFoundException,
-                                                                        MissingRequestParameterException {
-    return dataset.selections ().get (parameter (SELECTION_NAME_REQUEST_PARAMETER_NAME, request));
+  public Selection selection (Dimension dimension, NativeWebRequest request) throws SelectionNotFoundException,
+                                                                            MissingRequestParameterException {
+    return dimension.selections ().get (parameter (SELECTION_NAME_REQUEST_PARAMETER_NAME, request));
+  }
+
+  @Bean
+  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
+  public Annotation annotation (Dimension dimension, NativeWebRequest request) {
+    return dimension.annotation ();
   }
 
   @Bean
