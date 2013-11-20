@@ -14,6 +14,7 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.controllers;
 
+import static java.util.Collections.shuffle;
 import static java.util.UUID.randomUUID;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -34,7 +35,7 @@ import edu.dfci.cccb.mev.dataset.rest.json.Value;
  * 
  */
 @RestController
-@RequestMapping ("/dataset/mock")
+@RequestMapping ("/heatmap/dataset/mock")
 @Scope ("session")
 public class MockDatasetController {
 
@@ -55,8 +56,20 @@ public class MockDatasetController {
                                                                      columns.get (c))));
   }
 
-  @RequestMapping (method = GET)
+  @RequestMapping (value = "/data", method = GET)
   public Data mockData () {
     return new Data (rows, columns, values);
+  }
+
+  @RequestMapping (value = "/shuffleRows", method = GET)
+  public List<String> shuffleRows () {
+    shuffle (rows);
+    return rows;
+  }
+
+  @RequestMapping (value = "/shuffleColumns", method = GET)
+  public List<String> shuffleColumns () {
+    shuffle (columns);
+    return columns;
   }
 }
