@@ -32,18 +32,19 @@ define (
 
                 jq ('#closeRight').hide ();
                 jq ('#closeLeft').hide ();
-                
+
                 var margin = "2.127659574468085%"
 
                 scope.expandLeft = function () {
 
-                  
                   jq ('#leftPanel').attr ("class", "span12 marker");
                   jq ('#rightPanel').hide ();
                   jq ('#expandLeft').hide ();
                   jq ('#closeLeft').show ();
                   jq ('#leftPanel').show ();
-                  
+
+                  jq ('vis-heatmap svg').attr ("width", jq ('#leftPanel').css ('width').slice (0,
+                      -2) * .9 );
 
                 };
 
@@ -54,7 +55,9 @@ define (
                   jq ('#closeRight').show ();
                   jq ('#rightPanel').show ();
                   jq ('#rightPanel').attr ("class", "span12 marker");
-                  jq ('#rightPanel').css({"margin-left": "0"})
+                  jq ('#rightPanel').css ({
+                    "margin-left" : "0"
+                  })
 
                 };
 
@@ -68,7 +71,11 @@ define (
                   jq ('#leftPanel').show ();
                   jq ('#leftPanel').attr ("class", "span6 marker");
                   jq ('#rightPanel').attr ("class", "span6 marker");
-                  jq ('#rightPanel').css({"margin-left": margin})
+                  jq ('#rightPanel').css ({
+                    "margin-left" : margin
+                  });
+                  jq ('vis-heatmap svg').attr ("width", jq ('#leftPanel').css ('width').slice (0,
+                      -2) * .9 );
 
                 };
 
@@ -447,139 +454,144 @@ define (
 
                     return {
 
-                      restrict : 'A',
+                      restrict : 'E',
                       // templateUrl : "/container/view/elements/visHeatmap",
                       link : function (scope, elems, attr) {
 
-                        scope.width = 400;
+                        scope.width = jq ('#leftPanel').css ('width').slice (0,
+                            -2) * .9;
                         scope.height = 700;
                         scope.marginleft = 20;
                         scope.marginright = 20;
                         scope.margintop = 20;
                         scope.marginbottom = 20;
 
-                        API.heatmap.get ('mock/data').then (
+                        var cellwidth = 4;
+
+                        var margin = {
+                          left : scope.marginleft,
+                          right : scope.marginright,
+                          top : scope.margintop,
+                          bottom : scope.marginbottom
+                        };
+
+                        var width = scope.width - margin.left - margin.right;
+
+                        var height = scope.height - margin.top - margin.bottom;
+
+                        var window = d3.select (elems[0]);
+
+                        var cellXPosition = function (key) {
+                          return cellwidth * key;
+                        };
+
+                        var cellYPosition = function (key) {
+                          return cellwidth * key;
+                        };
+
+                        var cellColor = function (val, type) {
+
+                          var color = {
+                            red : 0,
+                            blue : 0,
+                            green : 0
+                          }
+
+                          var leftshifter = d3.scale.linear ().domain (
+                              [ -3, 0 ]).rangeRound ([ 255, 0 ])
+
+                          var rightshifter = d3.scale.linear ().domain (
+                              [ 0, 3 ]).rangeRound ([ 0, 255 ])
+
+                          if (type) {
+
+                            // coloring options
+
+                          } else {
+                            // default blue-yellow
+                            if (val <= 0) {
+                              color.blue = leftshifter (val);
+
+                            } else {
+                              color.red = rightshifter (val);
+                              color.green = rightshifter (val);
+                            }
+                            ;
+                          }
+                          ;
+
+                          return "rgb(" + color.red + "," + color.green + ","
+                              + color.blue + ")";
+
+                        }
+
+                        var svg = window.append ("svg").attr ("class", "chart")
+                        // .attr("pointer-events", "all")
+                        .attr ("width", width + margin.left + margin.right)
+                            .attr ("height",
+                                height + margin.top + margin.bottom);
+
+                        var vis = svg.append ("g").attr ("class", "uncovered");
+
+                        var rects = vis.append ("g").selectAll ("rect");
+
+                     
+
+                        function draw (hc) {
+
+                          hc.attr ({
+                            "class" : "cells",
+                            "height" : function (d) {
+                              return cellwidth;
+                            },
+                            "width" : function (d) {
+                              return cellwidth;
+                            },
+                            "x" : function (d, i) {
+                              return cellXPosition (d.columnOrder);
+                            },
+                            "y" : function (d, i) {
+                              return cellYPosition (d.rowOrder);
+                            },
+                            "fill" : function (d) {
+                              return cellColor (d.value);
+                            },
+                            "value" : function (d) {
+                              return d.value;
+                            },
+                            "index" : function (d, i) {
+                              return i;
+                            },
+                            "row" : function (d, i) {
+                              return d.rowOrder;
+                            },
+                            "column" : function (d, i) {
+                              return d.columnOrder;
+                            },
+                            "rowKey" : function (d, i) {
+                              return d.rowKey
+                            },
+                            "columnKey" : function (d, i) {
+                              return d.columnKey
+                            },
+                          });
+
+                        }
+                        ;
+
+                        var heatmapcells = undefined;
+
+                        API.heatmap.get ('mock/data')
+                        .then (
                             function (data) {
 
-                              var cellwidth = 10;
+                              heatmapcells = rects.data (data).enter ().append (
+                                  "rect")
 
-                              var margin = {
-                                left : scope.marginleft,
-                                right : scope.marginright,
-                                top : scope.margintop,
-                                bottom : scope.marginbottom
-                              };
-
-                              var width = scope.width - margin.left
-                                  - margin.right;
-
-                              var height = scope.height - margin.top
-                                  - margin.bottom;
-
-                              var window = d3.select (elems[0]);
-
-                              var cellXPosition = function (key) {
-                                return cellwidth * key;
-                              };
-
-                              var cellYPosition = function (key) {
-                                return cellwidth * key;
-                              };
+                              draw (heatmapcells);
                               
-                              var cellColor = function(val, type) {
-                            	  
-                            	  var color = {
-                            			  red : 0, 
-                            			  blue : 0, 
-                            			  green : 0
-                            	  }
-                            	  
-                            	  var leftshifter = d3.scale.linear()
-                            	    .domain([-3, 0])
-                            	    .rangeRound([255, 0])
-                            	  
-                            	  var rightshifter =  d3.scale.linear()
-                          	        .domain([0, 3])
-                        	        .rangeRound([0, 255])
-                        	    
-                            	  if (type) {
-                                  
-                            		  //coloring options
-                            		  
-                            	  } else {
-                            		  //default blue-yellow
-                            		  if (val <= 0) {
-                            			color.blue = leftshifter(val);
-                            			
-                            		  } else {
-                            			color.red = rightshifter(val);
-                            			color.green = rightshifter(val);
-                            		  };
-                            	  };
-                            	  
-                            	  return "rgb(" + color.red + "," +  color.green + "," + color.blue + ")" ;
-                            	  
-                            	  
-                              }
-
-                              var svg = window.append ("svg").attr ("class",
-                                  "chart")
-                              // .attr("pointer-events", "all")
-                              .attr ("width",
-                                  width + margin.left + margin.right)
-                                  .attr ("height",
-                                      height + margin.top + margin.bottom);
-
-                              var vis = svg.append ("g").attr ("class",
-                                  "uncovered");
-
-                              var heatmapcells = vis.append ("g").selectAll (
-                                  "rect").data (data).enter ().append ("rect");
-
-                              draw ();
-
-                              function draw () {
-
-                                heatmapcells.attr ({
-                                  "class" : "cells",
-                                  "height" : function (d) {
-                                    return cellwidth;
-                                  },
-                                  "width" : function (d) {
-                                    return cellwidth;
-                                  },
-                                  "x" : function (d, i) {
-                                    return cellXPosition (d.columnOrder);
-                                  },
-                                  "y" : function (d, i) {
-                                    return cellYPosition (d.rowOrder);
-                                  },
-                                  "fill" : function (d) {
-                                    return cellColor(d.value);
-                                  },
-                                  "value" : function (d) {
-                                    return d.value;
-                                  },
-                                  "index" : function (d, i) {
-                                    return i;
-                                  },
-                                  "row" : function (d, i) {
-                                    return d.rowOrder;
-                                  },
-                                  "column" : function (d, i) {
-                                    return d.columnOrder;
-                                  },
-                                  "rowKey" : function (d, i) {
-                                    return d.rowKey
-                                  },
-                                  "columnKey" : function (d, i) {
-                                    return d.columnKey
-                                  },
-                                });
-
-                              };
-
                             });
+
                       }
 
                     };

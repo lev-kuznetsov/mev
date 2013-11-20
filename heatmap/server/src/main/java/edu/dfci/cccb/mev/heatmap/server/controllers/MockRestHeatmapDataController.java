@@ -48,8 +48,8 @@ public class MockRestHeatmapDataController {
   public Collection<HeatmapDataEntry> data () {
     Collection<HeatmapDataEntry> result = new ArrayList<> ();
 
-    int rows = random.nextInt (100) + 2;
-    int columns = random.nextInt (100) + 2;
+    int rows = random.nextInt (100) + 100;
+    int columns = random.nextInt (100) + 100;
 
     List<String> rowKeys = new ArrayList<> (), columnKeys = new ArrayList<> ();
     for (int row = rows; --row >= 0; rowKeys.add ("ROW-" + randomUUID ()));
