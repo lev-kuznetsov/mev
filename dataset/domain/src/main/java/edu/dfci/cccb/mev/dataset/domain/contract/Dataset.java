@@ -28,9 +28,7 @@ public interface Dataset {
 
   Values values ();
 
-  Dimension dimension (Type type);
-
-  Selections selections ();
+  Dimension dimension (Type type) throws InvalidDimensionTypeException;
 
   Analyses analyses ();
 }

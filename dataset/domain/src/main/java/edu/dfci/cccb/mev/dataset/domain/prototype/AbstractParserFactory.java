@@ -14,24 +14,10 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.prototype;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.ParserFactory;
 
 /**
  * @author levk
  * 
  */
-public abstract class AbstractDimension implements Dimension {
-
-  private final Type type;
-
-  protected AbstractDimension (Type type) {
-    this.type = type;
-  }
-
-  /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.dataset.domain.contract.Dimension#type() */
-  @Override
-  public Type type () {
-    return type;
-  }
-}
+public abstract class AbstractParserFactory implements ParserFactory {}

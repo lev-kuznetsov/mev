@@ -12,26 +12,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.prototype;
-
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+package edu.dfci.cccb.mev.dataset.domain.contract;
 
 /**
  * @author levk
  * 
  */
-public abstract class AbstractDimension implements Dimension {
+public interface ValueStoreBuilder {
 
-  private final Type type;
+  ValueStoreBuilder add (double value, String row, String column);
 
-  protected AbstractDimension (Type type) {
-    this.type = type;
-  }
-
-  /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.dataset.domain.contract.Dimension#type() */
-  @Override
-  public Type type () {
-    return type;
-  }
+  Values build ();
 }
