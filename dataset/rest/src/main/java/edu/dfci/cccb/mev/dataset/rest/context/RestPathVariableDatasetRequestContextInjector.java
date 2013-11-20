@@ -14,15 +14,22 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.context;
 
+import static edu.dfci.cccb.mev.dataset.domain.contract.Analysis.VALID_ANALYSIS_NAME_REGEX;
+import static edu.dfci.cccb.mev.dataset.domain.contract.Dataset.VALID_DATASET_NAME_REGEX;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.from;
+import static edu.dfci.cccb.mev.dataset.domain.contract.Selection.VALID_SELECTION_NAME_REGEX;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
+import static org.springframework.web.servlet.HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE;
+
+import java.util.Map;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.context.request.RequestAttributes;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisNotFoundException;
@@ -41,12 +48,17 @@ import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListWorkspace;
  * 
  */
 @Configuration
-public class DatasetRequestContext {
+public class RestPathVariableDatasetRequestContextInjector {
 
-  private static final String DATASET_NAME_REQUEST_PARAMETER_NAME = "dataset";
-  private static final String DIMENSION_TYPE_REQUEST_PARAMETER_NAME = "dimension";
-  private static final String SELECTION_NAME_REQUEST_PARAMETER_NAME = "selection";
-  private static final String ANALYSIS_NAME_REQUEST_PARAMETER_NAME = "analysis";
+  private static final String DATASET = "dataset";
+  private static final String DIMENSION = "dimension";
+  private static final String SELECTION = "selection";
+  private static final String ANALYSIS = "analysis";
+
+  public static final String DATASET_URL_ELEMENT = "{" + DATASET + ":" + VALID_DATASET_NAME_REGEX + "}";
+  public static final String DIMENSION_URL_ELEMENT = "{" + DIMENSION + "}";
+  public static final String SELECTION_URL_ELEMENT = "{" + SELECTION + ":" + VALID_SELECTION_NAME_REGEX + "}";
+  public static final String ANALYSIS_URL_ELEMENT = "{" + ANALYSIS + ":" + VALID_ANALYSIS_NAME_REGEX + "}";
 
   @Bean
   @Scope (value = SCOPE_SESSION, proxyMode = INTERFACES)
@@ -57,41 +69,43 @@ public class DatasetRequestContext {
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
   public Dataset dataset (Workspace workspace, NativeWebRequest request) throws DatasetNotFoundException,
-                                                                        MissingRequestParameterException {
-    return workspace.get (parameter (DATASET_NAME_REQUEST_PARAMETER_NAME, request));
+                                                                        MissingPathVariableException {
+    return workspace.get (variable (DATASET, request));
   }
 
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
   public Dimension dimension (Dataset dataset, NativeWebRequest request) throws InvalidDimensionTypeException,
-                                                                        MissingRequestParameterException {
-    return dataset.dimension (from (parameter (DIMENSION_TYPE_REQUEST_PARAMETER_NAME, request)));
+                                                                        MissingPathVariableException {
+    return dataset.dimension (from (variable (DIMENSION, request)));
   }
 
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public Selection selection (Dimension dimension, NativeWebRequest request) throws SelectionNotFoundException,
-                                                                            MissingRequestParameterException {
-    return dimension.selections ().get (parameter (SELECTION_NAME_REQUEST_PARAMETER_NAME, request));
+  public Selection selections (Dimension dimension, NativeWebRequest request) throws SelectionNotFoundException,
+                                                                             MissingPathVariableException {
+    return dimension.selections ().get (variable (SELECTION, request));
   }
 
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public Annotation annotation (Dimension dimension, NativeWebRequest request) {
+  public Annotation annoation (Dimension dimension) {
     return dimension.annotation ();
   }
 
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
   public Analysis analysis (Dataset dataset, NativeWebRequest request) throws AnalysisNotFoundException,
-                                                                      MissingRequestParameterException {
-    return dataset.analyses ().get (parameter (ANALYSIS_NAME_REQUEST_PARAMETER_NAME, request));
+                                                                      MissingPathVariableException {
+    return dataset.analyses ().get (variable (ANALYSIS, request));
   }
 
-  private String parameter (String name, NativeWebRequest request) throws MissingRequestParameterException {
-    String value = request.getParameter (name);
+  @SuppressWarnings ("unchecked")
+  private String variable (String name, NativeWebRequest request) throws MissingPathVariableException {
+    String value = ((Map<String, String>) request.getAttribute (URI_TEMPLATE_VARIABLES_ATTRIBUTE,
+                                                                RequestAttributes.SCOPE_REQUEST)).get (name);
     if (value == null)
-      throw new MissingRequestParameterException (); // TODO: add args
+      throw new MissingPathVariableException (); // TODO: add args
     return value;
   }
 }
