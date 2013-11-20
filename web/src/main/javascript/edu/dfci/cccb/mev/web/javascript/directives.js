@@ -32,14 +32,18 @@ define (
 
                 jq ('#closeRight').hide ();
                 jq ('#closeLeft').hide ();
+                
+                var margin = "2.127659574468085%"
 
                 scope.expandLeft = function () {
 
+                  
+                  jq ('#leftPanel').attr ("class", "span12 marker");
                   jq ('#rightPanel').hide ();
                   jq ('#expandLeft').hide ();
                   jq ('#closeLeft').show ();
                   jq ('#leftPanel').show ();
-                  jq ('#leftPanel').attr ("class", "span12");
+                  
 
                 };
 
@@ -49,7 +53,8 @@ define (
                   jq ('#expandRight').hide ();
                   jq ('#closeRight').show ();
                   jq ('#rightPanel').show ();
-                  jq ('#rightPanel').attr ("class", "span12");
+                  jq ('#rightPanel').attr ("class", "span12 marker");
+                  jq ('#rightPanel').css({"margin-left": "0"})
 
                 };
 
@@ -61,8 +66,9 @@ define (
                   jq ('#expandLeft').show ();
                   jq ('#rightPanel').show ();
                   jq ('#leftPanel').show ();
-                  jq ('#leftPanel').attr ("class", "span6");
-                  jq ('#rightPanel').attr ("class", "span6");
+                  jq ('#leftPanel').attr ("class", "span6 marker");
+                  jq ('#rightPanel').attr ("class", "span6 marker");
+                  jq ('#rightPanel').css({"margin-left": margin})
 
                 };
 
@@ -236,9 +242,7 @@ define (
                         diameter : '@'
 
                       },
-                      template : '<div id="vis"></div>', // requires
-                      // css
-                      // location
+                      templateUrl : '/container/view/elements/d3RadialTree',
                       link : function (scope, elems, attr) {
 
                         var cluster = API.hcl.radial.get ("mock/cluster");
@@ -481,6 +485,42 @@ define (
                               var cellYPosition = function (key) {
                                 return cellwidth * key;
                               };
+                              
+                              var cellColor = function(val, type) {
+                            	  
+                            	  var color = {
+                            			  red : 0, 
+                            			  blue : 0, 
+                            			  green : 0
+                            	  }
+                            	  
+                            	  var leftshifter = d3.scale.linear()
+                            	    .domain([-3, 0])
+                            	    .rangeRound([255, 0])
+                            	  
+                            	  var rightshifter =  d3.scale.linear()
+                          	        .domain([0, 3])
+                        	        .rangeRound([0, 255])
+                        	    
+                            	  if (type) {
+                                  
+                            		  //coloring options
+                            		  
+                            	  } else {
+                            		  //default blue-yellow
+                            		  if (val <= 0) {
+                            			color.blue = leftshifter(val);
+                            			
+                            		  } else {
+                            			color.red = rightshifter(val);
+                            			color.green = rightshifter(val);
+                            		  };
+                            	  };
+                            	  
+                            	  return "rgb(" + color.red + "," +  color.green + "," + color.blue + ")" ;
+                            	  
+                            	  
+                              }
 
                               var svg = window.append ("svg").attr ("class",
                                   "chart")
@@ -515,10 +555,7 @@ define (
                                     return cellYPosition (d.rowOrder);
                                   },
                                   "fill" : function (d) {
-                                    return "rgb(0,"
-                                        + 255
-                                        * Math.floor (Math.sqrt (d.value
-                                            * d.value)) + ",0)";
+                                    return cellColor(d.value);
                                   },
                                   "value" : function (d) {
                                     return d.value;
@@ -540,8 +577,7 @@ define (
                                   },
                                 });
 
-                              }
-                              ;
+                              };
 
                             });
                       }

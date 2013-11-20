@@ -20,6 +20,7 @@ import static org.springframework.util.StringUtils.isEmpty;
 import java.io.IOException;
 import java.io.InputStream;
 
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
@@ -43,6 +44,7 @@ import edu.dfci.cccb.mev.heatmap.domain.ImportException;
  */
 @Log4j
 @ToString
+@EqualsAndHashCode (callSuper = false)
 public class ImportHeatmapMethodArgumentResolver extends RequestParamMethodArgumentResolver {
 
   private final HeatmapBuilder builder;

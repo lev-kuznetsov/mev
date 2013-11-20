@@ -15,15 +15,12 @@
 package edu.dfci.cccb.mev.heatmap.domain;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author levk
  * 
  */
 public interface Mapper {
-
-  Map<String, Integer> indices ();
 
   List<String> ids ();
 }

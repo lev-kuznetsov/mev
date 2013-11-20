@@ -17,6 +17,7 @@ package edu.dfci.cccb.mev.heatmap.server.resolvers;
 import static edu.dfci.cccb.mev.heatmap.domain.Dimension.from;
 import static edu.dfci.cccb.mev.heatmap.server.resolvers.MethodParameters.brief;
 import static org.springframework.util.StringUtils.isEmpty;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
@@ -33,6 +34,7 @@ import edu.dfci.cccb.mev.heatmap.domain.Dimension;
  */
 @Log4j
 @ToString
+@EqualsAndHashCode (callSuper = false)
 public class DimensionMethodArgumentResolver extends PathVariableMethodArgumentResolver {
 
   /* (non-Javadoc)

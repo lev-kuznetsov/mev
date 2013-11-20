@@ -20,7 +20,6 @@ import java.util.Map;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import edu.dfci.cccb.mev.api.client.support.injectors.ViewRegistrar;
@@ -48,7 +47,7 @@ public class ViewResolverConfiguration {
   }
 
   @Bean
-  public ViewResolver hotPlugViewResolver () {
+  public HotPlugViewResolver hotPlugViewResolver () {
     return new HotPlugViewResolver (views);
   }
 

@@ -16,4 +16,4 @@
  * @author levk
  *
  */
-package edu.dfci.cccb.mev.heatmap.server.support;
+package edu.dfci.cccb.mev.dataset.domain.contract;

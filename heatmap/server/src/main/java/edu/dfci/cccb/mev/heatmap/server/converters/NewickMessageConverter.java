@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.heatmap.server.support;
+package edu.dfci.cccb.mev.heatmap.server.converters;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;

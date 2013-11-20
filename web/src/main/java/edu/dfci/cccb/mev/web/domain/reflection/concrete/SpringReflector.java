@@ -60,68 +60,67 @@ public class SpringReflector implements Reflection {
       final RequestMappingInfo info = mapping.getKey ();
       final HandlerMethod handler = mapping.getValue ();
       if (handler.getMethodAnnotation (ResponseBody.class) != null
-          || handler.getBeanType ().getAnnotation (RestController.class) != null) {
-        Collection<RequestMethod> methods = info.getMethodsCondition ().getMethods ();
-        if (methods.isEmpty ())
-          methods = asList (RequestMethod.values ());
-        for (final RequestMethod method : methods)
-          for (final String url : info.getPatternsCondition ().getPatterns ())
-            services.add (new RestService () {
+          || handler.getBeanType ().getAnnotation (RestController.class) != null)
+        services.add (new RestService () {
 
-              private Collection<RestParameter> parameters;
-              private Collection<Class<? extends Throwable>> throwing;
+          private Collection<RestParameter> parameters;
+          private Collection<Class<? extends Throwable>> throwing;
+          private Collection<String> methods;
 
-              {
-                Collection<RestParameter> parameters = new ArrayList<> ();
-                for (final MethodParameter parameter : handler.getMethodParameters ())
-                  if (parameter.hasParameterAnnotation (RequestParam.class))
-                    parameters.add (new RestParameter () {
+          {
+            Collection<RestParameter> parameters = new ArrayList<> ();
+            for (final MethodParameter parameter : handler.getMethodParameters ())
+              if (parameter.hasParameterAnnotation (RequestParam.class))
+                parameters.add (new RestParameter () {
 
-                      @Override
-                      public Class<?> type () {
-                        return parameter.getParameterType ();
-                      }
+                  @Override
+                  public Class<?> type () {
+                    return parameter.getParameterType ();
+                  }
 
-                      @Override
-                      public String name () {
-                        return parameter.getParameterAnnotation (RequestParam.class)
-                                        .value ();
-                      }
-                    });
-                this.parameters = unmodifiableCollection (parameters);
+                  @Override
+                  public String name () {
+                    return parameter.getParameterAnnotation (RequestParam.class).value ();
+                  }
+                });
+            this.parameters = unmodifiableCollection (parameters);
 
-                Collection<Class<? extends Throwable>> throwing = new ArrayList<> ();
-                for (Class<?> exceptionType : handler.getMethod ().getExceptionTypes ())
-                  throwing.add ((Class<? extends Throwable>) exceptionType);
-                this.throwing = unmodifiableCollection (throwing);
-              }
+            Collection<Class<? extends Throwable>> throwing = new ArrayList<> ();
+            for (Class<?> exceptionType : handler.getMethod ().getExceptionTypes ())
+              throwing.add ((Class<? extends Throwable>) exceptionType);
+            this.throwing = unmodifiableCollection (throwing);
 
-              @Override
-              public String url () {
-                return url;
-              }
+            Collection<String> methods = new ArrayList<> ();
+            for (RequestMethod method : info.getMethodsCondition ().getMethods ())
+              methods.add (method.toString ());
+            this.methods = unmodifiableCollection (methods);
+          }
 
-              @Override
-              public String method () {
-                return method.name ();
-              }
+          @Override
+          public Collection<String> urls () {
+            return unmodifiableCollection (info.getPatternsCondition ().getPatterns ());
+          }
 
-              @Override
-              public Method handler () {
-                return handler.getMethod ();
-              }
+          @Override
+          public Collection<String> methods () {
+            return methods;
+          }
 
-              @Override
-              public Collection<RestParameter> parameters () {
-                return parameters;
-              }
+          @Override
+          public Method handler () {
+            return handler.getMethod ();
+          }
 
-              @Override
-              public Collection<Class<? extends Throwable>> throwing () {
-                return throwing;
-              }
-            });
-      }
+          @Override
+          public Collection<RestParameter> parameters () {
+            return parameters;
+          }
+
+          @Override
+          public Collection<Class<? extends Throwable>> throwing () {
+            return throwing;
+          }
+        });
 
       this.services = unmodifiableCollection (services);
     }

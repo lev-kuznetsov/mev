@@ -14,10 +14,19 @@
  */
 package edu.dfci.cccb.mev.heatmap.domain.prototype;
 
+import javax.inject.Inject;
+
+import lombok.Getter;
+import lombok.Setter;
+import edu.dfci.cccb.mev.heatmap.domain.DataBuilder;
+import edu.dfci.cccb.mev.heatmap.domain.DataParser;
 import edu.dfci.cccb.mev.heatmap.domain.HeatmapBuilder;
 
 /**
  * @author levk
  * 
  */
-public abstract class AbstractHeatmapBuilder implements HeatmapBuilder {}
+public abstract class AbstractHeatmapBuilder implements HeatmapBuilder {
+  private @Getter @Setter (onMethod = @_ (@Inject)) DataParser parser;
+  private @Getter @Setter (onMethod = @_ (@Inject)) DataBuilder builder;
+}
