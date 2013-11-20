@@ -163,6 +163,7 @@ margin-left: 0;
 margin-bottom: 20px;
 list-style: none;
 }
+/*
 ul, ol {
 padding: 0;
 margin: 0 0 10px 25px;
@@ -176,26 +177,17 @@ list-style-type: disc;
 -webkit-margin-end: 0px;
 -webkit-padding-start: 40px;
 }
+*/
 
 /*	link in menu */
 .navbar .nav>li {
 float: left;
 }
+/*
 li {
 line-height: 20px;
 }
-user agent stylesheetli {
-display: list-item;
-text-align: -webkit-match-parent;
-}
-Inherited from ul.nav
-.nav {
-list-style: none;
-}
-user agent stylesheetul, menu, dir {
-list-style-type: disc;
-}
-
+*/
 /* link in menu <a> */
 .navbar .nav>li>a {
 float: none;
