@@ -23,6 +23,8 @@ import java.util.Set;
  */
 public interface Selection {
 
+  final String VALID_SELECTION_NAME_REGEX = "[a-zA-Z0-9_\\-\\+\\*]+";
+
   String name ();
 
   Properties properties ();

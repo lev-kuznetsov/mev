@@ -41,7 +41,7 @@ import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListWorkspace;
  * 
  */
 @Configuration
-public class DatasetRequestContext {
+public class RequestParameterDatasetRequestContextInjector {
 
   private static final String DATASET_NAME_REQUEST_PARAMETER_NAME = "dataset";
   private static final String DIMENSION_TYPE_REQUEST_PARAMETER_NAME = "dimension";
