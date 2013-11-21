@@ -53,6 +53,7 @@ define ([ 'angular', 'd3' ], function (angular, d3) {
               return QHTTP (params, function (d, s) {
                 return d;
               }, function (d, s) {
+                alert("error")
                 return d, s;
               });
 
