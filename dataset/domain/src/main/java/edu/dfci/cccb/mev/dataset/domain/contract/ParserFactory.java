@@ -14,22 +14,15 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
-import java.util.Properties;
-import java.util.Set;
+import java.io.InputStream;
 
 /**
  * @author levk
  * 
  */
-public interface Selection {
+public interface ParserFactory {
 
-  final String VALID_SELECTION_NAME_REGEX = "[a-zA-Z0-9_\\-\\+\\*]+";
+  String contentType ();
 
-  String name ();
-
-  Properties properties ();
-
-  Set<String> keys ();
-
-  Dataset export (String name);
+  Parser parse (InputStream input) throws DatasetBuilderException;
 }

@@ -20,4 +20,18 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
  * @author levk
  * 
  */
-public abstract class AbstractDimension implements Dimension {}
+public abstract class AbstractDimension implements Dimension {
+
+  private final Type type;
+
+  protected AbstractDimension (Type type) {
+    this.type = type;
+  }
+
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.dataset.domain.contract.Dimension#type() */
+  @Override
+  public Type type () {
+    return type;
+  }
+}

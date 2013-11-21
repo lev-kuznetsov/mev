@@ -24,57 +24,66 @@ define (
                   }
                 };
               } ])
-          .directive ('heatmapPanels', function () {
-            return {
-              restrict : 'A',
-              templateUrl : '/container/view/elements/heatmapPanels',
-              link : function (scope, elems, attrs) {
+          .directive (
+              'heatmapPanels',
+              function () {
+                return {
+                  restrict : 'A',
+                  templateUrl : '/container/view/elements/heatmapPanels',
+                  link : function (scope, elems, attrs) {
 
-                jq ('#closeRight').hide ();
-                jq ('#closeLeft').hide ();
-                
-                var margin = "2.127659574468085%"
+                    jq ('#closeRight').hide ();
+                    jq ('#closeLeft').hide ();
 
-                scope.expandLeft = function () {
+                    var margin = "2.127659574468085%"
 
-                  
-                  jq ('#leftPanel').attr ("class", "span12 marker");
-                  jq ('#rightPanel').hide ();
-                  jq ('#expandLeft').hide ();
-                  jq ('#closeLeft').show ();
-                  jq ('#leftPanel').show ();
-                  
+                    scope.expandLeft = function () {
 
+                      jq ('#leftPanel').attr ("class", "span12 marker");
+                      jq ('#rightPanel').hide ();
+                      jq ('#expandLeft').hide ();
+                      jq ('#closeLeft').show ();
+                      jq ('#leftPanel').show ();
+
+                      jq ('vis-heatmap svg').attr ("width",
+                          jq ('#leftPanel').css ('width').slice (0, -2) * .9);
+
+                    };
+
+                    scope.expandRight = function () {
+
+                      jq ('#leftPanel').hide ();
+                      jq ('#expandRight').hide ();
+                      jq ('#closeRight').show ();
+                      jq ('#rightPanel').show ();
+                      jq ('#rightPanel').attr ("class", "span12 marker");
+                      jq ('#rightPanel').css ({
+                        "margin-left" : "0"
+                      })
+
+                    };
+
+                    scope.expandBoth = function () {
+
+                      jq ('#closeRight').hide ();
+                      jq ('#closeLeft').hide ();
+                      jq ('#expandRight').show ();
+                      jq ('#expandLeft').show ();
+                      jq ('#rightPanel').show ();
+                      jq ('#leftPanel').show ();
+                      jq ('#leftPanel').attr ("class", "span6 marker");
+                      jq ('#rightPanel').attr ("class", "span6 marker");
+                      jq ('#rightPanel').css ({
+                        "margin-left" : margin
+                      });
+                      jq ('vis-heatmap svg').attr ("width",
+                          jq ('#leftPanel').css ('width').slice (0, -2) * .9);
+
+                    };
+
+                  }
                 };
-
-                scope.expandRight = function () {
-
-                  jq ('#leftPanel').hide ();
-                  jq ('#expandRight').hide ();
-                  jq ('#closeRight').show ();
-                  jq ('#rightPanel').show ();
-                  jq ('#rightPanel').attr ("class", "span12 marker");
-                  jq ('#rightPanel').css({"margin-left": "0"})
-
-                };
-
-                scope.expandBoth = function () {
-
-                  jq ('#closeRight').hide ();
-                  jq ('#closeLeft').hide ();
-                  jq ('#expandRight').show ();
-                  jq ('#expandLeft').show ();
-                  jq ('#rightPanel').show ();
-                  jq ('#leftPanel').show ();
-                  jq ('#leftPanel').attr ("class", "span6 marker");
-                  jq ('#rightPanel').attr ("class", "span6 marker");
-                  jq ('#rightPanel').css({"margin-left": margin})
-
-                };
-
-              }
-            };
-          })
+              })
           .directive ('menubar', [ 'analysisOptions', function (opts) {
             return {
               restrict : 'E',
@@ -428,7 +437,8 @@ define (
                       } // end link
                     };
 
-                  } ]).directive ('bsTable', function () {
+                  } ])
+          .directive ('bsTable', function () {
 
             return {
               scope : {
@@ -439,147 +449,192 @@ define (
 
             };
 
-          }).directive (
+          })
+          .directive (
               'visHeatmap',
               [
                   'API',
-                  function (API) {
+                  '$http',
+                  function (API, $http) {
 
                     return {
 
-                      restrict : 'A',
+                      restrict : 'E',
                       // templateUrl : "/container/view/elements/visHeatmap",
                       link : function (scope, elems, attr) {
 
-                        scope.width = 400;
+                        scope.width = jq ('#leftPanel').css ('width').slice (0,
+                            -2) * .9;
                         scope.height = 700;
                         scope.marginleft = 20;
                         scope.marginright = 20;
                         scope.margintop = 20;
                         scope.marginbottom = 20;
 
-                        API.heatmap.get ('mock/data').then (
-                            function (data) {
+                        var cellwidth = 9;
 
-                              var cellwidth = 10;
+                        var margin = {
+                          left : scope.marginleft,
+                          right : scope.marginright,
+                          top : scope.margintop,
+                          bottom : scope.marginbottom
+                        };
 
-                              var margin = {
-                                left : scope.marginleft,
-                                right : scope.marginright,
-                                top : scope.margintop,
-                                bottom : scope.marginbottom
-                              };
+                        var width = scope.width - margin.left - margin.right;
 
-                              var width = scope.width - margin.left
-                                  - margin.right;
+                        var height = scope.height - margin.top - margin.bottom;
 
-                              var height = scope.height - margin.top
-                                  - margin.bottom;
+                        var window = d3.select (elems[0]);
 
-                              var window = d3.select (elems[0]);
+                        var cellColor = function (val, type) {
 
-                              var cellXPosition = function (key) {
-                                return cellwidth * key;
-                              };
+                          var color = {
+                            red : 0,
+                            blue : 0,
+                            green : 0
+                          }
 
-                              var cellYPosition = function (key) {
-                                return cellwidth * key;
-                              };
-                              
-                              var cellColor = function(val, type) {
-                            	  
-                            	  var color = {
-                            			  red : 0, 
-                            			  blue : 0, 
-                            			  green : 0
-                            	  }
-                            	  
-                            	  var leftshifter = d3.scale.linear()
-                            	    .domain([-3, 0])
-                            	    .rangeRound([255, 0])
-                            	  
-                            	  var rightshifter =  d3.scale.linear()
-                          	        .domain([0, 3])
-                        	        .rangeRound([0, 255])
-                        	    
-                            	  if (type) {
-                                  
-                            		  //coloring options
-                            		  
-                            	  } else {
-                            		  //default blue-yellow
-                            		  if (val <= 0) {
-                            			color.blue = leftshifter(val);
-                            			
-                            		  } else {
-                            			color.red = rightshifter(val);
-                            			color.green = rightshifter(val);
-                            		  };
-                            	  };
-                            	  
-                            	  return "rgb(" + color.red + "," +  color.green + "," + color.blue + ")" ;
-                            	  
-                            	  
-                              }
+                          var leftshifter = d3.scale.linear ().domain (
+                              [ -3, 0 ]).rangeRound ([ 255, 0 ])
 
-                              var svg = window.append ("svg").attr ("class",
-                                  "chart")
-                              // .attr("pointer-events", "all")
-                              .attr ("width",
-                                  width + margin.left + margin.right)
-                                  .attr ("height",
-                                      height + margin.top + margin.bottom);
+                          var rightshifter = d3.scale.linear ().domain (
+                              [ 0, 3 ]).rangeRound ([ 0, 255 ])
 
-                              var vis = svg.append ("g").attr ("class",
-                                  "uncovered");
+                          if (type) {
 
-                              var heatmapcells = vis.append ("g").selectAll (
-                                  "rect").data (data).enter ().append ("rect");
+                            // coloring options
 
-                              draw ();
+                          } else {
+                            // default blue-yellow
+                            if (val <= 0) {
+                              color.blue = leftshifter (val);
 
-                              function draw () {
+                            } else {
+                              color.red = rightshifter (val);
+                              color.green = rightshifter (val);
+                            }
+                            ;
+                          }
+                          ;
 
-                                heatmapcells.attr ({
-                                  "class" : "cells",
-                                  "height" : function (d) {
-                                    return cellwidth;
-                                  },
-                                  "width" : function (d) {
-                                    return cellwidth;
-                                  },
-                                  "x" : function (d, i) {
-                                    return cellXPosition (d.columnOrder);
-                                  },
-                                  "y" : function (d, i) {
-                                    return cellYPosition (d.rowOrder);
-                                  },
-                                  "fill" : function (d) {
-                                    return cellColor(d.value);
-                                  },
-                                  "value" : function (d) {
-                                    return d.value;
-                                  },
-                                  "index" : function (d, i) {
-                                    return i;
-                                  },
-                                  "row" : function (d, i) {
-                                    return d.rowOrder;
-                                  },
-                                  "column" : function (d, i) {
-                                    return d.columnOrder;
-                                  },
-                                  "rowKey" : function (d, i) {
-                                    return d.rowKey
-                                  },
-                                  "columnKey" : function (d, i) {
-                                    return d.columnKey
-                                  },
+                          return "rgb(" + color.red + "," + color.green + ","
+                              + color.blue + ")";
+
+                        }
+
+                        var svg = window.append ("svg").attr ("class", "chart")
+                        // .attr("pointer-events", "all")
+                        .attr ("width", width + margin.left + margin.right)
+                            .attr ("height",
+                                height + margin.top + margin.bottom);
+
+                        var vis = svg.append ("g").attr ("class", "uncovered")
+
+                        window
+                            .append ("button")
+                            .attr ("class", "btn btn-primary")
+                            .text ("Cluster")
+                            .on (
+                                'click',
+                                function () {
+
+                                  jq
+                                      .get (
+                                          '/heatmap/dataset/mock/shuffleRows?format=json',
+                                          function (rowreordering) {
+                                            jq
+                                                .get (
+                                                    '/heatmap/dataset/mock/shuffleColumns?format=json',
+                                                    function (colreordering) {
+                                                      console
+                                                          .log (colreordering.length)
+                                                      cluster (heatmapcells,
+                                                          colreordering)
+                                                    })
+
+                                          });
+
                                 });
 
-                              };
+                        var rects = vis.append ("g").selectAll ("rect");
+
+                        function cluster (hc, cols) {
+
+                          var cellXPosition = d3.scale.ordinal ().domain (cols)
+                              .rangeRoundBands ([ 0, cellwidth * cols.length ]);
+
+                          // var cellYPosition = d3.scale.ordinal ().domain
+                          // (rows)
+                          // .rangeRoundBands ([ 0, cellwidth * rows.length ]);
+
+                          svg.selectAll (".cells").transition ()
+                              .duration (5000).attr ("x", function (d, i) {
+                                return cellXPosition (d.column)
+                              })
+
+                        }
+                        ;
+
+                        function draw (hc, cols, rows) {
+
+                          var cellXPosition = d3.scale.ordinal ().domain (cols)
+                              .rangeRoundBands ([ 0, cellwidth * cols.length ]);
+
+                          var cellYPosition = d3.scale.ordinal ().domain (rows)
+                              .rangeRoundBands ([ 0, cellwidth * rows.length ]);
+
+                          hc.attr ({
+                            "class" : "cells",
+                            "height" : function (d) {
+                              return cellwidth - .5;
+                            },
+                            "width" : function (d) {
+                              return cellwidth - .5;
+                            },
+                            "x" : function (d, i) {
+                              return cellXPosition (d.column);
+                            },
+                            "y" : function (d, i) {
+                              return cellYPosition (d.row);
+                            },
+                            "fill" : function (d) {
+                              return cellColor (d.value);
+                            },
+                            "value" : function (d) {
+                              return d.value;
+                            },
+                            "index" : function (d, i) {
+                              return i;
+                            },
+                            "row" : function (d, i) {
+                              return d.rowOrder;
+                            },
+                            "column" : function (d, i) {
+                              return d.columnOrder;
+                            },
+                            "rowKey" : function (d, i) {
+                              return d.rowKey
+                            },
+                            "columnKey" : function (d, i) {
+                              return d.columnKey
+                            },
+                          })
+
+                        }
+                        ;
+
+                        var heatmapcells = undefined;
+
+                        API.heatmap.get ("dataset/mock/data").then (
+                            function (data) {
+
+                              heatmapcells = rects.data (data.values).enter ()
+                                  .append ("rect")
+
+                              draw (heatmapcells, data.columns, data.rows);
 
                             });
+
                       }
 
                     };

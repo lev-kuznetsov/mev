@@ -1,3 +1,3 @@
 <div class="row-fluid">
-  <div vis-Heatmap></div>
+  <vis-Heatmap></vis-Heatmap>
 </div>

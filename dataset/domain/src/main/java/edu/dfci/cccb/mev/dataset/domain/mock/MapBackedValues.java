@@ -31,7 +31,7 @@ public class MapBackedValues extends AbstractValues {
   @EqualsAndHashCode
   @RequiredArgsConstructor
   @Data
-  private static class Coordinate {
+  static class Coordinate {
     private final String row;
     private final String column;
   }
@@ -41,7 +41,7 @@ public class MapBackedValues extends AbstractValues {
   /**
    * 
    */
-  public MapBackedValues (Map<Coordinate, Double> values) {
+  MapBackedValues (Map<Coordinate, Double> values) {
     this.values = values;
   }
 

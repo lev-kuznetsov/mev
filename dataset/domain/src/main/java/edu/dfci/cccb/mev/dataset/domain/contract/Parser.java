@@ -14,22 +14,17 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
-import java.util.Properties;
-import java.util.Set;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 
 /**
  * @author levk
  * 
  */
-public interface Selection {
+public interface Parser {
 
-  final String VALID_SELECTION_NAME_REGEX = "[a-zA-Z0-9_\\-\\+\\*]+";
+  String dimension (Type type);
 
-  String name ();
+  double value ();
 
-  Properties properties ();
-
-  Set<String> keys ();
-
-  Dataset export (String name);
+  boolean next () throws DatasetBuilderException;
 }

@@ -12,24 +12,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.contract;
+package edu.dfci.cccb.mev.dataset.rest.configuration;
 
-import java.util.Properties;
-import java.util.Set;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author levk
  * 
  */
-public interface Selection {
-
-  final String VALID_SELECTION_NAME_REGEX = "[a-zA-Z0-9_\\-\\+\\*]+";
-
-  String name ();
-
-  Properties properties ();
-
-  Set<String> keys ();
-
-  Dataset export (String name);
-}
+@Configuration
+@ComponentScan (basePackages = "edu.dfci.cccb.mev.dataset.rest.controllers")
+public class DatasetRestConfiguration {}

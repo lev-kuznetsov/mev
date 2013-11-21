@@ -12,24 +12,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.contract;
+package edu.dfci.cccb.mev.dataset.rest.json;
 
-import java.util.Properties;
-import java.util.Set;
+import lombok.AllArgsConstructor;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 /**
  * @author levk
  * 
  */
-public interface Selection {
+@AllArgsConstructor
+public class Value {
 
-  final String VALID_SELECTION_NAME_REGEX = "[a-zA-Z0-9_\\-\\+\\*]+";
-
-  String name ();
-
-  Properties properties ();
-
-  Set<String> keys ();
-
-  Dataset export (String name);
+  private @JsonView double value;
+  private @JsonView String row;
+  private @JsonView String column;
 }

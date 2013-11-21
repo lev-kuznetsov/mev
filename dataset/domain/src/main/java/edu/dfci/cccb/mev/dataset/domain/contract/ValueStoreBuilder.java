@@ -14,22 +14,13 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
-import java.util.Properties;
-import java.util.Set;
-
 /**
  * @author levk
  * 
  */
-public interface Selection {
+public interface ValueStoreBuilder {
 
-  final String VALID_SELECTION_NAME_REGEX = "[a-zA-Z0-9_\\-\\+\\*]+";
+  ValueStoreBuilder add (double value, String row, String column);
 
-  String name ();
-
-  Properties properties ();
-
-  Set<String> keys ();
-
-  Dataset export (String name);
+  Values build ();
 }

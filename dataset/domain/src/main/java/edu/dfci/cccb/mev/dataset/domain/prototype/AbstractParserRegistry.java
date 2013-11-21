@@ -12,24 +12,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.contract;
+package edu.dfci.cccb.mev.dataset.domain.prototype;
 
-import java.util.Properties;
-import java.util.Set;
+import edu.dfci.cccb.mev.dataset.domain.contract.ParserRegistry;
 
 /**
  * @author levk
  * 
  */
-public interface Selection {
-
-  final String VALID_SELECTION_NAME_REGEX = "[a-zA-Z0-9_\\-\\+\\*]+";
-
-  String name ();
-
-  Properties properties ();
-
-  Set<String> keys ();
-
-  Dataset export (String name);
-}
+public abstract class AbstractParserRegistry implements ParserRegistry {}
