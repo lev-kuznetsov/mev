@@ -29,8 +29,6 @@ public interface Dataset {
   Values values ();
 
   Dimension dimension (Type type);
-
-  Selections selections ();
-
+  
   Analyses analyses ();
 }

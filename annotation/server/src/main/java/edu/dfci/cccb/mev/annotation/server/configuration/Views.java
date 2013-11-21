@@ -15,6 +15,7 @@ public class Views {
 	*/
 	@Bean
   public FreeMarkerView annotations () {
-    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/annotations.ftl").build ();
+    FreeMarkerView view = freemarker ().url ("/edu/dfci/cccb/mev/web/views/annotations.ftl").build ();
+    return view;
   }
 }

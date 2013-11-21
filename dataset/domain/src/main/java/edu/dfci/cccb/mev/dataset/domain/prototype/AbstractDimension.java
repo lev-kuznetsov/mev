@@ -14,10 +14,33 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.prototype;
 
+import java.util.List;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 
 /**
  * @author levk
  * 
  */
-public abstract class AbstractDimension implements Dimension {}
+public abstract class AbstractDimension implements Dimension {
+  protected final Dimension.Type type;
+  protected final List<String> keys;
+  
+  public AbstractDimension(Dimension.Type type, List<String> keys){
+    this.type=type;
+    this.keys=keys;
+  }
+  
+  @Override
+  public Type type () {
+    return this.type;
+  }
+  
+  @Override
+  public List<String> keys () {
+    return this.keys;
+  }
+
+}

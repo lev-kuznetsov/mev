@@ -14,10 +14,19 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.prototype;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
+import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 
 /**
  * @author levk
  * 
  */
-public abstract class AbstractSelections implements Selections {}
+public abstract class AbstractSelections implements Selections {
+  
+}

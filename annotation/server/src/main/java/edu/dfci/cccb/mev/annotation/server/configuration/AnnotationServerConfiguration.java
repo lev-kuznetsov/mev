@@ -27,10 +27,8 @@ import com.google.refine.ProjectManager;
 import com.google.refine.SessionWorkspaceDir;
 import com.google.refine.io.FileProjectManager;
 
-import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
-import edu.dfci.cccb.mev.heatmap.domain.HeatmapNotFoundException;
-import edu.dfci.cccb.mev.heatmap.domain.Workspace;
-import edu.dfci.cccb.mev.heatmap.server.resolvers.WorkspaceHeatmapMethodArgumentResolver;
+import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
+
 
 @Configuration
 @ComponentScan (value = "edu.dfci.cccb.mev.annotation",
@@ -51,14 +49,15 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
     projectManager.setWorkspaceDir (new SessionWorkspaceDir ());
     return projectManager;
   }
-
+/*
   @Bean
   @Scope (value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.INTERFACES)
   public Heatmap requestHeatmap (HttpServletRequest request) throws HeatmapNotFoundException {
     Heatmap heatmap = workspace.get (request.getContextPath ().split ("/")[1]);
     return heatmap;
   }
-
+*/
+  
   @PostConstruct
   public void setProjectmanagerSingleton () {
     ProjectManager.setSingleton (sessionProjectManager);
@@ -79,6 +78,6 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
   @Override
   public void addArgumentResolvers (
                                     List<HandlerMethodArgumentResolver> argumentResolvers) {
-    argumentResolvers.add (new WorkspaceHeatmapMethodArgumentResolver (workspace));
+    //argumentResolvers.add (new WorkspaceHeatmapMethodArgumentResolver (workspace));
   }
 }

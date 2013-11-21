@@ -33,16 +33,17 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.refine.RefineServlet;
 import com.google.refine.io.FileProjectManager;
 
-import edu.dfci.cccb.mev.heatmap.domain.Annotation;
-import edu.dfci.cccb.mev.heatmap.domain.Dimension;
-import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
-import edu.dfci.cccb.mev.heatmap.domain.HeatmapNotFoundException;
-import edu.dfci.cccb.mev.heatmap.domain.Workspace;
-import edu.dfci.cccb.mev.heatmap.domain.concrete.DimensionHeaderSimple;
-import edu.dfci.cccb.mev.heatmap.domain.concrete.DimensionSubsetList;
-import edu.dfci.cccb.mev.test.mock.MockHeatmap;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
+import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
+import edu.dfci.cccb.mev.dataset.domain.mock.DatasetMock;
+import freemarker.ext.beans.BeansWrapper;
+import freemarker.template.TemplateHashModel;
+import freemarker.template.TemplateModelException;
 import static java.util.Arrays.asList;
-
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
+import java.math.RoundingMode;
 @Controller
 @RequestMapping ("/annotations")
 @Log4j
@@ -60,66 +61,32 @@ public class AnnotationController extends WebApplicationObjectSupport {
   }
 
   @RequestMapping ("/")
-  public ModelAndView annotationsHome () {
+  public ModelAndView annotationsHome () throws InvalidDatasetNameException, TemplateModelException {
 
     try {
       workspace.get ("mock");
-    } catch (HeatmapNotFoundException e) {
-      Heatmap mockHeatmap = new MockHeatmap (
-                                 "mock",
-                                 new DimensionHeaderSimple<String> (
-                                     Dimension.COLUMN, 
-                                     new Annotation() { 
-                                        @Override
-                                        public void merge (Annotation other) {
-                                          // TODO Auto-generated method stub     
-                                        }
-                                        @Override
-                                        public List<String> getKeys () {
-                                          // TODO Auto-generated method stub
-                                          return new ArrayList<String>(asList("a", "b", "c"));
-                                        }
-                                    })
-                                 );
-      DimensionSubsetList testSet = new DimensionSubsetList<String>("mock-test-set", "testing mock", "#fffff");
-      testSet.add ("aaa");
-      testSet.add ("bbb");
-      testSet.add ("ccc");
-      mockHeatmap.columnHeader ().addKeyset (testSet);
+    } catch (DatasetNotFoundException e) {
+      Dataset mockHeatmap = new DatasetMock ("boom", "aaa,bbb,ccc", "a,b,c");       
       workspace.put (mockHeatmap);
     }
 
 
     try {
       workspace.get ("shmock");
-    } catch (HeatmapNotFoundException e) {
-      Heatmap mockHeatmap = new MockHeatmap (
-                                 "shmock", 
-                                 new DimensionHeaderSimple<String> (
-                                         Dimension.COLUMN, 
-                                         new Annotation() {
-                                           @Override
-                                           public void merge (Annotation other) {
-                                              // TODO Auto-generated method stub
-                                              
-                                           }
-                                           @Override
-                                           public List<String> getKeys () {
-                                             // TODO Auto-generated method stub
-                                              return new ArrayList<String>(asList("e", "f", "g"));
-                                           }
-                                         })
-                                );
-      DimensionSubsetList testSet = new DimensionSubsetList<String>("shmock-test-set", "testing shmock", "#55555");
-      testSet.add ("xxx");
-      testSet.add ("yyy");
-      testSet.add ("zzz");
-      mockHeatmap.columnHeader ().addKeyset (testSet);
+    } catch (DatasetNotFoundException e) {
+      Dataset mockHeatmap = new DatasetMock ("shmock", "aaa,bbb,ccc", "e,f,g");       
       workspace.put (mockHeatmap);
     }
     
     ModelAndView mav = new ModelAndView ();
-    mav.addObject ("heatmaps", workspace.list ());
+    /*
+    BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
+    TemplateHashModel enumModels = wrapper.getEnumModels();
+    TemplateHashModel dimensionColumnTypeEnum =
+        (TemplateHashModel) enumModels.get(Type.class.getCanonicalName ());
+    mav.addObject("ColumnType", dimensionColumnTypeEnum);
+    */    
+        
     mav.addObject ("workspace", workspace);
     mav.setViewName ("annotations");
     return mav;
@@ -130,7 +97,7 @@ public class AnnotationController extends WebApplicationObjectSupport {
   @ResponseBody
   public void handleAnnotation (@PathVariable ("heatmapId") final String heatmapId,
                                 @PathVariable ("dimension") final String dimension,
-                                HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, HeatmapNotFoundException {
+                                HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DatasetNotFoundException {
     log.debug (String.format ("Handling annotation request: %s", request.getServletPath ()));    
     
     
@@ -142,7 +109,7 @@ public class AnnotationController extends WebApplicationObjectSupport {
       
     };
 
-    Heatmap heatmap = workspace.get (heatmapId);
+    Dataset heatmap = workspace.get (heatmapId);
     long projectId=projectManager.getProjectID (heatmap.name ());
     if(projectId!=-1){
       if(wrappedRequest.getPathInfo().trim().equals("/")){
@@ -155,7 +122,7 @@ public class AnnotationController extends WebApplicationObjectSupport {
       }
     }
     
-    wrappedRequest.setAttribute ("heatmap", heatmap);
+    wrappedRequest.setAttribute ("dataset", heatmap);
     wrappedRequest.setAttribute ("dimension", dimension);    
     this.refineServlet.service (wrappedRequest, response);    
   }

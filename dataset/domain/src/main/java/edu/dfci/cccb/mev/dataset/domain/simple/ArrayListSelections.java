@@ -18,7 +18,9 @@ import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
+import java.util.Properties;
 
 import lombok.SneakyThrows;
 import lombok.Synchronized;
@@ -114,5 +116,11 @@ public class ArrayListSelections extends AbstractSelections {
       }.listIterator ();
     else
       throw new SelectionNotFoundException (); // TODO: add args
+  }
+
+  @Override
+  public void put (String name, Properties properties, List<String> keys) {
+    // TODO Auto-generated method stub
+    
   }
 }

@@ -23,6 +23,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 
 import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfiguration;
+import edu.dfci.cccb.mev.dataset.rest.context.DatasetRequestContext;
 import edu.dfci.cccb.mev.heatmap.client.configuration.HeatmapClientConfiguration;
 import edu.dfci.cccb.mev.heatmap.server.configuration.HeatmapServerConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
@@ -43,7 +44,8 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 
     mvcContext.register (DispatcherConfiguration.class, PersistenceConfiguration.class, ContainerConfigurations.class);
 
-    mvcContext.register (HeatmapServerConfiguration.class, HeatmapClientConfiguration.class);
+    //mvcContext.register (HeatmapServerConfiguration.class, HeatmapClientConfiguration.class);
+    mvcContext.register (DatasetRequestContext.class);
     mvcContext.register (AnnotationServerConfiguration.class);
 
     Dynamic dispatcher = servletContext.addServlet ("dispatcher", new DispatcherServlet (mvcContext));

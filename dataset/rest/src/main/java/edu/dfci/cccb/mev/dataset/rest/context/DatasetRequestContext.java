@@ -34,6 +34,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListWorkspace;
+import edu.dfci.cccb.mev.dataset.domain.simple.WorkspaceBackedByMap;
 
 /**
  * @author levk
@@ -50,7 +51,7 @@ public class DatasetRequestContext {
   @Bean
   @Scope (value = SCOPE_SESSION, proxyMode = INTERFACES)
   public Workspace workspace () {
-    return new ArrayListWorkspace ();
+    return new WorkspaceBackedByMap ();
   }
 
   @Bean
@@ -62,16 +63,14 @@ public class DatasetRequestContext {
 
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public Dimension dimension (Dataset dataset, NativeWebRequest request) throws InvalidDimensionTypeException,
-                                                                        MissingRequestParameterException {
-    return dataset.dimension (from (parameter (DIMENSION_TYPE_REQUEST_PARAMETER_NAME, request)));
+  public Dimension dimension (Dataset dataset, NativeWebRequest request) throws InvalidDimensionTypeException, MissingRequestParameterException {
+      return dataset.dimension (from (parameter (DIMENSION_TYPE_REQUEST_PARAMETER_NAME, request)));    
   }
 
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public Selection selection (Dataset dataset, NativeWebRequest request) throws SelectionNotFoundException,
-                                                                        MissingRequestParameterException {
-    return dataset.selections ().get (parameter (SELECTION_NAME_REQUEST_PARAMETER_NAME, request));
+  public Selection selection (Dimension dimension, NativeWebRequest request) throws SelectionNotFoundException, MissingRequestParameterException{    
+    return dimension.selections ().get (parameter (SELECTION_NAME_REQUEST_PARAMETER_NAME, request));
   }
 
   @Bean
@@ -83,8 +82,18 @@ public class DatasetRequestContext {
 
   private String parameter (String name, NativeWebRequest request) throws MissingRequestParameterException {
     String value = request.getParameter (name);
-    if (value == null)
-      throw new MissingRequestParameterException (); // TODO: add args
+    if (value == null){
+      String[] contextPath = request.getContextPath ().split ("/");
+      if(contextPath[0].equals ("annotations")){
+        if(name.equals (DATASET_NAME_REQUEST_PARAMETER_NAME)){
+          return contextPath[1];
+        }else if(name.equals (DIMENSION_TYPE_REQUEST_PARAMETER_NAME)){
+          return contextPath[3];
+        }
+      }      
+      throw new MissingRequestParameterException (); // TODO: add args      
+    }
+      
     return value;
   }
 }
