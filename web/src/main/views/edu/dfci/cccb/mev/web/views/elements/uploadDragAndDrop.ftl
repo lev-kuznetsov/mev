@@ -1,6 +1,13 @@
+<style type="text/css" src="/library/webjars/dropzone/3.7.1/css/dropzone.css">
+
+
+</style>
+
 
 <div class='well'>
-  <button class="btn btn-large btn-success btn-block" type="button">
-    Import New File <i class="icon-arrow-up icon-white"></i>
-  </button>
+  
+  <form
+      class="dropzone"
+      id="uploader"></form>
+  
 </div>
