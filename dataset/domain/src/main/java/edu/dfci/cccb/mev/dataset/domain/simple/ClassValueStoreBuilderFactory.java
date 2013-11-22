@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.simple;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValueStoreBuilderFactory;
@@ -22,6 +24,8 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValueStoreBuilderFacto
  * @author levk
  * 
  */
+@EqualsAndHashCode (callSuper = true)
+@ToString
 public class ClassValueStoreBuilderFactory <T extends ValueStoreBuilder> extends AbstractValueStoreBuilderFactory {
 
   private final Class<T> valueBuilderClass;

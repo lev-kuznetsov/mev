@@ -18,6 +18,8 @@ import static java.util.regex.Pattern.compile;
 
 import java.util.regex.Pattern;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 
@@ -25,6 +27,8 @@ import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
  * @author levk
  * 
  */
+@EqualsAndHashCode
+@ToString
 public abstract class AbstractDataset implements Dataset {
 
   private static final Pattern VALID_DATASET_NAME_PATTERN = compile (VALID_DATASET_NAME_REGEX);

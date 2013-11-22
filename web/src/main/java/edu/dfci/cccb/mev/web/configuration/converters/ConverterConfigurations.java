@@ -19,6 +19,7 @@ import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
@@ -31,10 +32,11 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 public class ConverterConfigurations {
 
   private @Inject RequestMappingHandlerAdapter requestMappingHandlerAdapter;
-  private @Inject Collection<HttpMessageConverter<?>> converters;
+  private @Autowired (required = false) Collection<HttpMessageConverter<?>> converters;
 
   @PostConstruct
   public void registerConverters () {
-    requestMappingHandlerAdapter.getMessageConverters ().addAll (0, converters);
+    if (converters != null && converters.size () > 0)
+      requestMappingHandlerAdapter.getMessageConverters ().addAll (0, converters);
   }
 }

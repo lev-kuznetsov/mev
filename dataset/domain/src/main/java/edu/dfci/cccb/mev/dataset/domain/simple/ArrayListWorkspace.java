@@ -16,11 +16,12 @@ package edu.dfci.cccb.mev.dataset.domain.simple;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
-import lombok.SneakyThrows;
+import lombok.EqualsAndHashCode;
 import lombok.Synchronized;
+import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractWorkspace;
@@ -29,6 +30,8 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractWorkspace;
  * @author levk
  * 
  */
+@EqualsAndHashCode (callSuper = true)
+@ToString
 public class ArrayListWorkspace extends AbstractWorkspace {
 
   private final ArrayList<Dataset> datasets = new ArrayList<> ();
@@ -39,9 +42,10 @@ public class ArrayListWorkspace extends AbstractWorkspace {
    * .domain.Dataset) */
   @Override
   @Synchronized
-  @SneakyThrows (DatasetNotFoundException.class)
   public void put (Dataset dataset) {
-    find (true, dataset.name ()).remove ();
+    for (Iterator<Dataset> datasets = this.datasets.iterator (); datasets.hasNext ();)
+      if (dataset.name ().equals (datasets.next ().name ()))
+        datasets.remove ();
     datasets.add (0, dataset);
   }
 
@@ -49,7 +53,10 @@ public class ArrayListWorkspace extends AbstractWorkspace {
    * @see edu.dfci.cccb.mev.dataset.domain.Workspace#get(java.lang.String) */
   @Override
   public Dataset get (String name) throws DatasetNotFoundException {
-    return find (false, name).previous ();
+    for (Dataset dataset : datasets)
+      if (dataset.name ().equals (name))
+        return dataset;
+    throw new DatasetNotFoundException (); // TODO: add args
   }
 
   /* (non-Javadoc)
@@ -75,22 +82,9 @@ public class ArrayListWorkspace extends AbstractWorkspace {
   @Override
   @Synchronized
   public void remove (String name) throws DatasetNotFoundException {
-    find (false, name).remove ();
-  }
-
-  private ListIterator<Dataset> find (boolean quiet, String name) throws DatasetNotFoundException {
-    for (ListIterator<Dataset> datasets = this.datasets.listIterator (); datasets.hasNext ();)
+    for (Iterator<Dataset> datasets = this.datasets.iterator (); datasets.hasNext ();)
       if (datasets.next ().name ().equals (name))
-        return datasets;
-    if (quiet)
-      return new ArrayList<Dataset> () {
-        private static final long serialVersionUID = 1L;
-
-        {
-          add (null);
-        }
-      }.listIterator ();
-    else
-      throw new DatasetNotFoundException (); // TODO: add args
+        datasets.remove ();
+    throw new DatasetNotFoundException (); // TODO: add args
   }
 }

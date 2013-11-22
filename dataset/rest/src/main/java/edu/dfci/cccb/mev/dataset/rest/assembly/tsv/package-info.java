@@ -12,19 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.contract;
-
 /**
  * @author levk
- * 
+ *
  */
-public interface Context {
-
-  Dataset dataset ();
-
-  Dimension dimension ();
-
-  Selection selection ();
-
-  Analysis analysis ();
-}
+package edu.dfci.cccb.mev.dataset.rest.assembly.tsv;
