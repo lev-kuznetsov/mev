@@ -37,7 +37,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <meta http-equiv="X-UA-Compatible" content="IE=8;IE=9;chrome=1;">
   <title>OpenRefine</title>
   <link rel="icon" type="image/png" href="images/favicon.png">
-  <!--link type="text/css" rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" /-->  
   <script type="text/javascript" src="wirings.js"></script>
   $scriptInjection
   $styleInjection
@@ -55,6 +54,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <ul id="action-area-tabs">
     </ul>
     
+    <!--
     <div id="project-links">
       <div id="powered-by-openrefine">Powered By:</div>
       <div id="logo-container">
@@ -66,6 +66,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <li><a href="about.html" id="or-index-about" target="_blank"></a></li>
       </ul>
     </div>
+    -->
   </div></div> <!-- left-panel -->
 
   <div id="right-panel" class="main-layout-panel"><div id="right-panel-body">

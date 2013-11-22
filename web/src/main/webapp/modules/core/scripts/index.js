@@ -147,7 +147,7 @@ $(function() {
   };
 
   var resize = function() {
-    var leftPanelWidth = 150;
+    var leftPanelWidth = 0;
     // px
     var width = $(window).width();
     var height = $(window).height();

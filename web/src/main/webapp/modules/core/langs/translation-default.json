@@ -632,7 +632,7 @@
 		"startover": "&laquo; Choose a different file",
 		"conf-pars-opt": "Configure Parsing Options &raquo;",
 		"reselect-files": "&laquo; Re-select Files",
-		"create-project": "Proceed &raquo;",
+		"create-project": "Import Annotations &raquo;",
 		"next": "Next &raquo;",
 		"add-url": "Add Another URL",
 		"update-preview": "Update&nbsp;Preview",
