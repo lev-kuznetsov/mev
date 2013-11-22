@@ -14,6 +14,7 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ public interface Selection {
 
   Properties properties ();
 
-  Set<String> keys ();
+  List<String> keys ();
 
   Dataset export (String name);
 }

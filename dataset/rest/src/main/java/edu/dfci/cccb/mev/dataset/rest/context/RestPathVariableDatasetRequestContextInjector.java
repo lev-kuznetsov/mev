@@ -44,6 +44,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListWorkspace;
+import edu.dfci.cccb.mev.dataset.domain.simple.WorkspaceBackedByMap;
 
 /**
  * @author levk
@@ -53,10 +54,10 @@ import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListWorkspace;
 @ToString
 public class RestPathVariableDatasetRequestContextInjector {
 
-  private static final String DATASET = "dataset";
-  private static final String DIMENSION = "dimension";
-  private static final String SELECTION = "selection";
-  private static final String ANALYSIS = "analysis";
+  public static final String DATASET = "dataset";
+  public static final String DIMENSION = "dimension";
+  public static final String SELECTION = "selection";
+  public static final String ANALYSIS = "analysis";
 
   public static final String DATASET_URL_ELEMENT = "{" + DATASET + ":" + VALID_DATASET_NAME_REGEX + "}";
   public static final String DIMENSION_URL_ELEMENT = "{" + DIMENSION + "}";
@@ -66,7 +67,7 @@ public class RestPathVariableDatasetRequestContextInjector {
   @Bean
   @Scope (value = SCOPE_SESSION, proxyMode = INTERFACES)
   public Workspace workspace () {
-    return new ArrayListWorkspace ();
+    return new WorkspaceBackedByMap ();
   }
 
   @Bean
