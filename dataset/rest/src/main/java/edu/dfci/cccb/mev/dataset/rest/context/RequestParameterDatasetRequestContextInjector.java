@@ -26,7 +26,6 @@ import org.springframework.web.context.request.NativeWebRequest;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisNotFoundException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
@@ -34,7 +33,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
-import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListWorkspace;
+import edu.dfci.cccb.mev.dataset.domain.simple.WorkspaceBackedByMap;
 
 /**
  * @author levk
@@ -51,7 +50,7 @@ public class RequestParameterDatasetRequestContextInjector {
   @Bean
   @Scope (value = SCOPE_SESSION, proxyMode = INTERFACES)
   public Workspace workspace () {
-    return new ArrayListWorkspace ();
+    return new WorkspaceBackedByMap ();
   }
 
   @Bean
@@ -73,12 +72,6 @@ public class RequestParameterDatasetRequestContextInjector {
   public Selection selection (Dimension dimension, NativeWebRequest request) throws SelectionNotFoundException,
                                                                             MissingRequestParameterException {
     return dimension.selections ().get (parameter (SELECTION_NAME_REQUEST_PARAMETER_NAME, request));
-  }
-
-  @Bean
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public Annotation annotation (Dimension dimension, NativeWebRequest request) {
-    return dimension.annotation ();
   }
 
   @Bean

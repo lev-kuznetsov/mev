@@ -52,6 +52,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.google.refine.ProjectManager;
+
+import static com.google.refine.io.FileProjectManager.REQUEST_ATTEIBUTE_DATASET;
+
 import com.google.refine.ProjectMetadata;
 import com.google.refine.browsing.Engine;
 import com.google.refine.browsing.FilteredRows;
@@ -70,9 +73,11 @@ import com.google.refine.model.Project;
 import com.google.refine.model.Row;
 import com.google.refine.util.JSONUtilities;
 
-import edu.dfci.cccb.mev.heatmap.domain.DimensionSubset;
-import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
-import edu.dfci.cccb.mev.heatmap.domain.concrete.DimensionSubsetList;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 
 public class ExportSetCommand extends Command {
 
@@ -112,8 +117,13 @@ public class ExportSetCommand extends Command {
             Project project = getProject(request);            
             
             Engine engine = getEngine(request, project);                        
-            final Heatmap heatmap = (Heatmap)request.getAttribute ("heatmap");
-            final DimensionSubset<String> theSet = new DimensionSubsetList<> (request.getParameter ("set-name"), request.getParameter ("set-description"), request.getParameter ("set-color"));
+            final Dataset heatmap = (Dataset)request.getAttribute (REQUEST_ATTEIBUTE_DATASET);
+            final Selections selections = heatmap.dimension (Dimension.Type.COLUMN).selections ();
+            final String setName = request.getParameter ("set-name");
+            final Properties properties = new Properties ();            
+            properties.put ("set-description", request.getParameter ("set-description"));
+            properties.put ("set-color", request.getParameter ("set-color"));
+            final List<String> keys = new ArrayList<String> ();
             
             RowVisitor visitor = new RowVisitor() {
                 int rowCount = 0;
@@ -138,15 +148,15 @@ public class ExportSetCommand extends Command {
                 public boolean visit(Project project, int rowIndex, Row row) {                    
                     String cellData = row.getCell(theIdColumn.getCellIndex()).value.toString ();
                     if (cellData != null) {
-                      theSet.add (cellData);
+                      keys.add (cellData);
                       rowCount++;
                     }
                     return false;
                 }
 
                 @Override
-                public void end(Project project) {
-                    heatmap.columnHeader ().addKeyset (theSet);
+                public void end(Project project) {                    
+                  selections.put (setName, properties, keys);
                 }
             };
 

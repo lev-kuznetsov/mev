@@ -33,6 +33,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.google.refine.importing;
 
+import static com.google.refine.io.FileProjectManager.REQUEST_ATTEIBUTE_DATASET;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -91,8 +93,9 @@ import com.google.refine.importing.UrlRewriter.Result;
 import com.google.refine.model.Project;
 import com.google.refine.util.JSONUtilities;
 
-import edu.dfci.cccb.mev.heatmap.domain.Dimension;
-import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 
 public class ImportingUtilities {
     final static protected Logger logger = LoggerFactory.getLogger("importing-utilities");
@@ -223,8 +226,8 @@ public class ImportingUtilities {
 
         @SuppressWarnings("unchecked")
         List<FileItem> tempFiles = (List<FileItem>)upload.parseRequest(request);
-        
-        Heatmap heatmap = (Heatmap)request.getAttribute ("heatmap");
+                
+        Dataset heatmap = (Dataset)request.getAttribute (REQUEST_ATTEIBUTE_DATASET);
         
         progress.setProgress("Uploading data ...", -1);
         parts: for (FileItem fileItem : tempFiles) {
@@ -420,7 +423,7 @@ public class ImportingUtilities {
                 calculateProgressPercent(update.totalExpectedSize, update.totalRetrievedSize));
             
             StringBuilder builder = new StringBuilder (StringUtils.join (
-                                                                         heatmap.annotation (Dimension.COLUMN).getKeys (),
+                                                                         heatmap.dimension (Dimension.Type.COLUMN).keys (),
                                                                          "\n"));
             InputStream stream = new ByteArrayInputStream ( builder.toString().getBytes(encoding) );
             

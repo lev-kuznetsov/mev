@@ -22,6 +22,7 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
 
@@ -46,6 +47,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     // mvcContext.register (AnnotationServerConfiguration.class);
 
     mvcContext.register (DatasetRestConfiguration.class);
+    mvcContext.register (AnnotationServerConfiguration.class);
 
     Dynamic dispatcher = servletContext.addServlet ("dispatcher", new DispatcherServlet (mvcContext));
     dispatcher.setLoadOnStartup (1);

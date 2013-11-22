@@ -70,9 +70,11 @@ import com.google.refine.history.HistoryEntryManager;
 import com.google.refine.model.Project;
 import com.google.refine.preference.TopList;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.heatmap.domain.Heatmap;
 
 public class FileProjectManager extends ProjectManager {
+    final static public String REQUEST_ATTEIBUTE_DATASET = "dataset";
     final static protected String PROJECT_DIR_SUFFIX = ".project";
     final static Logger logger = LoggerFactory.getLogger("FileProjectManager");
     static public synchronized void initialize(File dir) {
@@ -104,11 +106,11 @@ public class FileProjectManager extends ProjectManager {
     	return _workspaceDir;
     }    
     
-    @Inject private Heatmap requestHeatmap;
-    public Heatmap getRequestHeatmap () {
+    @Inject private Dataset requestHeatmap;
+    public Dataset getRequestHeatmap () {
       return requestHeatmap;
     }
-    public void setRequestHeatmap (Heatmap requestHeatmap) {
+    public void setRequestHeatmap (Dataset requestHeatmap) {
       this.requestHeatmap = requestHeatmap;
     }
     

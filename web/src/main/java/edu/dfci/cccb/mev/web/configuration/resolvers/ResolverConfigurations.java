@@ -50,9 +50,9 @@ public class ResolverConfigurations {
   @PostConstruct
   private void prioritizeCustomArgumentMethodHandlers () {
     if (methodArgumentResolvers != null && methodArgumentResolvers.size () > 0) {
-      List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<> (adapter.getArgumentResolvers ());
-      argumentResolvers.addAll (0, new HashSet<> (methodArgumentResolvers));
-      adapter.setArgumentResolvers (argumentResolvers);
+    List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<> (adapter.getArgumentResolvers ());
+    argumentResolvers.addAll (0, new HashSet<> (methodArgumentResolvers));
+    adapter.setArgumentResolvers (argumentResolvers);
     }
   }
 }

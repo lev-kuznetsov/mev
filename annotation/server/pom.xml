@@ -67,6 +67,22 @@
 
   <dependencies>
 
+    <!-- Dataset package -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-dataset-domain</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-dataset-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
+    <!-- Heatmap package -->
+
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
       <artifactId>mev-heatmap-server</artifactId>
@@ -84,6 +100,7 @@
       <artifactId>mev-heatmap-test</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
+
     <!-- Servlet API -->
 
     <dependency>
