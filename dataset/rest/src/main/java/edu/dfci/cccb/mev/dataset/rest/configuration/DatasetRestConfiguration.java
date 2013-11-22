@@ -14,13 +14,36 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.configuration;
 
+import lombok.ToString;
+
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+
+import edu.dfci.cccb.mev.dataset.rest.assembly.json.DatasetJsonSerializer;
+import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.MultipartUploadDatasetArgumentResolver;
+import edu.dfci.cccb.mev.dataset.rest.context.DatasetBuilderConfiguration;
+import edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector;
 
 /**
  * @author levk
  * 
  */
 @Configuration
+@Import ({ DatasetBuilderConfiguration.class, RestPathVariableDatasetRequestContextInjector.class })
 @ComponentScan (basePackages = "edu.dfci.cccb.mev.dataset.rest.controllers")
-public class DatasetRestConfiguration {}
+@ToString
+public class DatasetRestConfiguration {
+
+  @Bean
+  public MultipartUploadDatasetArgumentResolver multipartUploadDatasetArgumentResolver (ConfigurableBeanFactory beanFactory) {
+    return new MultipartUploadDatasetArgumentResolver (beanFactory, false);
+  }
+
+  @Bean
+  public DatasetJsonSerializer datasetJsonSerializer () {
+    return new DatasetJsonSerializer ();
+  }
+}

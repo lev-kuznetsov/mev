@@ -17,6 +17,8 @@ package edu.dfci.cccb.mev.dataset.domain.mock;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 import edu.dfci.cccb.mev.dataset.domain.mock.MapBackedValues.Coordinate;
@@ -26,6 +28,8 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValueStoreBuilder;
  * @author levk
  * 
  */
+@EqualsAndHashCode (callSuper = true)
+@ToString
 public class MapBackedValueStoreBuilder extends AbstractValueStoreBuilder {
 
   private Map<Coordinate, Double> values = new HashMap<> ();

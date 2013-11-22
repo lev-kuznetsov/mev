@@ -16,6 +16,8 @@ package edu.dfci.cccb.mev.dataset.domain.simple;
 
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDimension;
@@ -24,6 +26,8 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDimension;
  * @author levk
  * 
  */
+@EqualsAndHashCode (callSuper = true)
+@ToString
 public class SimpleDimension extends AbstractDimension {
 
   private final List<String> keys;

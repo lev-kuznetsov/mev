@@ -14,12 +14,16 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.prototype;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
 /**
  * @author levk
  * 
  */
+@EqualsAndHashCode
+@ToString
 public abstract class AbstractDimension implements Dimension {
 
   private final Type type;

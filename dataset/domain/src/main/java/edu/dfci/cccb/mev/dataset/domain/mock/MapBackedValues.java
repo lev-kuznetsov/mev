@@ -19,6 +19,7 @@ import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValues;
 
@@ -26,6 +27,8 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValues;
  * @author levk
  * 
  */
+@EqualsAndHashCode (callSuper = true)
+@ToString
 public class MapBackedValues extends AbstractValues {
 
   @EqualsAndHashCode

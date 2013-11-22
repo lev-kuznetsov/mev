@@ -26,6 +26,15 @@
       <artifactId>mev-dataset-domain</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
+    
+    <!-- Servlet API -->
+
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-web-api</artifactId>
+      <version>6.0</version>
+      <scope>provided</scope>
+    </dependency>
 
     <!-- Spring -->
 
