@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.simple;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analyses;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
@@ -26,6 +28,8 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDataset;
  * @author levk
  * 
  */
+@EqualsAndHashCode (callSuper = true)
+@ToString
 public class SimpleDataset extends AbstractDataset {
 
   private Values values;

@@ -24,8 +24,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analyses;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
@@ -44,6 +46,8 @@ import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
  * @author levk
  * 
  */
+@EqualsAndHashCode
+@ToString
 public abstract class AbstractDatasetBuilder implements DatasetBuilder {
 
   private @Getter @Setter (onMethod = @_ (@Inject)) Collection<? extends ParserFactory> parserFactories;

@@ -20,8 +20,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.ListIterator;
 
+import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
 import lombok.Synchronized;
+import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractSelections;
@@ -30,6 +32,8 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractSelections;
  * @author levk
  * 
  */
+@EqualsAndHashCode (callSuper = true)
+@ToString
 public class ArrayListSelections extends AbstractSelections {
 
   private final ArrayList<Selection> selections = new ArrayList<> ();

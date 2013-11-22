@@ -25,6 +25,8 @@ import static org.springframework.web.servlet.HandlerMapping.URI_TEMPLATE_VARIAB
 
 import java.util.Map;
 
+import lombok.ToString;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -48,6 +50,7 @@ import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListWorkspace;
  * 
  */
 @Configuration
+@ToString
 public class RestPathVariableDatasetRequestContextInjector {
 
   private static final String DATASET = "dataset";

@@ -14,8 +14,21 @@
  */
 package edu.dfci.cccb.mev.web.configuration.resolvers;
 
+import static com.fasterxml.jackson.databind.ser.BeanSerializerFactory.instance;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import lombok.ToString;
+import lombok.extern.log4j.Log4j;
+
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleSerializers;
 
 import edu.dfci.cccb.mev.web.support.JsonViewResolver;
 
@@ -24,10 +37,23 @@ import edu.dfci.cccb.mev.web.support.JsonViewResolver;
  * 
  */
 @Configuration
+@Log4j
+@ToString
 public class RestResolverConfiguration {
 
   @Bean
   public JsonViewResolver jsonViewResolver () {
     return new JsonViewResolver ();
+  }
+
+  @Bean
+  public ObjectMapper jsonObjectMapper (ApplicationContext context) {
+    List<JsonSerializer<?>> serializers = new ArrayList<> ();
+    for (JsonSerializer<?> serializer : context.getBeansOfType (JsonSerializer.class).values ())
+      serializers.add (serializer);
+    log.info ("Registering custom JSON serializers: " + serializers);
+    ObjectMapper mapper = new ObjectMapper ();
+    mapper.setSerializerFactory (instance.withAdditionalSerializers (new SimpleSerializers (serializers)));
+    return mapper;
   }
 }

@@ -12,16 +12,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.prototype;
+package edu.dfci.cccb.mev.dataset.rest.controllers;
 
-import lombok.EqualsAndHashCode;
+import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DATASET_URL_ELEMENT;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
+import javax.inject.Inject;
+
 import lombok.ToString;
-import edu.dfci.cccb.mev.dataset.domain.contract.ParserRegistry;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 
 /**
  * @author levk
  * 
  */
-@EqualsAndHashCode
+@RestController
+@RequestMapping ("/dataset/" + DATASET_URL_ELEMENT)
 @ToString
-public abstract class AbstractParserRegistry implements ParserRegistry {}
+public class DatasetController {
+
+  private @Inject Dataset dataset;
+
+  @RequestMapping (method = GET)
+  public Dataset dataset () {
+    return dataset;
+  }
+}

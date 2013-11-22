@@ -22,6 +22,9 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import lombok.ToString;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -38,15 +41,18 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
           RestResolverConfiguration.class,
           ViewResolverConfiguration.class,
           WebjarResourceHandlerConfiguration.class })
+@ToString
 public class ResolverConfigurations {
 
   private @Inject RequestMappingHandlerAdapter adapter;
-  private @Inject Collection<HandlerMethodArgumentResolver> methodArgumentResolvers;
+  private @Autowired (required = false) Collection<HandlerMethodArgumentResolver> methodArgumentResolvers;
 
   @PostConstruct
   private void prioritizeCustomArgumentMethodHandlers () {
-    List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<> (adapter.getArgumentResolvers ());
-    argumentResolvers.addAll (0, new HashSet<> (methodArgumentResolvers));
-    adapter.setArgumentResolvers (argumentResolvers);
+    if (methodArgumentResolvers != null && methodArgumentResolvers.size () > 0) {
+      List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<> (adapter.getArgumentResolvers ());
+      argumentResolvers.addAll (0, new HashSet<> (methodArgumentResolvers));
+      adapter.setArgumentResolvers (argumentResolvers);
+    }
   }
 }

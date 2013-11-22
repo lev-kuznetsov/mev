@@ -12,33 +12,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.mock;
+package edu.dfci.cccb.mev.dataset.rest.assembly.tsv;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractRawInput;
 
 /**
  * @author levk
  * 
  */
-@EqualsAndHashCode (callSuper = true)
 @ToString
-public class MockTsvInput extends AbstractRawInput {
+public class MultipartTsvInput extends AbstractRawInput {
 
-  private final String name;
-  private final String content;
+  private MultipartFile file;
 
   /**
    * 
    */
-  public MockTsvInput (String name, String content) {
-    this.name = name;
-    this.content = content;
+  public MultipartTsvInput (MultipartFile file) {
+    this.file = file;
   }
 
   /* (non-Javadoc)
@@ -52,20 +50,22 @@ public class MockTsvInput extends AbstractRawInput {
    * @see edu.dfci.cccb.mev.dataset.domain.contract.RawInput#name() */
   @Override
   public String name () {
-    return name;
+    return file.getOriginalFilename ();// .substring (0,
+                                       // file.getOriginalFilename ().indexOf
+                                       // ('.'));
   }
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.domain.contract.RawInput#input() */
   @Override
   public InputStream input () throws IOException {
-    return new ByteArrayInputStream (content.getBytes ());
+    return file.getInputStream ();
   }
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.domain.contract.RawInput#size() */
   @Override
   public long size () {
-    return content.length ();
+    return file.getSize ();
   }
 }

@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.context;
 
+import lombok.ToString;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,6 +32,7 @@ import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
  * 
  */
 @Configuration
+@ToString
 public class DatasetBuilderConfiguration {
 
   @Bean
