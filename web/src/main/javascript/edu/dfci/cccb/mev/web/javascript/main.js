@@ -16,7 +16,8 @@ require
         bootstrap : [
             'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min',
             '/library/webjars/bootstrap/2.3.2/js/bootstrap.min' ],
-        d3: ['/library/webjars/d3js/3.1.5/d3.min']
+        d3: ['/library/webjars/d3js/3.1.5/d3.min'],
+        dropzone: ['/library/webjars/dropzone/3.7.1/dropzone-amd-module.min'],
       },
       shim : {
         'angular' : {
