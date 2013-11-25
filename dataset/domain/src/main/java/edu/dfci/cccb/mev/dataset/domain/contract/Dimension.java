@@ -31,17 +31,13 @@ public interface Dimension {
   Annotation annotation ();
 
   public enum Type {
-    ROW ("row"),
-    COLUMN ("column");
+    ROW ("row", "y", "1", "gene", "probe", "height"),
+    COLUMN ("column", "col", "sample", "0", "x", "width");
 
     private Type (String... aliases) {
       this.aliases = aliases;
     }
 
-    private Type (String name) {
-      this.aliases = new String[]{name};
-    }
-    
     private final String[] aliases;
 
     public static Type from (String string) throws InvalidDimensionTypeException {

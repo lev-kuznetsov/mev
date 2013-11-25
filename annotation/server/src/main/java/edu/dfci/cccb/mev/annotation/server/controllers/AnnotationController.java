@@ -80,10 +80,26 @@ public class AnnotationController extends WebApplicationObjectSupport {
 
     ModelAndView mav = new ModelAndView ();
     
+    /*
+    TemplateHashModel enumModels = BeansWrapper.getDefaultInstance().getEnumModels();    
+    TemplateHashModel roundingModeEnums = (TemplateHashModel) enumModels.get("java.math.RoundingMode");
+    TemplateHashModel dimensionTypeEnums = (TemplateHashModel) enumModels.get("edu.dfci.cccb.mev.dataset.domain.contract.Dimension$Type");    
+    mav.addObject("RoundingMode", roundingModeEnums);
+    mav.addObject("Dimension.Type", dimensionTypeEnums);
+    mav.addObject("DimensionType", dimensionTypeEnums);
+    mav.addObject("Dimension$Type", dimensionTypeEnums);    
+    mav.addObject("enums", BeansWrapper.getDefaultInstance().getEnumModels());    
+    
+    Type type = Type.COLUMN;
+    Type type2 = Type.valueOf ("COLUMN");        
+    mav.addObject ("type", type);
+    mav.addObject ("type2", type2);
+    */
+    
     mav.addObject ("workspace", workspace);
     mav.setViewName ("annotations");
     return mav;
-
+ 
   }
   
 

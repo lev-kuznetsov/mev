@@ -40,6 +40,7 @@ import edu.dfci.cccb.mev.api.client.support.view.ViewBuilders.AbstractViewBuilde
 import edu.dfci.cccb.mev.api.client.support.view.ViewBuilders.AbstractViewBuilder.AbstractUrlBasedViewBuilder.AbstractTemplateViewBuilder.VelocityViewBuilder;
 import edu.dfci.cccb.mev.api.client.support.view.ViewBuilders.AbstractViewBuilder.AbstractUrlBasedViewBuilder.InternalResourceViewBuilder;
 import edu.dfci.cccb.mev.api.client.support.view.ViewBuilders.AbstractViewBuilder.AbstractUrlBasedViewBuilder.InternalResourceViewBuilder.JstlViewBuilder;
+import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 
 /**
@@ -246,6 +247,8 @@ public class ViewBuilders {
               view.setEncoding (encoding);
             if (configuration != null)
               view.setConfiguration (configuration);
+            
+            view.addStaticAttribute ("enums", BeansWrapper.getDefaultInstance().getEnumModels());
             return view;
           }
         }
