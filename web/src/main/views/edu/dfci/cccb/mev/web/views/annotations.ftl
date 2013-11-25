@@ -1,10 +1,16 @@
 <b>hello cruel world </b>
 <table>
-HEY!
+HEY!444
+
+RoundingMode: ${RoundingMode.UP}<br>
+enums["java.math.RoundingMode"].UP: ${enums["java.math.RoundingMode"].UP}<br>
+DimensionType: ${Dimension$Type.COLUMN}<br>
+enums["edu.dfci.cccb.mev.dataset.domain.contract.Dimension$Type"].COLUMN: ${enums["edu.dfci.cccb.mev.dataset.domain.contract.Dimension$Type"].COLUMN}<br>
+
 <#list workspace.list() as heatmap_name>
 	<#assign heatmap=workspace.get(heatmap_name) >
 		
-	<#assign columnDimension=heatmap.columns() >
+	<#assign columnDimension=heatmap.dimension(enums["edu.dfci.cccb.mev.dataset.domain.contract.Dimension$Type"].COLUMN) >
 	<tr>
 		<td>${heatmap.name()}</td>
 		<td><a href="${heatmap.name()}/annotation/0/">column annotations</a></td>
