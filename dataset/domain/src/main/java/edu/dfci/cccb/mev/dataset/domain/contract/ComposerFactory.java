@@ -14,17 +14,14 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 
 /**
  * @author levk
  * 
  */
-public interface Parser {
+public interface ComposerFactory {
 
-  String projection (Type dimension);
+  String contentType ();
 
-  double value ();
-
-  boolean next () throws DatasetBuilderException;
+  Composer compose (Dataset dataset) throws DatasetComposingException;
 }

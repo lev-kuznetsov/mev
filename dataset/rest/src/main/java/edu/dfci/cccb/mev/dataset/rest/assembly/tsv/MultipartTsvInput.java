@@ -50,9 +50,7 @@ public class MultipartTsvInput extends AbstractRawInput {
    * @see edu.dfci.cccb.mev.dataset.domain.contract.RawInput#name() */
   @Override
   public String name () {
-    return file.getOriginalFilename ();// .substring (0,
-                                       // file.getOriginalFilename ().indexOf
-                                       // ('.'));
+    return file.getOriginalFilename ();
   }
 
   /* (non-Javadoc)

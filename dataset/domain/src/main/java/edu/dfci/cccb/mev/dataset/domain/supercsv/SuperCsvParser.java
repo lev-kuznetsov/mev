@@ -114,7 +114,7 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
    * edu.dfci.cccb.mev.dataset.domain.contract.builders.Parser#dimension(edu
    * .dfci.cccb.mev.dataset.domain.contract.Dimension.Type) */
   @Override
-  public String dimension (Type type) {
+  public String projection (Type type) {
     switch (type) {
     case ROW:
       return currentRowName;
