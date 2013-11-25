@@ -230,6 +230,8 @@ define (
                 var myDropzone = new Dropzone("#uploader", {
                   
                   url: "/dataset",
+                  method : "post",
+                  paramName: "dataset",
                   clickable: true,
                   uploadMultiple: true,
                   previewsContainer: null,
