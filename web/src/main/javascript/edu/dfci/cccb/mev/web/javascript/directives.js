@@ -1,6 +1,6 @@
 define (
-    [ 'angular', 'jquery', 'd3', 'newick', 'services' ],
-    function (angular, jq, d3, newick) {
+    [ 'angular', 'jquery', 'd3', 'newick', 'dropzone', 'services', ],
+    function (angular, jq, d3, newick, Dropzone) {
 
       return angular
           .module ('myApp.directives', [])
@@ -225,6 +225,31 @@ define (
             return {
               restrict : 'C',
               templateUrl : '/container/view/elements/uploadDragAndDrop',
+              link : function (scope, elems, attrs) {
+                
+                var myDropzone = new Dropzone("#uploader", {
+                  
+                  url: "/dataset",
+                  method : "post",
+                  paramName: "dataset",
+                  clickable: true,
+                  uploadMultiple: true,
+                  previewsContainer: null,
+                  addRemoveLinks: true,
+                  
+                  dictRemoveFile: "Remove",
+                  dictCancelUpload: "Cancel",
+                  dictCancelUploadConfirmation: "Are you sure?",
+                  dictResponseError: "Upload Failed"
+                    
+                })
+                .on("error", function(file){
+                  alert("Errored")
+                });
+                
+                
+                
+              }
             };
 
           })

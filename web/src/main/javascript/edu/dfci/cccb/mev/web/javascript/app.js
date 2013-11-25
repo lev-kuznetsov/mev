@@ -10,7 +10,7 @@ define(['angular', 'directives', 'services', 'controllers'], function(angular){
 			  templateUrl: '/container/view/partials/heatmap', 
 			  controller: 'HeatmapCtrl'
 		  })
-		  .when('/import', {
+		  .when('/home', {
         templateUrl: '/container/view/partials/importItems'
       });
 		  
