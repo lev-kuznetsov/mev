@@ -12,19 +12,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.contract;
+package edu.dfci.cccb.mev.dataset.domain.prototype;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import edu.dfci.cccb.mev.dataset.domain.contract.ComposerFactory;
 
 /**
  * @author levk
  * 
  */
-public interface Parser {
-
-  String projection (Type dimension);
-
-  double value ();
-
-  boolean next () throws DatasetBuilderException;
-}
+@ToString
+@EqualsAndHashCode
+public abstract class AbstractComposerFactory implements ComposerFactory {}
