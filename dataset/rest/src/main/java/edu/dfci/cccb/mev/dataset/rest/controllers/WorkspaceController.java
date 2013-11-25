@@ -51,7 +51,7 @@ public class WorkspaceController {
   }
 
   @RequestMapping (method = POST)
-  public void upload (@RequestParam ("dataset") Dataset dataset) {
+  public void upload (@RequestParam ("dataset[]") Dataset dataset) {
     if (log.isDebugEnabled ())
       log.debug ("Adding " + dataset);
     workspace.put (dataset);
