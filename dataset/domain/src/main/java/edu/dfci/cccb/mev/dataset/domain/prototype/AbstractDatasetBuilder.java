@@ -63,11 +63,11 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
     List<String> rows = new ArrayList<> ();
     List<String> columns = new ArrayList<> ();
     for (Parser parser = parser (content); parser.next ();) {
-      valueBuilder.add (parser.value (), parser.dimension (ROW), parser.dimension (COLUMN));
-      if (!rows.contains (parser.dimension (ROW)))
-        rows.add (parser.dimension (ROW));
-      if (!columns.contains (parser.dimension (COLUMN)))
-        columns.add (parser.dimension (COLUMN));
+      valueBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));
+      if (!rows.contains (parser.projection (ROW)))
+        rows.add (parser.projection (ROW));
+      if (!columns.contains (parser.projection (COLUMN)))
+        columns.add (parser.projection (COLUMN));
     }
     return aggregate (content.name (), valueBuilder.build (), null, // TODO: add
                                                                     // analyses
@@ -93,7 +93,7 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
       if (parserFactory.contentType ().equals (content.contentType ()))
         try {
           return parserFactory.parse (content.input ());
-        } catch (DatasetBuilderException | IOException e) {
+        } catch (IOException e) {
           throw new DatasetBuilderException (e); // TODO: add args
         }
     throw new DatasetBuilderException (); // TODO: add args

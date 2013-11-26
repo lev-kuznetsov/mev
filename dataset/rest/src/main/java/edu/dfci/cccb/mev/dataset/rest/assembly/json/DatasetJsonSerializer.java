@@ -16,6 +16,8 @@ package edu.dfci.cccb.mev.dataset.rest.assembly.json;
 
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
+import static java.lang.Double.MAX_VALUE;
+import static java.lang.Double.NaN;
 
 import java.io.IOException;
 import java.util.List;
@@ -57,7 +59,6 @@ public class DatasetJsonSerializer extends JsonSerializer<Dataset> {
   @SneakyThrows ({ InvalidDimensionTypeException.class, InvalidCoordinateException.class })
   public void serialize (Dataset value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
                                                                                         JsonProcessingException {
-    System.out.println ("\n\n\nserialize()\n\n\n");
     new Throwable ().printStackTrace ();
     jgen.writeStartObject ();
     writeDimension (jgen, value.dimension (ROW));
@@ -76,10 +77,21 @@ public class DatasetJsonSerializer extends JsonSerializer<Dataset> {
   private void writeValues (JsonGenerator jgen, Values values, List<String> rows, List<String> columns) throws IOException,
                                                                                                        JsonProcessingException,
                                                                                                        InvalidCoordinateException {
+    double min = MAX_VALUE, max = -MAX_VALUE, sum = .0;
+    int count = 0;
     jgen.writeArrayFieldStart ("values");
     for (String row : rows)
-      for (String column : columns)
+      for (String column : columns) {
+        double value = values.get (row, column);
+        min = min > value ? value : min;
+        max = max < value ? value : max;
+        sum += value;
+        count++;
         jgen.writeNumber (values.get (row, column));
+      }
     jgen.writeEndArray ();
+    jgen.writeNumberField ("min", min);
+    jgen.writeNumberField ("max", max);
+    jgen.writeNumberField ("avg", count == 0 ? NaN : (sum / count));
   }
 }

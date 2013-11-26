@@ -20,6 +20,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import javax.inject.Inject;
 
 import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,12 +34,15 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 @RestController
 @RequestMapping ("/dataset/" + DATASET_URL_ELEMENT)
 @ToString
+@Log4j
 public class DatasetController {
 
   private @Inject Dataset dataset;
 
   @RequestMapping (method = GET)
   public Dataset dataset () {
+    if (log.isDebugEnabled ())
+      log.debug ("Returning dataset " + dataset);
     return dataset;
   }
 }

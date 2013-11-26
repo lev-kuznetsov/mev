@@ -17,6 +17,10 @@ package edu.dfci.cccb.mev.dataset.rest.assembly.tsv;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import javax.inject.Inject;
+
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import org.springframework.http.HttpInputMessage;
@@ -26,7 +30,10 @@ import org.springframework.http.converter.AbstractHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.ComposerFactory;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetComposingException;
 
 /**
  * @author levk
@@ -41,6 +48,9 @@ public class DatasetTsvMessageConverter extends AbstractHttpMessageConverter<Dat
   public static final MediaType TSV_MEDIA_TYPE = new MediaType (TSV_TYPE,
                                                                 "x-" + TSV_EXTENSION,
                                                                 DEFAULT_CHARSET);
+
+  private @Getter @Setter (onMethod = @_ (@Inject)) ComposerFactory composer;
+  private @Getter @Setter (onMethod = @_ (@Inject)) DatasetBuilder builder;
 
   /**
    * 
@@ -63,8 +73,8 @@ public class DatasetTsvMessageConverter extends AbstractHttpMessageConverter<Dat
    * org.springframework.http.converter.AbstractHttpMessageConverter#readInternal
    * (java.lang.Class, org.springframework.http.HttpInputMessage) */
   @Override
-  protected Dataset readInternal (Class<? extends Dataset> clazz, HttpInputMessage inputMessage) throws IOException,
-                                                                                                HttpMessageNotReadableException {
+  protected Dataset readInternal (Class<? extends Dataset> clazz, final HttpInputMessage inputMessage) throws IOException,
+                                                                                                      HttpMessageNotReadableException {
     throw new UnsupportedOperationException ("nyi");
   }
 
@@ -75,6 +85,13 @@ public class DatasetTsvMessageConverter extends AbstractHttpMessageConverter<Dat
   @Override
   protected void writeInternal (Dataset t, HttpOutputMessage outputMessage) throws IOException,
                                                                            HttpMessageNotWritableException {
-    throw new UnsupportedOperationException ("nyi");
+    try {
+      composer.compose (t).write (outputMessage.getBody ());
+    } catch (DatasetComposingException e) {
+      HttpMessageNotWritableException exception = new HttpMessageNotWritableException ("Unable to compose dataset "
+                                                                                       + t.name ());
+      exception.initCause (e);
+      throw exception;
+    }
   }
 }

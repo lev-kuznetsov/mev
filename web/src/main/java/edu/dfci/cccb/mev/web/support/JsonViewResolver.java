@@ -16,6 +16,8 @@ package edu.dfci.cccb.mev.web.support;
 
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +25,8 @@ import org.springframework.core.Ordered;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author levk
@@ -32,12 +36,16 @@ public class JsonViewResolver implements ViewResolver, Ordered {
 
   private @Getter @Setter int order = LOWEST_PRECEDENCE;
 
+  private @Inject ObjectMapper mapper;
+
   /* (non-Javadoc)
    * @see
    * org.springframework.web.servlet.ViewResolver#resolveViewName(java.lang
    * .String, java.util.Locale) */
   @Override
   public View resolveViewName (String viewName, Locale locale) throws Exception {
-    return new MappingJackson2JsonView ();
+    MappingJackson2JsonView view = new MappingJackson2JsonView ();
+    view.setObjectMapper (mapper);
+    return view;
   }
 }

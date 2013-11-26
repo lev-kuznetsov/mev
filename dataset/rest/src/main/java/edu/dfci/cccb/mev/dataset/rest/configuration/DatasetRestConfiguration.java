@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.configuration;
 
+import static edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter.TSV_EXTENSION;
+import static edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter.TSV_MEDIA_TYPE;
 import lombok.ToString;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -21,8 +23,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvComposerFactory;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.DatasetJsonSerializer;
+import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.MultipartUploadDatasetArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.context.DatasetBuilderConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector;
@@ -35,7 +41,7 @@ import edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestCont
 @Import ({ DatasetBuilderConfiguration.class, RestPathVariableDatasetRequestContextInjector.class })
 @ComponentScan (basePackages = "edu.dfci.cccb.mev.dataset.rest.controllers")
 @ToString
-public class DatasetRestConfiguration {
+public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
 
   @Bean
   public MultipartUploadDatasetArgumentResolver multipartUploadDatasetArgumentResolver (ConfigurableBeanFactory beanFactory) {
@@ -45,5 +51,26 @@ public class DatasetRestConfiguration {
   @Bean
   public DatasetJsonSerializer datasetJsonSerializer () {
     return new DatasetJsonSerializer ();
+  }
+
+  @Bean
+  public SuperCsvComposerFactory superCsvComposerFactory () {
+    return new SuperCsvComposerFactory ();
+  }
+
+  @Bean
+  public DatasetTsvMessageConverter datasetTsvMessageConverter () {
+    return new DatasetTsvMessageConverter ();
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
+   * #configureContentNegotiation
+   * (org.springframework.web.servlet.config.annotation
+   * .ContentNegotiationConfigurer) */
+  @Override
+  public void configureContentNegotiation (ContentNegotiationConfigurer configurer) {
+    configurer.mediaType (TSV_EXTENSION, TSV_MEDIA_TYPE);
   }
 }
