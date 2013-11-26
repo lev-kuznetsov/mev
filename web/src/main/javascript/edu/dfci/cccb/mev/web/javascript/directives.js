@@ -220,6 +220,17 @@ define (
             };
 
           })
+          .directive ('uploadsTable',function(){
+            return {
+              restrict : 'A',
+              templateUrl : '/container/view/elements/uploadsTable',
+              link : function (scope, elems, attrs) {
+                
+                //Add API call for uploads table
+                
+              }
+            }
+          })
           .directive ('uploadDrag', function () {
 
             return {
