@@ -20,7 +20,7 @@
  
       <div class="tab-content">
       
-        <div class="tab-pane active" id="Upload">
+        <div class="tab-pane active" id="upload">
           <div class='uploadDrag'></div>
         </div>
         
