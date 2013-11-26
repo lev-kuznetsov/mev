@@ -10,7 +10,7 @@
             
             <tbody>
               <tr ng-repeat="row in datasets">
-                <td>{{row.name}}</td>
+                <td><a ng-click='redirect({{row}})'>{{row}}</a></td>
               <tr>
             </tbody>
             

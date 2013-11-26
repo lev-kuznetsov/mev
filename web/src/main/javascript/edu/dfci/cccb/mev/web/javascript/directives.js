@@ -220,13 +220,17 @@ define (
             };
 
           })
-          .directive ('uploadsTable', ['API', function(API){
+          .directive ('uploadsTable', ['API', '$location', function(API, $location){
             return {
               restrict : 'A',
               templateUrl : '/container/view/elements/uploadsTable',
               link : function (scope, elems, attrs) {
                 
-                scope.datasets = API.dataset.get();
+                scope.datasets = API.user.datasets.get();
+                
+                scope.redirect = function(url){
+                  $location.url(url);
+                };
                 
               }
             }
