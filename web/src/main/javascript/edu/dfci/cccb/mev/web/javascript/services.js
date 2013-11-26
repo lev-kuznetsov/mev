@@ -59,6 +59,22 @@ define ([ 'angular', 'd3' ], function (angular, d3) {
 
             }
           },
+          dataset: {
+            get: function(){
+              
+              var params = {
+                  method : 'GET',
+                  url : '/dataset?format=json'
+                };
+                return QHTTP (params, function (d, s) {
+                  return d;
+                }, function (d, s) {
+                 
+                  return d, s;
+                });
+              
+            }
+          },
           hcl: {
             radial: {
               get: function(url){
