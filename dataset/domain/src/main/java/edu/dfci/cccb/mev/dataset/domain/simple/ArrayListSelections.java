@@ -46,9 +46,15 @@ public class ArrayListSelections extends AbstractSelections {
    * .mev.dataset.domain.contract.Selection) */
   @Override
   @Synchronized
-  @SneakyThrows (SelectionNotFoundException.class)
   public void put (Selection subset) {
-    find (true, subset.name ()).remove ();
+    
+    ListIterator<Selection> foundExisting = null;
+    try{ 
+      foundExisting = find (subset.name ()); 
+    }catch(SelectionNotFoundException e){}
+    
+    if(foundExisting!=null)
+      foundExisting.remove ();    
     selections.add (0, subset);
   }
 
@@ -57,7 +63,7 @@ public class ArrayListSelections extends AbstractSelections {
    * edu.dfci.cccb.mev.dataset.domain.contract.Selections#get(java.lang.String) */
   @Override
   public Selection get (String name) throws SelectionNotFoundException {
-    return find (false, name).next ();
+    return find (name).previous ();
   }
 
   /* (non-Javadoc)
@@ -67,7 +73,7 @@ public class ArrayListSelections extends AbstractSelections {
   @Override
   @Synchronized
   public void remove (String name) throws SelectionNotFoundException {
-    find (false, name).remove ();
+    find (name).remove ();
   }
 
   /* (non-Javadoc)
@@ -94,7 +100,7 @@ public class ArrayListSelections extends AbstractSelections {
 
           @Override
           public void remove () {
-            selections.remove ();
+            throw new UnsupportedOperationException ();
           }
         };
       }
@@ -106,25 +112,15 @@ public class ArrayListSelections extends AbstractSelections {
     };
   }
 
-  private ListIterator<Selection> find (boolean quiet, String name) throws SelectionNotFoundException {
+  private ListIterator<Selection> find (String name) throws SelectionNotFoundException {
     for (ListIterator<Selection> selections = this.selections.listIterator (); selections.hasNext ();)
       if (selections.next ().name ().equals (name))
         return selections;
-    if (quiet)
-      return new ArrayList<Selection> () {
-        private static final long serialVersionUID = 1L;
-
-        {
-          add (null);
-        }
-      }.listIterator ();
-    else
-      throw new SelectionNotFoundException (); // TODO: add args
+    throw new SelectionNotFoundException (); // TODO: add args
   }
 
   @Override
   public void put (String name, Properties properties, List<String> keys) {
-    // TODO Auto-generated method stub
-    
+   put(new SimpleSelection (name, properties, keys)); 
   }
 }
