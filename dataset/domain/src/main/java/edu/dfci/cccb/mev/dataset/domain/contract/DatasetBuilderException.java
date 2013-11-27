@@ -14,13 +14,16 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
-
 /**
  * @author levk
  * 
  */
 public class DatasetBuilderException extends DatasetException {
   private static final long serialVersionUID = 1L;
+
+  {
+    code ("dataset.builder.failure");
+  }
 
   /**
    * 

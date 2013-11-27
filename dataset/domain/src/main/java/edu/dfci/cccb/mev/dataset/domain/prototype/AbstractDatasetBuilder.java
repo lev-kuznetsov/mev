@@ -33,10 +33,13 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.InputContentStreamException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Parser;
 import edu.dfci.cccb.mev.dataset.domain.contract.ParserFactory;
 import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
+import edu.dfci.cccb.mev.dataset.domain.contract.UnparsableContentTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilderFactory;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
@@ -59,7 +62,9 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
    * edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder#build(edu.dfci
    * .cccb.mev.dataset.domain.contract.RawInput) */
   @Override
-  public Dataset build (RawInput content) throws DatasetBuilderException, InvalidDatasetNameException {
+  public Dataset build (RawInput content) throws DatasetBuilderException,
+                                         InvalidDatasetNameException,
+                                         InvalidDimensionTypeException {
     ValueStoreBuilder valueBuilder = valueStoreBuilderFactory.builder ();
     List<String> rows = new ArrayList<> ();
     List<String> columns = new ArrayList<> ();
@@ -91,8 +96,8 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
         try {
           return parserFactory.parse (content.input ());
         } catch (IOException e) {
-          throw new DatasetBuilderException (e); // TODO: add args
+          throw new InputContentStreamException (e);
         }
-    throw new DatasetBuilderException (); // TODO: add args
+    throw new UnparsableContentTypeException ().contentType (content.contentType ());
   }
 }

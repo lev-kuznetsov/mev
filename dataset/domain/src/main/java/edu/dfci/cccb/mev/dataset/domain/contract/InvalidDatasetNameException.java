@@ -21,6 +21,14 @@ package edu.dfci.cccb.mev.dataset.domain.contract;
 public class InvalidDatasetNameException extends DatasetException {
   private static final long serialVersionUID = 1L;
 
+  {
+    code ("invalid.dataset.name");
+  }
+
+  public InvalidDatasetNameException name (String name) {
+    return argument ("name", name);
+  }
+
   /**
    * 
    */

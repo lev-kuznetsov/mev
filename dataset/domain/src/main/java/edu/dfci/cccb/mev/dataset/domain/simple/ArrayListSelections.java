@@ -19,11 +19,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Properties;
 
 import lombok.EqualsAndHashCode;
-import lombok.SneakyThrows;
 import lombok.Synchronized;
 import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
@@ -47,14 +45,9 @@ public class ArrayListSelections extends AbstractSelections {
   @Override
   @Synchronized
   public void put (Selection subset) {
-    
-    ListIterator<Selection> foundExisting = null;
-    try{ 
-      foundExisting = find (subset.name ()); 
-    }catch(SelectionNotFoundException e){}
-    
-    if(foundExisting!=null)
-      foundExisting.remove ();    
+    for (Iterator<Selection> selections = this.selections.listIterator (); selections.hasNext ();)
+      if (selections.next ().name ().equals (subset.name ()))
+        selections.remove ();
     selections.add (0, subset);
   }
 
@@ -63,7 +56,10 @@ public class ArrayListSelections extends AbstractSelections {
    * edu.dfci.cccb.mev.dataset.domain.contract.Selections#get(java.lang.String) */
   @Override
   public Selection get (String name) throws SelectionNotFoundException {
-    return find (name).previous ();
+    for (Selection selection : selections)
+      if (selection.name ().equals (name))
+        return selection;
+    throw new SelectionNotFoundException ().name (name);
   }
 
   /* (non-Javadoc)
@@ -73,7 +69,10 @@ public class ArrayListSelections extends AbstractSelections {
   @Override
   @Synchronized
   public void remove (String name) throws SelectionNotFoundException {
-    find (name).remove ();
+    for (Iterator<Selection> selections = this.selections.listIterator (); selections.hasNext ();)
+      if (selections.next ().name ().equals (name))
+        selections.remove ();
+    throw new SelectionNotFoundException ().name (name);
   }
 
   /* (non-Javadoc)
@@ -100,7 +99,7 @@ public class ArrayListSelections extends AbstractSelections {
 
           @Override
           public void remove () {
-            throw new UnsupportedOperationException ();
+            selections.remove ();
           }
         };
       }
@@ -112,15 +111,8 @@ public class ArrayListSelections extends AbstractSelections {
     };
   }
 
-  private ListIterator<Selection> find (String name) throws SelectionNotFoundException {
-    for (ListIterator<Selection> selections = this.selections.listIterator (); selections.hasNext ();)
-      if (selections.next ().name ().equals (name))
-        return selections;
-    throw new SelectionNotFoundException (); // TODO: add args
-  }
-
   @Override
   public void put (String name, Properties properties, List<String> keys) {
-   put(new SimpleSelection (name, properties, keys)); 
+    put (new SimpleSelection (name, properties, keys));
   }
 }

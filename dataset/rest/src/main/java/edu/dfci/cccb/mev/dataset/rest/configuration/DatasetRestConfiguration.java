@@ -26,11 +26,17 @@ import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.ParserFactory;
+import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilderFactory;
+import edu.dfci.cccb.mev.dataset.domain.mock.MapBackedValueStoreBuilder;
+import edu.dfci.cccb.mev.dataset.domain.simple.ClassValueStoreBuilderFactory;
+import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvComposerFactory;
+import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.DatasetJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.MultipartUploadDatasetArgumentResolver;
-import edu.dfci.cccb.mev.dataset.rest.context.DatasetBuilderConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector;
 
 /**
@@ -38,7 +44,7 @@ import edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestCont
  * 
  */
 @Configuration
-@Import ({ DatasetBuilderConfiguration.class, RestPathVariableDatasetRequestContextInjector.class })
+@Import (RestPathVariableDatasetRequestContextInjector.class)
 @ComponentScan (basePackages = "edu.dfci.cccb.mev.dataset.rest.controllers")
 @ToString
 public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
@@ -61,6 +67,21 @@ public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
   @Bean
   public DatasetTsvMessageConverter datasetTsvMessageConverter () {
     return new DatasetTsvMessageConverter ();
+  }
+
+  @Bean
+  public ParserFactory tsvParserFactory () {
+    return new SuperCsvParserFactory ();
+  }
+
+  @Bean
+  public ValueStoreBuilderFactory valueFactory () {
+    return new ClassValueStoreBuilderFactory<MapBackedValueStoreBuilder> (MapBackedValueStoreBuilder.class);
+  }
+
+  @Bean
+  public DatasetBuilder datasetBuilder () {
+    return new SimpleDatasetBuilder ();
   }
 
   /* (non-Javadoc)

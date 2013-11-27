@@ -21,6 +21,14 @@ package edu.dfci.cccb.mev.dataset.domain.contract;
 public class AnalysisNotFoundException extends DatasetException {
   private static final long serialVersionUID = 1L;
 
+  {
+    code ("analysis.not.found");
+  }
+
+  public AnalysisNotFoundException name (String name) {
+    return argument ("name", name);
+  }
+
   /**
    * 
    */

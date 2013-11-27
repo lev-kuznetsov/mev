@@ -12,15 +12,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.heatmap.domain;
-
-import java.util.List;
+package edu.dfci.cccb.mev.hcl.domain.contract;
 
 /**
  * @author levk
  * 
  */
-public interface Mapper {
+public interface Leaf <T> extends Node<T> {
 
-  List<String> ids ();
+  String name ();
 }

@@ -84,7 +84,7 @@ public class RequestParameterDatasetRequestContextInjector {
   private String parameter (String name, NativeWebRequest request) throws MissingRequestParameterException {
     String value = request.getParameter (name);
     if (value == null)
-      throw new MissingRequestParameterException (); // TODO: add args
+      throw new MissingRequestParameterException ().parameter (name);
     return value;
   }
 }

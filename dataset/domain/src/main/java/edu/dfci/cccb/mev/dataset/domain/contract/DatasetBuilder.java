@@ -20,5 +20,7 @@ package edu.dfci.cccb.mev.dataset.domain.contract;
  */
 public interface DatasetBuilder {
 
-  Dataset build (RawInput content) throws DatasetBuilderException, InvalidDatasetNameException;
+  Dataset build (RawInput content) throws DatasetBuilderException,
+                                  InvalidDatasetNameException,
+                                  InvalidDimensionTypeException;
 }

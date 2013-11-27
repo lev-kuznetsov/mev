@@ -45,12 +45,14 @@ import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.mock.MockTsvInput;
 import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListSelections;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDataset;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 import freemarker.template.TemplateModelException;
+
 @Controller
 @RequestMapping ("/annotations")
 @Log4j
@@ -61,7 +63,7 @@ public class AnnotationController extends WebApplicationObjectSupport {
   private @Inject Workspace workspace;
   private @Inject FileProjectManager projectManager;
   private @Inject DatasetBuilder datasetBuilder;
-  
+
   @PostConstruct
   private void createRefineServlet () throws ServletException {
     refineServlet = new RefineServlet ();
@@ -69,94 +71,113 @@ public class AnnotationController extends WebApplicationObjectSupport {
   }
 
   @RequestMapping ("/")
-  public ModelAndView annotationsHome () throws InvalidDatasetNameException, TemplateModelException, DatasetBuilderException {
+  public ModelAndView annotationsHome () throws InvalidDatasetNameException,
+                                        TemplateModelException,
+                                        DatasetBuilderException,
+                                        InvalidDimensionTypeException {
 
     try {
       workspace.get ("mock");
     } catch (DatasetNotFoundException e) {
-      Dimension columns = new SimpleDimension (COLUMN, new ArrayList<String>(Arrays.asList("a", "b", "c")), new ArrayListSelections(), null);
-      Dimension rows = new SimpleDimension (ROW, new ArrayList<String>(Arrays.asList("aaa", "bbb", "ccc")), new ArrayListSelections(), null);
-      Dataset mockHeatmap = new SimpleDataset ("mock", null, null, columns, rows);            
-      
+      Dimension columns = new SimpleDimension (COLUMN,
+                                               new ArrayList<String> (Arrays.asList ("a", "b", "c")),
+                                               new ArrayListSelections (),
+                                               null);
+      Dimension rows = new SimpleDimension (ROW,
+                                            new ArrayList<String> (Arrays.asList ("aaa", "bbb", "ccc")),
+                                            new ArrayListSelections (),
+                                            null);
+      Dataset mockHeatmap = new SimpleDataset ("mock", null, null, columns, rows);
+
       workspace.put (mockHeatmap);
     }
-    
-    try{
+
+    try {
       workspace.get ("build-mock");
-    }catch(DatasetNotFoundException e){
+    } catch (DatasetNotFoundException e) {
       Dataset set = datasetBuilder.build (new MockTsvInput ("build-mock", "id\tsa\tsb\tsc\n" +
-              "g1\t.1\t.2\t.3\n" +
-              "g2\t.4\t.5\t.6"));
+                                                                          "g1\t.1\t.2\t.3\n" +
+                                                                          "g2\t.4\t.5\t.6"));
       workspace.put (set);
     }
-    
+
     try {
       workspace.get ("shmock");
     } catch (DatasetNotFoundException e) {
-      //Dataset mockHeatmap = new DatasetMock ("shmock", "aaa,bbb,ccc", "e,f,g");
-      Dimension columns = new SimpleDimension (COLUMN, new ArrayList<String>(Arrays.asList("e", "f", "g")), new ArrayListSelections(), null);
-      Dimension rows = new SimpleDimension (ROW, new ArrayList<String>(Arrays.asList("eee", "fff", "ggg")), new ArrayListSelections(), null);
+      // Dataset mockHeatmap = new DatasetMock ("shmock", "aaa,bbb,ccc",
+      // "e,f,g");
+      Dimension columns =
+                          new SimpleDimension (COLUMN,
+                                               new ArrayList<String> (Arrays.asList ("e", "f", "g")),
+                                               new ArrayListSelections (),
+                                               null);
+      Dimension rows =
+                       new SimpleDimension (ROW,
+                                            new ArrayList<String> (Arrays.asList ("eee", "fff", "ggg")),
+                                            new ArrayListSelections (),
+                                            null);
       Dataset mockHeatmap = new SimpleDataset ("shmock", null, null, columns, rows);
-      
+
       workspace.put (mockHeatmap);
     }
 
     ModelAndView mav = new ModelAndView ();
-    
-    /*
-    TemplateHashModel enumModels = BeansWrapper.getDefaultInstance().getEnumModels();    
-    TemplateHashModel roundingModeEnums = (TemplateHashModel) enumModels.get("java.math.RoundingMode");
-    TemplateHashModel dimensionTypeEnums = (TemplateHashModel) enumModels.get("edu.dfci.cccb.mev.dataset.domain.contract.Dimension$Type");    
-    mav.addObject("RoundingMode", roundingModeEnums);
-    mav.addObject("Dimension.Type", dimensionTypeEnums);
-    mav.addObject("DimensionType", dimensionTypeEnums);
-    mav.addObject("Dimension$Type", dimensionTypeEnums);    
-    mav.addObject("enums", BeansWrapper.getDefaultInstance().getEnumModels());    
-    
-    Type type = Type.COLUMN;
-    Type type2 = Type.valueOf ("COLUMN");        
-    mav.addObject ("type", type);
-    mav.addObject ("type2", type2);
-    */
-    
+
+    /* TemplateHashModel enumModels =
+     * BeansWrapper.getDefaultInstance().getEnumModels(); TemplateHashModel
+     * roundingModeEnums = (TemplateHashModel)
+     * enumModels.get("java.math.RoundingMode"); TemplateHashModel
+     * dimensionTypeEnums = (TemplateHashModel)
+     * enumModels.get("edu.dfci.cccb.mev.dataset.domain.contract.Dimension$Type"
+     * ); mav.addObject("RoundingMode", roundingModeEnums);
+     * mav.addObject("Dimension.Type", dimensionTypeEnums);
+     * mav.addObject("DimensionType", dimensionTypeEnums);
+     * mav.addObject("Dimension$Type", dimensionTypeEnums);
+     * mav.addObject("enums",
+     * BeansWrapper.getDefaultInstance().getEnumModels()); Type type =
+     * Type.COLUMN; Type type2 = Type.valueOf ("COLUMN"); mav.addObject ("type",
+     * type); mav.addObject ("type2", type2); */
+
     mav.addObject ("workspace", workspace);
     mav.setViewName ("annotations");
     return mav;
- 
-  }
-  
 
-  @RequestMapping (method = { GET, POST, PUT, DELETE }, value = { "/"+DATASET_URL_ELEMENT+"/annotation/"+DIMENSION_URL_ELEMENT+"/**" })
+  }
+
+  @RequestMapping (method = { GET, POST, PUT, DELETE }, value = { "/"
+                                                                  + DATASET_URL_ELEMENT + "/annotation/"
+                                                                  + DIMENSION_URL_ELEMENT + "/**" })
   @ResponseBody
   public void handleAnnotation (@PathVariable (DATASET) final String heatmapId,
                                 @PathVariable (DIMENSION) final String dimension,
-                                HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DatasetNotFoundException {
-    log.debug (String.format ("Handling annotation request: %s", request.getServletPath ()));    
-    
-    
+                                HttpServletRequest request, HttpServletResponse response) throws ServletException,
+                                                                                         IOException,
+                                                                                         DatasetNotFoundException {
+    log.debug (String.format ("Handling annotation request: %s", request.getServletPath ()));
+
     HttpServletRequest wrappedRequest = new HttpServletRequestWrapper (request) {
       @Override
       public String getPathInfo () {
         return super.getServletPath ().replace ("/annotations/" + heatmapId + "/annotation/" + dimension, "");
-      }      
+      }
     };
 
     Dataset heatmap = workspace.get (heatmapId);
-    long projectId=projectManager.getProjectID (heatmap.name ());
-    if(projectId!=-1){
-      if(wrappedRequest.getPathInfo().trim().equals("/")){
-        if(wrappedRequest.getParameter ("reset")!=null){
+    long projectId = projectManager.getProjectID (heatmap.name ());
+    if (projectId != -1) {
+      if (wrappedRequest.getPathInfo ().trim ().equals ("/")) {
+        if (wrappedRequest.getParameter ("reset") != null) {
           projectManager.deleteProject (projectId);
-        }else{
-          response.sendRedirect ("project?project="+projectId);
+        } else {
+          response.sendRedirect ("project?project=" + projectId);
           return;
         }
       }
     }
-    
+
     wrappedRequest.setAttribute ("dataset", heatmap);
-    wrappedRequest.setAttribute ("dimension", dimension);    
-    this.refineServlet.service (wrappedRequest, response);    
+    wrappedRequest.setAttribute ("dimension", dimension);
+    this.refineServlet.service (wrappedRequest, response);
   }
 
   /**

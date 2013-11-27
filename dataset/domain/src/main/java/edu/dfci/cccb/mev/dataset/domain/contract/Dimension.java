@@ -45,12 +45,12 @@ public interface Dimension {
         for (String alias : type.aliases)
           if (alias.equalsIgnoreCase (string))
             return type;
-      throw new InvalidDimensionTypeException (); // TODO: add args
+      throw new InvalidDimensionTypeException ().dimension (string);
     }
-    
-    @Override 
-    public String toString(){ 
-        return aliases[0]; 
-    } 
+
+    @Override
+    public String toString () {
+      return aliases[0];
+    }
   }
 }

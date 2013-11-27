@@ -25,6 +25,14 @@ public class SelectionNotFoundException extends DatasetException {
    */
   private static final long serialVersionUID = 1L;
 
+  {
+    code ("selection.not.found");
+  }
+
+  public SelectionNotFoundException name (String name) {
+    return argument ("name", name);
+  }
+
   /**
    * 
    */

@@ -14,12 +14,17 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.mock;
 
+import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
+import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import lombok.EqualsAndHashCode;
+import lombok.Synchronized;
 import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 import edu.dfci.cccb.mev.dataset.domain.mock.MapBackedValues.Coordinate;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValueStoreBuilder;
@@ -39,9 +44,15 @@ public class MapBackedValueStoreBuilder extends AbstractValueStoreBuilder {
    * edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder#add(double,
    * java.lang.String, java.lang.String) */
   @Override
-  public ValueStoreBuilder add (double value, String row, String column) {
-    values.put (new Coordinate (row, column), value);
-    return this;
+  @Synchronized
+  public ValueStoreBuilder add (double value, String row, String column) throws ValueStoreException {
+    Coordinate coordinate = new Coordinate (row, column);
+    if (values.containsKey (coordinate))
+      throw new ValueStoreException ().projection (ROW, row).projection (COLUMN, column).value (value);
+    else {
+      values.put (coordinate, value);
+      return this;
+    }
   }
 
   /* (non-Javadoc)

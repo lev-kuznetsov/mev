@@ -21,6 +21,14 @@ package edu.dfci.cccb.mev.dataset.domain.contract;
 public class DatasetNotFoundException extends DatasetException {
   private static final long serialVersionUID = 1L;
 
+  {
+    code ("dataset.not.found.exception");
+  }
+
+  public DatasetNotFoundException name (String name) {
+    return argument ("name", name);
+  }
+
   /**
    * 
    */

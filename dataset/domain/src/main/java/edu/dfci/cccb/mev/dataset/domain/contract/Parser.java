@@ -22,7 +22,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
  */
 public interface Parser {
 
-  String projection (Type dimension);
+  String projection (Type dimension) throws InvalidDimensionTypeException;
 
   double value ();
 

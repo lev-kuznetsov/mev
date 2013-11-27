@@ -46,7 +46,7 @@ public class ClassValueStoreBuilderFactory <T extends ValueStoreBuilder> extends
     try {
       return valueBuilderClass.newInstance ();
     } catch (InstantiationException | IllegalAccessException e) {
-      throw new DatasetBuilderException (e); // TODO: add args
+      throw new DatasetBuilderException (e);
     }
   }
 }

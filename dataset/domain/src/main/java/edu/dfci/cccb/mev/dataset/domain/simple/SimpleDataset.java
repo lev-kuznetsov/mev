@@ -70,7 +70,7 @@ public class SimpleDataset extends AbstractDataset {
     for (Dimension dimension : dimensions)
       if (dimension.type () == type)
         return dimension;
-    throw new InvalidDimensionTypeException (); // TODO: add args
+    throw new InvalidDimensionTypeException ().dimension (type);
   }
 
   /* (non-Javadoc)

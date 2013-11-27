@@ -69,8 +69,6 @@ public class MultipartUploadDatasetArgumentResolver extends RequestParamMethodAr
     if (value instanceof MultipartFile)
       return builder.build (new MultipartTsvInput ((MultipartFile) value));
     else
-      throw new IllegalArgumentException (); // TODO: institute a correct type,
-                                             // should be routed to response 400
-                                             // eventually
+      throw new UnsupportedDatasetDefinitionTypeException ().of (value);
   }
 }

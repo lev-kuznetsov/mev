@@ -56,7 +56,7 @@ public class ArrayListWorkspace extends AbstractWorkspace {
     for (Dataset dataset : datasets)
       if (dataset.name ().equals (name))
         return dataset;
-    throw new DatasetNotFoundException (); // TODO: add args
+    throw new DatasetNotFoundException ().name (name);
   }
 
   /* (non-Javadoc)
@@ -85,6 +85,6 @@ public class ArrayListWorkspace extends AbstractWorkspace {
     for (Iterator<Dataset> datasets = this.datasets.iterator (); datasets.hasNext ();)
       if (datasets.next ().name ().equals (name))
         datasets.remove ();
-    throw new DatasetNotFoundException (); // TODO: add args
+    throw new DatasetNotFoundException ().name (name);
   }
 }
