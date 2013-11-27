@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 @AllArgsConstructor
 public class Data {
 
-  private @JsonView List<String> rows;
-  private @JsonView List<String> columns;
+  private @JsonView List<String> row;
+  private @JsonView List<String> column;
   private @JsonView Collection<Value> values;
 }

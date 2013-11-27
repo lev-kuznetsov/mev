@@ -59,7 +59,6 @@ public class DatasetJsonSerializer extends JsonSerializer<Dataset> {
   @SneakyThrows ({ InvalidDimensionTypeException.class, InvalidCoordinateException.class })
   public void serialize (Dataset value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
                                                                                         JsonProcessingException {
-    new Throwable ().printStackTrace ();
     jgen.writeStartObject ();
     writeDimension (jgen, value.dimension (ROW));
     writeDimension (jgen, value.dimension (COLUMN));
@@ -87,7 +86,11 @@ public class DatasetJsonSerializer extends JsonSerializer<Dataset> {
         max = max < value ? value : max;
         sum += value;
         count++;
+        jgen.writeStartObject ();
+        jgen.writeStringField ("row", row);
+        jgen.writeStringField ("column", column);
         jgen.writeNumber (values.get (row, column));
+        jgen.writeEndObject ();
       }
     jgen.writeEndArray ();
     jgen.writeNumberField ("min", min);
