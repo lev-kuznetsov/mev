@@ -7,7 +7,11 @@ define(['angular', 'directives', 'services', 'controllers'], function(angular){
 	.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	  
 	  $routeProvider
-		  .when('/heatmap', {
+		  .when('/dataset', {
+			  templateUrl: '/container/view/partials/heatmap', 
+			  controller: 'HeatmapCtrl'
+		  })
+		  .when('/dataset/:datasetName', {
 			  templateUrl: '/container/view/partials/heatmap', 
 			  controller: 'HeatmapCtrl'
 		  })

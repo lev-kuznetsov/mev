@@ -5,6 +5,7 @@
 <br>
 <!-- End Page Hacks -->
 
+<p class="lead">Manage your datasets</p>
 
 
 <div class="row-fluid">

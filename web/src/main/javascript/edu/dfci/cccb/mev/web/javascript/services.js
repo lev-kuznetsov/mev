@@ -82,8 +82,9 @@ define ([ 'angular', 'd3' ], function (angular, d3) {
               
               var params = {
                   method : 'GET',
-                  url : '/dataset' + url  + '?format=json'
+                  url : '/dataset/' + url  + '?format=json'
                 };
+              
                 return QHTTP (params, function (d, s) {
                   return d;
                 }, function (d, s) {
