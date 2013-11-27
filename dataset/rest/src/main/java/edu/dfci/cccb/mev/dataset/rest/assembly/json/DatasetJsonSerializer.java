@@ -89,7 +89,7 @@ public class DatasetJsonSerializer extends JsonSerializer<Dataset> {
         jgen.writeStartObject ();
         jgen.writeStringField ("row", row);
         jgen.writeStringField ("column", column);
-        jgen.writeNumber (values.get (row, column));
+        jgen.writeNumberField ("value", values.get (row, column));
         jgen.writeEndObject ();
       }
     jgen.writeEndArray ();
