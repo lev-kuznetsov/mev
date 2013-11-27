@@ -119,12 +119,12 @@ public class ArrayListSelections extends AbstractSelections {
         }
       }.listIterator ();
     else
-      throw new SelectionNotFoundException (); // TODO: add args
+      throw new SelectionNotFoundException ().name (name);
   }
 
   @Override
   public void put (String name, Properties properties, List<String> keys) {
     // TODO Auto-generated method stub
-    
+
   }
 }
