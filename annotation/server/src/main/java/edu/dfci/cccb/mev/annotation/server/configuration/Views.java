@@ -28,9 +28,6 @@ public class Views {
     TemplateHashModel roundingModeEnums = (TemplateHashModel) enumModels.get("java.math.RoundingMode");
     TemplateHashModel dimensionTypeEnums = (TemplateHashModel) enumModels.get("edu.dfci.cccb.mev.dataset.domain.contract.Dimension$Type");
     
-    view.addStaticAttribute("RoundingMode", roundingModeEnums);
-    view.addStaticAttribute("Dimension.Type", dimensionTypeEnums);
-    view.addStaticAttribute("DimensionType", dimensionTypeEnums);
     view.addStaticAttribute("Dimension$Type", dimensionTypeEnums);
     return view;
     

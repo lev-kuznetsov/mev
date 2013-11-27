@@ -220,6 +220,21 @@ define (
             };
 
           })
+          .directive ('uploadsTable', ['API', '$location', function(API, $location){
+            return {
+              restrict : 'A',
+              templateUrl : '/container/view/elements/uploadsTable',
+              link : function (scope, elems, attrs) {
+                
+                scope.datasets = API.user.datasets.get();
+                
+                scope.redirect = function(url){
+                  $location.url(url);
+                };
+                
+              }
+            }
+          }])
           .directive ('uploadDrag', function () {
 
             return {
@@ -479,8 +494,8 @@ define (
               'visHeatmap',
               [
                   'API',
-                  '$http',
-                  function (API, $http) {
+                  '$routeParams',
+                  function (API, $routeParams) {
 
                     return {
 
@@ -649,16 +664,23 @@ define (
                         ;
 
                         var heatmapcells = undefined;
+                        
+                        var prep = function (data) {
 
-                        API.heatmap.get ("dataset/mock/data").then (
-                            function (data) {
+                            heatmapcells = rects.data (data.values).enter ()
+                                .append ("rect")
 
-                              heatmapcells = rects.data (data.values).enter ()
-                                  .append ("rect")
+                            draw (heatmapcells, data.columns, data.rows);
 
-                              draw (heatmapcells, data.columns, data.rows);
+                          }
+                        
+                        if (!$routeParams.datasetName){
+                        	API.heatmap.get ("dataset/mock/data").then (prep);
+                        } else {
+                        	API.dataset.get ( $routeParams.datasetName ).then (prep);
+                        }
 
-                            });
+                        
 
                       }
 

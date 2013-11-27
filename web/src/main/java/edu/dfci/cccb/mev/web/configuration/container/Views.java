@@ -116,6 +116,11 @@ public class Views {
   public FreeMarkerView elementD3RadialTree () {
     return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/d3RadialTree.ftl").build ();
   }
+  
+  @Bean (name = "elements/uploadsTable")
+  public FreeMarkerView elementUploadsTable () {
+    return freemarker ().url ("/edu/dfci/cccb/mev/web/views/elements/uploadsTable.ftl").build ();
+  }
 
   // Partials
 

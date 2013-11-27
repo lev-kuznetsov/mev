@@ -43,6 +43,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.UnparsableContentTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilderFactory;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
+import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListSelections;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 
 /**
@@ -76,14 +77,10 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
     }
     return aggregate (content.name (), valueBuilder.build (), null, // TODO: add
                                                                     // analyses
-                      new SimpleDimension (ROW, rows, null, null), // TODO: add
-                                                                   // selections
-                                                                   // and
+                      new SimpleDimension (ROW, rows, new ArrayListSelections (), null), // TODO: add
                                                                    // annotation
-                      new SimpleDimension (COLUMN, columns, null, null)); // TODO:
+                      new SimpleDimension (COLUMN, columns, new ArrayListSelections (), null)); // TODO:
                                                                           // add
-                                                                          // selections
-                                                                          // and
                                                                           // annotation
   }
 
