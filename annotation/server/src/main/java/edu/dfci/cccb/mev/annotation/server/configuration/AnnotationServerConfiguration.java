@@ -49,14 +49,6 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
     projectManager.setWorkspaceDir (new SessionWorkspaceDir ());
     return projectManager;
   }
-/*
-  @Bean
-  @Scope (value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.INTERFACES)
-  public Heatmap requestHeatmap (HttpServletRequest request) throws HeatmapNotFoundException {
-    Heatmap heatmap = workspace.get (request.getContextPath ().split ("/")[1]);
-    return heatmap;
-  }
-*/
   
   @PostConstruct
   public void setProjectmanagerSingleton () {

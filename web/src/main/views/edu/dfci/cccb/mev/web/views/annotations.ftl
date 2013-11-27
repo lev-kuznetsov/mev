@@ -2,7 +2,6 @@
 <table>
 HEY!444
 
-RoundingMode: ${RoundingMode.UP}<br>
 enums["java.math.RoundingMode"].UP: ${enums["java.math.RoundingMode"].UP}<br>
 DimensionType: ${Dimension$Type.COLUMN}<br>
 enums["edu.dfci.cccb.mev.dataset.domain.contract.Dimension$Type"].COLUMN: ${enums["edu.dfci.cccb.mev.dataset.domain.contract.Dimension$Type"].COLUMN}<br>
@@ -18,18 +17,24 @@ enums["edu.dfci.cccb.mev.dataset.domain.contract.Dimension$Type"].COLUMN: ${enum
 			<td>${columnKey}</td>	
 		</#list>
 	</tr>
-		
-	<#list columnDimension.selections().list() as selection_name>		
-		<#assign selection=columnDimension.selections().get(selection_name) >
-		<tr>
-		<td>${selection_name}:${selection.name()}</td>
-		<td>
-		<#list selection.keys() as columnInSet>
-			${columnInSet},
+
+	<#if columnDimension.selections()??>
+		<#list columnDimension.selections().list() as selection_name>		
+			<#assign selection=columnDimension.selections().get(selection_name) >
+			<tr>
+			<td>${selection_name}:${selection.name()}</td>
+			<td>
+			<#list selection.keys() as columnInSet>
+				${columnInSet},
+			</#list>
+			</td>
+			</tr>
 		</#list>
-		</td>
+	<#else>
+		<tr>
+		<td>no selections</td>
 		</tr>
-	</#list>
+	</#if>
 </#list>
 
 </table>

@@ -1,5 +1,11 @@
 package edu.dfci.cccb.mev.annotation.server.controllers;
 
+import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
+import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
+import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DATASET;
+import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DATASET_URL_ELEMENT;
+import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DIMENSION;
+import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DIMENSION_URL_ELEMENT;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -7,11 +13,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Properties;
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.*;
-
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -36,16 +40,17 @@ import com.google.refine.RefineServlet;
 import com.google.refine.io.FileProjectManager;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
-import edu.dfci.cccb.mev.dataset.domain.mock.DatasetMock;
-import freemarker.ext.beans.BeansWrapper;
-import freemarker.template.TemplateHashModel;
+import edu.dfci.cccb.mev.dataset.domain.mock.MockTsvInput;
+import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListSelections;
+import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDataset;
+import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 import freemarker.template.TemplateModelException;
-import static java.util.Arrays.asList;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
-import java.math.RoundingMode;
 @Controller
 @RequestMapping ("/annotations")
 @Log4j
@@ -55,6 +60,7 @@ public class AnnotationController extends WebApplicationObjectSupport {
   private @Inject Environment environment;
   private @Inject Workspace workspace;
   private @Inject FileProjectManager projectManager;
+  private @Inject DatasetBuilder datasetBuilder;
   
   @PostConstruct
   private void createRefineServlet () throws ServletException {
@@ -63,18 +69,35 @@ public class AnnotationController extends WebApplicationObjectSupport {
   }
 
   @RequestMapping ("/")
-  public ModelAndView annotationsHome () throws InvalidDatasetNameException, TemplateModelException {
+  public ModelAndView annotationsHome () throws InvalidDatasetNameException, TemplateModelException, DatasetBuilderException {
 
     try {
-      workspace.get ("boom");
+      workspace.get ("mock");
     } catch (DatasetNotFoundException e) {
-      Dataset mockHeatmap = new DatasetMock ("boom", "aaa,bbb,ccc", "a,b,c");       
+      Dimension columns = new SimpleDimension (COLUMN, new ArrayList<String>(Arrays.asList("a", "b", "c")), new ArrayListSelections(), null);
+      Dimension rows = new SimpleDimension (ROW, new ArrayList<String>(Arrays.asList("aaa", "bbb", "ccc")), new ArrayListSelections(), null);
+      Dataset mockHeatmap = new SimpleDataset ("mock", null, null, columns, rows);            
+      
       workspace.put (mockHeatmap);
     }
+    
+    try{
+      workspace.get ("build-mock");
+    }catch(DatasetNotFoundException e){
+      Dataset set = datasetBuilder.build (new MockTsvInput ("build-mock", "id\tsa\tsb\tsc\n" +
+              "g1\t.1\t.2\t.3\n" +
+              "g2\t.4\t.5\t.6"));
+      workspace.put (set);
+    }
+    
     try {
       workspace.get ("shmock");
     } catch (DatasetNotFoundException e) {
-      Dataset mockHeatmap = new DatasetMock ("shmock", "aaa,bbb,ccc", "e,f,g");       
+      //Dataset mockHeatmap = new DatasetMock ("shmock", "aaa,bbb,ccc", "e,f,g");
+      Dimension columns = new SimpleDimension (COLUMN, new ArrayList<String>(Arrays.asList("e", "f", "g")), new ArrayListSelections(), null);
+      Dimension rows = new SimpleDimension (ROW, new ArrayList<String>(Arrays.asList("eee", "fff", "ggg")), new ArrayListSelections(), null);
+      Dataset mockHeatmap = new SimpleDataset ("shmock", null, null, columns, rows);
+      
       workspace.put (mockHeatmap);
     }
 
