@@ -2,12 +2,9 @@
 
 
 </style>
-
-
-<div class='well'>
   
-  <form
-      class="dropzone"
-      id="uploader"></form>
   
+<div class="well">
+
+<form class="dropzone" id="uploader"></form>
 </div>

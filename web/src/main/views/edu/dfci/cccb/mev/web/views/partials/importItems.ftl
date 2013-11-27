@@ -1,40 +1,45 @@
+
 <!-- Page Hacks -->
 <br>
 <br>
 <br>
 <!-- End Page Hacks -->
 
-<div class="row">
+<p class="lead">Manage your datasets</p>
 
-  <div class="well">
 
+<div class="row-fluid">
+
+  <div class="span12">
     <div class="row-fluid">
-    
-      <div class="span4">
-      
-      
-        <div class='uploadDrag'></div>
-      
-      </div>
-      
-      <div class="span8">
-    
-        <div class="well">
-          <ul>
-          
-             <li>Dataset</li>
-             
-             <li>Dataset</li>
-             
-             <li>Dataset</li>
-             
-          </ul>
-        </div>
-    
-      </div>
-
-    </div>
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#upload" data-toggle="tab">Upload</a></li>
+        <li><a href="#googleDrive" data-toggle="tab">Google Drive</a></li>
+        <li><a href="#tcga" data-toggle="tab">TCGA</a></li>
+        <li><a href="#current" data-toggle="tab">Current</a></li>
+      </ul>
  
+      <div class="tab-content">
+      
+        <div class="tab-pane active" id="upload">
+          <div class='uploadDrag'></div>
+        </div>
+        
+        <div class="tab-pane" id="googleDrive">
+
+        </div>
+        
+        <div class="tab-pane" id="tcga">
+
+        </div>
+       
+        <div class="tab-pane" id="current">
+        
+          <div uploads-Table></div>
+          
+        </div>
+      </div>
+    </div>
   </div>
-  
+
 </div>
