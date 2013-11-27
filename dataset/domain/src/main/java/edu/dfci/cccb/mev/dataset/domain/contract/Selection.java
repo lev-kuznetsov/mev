@@ -16,7 +16,6 @@ package edu.dfci.cccb.mev.dataset.domain.contract;
 
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * @author levk

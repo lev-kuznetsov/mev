@@ -14,12 +14,26 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
+
 /**
  * @author levk
  * 
  */
 public class InvalidDimensionTypeException extends DatasetException {
   private static final long serialVersionUID = 1L;
+
+  {
+    code ("invalid.dimension");
+  }
+
+  public InvalidDimensionTypeException dimension (String type) {
+    return argument ("dimension", type);
+  }
+
+  public InvalidDimensionTypeException dimension (Type type) {
+    return argument ("dimension", type.name ());
+  }
 
   /**
    * 

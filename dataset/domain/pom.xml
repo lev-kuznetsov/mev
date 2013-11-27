@@ -25,6 +25,14 @@
       <version>2.1.0</version>
     </dependency>
 
+    <!-- MeV Common API -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-api-common</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
   </dependencies>
 
 </project>

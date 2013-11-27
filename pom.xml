@@ -14,10 +14,11 @@
 
     <!-- MeV modules -->
 
+    <module>math</module>
     <module>api</module>
     <module>dataset</module>
-    <module>heatmap</module>
     <module>annotation</module>
+    <module>hcl</module>
     <module>web</module>
 
   </modules>

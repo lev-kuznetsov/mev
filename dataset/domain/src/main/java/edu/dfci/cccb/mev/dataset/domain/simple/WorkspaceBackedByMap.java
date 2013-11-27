@@ -1,14 +1,12 @@
 package edu.dfci.cccb.mev.dataset.domain.simple;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
-import edu.dfci.cccb.mev.dataset.domain.mock.DatasetMock;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractWorkspace;
 
 public class WorkspaceBackedByMap extends AbstractWorkspace {
@@ -42,7 +40,7 @@ public class WorkspaceBackedByMap extends AbstractWorkspace {
 
   @Override
   public List<String> list () {
-    return new ArrayList(datasetsMap.keySet ());
+    return new ArrayList<String> (datasetsMap.keySet ());
   }
 
 }

@@ -29,10 +29,8 @@ public interface Heatmap {
   Data data ();
 
   Annotation annotation (Dimension dimension);
-
-  DimensionHeader<String> dimensionHeader (Dimension dimension);
-
-  DimensionHeader<String> dimensionHeader (String dimension);
-
-  DimensionHeader<String> columnHeader ();
+  
+  Order order ();
+  
+  void reorder (Adjuster adjuster);
 }

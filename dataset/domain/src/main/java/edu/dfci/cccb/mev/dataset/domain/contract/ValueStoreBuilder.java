@@ -20,7 +20,7 @@ package edu.dfci.cccb.mev.dataset.domain.contract;
  */
 public interface ValueStoreBuilder {
 
-  ValueStoreBuilder add (double value, String row, String column);
+  ValueStoreBuilder add (double value, String row, String column) throws ValueStoreException;
 
   Values build ();
 }

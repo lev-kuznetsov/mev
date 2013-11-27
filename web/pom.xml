@@ -82,20 +82,6 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
-    <!-- Heatmap package -->
-
-    <dependency>
-      <groupId>edu.dfci.cccb</groupId>
-      <artifactId>mev-heatmap-client</artifactId>
-      <version>BAYLIE-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <groupId>edu.dfci.cccb</groupId>
-      <artifactId>mev-heatmap-server</artifactId>
-      <version>BAYLIE-SNAPSHOT</version>
-    </dependency>
-
     <!-- Annotation Server -->
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
@@ -114,7 +100,7 @@
 
     <!-- Webjars -->
 
-	<dependency>
+    <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>dropzone</artifactId>
       <version>3.7.1</version>

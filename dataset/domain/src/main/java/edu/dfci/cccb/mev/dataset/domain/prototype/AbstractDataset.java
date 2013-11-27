@@ -37,7 +37,7 @@ public abstract class AbstractDataset implements Dataset {
 
   protected AbstractDataset (String name) throws InvalidDatasetNameException {
     if (!VALID_DATASET_NAME_PATTERN.matcher (name).matches ())
-      throw new InvalidDatasetNameException (); // TODO: add arguments
+      throw new InvalidDatasetNameException ().name (name);
     this.name = name;
   }
 

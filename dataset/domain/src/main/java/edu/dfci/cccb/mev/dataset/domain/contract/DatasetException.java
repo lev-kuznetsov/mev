@@ -14,11 +14,13 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
+import edu.dfci.cccb.mev.api.common.support.MevException;
+
 /**
  * @author levk
- *
+ * 
  */
-public class DatasetException extends Exception {
+public class DatasetException extends MevException {
   private static final long serialVersionUID = 1L;
 
   /**

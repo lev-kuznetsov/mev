@@ -21,6 +21,10 @@ package edu.dfci.cccb.mev.dataset.domain.contract;
 public class DatasetComposingException extends DatasetException {
   private static final long serialVersionUID = 1L;
 
+  {
+    code ("dataset.composing.exception");
+  }
+
   /**
    * 
    */

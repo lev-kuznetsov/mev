@@ -12,8 +12,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.hcl.domain.mock;
+
+import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractLeaf;
+
 /**
  * @author levk
- *
+ * 
  */
-package edu.dfci.cccb.mev.dataset.domain;
+public class MockLeaf extends AbstractLeaf<Double> {
+
+  private double distance;
+  private String name;
+
+  /**
+   * 
+   */
+  public MockLeaf (double distance, String name) {
+    this.name = name;
+    this.distance = distance;
+  }
+
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.hcl.domain.contract.Leaf#name() */
+  @Override
+  public String name () {
+    return name;
+  }
+
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.hcl.domain.contract.Node#distance() */
+  @Override
+  public Double distance () {
+    return distance;
+  }
+}

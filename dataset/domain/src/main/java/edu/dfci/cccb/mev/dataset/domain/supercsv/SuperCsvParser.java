@@ -36,6 +36,8 @@ import org.supercsv.util.CsvContext;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
+import edu.dfci.cccb.mev.dataset.domain.contract.InputContentStreamException;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractParser;
 
 /**
@@ -105,7 +107,7 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
       currentRowName = firstDataLine.get (0);
       currentRow = firstProcessedLine.entrySet ().iterator ();
     } catch (IOException e) {
-      throw new DatasetBuilderException (e); // TODO: add args
+      throw new InputContentStreamException (e);
     }
   }
 
@@ -114,14 +116,14 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
    * edu.dfci.cccb.mev.dataset.domain.contract.builders.Parser#dimension(edu
    * .dfci.cccb.mev.dataset.domain.contract.Dimension.Type) */
   @Override
-  public String projection (Type type) {
+  public String projection (Type type) throws InvalidDimensionTypeException {
     switch (type) {
     case ROW:
       return currentRowName;
     case COLUMN:
       return currentColumnName;
     default:
-      throw new UnsupportedOperationException ();
+      throw new InvalidDimensionTypeException ().dimension (type);
     }
   }
 
@@ -148,7 +150,7 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
             row.put (header[index], value);
         currentRow = row.entrySet ().iterator ();
       } catch (IOException e) {
-        throw new DatasetBuilderException (e); // TODO: add args
+        throw new InputContentStreamException (e);
       }
     Entry<String, Double> next = currentRow.next ();
     currentColumnName = next.getKey ();

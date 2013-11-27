@@ -23,6 +23,14 @@ import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 public class MissingPathVariableException extends DatasetException {
   private static final long serialVersionUID = 1L;
 
+  {
+    code ("missing.path.variable");
+  }
+
+  public MissingPathVariableException variable (String name) {
+    return argument ("variable", name);
+  }
+
   /**
    * 
    */

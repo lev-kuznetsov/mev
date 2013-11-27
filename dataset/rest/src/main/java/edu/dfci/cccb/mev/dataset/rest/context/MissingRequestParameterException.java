@@ -23,6 +23,14 @@ import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 public class MissingRequestParameterException extends DatasetException {
   private static final long serialVersionUID = 1L;
 
+  {
+    code ("missing.request.parameter");
+  }
+
+  public MissingRequestParameterException parameter (String name) {
+    return argument ("parameter", name);
+  }
+
   /**
    * 
    */
