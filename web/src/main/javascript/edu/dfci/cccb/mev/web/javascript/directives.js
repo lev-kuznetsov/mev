@@ -586,8 +586,7 @@ define (
                                                 .get (
                                                     '/heatmap/dataset/mock/shuffleColumns?format=json',
                                                     function (colreordering) {
-                                                      console
-                                                          .log (colreordering.length)
+                                                      
                                                       cluster (heatmapcells,
                                                           colreordering)
                                                     })
@@ -670,7 +669,7 @@ define (
                             heatmapcells = rects.data (data.values).enter ()
                                 .append ("rect")
 
-                            draw (heatmapcells, data.columns, data.rows);
+                            draw (heatmapcells, data.column, data.row);
 
                           }
                         
