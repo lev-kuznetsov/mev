@@ -525,8 +525,12 @@ define (
                         var height = scope.height - margin.top - margin.bottom;
 
                         var window = d3.select (elems[0]);
+                        
+                        var leftshifter = d3.scale.linear ().rangeRound ([ 255, 0 ])
 
-                        var cellColor = function (val, type) {
+                        var rightshifter = d3.scale.linear ().rangeRound ([ 0, 255 ])
+
+                        function cellColor (val, type) {
 
                           var color = {
                             red : 0,
@@ -534,11 +538,7 @@ define (
                             green : 0
                           }
 
-                          var leftshifter = d3.scale.linear ().domain (
-                              [ -3, 0 ]).rangeRound ([ 255, 0 ])
-
-                          var rightshifter = d3.scale.linear ().domain (
-                              [ 0, 3 ]).rangeRound ([ 0, 255 ])
+                          
 
                           if (type) {
 
@@ -586,8 +586,7 @@ define (
                                                 .get (
                                                     '/heatmap/dataset/mock/shuffleColumns?format=json',
                                                     function (colreordering) {
-                                                      console
-                                                          .log (colreordering.length)
+                                                      
                                                       cluster (heatmapcells,
                                                           colreordering)
                                                     })
@@ -666,16 +665,33 @@ define (
                         var heatmapcells = undefined;
                         
                         var prep = function (data) {
+                        	
+                        	leftshifter.domain ([ data.min, data.avg ]);
+                                    
+                            rightshifter.domain ([ data.avg, data.max])
 
                             heatmapcells = rects.data (data.values).enter ()
                                 .append ("rect")
 
-                            draw (heatmapcells, data.columns, data.rows);
+                            draw (heatmapcells, data.column, data.row);
+
+                          }
+                        
+                        var mockprep = function (data) {
+                        	
+                        	leftshifter.domain ([ -3, 0 ]);
+                                    
+                            rightshifter.domain ([ 0, 3])
+
+                            heatmapcells = rects.data (data.values).enter ()
+                                .append ("rect")
+
+                            draw (heatmapcells, data.column, data.row);
 
                           }
                         
                         if (!$routeParams.datasetName){
-                        	API.heatmap.get ("dataset/mock/data").then (prep);
+                        	API.heatmap.get ("dataset/mock/data").then (mockprep);
                         } else {
                         	API.dataset.get ( $routeParams.datasetName ).then (prep);
                         }
