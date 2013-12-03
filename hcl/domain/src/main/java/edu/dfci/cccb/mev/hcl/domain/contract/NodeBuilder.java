@@ -20,14 +20,14 @@ import java.util.Set;
  * @author levk
  * 
  */
-public interface NodeBuilder <T> {
+public interface NodeBuilder {
 
-  public interface NodeTypeBuilder <T> {
+  public interface NodeTypeBuilder {
 
-    Branch<T> children (Set<Node<T>> children);
+    Branch children (Set<Node> children);
 
-    Leaf<T> name (String name);
+    Leaf name (String name);
   }
 
-  NodeTypeBuilder<T> distance (T distance);
+  NodeTypeBuilder distance (double distance);
 }

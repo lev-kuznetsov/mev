@@ -12,40 +12,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.hcl.domain.mock;
-
-import lombok.ToString;
-import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractLeaf;
+package edu.dfci.cccb.mev.web.domain.social;
 
 /**
  * @author levk
  * 
  */
-@ToString
-public class MockLeaf extends AbstractLeaf {
+public interface SocialContext {
 
-  private double distance;
-  private String name;
+  String id ();
 
-  /**
-   * 
-   */
-  public MockLeaf (double distance, String name) {
-    this.name = name;
-    this.distance = distance;
-  }
-
-  /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.hcl.domain.contract.Leaf#name() */
-  @Override
-  public String name () {
-    return name;
-  }
-
-  /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.hcl.domain.contract.Node#distance() */
-  @Override
-  public double distance () {
-    return distance;
-  }
+  void set (String id);
 }

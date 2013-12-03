@@ -30,7 +30,7 @@ public abstract class MevException extends Exception {
 
   private @Getter String code;
   private @Getter final Map<String, String> arguments = new HashMap<String, String> ();
-  
+
   {
     code ("mev.unspecified");
   }
@@ -89,5 +89,12 @@ public abstract class MevException extends Exception {
     } catch (InstantiationException | IllegalAccessException e) {
       throw new RuntimeException (e);
     }
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Throwable#toString() */
+  @Override
+  public String toString () {
+    return super.toString () + " arguments: " + arguments;
   }
 }

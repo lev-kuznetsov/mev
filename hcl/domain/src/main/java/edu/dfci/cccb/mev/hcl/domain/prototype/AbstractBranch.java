@@ -20,4 +20,4 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Branch;
  * @author levk
  * 
  */
-public abstract class AbstractBranch <T> implements Branch<T> {}
+public abstract class AbstractBranch implements Branch {}

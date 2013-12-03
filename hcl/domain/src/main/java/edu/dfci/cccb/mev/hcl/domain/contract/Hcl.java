@@ -14,6 +14,7 @@
  */
 package edu.dfci.cccb.mev.hcl.domain.contract;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
@@ -22,7 +23,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
  * @author levk
  * 
  */
-public interface Hcl <T> {
+public interface Hcl extends Analysis {
 
-  Node cluster (Dataset dataset, Dimension dimension, Metric<T> metric, Algorithm<T> algorithm) throws DatasetException;
+  Node cluster (Dataset dataset, Dimension dimension, Metric metric, Algorithm algorithm) throws DatasetException;
 }

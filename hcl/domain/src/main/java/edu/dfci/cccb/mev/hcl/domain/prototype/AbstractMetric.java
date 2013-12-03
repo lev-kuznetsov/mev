@@ -20,4 +20,4 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
  * @author levk
  * 
  */
-public abstract class AbstractMetric<T> implements Metric<T> {}
+public abstract class AbstractMetric implements Metric {}

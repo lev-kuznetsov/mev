@@ -20,4 +20,4 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Algorithm;
  * @author levk
  * 
  */
-public abstract class AbstractAlgorithm <T> implements Algorithm<T> {}
+public abstract class AbstractAlgorithm implements Algorithm {}

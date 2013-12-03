@@ -16,4 +16,4 @@
  * @author levk
  *
  */
-package edu.dfci.cccb.mev.web.domain.reflection.concrete;
+package edu.dfci.cccb.mev.web.configuration.social;

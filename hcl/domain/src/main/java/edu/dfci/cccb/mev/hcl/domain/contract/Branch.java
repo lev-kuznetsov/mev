@@ -20,7 +20,7 @@ import java.util.Set;
  * @author levk
  * 
  */
-public interface Branch <T> extends Node<T> {
+public interface Branch extends Node {
 
-  Set<Node<T>> children ();
+  Set<Node> children ();
 }

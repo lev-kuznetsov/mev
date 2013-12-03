@@ -20,14 +20,14 @@ import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractAlgorithm;
  * @author levk
  * 
  */
-public class AverageAlgorithm extends AbstractAlgorithm<Double> {
+public class AverageAlgorithm extends AbstractAlgorithm {
 
   /* (non-Javadoc)
    * @see
    * edu.dfci.cccb.mev.hcl.domain.contract.Algorithm#aggregate(java.lang.Iterable
    * ) */
   @Override
-  public Double aggregate (Iterable<Double> distances) {
+  public double aggregate (Iterable<Double> distances) {
     int count = 0;
     double aggregate = .0;
     for (double distance : distances)

@@ -31,7 +31,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import edu.dfci.cccb.mev.api.client.support.injectors.InjectorRegistry;
 import edu.dfci.cccb.mev.api.client.support.injectors.ViewRegistrar;
 import edu.dfci.cccb.mev.web.domain.reflection.Reflection;
-import edu.dfci.cccb.mev.web.domain.reflection.concrete.SpringReflector;
+import edu.dfci.cccb.mev.web.domain.reflection.spring.SpringReflector;
 
 /**
  * @author levk

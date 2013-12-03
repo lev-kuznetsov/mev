@@ -48,16 +48,4 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
   public void setProjectmanagerSingleton () {
     ProjectManager.setSingleton (sessionProjectManager);
   }
-
-  /* @Bean public ProjectManagerFactory projectManagerFactory(){ return new
-   * ProjectManagerFactory(){ }; } */
-
-  /* <bean id="myWorkspaceDir" class="com.google.refine.SessionWorkspaceDir"
-   * scope="session" lazy-init="true"> <aop:scoped-proxy
-   * proxy-target-class="true"/> </bean> <bean id="mySessionProjectManager"
-   * class="com.google.refine.io.FileProjectManager" scope="session"> <property
-   * name="workspaceDir" ref="myWorkspaceDir" /> <aop:scoped-proxy
-   * proxy-target-class="true" /> </bean> <bean id="myProjectManagerFactory"
-   * class="com.google.refine.ProjectManagerFactory" > <property
-   * name="projectManager" ref="mySessionProjectManager"></property> </bean> */
 }

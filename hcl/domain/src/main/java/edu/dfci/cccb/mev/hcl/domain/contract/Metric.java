@@ -20,7 +20,7 @@ import java.util.List;
  * @author levk
  * 
  */
-public interface Metric <T> {
+public interface Metric {
 
-  T distance (List<Double> from, List<Double> to);
+  double distance (List<Double> from, List<Double> to);
 }
