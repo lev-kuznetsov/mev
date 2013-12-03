@@ -25,21 +25,21 @@ import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
  * @author levk
  * 
  */
-public class MockNodeBuilder implements NodeBuilder<Double> {
+public class MockNodeBuilder implements NodeBuilder {
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder#distance(double) */
   @Override
-  public NodeTypeBuilder<Double> distance (final Double distance) {
-    return new NodeTypeBuilder<Double> () {
+  public NodeTypeBuilder distance (final double distance) {
+    return new NodeTypeBuilder () {
 
       @Override
-      public Leaf<Double> name (final String name) {
+      public Leaf name (final String name) {
         return new MockLeaf (distance, name);
       }
 
       @Override
-      public Branch<Double> children (Set<Node<Double>> children) {
+      public Branch children (Set<Node> children) {
         return new MockBranch (distance, children);
       }
     };

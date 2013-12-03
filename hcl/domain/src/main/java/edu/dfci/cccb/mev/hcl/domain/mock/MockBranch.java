@@ -19,6 +19,7 @@ import static java.util.Collections.unmodifiableSet;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.ToString;
 import edu.dfci.cccb.mev.hcl.domain.contract.Node;
 import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractBranch;
 
@@ -26,12 +27,13 @@ import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractBranch;
  * @author levk
  * 
  */
-public class MockBranch extends AbstractBranch<Double> {
+@ToString
+public class MockBranch extends AbstractBranch {
 
-  private Set<Node<Double>> children;
+  private Set<Node> children;
   private double distance;
 
-  public MockBranch (double distance, Set<Node<Double>> children) {
+  public MockBranch (double distance, Set<Node> children) {
     this.distance = distance;
     this.children = unmodifiableSet (new HashSet<> (children));
   }
@@ -39,14 +41,14 @@ public class MockBranch extends AbstractBranch<Double> {
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.hcl.domain.contract.Branch#children() */
   @Override
-  public Set<Node<Double>> children () {
+  public Set<Node> children () {
     return children;
   }
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.hcl.domain.contract.Node#distance() */
   @Override
-  public Double distance () {
+  public double distance () {
     return distance;
   }
 }

@@ -12,30 +12,46 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.web.configuration.resolvers;
+package edu.dfci.cccb.mev.hcl.rest.configuration;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.http.MediaType.TEXT_HTML;
+import static edu.dfci.cccb.mev.hcl.rest.converters.NewickMessageConverter.NEWICK_EXTENSION;
+import static edu.dfci.cccb.mev.hcl.rest.converters.NewickMessageConverter.NEWICK_MEDIA_TYPE;
+import lombok.ToString;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
+
+import edu.dfci.cccb.mev.hcl.domain.concrete.TwoDimensionalHcl;
+import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
+import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
+import edu.dfci.cccb.mev.hcl.domain.mock.MockNodeBuilder;
+import edu.dfci.cccb.mev.hcl.rest.converters.NewickMessageConverter;
 
 /**
  * @author levk
  * 
  */
 @Configuration
-public class ContentNegotiationConfiguration extends WebMvcConfigurerAdapter {
+@ToString
+@ComponentScan (basePackages = "edu.dfci.cccb.mev.hcl.rest.controllers")
+public class HclConfiguration extends WebMvcConfigurerAdapter {
 
   @Bean
-  public ContentNegotiatingViewResolver contentNegotiatingViewResolver (final ContentNegotiationManager manager) {
-    ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver ();
-    resolver.setContentNegotiationManager (manager);
-    return resolver;
+  public NodeBuilder nodeBuilder () {
+    return new MockNodeBuilder ();
+  }
+
+  @Bean
+  public Hcl hcl (NodeBuilder nodeBuilder) {
+    return new TwoDimensionalHcl (nodeBuilder);
+  }
+
+  @Bean
+  public NewickMessageConverter newickMessageConverter () {
+    return new NewickMessageConverter ();
   }
 
   /* (non-Javadoc)
@@ -46,13 +62,6 @@ public class ContentNegotiationConfiguration extends WebMvcConfigurerAdapter {
    * .ContentNegotiationConfigurer) */
   @Override
   public void configureContentNegotiation (ContentNegotiationConfigurer configurer) {
-    configurer.favorPathExtension (false)
-              .favorParameter (true)
-              .parameterName ("format")
-              .ignoreAcceptHeader (true)
-              .useJaf (false)
-              .defaultContentType (TEXT_HTML)
-              .mediaType ("html", TEXT_HTML)
-              .mediaType ("json", APPLICATION_JSON);
+    configurer.mediaType (NEWICK_EXTENSION, NEWICK_MEDIA_TYPE);
   }
 }

@@ -16,9 +16,9 @@ package edu.dfci.cccb.mev.hcl.domain.contract;
 
 /**
  * @author levk
- *
+ * 
  */
-public interface Algorithm<T> {
+public interface Algorithm {
 
-  T aggregate (Iterable<T> distances);
+  double aggregate (Iterable<Double> distances);
 }

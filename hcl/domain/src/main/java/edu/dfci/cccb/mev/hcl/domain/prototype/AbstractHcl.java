@@ -14,10 +14,11 @@
  */
 package edu.dfci.cccb.mev.hcl.domain.prototype;
 
+import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
 import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 
 /**
  * @author levk
  * 
  */
-public abstract class AbstractHcl <T> implements Hcl<T> {}
+public abstract class AbstractHcl extends AbstractAnalysis implements Hcl {}

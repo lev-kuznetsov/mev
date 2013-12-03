@@ -16,4 +16,4 @@
  * @author levk
  *
  */
-package edu.dfci.cccb.mev.web.domain;
+package edu.dfci.cccb.mev.hcl.rest.converters;

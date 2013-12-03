@@ -23,6 +23,12 @@
 
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-dataset-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
       <artifactId>mev-hcl-domain</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>

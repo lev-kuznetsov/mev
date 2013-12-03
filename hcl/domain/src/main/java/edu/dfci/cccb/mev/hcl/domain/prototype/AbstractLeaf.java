@@ -20,4 +20,4 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Leaf;
  * @author levk
  * 
  */
-public abstract class AbstractLeaf <T> implements Leaf<T> {}
+public abstract class AbstractLeaf implements Leaf {}

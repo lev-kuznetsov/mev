@@ -18,7 +18,7 @@ package edu.dfci.cccb.mev.hcl.domain.contract;
  * @author levk
  * 
  */
-public interface Leaf <T> extends Node<T> {
+public interface Leaf extends Node {
 
   String name ();
 }

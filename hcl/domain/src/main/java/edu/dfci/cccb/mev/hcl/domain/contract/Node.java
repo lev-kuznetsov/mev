@@ -18,7 +18,7 @@ package edu.dfci.cccb.mev.hcl.domain.contract;
  * @author levk
  * 
  */
-public interface Node <T> {
+public interface Node {
 
-  T distance ();
+  double distance ();
 }
