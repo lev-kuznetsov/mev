@@ -29,20 +29,23 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analyses;
+import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.InputContentStreamException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Parser;
 import edu.dfci.cccb.mev.dataset.domain.contract.ParserFactory;
 import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 import edu.dfci.cccb.mev.dataset.domain.contract.UnparsableContentTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilderFactory;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
+import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListAnalyses;
 import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListSelections;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 
@@ -55,7 +58,7 @@ import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 public abstract class AbstractDatasetBuilder implements DatasetBuilder {
 
   private @Getter @Setter (onMethod = @_ (@Inject)) Collection<? extends ParserFactory> parserFactories;
-  private @Getter @Setter (onMethod = @_ (@Inject)) ValueStoreBuilderFactory valueStoreBuilderFactory;
+  private @Getter @Setter (onMethod = @_ (@Inject)) ValueStoreBuilder valueStoreBuilder;
 
   /* (non-Javadoc)
    * @see
@@ -65,23 +68,34 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
   public Dataset build (RawInput content) throws DatasetBuilderException,
                                          InvalidDatasetNameException,
                                          InvalidDimensionTypeException {
-    ValueStoreBuilder valueBuilder = valueStoreBuilderFactory.builder ();
     List<String> rows = new ArrayList<> ();
     List<String> columns = new ArrayList<> ();
     for (Parser parser = parser (content); parser.next ();) {
-      valueBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));
+      valueStoreBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));
       if (!rows.contains (parser.projection (ROW)))
         rows.add (parser.projection (ROW));
       if (!columns.contains (parser.projection (COLUMN)))
         columns.add (parser.projection (COLUMN));
     }
-    return aggregate (content.name (), valueBuilder.build (), null, // TODO: add
-                                                                    // analyses
-                      new SimpleDimension (ROW, rows, new ArrayListSelections (), null), // TODO: add
-                                                                   // annotation
-                      new SimpleDimension (COLUMN, columns, new ArrayListSelections (), null)); // TODO:
-                                                                          // add
-                                                                          // annotation
+    return aggregate (content.name (), valueStoreBuilder.build (), analyses (),
+                      dimension (ROW, rows, selections (), annotation ()),
+                      dimension (COLUMN, columns, selections (), annotation ()));
+  }
+
+  protected Analyses analyses () {
+    return new ArrayListAnalyses ();
+  }
+
+  protected Dimension dimension (Type type, List<String> keys, Selections selections, Annotation annotation) {
+    return new SimpleDimension (type, keys, selections, annotation);
+  }
+
+  protected Selections selections () {
+    return new ArrayListSelections ();
+  }
+
+  protected Annotation annotation () {
+    return null; // TODO: add annotation
   }
 
   protected abstract Dataset aggregate (String name,

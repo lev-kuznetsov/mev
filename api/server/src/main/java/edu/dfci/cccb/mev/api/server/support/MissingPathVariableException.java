@@ -12,23 +12,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.rest.context;
+package edu.dfci.cccb.mev.api.server.support;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
+import edu.dfci.cccb.mev.api.common.support.MevException;
 
 /**
  * @author levk
  * 
  */
-public class MissingPathVariableException extends DatasetException {
+public class MissingPathVariableException extends MevException {
   private static final long serialVersionUID = 1L;
 
   {
     code ("missing.path.variable");
   }
 
-  public MissingPathVariableException variable (String name) {
-    return argument ("variable", name);
+  public MissingPathVariableException name (String name) {
+    return argument ("name", name);
   }
 
   /**

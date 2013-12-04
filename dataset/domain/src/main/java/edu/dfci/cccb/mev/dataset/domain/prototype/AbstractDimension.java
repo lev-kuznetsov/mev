@@ -14,8 +14,12 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.prototype;
 
+import static lombok.AccessLevel.PROTECTED;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
 /**
@@ -24,18 +28,9 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
  */
 @EqualsAndHashCode
 @ToString
+@Accessors (fluent = true)
+@RequiredArgsConstructor (access = PROTECTED)
 public abstract class AbstractDimension implements Dimension {
 
-  private final Type type;
-
-  protected AbstractDimension (Type type) {
-    this.type = type;
-  }
-
-  /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.dataset.domain.contract.Dimension#type() */
-  @Override
-  public Type type () {
-    return type;
-  }
+  private @Getter final Type type;
 }

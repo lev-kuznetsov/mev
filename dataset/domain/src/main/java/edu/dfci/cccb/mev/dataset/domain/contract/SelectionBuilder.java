@@ -14,11 +14,22 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
+import java.util.List;
+import java.util.Properties;
+
 /**
  * @author levk
  * 
  */
-public interface ValueStoreBuilderFactory {
+public interface SelectionBuilder {
 
-  ValueStoreBuilder builder () throws DatasetBuilderException;
+  SelectionBuilder name (String name);
+
+  SelectionBuilder property (String key, String value);
+
+  SelectionBuilder properties (Properties properties);
+
+  SelectionBuilder keys (List<String> keys);
+
+  Selection build ();
 }

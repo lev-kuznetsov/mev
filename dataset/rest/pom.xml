@@ -26,7 +26,13 @@
       <artifactId>mev-dataset-domain</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
-    
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-api-server</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
     <!-- Servlet API -->
 
     <dependency>

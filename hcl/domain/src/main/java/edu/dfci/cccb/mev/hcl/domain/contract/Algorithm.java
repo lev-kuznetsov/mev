@@ -21,4 +21,6 @@ package edu.dfci.cccb.mev.hcl.domain.contract;
 public interface Algorithm {
 
   double aggregate (Iterable<Double> distances);
+
+  String name ();
 }

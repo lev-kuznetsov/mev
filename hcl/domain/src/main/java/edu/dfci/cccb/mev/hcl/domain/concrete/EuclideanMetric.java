@@ -27,7 +27,7 @@ import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractMetric;
  * @author levk
  * 
  */
-public class EucledianMetric extends AbstractMetric {
+public class EuclideanMetric extends AbstractMetric {
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.hcl.domain.contract.Metric#distance(java.util.List,
@@ -41,5 +41,13 @@ public class EucledianMetric extends AbstractMetric {
         sumOfSquares += pow (from.get (index) - to.get (index), 2);
     }
     return sqrt (sumOfSquares);
+  }
+
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.hcl.domain.contract.Metric#name()
+   */
+  @Override
+  public String name () {
+    return "euclidean";
   }
 }

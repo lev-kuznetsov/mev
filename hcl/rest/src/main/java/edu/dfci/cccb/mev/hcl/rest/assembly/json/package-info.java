@@ -12,16 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.prototype;
-
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilderFactory;
-
 /**
  * @author levk
- * 
+ *
  */
-@EqualsAndHashCode
-@ToString
-public abstract class AbstractValueStoreBuilderFactory implements ValueStoreBuilderFactory {}
+package edu.dfci.cccb.mev.hcl.rest.assembly.json;

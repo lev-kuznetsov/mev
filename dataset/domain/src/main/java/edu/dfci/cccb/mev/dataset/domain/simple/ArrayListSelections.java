@@ -70,8 +70,10 @@ public class ArrayListSelections extends AbstractSelections {
   @Synchronized
   public void remove (String name) throws SelectionNotFoundException {
     for (Iterator<Selection> selections = this.selections.listIterator (); selections.hasNext ();)
-      if (selections.next ().name ().equals (name))
+      if (selections.next ().name ().equals (name)) {
         selections.remove ();
+        return;
+      }
     throw new SelectionNotFoundException ().name (name);
   }
 
