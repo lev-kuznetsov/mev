@@ -12,20 +12,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.hcl.domain.contract;
+package edu.dfci.cccb.mev.hcl.rest.controllers;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author levk
- * 
+ *
  */
-public interface Hcl extends AnalysisBuilder<Hcl, HclResult> {
+@RestController
+public class HclAnalysisController {
 
-  Hcl dimension (Dimension dimension);
-
-  Hcl metric (Metric metric);
-
-  Hcl algorithm (Algorithm algorithm);
+  
 }

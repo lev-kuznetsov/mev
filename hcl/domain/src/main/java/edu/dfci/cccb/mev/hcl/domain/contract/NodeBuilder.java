@@ -14,7 +14,6 @@
  */
 package edu.dfci.cccb.mev.hcl.domain.contract;
 
-import java.util.Set;
 
 /**
  * @author levk
@@ -22,12 +21,7 @@ import java.util.Set;
  */
 public interface NodeBuilder {
 
-  public interface NodeTypeBuilder {
+  Leaf leaf (String name);
 
-    Branch children (Set<Node> children);
-
-    Leaf name (String name);
-  }
-
-  NodeTypeBuilder distance (double distance);
+  Branch branch (double distance, Node... children);
 }

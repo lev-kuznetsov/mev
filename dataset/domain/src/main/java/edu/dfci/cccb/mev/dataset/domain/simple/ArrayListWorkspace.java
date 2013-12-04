@@ -83,8 +83,10 @@ public class ArrayListWorkspace extends AbstractWorkspace {
   @Synchronized
   public void remove (String name) throws DatasetNotFoundException {
     for (Iterator<Dataset> datasets = this.datasets.iterator (); datasets.hasNext ();)
-      if (datasets.next ().name ().equals (name))
+      if (datasets.next ().name ().equals (name)) {
         datasets.remove ();
+        return;
+      }
     throw new DatasetNotFoundException ().name (name);
   }
 }

@@ -14,7 +14,9 @@
  */
 package edu.dfci.cccb.mev.hcl.domain.mock;
 
-import java.util.Set;
+import static java.util.Arrays.asList;
+
+import java.util.HashSet;
 
 import edu.dfci.cccb.mev.hcl.domain.contract.Branch;
 import edu.dfci.cccb.mev.hcl.domain.contract.Leaf;
@@ -28,20 +30,18 @@ import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 public class MockNodeBuilder implements NodeBuilder {
 
   /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder#distance(double) */
+   * @see
+   * edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder#leaf(java.lang.String) */
   @Override
-  public NodeTypeBuilder distance (final double distance) {
-    return new NodeTypeBuilder () {
+  public Leaf leaf (String name) {
+    return new MockLeaf (name);
+  }
 
-      @Override
-      public Leaf name (final String name) {
-        return new MockLeaf (distance, name);
-      }
-
-      @Override
-      public Branch children (Set<Node> children) {
-        return new MockBranch (distance, children);
-      }
-    };
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder#branch(double,
+   * edu.dfci.cccb.mev.hcl.domain.contract.Node[]) */
+  @Override
+  public Branch branch (double distance, Node... children) {
+    return new MockBranch (distance, new HashSet<> (asList (children)));
   }
 }

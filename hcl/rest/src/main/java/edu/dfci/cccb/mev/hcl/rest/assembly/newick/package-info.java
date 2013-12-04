@@ -12,20 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.hcl.domain.contract;
-
-import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-
 /**
  * @author levk
- * 
+ *
  */
-public interface Hcl extends AnalysisBuilder<Hcl, HclResult> {
-
-  Hcl dimension (Dimension dimension);
-
-  Hcl metric (Metric metric);
-
-  Hcl algorithm (Algorithm algorithm);
-}
+package edu.dfci.cccb.mev.hcl.rest.assembly.newick;

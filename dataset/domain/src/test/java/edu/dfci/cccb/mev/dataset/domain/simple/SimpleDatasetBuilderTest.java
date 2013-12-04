@@ -37,7 +37,7 @@ public class SimpleDatasetBuilderTest {
   public void initializeBuilder () {
     builder = new SimpleDatasetBuilder ();
     builder.setParserFactories (asList (new SuperCsvParserFactory ()));
-    builder.setValueStoreBuilderFactory (new ClassValueStoreBuilderFactory<MapBackedValueStoreBuilder> (MapBackedValueStoreBuilder.class));
+    builder.setValueStoreBuilder (new MapBackedValueStoreBuilder ());
   }
 
   @Test

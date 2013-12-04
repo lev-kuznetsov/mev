@@ -15,7 +15,9 @@
 package edu.dfci.cccb.mev.dataset.domain.prototype;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 
 /**
@@ -24,4 +26,14 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
  */
 @EqualsAndHashCode
 @ToString
-public abstract class AbstractAnalysis implements Analysis {}
+@Accessors (fluent = true)
+public abstract class AbstractAnalysis <T extends AbstractAnalysis<?>> implements Analysis {
+
+  private @Getter String name;
+
+  @SuppressWarnings ("unchecked")
+  public T name (String name) {
+    this.name = name;
+    return (T) this;
+  }
+}

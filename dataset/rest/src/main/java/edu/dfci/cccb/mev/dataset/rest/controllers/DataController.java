@@ -32,17 +32,17 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
  * 
  */
 @RestController
-@RequestMapping ("/dataset/" + DATASET_URL_ELEMENT)
+@RequestMapping ("/dataset/" + DATASET_URL_ELEMENT + "/data")
 @ToString
 @Log4j
-public class DatasetController {
+public class DataController {
 
   private @Inject Dataset dataset;
 
   @RequestMapping (method = GET)
   public Dataset dataset () {
     if (log.isDebugEnabled ())
-      log.debug ("Returning dataset " + dataset);
+      log.debug ("Returning data " + dataset);
     return dataset;
   }
 }

@@ -17,8 +17,12 @@ package edu.dfci.cccb.mev.dataset.domain.simple;
 import java.util.List;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Synchronized;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDimension;
 
@@ -28,11 +32,12 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDimension;
  */
 @EqualsAndHashCode (callSuper = true)
 @ToString
+@Accessors (fluent = true)
 public class SimpleDimension extends AbstractDimension {
 
-  private final List<String> keys;
-  private final Selections selections;
-  private final Annotation annotation;
+  private @Getter List<String> keys;
+  private @Getter final Selections selections;
+  private @Getter final Annotation annotation;
 
   /**
    * 
@@ -45,23 +50,22 @@ public class SimpleDimension extends AbstractDimension {
   }
 
   /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.dataset.domain.contract.Dimension#keys() */
-  @Override
-  public List<String> keys () {
-    return keys;
-  }
+   * @see
+   * edu.dfci.cccb.mev.dataset.domain.contract.Dimension#reorder(java.util.List) */
 
   /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.dataset.domain.contract.Dimension#selections() */
+   * @see
+   * edu.dfci.cccb.mev.dataset.domain.contract.Dimension#reorder(java.util.List) */
   @Override
-  public Selections selections () {
-    return selections;
-  }
-
-  /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.dataset.domain.contract.Dimension#annotation() */
-  @Override
-  public Annotation annotation () {
-    return annotation;
+  @Synchronized
+  public void reorder (List<String> keys) throws DatasetException {
+    List<String> old = keys ();
+    if (old.size () != keys.size ())
+      throw new DatasetException (); // TODO: add args
+    else
+      for (String key : old)
+        if (!keys.contains (key))
+          throw new DatasetException (); // TODO: add args
+    this.keys = keys;
   }
 }

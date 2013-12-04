@@ -23,4 +23,6 @@ import java.util.List;
 public interface Metric {
 
   double distance (List<Double> from, List<Double> to);
+
+  String name ();
 }
