@@ -34,4 +34,11 @@ public class AverageAlgorithm extends AbstractAlgorithm {
       aggregate += distance / ++count;
     return aggregate;
   }
+
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.hcl.domain.contract.Algorithm#name() */
+  @Override
+  public String name () {
+    return "average";
+  }
 }

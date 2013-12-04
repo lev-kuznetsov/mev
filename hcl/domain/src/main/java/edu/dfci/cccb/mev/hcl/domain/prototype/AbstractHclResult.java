@@ -14,22 +14,21 @@
  */
 package edu.dfci.cccb.mev.hcl.domain.prototype;
 
-import static lombok.AccessLevel.PROTECTED;
-
-import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysisBuilder;
-import edu.dfci.cccb.mev.hcl.domain.contract.Algorithm;
-import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
+import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
+import edu.dfci.cccb.mev.hcl.domain.contract.Branch;
 import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
-import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
-import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
+import edu.dfci.cccb.mev.hcl.domain.contract.Leaf;
+import edu.dfci.cccb.mev.hcl.domain.contract.Node;
 
 /**
  * @author levk
@@ -38,14 +37,24 @@ import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 @ToString
 @EqualsAndHashCode (callSuper = true)
 @Accessors (fluent = true, chain = true)
-public abstract class AbstractHcl extends AbstractAnalysisBuilder<Hcl, HclResult> implements Hcl {
+public abstract class AbstractHclResult extends AbstractAnalysis<AbstractHclResult> implements HclResult {
 
-  private @Getter (PROTECTED) @Setter (onMethod = @_ (@Inject)) Algorithm algorithm;
-  private @Getter (PROTECTED) @Setter (onMethod = @_ (@Inject)) Metric metric;
-  private @Getter (PROTECTED) @Setter (onMethod = @_ (@Inject)) Dimension dimension;
-  private @Getter (PROTECTED) @Setter (onMethod = @_ (@Inject)) NodeBuilder nodeBuilder;
+  private @Getter @Setter Node root;
+  private @Getter @Setter Dimension dimension;
 
-  protected AbstractHcl () {
-    super ("Hierarchical Clustering");
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.hcl.domain.contract.HclResult#apply() */
+  @Override
+  public void apply () throws DatasetException {
+    dimension.reorder (traverse (root, new ArrayList<String> ()));
+  }
+
+  private List<String> traverse (Node node, List<String> accumulator) {
+    if (node instanceof Branch) {
+      for (Node child : ((Branch) node).children ())
+        traverse (child, accumulator);
+    } else
+      accumulator.add (((Leaf) node).name ());
+    return accumulator;
   }
 }

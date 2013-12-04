@@ -23,16 +23,13 @@ import static java.util.Arrays.asList;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.TreeMap;
 
-import javax.inject.Inject;
-
+import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
@@ -51,11 +48,12 @@ import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 import edu.dfci.cccb.mev.hcl.domain.contract.Algorithm;
 import edu.dfci.cccb.mev.hcl.domain.contract.Branch;
+import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
 import edu.dfci.cccb.mev.hcl.domain.contract.Leaf;
 import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
 import edu.dfci.cccb.mev.hcl.domain.contract.Node;
-import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractHcl;
+import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractHclResult;
 
 /**
  * @author levk
@@ -63,28 +61,19 @@ import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractHcl;
  */
 @ToString
 @Log4j
+@EqualsAndHashCode (callSuper = true)
 public class TwoDimensionalHcl extends AbstractHcl {
 
-  private final NodeBuilder nodeBuilder;
-
-  /**
-   * 
-   * @param nodeBuilder
-   */
-  @Inject
-  public TwoDimensionalHcl (NodeBuilder nodeBuilder) {
-    this.nodeBuilder = nodeBuilder;
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder#build() */
+  @Override
+  public HclResult build () throws DatasetException {
+    return new AbstractHclResult () {}.root (cluster (dataset (), dimension (), metric (), algorithm ()))
+                                      .dimension (dimension ())
+                                      .name (name ());
   }
 
-  /* (non-Javadoc)
-   * @see
-   * edu.dfci.cccb.mev.hcl.domain.contract.Hcl#cluster(edu.dfci.cccb.mev.dataset
-   * .domain.contract.Dataset,
-   * edu.dfci.cccb.mev.dataset.domain.contract.Dimension,
-   * edu.dfci.cccb.mev.hcl.domain.contract.Metric,
-   * edu.dfci.cccb.mev.hcl.domain.contract.Algorithm) */
-  @Override
-  public Node cluster (Dataset dataset, Dimension dimension, Metric metric, Algorithm algorithm) throws DatasetException {
+  private Node cluster (Dataset dataset, Dimension dimension, Metric metric, Algorithm algorithm) throws DatasetException {
     return eucledian (dataset, dimension);
   }
 
@@ -180,10 +169,9 @@ public class TwoDimensionalHcl extends AbstractHcl {
       private static final long serialVersionUID = 1L;
 
       {
-        for (int index = size; --index >= 0; put (index,
-                                                  nodeBuilder.distance (.0).name (dataset.dimension (dimensionType)
-                                                                                         .keys ()
-                                                                                         .get (index))));
+        for (int index = size; --index >= 0; put (index, nodeBuilder ().leaf (dataset.dimension (dimensionType)
+                                                                                     .keys ()
+                                                                                     .get (index))));
       }
     };
     TreeMap<Double, int[]> sorted = new TreeMap<> ();
@@ -220,7 +208,7 @@ public class TwoDimensionalHcl extends AbstractHcl {
       final int value1 = minValues[0], value2 = minValues[1];
       // find
 
-      Node cluster = nodeBuilder.distance (minkey).children (toSet (genehash.get (value1), genehash.get (value2)));
+      Node cluster = nodeBuilder ().branch (minkey, genehash.get (value1), genehash.get (value2));
       int id = enumerator.next ();
 
       genehash.put (id, cluster);
@@ -263,8 +251,7 @@ public class TwoDimensionalHcl extends AbstractHcl {
         double mk = sorted.firstKey ();
         minValues = sorted.firstEntry ().getValue ();
         // If the gene pair is not present in the current gene set, remove
-        // this
-        // distance.
+        // this distance.
         if (!genehash.containsKey (minValues[0]) || !genehash.containsKey (minValues[1]))
           sorted.remove (mk);
         else
@@ -275,10 +262,6 @@ public class TwoDimensionalHcl extends AbstractHcl {
     Node result = genehash.entrySet ().iterator ().next ().getValue ();
     log.debug ("Clustered " + result);
     return result;
-  }
-
-  private Set<Node> toSet (Node... nodes) {
-    return new HashSet<> (asList (nodes));
   }
 
   private List<Integer> traverse (List<String> keys, Node node) {
@@ -294,12 +277,5 @@ public class TwoDimensionalHcl extends AbstractHcl {
         traversal.addAll (traverse (keys, child));
       return traversal;
     }
-  }
-
-  /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.dataset.domain.contract.Analysis#name() */
-  @Override
-  public String name () {
-    return "Eucledian hierarchical clustering";
   }
 }

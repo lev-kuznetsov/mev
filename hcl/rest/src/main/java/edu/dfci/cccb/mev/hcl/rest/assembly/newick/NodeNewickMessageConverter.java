@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.hcl.rest.converters;
+package edu.dfci.cccb.mev.hcl.rest.assembly.newick;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -35,7 +35,7 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Node;
  * @author levk
  * 
  */
-public class NewickMessageConverter extends AbstractHttpMessageConverter<Node> {
+public class NodeNewickMessageConverter extends AbstractHttpMessageConverter<Node> {
   private static final Charset DEFAULT_CHARSET = Charset.forName ("UTF-8");
   public static final String NEWICK_EXTENSION = "newick";
   private static final String NEWICK_TYPE = "application";
@@ -46,7 +46,7 @@ public class NewickMessageConverter extends AbstractHttpMessageConverter<Node> {
   /**
    * 
    */
-  public NewickMessageConverter () {
+  public NodeNewickMessageConverter () {
     super (NEWICK_MEDIA_TYPE);
   }
 
@@ -92,18 +92,23 @@ public class NewickMessageConverter extends AbstractHttpMessageConverter<Node> {
   }
 
   private void write (OutputStream out, Node node) throws IOException {
-    /* (A:0.1,B:0.2,(C:0.3,D:0.4):0.5); */
     if (node instanceof Leaf)
-      out.write (((Leaf) node).name ().getBytes ());
-    else if (node instanceof Branch) {
-      out.write ("(".getBytes ());
-      for (Iterator<Node> children = ((Branch) node).children ().iterator (); children.hasNext ();) {
-        write (out, children.next ());
-        if (children.hasNext ())
-          out.write (",".getBytes ());
-      }
-      out.write (")".getBytes ());
+      write (out, (Leaf) node);
+    else if (node instanceof Branch)
+      write (out, (Branch) node);
+  }
+
+  private void write (OutputStream out, Leaf leaf) throws IOException {
+    out.write ((leaf.name () + ":0.0").getBytes ());
+  }
+
+  private void write (OutputStream out, Branch branch) throws IOException {
+    out.write ("(".getBytes ());
+    for (Iterator<Node> children = branch.children ().iterator (); children.hasNext ();) {
+      write (out, children.next ());
+      if (children.hasNext ())
+        out.write (",".getBytes ());
     }
-    out.write ((":" + node.distance ()).getBytes ());
+    out.write (("):" + branch.distance ()).getBytes ());
   }
 }

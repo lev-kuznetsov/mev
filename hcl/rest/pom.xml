@@ -6,7 +6,7 @@
   <artifactId>mev-hcl-rest</artifactId>
   <packaging>jar</packaging>
 
-  <name>MeV Dataset Plugin REST Component</name>
+  <name>MeV Hierarchical Clustering Plugin REST Component</name>
   <url>http://github.com/dfci-cccb/mev</url>
 
   <parent>

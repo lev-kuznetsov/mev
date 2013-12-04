@@ -23,16 +23,13 @@ import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractLeaf;
  */
 @ToString
 public class MockLeaf extends AbstractLeaf {
-
-  private double distance;
   private String name;
 
   /**
    * 
    */
-  public MockLeaf (double distance, String name) {
+  public MockLeaf (String name) {
     this.name = name;
-    this.distance = distance;
   }
 
   /* (non-Javadoc)
@@ -40,12 +37,5 @@ public class MockLeaf extends AbstractLeaf {
   @Override
   public String name () {
     return name;
-  }
-
-  /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.hcl.domain.contract.Node#distance() */
-  @Override
-  public double distance () {
-    return distance;
   }
 }

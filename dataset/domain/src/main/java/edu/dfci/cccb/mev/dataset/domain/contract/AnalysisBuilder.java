@@ -12,20 +12,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.hcl.domain.contract;
-
-import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+package edu.dfci.cccb.mev.dataset.domain.contract;
 
 /**
  * @author levk
  * 
  */
-public interface Hcl extends AnalysisBuilder<Hcl, HclResult> {
+public interface AnalysisBuilder <B extends AnalysisBuilder<?, ?>, A extends Analysis> {
 
-  Hcl dimension (Dimension dimension);
+  String type ();
 
-  Hcl metric (Metric metric);
+  B name (String name);
 
-  Hcl algorithm (Algorithm algorithm);
+  B dataset (Dataset dataset);
+
+  A build () throws DatasetException;
 }

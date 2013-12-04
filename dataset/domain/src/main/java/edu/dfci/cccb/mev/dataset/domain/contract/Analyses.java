@@ -14,7 +14,7 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * @author levk
@@ -28,5 +28,5 @@ public interface Analyses {
 
   void remove (String name) throws AnalysisNotFoundException;
 
-  Collection<String> list ();
+  List<String> list ();
 }

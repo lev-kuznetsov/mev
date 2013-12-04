@@ -12,37 +12,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.hcl.rest.controllers;
+package edu.dfci.cccb.mev.dataset.rest.controllers;
 
+import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.ANALYSIS_URL_ELEMENT;
 import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DATASET_URL_ELEMENT;
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DIMENSION_URL_ELEMENT;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import javax.inject.Inject;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
-import edu.dfci.cccb.mev.hcl.domain.contract.Node;
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 
 /**
  * @author levk
  * 
  */
 @RestController
-@RequestMapping ("/analysis/" + DATASET_URL_ELEMENT + "/hcl/" + DIMENSION_URL_ELEMENT)
-public class HclController {
+@RequestMapping ("/dataset/" + DATASET_URL_ELEMENT + "/analysis/" + ANALYSIS_URL_ELEMENT)
+public class AnalysisController {
 
-  private @Inject Dataset dataset;
-  private @Inject Dimension dimension;
-  private @Inject Hcl hcl;
+  private @Getter @Setter (onMethod = @_ (@Inject)) Analysis analysis;
 
-  @RequestMapping (method = POST)
-  public Node cluster () throws DatasetException {
-    return hcl.cluster (dataset, dimension, null, null);
+  @RequestMapping (method = GET)
+  public Analysis analysis () {
+    return analysis;
   }
 }

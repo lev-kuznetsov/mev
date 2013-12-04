@@ -26,6 +26,8 @@ public interface Dimension {
 
   List<String> keys ();
 
+  void reorder (List<String> keys) throws DatasetException;
+
   Selections selections ();
 
   Annotation annotation ();

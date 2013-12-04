@@ -23,4 +23,6 @@ import java.util.Set;
 public interface Branch extends Node {
 
   Set<Node> children ();
+
+  double distance ();
 }

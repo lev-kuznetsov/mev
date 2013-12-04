@@ -16,6 +16,8 @@ package edu.dfci.cccb.mev.dataset.rest.configuration;
 
 import static edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter.TSV_EXTENSION;
 import static edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter.TSV_MEDIA_TYPE;
+import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
+import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 import lombok.ToString;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -23,14 +25,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.ParserFactory;
-import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilderFactory;
+import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.mock.MapBackedValueStoreBuilder;
-import edu.dfci.cccb.mev.dataset.domain.simple.ClassValueStoreBuilderFactory;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvComposerFactory;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
@@ -38,6 +40,8 @@ import edu.dfci.cccb.mev.dataset.rest.assembly.json.DatasetJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.MultipartUploadDatasetArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector;
+import edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver;
+import edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver;
 
 /**
  * @author levk
@@ -75,13 +79,24 @@ public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  public ValueStoreBuilderFactory valueFactory () {
-    return new ClassValueStoreBuilderFactory<MapBackedValueStoreBuilder> (MapBackedValueStoreBuilder.class);
+  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
+  public ValueStoreBuilder valueFactory () {
+    return new MapBackedValueStoreBuilder ();
   }
 
   @Bean
   public DatasetBuilder datasetBuilder () {
     return new SimpleDatasetBuilder ();
+  }
+
+  @Bean
+  public DatasetPathVariableMethodArgumentResolver datasetPathVariableMethodArgumentResolver () {
+    return new DatasetPathVariableMethodArgumentResolver ();
+  }
+
+  @Bean
+  public DimensionPathVariableMethodArgumentResolver dimensionPathVariableMethodArgumentResolver () {
+    return new DimensionPathVariableMethodArgumentResolver ();
   }
 
   /* (non-Javadoc)
