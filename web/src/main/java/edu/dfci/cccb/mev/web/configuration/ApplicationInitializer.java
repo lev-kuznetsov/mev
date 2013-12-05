@@ -51,8 +51,12 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     mvcContext.register (AnnotationServerConfiguration.class);
     mvcContext.register (HclRestConfiguration.class);
 
-    Dynamic dispatcher = servletContext.addServlet ("dispatcher", new DispatcherServlet (mvcContext));
-    dispatcher.setLoadOnStartup (1);
-    dispatcher.addMapping ("/");
+    DispatcherServlet dispatcher = new DispatcherServlet (mvcContext);
+    dispatcher.setThreadContextInheritable (true); // Hack until proper MeV
+                                                   // context scopes are
+                                                   // implemented
+    Dynamic registration = servletContext.addServlet ("dispatcher", dispatcher);
+    registration.setLoadOnStartup (1);
+    registration.addMapping ("/");
   }
 }

@@ -15,11 +15,15 @@
 package edu.dfci.cccb.mev.dataset.domain.prototype;
 
 import static lombok.AccessLevel.PROTECTED;
+
+import javax.inject.Inject;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
@@ -33,6 +37,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 @EqualsAndHashCode
 @Accessors (fluent = true, chain = true)
 @SuppressWarnings ("unchecked")
+@Log4j
 public abstract class AbstractAnalysisBuilder <B extends AnalysisBuilder<?, ?>, A extends Analysis> implements AnalysisBuilder<B, A> {
 
   private @Getter final String type;
@@ -54,7 +59,10 @@ public abstract class AbstractAnalysisBuilder <B extends AnalysisBuilder<?, ?>, 
    * edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder#dataset(edu.
    * dfci.cccb.mev.dataset.domain.contract.Dataset) */
   @Override
+  @Inject
   public B dataset (Dataset dataset) {
+    if (log.isDebugEnabled ())
+      log.debug ("Setting dataset to " + dataset);
     this.dataset = dataset;
     return (B) this;
   }

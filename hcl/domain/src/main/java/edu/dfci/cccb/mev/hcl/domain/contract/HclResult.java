@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.hcl.domain.contract;
 
+import java.util.List;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 
@@ -25,5 +27,5 @@ public interface HclResult extends Analysis {
 
   Node root ();
 
-  void apply () throws DatasetException;
+  List<String> apply () throws DatasetException;
 }

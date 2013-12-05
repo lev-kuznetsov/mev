@@ -16,8 +16,10 @@ package edu.dfci.cccb.mev.dataset.rest.resolvers;
 
 import javax.inject.Inject;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -29,6 +31,8 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
  * @author levk
  * 
  */
+@ToString
+@EqualsAndHashCode (callSuper = false)
 public class DimensionPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver {
 
   private @Getter @Setter (onMethod = @_ (@Inject)) Dimension dimension;

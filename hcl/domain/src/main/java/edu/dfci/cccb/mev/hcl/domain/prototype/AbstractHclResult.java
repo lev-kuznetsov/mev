@@ -45,8 +45,9 @@ public abstract class AbstractHclResult extends AbstractAnalysis<AbstractHclResu
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.hcl.domain.contract.HclResult#apply() */
   @Override
-  public void apply () throws DatasetException {
+  public List<String> apply () throws DatasetException {
     dimension.reorder (traverse (root, new ArrayList<String> ()));
+    return dimension.keys ();
   }
 
   private List<String> traverse (Node node, List<String> accumulator) {

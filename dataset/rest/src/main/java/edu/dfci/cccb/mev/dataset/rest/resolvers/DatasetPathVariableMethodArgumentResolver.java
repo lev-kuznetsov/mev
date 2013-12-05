@@ -18,21 +18,24 @@ import javax.inject.Inject;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 
 /**
  * @author levk
  * 
  */
+@Log4j
+@ToString
 public class DatasetPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver {
 
-  private @Getter @Setter (onMethod = @_ (@Inject)) Workspace workspace;
+  private @Getter @Setter (onMethod = @_ (@Inject)) Dataset dataset;
 
   /* (non-Javadoc)
    * @see org.springframework.web.servlet.mvc.method.annotation.
@@ -50,9 +53,8 @@ public class DatasetPathVariableMethodArgumentResolver extends PathVariableMetho
    * org.springframework.web.context.request.NativeWebRequest) */
   @Override
   protected Object resolveName (String name, MethodParameter parameter, NativeWebRequest request) throws Exception {
-    Object value = super.resolveName (name, parameter, request);
-    if (value == null)
-      return null;
-    return workspace.get (value.toString ());
+    if (log.isDebugEnabled ())
+      log.debug ("Resolved " + dataset);
+    return dataset;
   }
 }
