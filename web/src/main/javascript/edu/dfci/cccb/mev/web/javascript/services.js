@@ -99,6 +99,7 @@ define(
 														method : 'GET',
 														url : '/dataset/'
 																+ url
+																+ '/data'
 																+ '?format=json'
 													};
 
@@ -114,45 +115,40 @@ define(
 											},
 											analysis : {
 												hcl : {
-													row : {
-														get : function(url) {
+													create : function(q) {
 
-															var params = {
-																method : 'GET',
-																url : 'analysis/'
-																		+ url
-																		+ '/hcl/row',
-																format : 'newick'
-															};
-															return QHTTP(
-																	params,
-																	function(d,
-																			s) {
+														var params = {
 
-																		return d3
-																				.text(
-																						'heatmap/'
-																								+ url
-																								+ '?format=newick',
-																						function(
-																								data) {
-																							return data
-																						})
+															method : 'POST',
+															url : 'analysis/hcl/new/'
+																	+ q.name
+																	+ '('
+																	+ q.dataset
+																	+ ','
+																	+ q.dimension
+																	+ ','
+																	+ q.metric
+																	+ ','
+																	+ q.algorithm
+																	+ ')'
 
-																	},
-																	function(d,
-																			s) {
-																		return
-																				d,
-																				s;
-																	});
+														};
 
-														}
+														return QHTTP(
+																params,
+																function(d, s) {
+																	
+																	return null // fix this to alert something interesting
+																},
+																function(d, s) {
+																	return d, s;
+																});
+
 													}
 												}
 											}
-
 										}
+
 									} ]);
 
 		});
