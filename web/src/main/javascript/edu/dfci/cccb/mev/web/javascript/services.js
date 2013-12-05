@@ -1,126 +1,158 @@
-define ([ 'angular', 'd3' ], function (angular, d3) {
+define(
+		[ 'angular', 'd3' ],
+		function(angular, d3) {
 
-  return angular.module ('myApp.services', []).value ('appVersion', '0.1')
-      .value ('appName', 'MEV: Multi-Experiment Viewer').factory (
-          'mainMenuBarOptions', [ function () {
-            return [ {
-              value : "About",
-              url : "#"
-            }, {
-              value : "Contact",
-              url : "#"
-            } ];
-          } ]).factory ('analysisOptions', [ function () {
+			return angular
+					.module('myApp.services', [])
+					.value('appVersion', '0.1')
+					.value('appName', 'MEV: Multi-Experiment Viewer')
+					.factory('mainMenuBarOptions', [ function() {
+						return [ {
+							value : "About",
+							url : "#"
+						}, {
+							value : "Contact",
+							url : "#"
+						} ];
+					} ])
+					.factory('analysisOptions', function(){
+						
+					})
+					.factory('alertService', [ function() {
 
-        // future feature
+						return {
+							success: function(message, header, callback, params){
+								
+								alert(header + '\n'+ message);
+								//Fix this later with something interesting
+								
+							},
+							error: function(message, header, callback, params){
+								
+								alert(header + '\n\n'+ 'Issue: \n' + message);
+								//Fix this later with something interesting
+								
+							}
+						};
 
-        return undefined;
-        
-      } ])
-      .factory ('heatmapGenerator', [function () {
-        return null;
-      }])
-      .factory ('QHTTP', [ '$http', '$q', function ($http, $q) {
+					} ])
+					.factory('heatmapGenerator', [ function() {
+						return null;
+					} ])
+					.factory('QHTTP', [ '$http', '$q', function($http, $q) {
 
-        return function (params, callback_fn, error_fn) {
-          var deferred = $q.defer ();
+						return function(params, callback_fn, error_fn) {
+							var deferred = $q.defer();
 
-          $http (params).success (function (data, status) {
+							$http(params).success(function(data, status) {
 
-            deferred.resolve (callback_fn (data, status));
+								deferred.resolve(callback_fn(data, status));
 
-          }).error (function (data, status) {
+							}).error(function(data, status) {
 
-            deferred.reject (error_fn (data, status));
+								deferred.reject(error_fn(data, status));
 
-          });
+							});
 
-          return deferred.promise;
-        };
+							return deferred.promise;
+						};
 
-      } ])
-      .factory ('API', [ 'QHTTP', function (QHTTP) {
+					} ])
+					.factory(
+							'API',
+							[
+									'QHTTP', 'alertService',
+									function(QHTTP, alertService) {
 
-        return {
+										return {
 
-          heatmap : {
-            get : function (url) {
-              var params = {
-                method : 'GET',
-                url : 'heatmap/' + url + '?format=json',
-                format : 'json'
-              };
-              return QHTTP (params, function (d, s) {
-                return d;
-              }, function (d, s) {
-               
-                return d, s;
-              });
+											user : {
+												datasets : {
+													get : function() {
+														//Pulls list of Datasets for the user
+														var params = {
+															method : 'GET',
+															url : '/dataset?format=json'
+														};
+														return QHTTP(
+																params,
+																function(d, s) {
+																	return d;
+																},
+																function(d, s) {
+																	var message = "Could not pull your dataset list If "
+																	+ "problem persists, please contact us."
+																	
+																	var header = "Could Not Pull List Of Datasets (Error Code: " + s + ")"
+																	alertService.error(message, header);
+																});
 
-            }
-          },
-          user: {
-            datasets: {
-              get: function(){
-                
-                var params = {
-                    method : 'GET',
-                    url : '/dataset?format=json'
-                  };
-                  return QHTTP (params, function (d, s) {
-                    return d;
-                  }, function (d, s) {
-                   
-                    return d, s;
-                  });
-                
-              }
-            }
-          },
-          dataset: {
-            get: function(url){
-              
-              var params = {
-                  method : 'GET',
-                  url : '/dataset/' + url  + '?format=json'
-                };
-              
-                return QHTTP (params, function (d, s) {
-                  return d;
-                }, function (d, s) {
-                 
-                  return d, s;
-                });
-              
-            }
-          },
-          hcl: {
-            radial: {
-              get: function(url){
-                
-                var params = {
-                    method : 'GET',
-                    url : 'heatmap/' + url + '?format=newick',
-                    format : 'json'
-                  };
-                  return QHTTP (params, function (d, s) {
-                    
-                    return d3.text('heatmap/' + url + '?format=newick', function(data) {return data})
-                    
-                  }, function (d, s) {
-                    return d, s;
-                  });
+													}
+												}
+											},
+											dataset : {
+												get : function(url) {
+													//Pulls specific dataset with given name
+													var params = {
+														method : 'GET',
+														url : '/dataset/'
+																+ url
+																+ '/data'
+																+ '?format=json'
+													};
 
-              }
-            },
-            linear :{
-              get: function(url){
-                return null;
-              }
-            }
-          }
+													return QHTTP(params,
+															function(d, s) {
+																return d;
+															}, function(d, s) {
+																var message = "Could not pull dataset " + url + ". If "
+																+ "problem persists, contact us."
+																
+																var header = "Could Not Pull Dataset (Error Code: " + s + ")"
+																alertService.error(message, header);
+															});
 
-        }
-      } ]);
+												}
+											},
+											analysis : {
+												hcl : {
+													create : function(q) {
 
-});
+														var params = {
+
+															method : 'POST',
+															url : 'analysis/hcl/new/'
+																	+ q.name
+																	+ '('
+																	+ q.dataset
+																	+ ','
+																	+ q.dimension
+																	+ ','
+																	+ q.metric
+																	+ ','
+																	+ q.algorithm
+																	+ ')'
+
+														};
+
+														return QHTTP(
+																params,
+																function(d, s) {
+																	alertService.success(name + ' clustering complete!', 'Clustering Complete')
+																},
+																function(d, s) {
+																	var message = "Could not begin analysis on " + q.dataset + ". If "
+																	+ "problem persists, please contact us."
+																	
+																	var header = "Could Not Start Clustering (Error Code: " + s + ")"
+																	alertService.error(message, header);
+																});
+
+													}
+												}
+											}
+										}
+
+									} ]);
+
+		});

@@ -1,23 +1,29 @@
       <form class="form-horizontal">
 
-            <div class="control-group">
-          <label for="inputDataset" class="control-label">Dataset</label>
-          <div class="controls">
-                          <input type="text" id="inputDataset" placeholder="Dataset_1">
-                  </div>
-                </div>
-
           <div class="control-group">
-            <label for="inputAnalysisName" class="control-label">Analysis Name</label>
+            <label for="clusterName" class="control-label">Cluster Name</label>
             <div class="controls">
-              <input id="inputAnalysisName" placeholder="Ex: My_Analysis_1">
+              <input id="clusterName" ng-model="clusterName" placeholder="Ex: My_Analysis_1">
+            </div>
+          </div>
+          
+          <div class="control-group">
+            <label for="metricName" class="control-label">Distance Metric</label>
+            <div class="controls">
+              <select id="metricName" ng-options="option.name for option in availableMetrics" ng-model="selectedMetric"></select>
             </div>
           </div>
 
           <div class="control-group">
-            <label for="inputAnalysisName" class="control-label">Distance Metric</label>
+            <label for="dimension" class="control-label">Clustering Dimension</label>
             <div class="controls">
-              <select ng-options="option.name for option in analysislist" ng-model="selectedanalysis"></select>
+              <select id="metricName" ng-options="option.name for option in dimensions" ng-model="selectedDimension"></select>
             </div>
           </div>
+          
+          
+          
      </form> 
+     		
+     <button class="btn btn-success btn-block" ng-click="clusterInit()" data-dismiss="modal" aria-hidden="true">Analyze</button>
+    		
