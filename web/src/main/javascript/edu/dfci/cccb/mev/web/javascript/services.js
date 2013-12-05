@@ -15,11 +15,22 @@ define(
 							url : "#"
 						} ];
 					} ])
-					.factory('analysisOptions', [ function() {
+					.factory('alertService', [ function() {
 
-						// future feature
-
-						return undefined;
+						return {
+							success: function(message, header, callback, params){
+								
+								alert(header + '\n'+ message);
+								//Fix this later with something interesting
+								
+							},
+							error: function(message, header, callback, params){
+								
+								alert(header + '\n'+ message);
+								//Fix this later with something interesting
+								
+							}
+						};
 
 					} ])
 					.factory('heatmapGenerator', [ function() {
