@@ -192,17 +192,31 @@ define (
               restrict : 'C',
               templateUrl : "/container/view/elements/hierarchicalbody",
               link : function (scope, elems, attrs) {
-                scope.types = [ {
-                  name : 'K-Means'
+            	  
+                scope.availableMetrics = [ {
+                  name : 'Euclidean'
                 }, {
-                  name : 'K-Medians'
+                  name : 'Manhattan'
                 } ];
                 
-                scope.clusterRows = function(params) {
-                	console.log(API.analysis.hcl.row.get($routeParams.datasetName) ); 
+                scope.dimensions = [{name: 'Rows', value: 'row'}, {name: 'Columns', value: 'column'}]
+                
+                scope.clusterInit = function() {
+                	var q = {
+                			name: scope.clusterName,
+                			dataset: $routeParams.datasetName,
+                			dimension: scope.selectedDimension,
+                			metric: scope.selectedMetric,
+                			algorithm: null
+                			
+                	}
+                	
+                	API.analysis.hcl.create(q);
+                	
                 }
                 
-                scope.clusterRows()
+                
+
               }
 
             };

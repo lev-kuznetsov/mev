@@ -15,6 +15,9 @@ define(
 							url : "#"
 						} ];
 					} ])
+					.factory('analysisOptions', function(){
+						
+					})
 					.factory('alertService', [ function() {
 
 						return {
@@ -26,7 +29,7 @@ define(
 							},
 							error: function(message, header, callback, params){
 								
-								alert(header + '\n'+ message);
+								alert(header + '\n\n'+ 'Issue: \n' + message);
 								//Fix this later with something interesting
 								
 							}
@@ -58,34 +61,15 @@ define(
 					.factory(
 							'API',
 							[
-									'QHTTP',
-									function(QHTTP) {
+									'QHTTP', 'alertService',
+									function(QHTTP, alertService) {
 
 										return {
 
-											heatmap : {
-												get : function(url) {
-													var params = {
-														method : 'GET',
-														url : 'heatmap/'
-																+ url
-																+ '?format=json',
-														format : 'json'
-													};
-													return QHTTP(params,
-															function(d, s) {
-																return d;
-															}, function(d, s) {
-
-																return d, s;
-															});
-
-												}
-											},
 											user : {
 												datasets : {
 													get : function() {
-
+														//Pulls list of Datasets for the user
 														var params = {
 															method : 'GET',
 															url : '/dataset?format=json'
@@ -96,8 +80,11 @@ define(
 																	return d;
 																},
 																function(d, s) {
-
-																	return d, s;
+																	var message = "Could not pull your dataset list If "
+																	+ "problem persists, please contact us."
+																	
+																	var header = "Could Not Pull List Of Datasets (Error Code: " + s + ")"
+																	alertService.error(message, header);
 																});
 
 													}
@@ -105,7 +92,7 @@ define(
 											},
 											dataset : {
 												get : function(url) {
-
+													//Pulls specific dataset with given name
 													var params = {
 														method : 'GET',
 														url : '/dataset/'
@@ -118,8 +105,11 @@ define(
 															function(d, s) {
 																return d;
 															}, function(d, s) {
-
-																return d, s;
+																var message = "Could not pull dataset " + url + ". If "
+																+ "problem persists, contact us."
+																
+																var header = "Could Not Pull Dataset (Error Code: " + s + ")"
+																alertService.error(message, header);
 															});
 
 												}
@@ -148,11 +138,14 @@ define(
 														return QHTTP(
 																params,
 																function(d, s) {
-																	
-																	return null // fix this to alert something interesting
+																	alertService.success(name + ' clustering complete!', 'Clustering Complete')
 																},
 																function(d, s) {
-																	return d, s;
+																	var message = "Could not begin analysis on " + q.dataset + ". If "
+																	+ "problem persists, please contact us."
+																	
+																	var header = "Could Not Start Clustering (Error Code: " + s + ")"
+																	alertService.error(message, header);
 																});
 
 													}
