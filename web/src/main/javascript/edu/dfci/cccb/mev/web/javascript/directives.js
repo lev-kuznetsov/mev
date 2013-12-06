@@ -31,14 +31,22 @@ define (
                   restrict : 'A',
                   templateUrl : '/container/view/elements/heatmapPanels',
                   link : function (scope, elems, attrs) {
-
+                	  
+                	jq ('#leftPanel div.well').height($(document).height() + 'px');
+                   	jq ('#rightPanel div.well').height($('#leftPanel div.well').height() + 'px');
+                	
+                   
+                	  
                     jq ('#closeRight').hide ();
                     jq ('#closeLeft').hide ();
 
                     var margin = "2.127659574468085%"
 
                     scope.expandLeft = function () {
-
+                    	
+                    	
+                    	 
+                     	
                       jq ('#leftPanel').attr ("class", "span12 marker");
                       jq ('#rightPanel').hide ();
                       jq ('#expandLeft').hide ();
@@ -243,14 +251,26 @@ define (
           .directive ('uploadsTable', ['API', '$location', function(API, $location){
             return {
               restrict : 'A',
+              scope: {
+            	  uploads: '='
+              },
               templateUrl : '/container/view/elements/uploadsTable',
               link : function (scope, elems, attrs) {
+            	  
+            	  scope.datasets = []
                 
-                scope.datasets = API.user.datasets.get();
-                
-                scope.redirect = function(url){
-                  $location.url(url);
-                };
+            	scope.$watch('uploads', function(newValues, oldValues){
+            		
+            		
+            		if (newValues != undefined){
+            			console.log(newValues)
+            			scope.datasets = newValues;
+            			
+            		};
+            		
+            		
+            	});
+            	
                 
               }
             }
