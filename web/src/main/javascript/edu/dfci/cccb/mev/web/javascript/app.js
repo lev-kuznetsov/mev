@@ -16,8 +16,9 @@ define(['angular', 'directives', 'services', 'controllers'], function(angular){
 			  controller: 'HeatmapCtrl'
 		  })
 		  .when('/home', {
-        templateUrl: '/container/view/partials/importItems'
-      });
+              templateUrl: '/container/view/partials/importItems',
+              controller: 'ImportsCtrl'
+          });
 		  
 		  $routeProvider.otherwise({redirectTo: '/home'});
 		  

@@ -243,14 +243,26 @@ define (
           .directive ('uploadsTable', ['API', '$location', function(API, $location){
             return {
               restrict : 'A',
+              scope: {
+            	  uploads: '='
+              },
               templateUrl : '/container/view/elements/uploadsTable',
               link : function (scope, elems, attrs) {
+            	  
+            	  scope.datasets = []
                 
-                scope.datasets = API.user.datasets.get();
-                
-                scope.redirect = function(url){
-                  $location.url(url);
-                };
+            	scope.$watch('uploads', function(newValues, oldValues){
+            		
+            		
+            		if (newValues != undefined){
+            			console.log(newValues)
+            			scope.datasets = newValues;
+            			
+            		};
+            		
+            		
+            	});
+            	
                 
               }
             }

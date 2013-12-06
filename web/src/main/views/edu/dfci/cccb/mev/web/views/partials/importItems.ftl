@@ -16,7 +16,7 @@
         <li class="active"><a href="#upload" data-toggle="tab">Upload</a></li>
         <li><a href="#googleDrive" data-toggle="tab">Google Drive</a></li>
         <li><a href="#tcga" data-toggle="tab">TCGA</a></li>
-        <li><a href="#current" data-toggle="tab">Current</a></li>
+        <li><a href="#current" data-toggle="tab" ng-click="loadUploads()">Current</a></li>
       </ul>
  
       <div class="tab-content">
@@ -33,9 +33,9 @@
 
         </div>
        
-        <div class="tab-pane" id="current">
+        <div class="tab-pane" id="current" >
         
-          <div uploads-Table></div>
+          <div uploads-Table uploads="userUploads"></div>
           
         </div>
       </div>

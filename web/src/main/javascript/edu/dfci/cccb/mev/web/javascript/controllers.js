@@ -12,6 +12,23 @@ define ([ 'angular', 'jquery' ], function (angular, $) {
     	}
         
 
-      } ]);
+      } ])
+      .controller ('ImportsCtrl',
+      [ '$scope', 'API', function ($scope, API) { 
+    	  
+    	  $scope.userUploads = [];
+  
+    	  $scope.loadUploads = function(){
+    		  
+    		  $scope.userUploads = API.user.datasets.get().then(function(data){
+              	return data;
+              });
+    		  
+    	  };
+    	  
+    	  $scope.loadUploads();
+    	  
+      }]);
+  
 
 });
