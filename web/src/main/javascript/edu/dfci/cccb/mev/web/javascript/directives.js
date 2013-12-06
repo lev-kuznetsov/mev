@@ -618,35 +618,10 @@ define (
                             .attr ("height",
                                 height + margin.top + margin.bottom);
 
-                        var vis = svg.append ("g").attr ("class", "uncovered")
-
-                        window
-                            .append ("button")
-                            .attr ("class", "btn btn-primary")
-                            .text ("Cluster")
-                            .on (
-                                'click',
-                                function () {
-
-                                  jq
-                                      .get (
-                                          '/heatmap/dataset/mock/shuffleRows?format=json',
-                                          function (rowreordering) {
-                                            jq
-                                                .get (
-                                                    '/heatmap/dataset/mock/shuffleColumns?format=json',
-                                                    function (colreordering) {
-                                                      
-                                                      cluster (heatmapcells,
-                                                          colreordering)
-                                                    })
-
-                                          });
-
-                                });
+                        var vis = svg.append ("g").attr ("class", "uncovered");
 
                         var rects = vis.append ("g").selectAll ("rect");
-                        var labels = vis.append ("g").selectAll()
+                        var labels = vis.append ("g").selectAll();
 
                         function updateCols (hc, cols) {
 
