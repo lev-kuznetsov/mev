@@ -543,7 +543,9 @@ define (
               [
                   'API',
                   '$routeParams',
-                  function (API, $routeParams) {
+                  'alertService',
+                  '$location',
+                  function (API, $routeParams, alertService, $location) {
 
                     return {
 
@@ -644,8 +646,9 @@ define (
                                 });
 
                         var rects = vis.append ("g").selectAll ("rect");
+                        var labels = vis.append ("g").selectAll()
 
-                        function cluster (hc, cols) {
+                        function updateCols (hc, cols) {
 
                           var cellXPosition = d3.scale.ordinal ().domain (cols)
                               .rangeRoundBands ([ 0, cellwidth * cols.length ]);
@@ -660,10 +663,28 @@ define (
                                 return cellXPosition (d.column)
                               })
 
-                        }
-                        ;
+                        };
+                        
+                        function updateRows (hc, rows) {
 
-                        function draw (hc, cols, rows) {
+                            var cellYPosition = d3.scale.ordinal ().domain (rows)
+                                .rangeRoundBands ([ 0, cellwidth * rows.length ]);
+
+                            svg.selectAll (".cells").transition ()
+                                .duration (5000).attr ("y", function (d, i) {
+                                  return cellYPosition (d.row)
+                                })
+
+                          };
+
+                        
+                        function drawLabels (lbs, cols, rows) {
+                        
+                        	
+                        	
+                        };
+                        
+                        function drawCells (hc, cols, rows) {
 
                           var cellXPosition = d3.scale.ordinal ().domain (cols)
                               .rangeRoundBands ([ 0, cellwidth * cols.length ]);
@@ -713,7 +734,7 @@ define (
 
                         var heatmapcells = undefined;
                         
-                        var prep = function (data) {
+                        function init (data) {
                         	
                         	leftshifter.domain ([ data.min, data.avg ]);
                                     
@@ -722,27 +743,17 @@ define (
                             heatmapcells = rects.data (data.values).enter ()
                                 .append ("rect")
 
-                            draw (heatmapcells, data.column, data.row);
-
-                          }
-                        
-                        var mockprep = function (data) {
-                        	
-                        	leftshifter.domain ([ -3, 0 ]);
-                                    
-                            rightshifter.domain ([ 0, 3])
-
-                            heatmapcells = rects.data (data.values).enter ()
-                                .append ("rect")
-
-                            draw (heatmapcells, data.column, data.row);
+                            drawCells (heatmapcells, data.column, data.row);
 
                           }
                         
                         if (!$routeParams.datasetName){
-                        	API.heatmap.get ("dataset/mock/data").then (mockprep);
+                        	alertService.error()
                         } else {
-                        	API.dataset.get ( $routeParams.datasetName ).then (prep);
+                        	API.dataset.get ( $routeParams.datasetName ).then (init, function(){
+                        		//Redirect to home if errored out
+                        		$location.path('/');
+                        	});
                         }
 
                         
