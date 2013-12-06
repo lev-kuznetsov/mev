@@ -31,14 +31,22 @@ define (
                   restrict : 'A',
                   templateUrl : '/container/view/elements/heatmapPanels',
                   link : function (scope, elems, attrs) {
-
+                	  
+                	jq ('#leftPanel div.well').height($(document).height() + 'px');
+                   	jq ('#rightPanel div.well').height($('#leftPanel div.well').height() + 'px');
+                	
+                   
+                	  
                     jq ('#closeRight').hide ();
                     jq ('#closeLeft').hide ();
 
                     var margin = "2.127659574468085%"
 
                     scope.expandLeft = function () {
-
+                    	
+                    	
+                    	 
+                     	
                       jq ('#leftPanel').attr ("class", "span12 marker");
                       jq ('#rightPanel').hide ();
                       jq ('#expandLeft').hide ();
