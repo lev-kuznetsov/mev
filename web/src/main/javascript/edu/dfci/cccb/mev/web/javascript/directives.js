@@ -263,7 +263,7 @@ define (
             		
             		
             		if (newValues != undefined){
-            			console.log(newValues)
+            			
             			scope.datasets = newValues;
             			
             		};
@@ -553,9 +553,8 @@ define (
                       // templateUrl : "/container/view/elements/visHeatmap",
                       link : function (scope, elems, attr) {
 
-                        scope.width = jq ('#leftPanel').css ('width').slice (0,
-                            -2) * .9;
-                        scope.height = 700;
+                        scope.width = jq ('#leftPanel').css ('width').slice (0, -2) * .9;
+                        scope.height = jq ('#leftPanel').css ('height').slice (0, -2) * .9;
                         scope.marginleft = 20;
                         scope.marginright = 20;
                         scope.margintop = 20;
@@ -563,22 +562,29 @@ define (
 
                         var cellwidth = 9;
 
-                        var margin = {
-                          left : scope.marginleft,
-                          right : scope.marginright,
-                          top : scope.margintop,
-                          bottom : scope.marginbottom
-                        };
+                        var width = scope.width - scope.marginleft - scope.marginright;
 
-                        var width = scope.width - margin.left - margin.right;
-
-                        var height = scope.height - margin.top - margin.bottom;
+                        var height = scope.height - scope.margintop - scope.marginbottom;
 
                         var window = d3.select (elems[0]);
                         
-                        var leftshifter = d3.scale.linear ().rangeRound ([ 255, 0 ])
+                        var leftshifter = d3.scale.linear ().rangeRound ([ 255, 0 ]);
 
-                        var rightshifter = d3.scale.linear ().rangeRound ([ 0, 255 ])
+                        var rightshifter = d3.scale.linear ().rangeRound ([ 0, 255 ]);
+                        
+                        var svg = window.append ("svg").attr ("class", "chart")
+                        // .attr("pointer-events", "all")
+                        .attr ("width", width + scope.marginleft + scope.marginright)
+                            .attr ("height",
+                                height + scope.margintop + scope.marginbottom);
+
+                        var vis = svg.append ("g").attr ("class", "uncovered");
+
+                        var rects = vis.append ("g").selectAll ("rect");
+                        var labels = vis.append ("g").selectAll();
+                        
+                        var heatmapcells = undefined;
+                        
 
                         function cellColor (val, type) {
 
@@ -612,16 +618,7 @@ define (
 
                         }
 
-                        var svg = window.append ("svg").attr ("class", "chart")
-                        // .attr("pointer-events", "all")
-                        .attr ("width", width + margin.left + margin.right)
-                            .attr ("height",
-                                height + margin.top + margin.bottom);
-
-                        var vis = svg.append ("g").attr ("class", "uncovered");
-
-                        var rects = vis.append ("g").selectAll ("rect");
-                        var labels = vis.append ("g").selectAll();
+                        
 
                         function updateCols (hc, cols) {
 
@@ -662,18 +659,18 @@ define (
                         function drawCells (hc, cols, rows) {
 
                           var cellXPosition = d3.scale.ordinal ().domain (cols)
-                              .rangeRoundBands ([ 0, cellwidth * cols.length ]);
+                              .rangeRoundBands ([ scope.marginleft, width ]);
 
                           var cellYPosition = d3.scale.ordinal ().domain (rows)
-                              .rangeRoundBands ([ 0, cellwidth * rows.length ]);
+                              .rangeRoundBands ([ scope.margintop, height ]);
 
                           hc.attr ({
                             "class" : "cells",
                             "height" : function (d) {
-                              return cellwidth - .5;
+                              return cellXPosition.rangeBand();
                             },
                             "width" : function (d) {
-                              return cellwidth - .5;
+                              return cellYPosition.rangeBand();
                             },
                             "x" : function (d, i) {
                               return cellXPosition (d.column);
@@ -704,10 +701,9 @@ define (
                             },
                           })
 
-                        }
-                        ;
+                        };
 
-                        var heatmapcells = undefined;
+                        
                         
                         function init (data) {
                         	
@@ -720,7 +716,7 @@ define (
 
                             drawCells (heatmapcells, data.column, data.row);
 
-                          }
+                        };
                         
                         if (!$routeParams.datasetName){
                         	alertService.error()
@@ -733,9 +729,9 @@ define (
 
                         
 
-                      }
+                      } // End Link Function
 
-                    };
+                    }; //End return obj
                   } ]);
 
     });
