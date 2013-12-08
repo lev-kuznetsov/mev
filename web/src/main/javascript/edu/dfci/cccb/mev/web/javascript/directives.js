@@ -625,11 +625,6 @@ define (
                           var cellXPosition = d3.scale.ordinal ().domain (cols)
                               .rangeRoundBands ([ 0, cellwidth * cols.length ]);
 
-                          // var cellYPosition = d3.scale.ordinal ().domain
-                          // (rows)
-                          // .rangeRoundBands ([ 0, cellwidth * rows.length
-							// ]);
-
                           svg.selectAll (".cells").transition ()
                               .duration (5000).attr ("x", function (d, i) {
                                 return cellXPosition (d.column)
@@ -667,10 +662,10 @@ define (
                           hc.attr ({
                             "class" : "cells",
                             "height" : function (d) {
-                              return cellXPosition.rangeBand();
+                              return cellYPosition.rangeBand();
                             },
                             "width" : function (d) {
-                              return cellYPosition.rangeBand();
+                              return cellXPosition.rangeBand();
                             },
                             "x" : function (d, i) {
                               return cellXPosition (d.column);
