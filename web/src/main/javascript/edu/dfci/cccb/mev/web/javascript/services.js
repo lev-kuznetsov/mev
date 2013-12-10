@@ -112,7 +112,29 @@ define(
 																alertService.error(message, header);
 															});
 
-												}
+												},
+												analysis : function(url) {
+                          //Pulls specific dataset with given name
+                          var params = {
+                            method : 'GET',
+                            url : '/dataset/'
+                                + url
+                                + '/analysis'
+                                + '?format=json'
+                          };
+
+                          return QHTTP(params,
+                              function(d, s) {
+                                return d;
+                              }, function(d, s) {
+                                var message = "Could not pull dataset " + url + "'s previous "
+                                + "analysis. If problem persists, contact us."
+                                
+                                var header = "Could Not Pull Dataset Analysis List (Error Code: " + s + ")"
+                                alertService.error(message, header);
+                              });
+
+                        }
 											},
 											analysis : {
 												hcl : {
