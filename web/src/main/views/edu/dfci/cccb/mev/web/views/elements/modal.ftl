@@ -10,8 +10,5 @@
      <foo ng-transclude></foo>
 
   </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary" ng-click="func()">Analyze</button>
-  </div>
+  
 </div>
