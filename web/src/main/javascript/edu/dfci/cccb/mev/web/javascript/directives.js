@@ -295,15 +295,20 @@ define (
                   clickable : true,
                   uploadMultiple : true,
                   previewsContainer : null,
-                  addRemoveLinks : true,
-
-                  dictRemoveFile : "Remove",
-                  dictCancelUpload : "Cancel",
-                  dictCancelUploadConfirmation : "Are you sure?",
-                  dictResponseError : "Upload Failed"
+                  addRemoveLinks : false,
+                  createImageThumbnails: false,
+                  previewTemplate: "<div class='dz-preview dz-file-preview'><br>" 
+                	  +  "<div class='dz-filename'><span data-dz-name></span> (<span data-dz-size></span>) <span data-dz-errormessage> ✔ </span></div>"
+                	  +  "<div class='dz-size'><span data-dz-size></span></div>"
+                	  +  "<div class='dz-progress'><span class='dz-upload' data-dz-uploadprogress></span></div>"
+                	  +  "<div class ='dz-error-message'></div>"
+                	  +"</div>",
+                  dictResponseError : "File Upload Error. Try Again",
+                  dictInvalidFileType : "File Upload Error. Try Again",
+                  dictDefaultMessage : "Drop files here",
 
                 }).on ("error", function (file) {
-                  alert ("Errored")
+                  
                 });
 
               }
@@ -601,28 +606,32 @@ define (
                         var ylabels = vis.append ("g")
                             .attr ("class", "ylabels");
 
-                        function drawLabels (xAxis, yAxis, cols, rows) {
+                        function drawLabels (xAxis, yAxis) {
+                        	
+                          
 
                           xAxis
                               .attr("transform", "translate(0," + (heatmapMarginTop + heatmapCellsHeight)
                                       + ")").call (xAxisd3)
                               .selectAll ("text")
-                              //.style ("text-anchor", "start")
-                              //.attr ("dy", function(d, i){
-                              //  return (i * cellXPosition.rangeBand ()) + "px"
-                              //})
-                              //.attr ("dx", "20px")
-                              //.attr ("transform",function (d) {
-                              //      return "rotate(-90)"
-                               //   })
-                              //.style ("text-anchor", "start");
+                              .style ("text-anchor", "end")
+                              .attr ("dy", function(d, i){
+                            	  return 0;
+                                  //return ((XIndex2Pixel(1) - XIndex2Pixel(0) ) / 2) + "px"
+                              })
+                              .attr ("dx", "-20px")
+                              .attr ("transform",function (d) {
+                                    return "rotate(-90)"
+                                  });
 
                           yAxis.attr ("transform",
                               "translate(" + (heatmapMarginLeft + heatmapCellsWidth) + ")")
                               .call (yAxisd3)
                               .selectAll ("text")
                               .style ("text-anchor", "start")
-                              //.attr ("dy", (cellYPosition.rangeBand () / 2) + "px");
+                              .attr ("dy", ( (YIndex2Pixel(1) - YIndex2Pixel(0) ) / 2) + "px");
+                          
+                          
 
                         }
                         ;
@@ -700,8 +709,8 @@ define (
                             .orient ("bottom").ticks (cols.length)
                             .tickFormat (function (d) {
                               if (d % 1 == 0 && d >= 0 && d < cols.length) {
-                                //return XIndex2Label (d);
-                                return d;
+                                return XIndex2Label (d);
+                                
                               }
                             });
 
@@ -709,8 +718,7 @@ define (
                             .orient ("right").ticks (rows.length)
                             .tickFormat (function (d) {
                               if (d % 1 == 0 && d >= 0 && d < rows.length) {
-                                //return YIndex2Label (d);
-                                return d;
+                                return YIndex2Label (d);
                               }
                             });
                         };
