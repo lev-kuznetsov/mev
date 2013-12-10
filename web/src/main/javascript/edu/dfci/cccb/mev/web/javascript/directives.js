@@ -205,7 +205,7 @@ define (
 
                     scope.availableMetrics = API.analysis.hcl.metrics();
                     
-                    scope.availableAvailableAlgorithms = API.analysis.hcl.metrics();
+                    scope.availableAlgorithms = API.analysis.hcl.algorithms();
 
                     scope.dimensions = [ {
                       name : 'Rows',
@@ -221,7 +221,10 @@ define (
                         dataset : $routeParams.datasetName,
                         dimension : scope.selectedDimension,
                         metric : scope.selectedMetric,
-                        algorithm : scope.selectedAlgorithm
+                        algorithm : scope.selectedAlgorithm,
+                        callback : function(){
+                          
+                        }
 
                       }
 
