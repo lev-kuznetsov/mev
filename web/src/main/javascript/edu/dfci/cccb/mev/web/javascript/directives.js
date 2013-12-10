@@ -203,11 +203,9 @@ define (
                   templateUrl : "/container/view/elements/hierarchicalbody",
                   link : function (scope, elems, attrs) {
 
-                    scope.availableMetrics = [ {
-                      name : 'Euclidean'
-                    }, {
-                      name : 'Manhattan'
-                    } ];
+                    scope.availableMetrics = API.analysis.hcl.metrics();
+                    
+                    scope.availableAvailableAlgorithms = API.analysis.hcl.metrics();
 
                     scope.dimensions = [ {
                       name : 'Rows',
@@ -223,7 +221,7 @@ define (
                         dataset : $routeParams.datasetName,
                         dimension : scope.selectedDimension,
                         metric : scope.selectedMetric,
-                        algorithm : null
+                        algorithm : scope.selectedAlgorithm
 
                       }
 
