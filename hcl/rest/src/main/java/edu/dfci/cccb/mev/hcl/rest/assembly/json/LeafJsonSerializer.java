@@ -16,6 +16,8 @@ package edu.dfci.cccb.mev.hcl.rest.assembly.json;
 
 import java.io.IOException;
 
+import lombok.ToString;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -27,6 +29,7 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Leaf;
  * @author levk
  * 
  */
+@ToString
 public class LeafJsonSerializer extends JsonSerializer<Leaf> {
 
   /* (non-Javadoc)

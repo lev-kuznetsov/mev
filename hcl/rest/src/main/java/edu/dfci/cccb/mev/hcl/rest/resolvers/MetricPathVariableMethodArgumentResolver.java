@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.hcl.rest.resolvers;
 
+import java.util.Collection;
+
 import javax.inject.Inject;
 
 import lombok.Getter;
@@ -23,6 +25,7 @@ import org.springframework.core.MethodParameter;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver;
 
+import edu.dfci.cccb.mev.hcl.domain.contract.InvalidMetricException;
 import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
 
 /**
@@ -31,7 +34,7 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
  */
 public class MetricPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver {
 
-  private @Getter @Setter (onMethod = @_ (@Inject)) Metric metric;
+  private @Getter @Setter (onMethod = @_ (@Inject)) Collection<Metric> metrics;
 
   /* (non-Javadoc)
    * @see org.springframework.web.servlet.mvc.method.annotation.
@@ -49,6 +52,12 @@ public class MetricPathVariableMethodArgumentResolver extends PathVariableMethod
    * org.springframework.web.context.request.NativeWebRequest) */
   @Override
   protected Object resolveName (String name, MethodParameter parameter, NativeWebRequest request) throws Exception {
-    return metric;
+    Object value = super.resolveName (name, parameter, request);
+    if (value == null)
+      return null;
+    for (Metric metric : metrics)
+      if (metric.name ().equals (value))
+        return metric;
+    throw new InvalidMetricException ().name (value.toString ());
   }
 }

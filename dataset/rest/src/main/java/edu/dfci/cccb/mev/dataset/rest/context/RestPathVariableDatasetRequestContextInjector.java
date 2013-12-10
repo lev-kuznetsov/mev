@@ -20,6 +20,7 @@ import static edu.dfci.cccb.mev.dataset.domain.contract.Dataset.VALID_DATASET_NA
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.from;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Selection.VALID_SELECTION_NAME_REGEX;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
+import static org.springframework.context.annotation.ScopedProxyMode.NO;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 import lombok.ToString;
@@ -94,7 +95,7 @@ public class RestPathVariableDatasetRequestContextInjector {
   }
 
   @Bean
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
+  @Scope (value = SCOPE_REQUEST, proxyMode = NO)
   public Analysis analysis (Dataset dataset, NativeWebRequest request) throws AnalysisNotFoundException,
                                                                       MissingPathVariableException {
     return dataset.analyses ().get (variable (ANALYSIS, request));

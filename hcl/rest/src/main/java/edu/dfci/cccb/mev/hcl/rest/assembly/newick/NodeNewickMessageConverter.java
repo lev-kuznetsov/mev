@@ -20,6 +20,8 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.Iterator;
 
+import lombok.ToString;
+
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
@@ -35,6 +37,7 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Node;
  * @author levk
  * 
  */
+@ToString
 public class NodeNewickMessageConverter extends AbstractHttpMessageConverter<Node> {
   private static final Charset DEFAULT_CHARSET = Charset.forName ("UTF-8");
   public static final String NEWICK_EXTENSION = "newick";
