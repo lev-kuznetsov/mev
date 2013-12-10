@@ -726,7 +726,7 @@ define (
 
                         function init (data) {
                           
-                          scaleUpdates(data.column, data.row, data.min, data.max, data.avg);
+                          scaleUpdates(data.column.keys, data.row.keys, data.min, data.max, data.avg);
 
                           drawCells (rects.data (data.values).enter ().append (
                           "rect"));
