@@ -125,6 +125,7 @@ define(
 
 		                          return QHTTP(params,
 		                              function(d, s) {
+		                            
 		                                return d;
 		                              }, function(d, s) {
 		                                var message = "Could not pull available HCL Algorithms. If "
@@ -157,24 +158,24 @@ define(
 														var params = {
 
 															method : 'POST',
-															url : 'analysis/hcl/new/'
+															url : 'dataset/' + q.dataset + '/analyze/hcl/'
 																	+ q.name
 																	+ '('
-																	+ q.dataset
-																	+ ','
-																	+ q.dimension
+																	+ q.dimension.value
 																	+ ','
 																	+ q.metric
 																	+ ','
 																	+ q.algorithm
-																	+ ')'
+																	+ ')',
+															callback: q.callback
 
 														};
 
 														return QHTTP(
 																params,
 																function(d, s) {
-																	alertService.success(name + ' clustering complete!', 'Clustering Complete')
+																	alertService.success(name + ' clustering complete.', 'Clustering Complete');
+																	callback();
 																},
 																function(d, s) {
 																	var message = "Could not begin analysis on " + q.dataset + ". If "
