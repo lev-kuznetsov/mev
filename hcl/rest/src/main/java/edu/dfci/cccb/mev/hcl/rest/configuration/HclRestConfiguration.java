@@ -28,9 +28,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.hcl.domain.concrete.AverageAlgorithm;
 import edu.dfci.cccb.mev.hcl.domain.concrete.EuclideanMetric;
 import edu.dfci.cccb.mev.hcl.domain.concrete.TwoDimensionalHcl;
+import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
 import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 import edu.dfci.cccb.mev.hcl.domain.mock.MockNodeBuilder;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.BranchJsonSerializer;
@@ -68,6 +70,11 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
+  public HclResultJsonSerializer hclResultJsonSerializer () {
+    return new HclResultJsonSerializer ();
+  }
+
+  @Bean
   public LeafJsonSerializer leafJsonSerializer () {
     return new LeafJsonSerializer ();
   }
@@ -98,8 +105,8 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  public HclResultJsonSerializer hclResultJsonSerializer () {
-    return new HclResultJsonSerializer ();
+  public AnalysisPathVariableMethodArgumentResolver<HclResult> hclAnalysisPathVariableMethodArgumentResolver () {
+    return new AnalysisPathVariableMethodArgumentResolver<HclResult> (HclResult.class);
   }
 
   /* (non-Javadoc)

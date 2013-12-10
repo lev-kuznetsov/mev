@@ -24,6 +24,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import org.springframework.core.MethodParameter;
+import org.springframework.core.Ordered;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver;
 
@@ -34,11 +35,12 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
  * @author levk
  * 
  */
-@ToString
+@ToString (exclude = "dataset")
 @EqualsAndHashCode (callSuper = false)
-public class DimensionPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver {
+public class DimensionPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver implements Ordered {
 
   private @Getter @Setter (onMethod = @_ (@Inject)) Dataset dataset;
+  private @Getter @Setter int order = LOWEST_PRECEDENCE;
 
   /* (non-Javadoc)
    * @see org.springframework.web.servlet.mvc.method.annotation.
