@@ -112,11 +112,59 @@ define(
 																alertService.error(message, header);
 															});
 
-												}
+												},
+												analysis : {
+												  list: function(url) {
+	                          //Pulls previous analysis list for given heatmap
+	                          var params = {
+	                            method : 'GET',
+	                            url : '/dataset/'
+	                                + url
+	                                + '/analysis'
+	                                + '?format=json'
+	                          };
+
+	                          return QHTTP(params,
+	                              function(d, s) {
+	                                return d;
+	                              }, function(d, s) {
+	                                var message = "Could not pull dataset " + url + "'s previous "
+	                                + "analysis. If problem persists, contact us."
+	                                
+	                                var header = "Could Not Pull Dataset Analysis List (Error Code: " + s + ")"
+	                                alertService.error(message, header);
+	                              });
+
+	                        },
+	                        get : function(q) {
+	                          //Pulls previous analysis by name q.name
+	                          var params = {
+	                            method : 'GET',
+	                            url : '/dataset/'
+	                                + q.dataset
+	                                + '/analysis/'
+	                                + q.name
+	                                + '/root?format=newick'
+	                          };
+
+	                          return QHTTP(params,
+	                              function(d, s) {
+	                                return d;
+	                              }, function(d, s) {
+	                                var message = "Could not pull HCL analysis " + q.name + ". "
+	                                + "If problem persists, contact us."
+	                                
+	                                var header = "Could Not Pull Previous Analysis (Error Code: " + s + ")"
+	                                alertService.error(message, header);
+	                              });
+
+	                        }
+												},
 											},
 											analysis : {
 												hcl : {
 												  algorithms : function() {
+												    //Pull available hcl algorithms list
 												    var params = {
 		                            method : 'GET',
 		                            url : '/analysis/hcl/algorithms'
@@ -136,6 +184,7 @@ define(
 		                              });
 												  },
 												  metrics : function() {
+												  //Pull available hcl metrics list
                             var params = {
                                 method : 'GET',
                                 url : '/analysis/hcl/metrics'
@@ -154,6 +203,7 @@ define(
                                   });
                           },
 													create : function(q) {
+													//Create a new HCL analysis
 
 														var params = {
 
