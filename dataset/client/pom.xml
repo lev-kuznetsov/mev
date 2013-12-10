@@ -3,24 +3,25 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>mev-heatmap-test</artifactId>
+  <artifactId>mev-dataset-client</artifactId>
   <packaging>jar</packaging>
 
-  <name>MeV Heatmap Plugin Tests</name>
+  <name>MeV Dataset Plugin Client Component</name>
   <url>http://github.com/dfci-cccb/mev</url>
 
   <parent>
     <groupId>edu.dfci.cccb</groupId>
-    <artifactId>mev-heatmap</artifactId>
+    <artifactId>mev-dataset</artifactId>
     <version>BAYLIE-SNAPSHOT</version>
   </parent>
 
   <dependencies>
+
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
-      <artifactId>mev-heatmap-domain</artifactId>
+      <artifactId>mev-dataset-rest</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
-  </dependencies>
 
+  </dependencies>
 </project>

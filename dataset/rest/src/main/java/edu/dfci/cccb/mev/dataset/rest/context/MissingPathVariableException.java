@@ -12,33 +12,41 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.heatmap.domain;
+package edu.dfci.cccb.mev.dataset.rest.context;
 
-import edu.dfci.cccb.mev.api.common.support.MevException;
+import edu.dfci.cccb.mev.dataset.domain.contract.MevException;
 
 /**
  * @author levk
  * 
  */
-public abstract class HeatmapException extends MevException {
+public class MissingPathVariableException extends MevException {
   private static final long serialVersionUID = 1L;
+
+  {
+    code ("missing.path.variable");
+  }
+
+  public MissingPathVariableException name (String name) {
+    return argument ("name", name);
+  }
 
   /**
    * 
    */
-  public HeatmapException () {}
+  public MissingPathVariableException () {}
 
   /**
    * @param message
    */
-  public HeatmapException (String message) {
+  public MissingPathVariableException (String message) {
     super (message);
   }
 
   /**
    * @param cause
    */
-  public HeatmapException (Throwable cause) {
+  public MissingPathVariableException (Throwable cause) {
     super (cause);
   }
 
@@ -46,7 +54,7 @@ public abstract class HeatmapException extends MevException {
    * @param message
    * @param cause
    */
-  public HeatmapException (String message, Throwable cause) {
+  public MissingPathVariableException (String message, Throwable cause) {
     super (message, cause);
   }
 
@@ -56,7 +64,10 @@ public abstract class HeatmapException extends MevException {
    * @param enableSuppression
    * @param writableStackTrace
    */
-  public HeatmapException (String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+  public MissingPathVariableException (String message,
+                                       Throwable cause,
+                                       boolean enableSuppression,
+                                       boolean writableStackTrace) {
     super (message, cause, enableSuppression, writableStackTrace);
   }
 }

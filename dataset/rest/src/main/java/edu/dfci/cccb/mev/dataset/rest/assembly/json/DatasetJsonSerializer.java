@@ -34,6 +34,8 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
+import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 
 /**
@@ -56,21 +58,38 @@ public class DatasetJsonSerializer extends JsonSerializer<Dataset> {
    * com.fasterxml.jackson.core.JsonGenerator,
    * com.fasterxml.jackson.databind.SerializerProvider) */
   @Override
-  @SneakyThrows ({ InvalidDimensionTypeException.class, InvalidCoordinateException.class })
+  @SneakyThrows ({
+                  InvalidDimensionTypeException.class,
+                  InvalidCoordinateException.class,
+                  SelectionNotFoundException.class })
   public void serialize (Dataset value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
                                                                                         JsonProcessingException {
     jgen.writeStartObject ();
-    writeDimension (jgen, value.dimension (ROW));
-    writeDimension (jgen, value.dimension (COLUMN));
+    writeDimension (jgen, value.dimension (ROW), provider);
+    writeDimension (jgen, value.dimension (COLUMN), provider);
     writeValues (jgen, value.values (), value.dimension (ROW).keys (), value.dimension (COLUMN).keys ());
     jgen.writeEndObject ();
   }
 
-  private void writeDimension (JsonGenerator jgen, Dimension dimension) throws IOException, JsonProcessingException {
-    jgen.writeArrayFieldStart (dimension.type ().name ().toLowerCase ());
-    for (String item : dimension.keys ())
-      jgen.writeString (item);
+  private void writeDimension (JsonGenerator jgen, Dimension dimension, SerializerProvider provider) throws IOException,
+                                                                                                    JsonProcessingException,
+                                                                                                    SelectionNotFoundException {
+    jgen.writeObjectFieldStart (dimension.type ().name ().toLowerCase ());
+    provider.defaultSerializeField ("keys", dimension.keys (), jgen);
+    jgen.writeArrayFieldStart ("selections");
+    for (String selection : dimension.selections ().list ())
+      writeSelection (jgen, dimension.selections ().get (selection), provider);
     jgen.writeEndArray ();
+    jgen.writeEndObject ();
+  }
+
+  private void writeSelection (JsonGenerator jgen, Selection selection, SerializerProvider provider) throws IOException,
+                                                                                                    JsonProcessingException {
+    jgen.writeStartObject ();
+    jgen.writeStringField ("name", selection.name ());
+    provider.defaultSerializeField ("properties", selection.properties (), jgen);
+    provider.defaultSerializeField ("keys", selection.keys (), jgen);
+    jgen.writeEndObject ();
   }
 
   private void writeValues (JsonGenerator jgen, Values values, List<String> rows, List<String> columns) throws IOException,

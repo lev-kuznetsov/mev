@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.api.common.support;
+package edu.dfci.cccb.mev.dataset.domain.contract;
 
 import java.util.HashMap;
 import java.util.Map;

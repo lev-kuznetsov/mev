@@ -14,7 +14,6 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.context;
 
-import static edu.dfci.cccb.mev.api.server.support.PathVariables.variable;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Analysis.VALID_ANALYSIS_NAME_REGEX;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dataset.VALID_DATASET_NAME_REGEX;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.from;
@@ -23,14 +22,18 @@ import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 import static org.springframework.context.annotation.ScopedProxyMode.NO;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
+import static org.springframework.web.servlet.HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE;
+
+import java.util.Map;
+
 import lombok.ToString;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.context.request.RequestAttributes;
 
-import edu.dfci.cccb.mev.api.server.support.MissingPathVariableException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
@@ -99,5 +102,14 @@ public class RestPathVariableDatasetRequestContextInjector {
   public Analysis analysis (Dataset dataset, NativeWebRequest request) throws AnalysisNotFoundException,
                                                                       MissingPathVariableException {
     return dataset.analyses ().get (variable (ANALYSIS, request));
+  }
+
+  @SuppressWarnings ("unchecked")
+  public static String variable (String name, NativeWebRequest request) throws MissingPathVariableException {
+    String value = ((Map<String, String>) request.getAttribute (URI_TEMPLATE_VARIABLES_ATTRIBUTE,
+                                                                RequestAttributes.SCOPE_REQUEST)).get (name);
+    if (value == null)
+      throw new MissingPathVariableException ().name (name);
+    return value;
   }
 }
