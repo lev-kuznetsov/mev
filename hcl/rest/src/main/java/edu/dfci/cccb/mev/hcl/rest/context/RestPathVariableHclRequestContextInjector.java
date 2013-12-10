@@ -14,22 +14,7 @@
  */
 package edu.dfci.cccb.mev.hcl.rest.context;
 
-import static edu.dfci.cccb.mev.api.server.support.PathVariables.variable;
-import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
-import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
-
-import java.util.Collection;
-
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-import org.springframework.web.context.request.NativeWebRequest;
-
-import edu.dfci.cccb.mev.api.server.support.MissingPathVariableException;
-import edu.dfci.cccb.mev.hcl.domain.contract.Algorithm;
-import edu.dfci.cccb.mev.hcl.domain.contract.InvalidAlgorithmException;
-import edu.dfci.cccb.mev.hcl.domain.contract.InvalidMetricException;
-import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
 
 /**
  * @author levk
@@ -38,31 +23,9 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
 @Configuration
 public class RestPathVariableHclRequestContextInjector {
 
-  private static final String METRIC = "metric";
-  private static final String ALGORITHM = "algorithm";
+  public static final String METRIC = "metric";
+  public static final String ALGORITHM = "algorithm";
 
   public static final String METRIC_URL_ELEMENT = "{" + METRIC + "}";
   public static final String ALGORITHM_URL_ELEMENT = "{" + ALGORITHM + "}";
-
-  @Bean
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public Metric metric (Collection<Metric> metrics, NativeWebRequest request) throws InvalidMetricException,
-                                                                             MissingPathVariableException {
-    String name = variable (METRIC, request);
-    for (Metric metric : metrics)
-      if (metric.name ().equals (name))
-        return metric;
-    throw new InvalidMetricException ().name (name);
-  }
-
-  @Bean
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public Algorithm algorithm (Collection<Algorithm> algorithms, NativeWebRequest request) throws InvalidAlgorithmException,
-                                                                                         MissingPathVariableException {
-    String name = variable (METRIC, request);
-    for (Algorithm algorithm : algorithms)
-      if (algorithm.name ().equals (name))
-        return algorithm;
-    throw new InvalidAlgorithmException ().name (name);
-  }
 }

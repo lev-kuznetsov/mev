@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.Synchronized;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
@@ -33,6 +34,7 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDimension;
 @EqualsAndHashCode (callSuper = true)
 @ToString
 @Accessors (fluent = true)
+@Log4j
 public class SimpleDimension extends AbstractDimension {
 
   private @Getter List<String> keys;
@@ -44,6 +46,8 @@ public class SimpleDimension extends AbstractDimension {
    */
   public SimpleDimension (Type type, List<String> keys, Selections selections, Annotation annotation) {
     super (type);
+    if (log.isDebugEnabled ())
+      log.debug ("Type=" + type);
     this.annotation = annotation;
     this.keys = keys;
     this.selections = selections;

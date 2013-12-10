@@ -17,7 +17,7 @@ package edu.dfci.cccb.mev.hcl.rest.configuration;
 import static edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter.NEWICK_EXTENSION;
 import static edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter.NEWICK_MEDIA_TYPE;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
-import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
+import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLASS;
 import lombok.ToString;
 
 import org.springframework.context.annotation.Bean;
@@ -31,10 +31,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import edu.dfci.cccb.mev.hcl.domain.concrete.AverageAlgorithm;
 import edu.dfci.cccb.mev.hcl.domain.concrete.EuclideanMetric;
 import edu.dfci.cccb.mev.hcl.domain.concrete.TwoDimensionalHcl;
-import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 import edu.dfci.cccb.mev.hcl.domain.mock.MockNodeBuilder;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.BranchJsonSerializer;
+import edu.dfci.cccb.mev.hcl.rest.assembly.json.HclResultJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.LeafJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter;
 import edu.dfci.cccb.mev.hcl.rest.context.RestPathVariableHclRequestContextInjector;
@@ -57,8 +57,8 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  @Scope (value = SCOPE_PROTOTYPE, proxyMode = INTERFACES)
-  public Hcl hcl () {
+  @Scope (value = SCOPE_PROTOTYPE, proxyMode = TARGET_CLASS)
+  public TwoDimensionalHcl hcl () {
     return new TwoDimensionalHcl ();
   }
 
@@ -95,6 +95,11 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   @Bean
   public MetricPathVariableMethodArgumentResolver metricPathVariableMethodArgumentResolver () {
     return new MetricPathVariableMethodArgumentResolver ();
+  }
+
+  @Bean
+  public HclResultJsonSerializer hclResultJsonSerializer () {
+    return new HclResultJsonSerializer ();
   }
 
   /* (non-Javadoc)

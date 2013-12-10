@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalyses;
@@ -27,6 +28,7 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalyses;
  * @author levk
  * 
  */
+@Log4j
 public class ArrayListAnalyses extends AbstractAnalyses {
 
   private List<Analysis> analyses = new ArrayList<> ();
@@ -46,8 +48,11 @@ public class ArrayListAnalyses extends AbstractAnalyses {
   @Override
   public Analysis get (String name) throws AnalysisNotFoundException {
     for (Analysis analysis : analyses)
-      if (analysis.name ().equals (name))
+      if (analysis.name ().equals (name)) {
+        if (log.isDebugEnabled ())
+          log.debug ("Found analysis " + name + " of type " + analysis.getClass ().getName ());
         return analysis;
+      }
     throw new AnalysisNotFoundException ().name (name);
   }
 

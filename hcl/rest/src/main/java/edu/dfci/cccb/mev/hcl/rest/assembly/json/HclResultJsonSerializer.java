@@ -16,6 +16,9 @@ package edu.dfci.cccb.mev.hcl.rest.assembly.json;
 
 import java.io.IOException;
 
+import lombok.ToString;
+import lombok.extern.log4j.Log4j;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -27,6 +30,8 @@ import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
  * @author levk
  * 
  */
+@Log4j
+@ToString
 public class HclResultJsonSerializer extends JsonSerializer<HclResult> {
 
   /* (non-Javadoc)
@@ -44,8 +49,11 @@ public class HclResultJsonSerializer extends JsonSerializer<HclResult> {
   @Override
   public void serialize (HclResult value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
                                                                                           JsonProcessingException {
+    if (log.isDebugEnabled ())
+      log.debug ("Serializing " + value.getClass ());
     jgen.writeStartObject ();
     jgen.writeStringField ("name", value.name ());
+    jgen.writeObjectField ("dimension", value.dimension ().type ());
     jgen.writeFieldName ("root");
     provider.defaultSerializeValue (value.root (), jgen);
     jgen.writeEndObject ();

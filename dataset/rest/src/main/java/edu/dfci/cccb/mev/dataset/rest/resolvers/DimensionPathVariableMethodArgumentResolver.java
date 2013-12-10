@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.resolvers;
 
+import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.from;
+
 import javax.inject.Inject;
 
 import lombok.EqualsAndHashCode;
@@ -25,6 +27,7 @@ import org.springframework.core.MethodParameter;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
 /**
@@ -35,7 +38,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 @EqualsAndHashCode (callSuper = false)
 public class DimensionPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver {
 
-  private @Getter @Setter (onMethod = @_ (@Inject)) Dimension dimension;
+  private @Getter @Setter (onMethod = @_ (@Inject)) Dataset dataset;
 
   /* (non-Javadoc)
    * @see org.springframework.web.servlet.mvc.method.annotation.
@@ -53,6 +56,9 @@ public class DimensionPathVariableMethodArgumentResolver extends PathVariableMet
    * org.springframework.web.context.request.NativeWebRequest) */
   @Override
   protected Object resolveName (String name, MethodParameter parameter, NativeWebRequest request) throws Exception {
-    return dimension;
+    Object value = super.resolveName (name, parameter, request);
+    if (value == null)
+      return null;
+    return dataset.dimension (from (value.toString ()));
   }
 }

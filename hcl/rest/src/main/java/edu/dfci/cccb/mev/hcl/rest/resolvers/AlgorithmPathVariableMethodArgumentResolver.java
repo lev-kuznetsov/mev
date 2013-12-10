@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.hcl.rest.resolvers;
 
+import java.util.Collection;
+
 import javax.inject.Inject;
 
 import lombok.Getter;
@@ -24,6 +26,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver;
 
 import edu.dfci.cccb.mev.hcl.domain.contract.Algorithm;
+import edu.dfci.cccb.mev.hcl.domain.contract.InvalidAlgorithmException;
 
 /**
  * @author levk
@@ -31,7 +34,7 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Algorithm;
  */
 public class AlgorithmPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver {
 
-  private @Getter @Setter (onMethod = @_ (@Inject)) Algorithm algorithm;
+  private @Getter @Setter (onMethod = @_ (@Inject)) Collection<Algorithm> algorithms;
 
   /* (non-Javadoc)
    * @see org.springframework.web.servlet.mvc.method.annotation.
@@ -49,6 +52,12 @@ public class AlgorithmPathVariableMethodArgumentResolver extends PathVariableMet
    * org.springframework.web.context.request.NativeWebRequest) */
   @Override
   protected Object resolveName (String name, MethodParameter parameter, NativeWebRequest request) throws Exception {
-    return algorithm;
+    Object value = super.resolveName (name, parameter, request);
+    if (value == null)
+      return null;
+    for (Algorithm algorithm : algorithms)
+      if (algorithm.name ().equals (value))
+        return algorithm;
+    throw new InvalidAlgorithmException ().name (value.toString ());
   }
 }
