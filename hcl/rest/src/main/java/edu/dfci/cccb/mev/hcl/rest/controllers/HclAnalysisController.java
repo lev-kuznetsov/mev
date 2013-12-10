@@ -118,7 +118,8 @@ public class HclAnalysisController {
 
   @RequestMapping (value = "/dataset/" + DATASET_URL_ELEMENT + "/analysis/" + ANALYSIS_URL_ELEMENT + "/root",
                    method = GET)
-  public Node root (@PathVariable (ANALYSIS) HclResult analysis) {
+  public Node root (@PathVariable (DATASET) Dataset dataset,
+                    @PathVariable (ANALYSIS) HclResult analysis) {
     return analysis.root ();
   }
 
