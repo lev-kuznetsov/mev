@@ -14,20 +14,21 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.resolvers;
 
-import static java.lang.reflect.Modifier.isAbstract;
-
-import javax.inject.Inject;
-
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_REQUEST_ATTRIBUTE_NAME;
+import static java.lang.Integer.MAX_VALUE;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import org.springframework.core.MethodParameter;
+import org.springframework.core.Ordered;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 
 /**
  * @author levk
@@ -35,14 +36,12 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
  */
 @ToString
 @EqualsAndHashCode (callSuper = false)
-public class AnalysisPathVariableMethodArgumentResolver <T extends Analysis> extends PathVariableMethodArgumentResolver {
+public class AnalysisPathVariableMethodArgumentResolver <T extends Analysis> extends PathVariableMethodArgumentResolver implements Ordered {
 
   private @Getter final Class<T> analysisType;
-  private @Getter @Setter (onMethod = @_ (@Inject)) Analysis analysis;
+  private @Getter @Setter int order = MAX_VALUE;
 
   public AnalysisPathVariableMethodArgumentResolver (Class<T> analysisType) {
-    if (analysisType.isInterface () || isAbstract (analysisType.getModifiers ()))
-      throw new IllegalArgumentException (analysisType.getName () + " must be a concrete implementation");
     this.analysisType = analysisType;
   }
 
@@ -62,6 +61,12 @@ public class AnalysisPathVariableMethodArgumentResolver <T extends Analysis> ext
    * org.springframework.web.context.request.NativeWebRequest) */
   @Override
   protected Object resolveName (String name, MethodParameter parameter, NativeWebRequest request) throws Exception {
+    Object value = super.resolveName (name, parameter, request);
+    if (value == null)
+      return null;
+    Analysis analysis = ((Dataset) request.getAttribute (DATASET_REQUEST_ATTRIBUTE_NAME,
+                                                         RequestAttributes.SCOPE_REQUEST)).analyses ()
+                                                                                          .get ((String) value);
     if (analysisType.isInstance (analysis))
       return analysis;
     else

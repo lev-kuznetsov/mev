@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.resolvers;
 
+import java.util.Arrays;
+
 import javax.inject.Inject;
 
 import lombok.Getter;
@@ -21,8 +23,11 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
+import org.springframework.aop.scope.ScopedObject;
 import org.springframework.core.MethodParameter;
+import org.springframework.core.Ordered;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
@@ -32,10 +37,13 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
  * 
  */
 @Log4j
-@ToString
-public class DatasetPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver {
+@ToString (exclude = "dataset")
+public class DatasetPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver implements Ordered {
+
+  public static final String DATASET_REQUEST_ATTRIBUTE_NAME = "mev.dataset";
 
   private @Getter @Setter (onMethod = @_ (@Inject)) Dataset dataset;
+  private @Getter @Setter int order = LOWEST_PRECEDENCE - 1;
 
   /* (non-Javadoc)
    * @see org.springframework.web.servlet.mvc.method.annotation.
@@ -54,7 +62,11 @@ public class DatasetPathVariableMethodArgumentResolver extends PathVariableMetho
   @Override
   protected Object resolveName (String name, MethodParameter parameter, NativeWebRequest request) throws Exception {
     if (log.isDebugEnabled ())
-      log.debug ("Resolved " + dataset);
+      log.debug ("Resolved " + dataset + " of type " + dataset.getClass () + " implementing "
+                 + Arrays.toString (dataset.getClass ().getInterfaces ()));
+    request.setAttribute (DATASET_REQUEST_ATTRIBUTE_NAME,
+                          dataset instanceof ScopedObject ? ((ScopedObject) dataset).getTargetObject () : dataset,
+                          RequestAttributes.SCOPE_REQUEST);
     return dataset;
   }
 }

@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.hcl.rest.resolvers;
 
+import static java.lang.Integer.MAX_VALUE;
+
 import java.util.Collection;
 
 import javax.inject.Inject;
@@ -22,6 +24,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import org.springframework.core.MethodParameter;
+import org.springframework.core.Ordered;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver;
 
@@ -32,9 +35,10 @@ import edu.dfci.cccb.mev.hcl.domain.contract.InvalidAlgorithmException;
  * @author levk
  * 
  */
-public class AlgorithmPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver {
+public class AlgorithmPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver implements Ordered {
 
   private @Getter @Setter (onMethod = @_ (@Inject)) Collection<Algorithm> algorithms;
+  private @Getter @Setter int order = MAX_VALUE;
 
   /* (non-Javadoc)
    * @see org.springframework.web.servlet.mvc.method.annotation.

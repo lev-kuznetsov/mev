@@ -14,19 +14,23 @@
  */
 package edu.dfci.cccb.mev.web.configuration.resolvers;
 
+import static java.util.Collections.sort;
+import static org.springframework.core.Ordered.LOWEST_PRECEDENCE;
+
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.Ordered;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
@@ -42,17 +46,32 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
           ViewResolverConfiguration.class,
           WebjarResourceHandlerConfiguration.class })
 @ToString
+@Log4j
 public class ResolverConfigurations {
 
   private @Inject RequestMappingHandlerAdapter adapter;
-  private @Autowired (required = false) Collection<HandlerMethodArgumentResolver> methodArgumentResolvers;
+  private @Autowired (required = false) List<HandlerMethodArgumentResolver> methodArgumentResolvers;
 
   @PostConstruct
   private void prioritizeCustomArgumentMethodHandlers () {
+    log.debug ("Adding custom method argument handlers " + methodArgumentResolvers);
     if (methodArgumentResolvers != null && methodArgumentResolvers.size () > 0) {
-    List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<> (adapter.getArgumentResolvers ());
-    argumentResolvers.addAll (0, new HashSet<> (methodArgumentResolvers));
-    adapter.setArgumentResolvers (argumentResolvers);
+      sort (methodArgumentResolvers, new Comparator<HandlerMethodArgumentResolver> () {
+        /* (non-Javadoc)
+         * @see java.util.Comparator#compare(java.lang.Object,
+         * java.lang.Object) */
+        @Override
+        public int compare (HandlerMethodArgumentResolver o1, HandlerMethodArgumentResolver o2) {
+          return order (o2) - order (o1);
+        }
+
+        private int order (HandlerMethodArgumentResolver resolver) {
+          return (resolver instanceof Ordered) ? ((Ordered) resolver).getOrder () : LOWEST_PRECEDENCE;
+        }
+      });
+      List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<> (adapter.getArgumentResolvers ());
+      argumentResolvers.addAll (0, methodArgumentResolvers);
+      adapter.setArgumentResolvers (argumentResolvers);
     }
   }
 }

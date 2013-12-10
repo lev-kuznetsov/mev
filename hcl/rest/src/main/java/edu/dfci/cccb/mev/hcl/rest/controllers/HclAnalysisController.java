@@ -45,7 +45,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
@@ -57,6 +56,7 @@ import edu.dfci.cccb.mev.hcl.domain.concrete.TwoDimensionalHcl;
 import edu.dfci.cccb.mev.hcl.domain.contract.Algorithm;
 import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
 import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
+import edu.dfci.cccb.mev.hcl.domain.contract.Node;
 import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 
 /**
@@ -111,13 +111,15 @@ public class HclAnalysisController {
   @RequestMapping (value = "/dataset/" + DATASET_URL_ELEMENT + "/analysis/" + ANALYSIS_URL_ELEMENT,
                    method = POST)
   public List<String> apply (@PathVariable (DATASET) Dataset dataset,
-                             @PathVariable (ANALYSIS) Analysis analysis) throws DatasetException {
-    if (analysis instanceof HclResult) {
-      HclResult hcl = (HclResult) analysis;
-      hcl.apply ();
-      return hcl.dimension ().keys ();
-    } else
-      throw new IllegalArgumentException ();
+                             @PathVariable (ANALYSIS) HclResult analysis) throws DatasetException {
+    analysis.apply ();
+    return analysis.dimension ().keys ();
+  }
+
+  @RequestMapping (value = "/dataset/" + DATASET_URL_ELEMENT + "/analysis/" + ANALYSIS_URL_ELEMENT + "/root",
+                   method = GET)
+  public Node root (@PathVariable (ANALYSIS) HclResult analysis) {
+    return analysis.root ();
   }
 
   private @Getter @Setter (onMethod = @_ (@Inject)) Collection<Metric> metrics;
