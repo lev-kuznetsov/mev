@@ -14,7 +14,6 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
-import edu.dfci.cccb.mev.api.common.support.MevException;
 
 /**
  * @author levk
