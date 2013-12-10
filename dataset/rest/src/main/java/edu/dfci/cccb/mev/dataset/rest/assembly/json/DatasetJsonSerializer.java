@@ -76,10 +76,6 @@ public class DatasetJsonSerializer extends JsonSerializer<Dataset> {
                                                                                                     SelectionNotFoundException {
     jgen.writeObjectFieldStart (dimension.type ().name ().toLowerCase ());
     provider.defaultSerializeField ("keys", dimension.keys (), jgen);
-    jgen.writeArrayFieldStart ("keys");
-    for (String item : dimension.keys ())
-      jgen.writeString (item);
-    jgen.writeEndArray ();
     jgen.writeArrayFieldStart ("selections");
     for (String selection : dimension.selections ().list ())
       writeSelection (jgen, dimension.selections ().get (selection), provider);
