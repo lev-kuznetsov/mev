@@ -14,12 +14,12 @@
  */
 package edu.dfci.cccb.mev.api.server.support;
 
+import static org.springframework.web.context.request.RequestAttributes.SCOPE_REQUEST;
 import static org.springframework.web.servlet.HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE;
 
 import java.util.Map;
 
 import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.context.request.RequestAttributes;
 
 /**
  * @author levk
@@ -30,7 +30,7 @@ public final class PathVariables {
   @SuppressWarnings ("unchecked")
   public static String variable (String name, NativeWebRequest request) throws MissingPathVariableException {
     String value = ((Map<String, String>) request.getAttribute (URI_TEMPLATE_VARIABLES_ATTRIBUTE,
-                                                                RequestAttributes.SCOPE_REQUEST)).get (name);
+                                                                SCOPE_REQUEST)).get (name);
     if (value == null)
       throw new MissingPathVariableException ().name (name);
     return value;

@@ -16,8 +16,8 @@ package edu.dfci.cccb.mev.hcl.rest.configuration;
 
 import static edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter.NEWICK_EXTENSION;
 import static edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter.NEWICK_MEDIA_TYPE;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
-import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 import lombok.ToString;
 
 import org.springframework.context.annotation.Bean;
@@ -57,7 +57,7 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
+  @Scope (value = SCOPE_PROTOTYPE, proxyMode = INTERFACES)
   public Hcl hcl () {
     return new TwoDimensionalHcl ();
   }

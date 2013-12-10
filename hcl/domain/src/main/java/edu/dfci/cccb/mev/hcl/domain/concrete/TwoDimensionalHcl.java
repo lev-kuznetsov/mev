@@ -74,6 +74,8 @@ public class TwoDimensionalHcl extends AbstractHcl {
   }
 
   private Node cluster (Dataset dataset, Dimension dimension, Metric metric, Algorithm algorithm) throws DatasetException {
+    if (log.isDebugEnabled ())
+      log.debug ("Clustering " + dataset + " on " + dimension);
     return eucledian (dataset, dimension);
   }
 

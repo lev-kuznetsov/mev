@@ -12,45 +12,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.hcl.rest.controllers;
+package edu.dfci.cccb.mev.dataset.rest.controllers;
 
-import static ch.lambdaj.Lambda.extract;
-import static ch.lambdaj.Lambda.on;
+import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DATASET_URL_ELEMENT;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.dfci.cccb.mev.hcl.domain.contract.Algorithm;
-import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 
 /**
  * @author levk
  * 
  */
 @RestController
-@ToString
-@RequestMapping ("/analysis/hcl")
-public class HclAnalyzeController {
+@RequestMapping ("/dataset/" + DATASET_URL_ELEMENT + "/analysis")
+public class AnalysesController {
 
-  private @Getter @Setter (onMethod = @_ (@Inject)) Collection<Metric> metrics;
-  private @Getter @Setter (onMethod = @_ (@Inject)) Collection<Algorithm> algorithms;
+  private @Getter @Setter (onMethod = @_ (@Inject)) Dataset dataset;
 
-  @RequestMapping (value = "/metrics", method = GET)
-  public Collection<String> metrics () {
-    return extract (metrics, on (Metric.class).name ());
-  }
-
-  @RequestMapping (value = "/algorithms", method = GET)
-  public Collection<String> algorithms () {
-    return extract (algorithms, on (Algorithm.class).name ());
+  @RequestMapping (method = GET)
+  public List<String> list () {
+    return dataset.analyses ().list ();
   }
 }
