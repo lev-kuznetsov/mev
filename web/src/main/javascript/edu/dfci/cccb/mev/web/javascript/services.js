@@ -116,6 +116,42 @@ define(
 											},
 											analysis : {
 												hcl : {
+												  algorithms : function() {
+												    var params = {
+		                            method : 'GET',
+		                            url : '/analysis/hcl/algorithms'
+		                                + '?format=json'
+		                          };
+
+		                          return QHTTP(params,
+		                              function(d, s) {
+		                                return d;
+		                              }, function(d, s) {
+		                                var message = "Could not pull available HCL Algorithms. If "
+		                                + "problem persists, contact us."
+		                                
+		                                var header = "Could Not Pull Available HCL Algorithms (Error Code: " + s + ")"
+		                                alertService.error(message, header);
+		                              });
+												  },
+												  metrics : function() {
+                            var params = {
+                                method : 'GET',
+                                url : '/analysis/hcl/metrics'
+                                    + '?format=json'
+                              };
+
+                              return QHTTP(params,
+                                  function(d, s) {
+                                    return d;
+                                  }, function(d, s) {
+                                    var message = "Could not pull available HCL Metrics. If "
+                                    + "problem persists, contact us."
+                                    
+                                    var header = "Could Not Pull Available HCL Metrics (Error Code: " + s + ")"
+                                    alertService.error(message, header);
+                                  });
+                          },
 													create : function(q) {
 
 														var params = {

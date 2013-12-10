@@ -10,7 +10,14 @@
           <div class="control-group">
             <label for="metricName" class="control-label">Distance Metric</label>
             <div class="controls">
-              <select id="metricName" ng-options="option.name for option in availableMetrics" ng-model="selectedMetric"></select>
+              <select id="metricName" ng-options="option for option in availableMetrics" ng-model="selectedMetric"></select>
+            </div>
+          </div>
+          
+          <div class="control-group">
+            <label for="algorithmName" class="control-label">Algorithm Linkage Criteria</label>
+            <div class="controls">
+              <select id="algorithmName" ng-options="option for option in availableAlgorithms" ng-model="selectedAlgorithm"></select>
             </div>
           </div>
 
