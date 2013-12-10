@@ -31,22 +31,23 @@ define (
                   restrict : 'A',
                   templateUrl : '/container/view/elements/heatmapPanels',
                   link : function (scope, elems, attrs) {
-                	  
-                	jq ('#leftPanel div.well').height($(document).height() + 'px');
-                   	jq ('#rightPanel div.well').height($('#leftPanel div.well').height() + 'px');
-                	
-                   
-                	  
+                    
+                    
+                      jq ('#leftPanel div.well').css('height', 
+                          1000);
+                      jq ('#rightPanel div.well').css('height', 
+                          $ ('#leftPanel div.well').height ());
+                    
+
+                    
+
                     jq ('#closeRight').hide ();
                     jq ('#closeLeft').hide ();
 
                     var margin = "2.127659574468085%"
 
                     scope.expandLeft = function () {
-                    	
-                    	
-                    	 
-                     	
+
                       jq ('#leftPanel').attr ("class", "span12 marker");
                       jq ('#rightPanel').hide ();
                       jq ('#expandLeft').hide ();
@@ -194,42 +195,47 @@ define (
             };
 
           } ])
-          .directive ('modalHierarchical', ['API', '$routeParams', function (API, $routeParams) {
+          .directive ('modalHierarchical',
+              [ 'API', '$routeParams', function (API, $routeParams) {
 
-            return {
-              restrict : 'C',
-              templateUrl : "/container/view/elements/hierarchicalbody",
-              link : function (scope, elems, attrs) {
-            	  
-                scope.availableMetrics = [ {
-                  name : 'Euclidean'
-                }, {
-                  name : 'Manhattan'
-                } ];
-                
-                scope.dimensions = [{name: 'Rows', value: 'row'}, {name: 'Columns', value: 'column'}]
-                
-                scope.clusterInit = function() {
-                	var q = {
-                			name: scope.clusterName,
-                			dataset: $routeParams.datasetName,
-                			dimension: scope.selectedDimension,
-                			metric: scope.selectedMetric,
-                			algorithm: null
-                			
-                	}
-                	
-                	API.analysis.hcl.create(q);
-                	
-                }
-                
-                
+                return {
+                  restrict : 'C',
+                  templateUrl : "/container/view/elements/hierarchicalbody",
+                  link : function (scope, elems, attrs) {
 
-              }
+                    scope.availableMetrics = [ {
+                      name : 'Euclidean'
+                    }, {
+                      name : 'Manhattan'
+                    } ];
 
-            };
+                    scope.dimensions = [ {
+                      name : 'Rows',
+                      value : 'row'
+                    }, {
+                      name : 'Columns',
+                      value : 'column'
+                    } ]
 
-          }])
+                    scope.clusterInit = function () {
+                      var q = {
+                        name : scope.clusterName,
+                        dataset : $routeParams.datasetName,
+                        dimension : scope.selectedDimension,
+                        metric : scope.selectedMetric,
+                        algorithm : null
+
+                      }
+
+                      API.analysis.hcl.create (q);
+
+                    }
+
+                  }
+
+                };
+
+              } ])
           .directive ('modalKmeans', function () {
 
             return {
@@ -248,62 +254,58 @@ define (
             };
 
           })
-          .directive ('uploadsTable', ['API', '$location', function(API, $location){
-            return {
-              restrict : 'A',
-              scope: {
-            	  uploads: '='
-              },
-              templateUrl : '/container/view/elements/uploadsTable',
-              link : function (scope, elems, attrs) {
-            	  
-            	  scope.datasets = []
-                
-            	scope.$watch('uploads', function(newValues, oldValues){
-            		
-            		
-            		if (newValues != undefined){
-            			
-            			scope.datasets = newValues;
-            			
-            		};
-            		
-            		
-            	});
-            	
-                
-              }
-            }
-          }])
+          .directive ('uploadsTable',
+              [ 'API', '$location', function (API, $location) {
+                return {
+                  restrict : 'A',
+                  scope : {
+                    uploads : '='
+                  },
+                  templateUrl : '/container/view/elements/uploadsTable',
+                  link : function (scope, elems, attrs) {
+
+                    scope.datasets = []
+
+                    scope.$watch ('uploads', function (newValues, oldValues) {
+
+                      if (newValues != undefined) {
+
+                        scope.datasets = newValues;
+
+                      }
+                      ;
+
+                    });
+
+                  }
+                }
+              } ])
           .directive ('uploadDrag', function () {
 
             return {
               restrict : 'C',
               templateUrl : '/container/view/elements/uploadDragAndDrop',
               link : function (scope, elems, attrs) {
-                
-                var myDropzone = new Dropzone("#uploader", {
-                  
-                  url: "/dataset",
+
+                var myDropzone = new Dropzone ("#uploader", {
+
+                  url : "/dataset",
                   method : "post",
-                  paramName: "dataset",
-                  clickable: true,
-                  uploadMultiple: true,
-                  previewsContainer: null,
-                  addRemoveLinks: true,
-                  
-                  dictRemoveFile: "Remove",
-                  dictCancelUpload: "Cancel",
-                  dictCancelUploadConfirmation: "Are you sure?",
-                  dictResponseError: "Upload Failed"
-                    
-                })
-                .on("error", function(file){
-                  alert("Errored")
+                  paramName : "dataset",
+                  clickable : true,
+                  uploadMultiple : true,
+                  previewsContainer : null,
+                  addRemoveLinks : true,
+
+                  dictRemoveFile : "Remove",
+                  dictCancelUpload : "Cancel",
+                  dictCancelUploadConfirmation : "Are you sure?",
+                  dictResponseError : "Upload Failed"
+
+                }).on ("error", function (file) {
+                  alert ("Errored")
                 });
-                
-                
-                
+
               }
             };
 
@@ -336,197 +338,191 @@ define (
                       templateUrl : '/container/view/elements/d3RadialTree',
                       link : function (scope, elems, attr) {
 
-                    	var cluster = undefined;
-                    	
-                    	//start function
-                    	
-                    	var cluster = d3.layout.cluster ().size (
-                                [ 360, 1 ]).sort (null).value (
-                                function (d) {
-                                  return d.length;
-                                }).children (function (d) {
+                        var cluster = undefined;
+
+                        // start function
+
+                        var cluster = d3.layout.cluster ().size ([ 360, 1 ])
+                            .sort (null).value (function (d) {
+                              return d.length;
+                            }).children (function (d) {
                               return d.branchset;
                             }).separation (function (a, b) {
                               return 1;
                             });
-                    	
-                    	var r = scope.diameter / 2;
-                    	
-                    	function project (d) {
-                            var r = d.y, a = (d.x - 90) / 180 * Math.PI;
-                            return [ r * Math.cos (a), r * Math.sin (a) ];
-                          }
+
+                        var r = scope.diameter / 2;
+
+                        function project (d) {
+                          var r = d.y, a = (d.x - 90) / 180 * Math.PI;
+                          return [ r * Math.cos (a), r * Math.sin (a) ];
+                        }
 
                         function cross (a, b) {
-                            return a[0] * b[1] - a[1] * b[0];
-                          }
+                          return a[0] * b[1] - a[1] * b[0];
+                        }
                         function dot (a, b) {
-                            return a[0] * b[0] + a[1] * b[1];
-                          }
+                          return a[0] * b[0] + a[1] * b[1];
+                        }
 
                         function step (d) {
-                            var s = project (d.source), m = project ({
-                              x : d.target.x,
-                              y : d.source.y
-                            }), t = project (d.target), r = d.source.y, sweep = d.target.x > d.source.x ? 1
-                                : 0;
-                            return ("M" + s[0] + "," + s[1] + "A" + r
-                                + "," + r + " 0 0," + sweep + " "
-                                + m[0] + "," + m[1] + "L" + t[0] + "," + t[1]);
-                         }
-                        
-                        var wrap = d3.select (elems[0])
-                        .append ("svg").attr ("width", r * 2)
-                        .attr ("height", r * 2).style (
-                            "-webkit-backface-visibility",
-                            "hidden");
-                        
+                          var s = project (d.source), m = project ({
+                            x : d.target.x,
+                            y : d.source.y
+                          }), t = project (d.target), r = d.source.y, sweep = d.target.x > d.source.x ? 1
+                              : 0;
+                          return ("M" + s[0] + "," + s[1] + "A" + r + "," + r
+                              + " 0 0," + sweep + " " + m[0] + "," + m[1] + "L"
+                              + t[0] + "," + t[1]);
+                        }
+
+                        var wrap = d3.select (elems[0]).append ("svg").attr (
+                            "width", r * 2).attr ("height", r * 2).style (
+                            "-webkit-backface-visibility", "hidden");
+
                         // Catch mouse events in Safari.
-                        wrap.append ("rect").attr ("width", r * 2)
-                            .attr ("height", r * 2).attr ("fill",
-                                "none");
-                        
+                        wrap.append ("rect").attr ("width", r * 2).attr (
+                            "height", r * 2).attr ("fill", "none");
+
                         wrap.on ("mousedown", function () {
-                            wrap.style ("cursor", "move");
-                            start = mouse (d3.event);
-                            d3.event.preventDefault ();
-                          });
-                        
-                        var vis = wrap.append ("g").attr (
-                                "transform",
-                                "translate(" + r + "," + r + ")");
-                        
+                          wrap.style ("cursor", "move");
+                          start = mouse (d3.event);
+                          d3.event.preventDefault ();
+                        });
+
+                        var vis = wrap.append ("g").attr ("transform",
+                            "translate(" + r + "," + r + ")");
+
                         var start = null, rotate = 0, div = elems[0].childNodes[1];
-                        
+
                         function mouse (e) {
-                            return [ e.pageX - div.offsetLeft - r,
-                                e.pageY - div.offsetTop - r ];
-                          }
-                        
-                        //radial tree mouse movement
-                        d3.select (wrap).on ("mouseup", function () {
-                        	
-                              if (start) {
-                                wrap.style ("cursor", "auto");
-                                var m = mouse (d3.event);
-                                var delta = Math.atan2 (cross (
-                                    start, m), dot (start, m))
-                                    * 180 / Math.PI;
-                                rotate += delta;
-                                if (rotate > 360)
-                                  rotate %= 360;
-                                else if (rotate < 0)
-                                  rotate = (360 + rotate) % 360;
-                                start = null;
-                                wrap.style ("-webkit-transform",
-                                    null);
-                                vis
-                                    .attr (
-                                        "transform",
-                                        "translate(" + r + ","
-                                            + r + ")rotate("
-                                            + rotate + ")")
-                                    .selectAll ("text")
-                                    .attr (
-                                        "text-anchor",
-                                        function (d) {
-                                          return (d.x + rotate) % 360 < 180 ? "start"
-                                              : "end";
-                                        })
-                                    .attr (
-                                        "transform",
-                                        function (d) {
-                                          return "rotate("
-                                              + (d.x - 90)
-                                              + ")translate("
-                                              + (r - 170 + 8)
-                                              + ")rotate("
-                                              + ((d.x + rotate) % 360 < 180 ? 0
-                                                  : 180) + ")";
-                                        });
-                              }
-                            }).on ("mousemove", function () {
-                              if (start) {
-                                var m = mouse (d3.event);
-                                var delta = Math.atan2 (cross (
-                                    start, m), dot (start, m))
-                                    * 180 / Math.PI;
-                                wrap.style ("-webkit-transform",
-                                    "rotateZ(" + delta + "deg)");
-                              }
-                            });
-                        
+                          return [ e.pageX - div.offsetLeft - r,
+                              e.pageY - div.offsetTop - r ];
+                        }
+
+                        // radial tree mouse movement
+                        d3
+                            .select (wrap)
+                            .on (
+                                "mouseup",
+                                function () {
+
+                                  if (start) {
+                                    wrap.style ("cursor", "auto");
+                                    var m = mouse (d3.event);
+                                    var delta = Math.atan2 (cross (start, m),
+                                        dot (start, m))
+                                        * 180 / Math.PI;
+                                    rotate += delta;
+                                    if (rotate > 360)
+                                      rotate %= 360;
+                                    else if (rotate < 0)
+                                      rotate = (360 + rotate) % 360;
+                                    start = null;
+                                    wrap.style ("-webkit-transform", null);
+                                    vis
+                                        .attr (
+                                            "transform",
+                                            "translate(" + r + "," + r
+                                                + ")rotate(" + rotate + ")")
+                                        .selectAll ("text")
+                                        .attr (
+                                            "text-anchor",
+                                            function (d) {
+                                              return (d.x + rotate) % 360 < 180 ? "start"
+                                                  : "end";
+                                            })
+                                        .attr (
+                                            "transform",
+                                            function (d) {
+                                              return "rotate("
+                                                  + (d.x - 90)
+                                                  + ")translate("
+                                                  + (r - 170 + 8)
+                                                  + ")rotate("
+                                                  + ((d.x + rotate) % 360 < 180 ? 0
+                                                      : 180) + ")";
+                                            });
+                                  }
+                                }).on (
+                                "mousemove",
+                                function () {
+                                  if (start) {
+                                    var m = mouse (d3.event);
+                                    var delta = Math.atan2 (cross (start, m),
+                                        dot (start, m))
+                                        * 180 / Math.PI;
+                                    wrap.style ("-webkit-transform", "rotateZ("
+                                        + delta + "deg)");
+                                  }
+                                });
+
                         function phylo (n, offset) {
-                            if (n.length != null)
-                              offset += n.length * 115;
-                            n.y = offset;
-                            if (n.children)
-                              n.children.forEach (function (n) {
-                                phylo (n, offset);
-                              });
-                          }
-                        
+                          if (n.length != null)
+                            offset += n.length * 115;
+                          n.y = offset;
+                          if (n.children)
+                            n.children.forEach (function (n) {
+                              phylo (n, offset);
+                            });
+                        }
+
                         function draw (data) {
 
-                                  var x = newick.parse (data);
-                                  var nodes = cluster.nodes (x);
-                                  phylo (nodes[0], 0);
+                          var x = newick.parse (data);
+                          var nodes = cluster.nodes (x);
+                          phylo (nodes[0], 0);
 
-                                  var link = vis.selectAll ("path.link")
-                                      .data (cluster.links (nodes)).enter ()
-                                      .append ("path")
-                                      .attr ("class", "link")
-                                      .attr ("d", step);
+                          var link = vis.selectAll ("path.link").data (
+                              cluster.links (nodes)).enter ().append ("path")
+                              .attr ("class", "link").attr ("d", step);
 
-                                  var node = vis.selectAll ("g.node")
-                                    .data ( nodes.filter (function (n) {
-                                        return n.x !== undefined;
-                                      }))
-                                    .enter ()
-                                    .append ("g")
-                                    .attr ("class", "node")
-                                    
-                                    .attr ("transform",function (d) {
-                                        return "rotate(" + (d.x - 90)
-                                            + ")translate(" + d.y + ")";
-                                    });
+                          var node = vis.selectAll ("g.node").data (
+                              nodes.filter (function (n) {
+                                return n.x !== undefined;
+                              })).enter ().append ("g").attr ("class", "node")
 
-                                  node.append ("circle").attr ("r", 2.5);
+                          .attr (
+                              "transform",
+                              function (d) {
+                                return "rotate(" + (d.x - 90) + ")translate("
+                                    + d.y + ")";
+                              });
 
-                                  var label = vis.selectAll ("text").data (
-                                      nodes.filter (function (d) {
-                                            return d.x !== undefined
-                                                && !d.children;
-                                          })
-                                      ).enter ()
-                                      .append("text")
-                                      .attr ("dy", ".31em")
-                                      .attr ("text-anchor",function (d) {
-                                        return d.x < 180 ? "start" : "end";
-                                      })
-                                      .attr ("transform", function (d) {
-                                        return "rotate(" + (d.x - 90)
-                                            + ")translate(" + (r - 170 + 8)
-                                            + ")rotate("
-                                            + (d.x < 180 ? 0 : 180) + ")";
-                                      })
-                                      .text (function (d) {
-                                        return d.name.replace (/_/g, ' ');
-                                      });
+                          node.append ("circle").attr ("r", 2.5);
+
+                          var label = vis.selectAll ("text").data (
+                              nodes.filter (function (d) {
+                                return d.x !== undefined && !d.children;
+                              })).enter ().append ("text").attr ("dy", ".31em")
+                              .attr ("text-anchor", function (d) {
+                                return d.x < 180 ? "start" : "end";
+                              }).attr (
+                                  "transform",
+                                  function (d) {
+                                    return "rotate(" + (d.x - 90)
+                                        + ")translate(" + (r - 170 + 8)
+                                        + ")rotate(" + (d.x < 180 ? 0 : 180)
+                                        + ")";
+                                  }).text (function (d) {
+                                return d.name.replace (/_/g, ' ');
+                              });
 
                         } // end draw function
-                        
+
                         if (scope.dimension == 'row') {
-                    		API.analysis.hcl.row.get ($routeParams.datasetName).then(draw);
-                    	} else if (scope.dimension == 'column') {
-                    		API.analysis.hcl.column.get ($routeParams.datasetName).then(draw);
-                    	};
+                          API.analysis.hcl.row.get ($routeParams.datasetName)
+                              .then (draw);
+                        } else if (scope.dimension == 'column') {
+                          API.analysis.hcl.column
+                              .get ($routeParams.datasetName).then (draw);
+                        }
+                        ;
 
                       } // end link
                     };
 
-                  } ])
-          .directive ('bsTable', function () {
+                  } ]).directive ('bsTable', function () {
 
             return {
               scope : {
@@ -537,8 +533,7 @@ define (
 
             };
 
-          })
-          .directive (
+          }).directive (
               'visHeatmap',
               [
                   'API',
@@ -553,39 +548,195 @@ define (
                       // templateUrl : "/container/view/elements/visHeatmap",
                       link : function (scope, elems, attr) {
 
-                        scope.width = jq ('#leftPanel').css ('width').slice (0, -2) * .9;
-                        scope.height = jq ('#leftPanel').css ('height').slice (0, -2) * .9;
-                        scope.marginleft = 20;
-                        scope.marginright = 20;
-                        scope.margintop = 20;
-                        scope.marginbottom = 20;
+                        var svgWidth = Math.floor(jq ('#leftPanel').css ('width').slice (0,-2) *.8),
+                        svgHeight = Math.floor(jq ('#leftPanel').css ('height').slice (0, -2) *.8);
+                        
+                        var heatmapMarginLeft = Math.floor(svgWidth * .05),
+                        heatmapMarginRight = Math.floor(svgWidth * .1),
+                        heatmapMarginTop = Math.floor(svgHeight * .05),
+                        heatmapMarginBottom = Math.floor(svgHeight * .1);
 
-                        var cellwidth = 9;
+                        var heatmapCellsWidth = svgWidth - heatmapMarginLeft
+                            - heatmapMarginRight;
 
-                        var width = scope.width - scope.marginleft - scope.marginright;
-
-                        var height = scope.height - scope.margintop - scope.marginbottom;
+                        var heatmapCellsHeight = svgHeight - heatmapMarginTop
+                            - heatmapMarginBottom;
+                        
 
                         var window = d3.select (elems[0]);
-                        
-                        var leftshifter = d3.scale.linear ().rangeRound ([ 255, 0 ]);
 
-                        var rightshifter = d3.scale.linear ().rangeRound ([ 0, 255 ]);
+                        //Color Scales
+                        var leftshifter = d3.scale.linear ().rangeRound (
+                            [ 255, 0 ]);
+                        var rightshifter = d3.scale.linear ().rangeRound (
+                            [ 0, 255 ]);
                         
+                        //X Scales
+                        var XLabel2Index = d3.scale.ordinal ();
+                        var XIndex2Label = d3.scale.ordinal ();
+                        var XIndex2Pixel = d3.scale.linear();
+                        
+                        //YScales
+                        var YLabel2Index = d3.scale.ordinal ();
+                        var YIndex2Label = d3.scale.ordinal ();
+                        var YIndex2Pixel = d3.scale.linear();
+                        
+                        //Axis Scales
+                        var xAxisd3 = d3.svg.axis ();
+                        var yAxisd3 = d3.svg.axis ();
+
                         var svg = window.append ("svg").attr ("class", "chart")
                         // .attr("pointer-events", "all")
-                        .attr ("width", width + scope.marginleft + scope.marginright)
-                            .attr ("height",
-                                height + scope.margintop + scope.marginbottom);
+                        .attr ("width", svgWidth)
+                        .attr ("height", svgHeight);
 
-                        var vis = svg.append ("g").attr ("class", "uncovered");
+                        var vis = svg.append ("g");
 
-                        var rects = vis.append ("g").selectAll ("rect");
-                        var labels = vis.append ("g").selectAll();
+                        var rects = vis.append ("g").attr ("class", "cells")
+                            .selectAll ("rect");
                         
-                        var heatmapcells = undefined;
+                        var xlabels = vis.append ("g")
+                            .attr ("class", "xlabels");
                         
+                        var ylabels = vis.append ("g")
+                            .attr ("class", "ylabels");
 
+                        function drawLabels (xAxis, yAxis, cols, rows) {
+
+                          xAxis
+                              .attr("transform", "translate(0," + (heatmapMarginTop + heatmapCellsHeight)
+                                      + ")").call (xAxisd3)
+                              .selectAll ("text")
+                              //.style ("text-anchor", "start")
+                              //.attr ("dy", function(d, i){
+                              //  return (i * cellXPosition.rangeBand ()) + "px"
+                              //})
+                              //.attr ("dx", "20px")
+                              //.attr ("transform",function (d) {
+                              //      return "rotate(-90)"
+                               //   })
+                              //.style ("text-anchor", "start");
+
+                          yAxis.attr ("transform",
+                              "translate(" + (heatmapMarginLeft + heatmapCellsWidth) + ")")
+                              .call (yAxisd3)
+                              .selectAll ("text")
+                              .style ("text-anchor", "start")
+                              //.attr ("dy", (cellYPosition.rangeBand () / 2) + "px");
+
+                        }
+                        ;
+
+                        function drawCells (hc) {
+
+                          hc.attr ({
+                            "class" : "cells",
+                            "height" : function (d) {
+                              
+                              return YIndex2Pixel(1) - YIndex2Pixel(0) ;
+                            },
+                            "width" : function (d) {
+                              return XIndex2Pixel(1) - XIndex2Pixel(0) ;
+                            },
+                            "x" : function (d, i) {
+                              return XIndex2Pixel( XLabel2Index (d.column) );
+                            },
+                            "y" : function (d, i) {
+                              return YIndex2Pixel( YLabel2Index (d.row) );
+                            },
+                            "fill" : function (d) {
+                              return cellColor (d.value);
+                            },
+                            "value" : function (d) {
+                              return d.value;
+                            },
+                            "index" : function (d, i) {
+                              return i;
+                            },
+                            "row" : function (d, i) {
+                              return d.row;
+                            },
+                            "column" : function (d, i) {
+                              return d.column;
+                            }
+                          });
+
+                        }
+                        ;
+                        
+                        function scaleUpdates(cols, rows, min, max, avg) {
+                          
+                          leftshifter.domain ([ min, avg ]); // Color Update
+
+                          rightshifter.domain ([ avg, max ]) // Color Update
+                          
+                          XLabel2Index.domain (cols).range(cols.map(function(d, i){
+                            return i
+                          }));
+                          
+                          YLabel2Index.domain (rows).range(rows.map(function(d, i){
+                            return i
+                          }));
+                          
+                          XIndex2Label.domain(cols.map(function(d, i){
+                            return i
+                          })).range(cols.map(function(d, i){
+                            return d
+                          }));
+                          
+                          YIndex2Label.domain(rows.map(function(d, i){
+                            return i
+                          })).range(rows.map(function(d, i){
+                            return d
+                          }));
+                          
+                          XIndex2Pixel.domain([0, cols.length])
+                          .range([heatmapMarginLeft, heatmapMarginLeft + heatmapCellsWidth]);
+                          
+                          YIndex2Pixel.domain([0, rows.length])
+                          .range([heatmapMarginTop, heatmapMarginTop + heatmapCellsHeight]);
+                          
+                          xAxisd3.scale (XIndex2Pixel)
+                            .orient ("bottom").ticks (cols.length)
+                            .tickFormat (function (d) {
+                              if (d % 1 == 0 && d >= 0 && d < cols.length) {
+                                //return XIndex2Label (d);
+                                return d;
+                              }
+                            });
+
+                          yAxisd3.scale (YIndex2Pixel)
+                            .orient ("right").ticks (rows.length)
+                            .tickFormat (function (d) {
+                              if (d % 1 == 0 && d >= 0 && d < rows.length) {
+                                //return YIndex2Label (d);
+                                return d;
+                              }
+                            });
+                        };
+
+                        function init (data) {
+                          
+                          scaleUpdates(data.column, data.row, data.min, data.max, data.avg);
+
+                          drawCells (rects.data (data.values).enter ().append (
+                          "rect"));
+
+                          drawLabels (xlabels, ylabels);
+
+                        };
+
+                        //Initial Build
+                        if (!$routeParams.datasetName) {
+                          alertService.error ()
+                        } else {
+                          API.dataset.get ($routeParams.datasetName).then (
+                              init, function () {
+                                // Redirect to home if errored out
+                                $location.path ('/');
+                              });
+                        }
+                        
                         function cellColor (val, type) {
 
                           var color = {
@@ -593,8 +744,6 @@ define (
                             blue : 0,
                             green : 0
                           }
-
-                          
 
                           if (type) {
 
@@ -618,115 +767,9 @@ define (
 
                         }
 
-                        
-
-                        function updateCols (hc, cols) {
-
-                          var cellXPosition = d3.scale.ordinal ().domain (cols)
-                              .rangeRoundBands ([ 0, cellwidth * cols.length ]);
-
-                          svg.selectAll (".cells").transition ()
-                              .duration (5000).attr ("x", function (d, i) {
-                                return cellXPosition (d.column)
-                              })
-
-                        };
-                        
-                        function updateRows (hc, rows) {
-
-                            var cellYPosition = d3.scale.ordinal ().domain (rows)
-                                .rangeRoundBands ([ 0, cellwidth * rows.length ]);
-
-                            svg.selectAll (".cells").transition ()
-                                .duration (5000).attr ("y", function (d, i) {
-                                  return cellYPosition (d.row)
-                                })
-
-                          };
-
-                        
-                        function drawLabels (lbs, cols, rows) {
-                        
-                        	
-                        	
-                        };
-                        
-                        function drawCells (hc, cols, rows) {
-
-                          var cellXPosition = d3.scale.ordinal ().domain (cols)
-                              .rangeRoundBands ([ scope.marginleft, width ]);
-
-                          var cellYPosition = d3.scale.ordinal ().domain (rows)
-                              .rangeRoundBands ([ scope.margintop, height ]);
-
-                          hc.attr ({
-                            "class" : "cells",
-                            "height" : function (d) {
-                              return cellYPosition.rangeBand();
-                            },
-                            "width" : function (d) {
-                              return cellXPosition.rangeBand();
-                            },
-                            "x" : function (d, i) {
-                              return cellXPosition (d.column);
-                            },
-                            "y" : function (d, i) {
-                              return cellYPosition (d.row);
-                            },
-                            "fill" : function (d) {
-                              return cellColor (d.value);
-                            },
-                            "value" : function (d) {
-                              return d.value;
-                            },
-                            "index" : function (d, i) {
-                              return i;
-                            },
-                            "row" : function (d, i) {
-                              return d.rowOrder;
-                            },
-                            "column" : function (d, i) {
-                              return d.columnOrder;
-                            },
-                            "rowKey" : function (d, i) {
-                              return d.rowKey
-                            },
-                            "columnKey" : function (d, i) {
-                              return d.columnKey
-                            },
-                          })
-
-                        };
-
-                        
-                        
-                        function init (data) {
-                        	
-                        	leftshifter.domain ([ data.min, data.avg ]);
-                                    
-                            rightshifter.domain ([ data.avg, data.max])
-
-                            heatmapcells = rects.data (data.values).enter ()
-                                .append ("rect")
-
-                            drawCells (heatmapcells, data.column, data.row);
-
-                        };
-                        
-                        if (!$routeParams.datasetName){
-                        	alertService.error()
-                        } else {
-                        	API.dataset.get ( $routeParams.datasetName ).then (init, function(){
-                        		//Redirect to home if errored out
-                        		$location.path('/');
-                        	});
-                        }
-
-                        
-
                       } // End Link Function
 
-                    }; //End return obj
+                    }; // End return obj
                   } ]);
 
     });
