@@ -295,15 +295,20 @@ define (
                   clickable : true,
                   uploadMultiple : true,
                   previewsContainer : null,
-                  addRemoveLinks : true,
-
-                  dictRemoveFile : "Remove",
-                  dictCancelUpload : "Cancel",
-                  dictCancelUploadConfirmation : "Are you sure?",
-                  dictResponseError : "Upload Failed"
+                  addRemoveLinks : false,
+                  createImageThumbnails: false,
+                  previewTemplate: "<div class='dz-preview dz-file-preview'><br>" 
+                	  +  "<div class='dz-filename'><span data-dz-name></span> (<span data-dz-size></span>) <span data-dz-errormessage> ✔ </span></div>"
+                	  +  "<div class='dz-size'><span data-dz-size></span></div>"
+                	  +  "<div class='dz-progress'><span class='dz-upload' data-dz-uploadprogress></span></div>"
+                	  +  "<div class ='dz-error-message'></div>"
+                	  +"</div>",
+                  dictResponseError : "File Upload Error. Try Again",
+                  dictInvalidFileType : "File Upload Error. Try Again",
+                  dictDefaultMessage : "Drop files here",
 
                 }).on ("error", function (file) {
-                  alert ("Errored")
+                  
                 });
 
               }
