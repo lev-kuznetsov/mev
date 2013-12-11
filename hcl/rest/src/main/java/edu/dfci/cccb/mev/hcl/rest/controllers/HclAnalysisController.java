@@ -31,7 +31,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -110,12 +109,13 @@ public class HclAnalysisController {
 
   @RequestMapping (value = "/dataset/" + DATASET_URL_ELEMENT + "/analysis/" + ANALYSIS_URL_ELEMENT,
                    method = POST)
-  public List<String> apply (@PathVariable (DATASET) Dataset dataset,
-                             @PathVariable (ANALYSIS) HclResult analysis) throws DatasetException {
+  public Dimension apply (@PathVariable (DATASET) Dataset dataset,
+                          @PathVariable (ANALYSIS) HclResult analysis) throws DatasetException {
     analysis.apply ();
-    return analysis.dimension ().keys ();
+    return dataset.dimension (analysis.dimension ().type ());
   }
 
+  @Deprecated
   @RequestMapping (value = "/dataset/" + DATASET_URL_ELEMENT + "/analysis/" + ANALYSIS_URL_ELEMENT + "/root",
                    method = GET)
   public Node root (@PathVariable (DATASET) Dataset dataset,
@@ -126,11 +126,13 @@ public class HclAnalysisController {
   private @Getter @Setter (onMethod = @_ (@Inject)) Collection<Metric> metrics;
   private @Getter @Setter (onMethod = @_ (@Inject)) Collection<Algorithm> algorithms;
 
+  @Deprecated
   @RequestMapping (value = "/analysis/hcl/metrics", method = GET)
   public Collection<String> metrics () {
     return extract (metrics, on (Metric.class).name ());
   }
 
+  @Deprecated
   @RequestMapping (value = "/analysis/hcl/algorithms", method = GET)
   public Collection<String> algorithms () {
     return extract (algorithms, on (Algorithm.class).name ());

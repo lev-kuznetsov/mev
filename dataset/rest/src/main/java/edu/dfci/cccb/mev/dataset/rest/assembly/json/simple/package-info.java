@@ -16,4 +16,4 @@
  * @author levk
  *
  */
-package edu.dfci.cccb.mev.dataset.rest.assembly.json;
+package edu.dfci.cccb.mev.dataset.rest.assembly.json.simple;

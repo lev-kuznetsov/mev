@@ -37,6 +37,7 @@ import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 import edu.dfci.cccb.mev.hcl.domain.mock.MockNodeBuilder;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.BranchJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.HclResultJsonSerializer;
+import edu.dfci.cccb.mev.hcl.rest.assembly.json.HierarchicallyClusteredDimensionJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.LeafJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.newick.HclResultNewickMessageConverter;
 import edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter;
@@ -88,6 +89,11 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   @Bean
   public BranchJsonSerializer branchJsonSerializer () {
     return new BranchJsonSerializer ();
+  }
+
+  @Bean
+  public HierarchicallyClusteredDimensionJsonSerializer hierarchicallyClusteredDimensionJsonSerializer () {
+    return new HierarchicallyClusteredDimensionJsonSerializer ();
   }
 
   @Bean

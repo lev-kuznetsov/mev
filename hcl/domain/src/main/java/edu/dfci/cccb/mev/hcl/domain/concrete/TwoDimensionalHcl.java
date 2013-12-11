@@ -70,6 +70,7 @@ public class TwoDimensionalHcl extends AbstractHcl {
   public HclResult build () throws DatasetException {
     return new AbstractHclResult () {}.root (cluster (dataset (), dimension (), metric (), algorithm ()))
                                       .dimension (dimension ())
+                                      .dataset (dataset ())
                                       .name (name ());
   }
 

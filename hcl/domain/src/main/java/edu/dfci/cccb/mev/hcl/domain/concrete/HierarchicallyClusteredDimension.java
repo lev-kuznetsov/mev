@@ -12,40 +12,53 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.simple;
+package edu.dfci.cccb.mev.hcl.domain.concrete;
 
+import static java.util.Collections.unmodifiableList;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDimension;
+import edu.dfci.cccb.mev.hcl.domain.contract.Branch;
+import edu.dfci.cccb.mev.hcl.domain.contract.Leaf;
+import edu.dfci.cccb.mev.hcl.domain.contract.Node;
 
 /**
  * @author levk
  * 
  */
-@EqualsAndHashCode (callSuper = true)
 @ToString
+@EqualsAndHashCode (callSuper = true)
 @Accessors (fluent = true)
-@Log4j
-public class SimpleDimension extends AbstractDimension {
+public class HierarchicallyClusteredDimension extends AbstractDimension {
 
+  private @Getter Node root;
   private @Getter List<String> keys;
 
   /**
-   * 
+   * @param type
    */
-  public SimpleDimension (Type type, List<String> keys, Selections selections, Annotation annotation) {
+  public HierarchicallyClusteredDimension (Type type, Node root, Selections selections, Annotation annotation) {
     super (type);
-    if (log.isDebugEnabled ())
-      log.debug ("Type=" + type);
-    annotation (annotation);
-    this.keys = keys;
     selections (selections);
+    annotation (annotation);
+    this.root = root;
+    keys = unmodifiableList (traverse (root, new ArrayList<String> ()));
+  }
+
+  private List<String> traverse (Node node, List<String> accumulator) {
+    if (node instanceof Branch) {
+      for (Node child : ((Branch) node).children ())
+        traverse (child, accumulator);
+    } else
+      accumulator.add (((Leaf) node).name ());
+    return accumulator;
   }
 }

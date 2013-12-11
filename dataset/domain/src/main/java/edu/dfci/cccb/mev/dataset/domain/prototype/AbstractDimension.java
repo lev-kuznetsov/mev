@@ -18,9 +18,12 @@ import static lombok.AccessLevel.PROTECTED;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 
 /**
  * @author levk
@@ -33,4 +36,6 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 public abstract class AbstractDimension implements Dimension {
 
   private @Getter final Type type;
+  private @Getter @Setter (PROTECTED) Selections selections;
+  private @Getter @Setter (PROTECTED) Annotation annotation;
 }

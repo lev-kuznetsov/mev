@@ -15,6 +15,7 @@
 package edu.dfci.cccb.mev.dataset.domain.simple;
 
 import lombok.EqualsAndHashCode;
+import lombok.Synchronized;
 import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analyses;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
@@ -66,11 +67,27 @@ public class SimpleDataset extends AbstractDataset {
    * edu.dfci.cccb.mev.dataset.domain.contract.Dataset#dimension(edu.dfci.cccb
    * .mev.dataset.domain.contract.Dimension.Type) */
   @Override
+  @Synchronized
   public Dimension dimension (Type type) throws InvalidDimensionTypeException {
     for (Dimension dimension : dimensions)
       if (dimension.type () == type)
         return dimension;
     throw new InvalidDimensionTypeException ().dimension (type);
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.dataset.domain.contract.Dataset#set(edu.dfci.cccb.mev
+   * .dataset.domain.contract.Dimension) */
+  @Override
+  @Synchronized
+  public void set (Dimension dimension) throws InvalidDimensionTypeException {
+    for (int index = dimensions.length; --index >= 0;)
+      if (dimensions[index].type ().equals (dimension.type ())) {
+        dimensions[index] = dimension;
+        return;
+      }
+    throw new InvalidDimensionTypeException ().dimension (dimension.type ());
   }
 
   /* (non-Javadoc)

@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.rest.assembly.json;
+package edu.dfci.cccb.mev.dataset.rest.assembly.json.simple;
 
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
@@ -24,6 +24,7 @@ import java.util.List;
 
 import lombok.SneakyThrows;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -31,11 +32,8 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
-import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 
 /**
@@ -43,7 +41,8 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Values;
  * 
  */
 @ToString
-public class DatasetJsonSerializer extends JsonSerializer<Dataset> {
+@Log4j
+public class SimpleDatasetJsonSerializer extends JsonSerializer<Dataset> {
 
   /* (non-Javadoc)
    * @see com.fasterxml.jackson.databind.JsonSerializer#handledType() */
@@ -60,35 +59,15 @@ public class DatasetJsonSerializer extends JsonSerializer<Dataset> {
   @Override
   @SneakyThrows ({
                   InvalidDimensionTypeException.class,
-                  InvalidCoordinateException.class,
-                  SelectionNotFoundException.class })
+                  InvalidCoordinateException.class })
   public void serialize (Dataset value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
                                                                                         JsonProcessingException {
+    if (log.isDebugEnabled ())
+      log.debug ("Serializing " + value.name () + " of type " + value.getClass ().getSimpleName () + " to json");
     jgen.writeStartObject ();
-    writeDimension (jgen, value.dimension (ROW), provider);
-    writeDimension (jgen, value.dimension (COLUMN), provider);
+    provider.defaultSerializeField (ROW.name ().toLowerCase (), value.dimension (ROW), jgen);
+    provider.defaultSerializeField (COLUMN.name ().toLowerCase (), value.dimension (COLUMN), jgen);
     writeValues (jgen, value.values (), value.dimension (ROW).keys (), value.dimension (COLUMN).keys ());
-    jgen.writeEndObject ();
-  }
-
-  private void writeDimension (JsonGenerator jgen, Dimension dimension, SerializerProvider provider) throws IOException,
-                                                                                                    JsonProcessingException,
-                                                                                                    SelectionNotFoundException {
-    jgen.writeObjectFieldStart (dimension.type ().name ().toLowerCase ());
-    provider.defaultSerializeField ("keys", dimension.keys (), jgen);
-    jgen.writeArrayFieldStart ("selections");
-    for (String selection : dimension.selections ().list ())
-      writeSelection (jgen, dimension.selections ().get (selection), provider);
-    jgen.writeEndArray ();
-    jgen.writeEndObject ();
-  }
-
-  private void writeSelection (JsonGenerator jgen, Selection selection, SerializerProvider provider) throws IOException,
-                                                                                                    JsonProcessingException {
-    jgen.writeStartObject ();
-    jgen.writeStringField ("name", selection.name ());
-    provider.defaultSerializeField ("properties", selection.properties (), jgen);
-    provider.defaultSerializeField ("keys", selection.keys (), jgen);
     jgen.writeEndObject ();
   }
 
