@@ -38,6 +38,7 @@ import edu.dfci.cccb.mev.hcl.domain.mock.MockNodeBuilder;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.BranchJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.HclResultJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.LeafJsonSerializer;
+import edu.dfci.cccb.mev.hcl.rest.assembly.newick.HclResultNewickMessageConverter;
 import edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter;
 import edu.dfci.cccb.mev.hcl.rest.context.RestPathVariableHclRequestContextInjector;
 import edu.dfci.cccb.mev.hcl.rest.resolvers.AlgorithmPathVariableMethodArgumentResolver;
@@ -65,8 +66,13 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  public NodeNewickMessageConverter newickMessageConverter () {
+  public NodeNewickMessageConverter nodeNewickMessageConverter () {
     return new NodeNewickMessageConverter ();
+  }
+
+  @Bean
+  HclResultNewickMessageConverter hclResultNewickMessageConverter () {
+    return new HclResultNewickMessageConverter ();
   }
 
   @Bean
