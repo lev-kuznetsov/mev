@@ -135,72 +135,34 @@ define(
 	                                alertService.error(message, header);
 	                              });
 
-	                        },
-	                        get : function(q) {
-	                          //Pulls previous analysis by name q.name
-	                          var params = {
-	                            method : 'GET',
-	                            url : '/dataset/'
-	                                + q.dataset
-	                                + '/analysis/'
-	                                + q.name
-	                                + '?format=newick'
-	                          };
-
-	                          return QHTTP(params,
-	                              function(d, s) {
-	                                return d;
-	                              }, function(d, s) {
-	                                var message = "Could not pull HCL analysis " + q.name + ". "
-	                                + "If problem persists, contact us."
-	                                
-	                                var header = "Could Not Pull Previous Analysis (Error Code: " + s + ")"
-	                                alertService.error(message, header);
-	                              });
-
 	                        }
+	                        
 												},
 											},
 											analysis : {
 												hcl : {
-												  algorithms : function() {
-												    //Pull available hcl algorithms list
-												    var params = {
-		                            method : 'GET',
-		                            url : '/analysis/hcl/algorithms'
-		                                + '?format=json'
-		                          };
-
-		                          return QHTTP(params,
-		                              function(d, s) {
-		                            
-		                                return d;
-		                              }, function(d, s) {
-		                                var message = "Could not pull available HCL Algorithms. If "
-		                                + "problem persists, contact us."
-		                                
-		                                var header = "Could Not Pull Available HCL Algorithms (Error Code: " + s + ")"
-		                                alertService.error(message, header);
-		                              });
-												  },
-												  metrics : function() {
-												  //Pull available hcl metrics list
+												  get : function(q) {
+                            //Pulls previous analysis by name q.name
                             var params = {
-                                method : 'GET',
-                                url : '/analysis/hcl/metrics'
-                                    + '?format=json'
-                              };
+                              method : 'GET',
+                              url : '/dataset/'
+                                  + q.dataset
+                                  + '/analysis/'
+                                  + q.name
+                                  + '?format=newick'
+                            };
 
-                              return QHTTP(params,
-                                  function(d, s) {
-                                    return d;
-                                  }, function(d, s) {
-                                    var message = "Could not pull available HCL Metrics. If "
-                                    + "problem persists, contact us."
-                                    
-                                    var header = "Could Not Pull Available HCL Metrics (Error Code: " + s + ")"
-                                    alertService.error(message, header);
-                                  });
+                            return QHTTP(params,
+                                function(d, s) {
+                                  return d;
+                                }, function(d, s) {
+                                  var message = "Could not pull HCL analysis " + q.name + ". "
+                                  + "If problem persists, contact us."
+                                  
+                                  var header = "Could Not Pull Previous Analysis (Error Code: " + s + ")"
+                                  alertService.error(message, header);
+                                });
+
                           },
 													create : function(q) {
 													//Create a new HCL analysis
