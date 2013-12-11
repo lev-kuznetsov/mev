@@ -17,10 +17,12 @@ package edu.dfci.cccb.mev.web.configuration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import edu.dfci.cccb.mev.web.configuration.converters.ConverterConfigurations;
 import edu.dfci.cccb.mev.web.configuration.injectors.InjectorConfigurations;
+import edu.dfci.cccb.mev.web.configuration.interceptors.WarnOnDeprecatedRequestMappingInterceptor;
 import edu.dfci.cccb.mev.web.configuration.resolvers.ResolverConfigurations;
 
 /**
@@ -30,4 +32,15 @@ import edu.dfci.cccb.mev.web.configuration.resolvers.ResolverConfigurations;
 @Configuration
 @EnableWebMvc
 @Import ({ ResolverConfigurations.class, InjectorConfigurations.class, ConverterConfigurations.class })
-public class DispatcherConfiguration extends WebMvcConfigurationSupport {}
+public class DispatcherConfiguration extends WebMvcConfigurerAdapter {
+
+  /* (non-Javadoc)
+   * @see
+   * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
+   * #addInterceptors
+   * (org.springframework.web.servlet.config.annotation.InterceptorRegistry) */
+  @Override
+  public void addInterceptors (InterceptorRegistry registry) {
+    registry.addInterceptor (new WarnOnDeprecatedRequestMappingInterceptor ());
+  }
+}
