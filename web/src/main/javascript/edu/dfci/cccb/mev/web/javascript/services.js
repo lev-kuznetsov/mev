@@ -18,15 +18,20 @@ define(
 					.factory('analysisOptions', function(){
 						
 					})
-					.factory('pseudoRandomStringGenerator', function(length){
+					.factory('pseudoRandomStringGenerator', function(){
 					  
-					  var text = "";
-				    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+					  return function(length){
+					    
+					    var text = "";
+	            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-				    for( var i=0; i < length; i++ )
-				        text += possible.charAt(Math.floor(Math.random() * possible.length));
+	            for ( var i=0; i < length; i++ ){
+	              text += possible.charAt(Math.floor(Math.random() * possible.length));
+	            }
 
-				    return text;
+	            return text;
+					    
+					  }
             
           })
 					.factory('alertService', [ function() {
