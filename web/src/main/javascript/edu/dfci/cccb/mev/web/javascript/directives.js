@@ -203,10 +203,10 @@ define (
                   templateUrl : "/container/view/elements/hierarchicalbody",
                   link : function (scope, elems, attrs) {
 
-                    scope.availableMetrics = API.analysis.hcl.metrics();
+                    scope.availableMetrics = ['euclidean']; // TODO: Add manhattan, pearson
                     
-                    scope.availableAlgorithms = API.analysis.hcl.algorithms();
-
+                    scope.availableAlgorithms = ['average']; // TODO: Add complete
+                    
                     scope.dimensions = [ {
                       name : 'Rows',
                       value : 'row'
