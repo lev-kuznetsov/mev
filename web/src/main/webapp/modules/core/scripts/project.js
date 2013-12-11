@@ -247,7 +247,7 @@ Refine._exportSet = function() {
 };
 
 Refine._close = function(){
-	window.location.replace("/#/heatmap/"+theProject.metadata.name);
+	window.location.replace("/#/dataset/"+theProject.metadata.name);
 };
 Refine._reset = function(){
 	if(confirm("Disgard current annotations?"))
