@@ -36,7 +36,9 @@ import edu.dfci.cccb.mev.dataset.domain.mock.MapBackedValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvComposerFactory;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
-import edu.dfci.cccb.mev.dataset.rest.assembly.json.DatasetJsonSerializer;
+import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDatasetJsonSerializer;
+import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleSelectionJsonSerializer;
+import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDimensionJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.MultipartUploadDatasetArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector;
@@ -59,8 +61,18 @@ public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  public DatasetJsonSerializer datasetJsonSerializer () {
-    return new DatasetJsonSerializer ();
+  public SimpleDatasetJsonSerializer datasetJsonSerializer () {
+    return new SimpleDatasetJsonSerializer ();
+  }
+
+  @Bean
+  public SimpleSelectionJsonSerializer selectionJsonSerializer () {
+    return new SimpleSelectionJsonSerializer ();
+  }
+
+  @Bean
+  public SimpleDimensionJsonSerializer simpleDimensionJsonSerializer () {
+    return new SimpleDimensionJsonSerializer ();
   }
 
   @Bean

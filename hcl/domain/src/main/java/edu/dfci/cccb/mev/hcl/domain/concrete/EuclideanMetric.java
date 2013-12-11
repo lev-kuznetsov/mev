@@ -21,12 +21,14 @@ import static org.apache.commons.math3.util.FastMath.sqrt;
 
 import java.util.List;
 
+import lombok.ToString;
 import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractMetric;
 
 /**
  * @author levk
  * 
  */
+@ToString
 public class EuclideanMetric extends AbstractMetric {
 
   /* (non-Javadoc)
@@ -44,8 +46,7 @@ public class EuclideanMetric extends AbstractMetric {
   }
 
   /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.hcl.domain.contract.Metric#name()
-   */
+   * @see edu.dfci.cccb.mev.hcl.domain.contract.Metric#name() */
   @Override
   public String name () {
     return "euclidean";

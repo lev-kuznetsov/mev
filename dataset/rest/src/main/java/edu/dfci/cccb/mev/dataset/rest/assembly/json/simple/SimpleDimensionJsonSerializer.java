@@ -12,25 +12,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.contract;
+package edu.dfci.cccb.mev.dataset.rest.assembly.json.simple;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
+import lombok.ToString;
+import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
+import edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.AbstractDimensionJsonSerializer;
 
 /**
  * @author levk
  * 
  */
-public interface Dataset {
+@ToString
+public class SimpleDimensionJsonSerializer extends AbstractDimensionJsonSerializer<SimpleDimension> {
 
-  final String VALID_DATASET_NAME_REGEX = "[a-zA-Z0-9_\\-\\+\\*\\.]+";
-
-  String name ();
-
-  Values values ();
-
-  Dimension dimension (Type type) throws InvalidDimensionTypeException;
-
-  void set (Dimension dimension) throws InvalidDimensionTypeException;
-
-  Analyses analyses ();
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.
+   * AbstractDimensionJsonSerializer#handledType() */
+  @Override
+  public Class<SimpleDimension> handledType () {
+    return SimpleDimension.class;
+  }
 }

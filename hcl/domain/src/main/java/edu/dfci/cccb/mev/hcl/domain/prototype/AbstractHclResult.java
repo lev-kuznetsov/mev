@@ -14,20 +14,17 @@
  */
 package edu.dfci.cccb.mev.hcl.domain.prototype;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
-import edu.dfci.cccb.mev.hcl.domain.contract.Branch;
+import edu.dfci.cccb.mev.hcl.domain.concrete.HierarchicallyClusteredDimension;
 import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
-import edu.dfci.cccb.mev.hcl.domain.contract.Leaf;
 import edu.dfci.cccb.mev.hcl.domain.contract.Node;
 
 /**
@@ -41,20 +38,15 @@ public abstract class AbstractHclResult extends AbstractAnalysis<AbstractHclResu
 
   private @Getter @Setter Node root;
   private @Getter @Setter Dimension dimension;
+  private @Getter @Setter Dataset dataset;
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.hcl.domain.contract.HclResult#apply() */
   @Override
   public void apply () throws DatasetException {
-    dimension.reorder (traverse (root, new ArrayList<String> ()));
-  }
-
-  private List<String> traverse (Node node, List<String> accumulator) {
-    if (node instanceof Branch) {
-      for (Node child : ((Branch) node).children ())
-        traverse (child, accumulator);
-    } else
-      accumulator.add (((Leaf) node).name ());
-    return accumulator;
+    dataset.set (new HierarchicallyClusteredDimension (dimension.type (),
+                                                       root,
+                                                       dimension.selections (),
+                                                       dimension.annotation ()));
   }
 }

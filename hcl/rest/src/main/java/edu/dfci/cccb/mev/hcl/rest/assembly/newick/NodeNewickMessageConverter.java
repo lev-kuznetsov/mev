@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.hcl.rest.assembly.newick;
 
+import static java.nio.charset.Charset.forName;
+
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -39,7 +41,8 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Node;
  */
 @ToString
 public class NodeNewickMessageConverter extends AbstractHttpMessageConverter<Node> {
-  private static final Charset DEFAULT_CHARSET = Charset.forName ("UTF-8");
+
+  private static final Charset DEFAULT_CHARSET = forName ("UTF-8");
   public static final String NEWICK_EXTENSION = "newick";
   private static final String NEWICK_TYPE = "application";
   public static final MediaType NEWICK_MEDIA_TYPE = new MediaType (NEWICK_TYPE,
@@ -51,15 +54,6 @@ public class NodeNewickMessageConverter extends AbstractHttpMessageConverter<Nod
    */
   public NodeNewickMessageConverter () {
     super (NEWICK_MEDIA_TYPE);
-  }
-
-  /* (non-Javadoc)
-   * @see
-   * org.springframework.http.converter.AbstractHttpMessageConverter#canWrite
-   * (java.lang.Class, org.springframework.http.MediaType) */
-  @Override
-  public boolean canWrite (Class<?> clazz, MediaType mediaType) {
-    return super.canWrite (clazz, mediaType);
   }
 
   /* (non-Javadoc)

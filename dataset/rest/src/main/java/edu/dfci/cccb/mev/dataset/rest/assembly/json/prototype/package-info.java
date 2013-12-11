@@ -12,25 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.contract;
-
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
-
 /**
  * @author levk
- * 
+ *
  */
-public interface Dataset {
-
-  final String VALID_DATASET_NAME_REGEX = "[a-zA-Z0-9_\\-\\+\\*\\.]+";
-
-  String name ();
-
-  Values values ();
-
-  Dimension dimension (Type type) throws InvalidDimensionTypeException;
-
-  void set (Dimension dimension) throws InvalidDimensionTypeException;
-
-  Analyses analyses ();
-}
+package edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype;
