@@ -144,7 +144,7 @@ define(
 	                                + q.dataset
 	                                + '/analysis/'
 	                                + q.name
-	                                + '/root?format=newick'
+	                                + '?format=newick'
 	                          };
 
 	                          return QHTTP(params,
