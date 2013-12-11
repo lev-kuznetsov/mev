@@ -1,5 +1,5 @@
 <div id="vis">
-<style>
+<style type="text/css">
 
 .node circle {
   fill: #fff;

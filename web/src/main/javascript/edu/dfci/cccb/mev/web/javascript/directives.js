@@ -31,15 +31,10 @@ define (
                   restrict : 'A',
                   templateUrl : '/container/view/elements/heatmapPanels',
                   link : function (scope, elems, attrs) {
-                    
-                    
-                      jq ('#leftPanel div.well').css('height', 
-                          1000);
-                      jq ('#rightPanel div.well').css('height', 
-                          $ ('#leftPanel div.well').height ());
-                    
 
-                    
+                    jq ('#leftPanel div.well').css ('height', 1000);
+                    jq ('#rightPanel div.well').css ('height',
+                        $ ('#leftPanel div.well').height ());
 
                     jq ('#closeRight').hide ();
                     jq ('#closeLeft').hide ();
@@ -111,15 +106,50 @@ define (
               }
             };
           } ])
-          .directive ('analysisPanel', [ function () {
-            return {
-              restrict : 'A',
-              templateUrl : '/container/view/elements/analysisPanel',
-              link : function (scope) {
+          .directive (
+              'analysisPanel',
+              [
+                  'pseudoRandomStringGenerator',
+                  'API',
+                  '$routeParams',
+                  function (prsg, API, $rP) {
+                    return {
+                      restrict : 'A',
+                      templateUrl : '/container/view/elements/analysisPanel',
+                      link : function (scope) {
 
-              }
-            };
-          } ])
+                        function buildPrevioiusClusters () {
+
+                          API.dataset.analysis.list ($rP.datasetName).then (
+                              function (prevList) {
+
+                                scope.previousClusters = prevList
+                                    .map (function (name) {
+
+                                      var randstr = prsg (5);
+
+                                      return {
+                                        name : name,
+                                        href : "#" + randstr,
+                                        divId : randstr,
+                                        datar : API.analysis.hcl.get ({
+                                          name : name,
+                                          dataset : $rP.datasetName
+                                        })
+                                      };
+
+                                    });
+
+                              });
+
+                        }
+                        ;
+
+                        buildPrevioiusClusters ();
+
+                      }
+                    };
+                  } ])
           .directive ('bsprevanalysis', function () {
 
             return {
@@ -203,10 +233,13 @@ define (
                   templateUrl : "/container/view/elements/hierarchicalbody",
                   link : function (scope, elems, attrs) {
 
-                    scope.availableMetrics = ['euclidean']; // TODO: Add manhattan, pearson
-                    
-                    scope.availableAlgorithms = ['average']; // TODO: Add complete
-                    
+                    scope.availableMetrics = [ 'euclidean' ]; // TODO: Add
+                                                              // manhattan,
+                                                              // pearson
+
+                    scope.availableAlgorithms = [ 'average' ]; // TODO: Add
+                                                                // complete
+
                     scope.dimensions = [ {
                       name : 'Rows',
                       value : 'row'
@@ -222,8 +255,8 @@ define (
                         dimension : scope.selectedDimension,
                         metric : scope.selectedMetric,
                         algorithm : scope.selectedAlgorithm,
-                        callback : function(){
-                          
+                        callback : function () {
+
                         }
 
                       }
@@ -281,41 +314,45 @@ define (
                   }
                 }
               } ])
-          .directive ('uploadDrag', function () {
+          .directive (
+              'uploadDrag',
+              function () {
 
-            return {
-              restrict : 'C',
-              templateUrl : '/container/view/elements/uploadDragAndDrop',
-              link : function (scope, elems, attrs) {
+                return {
+                  restrict : 'C',
+                  templateUrl : '/container/view/elements/uploadDragAndDrop',
+                  link : function (scope, elems, attrs) {
 
-                var myDropzone = new Dropzone ("#uploader", {
+                    var myDropzone = new Dropzone (
+                        "#uploader",
+                        {
 
-                  url : "/dataset",
-                  method : "post",
-                  paramName : "dataset",
-                  clickable : true,
-                  uploadMultiple : true,
-                  previewsContainer : null,
-                  addRemoveLinks : false,
-                  createImageThumbnails: false,
-                  previewTemplate: "<div class='dz-preview dz-file-preview'><br>" 
-                	  +  "<div class='dz-filename'><span data-dz-name></span> (<span data-dz-size></span>) <span data-dz-errormessage> ✔ </span></div>"
-                	  +  "<div class='dz-size'><span data-dz-size></span></div>"
-                	  +  "<div class='dz-progress'><span class='dz-upload' data-dz-uploadprogress></span></div>"
-                	  +  "<div class ='dz-error-message'></div>"
-                	  +"</div>",
-                  dictResponseError : "File Upload Error. Try Again",
-                  dictInvalidFileType : "File Upload Error. Try Again",
-                  dictDefaultMessage : "Drop files here",
+                          url : "/dataset",
+                          method : "post",
+                          paramName : "dataset",
+                          clickable : true,
+                          uploadMultiple : true,
+                          previewsContainer : null,
+                          addRemoveLinks : false,
+                          createImageThumbnails : false,
+                          previewTemplate : "<div class='dz-preview dz-file-preview'><br>"
+                              + "<div class='dz-filename'><span data-dz-name></span> (<span data-dz-size></span>) <span data-dz-errormessage> ✔ </span></div>"
+                              + "<div class='dz-size'><span data-dz-size></span></div>"
+                              + "<div class='dz-progress'><span class='dz-upload' data-dz-uploadprogress></span></div>"
+                              + "<div class ='dz-error-message'></div>"
+                              + "</div>",
+                          dictResponseError : "File Upload Error. Try Again",
+                          dictInvalidFileType : "File Upload Error. Try Again",
+                          dictDefaultMessage : "Drop files here",
 
-                }).on ("error", function (file) {
-                  
-                });
+                        }).on ("error", function (file) {
 
-              }
-            };
+                    });
 
-          })
+                  }
+                };
+
+              })
           .directive ('datasetSummary', function () {
             return {
               restrict : 'A',
@@ -336,17 +373,14 @@ define (
                     return {
                       restrict : 'A',
                       scope : {
-                        url : '@',
-                        dimension : '@',
+                        data : '=',
                         diameter : '@'
 
                       },
                       templateUrl : '/container/view/elements/d3RadialTree',
                       link : function (scope, elems, attr) {
 
-                        var cluster = undefined;
-
-                        // start function
+                        var r = scope.diameter / 2;
 
                         var cluster = d3.layout.cluster ().size ([ 360, 1 ])
                             .sort (null).value (function (d) {
@@ -356,8 +390,6 @@ define (
                             }).separation (function (a, b) {
                               return 1;
                             });
-
-                        var r = scope.diameter / 2;
 
                         function project (d) {
                           var r = d.y, a = (d.x - 90) / 180 * Math.PI;
@@ -388,80 +420,24 @@ define (
 
                         // Catch mouse events in Safari.
                         wrap.append ("rect").attr ("width", r * 2).attr (
-                            "height", r * 2).attr ("fill", "none");
-
-                        wrap.on ("mousedown", function () {
-                          wrap.style ("cursor", "move");
-                          start = mouse (d3.event);
-                          d3.event.preventDefault ();
-                        });
+                            "height", r * 2).attr ("fill", "none")
 
                         var vis = wrap.append ("g").attr ("transform",
                             "translate(" + r + "," + r + ")");
 
-                        var start = null, rotate = 0, div = elems[0].childNodes[1];
+                        var start = null, rotate = 0, div = document
+                            .getElementById ("vis");
 
                         function mouse (e) {
                           return [ e.pageX - div.offsetLeft - r,
                               e.pageY - div.offsetTop - r ];
                         }
 
-                        // radial tree mouse movement
-                        d3
-                            .select (wrap)
-                            .on (
-                                "mouseup",
-                                function () {
-
-                                  if (start) {
-                                    wrap.style ("cursor", "auto");
-                                    var m = mouse (d3.event);
-                                    var delta = Math.atan2 (cross (start, m),
-                                        dot (start, m))
-                                        * 180 / Math.PI;
-                                    rotate += delta;
-                                    if (rotate > 360)
-                                      rotate %= 360;
-                                    else if (rotate < 0)
-                                      rotate = (360 + rotate) % 360;
-                                    start = null;
-                                    wrap.style ("-webkit-transform", null);
-                                    vis
-                                        .attr (
-                                            "transform",
-                                            "translate(" + r + "," + r
-                                                + ")rotate(" + rotate + ")")
-                                        .selectAll ("text")
-                                        .attr (
-                                            "text-anchor",
-                                            function (d) {
-                                              return (d.x + rotate) % 360 < 180 ? "start"
-                                                  : "end";
-                                            })
-                                        .attr (
-                                            "transform",
-                                            function (d) {
-                                              return "rotate("
-                                                  + (d.x - 90)
-                                                  + ")translate("
-                                                  + (r - 170 + 8)
-                                                  + ")rotate("
-                                                  + ((d.x + rotate) % 360 < 180 ? 0
-                                                      : 180) + ")";
-                                            });
-                                  }
-                                }).on (
-                                "mousemove",
-                                function () {
-                                  if (start) {
-                                    var m = mouse (d3.event);
-                                    var delta = Math.atan2 (cross (start, m),
-                                        dot (start, m))
-                                        * 180 / Math.PI;
-                                    wrap.style ("-webkit-transform", "rotateZ("
-                                        + delta + "deg)");
-                                  }
-                                });
+                        wrap.on ("mousedown", function () {
+                          wrap.style ("cursor", "move");
+                          start = mouse (d3.event);
+                          d3.event.preventDefault ();
+                        });
 
                         function phylo (n, offset) {
                           if (n.length != null)
@@ -473,62 +449,48 @@ define (
                             });
                         }
 
-                        function draw (data) {
+                        function draw (text) {
 
-                          var x = newick.parse (data);
-                          var nodes = cluster.nodes (x);
-                          phylo (nodes[0], 0);
-
-                          var link = vis.selectAll ("path.link").data (
-                              cluster.links (nodes)).enter ().append ("path")
-                              .attr ("class", "link").attr ("d", step);
-
-                          var node = vis.selectAll ("g.node").data (
-                              nodes.filter (function (n) {
-                                return n.x !== undefined;
-                              })).enter ().append ("g").attr ("class", "node")
-
-                          .attr (
-                              "transform",
-                              function (d) {
-                                return "rotate(" + (d.x - 90) + ")translate("
-                                    + d.y + ")";
-                              });
-
-                          node.append ("circle").attr ("r", 2.5);
-
-                          var label = vis.selectAll ("text").data (
-                              nodes.filter (function (d) {
-                                return d.x !== undefined && !d.children;
-                              })).enter ().append ("text").attr ("dy", ".31em")
-                              .attr ("text-anchor", function (d) {
-                                return d.x < 180 ? "start" : "end";
-                              }).attr (
-                                  "transform",
-                                  function (d) {
-                                    return "rotate(" + (d.x - 90)
-                                        + ")translate(" + (r - 170 + 8)
-                                        + ")rotate(" + (d.x < 180 ? 0 : 180)
-                                        + ")";
-                                  }).text (function (d) {
-                                return d.name.replace (/_/g, ' ');
-                              });
+                          var x = newick.parse(text);
+                          var nodes = cluster.nodes(x);
+                          phylo(nodes[0], 0);
+                         
+                          var link = vis.selectAll("path.link")
+                              .data(cluster.links(nodes))
+                            .enter().append("path")
+                              .attr("class", "link")
+                              .attr("d", step);
+                         
+                          var node = vis.selectAll("g.node")
+                              .data(nodes.filter(function(n) { return n.x !== undefined; }))
+                            .enter().append("g")
+                              .attr("class", "node")
+                              .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+                         
+                          node.append("circle")
+                              .attr("r", 2.5);
+                         
+                          var label = vis.selectAll("text")
+                              .data(nodes.filter(function(d) { return d.x !== undefined && !d.children; }))
+                            .enter().append("text")
+                              .attr("dy", ".31em")
+                              .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+                              .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (r - 170 + 8) + ")rotate(" + (d.x < 180 ? 0 : 180) + ")"; })
+                              .text(function(d) { return d.name.replace(/_/g, ' '); });
 
                         } // end draw function
 
-                        if (scope.dimension == 'row') {
-                          API.analysis.hcl.row.get ($routeParams.datasetName)
-                              .then (draw);
-                        } else if (scope.dimension == 'column') {
-                          API.analysis.hcl.column
-                              .get ($routeParams.datasetName).then (draw);
-                        }
-                        ;
+                        scope.$watch ('data', function (newval, oldval) {
+                          if (newval) {
+                            draw (newval);
+                          }
+                        });
 
                       } // end link
                     };
 
-                  } ]).directive ('bsTable', function () {
+                  } ])
+          .directive ('bsTable', function () {
 
             return {
               scope : {
@@ -539,7 +501,8 @@ define (
 
             };
 
-          }).directive (
+          })
+          .directive (
               'visHeatmap',
               [
                   'API',
@@ -554,85 +517,85 @@ define (
                       // templateUrl : "/container/view/elements/visHeatmap",
                       link : function (scope, elems, attr) {
 
-                        var svgWidth = Math.floor(jq ('#leftPanel').css ('width').slice (0,-2) *.8),
-                        svgHeight = Math.floor(jq ('#leftPanel').css ('height').slice (0, -2) *.8);
-                        
-                        var heatmapMarginLeft = Math.floor(svgWidth * .05),
-                        heatmapMarginRight = Math.floor(svgWidth * .1),
-                        heatmapMarginTop = Math.floor(svgHeight * .05),
-                        heatmapMarginBottom = Math.floor(svgHeight * .1);
+                        var svgWidth = Math.floor (jq ('#leftPanel').css (
+                            'width').slice (0, -2) * .8), svgHeight = Math
+                            .floor (jq ('#leftPanel').css ('height').slice (0,
+                                -2) * .8);
+
+                        var heatmapMarginLeft = Math.floor (svgWidth * .05), heatmapMarginRight = Math
+                            .floor (svgWidth * .1), heatmapMarginTop = Math
+                            .floor (svgHeight * .05), heatmapMarginBottom = Math
+                            .floor (svgHeight * .1);
 
                         var heatmapCellsWidth = svgWidth - heatmapMarginLeft
                             - heatmapMarginRight;
 
                         var heatmapCellsHeight = svgHeight - heatmapMarginTop
                             - heatmapMarginBottom;
-                        
 
                         var window = d3.select (elems[0]);
 
-                        //Color Scales
+                        // Color Scales
                         var leftshifter = d3.scale.linear ().rangeRound (
                             [ 255, 0 ]);
                         var rightshifter = d3.scale.linear ().rangeRound (
                             [ 0, 255 ]);
-                        
-                        //X Scales
+
+                        // X Scales
                         var XLabel2Index = d3.scale.ordinal ();
                         var XIndex2Label = d3.scale.ordinal ();
-                        var XIndex2Pixel = d3.scale.linear();
-                        
-                        //YScales
+                        var XIndex2Pixel = d3.scale.linear ();
+
+                        // YScales
                         var YLabel2Index = d3.scale.ordinal ();
                         var YIndex2Label = d3.scale.ordinal ();
-                        var YIndex2Pixel = d3.scale.linear();
-                        
-                        //Axis Scales
+                        var YIndex2Pixel = d3.scale.linear ();
+
+                        // Axis Scales
                         var xAxisd3 = d3.svg.axis ();
                         var yAxisd3 = d3.svg.axis ();
 
                         var svg = window.append ("svg").attr ("class", "chart")
                         // .attr("pointer-events", "all")
-                        .attr ("width", svgWidth)
-                        .attr ("height", svgHeight);
+                        .attr ("width", svgWidth).attr ("height", svgHeight);
 
                         var vis = svg.append ("g");
 
                         var rects = vis.append ("g").attr ("class", "cells")
                             .selectAll ("rect");
-                        
+
                         var xlabels = vis.append ("g")
                             .attr ("class", "xlabels");
-                        
+
                         var ylabels = vis.append ("g")
                             .attr ("class", "ylabels");
 
                         function drawLabels (xAxis, yAxis) {
-                        	
-                          
 
-                          xAxis
-                              .attr("transform", "translate(0," + (heatmapMarginTop + heatmapCellsHeight)
-                                      + ")").call (xAxisd3)
-                              .selectAll ("text")
-                              .style ("text-anchor", "end")
-                              .attr ("dy", function(d, i){
-                            	  return 0;
-                                  //return ((XIndex2Pixel(1) - XIndex2Pixel(0) ) / 2) + "px"
-                              })
-                              .attr ("dx", "-20px")
-                              .attr ("transform",function (d) {
+                          xAxis.attr (
+                              "transform",
+                              "translate(0,"
+                                  + (heatmapMarginTop + heatmapCellsHeight)
+                                  + ")").call (xAxisd3).selectAll ("text")
+                              .style ("text-anchor", "end").attr ("dy",
+                                  function (d, i) {
+                                    return 0;
+                                    // return ((XIndex2Pixel(1) -
+                                    // XIndex2Pixel(0) ) / 2) + "px"
+                                  }).attr ("dx", "-20px").attr ("transform",
+                                  function (d) {
                                     return "rotate(-90)"
                                   });
 
-                          yAxis.attr ("transform",
-                              "translate(" + (heatmapMarginLeft + heatmapCellsWidth) + ")")
-                              .call (yAxisd3)
-                              .selectAll ("text")
-                              .style ("text-anchor", "start")
-                              .attr ("dy", ( (YIndex2Pixel(1) - YIndex2Pixel(0) ) / 2) + "px");
-                          
-                          
+                          yAxis.attr (
+                              "transform",
+                              "translate("
+                                  + (heatmapMarginLeft + heatmapCellsWidth)
+                                  + ")").call (yAxisd3).selectAll ("text")
+                              .style ("text-anchor", "start").attr (
+                                  "dy",
+                                  ((YIndex2Pixel (1) - YIndex2Pixel (0)) / 2)
+                                      + "px");
 
                         }
                         ;
@@ -642,17 +605,17 @@ define (
                           hc.attr ({
                             "class" : "cells",
                             "height" : function (d) {
-                              
-                              return YIndex2Pixel(1) - YIndex2Pixel(0) ;
+
+                              return YIndex2Pixel (1) - YIndex2Pixel (0);
                             },
                             "width" : function (d) {
-                              return XIndex2Pixel(1) - XIndex2Pixel(0) ;
+                              return XIndex2Pixel (1) - XIndex2Pixel (0);
                             },
                             "x" : function (d, i) {
-                              return XIndex2Pixel( XLabel2Index (d.column) );
+                              return XIndex2Pixel (XLabel2Index (d.column));
                             },
                             "y" : function (d, i) {
-                              return YIndex2Pixel( YLabel2Index (d.row) );
+                              return YIndex2Pixel (YLabel2Index (d.row));
                             },
                             "fill" : function (d) {
                               return cellColor (d.value);
@@ -673,69 +636,74 @@ define (
 
                         }
                         ;
-                        
-                        function scaleUpdates(cols, rows, min, max, avg) {
-                          
+
+                        function scaleUpdates (cols, rows, min, max, avg) {
+
                           leftshifter.domain ([ min, avg ]); // Color Update
 
                           rightshifter.domain ([ avg, max ]) // Color Update
-                          
-                          XLabel2Index.domain (cols).range(cols.map(function(d, i){
-                            return i
-                          }));
-                          
-                          YLabel2Index.domain (rows).range(rows.map(function(d, i){
-                            return i
-                          }));
-                          
-                          XIndex2Label.domain(cols.map(function(d, i){
-                            return i
-                          })).range(cols.map(function(d, i){
-                            return d
-                          }));
-                          
-                          YIndex2Label.domain(rows.map(function(d, i){
-                            return i
-                          })).range(rows.map(function(d, i){
-                            return d
-                          }));
-                          
-                          XIndex2Pixel.domain([0, cols.length])
-                          .range([heatmapMarginLeft, heatmapMarginLeft + heatmapCellsWidth]);
-                          
-                          YIndex2Pixel.domain([0, rows.length])
-                          .range([heatmapMarginTop, heatmapMarginTop + heatmapCellsHeight]);
-                          
-                          xAxisd3.scale (XIndex2Pixel)
-                            .orient ("bottom").ticks (cols.length)
-                            .tickFormat (function (d) {
-                              if (d % 1 == 0 && d >= 0 && d < cols.length) {
-                                return XIndex2Label (d);
-                                
-                              }
-                            });
 
-                          yAxisd3.scale (YIndex2Pixel)
-                            .orient ("right").ticks (rows.length)
-                            .tickFormat (function (d) {
-                              if (d % 1 == 0 && d >= 0 && d < rows.length) {
-                                return YIndex2Label (d);
-                              }
-                            });
-                        };
+                          XLabel2Index.domain (cols).range (
+                              cols.map (function (d, i) {
+                                return i
+                              }));
+
+                          YLabel2Index.domain (rows).range (
+                              rows.map (function (d, i) {
+                                return i
+                              }));
+
+                          XIndex2Label.domain (cols.map (function (d, i) {
+                            return i
+                          })).range (cols.map (function (d, i) {
+                            return d
+                          }));
+
+                          YIndex2Label.domain (rows.map (function (d, i) {
+                            return i
+                          })).range (rows.map (function (d, i) {
+                            return d
+                          }));
+
+                          XIndex2Pixel.domain ([ 0, cols.length ]).range (
+                              [ heatmapMarginLeft,
+                                  heatmapMarginLeft + heatmapCellsWidth ]);
+
+                          YIndex2Pixel.domain ([ 0, rows.length ]).range (
+                              [ heatmapMarginTop,
+                                  heatmapMarginTop + heatmapCellsHeight ]);
+
+                          xAxisd3.scale (XIndex2Pixel).orient ("bottom").ticks (
+                              cols.length).tickFormat (function (d) {
+                            if (d % 1 == 0 && d >= 0 && d < cols.length) {
+                              return XIndex2Label (d);
+
+                            }
+                          });
+
+                          yAxisd3.scale (YIndex2Pixel).orient ("right").ticks (
+                              rows.length).tickFormat (function (d) {
+                            if (d % 1 == 0 && d >= 0 && d < rows.length) {
+                              return YIndex2Label (d);
+                            }
+                          });
+                        }
+                        ;
 
                         function init (data) {
-                          
-                          scaleUpdates(data.column.keys, data.row.keys, data.min, data.max, data.avg);
+
+                          scaleUpdates (data.column.keys, data.row.keys,
+                              data.min, data.max, data.avg);
 
                           drawCells (rects.data (data.values).enter ().append (
-                          "rect"));
+                              "rect"));
 
                           drawLabels (xlabels, ylabels);
 
-                        };
+                        }
+                        ;
 
-                        //Initial Build
+                        // Initial Build
                         if (!$routeParams.datasetName) {
                           alertService.error ()
                         } else {
@@ -745,7 +713,7 @@ define (
                                 $location.path ('/');
                               });
                         }
-                        
+
                         function cellColor (val, type) {
 
                           var color = {

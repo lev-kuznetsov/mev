@@ -1,15 +1,28 @@
+
 <div class="row-fluid">
 
-	<div class="accordion" id="prevAnalysisList">
-	  
-	  <div class="accordion-group">
+  <div class="accordion" id="prevAnalysisList" ng-repeat="cluster in previousClusters">
+    <div class="accordion-group">
+    
 	    <div class="accordion-heading">
-	      <a class="accordion-toggle" data-toggle="collapse" data-parent="#prevAnalysisList" href="#collapseOne">
-	        Limma Analysis
+	      <a class="accordion-toggle" data-toggle="collapse" data-parent="#prevAnalysisList" href="{{cluster.href}}">
+	        {{cluster.name}}
 	      </a>
-	    </div>
-	    <div id="collapseOne" class="accordion-body collapse">
+	    </div> <!-- End Heading Div -->
+	    
+	    <div id="{{cluster.divId}}" class="accordion-body collapse">
 	      <div class="accordion-inner">
+	        <div d3-Radial-Tree data="cluster.datar" diameter='400'></div> -->
+	        
+	      </div>
+	    </div> <!-- End Body Div -->
+    
+    </div> <!-- End Accordion Grouping -->
+  </div> <!-- End Accordion Definition -->
+
+</div> <!-- End Row Definition -->
+
+    <!--
 	        <div id="limmaResultsTable">
                     <table class="table table-hover table-bordered">
                             <thead>
@@ -37,27 +50,6 @@
                                     </tr>
                             </tbody>
                     </table>
-            </div> <!-- LIMMA ANALYSIS END -->
-            
-            
-	      </div>
-	    </div>
-	  </div>
-	  
-	  <div class="accordion-group">
-	    <div class="accordion-heading">
-	      <a class="accordion-toggle" data-toggle="collapse" data-parent="#prevAnalysisList" href="#collapseTwo">
-	        Radial Clustering
-	      </a>
-	    </div>
-	    <div id="collapseTwo" class="accordion-body collapse">
-	      <div class="accordion-inner">
-	        <div d3-Radial-Tree diameter='400'></div>
-	      </div>
-	    </div>
-	  </div>
-	  
-	  
-	</div>
+            </div> 
+	-->
 	
-</div>
