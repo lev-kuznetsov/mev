@@ -69,6 +69,21 @@
           </ul>
         </li>
         
+      <li class="divider-vertical"></li>
+      
+      
+      
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown">
+            Annotations
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="/annotations/{{heatmapId}}/annotation/0/">Column Annotations</a></li>
+          </ul>
+        </li>
+        
+        
         
 
     </ul> <!-- End Nav Link List -->
