@@ -380,9 +380,12 @@ define (
                       templateUrl : '/container/view/elements/d3RadialTree',
                       link : function (scope, elems, attr) {
 
-                        var r = scope.diameter / 2;
+                        console.log(scope.diameter)
+                        
+                        var r =500/ 2;
+                        var resizeCoeff = .75; // Adjust r coefficient for end size
 
-                        var cluster = d3.layout.cluster ().size ([ 360, 1 ])
+                        var cluster = d3.layout.cluster ().size ([ 360, r*resizeCoeff ]) 
                             .sort (null).value (function (d) {
                               return d.length;
                             }).children (function (d) {
@@ -441,7 +444,7 @@ define (
 
                         function phylo (n, offset) {
                           if (n.length != null)
-                            offset += n.length * 115;
+                            offset += n.length * 65;
                           n.y = offset;
                           if (n.children)
                             n.children.forEach (function (n) {
@@ -450,7 +453,7 @@ define (
                         }
 
                         function draw (text) {
-
+                          
                           var x = newick.parse(text);
                           var nodes = cluster.nodes(x);
                           phylo(nodes[0], 0);
@@ -475,7 +478,7 @@ define (
                             .enter().append("text")
                               .attr("dy", ".31em")
                               .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-                              .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (r - 170 + 8) + ")rotate(" + (d.x < 180 ? 0 : 180) + ")"; })
+                              .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (r * resizeCoeff) + ")rotate(" + (d.x < 180 ? 0 : 180) + ")"; })
                               .text(function(d) { return d.name.replace(/_/g, ' '); });
 
                         } // end draw function
