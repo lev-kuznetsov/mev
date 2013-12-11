@@ -12,7 +12,7 @@
 	    
 	    <div id="{{cluster.divId}}" class="accordion-body collapse">
 	      <div class="accordion-inner">
-	        <div d3-Radial-Tree data="cluster.datar" diameter='400'></div> -->
+	        <div d3-Radial-Tree data="cluster.datar" diameter='400'></div> 
 	        
 	      </div>
 	    </div> <!-- End Body Div -->

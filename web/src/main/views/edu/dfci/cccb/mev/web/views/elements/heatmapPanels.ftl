@@ -18,11 +18,11 @@
 		<div class="well">
 		
 			<div class="row-fluid">
-		    	<button class="btn btn-primary pull-left" id="expandRight" ng-click="expandRight()"><i class="icon-chevron-left"></i></button>
-				<button class="btn btn-primary pull-left" id="closeRight" ng-click="expandBoth()"><i class="icon-chevron-right"></i></button>
+                <p class="lead pull-left">Previous Analysis</p>
+		    	<button class="btn btn-primary pull-right" id="expandRight" ng-click="expandRight()"><i class="icon-chevron-left"></i></button>
+				<button class="btn btn-primary pull-right" id="closeRight" ng-click="expandBoth()"><i class="icon-chevron-right"></i></button>
 		    </div>
-		    
-		    <br>
+		    <hr>
 		    
 		    <div analysis-Panel></div>
 	    </div>
