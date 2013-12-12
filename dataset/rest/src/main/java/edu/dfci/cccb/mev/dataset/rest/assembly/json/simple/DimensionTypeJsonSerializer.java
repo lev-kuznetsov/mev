@@ -12,33 +12,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.hcl.rest.assembly.json;
+package edu.dfci.cccb.mev.dataset.rest.assembly.json.simple;
 
 import java.io.IOException;
-
-import lombok.ToString;
-import lombok.extern.log4j.Log4j;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 
 /**
  * @author levk
  * 
  */
-@Log4j
-@ToString
-public class HclResultJsonSerializer extends JsonSerializer<HclResult> {
+public class DimensionTypeJsonSerializer extends JsonSerializer<Type> {
 
   /* (non-Javadoc)
    * @see com.fasterxml.jackson.databind.JsonSerializer#handledType() */
   @Override
-  public Class<HclResult> handledType () {
-    return HclResult.class;
+  public Class<Type> handledType () {
+    return Type.class;
   }
 
   /* (non-Javadoc)
@@ -47,13 +42,8 @@ public class HclResultJsonSerializer extends JsonSerializer<HclResult> {
    * com.fasterxml.jackson.core.JsonGenerator,
    * com.fasterxml.jackson.databind.SerializerProvider) */
   @Override
-  public void serialize (HclResult value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
-                                                                                          JsonProcessingException {
-    if (log.isDebugEnabled ())
-      log.debug ("Serializing " + value.getClass ());
-    jgen.writeStartObject ();
-    jgen.writeStringField ("name", value.name ());
-    provider.defaultSerializeField ("dimension", value.dimension (), jgen);
-    jgen.writeEndObject ();
+  public void serialize (Type value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
+                                                                                     JsonProcessingException {
+    jgen.writeString (value.name ().toLowerCase ());
   }
 }
