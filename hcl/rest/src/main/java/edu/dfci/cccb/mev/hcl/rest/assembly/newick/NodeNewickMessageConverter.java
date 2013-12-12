@@ -48,6 +48,8 @@ public class NodeNewickMessageConverter extends AbstractHttpMessageConverter<Nod
   public static final MediaType NEWICK_MEDIA_TYPE = new MediaType (NEWICK_TYPE,
                                                                    "x-" + NEWICK_EXTENSION,
                                                                    DEFAULT_CHARSET);
+  private static final String LEAF_DISTANCE = "0.1"; // TODO: check with Kevin!
+                                                     // this is a hack
 
   /**
    * 
@@ -96,7 +98,7 @@ public class NodeNewickMessageConverter extends AbstractHttpMessageConverter<Nod
   }
 
   private void write (OutputStream out, Leaf leaf) throws IOException {
-    out.write ((leaf.name () + ":0.0").getBytes ());
+    out.write ((leaf.name () + ":" + LEAF_DISTANCE).getBytes ());
   }
 
   private void write (OutputStream out, Branch branch) throws IOException {
