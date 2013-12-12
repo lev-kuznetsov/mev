@@ -15,7 +15,7 @@
           </div>
           
           <div class="control-group">
-            <label for="algorithmName" class="control-label">Algorithm Linkage Criteria</label>
+            <label for="algorithmName" class="control-label">Linkage Criteria Algorithm</label>
             <div class="controls">
               <select id="algorithmName" ng-options="option for option in availableAlgorithms" ng-model="selectedAlgorithm"></select>
             </div>

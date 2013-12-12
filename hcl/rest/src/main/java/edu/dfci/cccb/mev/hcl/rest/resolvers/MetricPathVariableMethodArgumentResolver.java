@@ -14,12 +14,7 @@
  */
 package edu.dfci.cccb.mev.hcl.rest.resolvers;
 
-import static java.lang.Integer.MAX_VALUE;
-
-import java.util.Collection;
-
-import javax.inject.Inject;
-
+import static edu.dfci.cccb.mev.hcl.domain.contract.Metric.from;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,7 +23,6 @@ import org.springframework.core.Ordered;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver;
 
-import edu.dfci.cccb.mev.hcl.domain.contract.InvalidMetricException;
 import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
 
 /**
@@ -37,8 +31,7 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
  */
 public class MetricPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver implements Ordered {
 
-  private @Getter @Setter (onMethod = @_ (@Inject)) Collection<Metric> metrics;
-  private @Getter @Setter int order = MAX_VALUE;
+  private @Getter @Setter int order = LOWEST_PRECEDENCE;
 
   /* (non-Javadoc)
    * @see org.springframework.web.servlet.mvc.method.annotation.
@@ -59,9 +52,6 @@ public class MetricPathVariableMethodArgumentResolver extends PathVariableMethod
     Object value = super.resolveName (name, parameter, request);
     if (value == null)
       return null;
-    for (Metric metric : metrics)
-      if (metric.name ().equals (value))
-        return metric;
-    throw new InvalidMetricException ().name (value.toString ());
+    return from ((String) value);
   }
 }

@@ -27,5 +27,5 @@ public interface Hcl extends AnalysisBuilder<Hcl, HclResult> {
 
   Hcl metric (Metric metric);
 
-  Hcl algorithm (Algorithm algorithm);
+  Hcl linkage (Linkage linkage);
 }

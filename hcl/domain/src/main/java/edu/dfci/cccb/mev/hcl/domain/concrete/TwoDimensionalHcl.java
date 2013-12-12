@@ -16,8 +16,6 @@ package edu.dfci.cccb.mev.hcl.domain.concrete;
 
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
-import static java.lang.Double.isInfinite;
-import static java.lang.Double.isNaN;
 import static java.util.Arrays.asList;
 
 import java.util.AbstractList;
@@ -46,10 +44,10 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
-import edu.dfci.cccb.mev.hcl.domain.contract.Algorithm;
 import edu.dfci.cccb.mev.hcl.domain.contract.Branch;
 import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
 import edu.dfci.cccb.mev.hcl.domain.contract.Leaf;
+import edu.dfci.cccb.mev.hcl.domain.contract.Linkage;
 import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
 import edu.dfci.cccb.mev.hcl.domain.contract.Node;
 import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractHcl;
@@ -68,16 +66,10 @@ public class TwoDimensionalHcl extends AbstractHcl {
    * @see edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder#build() */
   @Override
   public HclResult build () throws DatasetException {
-    return new AbstractHclResult () {}.root (cluster (dataset (), dimension (), metric (), algorithm ()))
+    return new AbstractHclResult () {}.root (cluster (dataset (), dimension (), metric (), linkage ()))
                                       .dimension (dimension ())
                                       .dataset (dataset ())
                                       .name (name ());
-  }
-
-  private Node cluster (Dataset dataset, Dimension dimension, Metric metric, Algorithm algorithm) throws DatasetException {
-    if (log.isDebugEnabled ())
-      log.debug ("Clustering " + dataset + " on " + dimension);
-    return eucledian (dataset, dimension);
   }
 
   @SuppressWarnings ("unused")
@@ -138,7 +130,7 @@ public class TwoDimensionalHcl extends AbstractHcl {
     };
   }
 
-  private Node eucledian (final Dataset dataset, final Dimension dimension) throws InvalidDimensionTypeException {
+  private Node cluster (final Dataset dataset, Dimension dimension, Metric metric, Linkage linkage) throws DatasetException {
     final Type dimensionType = dimension.type ();
     final RealMatrix original = toRealMatrix (dataset);
     final int size = dimensionType == ROW ? original.getRowDimension () : original.getColumnDimension ();
@@ -165,7 +157,7 @@ public class TwoDimensionalHcl extends AbstractHcl {
         throw new UnsupportedOperationException ();
       }
     };
-    double[][] distances = new double[size][size];
+    final double[][] distances = new double[size][size];
 
     log.debug ("Populating node hash");
     final Map<Integer, Node> genehash = new HashMap<Integer, Node> () {
@@ -182,15 +174,43 @@ public class TwoDimensionalHcl extends AbstractHcl {
     log.debug ("Populating distance matrix");
     for (int i = 0; i < size; i++) {
       for (int j = i + 1; j < size; j++) {
-        // Euclidean distance calculation.
-        double total = 0;
-        for (int k = 0; k < other; k++) {
-          double left = dimensionType == ROW ? original.getEntry (i, k) : original.getEntry (k, i);
-          double right = dimensionType == ROW ? original.getEntry (j, k) : original.getEntry (k, j);
-          if (!isNaN (left) && !isNaN (right) && !isInfinite (left) && !isInfinite (right))
-            total += Math.pow (left - right, 2);
-        }
-        double distance = Math.pow (total, 0.5);
+        double distance = metric.distance (new AbstractList<Double> () {
+
+          private int i;
+
+          @Override
+          public Double get (int index) {
+            return dimensionType == ROW ? original.getEntry (i, index) : original.getEntry (index, i);
+          }
+
+          @Override
+          public int size () {
+            return other;
+          }
+
+          private List<Double> initializeProjection (int i) {
+            this.i = i;
+            return this;
+          }
+        }.initializeProjection (i), new AbstractList<Double> () {
+
+          private int j;
+
+          @Override
+          public Double get (int index) {
+            return dimensionType == ROW ? original.getEntry (j, index) : original.getEntry (index, j);
+          }
+
+          @Override
+          public int size () {
+            return other;
+          }
+
+          private List<Double> initializeProjection (int j) {
+            this.j = j;
+            return this;
+          }
+        }.initializeProjection (j));
 
         distances[i][j] = distance;
         distances[j][i] = distance;
@@ -229,20 +249,15 @@ public class TwoDimensionalHcl extends AbstractHcl {
         if (c == cluster)
           continue;
 
-        double distance = 0;
-        int n = 0;
+        List<Double> aggregation = new ArrayList<> ();
         // Get genes from each cluster. Distance is measured from each element
         // to every element.
         for (int current : traverse (dimension.keys (), c))
-          for (int created : traverse (dimension.keys (), cluster)) {
-            distance += distances[current][created];
-            n++;
-          }
-
-        distance = distance / n;
+          for (int created : traverse (dimension.keys (), cluster))
+            aggregation.add (distances[current][created]);
 
         int[] valuePair = { e.getKey (), id };
-        sorted.put (distance, valuePair);
+        sorted.put (linkage.aggregate (aggregation), valuePair);
       }
 
       // Get the shortest distance.
