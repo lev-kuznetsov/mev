@@ -383,7 +383,7 @@ define (
                         console.log(scope.diameter)
                         
                         var r =500/ 2;
-                        var resizeCoeff = .75; // Adjust r coefficient for end size
+                        var resizeCoeff = .75; // Adjusts r coefficient for end size
 
                         var cluster = d3.layout.cluster ().size ([ 360, r*resizeCoeff ]) 
                             .sort (null).value (function (d) {
@@ -412,7 +412,7 @@ define (
                             y : d.source.y
                           }), t = project (d.target), r = d.source.y, sweep = d.target.x > d.source.x ? 1
                               : 0;
-                          return ("M" + s[0] + "," + s[1] + "A" + r + "," + r
+                          return ("M" + s[0] + "," + s[1] + "A" + r + "," + r 
                               + " 0 0," + sweep + " " + m[0] + "," + m[1] + "L"
                               + t[0] + "," + t[1]);
                         }
@@ -444,8 +444,8 @@ define (
 
                         function phylo (n, offset) {
                           if (n.length != null)
-                            offset += n.length * 65;
-                          n.y = offset;
+                            offset += n.length  * 65 ;
+                          n.y = offset *.0025; //TODO: remove coefficient on algorithm correction
                           if (n.children)
                             n.children.forEach (function (n) {
                               phylo (n, offset);
