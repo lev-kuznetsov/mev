@@ -1,17 +1,31 @@
+<style type="text/css">
+
+.fixed-height {
+  height: 900px;
+  overflow:auto
+}
+
+</style>
+
 
 <div class="row-fluid">
 
-  <div class="accordion" id="prevAnalysisList" ng-repeat="cluster in previousClusters">
+<div class="fixed-height">
+  <div class="accordion" id="{{cluster.parentId}}" ng-repeat="cluster in previousClusters">
     <div class="accordion-group">
     
 	    <div class="accordion-heading">
-	      <a class="accordion-toggle" data-toggle="collapse" data-parent="#prevAnalysisList" href="{{cluster.href}}">
+	      <a class="accordion-toggle" data-toggle="collapse" data-parent="{{cluster.dataParent}}" href="{{cluster.href}}">
 	        {{cluster.name}}
 	      </a>
 	    </div> <!-- End Heading Div -->
 	    
 	    <div id="{{cluster.divId}}" class="accordion-body collapse">
 	      <div class="accordion-inner">
+	      
+	        <button class="btn btn-success" ng-click="updateHeatmapData(cluster.name)">
+	        <i class='icon-chevron-left'></i> Apply to heatmap
+	        </button>
 	        <div d3-Radial-Tree data="cluster.datar" diameter='400'></div> 
 	        
 	      </div>
@@ -19,6 +33,8 @@
     
     </div> <!-- End Accordion Grouping -->
   </div> <!-- End Accordion Definition -->
+
+</div> <!-- End fixed-height def -->
 
 </div> <!-- End Row Definition -->
 
