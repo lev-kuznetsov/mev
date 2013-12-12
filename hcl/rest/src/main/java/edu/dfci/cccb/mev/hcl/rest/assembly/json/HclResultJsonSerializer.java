@@ -53,7 +53,8 @@ public class HclResultJsonSerializer extends JsonSerializer<HclResult> {
       log.debug ("Serializing " + value.getClass ());
     jgen.writeStartObject ();
     jgen.writeStringField ("name", value.name ());
-    provider.defaultSerializeField ("dimension", value.dimension (), jgen);
+    provider.defaultSerializeField ("dimension", value.dimension ().type (), jgen);
+    provider.defaultSerializeField ("root", value.root (), jgen);
     jgen.writeEndObject ();
   }
 }
