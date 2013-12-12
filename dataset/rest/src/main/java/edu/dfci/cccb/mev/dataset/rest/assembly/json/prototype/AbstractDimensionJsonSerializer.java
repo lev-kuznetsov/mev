@@ -55,6 +55,7 @@ public abstract class AbstractDimensionJsonSerializer <T extends Dimension> exte
 
   protected void serializeDimensionContent (T value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
                                                                                                      JsonProcessingException {
+    provider.defaultSerializeField ("type", value.type (), jgen);
     serializeKeys ("keys", value.keys (), jgen, provider);
     serializeSelections ("selections", value.selections (), jgen, provider);
   }
