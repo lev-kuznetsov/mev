@@ -29,8 +29,6 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver;
-import edu.dfci.cccb.mev.hcl.domain.concrete.AverageAlgorithm;
-import edu.dfci.cccb.mev.hcl.domain.concrete.EuclideanMetric;
 import edu.dfci.cccb.mev.hcl.domain.concrete.TwoDimensionalHcl;
 import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
 import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
@@ -94,16 +92,6 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   @Bean
   public HierarchicallyClusteredDimensionJsonSerializer hierarchicallyClusteredDimensionJsonSerializer () {
     return new HierarchicallyClusteredDimensionJsonSerializer ();
-  }
-
-  @Bean
-  public EuclideanMetric euclideanMetric () {
-    return new EuclideanMetric ();
-  }
-
-  @Bean
-  public AverageAlgorithm averageAlgorithm () {
-    return new AverageAlgorithm ();
   }
 
   @Bean

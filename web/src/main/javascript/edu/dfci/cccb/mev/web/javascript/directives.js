@@ -233,12 +233,9 @@ define (
                   templateUrl : "/container/view/elements/hierarchicalbody",
                   link : function (scope, elems, attrs) {
 
-                    scope.availableMetrics = [ 'euclidean' ]; // TODO: Add
-                                                              // manhattan,
-                                                              // pearson
+                    scope.availableMetrics = [ 'euclidean', 'manhattan', 'pearson' ];
 
-                    scope.availableAlgorithms = [ 'average' ]; // TODO: Add
-                                                                // complete
+                    scope.availableAlgorithms = [ 'average', 'complete', 'single' ];
 
                     scope.dimensions = [ {
                       name : 'Rows',
@@ -246,7 +243,7 @@ define (
                     }, {
                       name : 'Columns',
                       value : 'column'
-                    } ]
+                    } ];
 
                     scope.clusterInit = function () {
                       var q = {
@@ -259,11 +256,11 @@ define (
 
                         }
 
-                      }
+                      };
 
                       API.analysis.hcl.create (q);
 
-                    }
+                    };
 
                   }
 

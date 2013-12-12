@@ -23,9 +23,9 @@ import lombok.experimental.Accessors;
 import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysisBuilder;
-import edu.dfci.cccb.mev.hcl.domain.contract.Algorithm;
 import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
+import edu.dfci.cccb.mev.hcl.domain.contract.Linkage;
 import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
 import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 
@@ -39,7 +39,7 @@ import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 @Log4j
 public abstract class AbstractHcl extends AbstractAnalysisBuilder<Hcl, HclResult> implements Hcl {
 
-  private @Getter (PROTECTED) @Setter/* (onMethod = @_ (@Inject)) */Algorithm algorithm;
+  private @Getter (PROTECTED) @Setter/* (onMethod = @_ (@Inject)) */Linkage linkage;
   private @Getter (PROTECTED) @Setter/* (onMethod = @_ (@Inject)) */Metric metric;
   private/* @Getter (PROTECTED) /*@Setter/* (onMethod = @_ (@Inject)) */Dimension dimension;
   private @Getter (PROTECTED) @Setter/* (onMethod = @_ (@Inject)) */NodeBuilder nodeBuilder;

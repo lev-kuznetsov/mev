@@ -14,12 +14,8 @@
  */
 package edu.dfci.cccb.mev.hcl.rest.resolvers;
 
+import static edu.dfci.cccb.mev.hcl.domain.contract.Linkage.from;
 import static java.lang.Integer.MAX_VALUE;
-
-import java.util.Collection;
-
-import javax.inject.Inject;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,8 +24,7 @@ import org.springframework.core.Ordered;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver;
 
-import edu.dfci.cccb.mev.hcl.domain.contract.Algorithm;
-import edu.dfci.cccb.mev.hcl.domain.contract.InvalidAlgorithmException;
+import edu.dfci.cccb.mev.hcl.domain.contract.Linkage;
 
 /**
  * @author levk
@@ -37,7 +32,6 @@ import edu.dfci.cccb.mev.hcl.domain.contract.InvalidAlgorithmException;
  */
 public class AlgorithmPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver implements Ordered {
 
-  private @Getter @Setter (onMethod = @_ (@Inject)) Collection<Algorithm> algorithms;
   private @Getter @Setter int order = MAX_VALUE;
 
   /* (non-Javadoc)
@@ -46,7 +40,7 @@ public class AlgorithmPathVariableMethodArgumentResolver extends PathVariableMet
    * #supportsParameter(org.springframework.core.MethodParameter) */
   @Override
   public boolean supportsParameter (MethodParameter parameter) {
-    return Algorithm.class.isAssignableFrom (parameter.getParameterType ()) && super.supportsParameter (parameter);
+    return Linkage.class.isAssignableFrom (parameter.getParameterType ()) && super.supportsParameter (parameter);
   }
 
   /* (non-Javadoc)
@@ -59,9 +53,6 @@ public class AlgorithmPathVariableMethodArgumentResolver extends PathVariableMet
     Object value = super.resolveName (name, parameter, request);
     if (value == null)
       return null;
-    for (Algorithm algorithm : algorithms)
-      if (algorithm.name ().equals (value))
-        return algorithm;
-    throw new InvalidAlgorithmException ().name (value.toString ());
+    return from ((String) value);
   }
 }

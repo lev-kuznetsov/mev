@@ -14,8 +14,6 @@
  */
 package edu.dfci.cccb.mev.hcl.rest.controllers;
 
-import static ch.lambdaj.Lambda.extract;
-import static ch.lambdaj.Lambda.on;
 import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.ANALYSIS;
 import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.ANALYSIS_URL_ELEMENT;
 import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DATASET;
@@ -27,15 +25,10 @@ import static edu.dfci.cccb.mev.hcl.rest.context.RestPathVariableHclRequestConte
 import static edu.dfci.cccb.mev.hcl.rest.context.RestPathVariableHclRequestContextInjector.METRIC;
 import static edu.dfci.cccb.mev.hcl.rest.context.RestPathVariableHclRequestContextInjector.METRIC_URL_ELEMENT;
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
-import java.util.Collection;
 
 import javax.inject.Inject;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
@@ -52,10 +45,9 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.hcl.domain.concrete.TwoDimensionalHcl;
-import edu.dfci.cccb.mev.hcl.domain.contract.Algorithm;
 import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
+import edu.dfci.cccb.mev.hcl.domain.contract.Linkage;
 import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
-import edu.dfci.cccb.mev.hcl.domain.contract.Node;
 import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 
 /**
@@ -79,8 +71,8 @@ public class HclAnalysisController {
                      final @PathVariable (DATASET) Dataset ds,
                      final @PathVariable (DIMENSION) Dimension dimension,
                      final @PathVariable (METRIC) Metric metric,
-                     final @PathVariable (ALGORITHM) Algorithm algorithm) throws DatasetNotFoundException,
-                                                                         InvalidDimensionTypeException {
+                     final @PathVariable (ALGORITHM) Linkage linkage) throws DatasetNotFoundException,
+                                                                     InvalidDimensionTypeException {
     // HACKS FIXME: This is bad, fix scoping!!!
 
     final TwoDimensionalHcl hcl = new TwoDimensionalHcl ();
@@ -88,7 +80,7 @@ public class HclAnalysisController {
     final Type type = dimension.type ();
     hcl.nodeBuilder (nodeBuilder);
     hcl.metric (metric);
-    hcl.algorithm (algorithm);
+    hcl.linkage (linkage);
 
     log.debug ("Running HCL on " + dataset + ", " + dimension + " of " + type);
 
@@ -113,28 +105,5 @@ public class HclAnalysisController {
                           @PathVariable (ANALYSIS) HclResult analysis) throws DatasetException {
     analysis.apply ();
     return dataset.dimension (analysis.dimension ().type ());
-  }
-
-  @Deprecated
-  @RequestMapping (value = "/dataset/" + DATASET_URL_ELEMENT + "/analysis/" + ANALYSIS_URL_ELEMENT + "/root",
-                   method = GET)
-  public Node root (@PathVariable (DATASET) Dataset dataset,
-                    @PathVariable (ANALYSIS) HclResult analysis) {
-    return analysis.root ();
-  }
-
-  private @Getter @Setter (onMethod = @_ (@Inject)) Collection<Metric> metrics;
-  private @Getter @Setter (onMethod = @_ (@Inject)) Collection<Algorithm> algorithms;
-
-  @Deprecated
-  @RequestMapping (value = "/analysis/hcl/metrics", method = GET)
-  public Collection<String> metrics () {
-    return extract (metrics, on (Metric.class).name ());
-  }
-
-  @Deprecated
-  @RequestMapping (value = "/analysis/hcl/algorithms", method = GET)
-  public Collection<String> algorithms () {
-    return extract (algorithms, on (Algorithm.class).name ());
   }
 }
