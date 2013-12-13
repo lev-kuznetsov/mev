@@ -19,12 +19,14 @@ import java.util.Map;
 
 import lombok.Getter;
 import lombok.Synchronized;
+import lombok.experimental.Accessors;
 
 /**
  * @author levk
  * 
  */
 @SuppressWarnings ("unchecked")
+@Accessors (fluent = true)
 public abstract class MevException extends Exception {
   private static final long serialVersionUID = 1L;
 
@@ -81,14 +83,6 @@ public abstract class MevException extends Exception {
   public <T extends MevException> T argument (String key, String value) {
     arguments.put (key, value);
     return (T) this;
-  }
-
-  public static <T extends MevException> T exception (Class<T> type, String code) {
-    try {
-      return type.newInstance ().code (code);
-    } catch (InstantiationException | IllegalAccessException e) {
-      throw new RuntimeException (e);
-    }
   }
 
   /* (non-Javadoc)

@@ -33,7 +33,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import edu.dfci.cccb.mev.web.domain.reflection.Reflection;
+import edu.dfci.cccb.mev.web.domain.reflection.Reflector;
 import edu.dfci.cccb.mev.web.domain.reflection.RestParameter;
 import edu.dfci.cccb.mev.web.domain.reflection.RestService;
 
@@ -41,7 +41,7 @@ import edu.dfci.cccb.mev.web.domain.reflection.RestService;
  * @author levk
  * 
  */
-public class SpringReflector implements Reflection {
+public class SpringReflector implements Reflector {
 
   private @Inject RequestMappingHandlerMapping mappings;
   private Collection<RestService> services;

@@ -54,20 +54,6 @@
       <version>1.4</version>
     </dependency>
 
-    <!-- MeV API -->
-
-    <dependency>
-      <groupId>edu.dfci.cccb</groupId>
-      <artifactId>mev-api-client</artifactId>
-      <version>BAYLIE-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <groupId>edu.dfci.cccb</groupId>
-      <artifactId>mev-api-server</artifactId>
-      <version>BAYLIE-SNAPSHOT</version>
-    </dependency>
-
     <!-- Dataset package -->
 
     <dependency>
@@ -79,6 +65,12 @@
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
       <artifactId>mev-dataset-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-dataset-client</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
@@ -103,7 +95,6 @@
     <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-web-api</artifactId>
-      <version>6.0</version>
       <scope>provided</scope>
     </dependency>
 

@@ -14,12 +14,20 @@
  */
 package edu.dfci.cccb.mev.web.configuration;
 
+import java.util.Collection;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import edu.dfci.cccb.mev.dataset.client.contract.JavascriptInjectorRegistry;
+import edu.dfci.cccb.mev.dataset.client.prototype.MevClientConfigurerAdapter;
+import edu.dfci.cccb.mev.dataset.client.simple.MapHotPlugViewRegistry;
 import edu.dfci.cccb.mev.web.configuration.converters.ConverterConfigurations;
 import edu.dfci.cccb.mev.web.configuration.injectors.InjectorConfigurations;
 import edu.dfci.cccb.mev.web.configuration.interceptors.WarnOnDeprecatedRequestMappingInterceptor;
@@ -42,5 +50,23 @@ public class DispatcherConfiguration extends WebMvcConfigurerAdapter {
   @Override
   public void addInterceptors (InterceptorRegistry registry) {
     registry.addInterceptor (new WarnOnDeprecatedRequestMappingInterceptor ());
+  }
+
+  private @Inject Collection<MevClientConfigurerAdapter> clientConfigurers;
+  private @Inject MapHotPlugViewRegistry viewRegistry;
+  private @Inject JavascriptInjectorRegistry injectorRegistry;
+
+  @PostConstruct
+  public void registerViews () {
+    for (MevClientConfigurerAdapter clientConfigurer : clientConfigurers) {
+      clientConfigurer.registerAnnotatedClassViews (viewRegistry);
+      clientConfigurer.registerXmlBeanResourceViews (viewRegistry);
+    }
+  }
+
+  @PostConstruct
+  public void registerInjectors () {
+    for (MevClientConfigurerAdapter clientConfigurer : clientConfigurers)
+      clientConfigurer.registerJavascriptInjectors (injectorRegistry);
   }
 }

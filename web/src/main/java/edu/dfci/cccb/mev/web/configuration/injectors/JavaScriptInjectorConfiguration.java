@@ -17,7 +17,8 @@ package edu.dfci.cccb.mev.web.configuration.injectors;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import edu.dfci.cccb.mev.web.support.JavaScriptInjectors;
+import edu.dfci.cccb.mev.dataset.client.contract.JavascriptInjectorRegistry;
+import edu.dfci.cccb.mev.dataset.client.simple.ArrayListJavascriptRegistryInjector;
 
 /**
  * @author levk
@@ -27,7 +28,7 @@ import edu.dfci.cccb.mev.web.support.JavaScriptInjectors;
 public class JavaScriptInjectorConfiguration {
 
   @Bean
-  public JavaScriptInjectors javascriptInjectors () {
-    return new JavaScriptInjectors ();
+  public JavascriptInjectorRegistry javascriptInjectors () {
+    return new ArrayListJavascriptRegistryInjector ();
   }
 }
