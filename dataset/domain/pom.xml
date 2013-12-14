@@ -15,6 +15,13 @@
     <version>BAYLIE-SNAPSHOT</version>
   </parent>
 
+  <properties>
+    <org.slf4j.version>1.7.2</org.slf4j.version>
+    <log4j.version>1.2.17</log4j.version>
+    <lombok.version>0.12.0</lombok.version>
+    <lambdaj.version>2.3.3</lambdaj.version>
+  </properties>
+
   <dependencies>
 
     <!-- SuperCsv -->
@@ -23,6 +30,55 @@
       <groupId>net.sf.supercsv</groupId>
       <artifactId>super-csv</artifactId>
       <version>2.1.0</version>
+    </dependency>
+
+    <!-- @Inject -->
+
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+      <version>1</version>
+    </dependency>
+
+    <!-- Logging -->
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${org.slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>${org.slf4j.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${org.slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+
+    <!-- Code generation -->
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.googlecode.lambdaj</groupId>
+      <artifactId>lambdaj</artifactId>
+      <version>${lambdaj.version}</version>
     </dependency>
 
   </dependencies>
