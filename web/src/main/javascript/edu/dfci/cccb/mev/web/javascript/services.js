@@ -157,6 +157,29 @@ define(
 											},
 											analysis : {
 												hcl : {
+												  update: function(q) {
+                            //Updates dataset's reordering using clustering order
+                            var params = {
+                              method : 'POST',
+                              url : '/dataset/'
+                                  + q.dataset
+                                  + '/analysis/'
+                                  + q.name
+                                  + '?format=json'
+                            };
+
+                            return QHTTP(params,
+                                function(d, s) {
+                                  return d;
+                                }, function(d, s) {
+                                  var message = "Could not pull HCL analysis " + q.name + ". "
+                                  + "If problem persists, contact us."
+                                  
+                                  var header = "Could Not Pull Previous Analysis (Error Code: " + s + ")"
+                                  alertService.error(message, header);
+                                });
+
+                          },
 												  get : function(q) {
                             //Pulls previous analysis by name q.name
                             var params = {

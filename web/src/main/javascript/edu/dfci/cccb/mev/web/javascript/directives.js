@@ -25,13 +25,46 @@ define (
                 };
               } ])
           .directive (
-              'heatmapPanels',
-              function () {
+              'heatmapPanels',[ '$routeParams', 'API', 'alertService',
+              function ($routeParams, API, alertService) {
                 return {
                   restrict : 'A',
                   templateUrl : '/container/view/elements/heatmapPanels',
                   link : function (scope, elems, attrs) {
 
+                    scope.heatmapData = undefined;
+                    
+                    API.dataset.get ($routeParams.datasetName).then (
+                        function(data){ scope.heatmapData = data;}, function () {
+                          // Redirect to home if errored out
+                          $location.path ('/');
+                        });
+                    
+                   scope.updateHeatmapData = function(prevAnalysis){
+                      
+                      API.analysis.hcl.update({
+                        dataset:$routeParams.datasetName,
+                        name:prevAnalysis
+                        }).then(function(){
+                          
+                          API.dataset.get ($routeParams.datasetName).then (
+                              function(data){ scope.heatmapData = data;}, function () {
+                                // Redirect to home if errored out
+                                $location.path ('/');
+                              });
+                          
+                        }, function(){
+                          
+                          var message = "Could not update heatmap. If "
+                            + "problem persists, please contact us."
+                            
+                            var header = "Heatmap Clustering Update Problem (Error Code: " + s + ")"
+                            alertService.error(message, header);
+                          
+                        })
+                      
+                    };
+                    
                     jq ('#leftPanel div.well').css ('height', 1000);
                     jq ('#rightPanel div.well').css ('height',
                         $ ('#leftPanel div.well').height ());
@@ -87,7 +120,7 @@ define (
 
                   }
                 };
-              })
+              }])
           .directive ('menubar', [ 'analysisOptions', function (opts) {
             return {
               restrict : 'E',
@@ -127,10 +160,13 @@ define (
                                     .map (function (name) {
 
                                       var randstr = prsg (5);
+                                      var randstr2 = prsg (5);
 
                                       return {
                                         name : name,
                                         href : "#" + randstr,
+                                        parentId: randstr2 ,
+                                        dataParent: '#' + randstr2,
                                         divId : randstr,
                                         datar : API.analysis.hcl.get ({
                                           name : name,
@@ -376,11 +412,9 @@ define (
                       },
                       templateUrl : '/container/view/elements/d3RadialTree',
                       link : function (scope, elems, attr) {
-
-                        console.log(scope.diameter)
                         
                         var r =500/ 2;
-                        var resizeCoeff = .75; // Adjust r coefficient for end size
+                        var resizeCoeff = .75; // Adjusts r coefficient for end size
 
                         var cluster = d3.layout.cluster ().size ([ 360, r*resizeCoeff ]) 
                             .sort (null).value (function (d) {
@@ -409,7 +443,7 @@ define (
                             y : d.source.y
                           }), t = project (d.target), r = d.source.y, sweep = d.target.x > d.source.x ? 1
                               : 0;
-                          return ("M" + s[0] + "," + s[1] + "A" + r + "," + r
+                          return ("M" + s[0] + "," + s[1] + "A" + r + "," + r 
                               + " 0 0," + sweep + " " + m[0] + "," + m[1] + "L"
                               + t[0] + "," + t[1]);
                         }
@@ -441,8 +475,8 @@ define (
 
                         function phylo (n, offset) {
                           if (n.length != null)
-                            offset += n.length * 65;
-                          n.y = offset;
+                            offset += n.length  * 65 ;
+                          n.y = offset *.0025; //TODO: remove coefficient on algorithm correction
                           if (n.children)
                             n.children.forEach (function (n) {
                               phylo (n, offset);
@@ -603,7 +637,7 @@ define (
                         function drawCells (hc) {
 
                           hc.attr ({
-                            "class" : "cells",
+                            "class" : "cell",
                             "height" : function (d) {
 
                               return YIndex2Pixel (1) - YIndex2Pixel (0);
@@ -631,6 +665,23 @@ define (
                             },
                             "column" : function (d, i) {
                               return d.column;
+                            }
+                          });
+
+                        }
+                        ;
+                        
+                        function redrawCells () {
+
+                          svg.selectAll('.cell')
+                          .transition().delay(200).duration(2000)
+                          .attr ({"x" : function (d, i) {
+                            
+                            
+                            return XIndex2Pixel (XLabel2Index (d.column));
+                            },
+                            "y" : function (d, i) {
+                              return YIndex2Pixel (YLabel2Index (d.row));
                             }
                           });
 
@@ -690,29 +741,47 @@ define (
                         }
                         ;
 
-                        function init (data) {
+                        function draw (data) {
+                          
+                          heatmapcells = rects.data (data.values).enter ().append (
+                          "rect");
 
                           scaleUpdates (data.column.keys, data.row.keys,
                               data.min, data.max, data.avg);
 
-                          drawCells (rects.data (data.values).enter ().append (
-                              "rect"));
+                          drawCells (heatmapcells);
 
                           drawLabels (xlabels, ylabels);
 
-                        }
-                        ;
+                        };
+                        
+                        function updateDraw (data) {
 
-                        // Initial Build
-                        if (!$routeParams.datasetName) {
-                          alertService.error ()
-                        } else {
-                          API.dataset.get ($routeParams.datasetName).then (
-                              init, function () {
-                                // Redirect to home if errored out
-                                $location.path ('/');
-                              });
-                        }
+                          scaleUpdates (data.column.keys, data.row.keys,
+                              data.min, data.max, data.avg);
+
+                          redrawCells (heatmapcells);
+
+                          drawLabels (xlabels, ylabels);
+
+                        };
+                        
+                        var heatmapcells = undefined;
+
+                        scope.$watch('heatmapData', function(newval, oldval){
+                          
+
+                        
+                            if (newval && !oldval) {
+                              draw(newval);
+                            } else if (newval && oldval) {
+                              updateDraw(newval);
+                            }
+                          
+                          
+                        });
+                        
+
 
                         function cellColor (val, type) {
 
