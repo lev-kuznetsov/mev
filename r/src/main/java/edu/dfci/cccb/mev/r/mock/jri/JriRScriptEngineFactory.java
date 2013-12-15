@@ -14,37 +14,31 @@
  */
 package edu.dfci.cccb.mev.r.mock.jri;
 
-import static ch.lambdaj.Lambda.join;
-import static java.lang.System.lineSeparator;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
 import static javax.script.ScriptEngine.ENGINE;
 import static javax.script.ScriptEngine.ENGINE_VERSION;
-import static javax.script.ScriptEngine.LANGUAGE;
 import static javax.script.ScriptEngine.LANGUAGE_VERSION;
 import static javax.script.ScriptEngine.NAME;
 
 import java.util.List;
 
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineFactory;
 
 import lombok.Getter;
 import lombok.ToString;
+import edu.dfci.cccb.mev.r.prototype.AbstractRScriptEngineFactory;
 
 /**
  * @author levk
  * 
  */
 @ToString
-public class JriRScriptEngineFactory implements ScriptEngineFactory {
+public class JriRScriptEngineFactory extends AbstractRScriptEngineFactory {
 
   private @Getter final String engineName = "JriR";
   private @Getter final String engineVersion = "mock";
-  private @Getter final List<String> extensions = unmodifiableList (asList ("R"));
-  private @Getter final List<String> mimeTypes = unmodifiableList (asList ("x-application-r"));
   private @Getter final List<String> names = unmodifiableList (asList ("JRI", "Jri", "jri", "R", "r"));
-  private @Getter final String languageName = "R";
   private @Getter final String languageVersion = "2.15"; // TODO: see if I can
                                                          // figure this out at
                                                          // runtime
@@ -57,37 +51,12 @@ public class JriRScriptEngineFactory implements ScriptEngineFactory {
       return getEngineName ();
     else if (ENGINE_VERSION.equals (key))
       return getEngineVersion ();
-    else if (LANGUAGE.equals (key))
-      return getLanguageName ();
     else if (LANGUAGE_VERSION.equals (key))
       return getLanguageVersion ();
     else if (NAME.equals (key))
       return getNames ().get (0);
     else
-      return null;
-  }
-
-  /* (non-Javadoc)
-   * @see
-   * javax.script.ScriptEngineFactory#getMethodCallSyntax(java.lang.String,
-   * java.lang.String, java.lang.String[]) */
-  @Override
-  public String getMethodCallSyntax (String obj, String m, String... args) {
-    return obj + "." + m + "(" + join (args, ",") + ")";
-  }
-
-  /* (non-Javadoc)
-   * @see javax.script.ScriptEngineFactory#getOutputStatement(java.lang.String) */
-  @Override
-  public String getOutputStatement (String toDisplay) {
-    return "cat(" + toDisplay + ")";
-  }
-
-  /* (non-Javadoc)
-   * @see javax.script.ScriptEngineFactory#getProgram(java.lang.String[]) */
-  @Override
-  public String getProgram (String... statements) {
-    return join (statements, lineSeparator ());
+      return super.getParameter (key);
   }
 
   /* (non-Javadoc)
