@@ -1,6 +1,6 @@
 before_install:
     - sudo apt-get update
-install: r-base
+    - sudo apt-get install r-base
 language: java
 jdk:
     - oraclejdk7
