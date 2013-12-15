@@ -15,8 +15,10 @@
 package edu.dfci.cccb.mev.r.mock.cli;
 
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
+import org.junit.Test;
 
 /**
  * @author levk
@@ -24,11 +26,10 @@ import javax.script.ScriptEngineManager;
  */
 public class CliRScriptEngineTest {
 
-  public static void main (String[] args) throws Exception {
-    ScriptEngine e = new CliRScriptEngine ();
-    e.eval ("cat('hello world\\n')");
+  private ScriptEngine r = new ScriptEngineManager ().getEngineByName ("CliR");
 
-    for (ScriptEngineFactory factory : new ScriptEngineManager ().getEngineFactories ())
-      System.err.println (factory.getEngineName ());
+  @Test
+  public void helloWorld () throws ScriptException {
+    r.eval ("cat('hello world\\n')");
   }
 }
