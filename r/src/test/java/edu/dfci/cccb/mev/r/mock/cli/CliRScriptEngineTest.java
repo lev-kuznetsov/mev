@@ -15,9 +15,9 @@
 package edu.dfci.cccb.mev.r.mock.cli;
 
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -26,7 +26,12 @@ import org.junit.Test;
  */
 public class CliRScriptEngineTest {
 
-  private ScriptEngine r = new ScriptEngineManager ().getEngineByName ("CliR");
+  private static ScriptEngine r;
+
+  @BeforeClass
+  public static void rEngine () {
+    r = new CliRScriptEngine ();
+  }
 
   @Test
   public void helloWorld () throws ScriptException {

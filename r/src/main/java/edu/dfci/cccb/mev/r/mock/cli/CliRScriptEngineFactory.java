@@ -30,11 +30,13 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * @author levk
  * 
  */
+@ToString
 public class CliRScriptEngineFactory implements ScriptEngineFactory {
 
   private @Getter static final CliRScriptEngineFactory instance = new CliRScriptEngineFactory ();

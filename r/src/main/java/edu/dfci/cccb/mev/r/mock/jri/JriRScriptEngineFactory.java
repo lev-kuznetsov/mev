@@ -30,11 +30,13 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * @author levk
  * 
  */
+@ToString
 public class JriRScriptEngineFactory implements ScriptEngineFactory {
 
   private @Getter final String engineName = "JriR";
