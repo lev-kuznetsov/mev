@@ -3,28 +3,29 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>mev-dataset-domain</artifactId>
+  <artifactId>mev-r</artifactId>
   <packaging>jar</packaging>
 
-  <name>MeV Dataset Plugin Domain Component</name>
+  <name>MeV R</name>
   <url>http://github.com/dfci-cccb/mev</url>
 
   <parent>
     <groupId>edu.dfci.cccb</groupId>
-    <artifactId>mev-dataset</artifactId>
+    <artifactId>mev</artifactId>
     <version>BAYLIE-SNAPSHOT</version>
   </parent>
 
-  <dependencies>
+  <build>
 
-    <!-- SuperCsv -->
+    <resources>
 
-    <dependency>
-      <groupId>net.sf.supercsv</groupId>
-      <artifactId>super-csv</artifactId>
-      <version>2.1.0</version>
-    </dependency>
+      <resource>
+        <directory>src/main/lib</directory>
+        <filtering>false</filtering>
+      </resource>
 
-  </dependencies>
+    </resources>
+
+  </build>
 
 </project>
