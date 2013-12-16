@@ -51,7 +51,10 @@ define ([ 'angular', 'jquery' ], function (angular, $) {
     		  
     		  $scope.userUploads = API.user.datasets.get().then(function(data){
               	return data;
+              	
+              	
               });
+    		  
     		  
     	  };
     	  

@@ -380,6 +380,8 @@ define (
 
                         }).on ("error", function (file) {
 
+                    }).on('complete', function(file){
+                    	$("#importTabs a[href='#current']").tab('show');
                     });
 
                   }
