@@ -21,4 +21,4 @@ import edu.dfci.cccb.mev.limma.domain.contract.LimmaResult;
  * @author levk
  * 
  */
-public abstract class AbstractLimmaResult <T extends AbstractLimmaResult<?>> extends AbstractAnalysis<T> implements LimmaResult {}
+public abstract class AbstractLimmaResult extends AbstractAnalysis<AbstractLimmaResult> implements LimmaResult {}

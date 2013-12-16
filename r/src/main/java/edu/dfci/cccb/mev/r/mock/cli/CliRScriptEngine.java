@@ -92,7 +92,10 @@ public class CliRScriptEngine extends AbstractScriptEngine {
             } catch (Exception e) {
               log.warn ("Unable to dump debug output for R process " + script, e);
             }
-          return result;
+          if (result == 0)
+            return result;
+          else
+            throw new RuntimeException ("Exited with abnormal return code " + result);
         }
       } finally {
         script.delete ();

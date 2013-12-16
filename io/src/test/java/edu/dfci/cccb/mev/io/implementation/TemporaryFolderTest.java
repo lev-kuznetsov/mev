@@ -48,6 +48,7 @@ public class TemporaryFolderTest {
       Set<String> added = tempContent ();
       added.removeAll (before);
       assertEquals (1, added.size ());
+      assertEquals (temp.getName (), added.iterator ().next ());
       String test = "hello world";
       File file = new File (temp, "test.f");
       try (Writer writer = new OutputStreamWriter (new FileOutputStream (file))) {

@@ -17,6 +17,14 @@
 
   <dependencies>
 
+    <!-- IO -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-io</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
     <!-- R -->
 
     <dependency>

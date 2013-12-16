@@ -27,6 +27,7 @@ import lombok.extern.log4j.Log4j;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
@@ -44,6 +45,7 @@ public class AnalysisController {
   private @Getter @Setter (onMethod = @_ (@Inject)) Analysis analysis;
 
   @RequestMapping (method = GET)
+  @ResponseBody
   public Analysis analysis () {
     if (log.isDebugEnabled ())
       log.debug ("Returning analysis " + analysis);

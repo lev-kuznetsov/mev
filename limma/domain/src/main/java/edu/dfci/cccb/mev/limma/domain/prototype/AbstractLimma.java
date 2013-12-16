@@ -22,7 +22,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.contract.ComposerFactory;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetComposingException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysisBuilder;
 import edu.dfci.cccb.mev.limma.domain.contract.Limma;
@@ -46,10 +45,5 @@ public abstract class AbstractLimma extends AbstractAnalysisBuilder<Limma, Limma
    */
   public AbstractLimma () {
     super ("LIMMA");
-  }
-
-  protected void runR () throws DatasetComposingException {
-    composerFactory.compose (control.export ("control"));
-
   }
 }

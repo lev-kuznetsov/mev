@@ -28,6 +28,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analyses;
 import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
@@ -55,6 +56,7 @@ import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
  */
 @EqualsAndHashCode
 @ToString
+@Accessors (fluent = false, chain = true)
 public abstract class AbstractDatasetBuilder implements DatasetBuilder {
 
   private @Getter @Setter (onMethod = @_ (@Inject)) Collection<? extends ParserFactory> parserFactories;
