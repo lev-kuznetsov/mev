@@ -24,7 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import edu.dfci.cccb.mev.web.domain.reflection.Reflection;
+import edu.dfci.cccb.mev.web.domain.reflection.Reflector;
 
 /**
  * @author levk
@@ -35,10 +35,10 @@ import edu.dfci.cccb.mev.web.domain.reflection.Reflection;
 @RequestMapping ("/api")
 public class ReflectionController {
 
-  private final Reflection reflection;
+  private final Reflector reflection;
 
   @Inject
-  public ReflectionController (Reflection reflection) {
+  public ReflectionController (Reflector reflection) {
     this.reflection = reflection;
   }
 

@@ -25,7 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import edu.dfci.cccb.mev.api.client.support.injectors.InjectorRegistry;
+import edu.dfci.cccb.mev.dataset.client.contract.JavascriptInjectorRegistry;
 
 /**
  * @author levk
@@ -37,7 +37,7 @@ import edu.dfci.cccb.mev.api.client.support.injectors.InjectorRegistry;
 @Log4j
 public class HomeController {
   
-  private final InjectorRegistry javascript;
+  private final JavascriptInjectorRegistry javascript;
 
   @RequestMapping (method = GET)
   public String home (Model model) {

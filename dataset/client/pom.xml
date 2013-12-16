@@ -15,6 +15,11 @@
     <version>BAYLIE-SNAPSHOT</version>
   </parent>
 
+  <properties>
+    <freemarker.version>2.3.20</freemarker.version>
+    <velocity.version>1.7</velocity.version>
+  </properties>
+
   <dependencies>
 
     <dependency>
@@ -23,5 +28,79 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
+    <!-- Servlet API -->
+
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-web-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- FreeMarker -->
+
+    <dependency>
+      <groupId>org.freemarker</groupId>
+      <artifactId>freemarker</artifactId>
+      <version>${freemarker.version}</version>
+    </dependency>
+
+    <!-- Velocity -->
+
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity</artifactId>
+      <version>${velocity.version}</version>
+    </dependency>
+
+    <!-- Spring Social -->
+
+    <dependency>
+      <groupId>org.springframework.social</groupId>
+      <artifactId>spring-social-core</artifactId>
+      <version>1.0.3.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-crypto</artifactId>
+      <version>3.2.0.M2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.social</groupId>
+      <artifactId>spring-social-google</artifactId>
+      <version>1.0.0.M3</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-asm</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-crypto</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
   </dependencies>
+
+  <repositories>
+
+    <repository>
+      <id>spring.milestone</id>
+      <name>Spring Milestone Repository</name>
+      <url>http://maven.springframework.org/milestone</url>
+    </repository>
+
+    <repository>
+      <id>spring-social-google</id>
+      <url>https://github.com/GabiAxel/maven/raw/master</url>
+    </repository>
+
+  </repositories>
+
 </project>
