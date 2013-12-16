@@ -37,7 +37,7 @@ public abstract class AbstractLimma extends AbstractAnalysisBuilder<Limma, Limma
 
   private @Getter @Setter Selection control;
   private @Getter @Setter Selection experiment;
-  private @Getter @Setter double alpha;
+  private @Getter @Setter double alpha = .2;
   private @Getter @Setter (onMethod = @_ (@Inject)) ScriptEngine r;
   private @Getter @Setter (onMethod = @_ (@Inject)) ComposerFactory composerFactory;
 
