@@ -14,6 +14,7 @@
 
     <!-- Support modules -->
 
+    <module>io</module>
     <module>math</module>
     <module>r</module>
 
@@ -22,6 +23,7 @@
     <module>dataset</module>
     <module>annotation</module>
     <module>hcl</module>
+    <module>limma</module>
     <module>web</module>
 
   </modules>
