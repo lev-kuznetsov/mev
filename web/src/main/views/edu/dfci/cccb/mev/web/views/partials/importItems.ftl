@@ -12,7 +12,7 @@
 
   <div class="span12">
     <div class="row-fluid">
-      <ul class="nav nav-tabs">
+      <ul class="nav nav-tabs" id="importTabs">
         <li class="active"><a href="#upload" data-toggle="tab">Upload</a></li>
         <li><a href="#googleDrive" data-toggle="tab">Google Drive</a></li>
         <li><a href="#tcga" data-toggle="tab">TCGA</a></li>
