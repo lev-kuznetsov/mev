@@ -81,12 +81,15 @@ public class CliRScriptEngine extends AbstractScriptEngine {
                  Reader output = new BufferedReader (new InputStreamReader (r.getInputStream ()));
                  Reader error = new BufferedReader (new InputStreamReader (r.getErrorStream ()));
                  Reader code = new BufferedReader (new InputStreamReader (new FileInputStream (script)))) {
-              debug.write ("R process " + script + " exited with code " + result + "\nOriginal script:\n");
-              for (int c; (c = code.read ()) >= 0; debug.write (c));
-              debug.write ("\nStandard output:\n");
-              for (int c; (c = output.read ()) >= 0; debug.write (c));
-              debug.write ("\nStandard error:\n");
-              for (int c; (c = error.read ()) >= 0; debug.write (c));
+              debug.write ("R process " + script + " exited with code " + result + "\n");
+              if (result != 0) {
+                debug.write ("Original script:\n");
+                for (int c; (c = code.read ()) >= 0; debug.write (c));
+                debug.write ("\nStandard output:\n");
+                for (int c; (c = output.read ()) >= 0; debug.write (c));
+                debug.write ("\nStandard error:\n");
+                for (int c; (c = error.read ()) >= 0; debug.write (c));
+              }
               debug.flush ();
               log.debug (buffer.toString ());
             } catch (Exception e) {
