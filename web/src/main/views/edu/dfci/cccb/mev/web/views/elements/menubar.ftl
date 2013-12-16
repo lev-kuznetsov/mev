@@ -5,7 +5,7 @@
 
 
 
-      <li><a href="">Visualization</a></li>
+      <li><a href=""><p class="muted">Visualization</p></a></li>
       
       <li class="divider-vertical"></li>
 
@@ -18,7 +18,8 @@
           </a>
           <ul class="dropdown-menu">
             <li><a data-toggle="modal" role="button" href="#hierarchical">Hierarchical</a></li>
-            <li><a data-toggle="modal" role="button" href="#kmeansclust">K-Means/Medians</a></li>
+            <!-- <li><a data-toggle="modal" role="button" href="#kmeansclust">K-Means/Medians</a></li> -->
+            <li><a data-toggle="modal" role="button" class="disabled" href=""><p class="muted">K-Means/Medians</p></a></li>
           </ul>
         </li>
 
@@ -34,8 +35,9 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
-            <li><a data-toggle="modal" role="button" href="#limma">LIMMA</a></li>
-            <li><a href="#">t-Test</a></li>
+            <!-- <li><a data-toggle="modal" role="button" href="#limma">LIMMA</a></li> -->
+            <li><a data-toggle="modal" role="button" href=""><p class="muted">LIMMA</p></a></li>
+            <li><a href=""><p class="muted">t-Test</p></a></li>
           </ul>
         </li>
         
@@ -49,7 +51,7 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
-            <li><a href="#">PCA</a></li>
+            <li><a href=""><p class="muted">PCA</p></a></li>
           </ul>
         </li>
         
@@ -65,7 +67,7 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
-            <li><a href="#">GSEA</a></li>
+            <li><a href=""><p class="muted">GSEA</p></a></li>
           </ul>
         </li>
         
