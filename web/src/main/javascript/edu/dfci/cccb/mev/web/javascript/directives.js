@@ -175,37 +175,9 @@ define (
                       templateUrl : '/container/view/elements/analysisPanel',
                       link : function (scope) {
 
-                        function buildPrevioiusClusters () {
+                        
 
-                          API.dataset.analysis.list ($rP.datasetName).then (
-                              function (prevList) {
-
-                                scope.previousClusters = prevList
-                                    .map (function (name) {
-
-                                      var randstr = prsg (5);
-                                      var randstr2 = prsg (5);
-
-                                      return {
-                                        name : name,
-                                        href : "#" + randstr,
-                                        parentId: randstr2 ,
-                                        dataParent: '#' + randstr2,
-                                        divId : randstr,
-                                        datar : API.analysis.hcl.get ({
-                                          name : name,
-                                          dataset : $rP.datasetName
-                                        })
-                                      };
-
-                                    });
-
-                              });
-
-                        }
-                        ;
-
-                        buildPrevioiusClusters ();
+                        scope.buildPrevioiusClusters ();
 
                       }
                     };
@@ -313,12 +285,16 @@ define (
                         metric : scope.selectedMetric,
                         algorithm : scope.selectedAlgorithm,
                         callback : function () {
+                        	
+                        	scope.buildPrevioiusClusters()
 
                         }
 
                       };
 
                       API.analysis.hcl.create (q);
+                      
+                      
 
                     };
 

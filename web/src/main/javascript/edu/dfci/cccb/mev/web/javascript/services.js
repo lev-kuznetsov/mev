@@ -226,7 +226,7 @@ define(
 																params,
 																function(d, s) {
 																	alertService.success(name + ' clustering complete.', 'Clustering Complete');
-																	callback();
+																	params.callback();
 																},
 																function(d, s) {
 																	var message = "Could not begin analysis on " + q.dataset + ". If "
