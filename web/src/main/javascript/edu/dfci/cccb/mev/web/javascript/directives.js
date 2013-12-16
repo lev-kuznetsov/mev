@@ -1,6 +1,6 @@
 define (
-    [ 'angular', 'jquery', 'd3', 'newick', 'dropzone', 'services', ],
-    function (angular, jq, d3, newick, Dropzone) {
+    [ 'angular', 'jquery', 'd3', 'dropzone', 'newick', 'services' ],
+    function (angular, jq, d3, Dropzone, newick) {
 
       return angular
           .module ('myApp.directives', [])
@@ -33,6 +33,10 @@ define (
                   link : function (scope, elems, attrs) {
 
                     scope.heatmapData = undefined;
+                    scope.heatmapLeftTree = undefined;
+                    scope.heatmapTopTree = undefined;
+                    scope.heatmapLeftTreeName = undefined;
+                    scope.heatmapTopTreeName = undefined;
                     
                     API.dataset.get ($routeParams.datasetName).then (
                         function(data){ scope.heatmapData = data;}, function () {
@@ -40,7 +44,7 @@ define (
                           $location.path ('/');
                         });
                     
-                   scope.updateHeatmapData = function(prevAnalysis){
+                   scope.updateHeatmapData = function(prevAnalysis, textForm){
                       
                       API.analysis.hcl.update({
                         dataset:$routeParams.datasetName,
@@ -48,7 +52,27 @@ define (
                         }).then(function(){
                           
                           API.dataset.get ($routeParams.datasetName).then (
-                              function(data){ scope.heatmapData = data;}, function () {
+                              function(data){
+                              
+                                if (data.column.root) {
+                                  
+                                  //apply column cluster to dendogram
+                                  
+                                  scope.heatmapTopTree = data.column.root;
+                                  
+                                };
+                                
+                                if (data.row.root) {
+                                  
+                                  
+                                  scope.heatmapLeftTree = data.row.root;
+
+                                };
+                                
+                                //Apply new ordering and dataset to held heatmap
+                                scope.heatmapData = data;
+                              
+                              }, function () {
                                 // Redirect to home if errored out
                                 $location.path ('/');
                               });
@@ -552,13 +576,13 @@ define (
                       link : function (scope, elems, attr) {
 
                         var svgWidth = Math.floor (jq ('#leftPanel').css (
-                            'width').slice (0, -2) * .8), svgHeight = Math
+                            'width').slice (0, -2) * .9), svgHeight = Math
                             .floor (jq ('#leftPanel').css ('height').slice (0,
-                                -2) * .8);
+                                -2) * .9);
 
-                        var heatmapMarginLeft = Math.floor (svgWidth * .05), heatmapMarginRight = Math
+                        var heatmapMarginLeft = Math.floor (svgWidth * .15), heatmapMarginRight = Math
                             .floor (svgWidth * .1), heatmapMarginTop = Math
-                            .floor (svgHeight * .05), heatmapMarginBottom = Math
+                            .floor (svgHeight * .15), heatmapMarginBottom = Math
                             .floor (svgHeight * .1);
 
                         var heatmapCellsWidth = svgWidth - heatmapMarginLeft
@@ -741,7 +765,7 @@ define (
                         }
                         ;
 
-                        function draw (data) {
+                        function drawHeatmap (data) {
                           
                           heatmapcells = rects.data (data.values).enter ().append (
                           "rect");
@@ -755,7 +779,7 @@ define (
 
                         };
                         
-                        function updateDraw (data) {
+                        function updateDrawHeatmap (data) {
 
                           scaleUpdates (data.column.keys, data.row.keys,
                               data.min, data.max, data.avg);
@@ -769,18 +793,140 @@ define (
                         var heatmapcells = undefined;
 
                         scope.$watch('heatmapData', function(newval, oldval){
-                          
 
-                        
                             if (newval && !oldval) {
-                              draw(newval);
+                              drawHeatmap(newval);
                             } else if (newval && oldval) {
-                              updateDraw(newval);
+                              updateDrawHeatmap(newval);
                             }
-                          
                           
                         });
                         
+                        //Dendogram Stuff
+
+                        var Cluster = d3.layout.cluster()
+                          .sort(null)
+                          .separation(function(a, b){ 
+                            return a.parent == b.parent ? 1:1
+                          })
+                          .value(function(d){return d.distance;})
+                          .children(function(d){return d.children;});
+                        
+                        var dendogramLeft = {
+                            height: heatmapCellsHeight,
+                            width: heatmapMarginLeft
+                        };
+                        
+                        var dendogramTop = {
+                            height: heatmapMarginTop,
+                            width: heatmapCellsWidth
+                        };
+                        
+                        var dendogramLeftWindow = svg.append("g")
+                            .attr('class', 'leftDendogram');
+                        
+                        var dendogramTopWindow = svg.append("g")
+                            .attr('class', 'topDendogram');
+                        
+                        
+                        //Left Dendogram Builder
+                        scope.$watch('heatmapTopTree', function(newval, oldval){
+                        
+                          if (newval) {
+                          
+                            var tree = newval;
+                            
+                            drawTree(dendogramLeftWindow, Cluster, tree, 'horizontal' )
+                            
+                            
+                          }
+                          
+                        });
+                        
+                        scope.$watch('heatmapLeftTree', function(newval, oldval){
+                          
+                          if (newval) {
+
+                            var tree = newval;
+                            
+                            drawTree(dendogramTopWindow, Cluster, tree, 'vertical' )
+                            
+                            
+                          }
+                          
+                        });
+                        
+                        function drawTree(canvas, cluster, tree, type) {
+                          
+                          canvas.selectAll('*').remove();
+                          var nodes = cluster.nodes(tree);
+                          var links = cluster.links(nodes);
+
+                          
+                          
+                          canvas.selectAll("path")
+                              .data(links)
+                            .enter().append("path")
+                              .attr("d", function(d) {
+                              return (type == 'horizontal') ? horizontalPath(d) : verticalPath(d)
+                              })
+                              .attr("stroke", function(){
+                                return (type == 'horizontal') ? "blue" : "red"
+                              })
+                              .attr("fill", "none"); 
+
+                          canvas.selectAll("circle").data(nodes).enter().append("circle")
+                             .attr("r", 2.5)
+                             .attr("cx", function(d){
+     
+                              return (type == 'vertical') ? (d.y * dendogramLeft.width) : (d.x * dendogramTop.width) + dendogramLeft.width;
+                             })
+                             .attr("cy", function(d){
+                              return (type == 'vertical') ? (d.x * dendogramLeft.height) + dendogramTop.height : (d.y * dendogramTop.height);
+                             })
+                             .attr("fill", function(d){
+                               return (type == 'horizontal') ? "blue" : "red"
+                             })
+                             .on("click", function(d){
+                               noder(d); //TODO add selections function to this
+                             }); 
+
+                        };
+                        
+                        function noder(d){
+                          
+                          var a = [];
+                          
+                          if (!d.children) {
+                            a.push(d.name); 
+                          } else {
+                            d.children.forEach(function(child){
+                              noder(child).forEach(function(name){a.push(name)});
+                            });
+                          };
+                          
+                          return a;
+                        };
+                        
+                        function horizontalPath(d) {
+                          //Path function builder for TOP heatmap tree path attribute
+                          
+                          return "M" + ((d.target.x * dendogramTop.width)+dendogramLeft.width )  + "," + (d.target.y * dendogramTop.height ) +
+                          "V" + (d.source.y * dendogramTop.height ) +
+                          "H" + ((d.source.x * dendogramTop.width)+dendogramLeft.width );
+                          
+                          
+
+                        };
+                        function verticalPath(d) {
+                          //Path function builder for LEFT heatmap tree path attribute
+
+                          return "M" + (d.source.y * dendogramLeft.width )  + "," + ((d.source.x * dendogramLeft.height)+dendogramTop.height ) +
+                          "V" + ((d.target.x * dendogramLeft.height)+dendogramTop.height ) +
+                          "H" + (d.target.y * dendogramLeft.width )
+
+                        };
+
 
 
                         function cellColor (val, type) {
