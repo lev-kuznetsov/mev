@@ -12,19 +12,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.contract;
+package edu.dfci.cccb.mev.dataset.domain.simple;
 
-import java.util.Calendar;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
+import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractSelectionBuilder;
 
 /**
  * @author levk
  * 
  */
-public interface Analysis {
+public class SimpleSelectionBuilder extends AbstractSelectionBuilder {
 
-  final String VALID_ANALYSIS_NAME_REGEX = "[a-zA-Z0-9_\\-\\+\\*]+";
-
-  String name ();
-
-  Calendar timestamp ();
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.dataset.domain.contract.SelectionBuilder#build() */
+  @Override
+  public Selection build () {
+    return new SimpleSelection (name (), properties (), keys ());
+  }
 }

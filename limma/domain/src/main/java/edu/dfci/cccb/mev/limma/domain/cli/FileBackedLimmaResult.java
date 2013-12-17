@@ -16,9 +16,9 @@ package edu.dfci.cccb.mev.limma.domain.cli;
 
 import static edu.dfci.cccb.mev.limma.domain.cli.CliRLimma.FULL_FILENAME;
 import static edu.dfci.cccb.mev.limma.domain.cli.CliRLimma.SIGNIFICANT_FILENAME;
+import static java.lang.Double.parseDouble;
 
 import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -30,13 +30,14 @@ import lombok.Synchronized;
 import lombok.ToString;
 import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
 import edu.dfci.cccb.mev.limma.domain.prototype.AbstractLimmaResult;
+import edu.dfci.cccb.mev.limma.domain.simple.SimpleEntry;
 
 /**
  * @author levk
  * 
  */
 @ToString
-public class FileBackedLimmaResult extends AbstractLimmaResult implements Closeable {
+public class FileBackedLimmaResult extends AbstractLimmaResult {
 
   private @Getter final File significant;
   private @Getter final File full;
@@ -102,49 +103,25 @@ public class FileBackedLimmaResult extends AbstractLimmaResult implements Closea
 
   private Entry parse (String line) {
     final String[] split = line.split ("\t");
-    return new Entry () {
+    return new SimpleEntry (string (0, split),
+                            number (1, split),
+                            number (2, split),
+                            number (3, split),
+                            number (4, split));
+  }
 
-      @Override
-      public String t () {
-        return split[3];
-      }
+  private String string (int index, String[] split) {
+    return split[index];
+  }
 
-      @Override
-      public String qValue () {
-        return split[5];
-      }
-
-      @Override
-      public String pValue () {
-        return split[4];
-      }
-
-      @Override
-      public String logFoldChange () {
-        return split[1];
-      }
-
-      @Override
-      public String id () {
-        return split[0];
-      }
-
-      @Override
-      public String beta () {
-        return split[6];
-      }
-
-      @Override
-      public String averageExpression () {
-        return split[2];
-      }
-    };
+  private double number (int index, String[] split) {
+    return parseDouble (string (index, split));
   }
 
   /* (non-Javadoc)
-   * @see java.io.Closeable#close() */
+   * @see java.lang.Object#finalize() */
   @Override
-  public void close () throws IOException {
+  protected void finalize () throws Throwable {
     // FIXME: any iterators open will no longer operate
     limma.close ();
   }

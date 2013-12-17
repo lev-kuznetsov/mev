@@ -12,8 +12,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.limma.domain.simple;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+import edu.dfci.cccb.mev.limma.domain.contract.LimmaResult.Entry;
+
 /**
  * @author levk
- *
+ * 
  */
-package edu.dfci.cccb.mev.dataset.rest.annotation;
+@ToString
+@EqualsAndHashCode
+@RequiredArgsConstructor
+@Accessors (fluent = true)
+public class SimpleEntry implements Entry {
+
+  private @Getter final String id;
+  private @Getter final double logFoldChange;
+  private @Getter final double averageExpression;
+  private @Getter final double pValue;
+  private @Getter final double qValue;
+}

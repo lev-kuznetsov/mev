@@ -123,7 +123,7 @@ public class CliRLimma extends AbstractLimma {
                 configFile.delete ();
               }
 
-              return new FileBackedLimmaResult (limma);
+              return new FileBackedLimmaResult (limma).name (name ());
             } catch (ScriptException e) {
               if (log.isDebugEnabled ())
                 try (ByteArrayOutputStream buffer = new ByteArrayOutputStream ();

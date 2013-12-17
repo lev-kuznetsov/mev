@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
 
+import edu.dfci.cccb.mev.web.rest.assembly.json.CalendarJsonSerializer;
 import edu.dfci.cccb.mev.web.support.JsonViewResolver;
 
 /**
@@ -44,6 +45,11 @@ public class RestResolverConfiguration {
   @Bean
   public JsonViewResolver jsonViewResolver () {
     return new JsonViewResolver ();
+  }
+
+  @Bean
+  public CalendarJsonSerializer calendarJsonSerializer () {
+    return new CalendarJsonSerializer ();
   }
 
   @Bean

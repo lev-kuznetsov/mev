@@ -34,7 +34,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
  * @author levk
  * 
  */
-@ToString
+@ToString (exclude = "builder")
 public class MultipartUploadDatasetArgumentResolver extends RequestParamMethodArgumentResolver {
 
   private @Getter @Setter (onMethod = @_ (@Inject)) DatasetBuilder builder;

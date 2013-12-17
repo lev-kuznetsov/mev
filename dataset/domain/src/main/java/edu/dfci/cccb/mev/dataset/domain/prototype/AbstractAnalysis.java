@@ -14,6 +14,12 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.prototype;
 
+import static java.util.Calendar.getInstance;
+
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -27,13 +33,26 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 @EqualsAndHashCode
 @ToString
 @Accessors (fluent = true)
-public abstract class AbstractAnalysis <T extends AbstractAnalysis<?>> implements Analysis {
+@SuppressWarnings ("unchecked")
+public abstract class AbstractAnalysis <T extends AbstractAnalysis<?>> implements Analysis, Comparable<AbstractAnalysis<?>> {
 
   private @Getter String name;
+  private @Getter Calendar timestamp = getInstance ();
 
-  @SuppressWarnings ("unchecked")
   public T name (String name) {
     this.name = name;
     return (T) this;
+  }
+
+  public T timestamp (Locale locale, TimeZone timezone) {
+    timestamp = getInstance (timezone, locale);
+    return (T) this;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Comparable#compareTo(java.lang.Object) */
+  @Override
+  public int compareTo (AbstractAnalysis<?> o) {
+    return timestamp ().compareTo (o.timestamp ());
   }
 }

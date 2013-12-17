@@ -12,26 +12,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.hcl.rest.resolvers;
+package edu.dfci.cccb.mev.dataset.rest.resolvers;
 
-import static edu.dfci.cccb.mev.hcl.domain.contract.Linkage.from;
+import javax.inject.Inject;
+
 import lombok.Getter;
 import lombok.Setter;
 
 import org.springframework.core.MethodParameter;
-import org.springframework.core.Ordered;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver;
 
-import edu.dfci.cccb.mev.hcl.domain.contract.Linkage;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 
 /**
  * @author levk
  * 
  */
-public class AlgorithmPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver implements Ordered {
+public class SelectionPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver {
 
-  private @Getter @Setter int order = LOWEST_PRECEDENCE;
+  private @Getter @Setter (onMethod = @_ (@Inject)) Dimension dimension;
 
   /* (non-Javadoc)
    * @see org.springframework.web.servlet.mvc.method.annotation.
@@ -39,7 +40,7 @@ public class AlgorithmPathVariableMethodArgumentResolver extends PathVariableMet
    * #supportsParameter(org.springframework.core.MethodParameter) */
   @Override
   public boolean supportsParameter (MethodParameter parameter) {
-    return Linkage.class.isAssignableFrom (parameter.getParameterType ()) && super.supportsParameter (parameter);
+    return Selection.class.isAssignableFrom (parameter.getParameterType ()) && super.supportsParameter (parameter);
   }
 
   /* (non-Javadoc)
@@ -52,6 +53,6 @@ public class AlgorithmPathVariableMethodArgumentResolver extends PathVariableMet
     Object value = super.resolveName (name, parameter, request);
     if (value == null)
       return null;
-    return from ((String) value);
+    return dimension.selections ().get ((String) value);
   }
 }
