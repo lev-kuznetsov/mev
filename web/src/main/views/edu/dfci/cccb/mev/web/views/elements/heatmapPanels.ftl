@@ -34,12 +34,12 @@
 				    
 				    <div id="collapseSetManagerColumns" class="accordion-body collapse" style="height: auto;">
 				      <div class="accordion-inner">
-				        <div class="table">
-				        	<div ng-repeat="selection in theData.column.selections" >
-				        		<div style='margin-right: .3em; display: inline; width: 1em; height: 1em; float: left; background-color: {{selection.properties.selectionColor}}'></div>
+				        <div class="selectionSetList">
+				        	<div ng-repeat="selection in theData.column.selections" class="selectionSetListItem">
+				        		<div class="selectionSetColor" style='background-color: {{selection.properties.selectionColor}}'></div>
 				        		<div><a href="/annotations/{{heatmapId}}/annotation/0/{{selection.properties.selectionFacetLink}}">{{selection.name}}</a></div>
-				        		<div>{{selection.properties.selectionDescription}}</div>
-				        		<div style='overflow: hidden; text-overflow: ellipsis; -o-text-overflow: ellipsis; white-space: nowrap;'>
+				        		<div class="selectionSetDescription">{{selection.properties.selectionDescription}}</div>
+				        		<div class="selectionSetKeys">
 					        		<span ng-repeat="key in selection.keys">
 					        			{{key}},
 					        		</span>
