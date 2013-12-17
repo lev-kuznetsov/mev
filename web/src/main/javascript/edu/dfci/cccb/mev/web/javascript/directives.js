@@ -621,6 +621,44 @@ define (
 
                         var ylabels = vis.append ("g")
                             .attr ("class", "ylabels");
+                        
+                        function drawSelections(columnData, rowData) {
+                          
+                          //definitions
+                          var columnCells = [], rowCells = [];
+                          
+                          //Data building
+                          columnData.selections.forEach(function(selection){
+                            selection.keys.forEach(function(key){
+                              columnCells.push({
+                                name: selection.name, 
+                                selection: key, 
+                                color: selection.color}); 
+                            });
+                          });
+                          
+                          rowData.selections.forEach(function(selection){
+                            selection.keys.forEach(function(key){
+                              rowCells.push({
+                                name: selection.name, 
+                                selection: key, 
+                                color: selection.color}); 
+                            });
+                          });
+                          
+                          //Clearing canvas
+                          columnSelections.selectAll("*").remove();
+                          rowSelections.selectAll("*").remove();
+                          
+                          //Data Entering
+                          
+                          columnSelections.selectAll("*").remove();
+                          rowSelections.selectAll("*").remove();
+                          
+                          //Canvas adding
+                       
+                          
+                        };
 
                         function drawLabels (xAxis, yAxis) {
 
@@ -693,10 +731,9 @@ define (
 
                           svg.selectAll('.cell')
                           .transition().delay(200).duration(2000)
-                          .attr ({"x" : function (d, i) {
-                            
-                            
-                            return XIndex2Pixel (XLabel2Index (d.column));
+                          .attr ({
+                            "x" : function (d, i) {
+                              return XIndex2Pixel (XLabel2Index (d.column));
                             },
                             "y" : function (d, i) {
                               return YIndex2Pixel (YLabel2Index (d.row));
@@ -712,7 +749,23 @@ define (
 
                           rightshifter.domain ([ avg, max ]) // Color Update
                           
-                          colSelectionsX =
+                          //Selection Scales update
+                          colSelectionsX.domain(cols.selections.map(function(d, i){return d.name}))
+                            .rangeBands([ heatmapMarginLeft + heatmapCellsWidth,
+                                          heatmapMarginLeft + heatmapCellsWidth + heatmapMarginRight  ]);
+                          
+                          colSelectionsY.domain(rows.keys)
+                            .rangeBands([ heatmapMarginTop,
+                                          heatmapMarginTop + heatmapCellsHeight ]);
+                          
+                          rowSelectionsX.domain(cols.keys)
+                            .rangeBands([ heatmapMarginLeft,
+                                          heatmapMarginLeft + heatmapCellsWidth ]);
+                          
+                          rowSelectionsY.domain(rows.selections.map(function(d, i){return d.name}))
+                            .rangeBands([ heatmapMarginTop + heatmapCellsHeight,
+                                          heatmapMarginTop + heatmapCellsHeight + heatmapMarginBottom ]);
+                          
 
                           XLabel2Index.domain (cols.keys).range (
                               cols.keys.map (function (d, i) {
