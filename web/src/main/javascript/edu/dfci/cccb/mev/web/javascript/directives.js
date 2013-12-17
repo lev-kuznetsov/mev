@@ -696,47 +696,47 @@ define (
 
                           rightshifter.domain ([ avg, max ]) // Color Update
 
-                          XLabel2Index.domain (cols).range (
-                              cols.map (function (d, i) {
+                          XLabel2Index.domain (cols.keys).range (
+                              cols.keys.map (function (d, i) {
                                 return i
                               }));
 
-                          YLabel2Index.domain (rows).range (
-                              rows.map (function (d, i) {
+                          YLabel2Index.domain (rows.keys).range (
+                              rows.keys.map (function (d, i) {
                                 return i
                               }));
 
-                          XIndex2Label.domain (cols.map (function (d, i) {
+                          XIndex2Label.domain (cols.keys.map (function (d, i) {
                             return i
-                          })).range (cols.map (function (d, i) {
+                          })).range (cols.keys.map (function (d, i) {
                             return d
                           }));
 
-                          YIndex2Label.domain (rows.map (function (d, i) {
+                          YIndex2Label.domain (rows.keys.map (function (d, i) {
                             return i
-                          })).range (rows.map (function (d, i) {
+                          })).range (rows.keys.map (function (d, i) {
                             return d
                           }));
 
-                          XIndex2Pixel.domain ([ 0, cols.length ]).range (
+                          XIndex2Pixel.domain ([ 0, cols.keys.length ]).range (
                               [ heatmapMarginLeft,
                                   heatmapMarginLeft + heatmapCellsWidth ]);
 
-                          YIndex2Pixel.domain ([ 0, rows.length ]).range (
+                          YIndex2Pixel.domain ([ 0, rows.keys.length ]).range (
                               [ heatmapMarginTop,
                                   heatmapMarginTop + heatmapCellsHeight ]);
 
                           xAxisd3.scale (XIndex2Pixel).orient ("bottom").ticks (
-                              cols.length).tickFormat (function (d) {
-                            if (d % 1 == 0 && d >= 0 && d < cols.length) {
+                              cols.keys.length).tickFormat (function (d) {
+                            if (d % 1 == 0 && d >= 0 && d < cols.keys.length) {
                               return XIndex2Label (d);
 
                             }
                           });
 
                           yAxisd3.scale (YIndex2Pixel).orient ("right").ticks (
-                              rows.length).tickFormat (function (d) {
-                            if (d % 1 == 0 && d >= 0 && d < rows.length) {
+                              rows.keys.length).tickFormat (function (d) {
+                            if (d % 1 == 0 && d >= 0 && d < rows.keys.length) {
                               return YIndex2Label (d);
                             }
                           });
@@ -748,7 +748,7 @@ define (
                           heatmapcells = rects.data (data.values).enter ().append (
                           "rect");
 
-                          scaleUpdates (data.column.keys, data.row.keys,
+                          scaleUpdates (data.column, data.row,
                               data.min, data.max, data.avg);
 
                           drawCells (heatmapcells);
