@@ -33,7 +33,7 @@ import lombok.Getter;
 public abstract class AbstractRScriptEngineFactory implements ScriptEngineFactory {
 
   private @Getter final List<String> extensions = unmodifiableList (asList ("R", "r"));
-  private @Getter final List<String> mimeTypes = unmodifiableList (asList ("x-application-r"));
+  private @Getter final List<String> mimeTypes = unmodifiableList (asList ("application/x-r"));
   private @Getter final String languageName = "R";
 
   /* (non-Javadoc)
