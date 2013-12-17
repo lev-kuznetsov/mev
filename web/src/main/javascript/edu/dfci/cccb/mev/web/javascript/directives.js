@@ -586,6 +586,13 @@ define (
                         var YLabel2Index = d3.scale.ordinal ();
                         var YIndex2Label = d3.scale.ordinal ();
                         var YIndex2Pixel = d3.scale.linear ();
+                        
+                        
+                        //Selections Scales
+                        var colSelectionsX = d3.scale.ordinal();
+                        var colSelectionsY = d3.scale.ordinal();
+                        var rowSelectionsX = d3.scale.ordinal();
+                        var rowSelectionsY = d3.scale.ordinal();
 
                         // Axis Scales
                         var xAxisd3 = d3.svg.axis ();
@@ -695,6 +702,8 @@ define (
                           leftshifter.domain ([ min, avg ]); // Color Update
 
                           rightshifter.domain ([ avg, max ]) // Color Update
+                          
+                          colSelectionsX =
 
                           XLabel2Index.domain (cols.keys).range (
                               cols.keys.map (function (d, i) {
