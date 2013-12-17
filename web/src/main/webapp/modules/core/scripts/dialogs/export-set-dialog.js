@@ -66,9 +66,10 @@ ExportSetDialog.prototype._exportAjax = function(){
 	    data: { 
 	    	"project" : theProject.id, 
 	    	"name" : name,
-	    	"set-name" : this._name,
-	    	"set-description" : this._description,
-	    	"set-color" : this._color,
+	    	"selectionName" : this._name,
+	    	"selectionDescription" : this._description,
+	    	"selectionColor" : this._color,
+	    	"selectionFacetLink" : Refine.getPermanentLink(),
 	    	"engine" : JSON.stringify(ui.browsingEngine.getJSON())
 	    	},
 	    dataType: "json",
@@ -96,17 +97,17 @@ ExportSetDialog.prototype._export = function() {
 	  .appendTo(form);
 	  
 	  $('<input />')
-	  .attr("name", "set-name")
+	  .attr("name", "selectionName")
 	  .attr("value", this._name)
 	  .appendTo(form);
 	  
 	  $('<input />')
-	  .attr("name", "set-description")
+	  .attr("name", "selectiondescription")
 	  .attr("value", this._description)
 	  .appendTo(form);
 	  
 	  $('<input />')
-	  .attr("name", "set-color")
+	  .attr("name", "selectioncolor")
 	  .attr("value", this._color)
 	  .appendTo(form);
 	  
