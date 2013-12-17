@@ -606,6 +606,15 @@ define (
 
                         var rects = vis.append ("g").attr ("class", "cells")
                             .selectAll ("rect");
+                        
+                        var selections = vis.append("g").attr ("class", "selections")
+                            .selectAll ("rect");
+                        
+                        var columnSelections = selections.append("g")
+                            .attr ("class", "colSelections");
+                        
+                        var rowSelections = selections.append("g")
+                            .attr ("class", "rowSelections");
 
                         var xlabels = vis.append ("g")
                             .attr ("class", "xlabels");
