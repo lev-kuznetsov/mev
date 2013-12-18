@@ -19,7 +19,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import edu.dfci.cccb.mev.limma.domain.contract.LimmaResult.Entry;
+import edu.dfci.cccb.mev.limma.domain.contract.Limma.Entry;
 
 /**
  * @author levk

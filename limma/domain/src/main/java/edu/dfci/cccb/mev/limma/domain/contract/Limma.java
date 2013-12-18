@@ -14,18 +14,27 @@
  */
 package edu.dfci.cccb.mev.limma.domain.contract;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 
 /**
  * @author levk
  * 
  */
-public interface Limma extends AnalysisBuilder<Limma, LimmaResult> {
+public interface Limma extends Analysis {
 
-  Limma control (Selection selection);
+  public interface Entry {
+    String id ();
 
-  Limma experiment (Selection selection);
+    double logFoldChange ();
 
-  Limma alpha (double alpha);
+    double averageExpression ();
+
+    double pValue ();
+
+    double qValue ();
+  }
+
+  Iterable<Entry> significant ();
+
+  Iterable<Entry> full ();
 }

@@ -30,7 +30,7 @@ import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHierarchicallyClusteredDimensio
  * 
  */
 @ToString
-public class HierarchicallyClusteredDimensionJsonSerializer extends AbstractDimensionJsonSerializer<SimpleHierarchicallyClusteredDimension> {
+public class SimpleHierarchicallyClusteredDimensionJsonSerializer extends AbstractDimensionJsonSerializer<SimpleHierarchicallyClusteredDimension> {
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.

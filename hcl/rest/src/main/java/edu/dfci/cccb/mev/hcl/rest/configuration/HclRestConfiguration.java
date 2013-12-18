@@ -35,9 +35,9 @@ import edu.dfci.cccb.mev.hcl.domain.mock.MockNodeBuilder;
 import edu.dfci.cccb.mev.hcl.domain.simple.SimpleTwoDimensionalHclBuilder;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.BranchJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.HclJsonSerializer;
-import edu.dfci.cccb.mev.hcl.rest.assembly.json.HierarchicallyClusteredDimensionJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.LeafJsonSerializer;
-import edu.dfci.cccb.mev.hcl.rest.assembly.newick.HclResultNewickMessageConverter;
+import edu.dfci.cccb.mev.hcl.rest.assembly.json.SimpleHierarchicallyClusteredDimensionJsonSerializer;
+import edu.dfci.cccb.mev.hcl.rest.assembly.newick.HclNewickMessageConverter;
 import edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter;
 import edu.dfci.cccb.mev.hcl.rest.context.RestPathVariableHclRequestContextInjector;
 import edu.dfci.cccb.mev.hcl.rest.resolvers.AlgorithmPathVariableMethodArgumentResolver;
@@ -60,7 +60,7 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
 
   @Bean
   @Scope (value = SCOPE_PROTOTYPE, proxyMode = TARGET_CLASS)
-  public SimpleTwoDimensionalHclBuilder hcl () {
+  public SimpleTwoDimensionalHclBuilder hclBuilder () {
     return new SimpleTwoDimensionalHclBuilder ();
   }
 
@@ -70,12 +70,12 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  HclResultNewickMessageConverter hclResultNewickMessageConverter () {
-    return new HclResultNewickMessageConverter ();
+  public HclNewickMessageConverter hclNewickMessageConverter () {
+    return new HclNewickMessageConverter ();
   }
 
   @Bean
-  public HclJsonSerializer hclResultJsonSerializer () {
+  public HclJsonSerializer hclJsonSerializer () {
     return new HclJsonSerializer ();
   }
 
@@ -90,8 +90,8 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  public HierarchicallyClusteredDimensionJsonSerializer hierarchicallyClusteredDimensionJsonSerializer () {
-    return new HierarchicallyClusteredDimensionJsonSerializer ();
+  public SimpleHierarchicallyClusteredDimensionJsonSerializer simpleHierarchicallyClusteredDimensionJsonSerializer () {
+    return new SimpleHierarchicallyClusteredDimensionJsonSerializer ();
   }
 
   @Bean

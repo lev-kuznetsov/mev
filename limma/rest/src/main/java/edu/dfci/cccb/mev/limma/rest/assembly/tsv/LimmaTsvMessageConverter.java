@@ -12,39 +12,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.hcl.rest.assembly.newick;
-
-import static edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter.NEWICK_MEDIA_TYPE;
+package edu.dfci.cccb.mev.limma.rest.assembly.tsv;
 
 import java.io.IOException;
-
-import javax.inject.Inject;
-
-import lombok.Getter;
-import lombok.Setter;
+import java.io.PrintStream;
 
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
-import org.springframework.http.converter.AbstractHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
-import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
+import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.prototype.AbstractTsvHttpMessageConverter;
+import edu.dfci.cccb.mev.limma.domain.contract.Limma;
+import edu.dfci.cccb.mev.limma.domain.contract.Limma.Entry;
 
 /**
  * @author levk
  * 
  */
-public class HclResultNewickMessageConverter extends AbstractHttpMessageConverter<Hcl> {
-
-  private @Getter @Setter (onMethod = @_ (@Inject)) NodeNewickMessageConverter nodeNewickMessageConverter;
-
-  /**
-   * 
-   */
-  public HclResultNewickMessageConverter () {
-    super (NEWICK_MEDIA_TYPE);
-  }
+public class LimmaTsvMessageConverter extends AbstractTsvHttpMessageConverter<Limma> {
 
   /* (non-Javadoc)
    * @see
@@ -52,7 +38,7 @@ public class HclResultNewickMessageConverter extends AbstractHttpMessageConverte
    * (java.lang.Class) */
   @Override
   protected boolean supports (Class<?> clazz) {
-    return Hcl.class.isAssignableFrom (clazz);
+    return Limma.class.isAssignableFrom (clazz);
   }
 
   /* (non-Javadoc)
@@ -60,8 +46,8 @@ public class HclResultNewickMessageConverter extends AbstractHttpMessageConverte
    * org.springframework.http.converter.AbstractHttpMessageConverter#readInternal
    * (java.lang.Class, org.springframework.http.HttpInputMessage) */
   @Override
-  protected Hcl readInternal (Class<? extends Hcl> clazz, HttpInputMessage inputMessage) throws IOException,
-                                                                                                    HttpMessageNotReadableException {
+  protected Limma readInternal (Class<? extends Limma> clazz, HttpInputMessage inputMessage) throws IOException,
+                                                                                                        HttpMessageNotReadableException {
     throw new UnsupportedOperationException ("nyi");
   }
 
@@ -70,8 +56,16 @@ public class HclResultNewickMessageConverter extends AbstractHttpMessageConverte
    * org.springframework.http.converter.AbstractHttpMessageConverter#writeInternal
    * (java.lang.Object, org.springframework.http.HttpOutputMessage) */
   @Override
-  protected void writeInternal (Hcl t, HttpOutputMessage outputMessage) throws IOException,
-                                                                             HttpMessageNotWritableException {
-    nodeNewickMessageConverter.writeInternal (t.root (), outputMessage);
+  protected void writeInternal (Limma t, HttpOutputMessage outputMessage) throws IOException,
+                                                                               HttpMessageNotWritableException {
+    try (PrintStream out = new PrintStream (outputMessage.getBody ())) {
+      out.println ("ID\tLog Fold Change\tAverage Expression\tt\tP Value\tQ Value\tBeta");
+      for (Entry e : t.full ())
+        out.println (e.id () + "\t" +
+                     e.logFoldChange () + "\t" +
+                     e.averageExpression () + "\t" +
+                     e.pValue () + "\t" +
+                     e.qValue ());
+    }
   }
 }

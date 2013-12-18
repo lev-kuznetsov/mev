@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
-import edu.dfci.cccb.mev.limma.domain.contract.Limma;
+import edu.dfci.cccb.mev.limma.domain.contract.LimmaBuilder;
 
 /**
  * @author levk
@@ -46,7 +46,7 @@ import edu.dfci.cccb.mev.limma.domain.contract.Limma;
 public class LimmaAnalysisController {
 
   private @Getter @Setter (onMethod = @_ (@Inject)) Dataset dataset;
-  private @Getter @Setter (onMethod = @_ (@Inject)) Limma limma;
+  private @Getter @Setter (onMethod = @_ (@Inject)) LimmaBuilder limma;
 
   @RequestMapping (value = "/analyze/limma/{name}(dimension="
                            + DIMENSION_URL_ELEMENT + ",experiment={experiment},control={control},alpha={alpha})",

@@ -14,36 +14,11 @@
  */
 package edu.dfci.cccb.mev.limma.domain.prototype;
 
-import javax.inject.Inject;
-import javax.script.ScriptEngine;
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.Accessors;
-import edu.dfci.cccb.mev.dataset.domain.contract.ComposerFactory;
-import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
-import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysisBuilder;
+import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
 import edu.dfci.cccb.mev.limma.domain.contract.Limma;
-import edu.dfci.cccb.mev.limma.domain.contract.LimmaResult;
 
 /**
  * @author levk
  * 
  */
-@ToString
-@Accessors (fluent = true, chain = true)
-public abstract class AbstractLimma extends AbstractAnalysisBuilder<Limma, LimmaResult> implements Limma {
-
-  private @Getter @Setter Selection control;
-  private @Getter @Setter Selection experiment;
-  private @Getter @Setter double alpha = .2;
-  private @Getter @Setter (onMethod = @_ (@Inject)) ScriptEngine r;
-  private @Getter @Setter (onMethod = @_ (@Inject)) ComposerFactory composerFactory;
-
-  /**
-   */
-  public AbstractLimma () {
-    super ("LIMMA");
-  }
-}
+public abstract class AbstractLimma extends AbstractAnalysis<AbstractLimma> implements Limma {}

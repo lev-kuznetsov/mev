@@ -12,8 +12,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.limma.domain.contract;
+
+import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
+
 /**
  * @author levk
- *
+ * 
  */
-package edu.dfci.cccb.mev.limma.domain.cli;
+public interface LimmaBuilder extends AnalysisBuilder<LimmaBuilder, Limma> {
+
+  LimmaBuilder control (Selection selection);
+
+  LimmaBuilder experiment (Selection selection);
+
+  LimmaBuilder alpha (double alpha);
+}

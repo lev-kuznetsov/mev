@@ -35,8 +35,9 @@ import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvComposerFactory;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
-import edu.dfci.cccb.mev.limma.domain.contract.LimmaResult;
-import edu.dfci.cccb.mev.limma.domain.contract.LimmaResult.Entry;
+import edu.dfci.cccb.mev.limma.domain.contract.Limma;
+import edu.dfci.cccb.mev.limma.domain.contract.Limma.Entry;
+import edu.dfci.cccb.mev.limma.domain.simple.StatelessScriptEngineFileBackedLimmaBuilder;
 
 /**
  * @author levk
@@ -56,7 +57,7 @@ public class CliRLimmaTest {
     Selection control = new SimpleSelection ("control", new Properties (), asList ("sb", "se", "sf"));
     dataset.dimension (COLUMN).selections ().put (experiment);
     dataset.dimension (COLUMN).selections ().put (control);
-    LimmaResult result = new CliRLimma ().r (new ScriptEngineManager ().getEngineByName ("CliR"))
+    Limma result = new StatelessScriptEngineFileBackedLimmaBuilder ().r (new ScriptEngineManager ().getEngineByName ("CliR"))
                                          .composerFactory (new SuperCsvComposerFactory ())
                                          .dataset (dataset)
                                          .control (control)

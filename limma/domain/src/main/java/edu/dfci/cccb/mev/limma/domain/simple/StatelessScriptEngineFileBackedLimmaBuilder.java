@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.limma.domain.cli;
+package edu.dfci.cccb.mev.limma.domain.simple;
 
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.values;
 
@@ -41,15 +41,15 @@ import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
 import edu.dfci.cccb.mev.limma.domain.contract.InvalidLimmaConfigurationException;
-import edu.dfci.cccb.mev.limma.domain.contract.LimmaResult;
-import edu.dfci.cccb.mev.limma.domain.prototype.AbstractLimma;
+import edu.dfci.cccb.mev.limma.domain.contract.Limma;
+import edu.dfci.cccb.mev.limma.domain.prototype.AbstractLimmaBuilder;
 
 /**
  * @author levk
  * 
  */
 @Log4j
-public class CliRLimma extends AbstractLimma {
+public class StatelessScriptEngineFileBackedLimmaBuilder extends AbstractLimmaBuilder {
 
   public static final String DATASET_FILENAME = "dataset.tsv";
   public static final String CONFIGURATION_FILENAME = "config.tsv";
@@ -61,7 +61,7 @@ public class CliRLimma extends AbstractLimma {
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder#build() */
   @Override
-  public LimmaResult build () throws DatasetException {
+  public Limma build () throws DatasetException {
     Dimension dimension = null;
     for (Type of : values ())
       try {
@@ -123,7 +123,7 @@ public class CliRLimma extends AbstractLimma {
                 configFile.delete ();
               }
 
-              return new FileBackedLimmaResult (limma).name (name ()).type (type ());
+              return new FileBackedLimma (limma).name (name ()).type (type ());
             } catch (ScriptException e) {
               if (log.isDebugEnabled ())
                 try (ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
