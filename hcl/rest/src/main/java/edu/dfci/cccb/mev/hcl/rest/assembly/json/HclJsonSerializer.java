@@ -23,20 +23,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.AbstractAnalysisJsonSerializer;
-import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
+import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 
 /**
  * @author levk
  * 
  */
 @ToString
-public class HclResultJsonSerializer extends AbstractAnalysisJsonSerializer<HclResult> {
+public class HclJsonSerializer extends AbstractAnalysisJsonSerializer<Hcl> {
 
   /* (non-Javadoc)
    * @see com.fasterxml.jackson.databind.JsonSerializer#handledType() */
   @Override
-  public Class<HclResult> handledType () {
-    return HclResult.class;
+  public Class<Hcl> handledType () {
+    return Hcl.class;
   }
 
   /* (non-Javadoc)
@@ -46,10 +46,9 @@ public class HclResultJsonSerializer extends AbstractAnalysisJsonSerializer<HclR
    * .domain.contract.Analysis, com.fasterxml.jackson.core.JsonGenerator,
    * com.fasterxml.jackson.databind.SerializerProvider) */
   @Override
-  protected void serializeAnalysisContent (HclResult value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
+  protected void serializeAnalysisContent (Hcl value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
                                                                                                             JsonProcessingException {
     super.serializeAnalysisContent (value, jgen, provider);
-    provider.defaultSerializeField ("dimension", value.dimension ().type (), jgen);
     provider.defaultSerializeField ("root", value.root (), jgen);
   }
 }

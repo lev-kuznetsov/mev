@@ -16,4 +16,4 @@
  * @author levk
  *
  */
-package edu.dfci.cccb.mev.hcl.domain.concrete;
+package edu.dfci.cccb.mev.hcl.domain.simple;

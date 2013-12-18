@@ -23,21 +23,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.AbstractDimensionJsonSerializer;
-import edu.dfci.cccb.mev.hcl.domain.concrete.HierarchicallyClusteredDimension;
+import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHierarchicallyClusteredDimension;
 
 /**
  * @author levk
  * 
  */
 @ToString
-public class HierarchicallyClusteredDimensionJsonSerializer extends AbstractDimensionJsonSerializer<HierarchicallyClusteredDimension> {
+public class HierarchicallyClusteredDimensionJsonSerializer extends AbstractDimensionJsonSerializer<SimpleHierarchicallyClusteredDimension> {
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.
    * AbstractDimensionJsonSerializer#handledType() */
   @Override
-  public Class<HierarchicallyClusteredDimension> handledType () {
-    return HierarchicallyClusteredDimension.class;
+  public Class<SimpleHierarchicallyClusteredDimension> handledType () {
+    return SimpleHierarchicallyClusteredDimension.class;
   }
 
   /* (non-Javadoc)
@@ -48,7 +48,7 @@ public class HierarchicallyClusteredDimensionJsonSerializer extends AbstractDime
    * com.fasterxml.jackson.core.JsonGenerator,
    * com.fasterxml.jackson.databind.SerializerProvider) */
   @Override
-  protected void serializeDimensionContent (HierarchicallyClusteredDimension value,
+  protected void serializeDimensionContent (SimpleHierarchicallyClusteredDimension value,
                                             JsonGenerator jgen,
                                             SerializerProvider provider) throws IOException, JsonProcessingException {
     super.serializeDimensionContent (value, jgen, provider);

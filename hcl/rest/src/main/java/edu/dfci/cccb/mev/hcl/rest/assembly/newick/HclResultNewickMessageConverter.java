@@ -29,13 +29,13 @@ import org.springframework.http.converter.AbstractHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
-import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
+import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 
 /**
  * @author levk
  * 
  */
-public class HclResultNewickMessageConverter extends AbstractHttpMessageConverter<HclResult> {
+public class HclResultNewickMessageConverter extends AbstractHttpMessageConverter<Hcl> {
 
   private @Getter @Setter (onMethod = @_ (@Inject)) NodeNewickMessageConverter nodeNewickMessageConverter;
 
@@ -52,7 +52,7 @@ public class HclResultNewickMessageConverter extends AbstractHttpMessageConverte
    * (java.lang.Class) */
   @Override
   protected boolean supports (Class<?> clazz) {
-    return HclResult.class.isAssignableFrom (clazz);
+    return Hcl.class.isAssignableFrom (clazz);
   }
 
   /* (non-Javadoc)
@@ -60,7 +60,7 @@ public class HclResultNewickMessageConverter extends AbstractHttpMessageConverte
    * org.springframework.http.converter.AbstractHttpMessageConverter#readInternal
    * (java.lang.Class, org.springframework.http.HttpInputMessage) */
   @Override
-  protected HclResult readInternal (Class<? extends HclResult> clazz, HttpInputMessage inputMessage) throws IOException,
+  protected Hcl readInternal (Class<? extends Hcl> clazz, HttpInputMessage inputMessage) throws IOException,
                                                                                                     HttpMessageNotReadableException {
     throw new UnsupportedOperationException ("nyi");
   }
@@ -70,7 +70,7 @@ public class HclResultNewickMessageConverter extends AbstractHttpMessageConverte
    * org.springframework.http.converter.AbstractHttpMessageConverter#writeInternal
    * (java.lang.Object, org.springframework.http.HttpOutputMessage) */
   @Override
-  protected void writeInternal (HclResult t, HttpOutputMessage outputMessage) throws IOException,
+  protected void writeInternal (Hcl t, HttpOutputMessage outputMessage) throws IOException,
                                                                              HttpMessageNotWritableException {
     nodeNewickMessageConverter.writeInternal (t.root (), outputMessage);
   }

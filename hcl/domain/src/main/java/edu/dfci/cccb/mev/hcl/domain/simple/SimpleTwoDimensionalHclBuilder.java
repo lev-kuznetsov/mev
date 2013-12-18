@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.hcl.domain.concrete;
+package edu.dfci.cccb.mev.hcl.domain.simple;
 
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
@@ -43,15 +43,13 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 import edu.dfci.cccb.mev.hcl.domain.contract.Branch;
-import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
+import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 import edu.dfci.cccb.mev.hcl.domain.contract.Leaf;
 import edu.dfci.cccb.mev.hcl.domain.contract.Linkage;
 import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
 import edu.dfci.cccb.mev.hcl.domain.contract.Node;
-import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractHcl;
-import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractHclResult;
+import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractHclBuilder;
 
 /**
  * @author levk
@@ -60,36 +58,17 @@ import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractHclResult;
 @ToString
 @Log4j
 @EqualsAndHashCode (callSuper = true)
-public class TwoDimensionalHcl extends AbstractHcl {
+public class SimpleTwoDimensionalHclBuilder extends AbstractHclBuilder {
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder#build() */
   @Override
-  public HclResult build () throws DatasetException {
-    return new AbstractHclResult () {}.root (cluster (dataset (), dimension (), metric (), linkage ()))
-                                      .dimension (dimension ())
-                                      .dataset (dataset ())
-                                      .type (type ())
-                                      .name (name ());
-  }
-
-  @SuppressWarnings ("unused")
-  private List<Double> project (final Values values, final String key, final Dimension onto) {
-    return new AbstractList<Double> () {
-
-      @Override
-      @SneakyThrows (InvalidCoordinateException.class)
-      public Double get (int index) {
-        return onto.type () == ROW
-                                  ? values.get (onto.keys ().get (index), key)
-                                  : values.get (key, onto.keys ().get (index));
-      }
-
-      @Override
-      public int size () {
-        return onto.keys ().size ();
-      }
-    };
+  public Hcl build () throws DatasetException {
+    return new SimpleHcl ().root (cluster (dataset (), dimension (), metric (), linkage ()))
+                           .dimension (dimension ())
+                           .dataset (dataset ())
+                           .type (type ())
+                           .name (name ());
   }
 
   private RealMatrix toRealMatrix (final Dataset dataset) {

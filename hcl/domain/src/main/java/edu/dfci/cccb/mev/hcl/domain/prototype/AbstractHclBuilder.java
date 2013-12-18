@@ -14,18 +14,19 @@
  */
 package edu.dfci.cccb.mev.hcl.domain.prototype;
 
+import static lombok.AccessLevel.PROTECTED;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
+import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysisBuilder;
+import edu.dfci.cccb.mev.hcl.domain.contract.HclBuilder;
 import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
-import edu.dfci.cccb.mev.hcl.domain.contract.Node;
-import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHierarchicallyClusteredDimension;
+import edu.dfci.cccb.mev.hcl.domain.contract.Linkage;
+import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
+import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 
 /**
  * @author levk
@@ -34,21 +35,14 @@ import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHierarchicallyClusteredDimensio
 @ToString
 @EqualsAndHashCode (callSuper = true)
 @Accessors (fluent = true, chain = true)
-public abstract class AbstractHcl extends AbstractAnalysis<AbstractHcl> implements Hcl {
+public abstract class AbstractHclBuilder extends AbstractAnalysisBuilder<HclBuilder, Hcl> implements HclBuilder {
 
-  private @Getter @Setter Node root;
-  private @Getter @Setter Dimension dimension;
-  private @Getter @Setter Dataset dataset;
+  private @Getter (PROTECTED) @Setter/* (onMethod = @_ (@Inject)) */Linkage linkage;
+  private @Getter (PROTECTED) @Setter/* (onMethod = @_ (@Inject)) */Metric metric;
+  private @Getter (PROTECTED) @Setter/* (onMethod = @_ (@Inject)) */Dimension dimension;
+  private @Getter (PROTECTED) @Setter/* (onMethod = @_ (@Inject)) */NodeBuilder nodeBuilder;
 
-  /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.hcl.domain.contract.HclResult#apply() */
-  @Override
-  public Dimension apply () throws DatasetException {
-    Dimension result = new SimpleHierarchicallyClusteredDimension (dimension.type (),
-                                                             root,
-                                                             dimension.selections (),
-                                                             dimension.annotation ());
-    dataset.set (result);
-    return result;
+  protected AbstractHclBuilder () {
+    super ("Hierarchical Clustering");
   }
 }

@@ -14,19 +14,18 @@
  */
 package edu.dfci.cccb.mev.hcl.domain.contract;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
+import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
 /**
  * @author levk
  * 
  */
-public interface HclResult extends Analysis {
+public interface HclBuilder extends AnalysisBuilder<HclBuilder, Hcl> {
 
-  Node root ();
+  HclBuilder dimension (Dimension dimension);
 
-  void apply () throws DatasetException;
+  HclBuilder metric (Metric metric);
 
-  Dimension dimension ();
+  HclBuilder linkage (Linkage linkage);
 }
