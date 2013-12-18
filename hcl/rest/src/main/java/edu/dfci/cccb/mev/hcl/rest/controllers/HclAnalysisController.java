@@ -44,11 +44,11 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
-import edu.dfci.cccb.mev.hcl.domain.concrete.TwoDimensionalHcl;
-import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
+import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 import edu.dfci.cccb.mev.hcl.domain.contract.Linkage;
 import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
 import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
+import edu.dfci.cccb.mev.hcl.domain.simple.SimpleTwoDimensionalHclBuilder;
 
 /**
  * @author levk
@@ -75,7 +75,7 @@ public class HclAnalysisController {
                                                                      InvalidDimensionTypeException {
     // HACKS FIXME: This is bad, fix scoping!!!
 
-    final TwoDimensionalHcl hcl = new TwoDimensionalHcl ();
+    final SimpleTwoDimensionalHclBuilder hcl = new SimpleTwoDimensionalHclBuilder ();
     final Dataset dataset = workspace.get (ds.name ());
     final Type type = dimension.type ();
     hcl.nodeBuilder (nodeBuilder);
@@ -102,8 +102,7 @@ public class HclAnalysisController {
   @RequestMapping (value = "/dataset/" + DATASET_URL_ELEMENT + "/analysis/" + ANALYSIS_URL_ELEMENT,
                    method = POST)
   public Dimension apply (@PathVariable (DATASET) Dataset dataset,
-                          @PathVariable (ANALYSIS) HclResult analysis) throws DatasetException {
-    analysis.apply ();
-    return dataset.dimension (analysis.dimension ().type ());
+                          @PathVariable (ANALYSIS) Hcl analysis) throws DatasetException {
+    return analysis.apply ();
   }
 }

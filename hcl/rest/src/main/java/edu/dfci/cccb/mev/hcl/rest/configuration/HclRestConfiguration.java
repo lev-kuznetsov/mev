@@ -29,15 +29,15 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver;
-import edu.dfci.cccb.mev.hcl.domain.concrete.TwoDimensionalHcl;
-import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
+import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 import edu.dfci.cccb.mev.hcl.domain.mock.MockNodeBuilder;
+import edu.dfci.cccb.mev.hcl.domain.simple.SimpleTwoDimensionalHclBuilder;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.BranchJsonSerializer;
-import edu.dfci.cccb.mev.hcl.rest.assembly.json.HclResultJsonSerializer;
-import edu.dfci.cccb.mev.hcl.rest.assembly.json.HierarchicallyClusteredDimensionJsonSerializer;
+import edu.dfci.cccb.mev.hcl.rest.assembly.json.HclJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.LeafJsonSerializer;
-import edu.dfci.cccb.mev.hcl.rest.assembly.newick.HclResultNewickMessageConverter;
+import edu.dfci.cccb.mev.hcl.rest.assembly.json.SimpleHierarchicallyClusteredDimensionJsonSerializer;
+import edu.dfci.cccb.mev.hcl.rest.assembly.newick.HclNewickMessageConverter;
 import edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter;
 import edu.dfci.cccb.mev.hcl.rest.context.RestPathVariableHclRequestContextInjector;
 import edu.dfci.cccb.mev.hcl.rest.resolvers.AlgorithmPathVariableMethodArgumentResolver;
@@ -60,8 +60,8 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
 
   @Bean
   @Scope (value = SCOPE_PROTOTYPE, proxyMode = TARGET_CLASS)
-  public TwoDimensionalHcl hcl () {
-    return new TwoDimensionalHcl ();
+  public SimpleTwoDimensionalHclBuilder hclBuilder () {
+    return new SimpleTwoDimensionalHclBuilder ();
   }
 
   @Bean
@@ -70,13 +70,13 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  HclResultNewickMessageConverter hclResultNewickMessageConverter () {
-    return new HclResultNewickMessageConverter ();
+  public HclNewickMessageConverter hclNewickMessageConverter () {
+    return new HclNewickMessageConverter ();
   }
 
   @Bean
-  public HclResultJsonSerializer hclResultJsonSerializer () {
-    return new HclResultJsonSerializer ();
+  public HclJsonSerializer hclJsonSerializer () {
+    return new HclJsonSerializer ();
   }
 
   @Bean
@@ -90,8 +90,8 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  public HierarchicallyClusteredDimensionJsonSerializer hierarchicallyClusteredDimensionJsonSerializer () {
-    return new HierarchicallyClusteredDimensionJsonSerializer ();
+  public SimpleHierarchicallyClusteredDimensionJsonSerializer simpleHierarchicallyClusteredDimensionJsonSerializer () {
+    return new SimpleHierarchicallyClusteredDimensionJsonSerializer ();
   }
 
   @Bean
@@ -105,8 +105,8 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  public AnalysisPathVariableMethodArgumentResolver<HclResult> hclAnalysisPathVariableMethodArgumentResolver () {
-    return new AnalysisPathVariableMethodArgumentResolver<HclResult> (HclResult.class);
+  public AnalysisPathVariableMethodArgumentResolver<Hcl> hclAnalysisPathVariableMethodArgumentResolver () {
+    return new AnalysisPathVariableMethodArgumentResolver<Hcl> (Hcl.class);
   }
 
   /* (non-Javadoc)

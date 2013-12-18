@@ -12,8 +12,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.hcl.domain.contract;
+
+import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+
 /**
  * @author levk
- *
+ * 
  */
-package edu.dfci.cccb.mev.limma.domain.cli;
+public interface HclBuilder extends AnalysisBuilder<HclBuilder, Hcl> {
+
+  HclBuilder dimension (Dimension dimension);
+
+  HclBuilder metric (Metric metric);
+
+  HclBuilder linkage (Linkage linkage);
+}

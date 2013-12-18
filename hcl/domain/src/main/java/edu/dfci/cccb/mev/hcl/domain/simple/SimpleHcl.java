@@ -12,21 +12,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.hcl.domain.contract;
+package edu.dfci.cccb.mev.hcl.domain.simple;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractHcl;
 
 /**
  * @author levk
  * 
  */
-public interface HclResult extends Analysis {
-
-  Node root ();
-
-  void apply () throws DatasetException;
-
-  Dimension dimension ();
-}
+public class SimpleHcl extends AbstractHcl {}

@@ -12,10 +12,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.limma.domain.cli;
+package edu.dfci.cccb.mev.limma.domain.simple;
 
-import static edu.dfci.cccb.mev.limma.domain.cli.CliRLimma.FULL_FILENAME;
-import static edu.dfci.cccb.mev.limma.domain.cli.CliRLimma.SIGNIFICANT_FILENAME;
+import static edu.dfci.cccb.mev.limma.domain.simple.StatelessScriptEngineFileBackedLimmaBuilder.FULL_FILENAME;
+import static edu.dfci.cccb.mev.limma.domain.simple.StatelessScriptEngineFileBackedLimmaBuilder.SIGNIFICANT_FILENAME;
 import static java.lang.Double.parseDouble;
 
 import java.io.BufferedReader;
@@ -29,21 +29,20 @@ import lombok.SneakyThrows;
 import lombok.Synchronized;
 import lombok.ToString;
 import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
-import edu.dfci.cccb.mev.limma.domain.prototype.AbstractLimmaResult;
-import edu.dfci.cccb.mev.limma.domain.simple.SimpleEntry;
+import edu.dfci.cccb.mev.limma.domain.prototype.AbstractLimma;
 
 /**
  * @author levk
  * 
  */
 @ToString
-public class FileBackedLimmaResult extends AbstractLimmaResult {
+public class FileBackedLimma extends AbstractLimma {
 
   private @Getter final File significant;
   private @Getter final File full;
   private @Getter final TemporaryFolder limma;
 
-  public FileBackedLimmaResult (TemporaryFolder limma) {
+  public FileBackedLimma (TemporaryFolder limma) {
     this.limma = limma;
     this.significant = new File (limma, SIGNIFICANT_FILENAME);
     this.full = new File (limma, FULL_FILENAME);

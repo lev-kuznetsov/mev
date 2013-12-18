@@ -51,5 +51,6 @@ public abstract class AbstractAnalysisJsonSerializer <T extends Analysis> extend
                                                                                                     JsonProcessingException {
     jgen.writeStringField ("name", value.name ());
     provider.defaultSerializeField ("timestamp", value.timestamp (), jgen);
+    jgen.writeStringField ("type", value.type ());
   }
 }

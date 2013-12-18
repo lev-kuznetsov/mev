@@ -37,10 +37,16 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 public abstract class AbstractAnalysis <T extends AbstractAnalysis<?>> implements Analysis, Comparable<AbstractAnalysis<?>> {
 
   private @Getter String name;
+  private @Getter String type;
   private @Getter Calendar timestamp = getInstance ();
 
   public T name (String name) {
     this.name = name;
+    return (T) this;
+  }
+
+  public T type (String type) {
+    this.type = type;
     return (T) this;
   }
 

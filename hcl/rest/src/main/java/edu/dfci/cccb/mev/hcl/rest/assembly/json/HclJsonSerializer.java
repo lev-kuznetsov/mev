@@ -22,36 +22,33 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.AbstractDimensionJsonSerializer;
-import edu.dfci.cccb.mev.hcl.domain.concrete.HierarchicallyClusteredDimension;
+import edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.AbstractAnalysisJsonSerializer;
+import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 
 /**
  * @author levk
  * 
  */
 @ToString
-public class HierarchicallyClusteredDimensionJsonSerializer extends AbstractDimensionJsonSerializer<HierarchicallyClusteredDimension> {
+public class HclJsonSerializer extends AbstractAnalysisJsonSerializer<Hcl> {
 
   /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.
-   * AbstractDimensionJsonSerializer#handledType() */
+   * @see com.fasterxml.jackson.databind.JsonSerializer#handledType() */
   @Override
-  public Class<HierarchicallyClusteredDimension> handledType () {
-    return HierarchicallyClusteredDimension.class;
+  public Class<Hcl> handledType () {
+    return Hcl.class;
   }
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.
-   * AbstractDimensionJsonSerializer
-   * #serializeDimensionContent(edu.dfci.cccb.mev.
-   * dataset.domain.contract.Dimension,
-   * com.fasterxml.jackson.core.JsonGenerator,
+   * AbstractAnalysisJsonSerializer
+   * #serializeAnalysisContent(edu.dfci.cccb.mev.dataset
+   * .domain.contract.Analysis, com.fasterxml.jackson.core.JsonGenerator,
    * com.fasterxml.jackson.databind.SerializerProvider) */
   @Override
-  protected void serializeDimensionContent (HierarchicallyClusteredDimension value,
-                                            JsonGenerator jgen,
-                                            SerializerProvider provider) throws IOException, JsonProcessingException {
-    super.serializeDimensionContent (value, jgen, provider);
+  protected void serializeAnalysisContent (Hcl value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
+                                                                                                            JsonProcessingException {
+    super.serializeAnalysisContent (value, jgen, provider);
     provider.defaultSerializeField ("root", value.root (), jgen);
   }
 }

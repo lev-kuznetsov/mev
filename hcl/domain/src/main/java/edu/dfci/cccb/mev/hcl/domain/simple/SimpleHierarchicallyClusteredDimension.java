@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.hcl.domain.concrete;
+package edu.dfci.cccb.mev.hcl.domain.simple;
 
 import static java.util.Collections.unmodifiableList;
 
@@ -37,7 +37,7 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Node;
 @ToString
 @EqualsAndHashCode (callSuper = true)
 @Accessors (fluent = true)
-public class HierarchicallyClusteredDimension extends AbstractDimension {
+public class SimpleHierarchicallyClusteredDimension extends AbstractDimension {
 
   private @Getter Node root;
   private @Getter List<String> keys;
@@ -45,7 +45,7 @@ public class HierarchicallyClusteredDimension extends AbstractDimension {
   /**
    * @param type
    */
-  public HierarchicallyClusteredDimension (Type type, Node root, Selections selections, Annotation annotation) {
+  public SimpleHierarchicallyClusteredDimension (Type type, Node root, Selections selections, Annotation annotation) {
     super (type);
     selections (selections);
     annotation (annotation);

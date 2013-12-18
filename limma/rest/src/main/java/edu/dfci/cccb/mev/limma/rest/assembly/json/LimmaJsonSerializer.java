@@ -21,21 +21,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.AbstractAnalysisJsonSerializer;
-import edu.dfci.cccb.mev.limma.domain.contract.LimmaResult;
-import edu.dfci.cccb.mev.limma.domain.contract.LimmaResult.Entry;
+import edu.dfci.cccb.mev.limma.domain.contract.Limma;
+import edu.dfci.cccb.mev.limma.domain.contract.Limma.Entry;
 
 /**
  * @author levk
  * 
  */
-public class LimmaResultJsonSerializer extends AbstractAnalysisJsonSerializer<LimmaResult> {
+public class LimmaJsonSerializer extends AbstractAnalysisJsonSerializer<Limma> {
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.
    * AbstractAnalysisJsonSerializer#handledType() */
   @Override
-  public Class<LimmaResult> handledType () {
-    return LimmaResult.class;
+  public Class<Limma> handledType () {
+    return Limma.class;
   }
 
   /* (non-Javadoc)
@@ -45,7 +45,7 @@ public class LimmaResultJsonSerializer extends AbstractAnalysisJsonSerializer<Li
    * .domain.contract.Analysis, com.fasterxml.jackson.core.JsonGenerator,
    * com.fasterxml.jackson.databind.SerializerProvider) */
   @Override
-  protected void serializeAnalysisContent (LimmaResult value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
+  protected void serializeAnalysisContent (Limma value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
                                                                                                               JsonProcessingException {
     super.serializeAnalysisContent (value, jgen, provider);
     jgen.writeArrayFieldStart ("significant");

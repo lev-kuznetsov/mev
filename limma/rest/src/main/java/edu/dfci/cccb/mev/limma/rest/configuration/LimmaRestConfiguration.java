@@ -26,11 +26,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import edu.dfci.cccb.mev.limma.domain.cli.CliRLimma;
-import edu.dfci.cccb.mev.limma.domain.contract.Limma;
+import edu.dfci.cccb.mev.limma.domain.contract.LimmaBuilder;
+import edu.dfci.cccb.mev.limma.domain.simple.StatelessScriptEngineFileBackedLimmaBuilder;
 import edu.dfci.cccb.mev.limma.rest.assembly.json.EntryJsonSerializer;
-import edu.dfci.cccb.mev.limma.rest.assembly.json.LimmaResultJsonSerializer;
-import edu.dfci.cccb.mev.limma.rest.assembly.tsv.LimmaResultTsvMessageConverter;
+import edu.dfci.cccb.mev.limma.rest.assembly.json.LimmaJsonSerializer;
+import edu.dfci.cccb.mev.limma.rest.assembly.tsv.LimmaTsvMessageConverter;
 
 /**
  * @author levk
@@ -43,18 +43,18 @@ public class LimmaRestConfiguration {
 
   @Bean
   @Scope (SCOPE_REQUEST)
-  public Limma limma () {
-    return new CliRLimma ();
+  public LimmaBuilder limmaBuilder () {
+    return new StatelessScriptEngineFileBackedLimmaBuilder ();
   }
 
-  @Bean
+  @Bean (name = "R")
   public ScriptEngine r () {
     return new ScriptEngineManager ().getEngineByName ("CliR");
   }
 
   @Bean
-  public LimmaResultTsvMessageConverter limmaResultTsvMessageConverter () {
-    return new LimmaResultTsvMessageConverter ();
+  public LimmaTsvMessageConverter limmaTsvMessageConverter () {
+    return new LimmaTsvMessageConverter ();
   }
 
   @Bean
@@ -63,7 +63,7 @@ public class LimmaRestConfiguration {
   }
 
   @Bean
-  public LimmaResultJsonSerializer limmaResultJsonSerializer () {
-    return new LimmaResultJsonSerializer ();
+  public LimmaJsonSerializer limmaJsonSerializer () {
+    return new LimmaJsonSerializer ();
   }
 }
