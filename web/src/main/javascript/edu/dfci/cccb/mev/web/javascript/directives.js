@@ -631,8 +631,8 @@ define (
                           columnData.selections.forEach(function(selection){
                             selection.keys.forEach(function(key){
                               columnCells.push({
-                                name: selection.name, 
-                                selection: key, 
+                                row: selection.name, 
+                                col: key, 
                                 color: selection.color}); 
                             });
                           });
@@ -640,8 +640,8 @@ define (
                           rowData.selections.forEach(function(selection){
                             selection.keys.forEach(function(key){
                               rowCells.push({
-                                name: selection.name, 
-                                selection: key, 
+                                col: selection.name, 
+                                row: key, 
                                 color: selection.color}); 
                             });
                           });
@@ -656,6 +656,46 @@ define (
                           rowSelections.selectAll("*").remove();
                           
                           //Canvas adding
+                          
+                          columnSelections.data(columnCells).enter().append("rect")
+                          .attr({"class" : "columnSelection",
+                              "height" : function (d) {
+
+                                return YIndex2Pixel (1) - YIndex2Pixel (0);
+                              },
+                              "width" : function (d) {
+                                return XIndex2Pixel (1) - XIndex2Pixel (0);
+                              },
+                              "x" : function (d, i) {
+                                return colSelectionsX(d.col);
+                              },
+                              "y" : function (d, i) {
+                                return colSelectionsY(d.row);
+                              },
+                              "fill" : function (d) {
+                                return d.color;
+                              }
+                          });
+                          
+                          rowSelections.data(rowCells).enter().append("rect")
+                          .attr({"class" : "rowSelection",
+                              "height" : function (d) {
+
+                                return YIndex2Pixel (1) - YIndex2Pixel (0);
+                              },
+                              "width" : function (d) {
+                                return XIndex2Pixel (1) - XIndex2Pixel (0);
+                              },
+                              "x" : function (d, i) {
+                                return rowSelectionsX(d.col);
+                              },
+                              "y" : function (d, i) {
+                                return rowSelectionsY(d.row);
+                              },
+                              "fill" : function (d) {
+                                return d.color;
+                              }
+                          });
                        
                           
                         };
@@ -750,22 +790,27 @@ define (
                           rightshifter.domain ([ avg, max ]) // Color Update
                           
                           //Selection Scales update
-                          colSelectionsX.domain(cols.selections.map(function(d, i){return d.name}))
+                          if (cols.selections.length > 0){
+                            colSelectionsX.domain(cols.selections.map(function(d, i){return d.name}))
                             .rangeBands([ heatmapMarginLeft + heatmapCellsWidth,
-                                          heatmapMarginLeft + heatmapCellsWidth + heatmapMarginRight  ]);
+                                          heatmapMarginLeft + heatmapCellsWidth + (heatmapMarginRight *.5)  ]);
                           
                           colSelectionsY.domain(rows.keys)
                             .rangeBands([ heatmapMarginTop,
                                           heatmapMarginTop + heatmapCellsHeight ]);
+                          };
                           
-                          rowSelectionsX.domain(cols.keys)
-                            .rangeBands([ heatmapMarginLeft,
+                          if (rows.selections.length > 0) {
+                            
+                            rowSelectionsX.domain(cols.keys)
+                              .rangeBands([ heatmapMarginLeft,
                                           heatmapMarginLeft + heatmapCellsWidth ]);
                           
-                          rowSelectionsY.domain(rows.selections.map(function(d, i){return d.name}))
-                            .rangeBands([ heatmapMarginTop + heatmapCellsHeight,
+                            rowSelectionsY.domain(rows.selections.map(function(d, i){return d.name}))
+                              .rangeBands([ heatmapMarginTop + heatmapCellsHeight,
                                           heatmapMarginTop + heatmapCellsHeight + heatmapMarginBottom ]);
-                          
+                          };
+
 
                           XLabel2Index.domain (cols.keys).range (
                               cols.keys.map (function (d, i) {
@@ -821,6 +866,8 @@ define (
 
                           scaleUpdates (data.column, data.row,
                               data.min, data.max, data.avg);
+                          
+                          drawSelections(data.column, data.row)
 
                           drawCells (heatmapcells);
 
@@ -830,7 +877,7 @@ define (
                         
                         function updateDrawHeatmap (data) {
 
-                          scaleUpdates (data.column.keys, data.row.keys,
+                          scaleUpdates (data.column, data.row,
                               data.min, data.max, data.avg);
 
                           redrawCells (heatmapcells);
