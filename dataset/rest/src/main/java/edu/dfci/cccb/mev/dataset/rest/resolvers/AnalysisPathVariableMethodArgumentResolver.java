@@ -15,7 +15,6 @@
 package edu.dfci.cccb.mev.dataset.rest.resolvers;
 
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_REQUEST_ATTRIBUTE_NAME;
-import static java.lang.Integer.MAX_VALUE;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,7 +38,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 public class AnalysisPathVariableMethodArgumentResolver <T extends Analysis> extends PathVariableMethodArgumentResolver implements Ordered {
 
   private @Getter final Class<T> analysisType;
-  private @Getter @Setter int order = MAX_VALUE;
+  private @Getter @Setter int order = LOWEST_PRECEDENCE;
 
   public AnalysisPathVariableMethodArgumentResolver (Class<T> analysisType) {
     this.analysisType = analysisType;

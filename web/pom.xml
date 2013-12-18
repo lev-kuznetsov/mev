@@ -90,11 +90,11 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
-    <!-- R Integration -->
+    <!-- LIMMA package -->
 
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
-      <artifactId>mev-r</artifactId>
+      <artifactId>mev-limma-rest</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 

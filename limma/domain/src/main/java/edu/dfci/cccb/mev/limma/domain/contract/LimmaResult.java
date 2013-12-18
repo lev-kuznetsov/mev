@@ -25,17 +25,13 @@ public interface LimmaResult extends Analysis {
   public interface Entry {
     String id ();
 
-    String logFoldChange ();
+    double logFoldChange ();
 
-    String averageExpression ();
+    double averageExpression ();
 
-    String t ();
+    double pValue ();
 
-    String pValue ();
-
-    String qValue ();
-
-    String beta ();
+    double qValue ();
   }
 
   Iterable<Entry> significant ();

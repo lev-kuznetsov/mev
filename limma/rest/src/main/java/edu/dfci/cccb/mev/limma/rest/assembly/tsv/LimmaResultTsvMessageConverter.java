@@ -12,36 +12,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.rest.assembly.tsv;
+package edu.dfci.cccb.mev.limma.rest.assembly.tsv;
 
 import java.io.IOException;
-
-import javax.inject.Inject;
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import java.io.PrintStream;
 
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.ComposerFactory;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetComposingException;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.prototype.AbstractTsvHttpMessageConverter;
+import edu.dfci.cccb.mev.limma.domain.contract.LimmaResult;
+import edu.dfci.cccb.mev.limma.domain.contract.LimmaResult.Entry;
 
 /**
  * @author levk
  * 
  */
-@ToString (exclude = "builder")
-public class DatasetTsvMessageConverter extends AbstractTsvHttpMessageConverter<Dataset> {
-
-  private @Getter @Setter (onMethod = @_ (@Inject)) ComposerFactory composer;
-  private @Getter @Setter (onMethod = @_ (@Inject)) DatasetBuilder builder;
+public class LimmaResultTsvMessageConverter extends AbstractTsvHttpMessageConverter<LimmaResult> {
 
   /* (non-Javadoc)
    * @see
@@ -49,7 +38,7 @@ public class DatasetTsvMessageConverter extends AbstractTsvHttpMessageConverter<
    * (java.lang.Class) */
   @Override
   protected boolean supports (Class<?> clazz) {
-    return Dataset.class.isAssignableFrom (clazz);
+    return LimmaResult.class.isAssignableFrom (clazz);
   }
 
   /* (non-Javadoc)
@@ -57,8 +46,8 @@ public class DatasetTsvMessageConverter extends AbstractTsvHttpMessageConverter<
    * org.springframework.http.converter.AbstractHttpMessageConverter#readInternal
    * (java.lang.Class, org.springframework.http.HttpInputMessage) */
   @Override
-  protected Dataset readInternal (Class<? extends Dataset> clazz, final HttpInputMessage inputMessage) throws IOException,
-                                                                                                      HttpMessageNotReadableException {
+  protected LimmaResult readInternal (Class<? extends LimmaResult> clazz, HttpInputMessage inputMessage) throws IOException,
+                                                                                                        HttpMessageNotReadableException {
     throw new UnsupportedOperationException ("nyi");
   }
 
@@ -67,15 +56,16 @@ public class DatasetTsvMessageConverter extends AbstractTsvHttpMessageConverter<
    * org.springframework.http.converter.AbstractHttpMessageConverter#writeInternal
    * (java.lang.Object, org.springframework.http.HttpOutputMessage) */
   @Override
-  protected void writeInternal (Dataset t, HttpOutputMessage outputMessage) throws IOException,
-                                                                           HttpMessageNotWritableException {
-    try {
-      composer.compose (t).write (outputMessage.getBody ());
-    } catch (DatasetComposingException e) {
-      HttpMessageNotWritableException exception = new HttpMessageNotWritableException ("Unable to compose dataset "
-                                                                                       + t.name ());
-      exception.initCause (e);
-      throw exception;
+  protected void writeInternal (LimmaResult t, HttpOutputMessage outputMessage) throws IOException,
+                                                                               HttpMessageNotWritableException {
+    try (PrintStream out = new PrintStream (outputMessage.getBody ())) {
+      out.println ("ID\tLog Fold Change\tAverage Expression\tt\tP Value\tQ Value\tBeta");
+      for (Entry e : t.full ())
+        out.println (e.id () + "\t" +
+                     e.logFoldChange () + "\t" +
+                     e.averageExpression () + "\t" +
+                     e.pValue () + "\t" +
+                     e.qValue ());
     }
   }
 }

@@ -12,31 +12,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.hcl.rest.assembly.json;
+package edu.dfci.cccb.mev.limma.rest.assembly.json;
 
 import java.io.IOException;
-
-import lombok.ToString;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.AbstractAnalysisJsonSerializer;
-import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
+import edu.dfci.cccb.mev.limma.domain.contract.LimmaResult;
+import edu.dfci.cccb.mev.limma.domain.contract.LimmaResult.Entry;
 
 /**
  * @author levk
  * 
  */
-@ToString
-public class HclResultJsonSerializer extends AbstractAnalysisJsonSerializer<HclResult> {
+public class LimmaResultJsonSerializer extends AbstractAnalysisJsonSerializer<LimmaResult> {
 
   /* (non-Javadoc)
-   * @see com.fasterxml.jackson.databind.JsonSerializer#handledType() */
+   * @see edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.
+   * AbstractAnalysisJsonSerializer#handledType() */
   @Override
-  public Class<HclResult> handledType () {
-    return HclResult.class;
+  public Class<LimmaResult> handledType () {
+    return LimmaResult.class;
   }
 
   /* (non-Javadoc)
@@ -46,10 +45,16 @@ public class HclResultJsonSerializer extends AbstractAnalysisJsonSerializer<HclR
    * .domain.contract.Analysis, com.fasterxml.jackson.core.JsonGenerator,
    * com.fasterxml.jackson.databind.SerializerProvider) */
   @Override
-  protected void serializeAnalysisContent (HclResult value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
-                                                                                                            JsonProcessingException {
+  protected void serializeAnalysisContent (LimmaResult value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
+                                                                                                              JsonProcessingException {
     super.serializeAnalysisContent (value, jgen, provider);
-    provider.defaultSerializeField ("dimension", value.dimension ().type (), jgen);
-    provider.defaultSerializeField ("root", value.root (), jgen);
+    jgen.writeArrayFieldStart ("significant");
+    for (Entry e : value.significant ())
+      provider.defaultSerializeValue (e, jgen);
+    jgen.writeEndArray ();
+    jgen.writeArrayFieldStart ("full");
+    for (Entry e : value.full ())
+      provider.defaultSerializeValue (e, jgen);
+    jgen.writeEndArray ();
   }
 }

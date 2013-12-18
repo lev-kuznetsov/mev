@@ -12,19 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.contract;
-
-import java.util.Calendar;
-
 /**
  * @author levk
- * 
+ *
  */
-public interface Analysis {
-
-  final String VALID_ANALYSIS_NAME_REGEX = "[a-zA-Z0-9_\\-\\+\\*]+";
-
-  String name ();
-
-  Calendar timestamp ();
-}
+package edu.dfci.cccb.mev.limma.rest.configuration;

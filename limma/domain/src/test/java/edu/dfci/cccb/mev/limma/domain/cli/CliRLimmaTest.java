@@ -1,4 +1,5 @@
 package edu.dfci.cccb.mev.limma.domain.cli;
+
 /**
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,13 +16,14 @@ package edu.dfci.cccb.mev.limma.domain.cli;
  */
 
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
-import static java.lang.Double.parseDouble;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Properties;
 
 import javax.script.ScriptEngineManager;
+
+import lombok.extern.log4j.Log4j;
 
 import org.junit.Test;
 
@@ -33,12 +35,14 @@ import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvComposerFactory;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
-import edu.dfci.cccb.mev.limma.domain.cli.CliRLimma;
+import edu.dfci.cccb.mev.limma.domain.contract.LimmaResult;
+import edu.dfci.cccb.mev.limma.domain.contract.LimmaResult.Entry;
 
 /**
  * @author levk
  * 
  */
+@Log4j
 public class CliRLimmaTest {
 
   @Test
@@ -52,14 +56,17 @@ public class CliRLimmaTest {
     Selection control = new SimpleSelection ("control", new Properties (), asList ("sb", "se", "sf"));
     dataset.dimension (COLUMN).selections ().put (experiment);
     dataset.dimension (COLUMN).selections ().put (control);
+    LimmaResult result = new CliRLimma ().r (new ScriptEngineManager ().getEngineByName ("CliR"))
+                                         .composerFactory (new SuperCsvComposerFactory ())
+                                         .dataset (dataset)
+                                         .control (control)
+                                         .experiment (experiment)
+                                         .alpha (.2)
+                                         .build ();
+    for (Entry e : result.full ())
+      log.debug ("Full limma entry: " + e);
     assertEquals (.35,
-                  parseDouble (new CliRLimma ().r (new ScriptEngineManager ().getEngineByName ("CliR"))
-                                               .composerFactory (new SuperCsvComposerFactory ())
-                                               .dataset (dataset)
-                                               .control (control)
-                                               .experiment (experiment)
-                                               .alpha (.2)
-                                               .build ().full ().iterator ().next ().averageExpression ()),
+                  result.full ().iterator ().next ().averageExpression (),
                   .1);
   }
 }

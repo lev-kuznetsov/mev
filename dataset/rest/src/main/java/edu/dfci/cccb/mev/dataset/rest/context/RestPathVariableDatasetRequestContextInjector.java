@@ -85,9 +85,9 @@ public class RestPathVariableDatasetRequestContextInjector {
   }
 
   @Bean
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public Selection selections (Dimension dimension, NativeWebRequest request) throws SelectionNotFoundException,
-                                                                             MissingPathVariableException {
+  @Scope (value = SCOPE_REQUEST, proxyMode = NO)
+  public Selection selection (Dimension dimension, NativeWebRequest request) throws SelectionNotFoundException,
+                                                                            MissingPathVariableException {
     return dimension.selections ().get (variable (SELECTION, request));
   }
 

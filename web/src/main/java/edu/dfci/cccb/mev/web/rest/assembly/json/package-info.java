@@ -16,4 +16,4 @@
  * @author levk
  *
  */
-package edu.dfci.cccb.mev.limma.rest;
+package edu.dfci.cccb.mev.web.rest.assembly.json;
