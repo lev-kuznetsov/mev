@@ -81,7 +81,7 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
-            <li><a href="/annotations/{{heatmapId}}/annotation/0/">Column Annotations</a></li>
+            <li><a href="/annotations/{{heatmapId}}/annotation/column/new/">Column Annotations</a></li>
           </ul>
         </li>
         

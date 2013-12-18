@@ -72,6 +72,8 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 
 public class FileProjectManager extends ProjectManager {
   final static public String REQUEST_ATTEIBUTE_DATASET = "dataset";
+  final static public String REQUEST_ATTEIBUTE_DIMENSION = "dimension";
+  final static public String REQUEST_ATTEIBUTE_SELECTIONNAME = "selectionName";
   final static protected String PROJECT_DIR_SUFFIX = ".project";
   final static Logger logger = LoggerFactory.getLogger ("FileProjectManager");
 
@@ -118,7 +120,7 @@ public class FileProjectManager extends ProjectManager {
   public void setRequestHeatmap (Dataset requestHeatmap) {
     this.requestHeatmap = requestHeatmap;
   }
-
+  
   @Override
   public Map<Long, ProjectMetadata> getAllProjectMetadata () {
     Map<Long, ProjectMetadata> heatmapMetadata = new HashMap<Long, ProjectMetadata> ();
@@ -357,7 +359,7 @@ public class FileProjectManager extends ProjectManager {
 
     saveWorkspace ();
   }
-
+  
   static protected void deleteDir (File dir) {
     for (File file : dir.listFiles ()) {
       if (file.isDirectory ()) {

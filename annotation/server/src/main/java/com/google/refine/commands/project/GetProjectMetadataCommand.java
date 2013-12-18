@@ -33,6 +33,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.google.refine.commands.project;
 
+import static com.google.refine.io.FileProjectManager.*;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -42,8 +44,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 
 import com.google.refine.ProjectManager;
+import com.google.refine.ProjectMetadata;
 import com.google.refine.commands.Command;
 import com.google.refine.model.Project;
+
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
+import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 
 public class GetProjectMetadataCommand extends Command {
     @Override
@@ -59,9 +68,43 @@ public class GetProjectMetadataCommand extends Command {
                 return;
             }
             
-            respondJSON(response, ProjectManager.getSingleton().getProjectMetadata(project.id));
+            ProjectMetadata metadata = ProjectManager.getSingleton().getProjectMetadata(project.id);
+            metadata.setCustomMetadata ("selectionName", "");
+            metadata.setCustomMetadata ("selectionDescription", "");
+            metadata.setCustomMetadata ("selectionColor", "");
+            metadata.setCustomMetadata ("selectionDescription", "");
+            metadata.setCustomMetadata ("selectionFacetLink", "");                    
+            
+            Dataset dataset = (Dataset) request.getAttribute (REQUEST_ATTEIBUTE_DATASET);
+            if(dataset!=null){
+              metadata.setCustomMetadata ("datasetName", dataset.name ());
+              Dimension.Type dimensionType = Dimension.Type.from ((String)request.getAttribute (REQUEST_ATTEIBUTE_DIMENSION));              
+              Dimension dimension = dataset.dimension (dimensionType);
+              if(dimension!=null){
+                metadata.setCustomMetadata ("dimension", dimension.type ().name ());                
+                String selectionName = (String)request.getAttribute (REQUEST_ATTEIBUTE_SELECTIONNAME);
+                if(selectionName!=null){
+                  metadata.setCustomMetadata ("selectionName", selectionName);
+                  Selection selection = dimension.selections ().get (selectionName);
+                  if(selectionName!=null){
+                    metadata.setCustomMetadata ("selectionDescription", selection.properties ().getProperty ("selectionDescription"));
+                    metadata.setCustomMetadata ("selectionColor", selection.properties ().getProperty ("selectionColor"));
+                    metadata.setCustomMetadata ("selectionDescription", selection.properties ().getProperty ("selectionDescription"));
+                    metadata.setCustomMetadata ("selectionFacetLink", selection.properties ().getProperty ("selectionFacetLink"));                    
+                  }
+                }
+              }
+            }
+            
+            respondJSON(response, metadata);
         } catch (JSONException e) {
             respondException(response, e);
+        } catch (SelectionNotFoundException e) {          
+          e.printStackTrace();
+          respondException(response, e);
+        } catch (InvalidDimensionTypeException e) {
+          e.printStackTrace();
+          respondException(response, e);
         }
     }
 }

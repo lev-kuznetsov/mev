@@ -1,5 +1,20 @@
+div.accordion, div.accordion div{
+	overflow: hidden;
+}
 
+.accordion-heading{
+	padding: 8px 15px
+}
 
+.accordion-heading .accordion-toggle {
+	padding: 0;	
+}
+.accordion-toggle{
+	float: left;	
+}
+.accordion-action-button{
+	float: right;
+}
 .selectionSetListItem div{
 	float: left;
 }
