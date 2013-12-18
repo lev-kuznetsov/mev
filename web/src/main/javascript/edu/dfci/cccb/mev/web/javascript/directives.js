@@ -558,10 +558,12 @@ define (
                             .floor (jq ('#leftPanel').css ('height').slice (0,
                                 -2) * .9);
 
-                        var heatmapMarginLeft = Math.floor (svgWidth * .15), heatmapMarginRight = Math
-                            .floor (svgWidth * .1), heatmapMarginTop = Math
-                            .floor (svgHeight * .15), heatmapMarginBottom = Math
-                            .floor (svgHeight * .1);
+                        var heatmapMarginLeft = Math.floor (svgWidth * .15), 
+                            heatmapMarginRight = Math.floor (svgWidth * .15), 
+                            heatmapMarginTop = Math.floor (svgHeight * .15), 
+                            heatmapMarginBottom = Math.floor (svgHeight * .15),
+                            heatmapColumnSelectionsGutter = 0,
+                            heatmapRowSelectionsGutter = 0;
 
                         var heatmapCellsWidth = svgWidth - heatmapMarginLeft
                             - heatmapMarginRight;
@@ -586,6 +588,13 @@ define (
                         var YLabel2Index = d3.scale.ordinal ();
                         var YIndex2Label = d3.scale.ordinal ();
                         var YIndex2Pixel = d3.scale.linear ();
+                        
+                        
+                        //Selections Scales
+                        var colSelectionsX = d3.scale.ordinal();
+                        var colSelectionsY = d3.scale.ordinal();
+                        var rowSelectionsX = d3.scale.ordinal();
+                        var rowSelectionsY = d3.scale.ordinal();
 
                         // Axis Scales
                         var xAxisd3 = d3.svg.axis ();
@@ -599,19 +608,105 @@ define (
 
                         var rects = vis.append ("g").attr ("class", "cells")
                             .selectAll ("rect");
+                        
+                        var selections = vis.append("g").attr ("class", "selections")
+                            .selectAll ("rect");
+                        
+                        var columnSelections = selections.append("g")
+                            .attr ("class", "colSelections");
+                        
+                        var rowSelections = selections.append("g")
+                            .attr ("class", "rowSelections");
 
                         var xlabels = vis.append ("g")
                             .attr ("class", "xlabels");
 
                         var ylabels = vis.append ("g")
                             .attr ("class", "ylabels");
+                        
+                        function drawSelections(columnData, rowData) {
+                          
+                          //definitions
+                          var columnCells = [], rowCells = [];
+                          
+                          //Data building
+                          columnData.selections.forEach(function(selection){
+                            selection.keys.forEach(function(key){
+                            	
+                              columnCells.push({
+                                row: selection.name, 
+                                col: key, 
+                                color: selection.properties['set-color']}); 
+                            });
+                          });
+                          
+                          rowData.selections.forEach(function(selection){
+                            selection.keys.forEach(function(key){
+                              
+                              rowCells.push({
+                                col: selection.name, 
+                                row: key, 
+                                color: selection.color}); 
+                            });
+                          });
+                          
+                          //Clearing canvas
+                          d3.selectAll(".columnSelection").remove();
+                          d3.selectAll(".rowSelection").remove();
+                          
+                          //Canvas adding
+                          
+                          
+                          columnSelections.data(columnCells).enter().append("rect")
+                          .attr({"class" : "columnSelection",
+                              "height" : function (d) {
+                            	  
+
+                                return colSelectionsY.rangeBand();
+                              },
+                              "width" : function (d) {
+                                return colSelectionsX.rangeBand();
+                              },
+                              "x" : function (d, i) {
+                                return colSelectionsX(d.col);
+                              },
+                              "y" : function (d, i) {
+                                return colSelectionsY(d.row);
+                              },
+                              "fill" : function (d) {
+                                return d.color;
+                              }
+                          });
+                          
+                          rowSelections.data(rowCells).enter().append("rect")
+                          .attr({"class" : "rowSelection",
+                              "height" : function (d) {
+
+                                return rowSelectionsY.rangeBand();
+                              },
+                              "width" : function (d) {
+                                return rowSelectionsX.rangeBand();
+                              },
+                              "x" : function (d, i) {
+                                return rowSelectionsX(d.col);
+                              },
+                              "y" : function (d, i) {
+                                return rowSelectionsY(d.row);
+                              },
+                              "fill" : function (d) {
+                                return d.color;
+                              }
+                          });
+                       
+                          
+                        };
 
                         function drawLabels (xAxis, yAxis) {
 
                           xAxis.attr (
                               "transform",
                               "translate(0,"
-                                  + (heatmapMarginTop + heatmapCellsHeight)
+                                  + (heatmapMarginTop + heatmapCellsHeight + heatmapColumnSelectionsGutter)
                                   + ")").call (xAxisd3).selectAll ("text")
                               .style ("text-anchor", "end").attr ("dy",
                                   function (d, i) {
@@ -626,7 +721,7 @@ define (
                           yAxis.attr (
                               "transform",
                               "translate("
-                                  + (heatmapMarginLeft + heatmapCellsWidth)
+                                  + (heatmapMarginLeft + heatmapCellsWidth + heatmapRowSelectionsGutter)
                                   + ")").call (yAxisd3).selectAll ("text")
                               .style ("text-anchor", "start").attr (
                                   "dy",
@@ -677,15 +772,16 @@ define (
 
                           svg.selectAll('.cell')
                           .transition().delay(200).duration(2000)
-                          .attr ({"x" : function (d, i) {
-                            
-                            
-                            return XIndex2Pixel (XLabel2Index (d.column));
+                          .attr ({
+                            "x" : function (d, i) {
+                              return XIndex2Pixel (XLabel2Index (d.column));
                             },
                             "y" : function (d, i) {
                               return YIndex2Pixel (YLabel2Index (d.row));
                             }
                           });
+                          
+                          
 
                         }
                         ;
@@ -695,48 +791,77 @@ define (
                           leftshifter.domain ([ min, avg ]); // Color Update
 
                           rightshifter.domain ([ avg, max ]) // Color Update
+                          
+                          //Selection Scales update
+                          
+                          if (cols.selections.length > 0){
+                        	  
+                        	heatmapColumnSelectionsGutter = .25 * heatmapMarginBottom;
+                        	
+                            colSelectionsX.domain(cols.keys)
+                              .rangeBands([ heatmapMarginLeft,
+                                          heatmapMarginLeft + heatmapCellsWidth  ]);
+                          
+                            colSelectionsY.domain(cols.selections.map(function(d){return d.name}))
+                              .rangeBands([ heatmapMarginTop + heatmapCellsHeight,
+                                          heatmapMarginTop + heatmapCellsHeight + heatmapColumnSelectionsGutter  ]);
+                          };
+                          
+                          if (rows.selections.length > 0) {
+                            
+                        	heatmapRowSelectionsGutter = .25 * heatmapMarginRight;
+                        	  
+                            rowSelectionsX.domain(rows.selections.map(function(d, i){return d.name}))
+                              .rangeBands([ heatmapMarginLeft + heatmapCellsWidth,
+                                          heatmapMarginLeft + heatmapCellsWidth + heatmapRowSelectionsGutter ]);
+                          
+                            rowSelectionsY.domain(rows.keys)
+                              .rangeBands([ heatmapMarginTop,
+                                          heatmapMarginTop + heatmapCellsHeight]);
+                          };
 
-                          XLabel2Index.domain (cols).range (
-                              cols.map (function (d, i) {
+
+                          XLabel2Index.domain (cols.keys).range (
+                              cols.keys.map (function (d, i) {
                                 return i
                               }));
 
-                          YLabel2Index.domain (rows).range (
-                              rows.map (function (d, i) {
+                          YLabel2Index.domain (rows.keys).range (
+                              rows.keys.map (function (d, i) {
                                 return i
                               }));
 
-                          XIndex2Label.domain (cols.map (function (d, i) {
+                          XIndex2Label.domain (cols.keys.map (function (d, i) {
                             return i
-                          })).range (cols.map (function (d, i) {
+                          })).range (cols.keys.map (function (d, i) {
                             return d
                           }));
 
-                          YIndex2Label.domain (rows.map (function (d, i) {
+                          YIndex2Label.domain (rows.keys.map (function (d, i) {
                             return i
-                          })).range (rows.map (function (d, i) {
+                          })).range (rows.keys.map (function (d, i) {
                             return d
                           }));
 
-                          XIndex2Pixel.domain ([ 0, cols.length ]).range (
+                          XIndex2Pixel.domain ([ 0, cols.keys.length ]).range (
                               [ heatmapMarginLeft,
                                   heatmapMarginLeft + heatmapCellsWidth ]);
 
-                          YIndex2Pixel.domain ([ 0, rows.length ]).range (
+                          YIndex2Pixel.domain ([ 0, rows.keys.length ]).range (
                               [ heatmapMarginTop,
                                   heatmapMarginTop + heatmapCellsHeight ]);
 
                           xAxisd3.scale (XIndex2Pixel).orient ("bottom").ticks (
-                              cols.length).tickFormat (function (d) {
-                            if (d % 1 == 0 && d >= 0 && d < cols.length) {
+                              cols.keys.length).tickFormat (function (d) {
+                            if (d % 1 == 0 && d >= 0 && d < cols.keys.length) {
                               return XIndex2Label (d);
 
                             }
                           });
 
                           yAxisd3.scale (YIndex2Pixel).orient ("right").ticks (
-                              rows.length).tickFormat (function (d) {
-                            if (d % 1 == 0 && d >= 0 && d < rows.length) {
+                              rows.keys.length).tickFormat (function (d) {
+                            if (d % 1 == 0 && d >= 0 && d < rows.keys.length) {
                               return YIndex2Label (d);
                             }
                           });
@@ -748,8 +873,10 @@ define (
                           heatmapcells = rects.data (data.values).enter ().append (
                           "rect");
 
-                          scaleUpdates (data.column.keys, data.row.keys,
+                          scaleUpdates (data.column, data.row,
                               data.min, data.max, data.avg);
+                          
+                          drawSelections(data.column, data.row)
 
                           drawCells (heatmapcells);
 
@@ -759,12 +886,14 @@ define (
                         
                         function updateDrawHeatmap (data) {
 
-                          scaleUpdates (data.column.keys, data.row.keys,
+                          scaleUpdates (data.column, data.row,
                               data.min, data.max, data.avg);
 
                           redrawCells (heatmapcells);
 
                           drawLabels (xlabels, ylabels);
+                          
+                          drawSelections(data.column, data.row);
 
                         };
                         
