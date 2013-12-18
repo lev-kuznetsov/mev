@@ -651,13 +651,8 @@ define (
                           });
                           
                           //Clearing canvas
-                          columnSelections.selectAll("*").remove();
-                          rowSelections.selectAll("*").remove();
-                          
-                          //Data Entering
-                          
-                          columnSelections.selectAll("*").remove();
-                          rowSelections.selectAll("*").remove();
+                          d3.selectAll(".columnSelection").remove();
+                          d3.selectAll(".rowSelection").remove();
                           
                           //Canvas adding
                           
@@ -785,6 +780,8 @@ define (
                               return YIndex2Pixel (YLabel2Index (d.row));
                             }
                           });
+                          
+                          
 
                         }
                         ;
@@ -895,6 +892,8 @@ define (
                           redrawCells (heatmapcells);
 
                           drawLabels (xlabels, ylabels);
+                          
+                          drawSelections(data.column, data.row);
 
                         };
                         
