@@ -558,10 +558,12 @@ define (
                             .floor (jq ('#leftPanel').css ('height').slice (0,
                                 -2) * .9);
 
-                        var heatmapMarginLeft = Math.floor (svgWidth * .15), heatmapMarginRight = Math
-                            .floor (svgWidth * .1), heatmapMarginTop = Math
-                            .floor (svgHeight * .15), heatmapMarginBottom = Math
-                            .floor (svgHeight * .1);
+                        var heatmapMarginLeft = Math.floor (svgWidth * .15), 
+                            heatmapMarginRight = Math.floor (svgWidth * .15), 
+                            heatmapMarginTop = Math.floor (svgHeight * .15), 
+                            heatmapMarginBottom = Math.floor (svgHeight * .15),
+                            heatmapColumnSelectionsGutter = 0,
+                            heatmapRowSelectionsGutter = 0;
 
                         var heatmapCellsWidth = svgWidth - heatmapMarginLeft
                             - heatmapMarginRight;
@@ -630,15 +632,17 @@ define (
                           //Data building
                           columnData.selections.forEach(function(selection){
                             selection.keys.forEach(function(key){
+                            	
                               columnCells.push({
                                 row: selection.name, 
                                 col: key, 
-                                color: selection.color}); 
+                                color: selection.properties['set-color']}); 
                             });
                           });
                           
                           rowData.selections.forEach(function(selection){
                             selection.keys.forEach(function(key){
+                              
                               rowCells.push({
                                 col: selection.name, 
                                 row: key, 
@@ -657,14 +661,16 @@ define (
                           
                           //Canvas adding
                           
+                          
                           columnSelections.data(columnCells).enter().append("rect")
                           .attr({"class" : "columnSelection",
                               "height" : function (d) {
+                            	  
 
-                                return YIndex2Pixel (1) - YIndex2Pixel (0);
+                                return colSelectionsY.rangeBand();
                               },
                               "width" : function (d) {
-                                return XIndex2Pixel (1) - XIndex2Pixel (0);
+                                return colSelectionsX.rangeBand();
                               },
                               "x" : function (d, i) {
                                 return colSelectionsX(d.col);
@@ -681,10 +687,10 @@ define (
                           .attr({"class" : "rowSelection",
                               "height" : function (d) {
 
-                                return YIndex2Pixel (1) - YIndex2Pixel (0);
+                                return rowSelectionsY.rangeBand();
                               },
                               "width" : function (d) {
-                                return XIndex2Pixel (1) - XIndex2Pixel (0);
+                                return rowSelectionsX.rangeBand();
                               },
                               "x" : function (d, i) {
                                 return rowSelectionsX(d.col);
@@ -705,7 +711,7 @@ define (
                           xAxis.attr (
                               "transform",
                               "translate(0,"
-                                  + (heatmapMarginTop + heatmapCellsHeight)
+                                  + (heatmapMarginTop + heatmapCellsHeight + heatmapColumnSelectionsGutter)
                                   + ")").call (xAxisd3).selectAll ("text")
                               .style ("text-anchor", "end").attr ("dy",
                                   function (d, i) {
@@ -720,7 +726,7 @@ define (
                           yAxis.attr (
                               "transform",
                               "translate("
-                                  + (heatmapMarginLeft + heatmapCellsWidth)
+                                  + (heatmapMarginLeft + heatmapCellsWidth + heatmapRowSelectionsGutter)
                                   + ")").call (yAxisd3).selectAll ("text")
                               .style ("text-anchor", "start").attr (
                                   "dy",
@@ -790,25 +796,31 @@ define (
                           rightshifter.domain ([ avg, max ]) // Color Update
                           
                           //Selection Scales update
-                          if (cols.selections.length > 0){
-                            colSelectionsX.domain(cols.selections.map(function(d, i){return d.name}))
-                            .rangeBands([ heatmapMarginLeft + heatmapCellsWidth,
-                                          heatmapMarginLeft + heatmapCellsWidth + (heatmapMarginRight *.5)  ]);
                           
-                          colSelectionsY.domain(rows.keys)
-                            .rangeBands([ heatmapMarginTop,
-                                          heatmapMarginTop + heatmapCellsHeight ]);
+                          if (cols.selections.length > 0){
+                        	  
+                        	heatmapColumnSelectionsGutter = .25 * heatmapMarginBottom;
+                        	
+                            colSelectionsX.domain(cols.keys)
+                              .rangeBands([ heatmapMarginLeft,
+                                          heatmapMarginLeft + heatmapCellsWidth  ]);
+                          
+                            colSelectionsY.domain(cols.selections.map(function(d){return d.name}))
+                              .rangeBands([ heatmapMarginTop + heatmapCellsHeight,
+                                          heatmapMarginTop + heatmapCellsHeight + heatmapColumnSelectionsGutter  ]);
                           };
                           
                           if (rows.selections.length > 0) {
                             
-                            rowSelectionsX.domain(cols.keys)
-                              .rangeBands([ heatmapMarginLeft,
-                                          heatmapMarginLeft + heatmapCellsWidth ]);
+                        	heatmapRowSelectionsGutter = .25 * heatmapMarginRight;
+                        	  
+                            rowSelectionsX.domain(rows.selections.map(function(d, i){return d.name}))
+                              .rangeBands([ heatmapMarginLeft + heatmapCellsWidth,
+                                          heatmapMarginLeft + heatmapCellsWidth + heatmapRowSelectionsGutter ]);
                           
-                            rowSelectionsY.domain(rows.selections.map(function(d, i){return d.name}))
-                              .rangeBands([ heatmapMarginTop + heatmapCellsHeight,
-                                          heatmapMarginTop + heatmapCellsHeight + heatmapMarginBottom ]);
+                            rowSelectionsY.domain(rows.keys)
+                              .rangeBands([ heatmapMarginTop,
+                                          heatmapMarginTop + heatmapCellsHeight]);
                           };
 
 
