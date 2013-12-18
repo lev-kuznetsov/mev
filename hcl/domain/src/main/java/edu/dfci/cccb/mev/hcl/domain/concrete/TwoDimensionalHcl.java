@@ -69,6 +69,7 @@ public class TwoDimensionalHcl extends AbstractHcl {
     return new AbstractHclResult () {}.root (cluster (dataset (), dimension (), metric (), linkage ()))
                                       .dimension (dimension ())
                                       .dataset (dataset ())
+                                      .type (type ())
                                       .name (name ());
   }
 

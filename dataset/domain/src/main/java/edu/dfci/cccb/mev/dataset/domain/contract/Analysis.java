@@ -26,5 +26,7 @@ public interface Analysis {
 
   String name ();
 
+  String type ();
+
   Calendar timestamp ();
 }
