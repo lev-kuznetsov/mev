@@ -35,8 +35,8 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
-            <!-- <li><a data-toggle="modal" role="button" href="#limma">LIMMA</a></li> -->
-            <li><a data-toggle="modal" role="button" href=""><p class="muted">LIMMA</p></a></li>
+            <li><a data-toggle="modal" role="button" href="#limma">LIMMA</a></li> 
+            
             <li><a href=""><p class="muted">t-Test</p></a></li>
           </ul>
         </li>
