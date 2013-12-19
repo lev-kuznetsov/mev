@@ -2,9 +2,7 @@ package edu.dfci.cccb.mev.dataset.domain.mock;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
@@ -46,7 +44,7 @@ public class SelectionsMock extends AbstractSelections {
   }
 
   @Override
-  public Collection<Selection> getAll () {   
+  public Collection<Selection> getAll () {
     return selectionsMap.values ();
   }
 

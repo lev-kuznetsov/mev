@@ -145,7 +145,7 @@ define (
                   }
                 };
               }])
-          .directive ('menubar', [ 'analysisOptions', function (opts) {
+            .directive ('menubar', [ 'analysisOptions', function (opts) {
             return {
               restrict : 'E',
               templateUrl : '/container/view/elements/menubar',
@@ -656,83 +656,6 @@ define (
                         var ylabels = vis.append ("g")
                             .attr ("class", "ylabels");
 
-                        function drawSelections(columnData, rowData) {
-                          
-                          //definitions
-                          var columnCells = [], rowCells = [];
-                          
-                          //Data building
-                          columnData.selections.forEach(function(selection){
-                            selection.keys.forEach(function(key){
-                            	
-                              columnCells.push({
-                                row: selection.name, 
-                                col: key, 
-                                color: selection.properties.selectionColor}); 
-                            });
-                          });
-                          
-                          rowData.selections.forEach(function(selection){
-                            selection.keys.forEach(function(key){
-                              
-                              rowCells.push({
-                                col: selection.name, 
-                                row: key, 
-                                color: selection.selectionColor}); 
-                            });
-                          });
-                          
-                          //Clearing canvas
-                          d3.selectAll(".columnSelection").remove();
-                          d3.selectAll(".rowSelection").remove();
-                          
-                          //Canvas adding
-                          
-                          
-                          columnSelections.data(columnCells).enter().append("rect")
-                          .attr({"class" : "columnSelection",
-                              "height" : function (d) {
-                            	  
-
-                                return colSelectionsY.rangeBand();
-                              },
-                              "width" : function (d) {
-                                return colSelectionsX.rangeBand();
-                              },
-                              "x" : function (d, i) {
-                                return colSelectionsX(d.col);
-                              },
-                              "y" : function (d, i) {
-                                return colSelectionsY(d.row);
-                              },
-                              "fill" : function (d) {
-                                return d.color;
-                              }
-                          });
-                          
-                          rowSelections.data(rowCells).enter().append("rect")
-                          .attr({"class" : "rowSelection",
-                              "height" : function (d) {
-
-                                return rowSelectionsY.rangeBand();
-                              },
-                              "width" : function (d) {
-                                return rowSelectionsX.rangeBand();
-                              },
-                              "x" : function (d, i) {
-                                return rowSelectionsX(d.col);
-                              },
-                              "y" : function (d, i) {
-                                return rowSelectionsY(d.row);
-                              },
-                              "fill" : function (d) {
-                                return d.color;
-                              }
-                          });
-                       
-                          
-                        };
-
                         function drawLabels (xAxis, yAxis) {
 
                           xAxis.attr (
@@ -904,8 +827,8 @@ define (
                           
                           heatmapcells = rects.data (data.values).enter ().append (
                           "rect");
-
-                          scaleUpdates (data.column, data.row,
+						  scope.theData=data;
+                          scaleUpdates (data.column.keys, data.row.keys,
                               data.min, data.max, data.avg);
                           
                           drawSelections(data.column, data.row)

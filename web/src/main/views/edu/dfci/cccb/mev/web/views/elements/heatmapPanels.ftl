@@ -46,7 +46,7 @@
 					        		</span>
 				        		</div>				        		
 				        	</div>
-				        	<div ng-show="theData.column.selections.length<=0" class="selectionSetListItem">No sets defined. You may define sets using <a href="/annotations/{{heatmapId}}/annotation/column/new">column annotations</a> or by performing a clustering analysis.</div>
+				        	<div ng-show="theData.column.selections.length<=0" class="selectionSetListItem">No sets defined. You may define sets using <a href="/annotations/{{heatmapId}}/annotation/column/new/">column annotations</a> or by performing a clustering analysis.</div>
 				        </table>
 				      </div>
 				    </div>
