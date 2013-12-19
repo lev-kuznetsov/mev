@@ -177,7 +177,7 @@ define (
 
                         
 
-                        scope.buildPrevioiusClusters ();
+                        scope.buildPreviousAnalysisList ();
 
                       }
                     };
@@ -286,7 +286,7 @@ define (
                         algorithm : scope.selectedAlgorithm,
                         callback : function () {
                         	
-                        	scope.buildPrevioiusClusters()
+                        	scope.buildPreviousAnalysisList()
 
                         }
 

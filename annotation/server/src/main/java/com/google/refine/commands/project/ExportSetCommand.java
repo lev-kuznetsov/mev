@@ -57,6 +57,7 @@ import com.google.refine.model.Row;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
+import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 
 public class ExportSetCommand extends Command {
 
@@ -127,7 +128,7 @@ public class ExportSetCommand extends Command {
 
         @Override
         public void end (Project project) {
-          selections.put (setName, properties, keys);
+          selections.put (new SimpleSelection (setName, properties, keys));
         }
       };
 
