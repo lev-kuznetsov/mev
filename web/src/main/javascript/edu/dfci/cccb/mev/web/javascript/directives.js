@@ -312,15 +312,47 @@ define (
             };
 
           })
-          .directive ('modalLimma', function () {
+          .directive ('modalLimma', [ "API", "$routeParams", function (API, $routeP) {
 
             return {
               restrict : 'C',
-              templateUrl : "/container/view/elements/limmaBody"
+              templateUrl : "/container/view/elements/limmaBody",
+              link : function (scope, elems, attrs){
+                
+                scope.dimensions = [
+                  {name: "Row", value: "row"},
+                  {name:"Column", value:"column"}];
+                
+                scope.analysisPValue
+                scope.analysisControl
+                scope.analysisExperiment
+                scope.analysisDimension
+                scope.analysisName
+                
+                scope.$watch('analysisDimension', function(newval, oldval){
+                  if (newval) {
+                    API.dataset.selections.get($routeP.datasetName, newval.value).then(function(d){
+                      scope.selections = d;
+                    })
+                  }
+                  
+                });
+                
+                scope.limmaInit = function(){
+                  
+                  API.analysis.limma.create($routeP.datasetName, scope.analysisName, 
+                      scope.analysisDimension.value,
+                      scope.analysisExperiment, 
+                      scope.analysisControl, 
+                      scope.analysisPValue)
+                  
+                };
+                
+              }
 
             };
 
-          })
+          }])
           .directive ('uploadsTable',
               [ 'API', '$location', function (API, $location) {
                 return {
