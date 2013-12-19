@@ -1,7 +1,7 @@
 define ([ 'angular', 'jquery' ], function (angular, $) {
 
   return angular.module ('myApp.controllers', []).controller ('HeatmapCtrl',
-      [ '$scope', '$routeParams', 'API', 'pseudoRandomStringGenerator', function ($scope, $routeParams, API, prsg) {
+      [ '$scope', '$routeParams', 'API', 'pseudoRandomStringGenerator', '$rootScope', function ($scope, $routeParams, API, prsg, $rS) {
 
     	if (!$routeParams.datasetName){
     		$scope.heatmapId = " Mock Heatmap";
@@ -9,30 +9,56 @@ define ([ 'angular', 'jquery' ], function (angular, $) {
     	} else {
     		$scope.heatmapId = $routeParams.datasetName;
     		
-    		$scope.buildPrevioiusClusters = function() {
+    		
+    		
+    		$scope.buildPreviousAnalysisList = function() {
+    		  
+    		  $scope.previousHCLClusters = [];
+    		  
+    		  $scope.previousLimmaAnalysis = [];
 
                 API.dataset.analysis.list ($routeParams.datasetName).then (
                     function (prevList) {
 
-                      $scope.previousClusters = prevList
+                      $scope.previousAnalysisList = prevList
                           .map (function (name) {
 
-                            var randstr = prsg (5);
-                            var randstr2 = prsg (5);
+                            
+                            
+                            //$rS.$apply();
 
-                            return {
-                              name : name,
-                              href : "#" + randstr,
-                              parentId: randstr2 ,
-                              dataParent: '#' + randstr2,
-                              divId : randstr,
-                              datar : API.analysis.hcl.get ({
+                             API.analysis.get ({
                                 name : name,
                                 dataset : $routeParams.datasetName
-                              })
-                            };
+                              }).then(function(d){ 
+                                
+                                var randstr = prsg (5);
+                                var randstr2 = prsg (5);
+                                
+                                 if (d.type == "Hierarchical Clustering"){ 
+                                     $scope.previousHCLClusters.push({
+                                       name : name,
+                                       href : "#" + randstr,
+                                       parentId: randstr2 ,
+                                       dataParent: '#' + randstr2,
+                                       divId : randstr,
+                                       datar :d 
+                                     });
+                                 } else if (d.type == "LIMMA Differential Expression Analysis") {
+                                   $scope.previousLimmaAnalysis.push({
+                                     name : name,
+                                     href : "#" + randstr,
+                                     parentId: randstr2 ,
+                                     dataParent: '#' + randstr2,
+                                     divId : randstr,
+                                     datar :d 
+                                   });
+                                 }
+                              });                               
+                              
 
                           });
+                      
 
                     });
 

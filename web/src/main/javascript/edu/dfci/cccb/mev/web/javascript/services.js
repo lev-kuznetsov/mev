@@ -196,6 +196,33 @@ define (
                         },
                       },
                       analysis : {
+                        get: function (q) {
+                          // Pulls previous
+                          // analysis by name
+                          // q.name
+                          var params = {
+                            method : 'GET',
+                            url : '/dataset/' + q.dataset + '/analysis/'
+                                + q.name + '?format=json'
+                          };
+
+                          return QHTTP (
+                              params,
+                              function (d, s) {
+                                return d;
+                              },
+                              function (d, s) {
+                                var message = "Could not pull previous analysis "
+                                    + q.name + ". "
+                                    + "If problem persists, contact us."
+
+                                var header = "Could Not Pull Previous Analysis (Error Code: "
+                                    + s + ")"
+                                alertService.error (message, header);
+                              });
+
+                        },
+                        
                         limma : {
                           create : function(dataset, name, dimension, experiment, control, alpha){
                             
