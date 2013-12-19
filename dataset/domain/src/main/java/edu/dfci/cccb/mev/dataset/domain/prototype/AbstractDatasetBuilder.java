@@ -42,6 +42,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Parser;
 import edu.dfci.cccb.mev.dataset.domain.contract.ParserFactory;
 import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
+import edu.dfci.cccb.mev.dataset.domain.contract.SelectionBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 import edu.dfci.cccb.mev.dataset.domain.contract.UnparsableContentTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
@@ -61,6 +62,7 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
 
   private @Getter @Setter (onMethod = @_ (@Inject)) Collection<? extends ParserFactory> parserFactories;
   private @Getter @Setter (onMethod = @_ (@Inject)) ValueStoreBuilder valueStoreBuilder;
+  private @Getter @Setter (onMethod = @_ (@Inject)) SelectionBuilder selectionBuilder;
 
   /* (non-Javadoc)
    * @see
@@ -93,7 +95,7 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
   }
 
   protected Selections selections () {
-    return new ArrayListSelections ();
+    return new ArrayListSelections ().setBuilder (selectionBuilder);
   }
 
   protected Annotation annotation () {

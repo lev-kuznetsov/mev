@@ -24,11 +24,6 @@ public class SelectionsMock extends AbstractSelections {
   }
 
   @Override
-  public synchronized void put (String name, Properties properties, List<String> keys) {
-    this.put (new SelectionMock (name, properties, keys));
-  }
-
-  @Override
   public Selection get (String name) throws SelectionNotFoundException {
 
     if (selectionsMap.containsKey (name))
@@ -48,6 +43,11 @@ public class SelectionsMock extends AbstractSelections {
   @Override
   public Collection<String> list () {
     return selectionsMap.keySet ();
+  }
+
+  @Override
+  public Collection<Selection> getAll () {   
+    return selectionsMap.values ();
   }
 
 }

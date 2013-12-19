@@ -30,7 +30,7 @@ public interface Selections {
 
   void remove (String name) throws SelectionNotFoundException;
 
-  Collection<String> list ();
-
-  void put (String name, Properties properties, List<String> keys);
+  Collection<String> list ();  
+  
+  Collection<Selection> getAll(); 
 }
