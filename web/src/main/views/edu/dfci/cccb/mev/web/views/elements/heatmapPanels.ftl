@@ -30,7 +30,7 @@
 				      <a class="accordion-toggle" data-toggle="collapse" data-parent="" href="#collapseSetManagerColumns">
 				        Column Sets
 				      </a>
-				      <a class="accordion-action-button" href="/annotations/{{heatmapId}}/annotation/column/new/">annotations</a>
+				      <a class="accordion-action-button" href="/annotations/{{heatmapId}}/annotation/column/new/">create new from annotations</a>
 				    </div> <!-- End Heading Div -->
 				    
 				    <div id="collapseSetManagerColumns" class="accordion-body" style="height: auto;">
