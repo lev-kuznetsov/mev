@@ -23,17 +23,18 @@
                 <p class="lead pull-left">Set Manager</p>
 		    </div>
 			<div class="row-fluid">	
-			  <div class="accordion">
-			    <div class="accordion-group">
+			  <div id="setmanagerAccordion" class="accordion">
+
+				<div class="accordion-group">
 			    
 				    <div class="accordion-heading">
-				      <a class="accordion-toggle" data-toggle="collapse" data-parent="" href="#collapseSetManagerColumns">
+				      <a class="accordion-toggle" data-toggle="collapse" href="#collapseSetManagerColumns">
 				        Column Sets
 				      </a>
 				      <a class="accordion-action-button" href="/annotations/{{heatmapId}}/annotation/column/new/">create new from annotations</a>
 				    </div> <!-- End Heading Div -->
 				    
-				    <div id="collapseSetManagerColumns" class="accordion-body" style="height: auto;">
+				    <div id="collapseSetManagerColumns" class="accordion-body collapse in" style="height: auto;">
 				      <div class="accordion-inner">
 				        <div class="selectionSetList">
 				        	<div ng-show="theData.column.selections.length>0" ng-repeat="selection in theData.column.selections" class="selectionSetListItem">
@@ -47,20 +48,20 @@
 				        		</div>				        		
 				        	</div>
 				        	<div ng-show="theData.column.selections.length<=0" class="selectionSetListItem">No sets defined. You may define sets using <a href="/annotations/{{heatmapId}}/annotation/column/new/">column annotations</a> or by performing a clustering analysis.</div>
-				        </table>
 				      </div>
 				    </div>
-			    
+			      </div> <!-- End Accordion Body -->
 			    </div> <!-- End Accordion Grouping -->
+			    			    
 			    <div class="accordion-group">
 			    
 				    <div class="accordion-heading">
-				      <a class="accordion-toggle" data-toggle="collapse" data-parent="" href="#collapseSetManagerRows">
+				      <a class="accordion-toggle" data-toggle="collapse" href="#collapseSetManagerRows">
 				        Row Sets
 				      </a>				      
 				    </div> <!-- End Heading Div -->
 				    
-				    <div id="collapseSetManagerRows" class="accordion-body" style="height: auto;">
+				    <div id="collapseSetManagerRows" class="accordion-body collapse in" style="height: auto;">
 				      <div class="accordion-inner">
 				        <div class="selectionSetList">
 				        	<div ng-show="theData.row.selections.length>0" ng-repeat="selection in theData.row.selections" class="selectionSetListItem">
@@ -74,9 +75,9 @@
 				        		</div>				        		
 				        	</div>
 				        	<div ng-show="theData.row.selections.length<=0" class="selectionSetListItem">No sets defined. You may define sets by performing a clustering analysis.</div>
-				        </table>
+				        </div>
 				      </div>
-				    </div>
+				    </div> <!-- End Accordion Body -->
 			    
 			    </div> <!-- End Accordion Grouping -->
 			    
