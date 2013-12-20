@@ -12,41 +12,41 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.rest.context;
+package edu.dfci.cccb.mev.dataset.rest.configuration;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
+import edu.dfci.cccb.mev.dataset.domain.contract.MevException;
 
 /**
  * @author levk
  * 
  */
-public class MissingRequestParameterException extends DatasetException {
+public class MissingPathVariableException extends MevException {
   private static final long serialVersionUID = 1L;
 
   {
-    code ("missing.request.parameter");
+    code ("missing.path.variable");
   }
 
-  public MissingRequestParameterException parameter (String name) {
-    return argument ("parameter", name);
+  public MissingPathVariableException name (String name) {
+    return argument ("name", name);
   }
 
   /**
    * 
    */
-  public MissingRequestParameterException () {}
+  public MissingPathVariableException () {}
 
   /**
    * @param message
    */
-  public MissingRequestParameterException (String message) {
+  public MissingPathVariableException (String message) {
     super (message);
   }
 
   /**
    * @param cause
    */
-  public MissingRequestParameterException (Throwable cause) {
+  public MissingPathVariableException (Throwable cause) {
     super (cause);
   }
 
@@ -54,7 +54,7 @@ public class MissingRequestParameterException extends DatasetException {
    * @param message
    * @param cause
    */
-  public MissingRequestParameterException (String message, Throwable cause) {
+  public MissingPathVariableException (String message, Throwable cause) {
     super (message, cause);
   }
 
@@ -64,10 +64,10 @@ public class MissingRequestParameterException extends DatasetException {
    * @param enableSuppression
    * @param writableStackTrace
    */
-  public MissingRequestParameterException (String message,
-                                           Throwable cause,
-                                           boolean enableSuppression,
-                                           boolean writableStackTrace) {
+  public MissingPathVariableException (String message,
+                                       Throwable cause,
+                                       boolean enableSuppression,
+                                       boolean writableStackTrace) {
     super (message, cause, enableSuppression, writableStackTrace);
   }
 }

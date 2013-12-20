@@ -2,10 +2,10 @@ package edu.dfci.cccb.mev.annotation.server.controllers;
 
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DATASET;
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DATASET_URL_ELEMENT;
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DIMENSION;
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DIMENSION_URL_ELEMENT;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_MAPPING_NAME;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_URL_ELEMENT;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver.DIMENSION_MAPPING_NAME;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver.DIMENSION_URL_ELEMENT;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -148,8 +148,8 @@ public class AnnotationController extends WebApplicationObjectSupport {
                                                                   + DATASET_URL_ELEMENT + "/annotation/"
                                                                   + DIMENSION_URL_ELEMENT + "/**" })
   @ResponseBody
-  public void handleAnnotation (@PathVariable (DATASET) final String heatmapId,
-                                @PathVariable (DIMENSION) final String dimension,
+  public void handleAnnotation (@PathVariable (DATASET_MAPPING_NAME) final String heatmapId,
+                                @PathVariable (DIMENSION_MAPPING_NAME) final String dimension,
                                 HttpServletRequest request, HttpServletResponse response) throws ServletException,
                                                                                          IOException,
                                                                                          DatasetNotFoundException {

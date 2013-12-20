@@ -15,6 +15,9 @@
 package edu.dfci.cccb.mev.hcl.domain.prototype;
 
 import static lombok.AccessLevel.PROTECTED;
+
+import javax.inject.Inject;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +25,8 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysisBuilder;
-import edu.dfci.cccb.mev.hcl.domain.contract.HclBuilder;
 import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
+import edu.dfci.cccb.mev.hcl.domain.contract.HclBuilder;
 import edu.dfci.cccb.mev.hcl.domain.contract.Linkage;
 import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
 import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
@@ -37,10 +40,10 @@ import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 @Accessors (fluent = true, chain = true)
 public abstract class AbstractHclBuilder extends AbstractAnalysisBuilder<HclBuilder, Hcl> implements HclBuilder {
 
-  private @Getter (PROTECTED) @Setter/* (onMethod = @_ (@Inject)) */Linkage linkage;
-  private @Getter (PROTECTED) @Setter/* (onMethod = @_ (@Inject)) */Metric metric;
-  private @Getter (PROTECTED) @Setter/* (onMethod = @_ (@Inject)) */Dimension dimension;
-  private @Getter (PROTECTED) @Setter/* (onMethod = @_ (@Inject)) */NodeBuilder nodeBuilder;
+  private @Getter (PROTECTED) @Setter (onMethod = @_ (@Inject)) Linkage linkage;
+  private @Getter (PROTECTED) @Setter (onMethod = @_ (@Inject)) Metric metric;
+  private @Getter (PROTECTED) @Setter (onMethod = @_ (@Inject)) Dimension dimension;
+  private @Getter (PROTECTED) @Setter (onMethod = @_ (@Inject)) NodeBuilder nodeBuilder;
 
   protected AbstractHclBuilder () {
     super ("Hierarchical Clustering");

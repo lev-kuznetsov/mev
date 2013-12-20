@@ -26,6 +26,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver;
+import edu.dfci.cccb.mev.limma.domain.contract.Limma;
 import edu.dfci.cccb.mev.limma.domain.contract.LimmaBuilder;
 import edu.dfci.cccb.mev.limma.domain.simple.StatelessScriptEngineFileBackedLimmaBuilder;
 import edu.dfci.cccb.mev.limma.rest.assembly.json.EntryJsonSerializer;
@@ -65,5 +67,10 @@ public class LimmaRestConfiguration {
   @Bean
   public LimmaJsonSerializer limmaJsonSerializer () {
     return new LimmaJsonSerializer ();
+  }
+
+  @Bean
+  public AnalysisPathVariableMethodArgumentResolver<Limma> limmaPathVariableMethodArgumentResolver () {
+    return new AnalysisPathVariableMethodArgumentResolver<> (Limma.class);
   }
 }

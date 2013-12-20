@@ -17,6 +17,8 @@ package edu.dfci.cccb.mev.limma.rest.assembly.tsv;
 import java.io.IOException;
 import java.io.PrintStream;
 
+import lombok.ToString;
+
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -30,6 +32,7 @@ import edu.dfci.cccb.mev.limma.domain.contract.Limma.Entry;
  * @author levk
  * 
  */
+@ToString
 public class LimmaTsvMessageConverter extends AbstractTsvHttpMessageConverter<Limma> {
 
   /* (non-Javadoc)
@@ -47,7 +50,7 @@ public class LimmaTsvMessageConverter extends AbstractTsvHttpMessageConverter<Li
    * (java.lang.Class, org.springframework.http.HttpInputMessage) */
   @Override
   protected Limma readInternal (Class<? extends Limma> clazz, HttpInputMessage inputMessage) throws IOException,
-                                                                                                        HttpMessageNotReadableException {
+                                                                                            HttpMessageNotReadableException {
     throw new UnsupportedOperationException ("nyi");
   }
 
@@ -57,9 +60,9 @@ public class LimmaTsvMessageConverter extends AbstractTsvHttpMessageConverter<Li
    * (java.lang.Object, org.springframework.http.HttpOutputMessage) */
   @Override
   protected void writeInternal (Limma t, HttpOutputMessage outputMessage) throws IOException,
-                                                                               HttpMessageNotWritableException {
+                                                                         HttpMessageNotWritableException {
     try (PrintStream out = new PrintStream (outputMessage.getBody ())) {
-      out.println ("ID\tLog Fold Change\tAverage Expression\tt\tP Value\tQ Value\tBeta");
+      out.println ("ID\tLog Fold Change\tAverage Expression\tP Value\tQ Value");
       for (Entry e : t.full ())
         out.println (e.id () + "\t" +
                      e.logFoldChange () + "\t" +

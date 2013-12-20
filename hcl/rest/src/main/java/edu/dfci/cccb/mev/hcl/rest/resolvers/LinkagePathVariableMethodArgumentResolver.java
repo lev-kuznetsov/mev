@@ -14,29 +14,28 @@
  */
 package edu.dfci.cccb.mev.hcl.rest.resolvers;
 
-import static edu.dfci.cccb.mev.hcl.domain.contract.Metric.from;
+import static edu.dfci.cccb.mev.hcl.domain.contract.Linkage.from;
 
 import java.lang.reflect.Method;
 
 import org.springframework.web.context.request.NativeWebRequest;
 
 import edu.dfci.cccb.mev.dataset.rest.resolvers.AbstractTypedPathVariableMethodArgumentResolver;
-import edu.dfci.cccb.mev.hcl.domain.contract.InvalidMetricException;
-import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
+import edu.dfci.cccb.mev.hcl.domain.contract.Linkage;
 
 /**
  * @author levk
  * 
  */
-public class MetricPathVariableMethodArgumentResolver extends AbstractTypedPathVariableMethodArgumentResolver<Metric> {
+public class LinkagePathVariableMethodArgumentResolver extends AbstractTypedPathVariableMethodArgumentResolver<Linkage> {
 
-  public static final String METRIC_MAPPING_NAME = "metric";
-  public static final String METRIC_URL_ELEMENT = "{" + METRIC_MAPPING_NAME + "}";
+  public static final String LINKAGE_MAPPING_NAME = "linkage";
+  public static final String LINKAGE_URL_ELEMENT = "{" + LINKAGE_MAPPING_NAME + "}";
 
   /**
    */
-  public MetricPathVariableMethodArgumentResolver () {
-    super (Metric.class, METRIC_MAPPING_NAME);
+  public LinkagePathVariableMethodArgumentResolver () {
+    super (Linkage.class, LINKAGE_MAPPING_NAME);
   }
 
   /* (non-Javadoc)
@@ -45,7 +44,7 @@ public class MetricPathVariableMethodArgumentResolver extends AbstractTypedPathV
    * #resolveObject(java.lang.String, org.springframework.core.MethodParameter,
    * org.springframework.web.context.request.NativeWebRequest) */
   @Override
-  public Metric resolveObject (String value, Method method, NativeWebRequest request) throws InvalidMetricException {
+  public Linkage resolveObject (String value, Method method, NativeWebRequest request) throws Exception {
     return from (value);
   }
 
@@ -55,7 +54,7 @@ public class MetricPathVariableMethodArgumentResolver extends AbstractTypedPathV
    * #resolveObject(java.lang.String,
    * org.springframework.web.context.request.NativeWebRequest) */
   @Override
-  public Metric resolveObject (String value, NativeWebRequest request) throws InvalidMetricException {
+  public Linkage resolveObject (String value, NativeWebRequest request) throws Exception {
     return from (value);
   }
 }

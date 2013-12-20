@@ -14,13 +14,14 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.controllers;
 
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DATASET_URL_ELEMENT;
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DIMENSION_URL_ELEMENT;
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.SELECTION;
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.SELECTION_URL_ELEMENT;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_URL_ELEMENT;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver.DIMENSION_URL_ELEMENT;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgumentResolver.SELECTION_MAPPING_NAME;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgumentResolver.SELECTION_URL_ELEMENT;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
 import java.util.Collection;
 import java.util.List;
@@ -32,6 +33,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,6 +51,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.SelectionBuilder;
 @RestController
 @RequestMapping ("/dataset/" + DATASET_URL_ELEMENT + "/" + DIMENSION_URL_ELEMENT + "/selection")
 @Log4j
+@Scope (SCOPE_REQUEST)
 public class SelectionController {
 
   private @Getter @Setter (onMethod = @_ (@Inject)) Dimension dimension;
@@ -60,13 +63,13 @@ public class SelectionController {
   }
 
   @RequestMapping (value = "/" + SELECTION_URL_ELEMENT, method = GET)
-  public Selection get (@PathVariable (SELECTION) Selection selection) {
+  public Selection get (@PathVariable (SELECTION_MAPPING_NAME) Selection selection) {
     return selection;
   }
 
   @RequestMapping (value = "/" + SELECTION_URL_ELEMENT, method = PUT)
   @ResponseStatus (OK)
-  public void select (@PathVariable (SELECTION) String name,
+  public void select (@PathVariable (SELECTION_MAPPING_NAME) String name,
                       @RequestParam (value = "properties", required = false) Properties properties,
                       @RequestParam ("keys") List<String> keys) {
     Selection selection = builder.name (name)

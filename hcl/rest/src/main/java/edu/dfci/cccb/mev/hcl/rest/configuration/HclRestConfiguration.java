@@ -16,20 +16,20 @@ package edu.dfci.cccb.mev.hcl.rest.configuration;
 
 import static edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter.NEWICK_EXTENSION;
 import static edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter.NEWICK_MEDIA_TYPE;
-import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
-import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLASS;
+import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
+import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 import lombok.ToString;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
+import edu.dfci.cccb.mev.hcl.domain.contract.HclBuilder;
 import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 import edu.dfci.cccb.mev.hcl.domain.mock.MockNodeBuilder;
 import edu.dfci.cccb.mev.hcl.domain.simple.SimpleTwoDimensionalHclBuilder;
@@ -39,9 +39,10 @@ import edu.dfci.cccb.mev.hcl.rest.assembly.json.LeafJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.SimpleHierarchicallyClusteredDimensionJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.newick.HclNewickMessageConverter;
 import edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter;
-import edu.dfci.cccb.mev.hcl.rest.context.RestPathVariableHclRequestContextInjector;
-import edu.dfci.cccb.mev.hcl.rest.resolvers.AlgorithmPathVariableMethodArgumentResolver;
+import edu.dfci.cccb.mev.hcl.rest.resolvers.LinkagePathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.hcl.rest.resolvers.MetricPathVariableMethodArgumentResolver;
+//import org.springframework.context.annotation.Import;
+//import edu.dfci.cccb.mev.hcl.rest.context.RestPathVariableHclRequestContextInjector;
 
 /**
  * @author levk
@@ -50,8 +51,13 @@ import edu.dfci.cccb.mev.hcl.rest.resolvers.MetricPathVariableMethodArgumentReso
 @Configuration
 @ToString
 @ComponentScan (basePackages = "edu.dfci.cccb.mev.hcl.rest.controllers")
-@Import (RestPathVariableHclRequestContextInjector.class)
+// @Import (RestPathVariableHclRequestContextInjector.class)
 public class HclRestConfiguration extends WebMvcConfigurerAdapter {
+
+  @Bean
+  public AnalysisPathVariableMethodArgumentResolver<Hcl> hclPathVariableMethodArgumentResolver () {
+    return new AnalysisPathVariableMethodArgumentResolver<Hcl> (Hcl.class);
+  }
 
   @Bean
   public NodeBuilder nodeBuilder () {
@@ -59,8 +65,8 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  @Scope (value = SCOPE_PROTOTYPE, proxyMode = TARGET_CLASS)
-  public SimpleTwoDimensionalHclBuilder hclBuilder () {
+  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
+  public HclBuilder hclBuilder () {
     return new SimpleTwoDimensionalHclBuilder ();
   }
 
@@ -95,18 +101,13 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  public AlgorithmPathVariableMethodArgumentResolver algorithmPathVariableMethodArgumentResolver () {
-    return new AlgorithmPathVariableMethodArgumentResolver ();
+  public LinkagePathVariableMethodArgumentResolver algorithmPathVariableMethodArgumentResolver () {
+    return new LinkagePathVariableMethodArgumentResolver ();
   }
 
   @Bean
   public MetricPathVariableMethodArgumentResolver metricPathVariableMethodArgumentResolver () {
     return new MetricPathVariableMethodArgumentResolver ();
-  }
-
-  @Bean
-  public AnalysisPathVariableMethodArgumentResolver<Hcl> hclAnalysisPathVariableMethodArgumentResolver () {
-    return new AnalysisPathVariableMethodArgumentResolver<Hcl> (Hcl.class);
   }
 
   /* (non-Javadoc)
