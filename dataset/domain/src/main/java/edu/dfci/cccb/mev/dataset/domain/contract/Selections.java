@@ -15,8 +15,6 @@
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
 
 /**
  * @author levk
@@ -31,6 +29,6 @@ public interface Selections {
   void remove (String name) throws SelectionNotFoundException;
 
   Collection<String> list ();
-
-  void put (String name, Properties properties, List<String> keys);
+  
+  Collection<Selection> getAll(); 
 }

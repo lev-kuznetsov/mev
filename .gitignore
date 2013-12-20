@@ -21,6 +21,7 @@ src/**/html/app/data/*
 **.swp
 **.orig
 .springBeans
+.tern-project
 
 # Maven target
 target/

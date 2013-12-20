@@ -90,14 +90,15 @@ public class ExportSetCommand extends Command {
       Engine engine = getEngine (request, project);
       final Dataset heatmap = (Dataset) request.getAttribute (REQUEST_ATTEIBUTE_DATASET);
       final Selections selections = heatmap.dimension (Dimension.Type.COLUMN).selections ();
-      final String setName = request.getParameter ("set-name");
+            final String setName = request.getParameter ("selectionName");
       final Properties properties = new Properties ();
-      properties.put ("set-description", request.getParameter ("set-description"));
-      properties.put ("set-color", request.getParameter ("set-color"));
+            properties.put ("selectionDescription", request.getParameter ("selectionDescription"));
+            properties.put ("selectionColor", request.getParameter ("selectionColor"));
+            properties.put ("selectionFacetLink", request.getParameter ("selectionFacetLink"));
       final List<String> keys = new ArrayList<String> ();
 
       RowVisitor visitor = new RowVisitor () {
-        @SuppressWarnings ("unused") int rowCount = 0;
+                int rowCount = 0;
         Column theIdColumn;
 
         @Override

@@ -144,6 +144,7 @@ public class AnnotationController extends WebApplicationObjectSupport {
 
   }
 
+  /*
   @RequestMapping (method = { GET, POST, PUT, DELETE }, value = { "/"
                                                                   + DATASET_URL_ELEMENT + "/annotation/"
                                                                   + DIMENSION_URL_ELEMENT + "/**" })
@@ -179,7 +180,47 @@ public class AnnotationController extends WebApplicationObjectSupport {
     wrappedRequest.setAttribute ("dimension", dimension);
     this.refineServlet.service (wrappedRequest, response);
   }
+*/
+  @RequestMapping(method={GET, POST, PUT, DELETE}, value = {"/"
+          + DATASET_URL_ELEMENT + "/annotation/"
+          + DIMENSION_URL_ELEMENT + "/{selectionName}/**"
 
+  })
+  @ResponseBody
+  public void handleAnnotationByName (@PathVariable (DATASET_MAPPING_NAME) final String heatmapId,
+                                @PathVariable (DIMENSION_MAPPING_NAME) final String dimension,
+                                @PathVariable (value="selectionName") final String selectionName,
+                                HttpServletRequest request, HttpServletResponse response) throws ServletException,
+                                                                                         IOException,
+                                                                                         DatasetNotFoundException {
+    log.debug (String.format ("Handling annotation request: %s", request.getServletPath ()));
+    
+    HttpServletRequest wrappedRequest = new HttpServletRequestWrapper (request) {
+      @Override
+      public String getPathInfo () {
+        return super.getServletPath ().replace ("/annotations/" + heatmapId + "/annotation/" + dimension + "/" + selectionName, "");
+      }
+    };
+
+    Dataset heatmap = workspace.get (heatmapId);
+    long projectId = projectManager.getProjectID (heatmap.name ());
+    if (projectId != -1) {
+      if (wrappedRequest.getPathInfo ().trim ().equals ("/")) {
+        if (wrappedRequest.getParameter ("reset") != null) {
+          projectManager.deleteProject (projectId);
+        } else {
+          response.sendRedirect ("project?project=" + projectId);
+          return;
+        }
+      }
+    }
+
+    wrappedRequest.setAttribute ("dataset", heatmap);
+    wrappedRequest.setAttribute ("dimension", dimension);    
+    if(!selectionName.equalsIgnoreCase ("new"))
+      wrappedRequest.setAttribute ("selectionName", selectionName);
+    this.refineServlet.service (wrappedRequest, response);    
+  }
   /**
    * Internal implementation of the ServletConfig interface, to be passed to the
    * wrapped servlet. Delegates to ServletWrappingController fields and methods

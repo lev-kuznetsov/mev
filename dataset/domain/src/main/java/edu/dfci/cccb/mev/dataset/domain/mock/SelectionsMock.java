@@ -2,9 +2,7 @@ package edu.dfci.cccb.mev.dataset.domain.mock;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
@@ -21,11 +19,6 @@ public class SelectionsMock extends AbstractSelections {
   @Override
   public synchronized void put (Selection selection) {
     selectionsMap.put (selection.name (), selection);
-  }
-
-  @Override
-  public synchronized void put (String name, Properties properties, List<String> keys) {
-    this.put (new SelectionMock (name, properties, keys));
   }
 
   @Override
@@ -48,6 +41,11 @@ public class SelectionsMock extends AbstractSelections {
   @Override
   public Collection<String> list () {
     return selectionsMap.keySet ();
+  }
+
+  @Override
+  public Collection<Selection> getAll () {
+    return selectionsMap.values ();
   }
 
 }

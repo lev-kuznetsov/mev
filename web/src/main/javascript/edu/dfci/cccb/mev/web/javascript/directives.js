@@ -145,7 +145,7 @@ define (
                   }
                 };
               }])
-          .directive ('menubar', [ 'analysisOptions', function (opts) {
+            .directive ('menubar', [ 'analysisOptions', function (opts) {
             return {
               restrict : 'E',
               templateUrl : '/container/view/elements/menubar',
@@ -345,9 +345,9 @@ define (
                       scope.analysisExperiment, 
                       scope.analysisControl, 
                       scope.analysisPValue)
-                  
-                };
-                
+
+            };
+
               }
 
             };
@@ -640,7 +640,7 @@ define (
 
                         var rects = vis.append ("g").attr ("class", "cells")
                             .selectAll ("rect");
-                        
+
                         var selections = vis.append("g").attr ("class", "selections")
                             .selectAll ("rect");
                         
@@ -655,7 +655,7 @@ define (
 
                         var ylabels = vis.append ("g")
                             .attr ("class", "ylabels");
-                        
+
                         function drawSelections(columnData, rowData) {
                           
                           //definitions
@@ -668,7 +668,7 @@ define (
                               columnCells.push({
                                 row: selection.name, 
                                 col: key, 
-                                color: selection.properties['set-color']}); 
+                                color: selection.properties.selectionColor}); 
                             });
                           });
                           
@@ -678,7 +678,7 @@ define (
                               rowCells.push({
                                 col: selection.name, 
                                 row: key, 
-                                color: selection.color}); 
+                                color: selection.selectionColor}); 
                             });
                           });
                           
@@ -806,7 +806,7 @@ define (
                           .transition().delay(200).duration(2000)
                           .attr ({
                             "x" : function (d, i) {
-                              return XIndex2Pixel (XLabel2Index (d.column));
+                            return XIndex2Pixel (XLabel2Index (d.column));
                             },
                             "y" : function (d, i) {
                               return YIndex2Pixel (YLabel2Index (d.row));
@@ -823,7 +823,7 @@ define (
                           leftshifter.domain ([ min, avg ]); // Color Update
 
                           rightshifter.domain ([ avg, max ]) // Color Update
-                          
+
                           //Selection Scales update
                           
                           if (cols.selections.length > 0){
@@ -904,7 +904,7 @@ define (
                           
                           heatmapcells = rects.data (data.values).enter ().append (
                           "rect");
-
+						  scope.theData=data;
                           scaleUpdates (data.column, data.row,
                               data.min, data.max, data.avg);
                           
