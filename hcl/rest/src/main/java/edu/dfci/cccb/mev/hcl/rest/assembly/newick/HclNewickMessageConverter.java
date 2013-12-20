@@ -22,6 +22,7 @@ import javax.inject.Inject;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
@@ -35,6 +36,7 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
  * @author levk
  * 
  */
+@ToString
 public class HclNewickMessageConverter extends AbstractHttpMessageConverter<Hcl> {
 
   private @Getter @Setter (onMethod = @_ (@Inject)) NodeNewickMessageConverter nodeNewickMessageConverter;

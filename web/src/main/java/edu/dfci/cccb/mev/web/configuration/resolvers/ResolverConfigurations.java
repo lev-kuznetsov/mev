@@ -23,6 +23,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -43,6 +44,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
           ViewResolverConfiguration.class,
           WebjarResourceHandlerConfiguration.class })
 @ToString
+@Log4j
 public class ResolverConfigurations {
 
   private @Inject RequestMappingHandlerAdapter adapter;
@@ -50,6 +52,7 @@ public class ResolverConfigurations {
 
   @PostConstruct
   private void prioritizeCustomArgumentMethodHandlers () {
+    log.info ("Registering method argument resolvers " + methodArgumentResolvers);
     if (methodArgumentResolvers != null && methodArgumentResolvers.size () > 0) {
       sort (methodArgumentResolvers, new OrderComparator ());
       List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<> (adapter.getArgumentResolvers ());

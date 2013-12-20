@@ -14,8 +14,8 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.controllers;
 
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.ANALYSIS_URL_ELEMENT;
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DATASET_URL_ELEMENT;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver.ANALYSIS_URL_ELEMENT;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_URL_ELEMENT;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 

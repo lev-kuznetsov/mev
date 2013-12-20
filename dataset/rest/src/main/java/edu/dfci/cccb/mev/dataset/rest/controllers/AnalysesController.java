@@ -14,8 +14,9 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.controllers;
 
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DATASET_URL_ELEMENT;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_URL_ELEMENT;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +37,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
  */
 @RestController
 @RequestMapping ("/dataset/" + DATASET_URL_ELEMENT + "/analysis")
+@Scope (SCOPE_REQUEST)
 public class AnalysesController {
 
   private @Getter @Setter (onMethod = @_ (@Inject)) Dataset dataset;
