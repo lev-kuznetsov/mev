@@ -14,14 +14,16 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.controllers;
 
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DATASET_URL_ELEMENT;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_URL_ELEMENT;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
 import javax.inject.Inject;
 
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +37,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 @RequestMapping ("/dataset/" + DATASET_URL_ELEMENT + "/data")
 @ToString
 @Log4j
+@Scope (SCOPE_REQUEST)
 public class DataController {
 
   private @Inject Dataset dataset;

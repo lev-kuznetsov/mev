@@ -14,24 +14,27 @@
  */
 package edu.dfci.cccb.mev.hcl.rest.controllers;
 
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.ANALYSIS;
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.ANALYSIS_URL_ELEMENT;
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DATASET;
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DATASET_URL_ELEMENT;
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DIMENSION;
-import static edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector.DIMENSION_URL_ELEMENT;
-import static edu.dfci.cccb.mev.hcl.rest.context.RestPathVariableHclRequestContextInjector.ALGORITHM;
-import static edu.dfci.cccb.mev.hcl.rest.context.RestPathVariableHclRequestContextInjector.ALGORITHM_URL_ELEMENT;
-import static edu.dfci.cccb.mev.hcl.rest.context.RestPathVariableHclRequestContextInjector.METRIC;
-import static edu.dfci.cccb.mev.hcl.rest.context.RestPathVariableHclRequestContextInjector.METRIC_URL_ELEMENT;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver.ANALYSIS_MAPPING_NAME;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver.ANALYSIS_URL_ELEMENT;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_URL_ELEMENT;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver.DIMENSION_MAPPING_NAME;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver.DIMENSION_URL_ELEMENT;
+import static edu.dfci.cccb.mev.hcl.rest.resolvers.LinkagePathVariableMethodArgumentResolver.LINKAGE_MAPPING_NAME;
+import static edu.dfci.cccb.mev.hcl.rest.resolvers.LinkagePathVariableMethodArgumentResolver.LINKAGE_URL_ELEMENT;
+import static edu.dfci.cccb.mev.hcl.rest.resolvers.MetricPathVariableMethodArgumentResolver.METRIC_MAPPING_NAME;
+import static edu.dfci.cccb.mev.hcl.rest.resolvers.MetricPathVariableMethodArgumentResolver.METRIC_URL_ELEMENT;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
 import javax.inject.Inject;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -41,10 +44,9 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
+import edu.dfci.cccb.mev.hcl.domain.contract.HclBuilder;
 import edu.dfci.cccb.mev.hcl.domain.contract.Linkage;
 import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
 import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
@@ -57,52 +59,48 @@ import edu.dfci.cccb.mev.hcl.domain.simple.SimpleTwoDimensionalHclBuilder;
 @RestController
 @ToString
 @Log4j
+@RequestMapping (value = "/dataset/" + DATASET_URL_ELEMENT)
+@Scope (SCOPE_REQUEST)
 public class HclAnalysisController {
 
-  private @Inject Workspace workspace;
-  private @Inject NodeBuilder nodeBuilder;
+  private @Getter @Setter (onMethod = @_ (@Inject)) NodeBuilder nodeBuilder;
+  private @Getter @Setter (onMethod = @_ (@Inject)) Dataset dataset;
 
-  @RequestMapping (value = "/dataset/"
-                           + DATASET_URL_ELEMENT + "/analyze/hcl/{name}(" + DIMENSION_URL_ELEMENT + ","
-                           + METRIC_URL_ELEMENT + "," + ALGORITHM_URL_ELEMENT + ")",
+  @RequestMapping (value = "/analyze/hcl/" + ANALYSIS_URL_ELEMENT + "(" + DIMENSION_URL_ELEMENT + ","
+                           + METRIC_URL_ELEMENT + "," + LINKAGE_URL_ELEMENT + ")",
                    method = POST)
   @ResponseStatus (OK)
-  public void start (final @PathVariable ("name") String name,
-                     final @PathVariable (DATASET) Dataset ds,
-                     final @PathVariable (DIMENSION) Dimension dimension,
-                     final @PathVariable (METRIC) Metric metric,
-                     final @PathVariable (ALGORITHM) Linkage linkage) throws DatasetNotFoundException,
-                                                                     InvalidDimensionTypeException {
-    // HACKS FIXME: This is bad, fix scoping!!!
+  public void start (final @PathVariable (ANALYSIS_MAPPING_NAME) String name,
+                     final @PathVariable (DIMENSION_MAPPING_NAME) Dimension dimension,
+                     final @PathVariable (METRIC_MAPPING_NAME) Metric metric,
+                     final @PathVariable (LINKAGE_MAPPING_NAME) Linkage linkage) throws DatasetNotFoundException,
+                                                                                InvalidDimensionTypeException {
+    // TODO: inject a factory instead of manual injection
+    final HclBuilder builder = new SimpleTwoDimensionalHclBuilder ().nodeBuilder (nodeBuilder)
+                                                                    .dataset (dataset)
+                                                                    .dimension (dimension)
+                                                                    .linkage (linkage)
+                                                                    .metric (metric);
 
-    final SimpleTwoDimensionalHclBuilder hcl = new SimpleTwoDimensionalHclBuilder ();
-    final Dataset dataset = workspace.get (ds.name ());
-    final Type type = dimension.type ();
-    hcl.nodeBuilder (nodeBuilder);
-    hcl.metric (metric);
-    hcl.linkage (linkage);
+    log.debug ("Running HCL on " + dataset);
 
-    log.debug ("Running HCL on " + dataset + ", " + dimension + " of " + type);
-
-    // END HACKS
     new Thread () {
       /* (non-Javadoc)
        * @see java.lang.Thread#run() */
       @Override
       public void run () {
         try {
-          dataset.analyses ().put (hcl.name (name).dataset (dataset).dimension (dimension).build ());
+          dataset.analyses ().put (builder.name (name).build ());
         } catch (DatasetException e) {
           log.warn ("Could not cluster hierarchically", e);
         }
       }
-    }.run (); // .start ();
+    }.run (); // .start (); TODO: async analysis
   }
 
-  @RequestMapping (value = "/dataset/" + DATASET_URL_ELEMENT + "/analysis/" + ANALYSIS_URL_ELEMENT,
+  @RequestMapping (value = "/analysis/" + ANALYSIS_URL_ELEMENT,
                    method = POST)
-  public Dimension apply (@PathVariable (DATASET) Dataset dataset,
-                          @PathVariable (ANALYSIS) Hcl analysis) throws DatasetException {
+  public Dimension apply (@PathVariable (ANALYSIS_MAPPING_NAME) Hcl analysis) throws DatasetException {
     return analysis.apply ();
   }
 }

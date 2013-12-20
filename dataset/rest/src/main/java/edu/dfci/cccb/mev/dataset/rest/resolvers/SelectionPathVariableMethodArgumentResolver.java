@@ -14,45 +14,63 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.resolvers;
 
+import static edu.dfci.cccb.mev.dataset.domain.contract.Selection.VALID_SELECTION_NAME_REGEX;
+
+import java.lang.reflect.Method;
+
 import javax.inject.Inject;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import org.springframework.core.MethodParameter;
 import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
+import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 
 /**
  * @author levk
  * 
  */
-public class SelectionPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver {
+@ToString
+public class SelectionPathVariableMethodArgumentResolver extends AbstractTypedPathVariableMethodArgumentResolver<Selection> {
 
-  private @Getter @Setter (onMethod = @_ (@Inject)) Dimension dimension;
+  public static final String SELECTION_MAPPING_NAME = "selection";
+  public static final String SELECTION_URL_ELEMENT = "{" + SELECTION_MAPPING_NAME + ":"
+                                                     + VALID_SELECTION_NAME_REGEX + "}";
 
-  /* (non-Javadoc)
-   * @see org.springframework.web.servlet.mvc.method.annotation.
-   * PathVariableMethodArgumentResolver
-   * #supportsParameter(org.springframework.core.MethodParameter) */
-  @Override
-  public boolean supportsParameter (MethodParameter parameter) {
-    return Selection.class.isAssignableFrom (parameter.getParameterType ()) && super.supportsParameter (parameter);
+  private @Getter @Setter (onMethod = @_ (@Inject)) DimensionPathVariableMethodArgumentResolver dimensionResolver;
+
+  /**
+   * 
+   */
+  public SelectionPathVariableMethodArgumentResolver () {
+    super (Selection.class, SELECTION_MAPPING_NAME);
   }
 
   /* (non-Javadoc)
-   * @see org.springframework.web.servlet.mvc.method.annotation.
-   * PathVariableMethodArgumentResolver#resolveName(java.lang.String,
-   * org.springframework.core.MethodParameter,
+   * @see edu.dfci.cccb.mev.dataset.rest.resolvers.
+   * AbstractTypedPathVariableMethodArgumentResolver
+   * #resolveObject(java.lang.String, org.springframework.core.MethodParameter,
    * org.springframework.web.context.request.NativeWebRequest) */
   @Override
-  protected Object resolveName (String name, MethodParameter parameter, NativeWebRequest request) throws Exception {
-    Object value = super.resolveName (name, parameter, request);
-    if (value == null)
-      return null;
-    return dimension.selections ().get ((String) value);
+  public Selection resolveObject (String value, Method method, NativeWebRequest request) throws Exception {
+    return resolveSelection (dimensionResolver.resolveObject (method, request), value);
+  }
+
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.dataset.rest.resolvers.
+   * AbstractTypedPathVariableMethodArgumentResolver
+   * #resolveObject(java.lang.String,
+   * org.springframework.web.context.request.NativeWebRequest) */
+  @Override
+  public Selection resolveObject (String value, NativeWebRequest request) throws Exception {
+    return resolveSelection (dimensionResolver.resolveObject (request), value);
+  }
+
+  private Selection resolveSelection (Dimension dimension, String name) throws SelectionNotFoundException {
+    return dimension.selections ().get (name);
   }
 }

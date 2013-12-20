@@ -16,6 +16,8 @@ package edu.dfci.cccb.mev.dataset.rest.resolvers;
 
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.from;
 
+import java.lang.reflect.Method;
+
 import javax.inject.Inject;
 
 import lombok.EqualsAndHashCode;
@@ -23,44 +25,53 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import org.springframework.core.MethodParameter;
-import org.springframework.core.Ordered;
 import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 
 /**
  * @author levk
  * 
  */
-@ToString (exclude = "dataset")
+@ToString
 @EqualsAndHashCode (callSuper = false)
-public class DimensionPathVariableMethodArgumentResolver extends PathVariableMethodArgumentResolver implements Ordered {
+public class DimensionPathVariableMethodArgumentResolver extends AbstractTypedPathVariableMethodArgumentResolver<Dimension> {
 
-  private @Getter @Setter (onMethod = @_ (@Inject)) Dataset dataset;
-  private @Getter @Setter int order = LOWEST_PRECEDENCE;
+  public static final String DIMENSION_MAPPING_NAME = "dimension";
+  public static final String DIMENSION_URL_ELEMENT = "{" + DIMENSION_MAPPING_NAME + "}";
 
-  /* (non-Javadoc)
-   * @see org.springframework.web.servlet.mvc.method.annotation.
-   * PathVariableMethodArgumentResolver
-   * #supportsParameter(org.springframework.core.MethodParameter) */
-  @Override
-  public boolean supportsParameter (MethodParameter parameter) {
-    return Dimension.class.isAssignableFrom (parameter.getParameterType ()) && super.supportsParameter (parameter);
+  private @Getter @Setter (onMethod = @_ (@Inject)) DatasetPathVariableMethodArgumentResolver datasetResolver;
+
+  /**
+   * 
+   */
+  public DimensionPathVariableMethodArgumentResolver () {
+    super (Dimension.class, DIMENSION_MAPPING_NAME);
   }
 
   /* (non-Javadoc)
-   * @see org.springframework.web.servlet.mvc.method.annotation.
-   * PathVariableMethodArgumentResolver#resolveName(java.lang.String,
-   * org.springframework.core.MethodParameter,
+   * @see edu.dfci.cccb.mev.dataset.rest.resolvers.
+   * AbstractTypedPathVariableMethodArgumentResolver
+   * #resolveObject(java.lang.String, org.springframework.core.MethodParameter,
    * org.springframework.web.context.request.NativeWebRequest) */
   @Override
-  protected Object resolveName (String name, MethodParameter parameter, NativeWebRequest request) throws Exception {
-    Object value = super.resolveName (name, parameter, request);
-    if (value == null)
-      return null;
-    return dataset.dimension (from (value.toString ()));
+  public Dimension resolveObject (String value, Method method, NativeWebRequest request) throws Exception {
+    return resolveDimension (datasetResolver.resolveObject (method, request), value);
+  }
+
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.dataset.rest.resolvers.
+   * AbstractTypedPathVariableMethodArgumentResolver
+   * #resolveObject(java.lang.String,
+   * org.springframework.web.context.request.NativeWebRequest) */
+  @Override
+  public Dimension resolveObject (String value, NativeWebRequest request) throws Exception {
+    return resolveDimension (datasetResolver.resolveObject (request), value);
+  }
+
+  private Dimension resolveDimension (Dataset dataset, String value) throws InvalidDimensionTypeException {
+    return dataset.dimension (from (value));
   }
 }

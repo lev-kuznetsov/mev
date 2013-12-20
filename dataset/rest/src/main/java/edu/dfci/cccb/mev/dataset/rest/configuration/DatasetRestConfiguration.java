@@ -16,24 +16,38 @@ package edu.dfci.cccb.mev.dataset.rest.configuration;
 
 import static edu.dfci.cccb.mev.dataset.rest.assembly.tsv.prototype.AbstractTsvHttpMessageConverter.TSV_EXTENSION;
 import static edu.dfci.cccb.mev.dataset.rest.assembly.tsv.prototype.AbstractTsvHttpMessageConverter.TSV_MEDIA_TYPE;
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver.ANALYSIS_MAPPING_NAME;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
+import static org.springframework.context.annotation.ScopedProxyMode.NO;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
+import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
+import static org.springframework.web.servlet.HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE;
+
+import java.util.Map;
+
 import lombok.ToString;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.ParserFactory;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.mock.MapBackedValueStoreBuilder;
+import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListWorkspace;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelectionBuilder;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvComposerFactory;
@@ -44,7 +58,6 @@ import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDimensionJsonSe
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleSelectionJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.MultipartUploadDatasetArgumentResolver;
-import edu.dfci.cccb.mev.dataset.rest.context.RestPathVariableDatasetRequestContextInjector;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgumentResolver;
@@ -54,15 +67,67 @@ import edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgum
  * 
  */
 @Configuration
-@Import (RestPathVariableDatasetRequestContextInjector.class)
 @ComponentScan (basePackages = "edu.dfci.cccb.mev.dataset.rest.controllers")
 @ToString
 public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
 
+  // Domain conversational objects
+
   @Bean
-  public MultipartUploadDatasetArgumentResolver multipartUploadDatasetArgumentResolver (ConfigurableBeanFactory beanFactory) {
-    return new MultipartUploadDatasetArgumentResolver (beanFactory, false);
+  @Scope (value = SCOPE_SESSION, proxyMode = INTERFACES)
+  public Workspace workspace () {
+    return new ArrayListWorkspace ();
   }
+
+  @Bean
+  @Scope (value = SCOPE_REQUEST, proxyMode = NO)
+  public Dataset dataset (NativeWebRequest request, DatasetPathVariableMethodArgumentResolver resolver) throws Exception {
+    return resolver.resolveObject (request);
+  }
+
+  @Bean
+  @Scope (value = SCOPE_REQUEST, proxyMode = NO)
+  public Dimension dimension (NativeWebRequest request, DimensionPathVariableMethodArgumentResolver resolver) throws Exception {
+    return resolver.resolveObject (request);
+  }
+
+  @Bean
+  @Scope (value = SCOPE_REQUEST, proxyMode = NO)
+  public Selection selection (NativeWebRequest request, SelectionPathVariableMethodArgumentResolver resolver) throws Exception {
+    return resolver.resolveObject (request);
+  }
+
+  // TODO: this is a hack until type of analysis goes into the request mapping
+  @SuppressWarnings ("unchecked")
+  @Bean
+  @Scope (value = SCOPE_REQUEST, proxyMode = NO)
+  public Analysis analysis (NativeWebRequest request, Dataset dataset) throws Exception {
+    return dataset.analyses ()
+                  .get (((Map<String, String>) request.getAttribute (URI_TEMPLATE_VARIABLES_ATTRIBUTE,
+                                                                     RequestAttributes.SCOPE_REQUEST)).get (ANALYSIS_MAPPING_NAME));
+  }
+
+  // Domain builders
+
+  @Bean
+  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
+  public ValueStoreBuilder valueFactory () {
+    return new MapBackedValueStoreBuilder ();
+  }
+
+  @Bean
+  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
+  public DatasetBuilder datasetBuilder () {
+    return new SimpleDatasetBuilder ();
+  }
+
+  @Bean
+  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
+  public SelectionBuilder selectionBuilder () {
+    return new SimpleSelectionBuilder ();
+  }
+
+  // Serialization
 
   @Bean
   public DimensionTypeJsonSerializer dimensionTypeJsonSerializer () {
@@ -85,13 +150,13 @@ public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  public SuperCsvComposerFactory superCsvComposerFactory () {
-    return new SuperCsvComposerFactory ();
+  public DatasetTsvMessageConverter datasetTsvMessageConverter () {
+    return new DatasetTsvMessageConverter ();
   }
 
   @Bean
-  public DatasetTsvMessageConverter datasetTsvMessageConverter () {
-    return new DatasetTsvMessageConverter ();
+  public SuperCsvComposerFactory superCsvComposerFactory () {
+    return new SuperCsvComposerFactory ();
   }
 
   @Bean
@@ -99,22 +164,11 @@ public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
     return new SuperCsvParserFactory ();
   }
 
-  @Bean
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public ValueStoreBuilder valueFactory () {
-    return new MapBackedValueStoreBuilder ();
-  }
+  // Resolvers
 
   @Bean
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public DatasetBuilder datasetBuilder () {
-    return new SimpleDatasetBuilder ();
-  }
-
-  @Bean
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public SelectionBuilder selectionBuilder () {
-    return new SimpleSelectionBuilder ();
+  public MultipartUploadDatasetArgumentResolver multipartUploadDatasetArgumentResolver (ConfigurableBeanFactory beanFactory) {
+    return new MultipartUploadDatasetArgumentResolver (beanFactory, false);
   }
 
   @Bean
@@ -128,7 +182,6 @@ public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
   public SelectionPathVariableMethodArgumentResolver selectionPathVariableMethodArgumentResolver () {
     return new SelectionPathVariableMethodArgumentResolver ();
   }
