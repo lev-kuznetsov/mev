@@ -47,7 +47,15 @@
 	    <div id="{{limma.divId}}" class="accordion-body collapse">
 	      <div class="accordion-inner">
 	      
+	            <button class="btn btn-success pull-right" >
+	              <a href="/dataset/{{datasetName}}/analysis/{{limma.name}}?format=tsv">
+	              <i class="icon-download"></i> Download
+	              </a> 
+	            </button>
+	            
+	            
 	        	<div id="limmaResultsTable">
+	        	
                     <table class="table table-striped table-bordered">
                             <thead>
                                     <tr>
@@ -74,7 +82,7 @@
                                     </tr>
                             </tbody>
                     </table>
-            </div> 
+                </div> 
 	        
 	      </div>
 	    </div> <!-- End Body Div -->

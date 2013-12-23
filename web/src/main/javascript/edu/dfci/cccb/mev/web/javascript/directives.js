@@ -178,6 +178,9 @@ define (
                         
 
                         scope.buildPreviousAnalysisList ();
+                        
+                        scope.datasetName = $rP.datasetName;
+                        	
 
                       }
                     };
@@ -346,7 +349,9 @@ define (
                       scope.analysisControl, 
                       scope.analysisPValue)
 
-            };
+                };
+                
+                
 
               }
 
