@@ -23,14 +23,10 @@ import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUES
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 import static org.springframework.web.servlet.HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE;
 
-import java.net.URL;
 import java.util.Map;
-
-import javax.annotation.PostConstruct;
 
 import lombok.ToString;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

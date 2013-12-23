@@ -27,9 +27,9 @@ public abstract class AbstractTsvHttpMessageConverter <T> extends AbstractHttpMe
 
   private static final Charset DEFAULT_CHARSET = Charset.forName ("UTF-8");
   public static final String TSV_EXTENSION = "tsv";
-  private static final String TSV_TYPE = "application";
+  private static final String TSV_TYPE = "text";
   public static final MediaType TSV_MEDIA_TYPE = new MediaType (TSV_TYPE,
-                                                                "x-" + TSV_EXTENSION,
+                                                                "tab-separated-values",
                                                                 DEFAULT_CHARSET);
 
   /**
