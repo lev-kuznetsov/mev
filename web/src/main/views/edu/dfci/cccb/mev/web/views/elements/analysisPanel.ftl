@@ -47,14 +47,20 @@
 	    <div id="{{limma.divId}}" class="accordion-body collapse">
 	      <div class="accordion-inner">
 	      
-	            <button class="btn btn-success pull-right" >
+	            <button class="btn" >
 	              <a href="/dataset/{{datasetName}}/analysis/{{limma.name}}?format=tsv">
 	              <i class="icon-download"></i> Download
 	              </a> 
 	            </button>
 	            
+	            <div id="limmaResultsNotSignificant" ng-hide="limma.datar.significant">
+	              <hr>
+	              <p>No Significant values!</p>
+	              
+	            </div>
 	            
-	        	<div id="limmaResultsTable">
+	            
+	        	<div id="limmaResultsTable" ng-hide="!limma.datar.significant">
 	        	
                     <table class="table table-striped table-bordered">
                             <thead>
