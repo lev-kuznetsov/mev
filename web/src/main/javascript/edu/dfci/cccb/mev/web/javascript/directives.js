@@ -940,8 +940,19 @@ define (
 
                             if (newval && !oldval) {
                               drawHeatmap(newval);
+                              
+                              //redraw previously rendered tree if page loads
+                              if (newval.column.root) {
+                            	  scope.heatmapTopTree = newval.column.root;
+                              }
+                              if (newval.row.root) {
+                            	  scope.heatmapLeftTree = newval.column.root;
+                              }
+                              
                             } else if (newval && oldval) {
+                            	
                               updateDrawHeatmap(newval);
+                              
                             }
                           
                         });
