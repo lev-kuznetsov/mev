@@ -1,10 +1,11 @@
 <style type="text/css">
 
 .fixed-height {
-  height: 900px;
+  height: 700px;
   overflow:auto;
   
 }
+
 
 </style>
 
