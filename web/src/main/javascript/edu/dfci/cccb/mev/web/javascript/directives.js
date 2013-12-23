@@ -178,6 +178,9 @@ define (
                         
 
                         scope.buildPreviousAnalysisList ();
+                        
+                        scope.datasetName = $rP.datasetName;
+                        	
 
                       }
                     };
@@ -346,7 +349,9 @@ define (
                       scope.analysisControl, 
                       scope.analysisPValue)
 
-            };
+                };
+                
+                
 
               }
 
@@ -586,7 +591,7 @@ define (
                       link : function (scope, elems, attr) {
 
                         var svgWidth = Math.floor (jq ('#leftPanel').css (
-                            'width').slice (0, -2) * .9), svgHeight = Math
+                            'width').slice (0, -2) * .9), svgHeight = Math //svgheight no longer!
                             .floor (jq ('#leftPanel').css ('height').slice (0,
                                 -2) * .9);
 
@@ -600,8 +605,8 @@ define (
                         var heatmapCellsWidth = svgWidth - heatmapMarginLeft
                             - heatmapMarginRight;
 
-                        var heatmapCellsHeight = svgHeight - heatmapMarginTop
-                            - heatmapMarginBottom;
+                        var heatmapCellsHeight = undefined;
+                        var heatmapCellHeight = 40;
 
                         var window = d3.select (elems[0]);
 
@@ -634,7 +639,8 @@ define (
 
                         var svg = window.append ("svg").attr ("class", "chart")
                         // .attr("pointer-events", "all")
-                        .attr ("width", svgWidth).attr ("height", svgHeight);
+                        .attr ("width", svgWidth);
+                        
 
                         var vis = svg.append ("g");
 
@@ -819,6 +825,12 @@ define (
                         ;
 
                         function scaleUpdates (cols, rows, min, max, avg) {
+                        	
+                          heatmapCellHeight = 80;
+                          
+                          heatmapCellsHeight = heatmapCellHeight*rows.keys.length;
+                        	
+                          svg.attr("height", heatmapCellsHeight + heatmapMarginTop + heatmapMarginBottom);
 
                           leftshifter.domain ([ min, avg ]); // Color Update
 
@@ -881,7 +893,7 @@ define (
 
                           YIndex2Pixel.domain ([ 0, rows.keys.length ]).range (
                               [ heatmapMarginTop,
-                                  heatmapMarginTop + heatmapCellsHeight ]);
+                                heatmapMarginTop + heatmapCellsHeight ]);
 
                           xAxisd3.scale (XIndex2Pixel).orient ("bottom").ticks (
                               cols.keys.length).tickFormat (function (d) {
@@ -935,8 +947,21 @@ define (
 
                             if (newval && !oldval) {
                               drawHeatmap(newval);
+                              
+                              //redraw previously rendered tree if page loads
+                              
+                              if (newval.column.root) {
+                            	  scope.heatmapTopTree = newval.column.root;
+                              }
+                              
+                              if (newval.row.root) {
+                            	  scope.heatmapLeftTree = newval.row.root;
+                              }
+                              
                             } else if (newval && oldval) {
+                            	
                               updateDrawHeatmap(newval);
+                              
                             }
                           
                         });
