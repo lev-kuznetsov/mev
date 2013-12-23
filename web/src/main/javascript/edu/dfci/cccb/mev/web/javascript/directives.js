@@ -946,7 +946,7 @@ define (
                             	  scope.heatmapTopTree = newval.column.root;
                               }
                               if (newval.row.root) {
-                            	  scope.heatmapLeftTree = newval.column.root;
+                            	  scope.heatmapLeftTree = newval.row.root;
                               }
                               
                             } else if (newval && oldval) {
