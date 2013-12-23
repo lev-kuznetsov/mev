@@ -29,7 +29,6 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.ComposerFactory;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetComposingException;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.prototype.AbstractTsvHttpMessageConverter;
 
@@ -37,11 +36,10 @@ import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.prototype.AbstractTsvHttpMess
  * @author levk
  * 
  */
-@ToString (exclude = "builder")
+@ToString
 public class DatasetTsvMessageConverter extends AbstractTsvHttpMessageConverter<Dataset> {
 
   private @Getter @Setter (onMethod = @_ (@Inject)) ComposerFactory composer;
-  private @Getter @Setter (onMethod = @_ (@Inject)) DatasetBuilder builder;
 
   /* (non-Javadoc)
    * @see

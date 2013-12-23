@@ -394,9 +394,9 @@ define (
 
                           url : "/dataset",
                           method : "post",
-                          paramName : "dataset",
+                          paramName : "upload",
                           clickable : true,
-                          uploadMultiple : true,
+                          uploadMultiple : false,
                           previewsContainer : null,
                           addRemoveLinks : false,
                           createImageThumbnails : false,

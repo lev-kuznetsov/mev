@@ -24,7 +24,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 /**
  * @author levk
- *
+ * 
  */
 @Configuration
 public class MultipartUploadConfiguration {
@@ -33,7 +33,7 @@ public class MultipartUploadConfiguration {
 
   @Bean
   public MultipartResolver multipartResolver () {
-    final long DEFAULT_MAX_UPLOAD_SIZE = 1024L * 1024L * 1024L * 20L; // 20Gb
+    final long DEFAULT_MAX_UPLOAD_SIZE = 1024L * 1024L; // 1Mb
 
     CommonsMultipartResolver resolver = new CommonsMultipartResolver ();
     resolver.setMaxUploadSize (environment.getProperty ("multipart.upload.max.size",

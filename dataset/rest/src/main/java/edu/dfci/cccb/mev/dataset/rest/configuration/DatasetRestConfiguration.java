@@ -23,11 +23,14 @@ import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUES
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 import static org.springframework.web.servlet.HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE;
 
+import java.net.URL;
 import java.util.Map;
+
+import javax.annotation.PostConstruct;
 
 import lombok.ToString;
 
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -57,7 +60,6 @@ import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDatasetJsonSeri
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDimensionJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleSelectionJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter;
-import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.MultipartUploadDatasetArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgumentResolver;
@@ -165,11 +167,6 @@ public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   // Resolvers
-
-  @Bean
-  public MultipartUploadDatasetArgumentResolver multipartUploadDatasetArgumentResolver (ConfigurableBeanFactory beanFactory) {
-    return new MultipartUploadDatasetArgumentResolver (beanFactory, false);
-  }
 
   @Bean
   public DatasetPathVariableMethodArgumentResolver datasetPathVariableMethodArgumentResolver () {
