@@ -413,6 +413,7 @@ define (
                         }).on ("error", function (file) {
 
                     }).on('complete', function(file){
+                      loadUploads();
                     	$("#importTabs a[href='#current']").tab('show');
                     });
 

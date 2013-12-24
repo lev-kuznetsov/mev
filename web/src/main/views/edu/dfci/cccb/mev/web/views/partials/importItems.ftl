@@ -25,12 +25,21 @@
           <div class='uploadDrag'></div>
         </div>
         
-        <div class="tab-pane" id="googleDrive">
+        <!--div class="tab-pane" id="googleDrive">
 
-        </div>
+        </div-->
         
         <div class="tab-pane" id="tcga">
 
+          <a href="" onclick="$.ajax({ type: 'POST',
+                                       url: '/dataset?load=Ovarian Agilent G4502A 07 2 Level 3',
+                                       contentType: 'application/json;charset=UTF-8',
+                                       onSuccess: function() {
+                                         //loadUploads();
+                                         alert('Ovarian Agilent G4502A 07 2 Level 3 loaded');
+                                       }
+                                     });">Ovarian Agilent G4502A 07 2 Level 3</a>
+          
         </div>
        
         <div class="tab-pane" id="current" >

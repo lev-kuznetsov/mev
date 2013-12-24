@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.assembly.tsv;
 
+import static org.apache.commons.io.FilenameUtils.getBaseName;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -45,7 +47,7 @@ public class UrlTsvInput extends AbstractRawInput {
    * @see edu.dfci.cccb.mev.dataset.domain.contract.RawInput#name() */
   @Override
   public String name () {
-    return url.getFile ();
+    return getBaseName (url.toString ());
   }
 
   /* (non-Javadoc)

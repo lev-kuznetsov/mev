@@ -71,21 +71,25 @@ public class WorkspaceController {
     return workspace.list ();
   }
 
-  @RequestMapping (value = "/dataset", method = POST)
+  @RequestMapping (value = "/dataset", method = POST, consumes = "multipart/form-data")
   @ResponseStatus (OK)
-  public void put (@RequestParam (value = "upload", required = false) MultipartFile upload,
-                   @RequestParam (value = "load", required = false) String load) throws DatasetBuilderException,
-                                                                                InvalidDatasetNameException,
-                                                                                InvalidDimensionTypeException {
-    Dataset dataset;
-    if (upload != null)
-      dataset = builder.build (new MultipartTsvInput (upload));
-    else if (load != null)
-      dataset = builder.build (new UrlTsvInput (presets.get (load)));
-    else
-      throw new IllegalArgumentException (); // TODO: correct exception
+  public void upload (@RequestParam ("upload") MultipartFile upload) throws DatasetBuilderException,
+                                                                    InvalidDatasetNameException,
+                                                                    InvalidDimensionTypeException {
+    Dataset dataset = builder.build (new MultipartTsvInput (upload));
     if (log.isDebugEnabled ())
       log.debug ("Uploaded " + dataset);
+    workspace.put (dataset);
+  }
+
+  @RequestMapping (value = "/dataset", method = POST, consumes = { "text/plain", "application/json" })
+  @ResponseStatus (OK)
+  public void load (@RequestParam ("load") String load) throws DatasetBuilderException,
+                                                       InvalidDatasetNameException,
+                                                       InvalidDimensionTypeException {
+    Dataset dataset = builder.build (new UrlTsvInput (presets.get (load)));
+    if (log.isDebugEnabled ())
+      log.debug ("Loaded " + dataset);
     workspace.put (dataset);
   }
 }
