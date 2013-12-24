@@ -1,10 +1,11 @@
 <style type="text/css">
 
 .fixed-height {
-  height: 900px;
+  height: 700px;
   overflow:auto;
   
 }
+
 
 </style>
 
@@ -47,7 +48,21 @@
 	    <div id="{{limma.divId}}" class="accordion-body collapse">
 	      <div class="accordion-inner">
 	      
-	        	<div id="limmaResultsTable">
+	            <button class="btn" >
+	              <a href="/dataset/{{datasetName}}/analysis/{{limma.name}}?format=tsv">
+	              <i class="icon-download"></i> Download
+	              </a> 
+	            </button>
+	            
+	            <div id="limmaResultsNotSignificant" ng-hide="limma.datar.significant">
+	              <hr>
+	              <p>No Significant values!</p>
+	              
+	            </div>
+	            
+	            
+	        	<div id="limmaResultsTable" ng-hide="!limma.datar.significant">
+	        	
                     <table class="table table-striped table-bordered">
                             <thead>
                                     <tr>
@@ -74,7 +89,7 @@
                                     </tr>
                             </tbody>
                     </table>
-            </div> 
+                </div> 
 	        
 	      </div>
 	    </div> <!-- End Body Div -->

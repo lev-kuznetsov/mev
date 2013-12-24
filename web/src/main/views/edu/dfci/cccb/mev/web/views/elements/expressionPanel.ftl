@@ -1,3 +1,16 @@
+<style>
+
+.fixed-height {
+  height: 700;
+  overflow:auto;
+}
+
+</style>
+
 <div class="row-fluid">
-  <vis-Heatmap></vis-Heatmap>
+
+  <div class="fixed-height">
+    <vis-Heatmap></vis-Heatmap>
+  </div>
+  
 </div>
