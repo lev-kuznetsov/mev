@@ -27,7 +27,6 @@ import java.util.Map;
 
 import lombok.ToString;
 
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -57,7 +56,6 @@ import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDatasetJsonSeri
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDimensionJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleSelectionJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter;
-import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.MultipartUploadDatasetArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgumentResolver;
@@ -165,11 +163,6 @@ public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
   }
 
   // Resolvers
-
-  @Bean
-  public MultipartUploadDatasetArgumentResolver multipartUploadDatasetArgumentResolver (ConfigurableBeanFactory beanFactory) {
-    return new MultipartUploadDatasetArgumentResolver (beanFactory, false);
-  }
 
   @Bean
   public DatasetPathVariableMethodArgumentResolver datasetPathVariableMethodArgumentResolver () {
