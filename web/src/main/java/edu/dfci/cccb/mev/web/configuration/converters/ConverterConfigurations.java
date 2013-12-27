@@ -15,6 +15,7 @@
 package edu.dfci.cccb.mev.web.configuration.converters;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -25,6 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,7 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 @Configuration
 @Log4j
-public class ConverterConfigurations {
+public class ConverterConfigurations extends WebMvcConfigurerAdapter {
 
   private @Inject RequestMappingHandlerAdapter requestMappingHandlerAdapter;
   private @Inject ObjectMapper jsonObjectMapper;
@@ -50,8 +53,22 @@ public class ConverterConfigurations {
 
   @PostConstruct
   public void registerJacksonObjectMapper () {
-    for (HttpMessageConverter<?> converter : requestMappingHandlerAdapter.getMessageConverters ())
+    for (HttpMessageConverter<?> converter : requestMappingHandlerAdapter.getMessageConverters ()) {
+      log.warn ("Converter: " + converter + " of " + converter.getClass ().getName ());
       if (converter instanceof MappingJackson2HttpMessageConverter)
         ((MappingJackson2HttpMessageConverter) converter).setObjectMapper (jsonObjectMapper);
+    }
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
+   * #configureMessageConverters(java.util.List) */
+  // @Override
+  public void configureMessageConverters2 (List<HttpMessageConverter<?>> converters) {
+    MappingJackson2HttpMessageConverter jacksonConverter = new MappingJackson2HttpMessageConverter ();
+    jacksonConverter.setObjectMapper (jsonObjectMapper);
+    converters.add (jacksonConverter);
+    converters.add (new AllEncompassingFormHttpMessageConverter ());
   }
 }
