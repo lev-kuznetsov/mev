@@ -342,12 +342,19 @@ define (
                 });
                 
                 scope.limmaInit = function(){
+                	
+                  params = {
+                    dataset: $routeP.datasetName, 
+                    name: scope.analysisName,
+                    dimension: scope.analysisDimension.value, 
+                    experiment: scope.analysisExperiment, 
+                    control: scope.analysisControl, 
+                    alpha: scope.analysisPValue,
+                    callback: scope.buildPreviousAnalysisList
+                		  
+                  };
                   
-                  API.analysis.limma.create($routeP.datasetName, scope.analysisName, 
-                      scope.analysisDimension.value,
-                      scope.analysisExperiment, 
-                      scope.analysisControl, 
-                      scope.analysisPValue)
+                  API.analysis.limma.create(params);
 
                 };
                 
@@ -418,8 +425,7 @@ define (
                         }).on ("error", function (file) {
 
                     }).on('complete', function(file){
-                      loadUploads();
-                    	$("#importTabs a[href='#current']").tab('show');
+                    	scope.loadUploads();
                     });
 
                   }

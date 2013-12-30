@@ -224,16 +224,16 @@ define (
                         },
                         
                         limma : {
-                          create : function(dataset, name, dimension, experiment, control, alpha){
+                          create : function(q){
                             
                             var params = {
                                 method : 'POST',
-                                url : '/dataset/' + dataset + '/analyze/limma/'
-                                    + name + "(dimension="
-                                    + dimension + ",experiment="
-                                    + experiment + ",control="
-                                    + control + ",alpha="
-                                    + alpha + ")"
+                                url : '/dataset/' + q.dataset + '/analyze/limma/'
+                                    + q.name + "(dimension="
+                                    + q.dimension + ",experiment="
+                                    + q.experiment + ",control="
+                                    + q.control + ",alpha="
+                                    + q.alpha + ")"
                                     
                             };
                             
@@ -241,7 +241,8 @@ define (
                                 function (d, s) {
                                   var message = "LIMMA analysis " + name + " completed."
                               
-                                  alertService.success(message, "LIMMA Analysis")
+                                  alertService.success(message, "LIMMA Analysis");
+                                  q.callback();
                                 },
                                 function (d, s) {
                                   var message = "Could not generate LIMMA analysis "
