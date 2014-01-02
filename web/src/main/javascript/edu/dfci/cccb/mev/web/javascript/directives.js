@@ -25,8 +25,8 @@ define (
                 };
               } ])
           .directive (
-              'heatmapPanels',[ '$routeParams', 'API', 'alertService',
-              function ($routeParams, API, alertService) {
+              'heatmapPanels',[ '$routeParams', 'API', 'alertService', '$location',
+              function ($routeParams, API, alertService, $location) {
                 return {
                   restrict : 'A',
                   templateUrl : '/container/view/elements/heatmapPanels',
@@ -39,9 +39,9 @@ define (
                     scope.heatmapTopTreeName = undefined;
                     
                     API.dataset.get ($routeParams.datasetName).then (
-                        function(data){ scope.heatmapData = data;}, function () {
-                          // Redirect to home if errored out
-                          $location.path ('/');
+                        function(data){ scope.heatmapData = data;}, function(data){
+                        	//return home if error
+                        	$location.path('/');
                         });
                     
                    scope.updateHeatmapData = function(prevAnalysis, textForm){
@@ -442,12 +442,8 @@ define (
             };
 
           })
-          .directive (
-              'd3RadialTree',
-              [
-                  'API',
-                  '$routeParams',
-                  function (API, $routeParams) {
+          .directive ('d3RadialTree', ['API','$routeParams', 
+             function (API, $routeParams) {
 
                     return {
                       restrict : 'A',
@@ -458,118 +454,80 @@ define (
                       },
                       templateUrl : '/container/view/elements/d3RadialTree',
                       link : function (scope, elems, attr) {
+                    	  
+                    	var dendogram = {
+                          height: 300,
+                          width: 600
+                        };
+                    	
+                    	var svg = d3.select(elems[0]).append("svg")
+                    	  .attr({width: dendogram.width, height: dendogram.height});
+                    	
+                    	var Cluster = d3.layout.cluster()
+                          .sort(null)
+                          .separation(function(a, b){ 
+                            return a.parent == b.parent ? 1:1
+                          })
+                          .value(function(d){return d.distance;})
+                          .children(function(d){return d.children;});
                         
-                        var r =500/ 2;
-                        var resizeCoeff = .75; // Adjusts r coefficient for end size
+                        var dendogramWindow = svg.append("g")
+                            .attr('class', 'smallDendogram');
+                        
+                        function Path(d) {
+                            //Path function builder for TOP heatmap tree path attribute
+                            
+                            return "M" + ( d.target.x * dendogram.width )  + "," + ( d.target.y * dendogram.height ) +
+                            "V" + ( d.source.y * dendogram.height ) +
+                            "H" + ( d.source.x * dendogram.width );
+                            
 
-                        var cluster = d3.layout.cluster ().size ([ 360, r*resizeCoeff ]) 
-                            .sort (null).value (function (d) {
-                              return d.length;
-                            }).children (function (d) {
-                              return d.branchset;
-                            }).separation (function (a, b) {
-                              return 1;
-                            });
+                          };
+                    	  
+                        function drawAnalysisTree(canvas, cluster, tree, type) {
+                            
+                            canvas.selectAll('*').remove();
+                            var nodes = cluster.nodes(tree);
+                            var links = cluster.links(nodes);
+                            
+                            canvas.selectAll("path")
+                                .data(links)
+                              .enter().append("path")
+                                .attr("d", function(d) {
+                                return Path(d)
+                                })
+                                .attr("stroke", function(){
+                                  return "grey"
+                                })
+                                .attr("fill", "none"); 
 
-                        function project (d) {
-                          var r = d.y, a = (d.x - 90) / 180 * Math.PI;
-                          return [ r * Math.cos (a), r * Math.sin (a) ];
-                        }
+                            canvas.selectAll("circle").data(nodes).enter().append("circle")
+                               .attr("r", 2.5)
+                               .attr("cx", function(d){
+                                 return d.x * dendogram.width;
+                               })
+                               .attr("cy", function(d){
+                                 return d.y * dendogram.height;
+                               })
+                               .attr("fill", function(d){
+                                 return "red"
+                               })
+                               .on("click", function(d){
+                                 //
+                               }); 
 
-                        function cross (a, b) {
-                          return a[0] * b[1] - a[1] * b[0];
-                        }
-                        function dot (a, b) {
-                          return a[0] * b[0] + a[1] * b[1];
-                        }
-
-                        function step (d) {
-                          var s = project (d.source), m = project ({
-                            x : d.target.x,
-                            y : d.source.y
-                          }), t = project (d.target), r = d.source.y, sweep = d.target.x > d.source.x ? 1
-                              : 0;
-                          return ("M" + s[0] + "," + s[1] + "A" + r + "," + r 
-                              + " 0 0," + sweep + " " + m[0] + "," + m[1] + "L"
-                              + t[0] + "," + t[1]);
-                        }
-
-                        var wrap = d3.select (elems[0]).append ("svg").attr (
-                            "width", r * 2).attr ("height", r * 2).style (
-                            "-webkit-backface-visibility", "hidden");
-
-                        // Catch mouse events in Safari.
-                        wrap.append ("rect").attr ("width", r * 2).attr (
-                            "height", r * 2).attr ("fill", "none")
-
-                        var vis = wrap.append ("g").attr ("transform",
-                            "translate(" + r + "," + r + ")");
-
-                        var start = null, rotate = 0, div = document
-                            .getElementById ("vis");
-
-                        function mouse (e) {
-                          return [ e.pageX - div.offsetLeft - r,
-                              e.pageY - div.offsetTop - r ];
-                        }
-
-                        wrap.on ("mousedown", function () {
-                          wrap.style ("cursor", "move");
-                          start = mouse (d3.event);
-                          d3.event.preventDefault ();
-                        });
-
-                        function phylo (n, offset) {
-                          if (n.length != null)
-                            offset += n.length  * 65 ;
-                          n.y = offset *.0025; //TODO: remove coefficient on algorithm correction
-                          if (n.children)
-                            n.children.forEach (function (n) {
-                              phylo (n, offset);
-                            });
-                        }
-
-                        function draw (text) {
-                          
-                          var x = newick.parse(text);
-                          var nodes = cluster.nodes(x);
-                          phylo(nodes[0], 0);
-                         
-                          var link = vis.selectAll("path.link")
-                              .data(cluster.links(nodes))
-                            .enter().append("path")
-                              .attr("class", "link")
-                              .attr("d", step);
-                         
-                          var node = vis.selectAll("g.node")
-                              .data(nodes.filter(function(n) { return n.x !== undefined; }))
-                            .enter().append("g")
-                              .attr("class", "node")
-                              .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-                         
-                          node.append("circle")
-                              .attr("r", 2.5);
-                         
-                          var label = vis.selectAll("text")
-                              .data(nodes.filter(function(d) { return d.x !== undefined && !d.children; }))
-                            .enter().append("text")
-                              .attr("dy", ".31em")
-                              .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-                              .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (r * resizeCoeff) + ")rotate(" + (d.x < 180 ? 0 : 180) + ")"; })
-                              .text(function(d) { return d.name.replace(/_/g, ' '); });
-
-                        } // end draw function
-
+                          };
                         scope.$watch ('data', function (newval, oldval) {
                           if (newval) {
-                            draw (newval);
+                        	console.log(newval)
+                            drawAnalysisTree (dendogramWindow, Cluster, newval.root, "horizontal");
                           }
                         });
 
                       } // end link
                     };
 
-                  } ])
+          }])
           .directive ('bsTable', function () {
 
             return {
