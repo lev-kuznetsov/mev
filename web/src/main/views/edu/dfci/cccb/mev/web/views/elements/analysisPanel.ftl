@@ -25,12 +25,20 @@
 	    <div id="{{cluster.divId}}" class="accordion-body collapse">
 	      <div class="accordion-inner">
 	      
-	        <button class="btn btn-success" ng-click="updateHeatmapData(cluster.name, cluster.datar)">
-	        <i class='icon-chevron-left'></i> Apply to heatmap
-	        </button>
-	        <div d3-Radial-Tree data="cluster.datar" diameter='400'></div> 
+	        <div class="row-fluid">
+	          <div class="span12">
+	          <button class="btn btn-success" ng-click="updateHeatmapData(cluster.name, cluster.datar)">
+	          <i class='icon-chevron-left'></i> Apply to heatmap
+	          </button>
+	          </div>
+	        </div>
+	        <br>
+	        <div class="row-fluid">
+	          <div class="span12">
+	            <div d3-Radial-Tree data="cluster.datar" diameter='400'></div> 
+	          </div>
+	        </div>
 	        
-	      </div>
 	    </div> <!-- End Body Div -->
     
     </div> <!-- End Accordion Grouping -->
