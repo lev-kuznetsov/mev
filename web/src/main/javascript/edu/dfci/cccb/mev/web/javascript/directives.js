@@ -519,7 +519,6 @@ define (
                           };
                         scope.$watch ('data', function (newval, oldval) {
                           if (newval) {
-                        	console.log(newval)
                             drawAnalysisTree (dendogramWindow, Cluster, newval.root, "horizontal");
                           }
                         });
@@ -794,6 +793,7 @@ define (
                           heatmapCellHeight = 80;
                           
                           heatmapCellsHeight = heatmapCellHeight*rows.keys.length;
+                          dendogramLeft.height = heatmapCellsHeight;
                         	
                           svg.attr("height", heatmapCellsHeight + heatmapMarginTop + heatmapMarginBottom);
 
@@ -990,8 +990,6 @@ define (
                           canvas.selectAll('*').remove();
                           var nodes = cluster.nodes(tree);
                           var links = cluster.links(nodes);
-
-                          
                           
                           canvas.selectAll("path")
                               .data(links)
@@ -1042,12 +1040,11 @@ define (
                           
                           return "M" + ((d.target.x * dendogramTop.width)+dendogramLeft.width )  + "," + (d.target.y * dendogramTop.height ) +
                           "V" + (d.source.y * dendogramTop.height ) +
-                          "H" + ((d.source.x * dendogramTop.width)+dendogramLeft.width );
-                          
-                          
+                          "H" + ((d.source.x * dendogramTop.width)+dendogramLeft.width ) ;
 
                         };
                         function verticalPath(d) {
+                        	
                           //Path function builder for LEFT heatmap tree path attribute
 
                           return "M" + (d.source.y * dendogramLeft.width )  + "," + ((d.source.x * dendogramLeft.height)+dendogramTop.height ) +
