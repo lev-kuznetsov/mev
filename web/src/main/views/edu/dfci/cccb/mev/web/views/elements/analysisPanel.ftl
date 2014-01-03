@@ -1,6 +1,6 @@
 <style type="text/css">
 
-.fixed-height {
+.fixed-height-analysis {
   height: 700px;
   overflow:auto;
   
@@ -12,7 +12,7 @@
 
 <div class="row-fluid">
 
-<div class="fixed-height">
+<div class="fixed-height-analysis">
   <div class="accordion" id="{{cluster.parentId}}" ng-repeat="cluster in previousHCLClusters">
     <div class="accordion-group">
     
@@ -55,49 +55,63 @@
 	    
 	    <div id="{{limma.divId}}" class="accordion-body collapse">
 	      <div class="accordion-inner">
-	      
-	            <button class="btn" >
-	              <a href="/dataset/{{datasetName}}/analysis/{{limma.name}}?format=tsv">
-	              <i class="icon-download"></i> Download
-	              </a> 
-	            </button>
 	            
-	            <div id="limmaResultsNotSignificant" ng-hide="limma.datar.significant">
-	              <hr>
-	              <p>No Significant values!</p>
-	              
-	            </div>
+	            <div class="row-fluid">
+	            <div class="span12>
 	            
-	            
-	        	<div id="limmaResultsTable" ng-hide="!limma.datar.significant">
-	        	
-                    <table class="table table-striped table-bordered">
-                            <thead>
-                                    <tr>
-                                      <th ng-repeat="header in ['ID', 'Log-Fold-Change', 'Average Expression', 'P-Value', 'Q-Value']">{{header}}</th>
-                                    </tr>
-                            </thead>
-                            <tbody>
-                                    <tr ng-repeat="row in limma.datar.significant">
-                                            <td>
-                                                    {{row["id"]}}
-                                            </td>
-                                            <td>
-                                                    {{row["logFoldChange"]}}
-                                            </td>
-                                            <td>
-                                                    {{row["averageExpression"]}}
-                                            </td>
-                                            <td>
-                                                    {{row["pValue"]}}
-                                            </td>
-                                            <td>
-                                                    {{row["qValue"]}}
-                                            </td>
-                                    </tr>
-                            </tbody>
-                    </table>
-                </div> 
+		            <div class="row-fluid">
+			            <button class="btn pull-right btn-success" >
+			              <a href="/dataset/{{datasetName}}/analysis/{{limma.name}}?format=tsv">
+			              <i class="icon-white icon-download"></i> Download
+			              </a> 
+			            </button>
+			            
+			            <div id="limmaResultsNotSignificant" ng-hide="limma.datar.significant">
+			              <hr>
+			              <p>No Significant values!</p>
+			              
+			            </div>
+			            
+			            <div id="showTableDialog" ng-hide="showLimmaTables">
+			              <a href="" ng-click="expandRight()">Expand to see table...</a>
+			            </div>
+			            
+			        </div>
+		            
+		            <div class="row-fluid">
+			        	<div class="limma-table" id="limmaResultsTable" ng-hide="!limma.datar.significant || !showLimmaTables">
+			        	
+		                    <table class="table table-striped table-bordered">
+		                            <thead>
+		                                    <tr>
+		                                      <th ng-repeat="header in ['ID', 'Log-Fold-Change', 'Average Expression', 'P-Value', 'Q-Value']">{{header}}</th>
+		                                    </tr>
+		                            </thead>
+		                            <tbody>
+		                                    <tr ng-repeat="row in limma.datar.significant">
+		                                            <td>
+		                                                    {{row["id"]}}
+		                                            </td>
+		                                            <td>
+		                                                    {{row["logFoldChange"]}}
+		                                            </td>
+		                                            <td>
+		                                                    {{row["averageExpression"]}}
+		                                            </td>
+		                                            <td>
+		                                                    {{row["pValue"]}}
+		                                            </td>
+		                                            <td>
+		                                                    {{row["qValue"]}}
+		                                            </td>
+		                                    </tr>
+		                            </tbody>
+		                    </table>
+		                </div>
+		            </div>
+                
+                </div> <!-- End Span -->
+                </div> <!-- End Row -->
 	        
 	      </div>
 	    </div> <!-- End Body Div -->
