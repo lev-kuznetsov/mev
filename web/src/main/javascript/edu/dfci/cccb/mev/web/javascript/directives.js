@@ -97,6 +97,7 @@ define (
                     jq ('#closeLeft').hide ();
 
                     var margin = "2.127659574468085%"
+                    scope.showLimmaTables = false;
 
                     scope.expandLeft = function () {
 
@@ -120,7 +121,8 @@ define (
                       jq ('#rightPanel').attr ("class", "span12 marker");
                       jq ('#rightPanel').css ({
                         "margin-left" : "0"
-                      })
+                      });
+                      scope.showLimmaTables = true;
 
                     };
 
@@ -139,7 +141,7 @@ define (
                       });
                       jq ('vis-heatmap svg').attr ("width",
                           jq ('#leftPanel').css ('width').slice (0, -2) * .9);
-
+                      scope.showLimmaTables = false;
                     };
 
                   }
