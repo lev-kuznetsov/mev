@@ -456,14 +456,15 @@ define (
                       },
                       templateUrl : '/container/view/elements/d3RadialTree',
                       link : function (scope, elems, attr) {
-                    	  
+                    	
+                    	var padding = 20;
                     	var dendogram = {
-                          height: 300,
-                          width: 600
+                          height: 200 + padding,
+                          width: jq("#leftPanel").css("width").split("px")[0] * .8 // Nicely define width
                         };
                     	
                     	var svg = d3.select(elems[0]).append("svg")
-                    	  .attr({width: dendogram.width, height: dendogram.height});
+                    	  .attr({width: dendogram.width, height: (dendogram.height + (padding))});
                     	
                     	var Cluster = d3.layout.cluster()
                           .sort(null)
@@ -479,8 +480,8 @@ define (
                         function Path(d) {
                             //Path function builder for TOP heatmap tree path attribute
                             
-                            return "M" + ( d.target.x * dendogram.width )  + "," + ( d.target.y * dendogram.height ) +
-                            "V" + ( d.source.y * dendogram.height ) +
+                            return "M" + ( d.target.x * dendogram.width )  + "," + ( (d.target.y * dendogram.height) + (padding*.5) ) +
+                            "V" + ( (d.source.y * dendogram.height) + (padding*.5) ) +
                             "H" + ( d.source.x * dendogram.width );
                             
 
@@ -509,7 +510,7 @@ define (
                                  return d.x * dendogram.width;
                                })
                                .attr("cy", function(d){
-                                 return d.y * dendogram.height;
+                                 return (d.y * dendogram.height) + (padding*.5);
                                })
                                .attr("fill", function(d){
                                  return "red"
