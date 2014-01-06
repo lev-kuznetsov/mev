@@ -89,9 +89,13 @@ define (
                       
                     };
                     
-                    jq ('#leftPanel div.well').css ('height', 1000);
-                    jq ('#rightPanel div.well').css ('height',
-                        $ ('#leftPanel div.well').height ());
+                    console.log("window height: " + jq(window).height())
+                    
+                    var windowHeight = jq(window).height() * .7;
+                    
+                    jq ('#leftPanel div.well').css ('height', windowHeight);
+                    jq ('#rightPanel div.well').css ('height',  windowHeight);
+                    jq('div.fixed-height-analysis').css('height', windowHeight)
 
                     jq ('#closeRight').hide ();
                     jq ('#closeLeft').hide ();
@@ -134,13 +138,13 @@ define (
                       jq ('#expandLeft').show ();
                       jq ('#rightPanel').show ();
                       jq ('#leftPanel').show ();
-                      jq ('#leftPanel').attr ("class", "span6 marker");
-                      jq ('#rightPanel').attr ("class", "span6 marker");
+                      jq ('#leftPanel').attr ("class", "span3 marker");
+                      jq ('#rightPanel').attr ("class", "span9 marker");
                       jq ('#rightPanel').css ({
                         "margin-left" : margin
                       });
                       jq ('vis-heatmap svg').attr ("width",
-                          jq ('#leftPanel').css ('width').slice (0, -2) * .9);
+                          jq ('#rightPanel').css ('width').slice (0, -2) * .9);
                       scope.showLimmaTables = false;
                     };
 
@@ -460,7 +464,7 @@ define (
                     	var padding = 20;
                     	var dendogram = {
                           height: 200 + padding,
-                          width: jq("#leftPanel").css("width").split("px")[0] * .8 // Nicely define width
+                          width: jq("#leftPanel").css("width").split("px")[0] * .75 // Nicely define width
                         };
                     	
                     	var svg = d3.select(elems[0]).append("svg")
@@ -556,11 +560,12 @@ define (
                       restrict : 'E',
                       // templateUrl : "/container/view/elements/visHeatmap",
                       link : function (scope, elems, attr) {
+                    	  
+                    	jq('div.fixed-height').css('height', jq ('#rightPanel').css ('height').slice (0, -2)* .8 )
 
-                        var svgWidth = Math.floor (jq ('#leftPanel').css (
+                        var svgWidth = Math.floor (jq ('#rightPanel').css (
                             'width').slice (0, -2) * .9), svgHeight = Math //svgheight no longer!
-                            .floor (jq ('#leftPanel').css ('height').slice (0,
-                                -2) * .9);
+                            .floor (jq ('#rightPanel').css ('height').slice (0, -2) * .9);
 
                         var heatmapMarginLeft = Math.floor (svgWidth * .15), 
                             heatmapMarginRight = Math.floor (svgWidth * .15), 

@@ -1,18 +1,9 @@
-<style type="text/css">
 
-.fixed-height-analysis {
-  height: 700px;
-  overflow:auto;
-  
-}
-
-
-</style>
 
 
 <div class="row-fluid">
 
-<div class="fixed-height-analysis">
+
   <div class="accordion" id="{{cluster.parentId}}" ng-repeat="cluster in previousHCLClusters">
     <div class="accordion-group">
     
@@ -120,7 +111,7 @@
   </div> <!-- End Accordion Definition -->
   
 
-</div> <!-- End fixed-height def -->
+
 
 </div> <!-- End Row Definition -->
 	

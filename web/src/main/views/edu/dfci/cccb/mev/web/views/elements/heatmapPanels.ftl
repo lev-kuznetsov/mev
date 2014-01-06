@@ -1,13 +1,25 @@
+<style type="text/css">
+
+.fixed-height-analysis {
+  overflow:auto;
+  
+}
+
+</style>
+
 <div class="row-fluid"> <!-- Start Column Expand Tabs -->
 	<div class="span3 marker" id="leftPanel">
 	
 	  <div class="well">
-	        
-	        <div class="row-fluid">
+	  
+	     <div class="row-fluid">
 			    <! -- LEFT EXPANDER BUTTON -->
 				<button id="expandLeft" class="btn btn-primary pull-right" ng-click="expandLeft()"><i class="icon-chevron-right"></i></button>
 				<button id="closeLeft" class="btn btn-primary pull-right" ng-click="expandBoth()"><i class="icon-chevron-left"></i></button>
-			</div>
+	     </div>
+			
+	     <div class="fixed-height-analysis">
+	        
 			
 			<div class="row-fluid">
                 <p class="lead pull-left">Set Manager</p>
@@ -79,10 +91,12 @@
 			<div class="row-fluid">
                 <p class="lead pull-left">Analysis</p>
 		    </div>
-		    <hr>
 		    
 		    <div analysis-Panel></div>
-	    </div>
+		    
+		  </div> <!-- End fixed-height def -->
+	    </div> <!-- End well def -->
+	    
 		
 	</div>
 
