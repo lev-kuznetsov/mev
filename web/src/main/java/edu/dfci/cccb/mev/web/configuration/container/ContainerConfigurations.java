@@ -22,6 +22,7 @@ import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.servlet.RequestToViewNameTranslator;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import edu.dfci.cccb.mev.dataset.client.contract.AnnotatedClassViewRegistrar;
