@@ -77,4 +77,9 @@ public class ContainerConfigurations extends MevClientConfigurerAdapter {
     registry.addResourceHandler ("/container/style/**")
             .addResourceLocations ("classpath:/edu/dfci/cccb/mev/web/style/");
   }
+  
+  @Bean (name="viewNameTranslator")
+  public RequestToViewNameTranslator viewNameTranslator(){
+    return new MevRequestToViewNameTranslator ();
+  }
 }

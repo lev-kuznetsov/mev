@@ -39,15 +39,10 @@ import org.springframework.web.servlet.HandlerMapping;
 public class ViewController {
   
   @RequestMapping (value = "templates/**", method = GET)
-  public void templates (NativeWebRequest request) {    
-    String restOfTheUrl = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE, SCOPE_REQUEST);
-    //return "templates/" + restOfTheUrl;
-  }
+  public void templates (NativeWebRequest request) {}
   
-  @RequestMapping (value = "elements/{view}", method = GET)
-  public String elements (@PathVariable ("view") String view) {
-    return "elements/" + view;
-  }
+  @RequestMapping (value = "elements/**", method = GET)
+  public void elements () {}
 
   @RequestMapping (value = "partials/{view}", method = GET)
   public String partials (@PathVariable ("view") String view) {
