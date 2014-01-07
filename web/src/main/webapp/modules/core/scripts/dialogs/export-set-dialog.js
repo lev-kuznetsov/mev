@@ -50,7 +50,7 @@ ExportSetDialog.prototype._dismiss = function() {
 ExportSetDialog.prototype._validate = function()
 {
 	  //var name = window.prompt("Esport set name", "open-refine-exported-set");
-	  var name = this._elmts.setName[0].value;	  
+	  var name = this._elmts.setName[0].value.trim();	  
 	  if (!name) {
 		this._elmts.errorMessage.html("Name is required");
 		this._elmts.setName[0].focus();
