@@ -30,12 +30,18 @@ define (
         		  templateUrl : '/container/view/elements/setmanager/selectionSetHeader'        		  
         	  };
           }])
+          .directive('selectionSetManager', [function (){
+        	  return {
+        		  restrict : 'E',        		  
+        		  templateUrl : '/container/view/elements/setmanager/selectionSetManager'        		  
+        	  };
+          }])
+
           .directive (
               'heatmapPanels',[ '$routeParams', 'API', 'alertService', '$location',
               function ($routeParams, API, alertService, $location) {
                 return {
                   restrict : 'A',
-                  transclude: true,
                   templateUrl : '/container/view/elements/heatmapPanels',
                   link : function (scope, elems, attrs) {
 

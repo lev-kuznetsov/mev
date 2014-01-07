@@ -130,7 +130,11 @@ public class Views {
   @Bean (name="elements/setmanager/selectionSetHeader")
   public FreeMarkerView selectionSetHeader(FreeMarkerViewBuilder builder){    
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/setmanager/selectionSetHeader.ftl").build ();
-  }  
+  }
+  @Bean (name="elements/setmanager/selectionSetManager")
+  public FreeMarkerView selectionSetManager(FreeMarkerViewBuilder builder){    
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/setmanager/selectionSetManager.ftl").build ();
+  }
   @Bean (name="elements/fcuk")
   public FreeMarkerView fcuk(FreeMarkerViewBuilder builder){    
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/fcuk.ftl").build ();
