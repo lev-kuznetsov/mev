@@ -122,6 +122,21 @@ public class Views {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/uploadsTable.ftl").build ();
   }
 
+  //SetManager templates  
+  @Bean (name="container/view/templates/setmanager/selectionSetList")
+  public FreeMarkerView selectionSetList(FreeMarkerViewBuilder builder){
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/setmanager/selectionSetList.ftl").build ();
+  }
+  @Bean (name="container/view/templates/setmanager/selectionSetHeader")
+  public FreeMarkerView selectionSetHeader(FreeMarkerViewBuilder builder){    
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/setmanager/selectionSetHeader.ftl").build ();
+  }  
+  @Bean (name="elements/fcuk")
+  public FreeMarkerView fcuk(FreeMarkerViewBuilder builder){    
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/fcuk.ftl").build ();
+  }
+  
+  
   // Partials
 
   @Bean (name = "partials/partial1")
@@ -138,4 +153,5 @@ public class Views {
   public FreeMarkerView importitems (FreeMarkerViewBuilder builder) {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/partials/importItems.ftl").build ();
   }
+  
 }

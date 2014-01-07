@@ -24,7 +24,10 @@
 			<div class="row-fluid">
                 <p class="lead pull-left">Set Manager</p>
 		    </div>
-			<div class="row-fluid">	
+			<div class="row-fluid">
+			  
+			  <selectionListHeader></selectionListHeader>
+			  	
 			  <div id="setmanagerAccordion" class="accordion">
 
 				<div class="accordion-group">
@@ -39,7 +42,7 @@
 				    <div id="collapseSetManagerColumns" class="accordion-body collapse" >
 				      <div class="accordion-inner">
 				        <div class="selectionSetList">
-				        	<div ng-show="theData.column.selections.length>0" ng-repeat="selection in theData.column.selections" class="selectionSetListItem">
+				        	<div ng-show="heatmapData.column.selections.length>0" ng-repeat="selection in heatmapData.column.selections" class="selectionSetListItem">
 				        		<div class="selectionSetColor" style='background-color: {{selection.properties.selectionColor}}'></div>
 				        		<div><a href="/annotations/{{heatmapId}}/annotation/column/{{selection.name}}/{{selection.properties.selectionFacetLink}}">{{selection.name}}</a></div>
 				        		<div class="selectionSetDescription">{{selection.properties.selectionDescription}}</div>
@@ -49,7 +52,7 @@
 					        		</span>
 				        		</div>				        		
 				        	</div>
-				        	<div ng-show="theData.column.selections.length<=0" class="selectionSetListItem">No sets defined. You may define sets using <a href="/annotations/{{heatmapId}}/annotation/column/new/">column annotations</a> or by performing a clustering analysis.</div>
+				        	<div ng-show="heatmapData.column.selections.length<=0" class="selectionSetListItem">No sets defined. You may define sets using <a href="/annotations/{{heatmapId}}/annotation/column/new/">column annotations</a> or by performing a clustering analysis.</div>
 				      </div>
 				    </div>
 			      </div> <!-- End Accordion Body -->
@@ -66,7 +69,7 @@
 				    <div id="collapseSetManagerRows" class="accordion-body collapse" >
 				      <div class="accordion-inner">
 				        <div class="selectionSetList">
-				        	<div ng-show="theData.row.selections.length>0" ng-repeat="selection in theData.row.selections" class="selectionSetListItem">
+				        	<div ng-show="heatmapData.row.selections.length>0" ng-repeat="selection in heatmapData.row.selections" class="selectionSetListItem">
 				        		<div class="selectionSetColor" style='background-color: {{selection.properties.selectionColor}}'></div>
 				        		<div><a href="/annotations/{{heatmapId}}/annotation/row/{{selection.properties.selectionFacetLink}}&{{selection.name}}&{{selection.properties.selectionColor}}&{{selection.properties.selectionDescription}}">{{selection.name}}</a></div>
 				        		<div class="selectionSetDescription">{{selection.properties.selectionDescription}}</div>
@@ -76,7 +79,7 @@
 					        		</span>
 				        		</div>				        		
 				        	</div>
-				        	<div ng-show="theData.row.selections.length<=0" class="selectionSetListItem">No sets defined. You may define sets by performing a clustering analysis.</div>
+				        	<div ng-show="heatmapData.row.selections.length<=0" class="selectionSetListItem">No sets defined. You may define sets by performing a clustering analysis.</div>
 				        </div>
 				      </div>
 				    </div> <!-- End Accordion Body -->

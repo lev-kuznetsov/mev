@@ -24,20 +24,21 @@ define (
                   }
                 };
               } ])
+          .directive('selectionListHeader', [function (){
+        	  return {
+        		  restrict : 'E',        		  
+        		  templateUrl : '/container/view/elements/setmanager/selectionSetHeader'        		  
+        	  };
+          }])
           .directive (
               'heatmapPanels',[ '$routeParams', 'API', 'alertService', '$location',
               function ($routeParams, API, alertService, $location) {
                 return {
                   restrict : 'A',
+                  transclude: true,
                   templateUrl : '/container/view/elements/heatmapPanels',
                   link : function (scope, elems, attrs) {
 
-                    scope.heatmapData = undefined;
-                    scope.heatmapLeftTree = undefined;
-                    scope.heatmapTopTree = undefined;
-                    scope.heatmapLeftTreeName = undefined;
-                    scope.heatmapTopTreeName = undefined;
-                    
                     API.dataset.get ($routeParams.datasetName).then (
                         function(data){ scope.heatmapData = data;}, function(data){
                         	//return home if error
@@ -903,8 +904,7 @@ define (
 
                         function drawHeatmap (data) {
                           
-                          heatmapcells = rects.data (data.values).enter ().append (
-                          "rect");
+                          heatmapcells = rects.data (data.values).enter ().append ("rect");
 						  scope.theData=data;
                           scaleUpdates (data.column, data.row,
                               data.min, data.max, data.avg);

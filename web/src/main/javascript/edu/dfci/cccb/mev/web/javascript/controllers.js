@@ -10,7 +10,12 @@ define ([ 'angular', 'jquery' ], function (angular, $) {
     		$scope.heatmapId = $routeParams.datasetName;
     		
     		
-    		
+    		$scope.heatmapData = undefined;
+            $scope.heatmapLeftTree = undefined;
+            $scope.heatmapTopTree = undefined;
+            $scope.heatmapLeftTreeName = undefined;
+            $scope.heatmapTopTreeName = undefined;
+            
     		$scope.buildPreviousAnalysisList = function() {
     		  
     		  $scope.previousHCLClusters = [];
