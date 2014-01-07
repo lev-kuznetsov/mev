@@ -41,7 +41,7 @@ require
 
     });
 
-require ([ 'angular', 'app', 'jquery', 'bootstrap-css', 'bootstrap' ],
+require ([ 'angular', 'app', 'jquery', 'bootstrap-css', 'bootstrap', 'setmanager/SetManager' ],
     function (angular, app, jquery) {
 
       'use strict';

@@ -20,8 +20,7 @@
 						<div class="selectionSetColor"
 							style='background-color: {{selection.properties.selectionColor}}'></div>
 						<div>
-							<a
-								href="/annotations/{{heatmapId}}/annotation/column/{{selection.name}}/{{selection.properties.selectionFacetLink}}">{{selection.name}}</a>
+							<a href="/annotations/{{heatmapId}}/annotation/column/{{selection.name}}/{{selection.properties.selectionFacetLink}}">{{selection.name}}</a>
 						</div>
 						<div class="selectionSetDescription">{{selection.properties.selectionDescription}}</div>
 						<div class="selectionSetKeys">
@@ -59,8 +58,7 @@
 						<div class="selectionSetColor"
 							style='background-color: {{selection.properties.selectionColor}}'></div>
 						<div>
-							<a
-								href="/annotations/{{heatmapId}}/annotation/row/{{selection.properties.selectionFacetLink}}&{{selection.name}}&{{selection.properties.selectionColor}}&{{selection.properties.selectionDescription}}">{{selection.name}}</a>
+							<a href="/annotations/{{heatmapId}}/annotation/row/{{selection.properties.selectionFacetLink}}&{{selection.name}}&{{selection.properties.selectionColor}}&{{selection.properties.selectionDescription}}">{{selection.name}}</a>
 						</div>
 						<div class="selectionSetDescription">{{selection.properties.selectionDescription}}</div>
 						<div class="selectionSetKeys">
