@@ -1,18 +1,9 @@
-<style type="text/css">
 
-.fixed-height-analysis {
-  height: 700px;
-  overflow:auto;
-  
-}
-
-
-</style>
 
 
 <div class="row-fluid">
 
-<div class="fixed-height-analysis">
+
   <div class="accordion" id="{{cluster.parentId}}" ng-repeat="cluster in previousHCLClusters">
     <div class="accordion-group">
     
@@ -27,8 +18,8 @@
 	      
 	        <div class="row-fluid">
 	          <div class="span12">
-	          <button class="btn btn-success" ng-click="updateHeatmapData(cluster.name, cluster.datar)">
-	          <i class='icon-chevron-left'></i> Apply to heatmap
+	          <button class="btn btn-success pull-right" ng-click="updateHeatmapData(cluster.name, cluster.datar)">
+	           Apply to heatmap <i class='icon-chevron-right'></i>
 	          </button>
 	          </div>
 	        </div>
@@ -120,7 +111,7 @@
   </div> <!-- End Accordion Definition -->
   
 
-</div> <!-- End fixed-height def -->
+
 
 </div> <!-- End Row Definition -->
 	
