@@ -4,7 +4,7 @@ define(['angular', 'directives', 'services', 'controllers', 'setmanager/SetManag
 	     'myApp.directives', 
 	     'myApp.services',
 	     'myApp.controllers',
-	     'MEV.SetManager'])
+	     'Mev.SetManager'])
 	.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	  
 	  $routeProvider

@@ -7,7 +7,8 @@
 				href="#collapseSetManagerColumns"> Column Sets </a> <a
 				class="accordion-action-button"
 				href="/annotations/{{heatmapId}}/annotation/column/new/">create
-				new from annotations</a>
+				new from annotations</a>	
+				<input type="button" value="hi" ng-click="sayHello()" />			
 		</div>
 		<!-- End Heading Div -->
 
@@ -17,11 +18,10 @@
 					<div ng-show="heatmapData.column.selections.length>0"
 						ng-repeat="selection in heatmapData.column.selections"
 						class="selectionSetListItem">
-						<div class="selectionSetColor"
-							style='background-color: {{selection.properties.selectionColor}}'></div>
+						<div  ng-dblclick="sayHello()" class="selectionSetColor" style='background-color: {{selection.properties.selectionColor}}'></div>
 						<div>
 							<a href="/annotations/{{heatmapId}}/annotation/column/{{selection.name}}/{{selection.properties.selectionFacetLink}}">{{selection.name}}</a>
-						</div>
+						</div>						
 						<div class="selectionSetDescription">{{selection.properties.selectionDescription}}</div>
 						<div class="selectionSetKeys">
 							<span ng-repeat="key in selection.keys"> {{key}}, </span>

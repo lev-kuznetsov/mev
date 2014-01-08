@@ -26,7 +26,7 @@
 		    </div>
 			<div class="row-fluid">
 			  
-			  <selection-set-manager></selection-set-manager>
+			  <selection-set-manager heatmap-data="heatmapData"></selection-set-manager>
 			  
 			</div> <!-- End Row Definition -->
 					
