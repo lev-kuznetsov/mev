@@ -13,11 +13,24 @@ define(['angular'], function(angular){
 				  templateUrl : '/container/view/elements/setmanager/selectionSetManager'
 			  };
 		}])
+		.directive('selectionSetList', [function (){
+			return {
+				scope: {
+					selections: '=mevSelections',
+					baseUrl: '@mevBaseUrl',
+					sayHello: '&mevSayHello'
+				},
+				require : '^SelectionSetManagerCtl',				  
+				restrict : 'EA',
+				transclude : true,
+				replace : true,
+				templateUrl : '/container/view/elements/setmanager/selectionSetList'
+			};
+		}])
 		.controller('SelectionSetManagerCtl', ['$scope', function($scope){
 			$scope.sayHello = function() {
 				alert($scope.heatmapId + ":" + $scope.heatmapData.column.selections.length);
 			};			
 		}]);
-	
 });
 
