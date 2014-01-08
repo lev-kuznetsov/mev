@@ -3,8 +3,9 @@ define(['angular'], function(angular){
 	angular.module( 'Mev.SetManager', [])
 		.directive('selectionSetManager', [function (){
 			  return {				  
-				  require: '^heatmapData',
+				  require: ['^heatmapData', '^heatmapId'],		  
 				  scope: {
+					  heatmapId: '@heatmapId',
 					  heatmapData: '=heatmapData'
 				  },
 				  controller : 'SelectionSetManagerCtl',				  
@@ -14,7 +15,7 @@ define(['angular'], function(angular){
 		}])
 		.controller('SelectionSetManagerCtl', ['$scope', function($scope){
 			$scope.sayHello = function() {
-				alert($scope.heatmapData.column.selections.length);
+				alert($scope.heatmapId + ":" + $scope.heatmapData.column.selections.length);
 			};			
 		}]);
 	

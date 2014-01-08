@@ -6,9 +6,7 @@
 			<a class="accordion-toggle" data-toggle="collapse"
 				href="#collapseSetManagerColumns"> Column Sets </a> <a
 				class="accordion-action-button"
-				href="/annotations/{{heatmapId}}/annotation/column/new/">create
-				new from annotations</a>	
-				<input type="button" value="hi" ng-click="sayHello()" />			
+				href="/annotations/{{heatmapId}}/annotation/column/new/">create new set from annotations</a>			
 		</div>
 		<!-- End Heading Div -->
 
