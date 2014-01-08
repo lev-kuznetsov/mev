@@ -1,7 +1,6 @@
 <style>
 
 .fixed-height {
-  height: 700;
   overflow:auto;
 }
 

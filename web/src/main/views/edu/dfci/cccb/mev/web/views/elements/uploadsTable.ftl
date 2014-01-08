@@ -10,7 +10,7 @@
             
             <tbody>
               <tr ng-repeat="row in datasets">
-                <td><a href="#/dataset/{{row}}">{{row}}</a></td>
+                <td><a href="#/dataset/{{row}}"> <i class="icon-file"></i> {{row}}</a></td>
               <tr>
             </tbody>
             

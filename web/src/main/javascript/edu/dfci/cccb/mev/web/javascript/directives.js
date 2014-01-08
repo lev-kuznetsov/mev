@@ -89,9 +89,13 @@ define (
                       
                     };
                     
-                    jq ('#leftPanel div.well').css ('height', 1000);
-                    jq ('#rightPanel div.well').css ('height',
-                        $ ('#leftPanel div.well').height ());
+                    console.log("window height: " + jq(window).height())
+                    
+                    var windowHeight = jq(window).height() * .7;
+                    
+                    jq ('#leftPanel div.well').css ('height', windowHeight);
+                    jq ('#rightPanel div.well').css ('height',  windowHeight);
+                    jq('div.fixed-height-analysis').css('height', windowHeight)
 
                     jq ('#closeRight').hide ();
                     jq ('#closeLeft').hide ();
@@ -134,13 +138,13 @@ define (
                       jq ('#expandLeft').show ();
                       jq ('#rightPanel').show ();
                       jq ('#leftPanel').show ();
-                      jq ('#leftPanel').attr ("class", "span6 marker");
-                      jq ('#rightPanel').attr ("class", "span6 marker");
+                      jq ('#leftPanel').attr ("class", "span3 marker");
+                      jq ('#rightPanel').attr ("class", "span9 marker");
                       jq ('#rightPanel').css ({
                         "margin-left" : margin
                       });
                       jq ('vis-heatmap svg').attr ("width",
-                          jq ('#leftPanel').css ('width').slice (0, -2) * .9);
+                          jq ('#rightPanel').css ('width').slice (0, -2) * .9);
                       scope.showLimmaTables = false;
                     };
 
@@ -394,46 +398,62 @@ define (
                 }
               } ])
           .directive (
-              'uploadDrag',
-              function () {
+              'uploadDrag', [ "API",
+              function (API) {
 
                 return {
                   restrict : 'C',
                   templateUrl : '/container/view/elements/uploadDragAndDrop',
                   link : function (scope, elems, attrs) {
-
-                    var myDropzone = new Dropzone (
-                        "#uploader",
-                        {
-
-                          url : "/dataset",
-                          method : "post",
-                          paramName : "upload",
-                          clickable : true,
-                          uploadMultiple : false,
-                          previewsContainer : null,
-                          addRemoveLinks : false,
-                          createImageThumbnails : false,
-                          previewTemplate : "<div class='dz-preview dz-file-preview'><br>"
-                              + "<div class='dz-filename'><span data-dz-name></span> (<span data-dz-size></span>) <span data-dz-errormessage> ✔ </span></div>"
-                              + "<div class='dz-size'><span data-dz-size></span></div>"
-                              + "<div class='dz-progress'><span class='dz-upload' data-dz-uploadprogress></span></div>"
-                              + "<div class ='dz-error-message'></div>"
-                              + "</div>",
-                          dictResponseError : "File Upload Error. Try Again",
-                          dictInvalidFileType : "File Upload Error. Try Again",
-                          dictDefaultMessage : "Drop files here",
-
-                        }).on ("error", function (file) {
-
-                    }).on('complete', function(file){
-                    	scope.loadUploads();
-                    });
+                	  
+                	jq('#upload-button').click(function(){
+                		jq('#upload-input').click();
+                	});
+                	
+                	jq('#upload-input').on("change", function() {
+                		
+                		var input = document.getElementById('upload-input'),
+                		files = new Array();
+                		
+                		for (var i = 0; i < input.files.length; i++) {
+                			files.push(input.files[i]);
+                			
+                			if (files.length == input.files.length){
+                				files.map(function(file){
+                					
+                					var formdata = new FormData;
+                        			formdata.append('upload', file);
+                        			formdata.append('name', file.name);
+                        			var xhr = new XMLHttpRequest();
+                        			
+                        			xhr.upload.addEventListener("progress", function(e){
+                        				return;
+                        			});
+                        			
+                        			xhr.onreadystatechange = function() {
+                        				if(xhr.readyState == 4 && xhr.status == 200){
+                        					
+                        					
+                        					scope.loadUploads();
+                        					
+                        					
+                        				};
+                        			};
+                        			
+                        			xhr.open("POST", "/dataset", true);
+                        			xhr.send(formdata);
+                				});
+                			};
+                		};
+                		
+                		
+                	});
+                   
 
                   }
                 };
 
-              })
+              }])
           .directive ('datasetSummary', function () {
             return {
               restrict : 'A',
@@ -456,14 +476,15 @@ define (
                       },
                       templateUrl : '/container/view/elements/d3RadialTree',
                       link : function (scope, elems, attr) {
-                    	  
+                    	
+                    	var padding = 20;
                     	var dendogram = {
-                          height: 300,
-                          width: 600
+                          height: 200 + padding,
+                          width: jq("#leftPanel").css("width").split("px")[0] * .75 // Nicely define width
                         };
                     	
                     	var svg = d3.select(elems[0]).append("svg")
-                    	  .attr({width: dendogram.width, height: dendogram.height});
+                    	  .attr({width: dendogram.width, height: (dendogram.height + (padding))});
                     	
                     	var Cluster = d3.layout.cluster()
                           .sort(null)
@@ -479,8 +500,8 @@ define (
                         function Path(d) {
                             //Path function builder for TOP heatmap tree path attribute
                             
-                            return "M" + ( d.target.x * dendogram.width )  + "," + ( d.target.y * dendogram.height ) +
-                            "V" + ( d.source.y * dendogram.height ) +
+                            return "M" + ( d.target.x * dendogram.width )  + "," + ( (d.target.y * dendogram.height) + (padding*.5) ) +
+                            "V" + ( (d.source.y * dendogram.height) + (padding*.5) ) +
                             "H" + ( d.source.x * dendogram.width );
                             
 
@@ -509,7 +530,7 @@ define (
                                  return d.x * dendogram.width;
                                })
                                .attr("cy", function(d){
-                                 return d.y * dendogram.height;
+                                 return (d.y * dendogram.height) + (padding*.5);
                                })
                                .attr("fill", function(d){
                                  return "red"
@@ -555,11 +576,12 @@ define (
                       restrict : 'E',
                       // templateUrl : "/container/view/elements/visHeatmap",
                       link : function (scope, elems, attr) {
+                    	  
+                    	jq('div.fixed-height').css('height', jq ('#rightPanel').css ('height').slice (0, -2)* .8 )
 
-                        var svgWidth = Math.floor (jq ('#leftPanel').css (
+                        var svgWidth = Math.floor (jq ('#rightPanel').css (
                             'width').slice (0, -2) * .9), svgHeight = Math //svgheight no longer!
-                            .floor (jq ('#leftPanel').css ('height').slice (0,
-                                -2) * .9);
+                            .floor (jq ('#rightPanel').css ('height').slice (0, -2) * .9);
 
                         var heatmapMarginLeft = Math.floor (svgWidth * .15), 
                             heatmapMarginRight = Math.floor (svgWidth * .15), 
