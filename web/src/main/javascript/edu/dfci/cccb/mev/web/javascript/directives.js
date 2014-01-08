@@ -398,46 +398,62 @@ define (
                 }
               } ])
           .directive (
-              'uploadDrag',
-              function () {
+              'uploadDrag', [ "API",
+              function (API) {
 
                 return {
                   restrict : 'C',
                   templateUrl : '/container/view/elements/uploadDragAndDrop',
                   link : function (scope, elems, attrs) {
-
-                    var myDropzone = new Dropzone (
-                        "#uploader",
-                        {
-
-                          url : "/dataset",
-                          method : "post",
-                          paramName : "upload",
-                          clickable : true,
-                          uploadMultiple : false,
-                          previewsContainer : null,
-                          addRemoveLinks : false,
-                          createImageThumbnails : false,
-                          previewTemplate : "<div class='dz-preview dz-file-preview'><br>"
-                              + "<div class='dz-filename'><span data-dz-name></span> (<span data-dz-size></span>) <span data-dz-errormessage> ✔ </span></div>"
-                              + "<div class='dz-size'><span data-dz-size></span></div>"
-                              + "<div class='dz-progress'><span class='dz-upload' data-dz-uploadprogress></span></div>"
-                              + "<div class ='dz-error-message'></div>"
-                              + "</div>",
-                          dictResponseError : "File Upload Error. Try Again",
-                          dictInvalidFileType : "File Upload Error. Try Again",
-                          dictDefaultMessage : "Drop files here",
-
-                        }).on ("error", function (file) {
-
-                    }).on('complete', function(file){
-                    	scope.loadUploads();
-                    });
+                	  
+                	jq('#upload-button').click(function(){
+                		jq('#upload-input').click();
+                	});
+                	
+                	jq('#upload-input').on("change", function() {
+                		
+                		var input = document.getElementById('upload-input'),
+                		files = new Array();
+                		
+                		for (var i = 0; i < input.files.length; i++) {
+                			files.push(input.files[i]);
+                			
+                			if (files.length == input.files.length){
+                				files.map(function(file){
+                					
+                					var formdata = new FormData;
+                        			formdata.append('upload', file);
+                        			formdata.append('name', file.name);
+                        			var xhr = new XMLHttpRequest();
+                        			
+                        			xhr.upload.addEventListener("progress", function(e){
+                        				return;
+                        			});
+                        			
+                        			xhr.onreadystatechange = function() {
+                        				if(xhr.readyState == 4 && xhr.status == 200){
+                        					
+                        					
+                        					scope.loadUploads();
+                        					
+                        					
+                        				};
+                        			};
+                        			
+                        			xhr.open("POST", "/dataset", true);
+                        			xhr.send(formdata);
+                				});
+                			};
+                		};
+                		
+                		
+                	});
+                   
 
                   }
                 };
 
-              })
+              }])
           .directive ('datasetSummary', function () {
             return {
               restrict : 'A',
