@@ -131,6 +131,11 @@ public class Views {
   public FreeMarkerView selection(FreeMarkerViewBuilder builder){    
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/setmanager/selectionSetList.ftl").build ();
   }
+  @Bean (name="elements/setmanager/selectionSetEditForm")
+  public FreeMarkerView selectionSetEditForm(FreeMarkerViewBuilder builder){    
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/setmanager/selectionSetEditForm.ftl").build ();
+  }
+ 
   @Bean (name="elements/fcuk")
   public FreeMarkerView fcuk(FreeMarkerViewBuilder builder){    
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/fcuk.ftl").build ();
