@@ -1,10 +1,7 @@
-<div class="navbar">
-  <div class="navbar-inner">
-
-    <ul class="nav">
 
 
-
+    <ul class="nav nav-tabs nav-stacked">
+    
       <li><a href=""><p class="muted">Visualization</p></a></li>
       
       <li class="divider-vertical"></li>
@@ -89,9 +86,7 @@
         
 
     </ul> <!-- End Nav Link List -->
-    
-  </div> <!-- End Nav Inner -->
-</div> <!-- End Navbar -->
+
 
  <!-- Modals -->
 
