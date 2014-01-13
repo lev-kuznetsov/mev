@@ -1,10 +1,10 @@
 define ([ 'angular', 'jquery' ], function (angular, $) {
 
   return angular.module ('myApp.controllers', []).controller ('HeatmapCtrl',
-      [ '$scope', '$routeParams', 'API', 'pseudoRandomStringGenerator', '$rootScope', function ($scope, $routeParams, API, prsg, $rS) {
+      [ '$scope', '$routeParams', 'API', 'pseudoRandomStringGenerator', '$rootScope', '$location', function ($scope, $routeParams, API, prsg, $rS, $loc) {
 
     	if (!$routeParams.datasetName){
-    		$scope.heatmapId = " Mock Heatmap";
+    		$loc.path('/');
             	
     	} else {
     		$scope.heatmapId = $routeParams.datasetName;
@@ -75,16 +75,18 @@ define ([ 'angular', 'jquery' ], function (angular, $) {
   
     	  $scope.loadUploads = function(){
     		  
-    		  $scope.userUploads = API.user.datasets.get().then(function(data){
-              	return data;
-              	
-              	
-              });
-    		  
-    		  
+    	    $scope.$apply(function(){
+    	    	API.user.datasets.get().then(function(data){
+    	               $scope.userUploads = data;
+    	            });
+    	    });
+
     	  };
     	  
-    	  $scope.loadUploads();
+    	  API.user.datasets.get().then(function(data){
+    	    $scope.userUploads = data;
+    	  });
+    	  
     	  
       }]);
   

@@ -27,9 +27,11 @@ ExportSetDialog.prototype._createDialog = function() {
     
     //this._elmts.resetButton.html($.i18n._('core-buttons')["reset-template"]);
     this._elmts.exportSetButton.html("Save");
+    this._elmts.exportSetAndExitButton.html("Save and Close");
     this._elmts.cancelSetButton.html($.i18n._('core-buttons')["cancel"]);
     
     this._elmts.exportSetButton.click(function() { if(self._validate()){self._exportAjax(); self._dismiss(); }});
+    this._elmts.exportSetAndExitButton.click(function() { if(self._validate()){self._exportAjax(); self._dismiss(); Refine._close(); }});
     this._elmts.cancelSetButton.click(function() { self._dismiss(); });
     /*
     this._elmts.resetButton.click(function() {
@@ -48,7 +50,7 @@ ExportSetDialog.prototype._dismiss = function() {
 ExportSetDialog.prototype._validate = function()
 {
 	  //var name = window.prompt("Esport set name", "open-refine-exported-set");
-	  var name = this._elmts.setName[0].value;	  
+	  var name = this._elmts.setName[0].value.trim();	  
 	  if (!name) {
 		this._elmts.errorMessage.html("Name is required");
 		this._elmts.setName[0].focus();

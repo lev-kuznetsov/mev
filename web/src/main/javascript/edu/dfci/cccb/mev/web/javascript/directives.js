@@ -25,8 +25,8 @@ define (
                 };
               } ])
           .directive (
-              'heatmapPanels',[ '$routeParams', 'API', 'alertService',
-              function ($routeParams, API, alertService) {
+              'heatmapPanels',[ '$routeParams', 'API', 'alertService', '$location',
+              function ($routeParams, API, alertService, $location) {
                 return {
                   restrict : 'A',
                   templateUrl : '/container/view/elements/heatmapPanels',
@@ -39,9 +39,9 @@ define (
                     scope.heatmapTopTreeName = undefined;
                     
                     API.dataset.get ($routeParams.datasetName).then (
-                        function(data){ scope.heatmapData = data;}, function () {
-                          // Redirect to home if errored out
-                          $location.path ('/');
+                        function(data){ scope.heatmapData = data;}, function(data){
+                        	//return home if error
+                        	$location.path('/');
                         });
                     
                    scope.updateHeatmapData = function(prevAnalysis, textForm){
@@ -89,14 +89,19 @@ define (
                       
                     };
                     
-                    jq ('#leftPanel div.well').css ('height', 1000);
-                    jq ('#rightPanel div.well').css ('height',
-                        $ ('#leftPanel div.well').height ());
+                    console.log("window height: " + jq(window).height())
+                    
+                    var windowHeight = jq(window).height() * .7;
+                    
+                    jq ('#leftPanel div.well').css ('height', windowHeight);
+                    jq ('#rightPanel div.well').css ('height',  windowHeight);
+                    jq('div.fixed-height-analysis').css('height', windowHeight)
 
                     jq ('#closeRight').hide ();
                     jq ('#closeLeft').hide ();
 
                     var margin = "2.127659574468085%"
+                    scope.showLimmaTables = false;
 
                     scope.expandLeft = function () {
 
@@ -120,7 +125,8 @@ define (
                       jq ('#rightPanel').attr ("class", "span12 marker");
                       jq ('#rightPanel').css ({
                         "margin-left" : "0"
-                      })
+                      });
+                      scope.showLimmaTables = true;
 
                     };
 
@@ -132,14 +138,14 @@ define (
                       jq ('#expandLeft').show ();
                       jq ('#rightPanel').show ();
                       jq ('#leftPanel').show ();
-                      jq ('#leftPanel').attr ("class", "span6 marker");
-                      jq ('#rightPanel').attr ("class", "span6 marker");
+                      jq ('#leftPanel').attr ("class", "span3 marker");
+                      jq ('#rightPanel').attr ("class", "span9 marker");
                       jq ('#rightPanel').css ({
                         "margin-left" : margin
                       });
                       jq ('vis-heatmap svg').attr ("width",
-                          jq ('#leftPanel').css ('width').slice (0, -2) * .9);
-
+                          jq ('#rightPanel').css ('width').slice (0, -2) * .9);
+                      scope.showLimmaTables = false;
                     };
 
                   }
@@ -342,12 +348,19 @@ define (
                 });
                 
                 scope.limmaInit = function(){
+                	
+                  params = {
+                    dataset: $routeP.datasetName, 
+                    name: scope.analysisName,
+                    dimension: scope.analysisDimension.value, 
+                    experiment: scope.analysisExperiment, 
+                    control: scope.analysisControl, 
+                    alpha: scope.analysisPValue,
+                    callback: scope.buildPreviousAnalysisList
+                		  
+                  };
                   
-                  API.analysis.limma.create($routeP.datasetName, scope.analysisName, 
-                      scope.analysisDimension.value,
-                      scope.analysisExperiment, 
-                      scope.analysisControl, 
-                      scope.analysisPValue)
+                  API.analysis.limma.create(params);
 
                 };
                 
@@ -385,47 +398,62 @@ define (
                 }
               } ])
           .directive (
-              'uploadDrag',
-              function () {
+              'uploadDrag', [ "API",
+              function (API) {
 
                 return {
                   restrict : 'C',
                   templateUrl : '/container/view/elements/uploadDragAndDrop',
                   link : function (scope, elems, attrs) {
-
-                    var myDropzone = new Dropzone (
-                        "#uploader",
-                        {
-
-                          url : "/dataset",
-                          method : "post",
-                          paramName : "upload",
-                          clickable : true,
-                          uploadMultiple : false,
-                          previewsContainer : null,
-                          addRemoveLinks : false,
-                          createImageThumbnails : false,
-                          previewTemplate : "<div class='dz-preview dz-file-preview'><br>"
-                              + "<div class='dz-filename'><span data-dz-name></span> (<span data-dz-size></span>) <span data-dz-errormessage> ✔ </span></div>"
-                              + "<div class='dz-size'><span data-dz-size></span></div>"
-                              + "<div class='dz-progress'><span class='dz-upload' data-dz-uploadprogress></span></div>"
-                              + "<div class ='dz-error-message'></div>"
-                              + "</div>",
-                          dictResponseError : "File Upload Error. Try Again",
-                          dictInvalidFileType : "File Upload Error. Try Again",
-                          dictDefaultMessage : "Drop files here",
-
-                        }).on ("error", function (file) {
-
-                    }).on('complete', function(file){
-                      loadUploads();
-                    	$("#importTabs a[href='#current']").tab('show');
-                    });
+                	  
+                	jq('#upload-button').click(function(){
+                		jq('#upload-input').click();
+                	});
+                	
+                	jq('#upload-input').on("change", function() {
+                		
+                		var input = document.getElementById('upload-input'),
+                		files = new Array();
+                		
+                		for (var i = 0; i < input.files.length; i++) {
+                			files.push(input.files[i]);
+                			
+                			if (files.length == input.files.length){
+                				files.map(function(file){
+                					
+                					var formdata = new FormData;
+                        			formdata.append('upload', file);
+                        			formdata.append('name', file.name);
+                        			var xhr = new XMLHttpRequest();
+                        			
+                        			xhr.upload.addEventListener("progress", function(e){
+                        				return;
+                        			});
+                        			
+                        			xhr.onreadystatechange = function() {
+                        				if(xhr.readyState == 4 && xhr.status == 200){
+                        					
+                        					
+                        					scope.loadUploads();
+                        					
+                        					
+                        				};
+                        			};
+                        			
+                        			xhr.open("POST", "/dataset", true);
+                        			xhr.send(formdata);
+                				});
+                			};
+                		};
+                		
+                		
+                	});
+                   
 
                   }
                 };
 
-              })
+              }])
           .directive ('datasetSummary', function () {
             return {
               restrict : 'A',
@@ -436,12 +464,8 @@ define (
             };
 
           })
-          .directive (
-              'd3RadialTree',
-              [
-                  'API',
-                  '$routeParams',
-                  function (API, $routeParams) {
+          .directive ('d3RadialTree', ['API','$routeParams', 
+             function (API, $routeParams) {
 
                     return {
                       restrict : 'A',
@@ -452,118 +476,80 @@ define (
                       },
                       templateUrl : '/container/view/elements/d3RadialTree',
                       link : function (scope, elems, attr) {
+                    	
+                    	var padding = 20;
+                    	var dendogram = {
+                          height: 200 + padding,
+                          width: jq("#leftPanel").css("width").split("px")[0] * .75 // Nicely define width
+                        };
+                    	
+                    	var svg = d3.select(elems[0]).append("svg")
+                    	  .attr({width: dendogram.width, height: (dendogram.height + (padding))});
+                    	
+                    	var Cluster = d3.layout.cluster()
+                          .sort(null)
+                          .separation(function(a, b){ 
+                            return a.parent == b.parent ? 1:1
+                          })
+                          .value(function(d){return d.distance;})
+                          .children(function(d){return d.children;});
                         
-                        var r =500/ 2;
-                        var resizeCoeff = .75; // Adjusts r coefficient for end size
+                        var dendogramWindow = svg.append("g")
+                            .attr('class', 'smallDendogram');
+                        
+                        function Path(d) {
+                            //Path function builder for TOP heatmap tree path attribute
+                            
+                            return "M" + ( d.target.x * dendogram.width )  + "," + ( (d.target.y * dendogram.height) + (padding*.5) ) +
+                            "V" + ( (d.source.y * dendogram.height) + (padding*.5) ) +
+                            "H" + ( d.source.x * dendogram.width );
+                            
 
-                        var cluster = d3.layout.cluster ().size ([ 360, r*resizeCoeff ]) 
-                            .sort (null).value (function (d) {
-                              return d.length;
-                            }).children (function (d) {
-                              return d.branchset;
-                            }).separation (function (a, b) {
-                              return 1;
-                            });
+                          };
+                    	  
+                        function drawAnalysisTree(canvas, cluster, tree, type) {
+                            
+                            canvas.selectAll('*').remove();
+                            var nodes = cluster.nodes(tree);
+                            var links = cluster.links(nodes);
+                            
+                            canvas.selectAll("path")
+                                .data(links)
+                              .enter().append("path")
+                                .attr("d", function(d) {
+                                return Path(d)
+                                })
+                                .attr("stroke", function(){
+                                  return "grey"
+                                })
+                                .attr("fill", "none"); 
 
-                        function project (d) {
-                          var r = d.y, a = (d.x - 90) / 180 * Math.PI;
-                          return [ r * Math.cos (a), r * Math.sin (a) ];
-                        }
+                            canvas.selectAll("circle").data(nodes).enter().append("circle")
+                               .attr("r", 2.5)
+                               .attr("cx", function(d){
+                                 return d.x * dendogram.width;
+                               })
+                               .attr("cy", function(d){
+                                 return (d.y * dendogram.height) + (padding*.5);
+                               })
+                               .attr("fill", function(d){
+                                 return "red"
+                               })
+                               .on("click", function(d){
+                                 //
+                               }); 
 
-                        function cross (a, b) {
-                          return a[0] * b[1] - a[1] * b[0];
-                        }
-                        function dot (a, b) {
-                          return a[0] * b[0] + a[1] * b[1];
-                        }
-
-                        function step (d) {
-                          var s = project (d.source), m = project ({
-                            x : d.target.x,
-                            y : d.source.y
-                          }), t = project (d.target), r = d.source.y, sweep = d.target.x > d.source.x ? 1
-                              : 0;
-                          return ("M" + s[0] + "," + s[1] + "A" + r + "," + r 
-                              + " 0 0," + sweep + " " + m[0] + "," + m[1] + "L"
-                              + t[0] + "," + t[1]);
-                        }
-
-                        var wrap = d3.select (elems[0]).append ("svg").attr (
-                            "width", r * 2).attr ("height", r * 2).style (
-                            "-webkit-backface-visibility", "hidden");
-
-                        // Catch mouse events in Safari.
-                        wrap.append ("rect").attr ("width", r * 2).attr (
-                            "height", r * 2).attr ("fill", "none")
-
-                        var vis = wrap.append ("g").attr ("transform",
-                            "translate(" + r + "," + r + ")");
-
-                        var start = null, rotate = 0, div = document
-                            .getElementById ("vis");
-
-                        function mouse (e) {
-                          return [ e.pageX - div.offsetLeft - r,
-                              e.pageY - div.offsetTop - r ];
-                        }
-
-                        wrap.on ("mousedown", function () {
-                          wrap.style ("cursor", "move");
-                          start = mouse (d3.event);
-                          d3.event.preventDefault ();
-                        });
-
-                        function phylo (n, offset) {
-                          if (n.length != null)
-                            offset += n.length  * 65 ;
-                          n.y = offset *.0025; //TODO: remove coefficient on algorithm correction
-                          if (n.children)
-                            n.children.forEach (function (n) {
-                              phylo (n, offset);
-                            });
-                        }
-
-                        function draw (text) {
-                          
-                          var x = newick.parse(text);
-                          var nodes = cluster.nodes(x);
-                          phylo(nodes[0], 0);
-                         
-                          var link = vis.selectAll("path.link")
-                              .data(cluster.links(nodes))
-                            .enter().append("path")
-                              .attr("class", "link")
-                              .attr("d", step);
-                         
-                          var node = vis.selectAll("g.node")
-                              .data(nodes.filter(function(n) { return n.x !== undefined; }))
-                            .enter().append("g")
-                              .attr("class", "node")
-                              .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-                         
-                          node.append("circle")
-                              .attr("r", 2.5);
-                         
-                          var label = vis.selectAll("text")
-                              .data(nodes.filter(function(d) { return d.x !== undefined && !d.children; }))
-                            .enter().append("text")
-                              .attr("dy", ".31em")
-                              .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-                              .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (r * resizeCoeff) + ")rotate(" + (d.x < 180 ? 0 : 180) + ")"; })
-                              .text(function(d) { return d.name.replace(/_/g, ' '); });
-
-                        } // end draw function
-
+                          };
                         scope.$watch ('data', function (newval, oldval) {
                           if (newval) {
-                            draw (newval);
+                            drawAnalysisTree (dendogramWindow, Cluster, newval.root, "horizontal");
                           }
                         });
 
                       } // end link
                     };
 
-                  } ])
+          }])
           .directive ('bsTable', function () {
 
             return {
@@ -590,11 +576,12 @@ define (
                       restrict : 'E',
                       // templateUrl : "/container/view/elements/visHeatmap",
                       link : function (scope, elems, attr) {
+                    	  
+                    	jq('div.fixed-height').css('height', jq ('#rightPanel').css ('height').slice (0, -2)* .8 )
 
-                        var svgWidth = Math.floor (jq ('#leftPanel').css (
+                        var svgWidth = Math.floor (jq ('#rightPanel').css (
                             'width').slice (0, -2) * .9), svgHeight = Math //svgheight no longer!
-                            .floor (jq ('#leftPanel').css ('height').slice (0,
-                                -2) * .9);
+                            .floor (jq ('#rightPanel').css ('height').slice (0, -2) * .9);
 
                         var heatmapMarginLeft = Math.floor (svgWidth * .15), 
                             heatmapMarginRight = Math.floor (svgWidth * .15), 
@@ -830,6 +817,7 @@ define (
                           heatmapCellHeight = 80;
                           
                           heatmapCellsHeight = heatmapCellHeight*rows.keys.length;
+                          dendogramLeft.height = heatmapCellsHeight;
                         	
                           svg.attr("height", heatmapCellsHeight + heatmapMarginTop + heatmapMarginBottom);
 
@@ -1026,8 +1014,6 @@ define (
                           canvas.selectAll('*').remove();
                           var nodes = cluster.nodes(tree);
                           var links = cluster.links(nodes);
-
-                          
                           
                           canvas.selectAll("path")
                               .data(links)
@@ -1078,12 +1064,11 @@ define (
                           
                           return "M" + ((d.target.x * dendogramTop.width)+dendogramLeft.width )  + "," + (d.target.y * dendogramTop.height ) +
                           "V" + (d.source.y * dendogramTop.height ) +
-                          "H" + ((d.source.x * dendogramTop.width)+dendogramLeft.width );
-                          
-                          
+                          "H" + ((d.source.x * dendogramTop.width)+dendogramLeft.width ) ;
 
                         };
                         function verticalPath(d) {
+                        	
                           //Path function builder for LEFT heatmap tree path attribute
 
                           return "M" + (d.source.y * dendogramLeft.width )  + "," + ((d.source.x * dendogramLeft.height)+dendogramTop.height ) +
