@@ -3,15 +3,15 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>mev-dataset-rest</artifactId>
+  <artifactId>mev-configuration-rest</artifactId>
   <packaging>jar</packaging>
 
-  <name>MeV Dataset Plugin REST Component</name>
+  <name>MeV Configuration of REST Components</name>
   <url>http://github.com/dfci-cccb/mev</url>
 
   <parent>
     <groupId>edu.dfci.cccb</groupId>
-    <artifactId>mev-dataset</artifactId>
+    <artifactId>mev-configuration</artifactId>
     <version>BAYLIE-SNAPSHOT</version>
   </parent>
 
@@ -26,12 +26,6 @@
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
       <artifactId>mev-dataset-domain</artifactId>
-      <version>BAYLIE-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <groupId>edu.dfci.cccb</groupId>
-      <artifactId>mev-configuration-rest</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 

@@ -14,6 +14,7 @@
  */
 package edu.dfci.cccb.mev.web.configuration.converters;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,10 +28,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import edu.dfci.cccb.mev.dataset.rest.contract.HttpMessageConverterConfigurer;
 
 /**
  * @author levk
@@ -38,17 +40,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 @Configuration
 @Log4j
-public class ConverterConfigurations extends WebMvcConfigurerAdapter {
+public class ConverterConfigurations {
 
   private @Inject RequestMappingHandlerAdapter requestMappingHandlerAdapter;
   private @Inject ObjectMapper jsonObjectMapper;
   private @Autowired (required = false) Collection<HttpMessageConverter<?>> converters;
+  private @Autowired (required = false) Collection<HttpMessageConverterConfigurer> converterConfigurers;
 
   @PostConstruct
   public void registerConverters () {
+    List<HttpMessageConverter<?>> converters = new ArrayList<> ();
+    converters.addAll (this.converters);
+    if (converterConfigurers != null)
+      for (HttpMessageConverterConfigurer configurer : converterConfigurers)
+        configurer.addHttpMessageConverters (converters);
     log.info ("Registering converters: " + converters);
-    if (converters != null && converters.size () > 0)
-      requestMappingHandlerAdapter.getMessageConverters ().addAll (0, converters);
+    requestMappingHandlerAdapter.getMessageConverters ().addAll (0, converters);
   }
 
   @PostConstruct

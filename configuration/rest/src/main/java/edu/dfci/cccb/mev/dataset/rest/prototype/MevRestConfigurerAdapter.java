@@ -43,15 +43,6 @@ public abstract class MevRestConfigurerAdapter extends WebMvcConfigurerAdapter
    * #addPreferredArgumentResolvers(java.util.List) */
   @Override
   public void addPreferredArgumentResolvers (List<HandlerMethodArgumentResolver> resolvers) {}
-  
-  /* (non-Javadoc)
-   * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#configureMessageConverters(java.util.List)
-   */
-  @Override
-  public void configureMessageConverters (List<HttpMessageConverter<?>> converters) {
-    // TODO Auto-generated method stub
-    super.configureMessageConverters (converters);
-  }
 
   /* (non-Javadoc)
    * @see
