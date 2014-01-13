@@ -32,8 +32,12 @@ require
         'bootstrap-css' : {
           deps : [ 'bootstrap' ]
         },
-        'newick':{
-          exports: 'newick'
+        'metis':{
+          deps: ['jquery']
+        },
+        'sparkline':{
+          deps: ['jquery'],
+          exports: 'sparkline'
         }
 
       },
@@ -41,7 +45,7 @@ require
 
     });
 
-require ([ 'angular', 'app', 'jquery', 'bootstrap-css', 'bootstrap' ],
+require ([ 'angular', 'app', 'jquery', 'bootstrap-css', 'bootstrap', 'metis'],
     function (angular, app, jquery) {
 
       'use strict';

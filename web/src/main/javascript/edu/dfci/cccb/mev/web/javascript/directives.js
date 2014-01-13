@@ -91,34 +91,20 @@ define (
                     
                     console.log("window height: " + jq(window).height())
                     
-                    var windowHeight = jq(window).height() * .7;
+                    var windowHeight = jq(window).height() * .99;
                     
-                    jq ('#leftPanel div.well').css ('height', windowHeight);
-                    jq ('#rightPanel div.well').css ('height',  windowHeight);
-                    jq('div.fixed-height-analysis').css('height', windowHeight)
-
+                    //jq ('#rightPanel div.tab-group').css ('height',  windowHeight);
+                    jq('#rightPanel').css('height', windowHeight)
+                    
                     jq ('#closeRight').hide ();
                     jq ('#closeLeft').hide ();
 
                     var margin = "2.127659574468085%"
                     scope.showLimmaTables = false;
 
-                    scope.expandLeft = function () {
-
-                      jq ('#leftPanel').attr ("class", "span12 marker");
-                      jq ('#rightPanel').hide ();
-                      jq ('#expandLeft').hide ();
-                      jq ('#closeLeft').show ();
-                      jq ('#leftPanel').show ();
-
-                      jq ('vis-heatmap svg').attr ("width",
-                          jq ('#leftPanel').css ('width').slice (0, -2) * .9);
-
-                    };
-
                     scope.expandRight = function () {
 
-                      jq ('#leftPanel').hide ();
+                      jq ('menubar').hide ();
                       jq ('#expandRight').hide ();
                       jq ('#closeRight').show ();
                       jq ('#rightPanel').show ();
@@ -137,14 +123,11 @@ define (
                       jq ('#expandRight').show ();
                       jq ('#expandLeft').show ();
                       jq ('#rightPanel').show ();
-                      jq ('#leftPanel').show ();
-                      jq ('#leftPanel').attr ("class", "span3 marker");
-                      jq ('#rightPanel').attr ("class", "span9 marker");
+                      jq ('menubar').show ();
+                      jq ('#rightPanel').attr ("class", "span9 offset2");
                       jq ('#rightPanel').css ({
                         "margin-left" : margin
                       });
-                      jq ('vis-heatmap svg').attr ("width",
-                          jq ('#rightPanel').css ('width').slice (0, -2) * .9);
                       scope.showLimmaTables = false;
                     };
 
@@ -160,11 +143,15 @@ define (
               }
             };
           } ])
-          .directive ('expressionPanel', [ function () {
+          .directive ('expressionPanel', ['$routeParams', function ($routeParams) {
             return {
               restrict : 'A',
               templateUrl : '/container/view/elements/expressionPanel',
               link : function (scope) {
+                
+                scope.buildPreviousAnalysisList ();
+                
+                scope.datasetName = $routeParams.datasetName;
 
               }
             };
@@ -480,7 +467,7 @@ define (
                     	var padding = 20;
                     	var dendogram = {
                           height: 200 + padding,
-                          width: jq("#leftPanel").css("width").split("px")[0] * .75 // Nicely define width
+                          width: jq("#rightPanel").css("width").split("px")[0] * .75 // Nicely define width
                         };
                     	
                     	var svg = d3.select(elems[0]).append("svg")
