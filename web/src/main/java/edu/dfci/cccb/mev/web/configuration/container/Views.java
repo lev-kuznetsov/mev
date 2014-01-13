@@ -42,9 +42,14 @@ public class Views {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/view1.ftl").build ();
   }
 
-  @Bean (name = "elements/menubar")
-  public FreeMarkerView elementMenubar (FreeMarkerViewBuilder builder) {
-    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/menubar.ftl").build ();
+  @Bean (name = "elements/analysisMenuBar")
+  public FreeMarkerView elementAnalysisMenuBar (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/analysisMenuBar.ftl").build ();
+  }
+  
+  @Bean (name = "elements/sideNavigationBar")
+  public FreeMarkerView elementSideNavigationBar (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/sideNavigationBar.ftl").build ();
   }
 
   @Bean (name = "elements/expressionPanel")

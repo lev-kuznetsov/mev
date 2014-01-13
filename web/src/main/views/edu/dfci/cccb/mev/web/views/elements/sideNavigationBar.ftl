@@ -108,7 +108,7 @@ table.tablesorter thead tr th:hover {
 	height: 100%;
 	border-radius: 0;
 	border: none;
-	background-color: #EBEBE0;
+	background-color: #000000;
 	overflow-y: auto;
   }
 
@@ -161,7 +161,14 @@ table.tablesorter thead tr th:hover {
 
 </style>
 
-  <ul class="nav navbar-nav side-nav">
+<ul class="nav navbar-nav">
+
+    <div class="row-fluid">
+		<li>
+			<i class="icon-chevron-left pull-right" id="expandRight" ng-click="expandRight()"></i>
+			<i class="icon-chevron-right pull-right" id="closeRight" ng-click="expandBoth()"></i>
+		</li>
+	</div>
   
     <li><a href="/home"><i class="icon-list"></i> Datasets</a></li>
     
@@ -187,18 +194,4 @@ table.tablesorter thead tr th:hover {
     
     <li><a href=""><i class="icon-download-alt"></i> Export</a></li>
     
-  </ul>
-
-
-<!-- Modals -->
-<bsmodal bindid="hierarchical" func="" header="Hierarchical Clustering">
- <div class="modal-Hierarchical"></div>
-</bsmodal> 
-  
-<bsmodal bindid="kmeansclust" func="" header="K-Means/Medians Clustering">
- <div class="modal-Kmeans"></div>
-</bsmodal>
-  
-<bsmodal bindid="limma" func="" header="LIMMA">
- <div class="modal-Limma"></div>
-</bsmodal> 
+</ul>

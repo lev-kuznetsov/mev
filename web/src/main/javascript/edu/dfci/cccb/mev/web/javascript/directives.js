@@ -44,50 +44,7 @@ define (
                         	$location.path('/');
                         });
                     
-                   scope.updateHeatmapData = function(prevAnalysis, textForm){
-                      
-                      API.analysis.hcl.update({
-                        dataset:$routeParams.datasetName,
-                        name:prevAnalysis
-                        }).then(function(){
-                          
-                          API.dataset.get ($routeParams.datasetName).then (
-                              function(data){
-                              
-                                if (data.column.root) {
-                                  
-                                  //apply column cluster to dendogram
-                                  
-                                  scope.heatmapTopTree = data.column.root;
-                                  
-                                };
-                                
-                                if (data.row.root) {
-                                  
-                                  
-                                  scope.heatmapLeftTree = data.row.root;
-
-                                };
-                                
-                                //Apply new ordering and dataset to held heatmap
-                                scope.heatmapData = data;
-                              
-                              }, function () {
-                                // Redirect to home if errored out
-                                $location.path ('/');
-                              });
-                          
-                        }, function(){
-                          
-                          var message = "Could not update heatmap. If "
-                            + "problem persists, please contact us."
-                            
-                            var header = "Heatmap Clustering Update Problem (Error Code: " + s + ")"
-                            alertService.error(message, header);
-                          
-                        })
-                      
-                    };
+                   
                     
                     console.log("window height: " + jq(window).height())
                     
@@ -134,13 +91,18 @@ define (
                   }
                 };
               }])
-            .directive ('menubar', [ 'analysisOptions', function (opts) {
+            .directive ('sideNavigationBar', [ function () {
             return {
               restrict : 'E',
-              templateUrl : '/container/view/elements/menubar',
-              link : function (scope) {
-                scope.links = opts;
-              }
+              templateUrl : '/container/view/elements/sideNavigationBar'
+              
+            };
+          } ])
+          .directive ('analysisMenuBar', [ function () {
+            return {
+              restrict : 'E',
+              templateUrl : '/container/view/elements/analysisMenuBar'
+              
             };
           } ])
           .directive ('expressionPanel', ['$routeParams', function ($routeParams) {
