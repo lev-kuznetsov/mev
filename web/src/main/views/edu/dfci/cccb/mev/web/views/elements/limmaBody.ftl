@@ -36,7 +36,9 @@
   <div class="control-group">
     <label for="inputAnalysisValue" class="control-label">p-Value</label>
     <div class="controls">
-        <input id="inputAnalysisValue" ng-model="analysisPValue" placeholder="0 < x < 1">
+        <input id="inputAnalysisValue" ng-model="analysisPValue"
+        	onblur="if (this.value == '') {this.value = '0.05';}" 
+        	onfocus="if (this.value == '0.05') {this.value = '';}" />
     </div>
   </div>
   
