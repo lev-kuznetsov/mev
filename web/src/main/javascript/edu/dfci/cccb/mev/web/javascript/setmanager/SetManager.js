@@ -1,5 +1,4 @@
-define(['angular'], function(angular){
-	
+define(['jquery','angular'], function(jquery, angular){
 	angular.module( 'Mev.SetManager', [])
 		.directive('selectionSetManager', [function (){
 			  return {				  		  
@@ -26,7 +25,7 @@ define(['angular'], function(angular){
 				templateUrl : '/container/view/elements/setmanager/selectionSetList',
 				link : function (scope, iElement, iAttrs, controller){
 					scope.sayHelloDir = function(){
-						alert("link: " + scope.heatmapId + ":" + scope.selections.length + ":" + scope.$id);
+						//alert("link: " + scope.heatmapId + ":" + scope.selections.length + ":" + scope.$id);
 					};					
 				}				
 			};
@@ -55,14 +54,14 @@ define(['angular'], function(angular){
 		        scrolling: '@scrolling',
 		        annotationsUrl: '=annotationsUrl'
 		      },
-		      template: '<iframe class="frame" height="{{height}}" width="{{width}}" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="{{scrolling}}" ng-src="{{annotationsUrl}}"></iframe>',
+		      template: '<iframe scrolling="no" class="frame" height="{{height}}" width="{{width}}" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="{{scrolling}}" ng-src="{{annotationsUrl}}"></iframe>',
 		      link : linkFn
 		    };
 		  })
 		.controller('SelectionSetManagerCtl', ['$scope', '$element', '$attrs', function($scope, $element, $attrs){
 			
 			$scope.sayHelloCtl = function() {
-				alert($scope.heatmapId + ":" + $scope.heatmapData.column.selections.length + ":" + $scope.$id);
+				//alert($scope.heatmapId + ":" + $scope.heatmapData.column.selections.length + ":" + $scope.$id);
 			};		
 			
 			//alert(angular.toJson($attrs) );
@@ -74,7 +73,7 @@ define(['angular'], function(angular){
 			$scope.setSelected = function(item){
 				$scope.selectedItem = item;
 				$scope.selectedItemTmp = angular.copy(item);
-				alert("selected: " + item.name);
+				//alert("selected: " + item.name);
 			};
 			$scope.saveItem = function(item){
 				//alert("save: " + item.name + " old: " + $scope.selectedItem.name);
@@ -85,6 +84,14 @@ define(['angular'], function(angular){
 				//alert(angular.toJson(selection));
 				$scope.$emit('ViewAnnotationsEvent', selection, dimention);				
 				
+			}
+			$scope.addItem = function(item){
+				//alert('in addItem');				
+				$scope.$apply(function(){
+					$scope.heatmapData.column.selections = jquery.grep($scope.heatmapData.column.selections, function(e, i){return e.name==item.name}, true);
+					$scope.heatmapData.column.selections.push(item);
+					
+				});
 			}
 			
 			

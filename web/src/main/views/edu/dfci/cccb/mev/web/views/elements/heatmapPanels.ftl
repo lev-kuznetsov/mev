@@ -26,7 +26,7 @@
 		    </div>
 			<div class="row-fluid">
 			  
-			  <selection-set-manager ng-controller="SelectionSetManagerCtl" heatmap-data="heatmapData" heatmap-id="{{heatmapId}}"></selection-set-manager>
+			  <selection-set-manager id="selectionSetMgr" ng-controller="SelectionSetManagerCtl" heatmap-data="heatmapData" heatmap-id="{{heatmapId}}"></selection-set-manager>
 			  
 			</div> <!-- End Row Definition -->
 					
@@ -53,8 +53,8 @@
 			<br>
 			
 			<ul class="nav nav-tabs">
-			  <li>
-			    <a href="#heatmapTab" data-toggle="tab">Heatmap</a>			    
+			  <li id="heatmapTab" >
+			    <a id="heatmapTabLink"  href="#heatmapTabPane" data-toggle="tab">Heatmap</a>			    
 			  </li>
 			  <li id="annotationsTab">
 			  	<a id="annotationsTabLink" href="#annotationsTabPane" data-toggle="tab">Annotations</a>
@@ -62,11 +62,11 @@
 			  </li>
 			</ul>
 			<div class="tab-content">
-			    <div id="heatmapTab" class="tab-pane" expression-Panel></div>
+			    <div id="heatmapTabPane" class="tab-pane" expression-Panel></div>
 			    
 			    <div id="annotationsTabPane" class="tab-pane">			    
 			    <!-- my-iframe id="annotationsIframe" height="70%" width="99%"></my-iframe -->
-			    <iframe width="100%" height="70%" ng-src="{{annotationsUrl}}" />
+			    <iframe scrolling="no" frameborder="0" width="99%" height="80%" ng-src="{{annotationsUrl}}" />
 			    </div>
 		    </div>
 		    

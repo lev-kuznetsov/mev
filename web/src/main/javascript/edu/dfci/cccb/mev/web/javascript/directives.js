@@ -156,7 +156,7 @@ define (
           } ])
           .directive ('expressionPanel', [ function () {
             return {
-              restrict : 'A',
+              restrict : 'AC',
               templateUrl : '/container/view/elements/expressionPanel',
               link : function (scope) {
 

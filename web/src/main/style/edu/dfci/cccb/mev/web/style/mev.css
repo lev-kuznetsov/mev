@@ -50,3 +50,14 @@ div.accordion, div.accordion div{
 .selectionSetDescription:not(:empty):AFTER{
 	content: ")"
 }
+
+#rightPanel .nav{
+	margin-left: 0;
+	margin-bottom: 0px;
+	list-style: none;
+}
+
+#rightPanel ul {
+padding: 0;
+margin: 0 0 0px 25px;
+}
