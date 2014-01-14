@@ -44,7 +44,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <script>Refine.encodings = $encodingJson; Refine.defaultEncoding = $defaultEncoding;</script>
   </head>
   <body>
-  	#include("mev/mev-navbar.vt")
+  	<!-- include("mev/mev-navbar.vt") -->
     <div id="header">      
       <div id="project-title">
         <span id="project-name-button" class="app-path-section"></span>
@@ -56,7 +56,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <a class="button" bind="exportButton" id="export-button" href="#export"><span class="button-menu" id="or-proj-export"></span></a>
         <a class="button" bind="exportSet" id="export-set" href="#export-set"><span id="export-set-button">Save Set</span></a>
         <a class="button" bind="close" id="close-link" href="#close"><span id="close-button">Close</span></a>
-        <a href="https://github.com/OpenRefine/OpenRefine/wiki/Documentation-For-Users" target="_blank" class="button"><span id="or-proj-help"></span></a>
+        <a href="https://github.com/OpenRefine/OpenRefine/wiki/Documentation-For-Users" target="_blank" class="button" id="or-proj-help-link"><span id="or-proj-help"></span></a>
       </div>
     </div>
     

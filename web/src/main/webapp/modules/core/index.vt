@@ -43,7 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <script>Refine.encodings = $encodingJson; Refine.defaultEncoding = $defaultEncoding;</script>
 </head>
 <body>
-  #include("mev/mev-navbar.vt")
+  <!-- include("mev/mev-navbar.vt") -->
   <div id="header">
         <div id="project-title">
         <span id="project-name-button" class="app-path-section"></span>

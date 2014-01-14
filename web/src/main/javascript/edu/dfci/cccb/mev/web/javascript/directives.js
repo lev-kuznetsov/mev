@@ -2,6 +2,7 @@ define (
     [ 'angular', 'jquery', 'd3', 'dropzone', 'services' ],
     function (angular, jq, d3, Dropzone) {
 
+
       return angular
           .module ('myApp.directives', [])
           .directive ('appVersion', [ 'appVersion', function (version) {
@@ -23,7 +24,7 @@ define (
                     scope.menu = opts;
                   }
                 };
-              } ])
+              } ])          
           .directive (
               'heatmapPanels',[ '$routeParams', 'API', 'alertService', '$location',
               function ($routeParams, API, alertService, $location) {
@@ -32,12 +33,6 @@ define (
                   templateUrl : '/container/view/elements/heatmapPanels',
                   link : function (scope, elems, attrs) {
 
-                    scope.heatmapData = undefined;
-                    scope.heatmapLeftTree = undefined;
-                    scope.heatmapTopTree = undefined;
-                    scope.heatmapLeftTreeName = undefined;
-                    scope.heatmapTopTreeName = undefined;
-                    
                     API.dataset.get ($routeParams.datasetName).then (
                         function(data){ scope.heatmapData = data;}, function(data){
                         	//return home if error
@@ -65,8 +60,7 @@ define (
               restrict : 'E',
               templateUrl : '/container/view/elements/sideNavigationBar',
               link: function(scope) {
-            	  
-            	$('.list').expList();
+            	
                 jq ('#closeRight').hide ();
                 jq ('#closeLeft').hide ();
                 
@@ -95,6 +89,20 @@ define (
             }
             };
           } ])
+          .directive ('limmaAccordionList', [ function () {
+            return {
+              restrict : 'E',
+              templateUrl : '/container/view/elements/limmaAccordion'
+              
+            };
+          } ])
+          .directive ('clusterAccordionList', [ function () {
+            return {
+              restrict : 'E',
+              templateUrl : '/container/view/elements/clusterAccordion'
+              
+            };
+          } ])
           .directive ('analysisMenuBar', [ function () {
             return {
               restrict : 'E',
@@ -104,7 +112,7 @@ define (
           } ])
           .directive ('expressionPanel', ['$routeParams', function ($routeParams) {
             return {
-              restrict : 'A',
+              restrict : 'AC',
               templateUrl : '/container/view/elements/expressionPanel',
               link : function (scope) {
                 
@@ -115,28 +123,6 @@ define (
               }
             };
           } ])
-          .directive (
-              'analysisPanel',
-              [
-                  'pseudoRandomStringGenerator',
-                  'API',
-                  '$routeParams',
-                  function (prsg, API, $rP) {
-                    return {
-                      restrict : 'A',
-                      templateUrl : '/container/view/elements/analysisPanel',
-                      link : function (scope) {
-
-                        
-
-                        scope.buildPreviousAnalysisList ();
-                        
-                        scope.datasetName = $rP.datasetName;
-                        	
-
-                      }
-                    };
-                  } ])
           .directive ('bsprevanalysis', function () {
 
             return {
@@ -849,9 +835,9 @@ define (
 
                         function drawHeatmap (data) {
                           
-                          heatmapcells = rects.data (data.values).enter ().append (
-                          "rect");
-                          scope.theData=data;
+
+                          heatmapcells = rects.data (data.values).enter ().append ("rect");
+						  scope.theData=data;
                           scaleUpdates (data.column, data.row,
                               data.min, data.max, data.avg);
                           

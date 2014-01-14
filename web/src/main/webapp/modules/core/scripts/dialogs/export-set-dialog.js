@@ -1,6 +1,10 @@
 function ExportSetDialog() { 	
-    this._createDialog();    
+    this._createDialog();
+    
 }
+
+ExportSetDialog.prototype._lastItem=null;
+
 
 ExportSetDialog.prototype._createDialog = function() {
     var self = this;
@@ -75,27 +79,43 @@ ExportSetDialog.prototype._validate = function()
 };
 
 ExportSetDialog.prototype._exportAjax = function(){
-	$.ajax({
-	    type: "POST",
-	    url: "command/core/export-set",
-	    data: { 
-	    	"project" : theProject.id, 
-	    	"name" : name,
-	    	"selectionName" : this._name,
-	    	"selectionDescription" : this._description,
-	    	"selectionColor" : this._color,
-	    	"selectionFacetLink" : Refine.getPermanentLink(),
-	    	"engine" : JSON.stringify(ui.browsingEngine.getJSON())
-	    	},
-	    dataType: "json",
-	    success: function (data) {
-	      if (data && typeof data.code != 'undefined' && data.code == "ok") {
-	        alert("Set saved succesfully");
-	      } else {
-	        alert($.i18n._('core-index')["error-rename"]+" " + data.message);
-	      }
-	    }
-	  });
+	var postRequest = {
+		    type: "POST",
+		    url: "command/core/export-set",
+		    data: { 
+		    	"project" : theProject.id, 
+		    	"name" : name,
+		    	"selectionName" : this._name,
+		    	"selectionDescription" : this._description,
+		    	"selectionColor" : this._color,
+		    	"selectionFacetLink" : Refine.getPermanentLink(),
+		    	"engine" : JSON.stringify(ui.browsingEngine.getJSON())
+		    	},
+		    dataType: "json",
+		    success: function (data) {
+		      if (data && typeof data.code != 'undefined' && data.code == "ok") {
+		        alert("Set saved succesfully");		        
+		        parent.ORefineBridge.addSelectionSet(Refine._lastItem);
+		        var currentUrl = window.location.href;
+		        console.log("currentUrl:"+currentUrl);
+		        var newUrl = currentUrl.replace("/new/", "/"+Refine._lastItem.name+"/");
+		        console.log("newUrl:"+newUrl);
+		        window.location.replace(newUrl);
+		      } else {
+		        alert($.i18n._('core-index')["error-rename"]+" " + data.message);
+		      }
+		    }
+		  };
+		 
+		Refine._lastItem={
+			name: this._name,
+			properties: {
+				selectionDescription: this._description,
+				selectionColor: this._color,
+				selectionFacetLink: Refine.getPermanentLink(),
+			}
+		};		
+		$.ajax(postRequest);
 };
 
 ExportSetDialog.prototype._export = function() {  

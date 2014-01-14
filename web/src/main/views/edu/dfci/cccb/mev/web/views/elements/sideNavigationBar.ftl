@@ -56,44 +56,5 @@
         $(e.target).closest("li").addClass("selected").parent().parent().addClass("selected");
     });
 </script>
-    
-<div class="row">
-	<i class="icon-chevron-left pull-right" id="expandNav" ng-click="closeNav()"></i>
-	<i class="icon-chevron-right pull-right" id="closeNav" ng-click="expandNav()"></i>
-</div>
 
-<div class="row">
-	<ul class="breadcrumb">
-			  <li><a href="/">Files</a> <span class="divider">/</span></li>
-			  <li><a href="">{{heatmapId}}</a></li>
-			</ul>
-	<ul>	
-</div>
 
-<div class="row">
-
-<div class="menu">
-	<ul>
-		<li><span>Element1</span>
-			<ul>
-				<li> Elem1.1
-					<p> </p>
-					<ul>
-						<li> Elem1.3 </li>
-						<li> Elem1.4 </li>
-					</ul>
-				</li>
-				<li> Elem1.2 </li>
-			</ul>
-		</li>
-		<li><span>Element2</span>
-			<ul>
-				<li> Elem1.1 </li>
-				<li> Elem1.2 </li>
-			</ul>
-		</li>
-		<li>Element3</li>
-	</ul>
-</div>
-
-</div>
