@@ -23,7 +23,7 @@ float: left;
 #header {
 height: 40px;
 /*margin: 70px 0px 0px 0px;*/
-padding: 70px 0px 0px 0px;
+padding: 0px 0px 0px 0px;
 position: relative;
 overflow: visible;
 }
@@ -32,8 +32,20 @@ overflow: visible;
 	font-size: 23.5px;
 	/*line-height: 40px;*/
 	font-weight: bold;
+	display: none;
 }
-
+#project-permalink-button{
+	display:none;
+}
+#close-button, #close-link{
+	display: none;
+}
+#exportSetAndExitButton{
+	display: none;
+}
+#or-proj-help, #or-proj-help-link{
+	display: none;
+}
 #project-controls {
 position: relative;
 top: 0;

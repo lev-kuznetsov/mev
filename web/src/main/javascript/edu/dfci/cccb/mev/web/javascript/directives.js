@@ -1,5 +1,5 @@
 define (
-    [ 'angular', 'jquery', 'd3', 'dropzone', 'newick', 'services' ],
+    [ 'angular', 'jquery', 'd3', 'dropzone', 'newick', 'services', 'mainpanel/MainPanel' ],
     function (angular, jq, d3, Dropzone, newick) {
 
       return angular
@@ -23,7 +23,7 @@ define (
                     scope.menu = opts;
                   }
                 };
-              } ])
+              } ])          
           .directive (
               'heatmapPanels',[ '$routeParams', 'API', 'alertService', '$location',
               function ($routeParams, API, alertService, $location) {
@@ -32,12 +32,6 @@ define (
                   templateUrl : '/container/view/elements/heatmapPanels',
                   link : function (scope, elems, attrs) {
 
-                    scope.heatmapData = undefined;
-                    scope.heatmapLeftTree = undefined;
-                    scope.heatmapTopTree = undefined;
-                    scope.heatmapLeftTreeName = undefined;
-                    scope.heatmapTopTreeName = undefined;
-                    
                     API.dataset.get ($routeParams.datasetName).then (
                         function(data){ scope.heatmapData = data;}, function(data){
                         	//return home if error
@@ -162,7 +156,7 @@ define (
           } ])
           .directive ('expressionPanel', [ function () {
             return {
-              restrict : 'A',
+              restrict : 'AC',
               templateUrl : '/container/view/elements/expressionPanel',
               link : function (scope) {
 
@@ -903,8 +897,7 @@ define (
 
                         function drawHeatmap (data) {
                           
-                          heatmapcells = rects.data (data.values).enter ().append (
-                          "rect");
+                          heatmapcells = rects.data (data.values).enter ().append ("rect");
 						  scope.theData=data;
                           scaleUpdates (data.column, data.row,
                               data.min, data.max, data.avg);

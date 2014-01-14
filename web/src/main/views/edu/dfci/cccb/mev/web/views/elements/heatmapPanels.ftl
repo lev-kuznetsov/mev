@@ -7,10 +7,10 @@
 
 </style>
 
-<div class="row-fluid"> <!-- Start Column Expand Tabs -->
+<div ng-controller="MainPanelController" class="row-fluid"> <!-- Start Column Expand Tabs -->	
 	<div class="span3 marker" id="leftPanel">
 	
-	  <div class="well">
+	  <div class="well" style="height: 100%">
 	  
 	     <div class="row-fluid">
 			    <! -- LEFT EXPANDER BUTTON -->
@@ -24,67 +24,10 @@
 			<div class="row-fluid">
                 <p class="lead pull-left">Set Manager</p>
 		    </div>
-			<div class="row-fluid">	
-			  <div id="setmanagerAccordion" class="accordion">
-
-				<div class="accordion-group">
-			    
-				    <div class="accordion-heading">
-				      <a class="accordion-toggle" data-toggle="collapse" href="#collapseSetManagerColumns">
-				        Column Sets
-				      </a>
-				      <a class="accordion-action-button" href="/annotations/{{heatmapId}}/annotation/column/new/">create new from annotations</a>
-				    </div> <!-- End Heading Div -->
-				    
-				    <div id="collapseSetManagerColumns" class="accordion-body collapse" >
-				      <div class="accordion-inner">
-				        <div class="selectionSetList">
-				        	<div ng-show="theData.column.selections.length>0" ng-repeat="selection in theData.column.selections" class="selectionSetListItem">
-				        		<div class="selectionSetColor" style='background-color: {{selection.properties.selectionColor}}'></div>
-				        		<div><a href="/annotations/{{heatmapId}}/annotation/column/{{selection.name}}/{{selection.properties.selectionFacetLink}}">{{selection.name}}</a></div>
-				        		<div class="selectionSetDescription">{{selection.properties.selectionDescription}}</div>
-				        		<div class="selectionSetKeys">
-					        		<span ng-repeat="key in selection.keys">
-					        			{{key}},
-					        		</span>
-				        		</div>				        		
-				        	</div>
-				        	<div ng-show="theData.column.selections.length<=0" class="selectionSetListItem">No sets defined. You may define sets using <a href="/annotations/{{heatmapId}}/annotation/column/new/">column annotations</a> or by performing a clustering analysis.</div>
-				      </div>
-				    </div>
-			      </div> <!-- End Accordion Body -->
-			    </div> <!-- End Accordion Grouping -->
-			    			    
-			    <div class="accordion-group">
-			    
-				    <div class="accordion-heading">
-				      <a class="accordion-toggle" data-toggle="collapse" href="#collapseSetManagerRows">
-				        Row Sets
-				      </a>				      
-				    </div> <!-- End Heading Div -->
-				    
-				    <div id="collapseSetManagerRows" class="accordion-body collapse" >
-				      <div class="accordion-inner">
-				        <div class="selectionSetList">
-				        	<div ng-show="theData.row.selections.length>0" ng-repeat="selection in theData.row.selections" class="selectionSetListItem">
-				        		<div class="selectionSetColor" style='background-color: {{selection.properties.selectionColor}}'></div>
-				        		<div><a href="/annotations/{{heatmapId}}/annotation/row/{{selection.properties.selectionFacetLink}}&{{selection.name}}&{{selection.properties.selectionColor}}&{{selection.properties.selectionDescription}}">{{selection.name}}</a></div>
-				        		<div class="selectionSetDescription">{{selection.properties.selectionDescription}}</div>
-				        		<div class="selectionSetKeys">
-					        		<span ng-repeat="key in selection.keys">
-					        			{{key}},
-					        		</span>
-				        		</div>				        		
-				        	</div>
-				        	<div ng-show="theData.row.selections.length<=0" class="selectionSetListItem">No sets defined. You may define sets by performing a clustering analysis.</div>
-				        </div>
-				      </div>
-				    </div> <!-- End Accordion Body -->
-			    
-			    </div> <!-- End Accordion Grouping -->
-			    
-			  </div> <!-- End Accordion Definition -->
-			
+			<div class="row-fluid">
+			  
+			  <selection-set-manager id="selectionSetMgr" ng-controller="SelectionSetManagerCtl" heatmap-data="heatmapData" heatmap-id="{{heatmapId}}"></selection-set-manager>
+			  
 			</div> <!-- End Row Definition -->
 					
 					
@@ -96,17 +39,12 @@
 		    
 		  </div> <!-- End fixed-height def -->
 	    </div> <!-- End well def -->
-	    
-		
 	</div>
 
 	<div class="span9 marker" id="rightPanel">
 	
 	   <div class="well">
-		
-			
-			
-			<div class="row-fluid">
+		<div class="row-fluid">
 			  <!-- RIGHT EXPANDER BUTTON -->
 		    	<button class="btn btn-primary pull-right" id="expandRight" ng-click="expandRight()"><i class="icon-chevron-left"></i></button>
 				<button class="btn btn-primary pull-right" id="closeRight" ng-click="expandBoth()"><i class="icon-chevron-right"></i></button>
@@ -114,7 +52,24 @@
 			
 			<br>
 			
-		    <div expression-Panel></div>
+			<ul class="nav nav-tabs">
+			  <li id="heatmapTab" >
+			    <a id="heatmapTabLink"  href="#heatmapTabPane" data-toggle="tab">Heatmap</a>			    
+			  </li>
+			  <li id="annotationsTab">
+			  	<a id="annotationsTabLink" href="#annotationsTabPane" data-toggle="tab">Annotations</a>
+			  	
+			  </li>
+			</ul>
+			<div class="tab-content">
+			    <div id="heatmapTabPane" class="tab-pane" expression-Panel></div>
+			    
+			    <div id="annotationsTabPane" class="tab-pane">			    
+			    <!-- my-iframe id="annotationsIframe" height="70%" width="99%"></my-iframe -->
+			    <iframe scrolling="no" frameborder="0" width="99%" height="80%" ng-src="{{annotationsUrl}}" />
+			    </div>
+		    </div>
+		    
 		</div>
 		
 		

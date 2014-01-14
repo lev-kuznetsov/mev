@@ -41,14 +41,18 @@ require
 
     });
 
-require ([ 'angular', 'app', 'jquery', 'bootstrap-css', 'bootstrap' ],
-    function (angular, app, jquery) {
+require ([ 'angular', 'app', 'jquery', 'orefine/OrefineBridge', 'bootstrap-css', 'bootstrap', 'setmanager/SetManager', 'mainpanel/MainPanel'],
+    function (angular, app, jquery, orb) {
 
       'use strict';
       var $html = angular.element (document.getElementsByTagName ('html')[0]);
       angular.element ().ready (function () {
         $html.addClass ('ng-app');
         angular.bootstrap ($html, [ app['name'] ]);
+        
       });
-
+      
+      window.ORefineBridge = orb;
     });
+
+
