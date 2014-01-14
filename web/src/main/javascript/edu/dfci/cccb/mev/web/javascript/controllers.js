@@ -84,19 +84,19 @@ define ([ 'jquery', 'angular'], function ($, angular) {
                               
                               //apply column cluster to dendogram
                               
-                              scope.heatmapTopTree = data.column.root;
+                              $scope.heatmapTopTree = data.column.root;
                               
                             };
                             
                             if (data.row.root) {
                               
                               
-                              scope.heatmapLeftTree = data.row.root;
+                              $scope.heatmapLeftTree = data.row.root;
 
                             };
                             
                             //Apply new ordering and dataset to held heatmap
-                            scope.heatmapData = data;
+                            $scope.heatmapData = data;
                           
                           }, function () {
                             // Redirect to home if errored out

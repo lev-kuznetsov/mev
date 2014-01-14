@@ -39,14 +39,9 @@ define (
                         	$location.path('/');
                         });
                     
-                   
                     
-                    console.log("window height: " + jq(window).height())
-                    
-                    var windowHeight = jq(window).height() * .99;
-                    
-                    //jq ('#rightPanel div.tab-group').css ('height',  windowHeight);
-                    jq('#rightPanel').css('height', windowHeight)
+                    jq('#rightPanel').css('height', "80%")
+                    jq('#leftPanel').css('height', "80%")
 
                     scope.showLimmaTables = true;
                     
@@ -60,32 +55,14 @@ define (
               restrict : 'E',
               templateUrl : '/container/view/elements/sideNavigationBar',
               link: function(scope) {
-            	
-                jq ('#closeRight').hide ();
-                jq ('#closeLeft').hide ();
-                
-                scope.closeNav = function () {
-
-                  jq ('menubar').hide ();
-                  jq ('#expandRight').hide ();
-                  jq ('#closeRight').show ();
-                  jq ('#rightPanel').show ();
-
-                };
-
-                scope.expandNav = function () {
-
-                  jq ('#closeRight').hide ();
-                  jq ('#closeLeft').hide ();
-                  jq ('#expandRight').show ();
-                  jq ('#expandLeft').show ();
-                  jq ('#rightPanel').show ();
-                  jq ('menubar').show ();
-                  jq ('#rightPanel').attr ("class", "span9 offset2");
-                  jq ('#rightPanel').css ({
-                    "margin-left" : margin
-                  });
-                }
+            	  	jq('li.expandable').click(function() {
+            	  		if ($(this).children()) {
+            	  			console.log($(this))
+            	  			$(this).children('ul').toggle();
+                		    return false;
+            	  		}
+            		    
+            		});
             }
             };
           } ])
