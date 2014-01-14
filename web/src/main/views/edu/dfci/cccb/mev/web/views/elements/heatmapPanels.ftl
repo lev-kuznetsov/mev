@@ -56,15 +56,15 @@
 			  <li>
 			    <a href="#heatmapTab" data-toggle="tab">Heatmap</a>			    
 			  </li>
-			  <li >
-			  	<a href="#annotationsTab" data-toggle="tab">Annotations</a>
+			  <li id="annotationsTab">
+			  	<a id="annotationsTabLink" href="#annotationsTabPane" data-toggle="tab">Annotations</a>
 			  	
 			  </li>
 			</ul>
 			<div class="tab-content">
 			    <div id="heatmapTab" class="tab-pane" expression-Panel></div>
 			    
-			    <div id="annotationsTab" class="tab-pane">			    
+			    <div id="annotationsTabPane" class="tab-pane">			    
 			    <!-- my-iframe id="annotationsIframe" height="70%" width="99%"></my-iframe -->
 			    <iframe width="100%" height="70%" ng-src="{{annotationsUrl}}" />
 			    </div>

@@ -1,4 +1,4 @@
-define ([ 'angular', 'jquery' ], function (angular, $) {
+define ([ 'jquery', 'angular'], function ($, angular) {
 
   return angular.module ('myApp.controllers', []).controller ('HeatmapCtrl',
       [ '$scope', '$routeParams', 'API', 'pseudoRandomStringGenerator', '$rootScope', '$location', function ($scope, $routeParams, API, prsg, $rS, $loc) {
@@ -97,13 +97,15 @@ define ([ 'angular', 'jquery' ], function (angular, $) {
       .controller('MainPanelController', ['$scope', '$element', '$attrs', function($scope, $element, $attrs){
 			
     	  $scope.$on('ViewAnnotationsEvent', function(event, selection, dimension){
-				alert('view annot!: ' + angular.toJson(event) + "\nselection :" + selection.name);
-				var iframe = angular.element("#annotationsIframe");				
+				//alert('view annot!: ' + angular.toJson(event) + "\nselection :" + selection.name);
+				//var iframe = angular.element("#annotationsIframe");				
 				var url = $scope.baseUrl+"/"+dimension+"/"+selection.name+"/"+selection.properties.selectionFacetLink;
 				$scope.annotationsUrl=url;
+				var annotationsTab = angular.element("#annotationsTabLink");				
+				annotationsTab.trigger("click");
 			});
     	  
-    	  ///annotations/{{heatmapId}}/annotation/column
+    	  ///annotations/{{heatmapId}}/annotation/column    	  
     	  $scope.baseUrl='/annotations/'+$scope.heatmapId+'/annotation';
     	  $scope.annotationsUrl=$scope.baseUrl+'/column/new/';
 		}]);

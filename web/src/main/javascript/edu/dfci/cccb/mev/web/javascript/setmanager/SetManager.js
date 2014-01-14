@@ -55,7 +55,7 @@ define(['angular'], function(angular){
 		        scrolling: '@scrolling',
 		        annotationsUrl: '=annotationsUrl'
 		      },
-		      template: '<h1>annotationsUrl:{{annotationsUrl}}</h1><iframe class="frame" height="{{height}}" width="{{width}}" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="{{scrolling}}" ng-src="{{annotationsUrl}}"></iframe>',
+		      template: '<iframe class="frame" height="{{height}}" width="{{width}}" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="{{scrolling}}" ng-src="{{annotationsUrl}}"></iframe>',
 		      link : linkFn
 		    };
 		  })
@@ -77,12 +77,12 @@ define(['angular'], function(angular){
 				alert("selected: " + item.name);
 			};
 			$scope.saveItem = function(item){
-				alert("save: " + item.name + " old: " + $scope.selectedItem.name);
+				//alert("save: " + item.name + " old: " + $scope.selectedItem.name);
 				$scope.selectedItem.name = item.name;
 				$scope.selectedItem.properties = item.properties;
 			};
 			$scope.showAnnotations = function(selection, dimention){
-				alert(angular.toJson(selection));
+				//alert(angular.toJson(selection));
 				$scope.$emit('ViewAnnotationsEvent', selection, dimention);				
 				
 			}
