@@ -1,5 +1,5 @@
 
-<div id="setmanagerAccordion" class="accordion" ng-controller="SelectionSetManagerCtl">
+<div id="setmanagerAccordion" class="accordion">
 
 	<div class="accordion-group">
 		<div class="accordion-heading" ng-dblclick="sayHelloCtl()">
@@ -13,7 +13,8 @@
 			<div class="accordion-inner">
 				<selection-set-list 
 					mev-selections="heatmapData.column.selections" 
-					mev-base-url="/annotations/{{heatmapId}}/annotation/column">
+					mev-base-url="/annotations/{{heatmapId}}/annotation/column"
+					mev-demintion="column">
 					You may define sets using <a href="/annotations/{{heatmapId}}/annotation/column/new/">column annotations</a> or by performing a clustering analysis.				
 				</selection-set-list>				
 			</div>
@@ -34,6 +35,7 @@
 				<selection-set-list 
 					mev-selections="heatmapData.row.selections" 
 					mev-base-url="/annotations/{{heatmapId}}/annotation/row"
+					mev-demintion="row"
 					mev-say-hello="sayHelloCtl()">
 					You may define sets by performing a clustering analysis.				
 				</selection-set-list>

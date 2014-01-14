@@ -17,6 +17,7 @@ define(['angular'], function(angular){
 					selections: '=mevSelections'
 					, baseUrl: '@mevBaseUrl'
 					, setSelected: '&mevSayHello'
+					, dimension: '@mevDemintion'
 				},
 				restrict : 'EA',
 				transclude : true,
@@ -38,16 +39,37 @@ define(['angular'], function(angular){
 				templateUrl : '/container/view/elements/setmanager/selectionSetEditForm',				
 			};
 		}])
+		.directive('myIframe', function(){
+		    var linkFn = function(scope, element, attrs) {
+		        element.find('iframe').bind('load', function (event) {
+		          //event.target.contentWindow.scrollTo(0,400);
+		        });
+		        
+		    };
+		    return {
+		      restrict: 'EA',
+		      scope: {
+		        ngSrc:'@ngSrc',
+		        height: '@height',
+		        width: '@width',
+		        scrolling: '@scrolling',
+		        annotationsUrl: '=annotationsUrl'
+		      },
+		      template: '<h1>annotationsUrl:{{annotationsUrl}}</h1><iframe class="frame" height="{{height}}" width="{{width}}" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="{{scrolling}}" ng-src="{{annotationsUrl}}"></iframe>',
+		      link : linkFn
+		    };
+		  })
 		.controller('SelectionSetManagerCtl', ['$scope', '$element', '$attrs', function($scope, $element, $attrs){
 			
 			$scope.sayHelloCtl = function() {
 				alert($scope.heatmapId + ":" + $scope.heatmapData.column.selections.length + ":" + $scope.$id);
 			};		
 			
-			alert(angular.toJson($attrs) );
+			//alert(angular.toJson($attrs) );
 						
 			$scope.selectedItem = null;
 			$scope.selectedItemTmp = null;
+			$scope.annotationsUrl="hello";
 			
 			$scope.setSelected = function(item){
 				$scope.selectedItem = item;
@@ -59,6 +81,13 @@ define(['angular'], function(angular){
 				$scope.selectedItem.name = item.name;
 				$scope.selectedItem.properties = item.properties;
 			};
+			$scope.showAnnotations = function(selection, dimention){
+				alert(angular.toJson(selection));
+				$scope.$emit('ViewAnnotationsEvent', selection, dimention);				
+				
+			}
+			
+			
 		}]);
 });
 

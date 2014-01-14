@@ -7,10 +7,10 @@
 
 </style>
 
-<div class="row-fluid"> <!-- Start Column Expand Tabs -->
+<div ng-controller="MainPanelController" class="row-fluid"> <!-- Start Column Expand Tabs -->	
 	<div class="span3 marker" id="leftPanel">
 	
-	  <div class="well">
+	  <div class="well" style="height: 100%">
 	  
 	     <div class="row-fluid">
 			    <! -- LEFT EXPANDER BUTTON -->
@@ -26,7 +26,7 @@
 		    </div>
 			<div class="row-fluid">
 			  
-			  <selection-set-manager heatmap-data="heatmapData" heatmap-id="{{heatmapId}}"></selection-set-manager>
+			  <selection-set-manager ng-controller="SelectionSetManagerCtl" heatmap-data="heatmapData" heatmap-id="{{heatmapId}}"></selection-set-manager>
 			  
 			</div> <!-- End Row Definition -->
 					
@@ -39,17 +39,12 @@
 		    
 		  </div> <!-- End fixed-height def -->
 	    </div> <!-- End well def -->
-	    
-		
 	</div>
 
 	<div class="span9 marker" id="rightPanel">
 	
 	   <div class="well">
-		
-			
-			
-			<div class="row-fluid">
+		<div class="row-fluid">
 			  <!-- RIGHT EXPANDER BUTTON -->
 		    	<button class="btn btn-primary pull-right" id="expandRight" ng-click="expandRight()"><i class="icon-chevron-left"></i></button>
 				<button class="btn btn-primary pull-right" id="closeRight" ng-click="expandBoth()"><i class="icon-chevron-right"></i></button>
@@ -57,7 +52,24 @@
 			
 			<br>
 			
-		    <div expression-Panel></div>
+			<ul class="nav nav-tabs">
+			  <li>
+			    <a href="#heatmapTab" data-toggle="tab">Heatmap</a>			    
+			  </li>
+			  <li >
+			  	<a href="#annotationsTab" data-toggle="tab">Annotations</a>
+			  	
+			  </li>
+			</ul>
+			<div class="tab-content">
+			    <div id="heatmapTab" class="tab-pane" expression-Panel></div>
+			    
+			    <div id="annotationsTab" class="tab-pane">			    
+			    <!-- my-iframe id="annotationsIframe" height="70%" width="99%"></my-iframe -->
+			    <iframe width="100%" height="70%" ng-src="{{annotationsUrl}}" />
+			    </div>
+		    </div>
+		    
 		</div>
 		
 		

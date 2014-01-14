@@ -1,5 +1,5 @@
 define (
-    [ 'angular', 'jquery', 'd3', 'dropzone', 'newick', 'services' ],
+    [ 'angular', 'jquery', 'd3', 'dropzone', 'newick', 'services', 'mainpanel/MainPanel' ],
     function (angular, jq, d3, Dropzone, newick) {
 
       return angular

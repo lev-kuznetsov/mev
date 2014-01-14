@@ -80,4 +80,6 @@ public class SelectionController {
       log.debug ("Adding selection " + selection);
     dimension.selections ().put (selection);
   }
+  
+  
 }

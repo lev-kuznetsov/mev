@@ -3,13 +3,14 @@
 <div class="selectionSetList">
 	<div ng-show="selections.length>0" ng-repeat="selection in selections"
 		class="selectionSetListItem">
-		<a data-toggle="modal" role="button" data-target="#editModal" ng-click="alrt('hi'); setSelected(selection)">
+		<a data-toggle="modal" role="button" data-target="#editModal" ng-click="setSelected(selection)">
 			<div class="selectionSetColor"
 				style='background-color: {{selection.properties.selectionColor}}'></div>
 		</a>
 		<div>
-			<a
-				href="{{baseUrl}}/{{selection.name}}/{{selection.properties.selectionFacetLink}}">{{selection.name}}</a>
+			<!-- href="{{baseUrl}}/{{selection.name}}/{{selection.properties.selectionFacetLink}} -->
+			<a href=""
+				ng-click="showAnnotations(selection, dimension)">{{selection.name}}</a>
 		</div>
 		<div class="selectionSetDescription">{{selection.properties.selectionDescription}}</div>
 		<div class="selectionSetKeys">

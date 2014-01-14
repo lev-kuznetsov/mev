@@ -93,7 +93,20 @@ define ([ 'angular', 'jquery' ], function (angular, $) {
     	  });
     	  
     	  
-      }]);
+      }])
+      .controller('MainPanelController', ['$scope', '$element', '$attrs', function($scope, $element, $attrs){
+			
+    	  $scope.$on('ViewAnnotationsEvent', function(event, selection, dimension){
+				alert('view annot!: ' + angular.toJson(event) + "\nselection :" + selection.name);
+				var iframe = angular.element("#annotationsIframe");				
+				var url = $scope.baseUrl+"/"+dimension+"/"+selection.name+"/"+selection.properties.selectionFacetLink;
+				$scope.annotationsUrl=url;
+			});
+    	  
+    	  ///annotations/{{heatmapId}}/annotation/column
+    	  $scope.baseUrl='/annotations/'+$scope.heatmapId+'/annotation';
+    	  $scope.annotationsUrl=$scope.baseUrl+'/column/new/';
+		}]);
   
 
 });
