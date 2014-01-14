@@ -1,6 +1,6 @@
 define (
-    [ 'angular', 'jquery', 'd3', 'dropzone', 'newick', 'services' ],
-    function (angular, jq, d3, Dropzone, newick) {
+    [ 'angular', 'jquery', 'd3', 'dropzone', 'services' ],
+    function (angular, jq, d3, Dropzone) {
 
       return angular
           .module ('myApp.directives', [])
@@ -65,6 +65,8 @@ define (
               restrict : 'E',
               templateUrl : '/container/view/elements/sideNavigationBar',
               link: function(scope) {
+            	  
+            	$('.list').expList();
                 jq ('#closeRight').hide ();
                 jq ('#closeLeft').hide ();
                 

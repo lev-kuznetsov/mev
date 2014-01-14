@@ -31,13 +31,6 @@ require
         },
         'bootstrap-css' : {
           deps : [ 'bootstrap' ]
-        },
-        'metis':{
-          deps: ['jquery']
-        },
-        'sparkline':{
-          deps: ['jquery'],
-          exports: 'sparkline'
         }
 
       },
@@ -45,7 +38,7 @@ require
 
     });
 
-require ([ 'angular', 'app', 'jquery', 'bootstrap-css', 'bootstrap', 'metis'],
+require ([ 'angular', 'app', 'jquery', 'bootstrap-css', 'bootstrap'],
     function (angular, app, jquery) {
 
       'use strict';
