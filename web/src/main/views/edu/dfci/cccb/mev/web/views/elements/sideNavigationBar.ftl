@@ -161,37 +161,41 @@ table.tablesorter thead tr th:hover {
 
 </style>
 
-<ul class="nav navbar-nav">
+<div class="row">
+	<i class="icon-chevron-left pull-right" id="expandNav" ng-click="closeNav()"></i>
+	<i class="icon-chevron-right pull-right" id="closeNav" ng-click="expandNav()"></i>
+</div>
 
-    <div class="row-fluid">
-		<li>
-			<i class="icon-chevron-left pull-right" id="expandRight" ng-click="expandRight()"></i>
-			<i class="icon-chevron-right pull-right" id="closeRight" ng-click="expandBoth()"></i>
-		</li>
-	</div>
-  
-    <li><a href="/home"><i class="icon-list"></i> Datasets</a></li>
-    
-    <li class="dropdown">
-       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <i class="fa fa-caret-square-o-down"></i> Clustering <b class="caret"></b>
-       </a>
-       <ul class="dropdown-menu">
-          <li><a data-toggle="modal" role="button" href="#hierarchical">Hierarchical</a></li>
-          <li><a data-toggle="modal" role="button" class="disabled" href=""><p class="muted">K-Means/Medians</p></a></li>
-       </ul>
-    </li>
-    
-    <li class="dropdown">
-       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <i class="fa fa-caret-square-o-down"></i> Statistics <b class="caret"></b>
-       </a>
-       <ul class="dropdown-menu">
-          <li><a data-toggle="modal" role="button" href="#limma">LIMMA</a></li> 
-          <li><a href=""><p class="muted">t-Test</p></a></li>
-       </ul>
-    </li>
-    
-    <li><a href=""><i class="icon-download-alt"></i> Export</a></li>
-    
-</ul>
+<div class="row">
+	<ul class="breadcrumb">
+			  <li><a href="/">Files</a> <span class="divider">/</span></li>
+			  <li><a href="">{{heatmapId}}</a></li>
+			</ul>
+	<ul>	
+	  
+	    <li><a href="/home"><i class="icon-list"></i> Datasets</a></li>
+	    
+	    <li class="dropdown">
+	       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	          <i class="fa fa-caret-square-o-down"></i> Clustering <b class="caret"></b>
+	       </a>
+	       <ul class="dropdown-menu">
+	          <li><a data-toggle="modal" role="button" href="#hierarchical">Hierarchical</a></li>
+	          <li><a data-toggle="modal" role="button" class="disabled" href=""><p class="muted">K-Means/Medians</p></a></li>
+	       </ul>
+	    </li>
+	    
+	    <li class="dropdown">
+	       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	          <i class="fa fa-caret-square-o-down"></i> Statistics <b class="caret"></b>
+	       </a>
+	       <ul class="dropdown-menu">
+	          <li><a data-toggle="modal" role="button" href="#limma">LIMMA</a></li> 
+	          <li><a href=""><p class="muted">t-Test</p></a></li>
+	       </ul>
+	    </li>
+	    
+	    <li><a href=""><i class="icon-download-alt"></i> Export</a></li>
+	    
+	</ul>
+</div>
