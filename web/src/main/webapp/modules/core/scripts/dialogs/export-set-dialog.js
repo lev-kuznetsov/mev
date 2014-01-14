@@ -94,7 +94,7 @@ ExportSetDialog.prototype._exportAjax = function(){
 		    dataType: "json",
 		    success: function (data) {
 		      if (data && typeof data.code != 'undefined' && data.code == "ok") {
-		        alert("Set saved succesfully");		        
+		        //alert("Set saved succesfully");		        
 		        parent.ORefineBridge.addSelectionSet(Refine._lastItem);
 		        var currentUrl = window.location.href;
 		        console.log("currentUrl:"+currentUrl);

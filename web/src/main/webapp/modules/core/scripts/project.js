@@ -117,6 +117,20 @@ function resizeAll() {
   ui.dataTableView.resize();
 }
 
+ 
+
+function toProperCase(str)
+{
+    var noCaps = ['of','a','the','and','an','am','or','nor','but','is','if','then', 
+'else','when','at','from','by','on','off','for','in','out','to','into','with'];
+    return str.replace(/\w\S*/g, function(txt, offset){
+        if(offset != 0 && noCaps.indexOf(txt.toLowerCase()) != -1){
+            return txt.toLowerCase();    
+        }
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
 function initializeUI(uiState) {
   $("#loading-message").hide();
   $("#notification-container").hide();
@@ -132,11 +146,11 @@ function initializeUI(uiState) {
   $("#or-proj-starting").text($.i18n._('core-project')["starting"]+"...");
   $("#or-proj-facFil").text($.i18n._('core-project')["facet-filter"]);
   $("#or-proj-undoRedo").text($.i18n._('core-project')["undo-redo"]);
-  $("#or-proj-ext").text($.i18n._('core-project')["extensions"]+":");
-
+  $("#or-proj-ext").text($.i18n._('core-project')["extensions"]+":");  
+   
   
   //ap:disable project renaming for MeV
-  //$('#project-name-button').click(Refine._renameProject);
+  //$('#project-name-button').click(Refine._renameProject);  
   $('#project-permalink-button').mouseenter(function() {
     this.href = Refine.getPermanentLink();
   });
@@ -177,13 +191,21 @@ function initializeUI(uiState) {
 }
 
 Refine.setTitle = function(status) {
-  var title = theProject.metadata.name + " annotations - MEV: Multi-Experiment Viewer";
+  //var title = theProject.metadata.name + " annotations - MEV: Multi-Experiment Viewer";
+  var title = toProperCase(theProject.metadata.customMetadata.dimension) + " Annotations";
+  console.log("theProject.metadata.customMetadata.selectionName:"+theProject.metadata.customMetadata.selectionName);
+  if(theProject.metadata.customMetadata.selectionName!=""){
+	  //title += " (" + theProject.metadata.customMetadata.selectionName + ")";
+  }
+	  
   if (status) {
     title = status + " - " + title;
   }
   document.title = title;
 
   $("#project-name-button").text(theProject.metadata.name);
+  
+  $('#annotation-name-button').text(title);
 };
 
 Refine.reinitializeProjectData = function(f, fError) {
