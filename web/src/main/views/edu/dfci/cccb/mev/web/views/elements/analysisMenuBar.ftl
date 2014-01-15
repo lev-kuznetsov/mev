@@ -2,7 +2,7 @@
 	<div class="navbar-inner">
 		<ul class="nav pull-left">
 		  
-			<li><a href="/home"><i class="icon-list"></i> Datasets</a></li>
+			<li><a href="/home"></i> Datasets</a></li>
 		    
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">

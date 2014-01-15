@@ -7,7 +7,6 @@
     text-decoration:none;
 }
 div.menu{
-    border-right:1px solid #CCC;
     
 }
 .menu ul {
@@ -51,62 +50,69 @@ div.menu{
     background-color:#7EB0B0;
     /*border-left:6px solid #006363; */ 
 }
+p.lead {
+	left-margin: 10px;
+}
 </style>
 
-
-<div class='menu'>
-	<ul class="nav nav-tabs nav-stacked">
-		<li class="expandable"><a href=""><i class="icon-folder-open"></i> {{heatmapId}}</a>
+<br>
+<br>
+<div class="row-fluid">
+	<div class="span12">
+		<div class='menu'>
 			<ul>
-				<!-- Clustering Side List -->
-		        <li class="expandable"><a href=""><i class="icon-th"></i> Clusters</a>
+				<li class="expandable"><a href=""><i class="icon-folder-open"></i> {{heatmapId}}</a>
 					<ul>
-						<li class="expandable"><a href=""><i class="icon-random"></i> Row</a>
+						<!-- Clustering Side List -->
+				        <li class="expandable"><a href=""><i class="icon-th"></i> Clusters</a>
 							<ul>
-								<li><a href=""><i class="icon-tasks"></i> Analysis1</a></li>
-								<li><a href=""><i class="icon-tasks"></i> Analysis1</a></li>
+								<li class="expandable"><a href=""><i class="icon-random"></i> Row</a>
+									<ul>
+										<li><a href=""><i class="icon-tasks"></i> Analysis1</a></li>
+										<li><a href=""><i class="icon-tasks"></i> Analysis1</a></li>
+									</ul>
+								</li>
+								<li class="expandable"><a href=""><i class="icon-random"></i> Column</a>
+									<ul>
+										<li>-- Board 1</li>
+										<li>-- Board 2</li>
+									</ul>
+								</li>
 							</ul>
 						</li>
-						<li class="expandable"><a href=""><i class="icon-random"></i> Column</a>
+						
+						<!-- Limma Side List -->
+						<li class="expandable"><a href=""><i class="icon-th-list"></i> LIMMA Results</a>
 							<ul>
-								<li>-- Board 1</li>
-								<li>-- Board 2</li>
+								<li ><a href=""><i class="icon-tasks"></i> Analysis1</a></li>
+								<li><a href=""><i class="icon-tasks"></i> Analysis2</a></li>
 							</ul>
 						</li>
+						
+						<!-- Selections Side List -->
+				        <li class="expandable"><a href=""><i class="icon-tags"></i> Selections</a>
+							<ul>
+								<li class="expandable"><a href=""><i class="icon-bookmark"></i> Row</a>
+									<ul>
+										<li><a href=""><i class="icon-tag"></i> sdfs</a></li>
+									</ul>
+								</li>
+								<li class="expandable"><a href=""><i class="icon-bookmark"></i> Column</a>
+									<ul>
+										<li><a href=""><i class="icon-tag"></i> sdfs</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						
+						
+						
 					</ul>
 				</li>
+				<li><a href=""><i class="icon-folder-open"></i> Some Other Dataset</a>
 				
-				<!-- Limma Side List -->
-				<li class="expandable"><a href=""><i class="icon-th-list"></i> LIMMA Results</a>
-					<ul>
-						<li ><a href=""><i class="icon-tasks"></i> Analysis1</a></li>
-						<li><a href=""><i class="icon-tasks"></i> Analysis2</a></li>
-					</ul>
 				</li>
-				
-				<!-- Selections Side List -->
-		        <li class="expandable"><a href=""><i class="icon-tags"></i> Selections</a>
-					<ul>
-						<li class="expandable"><a href=""><i class="icon-bookmark"></i> Row</a>
-							<ul>
-								<li><a href=""><i class="icon-tag"></i> sdfs</a></li>
-							</ul>
-						</li>
-						<li class="expandable"><a href=""><i class="icon-bookmark"></i> Column</a>
-							<ul>
-								<li><a href=""><i class="icon-tag"></i> sdfs</a></li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-				
-				
-				
 			</ul>
-		</li>
-		<li><a href=""><i class="icon-folder-open"></i> Some Other Dataset</a>
-		
-		</li>
-	</ul>
+		</div>
+	</div>
 </div>
-

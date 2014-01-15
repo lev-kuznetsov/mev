@@ -40,8 +40,48 @@ define (
                         });
                     
                     
-                    jq('#rightPanel').css('height', "80%")
-                    jq('#leftPanel').css('height', "80%")
+                    var rightPanel = jq('#rightPanel'),
+                    leftPanel = jq('#leftPanel'),
+                    centerTab = jq('div#tab'),
+                    pageWidth = jq('body').width() - 50,
+                    showSidePanel = true;
+                    
+                    rightPanel.css('height', "90%");
+                    leftPanel.css('height', "90%");
+                    
+                    var isDragging = false;
+                    
+                    centerTab.mousedown(function(mouse){
+                    	isDragging = true;
+                    	mouse.preventDefault();
+                    });
+                    
+                    jq(document).mouseup(function(){
+                    	isDragging = false;
+                    }).mousemove(function(mouse){
+                    	if(isDragging && mouse.pageX < pageWidth*(1/4) && mouse.pageX > 0 ){
+                    		showSidePanel = true;
+                    		leftPanel.css("width", mouse.pageX);
+                    		rightPanel.css("width", pageWidth - mouse.pageX);
+                    		leftPanel.children().show();
+                    	}
+                    	
+                    	if(isDragging && mouse.pageX < pageWidth*(1/10) && mouse.pageX > 0 ){
+                    		leftPanel.children().hide();
+                    		
+                    	}
+                    	
+                    });
+                    
+                    jq('div#tab').click(function(){
+                    	
+                    		leftPanel.css("width", 0);
+                        	leftPanel.children().hide();
+                        	rightPanel.css("width", pageWidth - 30);
+                    	
+                    })
+                    
+                    
 
                     scope.showLimmaTables = true;
                     
