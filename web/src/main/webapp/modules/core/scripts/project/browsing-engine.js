@@ -192,6 +192,7 @@ BrowsingEngine.prototype.addFacet = function(type, config, options) {
   ui.leftPanelTabs.tabs("select", 0);
 
   Refine.update({ engineChanged: true });
+  return facet;
 };
 
 BrowsingEngine.prototype._createFacetContainer = function() {

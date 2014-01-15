@@ -41,8 +41,8 @@ require
 
     });
 
-require ([ 'angular', 'app', 'jquery', 'orefine/OrefineBridge', 'bootstrap-css', 'bootstrap', 'setmanager/SetManager', 'mainpanel/MainPanel'],
-    function (angular, app, jquery, orb) {
+require ([ 'jquery', 'angular', 'app',  'orefine/OrefineBridge', 'bootstrap-css', 'bootstrap', 'setmanager/SetManager', 'mainpanel/MainPanel'],
+    function (jquery, angular, app, orb) {
 
       'use strict';
       var $html = angular.element (document.getElementsByTagName ('html')[0]);

@@ -106,7 +106,9 @@ define ([ 'jquery', 'angular'], function ($, angular) {
     			$scope.annotationsUrl = $scope.baseUrl+"/column/new/";
     		  }
     		  
-    		  var annotationsTab = angular.element("#annotationsTabLink");				
+
+    		  var elm = document.querySelector('#annotationsTabLink');    		  
+    		  var annotationsTab = angular.element(elm);				
 			  annotationsTab.trigger("click");
 			});
     	  
