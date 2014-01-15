@@ -34,7 +34,5 @@ public interface Limma extends Analysis {
     double qValue ();
   }
 
-  Iterable<Entry> significant ();
-
   Iterable<Entry> full ();
 }

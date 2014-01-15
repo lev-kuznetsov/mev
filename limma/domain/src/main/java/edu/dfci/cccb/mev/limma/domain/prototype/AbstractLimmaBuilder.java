@@ -25,8 +25,8 @@ import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.contract.ComposerFactory;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysisBuilder;
-import edu.dfci.cccb.mev.limma.domain.contract.LimmaBuilder;
 import edu.dfci.cccb.mev.limma.domain.contract.Limma;
+import edu.dfci.cccb.mev.limma.domain.contract.LimmaBuilder;
 
 /**
  * @author levk
@@ -38,9 +38,8 @@ public abstract class AbstractLimmaBuilder extends AbstractAnalysisBuilder<Limma
 
   private @Getter @Setter Selection control;
   private @Getter @Setter Selection experiment;
-  private @Getter @Setter double alpha = .2;
-  private @Getter @Setter (onMethod = @_ (@Resource (name = "R"))) ScriptEngine r;
-  private @Getter @Setter (onMethod = @_ (@Inject)) ComposerFactory composerFactory;
+  private @Getter @Setter @Resource (name = "R") ScriptEngine r;
+  private @Getter @Setter @Inject ComposerFactory composerFactory;
 
   /**
    */

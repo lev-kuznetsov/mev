@@ -332,7 +332,6 @@ define (
                   {name: "Row", value: "row"},
                   {name:"Column", value:"column"}];
                 
-                scope.analysisPValue=0.05;
                 scope.analysisControl
                 scope.analysisExperiment
                 scope.analysisDimension
@@ -354,8 +353,7 @@ define (
                     name: scope.analysisName,
                     dimension: scope.analysisDimension.value, 
                     experiment: scope.analysisExperiment, 
-                    control: scope.analysisControl, 
-                    alpha: scope.analysisPValue,
+                    control: scope.analysisControl,
                     callback: scope.buildPreviousAnalysisList
                 		  
                   };

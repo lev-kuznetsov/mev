@@ -57,13 +57,13 @@ public class CliRLimmaTest {
     Selection control = new SimpleSelection ("control", new Properties (), asList ("sb", "se", "sf"));
     dataset.dimension (COLUMN).selections ().put (experiment);
     dataset.dimension (COLUMN).selections ().put (control);
-    Limma result = new StatelessScriptEngineFileBackedLimmaBuilder ().r (new ScriptEngineManager ().getEngineByName ("CliR"))
-                                         .composerFactory (new SuperCsvComposerFactory ())
-                                         .dataset (dataset)
-                                         .control (control)
-                                         .experiment (experiment)
-                                         .alpha (.2)
-                                         .build ();
+    Limma result =
+                   new StatelessScriptEngineFileBackedLimmaBuilder ().r (new ScriptEngineManager ().getEngineByName ("CliR"))
+                                                                     .composerFactory (new SuperCsvComposerFactory ())
+                                                                     .dataset (dataset)
+                                                                     .control (control)
+                                                                     .experiment (experiment)
+                                                                     .build ();
     for (Entry e : result.full ())
       log.debug ("Full limma entry: " + e);
     assertEquals (.35,
