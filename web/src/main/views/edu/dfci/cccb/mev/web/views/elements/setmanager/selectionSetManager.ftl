@@ -36,9 +36,8 @@
 				<selection-set-list 
 					mev-selections="heatmapData.row.selections" 
 					mev-base-url="/annotations/{{heatmapId}}/annotation/row"
-					mev-demintion="row"
-					mev-say-hello="sayHelloCtl()">
-					You may define sets by performing a clustering analysis.				
+					mev-demintion="row">
+					You may define sets using <a href="" ng-click="showAnnotations(selection, 'row')">row annotations</a> or by performing a clustering analysis.				
 				</selection-set-list>
 				
 		</div>

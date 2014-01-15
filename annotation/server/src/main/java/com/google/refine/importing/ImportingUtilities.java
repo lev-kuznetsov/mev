@@ -33,7 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.google.refine.importing;
 
-import static com.google.refine.io.FileProjectManager.REQUEST_ATTEIBUTE_DATASET;
+import static com.google.refine.io.FileProjectManager.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -230,7 +230,8 @@ public class ImportingUtilities {
     @SuppressWarnings ("unchecked") List<FileItem> tempFiles = (List<FileItem>) upload.parseRequest (request);
 
     Dataset heatmap = (Dataset) request.getAttribute (REQUEST_ATTEIBUTE_DATASET);
-
+    String dimension = (String) request.getAttribute (REQUEST_ATTEIBUTE_DIMENSION);
+    
     progress.setProgress ("Uploading data ...", -1);
     parts: for (FileItem fileItem : tempFiles) {
       if (progress.isCanceled ()) {
@@ -370,11 +371,13 @@ public class ImportingUtilities {
         }
 
       } else { // is file content
+        
         String fileName = fileItem.getName ();
 
         if (fileName.length () > 0) {
           if (heatmap != null)
-            fileName = heatmap.name ();
+            //ap:filename is used for project name, so rename the file to [dataset-name+dimension]
+            fileName = heatmap.name ()+dimension;
 
           long fileSize = fileItem.getSize ();
 
@@ -384,7 +387,8 @@ public class ImportingUtilities {
           JSONUtilities.safePut (fileRecord, "origin", "upload");
           JSONUtilities.safePut (fileRecord, "declaredEncoding", request.getCharacterEncoding ());
           JSONUtilities.safePut (fileRecord, "declaredMimeType", fileItem.getContentType ());
-          JSONUtilities.safePut (fileRecord, "fileName", fileName);
+
+          JSONUtilities.safePut (fileRecord, "fileName", fileName);          
           JSONUtilities.safePut (fileRecord, "location", getRelativePath (file, rawDataDir));
 
           progress.setProgress (
@@ -419,14 +423,14 @@ public class ImportingUtilities {
         JSONUtilities.safePut (fileRecord, "declaredEncoding", encoding);
         JSONUtilities.safePut (fileRecord, "declaredMimeType", (String) null);
         JSONUtilities.safePut (fileRecord, "format", "text");
-        JSONUtilities.safePut (fileRecord, "fileName", heatmap.name ());
+        JSONUtilities.safePut (fileRecord, "fileName", heatmap.name ()+dimension);
         JSONUtilities.safePut (fileRecord, "location", getRelativePath (file, rawDataDir));
 
         progress.setProgress ("Uploading pasted heatmap text",
                               calculateProgressPercent (update.totalExpectedSize, update.totalRetrievedSize));
 
         StringBuilder builder = new StringBuilder (StringUtils.join (
-                                                                     heatmap.dimension (Dimension.Type.COLUMN).keys (),
+                                                                     heatmap.dimension (Dimension.Type.from (dimension)).keys (),
                                                                      "\n"));
         InputStream stream = new ByteArrayInputStream (builder.toString ().getBytes (encoding));
 

@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.google.refine.commands.project;
 
 import static com.google.refine.io.FileProjectManager.REQUEST_ATTEIBUTE_DATASET;
+import static com.google.refine.io.FileProjectManager.REQUEST_ATTEIBUTE_DIMENSION;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -89,7 +90,8 @@ public class ExportSetCommand extends Command {
 
       Engine engine = getEngine (request, project);
       final Dataset heatmap = (Dataset) request.getAttribute (REQUEST_ATTEIBUTE_DATASET);
-      final Selections selections = heatmap.dimension (Dimension.Type.COLUMN).selections ();
+      Dimension.Type dimensionType = Dimension.Type.from ((String)request.getAttribute (REQUEST_ATTEIBUTE_DIMENSION));
+      final Selections selections = heatmap.dimension (dimensionType).selections ();
             final String setName = request.getParameter ("selectionName");
       final Properties properties = new Properties ();
             properties.put ("selectionDescription", request.getParameter ("selectionDescription"));

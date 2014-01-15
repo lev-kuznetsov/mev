@@ -13,6 +13,7 @@ ExportSetDialog.prototype._createDialog = function() {
     this._name="";
     this._description="";
     this._color="";
+    this._dimension="";
     if(theProject.metadata.customMetadata){
     	if(theProject.metadata.customMetadata.selectionName)
     		this._name=theProject.metadata.customMetadata.selectionName;
@@ -22,6 +23,9 @@ ExportSetDialog.prototype._createDialog = function() {
     		this._color=theProject.metadata.customMetadata.selectionColor;
     	else
     		this._color='#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
+    	if(theProject.metadata.customMetadata.dimension)
+    		this._dimension=theProject.metadata.customMetadata.dimension;
+    	
     }
     this._elmts.setName[0].value=this._name;
     this._elmts.setDescription[0].value=this._description;
@@ -109,6 +113,7 @@ ExportSetDialog.prototype._exportAjax = function(){
 		 
 		Refine._lastItem={
 			name: this._name,
+			dimension: this._dimension,
 			properties: {
 				selectionDescription: this._description,
 				selectionColor: this._color,

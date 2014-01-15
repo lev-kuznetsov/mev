@@ -88,8 +88,14 @@ define(['jquery','angular'], function(jquery, angular){
 			$scope.addItem = function(item){
 				//alert('in addItem');				
 				$scope.$apply(function(){
-					$scope.heatmapData.column.selections = jquery.grep($scope.heatmapData.column.selections, function(e, i){return e.name==item.name}, true);
-					$scope.heatmapData.column.selections.push(item);
+					
+					if(item.dimension.toLowerCase()=="column"){
+						$scope.heatmapData.column.selections = jquery.grep($scope.heatmapData.column.selections, function(e, i){return e.name==item.name}, true);
+						$scope.heatmapData.column.selections.push(item);
+					}else{
+						$scope.heatmapData.row.selections = jquery.grep($scope.heatmapData.row.selections, function(e, i){return e.name==item.name}, true);
+						$scope.heatmapData.row.selections.push(item);						
+					}
 					
 				});
 			}

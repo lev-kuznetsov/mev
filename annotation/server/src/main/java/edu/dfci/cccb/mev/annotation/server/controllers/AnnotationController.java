@@ -203,7 +203,7 @@ public class AnnotationController extends WebApplicationObjectSupport {
     };
 
     Dataset heatmap = workspace.get (heatmapId);
-    long projectId = projectManager.getProjectID (heatmap.name ());
+    long projectId = projectManager.getProjectID (heatmap.name ()+dimension);
     if (projectId != -1) {
       if (wrappedRequest.getPathInfo ().trim ().equals ("/")) {
         if (wrappedRequest.getParameter ("reset") != null) {
