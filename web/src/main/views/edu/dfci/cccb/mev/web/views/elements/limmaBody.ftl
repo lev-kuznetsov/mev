@@ -33,15 +33,6 @@
     </div>
   </div>
   
-  <div class="control-group">
-    <label for="inputAnalysisValue" class="control-label">p-Value</label>
-    <div class="controls">
-        <input id="inputAnalysisValue" ng-model="analysisPValue"
-        	onblur="if (this.value == '') {this.value = '0.05';}" 
-        	onfocus="if (this.value == '0.05') {this.value = '';}" />
-    </div>
-  </div>
-  
 </form>
 
 <button class="btn btn-success btn-block" ng-click="limmaInit()" data-dismiss="modal" aria-hidden="true">Analyze</button>

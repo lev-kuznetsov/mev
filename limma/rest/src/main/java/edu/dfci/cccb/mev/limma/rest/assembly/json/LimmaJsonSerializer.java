@@ -48,11 +48,7 @@ public class LimmaJsonSerializer extends AbstractAnalysisJsonSerializer<Limma> {
   protected void serializeAnalysisContent (Limma value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
                                                                                                               JsonProcessingException {
     super.serializeAnalysisContent (value, jgen, provider);
-    jgen.writeArrayFieldStart ("significant");
-    for (Entry e : value.significant ())
-      provider.defaultSerializeValue (e, jgen);
-    jgen.writeEndArray ();
-    jgen.writeArrayFieldStart ("full");
+    jgen.writeArrayFieldStart ("results");
     for (Entry e : value.full ())
       provider.defaultSerializeValue (e, jgen);
     jgen.writeEndArray ();

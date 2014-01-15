@@ -1,13 +1,3 @@
-## INPUT FILENAMES 
-#INFILE="$input"
-#SAMPLE_FILE="$configuration"
-#ALPHA=$alpha
-
-## OUTPUT FILESNAME
-#RESULT_OUT="$output"
-#SIGGENE_OUT="$significant"
-#RNK_OUT="$rnk"
-
 library(limma)
 
 ## NOTE
@@ -27,6 +17,19 @@ library(limma)
 ## Author: Yaoyu
 ##
 ##
+## NOTE
+## Add in variable BETA as the threshold for Log Fold Change
+##
+## DATE: 01.13.2013
+## Author: Yaoyu
+##
+## NOTE
+## Remove SIGGENE_OUT file definition.  All filtering is to be done at the user level
+## DATE 01.14.2014
+## Author: Yaoyu
+##
+
+
 
 ## definte limma function
 run.limma<-function(in.mtx, Experiment=NA, Control=NA){
@@ -98,11 +101,12 @@ write.table(result[,-c(4,7)],
 
 ##
 ## Define Significant gene expression
-q.thresh=ALPHA
-logfc.thresh=1.2
+## NOTE:  filtering is to be done at the user level rather than R analysis level
+## q.thresh=ALPHA
+## logfc.thresh=BETA
 
 ##
 ## write Significant gene set
-result.sig=result[result[,"q-value"]<q.thresh && result[,"Log Fold Change"]>logfc.thresh,]
-write.table(result.sig[,-c(4,7)], 
-            file=SIGGENE_OUT, quote=FALSE, sep="\t", row.names=FALSE, col.names=FALSE)
+## result.sig=result[result[,"q-value"]<q.thresh && abs(result[,"Log Fold Change"])>logfc.thresh,]
+## write.table(result[,-c(4,7)], 
+##            file=SIGGENE_OUT, quote=FALSE, sep="\t", row.names=FALSE, col.names=FALSE)
