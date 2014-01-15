@@ -543,7 +543,7 @@ define (
                             - heatmapMarginRight;
 
                         var heatmapCellsHeight = undefined;
-                        var heatmapCellHeight = 40;
+                        var heatmapCellHeight = undefined;
 
                         var window = d3.select (elems[0]);
 
@@ -763,7 +763,7 @@ define (
 
                         function scaleUpdates (cols, rows, min, max, avg) {
                         	
-                          heatmapCellHeight = 80;
+                          heatmapCellHeight = 30;
                           
                           heatmapCellsHeight = heatmapCellHeight*rows.keys.length;
                           dendogramLeft.height = heatmapCellsHeight;
