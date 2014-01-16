@@ -131,6 +131,9 @@ div.fixed-height {
 	border-top:1px solid #B2B2B2;
 	border-bottom:1px solid #B2B2B2;
 	box-shadow: 2px 2px 5px #888888;
+}
+
+div.accordion-heading {
 	background: #bcf;
 }
 

@@ -19,6 +19,8 @@ define ([ 'jquery', 'angular'], function ($, angular) {
             
     		$scope.buildPreviousAnalysisList = function() {
     		  
+    		  console.log("called")
+    		  
     		  $scope.previousHCLClusters = [];
     		  
     		  $scope.previousLimmaAnalysis = [];
