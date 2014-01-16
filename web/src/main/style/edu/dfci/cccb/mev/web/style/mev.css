@@ -52,8 +52,16 @@ div.accordion, div.accordion div{
 }
 
 .menu {
-    width: 100%;
+	align: center;
+    background: #FFFFFF;
+    margin-left: 5%;
+    width: 90%;
 }
+
+div.menu#padding {
+	background: #bcf;
+}
+
 .menu a {
     color:#0088cc;
     text-decoration:none;
@@ -120,14 +128,23 @@ div.fixed-height {
 #leftPanel {
 	width: 20%;
 	float: left;
-	box-shadow: 10px 10px 5px #888888;
 	border-top:1px solid #B2B2B2;
 	border-bottom:1px solid #B2B2B2;
+	box-shadow: 2px 2px 5px #888888;
+	background: #bcf;
 }
 
 #rightPanel {
 	float: left;
 	width: 70%;
+}
+
+div#baseline {
+	background: #bcf;
+}
+
+div#accent {
+	background: #e3e9ff;
 }
 
 div#tab {
@@ -136,11 +153,25 @@ div#tab {
 	border-bottom:1px solid #B2B2B2;
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
-	background: #B8E6E6;
-	box-shadow: 7px 10px 5px #888888;
+	box-shadow: 2px 2px 5px #888888;
+	background: #e3e9ff;
 	width: 15px;
 	height:30px;
 	text-align: left;
+}
+
+.nav-tabs>.active>a, .nav-tabs>.active>a:hover, .nav-tabs>.active>a:focus {
+	background: #bcf;
+	color: #000000; 
+}
+
+div#analysisnav {
+	margin-bottom: 10px;
+}
+
+.nav-tabs>li>a {
+	background: #e3e9ff;
+	color: #000000;
 }
 
 div#tab i {

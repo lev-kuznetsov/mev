@@ -1,10 +1,6 @@
 
 <br>
 
-
-
-
-
 <div ng-controller="MainPanelController" class="row-fluid"> <!-- Start Column Expand Tabs -->	
 	<div class="row-fluid">
 	    
@@ -20,10 +16,8 @@
 		
 		
 		<div id="rightPanel">
-			
-				<analysis-Menu-Bar></analysis-Menu-Bar>
-				<br>
 				
+	    		<analysis-Menu-Bar></analysis-Menu-Bar>
 				<div id="heatmapTabPane" class="tab-pane" expression-Panel></div>
 		</div>
 			

@@ -19,14 +19,12 @@
 			 </div>
 		
 			<div class="tab-pane active fixed-height" id="heatmap-tab">
-			  <br>
 			  
 		        <vis-Heatmap></vis-Heatmap>
 		      
 			</div>
 			<div class="tab-pane fixed-height" id="selections-tab">
 			
-				<br>
 			
 				<selection-set-manager id="selectionSetMgr" ng-controller="SelectionSetManagerCtl" heatmap-data="heatmapData" heatmap-id="{{heatmapId}}"></selection-set-manager>
 			
@@ -34,14 +32,12 @@
 			
 			<div class="tab-pane fixed-height" id="clusters-tab">
 			
-				<br>
 				<cluster-Accordion-List></cluster-Accordion-List>
 			
 			</div> <!-- End Cluster Tab -->
 			
 			<div class="tab-pane fixed-height" id="limma-tab">
 				
-				<br>
 				<limma-Accordion-List></limma-Accordion-List>
 			
 			</div> <!--End Limma Tab -->
