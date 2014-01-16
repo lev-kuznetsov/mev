@@ -1,12 +1,3 @@
-<style>
-
-div.fixed-height {
-  overflow:auto;
-}
-
-</style>
-
-	
 
 	<div class="tabbable">
 	
