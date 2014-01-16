@@ -15,7 +15,6 @@
 package edu.dfci.cccb.mev.limma.domain.simple;
 
 import static edu.dfci.cccb.mev.limma.domain.simple.StatelessScriptEngineFileBackedLimmaBuilder.FULL_FILENAME;
-import static edu.dfci.cccb.mev.limma.domain.simple.StatelessScriptEngineFileBackedLimmaBuilder.SIGNIFICANT_FILENAME;
 import static java.lang.Double.parseDouble;
 
 import java.io.BufferedReader;
@@ -38,21 +37,12 @@ import edu.dfci.cccb.mev.limma.domain.prototype.AbstractLimma;
 @ToString
 public class FileBackedLimma extends AbstractLimma {
 
-  private @Getter final File significant;
   private @Getter final File full;
   private @Getter final TemporaryFolder limma;
 
   public FileBackedLimma (TemporaryFolder limma) {
     this.limma = limma;
-    this.significant = new File (limma, SIGNIFICANT_FILENAME);
     this.full = new File (limma, FULL_FILENAME);
-  }
-
-  /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.limma.domain.contract.LimmaResult#significant() */
-  @Override
-  public Iterable<Entry> significant () {
-    return iterateEntries (significant);
   }
 
   /* (non-Javadoc)

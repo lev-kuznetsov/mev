@@ -1,10 +1,13 @@
-<style type="text/css" src="/library/webjars/dropzone/3.7.1/css/dropzone.css">
-
-
+<style type="text/css">
+  input {
+    display: block;
+    visibility: hidden;
+    width: 0;
+    hieght: 0;
+  }
 </style>
-  
-  
-<div class="well">
 
-<form class="dropzone" id="uploader"></form>
-</div>
+  <button id="upload-button" class="btn btn-block btn-danger"> <i class='icon-plus'></i> Upload </button>
+  <input id="upload-input" type="file" size="chars" multiple >
+
+

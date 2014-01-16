@@ -28,7 +28,6 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,36 +53,22 @@ public class ConverterConfigurations {
   public void registerConverters () {
     List<HttpMessageConverter<?>> converters = new ArrayList<> ();
     converters.addAll (this.converters);
-    if (converterConfigurers != null)
-      for (HttpMessageConverterConfigurer configurer : converterConfigurers) {
-        List<HttpMessageConverter<?>> configurerConverters = new ArrayList<> ();
+    if (converterConfigurers != null) {
+      List<HttpMessageConverter<?>> configurerConverters = new ArrayList<> ();
+      for (HttpMessageConverterConfigurer configurer : converterConfigurers)
         configurer.addHttpMessageConverters (configurerConverters);
-        for (HttpMessageConverter<?> converter : configurerConverters)
-          beanFactory.autowireBean (converter);
-        converters.addAll (configurerConverters);
-      }
+      for (HttpMessageConverter<?> converter : configurerConverters)
+        beanFactory.autowireBean (converter);
+      converters.addAll (configurerConverters);
+    }
     log.info ("Registering converters: " + converters);
     requestMappingHandlerAdapter.getMessageConverters ().addAll (0, converters);
   }
 
   @PostConstruct
   public void registerJacksonObjectMapper () {
-    for (HttpMessageConverter<?> converter : requestMappingHandlerAdapter.getMessageConverters ()) {
-      log.warn ("Converter: " + converter + " of " + converter.getClass ().getName ());
+    for (HttpMessageConverter<?> converter : requestMappingHandlerAdapter.getMessageConverters ())
       if (converter instanceof MappingJackson2HttpMessageConverter)
         ((MappingJackson2HttpMessageConverter) converter).setObjectMapper (jsonObjectMapper);
-    }
-  }
-
-  /* (non-Javadoc)
-   * @see
-   * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
-   * #configureMessageConverters(java.util.List) */
-  // @Override
-  public void configureMessageConverters2 (List<HttpMessageConverter<?>> converters) {
-    MappingJackson2HttpMessageConverter jacksonConverter = new MappingJackson2HttpMessageConverter ();
-    jacksonConverter.setObjectMapper (jsonObjectMapper);
-    converters.add (jacksonConverter);
-    converters.add (new AllEncompassingFormHttpMessageConverter ());
   }
 }

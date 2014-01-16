@@ -55,7 +55,6 @@ public class StatelessScriptEngineFileBackedLimmaBuilder extends AbstractLimmaBu
   public static final String CONFIGURATION_FILENAME = "config.tsv";
 
   public static final String FULL_FILENAME = "output.tsv";
-  public static final String SIGNIFICANT_FILENAME = "significant.tsv";
   public static final String RNK_FILENAME = "rnk.out";
 
   /* (non-Javadoc)
@@ -98,7 +97,6 @@ public class StatelessScriptEngineFileBackedLimmaBuilder extends AbstractLimmaBu
         }
 
         File fullOutputFile = new File (limma, FULL_FILENAME);
-        File significantOutputFile = new File (limma, SIGNIFICANT_FILENAME);
         File rnkOutputFile = new File (limma, RNK_FILENAME);
 
         try (ByteArrayOutputStream script = new ByteArrayOutputStream ();
@@ -106,9 +104,7 @@ public class StatelessScriptEngineFileBackedLimmaBuilder extends AbstractLimmaBu
           printScript.println ("INFILE=\"" + datasetFile.getAbsolutePath () + "\"");
           printScript.println ("SAMPLE_FILE=\"" + configFile.getAbsolutePath () + "\"");
           printScript.println ("RESULT_OUT=\"" + fullOutputFile.getAbsolutePath () + "\"");
-          printScript.println ("SIGGENE_OUT=\"" + significantOutputFile.getAbsolutePath () + "\"");
           printScript.println ("RNK_OUT=\"" + rnkOutputFile.getAbsolutePath () + "\"");
-          printScript.println ("ALPHA=" + alpha ());
 
           try (InputStream limmaScript = getClass ().getResourceAsStream ("/limma.R")) {
             for (int c; (c = limmaScript.read ()) >= 0; printScript.write (c));
