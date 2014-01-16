@@ -6,7 +6,6 @@
 		  <li id="annotationsTab">
 			 <a id="annotationsTabLink" href="#annotationsTabPane" data-toggle="tab">Annotations</a>
 		  </li>
-		  <li><a href="#selections-tab" data-toggle="tab">Selections</a></li>
 		  <li><a href="#clusters-tab" data-toggle="tab">Clusters</a></li>
 		  <li><a href="#limma-tab" data-toggle="tab">LIMMA</a></li>
 		</ul>
@@ -16,7 +15,7 @@
 			<div class="tab-pane active fixed-height" id="heatmap-tab">
 			  
 		        <vis-Heatmap></vis-Heatmap>
-		      
+		      <br>
 			</div>
 			    
 			 <div id="annotationsTabPane" class="tab-pane">			    
@@ -29,13 +28,13 @@
 			<div class="tab-pane fixed-height" id="clusters-tab">
 			
 				<cluster-Accordion-List></cluster-Accordion-List>
-			
+			<br>
 			</div> <!-- End Cluster Tab -->
 			
 			<div class="tab-pane fixed-height" id="limma-tab">
 				
 				<limma-Accordion-List></limma-Accordion-List>
-			
+			<br>
 			</div> <!--End Limma Tab -->
 		
 		</div> <!-- End Tab Content -->
