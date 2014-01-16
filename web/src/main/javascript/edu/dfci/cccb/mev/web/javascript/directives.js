@@ -1,6 +1,7 @@
 define (
-    [ 'angular', 'jquery', 'd3', 'dropzone', 'newick', 'services' ],
-    function (angular, jq, d3, Dropzone, newick) {
+    [ 'angular', 'jquery', 'd3', 'dropzone', 'services' ],
+    function (angular, jq, d3, Dropzone) {
+
 
       return angular
           .module ('myApp.directives', [])
@@ -23,7 +24,7 @@ define (
                     scope.menu = opts;
                   }
                 };
-              } ])
+              } ])          
           .directive (
               'heatmapPanels',[ '$routeParams', 'API', 'alertService', '$location',
               function ($routeParams, API, alertService, $location) {
@@ -32,26 +33,55 @@ define (
                   templateUrl : '/container/view/elements/heatmapPanels',
                   link : function (scope, elems, attrs) {
 
-                    scope.heatmapData = undefined;
-                    scope.heatmapLeftTree = undefined;
-                    scope.heatmapTopTree = undefined;
-                    scope.heatmapLeftTreeName = undefined;
-                    scope.heatmapTopTreeName = undefined;
-                    
                     API.dataset.get ($routeParams.datasetName).then (
                         function(data){ scope.heatmapData = data;}, function(data){
                         	//return home if error
                         	$location.path('/');
                         });
                     
-                   
                     
-                    console.log("window height: " + jq(window).height())
+                    var rightPanel = jq('#rightPanel'),
+                    leftPanel = jq('#leftPanel'),
+                    centerTab = jq('div#tab'),
+                    pageWidth = jq('body').width() - 50,
+                    showSidePanel = true;
                     
-                    var windowHeight = jq(window).height() * .99;
+                    rightPanel.css('height', "90%");
+                    leftPanel.css('height', "90%");
                     
-                    //jq ('#rightPanel div.tab-group').css ('height',  windowHeight);
-                    jq('#rightPanel').css('height', windowHeight)
+                    var isDragging = false;
+                    
+                    centerTab.mousedown(function(mouse){
+                    	isDragging = true;
+                    	mouse.preventDefault();
+                    });
+                    
+                    jq(document).mouseup(function(){
+                    	isDragging = false;
+                    }).mousemove(function(mouse){
+                    	if(isDragging && mouse.pageX < pageWidth*(1/4) && mouse.pageX > 0 ){
+                    		showSidePanel = true;
+                    		leftPanel.css("width", mouse.pageX);
+                    		rightPanel.css("width", pageWidth - mouse.pageX);
+                    		leftPanel.children().show();
+                    	}
+                    	
+                    	if(isDragging && mouse.pageX < pageWidth*(1/10) && mouse.pageX > 0 ){
+                    		leftPanel.children().hide();
+                    		
+                    	}
+                    	
+                    });
+                    
+                    jq('div#tab').click(function(){
+                    	
+                    		leftPanel.css("width", 0);
+                        	leftPanel.children().hide();
+                        	rightPanel.css("width", pageWidth - 30);
+                    	
+                    })
+                    
+                    
 
                     scope.showLimmaTables = true;
                     
@@ -65,32 +95,29 @@ define (
               restrict : 'E',
               templateUrl : '/container/view/elements/sideNavigationBar',
               link: function(scope) {
-                jq ('#closeRight').hide ();
-                jq ('#closeLeft').hide ();
-                
-                scope.closeNav = function () {
-
-                  jq ('menubar').hide ();
-                  jq ('#expandRight').hide ();
-                  jq ('#closeRight').show ();
-                  jq ('#rightPanel').show ();
-
-                };
-
-                scope.expandNav = function () {
-
-                  jq ('#closeRight').hide ();
-                  jq ('#closeLeft').hide ();
-                  jq ('#expandRight').show ();
-                  jq ('#expandLeft').show ();
-                  jq ('#rightPanel').show ();
-                  jq ('menubar').show ();
-                  jq ('#rightPanel').attr ("class", "span9 offset2");
-                  jq ('#rightPanel').css ({
-                    "margin-left" : margin
-                  });
-                }
+            	  	jq('li.expandable').click(function() {
+            	  		if ($(this).children()) {
+            	  			console.log($(this))
+            	  			$(this).children('ul').toggle();
+                		    return false;
+            	  		}
+            		    
+            		});
             }
+            };
+          } ])
+          .directive ('limmaAccordionList', [ function () {
+            return {
+              restrict : 'E',
+              templateUrl : '/container/view/elements/limmaAccordion'
+              
+            };
+          } ])
+          .directive ('clusterAccordionList', [ function () {
+            return {
+              restrict : 'E',
+              templateUrl : '/container/view/elements/clusterAccordion'
+              
             };
           } ])
           .directive ('analysisMenuBar', [ function () {
@@ -102,7 +129,7 @@ define (
           } ])
           .directive ('expressionPanel', ['$routeParams', function ($routeParams) {
             return {
-              restrict : 'A',
+              restrict : 'AC',
               templateUrl : '/container/view/elements/expressionPanel',
               link : function (scope) {
                 
@@ -113,28 +140,6 @@ define (
               }
             };
           } ])
-          .directive (
-              'analysisPanel',
-              [
-                  'pseudoRandomStringGenerator',
-                  'API',
-                  '$routeParams',
-                  function (prsg, API, $rP) {
-                    return {
-                      restrict : 'A',
-                      templateUrl : '/container/view/elements/analysisPanel',
-                      link : function (scope) {
-
-                        
-
-                        scope.buildPreviousAnalysisList ();
-                        
-                        scope.datasetName = $rP.datasetName;
-                        	
-
-                      }
-                    };
-                  } ])
           .directive ('bsprevanalysis', function () {
 
             return {
@@ -538,7 +543,7 @@ define (
                             - heatmapMarginRight;
 
                         var heatmapCellsHeight = undefined;
-                        var heatmapCellHeight = 40;
+                        var heatmapCellHeight = undefined;
 
                         var window = d3.select (elems[0]);
 
@@ -758,7 +763,7 @@ define (
 
                         function scaleUpdates (cols, rows, min, max, avg) {
                         	
-                          heatmapCellHeight = 80;
+                          heatmapCellHeight = 30;
                           
                           heatmapCellsHeight = heatmapCellHeight*rows.keys.length;
                           dendogramLeft.height = heatmapCellsHeight;
@@ -847,9 +852,9 @@ define (
 
                         function drawHeatmap (data) {
                           
-                          heatmapcells = rects.data (data.values).enter ().append (
-                          "rect");
-                          scope.theData=data;
+
+                          heatmapcells = rects.data (data.values).enter ().append ("rect");
+						  scope.theData=data;
                           scaleUpdates (data.column, data.row,
                               data.min, data.max, data.avg);
                           

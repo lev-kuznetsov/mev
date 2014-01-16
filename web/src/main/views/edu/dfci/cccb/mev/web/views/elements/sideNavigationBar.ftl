@@ -1,201 +1,118 @@
 <style type="text/css">
-/* 
-Author: Start Bootstrap - http://startbootstrap.com
-'SB Admin' HTML Template by Start Bootstrap
-
-All Start Bootstrap themes are licensed under Apache 2.0. 
-For more info and more free Bootstrap 3 HTML themes, visit http://startbootstrap.com!
-*/
-
-/* ATTN: This is mobile first CSS - to update 786px and up screen width use the media query near the bottom of the document! */
-
-/* Global Styles */
-
-body {
-  margin-top: 50px;
+.menu {
+    width: 100%;
 }
-
-#wrapper {
-  padding-left: 0;
+.menu a {
+    color:#0088cc;
+    text-decoration:none;
 }
-
-#page-wrapper {
-  width: 100%;
-  padding: 5px 15px;
+div.menu{
+    
 }
-
-/* Nav Messages */
-
-.messages-dropdown .dropdown-menu .message-preview .avatar,
-.messages-dropdown .dropdown-menu .message-preview .name,
-.messages-dropdown .dropdown-menu .message-preview .message,
-.messages-dropdown .dropdown-menu .message-preview .time {
-  display: block;
+.menu ul {
+    padding:0;
+    /* border-top:1px solid #CCC; */
+    
 }
-
-.messages-dropdown .dropdown-menu .message-preview .avatar {
-  float: left;
-  margin-right: 15px;
+.menu ul li {
+    list-style:none;
+    /* border-bottom:1px solid #CCC; */ 
 }
-
-.messages-dropdown .dropdown-menu .message-preview .name {
-  font-weight: bold;
+.menu ul li a {
+    text-indent:6px;
+    display:block;
+    padding:6px;
 }
-
-.messages-dropdown .dropdown-menu .message-preview .message {
-  font-size: 12px;
+.menu ul li a:hover, .menu ul li.selected a  {
+    color:#0088cc;
+    background-color:#d6d6d6;
 }
-
-.messages-dropdown .dropdown-menu .message-preview .time {
-  font-size: 12px;
+/* nested items */
+.menu ul li ul {
+    display:none;
 }
-
-
-/* Nav Announcements */
-
-.announcement-heading {
-  font-size: 50px;
-  margin: 0;
+.menu ul li.selected ul {
+    display:block;
 }
-
-.announcement-text {
-  margin: 0;
+.menu ul li.selected ul a {
+    color:#666;
+    background-color:white;
+    border-left:6px solid white; 
 }
-
-/* Table Headers */
-
-table.tablesorter thead {
-  cursor: pointer;
+.menu ul li ul li {
+    border-bottom:1px solid white;
 }
-
-table.tablesorter thead tr th:hover {
-  background-color: #f5f5f5;
+.menu ul li ul li:first-child {
+    border-top:1px solid white;
 }
-
-/* Flot Chart Containers */
-
-.flot-chart {
-  display: block;
-  height: 400px;
+.menu ul li.selected ul li.selected a, .menu ul li.selected ul li a:hover {
+    color:#FFF;
+    background-color:#7EB0B0;
+    /*border-left:6px solid #006363; */ 
 }
-
-.flot-chart-content {
-  width: 100%;
-  height: 100%;
+p.lead {
+	left-margin: 10px;
 }
-
-/* Edit Below to Customize Widths > 768px */
-@media (min-width:768px) {
-
-  /* Wrappers */
-
-  #wrapper {
-	padding-left: 225px;
-  }
-
-  #page-wrapper {
-	padding: 15px 25px;
-  }
-
-  /* Side Nav */
-
-  .side-nav {
-	margin-left: -225px;
-	left: 225px;
-	width: 225px;
-	position: fixed;
-	top: 50px;
-	height: 100%;
-	border-radius: 0;
-	border: none;
-	background-color: #000000;
-	overflow-y: auto;
-  }
-
-  /* Bootstrap Default Overrides - Customized Dropdowns for the Side Nav */
-
-  .side-nav>li.dropdown>ul.dropdown-menu {
-	position: relative;
-	min-width: 225px;
-	margin: 0;
-	padding: 0;
-	border: none;
-	border-radius: 0;
-	background-color: transparent;
-	box-shadow: none;
-	-webkit-box-shadow: none;
-  }
-
-  .side-nav>li.dropdown>ul.dropdown-menu>li>a {
-	color: #999999;
-	padding: 15px 15px 15px 25px;
-  }
-
-  .side-nav>li.dropdown>ul.dropdown-menu>li>a:hover,
-  .side-nav>li.dropdown>ul.dropdown-menu>li>a.active,
-  .side-nav>li.dropdown>ul.dropdown-menu>li>a:focus {
-	color: #fff;
-	background-color: #080808;
-  }
-
-  .side-nav>li>a {
-	width: 225px;
-  }
-
-  .navbar-inverse .navbar-nav>li>a:hover,
-  .navbar-inverse .navbar-nav>li>a:focus {
-	background-color: #080808;
-  }
-
-  /* Nav Messages */
-
-  .messages-dropdown .dropdown-menu {
-	min-width: 300px;
-  }
-
-  .messages-dropdown .dropdown-menu li a {
-	white-space: normal;
-  }
-
-}
-
 </style>
 
-<div class="row">
-	<i class="icon-chevron-left pull-right" id="expandNav" ng-click="closeNav()"></i>
-	<i class="icon-chevron-right pull-right" id="closeNav" ng-click="expandNav()"></i>
-</div>
-
-<div class="row">
-	<ul class="breadcrumb">
-			  <li><a href="/">Files</a> <span class="divider">/</span></li>
-			  <li><a href="">{{heatmapId}}</a></li>
+<br>
+<br>
+<div class="row-fluid">
+	<div class="span12">
+		<div class='menu'>
+			<ul>
+				<li class="expandable"><a href=""><i class="icon-folder-open"></i> {{heatmapId}}</a>
+					<ul>
+						<!-- Clustering Side List -->
+				        <li class="expandable"><a href=""><i class="icon-th"></i> Clusters</a>
+							<ul>
+								<li class="expandable"><a href=""><i class="icon-random"></i> Row</a>
+									<ul>
+										<li><a href=""><i class="icon-tasks"></i> Analysis1</a></li>
+										<li><a href=""><i class="icon-tasks"></i> Analysis1</a></li>
+									</ul>
+								</li>
+								<li class="expandable"><a href=""><i class="icon-random"></i> Column</a>
+									<ul>
+										<li>-- Board 1</li>
+										<li>-- Board 2</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						
+						<!-- Limma Side List -->
+						<li class="expandable"><a href=""><i class="icon-th-list"></i> LIMMA Results</a>
+							<ul>
+								<li ><a href=""><i class="icon-tasks"></i> Analysis1</a></li>
+								<li><a href=""><i class="icon-tasks"></i> Analysis2</a></li>
+							</ul>
+						</li>
+						
+						<!-- Selections Side List -->
+				        <li class="expandable"><a href=""><i class="icon-tags"></i> Selections</a>
+							<ul>
+								<li class="expandable"><a href=""><i class="icon-bookmark"></i> Row</a>
+									<ul>
+										<li><a href=""><i class="icon-tag"></i> sdfs</a></li>
+									</ul>
+								</li>
+								<li class="expandable"><a href=""><i class="icon-bookmark"></i> Column</a>
+									<ul>
+										<li><a href=""><i class="icon-tag"></i> sdfs</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						
+						
+						
+					</ul>
+				</li>
+				<li><a href=""><i class="icon-folder-open"></i> Some Other Dataset</a>
+				
+				</li>
 			</ul>
-	<ul>	
-	  
-	    <li><a href="/home"><i class="icon-list"></i> Datasets</a></li>
-	    
-	    <li class="dropdown">
-	       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-	          <i class="fa fa-caret-square-o-down"></i> Clustering <b class="caret"></b>
-	       </a>
-	       <ul class="dropdown-menu">
-	          <li><a data-toggle="modal" role="button" href="#hierarchical">Hierarchical</a></li>
-	          <li><a data-toggle="modal" role="button" class="disabled" href=""><p class="muted">K-Means/Medians</p></a></li>
-	       </ul>
-	    </li>
-	    
-	    <li class="dropdown">
-	       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-	          <i class="fa fa-caret-square-o-down"></i> Statistics <b class="caret"></b>
-	       </a>
-	       <ul class="dropdown-menu">
-	          <li><a data-toggle="modal" role="button" href="#limma">LIMMA</a></li> 
-	          <li><a href=""><p class="muted">t-Test</p></a></li>
-	       </ul>
-	    </li>
-	    
-	    <li><a href=""><i class="icon-download-alt"></i> Export</a></li>
-	    
-	</ul>
+		</div>
+	</div>
 </div>

@@ -1,4 +1,4 @@
-define ([ 'angular', 'jquery' ], function (angular, $) {
+define ([ 'jquery', 'angular'], function ($, angular) {
 
   return angular.module ('myApp.controllers', []).controller ('HeatmapCtrl',
       [ '$scope', '$routeParams', 'API', 'pseudoRandomStringGenerator', '$rootScope', '$location', function ($scope, $routeParams, API, prsg, $rS, $loc) {
@@ -11,7 +11,12 @@ define ([ 'angular', 'jquery' ], function (angular, $) {
     		$scope.heatmapId = $routeParams.datasetName;
     		
     		
-    		
+    		$scope.heatmapData = undefined;
+            $scope.heatmapLeftTree = undefined;
+            $scope.heatmapTopTree = undefined;
+            $scope.heatmapLeftTreeName = undefined;
+            $scope.heatmapTopTreeName = undefined;
+            
     		$scope.buildPreviousAnalysisList = function() {
     		  
     		  $scope.previousHCLClusters = [];
@@ -79,19 +84,19 @@ define ([ 'angular', 'jquery' ], function (angular, $) {
                               
                               //apply column cluster to dendogram
                               
-                              scope.heatmapTopTree = data.column.root;
+                              $scope.heatmapTopTree = data.column.root;
                               
                             };
                             
                             if (data.row.root) {
                               
                               
-                              scope.heatmapLeftTree = data.row.root;
+                              $scope.heatmapLeftTree = data.row.root;
 
                             };
                             
                             //Apply new ordering and dataset to held heatmap
-                            scope.heatmapData = data;
+                            $scope.heatmapData = data;
                           
                           }, function () {
                             // Redirect to home if errored out
@@ -131,7 +136,24 @@ define ([ 'angular', 'jquery' ], function (angular, $) {
     	  });
     	  
     	  
-      }]);
+      }])
+      .controller('MainPanelController', ['$scope', '$element', '$attrs', function($scope, $element, $attrs){
+    	  ///annotations/{{heatmapId}}/annotation/column    	  
+    	  $scope.baseUrl='/annotations/'+$scope.heatmapId+'/annotation';
+    	  $scope.annotationsUrl=$scope.baseUrl+'/column/new/';
+    	  
+    	  $scope.$on('ViewAnnotationsEvent', function(event, selection, dimension){
+    		  if(typeof selection != 'undefined'){
+    			$scope.annotationsUrl = $scope.baseUrl+"/"+dimension+"/"+selection.name+"/"+selection.properties.selectionFacetLink;				
+    		  }else{
+    			$scope.annotationsUrl = $scope.baseUrl+"/column/new/";
+    		  }
+    		  
+    		  var annotationsTab = angular.element("#annotationsTabLink");				
+			  annotationsTab.trigger("click");
+			});
+    	  
+		}]);
   
 
 });
