@@ -50,3 +50,4 @@ div.accordion, div.accordion div{
 .selectionSetDescription:not(:empty):AFTER{
 	content: ")"
 }
+
