@@ -164,9 +164,6 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
    * addHttpMessageConverters(java.util.List) */
   @Override
   public void addHttpMessageConverters (List<HttpMessageConverter<?>> converters) {
-    // FIXME: Since the converter is no longer a bean the composer doesn't get
-    // injected into it, check if there's a way to inject dependencies into
-    // something not in the beanspace
     converters.add (new DatasetTsvMessageConverter ());
   }
 

@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -44,16 +45,23 @@ public class ConverterConfigurations {
 
   private @Inject RequestMappingHandlerAdapter requestMappingHandlerAdapter;
   private @Inject ObjectMapper jsonObjectMapper;
+  // FIXME: remove this, implement HttpMessageConverterConfigurer instead
   private @Autowired (required = false) Collection<HttpMessageConverter<?>> converters;
   private @Autowired (required = false) Collection<HttpMessageConverterConfigurer> converterConfigurers;
+  private @Inject AutowireCapableBeanFactory beanFactory;
 
   @PostConstruct
   public void registerConverters () {
     List<HttpMessageConverter<?>> converters = new ArrayList<> ();
     converters.addAll (this.converters);
     if (converterConfigurers != null)
-      for (HttpMessageConverterConfigurer configurer : converterConfigurers)
-        configurer.addHttpMessageConverters (converters);
+      for (HttpMessageConverterConfigurer configurer : converterConfigurers) {
+        List<HttpMessageConverter<?>> configurerConverters = new ArrayList<> ();
+        configurer.addHttpMessageConverters (configurerConverters);
+        for (HttpMessageConverter<?> converter : configurerConverters)
+          beanFactory.autowireBean (converter);
+        converters.addAll (configurerConverters);
+      }
     log.info ("Registering converters: " + converters);
     requestMappingHandlerAdapter.getMessageConverters ().addAll (0, converters);
   }
