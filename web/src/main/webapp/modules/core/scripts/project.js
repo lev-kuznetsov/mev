@@ -192,7 +192,8 @@ function initializeUI(uiState) {
 
 Refine.setTitle = function(status) {
   //var title = theProject.metadata.name + " annotations - MEV: Multi-Experiment Viewer";
-  var title = toProperCase(theProject.metadata.customMetadata.dimension) + " Annotations";
+	var title = "hi";
+  //var title = toProperCase(theProject.metadata.customMetadata.dimension) + " Annotations";
   console.log("theProject.metadata.customMetadata.selectionName:"+theProject.metadata.customMetadata.selectionName);
   if(theProject.metadata.customMetadata.selectionName!=""){
 	  //title += " (" + theProject.metadata.customMetadata.selectionName + ")";

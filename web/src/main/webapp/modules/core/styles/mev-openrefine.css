@@ -71,6 +71,7 @@ padding: 0;
 margin: 0 0;
 line-height: 1em;
 font-size: 80%;
+display:none;
 }
 #project-links > ul > li{
 line-height: 15px;
@@ -267,4 +268,8 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#51a351', endC
 
 #annotation-name-button{
 /*	text-transform: capitalize; */
+}
+
+.create-project-ui-source-selection-tab.clipboard{
+	display: none;
 }

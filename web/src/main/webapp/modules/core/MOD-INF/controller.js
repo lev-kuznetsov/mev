@@ -66,6 +66,8 @@ function registerCommands() {
   RS.registerCommand(module, "export-project", new Packages.com.google.refine.commands.project.ExportProjectCommand());
   RS.registerCommand(module, "export-rows", new Packages.com.google.refine.commands.project.ExportRowsCommand());
   RS.registerCommand(module, "export-set", new Packages.com.google.refine.commands.project.ExportSetCommand());
+  RS.registerCommand(module, "import-server-project", new Packages.com.google.refine.commands.project.ImportServerProjectCommand());
+  
   
   RS.registerCommand(module, "get-project-metadata", new Packages.com.google.refine.commands.project.GetProjectMetadataCommand());
   RS.registerCommand(module, "get-all-project-metadata", new Packages.com.google.refine.commands.workspace.GetAllProjectMetadataCommand());
@@ -330,12 +332,12 @@ function init() {
 
       "scripts/index.js",
       "scripts/index/create-project-ui.js",
-      /*
+      
       //ap: disable open, import, and language menus for MeV
       "scripts/index/open-project-ui.js",
       "scripts/index/import-project-ui.js",
       "scripts/index/lang-settings-ui.js",
-	  */
+	  
       "scripts/index/default-importing-controller/controller.js",
       "scripts/index/default-importing-controller/file-selection-panel.js",
       "scripts/index/default-importing-controller/parsing-panel.js",
