@@ -17,12 +17,14 @@ package edu.dfci.cccb.mev.dataset.rest.configuration;
 import static edu.dfci.cccb.mev.dataset.rest.assembly.tsv.prototype.AbstractTsvHttpMessageConverter.TSV_EXTENSION;
 import static edu.dfci.cccb.mev.dataset.rest.assembly.tsv.prototype.AbstractTsvHttpMessageConverter.TSV_MEDIA_TYPE;
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver.ANALYSIS_MAPPING_NAME;
+import static java.util.Arrays.asList;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 import static org.springframework.context.annotation.ScopedProxyMode.NO;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 import static org.springframework.web.servlet.HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE;
 
+import java.util.List;
 import java.util.Map;
 
 import lombok.ToString;
@@ -31,11 +33,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.fasterxml.jackson.databind.JsonSerializer;
+
+import edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
@@ -67,7 +73,7 @@ import edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgum
 @Configuration
 @ComponentScan (basePackages = "edu.dfci.cccb.mev.dataset.rest.controllers")
 @ToString
-public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
+public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
 
   // Domain conversational objects
 
@@ -95,7 +101,8 @@ public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
     return resolver.resolveObject (request);
   }
 
-  // TODO: this is a hack until type of analysis goes into the request mapping
+  // FIXME: this is a hack until type of analysis goes into the request mapping,
+  // regarding issue #442
   @SuppressWarnings ("unchecked")
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = NO)
@@ -125,31 +132,23 @@ public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
     return new SimpleSelectionBuilder ();
   }
 
-  // Serialization
-
-  @Bean
-  public DimensionTypeJsonSerializer dimensionTypeJsonSerializer () {
-    return new DimensionTypeJsonSerializer ();
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.dataset.rest.prototype.MevRestConfigurerAdapter#
+   * addJsonSerializers(java.util.List) */
+  @Override
+  public void addJsonSerializers (List<JsonSerializer<?>> serializers) {
+    serializers.addAll (asList (new DimensionTypeJsonSerializer (),
+                                new SimpleDatasetJsonSerializer (),
+                                new SimpleDimensionJsonSerializer (),
+                                new SimpleSelectionJsonSerializer ()));
   }
 
-  @Bean
-  public SimpleDatasetJsonSerializer datasetJsonSerializer () {
-    return new SimpleDatasetJsonSerializer ();
-  }
-
-  @Bean
-  public SimpleSelectionJsonSerializer selectionJsonSerializer () {
-    return new SimpleSelectionJsonSerializer ();
-  }
-
-  @Bean
-  public SimpleDimensionJsonSerializer simpleDimensionJsonSerializer () {
-    return new SimpleDimensionJsonSerializer ();
-  }
-
-  @Bean
-  public DatasetTsvMessageConverter datasetTsvMessageConverter () {
-    return new DatasetTsvMessageConverter ();
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.dataset.rest.prototype.MevRestConfigurerAdapter#
+   * addHttpMessageConverters(java.util.List) */
+  @Override
+  public void addHttpMessageConverters (List<HttpMessageConverter<?>> converters) {
+    converters.add (new DatasetTsvMessageConverter ());
   }
 
   @Bean
@@ -162,7 +161,16 @@ public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
     return new SuperCsvParserFactory ();
   }
 
-  // Resolvers
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter
+   * #addPreferredArgumentResolvers(java.util.List) */
+  @Override
+  public void addPreferredArgumentResolvers (List<HandlerMethodArgumentResolver> resolvers) {
+    resolvers.addAll (asList (new SelectionPathVariableMethodArgumentResolver (),
+                              datasetPathVariableMethodArgumentResolver (),
+                              dimensionPathVariableMethodArgumentResolver ()));
+  }
 
   @Bean
   public DatasetPathVariableMethodArgumentResolver datasetPathVariableMethodArgumentResolver () {
@@ -172,11 +180,6 @@ public class DatasetRestConfiguration extends WebMvcConfigurerAdapter {
   @Bean
   public DimensionPathVariableMethodArgumentResolver dimensionPathVariableMethodArgumentResolver () {
     return new DimensionPathVariableMethodArgumentResolver ();
-  }
-
-  @Bean
-  public SelectionPathVariableMethodArgumentResolver selectionPathVariableMethodArgumentResolver () {
-    return new SelectionPathVariableMethodArgumentResolver ();
   }
 
   /* (non-Javadoc)

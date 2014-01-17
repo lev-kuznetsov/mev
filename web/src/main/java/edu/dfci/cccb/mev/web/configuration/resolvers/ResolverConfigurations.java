@@ -26,11 +26,14 @@ import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.OrderComparator;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
+
+import edu.dfci.cccb.mev.configuration.rest.contract.HandlerMethodArgumentResolverConfigurer;
 
 /**
  * @author levk
@@ -48,16 +51,21 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 public class ResolverConfigurations {
 
   private @Inject RequestMappingHandlerAdapter adapter;
-  private @Autowired (required = false) List<HandlerMethodArgumentResolver> methodArgumentResolvers;
+  private @Autowired (required = false) List<HandlerMethodArgumentResolverConfigurer> configurers;
+  private @Inject AutowireCapableBeanFactory beanFactory;
 
   @PostConstruct
   private void prioritizeCustomArgumentMethodHandlers () {
-    log.info ("Registering method argument resolvers " + methodArgumentResolvers);
-    if (methodArgumentResolvers != null && methodArgumentResolvers.size () > 0) {
-      sort (methodArgumentResolvers, new OrderComparator ());
-      List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<> (adapter.getArgumentResolvers ());
-      argumentResolvers.addAll (0, methodArgumentResolvers);
-      adapter.setArgumentResolvers (argumentResolvers);
-    }
+    List<HandlerMethodArgumentResolver> resolvers = new ArrayList<> ();
+    if (configurers != null)
+      for (HandlerMethodArgumentResolverConfigurer configurer : configurers)
+        configurer.addPreferredArgumentResolvers (resolvers);
+    for (HandlerMethodArgumentResolver resolver : resolvers)
+      beanFactory.autowireBean (resolver);
+    sort (resolvers, new OrderComparator ());
+
+    log.info ("Registering method argument resolvers " + resolvers);
+    resolvers.addAll (adapter.getArgumentResolvers ());
+    adapter.setArgumentResolvers (resolvers);
   }
 }
