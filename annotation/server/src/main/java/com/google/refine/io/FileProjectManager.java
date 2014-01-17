@@ -59,6 +59,7 @@ import org.json.JSONTokener;
 import org.json.JSONWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.refine.ProjectManager;
 import com.google.refine.ProjectManagerFactory;
@@ -111,15 +112,15 @@ public class FileProjectManager extends ProjectManager {
     return _workspaceDir;
   }
 
-  @Inject private Dataset requestHeatmap;
-
+  
+  @Autowired(required=false) private Dataset requestHeatmap;
   public Dataset getRequestHeatmap () {
     return requestHeatmap;
   }
-
   public void setRequestHeatmap (Dataset requestHeatmap) {
     this.requestHeatmap = requestHeatmap;
   }
+  
   
   @Override
   public Map<Long, ProjectMetadata> getAllProjectMetadata () {
