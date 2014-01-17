@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.rest.prototype;
+package edu.dfci.cccb.mev.configuration.rest.prototype;
 
 import java.util.List;
 
@@ -24,10 +24,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.dfci.cccb.mev.dataset.rest.contract.HandlerMethodArgumentResolverConfigurer;
-import edu.dfci.cccb.mev.dataset.rest.contract.HttpMessageConverterConfigurer;
-import edu.dfci.cccb.mev.dataset.rest.contract.JacksonConfigurer;
-import edu.dfci.cccb.mev.dataset.rest.contract.MultipartConfigurer;
+import edu.dfci.cccb.mev.configuration.rest.contract.HandlerMethodArgumentResolverConfigurer;
+import edu.dfci.cccb.mev.configuration.rest.contract.HttpMessageConverterConfigurer;
+import edu.dfci.cccb.mev.configuration.rest.contract.JacksonConfigurer;
+import edu.dfci.cccb.mev.configuration.rest.contract.MultipartConfigurer;
 
 /**
  * @author levk

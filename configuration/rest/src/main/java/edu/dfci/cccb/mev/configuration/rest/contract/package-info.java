@@ -12,20 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.rest.contract;
-
-import java.util.List;
-
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * @author levk
- * 
+ *
  */
-public interface JacksonConfigurer {
-
-  void addJsonSerializers (List<JsonSerializer<?>> serializers);
-
-  void configureObjectMapper (ObjectMapper mapper);
-}
+package edu.dfci.cccb.mev.configuration.rest.contract;

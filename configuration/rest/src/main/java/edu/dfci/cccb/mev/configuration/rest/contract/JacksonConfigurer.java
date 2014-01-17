@@ -12,15 +12,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.rest.contract;
+package edu.dfci.cccb.mev.configuration.rest.contract;
 
-import org.springframework.web.multipart.MultipartResolver;
+import java.util.List;
+
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author levk
  * 
  */
-public interface MultipartConfigurer {
+public interface JacksonConfigurer {
 
-  void configureMultipartResolver (MultipartResolver resolver);
+  void addJsonSerializers (List<JsonSerializer<?>> serializers);
+
+  void configureObjectMapper (ObjectMapper mapper);
 }

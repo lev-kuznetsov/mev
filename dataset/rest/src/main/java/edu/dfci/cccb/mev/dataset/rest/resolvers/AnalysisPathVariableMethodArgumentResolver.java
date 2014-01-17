@@ -45,7 +45,7 @@ public class AnalysisPathVariableMethodArgumentResolver <T extends Analysis> ext
                                                     + VALID_ANALYSIS_NAME_REGEX + "}";
 
   private @Getter final Class<T> analysisType;
-  private @Getter @Setter (onMethod = @_ (@Inject)) DatasetPathVariableMethodArgumentResolver datasetResolver;
+  private @Getter @Setter @Inject DatasetPathVariableMethodArgumentResolver datasetResolver;
 
   public AnalysisPathVariableMethodArgumentResolver (Class<T> analysisType) {
     super (analysisType, ANALYSIS_MAPPING_NAME);

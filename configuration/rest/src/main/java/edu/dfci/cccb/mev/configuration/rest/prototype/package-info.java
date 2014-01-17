@@ -16,4 +16,4 @@
  * @author levk
  *
  */
-package edu.dfci.cccb.mev.dataset.rest.prototype;
+package edu.dfci.cccb.mev.configuration.rest.prototype;

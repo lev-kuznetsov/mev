@@ -32,7 +32,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.dfci.cccb.mev.dataset.rest.contract.HttpMessageConverterConfigurer;
+import edu.dfci.cccb.mev.configuration.rest.contract.HttpMessageConverterConfigurer;
 
 /**
  * @author levk
@@ -44,15 +44,12 @@ public class ConverterConfigurations {
 
   private @Inject RequestMappingHandlerAdapter requestMappingHandlerAdapter;
   private @Inject ObjectMapper jsonObjectMapper;
-  // FIXME: remove this, implement HttpMessageConverterConfigurer instead
-  private @Autowired (required = false) Collection<HttpMessageConverter<?>> converters;
   private @Autowired (required = false) Collection<HttpMessageConverterConfigurer> converterConfigurers;
   private @Inject AutowireCapableBeanFactory beanFactory;
 
   @PostConstruct
   public void registerConverters () {
     List<HttpMessageConverter<?>> converters = new ArrayList<> ();
-    converters.addAll (this.converters);
     if (converterConfigurers != null) {
       List<HttpMessageConverter<?>> configurerConverters = new ArrayList<> ();
       for (HttpMessageConverterConfigurer configurer : converterConfigurers)

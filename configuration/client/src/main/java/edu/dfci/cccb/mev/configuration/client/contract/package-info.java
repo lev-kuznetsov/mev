@@ -12,17 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.rest.contract;
-
-import java.util.List;
-
-import org.springframework.http.converter.HttpMessageConverter;
-
 /**
  * @author levk
- * 
+ *
  */
-public interface HttpMessageConverterConfigurer {
-
-  void addHttpMessageConverters (List<HttpMessageConverter<?>> converters);
-}
+package edu.dfci.cccb.mev.configuration.client.contract;
