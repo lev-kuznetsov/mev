@@ -41,7 +41,7 @@ public class SelectionPathVariableMethodArgumentResolver extends AbstractTypedPa
   public static final String SELECTION_URL_ELEMENT = "{" + SELECTION_MAPPING_NAME + ":"
                                                      + VALID_SELECTION_NAME_REGEX + "}";
 
-  private @Getter @Setter (onMethod = @_ (@Inject)) DimensionPathVariableMethodArgumentResolver dimensionResolver;
+  private @Getter @Setter @Inject DimensionPathVariableMethodArgumentResolver dimensionResolver;
 
   /**
    * 

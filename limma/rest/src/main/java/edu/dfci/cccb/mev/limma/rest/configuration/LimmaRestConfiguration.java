@@ -14,7 +14,10 @@
  */
 package edu.dfci.cccb.mev.limma.rest.configuration;
 
+import static java.util.Arrays.asList;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
+
+import java.util.List;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -25,7 +28,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.converter.HttpMessageConverter;
 
+import com.fasterxml.jackson.databind.JsonSerializer;
+
+import edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.limma.domain.contract.Limma;
 import edu.dfci.cccb.mev.limma.domain.contract.LimmaBuilder;
@@ -41,7 +48,7 @@ import edu.dfci.cccb.mev.limma.rest.assembly.tsv.LimmaTsvMessageConverter;
 @ToString
 @Configuration
 @ComponentScan ("edu.dfci.cccb.mev.limma.rest.controllers")
-public class LimmaRestConfiguration {
+public class LimmaRestConfiguration extends MevRestConfigurerAdapter {
 
   @Bean
   @Scope (SCOPE_REQUEST)
@@ -55,22 +62,25 @@ public class LimmaRestConfiguration {
   }
 
   @Bean
-  public LimmaTsvMessageConverter limmaTsvMessageConverter () {
-    return new LimmaTsvMessageConverter ();
-  }
-
-  @Bean
-  public EntryJsonSerializer entryJsonSerializer () {
-    return new EntryJsonSerializer ();
-  }
-
-  @Bean
-  public LimmaJsonSerializer limmaJsonSerializer () {
-    return new LimmaJsonSerializer ();
-  }
-
-  @Bean
   public AnalysisPathVariableMethodArgumentResolver<Limma> limmaPathVariableMethodArgumentResolver () {
     return new AnalysisPathVariableMethodArgumentResolver<> (Limma.class);
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter
+   * #addJsonSerializers(java.util.List) */
+  @Override
+  public void addJsonSerializers (List<JsonSerializer<?>> serializers) {
+    serializers.addAll (asList (new EntryJsonSerializer (), new LimmaJsonSerializer ()));
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter
+   * #addHttpMessageConverters(java.util.List) */
+  @Override
+  public void addHttpMessageConverters (List<HttpMessageConverter<?>> converters) {
+    converters.add (new LimmaTsvMessageConverter ());
   }
 }
