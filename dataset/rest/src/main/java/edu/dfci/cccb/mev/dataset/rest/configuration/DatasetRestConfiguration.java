@@ -51,7 +51,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
-import edu.dfci.cccb.mev.dataset.domain.mock.MapBackedValueStoreBuilder;
+import edu.dfci.cccb.mev.dataset.domain.metamodel.MetamodelBackedValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListWorkspace;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelectionBuilder;
@@ -117,7 +117,8 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
   public ValueStoreBuilder valueFactory () {
-    return new MapBackedValueStoreBuilder ();
+    return new MetamodelBackedValueStoreBuilder ();// MapBackedValueStoreBuilder
+                                                   // ();
   }
 
   @Bean
