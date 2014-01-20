@@ -22,6 +22,8 @@ import static org.eobjects.metamodel.DataContextFactory.createJdbcDataContext;
 import static org.eobjects.metamodel.schema.ColumnType.DOUBLE;
 import static org.eobjects.metamodel.schema.ColumnType.VARCHAR;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -49,11 +51,11 @@ public class MetamodelBackedValueStoreBuilder extends AbstractValueStoreBuilder 
 
   private UpdateableDataContext context;
   private Table table;
+  private final AtomicBoolean destroy = new AtomicBoolean (false);
 
   @PostConstruct
   private void initialize () {
-    context = createJdbcDataContext (dataSource);
-    context.executeUpdate (new BatchUpdateScript () {
+    (context = createJdbcDataContext (dataSource)).executeUpdate (new BatchUpdateScript () {
 
       @Override
       public void run (UpdateCallback callback) {
@@ -62,6 +64,7 @@ public class MetamodelBackedValueStoreBuilder extends AbstractValueStoreBuilder 
                         .withColumn (COLUMN_FIELD_NAME).ofType (VARCHAR)
                         .withColumn (VALUE_FIELD_NAME).ofType (DOUBLE)
                         .execute ();
+        destroy.set (true);
       }
     });
   }
@@ -90,6 +93,21 @@ public class MetamodelBackedValueStoreBuilder extends AbstractValueStoreBuilder 
    * @see edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder#build() */
   @Override
   public Values build () {
+    destroy.set (false);
     return new MetamodelBackedValues (table, context);
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#finalize() */
+  @Override
+  protected void finalize () throws Throwable {
+    if (destroy.getAndSet (false))
+      context.executeUpdate (new BatchUpdateScript () {
+
+        @Override
+        public void run (UpdateCallback callback) {
+          callback.dropTable (table);
+        }
+      });
   }
 }
