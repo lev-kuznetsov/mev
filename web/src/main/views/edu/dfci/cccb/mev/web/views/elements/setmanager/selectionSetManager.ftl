@@ -5,9 +5,7 @@
 		<div class="accordion-heading" ng-dblclick="sayHelloCtl()">
 			<a class="accordion-toggle" data-toggle="collapse"
 				href="#collapseSetManagerColumns"> Column Sets </a>
-			<!-- href="/annotations/{{heatmapId}}/annotation/column/new/" --> 
-			<a class="accordion-action-button" href=""
-				ng-click="showAnnotations(selection, 'column')">create new set from annotations</a>			
+			<!-- href="/annotations/{{heatmapId}}/annotation/column/new/" -->
 		</div><!-- End Heading Div -->
 
 		<div id="collapseSetManagerColumns" class="accordion-body collapse">
