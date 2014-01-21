@@ -24,7 +24,13 @@ define (
                     scope.menu = opts;
                   }
                 };
-              } ])          
+              } ])
+          .directive ('heatmapNavigation',[ function () {
+                return {
+                  restrict : 'A',
+                  templateUrl : '/container/view/elements/heatmapNavigation'
+                };
+              } ])
           .directive (
               'heatmapPanels',[ '$routeParams', 'API', 'alertService', '$location',
               function ($routeParams, API, alertService, $location) {

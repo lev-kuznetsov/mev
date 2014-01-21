@@ -41,6 +41,11 @@ public class Views {
   public FreeMarkerView elementView1 (FreeMarkerViewBuilder builder) {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/view1.ftl").build ();
   }
+  
+  @Bean (name = "elements/heatmapNavigation")
+  public FreeMarkerView elementHeatmapNavigation (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/heatmapNavigation.ftl").build ();
+  }
 
   @Bean (name = "elements/analysisMenuBar")
   public FreeMarkerView elementAnalysisMenuBar (FreeMarkerViewBuilder builder) {
