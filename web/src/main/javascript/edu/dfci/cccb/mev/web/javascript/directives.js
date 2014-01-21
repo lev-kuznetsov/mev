@@ -1,6 +1,7 @@
 define (
-    [ 'angular', 'jquery', 'd3', 'dropzone', 'newick', 'services', 'mainpanel/MainPanel' ],
-    function (angular, jq, d3, Dropzone, newick) {
+    [ 'angular', 'jquery', 'd3', 'dropzone', 'services' ],
+    function (angular, jq, d3, Dropzone) {
+
 
       return angular
           .module ('myApp.directives', [])
@@ -23,7 +24,13 @@ define (
                     scope.menu = opts;
                   }
                 };
-              } ])          
+              } ])
+          .directive ('heatmapNavigation',[ function () {
+                return {
+                  restrict : 'A',
+                  templateUrl : '/container/view/elements/heatmapNavigation'
+                };
+              } ])
           .directive (
               'heatmapPanels',[ '$routeParams', 'API', 'alertService', '$location',
               function ($routeParams, API, alertService, $location) {
@@ -38,153 +45,107 @@ define (
                         	$location.path('/');
                         });
                     
-                   scope.updateHeatmapData = function(prevAnalysis, textForm){
-                      
-                      API.analysis.hcl.update({
-                        dataset:$routeParams.datasetName,
-                        name:prevAnalysis
-                        }).then(function(){
-                          
-                          API.dataset.get ($routeParams.datasetName).then (
-                              function(data){
-                              
-                                if (data.column.root) {
-                                  
-                                  //apply column cluster to dendogram
-                                  
-                                  scope.heatmapTopTree = data.column.root;
-                                  
-                                };
-                                
-                                if (data.row.root) {
-                                  
-                                  
-                                  scope.heatmapLeftTree = data.row.root;
-
-                                };
-                                
-                                //Apply new ordering and dataset to held heatmap
-                                scope.heatmapData = data;
-                              
-                              }, function () {
-                                // Redirect to home if errored out
-                                $location.path ('/');
-                              });
-                          
-                        }, function(){
-                          
-                          var message = "Could not update heatmap. If "
-                            + "problem persists, please contact us."
-                            
-                            var header = "Heatmap Clustering Update Problem (Error Code: " + s + ")"
-                            alertService.error(message, header);
-                          
-                        })
-                      
-                    };
                     
-                    console.log("window height: " + jq(window).height())
+                    var rightPanel = jq('#rightPanel'),
+                    leftPanel = jq('#leftPanel'),
+                    centerTab = jq('div#tab'),
+                    pageWidth = jq('body').width() - 50,
+                    showSidePanel = true;
                     
-                    var windowHeight = jq(window).height() * .7;
+                    rightPanel.css('height', "90%");
+                    leftPanel.css('height', "90%");
                     
-                    jq ('#leftPanel div.well').css ('height', windowHeight);
-                    jq ('#rightPanel div.well').css ('height',  windowHeight);
-                    jq('div.fixed-height-analysis').css('height', windowHeight)
+                    var isDragging = false;
+                    
+                    centerTab.mousedown(function(mouse){
+                    	isDragging = true;
+                    	mouse.preventDefault();
+                    });
+                    
+                    jq(document).mouseup(function(){
+                    	isDragging = false;
+                    }).mousemove(function(mouse){
+                    	if(isDragging && mouse.pageX < pageWidth*(1/4) && mouse.pageX > 0 ){
+                    		showSidePanel = true;
+                    		leftPanel.css("width", mouse.pageX);
+                    		rightPanel.css("width", pageWidth - mouse.pageX);
+                    		leftPanel.children().show();
+                    	}
+                    	
+                    	if(isDragging && mouse.pageX < pageWidth*(1/10) && mouse.pageX > 0 ){
+                    		leftPanel.children().hide();
+                    		
+                    	}
+                    	
+                    });
+                    
+                    jq('div#tab').click(function(){
+                    	
+                    		leftPanel.css("width", 0);
+                        	leftPanel.children().hide();
+                        	rightPanel.css("width", pageWidth - 30);
+                    	
+                    })
+                    
+                    
 
-                    jq ('#closeRight').hide ();
-                    jq ('#closeLeft').hide ();
-
-                    var margin = "2.127659574468085%"
-                    scope.showLimmaTables = false;
-
-                    scope.expandLeft = function () {
-
-                      jq ('#leftPanel').attr ("class", "span12 marker");
-                      jq ('#rightPanel').hide ();
-                      jq ('#expandLeft').hide ();
-                      jq ('#closeLeft').show ();
-                      jq ('#leftPanel').show ();
-
-                      jq ('vis-heatmap svg').attr ("width",
-                          jq ('#leftPanel').css ('width').slice (0, -2) * .9);
-
-                    };
-
-                    scope.expandRight = function () {
-
-                      jq ('#leftPanel').hide ();
-                      jq ('#expandRight').hide ();
-                      jq ('#closeRight').show ();
-                      jq ('#rightPanel').show ();
-                      jq ('#rightPanel').attr ("class", "span12 marker");
-                      jq ('#rightPanel').css ({
-                        "margin-left" : "0"
-                      });
-                      scope.showLimmaTables = true;
-
-                    };
-
-                    scope.expandBoth = function () {
-
-                      jq ('#closeRight').hide ();
-                      jq ('#closeLeft').hide ();
-                      jq ('#expandRight').show ();
-                      jq ('#expandLeft').show ();
-                      jq ('#rightPanel').show ();
-                      jq ('#leftPanel').show ();
-                      jq ('#leftPanel').attr ("class", "span3 marker");
-                      jq ('#rightPanel').attr ("class", "span9 marker");
-                      jq ('#rightPanel').css ({
-                        "margin-left" : margin
-                      });
-                      jq ('vis-heatmap svg').attr ("width",
-                          jq ('#rightPanel').css ('width').slice (0, -2) * .9);
-                      scope.showLimmaTables = false;
-                    };
+                    scope.showLimmaTables = true;
+                    
+                    
 
                   }
                 };
               }])
-            .directive ('menubar', [ 'analysisOptions', function (opts) {
+            .directive ('sideNavigationBar', [ function () {
             return {
               restrict : 'E',
-              templateUrl : '/container/view/elements/menubar',
-              link : function (scope) {
-                scope.links = opts;
-              }
+              templateUrl : '/container/view/elements/sideNavigationBar',
+              link: function(scope) {
+            	  	jq('li.expandable').click(function() {
+            	  		if ($(this).children()) {
+            	  			console.log($(this))
+            	  			$(this).children('ul').toggle();
+                		    return false;
+            	  		}
+            		    
+            		});
+            }
             };
           } ])
-          .directive ('expressionPanel', [ function () {
+          .directive ('limmaAccordionList', [ function () {
+            return {
+              restrict : 'E',
+              templateUrl : '/container/view/elements/limmaAccordion'
+              
+            };
+          } ])
+          .directive ('clusterAccordionList', [ function () {
+            return {
+              restrict : 'E',
+              templateUrl : '/container/view/elements/clusterAccordion'
+              
+            };
+          } ])
+          .directive ('analysisMenuBar', [ function () {
+            return {
+              restrict : 'E',
+              templateUrl : '/container/view/elements/analysisMenuBar'
+              
+            };
+          } ])
+          .directive ('expressionPanel', ['$routeParams', function ($routeParams) {
             return {
               restrict : 'AC',
               templateUrl : '/container/view/elements/expressionPanel',
               link : function (scope) {
+                
+                scope.buildPreviousAnalysisList ();
+                
+                scope.datasetName = $routeParams.datasetName;
 
               }
             };
           } ])
-          .directive (
-              'analysisPanel',
-              [
-                  'pseudoRandomStringGenerator',
-                  'API',
-                  '$routeParams',
-                  function (prsg, API, $rP) {
-                    return {
-                      restrict : 'A',
-                      templateUrl : '/container/view/elements/analysisPanel',
-                      link : function (scope) {
-
-                        
-
-                        scope.buildPreviousAnalysisList ();
-                        
-                        scope.datasetName = $rP.datasetName;
-                        	
-
-                      }
-                    };
-                  } ])
           .directive ('bsprevanalysis', function () {
 
             return {
@@ -326,7 +287,6 @@ define (
                   {name: "Row", value: "row"},
                   {name:"Column", value:"column"}];
                 
-                scope.analysisPValue
                 scope.analysisControl
                 scope.analysisExperiment
                 scope.analysisDimension
@@ -348,8 +308,7 @@ define (
                     name: scope.analysisName,
                     dimension: scope.analysisDimension.value, 
                     experiment: scope.analysisExperiment, 
-                    control: scope.analysisControl, 
-                    alpha: scope.analysisPValue,
+                    control: scope.analysisControl,
                     callback: scope.buildPreviousAnalysisList
                 		  
                   };
@@ -474,7 +433,7 @@ define (
                     	var padding = 20;
                     	var dendogram = {
                           height: 200 + padding,
-                          width: jq("#leftPanel").css("width").split("px")[0] * .75 // Nicely define width
+                          width: jq("#rightPanel").css("width").split("px")[0] * .75 // Nicely define width
                         };
                     	
                     	var svg = d3.select(elems[0]).append("svg")
@@ -588,7 +547,7 @@ define (
                             - heatmapMarginRight;
 
                         var heatmapCellsHeight = undefined;
-                        var heatmapCellHeight = 40;
+                        var heatmapCellHeight = undefined;
 
                         var window = d3.select (elems[0]);
 
@@ -808,7 +767,7 @@ define (
 
                         function scaleUpdates (cols, rows, min, max, avg) {
                         	
-                          heatmapCellHeight = 80;
+                          heatmapCellHeight = 30;
                           
                           heatmapCellsHeight = heatmapCellHeight*rows.keys.length;
                           dendogramLeft.height = heatmapCellsHeight;
@@ -897,6 +856,7 @@ define (
 
                         function drawHeatmap (data) {
                           
+
                           heatmapcells = rects.data (data.values).enter ().append ("rect");
 						  scope.theData=data;
                           scaleUpdates (data.column, data.row,

@@ -33,13 +33,6 @@
     </div>
   </div>
   
-  <div class="control-group">
-    <label for="inputAnalysisValue" class="control-label">p-Value</label>
-    <div class="controls">
-        <input id="inputAnalysisValue" ng-model="analysisPValue" placeholder="0 < x < 1">
-    </div>
-  </div>
-  
 </form>
 
 <button class="btn btn-success btn-block" ng-click="limmaInit()" data-dismiss="modal" aria-hidden="true">Analyze</button>

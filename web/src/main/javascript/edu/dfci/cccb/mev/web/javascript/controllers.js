@@ -6,7 +6,8 @@ define ([ 'jquery', 'angular'], function ($, angular) {
     	if (!$routeParams.datasetName){
     		$loc.path('/');
             	
-    	} else {
+    	};
+    	
     		$scope.heatmapId = $routeParams.datasetName;
     		
     		
@@ -17,6 +18,8 @@ define ([ 'jquery', 'angular'], function ($, angular) {
             $scope.heatmapTopTreeName = undefined;
             
     		$scope.buildPreviousAnalysisList = function() {
+    		  
+    		  console.log("called")
     		  
     		  $scope.previousHCLClusters = [];
     		  
@@ -69,12 +72,54 @@ define ([ 'jquery', 'angular'], function ($, angular) {
 
               };
             
-    	}
+              $scope.updateHeatmapData = function(prevAnalysis, textForm){
+                  
+                  API.analysis.hcl.update({
+                    dataset:$routeParams.datasetName,
+                    name:prevAnalysis
+                    }).then(function(){
+                      
+                      API.dataset.get ($routeParams.datasetName).then (
+                          function(data){
+                          
+                            if (data.column.root) {
+                              
+                              //apply column cluster to dendogram
+                              
+                              $scope.heatmapTopTree = data.column.root;
+                              
+                            };
+                            
+                            if (data.row.root) {
+                              
+                              
+                              $scope.heatmapLeftTree = data.row.root;
+
+                            };
+                            
+                            //Apply new ordering and dataset to held heatmap
+                            $scope.heatmapData = data;
+                          
+                          }, function () {
+                            // Redirect to home if errored out
+                            $location.path ('/');
+                          });
+                      
+                    }, function(){
+                      
+                      var message = "Could not update heatmap. If "
+                        + "problem persists, please contact us."
+                        
+                        var header = "Heatmap Clustering Update Problem (Error Code: " + s + ")"
+                        alertService.error(message, header);
+                      
+                    })
+                  
+                };
         
 
       } ])
-      .controller ('ImportsCtrl',
-      [ '$scope', 'API', function ($scope, API) { 
+      .controller ('ImportsCtrl', [ '$scope', 'API', function ($scope, API) { 
     	  
     	  $scope.userUploads = [];
   

@@ -49,18 +49,16 @@ public class LimmaAnalysisController {
   private @Getter @Setter (onMethod = @_ (@Inject)) LimmaBuilder limma;
 
   @RequestMapping (value = "/analyze/limma/{name}(dimension="
-                           + DIMENSION_URL_ELEMENT + ",experiment={experiment},control={control},alpha={alpha})",
+                           + DIMENSION_URL_ELEMENT + ",experiment={experiment},control={control})",
                    method = POST)
   @ResponseStatus (OK)
   public void start (final @PathVariable ("name") String name,
                      final @PathVariable ("experiment") Selection experiment,
-                     final @PathVariable ("control") Selection control,
-                     final @PathVariable ("alpha") double alpha) throws DatasetException {
+                     final @PathVariable ("control") Selection control) throws DatasetException {
     dataset.analyses ().put (limma.name (name)
                                   .dataset (dataset)
                                   .experiment (experiment)
                                   .control (control)
-                                  .alpha (alpha)
                                   .build ());
   }
 }

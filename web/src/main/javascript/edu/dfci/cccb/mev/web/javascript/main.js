@@ -31,15 +31,13 @@ require
         },
         'bootstrap-css' : {
           deps : [ 'bootstrap' ]
-        },
-        'newick':{
-          exports: 'newick'
         }
 
       },
       waitSeconds : "2"
 
     });
+
 
 require ([ 'angular', 'app', 'jquery', 'orefine/OrefineBridge', 'bootstrap-css', 'bootstrap', 'setmanager/SetManager', 'mainpanel/MainPanel'],
     function (angular, app, jquery, orb) {

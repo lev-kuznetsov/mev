@@ -5,7 +5,7 @@ define (
       return angular
           .module ('myApp.services', [])
           .value ('appVersion', '0.1')
-          .value ('appName', 'MeV: Multi-Experiment Viewer')
+          .value ('appName', 'MeV')
           .factory ('mainMenuBarOptions', [ function () {
             return [ {
               value : "About",
@@ -232,8 +232,7 @@ define (
                                     + q.name + "(dimension="
                                     + q.dimension + ",experiment="
                                     + q.experiment + ",control="
-                                    + q.control + ",alpha="
-                                    + q.alpha + ")"
+                                    + q.control + ")"
                                     
                             };
                             

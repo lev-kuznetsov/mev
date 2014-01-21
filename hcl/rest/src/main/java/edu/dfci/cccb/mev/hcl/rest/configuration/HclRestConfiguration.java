@@ -16,17 +16,25 @@ package edu.dfci.cccb.mev.hcl.rest.configuration;
 
 import static edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter.NEWICK_EXTENSION;
 import static edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter.NEWICK_MEDIA_TYPE;
+import static java.util.Arrays.asList;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
+
+import java.util.List;
+
 import lombok.ToString;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.fasterxml.jackson.databind.JsonSerializer;
+
+import edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 import edu.dfci.cccb.mev.hcl.domain.contract.HclBuilder;
@@ -41,8 +49,6 @@ import edu.dfci.cccb.mev.hcl.rest.assembly.newick.HclNewickMessageConverter;
 import edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter;
 import edu.dfci.cccb.mev.hcl.rest.resolvers.LinkagePathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.hcl.rest.resolvers.MetricPathVariableMethodArgumentResolver;
-//import org.springframework.context.annotation.Import;
-//import edu.dfci.cccb.mev.hcl.rest.context.RestPathVariableHclRequestContextInjector;
 
 /**
  * @author levk
@@ -51,13 +57,7 @@ import edu.dfci.cccb.mev.hcl.rest.resolvers.MetricPathVariableMethodArgumentReso
 @Configuration
 @ToString
 @ComponentScan (basePackages = "edu.dfci.cccb.mev.hcl.rest.controllers")
-// @Import (RestPathVariableHclRequestContextInjector.class)
-public class HclRestConfiguration extends WebMvcConfigurerAdapter {
-
-  @Bean
-  public AnalysisPathVariableMethodArgumentResolver<Hcl> hclPathVariableMethodArgumentResolver () {
-    return new AnalysisPathVariableMethodArgumentResolver<Hcl> (Hcl.class);
-  }
+public class HclRestConfiguration extends MevRestConfigurerAdapter {
 
   @Bean
   public NodeBuilder nodeBuilder () {
@@ -70,46 +70,6 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
     return new SimpleTwoDimensionalHclBuilder ();
   }
 
-  @Bean
-  public NodeNewickMessageConverter nodeNewickMessageConverter () {
-    return new NodeNewickMessageConverter ();
-  }
-
-  @Bean
-  public HclNewickMessageConverter hclNewickMessageConverter () {
-    return new HclNewickMessageConverter ();
-  }
-
-  @Bean
-  public HclJsonSerializer hclJsonSerializer () {
-    return new HclJsonSerializer ();
-  }
-
-  @Bean
-  public LeafJsonSerializer leafJsonSerializer () {
-    return new LeafJsonSerializer ();
-  }
-
-  @Bean
-  public BranchJsonSerializer branchJsonSerializer () {
-    return new BranchJsonSerializer ();
-  }
-
-  @Bean
-  public SimpleHierarchicallyClusteredDimensionJsonSerializer simpleHierarchicallyClusteredDimensionJsonSerializer () {
-    return new SimpleHierarchicallyClusteredDimensionJsonSerializer ();
-  }
-
-  @Bean
-  public LinkagePathVariableMethodArgumentResolver algorithmPathVariableMethodArgumentResolver () {
-    return new LinkagePathVariableMethodArgumentResolver ();
-  }
-
-  @Bean
-  public MetricPathVariableMethodArgumentResolver metricPathVariableMethodArgumentResolver () {
-    return new MetricPathVariableMethodArgumentResolver ();
-  }
-
   /* (non-Javadoc)
    * @see
    * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
@@ -119,5 +79,42 @@ public class HclRestConfiguration extends WebMvcConfigurerAdapter {
   @Override
   public void configureContentNegotiation (ContentNegotiationConfigurer configurer) {
     configurer.mediaType (NEWICK_EXTENSION, NEWICK_MEDIA_TYPE);
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter
+   * #addJsonSerializers(java.util.List) */
+  @Override
+  public void addJsonSerializers (List<JsonSerializer<?>> serializers) {
+    serializers.addAll (asList (new HclJsonSerializer (),
+                                new LeafJsonSerializer (),
+                                new BranchJsonSerializer (),
+                                new SimpleHierarchicallyClusteredDimensionJsonSerializer ()));
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter
+   * #addHttpMessageConverters(java.util.List) */
+  @Override
+  public void addHttpMessageConverters (List<HttpMessageConverter<?>> converters) {
+    converters.addAll (asList (nodeNewickMessageConverter (), new HclNewickMessageConverter ()));
+  }
+
+  @Bean
+  public NodeNewickMessageConverter nodeNewickMessageConverter () {
+    return new NodeNewickMessageConverter ();
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter
+   * #addPreferredArgumentResolvers(java.util.List) */
+  @Override
+  public void addPreferredArgumentResolvers (List<HandlerMethodArgumentResolver> resolvers) {
+    resolvers.addAll (asList (new LinkagePathVariableMethodArgumentResolver (),
+                              new MetricPathVariableMethodArgumentResolver (),
+                              new AnalysisPathVariableMethodArgumentResolver<Hcl> (Hcl.class)));
   }
 }

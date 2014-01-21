@@ -41,20 +41,25 @@ public class Views {
   public FreeMarkerView elementView1 (FreeMarkerViewBuilder builder) {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/view1.ftl").build ();
   }
+  
+  @Bean (name = "elements/heatmapNavigation")
+  public FreeMarkerView elementHeatmapNavigation (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/heatmapNavigation.ftl").build ();
+  }
 
-  @Bean (name = "elements/menubar")
-  public FreeMarkerView elementMenubar (FreeMarkerViewBuilder builder) {
-    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/menubar.ftl").build ();
+  @Bean (name = "elements/analysisMenuBar")
+  public FreeMarkerView elementAnalysisMenuBar (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/analysisMenuBar.ftl").build ();
+  }
+  
+  @Bean (name = "elements/sideNavigationBar")
+  public FreeMarkerView elementSideNavigationBar (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/sideNavigationBar.ftl").build ();
   }
 
   @Bean (name = "elements/expressionPanel")
   public FreeMarkerView elementExpressionPanel (FreeMarkerViewBuilder builder) {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/expressionPanel.ftl").build ();
-  }
-
-  @Bean (name = "elements/analysisPanel")
-  public FreeMarkerView elementanalysisPanel (FreeMarkerViewBuilder builder) {
-    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/analysisPanel.ftl").build ();
   }
 
   @Bean (name = "elements/hierarchicalbody")
@@ -77,9 +82,14 @@ public class Views {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/modal.ftl").build ();
   }
 
-  @Bean (name = "elements/prevlimmashell")
-  public FreeMarkerView elementPrevlimmashell (FreeMarkerViewBuilder builder) {
-    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/prevlimmashell.ftl").build ();
+  @Bean (name = "elements/limmaAccordion")
+  public FreeMarkerView elementLimmaAccordion (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/limmaAccordion.ftl").build ();
+  }
+  
+  @Bean (name = "elements/clusterAccordion")
+  public FreeMarkerView elementClusterAccordion (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/clusterAccordion.ftl").build ();
   }
 
   @Bean (name = "elements/table")
