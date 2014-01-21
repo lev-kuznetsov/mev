@@ -20,9 +20,9 @@
 			              </a> 
 			            </button>
 			            
-			            <div id="limmaResultsNotSignificant" ng-hide="limma.datar.significant">
+			            <div id="limmaResultsNotSignificant" ng-hide="limma.datar.results">
 			              <hr>
-			              <p>No Significant values!</p>
+			              <p>No Results!</p>
 			              
 			            </div>
 			            
@@ -33,7 +33,7 @@
 			        </div>
 		            
 		            <div class="row-fluid">
-			        	<div class="limma-table" id="limmaResultsTable" ng-hide="!limma.datar.significant || !showLimmaTables">
+			        	<div class="limma-table" id="limmaResultsTable" ng-hide="!limma.datar.results || !showLimmaTables">
 			        	
 		                    <table class="table table-striped table-bordered">
 		                            <thead>
@@ -42,7 +42,7 @@
 		                                    </tr>
 		                            </thead>
 		                            <tbody>
-		                                    <tr ng-repeat="row in limma.datar.significant">
+		                                    <tr ng-repeat="row in limma.datar.results">
 		                                            <td>
 		                                                    {{row["id"]}}
 		                                            </td>
