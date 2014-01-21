@@ -1,5 +1,6 @@
 <html>
   <head>
+    <title>MeV</title>
     <script type="text/javascript" src="/library/webjars/log4javascript/1.4.5/log4javascript_uncompressed.js"></script>
     <script type="text/javascript">
       var log = log4javascript.getDefaultLogger ();

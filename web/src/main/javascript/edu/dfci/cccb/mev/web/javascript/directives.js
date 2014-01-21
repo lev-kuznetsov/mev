@@ -38,8 +38,12 @@ define (
                     scope.heatmapLeftTreeName = undefined;
                     scope.heatmapTopTreeName = undefined;
                     
+                    document.title = "MeV: " + $routeParams.datasetName;
+                    
                     API.dataset.get ($routeParams.datasetName).then (
-                        function(data){ scope.heatmapData = data;}, function(data){
+                        function(data){ 
+                          scope.heatmapData = data;
+                        }, function(data){
                         	//return home if error
                         	$location.path('/');
                         });
