@@ -6,7 +6,7 @@
   <artifactId>mev-r</artifactId>
   <packaging>jar</packaging>
 
-  <name>MeV R</name>
+  <name>MeV R Integration</name>
   <url>http://github.com/dfci-cccb/mev</url>
 
   <parent>

@@ -5,7 +5,7 @@
   <artifactId>mev-dataset</artifactId>
   <packaging>pom</packaging>
 
-  <name>MultiExperiment Viewer Dataset</name>
+  <name>MeV Dataset Plugin</name>
   <url>http://github.com/dfci-cccb/mev</url>
 
   <parent>

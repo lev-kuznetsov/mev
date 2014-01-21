@@ -115,27 +115,6 @@
     <!-- Servlet -->
 
     <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-server</artifactId>
-      <version>${jetty.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-webapp</artifactId>
-      <version>${jetty.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-annotations</artifactId>
-      <version>${jetty.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-web-api</artifactId>
       <scope>provided</scope>
