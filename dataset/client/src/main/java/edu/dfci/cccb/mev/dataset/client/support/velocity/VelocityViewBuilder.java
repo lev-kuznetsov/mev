@@ -30,7 +30,6 @@ import edu.dfci.cccb.mev.dataset.client.support.prototype.AbstractTemplateViewBu
  * @author levk
  * 
  */
-@SuppressWarnings ("rawtypes")
 @Accessors (fluent = false, chain = true)
 public class VelocityViewBuilder extends AbstractTemplateViewBuilder<VelocityViewBuilder> {
 
@@ -38,10 +37,10 @@ public class VelocityViewBuilder extends AbstractTemplateViewBuilder<VelocityVie
   private @Getter @Setter String dateToolAttribute;
   private @Getter @Setter String encoding;
   private @Getter @Setter String numberToolAttribute;
-  private @Getter @Setter Map<String, Class> toolAttributes = new HashMap<> ();
+  private @Getter @Setter Map<String, Class<?>> toolAttributes = new HashMap<> ();
   private @Getter @Setter VelocityEngine velocityEngine;
 
-  public VelocityViewBuilder addToolAttributes (Map<String, Class> toolAttributes) {
+  public VelocityViewBuilder addToolAttributes (Map<String, Class<?>> toolAttributes) {
     this.toolAttributes.putAll (toolAttributes);
     return this;
   }
