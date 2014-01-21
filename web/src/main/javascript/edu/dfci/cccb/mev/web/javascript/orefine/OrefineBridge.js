@@ -4,7 +4,9 @@ define(['jquery', 'angular'], function(jquery, angular){
 			console.log('in addSelectionSet');
 			console.log("selection:"+angular.toJson(selection));
 			
-			var selectionSetMgrDOM = angular.element("#selectionSetMgr");
+			var elm = document.querySelector('#selectionSetMgr');
+			
+			var selectionSetMgrDOM = angular.element(elm);
 			
 			//var selectionSetManagerCtl=selectionSetMgrDOM.controller(); 
 			//angular.element(domElement).controller()

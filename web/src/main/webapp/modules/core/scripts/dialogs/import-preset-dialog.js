@@ -1,35 +1,30 @@
-function ExportSetDialog() { 	
+function ImportPresetDialog() { 	
     this._createDialog();
     
 }
 
-ExportSetDialog.prototype._lastItem=null;
+ImportPresetDialog.prototype._lastItem=null;
 
 
-ExportSetDialog.prototype._createDialog = function() {
+ImportPresetDialog.prototype._createDialog = function() {
     var self = this;
-    var dialog = $(DOM.loadHTML("core", "scripts/dialogs/export-set-dialog.html"));
+    var dialog = $(DOM.loadHTML("core", "scripts/dialogs/import-preset-dialog.html"));
     this._elmts = DOM.bind(dialog);
     this._name="";
     this._description="";
-    this._color="";
+    
     this._dimension="";
     if(theProject.metadata.customMetadata){
     	if(theProject.metadata.customMetadata.selectionName)
     		this._name=theProject.metadata.customMetadata.selectionName;
     	if(theProject.metadata.customMetadata.selectionDescription)
     		this._description=theProject.metadata.customMetadata.selectionDescription;
-    	if(theProject.metadata.customMetadata.selectionColor)
-    		this._color=theProject.metadata.customMetadata.selectionColor;
-    	else
-    		this._color='#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
     	if(theProject.metadata.customMetadata.dimension)
     		this._dimension=theProject.metadata.customMetadata.dimension;
     	
     }
     this._elmts.setName[0].value=this._name;
-    this._elmts.setDescription[0].value=this._description;
-    this._elmts.setColor[0].value=this._color;
+    this._elmts.setDescription[0].value=this._description;    
     
     //this._elmts.controls.find("textarea").bind("keyup change input",function() { self._scheduleUpdate(); });
     
@@ -47,15 +42,14 @@ ExportSetDialog.prototype._createDialog = function() {
         self._updatePreview();
     });
     */
-    this._elmts.setColor.colorpicker({showOn:"button"});
     this._level = DialogSystem.showDialog(dialog);
 };
 
-ExportSetDialog.prototype._dismiss = function() {
+ImportPresetDialog.prototype._dismiss = function() {
     DialogSystem.dismissUntil(this._level - 1);
 };
 
-ExportSetDialog.prototype._validate = function()
+ImportPresetDialog.prototype._validate = function()
 {
 	  //var name = window.prompt("Esport set name", "open-refine-exported-set");
 	  var name = this._elmts.setName[0].value.trim();	  
@@ -64,34 +58,23 @@ ExportSetDialog.prototype._validate = function()
 		this._elmts.setName[0].focus();
 	    return false;
 	  }
-	  	  
-	  var color = this._elmts.setColor[0].value;
-	  color = $.trim(color);
-	  if (!color) {
-		this._elmts.errorMessage.html("Color is required");		
-		this._elmts.setColor[0].focus();
-		//this._elmts.setColor.colorpicker("showPalette");
-		return false;
-	  }
 
 	  this._name=name;
-	  this._color=color;
 	  this._description = this._elmts.setDescription[0].value;
 	  this._description=$.trim(this._description); 	  
 
 	  return true;
 };
 
-ExportSetDialog.prototype._exportAjax = function(){
+ImportPresetDialog.prototype._exportAjax = function(){
 	var postRequest = {
 		    type: "POST",
-		    url: "command/core/export-set",
+		    url: "command/core/import-preset-dataset",
 		    data: { 
 		    	"project" : theProject.id, 
-		    	"name" : name,
+		    	"name" : this._name,
 		    	"selectionName" : this._name,
 		    	"selectionDescription" : this._description,
-		    	"selectionColor" : this._color,
 		    	"selectionFacetLink" : Refine.getPermanentLink(),
 		    	"engine" : JSON.stringify(ui.browsingEngine.getJSON())
 		    	},
@@ -123,7 +106,7 @@ ExportSetDialog.prototype._exportAjax = function(){
 		$.ajax(postRequest);
 };
 
-ExportSetDialog.prototype._export = function() {  
+ImportPresetDialog.prototype._export = function() {  
 
 	  var form = document.createElement("form");	  
 	  $(form)

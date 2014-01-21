@@ -148,11 +148,14 @@ define ([ 'jquery', 'angular'], function ($, angular) {
     		  if(typeof selection != 'undefined'){
     			$scope.annotationsUrl = $scope.baseUrl+"/"+dimension+"/"+selection.name+"/"+selection.properties.selectionFacetLink;				
     		  }else{
-    			$scope.annotationsUrl = $scope.baseUrl+"/column/new/";
+    			$scope.annotationsUrl = $scope.baseUrl+"/"+dimension+"/new/";
     		  }
     		  
-    		  var annotationsTab = angular.element("#annotationsTabLink");				
-			  annotationsTab.trigger("click");
+
+    		  var elm = document.querySelector('#annotationsTabLink');
+    		  $(elm).trigger('click');
+    		  //var annotationsTab = angular.element(elm);				
+			  //annotationsTab.trigger("click");
 			});
     	  
 		}]);
