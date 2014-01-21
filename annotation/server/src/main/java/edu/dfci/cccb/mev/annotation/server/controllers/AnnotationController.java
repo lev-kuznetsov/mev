@@ -155,6 +155,19 @@ public class AnnotationController extends WebApplicationObjectSupport {
     this.refineServlet.service (wrappedRequest, response);
   }
   
+  @RequestMapping(method={GET, POST, PUT, DELETE}, value="/import-dataset/**")
+  public void importDataset(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    
+    HttpServletRequest wrappedRequest = new HttpServletRequestWrapper (request) {
+      @Override
+      public String getPathInfo () {
+        return super.getServletPath ().replace ("/annotations/import-dataset", "");
+      }
+    };
+    
+    this.refineServlet.service (wrappedRequest, response);
+  }
+  
   @RequestMapping(method={GET, POST, PUT, DELETE}, value = {"/"
           + DATASET_URL_ELEMENT + "/annotation/"
           + DIMENSION_URL_ELEMENT + "/{selectionName}/**"

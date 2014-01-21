@@ -66,7 +66,8 @@ function registerCommands() {
   RS.registerCommand(module, "export-project", new Packages.com.google.refine.commands.project.ExportProjectCommand());
   RS.registerCommand(module, "export-rows", new Packages.com.google.refine.commands.project.ExportRowsCommand());
   RS.registerCommand(module, "export-set", new Packages.com.google.refine.commands.project.ExportSetCommand());
-  RS.registerCommand(module, "import-server-project", new Packages.com.google.refine.commands.project.ImportServerProjectCommand());
+  RS.registerCommand(module, "view-preset-annotations", new Packages.com.google.refine.commands.project.ViewPresetAnnotationsCommand());
+  RS.registerCommand(module, "import-preset-dataset", new Packages.com.google.refine.commands.project.ImportPresetDatasetCommand());
   
   
   RS.registerCommand(module, "get-project-metadata", new Packages.com.google.refine.commands.project.GetProjectMetadataCommand());
@@ -413,6 +414,7 @@ function init() {
       "scripts/util/custom-suggest.js",
       "scripts/util/encoding.js",
       "scripts/util/sign.js",
+      "scripts/util/purl.js",       //ap:add url parsing script
 
       "scripts/widgets/histogram-widget.js",
       "scripts/widgets/slider-widget.js",
@@ -452,6 +454,8 @@ function init() {
       "scripts/dialogs/custom-tabular-exporter-dialog.js",
       
       "scripts/dialogs/export-set-dialog.js",
+      "scripts/dialogs/import-preset-dialog.js"
+      
     ]
   );
 

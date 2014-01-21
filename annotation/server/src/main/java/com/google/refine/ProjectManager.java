@@ -53,6 +53,9 @@ import com.google.refine.model.Project;
 import com.google.refine.preference.PreferenceStore;
 import com.google.refine.preference.TopList;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
+
 /**
  * ProjectManager is responsible for loading and saving the workspace and
  * projects.
@@ -74,6 +77,23 @@ public abstract class ProjectManager {
 
   final static Logger logger = LoggerFactory.getLogger ("ProjectManager");
 
+  private Workspace _workspace;
+  public void setWorkspace (Workspace workspace) {
+    _workspace = workspace;
+  }
+  public Workspace getWorkspace () {
+    return _workspace;
+  }
+
+  private DatasetBuilder _datasetBuilder;
+  public void setDatasetBuilder (DatasetBuilder datasetBuilder) {
+    _datasetBuilder = datasetBuilder;
+  }
+  public DatasetBuilder getDatasetBuilder () {
+    return _datasetBuilder;
+  }
+
+  
   /**
    * What caches the joins between projects.
    */

@@ -52,7 +52,7 @@ require ([ 'jquery', 'angular', 'app',  'orefine/OrefineBridge', 'bootstrap-css'
         
       });
       
-      window.ORefineBridge = orb;
+      window.OpenRefineBridge = orb;
     });
 
 

@@ -70,6 +70,8 @@ import com.google.refine.model.Project;
 import com.google.refine.preference.TopList;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 
 public class FileProjectManager extends ProjectManager {
   final static public String REQUEST_ATTEIBUTE_DATASET = "dataset";
@@ -112,7 +114,7 @@ public class FileProjectManager extends ProjectManager {
     return _workspaceDir;
   }
 
-  
+    
   @Autowired(required=false) private Dataset requestHeatmap;
   public Dataset getRequestHeatmap () {
     return requestHeatmap;

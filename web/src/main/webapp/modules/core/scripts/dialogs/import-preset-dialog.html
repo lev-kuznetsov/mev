@@ -1,0 +1,50 @@
+<div class="dialog-frame" style="width: 300px;">
+	<div class="dialog-header" bind="dialogHeader">Import Dataset</div>
+	<div class="dialog-body" bind="dialogBody">
+		<div class="grid-layout layout-normal layout-full">
+
+			<table>
+				<tr>
+					<td><span bind="errorMessage" style="color: red;"></span></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top">
+
+						<table width="100%">
+							<tr>
+								<td><span>*Dataset Name:</span>
+									<div class="input-container">
+										<input bind="setName" type="text" value="" name="set-name"
+											style="width: 100%;" class="param" datatype="string" />
+									</div></td>
+							</tr>
+							<tr>
+								<td><span>Description:</span>
+									<div class="input-container">
+										<textarea bind="setDescription" class="code"
+											style="height: 5em; width: 100%"></textarea>
+									</div></td>
+							</tr>
+						</table>
+
+
+					</td>
+				</tr>
+			</table>
+
+		</div>
+	</div>
+	<div class="dialog-footer" bind="dialogFooter">
+		<div class="grid-layout layout-normal layout-full">
+			<table>
+				<tr>
+					<td style="text-align: right;">
+						<button class="button btn btn-success" id="exportSetAndExitButton" bind="exportSetAndExitButton"></button>
+						<button class="button" bind="exportSetButton"></button>
+						<button class="button" bind="cancelSetButton"></button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
