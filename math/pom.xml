@@ -6,7 +6,7 @@
   <artifactId>mev-math</artifactId>
   <packaging>jar</packaging>
 
-  <name>MeV Math</name>
+  <name>MeV Math Utilities</name>
   <url>http://github.com/dfci-cccb/mev</url>
 
   <parent>

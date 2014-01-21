@@ -42,7 +42,7 @@ public class DimensionPathVariableMethodArgumentResolver extends AbstractTypedPa
   public static final String DIMENSION_MAPPING_NAME = "dimension";
   public static final String DIMENSION_URL_ELEMENT = "{" + DIMENSION_MAPPING_NAME + "}";
 
-  private @Getter @Setter (onMethod = @_ (@Inject)) DatasetPathVariableMethodArgumentResolver datasetResolver;
+  private @Getter @Setter @Inject DatasetPathVariableMethodArgumentResolver datasetResolver;
 
   /**
    * 

@@ -26,6 +26,4 @@ public interface LimmaBuilder extends AnalysisBuilder<LimmaBuilder, Limma> {
   LimmaBuilder control (Selection selection);
 
   LimmaBuilder experiment (Selection selection);
-
-  LimmaBuilder alpha (double alpha);
 }
