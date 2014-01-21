@@ -22,7 +22,7 @@ import java.util.Calendar;
  */
 public interface Analysis {
 
-  final String VALID_ANALYSIS_NAME_REGEX = "[a-zA-Z0-9_\\-\\+\\*]+";
+  final String VALID_ANALYSIS_NAME_REGEX = "[a-zA-Z0-9_\\-\\+\\ \\.]+";
 
   String name ();
 

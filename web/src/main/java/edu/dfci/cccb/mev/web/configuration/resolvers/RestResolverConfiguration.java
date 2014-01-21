@@ -22,6 +22,7 @@ import java.util.List;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +31,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
 
+import edu.dfci.cccb.mev.configuration.rest.contract.JacksonConfigurer;
 import edu.dfci.cccb.mev.web.rest.assembly.json.CalendarJsonSerializer;
 import edu.dfci.cccb.mev.web.support.JsonViewResolver;
 
@@ -53,12 +55,20 @@ public class RestResolverConfiguration {
   }
 
   @Bean
-  public ObjectMapper jsonObjectMapper (ApplicationContext context) {
+  public ObjectMapper jsonObjectMapper (AutowireCapableBeanFactory beanFactory, ApplicationContext context) {
     List<JsonSerializer<?>> serializers = new ArrayList<> ();
+    ObjectMapper mapper = new ObjectMapper ();
     for (JsonSerializer<?> serializer : context.getBeansOfType (JsonSerializer.class).values ())
       serializers.add (serializer);
+    for (JacksonConfigurer configurer : context.getBeansOfType (JacksonConfigurer.class).values ()) {
+      configurer.configureObjectMapper (mapper);
+      List<JsonSerializer<?>> configurerSerializers = new ArrayList<> ();
+      configurer.addJsonSerializers (configurerSerializers);
+      for (JsonSerializer<?> serializer : configurerSerializers)
+        beanFactory.autowireBean (serializer);
+      serializers.addAll (configurerSerializers);
+    }
     log.info ("Registering custom JSON serializers: " + serializers);
-    ObjectMapper mapper = new ObjectMapper ();
     mapper.setSerializerFactory (instance.withAdditionalSerializers (new SimpleSerializers (serializers)));
     return mapper;
   }

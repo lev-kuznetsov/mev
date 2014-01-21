@@ -21,12 +21,11 @@ import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author levk
@@ -36,7 +35,7 @@ public class JsonViewResolver implements ViewResolver, Ordered {
 
   private @Getter @Setter int order = LOWEST_PRECEDENCE;
 
-  private @Inject ObjectMapper mapper;
+  private @Inject AutowireCapableBeanFactory beanFactory;
 
   /* (non-Javadoc)
    * @see
@@ -45,7 +44,7 @@ public class JsonViewResolver implements ViewResolver, Ordered {
   @Override
   public View resolveViewName (String viewName, Locale locale) throws Exception {
     MappingJackson2JsonView view = new MappingJackson2JsonView ();
-    view.setObjectMapper (mapper);
+    beanFactory.autowireBean (view);
     return view;
   }
 }

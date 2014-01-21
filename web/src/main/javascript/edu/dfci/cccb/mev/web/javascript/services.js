@@ -232,8 +232,7 @@ define (
                                     + q.name + "(dimension="
                                     + q.dimension + ",experiment="
                                     + q.experiment + ",control="
-                                    + q.control + ",alpha="
-                                    + q.alpha + ")"
+                                    + q.control + ")"
                                     
                             };
                             
