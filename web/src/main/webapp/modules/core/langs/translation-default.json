@@ -544,6 +544,7 @@
 		"last": "last",
 		"all": "All",
 		"facet-star": "Facet by star",
+		"filter-star": "Filter by star",
 		"starred-rows": "Starred Rows",
 		"facet-flag": "Facet by flag",
 		"flagged-rows": "Flagged Rows",
