@@ -13,9 +13,9 @@
 	<div class="span10 offset1">
 		<p class="lead">Previous Analysis</p>
 		<hr>
-		<ul>
+		<ul id="sidebarPreviousAnalysisList">
 			<li>Clusters </li>
-			<ul>
+			<ul id="clustersPreviousAnalysisList">
 				<li ng-repeat="analysis in previousHCLClusters">
 				
 					<a href="#clusters-tab" data-toggle="tab">{{analysis.name}}</a>
@@ -23,7 +23,7 @@
 				</li>
 			</ul>
 			<li>LIMMA </li>
-			<ul>
+			<ul id="limmaPreviousAnalysisList">
 				<li ng-repeat="analysis in previousLimmaAnalysis">
 					<a href="#limma-tab" data-toggle="tab">{{analysis.name}} </a>
 				</li>
