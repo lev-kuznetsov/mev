@@ -104,8 +104,6 @@ public class AnnotationController extends WebApplicationObjectSupport {
     try {
       workspace.get ("shmock");
     } catch (DatasetNotFoundException e) {
-      // Dataset mockHeatmap = new DatasetMock ("shmock", "aaa,bbb,ccc",
-      // "e,f,g");
       Dimension columns =
                           new SimpleDimension (COLUMN,
                                                new ArrayList<String> (Arrays.asList ("e", "f", "g")),
@@ -144,43 +142,32 @@ public class AnnotationController extends WebApplicationObjectSupport {
 
   }
 
-  /*
-  @RequestMapping (method = { GET, POST, PUT, DELETE }, value = { "/"
-                                                                  + DATASET_URL_ELEMENT + "/annotation/"
-                                                                  + DIMENSION_URL_ELEMENT + "/**" })
-  @ResponseBody
-  public void handleAnnotation (@PathVariable (DATASET_MAPPING_NAME) final String heatmapId,
-                                @PathVariable (DIMENSION_MAPPING_NAME) final String dimension,
-                                HttpServletRequest request, HttpServletResponse response) throws ServletException,
-                                                                                         IOException,
-                                                                                         DatasetNotFoundException {
-    log.debug (String.format ("Handling annotation request: %s", request.getServletPath ()));
-
+  @RequestMapping(method={GET, POST, PUT, DELETE}, value="/openrefine/**")
+  public void openRefine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    
     HttpServletRequest wrappedRequest = new HttpServletRequestWrapper (request) {
       @Override
       public String getPathInfo () {
-        return super.getServletPath ().replace ("/annotations/" + heatmapId + "/annotation/" + dimension, "");
+        return super.getServletPath ().replace ("/annotations/openrefine", "");
       }
     };
-
-    Dataset heatmap = workspace.get (heatmapId);
-    long projectId = projectManager.getProjectID (heatmap.name ());
-    if (projectId != -1) {
-      if (wrappedRequest.getPathInfo ().trim ().equals ("/")) {
-        if (wrappedRequest.getParameter ("reset") != null) {
-          projectManager.deleteProject (projectId);
-        } else {
-          response.sendRedirect ("project?project=" + projectId);
-          return;
-        }
-      }
-    }
-
-    wrappedRequest.setAttribute ("dataset", heatmap);
-    wrappedRequest.setAttribute ("dimension", dimension);
+    
     this.refineServlet.service (wrappedRequest, response);
   }
-*/
+  
+  @RequestMapping(method={GET, POST, PUT, DELETE}, value="/import-dataset/**")
+  public void importDataset(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    
+    HttpServletRequest wrappedRequest = new HttpServletRequestWrapper (request) {
+      @Override
+      public String getPathInfo () {
+        return super.getServletPath ().replace ("/annotations/import-dataset", "");
+      }
+    };
+    
+    this.refineServlet.service (wrappedRequest, response);
+  }
+  
   @RequestMapping(method={GET, POST, PUT, DELETE}, value = {"/"
           + DATASET_URL_ELEMENT + "/annotation/"
           + DIMENSION_URL_ELEMENT + "/{selectionName}/**"
@@ -203,7 +190,7 @@ public class AnnotationController extends WebApplicationObjectSupport {
     };
 
     Dataset heatmap = workspace.get (heatmapId);
-    long projectId = projectManager.getProjectID (heatmap.name ());
+    long projectId = projectManager.getProjectID (heatmap.name ()+dimension);
     if (projectId != -1) {
       if (wrappedRequest.getPathInfo ().trim ().equals ("/")) {
         if (wrappedRequest.getParameter ("reset") != null) {

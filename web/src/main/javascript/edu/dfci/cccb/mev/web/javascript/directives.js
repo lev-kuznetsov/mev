@@ -1,6 +1,7 @@
 define (
-    [ 'angular', 'jquery', 'd3', 'dropzone', 'newick', 'services' ],
-    function (angular, jq, d3, Dropzone, newick) {
+    [ 'angular', 'jquery', 'd3', 'dropzone', 'services' ],
+    function (angular, jq, d3, Dropzone) {
+
 
       return angular
           .module ('myApp.directives', [])
@@ -24,6 +25,12 @@ define (
                   }
                 };
               } ])
+          .directive ('heatmapNavigation',[ function () {
+                return {
+                  restrict : 'A',
+                  templateUrl : '/container/view/elements/heatmapNavigation'
+                };
+              } ])
           .directive (
               'heatmapPanels',[ '$routeParams', 'API', 'alertService', '$location',
               function ($routeParams, API, alertService, $location) {
@@ -39,7 +46,7 @@ define (
                     scope.heatmapTopTreeName = undefined;
                     
                     document.title = "MeV: " + $routeParams.datasetName;
-                    
+
                     API.dataset.get ($routeParams.datasetName).then (
                         function(data){ 
                           scope.heatmapData = data;
@@ -48,153 +55,122 @@ define (
                         	$location.path('/');
                         });
                     
-                   scope.updateHeatmapData = function(prevAnalysis, textForm){
-                      
-                      API.analysis.hcl.update({
-                        dataset:$routeParams.datasetName,
-                        name:prevAnalysis
-                        }).then(function(){
-                          
-                          API.dataset.get ($routeParams.datasetName).then (
-                              function(data){
-                              
-                                if (data.column.root) {
-                                  
-                                  //apply column cluster to dendogram
-                                  
-                                  scope.heatmapTopTree = data.column.root;
-                                  
-                                };
-                                
-                                if (data.row.root) {
-                                  
-                                  
-                                  scope.heatmapLeftTree = data.row.root;
-
-                                };
-                                
-                                //Apply new ordering and dataset to held heatmap
-                                scope.heatmapData = data;
-                              
-                              }, function () {
-                                // Redirect to home if errored out
-                                $location.path ('/');
-                              });
-                          
-                        }, function(){
-                          
-                          var message = "Could not update heatmap. If "
-                            + "problem persists, please contact us."
-                            
-                            var header = "Heatmap Clustering Update Problem (Error Code: " + s + ")"
-                            alertService.error(message, header);
-                          
-                        })
-                      
-                    };
                     
-                    console.log("window height: " + jq(window).height())
+                    var rightPanel = jq('#rightPanel'),
+                    leftPanel = jq('#leftPanel'),
+                    centerTab = jq('div#tab'),
+                    pageWidth = jq('body').width() - 50,
+                    showSidePanel = true;
                     
-                    var windowHeight = jq(window).height() * .7;
+                    rightPanel.css('height', "90%");
+                    leftPanel.css('height', "90%");
                     
-                    jq ('#leftPanel div.well').css ('height', windowHeight);
-                    jq ('#rightPanel div.well').css ('height',  windowHeight);
-                    jq('div.fixed-height-analysis').css('height', windowHeight)
+                    var isDragging = false;
+                    
+                    centerTab.mousedown(function(mouse){
+                    	isDragging = true;
+                    	mouse.preventDefault();
+                    });
+                    
+                    jq(document).mouseup(function(){
+                    	isDragging = false;
+                    }).mousemove(function(mouse){
+                    	if(isDragging && mouse.pageX < pageWidth*(1/4) && mouse.pageX > 0 ){
+                    		showSidePanel = true;
+                    		leftPanel.css("width", mouse.pageX);
+                    		rightPanel.css("width", pageWidth - mouse.pageX);
+                    		leftPanel.children().show();
+                    	}
+                    	
+                    	if(isDragging && mouse.pageX < pageWidth*(1/10) && mouse.pageX > 0 ){
+                    		leftPanel.children().hide();
+                    		
+                    	}
+                    	
+                    });
+                    
+                    jq('div#tab').click(function(){
+                    	
+                    		leftPanel.css("width", 0);
+                        	leftPanel.children().hide();
+                        	rightPanel.css("width", pageWidth - 30);
+                    	
+                    })
+                    
+                    
 
-                    jq ('#closeRight').hide ();
-                    jq ('#closeLeft').hide ();
-
-                    var margin = "2.127659574468085%"
-                    scope.showLimmaTables = false;
-
-                    scope.expandLeft = function () {
-
-                      jq ('#leftPanel').attr ("class", "span12 marker");
-                      jq ('#rightPanel').hide ();
-                      jq ('#expandLeft').hide ();
-                      jq ('#closeLeft').show ();
-                      jq ('#leftPanel').show ();
-
-                      jq ('vis-heatmap svg').attr ("width",
-                          jq ('#leftPanel').css ('width').slice (0, -2) * .9);
-
-                    };
-
-                    scope.expandRight = function () {
-
-                      jq ('#leftPanel').hide ();
-                      jq ('#expandRight').hide ();
-                      jq ('#closeRight').show ();
-                      jq ('#rightPanel').show ();
-                      jq ('#rightPanel').attr ("class", "span12 marker");
-                      jq ('#rightPanel').css ({
-                        "margin-left" : "0"
-                      });
-                      scope.showLimmaTables = true;
-
-                    };
-
-                    scope.expandBoth = function () {
-
-                      jq ('#closeRight').hide ();
-                      jq ('#closeLeft').hide ();
-                      jq ('#expandRight').show ();
-                      jq ('#expandLeft').show ();
-                      jq ('#rightPanel').show ();
-                      jq ('#leftPanel').show ();
-                      jq ('#leftPanel').attr ("class", "span3 marker");
-                      jq ('#rightPanel').attr ("class", "span9 marker");
-                      jq ('#rightPanel').css ({
-                        "margin-left" : margin
-                      });
-                      jq ('vis-heatmap svg').attr ("width",
-                          jq ('#rightPanel').css ('width').slice (0, -2) * .9);
-                      scope.showLimmaTables = false;
-                    };
+                    scope.showLimmaTables = true;
+                    
+                    
 
                   }
                 };
               }])
-            .directive ('menubar', [ 'analysisOptions', function (opts) {
+            .directive ('sideNavigationBar', [ function () {
             return {
               restrict : 'E',
-              templateUrl : '/container/view/elements/menubar',
-              link : function (scope) {
-                scope.links = opts;
-              }
+              templateUrl : '/container/view/elements/sideNavigationBar',
+              link: function(scope) {
+            	  
+            	  
+            	  	scope.clusterAnalysisClickOpen = function(id) {
+            	  		
+            	  		jq('#clustersPane').trigger("click");
+            	  		
+            	  		jq(id.href).collapse("show");
+            	  		
+            	  		jq('div.fixed-height').animate({
+            	  			scrollTop: jq(id.dataParent).offset().top
+            	  		}, 200);
+            	  	}
+            	  	
+            	  	scope.limmaAnalysisClickOpen = function(id) {
+            	  		
+            	  		jq('#limmaPane').trigger("click");
+            	  		
+            	  		jq(id.href).collapse("show");
+            	  		
+            	  		jq('div.fixed-height').animate({
+            	  			scrollTop: jq(id.dataParent).offset().top
+            	  		}, 200);
+            	  	}
+            }
             };
           } ])
-          .directive ('expressionPanel', [ function () {
+          .directive ('limmaAccordionList', [ function () {
             return {
-              restrict : 'A',
+              restrict : 'E',
+              templateUrl : '/container/view/elements/limmaAccordion'
+              
+            };
+          } ])
+          .directive ('clusterAccordionList', [ function () {
+            return {
+              restrict : 'E',
+              templateUrl : '/container/view/elements/clusterAccordion'
+              
+            };
+          } ])
+          .directive ('analysisMenuBar', [ function () {
+            return {
+              restrict : 'E',
+              templateUrl : '/container/view/elements/analysisMenuBar'
+              
+            };
+          } ])
+          .directive ('expressionPanel', ['$routeParams', function ($routeParams) {
+            return {
+              restrict : 'AC',
               templateUrl : '/container/view/elements/expressionPanel',
               link : function (scope) {
+                
+                scope.buildPreviousAnalysisList ();
+                
+                scope.datasetName = $routeParams.datasetName;
 
               }
             };
           } ])
-          .directive (
-              'analysisPanel',
-              [
-                  'pseudoRandomStringGenerator',
-                  'API',
-                  '$routeParams',
-                  function (prsg, API, $rP) {
-                    return {
-                      restrict : 'A',
-                      templateUrl : '/container/view/elements/analysisPanel',
-                      link : function (scope) {
-
-                        
-
-                        scope.buildPreviousAnalysisList ();
-                        
-                        scope.datasetName = $rP.datasetName;
-                        	
-
-                      }
-                    };
-                  } ])
           .directive ('bsprevanalysis', function () {
 
             return {
@@ -482,7 +458,7 @@ define (
                     	var padding = 20;
                     	var dendogram = {
                           height: 200 + padding,
-                          width: jq("#leftPanel").css("width").split("px")[0] * .75 // Nicely define width
+                          width: jq("#rightPanel").css("width").split("px")[0] * .75 // Nicely define width
                         };
                     	
                     	var svg = d3.select(elems[0]).append("svg")
@@ -587,7 +563,7 @@ define (
 
                         var heatmapMarginLeft = Math.floor (svgWidth * .15), 
                             heatmapMarginRight = Math.floor (svgWidth * .15), 
-                            heatmapMarginTop = Math.floor (svgHeight * .15), 
+                            heatmapMarginTop = Math.floor (svgHeight * .25), 
                             heatmapMarginBottom = Math.floor (svgHeight * .15),
                             heatmapColumnSelectionsGutter = 0,
                             heatmapRowSelectionsGutter = 0;
@@ -596,7 +572,7 @@ define (
                             - heatmapMarginRight;
 
                         var heatmapCellsHeight = undefined;
-                        var heatmapCellHeight = 40;
+                        var heatmapCellHeight = undefined;
 
                         var window = d3.select (elems[0]);
 
@@ -688,7 +664,6 @@ define (
                           columnSelections.data(columnCells).enter().append("rect")
                           .attr({"class" : "columnSelection",
                               "height" : function (d) {
-                            	  
 
                                 return colSelectionsY.rangeBand();
                               },
@@ -734,14 +709,12 @@ define (
                           xAxis.attr (
                               "transform",
                               "translate(0,"
-                                  + (heatmapMarginTop + heatmapCellsHeight + heatmapColumnSelectionsGutter)
+                                  + (heatmapMarginTop)
                                   + ")").call (xAxisd3).selectAll ("text")
-                              .style ("text-anchor", "end").attr ("dy",
+                              .style ("text-anchor", "start").attr ("dy",
                                   function (d, i) {
-                                    return 0;
-                                    // return ((XIndex2Pixel(1) -
-                                    // XIndex2Pixel(0) ) / 2) + "px"
-                                  }).attr ("dx", "-20px").attr ("transform",
+                                    return ( 2.8* (XIndex2Pixel(1) - XIndex2Pixel(0) ))/2  + "px"
+                                  }).attr ("dx", "10px").attr ("transform",
                                   function (d) {
                                     return "rotate(-90)"
                                   });
@@ -816,7 +789,7 @@ define (
 
                         function scaleUpdates (cols, rows, min, max, avg) {
                         	
-                          heatmapCellHeight = 80;
+                          heatmapCellHeight = 30;
                           
                           heatmapCellsHeight = heatmapCellHeight*rows.keys.length;
                           dendogramLeft.height = heatmapCellsHeight;
@@ -886,7 +859,7 @@ define (
                               [ heatmapMarginTop,
                                 heatmapMarginTop + heatmapCellsHeight ]);
 
-                          xAxisd3.scale (XIndex2Pixel).orient ("bottom").ticks (
+                          xAxisd3.scale (XIndex2Pixel).orient ("top").ticks (
                               cols.keys.length).tickFormat (function (d) {
                             if (d % 1 == 0 && d >= 0 && d < cols.keys.length) {
                               return XIndex2Label (d);
@@ -905,8 +878,8 @@ define (
 
                         function drawHeatmap (data) {
                           
-                          heatmapcells = rects.data (data.values).enter ().append (
-                          "rect");
+
+                          heatmapcells = rects.data (data.values).enter ().append ("rect");
 						  scope.theData=data;
                           scaleUpdates (data.column, data.row,
                               data.min, data.max, data.avg);
@@ -973,7 +946,7 @@ define (
                         };
                         
                         var dendogramTop = {
-                            height: heatmapMarginTop,
+                            height: (2*heatmapMarginTop) / 3,
                             width: heatmapCellsWidth
                         };
                         
@@ -1029,13 +1002,13 @@ define (
                               .attr("fill", "none"); 
 
                           canvas.selectAll("circle").data(nodes).enter().append("circle")
-                             .attr("r", 2.5)
+                             .attr("r", 0)
                              .attr("cx", function(d){
      
                               return (type == 'vertical') ? (d.y * dendogramLeft.width) : (d.x * dendogramTop.width) + dendogramLeft.width;
                              })
                              .attr("cy", function(d){
-                              return (type == 'vertical') ? (d.x * dendogramLeft.height) + dendogramTop.height : (d.y * dendogramTop.height);
+                              return (type == 'vertical') ? (d.x * dendogramLeft.height) + heatmapMarginTop : (d.y * dendogramTop.height);
                              })
                              .attr("fill", function(d){
                                return (type == 'horizontal') ? "blue" : "red"
@@ -1073,8 +1046,8 @@ define (
                         	
                           //Path function builder for LEFT heatmap tree path attribute
 
-                          return "M" + (d.source.y * dendogramLeft.width )  + "," + ((d.source.x * dendogramLeft.height)+dendogramTop.height ) +
-                          "V" + ((d.target.x * dendogramLeft.height)+dendogramTop.height ) +
+                          return "M" + (d.source.y * dendogramLeft.width )  + "," + ((d.source.x * dendogramLeft.height)+heatmapMarginTop ) +
+                          "V" + ((d.target.x * dendogramLeft.height)+heatmapMarginTop ) +
                           "H" + (d.target.y * dendogramLeft.width )
 
                         };

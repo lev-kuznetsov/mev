@@ -557,6 +557,34 @@ DataTableView.prototype._createMenuForAllColumns = function(elmt) {
   var self = this;
   var menu = [
     {
+        label: "Filter By Star",
+        id: "core/facet-by-star",
+        width: "200px",
+        click: function() {
+            var listFacet = ui.browsingEngine.addFacet(
+              "list", 
+              {
+                "name" : $.i18n._('core-views')["starred-rows"],
+                "columnName" : "", 
+                "expression" : "row.starred"
+              },
+              {
+                "scroll" : false
+              }
+            );            
+            var starredCount = $('.data-table-star-on').length;
+            listFacet._select(
+            {
+            	c: starredCount,
+            	s: true,
+            	v: {
+            		l: "true",
+            		v: true
+                }
+            }, true);
+          }
+    },
+    {
       label: $.i18n._('core-views')["facet"],
       id: "core/facets",
       width: "200px",

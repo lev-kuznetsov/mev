@@ -1,6 +1,10 @@
 function ExportSetDialog() { 	
-    this._createDialog();    
+    this._createDialog();
+    
 }
+
+ExportSetDialog.prototype._lastItem=null;
+
 
 ExportSetDialog.prototype._createDialog = function() {
     var self = this;
@@ -9,6 +13,7 @@ ExportSetDialog.prototype._createDialog = function() {
     this._name="";
     this._description="";
     this._color="";
+    this._dimension="";
     if(theProject.metadata.customMetadata){
     	if(theProject.metadata.customMetadata.selectionName)
     		this._name=theProject.metadata.customMetadata.selectionName;
@@ -18,6 +23,9 @@ ExportSetDialog.prototype._createDialog = function() {
     		this._color=theProject.metadata.customMetadata.selectionColor;
     	else
     		this._color='#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
+    	if(theProject.metadata.customMetadata.dimension)
+    		this._dimension=theProject.metadata.customMetadata.dimension;
+    	
     }
     this._elmts.setName[0].value=this._name;
     this._elmts.setDescription[0].value=this._description;
@@ -75,27 +83,44 @@ ExportSetDialog.prototype._validate = function()
 };
 
 ExportSetDialog.prototype._exportAjax = function(){
-	$.ajax({
-	    type: "POST",
-	    url: "command/core/export-set",
-	    data: { 
-	    	"project" : theProject.id, 
-	    	"name" : name,
-	    	"selectionName" : this._name,
-	    	"selectionDescription" : this._description,
-	    	"selectionColor" : this._color,
-	    	"selectionFacetLink" : Refine.getPermanentLink(),
-	    	"engine" : JSON.stringify(ui.browsingEngine.getJSON())
-	    	},
-	    dataType: "json",
-	    success: function (data) {
-	      if (data && typeof data.code != 'undefined' && data.code == "ok") {
-	        alert("Set saved succesfully");
-	      } else {
-	        alert($.i18n._('core-index')["error-rename"]+" " + data.message);
-	      }
-	    }
-	  });
+	var postRequest = {
+		    type: "POST",
+		    url: "command/core/export-set",
+		    data: { 
+		    	"project" : theProject.id, 
+		    	"name" : name,
+		    	"selectionName" : this._name,
+		    	"selectionDescription" : this._description,
+		    	"selectionColor" : this._color,
+		    	"selectionFacetLink" : Refine.getPermanentLink(),
+		    	"engine" : JSON.stringify(ui.browsingEngine.getJSON())
+		    	},
+		    dataType: "json",
+		    success: function (data) {
+		      if (data && typeof data.code != 'undefined' && data.code == "ok") {
+		        //alert("Set saved succesfully");		        
+		        parent.OpenRefineBridge.addSelectionSet(Refine._lastItem);
+		        var currentUrl = window.location.href;
+		        console.log("currentUrl:"+currentUrl);
+		        var newUrl = currentUrl.replace("/new/", "/"+Refine._lastItem.name+"/");
+		        console.log("newUrl:"+newUrl);
+		        window.location.replace(newUrl);
+		      } else {
+		        alert($.i18n._('core-index')["error-rename"]+" " + data.message);
+		      }
+		    }
+		  };
+		 
+		Refine._lastItem={
+			name: this._name,
+			dimension: this._dimension,
+			properties: {
+				selectionDescription: this._description,
+				selectionColor: this._color,
+				selectionFacetLink: Refine.getPermanentLink(),
+			}
+		};		
+		$.ajax(postRequest);
 };
 
 ExportSetDialog.prototype._export = function() {  

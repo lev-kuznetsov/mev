@@ -106,14 +106,14 @@ UrlImportingSourceUI.prototype.focus = function() {
 function ClipboardImportingSourceUI(controller) {
   this._controller = controller;
 }
-/*
+
 //ap:disable clipboard for MeV
 Refine.DefaultImportingController.sources.push({
   "label": $.i18n._('core-index-import')["clipboard"],
   "id": "clipboard",
   "uiClass": ClipboardImportingSourceUI
 });
-*/
+
 ClipboardImportingSourceUI.prototype.attachUI = function(bodyDiv) {
   var self = this;
 

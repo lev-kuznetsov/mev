@@ -117,6 +117,20 @@ function resizeAll() {
   ui.dataTableView.resize();
 }
 
+ 
+
+function toProperCase(str)
+{
+    var noCaps = ['of','a','the','and','an','am','or','nor','but','is','if','then', 
+'else','when','at','from','by','on','off','for','in','out','to','into','with'];
+    return str.replace(/\w\S*/g, function(txt, offset){
+        if(offset != 0 && noCaps.indexOf(txt.toLowerCase()) != -1){
+            return txt.toLowerCase();    
+        }
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
 function initializeUI(uiState) {
   $("#loading-message").hide();
   $("#notification-container").hide();
@@ -132,19 +146,34 @@ function initializeUI(uiState) {
   $("#or-proj-starting").text($.i18n._('core-project')["starting"]+"...");
   $("#or-proj-facFil").text($.i18n._('core-project')["facet-filter"]);
   $("#or-proj-undoRedo").text($.i18n._('core-project')["undo-redo"]);
-  $("#or-proj-ext").text($.i18n._('core-project')["extensions"]+":");
-
-  
+  $("#or-proj-ext").text($.i18n._('core-project')["extensions"]+":");  
+   
+  var title = theProject.metadata.name;
+  if($.url().param('import-preset')){
+	  $("#or-proj-reset-link").hide();
+	  $("#or-proj-reset").hide();
+	  $("#export-set").hide();
+	  $("#export-set-button").hide();
+	  $("#or-proj-import-preset-link").show();
+	  $("#or-proj-import-preset").show();
+  }else{
+	  $("#or-proj-import-preset-link").hide();
+	  $("#or-proj-import-preset").hide();
+	  if(theProject.metadata.customMetadata.dimension)
+		  title = toProperCase(theProject.metadata.customMetadata.dimension);
+	  if(theProject.metadata.customMetadata.selectionName!="")
+		  title = " (" + theProject.metadata.customMetadata.selectionName + ")";
+  }
+  Refine.setTitle(false, title+" Annotations");
+  $("#or-proj-import-preset").click(Refine._importPreset);
+  $("#or-proj-reset").click(Refine._reset);
+  $("#export-set-button").click(Refine._exportSet);
+  $("#close-button").click(Refine._close);  
   //ap:disable project renaming for MeV
-  //$('#project-name-button').click(Refine._renameProject);
+  //$('#project-name-button').click(Refine._renameProject);  
   $('#project-permalink-button').mouseenter(function() {
     this.href = Refine.getPermanentLink();
   });
-    
-  $("#or-proj-reset").click(Refine._reset);
-  $("#export-set-button").click(Refine._exportSet);
-  $("#close-button").click(Refine._close);
-  Refine.setTitle();
 
   ui = DOM.bind($("#body"));
 
@@ -176,14 +205,13 @@ function initializeUI(uiState) {
   }
 }
 
-Refine.setTitle = function(status) {
-  var title = theProject.metadata.name + " annotations - MEV: Multi-Experiment Viewer";
+Refine.setTitle = function(status, title) {
   if (status) {
     title = status + " - " + title;
   }
-  document.title = title;
-
+  document.title = title+" - MEV: Multi-Experiment Viewer";
   $("#project-name-button").text(theProject.metadata.name);
+  $('#annotation-name-button').text(title);
 };
 
 Refine.reinitializeProjectData = function(f, fError) {
@@ -245,6 +273,10 @@ Refine._renameProject = function() {
 Refine._exportSet = function() {
   new ExportSetDialog();
 };
+
+Refine._importPreset = function(){
+	new ImportPresetDialog();
+}
 
 Refine._close = function(){
 	window.location.replace("/#/dataset/"+theProject.metadata.name);

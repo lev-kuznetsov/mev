@@ -98,6 +98,7 @@ Refine.CreateProjectUI.prototype.addSourceSelectionUI = function(sourceSelection
 
   sourceSelectionUI._divHeader = $('<div>')
   .addClass('create-project-ui-source-selection-tab')
+  .addClass(sourceSelectionUI.id)
   .text(sourceSelectionUI.label)
   .appendTo(headerContainer)
   .click(function() { self.selectImportSource(sourceSelectionUI.id); });

@@ -31,9 +31,6 @@ require
         },
         'bootstrap-css' : {
           deps : [ 'bootstrap' ]
-        },
-        'newick':{
-          exports: 'newick'
         }
 
       },
@@ -41,14 +38,19 @@ require
 
     });
 
-require ([ 'angular', 'app', 'jquery', 'bootstrap-css', 'bootstrap' ],
-    function (angular, app, jquery) {
+
+require ([ 'jquery', 'angular', 'app',  'orefine/OrefineBridge', 'bootstrap-css', 'bootstrap', 'setmanager/SetManager', 'mainpanel/MainPanel'],
+    function (jquery, angular, app, orb) {
 
       'use strict';
       var $html = angular.element (document.getElementsByTagName ('html')[0]);
       angular.element ().ready (function () {
         $html.addClass ('ng-app');
         angular.bootstrap ($html, [ app['name'] ]);
+        
       });
-
+      
+      window.OpenRefineBridge = orb;
     });
+
+

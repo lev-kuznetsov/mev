@@ -41,20 +41,25 @@ public class Views {
   public FreeMarkerView elementView1 (FreeMarkerViewBuilder builder) {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/view1.ftl").build ();
   }
+  
+  @Bean (name = "elements/heatmapNavigation")
+  public FreeMarkerView elementHeatmapNavigation (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/heatmapNavigation.ftl").build ();
+  }
 
-  @Bean (name = "elements/menubar")
-  public FreeMarkerView elementMenubar (FreeMarkerViewBuilder builder) {
-    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/menubar.ftl").build ();
+  @Bean (name = "elements/analysisMenuBar")
+  public FreeMarkerView elementAnalysisMenuBar (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/analysisMenuBar.ftl").build ();
+  }
+  
+  @Bean (name = "elements/sideNavigationBar")
+  public FreeMarkerView elementSideNavigationBar (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/sideNavigationBar.ftl").build ();
   }
 
   @Bean (name = "elements/expressionPanel")
   public FreeMarkerView elementExpressionPanel (FreeMarkerViewBuilder builder) {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/expressionPanel.ftl").build ();
-  }
-
-  @Bean (name = "elements/analysisPanel")
-  public FreeMarkerView elementanalysisPanel (FreeMarkerViewBuilder builder) {
-    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/analysisPanel.ftl").build ();
   }
 
   @Bean (name = "elements/hierarchicalbody")
@@ -77,9 +82,14 @@ public class Views {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/modal.ftl").build ();
   }
 
-  @Bean (name = "elements/prevlimmashell")
-  public FreeMarkerView elementPrevlimmashell (FreeMarkerViewBuilder builder) {
-    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/prevlimmashell.ftl").build ();
+  @Bean (name = "elements/limmaAccordion")
+  public FreeMarkerView elementLimmaAccordion (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/limmaAccordion.ftl").build ();
+  }
+  
+  @Bean (name = "elements/clusterAccordion")
+  public FreeMarkerView elementClusterAccordion (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/clusterAccordion.ftl").build ();
   }
 
   @Bean (name = "elements/table")
@@ -122,6 +132,31 @@ public class Views {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/uploadsTable.ftl").build ();
   }
 
+  //SetManager templates  
+  @Bean (name="elements/setmanager/selectionSetManager")
+  public FreeMarkerView selectionSetManager(FreeMarkerViewBuilder builder){    
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/setmanager/selectionSetManager.ftl").build ();
+  }
+  @Bean (name="elements/setmanager/selectionSetList")
+  public FreeMarkerView selection(FreeMarkerViewBuilder builder){    
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/setmanager/selectionSetList.ftl").build ();
+  }
+  @Bean (name="elements/setmanager/selectionSetEditForm")
+  public FreeMarkerView selectionSetEditForm(FreeMarkerViewBuilder builder){    
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/setmanager/selectionSetEditForm.ftl").build ();
+  }
+  @Bean (name="elements/mainpanel/MainPanel")
+  public FreeMarkerView mainPanel(FreeMarkerViewBuilder builder){    
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/mainpanel/MainPanel.ftl").build ();
+  }
+
+  
+  @Bean (name="elements/fcuk")
+  public FreeMarkerView fcuk(FreeMarkerViewBuilder builder){    
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/fcuk.ftl").build ();
+  }
+  
+  
   // Partials
 
   @Bean (name = "partials/partial1")
@@ -138,4 +173,5 @@ public class Views {
   public FreeMarkerView importitems (FreeMarkerViewBuilder builder) {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/partials/importItems.ftl").build ();
   }
+  
 }
