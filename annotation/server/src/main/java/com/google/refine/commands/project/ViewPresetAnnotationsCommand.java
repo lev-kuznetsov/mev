@@ -31,10 +31,10 @@ public class ViewPresetAnnotationsCommand extends Command {
     ProjectManager.getSingleton().setBusy(true);
     try {
         Properties options = ParsingUtilities.parseUrlParameters(request);
-        if(!options.containsKey ("dataset-name"))
-          throw new NullArgumentException ("dataset-name");
+        if(!options.containsKey ("import-preset"))
+          throw new NullArgumentException ("import-preset");
         
-        String datasetName = options.getProperty ("dataset-name");
+        String datasetName = options.getProperty ("import-preset");
         long projectID = Project.generateID();
         logger.info("Importing existing project using new ID {}", projectID);
         File file = new File("/tmp/textxxx/presets/"+datasetName+"/"+datasetName+".annotations.gz");

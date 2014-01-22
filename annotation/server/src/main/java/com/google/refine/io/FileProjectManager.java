@@ -128,7 +128,9 @@ public class FileProjectManager extends ProjectManager {
   public Map<Long, ProjectMetadata> getAllProjectMetadata () {
     Map<Long, ProjectMetadata> heatmapMetadata = new HashMap<Long, ProjectMetadata> ();
     for (Entry<Long, ProjectMetadata> entry : _projectsMetadata.entrySet ()) {
-      if (entry.getValue ().getName ().startsWith (dataset.name ())) {
+      if (dataset!=null && entry.getValue ().getName ().startsWith (dataset.name ())) {
+        heatmapMetadata.put (entry.getKey (), entry.getValue ());
+      }else{
         heatmapMetadata.put (entry.getKey (), entry.getValue ());
       }
 
