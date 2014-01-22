@@ -2,12 +2,11 @@
 	<div class="tabbable">
 	
 		<ul class="nav nav-tabs">
-		  <li class="active"><a id="heatmapTabLink" href="#heatmap-tab" data-toggle="tab">Visualize</a></li>
-		  <li id="annotationsTab">
-			 <a id="annotationsTabLink" href="#annotationsTabPane" data-toggle="tab">Annotations</a>
-		  </li>
-		  <li><a href="#clusters-tab" data-toggle="tab">Clusters</a></li>
-		  <li><a href="#limma-tab" data-toggle="tab">LIMMA</a></li>
+		  <li><a href="#heatmap-tab" data-toggle="tab">Visualize</a></li>
+		  <li><a href="#annotationsTabPane" data-toggle="tab">Annotations</a></li>
+		  <li><a id="clustersPane" href="#clusters-tab" data-toggle="tab">Clusters</a></li>
+		  
+		  <li><a id="limmaPane" href="#limma-tab" data-toggle="tab">LIMMA</a></li>
 		</ul>
 	
 		<div class="tab-content">
@@ -25,13 +24,13 @@
 		
 			
 			
-			<div class="tab-pane fixed-height" id="clusters-tab">
+			<div id="clusters-tab" class="tab-pane fixed-height">
 			
 				<cluster-Accordion-List></cluster-Accordion-List>
 			<br>
 			</div> <!-- End Cluster Tab -->
 			
-			<div class="tab-pane fixed-height" id="limma-tab">
+			<div id="limma-tab" class="tab-pane fixed-height">
 				
 				<limma-Accordion-List></limma-Accordion-List>
 			<br>

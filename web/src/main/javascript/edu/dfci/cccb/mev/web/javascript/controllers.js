@@ -16,10 +16,12 @@ define ([ 'jquery', 'angular'], function ($, angular) {
             $scope.heatmapTopTree = undefined;
             $scope.heatmapLeftTreeName = undefined;
             $scope.heatmapTopTreeName = undefined;
+            $scope.previousHCLClusters = undefined;
+            $scope.previousLimmaAnalysis = undefined;
+            $scope.previousAnalysisList = undefined;
+
             
     		$scope.buildPreviousAnalysisList = function() {
-    		  
-    		  console.log("called")
     		  
     		  $scope.previousHCLClusters = [];
     		  
@@ -27,9 +29,10 @@ define ([ 'jquery', 'angular'], function ($, angular) {
 
                 API.dataset.analysis.list ($routeParams.datasetName).then (
                     function (prevList) {
+                    	
+                      $scope.previousAnalysisList = prevList;
 
-                      $scope.previousAnalysisList = prevList
-                          .map (function (name) {
+                      prevList.map (function (name) {
 
                             
                             
@@ -43,16 +46,20 @@ define ([ 'jquery', 'angular'], function ($, angular) {
                                 var randstr = prsg (5);
                                 var randstr2 = prsg (5);
                                 
-                                 if (d.type == "Hierarchical Clustering"){ 
-                                     $scope.previousHCLClusters.push({
-                                       name : name,
-                                       href : "#" + randstr,
-                                       parentId: randstr2 ,
-                                       dataParent: '#' + randstr2,
-                                       divId : randstr,
-                                       datar :d 
-                                     });
+                                 if (d.type == "Hierarchical Clustering"){
+                                     
+                                       $scope.previousHCLClusters.push({
+                                         name : name,
+                                         href : "#" + randstr,
+                                         parentId: randstr2 ,
+                                         dataParent: '#' + randstr2,
+                                         divId : randstr,
+                                         datar :d 
+                                       });
+                                     
+                                     
                                  } else if (d.type == "LIMMA Differential Expression Analysis") {
+                                   
                                    $scope.previousLimmaAnalysis.push({
                                      name : name,
                                      href : "#" + randstr,

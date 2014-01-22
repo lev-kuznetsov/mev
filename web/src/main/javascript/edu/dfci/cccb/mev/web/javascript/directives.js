@@ -101,14 +101,29 @@ define (
               restrict : 'E',
               templateUrl : '/container/view/elements/sideNavigationBar',
               link: function(scope) {
-            	  	jq('li.expandable').click(function() {
-            	  		if ($(this).children()) {
-            	  			console.log($(this))
-            	  			$(this).children('ul').toggle();
-                		    return false;
-            	  		}
-            		    
-            		});
+            	  
+            	  
+            	  	scope.clusterAnalysisClickOpen = function(id) {
+            	  		
+            	  		jq('#clustersPane').trigger("click");
+            	  		
+            	  		jq(id.href).collapse("show");
+            	  		
+            	  		jq('div.fixed-height').animate({
+            	  			scrollTop: jq(id.dataParent).offset().top
+            	  		}, 200);
+            	  	}
+            	  	
+            	  	scope.limmaAnalysisClickOpen = function(id) {
+            	  		
+            	  		jq('#limmaPane').trigger("click");
+            	  		
+            	  		jq(id.href).collapse("show");
+            	  		
+            	  		jq('div.fixed-height').animate({
+            	  			scrollTop: jq(id.dataParent).offset().top
+            	  		}, 200);
+            	  	}
             }
             };
           } ])
@@ -538,7 +553,7 @@ define (
 
                         var heatmapMarginLeft = Math.floor (svgWidth * .15), 
                             heatmapMarginRight = Math.floor (svgWidth * .15), 
-                            heatmapMarginTop = Math.floor (svgHeight * .15), 
+                            heatmapMarginTop = Math.floor (svgHeight * .25), 
                             heatmapMarginBottom = Math.floor (svgHeight * .15),
                             heatmapColumnSelectionsGutter = 0,
                             heatmapRowSelectionsGutter = 0;
@@ -639,7 +654,6 @@ define (
                           columnSelections.data(columnCells).enter().append("rect")
                           .attr({"class" : "columnSelection",
                               "height" : function (d) {
-                            	  
 
                                 return colSelectionsY.rangeBand();
                               },
@@ -685,14 +699,12 @@ define (
                           xAxis.attr (
                               "transform",
                               "translate(0,"
-                                  + (heatmapMarginTop + heatmapCellsHeight + heatmapColumnSelectionsGutter)
+                                  + (heatmapMarginTop)
                                   + ")").call (xAxisd3).selectAll ("text")
-                              .style ("text-anchor", "end").attr ("dy",
+                              .style ("text-anchor", "start").attr ("dy",
                                   function (d, i) {
-                                    return 0;
-                                    // return ((XIndex2Pixel(1) -
-                                    // XIndex2Pixel(0) ) / 2) + "px"
-                                  }).attr ("dx", "-20px").attr ("transform",
+                                    return ( 2.8* (XIndex2Pixel(1) - XIndex2Pixel(0) ))/2  + "px"
+                                  }).attr ("dx", "10px").attr ("transform",
                                   function (d) {
                                     return "rotate(-90)"
                                   });
@@ -837,7 +849,7 @@ define (
                               [ heatmapMarginTop,
                                 heatmapMarginTop + heatmapCellsHeight ]);
 
-                          xAxisd3.scale (XIndex2Pixel).orient ("bottom").ticks (
+                          xAxisd3.scale (XIndex2Pixel).orient ("top").ticks (
                               cols.keys.length).tickFormat (function (d) {
                             if (d % 1 == 0 && d >= 0 && d < cols.keys.length) {
                               return XIndex2Label (d);
@@ -924,7 +936,7 @@ define (
                         };
                         
                         var dendogramTop = {
-                            height: heatmapMarginTop,
+                            height: (2*heatmapMarginTop) / 3,
                             width: heatmapCellsWidth
                         };
                         
@@ -980,13 +992,13 @@ define (
                               .attr("fill", "none"); 
 
                           canvas.selectAll("circle").data(nodes).enter().append("circle")
-                             .attr("r", 2.5)
+                             .attr("r", 0)
                              .attr("cx", function(d){
      
                               return (type == 'vertical') ? (d.y * dendogramLeft.width) : (d.x * dendogramTop.width) + dendogramLeft.width;
                              })
                              .attr("cy", function(d){
-                              return (type == 'vertical') ? (d.x * dendogramLeft.height) + dendogramTop.height : (d.y * dendogramTop.height);
+                              return (type == 'vertical') ? (d.x * dendogramLeft.height) + heatmapMarginTop : (d.y * dendogramTop.height);
                              })
                              .attr("fill", function(d){
                                return (type == 'horizontal') ? "blue" : "red"
@@ -1024,8 +1036,8 @@ define (
                         	
                           //Path function builder for LEFT heatmap tree path attribute
 
-                          return "M" + (d.source.y * dendogramLeft.width )  + "," + ((d.source.x * dendogramLeft.height)+dendogramTop.height ) +
-                          "V" + ((d.target.x * dendogramLeft.height)+dendogramTop.height ) +
+                          return "M" + (d.source.y * dendogramLeft.width )  + "," + ((d.source.x * dendogramLeft.height)+heatmapMarginTop ) +
+                          "V" + ((d.target.x * dendogramLeft.height)+heatmapMarginTop ) +
                           "H" + (d.target.y * dendogramLeft.width )
 
                         };
