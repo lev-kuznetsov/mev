@@ -57,7 +57,7 @@ public class DatasetPathVariableMethodArgumentResolver extends AbstractTypedPath
    * org.springframework.web.context.request.NativeWebRequest) */
   @Override
   public Dataset resolveObject (String value, Method method, NativeWebRequest request) throws Exception {
-    return workspace.get (value);
+    return value!=null ? workspace.get (value) : null ;
   }
 
   /* (non-Javadoc)

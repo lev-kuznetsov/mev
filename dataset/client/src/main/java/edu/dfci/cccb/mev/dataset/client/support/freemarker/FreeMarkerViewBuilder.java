@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
 
 import edu.dfci.cccb.mev.dataset.client.support.prototype.AbstractTemplateViewBuilder;
+import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 
 /**
@@ -41,6 +42,7 @@ public class FreeMarkerViewBuilder extends AbstractTemplateViewBuilder<FreeMarke
       view.setEncoding (encoding);
     if (configuration != null)
       view.setConfiguration (configuration);
+    view.addStaticAttribute ("enums", BeansWrapper.getDefaultInstance().getEnumModels());
     return view;
   }
 }

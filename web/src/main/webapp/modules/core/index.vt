@@ -43,7 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <script>Refine.encodings = $encodingJson; Refine.defaultEncoding = $defaultEncoding;</script>
 </head>
 <body>
-  #include("mev/mev-navbar.vt")
+  <!-- include("mev/mev-navbar.vt") -->
   <div id="header">
         <div id="project-title">
         <span id="project-name-button" class="app-path-section"></span>
@@ -53,8 +53,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <div id="left-panel" class="main-layout-panel"><div id="left-panel-body">
     <ul id="action-area-tabs">
     </ul>
+    <!-- ap: -->
     
-    <!--
     <div id="project-links">
       <div id="powered-by-openrefine">Powered By:</div>
       <div id="logo-container">
@@ -66,7 +66,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <li><a href="about.html" id="or-index-about" target="_blank"></a></li>
       </ul>
     </div>
-    -->
+    
   </div></div> <!-- left-panel -->
 
   <div id="right-panel" class="main-layout-panel"><div id="right-panel-body">

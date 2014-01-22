@@ -15,11 +15,19 @@
 package edu.dfci.cccb.mev.web.controllers;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.context.request.RequestAttributes.*;
+
+import javax.faces.bean.ViewScoped;
+
 import lombok.ToString;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.HandlerMapping;
 
 /**
  * @author levk
@@ -29,11 +37,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @ToString
 @RequestMapping ("/container/view")
 public class ViewController {
-
-  @RequestMapping (value = "elements/{view}", method = GET)
-  public String elements (@PathVariable ("view") String view) {
-    return "elements/" + view;
-  }
+  
+  @RequestMapping (value = "templates/**", method = GET)
+  public void templates (NativeWebRequest request) {}
+  
+  @RequestMapping (value = "elements/**", method = GET)
+  public void elements () {}
 
   @RequestMapping (value = "partials/{view}", method = GET)
   public String partials (@PathVariable ("view") String view) {
