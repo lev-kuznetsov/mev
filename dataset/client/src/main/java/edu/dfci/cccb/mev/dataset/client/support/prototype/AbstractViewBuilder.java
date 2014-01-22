@@ -54,7 +54,6 @@ public abstract class AbstractViewBuilder <T extends AbstractViewBuilder<?>> {
     return (T) this;
   }
 
-  // @Inject
   public T setApplicationContext (ApplicationContext context) {
     applicationContext = context;
     return (T) this;
@@ -80,7 +79,6 @@ public abstract class AbstractViewBuilder <T extends AbstractViewBuilder<?>> {
     return (T) this;
   }
 
-  // @Inject
   public T setServletContext (ServletContext context) {
     this.servletContext = context;
     return (T) this;

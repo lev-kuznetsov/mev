@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.metamodel;
 
+import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
+import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
 import static edu.dfci.cccb.mev.dataset.domain.metamodel.MetamodelBackedValues.COLUMN_FIELD_NAME;
 import static edu.dfci.cccb.mev.dataset.domain.metamodel.MetamodelBackedValues.ROW_FIELD_NAME;
 import static edu.dfci.cccb.mev.dataset.domain.metamodel.MetamodelBackedValues.VALUE_FIELD_NAME;
@@ -22,18 +24,18 @@ import static org.eobjects.metamodel.DataContextFactory.createJdbcDataContext;
 import static org.eobjects.metamodel.schema.ColumnType.DOUBLE;
 import static org.eobjects.metamodel.schema.ColumnType.VARCHAR;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Synchronized;
 
-import org.eobjects.metamodel.BatchUpdateScript;
-import org.eobjects.metamodel.UpdateCallback;
 import org.eobjects.metamodel.UpdateableDataContext;
+import org.eobjects.metamodel.create.CreateTable;
+import org.eobjects.metamodel.data.DataSet;
+import org.eobjects.metamodel.insert.InsertInto;
 import org.eobjects.metamodel.schema.Table;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
@@ -51,22 +53,19 @@ public class MetamodelBackedValueStoreBuilder extends AbstractValueStoreBuilder 
 
   private UpdateableDataContext context;
   private Table table;
-  private final AtomicBoolean destroy = new AtomicBoolean (false);
+  private MetamodelBackedValues store;
 
   @PostConstruct
   private void initialize () {
-    (context = createJdbcDataContext (dataSource)).executeUpdate (new BatchUpdateScript () {
-
-      @Override
-      public void run (UpdateCallback callback) {
-        table = callback.createTable (context.getDefaultSchema (), randomUUID ().toString ())
-                        .withColumn (ROW_FIELD_NAME).ofType (VARCHAR)
-                        .withColumn (COLUMN_FIELD_NAME).ofType (VARCHAR)
-                        .withColumn (VALUE_FIELD_NAME).ofType (DOUBLE)
-                        .execute ();
-        destroy.set (true);
-      }
-    });
+    context = createJdbcDataContext (dataSource);
+    String tableName = randomUUID ().toString ();
+    CreateTable creator = new CreateTable (context.getDefaultSchema (), tableName);
+    creator.withColumn (ROW_FIELD_NAME).ofType (VARCHAR);
+    creator.withColumn (COLUMN_FIELD_NAME).ofType (VARCHAR);
+    creator.withColumn (VALUE_FIELD_NAME).ofType (DOUBLE);
+    context.executeUpdate (creator);
+    table = context.getDefaultSchema ().getTableByName (tableName);
+    store = new MetamodelBackedValues (table, context);
   }
 
   /* (non-Javadoc)
@@ -75,39 +74,21 @@ public class MetamodelBackedValueStoreBuilder extends AbstractValueStoreBuilder 
    * java.lang.String, java.lang.String) */
   @Override
   public ValueStoreBuilder add (final double value, final String row, final String column) throws ValueStoreException {
-    context.executeUpdate (new BatchUpdateScript () {
-
-      @Override
-      public void run (UpdateCallback callback) {
-        callback.insertInto (table)
-                .value (ROW_FIELD_NAME, row)
-                .value (COLUMN_FIELD_NAME, column)
-                .value (VALUE_FIELD_NAME, value)
-                .execute ();
-      }
-    });
+    try (DataSet data = store.query (row, column)) {
+      if (data.next ())
+        throw new ValueStoreException ().projection (ROW, row).projection (COLUMN, column);
+    }
+    context.executeUpdate (new InsertInto (table).value (ROW_FIELD_NAME, row)
+                                                 .value (COLUMN_FIELD_NAME, column)
+                                                 .value (VALUE_FIELD_NAME, value));
     return this;
   }
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder#build() */
   @Override
+  @Synchronized
   public Values build () {
-    destroy.set (false);
-    return new MetamodelBackedValues (table, context);
-  }
-
-  /* (non-Javadoc)
-   * @see java.lang.Object#finalize() */
-  @Override
-  protected void finalize () throws Throwable {
-    if (destroy.getAndSet (false))
-      context.executeUpdate (new BatchUpdateScript () {
-
-        @Override
-        public void run (UpdateCallback callback) {
-          callback.dropTable (table);
-        }
-      });
+    return store;
   }
 }
