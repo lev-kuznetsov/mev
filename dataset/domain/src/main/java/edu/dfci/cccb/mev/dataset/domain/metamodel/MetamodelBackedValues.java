@@ -55,8 +55,7 @@ public class MetamodelBackedValues extends AbstractValues {
    * java.lang.String) */
   @Override
   public double get (String row, String column) throws InvalidCoordinateException {
-    try (DataSet data =
-                        context.executeQuery (context.query ()
+    try (DataSet data = context.executeQuery (context.query ()
                                                      .from (values)
                                                      .select (VALUE_FIELD_NAME)
                                                      .where (and (eq (ROW_FIELD_NAME, row),
