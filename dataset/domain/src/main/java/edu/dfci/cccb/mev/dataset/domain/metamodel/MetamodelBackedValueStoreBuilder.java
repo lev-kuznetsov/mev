@@ -19,6 +19,8 @@ import static edu.dfci.cccb.mev.dataset.domain.metamodel.MetamodelBackedValues.R
 import static edu.dfci.cccb.mev.dataset.domain.metamodel.MetamodelBackedValues.VALUE_FIELD_NAME;
 import static java.util.UUID.randomUUID;
 import static org.eobjects.metamodel.DataContextFactory.createJdbcDataContext;
+import static org.eobjects.metamodel.schema.ColumnType.DOUBLE;
+import static org.eobjects.metamodel.schema.ColumnType.VARCHAR;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -57,7 +59,11 @@ public class MetamodelBackedValueStoreBuilder extends AbstractValueStoreBuilder 
   private void initialize () {
     context = createJdbcDataContext (dataSource);
     String tableName = randomUUID ().toString ();
-    context.executeUpdate (new CreateTable (context.getDefaultSchema (), tableName));
+    CreateTable creator = new CreateTable (context.getDefaultSchema (), tableName);
+    creator.withColumn (ROW_FIELD_NAME).ofType (VARCHAR);
+    creator.withColumn (COLUMN_FIELD_NAME).ofType (VARCHAR);
+    creator.withColumn (VALUE_FIELD_NAME).ofType (DOUBLE);
+    context.executeUpdate (creator);
     table = context.getDefaultSchema ().getTableByName (tableName);
   }
 
