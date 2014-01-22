@@ -11,20 +11,16 @@ ImportPresetDialog.prototype._createDialog = function() {
     var dialog = $(DOM.loadHTML("core", "scripts/dialogs/import-preset-dialog.html"));
     this._elmts = DOM.bind(dialog);
     this._name="";
-    this._description="";
     
     this._dimension="";
     if(theProject.metadata.customMetadata){
     	if(theProject.metadata.customMetadata.selectionName)
     		this._name=theProject.metadata.customMetadata.selectionName;
-    	if(theProject.metadata.customMetadata.selectionDescription)
-    		this._description=theProject.metadata.customMetadata.selectionDescription;
     	if(theProject.metadata.customMetadata.dimension)
     		this._dimension=theProject.metadata.customMetadata.dimension;
     	
     }
     this._elmts.setName[0].value=this._name;
-    this._elmts.setDescription[0].value=this._description;    
     
     //this._elmts.controls.find("textarea").bind("keyup change input",function() { self._scheduleUpdate(); });
     
@@ -59,9 +55,7 @@ ImportPresetDialog.prototype._validate = function()
 	    return false;
 	  }
 
-	  this._name=name;
-	  this._description = this._elmts.setDescription[0].value;
-	  this._description=$.trim(this._description); 	  
+	  this._name=name; 	  
 
 	  return true;
 };
@@ -72,10 +66,8 @@ ImportPresetDialog.prototype._exportAjax = function(){
 		    url: "command/core/import-preset-dataset",
 		    data: { 
 		    	"project" : theProject.id, 
-		    	"name" : this._name,
-		    	"selectionName" : this._name,
-		    	"selectionDescription" : this._description,
-		    	"selectionFacetLink" : Refine.getPermanentLink(),
+		    	"import-preset" : theProject.metadata.name,
+		    	"newDatasetName" : this._name,		    	
 		    	"engine" : JSON.stringify(ui.browsingEngine.getJSON())
 		    	},
 		    dataType: "json",
@@ -97,11 +89,6 @@ ImportPresetDialog.prototype._exportAjax = function(){
 		Refine._lastItem={
 			name: this._name,
 			dimension: this._dimension,
-			properties: {
-				selectionDescription: this._description,
-				selectionColor: this._color,
-				selectionFacetLink: Refine.getPermanentLink(),
-			}
 		};		
 		$.ajax(postRequest);
 };
@@ -123,12 +110,7 @@ ImportPresetDialog.prototype._export = function() {
 	  .attr("name", "selectionName")
 	  .attr("value", this._name)
 	  .appendTo(form);
-	  
-	  $('<input />')
-	  .attr("name", "selectiondescription")
-	  .attr("value", this._description)
-	  .appendTo(form);
-	  
+	  	  
 	  $('<input />')
 	  .attr("name", "selectioncolor")
 	  .attr("value", this._color)
