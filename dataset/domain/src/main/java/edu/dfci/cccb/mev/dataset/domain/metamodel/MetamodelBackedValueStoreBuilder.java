@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.metamodel;
 
+import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
+import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
 import static edu.dfci.cccb.mev.dataset.domain.metamodel.MetamodelBackedValues.COLUMN_FIELD_NAME;
 import static edu.dfci.cccb.mev.dataset.domain.metamodel.MetamodelBackedValues.ROW_FIELD_NAME;
 import static edu.dfci.cccb.mev.dataset.domain.metamodel.MetamodelBackedValues.VALUE_FIELD_NAME;
@@ -21,8 +23,6 @@ import static java.util.UUID.randomUUID;
 import static org.eobjects.metamodel.DataContextFactory.createJdbcDataContext;
 import static org.eobjects.metamodel.schema.ColumnType.DOUBLE;
 import static org.eobjects.metamodel.schema.ColumnType.VARCHAR;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -34,7 +34,7 @@ import lombok.Synchronized;
 
 import org.eobjects.metamodel.UpdateableDataContext;
 import org.eobjects.metamodel.create.CreateTable;
-import org.eobjects.metamodel.drop.DropTable;
+import org.eobjects.metamodel.data.DataSet;
 import org.eobjects.metamodel.insert.InsertInto;
 import org.eobjects.metamodel.schema.Table;
 
@@ -53,7 +53,7 @@ public class MetamodelBackedValueStoreBuilder extends AbstractValueStoreBuilder 
 
   private UpdateableDataContext context;
   private Table table;
-  private final AtomicBoolean destroy = new AtomicBoolean (false);
+  private MetamodelBackedValues store;
 
   @PostConstruct
   private void initialize () {
@@ -65,6 +65,7 @@ public class MetamodelBackedValueStoreBuilder extends AbstractValueStoreBuilder 
     creator.withColumn (VALUE_FIELD_NAME).ofType (DOUBLE);
     context.executeUpdate (creator);
     table = context.getDefaultSchema ().getTableByName (tableName);
+    store = new MetamodelBackedValues (table, context);
   }
 
   /* (non-Javadoc)
@@ -73,6 +74,10 @@ public class MetamodelBackedValueStoreBuilder extends AbstractValueStoreBuilder 
    * java.lang.String, java.lang.String) */
   @Override
   public ValueStoreBuilder add (final double value, final String row, final String column) throws ValueStoreException {
+    try (DataSet data = store.query (row, column)) {
+      if (data.next ())
+        throw new ValueStoreException ().projection (ROW, row).projection (COLUMN, column);
+    }
     context.executeUpdate (new InsertInto (table).value (ROW_FIELD_NAME, row)
                                                  .value (COLUMN_FIELD_NAME, column)
                                                  .value (VALUE_FIELD_NAME, value));
@@ -84,16 +89,6 @@ public class MetamodelBackedValueStoreBuilder extends AbstractValueStoreBuilder 
   @Override
   @Synchronized
   public Values build () {
-    destroy.set (false);
-    return new MetamodelBackedValues (table, context);
-  }
-
-  /* (non-Javadoc)
-   * @see java.lang.Object#finalize() */
-  @Override
-  @Synchronized
-  protected void finalize () throws Throwable {
-    if (destroy.getAndSet (false))
-      context.executeUpdate (new DropTable (table));
+    return store;
   }
 }
