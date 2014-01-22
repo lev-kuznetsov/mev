@@ -76,5 +76,7 @@ public class ContainerConfigurations extends MevClientConfigurerAdapter {
             .addResourceLocations ("classpath:/edu/dfci/cccb/mev/web/javascript/");
     registry.addResourceHandler ("/container/style/**")
             .addResourceLocations ("classpath:/edu/dfci/cccb/mev/web/style/");
+    registry.addResourceHandler ("/container/images/**")
+            .addResourceLocations ("classpath:/edu/dfci/cccb/mev/web/images/");
   }
 }

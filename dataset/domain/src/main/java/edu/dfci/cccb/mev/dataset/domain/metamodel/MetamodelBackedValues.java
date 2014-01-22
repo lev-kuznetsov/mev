@@ -17,10 +17,9 @@ package edu.dfci.cccb.mev.dataset.domain.metamodel;
 import static org.eobjects.metamodel.query.LogicalOperator.AND;
 import static org.eobjects.metamodel.query.OperatorType.EQUALS_TO;
 
-import org.eobjects.metamodel.BatchUpdateScript;
-import org.eobjects.metamodel.UpdateCallback;
 import org.eobjects.metamodel.UpdateableDataContext;
 import org.eobjects.metamodel.data.DataSet;
+import org.eobjects.metamodel.drop.DropTable;
 import org.eobjects.metamodel.query.FilterItem;
 import org.eobjects.metamodel.query.SelectItem;
 import org.eobjects.metamodel.schema.Table;
@@ -55,21 +54,20 @@ public class MetamodelBackedValues extends AbstractValues {
    * java.lang.String) */
   @Override
   public double get (String row, String column) throws InvalidCoordinateException {
-    try (DataSet data =
-                        context.executeQuery (context.query ()
-                                                     .from (values)
-                                                     .select (VALUE_FIELD_NAME)
-                                                     .where (and (eq (ROW_FIELD_NAME, row),
-                                                                  eq (COLUMN_FIELD_NAME, column)))
-                                                     .toQuery ())) {
-      if (data.next ()) {
-        double result = value (data.getRow ().getValue (0));
-        if (data.next ())
-          throw new InvalidCoordinateException ();
-        return result;
-      } else
+    try (DataSet data = query (row, column)) {
+      if (data.next ())
+        return value (data.getRow ().getValue (0));
+      else
         throw new InvalidCoordinateException ();
     }
+  }
+
+  protected DataSet query (String row, String column) {
+    return context.executeQuery (context.query ()
+                                        .from (values)
+                                        .select (VALUE_FIELD_NAME)
+                                        .where (and (eq (ROW_FIELD_NAME, row), eq (COLUMN_FIELD_NAME, column)))
+                                        .toQuery ());
   }
 
   private FilterItem and (FilterItem... filterItems) {
@@ -95,12 +93,6 @@ public class MetamodelBackedValues extends AbstractValues {
    * @see java.lang.Object#finalize() */
   @Override
   protected void finalize () throws Throwable {
-    context.executeUpdate (new BatchUpdateScript () {
-
-      @Override
-      public void run (UpdateCallback callback) {
-        callback.dropTable (values);
-      }
-    });
+    context.executeUpdate (new DropTable (values));
   }
 }

@@ -221,6 +221,11 @@
         <directory>src/main/style</directory>
         <filtering>false</filtering>
       </resource>
+      
+      <resource>
+        <directory>src/main/images</directory>
+        <filtering>false</filtering>
+      </resource>
     </resources>
 
   </build>
