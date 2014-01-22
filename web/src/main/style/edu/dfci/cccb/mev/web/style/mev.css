@@ -181,3 +181,17 @@ div#tab i {
 	margin-top:8px;
 	margin-left:2px;
 }
+
+div#prevElement {
+	background: #e3e9ff;
+	height: 20px;
+	border-radius: 3px;
+	padding: 5px;
+	margin: 7px;
+	margin-left:19px;
+}
+
+div.sidepanel-title {
+	margin-bottom: 7px;
+	border-bottom:1px solid #888888;
+}

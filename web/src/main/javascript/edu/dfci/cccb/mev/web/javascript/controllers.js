@@ -16,6 +16,10 @@ define ([ 'jquery', 'angular'], function ($, angular) {
             $scope.heatmapTopTree = undefined;
             $scope.heatmapLeftTreeName = undefined;
             $scope.heatmapTopTreeName = undefined;
+            $scope.previousHCLClusters = undefined;
+            $scope.previousLimmaAnalysis = undefined;
+            $scope.previousAnalysisList = undefined;
+
             
     		$scope.buildPreviousAnalysisList = function() {
     		  
@@ -25,9 +29,10 @@ define ([ 'jquery', 'angular'], function ($, angular) {
 
                 API.dataset.analysis.list ($routeParams.datasetName).then (
                     function (prevList) {
+                    	
+                      $scope.previousAnalysisList = prevList;
 
-                      $scope.previousAnalysisList = prevList
-                          .map (function (name) {
+                      prevList.map (function (name) {
 
                             
                             

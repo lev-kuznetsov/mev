@@ -101,14 +101,29 @@ define (
               restrict : 'E',
               templateUrl : '/container/view/elements/sideNavigationBar',
               link: function(scope) {
-            	  	jq('li.expandable').click(function() {
-            	  		if ($(this).children()) {
-            	  			console.log($(this))
-            	  			$(this).children('ul').toggle();
-                		    return false;
-            	  		}
-            		    
-            		});
+            	  
+            	  
+            	  	scope.clusterAnalysisClickOpen = function(id) {
+            	  		
+            	  		jq('#clustersPane').trigger("click");
+            	  		
+            	  		jq(id.href).collapse("show");
+            	  		
+            	  		jq('div.fixed-height').animate({
+            	  			scrollTop: jq(id.dataParent).offset().top
+            	  		}, 200);
+            	  	}
+            	  	
+            	  	scope.limmaAnalysisClickOpen = function(id) {
+            	  		
+            	  		jq('#limmaPane').trigger("click");
+            	  		
+            	  		jq(id.href).collapse("show");
+            	  		
+            	  		jq('div.fixed-height').animate({
+            	  			scrollTop: jq(id.dataParent).offset().top
+            	  		}, 200);
+            	  	}
             }
             };
           } ])
