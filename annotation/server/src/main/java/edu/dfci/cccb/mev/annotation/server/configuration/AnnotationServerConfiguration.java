@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.google.refine.ProjectManager;
 import com.google.refine.SessionWorkspaceDir;
+import com.google.refine.commands.project.ImportPresetDatasetCommand;
 import com.google.refine.io.FileProjectManager;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
@@ -39,7 +41,7 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
   private @Inject Workspace workspace;
   private @Inject FileProjectManager sessionProjectManager;
   private @Inject DatasetBuilder builder;
-
+  
 
   @Bean
   @Scope (value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -50,6 +52,7 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
     projectManager.setDatasetBuilder (builder);
     return projectManager;
   }
+
 
   @PostConstruct
   public void setProjectmanagerSingleton () {

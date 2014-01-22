@@ -115,12 +115,12 @@ public class FileProjectManager extends ProjectManager {
   }
 
     
-  @Autowired(required=false) private Dataset requestHeatmap;
+  @Autowired(required=false) private Dataset dataset;
   public Dataset getRequestHeatmap () {
-    return requestHeatmap;
+    return dataset;
   }
   public void setRequestHeatmap (Dataset requestHeatmap) {
-    this.requestHeatmap = requestHeatmap;
+    this.dataset = requestHeatmap;
   }
   
   
@@ -128,7 +128,7 @@ public class FileProjectManager extends ProjectManager {
   public Map<Long, ProjectMetadata> getAllProjectMetadata () {
     Map<Long, ProjectMetadata> heatmapMetadata = new HashMap<Long, ProjectMetadata> ();
     for (Entry<Long, ProjectMetadata> entry : _projectsMetadata.entrySet ()) {
-      if (entry.getValue ().getName ().startsWith (requestHeatmap.name ())) {
+      if (entry.getValue ().getName ().startsWith (dataset.name ())) {
         heatmapMetadata.put (entry.getKey (), entry.getValue ());
       }
 

@@ -82,10 +82,10 @@ ImportPresetDialog.prototype._exportAjax = function(){
 		    success: function (data) {
 		      if (data && typeof data.code != 'undefined' && data.code == "ok") {
 		        //alert("Set saved succesfully");		        
-		        parent.OpenRefineBridge.addSelectionSet(Refine._lastItem);
+		        //parent.OpenRefineBridge.addSelectionSet(Refine._lastItem);
 		        var currentUrl = window.location.href;
 		        console.log("currentUrl:"+currentUrl);
-		        var newUrl = currentUrl.replace("/new/", "/"+Refine._lastItem.name+"/");
+		        var newUrl = "/#/dataset/"+Refine._lastItem.name+"/";
 		        console.log("newUrl:"+newUrl);
 		        window.location.replace(newUrl);
 		      } else {

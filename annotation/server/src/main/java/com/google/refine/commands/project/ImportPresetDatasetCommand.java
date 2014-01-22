@@ -112,7 +112,7 @@ public class ImportPresetDatasetCommand extends Command {
           logger.info (String.format ("***Import Dataset: %s *******************", dataurl.toString ()));
                                       
           try {
-            dataset = ProjectManager.getSingleton ().getDatasetBuilder ().build (new UrlTsvInput (dataurl));
+            dataset = ProjectManager.getSingleton ().getDatasetBuilder ().build (new UrlTsvInput (dataurl), selection);
           } catch (DatasetBuilderException | InvalidDatasetNameException | InvalidDimensionTypeException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
