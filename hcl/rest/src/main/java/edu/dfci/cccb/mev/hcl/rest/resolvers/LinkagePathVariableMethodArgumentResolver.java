@@ -18,6 +18,9 @@ import static edu.dfci.cccb.mev.hcl.domain.contract.Linkage.from;
 
 import java.lang.reflect.Method;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import org.springframework.web.context.request.NativeWebRequest;
 
 import edu.dfci.cccb.mev.dataset.rest.resolvers.AbstractTypedPathVariableMethodArgumentResolver;
@@ -27,6 +30,8 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Linkage;
  * @author levk
  * 
  */
+@EqualsAndHashCode (callSuper = true)
+@ToString
 public class LinkagePathVariableMethodArgumentResolver extends AbstractTypedPathVariableMethodArgumentResolver<Linkage> {
 
   public static final String LINKAGE_MAPPING_NAME = "linkage";

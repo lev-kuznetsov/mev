@@ -16,6 +16,8 @@ package edu.dfci.cccb.mev.dataset.domain.metamodel;
 
 import static org.eobjects.metamodel.query.LogicalOperator.AND;
 import static org.eobjects.metamodel.query.OperatorType.EQUALS_TO;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import org.eobjects.metamodel.UpdateableDataContext;
 import org.eobjects.metamodel.data.DataSet;
@@ -31,6 +33,8 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValues;
  * @author levk
  * 
  */
+@ToString (of = "values")
+@EqualsAndHashCode (callSuper = true)
 public class MetamodelBackedValues extends AbstractValues {
 
   public static final String ROW_FIELD_NAME = "mev_row";
