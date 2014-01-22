@@ -167,7 +167,9 @@ div#tab {
 	background: #bcf;
 	color: #000000; 
 }
-
+ul.nav{
+	margin-bottom: 1px;
+}
 div#analysisnav {
 	margin-bottom: 10px;
 }
