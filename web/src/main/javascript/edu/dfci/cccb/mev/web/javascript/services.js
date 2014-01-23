@@ -43,6 +43,7 @@ define (
               success : function (message, header, callback, params) {
                 $.notific8(message, {
                   heading: header,
+                  theme: 'lime',
                   life: 5000
                 });
               },
