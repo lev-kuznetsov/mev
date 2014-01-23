@@ -72,7 +72,7 @@ public class CachedValues extends AbstractValues {
       if (e.getCause () instanceof InvalidCoordinateException)
         throw (InvalidCoordinateException) e.getCause ();
       else
-        throw new InvalidCoordinateException (e);
+        throw new InvalidCoordinateException (e); // shouldn't happen
     }
   }
 }
