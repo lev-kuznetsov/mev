@@ -49,7 +49,6 @@ define (
               },
               error : function (message, header, callback, params) {
 
-                alert (header + '\n\n' + 'Issue: \n' + message);
                 $.notific8('Issue: \n' +message, {
                   heading: header,
                   theme: 'ruby',
@@ -58,14 +57,11 @@ define (
 
               },
               info : function (message, header, callback, params) {
-
-                alert (header + '\n\n' + 'Issue: \n' + message);
                 $.notific8(message, {
                   heading: header,
                   theme: 'ebony',
                   life: 5000
                 });
-
               }
               
             };
@@ -137,6 +133,8 @@ define (
                               url : '/dataset/' + dataset + '/' + dimension
                                   + '/selection?format=json'
                             };
+                            
+                            
 
                             return QHTTP (
                                 params,
@@ -250,6 +248,8 @@ define (
                                     
                             };
                             
+                            alertService.info ("Began Processing " + q.name + "...", "Started Analysis!");
+                            
                             return QHTTP (params,
                                 function (d, s) {
                                   var message = "LIMMA analysis " + name + " completed."
@@ -338,6 +338,8 @@ define (
                               callback : q.callback
 
                             };
+  
+                            alertService.info ("Began Processing " + q.name + "...", "Started Analysis!");
 
                             return QHTTP (
                                 params,
