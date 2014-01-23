@@ -17,22 +17,6 @@
 
   <dependencies>
 
-    <!-- Google Guava -->
-
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>15.0</version>
-    </dependency>
-
-    <!-- Java Tuples -->
-
-    <dependency>
-      <groupId>org.javatuples</groupId>
-      <artifactId>javatuples</artifactId>
-      <version>1.2</version>
-    </dependency>
-
     <!-- Math packages -->
 
     <dependency>
