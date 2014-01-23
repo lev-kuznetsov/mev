@@ -55,7 +55,18 @@ define (
                   life: 5000
                 });
 
+              },
+              info : function (message, header, callback, params) {
+
+                alert (header + '\n\n' + 'Issue: \n' + message);
+                $.notific8(message, {
+                  heading: header,
+                  theme: 'ebony',
+                  life: 5000
+                });
+
               }
+              
             };
 
           } ])
