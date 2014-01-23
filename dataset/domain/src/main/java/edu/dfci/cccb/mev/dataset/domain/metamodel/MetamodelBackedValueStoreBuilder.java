@@ -42,6 +42,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValueStoreBuilder;
+import edu.dfci.cccb.mev.dataset.domain.simple.CachedValues;
 
 /**
  * @author levk
@@ -89,6 +90,6 @@ public class MetamodelBackedValueStoreBuilder extends AbstractValueStoreBuilder 
   @Override
   @Synchronized
   public Values build () {
-    return store;
+    return new CachedValues (store);
   }
 }
