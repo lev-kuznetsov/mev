@@ -1,5 +1,5 @@
 define (
-    [ 'angular', 'd3' ],
+    [ 'angular', 'd3', 'notific8'],
     function (angular, d3) {
 
       return angular
@@ -41,17 +41,19 @@ define (
 
             return {
               success : function (message, header, callback, params) {
-
-                alert (header + '\n' + message);
-                // Fix this later with something
-                // interesting
-
+                $.notific8(message, {
+                  heading: header,
+                  life: 5000
+                });
               },
               error : function (message, header, callback, params) {
 
                 alert (header + '\n\n' + 'Issue: \n' + message);
-                // Fix this later with something
-                // interesting
+                $.notific8('Issue: \n' +message, {
+                  heading: header,
+                  theme: 'ruby',
+                  life: 5000
+                });
 
               }
             };
