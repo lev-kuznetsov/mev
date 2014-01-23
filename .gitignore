@@ -11,6 +11,8 @@ src/**/html/**/lib/*
 src/**/html/app/data/*
 # Others #
 
+.Rhistory
+
 **.eclipse
 =======
 
