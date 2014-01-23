@@ -16,4 +16,4 @@
  * @author levk
  *
  */
-package edu.dfci.cccb.mev.web;
+package edu.dfci.cccb.mev.web.configuration.security;

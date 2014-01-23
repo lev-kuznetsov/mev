@@ -30,12 +30,8 @@ import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
-import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.social.google.api.Google;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
-
-import edu.dfci.cccb.mev.web.domain.social.SocialContext;
-import edu.dfci.cccb.mev.web.domain.spring.SpringSocialSignInAdapter;
 
 /**
  * @author levk
@@ -65,38 +61,7 @@ public class SocialConfiguration {
 
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public ConnectionRepository connectionRepository (UsersConnectionRepository usersConnectionRepository,
-                                                    SocialContext socialContext) {
-    return usersConnectionRepository.createConnectionRepository (socialContext.id ());
-  }
-
-  @Bean
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
   public Google google (ConnectionRepository connectionRepository) {
     return connectionRepository.getPrimaryConnection (Google.class).getApi ();
-  }
-
-  @Bean
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public SocialContext socialContext () {
-    return new SocialContext () {
-
-      private String id;
-
-      @Override
-      public void set (String id) {
-        this.id = id;
-      }
-
-      @Override
-      public String id () {
-        return id;
-      }
-    };
-  }
-
-  @Bean
-  public SignInAdapter signInAdapter () {
-    return new SpringSocialSignInAdapter ();
   }
 }
