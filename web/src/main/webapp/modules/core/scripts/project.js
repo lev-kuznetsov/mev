@@ -165,6 +165,7 @@ function initializeUI(uiState) {
 	  if(theProject.metadata.customMetadata.selectionName!="")
 		  title += " (" + theProject.metadata.customMetadata.selectionName + ")";
   }
+  
   Refine.setTitle(false, title);
   $("#or-proj-import-preset").click(Refine._importPreset);
   $("#or-proj-reset").click(Refine._reset);
