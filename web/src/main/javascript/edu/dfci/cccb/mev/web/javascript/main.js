@@ -18,6 +18,7 @@ require
             '/library/webjars/bootstrap/2.3.2/js/bootstrap.min' ],
         d3: ['/library/webjars/d3js/3.1.5/d3.min'],
         dropzone: ['/library/webjars/dropzone/3.7.1/dropzone-amd-module.min'],
+        notific8: ['notific8.min']
       },
       shim : {
         'angular' : {
@@ -31,6 +32,10 @@ require
         },
         'bootstrap-css' : {
           deps : [ 'bootstrap' ]
+        },
+        'notific8' : {
+          deps : ['jquery'],
+          exports : 'notific8'
         }
 
       },
