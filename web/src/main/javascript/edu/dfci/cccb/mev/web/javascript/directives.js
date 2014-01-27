@@ -75,26 +75,35 @@ define (
                     jq(document).mouseup(function(){
                     	isDragging = false;
                     }).mousemove(function(mouse){
-                    	if(isDragging && mouse.pageX < pageWidth*(1/4) && mouse.pageX > 0 ){
+                    	if(isDragging && mouse.pageX < pageWidth*(1/3) && mouse.pageX > 0 ){
                     		showSidePanel = true;
                     		leftPanel.css("width", mouse.pageX);
                     		rightPanel.css("width", pageWidth - mouse.pageX);
                     		leftPanel.children().show();
                     	}
                     	
-                    	if(isDragging && mouse.pageX < pageWidth*(1/10) && mouse.pageX > 0 ){
+                    	if(isDragging && mouse.pageX < pageWidth*(1/7) && mouse.pageX > 0 ){
                     		leftPanel.children().hide();
-                    		
+                    		jq('div#tab').click()
                     	}
                     	
                     });
                     
                     jq('div#tab').click(function(){
                     	
-                    		leftPanel.css("width", 0);
-                        	leftPanel.children().hide();
-                        	rightPanel.css("width", pageWidth - 30);
-                    	
+                      if (showSidePanel) {
+                        leftPanel.css("width", 0);
+                        leftPanel.children().hide();
+                        rightPanel.css("width", pageWidth - 30);
+                        showSidePanel = false;
+                      } else {
+                        console.log("clicked")
+                        leftPanel.css("width", pageWidth*(1/3));
+                        leftPanel.children().show();
+                        rightPanel.css("width", pageWidth*(2/3) - 30);
+                        showSidePanel = true;
+                      }
+                    		
                     })
                     
                     
