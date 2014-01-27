@@ -8,27 +8,32 @@ define ([ 'jquery', 'angular'], function ($, angular) {
             	
     	};
     	
-    		$scope.heatmapId = $routeParams.datasetName;
-    		
-    		
-    		$scope.heatmapData = undefined;
-            $scope.heatmapLeftTree = undefined;
-            $scope.heatmapTopTree = undefined;
-            $scope.heatmapLeftTreeName = undefined;
-            $scope.heatmapTopTreeName = undefined;
-            $scope.previousHCLClusters = undefined;
-            $scope.previousLimmaAnalysis = undefined;
-            $scope.previousAnalysisList = undefined;
+    	$scope.pageLoading = true;
+    	
+      $('#loading').modal('show');
+    	
+  		$scope.heatmapId = $routeParams.datasetName;
+  		
+  		
+  		$scope.heatmapData = undefined;
+      $scope.heatmapLeftTree = undefined;
+      $scope.heatmapTopTree = undefined;
+      $scope.heatmapLeftTreeName = undefined;
+      $scope.heatmapTopTreeName = undefined;
+      $scope.previousHCLClusters = undefined;
+      $scope.previousLimmaAnalysis = undefined;
+      $scope.previousAnalysisList = undefined;
 
             
-    		$scope.buildPreviousAnalysisList = function() {
+    	$scope.buildPreviousAnalysisList = function() {
     		  
-    		  $scope.previousHCLClusters = [];
+    	$scope.previousHCLClusters = [];
     		  
-    		  $scope.previousLimmaAnalysis = [];
+    	$scope.previousLimmaAnalysis = [];
 
-                API.dataset.analysis.list ($routeParams.datasetName).then (
+      API.dataset.analysis.list ($routeParams.datasetName).then (
                     function (prevList) {
+                      
                     	
                       $scope.previousAnalysisList = prevList;
 
