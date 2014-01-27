@@ -292,9 +292,16 @@ define (
 
                       API.analysis.hcl.create (q);
                       
+                      resetSelections()
                       
-
                     };
+                    
+                    function resetSelections() {
+                      scope.clusterName = "";
+                      scope.selectedDimension = "";
+                      scope.selectedMetric = "";
+                      scope.selectedAlgorithm = "";
+                    }
 
                   }
 
@@ -321,10 +328,6 @@ define (
                   {name: "Row", value: "row"},
                   {name:"Column", value:"column"}];
                 
-                scope.analysisControl
-                scope.analysisExperiment
-                scope.analysisDimension
-                scope.analysisName
                 
                 scope.$watch('analysisDimension', function(newval, oldval){
                   if (newval) {
@@ -348,8 +351,17 @@ define (
                   };
                   
                   API.analysis.limma.create(params);
+                  
+                  resetSelections();
 
                 };
+                
+                function resetSelections() {
+                  scope.analysisName = "";
+                  scope.analysisDimension = "";
+                  scope.analysisControl = "";
+                  scope.analysisExperiment = "";
+                }
                 
                 
 
