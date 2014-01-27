@@ -50,6 +50,7 @@ define (
                     API.dataset.get ($routeParams.datasetName).then (
                         function(data){ 
                           scope.heatmapData = data;
+                          $('#loading').modal('hide');
                         }, function(data){
                         	//return home if error
                         	$location.path('/');
