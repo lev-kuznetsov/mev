@@ -4,7 +4,7 @@
 		<ul class="nav nav-tabs">
 		  <li><a id="heatmapTabLink" href="#heatmap-tab" data-toggle="tab">Visualize</a></li>
 		  <li><a id="annotationsTabLink" href="#annotationsTabPane" data-toggle="tab">Annotations</a></li>
-		  <li><a id="clustersPane" href="#clusters-tab" data-toggle="tab">Clusters</a></li>
+		  <li><a id="clustersTabLink" href="#clusters-tab" data-toggle="tab">Clusters</a></li>
 		  
 		  <li><a id="limmaPane" href="#limma-tab" data-toggle="tab">LIMMA</a></li>
 		</ul>
