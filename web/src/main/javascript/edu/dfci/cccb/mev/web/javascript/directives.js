@@ -124,7 +124,7 @@ define (
             	  
             	  	scope.clusterAnalysisClickOpen = function(id) {
             	  		
-            	  		jq('#clustersPane').trigger("click");
+            	  		jq('#clustersTabLink').trigger("click");
             	  		
             	  		jq(id.href).collapse("show");
             	  		
