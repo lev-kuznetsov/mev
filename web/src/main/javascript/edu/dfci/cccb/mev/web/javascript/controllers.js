@@ -86,6 +86,8 @@ define ([ 'jquery', 'angular'], function ($, angular) {
                     name:prevAnalysis
                     }).then(function(){
                       
+                      $('#heatmapTabLink').trigger("click");
+                      
                       API.dataset.get ($routeParams.datasetName).then (
                           function(data){
                           
