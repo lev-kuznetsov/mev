@@ -55,6 +55,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.jooq.JooqBasedDatasourceValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListWorkspace;
+import edu.dfci.cccb.mev.dataset.domain.simple.SharedCachedValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelectionBuilder;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvComposerFactory;
@@ -119,7 +120,7 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
   public ValueStoreBuilder valueFactory (DataSource dataSource) throws Exception {
-    return new JooqBasedDatasourceValueStoreBuilder (dataSource);
+    return new SharedCachedValueStoreBuilder (new JooqBasedDatasourceValueStoreBuilder (dataSource));
   }
 
   @Bean
