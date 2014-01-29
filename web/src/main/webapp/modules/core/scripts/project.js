@@ -161,10 +161,12 @@ function initializeUI(uiState) {
 	  $("#or-proj-import-preset").hide();
 	  if(theProject.metadata.customMetadata.dimension)
 		  title = toProperCase(theProject.metadata.customMetadata.dimension);
+	  title+=" Annotations"
 	  if(theProject.metadata.customMetadata.selectionName!="")
-		  title = " (" + theProject.metadata.customMetadata.selectionName + ")";
+		  title += " (" + theProject.metadata.customMetadata.selectionName + ")";
   }
-  Refine.setTitle(false, title+" Annotations");
+  
+  Refine.setTitle(false, title);
   $("#or-proj-import-preset").click(Refine._importPreset);
   $("#or-proj-reset").click(Refine._reset);
   $("#export-set-button").click(Refine._exportSet);

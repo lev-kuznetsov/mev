@@ -50,6 +50,7 @@ define (
                     API.dataset.get ($routeParams.datasetName).then (
                         function(data){ 
                           scope.heatmapData = data;
+                          $('#loading').modal('hide');
                         }, function(data){
                         	//return home if error
                         	$location.path('/');
@@ -75,26 +76,35 @@ define (
                     jq(document).mouseup(function(){
                     	isDragging = false;
                     }).mousemove(function(mouse){
-                    	if(isDragging && mouse.pageX < pageWidth*(1/4) && mouse.pageX > 0 ){
+                    	if(isDragging && mouse.pageX < pageWidth*(1/3) && mouse.pageX > 0 ){
                     		showSidePanel = true;
                     		leftPanel.css("width", mouse.pageX);
                     		rightPanel.css("width", pageWidth - mouse.pageX);
                     		leftPanel.children().show();
                     	}
                     	
-                    	if(isDragging && mouse.pageX < pageWidth*(1/10) && mouse.pageX > 0 ){
+                    	if(isDragging && mouse.pageX < pageWidth*(1/7) && mouse.pageX > 0 ){
                     		leftPanel.children().hide();
-                    		
+                    		jq('div#tab').click()
                     	}
                     	
                     });
                     
                     jq('div#tab').click(function(){
                     	
-                    		leftPanel.css("width", 0);
-                        	leftPanel.children().hide();
-                        	rightPanel.css("width", pageWidth - 30);
-                    	
+                      if (showSidePanel) {
+                        leftPanel.css("width", 0);
+                        leftPanel.children().hide();
+                        rightPanel.css("width", pageWidth - 30);
+                        showSidePanel = false;
+                      } else {
+                        console.log("clicked")
+                        leftPanel.css("width", pageWidth*(1/3));
+                        leftPanel.children().show();
+                        rightPanel.css("width", pageWidth*(2/3) - 30);
+                        showSidePanel = true;
+                      }
+                    		
                     })
                     
                     
@@ -115,7 +125,7 @@ define (
             	  
             	  	scope.clusterAnalysisClickOpen = function(id) {
             	  		
-            	  		jq('#clustersPane').trigger("click");
+            	  		jq('#clustersTabLink').trigger("click");
             	  		
             	  		jq(id.href).collapse("show");
             	  		
@@ -283,9 +293,16 @@ define (
 
                       API.analysis.hcl.create (q);
                       
+                      resetSelections()
                       
-
                     };
+                    
+                    function resetSelections() {
+                      scope.clusterName = "";
+                      scope.selectedDimension = "";
+                      scope.selectedMetric = "";
+                      scope.selectedAlgorithm = "";
+                    }
 
                   }
 
@@ -312,10 +329,6 @@ define (
                   {name: "Row", value: "row"},
                   {name:"Column", value:"column"}];
                 
-                scope.analysisControl
-                scope.analysisExperiment
-                scope.analysisDimension
-                scope.analysisName
                 
                 scope.$watch('analysisDimension', function(newval, oldval){
                   if (newval) {
@@ -339,8 +352,17 @@ define (
                   };
                   
                   API.analysis.limma.create(params);
+                  
+                  resetSelections();
 
                 };
+                
+                function resetSelections() {
+                  scope.analysisName = "";
+                  scope.analysisDimension = "";
+                  scope.analysisControl = "";
+                  scope.analysisExperiment = "";
+                }
                 
                 
 

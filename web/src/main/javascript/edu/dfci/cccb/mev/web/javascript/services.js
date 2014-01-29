@@ -1,5 +1,5 @@
 define (
-    [ 'angular', 'd3' ],
+    [ 'angular', 'd3', 'notific8'],
     function (angular, d3) {
 
       return angular
@@ -41,19 +41,29 @@ define (
 
             return {
               success : function (message, header, callback, params) {
-
-                alert (header + '\n' + message);
-                // Fix this later with something
-                // interesting
-
+                $.notific8(message, {
+                  heading: header,
+                  theme: 'lime',
+                  life: 5000
+                });
               },
               error : function (message, header, callback, params) {
 
-                alert (header + '\n\n' + 'Issue: \n' + message);
-                // Fix this later with something
-                // interesting
+                $.notific8('Issue: \n' +message, {
+                  heading: header,
+                  theme: 'ruby',
+                  life: 5000
+                });
 
+              },
+              info : function (message, header, callback, params) {
+                $.notific8(message, {
+                  heading: header,
+                  theme: 'ebony',
+                  life: 5000
+                });
               }
+              
             };
 
           } ])
@@ -123,6 +133,8 @@ define (
                               url : '/dataset/' + dataset + '/' + dimension
                                   + '/selection?format=json'
                             };
+                            
+                            
 
                             return QHTTP (
                                 params,
@@ -236,6 +248,8 @@ define (
                                     
                             };
                             
+                            alertService.info ("Began Processing " + q.name + "...", "Started Analysis!");
+                            
                             return QHTTP (params,
                                 function (d, s) {
                                   var message = "LIMMA analysis " + name + " completed."
@@ -324,6 +338,8 @@ define (
                               callback : q.callback
 
                             };
+  
+                            alertService.info ("Began Processing " + q.name + "...", "Started Analysis!");
 
                             return QHTTP (
                                 params,
