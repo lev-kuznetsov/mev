@@ -10,6 +10,9 @@
     <artifactId>mev-presets</artifactId>
     <version>BAYLIE-SNAPSHOT</version>
   </parent>
+  <properties>
+  	<jackson.version>2.2.2</jackson.version>
+  </properties>
   
   <dependencies>
       <!-- MetaModel -->
@@ -20,5 +23,18 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
     
+    <!-- Jackson 2 -->
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
   </dependencies>
 </project>

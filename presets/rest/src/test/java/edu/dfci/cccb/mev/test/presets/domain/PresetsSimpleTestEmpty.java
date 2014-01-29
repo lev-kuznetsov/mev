@@ -1,9 +1,6 @@
 package edu.dfci.cccb.mev.test.presets.domain;
 
-import static org.junit.Assert.*;
-
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,7 +10,6 @@ import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetNotFoundException;
 import edu.dfci.cccb.mev.presets.simple.SimplePresests;
-import edu.dfci.cccb.mev.presets.simple.TcgaPresetMetafile;
 
 public class PresetsSimpleTestEmpty {
 

@@ -1,6 +1,5 @@
 package edu.dfci.cccb.mev.presets.dal;
 
-import java.io.Closeable;
 import java.net.URL;
 import java.util.List;
 

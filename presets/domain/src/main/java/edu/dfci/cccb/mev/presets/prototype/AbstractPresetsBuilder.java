@@ -4,13 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eobjects.metamodel.csv.CsvConfiguration;
-import org.eobjects.metamodel.csv.CsvDataContext;
-import org.eobjects.metamodel.data.DataSet;
-import org.eobjects.metamodel.data.Row;
-import org.eobjects.metamodel.schema.Schema;
-import org.eobjects.metamodel.schema.Table;
-
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetsBuilder;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;

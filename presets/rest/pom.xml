@@ -7,12 +7,7 @@
     <version>BAYLIE-SNAPSHOT</version>
   </parent>  
   <artifactId>mev-presets-rest</artifactId>
-  <name>MeV Preloaded Datasets - REST</name>
-
-  <properties>
-    <spring.version>4.0.0.RELEASE</spring.version>
-    <jackson.version>2.2.2</jackson.version>
-  </properties>
+  <name>MeV PREloaded DataSETS - REST</name>
 
   <dependencies>
   	<!-- Preset Domain -->

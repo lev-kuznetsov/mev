@@ -3,6 +3,8 @@ package edu.dfci.cccb.mev.presets.simple;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import edu.dfci.cccb.mev.presets.prototype.AbstractPresetDescriptor;
 @RequiredArgsConstructor
 @ToString
 @EqualsAndHashCode
+@JsonIgnoreType(value=true)
 public class SimplePresetDescriptor extends AbstractPresetDescriptor {
 
   @Getter private final URL dataUrl;

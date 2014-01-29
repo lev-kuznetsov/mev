@@ -1,21 +1,18 @@
 package edu.dfci.cccb.mev.presets.dal;
 
-import static org.eobjects.metamodel.csv.CsvConfiguration.*;
+import static org.eobjects.metamodel.csv.CsvConfiguration.DEFAULT_COLUMN_NAME_LINE;
+import static org.eobjects.metamodel.csv.CsvConfiguration.DEFAULT_ESCAPE_CHAR;
+import static org.eobjects.metamodel.csv.CsvConfiguration.DEFAULT_QUOTE_CHAR;
 import static org.eobjects.metamodel.util.FileHelper.DEFAULT_ENCODING;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eobjects.metamodel.csv.CsvConfiguration;
 import org.eobjects.metamodel.csv.CsvDataContext;
 import org.eobjects.metamodel.data.DataSet;
-import org.eobjects.metamodel.data.Row;
 import org.eobjects.metamodel.schema.Schema;
 import org.eobjects.metamodel.schema.Table;
-
-import edu.dfci.cccb.mev.presets.contract.Preset;
 
 public class TsvReaderMetaModel implements TsvReader {
 

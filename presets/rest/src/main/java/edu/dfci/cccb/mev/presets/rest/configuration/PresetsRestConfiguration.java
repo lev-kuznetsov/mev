@@ -1,9 +1,8 @@
 package edu.dfci.cccb.mev.presets.rest.configuration;
 
-import static org.springframework.context.annotation.FilterType.ANNOTATION;
-import static java.io.File.pathSeparator;
-import static org.springframework.context.annotation.ScopedProxyMode.NO;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
+import static org.springframework.context.annotation.FilterType.ANNOTATION;
+import static org.springframework.context.annotation.ScopedProxyMode.NO;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -17,9 +16,9 @@ import lombok.extern.log4j.Log4j;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -79,9 +78,6 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
   public URL tcgaPresetRoot() throws MalformedURLException{
     String pathTcgaRoot = environment.getProperty (TCGA_PROPERTY_ROOT_FOLDER);
     log.info (TCGA_PROPERTY_ROOT_FOLDER+":" + pathTcgaRoot);
-    if(pathTcgaRoot == null)
-      return null;
-    
     if(pathTcgaRoot == null)
       return null;
     

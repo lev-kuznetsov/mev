@@ -1,8 +1,5 @@
 package com.google.refine.commands.project;
 
-import static com.google.refine.io.FileProjectManager.REQUEST_ATTEIBUTE_DATASET;
-import static com.google.refine.io.FileProjectManager.REQUEST_ATTEIBUTE_DIMENSION;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;

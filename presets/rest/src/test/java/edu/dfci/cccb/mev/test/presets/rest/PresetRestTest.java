@@ -1,13 +1,13 @@
 package edu.dfci.cccb.mev.test.presets.rest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.inject.Inject;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,8 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
-import edu.dfci.cccb.mev.presets.simple.TcgaPresetMetafile;
-import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationMock;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={PresetsRestConfiguration.class})

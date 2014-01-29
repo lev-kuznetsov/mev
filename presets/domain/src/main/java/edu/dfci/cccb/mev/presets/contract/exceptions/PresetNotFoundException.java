@@ -4,6 +4,11 @@ import edu.dfci.cccb.mev.dataset.domain.contract.MevException;
 
 public class PresetNotFoundException extends MevException {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
+
   public PresetNotFoundException () {
   }
 

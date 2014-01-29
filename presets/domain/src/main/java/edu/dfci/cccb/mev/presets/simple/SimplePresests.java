@@ -1,21 +1,10 @@
 package edu.dfci.cccb.mev.presets.simple;
 
-import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eobjects.metamodel.DataContext;
-import org.eobjects.metamodel.DataContextFactory;
-import org.eobjects.metamodel.convert.Converters;
-import org.eobjects.metamodel.convert.StringToIntegerConverter;
-import org.eobjects.metamodel.schema.Column;
-import org.eobjects.metamodel.schema.Schema;
-import org.eobjects.metamodel.schema.Table;
-
-import lombok.Getter;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetsBuilder;

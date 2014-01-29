@@ -47,8 +47,6 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.zip.GZIPInputStream;
 
-import javax.inject.Inject;
-
 import org.apache.tools.tar.TarEntry;
 import org.apache.tools.tar.TarInputStream;
 import org.apache.tools.tar.TarOutputStream;
@@ -70,8 +68,6 @@ import com.google.refine.model.Project;
 import com.google.refine.preference.TopList;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 
 public class FileProjectManager extends ProjectManager {
   final static public String REQUEST_ATTEIBUTE_DATASET = "dataset";

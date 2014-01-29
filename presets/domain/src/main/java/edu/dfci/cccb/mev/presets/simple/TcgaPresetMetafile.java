@@ -1,6 +1,5 @@
 package edu.dfci.cccb.mev.presets.simple;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.inject.Inject;
@@ -11,6 +10,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
@@ -19,18 +22,19 @@ import edu.dfci.cccb.mev.presets.prototype.AbstractTcgaPreset;
 @Accessors(fluent=true)
 @EqualsAndHashCode
 @ToString
-@Named
 public class TcgaPresetMetafile extends AbstractTcgaPreset {
 
-  private @Setter  @Inject @Named ("tcgaPresetRoot") URL tcgaPresetRoot;
-  private String filename;
-  private String path;
-  private @Getter String name;
-  private @Getter String disease;
-  private @Getter String diseaseName;
-  private @Getter String platform;
-  private @Getter String platformName;   
-  private PresetDescriptor descriptor;
+  @JsonIgnore(value=true) private @Setter  @Inject @Named ("tcgaPresetRoot") URL tcgaPresetRoot;
+  @JsonIgnore(value=true) private String filename;
+  @JsonIgnore(value=true) private String path;
+  @JsonProperty(value="name") private @Getter String name;
+  @JsonProperty(value="disease") private @Getter String disease;
+  @JsonProperty(value="diseaseName") private @Getter String diseaseName;
+  @JsonProperty(value="platform") private @Getter String platform;
+  @JsonProperty(value="platformName") private @Getter String platformName;
+  @JsonProperty("dataLevel") private @Getter String dataLevel;
+  //@Getter(onMethod = @_ (@JsonProperty (value="platformName")) 
+  @JsonIgnore private @Getter PresetDescriptor descriptor;
   
   public TcgaPresetMetafile(){}
   
@@ -42,11 +46,12 @@ public class TcgaPresetMetafile extends AbstractTcgaPreset {
           (String)values[2],
           (String)values[3],
           (String)values[4],
-          (String)values[5]    
+          (String)values[5],
+          (String)values[6]
         );
   }
   
-  public Preset init(String filename, String path, String disease, String diseaseName, String platform, String platformName) throws PresetException{
+  public Preset init(String filename, String path, String disease, String diseaseName, String platform, String platformName, String dataLevel) throws PresetException{
     this.filename=filename;
     this.path=path;
     this.name=filename;
@@ -54,6 +59,7 @@ public class TcgaPresetMetafile extends AbstractTcgaPreset {
     this.diseaseName=diseaseName;
     this.platform=platform;
     this.platformName=platformName;
+    this.dataLevel=dataLevel;
     this.descriptor = new SimplePresetDescriptor (tcgaPresetRoot, getDataUrlSpec (), getColumnUrlSpec ()); 
     return this;
   }
@@ -66,11 +72,7 @@ public class TcgaPresetMetafile extends AbstractTcgaPreset {
     return disease+"/clinical/"+disease+".clinical_annotations.tsv";
   }
 
-  @Override
-  public PresetDescriptor getDescriptor () {
-      return descriptor;
-  }
-  
+
   
 }
   

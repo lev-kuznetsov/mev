@@ -35,6 +35,7 @@ import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfiguratio
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={PresetsRestConfigurationMock.class})
 @Log4j
+@SuppressWarnings ("serial")
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class TestTcgaPresets {
 
@@ -69,6 +70,7 @@ public class TestTcgaPresets {
   @Test 
   public void testGet () throws PresetNotFoundException, PresetException {
     Preset actuall = tcgaPresets.get ("BRCA.AgilentG4502A_07_3.Level_2.tsv");
+    
     assertNotNull (actuall);
     
     Object[] values = {"BRCA.AgilentG4502A_07_3.Level_2.tsv","BRCA/Level_2","BRCA","Breast invasive carcinoma","AgilentG4502A_07_3","Agilent 244K Custom Gene Expression G4502A-07-3","Level_2"};    
@@ -84,7 +86,7 @@ public class TestTcgaPresets {
     Preset preset = tcgaPresets.get ("ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv");
     assertNotNull (preset);
     
-    PresetDescriptor descriptor = preset.getDescriptor ();
+    PresetDescriptor descriptor = preset.descriptor ();
     File checkFile = new File( descriptor.dataUrl ().getFile() );
     assertTrue(checkFile.exists ());
   }
@@ -94,7 +96,7 @@ public class TestTcgaPresets {
     Preset preset = tcgaPresets.get ("ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv");
     assertNotNull (preset);
     
-    PresetDescriptor descriptor = preset.getDescriptor ();
+    PresetDescriptor descriptor = preset.descriptor ();
     File checkFile = new File( descriptor.columnUrl ().getFile() );
     assertTrue(checkFile.exists ());
   }
@@ -140,6 +142,7 @@ public class TestTcgaPresets {
     
   }
 
+  
   @Test
   public void testList () {
     List<String> names = tcgaPresets.list ();
