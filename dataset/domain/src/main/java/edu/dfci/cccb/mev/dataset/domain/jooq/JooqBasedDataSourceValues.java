@@ -14,7 +14,7 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.jooq;
 
-import lombok.RequiredArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import org.jooq.DSLContext;
@@ -29,7 +29,7 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDataSourceValues;
  * 
  */
 @ToString (exclude = "context")
-@RequiredArgsConstructor
+@EqualsAndHashCode (callSuper = true)
 public class JooqBasedDataSourceValues extends AbstractDataSourceValues {
 
   private final DSLContext context;
@@ -38,11 +38,24 @@ public class JooqBasedDataSourceValues extends AbstractDataSourceValues {
   private final Field<String> column;
   private final Field<Double> value;
 
+  public JooqBasedDataSourceValues (DSLContext context,
+                                    Table<?> table,
+                                    Field<String> row,
+                                    Field<String> column,
+                                    Field<Double> value) {
+    this.context = context;
+    this.table = table;
+    this.row = row;
+    this.column = column;
+    this.value = value;
+  }
+
   @Override
   public double get (String row, String column) throws InvalidCoordinateException {
     return context.select (value)
                   .from (table)
-                  .where (this.row.eq (row).and (this.column.eq (column)))
+                  .where (this.row.eq (row))
+                  .and (this.column.eq (column))
                   .fetchOne ()
                   .getValue (value);
   }

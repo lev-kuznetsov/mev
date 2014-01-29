@@ -14,10 +14,15 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.prototype;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 /**
  * @author levk
  * 
  */
+@ToString
+@EqualsAndHashCode (callSuper = true)
 public abstract class AbstractDataSourceValues extends AbstractValues implements AutoCloseable {
 
   public static final String ROW_FIELD_NAME = "mev_row";

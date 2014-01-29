@@ -15,7 +15,7 @@
 package edu.dfci.cccb.mev.dataset.domain.simple;
 
 import static com.google.common.cache.CacheBuilder.newBuilder;
-import static java.util.concurrent.TimeUnit.MINUTES;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -40,7 +40,7 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValues;
 @RequiredArgsConstructor
 public class SharedCacheValues extends AbstractValues {
 
-  private static final TimeUnit DURATION_UNIT = MINUTES;
+  private static final TimeUnit DURATION_UNIT = SECONDS;
   private static final long DURATION = 10;
   private static final LoadingCache<Triplet<Values, String, String>, Double> CACHE;
 

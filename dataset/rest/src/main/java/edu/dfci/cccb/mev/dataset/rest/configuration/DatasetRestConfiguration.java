@@ -121,6 +121,7 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
   public ValueStoreBuilder valueFactory (DataSource dataSource) throws Exception {
     return new SharedCachedValueStoreBuilder (new JooqBasedDatasourceValueStoreBuilder (dataSource));
+    // return new MetamodelBackedValueStoreBuilder ();
   }
 
   @Bean

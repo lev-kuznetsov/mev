@@ -43,7 +43,7 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValueStoreBuilder;
  * @author levk
  * 
  */
-@ToString
+@ToString (exclude = "context")
 @Log4j
 public class JooqBasedDatasourceValueStoreBuilder extends AbstractValueStoreBuilder {
 

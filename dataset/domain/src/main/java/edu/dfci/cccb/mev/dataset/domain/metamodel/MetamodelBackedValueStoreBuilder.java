@@ -20,7 +20,6 @@ import static edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDataSourceValue
 import static edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDataSourceValues.ROW_FIELD_NAME;
 import static edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDataSourceValues.VALUE_FIELD_NAME;
 import static java.util.UUID.randomUUID;
-import static org.eobjects.metamodel.DataContextFactory.createJdbcDataContext;
 import static org.eobjects.metamodel.schema.ColumnType.DOUBLE;
 import static org.eobjects.metamodel.schema.ColumnType.VARCHAR;
 
@@ -31,11 +30,13 @@ import javax.sql.DataSource;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Synchronized;
+import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 
-import org.eobjects.metamodel.UpdateableDataContext;
 import org.eobjects.metamodel.create.CreateTable;
 import org.eobjects.metamodel.data.DataSet;
 import org.eobjects.metamodel.insert.InsertInto;
+import org.eobjects.metamodel.jdbc.JdbcDataContext;
 import org.eobjects.metamodel.schema.Table;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
@@ -47,24 +48,27 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValueStoreBuilder;
  * @author levk
  * 
  */
+@ToString
+@Log4j
 public class MetamodelBackedValueStoreBuilder extends AbstractValueStoreBuilder {
 
   private @Getter @Setter @Inject DataSource dataSource;
 
-  private UpdateableDataContext context;
+  private JdbcDataContext context;
   private Table table;
   private MetamodelBackedValues store;
 
   @PostConstruct
-  private void initialize () {
-    context = createJdbcDataContext (dataSource);
+  private void initialize () throws Exception {
+    context = new JdbcDataContext (dataSource);
     String tableName = randomUUID ().toString ();
     CreateTable creator = new CreateTable (context.getDefaultSchema (), tableName);
-    creator.withColumn (ROW_FIELD_NAME).ofType (VARCHAR);
-    creator.withColumn (COLUMN_FIELD_NAME).ofType (VARCHAR);
+    creator.withColumn (ROW_FIELD_NAME).ofType (VARCHAR).asPrimaryKey ();
+    creator.withColumn (COLUMN_FIELD_NAME).ofType (VARCHAR).asPrimaryKey ();
     creator.withColumn (VALUE_FIELD_NAME).ofType (DOUBLE);
     context.executeUpdate (creator);
     table = context.getDefaultSchema ().getTableByName (tableName);
+    log.debug ("Created table " + table);
     store = new MetamodelBackedValues (table, context);
   }
 

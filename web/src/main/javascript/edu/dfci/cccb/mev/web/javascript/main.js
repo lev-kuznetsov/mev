@@ -14,6 +14,7 @@ require.config ({
                  '/library/webjars/bootstrap/2.3.2/js/bootstrap.min' ],
     d3 : [ '/library/webjars/d3js/3.1.5/d3.min' ],
     dropzone : [ '/library/webjars/dropzone/3.7.1/dropzone-amd-module.min' ],
+    retina : [ '/library/webjars/retinajs/0.0.2/retina' ],
     notific8 : [ 'notific8.min' ]
   },
   shim : {
