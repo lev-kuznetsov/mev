@@ -11,4 +11,14 @@
     <version>BAYLIE-SNAPSHOT</version>
   </parent>
   
+  <dependencies>
+      <!-- MetaModel -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-dataset-domain</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+    
+  </dependencies>
 </project>

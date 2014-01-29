@@ -1,23 +1,39 @@
 package edu.dfci.cccb.mev.presets.simple;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eobjects.metamodel.DataContext;
+import org.eobjects.metamodel.DataContextFactory;
+import org.eobjects.metamodel.convert.Converters;
+import org.eobjects.metamodel.convert.StringToIntegerConverter;
+import org.eobjects.metamodel.schema.Column;
+import org.eobjects.metamodel.schema.Schema;
+import org.eobjects.metamodel.schema.Table;
+
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.presets.contract.Preset;
-import edu.dfci.cccb.mev.presets.contract.PresetNotFoundException;
+import edu.dfci.cccb.mev.presets.contract.PresetsBuilder;
+import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
+import edu.dfci.cccb.mev.presets.contract.exceptions.PresetNotFoundException;
 import edu.dfci.cccb.mev.presets.prototype.AbstractPresets;
 
 @Accessors(fluent=true)
-public class PresestsSimple extends AbstractPresets {
+public class SimplePresests extends AbstractPresets {
 
-  private List<Preset> list = new ArrayList<Preset> ();
+  private final List<Preset> list;
   
-  public PresestsSimple(){}  
-  public PresestsSimple(File metadata){}
+  public SimplePresests(){
+    list=new ArrayList<Preset>();
+  }  
+  public SimplePresests(URL metadataURL, PresetsBuilder builder) throws PresetException{    
+    list=builder.getAll (metadataURL);
+  }
   
   @Override
   public Preset get (String name) throws PresetNotFoundException{    
@@ -25,10 +41,10 @@ public class PresestsSimple extends AbstractPresets {
     if(index>=0)
       return list.get (index);
     else
-      throw new PresetNotFoundException ("Preset.id("+name+") not found");
+      throw new PresetNotFoundException ("Preset.name("+name+") not found");
   }
 
-  @Override
+  @Override 
   public void put (Preset preset) {
     int index = find(preset.name ());
     if(index>=0)

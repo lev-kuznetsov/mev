@@ -1,6 +1,5 @@
-package edu.dfci.cccb.mev.presets.tcga.contract;
+package edu.dfci.cccb.mev.presets.contract;
 
-import edu.dfci.cccb.mev.presets.contract.Preset;
 
 public interface TcgaPreset extends Preset{
 

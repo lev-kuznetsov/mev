@@ -13,7 +13,7 @@ import edu.dfci.cccb.mev.presets.contract.Presets;
 
 @RestController
 @RequestMapping(value="/presets")
-public class PresetsController {
+public class PresetsRestController {
 
   @Inject Presets presets;
   
