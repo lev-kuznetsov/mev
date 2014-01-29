@@ -9,8 +9,7 @@ define ([ 'jquery', 'angular'], function ($, angular) {
     	};
     	
     	$scope.pageLoading = true;
-    	
-      $('#loading').modal('show');
+    	$('#loading').modal();
     	
   		$scope.heatmapId = $routeParams.datasetName;
   		
