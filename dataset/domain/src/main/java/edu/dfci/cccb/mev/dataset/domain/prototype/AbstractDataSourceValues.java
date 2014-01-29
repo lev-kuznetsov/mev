@@ -16,34 +16,16 @@ package edu.dfci.cccb.mev.dataset.domain.prototype;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 
 /**
  * @author levk
  * 
  */
-@EqualsAndHashCode
 @ToString
-public abstract class AbstractWorkspace implements Workspace, AutoCloseable {
+@EqualsAndHashCode (callSuper = true)
+public abstract class AbstractDataSourceValues extends AbstractValues implements AutoCloseable {
 
-  /* (non-Javadoc)
-   * @see java.lang.AutoCloseable#close() */
-  @Override
-  public void close () throws Exception {
-    Exception exception = null;
-    for (String name : list ())
-      try {
-        Dataset dataset = get (name);
-        if (dataset instanceof AutoCloseable)
-          ((AutoCloseable) dataset).close ();
-      } catch (Exception e) {
-        if (exception == null)
-          exception = e;
-        else
-          exception.addSuppressed (e);
-      }
-    if (exception != null)
-      throw exception;
-  }
+  public static final String ROW_FIELD_NAME = "mev_row";
+  public static final String COLUMN_FIELD_NAME = "mev_column";
+  public static final String VALUE_FIELD_NAME = "mev_value";
 }

@@ -18,16 +18,19 @@ import static org.eobjects.metamodel.query.LogicalOperator.AND;
 import static org.eobjects.metamodel.query.OperatorType.EQUALS_TO;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 
 import org.eobjects.metamodel.UpdateableDataContext;
 import org.eobjects.metamodel.data.DataSet;
 import org.eobjects.metamodel.drop.DropTable;
+import org.eobjects.metamodel.query.CompiledQuery;
 import org.eobjects.metamodel.query.FilterItem;
+import org.eobjects.metamodel.query.QueryParameter;
 import org.eobjects.metamodel.query.SelectItem;
 import org.eobjects.metamodel.schema.Table;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
-import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValues;
+import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDataSourceValues;
 
 /**
  * @author levk
@@ -35,14 +38,12 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValues;
  */
 @ToString (of = "values")
 @EqualsAndHashCode (callSuper = true)
-public class MetamodelBackedValues extends AbstractValues {
-
-  public static final String ROW_FIELD_NAME = "mev_row";
-  public static final String COLUMN_FIELD_NAME = "mev_column";
-  public static final String VALUE_FIELD_NAME = "mev_value";
+@Log4j
+public class MetamodelBackedValues extends AbstractDataSourceValues {
 
   private final Table values;
   private final UpdateableDataContext context;
+  private final CompiledQuery query;
 
   /**
    * 
@@ -50,6 +51,12 @@ public class MetamodelBackedValues extends AbstractValues {
   public MetamodelBackedValues (Table values, UpdateableDataContext context) {
     this.values = values;
     this.context = context;
+    query = context.compileQuery (context.query ()
+                                         .from (values)
+                                         .select (VALUE_FIELD_NAME)
+                                         .where (and (eq (ROW_FIELD_NAME, new QueryParameter ()),
+                                                      eq (COLUMN_FIELD_NAME, new QueryParameter ())))
+                                         .toQuery ());
   }
 
   /* (non-Javadoc)
@@ -67,11 +74,7 @@ public class MetamodelBackedValues extends AbstractValues {
   }
 
   protected DataSet query (String row, String column) {
-    return context.executeQuery (context.query ()
-                                        .from (values)
-                                        .select (VALUE_FIELD_NAME)
-                                        .where (and (eq (ROW_FIELD_NAME, row), eq (COLUMN_FIELD_NAME, column)))
-                                        .toQuery ());
+    return context.executeQuery (query, row, column);
   }
 
   private FilterItem and (FilterItem... filterItems) {
@@ -97,6 +100,14 @@ public class MetamodelBackedValues extends AbstractValues {
    * @see java.lang.Object#finalize() */
   @Override
   protected void finalize () throws Throwable {
+    close ();
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.AutoCloseable#close() */
+  @Override
+  public void close () throws Exception {
+    log.debug ("Closing " + this, new Throwable ("STACK TRACE"));
     context.executeUpdate (new DropTable (values));
   }
 }
