@@ -50,7 +50,7 @@ define (
                     API.dataset.get ($routeParams.datasetName).then (
                         function(data){ 
                           scope.heatmapData = data;
-                          $('#loading').modal('hide');
+                          
                         }, function(data){
                         	//return home if error
                         	$location.path('/');
@@ -933,7 +933,8 @@ define (
 
                             if (newval && !oldval) {
                               drawHeatmap(newval);
-                              
+                              $('#loading').modal('hide');
+                              console.log("hidden")
                               //redraw previously rendered tree if page loads
                               
                               if (newval.column.root) {
