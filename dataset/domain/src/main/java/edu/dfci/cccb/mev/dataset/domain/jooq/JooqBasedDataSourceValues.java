@@ -49,7 +49,7 @@ public class JooqBasedDataSourceValues extends AbstractDataSourceValues {
 
   @Override
   public void close () throws Exception {
-    context.query ("DROP TABLE {0}", table);
+    context.query ("DROP TABLE IF EXISTS {0}", table);
   }
 
   /* (non-Javadoc)
