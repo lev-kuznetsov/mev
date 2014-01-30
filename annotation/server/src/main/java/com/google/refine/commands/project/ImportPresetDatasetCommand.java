@@ -99,17 +99,13 @@ public class ImportPresetDatasetCommand extends Command {
           Dataset dataset=null;
           //File datafile = new File("/tmp/textxxx/presets/"+sourceDatasetName+"/"+sourceDatasetName+".tsv");
           PresetDescriptor descriptor = (PresetDescriptor)request.getAttribute ("descriptor");
-          File datafile = new File( descriptor.dataUrl ().getFile() );
-          
-          try {
-            URL dataurl=null;
-            dataurl = datafile.toURI ().toURL ();
-            RawInput newDatasetContent = new UrlTsvInput (dataurl);            
+          try {            
+            RawInput newDatasetContent = new UrlTsvInput (descriptor.dataUrl ());            
             newDatasetContent.name (newDatasetName);
-            logger.info (String.format ("***Import Dataset: %s *******************", dataurl.toString ()));
+            logger.info (String.format ("***Import Dataset: %s *******************", descriptor.dataUrl ().toString ()));
             dataset = ProjectManager.getSingleton ().getDatasetBuilder ().build (newDatasetContent, sourceSelection);
             
-          } catch (DatasetBuilderException | InvalidDatasetNameException | InvalidDimensionTypeException | MalformedURLException e) {
+          } catch (DatasetBuilderException | InvalidDatasetNameException | InvalidDimensionTypeException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
           }

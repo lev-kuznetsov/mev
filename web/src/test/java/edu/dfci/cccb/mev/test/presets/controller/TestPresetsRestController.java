@@ -22,6 +22,7 @@ import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.hcl.rest.configuration.HclRestConfiguration;
 import edu.dfci.cccb.mev.limma.rest.configuration.LimmaRestConfiguration;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
+import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationMock;
 import edu.dfci.cccb.mev.web.configuration.DispatcherConfiguration;
 import edu.dfci.cccb.mev.web.configuration.PersistenceConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
@@ -29,7 +30,10 @@ import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes={DispatcherConfiguration.class, PersistenceConfiguration.class, ContainerConfigurations.class, DatasetRestConfiguration.class, PresetsRestConfiguration.class, LimmaRestConfiguration.class, HclRestConfiguration.class, AnnotationServerConfiguration.class})
+@ContextConfiguration(classes={DispatcherConfiguration.class, PersistenceConfiguration.class, ContainerConfigurations.class, DatasetRestConfiguration.class, 
+                               LimmaRestConfiguration.class, HclRestConfiguration.class, AnnotationServerConfiguration.class
+                               , PresetsRestConfiguration.class
+                               })
 public class TestPresetsRestController {
 
   @Autowired WebApplicationContext applicationContext;  

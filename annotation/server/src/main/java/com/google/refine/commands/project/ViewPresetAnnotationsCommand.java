@@ -39,12 +39,13 @@ public class ViewPresetAnnotationsCommand extends Command {
         String datasetName = options.getProperty ("import-preset");
         long projectID = Project.generateID();
         logger.info("Importing existing project using new ID {}", projectID);
-        //File file = new File("/tmp/textxxx/presets/"+datasetName+"/"+datasetName+".annotations.gz");
+
         PresetDescriptor descriptor = (PresetDescriptor)request.getAttribute ("descriptor");
-        File file = new File( descriptor.columnUrl ().getFile() );
-        
-        String fileName = file.getName().toLowerCase();
-        InputStream stream = new FileInputStream (file);
+//        File file = new File( descriptor.columnUrl ().getFile() );        
+//        String fileName = file.getName().toLowerCase();
+//        InputStream stream = new FileInputStream (file);
+        InputStream stream = descriptor.columnUrl ().openStream ();
+        String fileName = descriptor.columnUrl ().getFile ();
         
         ProjectManager.getSingleton().importProject(projectID, stream, !fileName.endsWith(".tar"));
         ProjectManager.getSingleton().loadProjectMetadata(projectID);

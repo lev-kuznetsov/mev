@@ -40,11 +40,11 @@ public class TcgaPresetMetafileTest {
      
     PresetDescriptor descriptor = preset.descriptor ();
     
-    URL expectedDataURL = new URL(tcgaPresetRoot, "path/of/file/filename.tsv");    
+    URL expectedDataURL = new URL(tcgaPresetRoot, "tcga_data/path/of/file/filename.tsv");    
     assertEquals (expectedDataURL, descriptor.dataUrl ());
     
     
-    URL expectedColumnURL = new URL(tcgaPresetRoot, "NS/clinical/NS-clinical_annotations-tsv.openrefine.tar.gz");    
+    URL expectedColumnURL = new URL(tcgaPresetRoot, "openrefine/clinical/NS-clinical_annotations-tsv.openrefine.tar.gz");    
     assertEquals (expectedColumnURL, descriptor.columnUrl ());
     
     

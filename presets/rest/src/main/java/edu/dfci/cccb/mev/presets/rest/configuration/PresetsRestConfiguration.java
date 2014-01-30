@@ -8,9 +8,11 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -46,10 +48,11 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
 
   private final static String TCGA_PROPERTY_MATA_FILENAME="mev.presets.tcga.metadata.filename";
   private final static String TCGA_PROPERTY_ROOT_FOLDER="mev.presets.tcga.metadata.root";
+    
   @Inject Environment environment;
   
   @Bean  
-  public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot, TcgaPresetsBuilder builder) throws URISyntaxException, MalformedURLException, PresetException {
+  public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot, TcgaPresetsBuilder builder) throws URISyntaxException, PresetException, IOException {
     String metadataFilename = environment.getProperty (TCGA_PROPERTY_MATA_FILENAME);
     log.info (TCGA_PROPERTY_ROOT_FOLDER+" URL:" + tcgaPresetRoot);
     log.info (TCGA_PROPERTY_MATA_FILENAME+":" + metadataFilename);
@@ -59,10 +62,24 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
     
     
     URL metadataURL = new URL(tcgaPresetRoot, metadataFilename, null);
-    File checkFile = new File(metadataURL.getFile ());
-    if( checkFile.exists ()==false)
-      return new SimplePresests();
+    log.info ("URL.getFile():" + metadataURL.getFile ());
+    log.info ("URL.toString():" + metadataURL.toString ());
+    log.info ("URL.getProtocol ():" + metadataURL.getProtocol ());
     
+    
+//    InputStream checkExists = metadataURL.openStream ();    
+//    if(checkExists==null)
+//      throw new PresetException ("Metadata resource not found: " + metadataURL.toString ());
+
+    if(!checkExists(metadataURL)){
+      throw new PresetException ("Metadata resource not found: " + metadataURL.toString ());
+    }
+    
+//    File checkFile = new File(metadataURL.getFile ());
+//    if( checkFile.exists ()==false)    
+//      //return new SimplePresests();
+//      throw new PresetException ("Metadata resource not found: " + metadataURL.toString ());
+
     return new SimplePresests (metadataURL, builder);
   }
   
@@ -79,9 +96,6 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
   
   @Bean (name="tcgaPresetRoot")
   public URL tcgaPresetRoot() throws IOException{
-    //initial load of datasets via jar
-    //return (new ClassPathResource ("tcga/")).getURL ();
-    
     
     String pathTcgaRoot = environment.getProperty (TCGA_PROPERTY_ROOT_FOLDER);
     log.info (TCGA_PROPERTY_ROOT_FOLDER+":" + pathTcgaRoot);
@@ -92,7 +106,22 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
       pathTcgaRoot+="/";
     
     URL tcgaPresetRootURL = new URL("file:"+pathTcgaRoot);
+    
+    if(!checkExists(tcgaPresetRootURL))
+      return (new ClassPathResource ("tcga/")).getURL ();
+
     return tcgaPresetRootURL;
+    
+    
+  }
+  
+  private boolean checkExists(URL url){
+    try{
+      url.openStream ().close ();
+      return true;
+    }catch(Exception e){
+      return false;
+    }
     
   }
 }

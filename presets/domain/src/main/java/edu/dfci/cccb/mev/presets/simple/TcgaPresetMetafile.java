@@ -65,11 +65,11 @@ public class TcgaPresetMetafile extends AbstractTcgaPreset {
   }
    
   private String getDataUrlSpec() {
-    return path+"/"+filename;
+    return "tcga_data/"+path+"/"+filename;
   }
   private String getColumnUrlSpec() {
     //ACC-clinical_annotations-tsv.openrefine.tar.gz
-    return disease+"/clinical/"+disease+"-clinical_annotations-tsv.openrefine.tar.gz";
+    return "openrefine/clinical/"+disease+"-clinical_annotations-tsv.openrefine.tar.gz";
   }
 
 
