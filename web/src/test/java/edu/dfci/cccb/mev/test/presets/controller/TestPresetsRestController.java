@@ -54,22 +54,18 @@ public class TestPresetsRestController {
             .andReturn ();
     String content = result.getResponse().getContentAsString();    
   }
-
+  
   @Test 
-  public void testGetTcgaPresets2 () throws Exception {
-    this.mockMvc.perform(get("/presets/tcga2").param ("format", "json").accept("application/json"))    
+  public void testPresetListView () throws Exception {
+    this.mockMvc.perform(get("/container/view/elements/presets/presetList"))
     .andExpect(status().isOk())
-    .andExpect (MockMvcResultMatchers.jsonPath ("$[0].descriptor").doesNotExist ())
     .andReturn ();
     
-  }
-
-  @Test 
-  public void testGetTcgaPresets3 () throws Exception {
-    this.mockMvc.perform(get("/presets/tcga3").param ("format", "json").accept("application/json"))
+    this.mockMvc.perform(get("/container/javascript/presets/PresetManager.js"))
     .andExpect(status().isOk())
-    .andExpect (MockMvcResultMatchers.jsonPath ("$[0].descriptor").doesNotExist ())
     .andReturn ();
+
   }
+  
 
 }

@@ -50,30 +50,20 @@ public class TestTcgaPresets {
     expectedPresets = new ArrayList<Preset> (8);
     Object[] values1 = {"BRCA.MDA_RPPA_Core.Level_3.tsv","BRCA/Level_3","BRCA","Breast invasive carcinoma","MDA_RPPA_Core","M.D. Anderson Reverse Phase Protein Array Core","Level_3"};
     expectedPresets.add (presetProvider.get().init(values1));
-    Object[] values2 = {"BRCA.AgilentG4502A_07_3.Level_3.tsv","BRCA/Level_3","BRCA","Breast invasive carcinoma","AgilentG4502A_07_3","Agilent 244K Custom Gene Expression G4502A-07-3","Level_3"};
-    expectedPresets.add (presetProvider.get().init(values2));
     Object[] values3 = {"ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv","ACC/Level_3","ACC","Adrenocortical carcinoma","IlluminaHiSeq_miRNASeq","Illumina HiSeq 2000 miRNA Sequencing","Level_3"};    
     expectedPresets.add (presetProvider.get().init(values3));
-    Object[] values4 = {"BRCA.IlluminaGA_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv","BRCA/Level_3","BRCA","Breast invasive carcinoma","IlluminaGA_miRNASeq","Illumina Genome Analyzer miRNA Sequencing","Level_3"};
-    expectedPresets.add (presetProvider.get().init(values4));
-    Object[] values5 = {"BRCA.IlluminaHiSeq_RNASeq.Level_3.Expression-Exon.RPKM.tsv","BRCA/Level_3","BRCA","Breast invasive carcinoma","IlluminaHiSeq_RNASeq","Illumina HiSeq 2000 RNA Sequencing","Level_3"};
-    expectedPresets.add (presetProvider.get().init(values5));
     Object[] values6 = {"BRCA.IlluminaHiSeq_RNASeq.Level_3.Expression-Gene.RPKM.tsv","BRCA/Level_3","BRCA","Breast invasive carcinoma","IlluminaHiSeq_RNASeq","Illumina HiSeq 2000 RNA Sequencing","Level_3"};
     expectedPresets.add (presetProvider.get().init(values6));
-    Object[] values7 = {"BRCA.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv","BRCA/Level_3","BRCA","Breast invasive carcinoma","IlluminaHiSeq_miRNASeq","Illumina HiSeq 2000 miRNA Sequencing","Level_3"};
-    expectedPresets.add (presetProvider.get().init(values7));
-    Object[] values8 = {"BRCA.AgilentG4502A_07_3.Level_2.tsv","BRCA/Level_2","BRCA","Breast invasive carcinoma","AgilentG4502A_07_3","Agilent 244K Custom Gene Expression G4502A-07-3","Level_2"};
-    expectedPresets.add (presetProvider.get().init(values8));
 
   }
    
   @Test 
   public void testGet () throws PresetNotFoundException, PresetException {
-    Preset actuall = tcgaPresets.get ("BRCA.AgilentG4502A_07_3.Level_2.tsv");
+    Preset actuall = tcgaPresets.get ("BRCA.IlluminaHiSeq_RNASeq.Level_3.Expression-Gene.RPKM.tsv");
     
     assertNotNull (actuall);
     
-    Object[] values = {"BRCA.AgilentG4502A_07_3.Level_2.tsv","BRCA/Level_2","BRCA","Breast invasive carcinoma","AgilentG4502A_07_3","Agilent 244K Custom Gene Expression G4502A-07-3","Level_2"};    
+    Object[] values = {"BRCA.IlluminaHiSeq_RNASeq.Level_3.Expression-Gene.RPKM.tsv","BRCA/Level_3","BRCA","Breast invasive carcinoma","IlluminaHiSeq_RNASeq","Illumina HiSeq 2000 RNA Sequencing","Level_3"};    
     Preset expected = presetProvider.get().init (values );
     log.info ("actual:"+actuall.toString ());
     log.info ("expect:"+expected.toString ());    
@@ -117,7 +107,7 @@ public class TestTcgaPresets {
     
     assertThat(expectedPresets, is(tcgaPresets.getAll ()));
    
-    Object[] valuesLast = {"BRCA.AgilentG4502A_07_3.Level_2.tsv","New object - old name","BRCA","Breast invasive carcinoma","AgilentG4502A_07_3","Agilent 244K Custom Gene Expression G4502A-07-3","Level_2"};   
+    Object[] valuesLast = {"BRCA.IlluminaHiSeq_RNASeq.Level_3.Expression-Gene.RPKM.tsv","BRCA/Level_3","BRCA","Breast invasive carcinoma","IlluminaHiSeq_RNASeq","Illumina HiSeq 2000 RNA Sequencing","Level_3"};   
     tcgaPresets.put (presetProvider.get().init(valuesLast));
     expectedPresets.remove(expectedPresets.size ()-1);
     expectedPresets.add (presetProvider.get().init(valuesLast));
@@ -136,7 +126,7 @@ public class TestTcgaPresets {
   @Test 
   public void testGetAll () throws PresetException {
     List<Preset> actuall = tcgaPresets.getAll ();
-    assertEquals (8, actuall.size ());
+    assertEquals (3, actuall.size ());
     
     assertThat(expectedPresets, is(actuall));
     
@@ -149,13 +139,8 @@ public class TestTcgaPresets {
     List<String> expected = new ArrayList<String>(){
             {
               add("BRCA.MDA_RPPA_Core.Level_3.tsv");
-              add("BRCA.AgilentG4502A_07_3.Level_3.tsv");
-              add("ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv");
-              add("BRCA.IlluminaGA_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv");
-              add("BRCA.IlluminaHiSeq_RNASeq.Level_3.Expression-Exon.RPKM.tsv");
+              add("ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv");              
               add("BRCA.IlluminaHiSeq_RNASeq.Level_3.Expression-Gene.RPKM.tsv");
-              add("BRCA.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv");
-              add("BRCA.AgilentG4502A_07_3.Level_2.tsv");
     }};
     
     assertThat (names, is(expected));

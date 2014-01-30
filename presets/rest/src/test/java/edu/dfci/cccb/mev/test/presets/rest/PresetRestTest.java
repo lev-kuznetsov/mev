@@ -3,7 +3,7 @@ package edu.dfci.cccb.mev.test.presets.rest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.net.MalformedURLException;
+import java.io.File;
 import java.net.URL;
 
 import javax.inject.Inject;
@@ -24,9 +24,10 @@ public class PresetRestTest {
   @Inject URL tcgaPresetsRoot;
   
   @Test
-  public void testTcgaPresetsRoot () throws MalformedURLException {
-    URL expected = new URL("file:/home/antony/work/danafarber/mev/data/tcga/tcga_data_tempSubset/");
-    assertEquals(expected, tcgaPresetsRoot);
+  public void testTcgaPresetsRoot ()  {
+    //URL expected = new URL("file:/home/antony/work/danafarber/mev/data/tcga/tcga_data_tempSubset/");
+    File checkExists = new File(tcgaPresetsRoot.getFile ());
+    assert(checkExists.exists ());
   }
   
   
@@ -35,7 +36,7 @@ public class PresetRestTest {
     //Preset preset = new TcgaPresetMetafile ("BRCA.MDA_RPPA_Core.Level_3.tsv", "BRCA/Level_3", disease, diseaseName, platform, platformName)
     assertNotNull (tcgaPresets);
     assertNotNull( tcgaPresets.list ());
-    assertEquals(8, tcgaPresets.list ().size ());
+    assertEquals(3, tcgaPresets.list ().size ());
     
   }
 

@@ -66,7 +66,8 @@ ImportPresetDialog.prototype._exportAjax = function(){
 		    url: "command/core/import-preset-dataset",
 		    data: { 
 		    	"project" : theProject.id, 
-		    	"import-preset" : theProject.metadata.name,
+		    	//"import-preset" : theProject.metadata.name,
+		    	"import-preset" : $.url().param('import-preset'),
 		    	"newDatasetName" : this._name,		    	
 		    	"engine" : JSON.stringify(ui.browsingEngine.getJSON())
 		    	},

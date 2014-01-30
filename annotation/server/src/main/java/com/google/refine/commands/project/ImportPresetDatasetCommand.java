@@ -39,6 +39,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.UrlTsvInput;
+import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 
 public class ImportPresetDatasetCommand extends Command {
   final static protected Logger logger = LoggerFactory.getLogger("ImportPresetDatasetCommand");
@@ -46,7 +47,7 @@ public class ImportPresetDatasetCommand extends Command {
   private @Getter @Setter @Inject DatasetBuilder builder;
 
   @Override
-  public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  public void doPost (final HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
     logger.info (String.format ("******************* Import Dataset: %s *******************",
@@ -96,7 +97,9 @@ public class ImportPresetDatasetCommand extends Command {
         public void end (Project project) {
           Selection sourceSelection = new SimpleSelection (newDatasetName, properties, keys);
           Dataset dataset=null;
-          File datafile = new File("/tmp/textxxx/presets/"+sourceDatasetName+"/"+sourceDatasetName+".tsv");
+          //File datafile = new File("/tmp/textxxx/presets/"+sourceDatasetName+"/"+sourceDatasetName+".tsv");
+          PresetDescriptor descriptor = (PresetDescriptor)request.getAttribute ("descriptor");
+          File datafile = new File( descriptor.dataUrl ().getFile() );
           
           try {
             URL dataurl=null;

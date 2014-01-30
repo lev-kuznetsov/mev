@@ -4,7 +4,10 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 import static org.springframework.context.annotation.FilterType.ANNOTATION;
 import static org.springframework.context.annotation.ScopedProxyMode.NO;
 
+import org.springframework.core.io.ClassPathResource;
+
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -56,7 +59,7 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
     
     
     URL metadataURL = new URL(tcgaPresetRoot, metadataFilename, null);
-    File checkFile = new File(metadataURL.toURI ());
+    File checkFile = new File(metadataURL.getFile ());
     if( checkFile.exists ()==false)
       return new SimplePresests();
     
@@ -75,7 +78,11 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
   }
   
   @Bean (name="tcgaPresetRoot")
-  public URL tcgaPresetRoot() throws MalformedURLException{
+  public URL tcgaPresetRoot() throws IOException{
+    //initial load of datasets via jar
+    //return (new ClassPathResource ("tcga/")).getURL ();
+    
+    
     String pathTcgaRoot = environment.getProperty (TCGA_PROPERTY_ROOT_FOLDER);
     log.info (TCGA_PROPERTY_ROOT_FOLDER+":" + pathTcgaRoot);
     if(pathTcgaRoot == null)
@@ -86,5 +93,6 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
     
     URL tcgaPresetRootURL = new URL("file:"+pathTcgaRoot);
     return tcgaPresetRootURL;
+    
   }
 }

@@ -47,6 +47,8 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.zip.GZIPInputStream;
 
+import javax.inject.Inject;
+
 import org.apache.tools.tar.TarEntry;
 import org.apache.tools.tar.TarInputStream;
 import org.apache.tools.tar.TarOutputStream;
@@ -68,6 +70,7 @@ import com.google.refine.model.Project;
 import com.google.refine.preference.TopList;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.presets.contract.Presets;
 
 public class FileProjectManager extends ProjectManager {
   final static public String REQUEST_ATTEIBUTE_DATASET = "dataset";
@@ -118,8 +121,8 @@ public class FileProjectManager extends ProjectManager {
   public void setRequestHeatmap (Dataset requestHeatmap) {
     this.dataset = requestHeatmap;
   }
-  
-  
+  @Inject Presets presets;
+    
   @Override
   public Map<Long, ProjectMetadata> getAllProjectMetadata () {
     Map<Long, ProjectMetadata> heatmapMetadata = new HashMap<Long, ProjectMetadata> ();
@@ -127,7 +130,9 @@ public class FileProjectManager extends ProjectManager {
       if (dataset!=null && entry.getValue ().getName ().startsWith (dataset.name ())) {
         heatmapMetadata.put (entry.getKey (), entry.getValue ());
       }else{
-        heatmapMetadata.put (entry.getKey (), entry.getValue ());
+        /*if(presets!=null && presets.list ().contains (entry.getValue().getName())==false){
+          heatmapMetadata.put (entry.getKey (), entry.getValue ());
+        }*/
       }
 
     }

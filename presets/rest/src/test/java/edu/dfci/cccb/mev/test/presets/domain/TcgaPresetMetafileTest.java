@@ -44,7 +44,7 @@ public class TcgaPresetMetafileTest {
     assertEquals (expectedDataURL, descriptor.dataUrl ());
     
     
-    URL expectedColumnURL = new URL(tcgaPresetRoot, "NS/clinical/NS.clinical_annotations.tsv");    
+    URL expectedColumnURL = new URL(tcgaPresetRoot, "NS/clinical/NS-clinical_annotations-tsv.openrefine.tar.gz");    
     assertEquals (expectedColumnURL, descriptor.columnUrl ());
     
     
