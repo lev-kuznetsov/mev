@@ -806,8 +806,11 @@ define (
                             },
                             "column" : function (d, i) {
                               return d.column;
-                            }
-                          });
+                            },
+                          })
+                          .append("title").text(function(d){return "Value: " + d.value + "\nRow: " + d.row + "\nColumn: " + d.column});
+                          
+                          
 
                         }
                         ;
