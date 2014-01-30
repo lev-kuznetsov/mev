@@ -15,14 +15,23 @@
 package edu.dfci.cccb.mev.web.configuration;
 
 import static java.io.File.separator;
+import static java.lang.String.valueOf;
 import static java.lang.System.getProperty;
+import static org.h2.tools.Server.createWebServer;
 
+import java.sql.SQLException;
 import java.util.Properties;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import lombok.Synchronized;
+import lombok.extern.log4j.Log4j;
+
 import org.apache.commons.dbcp.BasicDataSource;
+import org.h2.tools.Server;
+import org.springframework.context.Lifecycle;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -38,6 +47,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
+@Log4j
 public class PersistenceConfiguration {
 
   private @Inject Environment environment;
@@ -89,5 +99,46 @@ public class PersistenceConfiguration {
   @Bean
   public PlatformTransactionManager transactionManager (DataSource dataSource) {
     return new DataSourceTransactionManager (dataSource);
+  }
+
+  @Bean
+  public Lifecycle h2ConsoleServer () {
+    return new Lifecycle () {
+
+      private Server server;
+      private final int port = environment.getProperty ("h2.console.port", Integer.class, 18043);
+
+      /* (non-Javadoc)
+       * @see org.springframework.context.Lifecycle#start() */
+      @Override
+      @Synchronized
+      @PostConstruct
+      public void start () {
+        try {
+          (server = createWebServer ("-webPort", valueOf (port))).start ();
+          log.info ("Started H2 console on port " + port);
+        } catch (SQLException e) {
+          log.warn ("Failed to start H2 console on port " + port, e);
+        }
+      }
+
+      /* (non-Javadoc)
+       * @see org.springframework.context.Lifecycle#stop() */
+      @Override
+      @Synchronized
+      public void stop () {
+        server.stop ();
+        log.info ("Stopped H2 console");
+        server = null;
+      }
+
+      /* (non-Javadoc)
+       * @see org.springframework.context.Lifecycle#isRunning() */
+      @Override
+      @Synchronized
+      public boolean isRunning () {
+        return server != null;
+      }
+    };
   }
 }
