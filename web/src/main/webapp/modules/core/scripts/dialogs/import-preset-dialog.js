@@ -1,4 +1,5 @@
 function ImportPresetDialog() { 	
+	
     this._createDialog();
     
 }
@@ -7,6 +8,12 @@ ImportPresetDialog.prototype._lastItem=null;
 
 
 ImportPresetDialog.prototype._createDialog = function() {
+		
+	if(theProject.rowModel.filtered>50){
+		alert("Cannot import more than 50 samples");
+		return;
+	}
+	
     var self = this;
     var dialog = $(DOM.loadHTML("core", "scripts/dialogs/import-preset-dialog.html"));
     this._elmts = DOM.bind(dialog);
@@ -90,7 +97,7 @@ ImportPresetDialog.prototype._exportAjax = function(){
 		Refine._lastItem={
 			name: this._name,
 			dimension: this._dimension,
-		};		
+		};
 		$.ajax(postRequest);
 };
 
