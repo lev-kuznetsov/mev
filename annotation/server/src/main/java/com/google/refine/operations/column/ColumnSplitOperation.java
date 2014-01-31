@@ -324,5 +324,11 @@ public class ColumnSplitOperation extends EngineDependentOperation {
             
             return results;
         }
+
+        @Override
+        public boolean pass (Project project, int rowIndex, Row row) {
+          // TODO Auto-generated method stub
+          return false;
+        }
     }
 }

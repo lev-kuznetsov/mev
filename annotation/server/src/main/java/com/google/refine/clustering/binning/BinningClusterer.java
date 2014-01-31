@@ -137,6 +137,12 @@ public class BinningClusterer extends Clusterer {
         public Map<String,Map<String,Integer>> getMap() {
             return _map;
         }
+
+        @Override
+        public boolean pass (Project project, int rowIndex, Row row) {
+          // TODO Auto-generated method stub
+          return false;
+        }
     }
             
     public static class SizeComparator implements Comparator<Map<String,Integer>>, Serializable {

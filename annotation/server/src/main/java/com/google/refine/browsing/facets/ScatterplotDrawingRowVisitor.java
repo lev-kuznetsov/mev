@@ -160,5 +160,11 @@ public class ScatterplotDrawingRowVisitor implements RowVisitor, RecordVisitor {
     public RenderedImage getImage() {
         return image;
     }
+
+    @Override
+    public boolean pass (Project project, int rowIndex, Row row) {
+      // TODO Auto-generated method stub
+      return false;
+    }
 }
 

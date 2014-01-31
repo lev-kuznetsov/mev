@@ -138,6 +138,12 @@ public class kNNClusterer extends Clusterer {
         public List<Set<Serializable>> getClusters() {
             return _clusterer.getClusters(_radius);
         }
+
+        @Override
+        public boolean pass (Project project, int rowIndex, Row row) {
+          // TODO Auto-generated method stub
+          return false;
+        }
     }
 
     class BlockingClusteringRowVisitor implements RowVisitor {
@@ -189,6 +195,12 @@ public class kNNClusterer extends Clusterer {
         
         public List<Set<Serializable>> getClusters() {
             return _clusterer.getClusters(_radius);
+        }
+
+        @Override
+        public boolean pass (Project project, int rowIndex, Row row) {
+          // TODO Auto-generated method stub
+          return false;
         }
     }
         

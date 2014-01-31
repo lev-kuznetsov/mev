@@ -105,4 +105,10 @@ public class SortingRowVisitor extends BaseSorter implements RowVisitor {
 
         return keyMaker.makeKey(project, (Row) o, index);
     }
+
+    @Override
+    public boolean pass (Project project, int rowIndex, Row row) {
+      // TODO Auto-generated method stub
+      return false;
+    }
 }
