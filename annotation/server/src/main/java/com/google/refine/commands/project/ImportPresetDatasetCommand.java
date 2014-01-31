@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.refine.ProjectManager;
+import com.google.refine.ProjectMetadata;
 import com.google.refine.browsing.Engine;
 import com.google.refine.browsing.FilteredRows;
 import com.google.refine.browsing.RowVisitor;
@@ -58,7 +59,7 @@ public class ImportPresetDatasetCommand extends Command {
       Project project = getProject (request);
       Engine engine = getEngine (request, project);      
       
-      Dimension.Type dimensionType = Dimension.Type.COLUMN;
+      final Dimension.Type dimensionType = Dimension.Type.COLUMN;
       final String sourceDatasetName = request.getParameter ("import-preset");
       final String newDatasetName = request.getParameter ("newDatasetName");
       final Properties properties = new Properties ();      
@@ -106,16 +107,20 @@ public class ImportPresetDatasetCommand extends Command {
             dataset = ProjectManager.getSingleton ().getDatasetBuilder ().build (newDatasetContent, sourceSelection);
             
           } catch (DatasetBuilderException | InvalidDatasetNameException | InvalidDimensionTypeException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
           }
           ProjectManager.getSingleton ().getWorkspace ().put (dataset);
+          ProjectMetadata pm = project.getMetadata ();;          
+          pm.setName(newDatasetName+dimensionType.toString ());
         }
       };
 
+      
+      
       FilteredRows filteredRows = engine.getAllFilteredRows ();
       filteredRows.accept (project, visitor);
       ProjectManager.getSingleton ().save (true);
+      logger.info (String.format ("***Import Dataset Respone: OK"));
       respond (response, "{ \"code\" : \"ok\" }");
 
     } catch (Exception e) {

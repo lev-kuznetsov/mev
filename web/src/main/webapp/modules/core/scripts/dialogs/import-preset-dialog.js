@@ -36,8 +36,7 @@ ImportPresetDialog.prototype._createDialog = function() {
     this._elmts.exportSetAndExitButton.html("Save and Close");
     this._elmts.cancelSetButton.html($.i18n._('core-buttons')["cancel"]);
     
-    this._elmts.exportSetButton.click(function() { if(self._validate()){self._exportAjax(); self._dismiss(); }});
-    this._elmts.exportSetAndExitButton.click(function() { if(self._validate()){self._exportAjax(); self._dismiss(); Refine._close(); }});
+    this._elmts.exportSetButton.click(function() { if(self._validate()){self._exportWait(); self._dismiss(); }});    
     this._elmts.cancelSetButton.click(function() { self._dismiss(); });
     /*
     this._elmts.resetButton.click(function() {
@@ -67,7 +66,7 @@ ImportPresetDialog.prototype._validate = function()
 	  return true;
 };
 
-ImportPresetDialog.prototype._exportAjax = function(){
+ImportPresetDialog.prototype._exportAjax = function(onSuccess, onError){
 	var postRequest = {
 		    type: "POST",
 		    url: "command/core/import-preset-dataset",
@@ -79,26 +78,65 @@ ImportPresetDialog.prototype._exportAjax = function(){
 		    	"engine" : JSON.stringify(ui.browsingEngine.getJSON())
 		    	},
 		    dataType: "json",
-		    success: function (data) {
-		      if (data && typeof data.code != 'undefined' && data.code == "ok") {
-		        //alert("Set saved succesfully");		        
-		        //parent.OpenRefineBridge.addSelectionSet(Refine._lastItem);
-		        var currentUrl = window.location.href;
-		        console.log("currentUrl:"+currentUrl);
-		        var newUrl = "/#/dataset/"+Refine._lastItem.name+"/";
-		        console.log("newUrl:"+newUrl);
-		        window.location.replace(newUrl);
-		      } else {
-		        alert($.i18n._('core-index')["error-rename"]+" " + data.message);
-		      }
-		    }
+		    success: function(data){
+		    	onSuccess(data);
+		    },
+		    error: function(data){
+		    	onError(data);		    	
+		    },
+		    complete: function(data){		    	}
 		  };
 		 
 		Refine._lastItem={
 			name: this._name,
 			dimension: this._dimension,
 		};
+		
 		$.ajax(postRequest);
+};
+
+ImportPresetDialog.prototype._exportWait = function(){
+	  var done = false;
+	  var dismissBusy = null;
+	  Refine.setAjaxInProgress();
+
+	  var closeWait = function(){
+		  Refine.clearAjaxInProgress();
+		  done = true;
+		  if (dismissBusy) {
+		      dismissBusy();
+		  }		  
+	  };
+	  var showWait = function(){
+		  window.setTimeout(function() {
+			  if (!done) {
+			    dismissBusy = DialogSystem.showBusy();
+			 }
+		  }, 500);  
+	  }
+	  var onSucess=function(data) {	    
+		closeWait();		
+	    if (data && typeof data.code != 'undefined' && data.code == "ok") {
+	        //alert("Set saved succesfully");		        
+	        //parent.OpenRefineBridge.addSelectionSet(Refine._lastItem);
+	        var currentUrl = window.location.href;
+	        console.log("currentUrl:"+currentUrl);
+	        var newUrl = "/#/dataset/"+Refine._lastItem.name+"/";
+	        console.log("newUrl:"+newUrl);
+	        window.location.replace(newUrl);
+	      } else {
+	        alert($.i18n._("Error while importing dataset:" + data.message));
+	      }	    
+	  };
+	  var onError=function(data) {
+		  closeWait();
+		  alert($.i18n._("Error while importing dataset:" + data.message));
+	  };
+	  
+	  //do
+	  showWait();
+	  this._exportAjax(onSucess, onError);
+	  
 };
 
 ImportPresetDialog.prototype._export = function() {  
