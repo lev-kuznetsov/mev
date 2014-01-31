@@ -231,9 +231,13 @@
     <resources>
       <resource>
         <directory>src/main/resources</directory>
-        <filtering>true</filtering>
+        <excludes>
+            <exclude>**/tcga/*</exclude>
+        </excludes>        
       </resource>
-
+	  <resource>
+           <directory>src/main/resources/tcga</directory>
+      </resource>
       <resource>
         <directory>src/main/javascript</directory>
         <filtering>false</filtering>
