@@ -204,15 +204,24 @@ input#upload-input {
     width: 0;
     hieght: 0;
   }
-  
+.mev-preset-list-wrapper a{
+	text-decoration: none;
+}  
 /* Presets List Form  */
-.filter-form-wrapper{
+.mev-filter-form-wrapper{
 	margin: 0 0 0 0;
 	float: right;
 }
-form.filter-form{
+form.mev-filter-form{
 	margin: 0px 0px 0px 0px;
 }
 form.filter-form input{
 	margin: 5px 0px 0px 0px;
 }
+.mev-table-tight th, .mev-table-tight td {
+padding: 2px;
+}
+.mev-table-tight th a{
+	color: rgb(51, 51, 51);
+}
+

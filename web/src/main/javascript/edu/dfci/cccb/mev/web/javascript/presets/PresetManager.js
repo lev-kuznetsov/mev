@@ -2,7 +2,7 @@ define(['jquery', 'angular'], function (jquery, angular){
 	angular.module('Mev.PresetManager', [])
 		.controller('PresetManagerController', ['$scope', '$element', '$attrs', 'PresetService', function($scope, $element, $attrs, presetService){			
 			$scope.presets = presetService.getPresetList();
-			$scope.orderByColumn="diseaseName";
+			$scope.orderByColumn="name";
 			$scope.orderByReverse=false;
 		}])
 		.service('PresetService', ['QHTTP', 'alertService', function(QHTTP, alertService){
