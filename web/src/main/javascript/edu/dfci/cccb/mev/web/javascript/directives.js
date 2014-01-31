@@ -585,7 +585,7 @@ define (
 
                         var heatmapMarginLeft = Math.floor (svgWidth * .15), 
                             heatmapMarginRight = Math.floor (svgWidth * .15), 
-                            heatmapMarginTop = Math.floor (svgHeight * .25), 
+                            heatmapMarginTop = 200, 
                             heatmapMarginBottom = Math.floor (svgHeight * .15),
                             heatmapColumnSelectionsGutter = 0,
                             heatmapRowSelectionsGutter = 0;
@@ -624,7 +624,18 @@ define (
                         // Axis Scales
                         var xAxisd3 = d3.svg.axis ();
                         var yAxisd3 = d3.svg.axis ();
-
+                        
+                        //Tree Scales
+                        
+                        var verticalTreeX = d3.scale.linear().domain([0, 1]);
+                    
+                        var verticalTreeY = d3.scale.linear().domain([0, 1]);
+                    	
+                        var horizontalTreeX = d3.scale.linear().domain([0, 100]);
+                    
+                        var horizontalTreeY = d3.scale.linear().domain([0, 100]);
+                        
+                        
                         var svg = window.append ("svg").attr ("class", "chart")
                         // .attr("pointer-events", "all")
                         .attr ("width", svgWidth);
@@ -643,8 +654,18 @@ define (
                         
                         var rowSelections = selections.append("g")
                             .attr ("class", "rowSelections");
+                        
+                        var clip = svg.append("defs").append("svg:clipPath")
+                        	.attr("id", "columnLabelClip")
+                        	.append("svg:rect")
+                        	.attr("id", "clip-rect")
+                       		.attr("x", heatmapMarginLeft)
+                       		.attr("y", (2*heatmapMarginTop)/3)
+                        	.attr("width", heatmapCellsWidth)
+                        	.attr("height", (1*heatmapMarginTop)/3 )
 
                         var xlabels = vis.append ("g")
+                            //.attr("clip-path", "url(#columnLabelClip)")
                             .attr ("class", "xlabels");
 
                         var ylabels = vis.append ("g")
@@ -785,8 +806,11 @@ define (
                             },
                             "column" : function (d, i) {
                               return d.column;
-                            }
-                          });
+                            },
+                          })
+                          .append("title").text(function(d){return "Value: " + d.value + "\nRow: " + d.row + "\nColumn: " + d.column});
+                          
+                          
 
                         }
                         ;
@@ -826,15 +850,15 @@ define (
                           
                           if (cols.selections.length > 0){
                         	  
-                        	heatmapColumnSelectionsGutter = .25 * heatmapMarginBottom;
+                        	heatmapColumnSelectionsGutter = 50;
                         	
                             colSelectionsX.domain(cols.keys)
                               .rangeBands([ heatmapMarginLeft,
                                           heatmapMarginLeft + heatmapCellsWidth  ]);
                           
                             colSelectionsY.domain(cols.selections.map(function(d){return d.name}))
-                              .rangeBands([ heatmapMarginTop + heatmapCellsHeight,
-                                          heatmapMarginTop + heatmapCellsHeight + heatmapColumnSelectionsGutter  ]);
+                              .rangeBands([ heatmapMarginTop,
+                                          heatmapMarginTop + heatmapColumnSelectionsGutter  ]);
                           };
                           
                           if (rows.selections.length > 0) {
@@ -849,6 +873,11 @@ define (
                               .rangeBands([ heatmapMarginTop,
                                           heatmapMarginTop + heatmapCellsHeight]);
                           };
+                          
+                          
+                          //if (cols.root){}
+                          
+                          
 
 
                           XLabel2Index.domain (cols.keys).range (
@@ -878,8 +907,8 @@ define (
                                   heatmapMarginLeft + heatmapCellsWidth ]);
 
                           YIndex2Pixel.domain ([ 0, rows.keys.length ]).range (
-                              [ heatmapMarginTop,
-                                heatmapMarginTop + heatmapCellsHeight ]);
+                              [ heatmapMarginTop + heatmapColumnSelectionsGutter,
+                                heatmapMarginTop + heatmapColumnSelectionsGutter + heatmapCellsHeight ]);
 
                           xAxisd3.scale (XIndex2Pixel).orient ("top").ticks (
                               cols.keys.length).tickFormat (function (d) {
@@ -895,6 +924,16 @@ define (
                               return YIndex2Label (d);
                             }
                           });
+                          
+                          verticalTreeX.range([4, heatmapMarginLeft]);
+                      
+                          verticalTreeY.range([heatmapMarginTop + heatmapColumnSelectionsGutter,
+                              heatmapCellsHeight + heatmapMarginTop + heatmapColumnSelectionsGutter]);
+                              
+                          horizontalTreeX.range([heatmapMarginLeft, heatmapCellsWidth + heatmapMarginLeft]);
+                      
+                          horizontalTreeY.range([4, (2*heatmapMarginTop) / 3]);
+                          
                         }
                         ;
 
@@ -973,6 +1012,23 @@ define (
                             width: heatmapCellsWidth
                         };
                         
+                        var verticalTreeX = d3.scale.linear()
+                        	.domain([0, 1])
+                        	.range([4, heatmapMarginLeft]);
+                        
+                        var verticalTreeY = d3.scale.linear()
+                        	.domain([0, 1])
+                        	.range([heatmapMarginTop + heatmapColumnSelectionsGutter,
+                                heatmapCellsHeight + heatmapMarginTop + heatmapColumnSelectionsGutter]);
+                                
+                        var horizontalTreeX = d3.scale.linear()
+                        	.domain([0, 1])
+                        	.range([heatmapMarginLeft, heatmapCellsWidth + heatmapMarginLeft]);
+                        
+                        var horizontalTreeY = d3.scale.linear()
+                            .domain([0, 1])
+                            .range([4, (2*heatmapMarginTop) / 3]);
+                        
                         var dendogramLeftWindow = svg.append("g")
                             .attr('class', 'leftDendogram');
                         
@@ -1008,7 +1064,7 @@ define (
                         });
                         
                         function drawTree(canvas, cluster, tree, type) {
-                          
+                        	
                           canvas.selectAll('*').remove();
                           var nodes = cluster.nodes(tree);
                           var links = cluster.links(nodes);
@@ -1025,13 +1081,15 @@ define (
                               .attr("fill", "none"); 
 
                           canvas.selectAll("circle").data(nodes).enter().append("circle")
-                             .attr("r", 0)
+                             .attr("r", 4)
                              .attr("cx", function(d){
+                            	 console.log(d.y)
      
-                              return (type == 'vertical') ? (d.y * dendogramLeft.width) : (d.x * dendogramTop.width) + dendogramLeft.width;
+                              return (type == 'vertical') ? verticalTreeX(d.y) : horizontalTreeX(d.x );
+                              
                              })
                              .attr("cy", function(d){
-                              return (type == 'vertical') ? (d.x * dendogramLeft.height) + heatmapMarginTop : (d.y * dendogramTop.height);
+                              return (type == 'vertical') ? verticalTreeY(d.x) : horizontalTreeY(d.y);
                              })
                              .attr("fill", function(d){
                                return (type == 'horizontal') ? "blue" : "red"
@@ -1060,18 +1118,18 @@ define (
                         function horizontalPath(d) {
                           //Path function builder for TOP heatmap tree path attribute
                           
-                          return "M" + ((d.target.x * dendogramTop.width)+dendogramLeft.width )  + "," + (d.target.y * dendogramTop.height ) +
-                          "V" + (d.source.y * dendogramTop.height ) +
-                          "H" + ((d.source.x * dendogramTop.width)+dendogramLeft.width ) ;
+                          return "M" + horizontalTreeX(d.target.x)  + "," + horizontalTreeY(d.target.y) +
+                          "V" + horizontalTreeY(d.source.y) +
+                          "H" + horizontalTreeX(d.source.x) ;
 
                         };
                         function verticalPath(d) {
                         	
                           //Path function builder for LEFT heatmap tree path attribute
 
-                          return "M" + (d.source.y * dendogramLeft.width )  + "," + ((d.source.x * dendogramLeft.height)+heatmapMarginTop ) +
-                          "V" + ((d.target.x * dendogramLeft.height)+heatmapMarginTop ) +
-                          "H" + (d.target.y * dendogramLeft.width )
+                          return "M" + verticalTreeX(d.source.y)  + "," + verticalTreeY(d.source.x) +
+                          "V" + verticalTreeY(d.target.x) +
+                          "H" + verticalTreeX(d.target.y)
 
                         };
 
