@@ -15,6 +15,7 @@
 package edu.dfci.cccb.mev.dataset.domain.simple;
 
 import static com.google.common.cache.CacheBuilder.newBuilder;
+import static edu.dfci.cccb.mev.dataset.domain.support.LifecycleUtilities.destroy;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import java.util.concurrent.ExecutionException;
@@ -38,7 +39,7 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValues;
  */
 @ToString
 @RequiredArgsConstructor
-public class SharedCacheValues extends AbstractValues {
+public class SharedCacheValues extends AbstractValues implements AutoCloseable {
 
   private static final TimeUnit DURATION_UNIT = SECONDS;
   private static final long DURATION = 10;
@@ -46,7 +47,7 @@ public class SharedCacheValues extends AbstractValues {
 
   static {
     CACHE = newBuilder ().expireAfterAccess (DURATION, DURATION_UNIT)
-                         .maximumSize (100000)
+                         .maximumSize (1000000)
                          .build (new CacheLoader<Triplet<Values, String, String>, Double> () {
 
                            @Override
@@ -69,5 +70,12 @@ public class SharedCacheValues extends AbstractValues {
     } catch (ExecutionException e) {
       throw (InvalidCoordinateException) e.getCause ();
     }
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.AutoCloseable#close() */
+  @Override
+  public void close () throws Exception {
+    destroy (new Exception ("Failure to close values " + values), values);
   }
 }

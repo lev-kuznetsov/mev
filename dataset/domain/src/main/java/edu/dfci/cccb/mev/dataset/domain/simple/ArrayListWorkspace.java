@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.simple;
 
+import static edu.dfci.cccb.mev.dataset.domain.support.LifecycleUtilities.destroy;
+
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,7 +36,7 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractWorkspace;
 @EqualsAndHashCode (callSuper = true)
 @ToString
 @Log4j
-public class ArrayListWorkspace extends AbstractWorkspace {
+public class ArrayListWorkspace extends AbstractWorkspace implements AutoCloseable {
 
   private final ArrayList<Dataset> datasets = new ArrayList<> ();
 
@@ -45,10 +47,11 @@ public class ArrayListWorkspace extends AbstractWorkspace {
   @Override
   @Synchronized
   public void put (Dataset dataset) {
-    log.debug ("*************************************************Adding dataset " + dataset);
-    for (Iterator<Dataset> datasets = this.datasets.iterator (); datasets.hasNext ();){
+    if (log.isDebugEnabled ())
+      log.debug ("Adding dataset " + dataset);
+    for (Iterator<Dataset> datasets = this.datasets.iterator (); datasets.hasNext ();) {
       Dataset curDataset = datasets.next ();
-      if (curDataset!=null && dataset.name ().equals (curDataset.name ()))
+      if (curDataset != null && dataset.name ().equals (curDataset.name ()))
         datasets.remove ();
     }
     datasets.add (0, dataset);
@@ -87,11 +90,25 @@ public class ArrayListWorkspace extends AbstractWorkspace {
   @Override
   @Synchronized
   public void remove (String name) throws DatasetNotFoundException {
-    for (Iterator<Dataset> datasets = this.datasets.iterator (); datasets.hasNext ();)
-      if (datasets.next ().name ().equals (name)) {
+    for (Iterator<Dataset> datasets = this.datasets.iterator (); datasets.hasNext ();) {
+      Dataset dataset = datasets.next ();
+      if (dataset.name ().equals (name)) {
         datasets.remove ();
+        try {
+          destroy (new Exception ("Failure to destroy dataset on removal from workspace"), dataset);
+        } catch (Exception e) {
+          log.warn (e);
+        }
         return;
       }
+    }
     throw new DatasetNotFoundException ().name (name);
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.AutoCloseable#close() */
+  @Override
+  public void close () throws Exception {
+    destroy (new Exception ("Failure to close workspace"), datasets);
   }
 }

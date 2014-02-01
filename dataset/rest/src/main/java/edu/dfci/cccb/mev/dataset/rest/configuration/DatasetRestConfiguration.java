@@ -17,6 +17,7 @@ package edu.dfci.cccb.mev.dataset.rest.configuration;
 import static edu.dfci.cccb.mev.dataset.rest.assembly.tsv.prototype.AbstractTsvHttpMessageConverter.TSV_EXTENSION;
 import static edu.dfci.cccb.mev.dataset.rest.assembly.tsv.prototype.AbstractTsvHttpMessageConverter.TSV_MEDIA_TYPE;
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver.ANALYSIS_MAPPING_NAME;
+import static java.lang.reflect.Proxy.newProxyInstance;
 import static java.util.Arrays.asList;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 import static org.springframework.context.annotation.ScopedProxyMode.NO;
@@ -24,6 +25,8 @@ import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUES
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 import static org.springframework.web.servlet.HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
@@ -88,20 +91,20 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
 
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = NO)
-  public Dataset dataset (NativeWebRequest request, DatasetPathVariableMethodArgumentResolver resolver) throws Exception {
-    return resolver.resolveObject (request);
+  public Dataset dataset (final NativeWebRequest request, final DatasetPathVariableMethodArgumentResolver resolver) throws Exception {
+    return proxy (resolver.resolveObject (request), Dataset.class);
   }
 
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = NO)
   public Dimension dimension (NativeWebRequest request, DimensionPathVariableMethodArgumentResolver resolver) throws Exception {
-    return resolver.resolveObject (request);
+    return proxy (resolver.resolveObject (request), Dimension.class);
   }
 
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = NO)
   public Selection selection (NativeWebRequest request, SelectionPathVariableMethodArgumentResolver resolver) throws Exception {
-    return resolver.resolveObject (request);
+    return proxy (resolver.resolveObject (request), Selection.class);
   }
 
   // FIXME: this is a hack until type of analysis goes into the request mapping,
@@ -110,9 +113,10 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = NO)
   public Analysis analysis (NativeWebRequest request, Dataset dataset) throws Exception {
-    return dataset.analyses ()
-                  .get (((Map<String, String>) request.getAttribute (URI_TEMPLATE_VARIABLES_ATTRIBUTE,
-                                                                     RequestAttributes.SCOPE_REQUEST)).get (ANALYSIS_MAPPING_NAME));
+    return proxy (dataset.analyses ()
+                         .get (((Map<String, String>) request.getAttribute (URI_TEMPLATE_VARIABLES_ATTRIBUTE,
+                                                                            RequestAttributes.SCOPE_REQUEST)).get (ANALYSIS_MAPPING_NAME)),
+                  Analysis.class);
   }
 
   // Domain builders
@@ -195,5 +199,18 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   @Override
   public void configureContentNegotiation (ContentNegotiationConfigurer configurer) {
     configurer.mediaType (TSV_EXTENSION, TSV_MEDIA_TYPE);
+  }
+
+  @SuppressWarnings ("unchecked")
+  // This is a greedy proxy as opposed to lazy proxy when using
+  // @Scope(proxyMode=INTERFACES)
+  private static <T> T proxy (final T of, Class<?>... interfaces) {
+    return (T) newProxyInstance (of.getClass ().getClassLoader (), interfaces, new InvocationHandler () {
+
+      @Override
+      public Object invoke (Object proxy, Method method, Object[] args) throws Throwable {
+        return method.invoke (of, args);
+      }
+    });
   }
 }

@@ -14,11 +14,14 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.simple;
 
+import static edu.dfci.cccb.mev.dataset.domain.support.LifecycleUtilities.destroy;
+
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisNotFoundException;
@@ -29,7 +32,8 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalyses;
  * 
  */
 @Log4j
-public class ArrayListAnalyses extends AbstractAnalyses {
+@ToString
+public class ArrayListAnalyses extends AbstractAnalyses implements AutoCloseable {
 
   private List<Analysis> analyses = new ArrayList<> ();
 
@@ -85,5 +89,12 @@ public class ArrayListAnalyses extends AbstractAnalyses {
         return analyses.size ();
       }
     };
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.AutoCloseable#close() */
+  @Override
+  public void close () throws Exception {
+    destroy (new Exception ("Failure closing analyses"), analyses);
   }
 }

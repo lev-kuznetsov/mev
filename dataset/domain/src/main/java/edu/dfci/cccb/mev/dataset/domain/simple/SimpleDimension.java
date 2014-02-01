@@ -18,7 +18,6 @@ import java.util.List;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
@@ -30,7 +29,6 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDimension;
  * 
  */
 @EqualsAndHashCode (callSuper = true)
-@ToString
 @Accessors (fluent = true)
 @Log4j
 public class SimpleDimension extends AbstractDimension {

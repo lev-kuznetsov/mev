@@ -19,7 +19,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
@@ -30,7 +29,6 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
  * 
  */
 @EqualsAndHashCode
-@ToString
 @Accessors (fluent = true)
 @RequiredArgsConstructor (access = PROTECTED)
 public abstract class AbstractDimension implements Dimension {
@@ -38,4 +36,14 @@ public abstract class AbstractDimension implements Dimension {
   private @Getter final Type type;
   private @Getter @Setter (PROTECTED) Selections selections;
   private @Getter @Setter (PROTECTED) Annotation annotation;
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#toString() */
+  @Override
+  public String toString () {
+    return getClass ().getSimpleName ()
+           + "(type=" + type () + ", "
+           + "selections=" + selections + ", "
+           + "keys=" + (keys ().size () > 10 ? "<" + keys ().size () + " keys>" : keys ()) + ")";
+  }
 }
