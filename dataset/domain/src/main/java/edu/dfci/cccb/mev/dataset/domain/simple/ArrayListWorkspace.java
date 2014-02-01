@@ -47,9 +47,13 @@ public class ArrayListWorkspace extends AbstractWorkspace implements AutoCloseab
   @Override
   @Synchronized
   public void put (Dataset dataset) {
-    for (Iterator<Dataset> datasets = this.datasets.iterator (); datasets.hasNext ();)
-      if (dataset.name ().equals (datasets.next ().name ()))
+    if (log.isDebugEnabled ())
+      log.debug ("Adding dataset " + dataset);
+    for (Iterator<Dataset> datasets = this.datasets.iterator (); datasets.hasNext ();) {
+      Dataset curDataset = datasets.next ();
+      if (curDataset != null && dataset.name ().equals (curDataset.name ()))
         datasets.remove ();
+    }
     datasets.add (0, dataset);
   }
 
