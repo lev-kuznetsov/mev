@@ -16,6 +16,7 @@ package edu.dfci.cccb.mev.dataset.domain.jooq;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -28,8 +29,9 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDataSourceValues;
  * @author levk
  * 
  */
-@ToString (exclude = "context")
+@ToString (of = "table")
 @EqualsAndHashCode (callSuper = true)
+@Log4j
 public class JooqBasedDataSourceValues extends AbstractDataSourceValues {
 
   private final DSLContext context;
@@ -62,6 +64,8 @@ public class JooqBasedDataSourceValues extends AbstractDataSourceValues {
 
   @Override
   public void close () throws Exception {
+    if (log.isDebugEnabled ())
+      log.debug ("Dropping table " + table);
     context.query ("DROP TABLE IF EXISTS {0}", table);
   }
 

@@ -20,16 +20,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 
-import javax.inject.Inject;
-
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.Synchronized;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
-import edu.dfci.cccb.mev.dataset.domain.contract.SelectionBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractSelections;
 
@@ -38,12 +33,11 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractSelections;
  * 
  */
 @EqualsAndHashCode (callSuper = true)
-@ToString
+@ToString (of = "selections")
 @Accessors (fluent = false, chain = true)
 public class ArrayListSelections extends AbstractSelections {
 
   private final ArrayList<Selection> selections = new ArrayList<> ();
-  private @Getter @Setter (onMethod = @_ (@Inject)) SelectionBuilder builder;
 
   /* (non-Javadoc)
    * @see
@@ -121,7 +115,7 @@ public class ArrayListSelections extends AbstractSelections {
   }
 
   @Override
-  public Collection<Selection> getAll () { 
+  public Collection<Selection> getAll () {
     return Collections.unmodifiableList (selections);
   }
 }

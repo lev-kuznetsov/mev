@@ -35,7 +35,7 @@ import edu.dfci.cccb.mev.limma.domain.prototype.AbstractLimma;
  * 
  */
 @ToString
-public class FileBackedLimma extends AbstractLimma {
+public class FileBackedLimma extends AbstractLimma implements AutoCloseable {
 
   private @Getter final File full;
   private @Getter final TemporaryFolder limma;
@@ -111,7 +111,13 @@ public class FileBackedLimma extends AbstractLimma {
    * @see java.lang.Object#finalize() */
   @Override
   protected void finalize () throws Throwable {
-    // FIXME: any iterators open will no longer operate
+    close ();
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.AutoCloseable#close() */
+  @Override
+  public void close () throws Exception {
     limma.close ();
   }
 }

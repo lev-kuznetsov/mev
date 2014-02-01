@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.simple;
 
+import static edu.dfci.cccb.mev.dataset.domain.support.LifecycleUtilities.destroy;
+
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,6 +24,7 @@ import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Synchronized;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractWorkspace;
@@ -32,7 +35,8 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractWorkspace;
  */
 @EqualsAndHashCode (callSuper = true)
 @ToString
-public class ArrayListWorkspace extends AbstractWorkspace {
+@Log4j
+public class ArrayListWorkspace extends AbstractWorkspace implements AutoCloseable {
 
   private final ArrayList<Dataset> datasets = new ArrayList<> ();
 
@@ -82,11 +86,25 @@ public class ArrayListWorkspace extends AbstractWorkspace {
   @Override
   @Synchronized
   public void remove (String name) throws DatasetNotFoundException {
-    for (Iterator<Dataset> datasets = this.datasets.iterator (); datasets.hasNext ();)
-      if (datasets.next ().name ().equals (name)) {
+    for (Iterator<Dataset> datasets = this.datasets.iterator (); datasets.hasNext ();) {
+      Dataset dataset = datasets.next ();
+      if (dataset.name ().equals (name)) {
         datasets.remove ();
+        try {
+          destroy (new Exception ("Failure to destroy dataset on removal from workspace"), dataset);
+        } catch (Exception e) {
+          log.warn (e);
+        }
         return;
       }
+    }
     throw new DatasetNotFoundException ().name (name);
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.AutoCloseable#close() */
+  @Override
+  public void close () throws Exception {
+    destroy (new Exception ("Failure to close workspace"), datasets);
   }
 }

@@ -14,6 +14,10 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.simple;
 
+import static edu.dfci.cccb.mev.dataset.domain.support.LifecycleUtilities.destroy;
+
+import javax.annotation.PreDestroy;
+
 import lombok.EqualsAndHashCode;
 import lombok.Synchronized;
 import lombok.ToString;
@@ -30,7 +34,7 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDataset;
  * 
  */
 @EqualsAndHashCode (callSuper = true)
-@ToString
+@ToString (callSuper = true)
 public class SimpleDataset extends AbstractDataset {
 
   private Values values;
@@ -84,6 +88,9 @@ public class SimpleDataset extends AbstractDataset {
   public void set (Dimension dimension) throws InvalidDimensionTypeException {
     for (int index = dimensions.length; --index >= 0;)
       if (dimensions[index].type ().equals (dimension.type ())) {
+        try {
+          destroy (new Exception ("Failure to close dimension " + dimensions[index]), dimensions[index]);
+        } catch (Exception e) {}
         dimensions[index] = dimension;
         return;
       }
@@ -95,5 +102,13 @@ public class SimpleDataset extends AbstractDataset {
   @Override
   public Analyses analyses () {
     return analyses;
+  }
+
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDataset#close() */
+  @Override
+  @PreDestroy
+  public void close () throws Exception {
+    destroy (new Exception ("Failure closing " + getClass ().getSimpleName ()), values, analyses, dimensions);
   }
 }

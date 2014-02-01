@@ -15,6 +15,7 @@
 package edu.dfci.cccb.mev.dataset.rest.controllers;
 
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_URL_ELEMENT;
+import static java.util.Arrays.asList;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
@@ -45,7 +46,9 @@ public class DataController {
   @RequestMapping (method = GET)
   public Dataset dataset () {
     if (log.isDebugEnabled ())
-      log.debug ("Returning data " + dataset);
+      log.debug ("Returning data "
+                 + dataset + " of type " + dataset.getClass () + " implementing "
+                 + asList (dataset.getClass ().getInterfaces ()));
     return dataset;
   }
 }

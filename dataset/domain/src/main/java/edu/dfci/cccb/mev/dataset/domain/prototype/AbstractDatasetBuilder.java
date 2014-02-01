@@ -60,9 +60,9 @@ import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 @Accessors (fluent = false, chain = true)
 public abstract class AbstractDatasetBuilder implements DatasetBuilder {
 
-  private @Getter @Setter (onMethod = @_ (@Inject)) Collection<? extends ParserFactory> parserFactories;
-  private @Getter @Setter (onMethod = @_ (@Inject)) ValueStoreBuilder valueStoreBuilder;
-  private @Getter @Setter (onMethod = @_ (@Inject)) SelectionBuilder selectionBuilder;
+  private @Getter @Setter @Inject Collection<? extends ParserFactory> parserFactories;
+  private @Getter @Setter @Inject ValueStoreBuilder valueStoreBuilder;
+  private @Getter @Setter @Inject SelectionBuilder selectionBuilder;
 
   /* (non-Javadoc)
    * @see
@@ -95,7 +95,7 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
   }
 
   protected Selections selections () {
-    return new ArrayListSelections ().setBuilder (selectionBuilder);
+    return new ArrayListSelections ();
   }
 
   protected Annotation annotation () {
