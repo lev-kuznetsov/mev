@@ -133,6 +133,12 @@ public class ExportSetCommand extends Command {
         public void end (Project project) {
           selections.put (new SimpleSelection (setName, properties, keys));
         }
+
+        @Override
+        public boolean pass (Project project, int rowIndex, Row row) {
+          // TODO Auto-generated method stub
+          return false;
+        }
       };
 
       FilteredRows filteredRows = engine.getAllFilteredRows ();

@@ -1,8 +1,9 @@
 define(['jquery', 'angular'], function (jquery, angular){
 	angular.module('Mev.PresetManager', [])
-		.controller('PresetManagerController', ['$scope', '$element', '$attrs', 'PresetService', function($scope, $element, $attrs, presetService){
-			$scope.hi="hello there, "+presetService.name;
+		.controller('PresetManagerController', ['$scope', '$element', '$attrs', 'PresetService', function($scope, $element, $attrs, presetService){			
 			$scope.presets = presetService.getPresetList();
+			$scope.orderByColumn="name";
+			$scope.orderByReverse=false;
 		}])
 		.service('PresetService', ['QHTTP', 'alertService', function(QHTTP, alertService){
 			this.name="Antony";
@@ -30,6 +31,9 @@ define(['jquery', 'angular'], function (jquery, angular){
 		}])
 		.directive('presetManager', [function(){
 			return {
+				link: function(scope){
+					
+				},
 				restrict: 'EA',
 				templateUrl: '/container/view/elements/presets/presetList'
 			};

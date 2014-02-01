@@ -4,10 +4,7 @@
 <br>
 <br>
 <!-- End Page Hacks -->
-
-
-
-
+     		
 <div class="row-fluid">
 
   <div class="span3">
@@ -25,6 +22,8 @@
     </div>
   
   </div>
+
+
 
   <div class="span6">
     <div class="row-fluid">

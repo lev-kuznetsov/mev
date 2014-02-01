@@ -20,13 +20,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.refine.ProjectManager;
+import com.google.refine.ProjectMetadata;
 import com.google.refine.browsing.Engine;
 import com.google.refine.browsing.FilteredRows;
 import com.google.refine.browsing.RowVisitor;
 import com.google.refine.commands.Command;
+import com.google.refine.history.HistoryEntry;
+import com.google.refine.model.AbstractOperation;
 import com.google.refine.model.Column;
 import com.google.refine.model.Project;
 import com.google.refine.model.Row;
+import com.google.refine.operations.row.ImportPresetsRowRemovalOperation;
+import com.google.refine.process.Process;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
@@ -56,13 +61,15 @@ public class ImportPresetDatasetCommand extends Command {
     try {
 
       Project project = getProject (request);
-      Engine engine = getEngine (request, project);      
+      final Engine engine = getEngine (request, project);      
       
-      Dimension.Type dimensionType = Dimension.Type.COLUMN;
+      final Dimension.Type dimensionType = Dimension.Type.COLUMN;
       final String sourceDatasetName = request.getParameter ("import-preset");
       final String newDatasetName = request.getParameter ("newDatasetName");
       final Properties properties = new Properties ();      
       final List<String> keys = new ArrayList<String> ();
+      final List<Integer> unmatchedRowIndices = new ArrayList<Integer>();
+      
       RowVisitor visitor = new RowVisitor () {
         int rowCount = 0;
         Column theIdColumn;
@@ -106,16 +113,36 @@ public class ImportPresetDatasetCommand extends Command {
             dataset = ProjectManager.getSingleton ().getDatasetBuilder ().build (newDatasetContent, sourceSelection);
             
           } catch (DatasetBuilderException | InvalidDatasetNameException | InvalidDimensionTypeException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
           }
-          ProjectManager.getSingleton ().getWorkspace ().put (dataset);
+          
+          try {
+            
+            ProjectManager.getSingleton ().getWorkspace ().put (dataset);
+            ProjectMetadata pm = project.getMetadata ();;          
+            pm.setName(newDatasetName+dimensionType.toString ());
+                      
+            ImportPresetsRowRemovalOperation op = new ImportPresetsRowRemovalOperation(getEngineConfig(request), unmatchedRowIndices);
+            Process process = op.createProcess(project, new Properties());            
+            project.processManager.queueProcess(process);            
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        }
+
+        @Override
+        public boolean pass (Project project, int rowIndex, Row row) {
+          unmatchedRowIndices.add(rowIndex);
+          return false;
         }
       };
 
+      
+      
       FilteredRows filteredRows = engine.getAllFilteredRows ();
       filteredRows.accept (project, visitor);
       ProjectManager.getSingleton ().save (true);
+      logger.info (String.format ("***Import Dataset Respone: OK"));
       respond (response, "{ \"code\" : \"ok\" }");
 
     } catch (Exception e) {

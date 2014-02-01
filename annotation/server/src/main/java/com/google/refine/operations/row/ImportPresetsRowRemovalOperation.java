@@ -44,32 +44,27 @@ import org.json.JSONWriter;
 import com.google.refine.browsing.Engine;
 import com.google.refine.browsing.FilteredRows;
 import com.google.refine.browsing.RowVisitor;
-import com.google.refine.history.Change;
 import com.google.refine.history.HistoryEntry;
 import com.google.refine.model.AbstractOperation;
 import com.google.refine.model.Project;
 import com.google.refine.model.Row;
-import com.google.refine.model.changes.MassChange;
-import com.google.refine.model.changes.RowStarChange;
+import com.google.refine.model.changes.RowRemovalChange;
 import com.google.refine.operations.EngineDependentOperation;
 import com.google.refine.operations.OperationRegistry;
 
-public class RowStarOperation extends EngineDependentOperation {
-    final protected boolean _starred;
-
+public class ImportPresetsRowRemovalOperation extends EngineDependentOperation {
     static public AbstractOperation reconstruct(Project project, JSONObject obj) throws Exception {
         JSONObject engineConfig = obj.getJSONObject("engineConfig");
-        boolean starred = obj.getBoolean("starred");
         
-        return new RowStarOperation(
-            engineConfig, 
-            starred
+        return new ImportPresetsRowRemovalOperation(
+            engineConfig, new ArrayList<Integer>()
         );
     }
     
-    public RowStarOperation(JSONObject engineConfig, boolean starred) {
+    public ImportPresetsRowRemovalOperation(JSONObject engineConfig, 
+                                            List<Integer> rowIndecies) {
         super(engineConfig);
-        _starred = starred;
+        this.rowIndices = rowIndecies;
     }
 
     @Override
@@ -80,67 +75,26 @@ public class RowStarOperation extends EngineDependentOperation {
         writer.key("op"); writer.value(OperationRegistry.s_opClassToName.get(this.getClass()));
         writer.key("description"); writer.value(getBriefDescription(null));
         writer.key("engineConfig"); writer.value(getEngineConfig());
-        writer.key("starred"); writer.value(_starred);
         writer.endObject();
     }
 
     @Override
     protected String getBriefDescription(Project project) {
-        return (_starred ? "Star rows" : "Unstar rows");
+        return "Import Presets - Remove rows";
     }
 
+    private final List<Integer> rowIndices;
+    
    @Override
 protected HistoryEntry createHistoryEntry(Project project, long historyEntryID) throws Exception {
-        Engine engine = createEngine(project);
-        
-        List<Change> changes = new ArrayList<Change>(project.rows.size());
-        
-        FilteredRows filteredRows = engine.getAllFilteredRows();
-        filteredRows.accept(project, createRowVisitor(project, changes));
         
         return new HistoryEntry(
             historyEntryID,
             project, 
-            (_starred ? "Star" : "Unstar") + " " + changes.size() + " rows", 
+            "Import Prests - Remove " + rowIndices.size() + " rows", 
             this, 
-            new MassChange(changes, false)
+            new RowRemovalChange(rowIndices)
         );
     }
 
-    protected RowVisitor createRowVisitor(Project project, List<Change> changes) throws Exception {
-        return new RowVisitor() {
-            List<Change> changes;
-            
-            public RowVisitor init(List<Change> changes) {
-                this.changes = changes;
-                return this;
-            }
-            
-            @Override
-            public void start(Project project) {
-                // nothing to do
-            }
-
-            @Override
-            public void end(Project project) {
-                // nothing to do
-            }
-            
-            @Override
-            public boolean visit(Project project, int rowIndex, Row row) {
-                if (row.starred != _starred) {
-                    RowStarChange change = new RowStarChange(rowIndex, _starred);
-                    
-                    changes.add(change);
-                }
-                return false;
-            }
-
-            @Override
-            public boolean pass (Project project, int rowIndex, Row row) {
-              // TODO Auto-generated method stub
-              return false;
-            }
-        }.init(changes);
-    }
 }

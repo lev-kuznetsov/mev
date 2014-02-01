@@ -243,4 +243,10 @@ public class ExpressionNominalValueGrouper implements RowVisitor, RecordVisitor 
             return blankCount;
         }
     }
+
+    @Override
+    public boolean pass (Project project, int rowIndex, Row row) {
+      // TODO Auto-generated method stub
+      return false;
+    }
 }

@@ -276,6 +276,12 @@ public class MassEditOperation extends EngineDependentMassCellOperation {
                 }
                 return false;
             }
+
+            @Override
+            public boolean pass (Project project, int rowIndex, Row row) {
+              // TODO Auto-generated method stub
+              return false;
+            }
         }.init(column.getCellIndex(), bindings, cellChanges, eval, fromTo, fromBlankTo, fromErrorTo);
     }
 }

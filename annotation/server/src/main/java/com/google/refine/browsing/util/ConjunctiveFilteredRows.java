@@ -65,11 +65,17 @@ public class ConjunctiveFilteredRows implements FilteredRows {
                     if (visitRow(project, visitor, rowIndex, row)) {
                         break;
                     }
+                }else{
+                  passRow(project, visitor, rowIndex, row);                   
                 }
             }
         } finally {
             visitor.end(project);
         }
+    }
+    
+    protected boolean passRow(Project project, RowVisitor visitor, int rowIndex, Row row) {
+      return visitor.pass(project, rowIndex, row);
     }
     
     protected boolean visitRow(Project project, RowVisitor visitor, int rowIndex, Row row) {
