@@ -47,6 +47,7 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.zip.GZIPInputStream;
 
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
 import org.apache.tools.tar.TarEntry;
@@ -483,4 +484,8 @@ public class FileProjectManager extends ProjectManager {
     return new FileHistoryEntryManager ();
   }
 
+  @PreDestroy
+  private void preDestroy() throws IOException{
+    _workspaceDir.close ();
+  }
 }

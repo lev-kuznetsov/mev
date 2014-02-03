@@ -8,5 +8,5 @@ import com.fasterxml.jackson.annotation.JsonIgnoreType;
 @JsonIgnoreType(value=true)
 public interface PresetDescriptor {
   URL dataUrl();
-  URL columnUrl();
+  URL columnUrl();  
 }

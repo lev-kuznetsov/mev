@@ -64,7 +64,6 @@ public class ImportPresetDatasetCommand extends Command {
       final Engine engine = getEngine (request, project);      
       
       final Dimension.Type dimensionType = Dimension.Type.COLUMN;
-      final String sourceDatasetName = request.getParameter ("import-preset");
       final String newDatasetName = request.getParameter ("newDatasetName");
       final Properties properties = new Properties ();      
       final List<String> keys = new ArrayList<String> ();

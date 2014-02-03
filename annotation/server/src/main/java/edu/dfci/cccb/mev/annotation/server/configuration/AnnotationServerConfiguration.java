@@ -2,6 +2,8 @@ package edu.dfci.cccb.mev.annotation.server.configuration;
 
 import static org.springframework.context.annotation.FilterType.ANNOTATION;
 
+import java.io.IOException;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
@@ -41,7 +43,7 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
 
   @Bean
   @Scope (value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-  public FileProjectManager sessionProjectManager () {
+  public FileProjectManager sessionProjectManager () throws IOException {
     FileProjectManager projectManager = new FileProjectManager ();
     projectManager.setWorkspaceDir (new SessionWorkspaceDir ());
     projectManager.setWorkspace (workspace);
@@ -54,4 +56,5 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
   public void setProjectmanagerSingleton () {
     ProjectManager.setSingleton (sessionProjectManager);
   }
+  
 }
