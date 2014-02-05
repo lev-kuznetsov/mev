@@ -99,8 +99,9 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
       log.debug ("**selection: " + columnSelection.keys ());
     for (Parser parser = parser (content); parser.next ();) {
       if(columnSelection.keys ().contains (parser.projection (COLUMN))){
-        if(log.isDebugEnabled ())
-          log.debug("+++adding:"+parser.projection (COLUMN));        
+        
+//        if(log.isDebugEnabled ())
+//          log.debug("+++adding:"+parser.projection (COLUMN));        
         
         valueStoreBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));        
         if (!rows.contains (parser.projection (ROW)))
@@ -108,8 +109,8 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
         if (!columns.contains (parser.projection (COLUMN)))
           columns.add (parser.projection (COLUMN));
       }else{
-        if(log.isDebugEnabled ())
-          log.debug ("---skipping:"+parser.projection (COLUMN));
+//        if(log.isDebugEnabled ())
+//          log.debug ("---skipping:"+parser.projection (COLUMN));
         
       }
     }

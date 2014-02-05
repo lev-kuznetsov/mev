@@ -205,6 +205,9 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   // This is a greedy proxy as opposed to lazy proxy when using
   // @Scope(proxyMode=INTERFACES)
   private static <T> T proxy (final T of, Class<?>... interfaces) {
+    
+    if(of==null) return null;
+    
     return (T) newProxyInstance (of.getClass ().getClassLoader (), interfaces, new InvocationHandler () {
 
       @Override

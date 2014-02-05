@@ -71,6 +71,13 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
     
+    <!-- MeV IO -->
+    <dependency>
+    <groupId>edu.dfci.cccb</groupId>
+    <artifactId>mev-io</artifactId>
+    <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+    
     <!-- Servlet API -->
 
     <dependency>

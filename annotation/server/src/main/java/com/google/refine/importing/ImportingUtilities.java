@@ -35,11 +35,14 @@ package com.google.refine.importing;
 
 import static com.google.refine.io.FileProjectManager.*;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -47,6 +50,10 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,6 +75,7 @@ import org.apache.commons.fileupload.ProgressListener;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -230,7 +238,10 @@ public class ImportingUtilities {
     @SuppressWarnings ("unchecked") List<FileItem> tempFiles = (List<FileItem>) upload.parseRequest (request);
 
     Dataset heatmap = (Dataset) request.getAttribute (REQUEST_ATTEIBUTE_DATASET);
-    String dimension = (String) request.getAttribute (REQUEST_ATTEIBUTE_DIMENSION);
+    
+    String sDimension = (String) request.getAttribute (REQUEST_ATTEIBUTE_DIMENSION);
+    Dimension dimension =heatmap.dimension (Dimension.Type.from (sDimension));
+    
     
     progress.setProgress ("Uploading data ...", -1);
     parts: for (FileItem fileItem : tempFiles) {
@@ -332,7 +343,7 @@ public class ImportingUtilities {
               JSONUtilities.safePut (fileRecord, "declaredMimeType", contentType);
               if (saveStream (stream2, url, rawDataDir, progress, update,
                               fileRecord, fileRecords,
-                              entity.getContentLength ())) {
+                              entity.getContentLength (),heatmap, dimension)) {
                 archiveCount++;
               }
               downloadCount++;
@@ -353,7 +364,7 @@ public class ImportingUtilities {
             try {
               if (saveStream (stream2, url, rawDataDir, progress,
                               update, fileRecord, fileRecords,
-                              urlConnection.getContentLength ())) {
+                              urlConnection.getContentLength (),heatmap, dimension)) {
                 archiveCount++;
               }
               downloadCount++;
@@ -377,7 +388,7 @@ public class ImportingUtilities {
         if (fileName.length () > 0) {
           if (heatmap != null)
             //ap:filename is used for project name, so rename the file to [dataset-name+dimension]
-            fileName = heatmap.name ()+dimension;
+            fileName = heatmap.name ()+sDimension;
 
           long fileSize = fileItem.getSize ();
 
@@ -396,7 +407,7 @@ public class ImportingUtilities {
                                 calculateProgressPercent (update.totalExpectedSize, update.totalRetrievedSize));
 
           JSONUtilities.safePut (fileRecord, "size", saveStreamToFile (stream, file, null));
-          if (postProcessRetrievedFile (rawDataDir, file, fileRecord, fileRecords, progress)) {
+          if (postProcessRetrievedFile (rawDataDir, file, fileRecord, fileRecords, progress, heatmap, dimension)) {
             archiveCount++;
           }
 
@@ -423,14 +434,14 @@ public class ImportingUtilities {
         JSONUtilities.safePut (fileRecord, "declaredEncoding", encoding);
         JSONUtilities.safePut (fileRecord, "declaredMimeType", (String) null);
         JSONUtilities.safePut (fileRecord, "format", "text");
-        JSONUtilities.safePut (fileRecord, "fileName", heatmap.name ()+dimension);
+        JSONUtilities.safePut (fileRecord, "fileName", heatmap.name ()+sDimension);
         JSONUtilities.safePut (fileRecord, "location", getRelativePath (file, rawDataDir));
 
         progress.setProgress ("Uploading pasted heatmap text",
                               calculateProgressPercent (update.totalExpectedSize, update.totalRetrievedSize));
 
         StringBuilder builder = new StringBuilder (StringUtils.join (
-                                                                     heatmap.dimension (Dimension.Type.from (dimension)).keys (),
+                                                                     dimension.keys (),
                                                                      "\n"));
         InputStream stream = new ByteArrayInputStream (builder.toString ().getBytes (encoding));
 
@@ -459,7 +470,9 @@ public class ImportingUtilities {
                                      final SavingUpdate update,
                                      JSONObject fileRecord,
                                      JSONArray fileRecords,
-                                     long length)
+                                     long length,
+                                     Dataset heatmap,
+                                     Dimension dimension)
                                                  throws IOException, Exception {
     String localname = url.getPath ();
     if (localname.isEmpty () || localname.endsWith ("/")) {
@@ -486,7 +499,7 @@ public class ImportingUtilities {
     }
     progress.setProgress ("Saving " + url.toString () + " locally",
                           calculateProgressPercent (update.totalExpectedSize, update.totalRetrievedSize));
-    return postProcessRetrievedFile (rawDataDir, file, fileRecord, fileRecords, progress);
+    return postProcessRetrievedFile (rawDataDir, file, fileRecord, fileRecords, progress, heatmap, dimension);
   }
 
   static public String getRelativePath (File file, File dir) {
@@ -593,7 +606,9 @@ public class ImportingUtilities {
                                                   File file,
                                                   JSONObject fileRecord,
                                                   JSONArray fileRecords,
-                                                  final Progress progress) {
+                                                  final Progress progress,
+                                                  Dataset heatmap,
+                                                  Dimension dimension) throws FileNotFoundException, IOException {
 
     String mimeType = JSONUtilities.getString (fileRecord, "declaredMimeType", null);
     String contentEncoding = JSONUtilities.getString (fileRecord, "declaredEncoding", null);
@@ -633,6 +648,51 @@ public class ImportingUtilities {
       }
     }
 
+    //ap:filter file
+    if(heatmap!=null){
+      boolean filtered = false;
+      String filteredFileName = FilenameUtils.getFullPath (file.getPath ())
+                                       +FilenameUtils.getBaseName (file.getName ())
+                                       +".mev."
+                                       +FilenameUtils.getExtension (file.getName ());
+      if(logger.isDebugEnabled ())
+        logger.debug ("*filteredFileName: " + filteredFileName);
+      Path path = Paths.get (filteredFileName);
+      try (BufferedWriter writer = Files.newBufferedWriter (Paths.get (filteredFileName), Charset.defaultCharset ())){
+        try (BufferedReader reader = new BufferedReader(new FileReader (file))){
+          String line = null;
+          //don't filter out the header
+          String header = reader.readLine(); 
+          if(header!=null){
+            writer.write(header);
+            writer.newLine();
+          }
+          while ((line = reader.readLine()) != null) {
+            //process each line in some way
+            //log(line);
+            String key = StringUtils.substringBefore (line, "\t");
+            if(dimension.keys ().contains (key)){
+              filtered=true;
+              writer.write(line);
+              writer.newLine();
+              if(logger.isDebugEnabled ())
+                logger.debug ("++writing: " + key);
+            }else{
+              if(logger.isDebugEnabled ())
+                logger.debug ("--skipping: " + key);
+            }
+          }      
+        }
+      }
+      if(filtered){        
+        File file2 = path.toFile ();        
+        JSONUtilities.safePut (fileRecord, "declaredEncoding", (String) null);
+        JSONUtilities.safePut (fileRecord, "declaredMimeType", (String) null);
+        JSONUtilities.safePut (fileRecord, "location", getRelativePath (file2, rawDataDir));
+        file = file2;
+      }
+    }
+    
     postProcessSingleRetrievedFile (file, fileRecord);
     JSONUtilities.append (fileRecords, fileRecord);
 
