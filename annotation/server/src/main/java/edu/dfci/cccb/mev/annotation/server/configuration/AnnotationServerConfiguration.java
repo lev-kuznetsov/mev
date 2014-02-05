@@ -52,7 +52,7 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
   private @Inject FileProjectManager sessionProjectManager;
   private @Inject DatasetBuilder builder;
   private @Inject org.springframework.core.env.Environment environment;
-
+  
   public static final String MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX="mev.annotations.probe.";
   public static final String MEV_PROBE_ANNOTATIONS_ROOT_FOLDER=MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"root";
   public static final String MEV_PROBE_ANNOTATIONS_AFFYMETRIX_FOLDER=MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"affymetrix.folder";

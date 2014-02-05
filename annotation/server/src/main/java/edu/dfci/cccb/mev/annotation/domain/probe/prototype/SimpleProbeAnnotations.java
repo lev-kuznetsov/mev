@@ -5,6 +5,7 @@ import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.using;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.DirectoryStream;
@@ -23,6 +24,7 @@ import org.jooq.Table;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotation;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
+import edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.Tables;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
 public class SimpleProbeAnnotations implements ProbeAnnotations{
@@ -75,8 +77,16 @@ public class SimpleProbeAnnotations implements ProbeAnnotations{
   
   @Override
   public List<ProbeAnnotation> get (Dimension dimension) {
-    
+ // Use ";" as the separator character
     return null;
   }
+
+  @Override
+  public InputStream getAsStream (Dimension dimension) {
+     
+    return null;
+  }
+  
+  
 
 }
