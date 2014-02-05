@@ -440,10 +440,17 @@ public class ImportingUtilities {
         progress.setProgress ("Uploading pasted heatmap text",
                               calculateProgressPercent (update.totalExpectedSize, update.totalRetrievedSize));
 
-        StringBuilder builder = new StringBuilder (StringUtils.join (
+        InputStream stream=null;
+        if(dimension.type ()==Dimension.Type.COLUMN){
+          StringBuilder builder = new StringBuilder (StringUtils.join (
                                                                      dimension.keys (),
                                                                      "\n"));
-        InputStream stream = new ByteArrayInputStream (builder.toString ().getBytes (encoding));
+          stream = new ByteArrayInputStream (builder.toString ().getBytes (encoding));
+        }else{
+          
+        }
+        
+        
 
         JSONUtilities.safePut (fileRecord, "size", saveStreamToFile (stream, file, null));
         JSONUtilities.append (fileRecords, fileRecord);

@@ -1,0 +1,1 @@
+CREATE TABLE TEST AS SELECT * FROM CSVREAD('/home/antony/work/danafarber/mev/data/array_annotations/AG.na33.annot.out.tsv', null, 'charset=UTF-8 fieldSeparator='||chr(9));
