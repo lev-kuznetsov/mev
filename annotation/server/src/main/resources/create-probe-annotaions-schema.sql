@@ -1,1 +1,23 @@
-CREATE TABLE TEST AS SELECT * FROM CSVREAD('/home/antony/work/danafarber/mev/data/array_annotations/AG.na33.annot.out.tsv', null, 'charset=UTF-8 fieldSeparator='||chr(9));
+--CREATE TABLE TEST AS SELECT * FROM CSVREAD('/home/antony/work/danafarber/mev/data/array_annotations/AG.na33.annot.out.tsv', null, 'charset=UTF-8 fieldSeparator='||chr(9));
+--INSERT INTO TEST SELECT * FROM CSVREAD('/home/antony/work/danafarber/mev/data/array_annotations/ATH1-121501.na33.annot.out.tsv', null, 'charset=UTF-8 fieldSeparator='||chr(9));
+
+DROP TABLE PUBLIC.MEV_PROBE_ANNOTATIONS IF EXISTS;
+CREATE CACHED TABLE PUBLIC.MEV_PROBE_ANNOTATIONS(
+    CHIP_VENDOR VARCHAR,
+    CHIP_TYPE VARCHAR,
+    CREATE_DATE VARCHAR,
+    genome_species VARCHAR,
+    genome_version VARCHAR,
+    netaffx_annotation_netaffx_build VARCHAR,
+    PROBESET_ID VARCHAR,
+    GENE_SYMBOL VARCHAR,
+    GENE_DESC VARCHAR,
+    CHR_LOCATION VARCHAR,
+    STRAND VARCHAR,
+    REFSEQ_ACCN VARCHAR,
+    GO_BIOPROCESS VARCHAR,
+    GO_CELLULARCOMPONENT VARCHAR,
+    GO_MOLECULARFUNCTION VARCHAR,
+    PATHWAY VARCHAR
+);
+CREATE UNIQUE INDEX MEV_PROBE_ANNOTATIONS_PK ON PUBLIC.MEV_PROBE_ANNOTATIONS(PROBESET_ID);
