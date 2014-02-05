@@ -35,7 +35,6 @@ public class JooqProbeAnnotations implements ProbeAnnotations {
   
   @Inject 
   public JooqProbeAnnotations (@Named("probe-annotations-datasource") DataSource dataSource) throws SQLException {
-    // TODO Auto-generated constructor stub
     context = using (dataSource.getConnection ()); 
   }
 
