@@ -12,6 +12,9 @@ import org.springframework.orm.hibernate4.SpringJtaSessionContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
+import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfiguration;
 import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsPersistanceConriguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -19,9 +22,12 @@ import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsPersist
 public class TestProbeAnnotationsConfiguration {
 
   @Inject @Named("probe-annotations-datasource") DataSource dataSource;
+
+  
   @Test
   public void test () {
     assertNotNull (dataSource);
   }
 
+  
 }

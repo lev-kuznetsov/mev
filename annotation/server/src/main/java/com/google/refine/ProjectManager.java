@@ -53,6 +53,7 @@ import com.google.refine.model.Project;
 import com.google.refine.preference.PreferenceStore;
 import com.google.refine.preference.TopList;
 
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 
@@ -93,6 +94,13 @@ public abstract class ProjectManager {
     return _datasetBuilder;
   }
 
+  private ProbeAnnotations _probeAnnotations;
+  public void setProbeAnnotations (ProbeAnnotations probeAnnotations) {
+    _probeAnnotations = probeAnnotations;
+  }
+  public ProbeAnnotations getProbeaAnnotations() {
+    return _probeAnnotations;
+  }
   
   /**
    * What caches the joins between projects.

@@ -258,7 +258,7 @@
             </generate>
             <target>
                 <packageName>edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq</packageName>
-                <directory>server/src/main/java</directory>
+                <directory>${basedir}/src/main/java</directory>
             </target>
         </generator>
     </configuration>

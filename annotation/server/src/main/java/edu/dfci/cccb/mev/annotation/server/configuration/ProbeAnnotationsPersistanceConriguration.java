@@ -1,8 +1,8 @@
 package edu.dfci.cccb.mev.annotation.server.configuration;
 
+import static edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfiguration.MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX;
 import static java.io.File.separator;
 import static java.lang.System.getProperty;
-import static edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfiguration.*;
 
 import java.util.Properties;
 
@@ -14,7 +14,6 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;
-import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

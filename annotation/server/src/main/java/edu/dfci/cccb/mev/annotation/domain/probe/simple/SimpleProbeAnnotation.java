@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.annotation.domain.probe.prototype;
+package edu.dfci.cccb.mev.annotation.domain.probe.simple;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

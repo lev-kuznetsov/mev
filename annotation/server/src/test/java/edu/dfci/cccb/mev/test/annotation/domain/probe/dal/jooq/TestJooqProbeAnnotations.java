@@ -21,7 +21,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import edu.dfci.cccb.mev.annotation.domain.probe.prototype.JooqProbeAnnotations;
+import edu.dfci.cccb.mev.annotation.domain.probe.jooq.JooqProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsPersistanceConriguration;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;

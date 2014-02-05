@@ -1,7 +1,11 @@
-package edu.dfci.cccb.mev.test.presets.controller;
+package edu.dfci.cccb.mev.test.annotation.domain.probe.configuration;
 
+import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import javax.inject.Inject;
+
 import lombok.extern.log4j.Log4j;
 
 import org.junit.Before;
@@ -17,30 +21,35 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfiguration;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
+import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfigurationMock;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
-import edu.dfci.cccb.mev.hcl.rest.configuration.HclRestConfiguration;
-import edu.dfci.cccb.mev.limma.rest.configuration.LimmaRestConfiguration;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
-import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationMock;
 import edu.dfci.cccb.mev.web.configuration.DispatcherConfiguration;
 import edu.dfci.cccb.mev.web.configuration.PersistenceConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
-/*
+
+
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes={DispatcherConfiguration.class, PersistenceConfiguration.class, ContainerConfigurations.class, DatasetRestConfiguration.class, 
-                               LimmaRestConfiguration.class, HclRestConfiguration.class, AnnotationServerConfiguration.class
+                               AnnotationServerConfigurationMock.class
                                , PresetsRestConfiguration.class
                                })
-*/
-public class TestPresetsRestController {
+public class TestAnnotationServerConfiguration {
+
+  @Inject ProbeAnnotationsLoader loader;
+  @Inject ProbeAnnotations annotations;
+  
   @Test
-  public void test(){
-    
-  }
-/*
+  public void test () {
+    assertNotNull (loader);
+    assertNotNull (annotations);
+}
+
+
   @Autowired WebApplicationContext applicationContext;  
   private MockMvc mockMvc;
   
@@ -76,5 +85,5 @@ public class TestPresetsRestController {
 
   }
   
-*/
+  
 }

@@ -1,17 +1,14 @@
 package edu.dfci.cccb.mev.annotation.support;
 
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 
-import edu.dfci.cccb.mev.test.annotation.support.TestFileChecker;
 import lombok.extern.log4j.Log4j;
 
 @Log4j

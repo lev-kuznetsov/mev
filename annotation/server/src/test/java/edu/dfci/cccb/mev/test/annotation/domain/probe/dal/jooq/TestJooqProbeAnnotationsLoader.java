@@ -17,8 +17,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import edu.dfci.cccb.mev.annotation.domain.probe.prototype.JooqProbeAnnotations;
-import edu.dfci.cccb.mev.annotation.domain.probe.prototype.JooqProbeAnnotationsLoader;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
+import edu.dfci.cccb.mev.annotation.domain.probe.jooq.JooqProbeAnnotations;
+import edu.dfci.cccb.mev.annotation.domain.probe.jooq.JooqProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsPersistanceConriguration;
 import edu.dfci.cccb.mev.annotation.support.FileChecker;
 
@@ -30,10 +31,10 @@ public class TestJooqProbeAnnotationsLoader {
   
   @Test
   public void testLoadUrlResource () throws SQLException, IOException {
-    URL url = TestJooqProbeAnnotationsLoader.class.getResource ("/array_annotations/AG.na33.annot.out.tsv");
+    URL url = TestJooqProbeAnnotationsLoader.class.getResource ("/array_annotations/from_affymetrix/AG.na33.top3.annot.out.tsv");
     assertNotNull (url);
     
-    JooqProbeAnnotationsLoader loader = new JooqProbeAnnotationsLoader (dataSource);
+    ProbeAnnotationsLoader loader = new JooqProbeAnnotationsLoader (dataSource);
     
     loader.loadUrlResource (url);
   }
@@ -41,12 +42,12 @@ public class TestJooqProbeAnnotationsLoader {
   @Test
   public void testInit() throws SQLException, IOException, URISyntaxException{
     
-    URL url = TestJooqProbeAnnotationsLoader.class.getResource ("/array_annotations/");
+    URL url = TestJooqProbeAnnotationsLoader.class.getResource ("/array_annotations/from_affymetrix/");
     assertNotNull (url);
     
     
-    JooqProbeAnnotationsLoader loader = new JooqProbeAnnotationsLoader (dataSource);
-    URL fileUrl = TestJooqProbeAnnotationsLoader.class.getResource ("/array_annotations/changedFile.annot.out.tsv");
+    ProbeAnnotationsLoader loader = new JooqProbeAnnotationsLoader (dataSource);
+    URL fileUrl = TestJooqProbeAnnotationsLoader.class.getResource ("/array_annotations/from_affymetrix/changedFile.annot.out.tsv");
     assertNotNull (fileUrl);
     FileChecker.touch (Paths.get (fileUrl.toURI ()));
     

@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.annotation.domain.probe.prototype;
+package edu.dfci.cccb.mev.annotation.domain.probe.jooq;
 
 import static edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.Tables.MEV_PROBE_ANNOTATIONS;
 import static org.jooq.impl.DSL.using;
@@ -20,10 +20,11 @@ import lombok.extern.log4j.Log4j;
 
 import org.jooq.DSLContext;
 
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.Tables;
 import edu.dfci.cccb.mev.annotation.support.FileChecker;
 @Log4j
-public class JooqProbeAnnotationsLoader {
+public class JooqProbeAnnotationsLoader implements ProbeAnnotationsLoader {
 
   private final DSLContext context;
   
@@ -32,7 +33,11 @@ public class JooqProbeAnnotationsLoader {
     context = using (dataSource.getConnection ());      
   }
   
-  public void init(URL rootFolder, String suffix, long modifiedInLastMillis) throws IOException, URISyntaxException{
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.annotation.domain.probe.jooq.ProbeAnnotationsLoader#init(java.net.URL, java.lang.String, long)
+   */
+  @Override
+  public ProbeAnnotationsLoader init(URL rootFolder, String suffix, long modifiedInLastMillis) throws IOException, URISyntaxException{
     Path rootPath = Paths.get(rootFolder.toURI ());
     if(rootPath==null)
       throw new IOException ("Root Folder "+rootFolder.toURI ()+" not found");
@@ -50,8 +55,13 @@ public class JooqProbeAnnotationsLoader {
         }
       }
     }
+    return this;
   }
   
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.annotation.domain.probe.jooq.ProbeAnnotationsLoader#loadUrlResource(java.net.URL)
+   */
+  @Override
   public void loadUrlResource(URL url) throws IOException{
     if(log.isDebugEnabled ())
       log.debug ("Importing Probe Annotations file"+url);
