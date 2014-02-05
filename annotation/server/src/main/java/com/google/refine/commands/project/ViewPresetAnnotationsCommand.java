@@ -1,22 +1,10 @@
 package com.google.refine.commands.project;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
-import java.util.Scanner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -120,13 +108,13 @@ public class ViewPresetAnnotationsCommand extends Command {
                   public boolean visit (Project project, int rowIndex, Row row) {
                     String cellData = row.getCell (theIdColumn.getCellIndex ()).value.toString ();
                     if (mapHeader.containsKey (cellData)) {
-                      if(logger.isDebugEnabled ())
-                        logger.debug ("++ will import"+cellData);
+//                      if(logger.isDebugEnabled ())
+//                        logger.debug ("++ will import"+cellData);
                       rowCount++;
                     }else{
                       unmatchedRowIndices.add(rowIndex);
-                      if(logger.isDebugEnabled ())
-                        logger.debug ("-- skip import"+rowIndex);
+//                      if(logger.isDebugEnabled ())
+//                        logger.debug ("-- skip import"+rowIndex);
                     }
                     return false;
                   }

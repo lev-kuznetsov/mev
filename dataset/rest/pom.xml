@@ -11,7 +11,7 @@
 
   <parent>
     <groupId>edu.dfci.cccb</groupId>
-    <artifactId>mev-dataset</artifactId>
+    <artifactId>mev-configuration</artifactId>
     <version>BAYLIE-SNAPSHOT</version>
   </parent>
 
@@ -34,13 +34,36 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
-    <!-- Servlet API -->
+<dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>3.0.1</version>
+        <scope>provided</scope>
+</dependency>
 
+	<!-- Spring Test -->
     <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-web-api</artifactId>
-      <scope>provided</scope>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${spring.version}</version>
+      <scope>test</scope>
     </dependency>
+    
+    <!-- JPA -->
+            
+	<dependency>
+	   <groupId>org.apache.geronimo.specs</groupId>
+	   <artifactId>geronimo-ejb_3.1_spec</artifactId>
+	   <version>1.0</version>
+	   <scope>test</scope>
+	</dependency>
+	<dependency>
+	   <groupId>org.apache.geronimo.specs</groupId>
+	   <artifactId>geronimo-jpa_2.0_spec</artifactId>
+	   <version>1.0</version>
+	   <scope>test</scope>
+	</dependency>
+    
 
   </dependencies>
 
