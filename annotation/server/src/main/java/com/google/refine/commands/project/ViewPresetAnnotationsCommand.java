@@ -1,9 +1,19 @@
 package com.google.refine.commands.project;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.ServletException;
@@ -82,14 +92,14 @@ public class ViewPresetAnnotationsCommand extends Command {
               if(sHeader!=null){
                 String[] arHeader = sHeader.split ("\t");
                 final ArrayList<String> listHeader = new ArrayList<String>(Arrays.asList(arHeader));
-                final Map<String, String> mapHeader = new HashMap <String, String>(listHeader.size ());
+                final Map<String, String> mapHeader = new HashMap<String, String>(listHeader.size ());
                 for(String columnName : listHeader)
                   if(!columnName.trim ().equals ("")) mapHeader.put(columnName, null);
                 
                 Project project = ProjectManager.getSingleton().getProject (projectID);
                 
                 final Engine engine = getEngine (request, project);
-                final List<Integer> unmatchedRowIndices = new ArrayList<Integer>();
+                final List<Integer> unmatchedRowIndices = new ArrayList <Integer>();
                 
                 RowVisitor visitor = new RowVisitor () {
                   int rowCount = 0;
