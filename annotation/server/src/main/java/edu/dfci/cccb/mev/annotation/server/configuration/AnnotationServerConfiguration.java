@@ -52,7 +52,7 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
   private @Inject Workspace workspace;
   private @Inject FileProjectManager sessionProjectManager;
   private @Inject DatasetBuilder builder;
-  private @Inject ProbeAnnotations probeAnnotations;
+  private @Inject @Named("probe-annotations-datasource") DataSource dataSource;
   private @Inject org.springframework.core.env.Environment environment;
   
   public static final String MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX="mev.annotations.probe.";
@@ -60,23 +60,6 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
   public static final String MEV_PROBE_ANNOTATIONS_MODIFIED_THRESHOLD_MILISECONDS=MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+".modified.threashold.miliseconds";
   public static final String MEV_PROBE_ANNOTATIONS_AFFYMETRIX_FOLDER=MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"affymetrix.folder";
   public static final String MEV_PROBE_ANNOTATIONS_AFFYMETRIX_SUFFIX=MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"affymetrix.file.suffix";
-  
-  @Bean
-  @Scope (value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-  public FileProjectManager sessionProjectManager () throws IOException {
-    FileProjectManager projectManager = new FileProjectManager ();
-    projectManager.setWorkspaceDir (new SessionWorkspaceDir ());
-    projectManager.setWorkspace (workspace);
-    projectManager.setDatasetBuilder (builder);
-    projectManager.setProbeAnnotations (probeAnnotations);
-    return projectManager;
-  }
-
-
-  @PostConstruct
-  public void setProjectmanagerSingleton () {
-    ProjectManager.setSingleton (sessionProjectManager);
-  }
   
   @Bean(name="probe-annotations-root")
   public URL probeAnnotationsRoot() throws IOException{
@@ -120,6 +103,25 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
     
     return new JooqProbeAnnotations (dataSource);
   }
+  
+  
+  @Bean
+  @Scope (value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+  public FileProjectManager sessionProjectManager () throws IOException, SQLException {
+    FileProjectManager projectManager = new FileProjectManager ();
+    projectManager.setWorkspaceDir (new SessionWorkspaceDir ());
+    projectManager.setWorkspace (workspace);
+    projectManager.setDatasetBuilder (builder);
+    projectManager.setProbeAnnotations (getProbeAnnotations (dataSource));
+    return projectManager;
+  }
+
+
+  @PostConstruct
+  public void setProjectmanagerSingleton () {
+    ProjectManager.setSingleton (sessionProjectManager);
+  }
+  
   
 
 }

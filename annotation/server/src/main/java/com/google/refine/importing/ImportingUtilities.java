@@ -101,6 +101,7 @@ import com.google.refine.importing.UrlRewriter.Result;
 import com.google.refine.model.Project;
 import com.google.refine.util.JSONUtilities;
 
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
@@ -447,7 +448,7 @@ public class ImportingUtilities {
                                                                      "\n"));
           stream = new ByteArrayInputStream (builder.toString ().getBytes (encoding));
         }else{
-          
+          stream = ProjectManager.getSingleton ().getProbeaAnnotations ().getAsStream (dimension);
         }
         
         
