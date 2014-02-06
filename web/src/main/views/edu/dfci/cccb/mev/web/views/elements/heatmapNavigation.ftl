@@ -5,7 +5,7 @@
 		<a class="brand" href="/"><img src="/container/images/favicon/favicon-32x32.png"/></span> : {{heatmapId}}</a>
 		<ul class="nav pull-right">
 			<li>
-				<a href=""><i class="icon-download-alt"></i></a>
+				<button class="btn btn-success" href="#settingsModal" data-toggle="modal"><i class="icon-wrench"></i></button>
 			</li>
 		</ul>
 		

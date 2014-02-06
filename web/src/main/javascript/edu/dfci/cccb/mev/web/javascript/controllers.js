@@ -13,6 +13,18 @@ define ([ 'jquery', 'angular'], function ($, angular) {
     	
   		$scope.heatmapId = $routeParams.datasetName;
   		
+  		$scope.hotThresholdOptions = ["10%", "20%", "30%", "40%", "50%"];
+      $scope.coldThresholdOptions = ["10%", "20%", "30%", "40%", "50%"];
+		  $scope.colorOptions = ["Blue-Yellow", "Red-Green"];
+		  
+      
+  		
+  		$scope.defaultColors = function() {
+  		  $scope.selectedColor = "Blue-Yellow";
+        $scope.hotThreshold = "30%";
+        $scope.coldThreshold = "30%";
+  		}
+  		$scope.defaultColors()
   		
   		$scope.heatmapData = undefined;
       $scope.heatmapLeftTree = undefined;
