@@ -23,6 +23,7 @@ import org.jooq.DSLContext;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.Tables;
 import edu.dfci.cccb.mev.annotation.support.FileChecker;
+import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
 @Log4j
 public class JooqProbeAnnotationsLoader implements ProbeAnnotationsLoader {
 
@@ -37,12 +38,16 @@ public class JooqProbeAnnotationsLoader implements ProbeAnnotationsLoader {
    * @see edu.dfci.cccb.mev.annotation.domain.probe.jooq.ProbeAnnotationsLoader#init(java.net.URL, java.lang.String, long)
    */
   @Override
-  public ProbeAnnotationsLoader init(URL rootFolder, String suffix, long modifiedInLastMillis) throws IOException, URISyntaxException{
+  public int init(URL rootFolder, String suffix) throws IOException, URISyntaxException{
+    int result = 0;
+    
     Path rootPath = Paths.get(rootFolder.toURI ());
     if(rootPath==null)
       throw new IOException ("Root Folder "+rootFolder.toURI ()+" not found");
     
-    if(FileChecker.hasAFileChangedSince (rootPath, suffix, modifiedInLastMillis)){
+    URL checkForceFlagURL = new URL(rootFolder, "reload.flag");
+    
+    if(CCCPHelpers.UrlUtils.checkExists (checkForceFlagURL)){
       
       if(log.isDebugEnabled ())
         log.debug ("Reloading Probe Annotations from folder "+rootPath);
@@ -52,10 +57,11 @@ public class JooqProbeAnnotationsLoader implements ProbeAnnotationsLoader {
         context.truncate(Tables.MEV_PROBE_ANNOTATIONS).execute();        
         for(Path path : ds){
           loadUrlResource (path.toUri ().toURL ());
+          result++;
         }
       }
-    }
-    return this;
+    }    
+    return result;
   }
   
   /* (non-Javadoc)
@@ -74,5 +80,7 @@ public class JooqProbeAnnotationsLoader implements ProbeAnnotationsLoader {
     .ignoreRows (1)    
     .execute();
   }
+  
+  
 
 }

@@ -56,10 +56,10 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
   private @Inject org.springframework.core.env.Environment environment;
   
   public static final String MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX="mev.annotations.probe.";
-  public static final String MEV_PROBE_ANNOTATIONS_ROOT_FOLDER=MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"root";
-  public static final String MEV_PROBE_ANNOTATIONS_MODIFIED_THRESHOLD_MILISECONDS=MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+".modified.threashold.miliseconds";
-  public static final String MEV_PROBE_ANNOTATIONS_AFFYMETRIX_FOLDER=MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"affymetrix.folder";
-  public static final String MEV_PROBE_ANNOTATIONS_AFFYMETRIX_SUFFIX=MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"affymetrix.file.suffix";
+  public static final String MEV_PROBE_ANNOTATIONS_ROOT_FOLDER="mev.annotations.probe.root";
+  public static final String MEV_PROBE_ANNOTATIONS_MODIFIED_THRESHOLD_MILLISECONDS="mev.annotations.probe.modified.threashold.milliseconds";
+  public static final String MEV_PROBE_ANNOTATIONS_AFFYMETRIX_FOLDER="mev.annotations.probe.affymetrix.folder";
+  public static final String MEV_PROBE_ANNOTATIONS_AFFYMETRIX_SUFFIX="mev.annotations.probe.affymetrix.file.suffix";
   
   @Bean(name="probe-annotations-root")
   public URL probeAnnotationsRoot() throws IOException{
@@ -92,10 +92,14 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
       annotationsFolder+="/";    
     URL annotationFolderURL = new URL(root, annotationsFolder);
     
-    String fileSuffix = environment.getProperty((MEV_PROBE_ANNOTATIONS_AFFYMETRIX_SUFFIX), "*.annot.out.tsv");
-    long modifiedThreshold = environment.getProperty (MEV_PROBE_ANNOTATIONS_MODIFIED_THRESHOLD_MILISECONDS, Long.class, 1000L*5L*60L); //default 5 minutes
+    String fileSuffix = environment.getProperty((MEV_PROBE_ANNOTATIONS_AFFYMETRIX_SUFFIX), "*.annot.out.tsv");    
     ProbeAnnotationsLoader loader = new JooqProbeAnnotationsLoader (dataSource);
-    return loader.init (annotationFolderURL, fileSuffix, modifiedThreshold);
+    
+    
+    
+    loader.init (annotationFolderURL, fileSuffix);
+    return loader;
+    
   }
   
   @Bean(name="affymatrix-probe-annotations")

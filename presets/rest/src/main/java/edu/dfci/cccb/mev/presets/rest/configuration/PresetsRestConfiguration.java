@@ -30,6 +30,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
@@ -66,20 +67,10 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
     log.info ("URL.toString():" + metadataURL.toString ());
     log.info ("URL.getProtocol ():" + metadataURL.getProtocol ());
     
-    
-//    InputStream checkExists = metadataURL.openStream ();    
-//    if(checkExists==null)
-//      throw new PresetException ("Metadata resource not found: " + metadataURL.toString ());
-
-    if(!checkExists(metadataURL)){
+    if(!CCCPHelpers.UrlUtils.checkExists(metadataURL)){
       throw new PresetException ("Metadata resource not found: " + metadataURL.toString ());
     }
     
-//    File checkFile = new File(metadataURL.getFile ());
-//    if( checkFile.exists ()==false)    
-//      //return new SimplePresests();
-//      throw new PresetException ("Metadata resource not found: " + metadataURL.toString ());
-
     return new SimplePresests (metadataURL, builder);
   }
   
@@ -107,7 +98,7 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
     
     URL tcgaPresetRootURL = new URL("file:"+pathTcgaRoot);
     
-    if(!checkExists(tcgaPresetRootURL))
+    if(!CCCPHelpers.UrlUtils.checkExists(tcgaPresetRootURL))
       return (new ClassPathResource ("tcga/")).getURL ();
 
     return tcgaPresetRootURL;
@@ -115,13 +106,5 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
     
   }
   
-  private boolean checkExists(URL url){
-    try{
-      url.openStream ().close ();
-      return true;
-    }catch(Exception e){
-      return false;
-    }
-    
-  }
+  
 }

@@ -6,7 +6,7 @@ import java.net.URL;
 
 public interface ProbeAnnotationsLoader {
 
-  public abstract ProbeAnnotationsLoader init (URL rootFolder, String suffix, long modifiedInLastMillis) throws IOException,
+  public abstract int init (URL rootFolder, String suffix) throws IOException,
                                                                                       URISyntaxException;
 
   public abstract void loadUrlResource (URL url) throws IOException;

@@ -10,6 +10,13 @@
   <name>MeV PREloaded DataSETS - REST</name>
 
   <dependencies>
+  	<!-- Mev IO -->
+  	<dependency>
+		<groupId>edu.dfci.cccb</groupId>
+	    <artifactId>mev-io</artifactId>
+	    <version>BAYLIE-SNAPSHOT</version>  	
+  	</dependency>
+  
   	<!-- Preset Domain -->
   	<dependency>
 		<groupId>edu.dfci.cccb</groupId>
