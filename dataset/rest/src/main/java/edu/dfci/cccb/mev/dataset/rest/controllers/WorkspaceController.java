@@ -54,14 +54,6 @@ import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.UrlTsvInput;
 @ToString (exclude = { "workspace", "builder" })
 public class WorkspaceController {
 
-  // FIXME: Бля не знаю
-  private static final Map<String, URL> presets;
-
-  static {
-    presets = new HashMap<> ();
-    presets.put ("Ovarian Agilent G4502A 07 2 Level 3",
-                 WorkspaceController.class.getResource ("/ov-agilent-g4502a-07-2-level-3-cut-700.tsv"));
-  }
 
   private @Getter @Setter @Inject Workspace workspace;
   private @Getter @Setter @Inject DatasetBuilder builder;
@@ -81,20 +73,5 @@ public class WorkspaceController {
       log.debug ("Uploaded " + dataset);
     workspace.put (dataset);
   }
-
-  @RequestMapping (value = "/dataset", method = POST, consumes = { "text/plain", "application/json" })
-  @ResponseStatus (OK)
-  public void load (@RequestParam ("load") String load) throws DatasetBuilderException,
-                                                       InvalidDatasetNameException,
-                                                       InvalidDimensionTypeException {
-    Dataset dataset = builder.build (new UrlTsvInput (presets.get (load)));
-    if (log.isDebugEnabled ())
-      log.debug ("Loaded " + dataset);
-    workspace.put (dataset);
-  }
   
-  @RequestMapping (value="/presets", method=GET)
-  public void getPresets(){
-    
-  }
 }

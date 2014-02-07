@@ -25,7 +25,7 @@
 
 
 
-  <div class="span6">
+  <div class="span8">
     <div class="row-fluid">
       <ul class="nav nav-tabs" id="importTabs">
         <li class="active"><a href="#current" data-toggle="tab" ng-click="loadUploads()">Files</a></li>
@@ -49,15 +49,6 @@
         
         <div class="tab-pane" id="tcga">
 		  <div preset-manager ng-controller="PresetManagerController"></div>
-          <!-- <a href="" onclick="$.ajax({ type: 'POST',
-                                       url: '/dataset?load=Ovarian Agilent G4502A 07 2 Level 3',
-                                       contentType: 'application/json;charset=UTF-8',
-                                       onSuccess: function() {
-                                         //loadUploads();
-                                         alert('Ovarian Agilent G4502A 07 2 Level 3 loaded');
-                                       }
-                                     });">Ovarian Agilent G4502A 07 2 Level 3</a>
-           -->
         </div>
        
         
