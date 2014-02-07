@@ -45,30 +45,7 @@ public class SimpleProbeAnnotations implements ProbeAnnotations{
         
       }
     }
-    /*
-    context = using (dataSource.getConnection ());
-    
-    // Specify transactional behaviour where this is possible
-    // (e.g. not in container-managed transactions)
-    
-    
-    context.loadInto(tableByName(annotationType))
-
-           // choose any of these methods
-           .commitEach()
-           .commitAfter(10)
-           .commitAll()
-           .commitNone() // the default
-    
-           .loadCSV(inputstream)
-           .fields(ID, null, TITLE)
-           .execute();
-     
-    if (log.isDebugEnabled ())
-      log.debug ("Created " + table + " with " + row + ", " + column + ", " + value);
-    */
-    
-    
+        
   }
 
   public SimpleProbeAnnotations(URL rootFolder, DataSource dataSource){
