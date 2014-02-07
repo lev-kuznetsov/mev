@@ -427,13 +427,13 @@ public class ImportingUtilities {
           encoding = "UTF-8";
         }
 
-        File file = allocateFile (rawDataDir, "heatmap.txt");
+        File file = allocateFile (rawDataDir, "heatmap.tsv");
 
         JSONObject fileRecord = new JSONObject ();
-        JSONUtilities.safePut (fileRecord, "origin", "heatmap");
+        JSONUtilities.safePut (fileRecord, "origin", "heatmap.tsv");
         JSONUtilities.safePut (fileRecord, "declaredEncoding", encoding);
         JSONUtilities.safePut (fileRecord, "declaredMimeType", (String) null);
-        JSONUtilities.safePut (fileRecord, "format", "text");
+        JSONUtilities.safePut (fileRecord, "format", "text/line-based/*sv");
         JSONUtilities.safePut (fileRecord, "fileName", heatmap.name ()+sDimension);
         JSONUtilities.safePut (fileRecord, "location", getRelativePath (file, rawDataDir));
 

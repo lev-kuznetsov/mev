@@ -35,7 +35,7 @@
 					mev-selections="heatmapData.row.selections" 
 					mev-base-url="/annotations/{{heatmapId}}/annotation/row"
 					mev-demintion="row">
-					You may define sets uploading your <a href="" ng-click="showAnnotations(selection, 'row')">row annotations</a> or by looking up <a href="" ng-click="showAnnotations(selection, 'row', 'probe')">probe annotations</a> from out database.				
+					You may define sets uploading your <a href="" ng-click="showAnnotations(selection, 'row')">row annotations</a> or by looking up <a href="" ng-click="showAnnotations(selection, 'row', 'probe')">probe annotations</a> from our database.				
 				</selection-set-list>
 				
 		</div>
