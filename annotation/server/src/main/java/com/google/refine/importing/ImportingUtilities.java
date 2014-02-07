@@ -243,7 +243,6 @@ public class ImportingUtilities {
     String sDimension = (String) request.getAttribute (REQUEST_ATTEIBUTE_DIMENSION);
     Dimension dimension =heatmap.dimension (Dimension.Type.from (sDimension));
     
-    
     progress.setProgress ("Uploading data ...", -1);
     parts: for (FileItem fileItem : tempFiles) {
       if (progress.isCanceled ()) {
@@ -443,12 +442,27 @@ public class ImportingUtilities {
 
         InputStream stream=null;
         if(dimension.type ()==Dimension.Type.COLUMN){
+          //use the dataset keys for column annotations          
           StringBuilder builder = new StringBuilder (StringUtils.join (
                                                                      dimension.keys (),
                                                                      "\n"));
           stream = new ByteArrayInputStream (builder.toString ().getBytes (encoding));
         }else{
-          stream = ProjectManager.getSingleton ().getProbeaAnnotations ().getAsStream (dimension);
+          String rowAnnotationSource = (String) request.getAttribute ("annotationSource");
+          if(rowAnnotationSource.equals ("probe")){
+            //user asked to load our probe annotations
+            if(logger.isDebugEnabled ())
+              logger.debug ("Using ROW PROBE annotations");
+            stream = ProjectManager.getSingleton ().getProbeaAnnotations ().getAsStream (dimension);
+          }else{
+            if(logger.isDebugEnabled ())
+              logger.debug ("Using ROW KEYS annotations");
+            //use the dataset keys for row annotations
+            StringBuilder builder = new StringBuilder (StringUtils.join (
+                                                                         dimension.keys (),
+                                                                         "\n"));
+            stream = new ByteArrayInputStream (builder.toString ().getBytes (encoding));
+          }
         }
         
         
