@@ -23,14 +23,11 @@
   </div>
   <div class="modal-body">
     <div class="row-fluid">
-
-          <select ng-model="selectedColor" ng-options="selection for selection in colorOptions" />
-          <select ng-model="hotThreshold" ng-options="selection for selection in hotThresholdOptions" />
-          <select ng-model="coldThreshold" ng-options="selection for selection in coldThresholdOptions" />
-
-      
-      
+          Heatmap Color:
+          <select ng-model="selectedColor" ng-options="selection for selection in colorOptions"></select>
     </div>
+    
+    
   </div>
   <div class="modal-footer">
     <button class="btn" ng-click="defaultColors()">Default</button>

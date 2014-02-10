@@ -1156,7 +1156,7 @@ define (
                             green : 0
                           }
 
-                          if (scope.selectedColor == "Red-Green" ) {
+                          if (scope.selectedColor == "Green-Black-Red" ) {
 
                             if (val <= leftshifter.domain()[1]) {
                               color.red = leftshifter (val);
@@ -1167,8 +1167,32 @@ define (
                             }
                             ;
 
-                          } else {
-                            // default blue-yellow
+                          } else if (scope.selectedColor == "Red-White-Blue" ) {
+                            
+                            ls = d3.scale.linear ()
+                              .domain([ leftshifter.domain()[0] , leftshifter.domain()[1] ])
+                              .rangeRound ( [ leftshifter.range()[1] , leftshifter.range()[0] ] );
+                            
+                            rs = d3.scale.linear ()
+                              .domain([ rightshifter.domain()[0] , rightshifter.domain()[1] ])
+                              .rangeRound ( [ rightshifter.range()[1] , rightshifter.range()[0] ] );
+
+                            if (val <= ls.domain()[1]) {
+                              color.blue = "255";
+                              color.red = ls (val);
+                              color.green = ls (val);
+                              
+
+                            } else { 
+                              
+                              color.red = "255";
+                              color.blue = rs (val);
+                              color.green = rs (val);
+                              
+                            }
+                            ;
+
+                          } else { // default Yellow-Black-Blue
                             if (val <= leftshifter.domain()[1]) {
                               color.blue = leftshifter (val);
 
