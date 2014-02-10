@@ -4,9 +4,10 @@ define(['jquery', 'angular'], function (jquery, angular){
 			$scope.presets = presetService.getPresetList();
 			$scope.orderByColumn="name";
 			$scope.orderByReverse=false;
+			$scope.importPresetUrl="about:blank";
+			$scope.showImport=false;
 		}])
 		.service('PresetService', ['QHTTP', 'alertService', function(QHTTP, alertService){
-			this.name="Antony";
 			this.getPresetList = function(){
                 var params = {
                   method : 'GET',
@@ -32,7 +33,14 @@ define(['jquery', 'angular'], function (jquery, angular){
 		.directive('presetManager', [function(){
 			return {
 				link: function(scope){
-					
+					scope.showImportPreset = function(presetName){						
+						scope.importPresetUrl="/annotations/import-dataset/command/core/view-preset-annotations?import-preset="+presetName;
+						scope.showImport=true;
+					};					
+					scope.showPresetList = function(){
+						scope.importPresetUrl="about:blank";
+						scope.showImport=false;
+					};
 				},
 				restrict: 'EA',
 				templateUrl: '/container/view/elements/presets/presetList'

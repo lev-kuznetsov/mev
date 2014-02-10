@@ -24,6 +24,7 @@ import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.sql.DataSource;
 
 import lombok.Synchronized;
@@ -52,7 +53,7 @@ public class PersistenceConfiguration {
 
   private @Inject Environment environment;
 
-  @Bean
+  @Bean(name="mev-datasource")
   public DataSource dataSource () {
     BasicDataSource dataSource = new BasicDataSource ();
     dataSource.setDriverClassName (environment.getProperty ("database.driver.class", "org.h2.Driver"));
@@ -68,7 +69,7 @@ public class PersistenceConfiguration {
   }
 
   @Bean
-  public LocalSessionFactoryBean sessionFactory (DataSource dataSource) {
+  public LocalSessionFactoryBean sessionFactory (@Named("mev-datasource") DataSource dataSource) {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean ();
     sessionFactory.setDataSource (dataSource);
     sessionFactory.setPackagesToScan (environment.getProperty ("session.factory.scan.packages",
@@ -97,7 +98,7 @@ public class PersistenceConfiguration {
   }
 
   @Bean
-  public PlatformTransactionManager transactionManager (DataSource dataSource) {
+  public PlatformTransactionManager transactionManager (@Named("mev-datasource") DataSource dataSource) {
     return new DataSourceTransactionManager (dataSource);
   }
 

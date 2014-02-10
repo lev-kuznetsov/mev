@@ -25,6 +25,7 @@ import static org.eobjects.metamodel.schema.ColumnType.VARCHAR;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.sql.DataSource;
 
 import lombok.Getter;
@@ -52,7 +53,7 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValueStoreBuilder;
 @Log4j
 public class MetamodelBackedValueStoreBuilder extends AbstractValueStoreBuilder {
 
-  private @Getter @Setter @Inject DataSource dataSource;
+  private @Getter @Setter @Inject @Named("mev-datasource")DataSource dataSource;
 
   private JdbcDataContext context;
   private Table table;

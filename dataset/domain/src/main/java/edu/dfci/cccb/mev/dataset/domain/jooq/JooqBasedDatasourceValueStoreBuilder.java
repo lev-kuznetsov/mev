@@ -25,6 +25,7 @@ import static org.jooq.impl.DSL.using;
 import java.sql.SQLException;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.sql.DataSource;
 
 import lombok.ToString;
@@ -54,7 +55,7 @@ public class JooqBasedDatasourceValueStoreBuilder extends AbstractValueStoreBuil
   private final Field<Double> value;
 
   @Inject
-  public JooqBasedDatasourceValueStoreBuilder (DataSource dataSource) throws SQLException {
+  public JooqBasedDatasourceValueStoreBuilder (@Named("mev-datasource")DataSource dataSource) throws SQLException {
     context = using (dataSource.getConnection ());
     table = tableByName (randomUUID ().toString ());
     row = fieldByName (String.class, ROW_FIELD_NAME);
