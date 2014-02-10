@@ -27,10 +27,11 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListSelections;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
+import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConrigurationMock;
 
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={ProbeAnnotationsPersistanceConriguration.class})
+@ContextConfiguration(classes={ProbeAnnotationsPersistanceConrigurationMock.class})
 public class TestJooqProbeAnnotations {
 
   @Inject @Named("probe-annotations-datasource") DataSource dataSource;

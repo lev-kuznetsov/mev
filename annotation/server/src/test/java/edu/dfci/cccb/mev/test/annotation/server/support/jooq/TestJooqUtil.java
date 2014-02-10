@@ -1,7 +1,6 @@
 package edu.dfci.cccb.mev.test.annotation.server.support.jooq;
 
 import static org.jooq.impl.DSL.using;
-import static org.junit.Assert.assertEquals;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,13 +20,13 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsPersistanceConriguration;
 import edu.dfci.cccb.mev.annotation.support.jooq.JooqUtil;
+import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConrigurationMock;
 
 
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={ProbeAnnotationsPersistanceConriguration.class})
+@ContextConfiguration(classes={ProbeAnnotationsPersistanceConrigurationMock.class})
 public class TestJooqUtil {
   
   @Inject @Named("probe-annotations-datasource") DataSource dataSource;

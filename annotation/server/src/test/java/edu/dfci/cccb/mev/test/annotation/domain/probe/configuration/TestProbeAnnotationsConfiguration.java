@@ -13,11 +13,11 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsPersistanceConriguration;
+import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConrigurationMock;
 
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={ProbeAnnotationsPersistanceConriguration.class})
+@ContextConfiguration(classes={ProbeAnnotationsPersistanceConrigurationMock.class})
 public class TestProbeAnnotationsConfiguration {
 
   @Inject @Named("probe-annotations-datasource") DataSource dataSource;

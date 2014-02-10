@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import lombok.extern.log4j.Log4j;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
-import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfigurationMock;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 import edu.dfci.cccb.mev.web.configuration.DispatcherConfiguration;
@@ -58,7 +58,7 @@ public class TestAnnotationServerConfiguration {
     mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext).build();
   }
   
-  @Test
+  @Test @Ignore
   public void testGetTcgaPresets () throws Exception {
     MvcResult result = this.mockMvc.perform(get("/presets/tcga").param ("format", "json").accept("application/json"))
             .andExpect (status ().isOk ())            

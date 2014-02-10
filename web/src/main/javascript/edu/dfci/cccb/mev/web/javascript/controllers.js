@@ -160,15 +160,18 @@ define ([ 'jquery', 'angular'], function ($, angular) {
     	  $scope.$on('ViewAnnotationsEvent', function(event, selection, dimension, annotationSource){
     		  var annotationsUrl = $scope.baseUrl+"/"+dimension+"/";
     		  if(typeof selection != 'undefined'){
-    			annotationsUrl += selection.name+"/"+selection.properties.selectionFacetLink;				
+    			annotationsUrl += selection.name+"/";				
     		  }else{
     			annotationsUrl += "new/";
     		  }
-    		  
     		  if(typeof annotationSource != 'undefined'){
     			  annotationsUrl += annotationSource+"/";
     		  }else{
     			  annotationsUrl += "dataset/";
+    		  }
+    		  
+    		  if(typeof selection != 'undefined'){
+    			  annotationsUrl += selection.properties.selectionFacetLink;
     		  }
     		  
     		  $scope.annotationsUrl=annotationsUrl;

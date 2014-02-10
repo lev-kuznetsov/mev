@@ -11,7 +11,7 @@ package edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MevProbeAnnotations extends org.jooq.impl.TableImpl<edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.tables.records.MevProbeAnnotationsRecord> {
 
-	private static final long serialVersionUID = 1966168745;
+	private static final long serialVersionUID = -94867754;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.MEV_PROBE_ANNOTATIONS</code>
@@ -85,26 +85,6 @@ public class MevProbeAnnotations extends org.jooq.impl.TableImpl<edu.dfci.cccb.m
 	 * The column <code>PUBLIC.MEV_PROBE_ANNOTATIONS.REFSEQ_ACCN</code>.
 	 */
 	public final org.jooq.TableField<edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.tables.records.MevProbeAnnotationsRecord, java.lang.String> REFSEQ_ACCN = createField("REFSEQ_ACCN", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this);
-
-	/**
-	 * The column <code>PUBLIC.MEV_PROBE_ANNOTATIONS.GO_BIOPROCESS</code>.
-	 */
-	public final org.jooq.TableField<edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.tables.records.MevProbeAnnotationsRecord, java.lang.String> GO_BIOPROCESS = createField("GO_BIOPROCESS", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this);
-
-	/**
-	 * The column <code>PUBLIC.MEV_PROBE_ANNOTATIONS.GO_CELLULARCOMPONENT</code>.
-	 */
-	public final org.jooq.TableField<edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.tables.records.MevProbeAnnotationsRecord, java.lang.String> GO_CELLULARCOMPONENT = createField("GO_CELLULARCOMPONENT", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this);
-
-	/**
-	 * The column <code>PUBLIC.MEV_PROBE_ANNOTATIONS.GO_MOLECULARFUNCTION</code>.
-	 */
-	public final org.jooq.TableField<edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.tables.records.MevProbeAnnotationsRecord, java.lang.String> GO_MOLECULARFUNCTION = createField("GO_MOLECULARFUNCTION", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this);
-
-	/**
-	 * The column <code>PUBLIC.MEV_PROBE_ANNOTATIONS.PATHWAY</code>.
-	 */
-	public final org.jooq.TableField<edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.tables.records.MevProbeAnnotationsRecord, java.lang.String> PATHWAY = createField("PATHWAY", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this);
 
 	/**
 	 * Create a <code>PUBLIC.MEV_PROBE_ANNOTATIONS</code> table reference

@@ -29,7 +29,6 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
 
 @Configuration
-@ComponentScan(value = "edu.dfci.cccb.mev.annotation.probe")
 @PropertySource("classpath:probe_annotations.properties")
 public class ProbeAnnotationsPersistanceConriguration {
 
