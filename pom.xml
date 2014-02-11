@@ -56,7 +56,7 @@
       <properties>
         <spring.prifiles.active>dev</spring.prifiles.active>
         <mev.work.directory>${java.io.tmpdir}</mev.work.directory>
-        <mev.RScript>RScript</mev.RScript>
+        <mev.Rscript>Rscript</mev.Rscript>
       </properties>
     </profile>
     <profile>
@@ -64,7 +64,7 @@
       <properties>
         <spring.prifiles.active>prod</spring.prifiles.active>
         <mev.work.directory>/cephfs/projects/mev/work</mev.work.directory>
-        <mev.RScript>/cephfs/projects/mev/lib/R/default/bin/RScript</mev.RScript>
+        <mev.Rscript>/cephfs/projects/mev/lib/R/default/bin/Rscript</mev.Rscript>
       </properties>
     </profile>
     <profile>
@@ -72,7 +72,7 @@
       <properties>
         <spring.prifiles.active>test</spring.prifiles.active>
         <mev.work.directory>${java.io.tmpdir}</mev.work.directory>
-        <mev.RScript>RScript</mev.RScript>
+        <mev.Rscript>Rscript</mev.Rscript>
       </properties>
     </profile>
   </profiles>

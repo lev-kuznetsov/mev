@@ -240,7 +240,7 @@
             </systemProperty>
             <systemProperty>
               <name>edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable</name>
-              <value>${mev.RScript}</value>
+              <value>${mev.Rscript}</value>
             </systemProperty>
           </systemProperties>
         </configuration>
