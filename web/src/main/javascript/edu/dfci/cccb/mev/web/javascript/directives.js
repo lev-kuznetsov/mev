@@ -675,7 +675,8 @@ define (
                           
                           //definitions
                           var columnCells = [], rowCells = [];
-                          
+                          console.log(columnData)
+                          console.log(rowData)
                           //Data building
                           columnData.selections.forEach(function(selection){
                             selection.keys.forEach(function(key){
@@ -693,7 +694,7 @@ define (
                               rowCells.push({
                                 col: selection.name, 
                                 row: key, 
-                                color: selection.selectionColor}); 
+                                color: selection.properties.selectionColor}); 
                             });
                           });
                           
@@ -878,11 +879,6 @@ define (
                           };
                           
                           
-                          //if (cols.root){}
-                          
-                          
-
-
                           XLabel2Index.domain (cols.keys).range (
                               cols.keys.map (function (d, i) {
                                 return i
@@ -974,18 +970,22 @@ define (
                         scope.$watch('heatmapData', function(newval, oldval){
 
                             if (newval && !oldval) {
-                              drawHeatmap(newval);
+                              
                               $('#loading').modal('hide');
                               console.log("hidden")
                               //redraw previously rendered tree if page loads
                               
                               if (newval.column.root) {
+                                //heatmapMarginTop = 200;
                             	  scope.heatmapTopTree = newval.column.root;
                               }
                               
                               if (newval.row.root) {
+                                //heatmapMarginLeft = Math.floor (svgWidth * .15);
                             	  scope.heatmapLeftTree = newval.row.root;
                               }
+                              
+                              drawHeatmap(newval);
                               
                             } else if (newval && oldval) {
                             	
@@ -1045,9 +1045,10 @@ define (
                           if (newval) {
                           
                             var tree = newval;
-                            
+                            //heatmapMarginTop = 200;
+                            //updateDrawHeatmap(scope.heatmapData);
                             drawTree(dendogramLeftWindow, Cluster, tree, 'horizontal' )
-                            
+
                             
                           }
                           
@@ -1058,7 +1059,8 @@ define (
                           if (newval) {
 
                             var tree = newval;
-                            
+                            //heatmapMarginLeft = Math.floor (svgWidth * .15);
+                            //updateDrawHeatmap(scope.heatmapData);
                             drawTree(dendogramTopWindow, Cluster, tree, 'vertical' )
                             
                             
