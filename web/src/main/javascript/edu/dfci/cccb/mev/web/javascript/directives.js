@@ -583,9 +583,9 @@ define (
                             'width').slice (0, -2) * .9), svgHeight = Math //svgheight no longer!
                             .floor (jq ('#rightPanel').css ('height').slice (0, -2) * .9);
 
-                        var heatmapMarginLeft = Math.floor (svgWidth * .15), 
+                        var heatmapMarginLeft = 0, //Math.floor (svgWidth * .15), 
                             heatmapMarginRight = Math.floor (svgWidth * .15), 
-                            heatmapMarginTop = 200, 
+                            heatmapMarginTop = 100, 
                             heatmapMarginBottom = Math.floor (svgHeight * .15),
                             heatmapColumnSelectionsGutter = 0,
                             heatmapRowSelectionsGutter = 0;
@@ -878,11 +878,6 @@ define (
                           };
                           
                           
-                          //if (cols.root){}
-                          
-                          
-
-
                           XLabel2Index.domain (cols.keys).range (
                               cols.keys.map (function (d, i) {
                                 return i
@@ -980,10 +975,12 @@ define (
                               //redraw previously rendered tree if page loads
                               
                               if (newval.column.root) {
+                                heatmapMarginTop = 200;
                             	  scope.heatmapTopTree = newval.column.root;
                               }
                               
                               if (newval.row.root) {
+                                heatmapMarginLeft = Math.floor (svgWidth * .15);
                             	  scope.heatmapLeftTree = newval.row.root;
                               }
                               
@@ -1045,9 +1042,10 @@ define (
                           if (newval) {
                           
                             var tree = newval;
-                            
+                            heatmapMarginTop = 200;
+                            updateDrawHeatmap(scope.heatmapData);
                             drawTree(dendogramLeftWindow, Cluster, tree, 'horizontal' )
-                            
+
                             
                           }
                           
@@ -1058,7 +1056,8 @@ define (
                           if (newval) {
 
                             var tree = newval;
-                            
+                            heatmapMarginLeft = Math.floor (svgWidth * .15);
+                            updateDrawHeatmap(scope.heatmapData);
                             drawTree(dendogramTopWindow, Cluster, tree, 'vertical' )
                             
                             
