@@ -749,6 +749,7 @@ define (
 
                         function drawLabels (xAxis, yAxis) {
                           
+                          
                           var xband = (XIndex2Pixel(1) - XIndex2Pixel(0))/2;
                           
                           
