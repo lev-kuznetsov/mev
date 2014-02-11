@@ -238,6 +238,10 @@
               <name>database.url</name>
               <value>jdbc:h2:file:${mev.work.directory}/mev;QUERY_CACHE_SIZE=100000;CACHE_SIZE=1048576</value>
             </systemProperty>
+            <systemProperty>
+              <name>edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable</name>
+              <value>${mev.RScript}</value>
+            </systemProperty>
           </systemProperties>
         </configuration>
       </plugin>
