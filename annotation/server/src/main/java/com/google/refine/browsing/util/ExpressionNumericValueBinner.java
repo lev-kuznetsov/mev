@@ -178,4 +178,10 @@ public class ExpressionNumericValueBinner implements RowVisitor, RecordVisitor {
             hasBlank = true;
         }
     }
+
+    @Override
+    public boolean pass (Project project, int rowIndex, Row row) {
+      // TODO Auto-generated method stub
+      return false;
+    }
 }

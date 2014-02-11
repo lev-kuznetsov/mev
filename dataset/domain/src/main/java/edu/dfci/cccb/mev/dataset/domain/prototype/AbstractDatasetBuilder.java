@@ -29,6 +29,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analyses;
 import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
@@ -59,6 +60,7 @@ import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 @EqualsAndHashCode
 @ToString
 @Accessors (fluent = false, chain = true)
+@Log4j
 public abstract class AbstractDatasetBuilder implements DatasetBuilder {
 
   private @Getter @Setter @Inject Collection<? extends ParserFactory> parserFactories;
@@ -93,13 +95,23 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
                                                                     InvalidDimensionTypeException {
     List<String> rows = new ArrayList<> ();
     List<String> columns = new ArrayList<> ();
+    if(log.isDebugEnabled ())
+      log.debug ("**selection: " + columnSelection.keys ());
     for (Parser parser = parser (content); parser.next ();) {
       if(columnSelection.keys ().contains (parser.projection (COLUMN))){
-        valueStoreBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));
+        
+//        if(log.isDebugEnabled ())
+//          log.debug("+++adding:"+parser.projection (COLUMN));        
+        
+        valueStoreBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));        
         if (!rows.contains (parser.projection (ROW)))
           rows.add (parser.projection (ROW));
         if (!columns.contains (parser.projection (COLUMN)))
           columns.add (parser.projection (COLUMN));
+      }else{
+//        if(log.isDebugEnabled ())
+//          log.debug ("---skipping:"+parser.projection (COLUMN));
+        
       }
     }
     return aggregate (content.name (), valueStoreBuilder.build (), analyses (),

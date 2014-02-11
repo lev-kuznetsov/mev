@@ -60,6 +60,13 @@ public interface RowVisitor {
             int     rowIndex, 
             Row     row
     );
+    
+    public boolean pass(
+             Project project, 
+             int     rowIndex, 
+             Row     row
+     );
+     
 
     /**
      * Called after all visit() calls.

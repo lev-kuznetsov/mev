@@ -80,9 +80,9 @@ define(['jquery','angular'], function(jquery, angular){
 				$scope.selectedItem.name = item.name;
 				$scope.selectedItem.properties = item.properties;
 			};
-			$scope.showAnnotations = function(selection, dimention){
+			$scope.showAnnotations = function(selection, dimention, annotationSource){
 				//alert(angular.toJson(selection));
-				$scope.$emit('ViewAnnotationsEvent', selection, dimention);				
+				$scope.$emit('ViewAnnotationsEvent', selection, dimention, annotationSource);				
 				
 			}
 			$scope.addItem = function(item){

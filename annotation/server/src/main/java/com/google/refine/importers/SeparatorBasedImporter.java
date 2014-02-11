@@ -203,7 +203,7 @@ public class SeparatorBasedImporter extends TabularImportingParserBase {
                             inQuote = !inQuote;
                         }
                         if (!Character.isLetterOrDigit(c) 
-                                && !"\"' .-".contains(s.subSequence(i, i + 1)) 
+                                && !"\"' .-_".contains(s.subSequence(i, i + 1)) 
                                 && (!handleQuotes || !inQuote)) {
                             Separator separator = separatorMap.get(c);
                             if (separator == null) {

@@ -180,13 +180,15 @@ public class AnnotationController extends WebApplicationObjectSupport {
   
   @RequestMapping(method={GET, POST, PUT, DELETE}, value = {"/"
           + DATASET_URL_ELEMENT + "/annotation/"
-          + DIMENSION_URL_ELEMENT + "/{selectionName}/**"
+          + DIMENSION_URL_ELEMENT + "/{selectionName}/{annotationSource}/**"
+          
 
   })
   @ResponseBody
   public void handleAnnotationByName (@PathVariable (DATASET_MAPPING_NAME) final String heatmapId,
                                 @PathVariable (DIMENSION_MAPPING_NAME) final String dimension,
-                                @PathVariable (value="selectionName") final String selectionName,
+                                @PathVariable (value="selectionName") final String selectionName,           
+                                @PathVariable(value="annotationSource") final String annotationSrouce,
                                 HttpServletRequest request, HttpServletResponse response) throws ServletException,
                                                                                          IOException,
                                                                                          DatasetNotFoundException {
@@ -195,7 +197,7 @@ public class AnnotationController extends WebApplicationObjectSupport {
     HttpServletRequest wrappedRequest = new HttpServletRequestWrapper (request) {
       @Override
       public String getPathInfo () {
-        return super.getServletPath ().replace ("/annotations/" + heatmapId + "/annotation/" + dimension + "/" + selectionName, "");
+        return super.getServletPath ().replace ("/annotations/" + heatmapId + "/annotation/" + dimension + "/" + selectionName + "/" + annotationSrouce, "");
       }
     };
 
@@ -213,7 +215,8 @@ public class AnnotationController extends WebApplicationObjectSupport {
     }
 
     wrappedRequest.setAttribute ("dataset", heatmap);
-    wrappedRequest.setAttribute ("dimension", dimension);    
+    wrappedRequest.setAttribute ("dimension", dimension);
+    wrappedRequest.setAttribute ("annotationSource", annotationSrouce);
     if(!selectionName.equalsIgnoreCase ("new"))
       wrappedRequest.setAttribute ("selectionName", selectionName);
     this.refineServlet.service (wrappedRequest, response);    

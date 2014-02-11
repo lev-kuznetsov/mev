@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Named;
 import javax.sql.DataSource;
 
 import lombok.ToString;
@@ -126,7 +127,7 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
 
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public ValueStoreBuilder valueFactory (DataSource dataSource) throws Exception {
+  public ValueStoreBuilder valueFactory (@Named ("mev-datasource") DataSource dataSource) throws Exception {
     return new SharedCachedValueStoreBuilder (new JooqBasedDatasourceValueStoreBuilder (dataSource));
     // return new MetamodelBackedValueStoreBuilder ();
   }
@@ -206,6 +207,9 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
 
   @SuppressWarnings ("unchecked")
   private static <T> T nonCloseableProxy (final T of) {
+    if (of == null)
+      return null;
+
     return (T) newProxyInstance (of.getClass ().getClassLoader (), new HashSet<Class<?>> () {
       private static final long serialVersionUID = 1L;
 

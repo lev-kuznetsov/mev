@@ -28,9 +28,12 @@
   <logger name="org.eobjects">
     <level value="info"></level>
   </logger>
-  <logger name="org.jooq">
+  <logger name="com.google.refine">
     <level value="info"></level>
   </logger>
+  <logger name="org.jooq">
+    <level value="info"></level>
+  </logger>  
   <root>
     <priority value="debug"></priority>
     <appender-ref ref="stderr" />

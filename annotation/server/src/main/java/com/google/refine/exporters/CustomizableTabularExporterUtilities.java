@@ -165,6 +165,12 @@ abstract public class CustomizableTabularExporterUtilities {
             public void end(Project project) {
                 serializer.endFile();
             }
+
+            @Override
+            public boolean pass (Project project, int rowIndex, Row row) {
+              // TODO Auto-generated method stub
+              return false;
+            }
         };
 
         FilteredRows filteredRows = engine.getAllFilteredRows();

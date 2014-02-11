@@ -825,6 +825,9 @@ define (
                             },
                             "y" : function (d, i) {
                               return YIndex2Pixel (YLabel2Index (d.row));
+                            },
+                            "fill" : function(d, i){
+                              return cellColor (d.value)
                             }
                           });
                           
@@ -941,7 +944,7 @@ define (
                           
 
                           heatmapcells = rects.data (data.values).enter ().append ("rect");
-						  scope.theData=data;
+						              scope.theData=data;
                           scaleUpdates (data.column, data.row,
                               data.min, data.max, data.avg);
                           
@@ -1063,6 +1066,16 @@ define (
                           
                         });
                         
+                        scope.$watch('selectedColor', function(newval, oldval){
+                          
+                          if (newval) {
+
+                            redrawCells (heatmapcells);
+                            
+                          }
+                          
+                        });
+                        
                         function drawTree(canvas, cluster, tree, type) {
                         	
                           canvas.selectAll('*').remove();
@@ -1135,7 +1148,7 @@ define (
 
 
 
-                        function cellColor (val, type) {
+                        function cellColor (val) {
 
                           var color = {
                             red : 0,
@@ -1143,13 +1156,44 @@ define (
                             green : 0
                           }
 
-                          if (type) {
+                          if (scope.selectedColor == "Green-Black-Red" ) {
 
-                            // coloring options
+                            if (val <= leftshifter.domain()[1]) {
+                              color.red = leftshifter (val);
 
-                          } else {
-                            // default blue-yellow
-                            if (val <= 0) {
+                            } else {
+                              
+                              color.green = rightshifter (val);
+                            }
+                            ;
+
+                          } else if (scope.selectedColor == "Red-White-Blue" ) {
+                            
+                            ls = d3.scale.linear ()
+                              .domain([ leftshifter.domain()[0] , leftshifter.domain()[1] ])
+                              .rangeRound ( [ leftshifter.range()[1] , leftshifter.range()[0] ] );
+                            
+                            rs = d3.scale.linear ()
+                              .domain([ rightshifter.domain()[0] , rightshifter.domain()[1] ])
+                              .rangeRound ( [ rightshifter.range()[1] , rightshifter.range()[0] ] );
+
+                            if (val <= ls.domain()[1]) {
+                              color.blue = "255";
+                              color.red = ls (val);
+                              color.green = ls (val);
+                              
+
+                            } else { 
+                              
+                              color.red = "255";
+                              color.blue = rs (val);
+                              color.green = rs (val);
+                              
+                            }
+                            ;
+
+                          } else { // default Yellow-Black-Blue
+                            if (val <= leftshifter.domain()[1]) {
                               color.blue = leftshifter (val);
 
                             } else {

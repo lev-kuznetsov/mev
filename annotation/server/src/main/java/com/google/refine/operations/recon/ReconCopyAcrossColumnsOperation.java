@@ -165,6 +165,12 @@ public class ReconCopyAcrossColumnsOperation extends EngineDependentOperation {
                         }
                         return false;
                     }
+
+                    @Override
+                    public boolean pass (Project project, int rowIndex, Row row) {
+                      // TODO Auto-generated method stub
+                      return false;
+                    }
                 });
                 
                 filteredRows.accept(project, new RowVisitor() {
@@ -195,6 +201,12 @@ public class ReconCopyAcrossColumnsOperation extends EngineDependentOperation {
                             }
                         }
                         return false;
+                    }
+
+                    @Override
+                    public boolean pass (Project project, int rowIndex, Row row) {
+                      // TODO Auto-generated method stub
+                      return false;
                     }
                 });
             } catch (Exception e) {

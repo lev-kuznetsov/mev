@@ -13,6 +13,14 @@ define ([ 'jquery', 'angular'], function ($, angular) {
     	
   		$scope.heatmapId = $routeParams.datasetName;
   		
+		  $scope.colorOptions = ["Green-Black-Red", "Yellow-Black-Blue",  "Red-White-Blue"];
+		  
+      
+  		
+  		$scope.defaultColors = function() {
+  		  $scope.selectedColor = "Yellow-Black-Blue";
+  		}
+  		$scope.defaultColors()
   		
   		$scope.heatmapData = undefined;
       $scope.heatmapLeftTree = undefined;
@@ -155,16 +163,26 @@ define ([ 'jquery', 'angular'], function ($, angular) {
       .controller('MainPanelController', ['$scope', '$element', '$attrs', function($scope, $element, $attrs){
     	  ///annotations/{{heatmapId}}/annotation/column    	  
     	  $scope.baseUrl='/annotations/'+$scope.heatmapId+'/annotation';
-    	  $scope.annotationsUrl=$scope.baseUrl+'/column/new/';
+    	  $scope.annotationsUrl=$scope.baseUrl+'/column/new/dataset/';
     	  
-    	  $scope.$on('ViewAnnotationsEvent', function(event, selection, dimension){
+    	  $scope.$on('ViewAnnotationsEvent', function(event, selection, dimension, annotationSource){
+    		  var annotationsUrl = $scope.baseUrl+"/"+dimension+"/";
     		  if(typeof selection != 'undefined'){
-    			$scope.annotationsUrl = $scope.baseUrl+"/"+dimension+"/"+selection.name+"/"+selection.properties.selectionFacetLink;				
+    			annotationsUrl += selection.name+"/";				
     		  }else{
-    			$scope.annotationsUrl = $scope.baseUrl+"/"+dimension+"/new/";
+    			annotationsUrl += "new/";
+    		  }
+    		  if(typeof annotationSource != 'undefined'){
+    			  annotationsUrl += annotationSource+"/";
+    		  }else{
+    			  annotationsUrl += "dataset/";
     		  }
     		  
-
+    		  if(typeof selection != 'undefined'){
+    			  annotationsUrl += selection.properties.selectionFacetLink;
+    		  }
+    		  
+    		  $scope.annotationsUrl=annotationsUrl;
     		  var elm = document.querySelector('#annotationsTabLink');
     		  $(elm).trigger('click');
     		  //var annotationsTab = angular.element(elm);				
