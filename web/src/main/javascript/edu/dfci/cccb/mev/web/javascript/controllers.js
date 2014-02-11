@@ -13,6 +13,14 @@ define ([ 'jquery', 'angular'], function ($, angular) {
     	
   		$scope.heatmapId = $routeParams.datasetName;
   		
+		  $scope.colorOptions = ["Green-Black-Red", "Yellow-Black-Blue",  "Red-White-Blue"];
+		  
+      
+  		
+  		$scope.defaultColors = function() {
+  		  $scope.selectedColor = "Yellow-Black-Blue";
+  		}
+  		$scope.defaultColors()
   		
   		$scope.heatmapData = undefined;
       $scope.heatmapLeftTree = undefined;
