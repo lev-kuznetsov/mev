@@ -30,13 +30,13 @@
 
   <dependencies>
 
-	<dependency>
-	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-test</artifactId>
-	    <version>${spring.version}</version>
-	    <scope>test</scope>
-	</dependency>
-    
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${spring.version}</version>
+      <scope>test</scope>
+    </dependency>
+
     <!-- Hibernate -->
 
     <dependency>
@@ -120,31 +120,31 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
-    <!-- Presets  -->
-    
+    <!-- Presets -->
+
     <dependency>
-    	<groupId>edu.dfci.cccb</groupId>
-    	<artifactId>mev-presets-rest</artifactId>
-    	<version>BAYLIE-SNAPSHOT</version>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-presets-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
     </dependency>
-    
+
     <!-- Servlet -->
-    
+
     <dependency>
-		<groupId>org.eclipse.jetty</groupId>
-		<artifactId>jetty-servlet</artifactId>
-		<version>${jetty.version}</version>
-		<scope>provided</scope>
-	</dependency>
-	
-	<!-- Unit Testing -->
-	<dependency>
-		<groupId>com.jayway.jsonpath</groupId>
-		<artifactId>json-path</artifactId>
-		<version>0.9.1</version>
-	</dependency>
-            
-	
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-servlet</artifactId>
+      <version>${jetty.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Unit Testing -->
+    <dependency>
+      <groupId>com.jayway.jsonpath</groupId>
+      <artifactId>json-path</artifactId>
+      <version>0.9.1</version>
+    </dependency>
+
+
     <!-- Webjars -->
 
     <dependency>
@@ -195,13 +195,14 @@
       <version>${requirejs.version}</version>
     </dependency>
 
-	
-	
+
+
   </dependencies>
 
   <build>
 
     <plugins>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
@@ -224,19 +225,53 @@
           </connectors>
           <stopPort>${jetty.stop.port}</stopPort>
           <stopKey>stop</stopKey>
+          <systemProperties>
+            <systemProperty>
+              <name>edu.dfci.cccb.mev.io.prototype.AbstractTemporaryResource.PARENT</name>
+              <value>${mev.work.directory}</value>
+            </systemProperty>
+            <systemProperty>
+              <name>mev.annotations.probe.database.url</name>
+              <value>jdbc:h2:file:${mev.work.directory}/mev-annotations;QUERY_CACHE_SIZE=100000;CACHE_SIZE=1048576</value>
+            </systemProperty>
+            <systemProperty>
+              <name>database.url</name>
+              <value>jdbc:h2:file:${mev.work.directory}/mev;QUERY_CACHE_SIZE=100000;CACHE_SIZE=1048576</value>
+            </systemProperty>
+          </systemProperties>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <echoproperties />
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
 
     <resources>
       <resource>
         <directory>src/main/resources</directory>
         <excludes>
-            <exclude>**/tcga/*</exclude>
-        </excludes>        
+          <exclude>**/tcga/*</exclude>
+        </excludes>
       </resource>
-	  <resource>
-           <directory>src/main/resources/tcga</directory>
+      <resource>
+        <directory>src/main/resources/tcga</directory>
       </resource>
       <resource>
         <directory>src/main/javascript</directory>
