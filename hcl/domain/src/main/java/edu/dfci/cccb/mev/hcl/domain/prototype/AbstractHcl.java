@@ -31,7 +31,7 @@ import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHierarchicallyClusteredDimensio
  * @author levk
  * 
  */
-@ToString
+@ToString (exclude = "dataset")
 @EqualsAndHashCode (callSuper = true)
 @Accessors (fluent = true, chain = true)
 public abstract class AbstractHcl extends AbstractAnalysis<AbstractHcl> implements Hcl {
