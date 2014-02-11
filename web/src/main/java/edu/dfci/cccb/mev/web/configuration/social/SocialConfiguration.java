@@ -19,6 +19,7 @@ import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 import static org.springframework.security.crypto.encrypt.Encryptors.noOpText;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
+import javax.inject.Named;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -50,7 +51,7 @@ public class SocialConfiguration {
   }
 
   @Bean
-  public UsersConnectionRepository usersConnectionRepository (DataSource dataSource,
+  public UsersConnectionRepository usersConnectionRepository (@Named("mev-datasource")DataSource dataSource,
                                                               ConnectionFactoryLocator connectionFactoryLocator) {
     JdbcUsersConnectionRepository repository = new JdbcUsersConnectionRepository (dataSource,
                                                                                   connectionFactoryLocator,

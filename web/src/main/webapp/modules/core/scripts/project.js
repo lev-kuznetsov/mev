@@ -156,9 +156,13 @@ function initializeUI(uiState) {
 	  $("#export-set-button").hide();
 	  $("#or-proj-import-preset-link").show();
 	  $("#or-proj-import-preset").show();
+	  $("#or-proj-import-preset-list-link").show();
+	  $("#or-proj-import-preset-lit").show();
   }else{
 	  $("#or-proj-import-preset-link").hide();
 	  $("#or-proj-import-preset").hide();
+	  $("#or-proj-import-preset-list-link").hide();
+	  $("#or-proj-import-preset-lit").hide();
 	  if(theProject.metadata.customMetadata.dimension)
 		  title = toProperCase(theProject.metadata.customMetadata.dimension);
 	  title+=" Annotations"
@@ -168,6 +172,7 @@ function initializeUI(uiState) {
   
   Refine.setTitle(false, title);
   $("#or-proj-import-preset").click(Refine._importPreset);
+  $("#or-proj-import-preset-list").click(Refine._viewToPresetList);
   $("#or-proj-reset").click(Refine._reset);
   $("#export-set-button").click(Refine._exportSet);
   $("#close-button").click(Refine._close);  
@@ -278,7 +283,11 @@ Refine._exportSet = function() {
 
 Refine._importPreset = function(){
 	new ImportPresetDialog();
-}
+};
+
+Refine._viewToPresetList = function(){
+	parent.OpenRefineBridge.showPresetList();
+};
 
 Refine._close = function(){
 	window.location.replace("/#/dataset/"+theProject.metadata.name);

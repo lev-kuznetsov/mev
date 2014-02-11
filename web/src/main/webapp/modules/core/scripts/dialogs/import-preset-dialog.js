@@ -88,8 +88,7 @@ ImportPresetDialog.prototype._exportAjax = function(onSuccess, onError){
 		  };
 		 
 		Refine._lastItem={
-			name: this._name,
-			dimension: this._dimension,
+			name: this._name,			
 		};
 		
 		$.ajax(postRequest);
@@ -118,12 +117,12 @@ ImportPresetDialog.prototype._exportWait = function(){
 		closeWait();		
 	    if (data && typeof data.code != 'undefined' && data.code == "ok") {
 	        //alert("Set saved succesfully");		        
-	        //parent.OpenRefineBridge.addSelectionSet(Refine._lastItem);
+	        parent.OpenRefineBridge.openDataset(Refine._lastItem);
 	        var currentUrl = window.location.href;
 	        console.log("currentUrl:"+currentUrl);
 	        var newUrl = "/#/dataset/"+Refine._lastItem.name+"/";
 	        console.log("newUrl:"+newUrl);
-	        window.location.replace(newUrl);
+	        //window.location.replace(newUrl);
 	      } else {
 	        alert($.i18n._("Error while importing dataset:" + data.message));
 	      }	    

@@ -88,6 +88,23 @@ Refine.DefaultImportingController.prototype._disposeFileSelectionPanel = functio
   delete this._parsingPanelElmts;
 };
 
+Refine.DefaultImportingController.prototype._lookupProbeAnnotations = function(){
+	window.location.replace("../probe/");	
+}
+Refine.DefaultImportingController.prototype._useDatasetAnnotations = function(){
+	window.location.replace("../dataset/");	
+}
+
+Refine.DefaultImportingController.prototype._getAnnotationSource = function(){
+	if(window.location.href.match(/(\/row\/.*\/probe\/)/i)!=null)
+		return "probe";
+	else if(window.location.href.match(/(\/row\/.*\/dataset\/)/i)!=null)
+		return "dataset";
+	else
+		return null;
+		
+}
+
 Refine.DefaultImportingController.prototype._prepareParsingPanel = function() {
   var self = this;
 
@@ -98,6 +115,12 @@ Refine.DefaultImportingController.prototype._prepareParsingPanel = function() {
   this._parsingPanelElmts.startOverButton.click(function() {
     self._startOver();
   });
+  this._parsingPanelElmts.probeAnnotationsButton.click(function(){
+	  self._lookupProbeAnnotations();
+  });
+  this._parsingPanelElmts.datasetAnnotationsButton.click(function(){
+	  self._useDatasetAnnotations();
+  });
   this._parsingPanelElmts.progressPanel.hide();
 
   this._parsingPanelElmts.startOverButton.html($.i18n._('core-buttons')["startover"]);
@@ -106,6 +129,22 @@ Refine.DefaultImportingController.prototype._prepareParsingPanel = function() {
   $('#or-import-projname').html($.i18n._('core-index-import')["project-name"]);
   $('#or-import-updating').text($.i18n._('core-index-import')["updating-preview"]);
   $('#or-import-parseas').text($.i18n._('core-index-import')["parse-as"]);
+  
+  this._parsingPanelElmts.probeAnnotationsButton.html('Lookup Probe Annotations');
+  this._parsingPanelElmts.datasetAnnotationsButton.html('Use Dataset Annotations');
+  if(self._getAnnotationSource()=="probe"){
+	  this._parsingPanelElmts.datasetAnnotationsButton.css("display", "inline");
+	  this._parsingPanelElmts.probeAnnotationsButton.css("display", "none");
+  }else if(self._getAnnotationSource()=="dataset"){
+	  this._parsingPanelElmts.datasetAnnotationsButton.css("display", "none");
+	  this._parsingPanelElmts.probeAnnotationsButton.css("display", "inline");
+  }else{
+	  this._parsingPanelElmts.datasetAnnotationsButton.css("display", "none");
+	  this._parsingPanelElmts.probeAnnotationsButton.css("display", "none");
+	  
+  }
+	  
+	  
   
   this._parsingPanelResizer = function() {
     var elmts = self._parsingPanelElmts;
@@ -130,6 +169,8 @@ Refine.DefaultImportingController.prototype._prepareParsingPanel = function() {
     .css("top", (height - controlPanelHeight) + "px")
     .css("width", (width - DOM.getHPaddings(elmts.controlPanel)) + "px")
     .css("height", (controlPanelHeight - DOM.getVPaddings(elmts.controlPanel)) + "px");
+    
+   
   };
 
   $(window).resize(this._parsingPanelResizer);

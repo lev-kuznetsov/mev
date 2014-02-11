@@ -30,6 +30,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Named;
 import javax.sql.DataSource;
 
 import lombok.ToString;
@@ -123,7 +124,7 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
 
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public ValueStoreBuilder valueFactory (DataSource dataSource) throws Exception {
+  public ValueStoreBuilder valueFactory (@Named("mev-datasource")DataSource dataSource) throws Exception {
     return new SharedCachedValueStoreBuilder (new JooqBasedDatasourceValueStoreBuilder (dataSource));
     // return new MetamodelBackedValueStoreBuilder ();
   }
