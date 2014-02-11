@@ -675,7 +675,8 @@ define (
                           
                           //definitions
                           var columnCells = [], rowCells = [];
-                          
+                          console.log(columnData)
+                          console.log(rowData)
                           //Data building
                           columnData.selections.forEach(function(selection){
                             selection.keys.forEach(function(key){
@@ -693,7 +694,7 @@ define (
                               rowCells.push({
                                 col: selection.name, 
                                 row: key, 
-                                color: selection.selectionColor}); 
+                                color: selection.properties.selectionColor}); 
                             });
                           });
                           
