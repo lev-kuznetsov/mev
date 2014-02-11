@@ -53,7 +53,7 @@ public class PersistenceConfiguration {
 
   private @Inject Environment environment;
 
-  @Bean(name="mev-datasource")
+  @Bean (name = "mev-datasource")
   public DataSource dataSource () {
     BasicDataSource dataSource = new BasicDataSource ();
     dataSource.setDriverClassName (environment.getProperty ("database.driver.class", "org.h2.Driver"));
@@ -69,7 +69,7 @@ public class PersistenceConfiguration {
   }
 
   @Bean
-  public LocalSessionFactoryBean sessionFactory (@Named("mev-datasource") DataSource dataSource) {
+  public LocalSessionFactoryBean sessionFactory (@Named ("mev-datasource") DataSource dataSource) {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean ();
     sessionFactory.setDataSource (dataSource);
     sessionFactory.setPackagesToScan (environment.getProperty ("session.factory.scan.packages",
@@ -98,7 +98,7 @@ public class PersistenceConfiguration {
   }
 
   @Bean
-  public PlatformTransactionManager transactionManager (@Named("mev-datasource") DataSource dataSource) {
+  public PlatformTransactionManager transactionManager (@Named ("mev-datasource") DataSource dataSource) {
     return new DataSourceTransactionManager (dataSource);
   }
 
