@@ -73,7 +73,8 @@ public class CliRScriptEngine extends AbstractScriptEngine {
           for (int c; (c = reader.read ()) >= 0; writer.write (c));
           writer.flush ();
           log.debug ("Launching R script " + script);
-          Process r = getRuntime ().exec ("Rscript " + rScriptLaunchingOptions + script.getAbsolutePath ());
+          Process r = getRuntime ().exec (rScriptExecutable + " "
+                                          + rScriptLaunchingOptions + script.getAbsolutePath ());
           int result = r.waitFor ();
           if (log.isDebugEnabled ())
             try (ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
