@@ -25,14 +25,17 @@ import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUES
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 import static org.springframework.web.servlet.HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE;
 
+import java.io.Closeable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
 import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -79,6 +82,7 @@ import edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgum
 @Configuration
 @ComponentScan (basePackages = "edu.dfci.cccb.mev.dataset.rest.controllers")
 @ToString
+@Log4j
 public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
 
   // Domain conversational objects
@@ -92,19 +96,19 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = NO)
   public Dataset dataset (final NativeWebRequest request, final DatasetPathVariableMethodArgumentResolver resolver) throws Exception {
-    return proxy (resolver.resolveObject (request), Dataset.class);
+    return nonCloseableProxy (resolver.resolveObject (request));
   }
 
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = NO)
   public Dimension dimension (NativeWebRequest request, DimensionPathVariableMethodArgumentResolver resolver) throws Exception {
-    return proxy (resolver.resolveObject (request), Dimension.class);
+    return nonCloseableProxy (resolver.resolveObject (request));
   }
 
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = NO)
   public Selection selection (NativeWebRequest request, SelectionPathVariableMethodArgumentResolver resolver) throws Exception {
-    return proxy (resolver.resolveObject (request), Selection.class);
+    return nonCloseableProxy (resolver.resolveObject (request));
   }
 
   // FIXME: this is a hack until type of analysis goes into the request mapping,
@@ -113,10 +117,9 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = NO)
   public Analysis analysis (NativeWebRequest request, Dataset dataset) throws Exception {
-    return proxy (dataset.analyses ()
-                         .get (((Map<String, String>) request.getAttribute (URI_TEMPLATE_VARIABLES_ATTRIBUTE,
-                                                                            RequestAttributes.SCOPE_REQUEST)).get (ANALYSIS_MAPPING_NAME)),
-                  Analysis.class);
+    return nonCloseableProxy (dataset.analyses ()
+                                     .get (((Map<String, String>) request.getAttribute (URI_TEMPLATE_VARIABLES_ATTRIBUTE,
+                                                                                        RequestAttributes.SCOPE_REQUEST)).get (ANALYSIS_MAPPING_NAME)));
   }
 
   // Domain builders
@@ -202,10 +205,27 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   }
 
   @SuppressWarnings ("unchecked")
-  // This is a greedy proxy as opposed to lazy proxy when using
-  // @Scope(proxyMode=INTERFACES)
-  private static <T> T proxy (final T of, Class<?>... interfaces) {
-    return (T) newProxyInstance (of.getClass ().getClassLoader (), interfaces, new InvocationHandler () {
+  private static <T> T nonCloseableProxy (final T of) {
+    return (T) newProxyInstance (of.getClass ().getClassLoader (), new HashSet<Class<?>> () {
+      private static final long serialVersionUID = 1L;
+
+      {
+        addImplementedInterfaces (of.getClass ());
+        remove (AutoCloseable.class);
+        remove (Closeable.class);
+        if (log.isDebugEnabled ())
+          log.debug ("Returning proxy of " + of + " implementing " + this);
+      }
+
+      private void addImplementedInterfaces (Class<?> clazz) {
+        if (clazz != null) {
+          addAll (asList (clazz.getInterfaces ()));
+          addImplementedInterfaces (clazz.getSuperclass ());
+          for (Class<?> implemented : clazz.getInterfaces ())
+            addImplementedInterfaces (implemented);
+        }
+      }
+    }.toArray (new Class<?>[0]), new InvocationHandler () {
 
       @Override
       public Object invoke (Object proxy, Method method, Object[] args) throws Throwable {
