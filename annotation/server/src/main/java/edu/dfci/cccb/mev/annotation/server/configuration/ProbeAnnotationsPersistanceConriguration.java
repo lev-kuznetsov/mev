@@ -15,7 +15,6 @@ import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -27,34 +26,32 @@ import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
-
 @Configuration
-@PropertySource("classpath:probe_annotations.properties")
+@PropertySource ("classpath:probe_annotations.properties")
 public class ProbeAnnotationsPersistanceConriguration {
 
-  
-  @Inject
-  private Environment environment;
+  @Inject private Environment environment;
 
-  @Bean(name="probe-annotations-datasource", destroyMethod = "close")
+  @Bean (name = "probe-annotations-datasource", destroyMethod = "close")
   public DataSource dataSource () {
     BasicDataSource dataSource = new BasicDataSource ();
-    dataSource.setDriverClassName (environment.getProperty (MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"database.driver.class", "org.h2.Driver"));
-    dataSource.setUrl (environment.getProperty (MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"database.url",
+    dataSource.setDriverClassName (environment.getProperty (MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX
+                                                            + "database.driver.class", "org.h2.Driver"));
+    dataSource.setUrl (environment.getProperty (MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX + "database.url",
                                                 "jdbc:h2:file:"
                                                         + getProperty ("java.io.tmpdir") + separator
                                                         + "mev-probe-annotations"
                                                         + ";QUERY_CACHE_SIZE=100000"
                                                         + ";CACHE_SIZE=1048576"));
-    dataSource.setUsername (environment.getProperty (MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"database.username", "sa"));
-    dataSource.setPassword (environment.getProperty (MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"database.password", ""));
+    dataSource.setUsername (environment.getProperty (MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX + "database.username", "sa"));
+    dataSource.setPassword (environment.getProperty (MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX + "database.password", ""));
     return dataSource;
   }
 
   @Bean
   public LocalSessionFactoryBean sessionFactory () {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean ();
-    sessionFactory.setDataSource (dataSource());
+    sessionFactory.setDataSource (dataSource ());
     sessionFactory.setPackagesToScan (environment.getProperty ("session.factory.scan.packages",
                                                                String[].class,
                                                                new String[] { "edu.dfci.cccb.mev" }));
@@ -74,67 +71,65 @@ public class ProbeAnnotationsPersistanceConriguration {
     sessionFactory.setHibernateProperties (hibernateProperties);
     return sessionFactory;
   }
-  
+
   @Bean
-  public LazyConnectionDataSourceProxy lazyConnectionDataSource() {
-      return new LazyConnectionDataSourceProxy(dataSource());
+  public LazyConnectionDataSourceProxy lazyConnectionDataSource () {
+    return new LazyConnectionDataSourceProxy (dataSource ());
   }
 
   @Bean
-  public TransactionAwareDataSourceProxy transactionAwareDataSource() {
-      return new TransactionAwareDataSourceProxy(lazyConnectionDataSource());
+  public TransactionAwareDataSourceProxy transactionAwareDataSource () {
+    return new TransactionAwareDataSourceProxy (lazyConnectionDataSource ());
   }
 
   @Bean
-  public DataSourceTransactionManager transactionManager() {
-      return new DataSourceTransactionManager(lazyConnectionDataSource());
+  public DataSourceTransactionManager transactionManager () {
+    return new DataSourceTransactionManager (lazyConnectionDataSource ());
   }
 
   @Bean
-  public DataSourceConnectionProvider connectionProvider() {
-      return new DataSourceConnectionProvider(transactionAwareDataSource());
+  public DataSourceConnectionProvider connectionProvider () {
+    return new DataSourceConnectionProvider (transactionAwareDataSource ());
   }
 
-  /*
-  @Bean
-  public JOOQToSpringExceptionTransformer jooqToSpringExceptionTransformer() {
-      return new JOOQToSpringExceptionTransformer();
-  }
-*/
-  
-  @Bean
-  public DefaultConfiguration configuration() {
-      DefaultConfiguration jooqConfiguration = new DefaultConfiguration();
-
-      jooqConfiguration.set(connectionProvider());
-//      jooqConfiguration.set(new DefaultExecuteListenerProvider(
-//          jooqToSpringExceptionTransformer()
-//      ));
-
-      String sqlDialectName = environment.getRequiredProperty(MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"jooq.sql.dialect");
-      SQLDialect dialect = SQLDialect.valueOf(sqlDialectName);
-      jooqConfiguration.set(dialect);
-
-      return jooqConfiguration;
-  }
+  /*@Bean public JOOQToSpringExceptionTransformer
+   * jooqToSpringExceptionTransformer() { return new
+   * JOOQToSpringExceptionTransformer(); } */
 
   @Bean
-  public DefaultDSLContext dsl() {
-      return new DefaultDSLContext(configuration());
+  public DefaultConfiguration configuration () {
+    DefaultConfiguration jooqConfiguration = new DefaultConfiguration ();
+
+    jooqConfiguration.set (connectionProvider ());
+    // jooqConfiguration.set(new DefaultExecuteListenerProvider(
+    // jooqToSpringExceptionTransformer()
+    // ));
+
+    String sqlDialectName =
+                            environment.getRequiredProperty (MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX + "jooq.sql.dialect");
+    SQLDialect dialect = SQLDialect.valueOf (sqlDialectName);
+    jooqConfiguration.set (dialect);
+
+    return jooqConfiguration;
   }
 
   @Bean
-  public DataSourceInitializer dataSourceInitializer() {
-      DataSourceInitializer initializer = new DataSourceInitializer();
-      initializer.setDataSource(dataSource());
+  public DefaultDSLContext dsl () {
+    return new DefaultDSLContext (configuration ());
+  }
 
-      ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-      populator.addScript(
-              new ClassPathResource(environment.getRequiredProperty(MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"db.schema.script"))
-      );
+  @Bean
+  public DataSourceInitializer dataSourceInitializer () {
+    DataSourceInitializer initializer = new DataSourceInitializer ();
+    initializer.setDataSource (dataSource ());
 
-      initializer.setDatabasePopulator(populator);
-      return initializer;
+    ResourceDatabasePopulator populator = new ResourceDatabasePopulator ();
+    populator.addScript (
+             new ClassPathResource (environment.getRequiredProperty (MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX
+                                                                     + "db.schema.script"))
+             );
+
+    initializer.setDatabasePopulator (populator);
+    return initializer;
   }
 }
-

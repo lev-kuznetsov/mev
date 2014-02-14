@@ -47,29 +47,35 @@
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
   </properties>
 
-<profiles>
-  <profile>
-    <id>dev</id>
-    <activation>
-       <activeByDefault>true</activeByDefault>
-     </activation>
-    <properties>
-      <spring.prifiles.active>dev</spring.prifiles.active>
-    </properties>
-  </profile>
-  <profile>
-    <id>prod</id>
-    <properties>
-      <spring.prifiles.active>prod</spring.prifiles.active>
-    </properties>
-  </profile>
-  <profile>
-    <id>test</id>
-    <properties>
-      <spring.prifiles.active>test</spring.prifiles.active>
-    </properties>
-  </profile>
-</profiles>
+  <profiles>
+    <profile>
+      <id>dev</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <spring.prifiles.active>dev</spring.prifiles.active>
+        <mev.work.directory>${java.io.tmpdir}</mev.work.directory>
+        <mev.Rscript>Rscript</mev.Rscript>
+      </properties>
+    </profile>
+    <profile>
+      <id>prod</id>
+      <properties>
+        <spring.prifiles.active>prod</spring.prifiles.active>
+        <mev.work.directory>/cephfs/projects/mev/work</mev.work.directory>
+        <mev.Rscript>/cephfs/projects/mev/lib/R/default/bin/Rscript</mev.Rscript>
+      </properties>
+    </profile>
+    <profile>
+      <id>test</id>
+      <properties>
+        <spring.prifiles.active>test</spring.prifiles.active>
+        <mev.work.directory>${java.io.tmpdir}</mev.work.directory>
+        <mev.Rscript>Rscript</mev.Rscript>
+      </properties>
+    </profile>
+  </profiles>
 
 
   <dependencies>
@@ -220,13 +226,13 @@
         </executions>
       </plugin>
 
- 	  <plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.16</version>
         <configuration>
           <systemPropertyVariables>
-            <spring.profiles.active>test</spring.profiles.active>            
+            <spring.profiles.active>test</spring.profiles.active>
           </systemPropertyVariables>
         </configuration>
       </plugin>

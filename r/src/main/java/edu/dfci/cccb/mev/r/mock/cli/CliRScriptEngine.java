@@ -48,7 +48,7 @@ import lombok.extern.log4j.Log4j;
 public class CliRScriptEngine extends AbstractScriptEngine {
 
   private @Getter @Setter String rScriptExecutable = getProperty (CliRScriptEngine.class.getName ()
-                                                                  + ".rScriptExecutable", "RScript");
+                                                                  + ".rScriptExecutable", "Rscript");
   private @Getter @Setter String rScriptLaunchingOptions = getProperty (CliRScriptEngine.class.getName ()
                                                                         + ".rScriptLaunchingOptions", "");
 
@@ -72,8 +72,10 @@ public class CliRScriptEngine extends AbstractScriptEngine {
         try (Writer writer = new BufferedWriter (new FileWriter (script))) {
           for (int c; (c = reader.read ()) >= 0; writer.write (c));
           writer.flush ();
-          log.debug ("Launching R script " + script);
-          Process r = getRuntime ().exec ("Rscript " + rScriptLaunchingOptions + script.getAbsolutePath ());
+          String command = rScriptExecutable + " "
+                           + rScriptLaunchingOptions + script.getAbsolutePath ();
+          log.debug ("Launching R script " + script + " using " + command);
+          Process r = getRuntime ().exec (command);
           int result = r.waitFor ();
           if (log.isDebugEnabled ())
             try (ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
