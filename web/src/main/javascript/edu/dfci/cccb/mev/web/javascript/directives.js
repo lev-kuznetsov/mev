@@ -667,6 +667,7 @@ define (
                         var xlabels = vis.append ("g")
                             //.attr("clip-path", "url(#columnLabelClip)")
                             .attr ("class", "xlabels");
+                        
 
                         var ylabels = vis.append ("g")
                             .attr ("class", "ylabels");
@@ -675,8 +676,6 @@ define (
                           
                           //definitions
                           var columnCells = [], rowCells = [];
-                          console.log(columnData)
-                          console.log(rowData)
                           //Data building
                           columnData.selections.forEach(function(selection){
                             selection.keys.forEach(function(key){
@@ -749,19 +748,26 @@ define (
                         };
 
                         function drawLabels (xAxis, yAxis) {
+                          
+                          
+                          var xband = (XIndex2Pixel(1) - XIndex2Pixel(0))/2;
+                          
+                          
+                          
+                          xlabels.selectAll("text").data( XLabel2Index.domain() )
+                           .enter().append("text")
+                          .attr('dx', -heatmapMarginTop)
+                          .attr('y', function(d){ 
+                            return XIndex2Pixel( XLabel2Index(d) ) + xband
+                           })
+                          //.style("text-anchor", "start")
+                          .attr ("transform", "rotate(-90)")
+                          
+                          .text(function(d){return d.substr(0, 8)})
+                          .style("font-size", "14px")
+                        
 
-                          xAxis.attr (
-                              "transform",
-                              "translate(0,"
-                                  + (heatmapMarginTop)
-                                  + ")").call (xAxisd3).selectAll ("text")
-                              .style ("text-anchor", "start").attr ("dy",
-                                  function (d, i) {
-                                    return ( 2.8* (XIndex2Pixel(1) - XIndex2Pixel(0) ))/2  + "px"
-                                  }).attr ("dx", "10px").attr ("transform",
-                                  function (d) {
-                                    return "rotate(-90)"
-                                  });
+                          
 
                           yAxis.attr (
                               "transform",
@@ -770,7 +776,7 @@ define (
                                   + ")").call (yAxisd3).selectAll ("text")
                               .style ("text-anchor", "start").attr (
                                   "dy",
-                                  ((YIndex2Pixel (1) - YIndex2Pixel (0)) / 2)
+                                   ((YIndex2Pixel (1) - YIndex2Pixel (0)) / 2)
                                       + "px");
 
                         }
@@ -920,7 +926,7 @@ define (
                           yAxisd3.scale (YIndex2Pixel).orient ("right").ticks (
                               rows.keys.length).tickFormat (function (d) {
                             if (d % 1 == 0 && d >= 0 && d < rows.keys.length) {
-                              return YIndex2Label (d);
+                              return YIndex2Label (d).substr(0, 15);
                             }
                           });
                           
@@ -972,7 +978,6 @@ define (
                             if (newval && !oldval) {
                               
                               $('#loading').modal('hide');
-                              console.log("hidden")
                               //redraw previously rendered tree if page loads
                               
                               if (newval.column.root) {
@@ -1098,7 +1103,6 @@ define (
                           canvas.selectAll("circle").data(nodes).enter().append("circle")
                              .attr("r", 4)
                              .attr("cx", function(d){
-                            	 console.log(d.y)
      
                               return (type == 'vertical') ? verticalTreeX(d.y) : horizontalTreeX(d.x );
                               
