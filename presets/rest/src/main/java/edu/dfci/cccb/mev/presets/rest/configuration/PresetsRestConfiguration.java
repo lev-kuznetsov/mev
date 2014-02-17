@@ -59,7 +59,7 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
   
   @Bean  
   public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot, TcgaPresetsBuilder builder) throws URISyntaxException, PresetException, IOException {
-    String metadataFilename = environment.getProperty (TCGA_PROPERTY_MATA_FILENAME);
+    String metadataFilename = environment.getProperty (TCGA_PROPERTY_MATA_FILENAME);    
     log.info (TCGA_PROPERTY_ROOT_FOLDER+" URL:" + tcgaPresetRoot);
     log.info (TCGA_PROPERTY_MATA_FILENAME+":" + metadataFilename);
     
@@ -91,9 +91,9 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
   }
   
   @Bean (name="tcgaPresetRoot")
-  public URL tcgaPresetRoot() throws IOException{
-    
+  public URL tcgaPresetRoot() throws IOException{    
     String pathTcgaRoot = environment.getProperty (TCGA_PROPERTY_ROOT_FOLDER);
+    log.info ("**** Prests Root Config ****");
     log.info (TCGA_PROPERTY_ROOT_FOLDER+":" + pathTcgaRoot);
     if(pathTcgaRoot == null)
       return null;
@@ -106,7 +106,6 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
     
     if(!CCCPHelpers.UrlUtils.checkExists(tcgaPresetRootURL))
       throw new IOException ("TCGA Preset URL resource cannot be openned: "+tcgaPresetRootURL.toString ());
-//      return (new ClassPathResource ("tcga/")).getURL ();
 
     return tcgaPresetRootURL;
     

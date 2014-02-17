@@ -27,6 +27,8 @@ import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.domain.probe.jooq.JooqProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.jooq.JooqProbeAnnotationsLoader;
+import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
+import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 
 @Log4j
 @Configuration
@@ -56,7 +58,9 @@ public class ProbeAnnotationsLoaderConfiguration {
     log.info ("URL.toString():" + probeAnnotationsRootURL.toString ());
     log.info ("URL.getProtocol ():" + probeAnnotationsRootURL.getProtocol ());
     
-    probeAnnotationsRootURL.openStream ().close ();
+    if(!CCCPHelpers.UrlUtils.checkExists(probeAnnotationsRootURL))
+      throw new IOException ("Probe Annotations Root URL not found: " + probeAnnotationsRootURL.toString ());
+
     return probeAnnotationsRootURL;    
   }
   
