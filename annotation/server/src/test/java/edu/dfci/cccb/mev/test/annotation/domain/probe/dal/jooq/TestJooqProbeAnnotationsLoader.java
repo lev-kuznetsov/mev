@@ -18,18 +18,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.domain.probe.jooq.JooqProbeAnnotationsLoader;
-import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsPersistanceConriguration;
-import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConrigurationMock;
+import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsPersistenceConfiguration;
+import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={ProbeAnnotationsPersistanceConrigurationMock.class})
+@ContextConfiguration(classes={ProbeAnnotationsPersistanceConfigTest.class})
 public class TestJooqProbeAnnotationsLoader {
   
   @Inject @Named("probe-annotations-datasource") DataSource dataSource;
   
   @Test
   public void testLoadUrlResource () throws SQLException, IOException {
-    URL url = TestJooqProbeAnnotationsLoader.class.getResource ("/array_annotations/from_affymetrix/HT_HG-U133A.na33.top3.annot.out.tsv");
+    URL url = TestJooqProbeAnnotationsLoader.class.getResource ("/array_annotations/from_affymetrix/annotation_files/HT_HG-U133A.na33.top3.annot.out.tsv");
     assertNotNull (url);
     
     ProbeAnnotationsLoader loader = new JooqProbeAnnotationsLoader (dataSource);
@@ -41,11 +41,11 @@ public class TestJooqProbeAnnotationsLoader {
   public void testInit_Force() throws SQLException, IOException, URISyntaxException{
     
     //this folder has a file in it which tells the loader to reload the database: 'reload.flag'
-    URL url = TestJooqProbeAnnotationsLoader.class.getResource ("/array_annotations/from_affymetrix_force/");
+    URL url = TestJooqProbeAnnotationsLoader.class.getResource ("/array_annotations/from_affymetrix_force/annotation_files/");
     assertNotNull (url);
     
     ProbeAnnotationsLoader loader = new JooqProbeAnnotationsLoader (dataSource);
-    URL fileUrl = TestJooqProbeAnnotationsLoader.class.getResource ("/array_annotations/from_affymetrix_force/HT_HG-U133A.na33.top3.annot.out.tsv");
+    URL fileUrl = new URL(url, "HT_HG-U133A.na33.top3.annot.out.tsv");
     assertNotNull (fileUrl);    
     
     assert(loader.init (url, "*.annot.out.tsv")>0);    
@@ -54,11 +54,11 @@ public class TestJooqProbeAnnotationsLoader {
   @Test
   public void testInit_NoReload() throws SQLException, IOException, URISyntaxException{
     
-    URL url = TestJooqProbeAnnotationsLoader.class.getResource ("/array_annotations/from_affymetrix/");
+    URL url = TestJooqProbeAnnotationsLoader.class.getResource ("/array_annotations/from_affymetrix/annotation_files/");
     assertNotNull (url);
     
     ProbeAnnotationsLoader loader = new JooqProbeAnnotationsLoader (dataSource);
-    URL fileUrl = TestJooqProbeAnnotationsLoader.class.getResource ("/array_annotations/from_affymetrix/HT_HG-U133A.na33.top3.annot.out.tsv");
+    URL fileUrl = new URL (url, "/HT_HG-U133A.na33.top3.annot.out.tsv");
     assertNotNull (fileUrl);    
     
     assert(loader.init (url, "*.annot.out.tsv")==0);    

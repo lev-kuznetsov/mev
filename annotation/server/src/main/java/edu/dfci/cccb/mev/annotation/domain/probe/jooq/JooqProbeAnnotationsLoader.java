@@ -60,7 +60,10 @@ public class JooqProbeAnnotationsLoader implements ProbeAnnotationsLoader {
           result++;
         }
       }
-    }    
+    }else{
+      if(log.isDebugEnabled ())
+        log.debug ("Reload flag not set.... will not load probe annotations");
+    }
     return result;
   }
   

@@ -24,9 +24,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -44,7 +46,10 @@ import edu.dfci.cccb.mev.presets.simple.TcgaPresetsBuilder;
 @Configuration
 @ComponentScan(value="edu.dfci.cccb.mev.presets", 
   includeFilters = @Filter (type = ANNOTATION, value = {Controller.class, RestController.class }))
-@PropertySource ("classpath:/presets.properties")
+@PropertySources({
+  @PropertySource ("classpath:/presets.properties"),
+  @PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true)
+})
 public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
 
   private final static String TCGA_PROPERTY_MATA_FILENAME="mev.presets.tcga.metadata.filename";
@@ -96,10 +101,12 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
     if(pathTcgaRoot.endsWith ("/")==false)
       pathTcgaRoot+="/";
     
-    URL tcgaPresetRootURL = new URL("file:"+pathTcgaRoot);
+    //URL tcgaPresetRootURL = new URL(pathTcgaRoot);
+    URL tcgaPresetRootURL = ResourceUtils.getURL (pathTcgaRoot);
     
     if(!CCCPHelpers.UrlUtils.checkExists(tcgaPresetRootURL))
-      return (new ClassPathResource ("tcga/")).getURL ();
+      throw new IOException ("TCGA Preset URL resource cannot be openned: "+tcgaPresetRootURL.toString ());
+//      return (new ClassPathResource ("tcga/")).getURL ();
 
     return tcgaPresetRootURL;
     

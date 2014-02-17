@@ -15,10 +15,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
-import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationMock;
+import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={PresetsRestConfigurationMock.class})
+@ContextConfiguration(classes={PresetsRestConfigurationTest.class})
 public class PresetRestTest {
   
   @Inject Presets tcgaPresets;
@@ -37,7 +37,7 @@ public class PresetRestTest {
     //Preset preset = new TcgaPresetMetafile ("BRCA.MDA_RPPA_Core.Level_3.tsv", "BRCA/Level_3", disease, diseaseName, platform, platformName)
     assertNotNull (tcgaPresets);
     assertNotNull( tcgaPresets.list ());
-    assertEquals(3, tcgaPresets.list ().size ());
+    assertEquals(2, tcgaPresets.list ().size ());
     
   }
 

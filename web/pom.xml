@@ -30,13 +30,13 @@
 
   <dependencies>
 
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-      <version>${spring.version}</version>
-      <scope>test</scope>
-    </dependency>
-
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-test</artifactId>
+	    <version>${spring.version}</version>
+	    <scope>test</scope>
+	</dependency>
+    
     <!-- Hibernate -->
 
     <dependency>
@@ -120,31 +120,38 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
-    <!-- Presets -->
-
+    <!-- Presets  -->
+    
     <dependency>
-      <groupId>edu.dfci.cccb</groupId>
-      <artifactId>mev-presets-rest</artifactId>
-      <version>BAYLIE-SNAPSHOT</version>
+    	<groupId>edu.dfci.cccb</groupId>
+    	<artifactId>mev-presets-rest</artifactId>
+    	<version>BAYLIE-SNAPSHOT</version>
     </dependency>
-
+    
     <!-- Servlet -->
-
+    
     <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-servlet</artifactId>
-      <version>${jetty.version}</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <!-- Unit Testing -->
-    <dependency>
-      <groupId>com.jayway.jsonpath</groupId>
-      <artifactId>json-path</artifactId>
-      <version>0.9.1</version>
-    </dependency>
-
-
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>jetty-servlet</artifactId>
+		<version>${jetty.version}</version>
+		<scope>provided</scope>
+	</dependency>
+	
+	<!-- Unit Testing -->
+	<dependency>
+		<groupId>com.jayway.jsonpath</groupId>
+		<artifactId>json-path</artifactId>
+		<version>0.9.1</version>
+	</dependency>
+            
+	<dependency>
+	  <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-annotation-server</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+	  <type>test-jar</type>
+	  <scope>test</scope>
+	</dependency>
+	
     <!-- Webjars -->
 
     <dependency>
@@ -195,8 +202,8 @@
       <version>${requirejs.version}</version>
     </dependency>
 
-
-
+	
+	
   </dependencies>
 
   <build>
@@ -217,31 +224,31 @@
         <artifactId>jetty-maven-plugin</artifactId>
         <version>${jetty.version}</version>
         <configuration>
+        
           <connectors>
             <connector
               implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
               <port>${jetty.port}</port>
             </connector>
           </connectors>
+          
           <stopPort>${jetty.stop.port}</stopPort>
           <stopKey>stop</stopKey>
+          
           <systemProperties>
+        	<force>true</force>    
+            <systemProperty>            
+              <name>java.io.tmpdir</name>
+              <value>${mev.java.io.tmpdir}</value>
+            </systemProperty>                 	    
             <systemProperty>
-              <name>edu.dfci.cccb.mev.io.prototype.AbstractTemporaryResource.PARENT</name>
-              <value>${mev.work.directory}</value>
-            </systemProperty>
-            <systemProperty>
-              <name>mev.annotations.probe.database.url</name>
-              <value>jdbc:h2:file:${mev.work.directory}/mev-annotations;QUERY_CACHE_SIZE=100000;CACHE_SIZE=1048576</value>
-            </systemProperty>
-            <systemProperty>
-              <name>database.url</name>
-              <value>jdbc:h2:file:${mev.work.directory}/mev;QUERY_CACHE_SIZE=100000;CACHE_SIZE=1048576</value>
+              <name>spring_profiles_active</name>
+              <value>${mev.spring_profiles_active}</value>
             </systemProperty>
             <systemProperty>
               <name>edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable</name>
               <value>${mev.Rscript}</value>
-            </systemProperty>
+            </systemProperty>             	   
           </systemProperties>
         </configuration>
       </plugin>
@@ -271,11 +278,11 @@
       <resource>
         <directory>src/main/resources</directory>
         <excludes>
-          <exclude>**/tcga/*</exclude>
-        </excludes>
+            <exclude>**/tcga/*</exclude>
+        </excludes>        
       </resource>
-      <resource>
-        <directory>src/main/resources/tcga</directory>
+	  <resource>
+           <directory>src/main/resources/tcga</directory>
       </resource>
       <resource>
         <directory>src/main/javascript</directory>
@@ -298,5 +305,38 @@
       </resource>
     </resources>
 
+    <pluginManagement>
+    	<plugins>
+    		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+    		<plugin>
+    			<groupId>org.eclipse.m2e</groupId>
+    			<artifactId>lifecycle-mapping</artifactId>
+    			<version>1.0.0</version>
+    			<configuration>
+    				<lifecycleMappingMetadata>
+    					<pluginExecutions>
+    						<pluginExecution>
+    							<pluginExecutionFilter>
+    								<groupId>
+    									org.apache.maven.plugins
+    								</groupId>
+    								<artifactId>
+    									maven-antrun-plugin
+    								</artifactId>
+    								<versionRange>[1.7,)</versionRange>
+    								<goals>
+    									<goal>run</goal>
+    								</goals>
+    							</pluginExecutionFilter>
+    							<action>
+    								<ignore></ignore>
+    							</action>
+    						</pluginExecution>
+    					</pluginExecutions>
+    				</lifecycleMappingMetadata>
+    			</configuration>
+    		</plugin>
+    	</plugins>
+    </pluginManagement>
   </build>
 </project>

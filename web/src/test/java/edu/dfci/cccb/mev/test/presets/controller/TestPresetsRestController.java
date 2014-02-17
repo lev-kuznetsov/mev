@@ -22,7 +22,7 @@ import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.hcl.rest.configuration.HclRestConfiguration;
 import edu.dfci.cccb.mev.limma.rest.configuration.LimmaRestConfiguration;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
-import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationMock;
+import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 import edu.dfci.cccb.mev.web.configuration.DispatcherConfiguration;
 import edu.dfci.cccb.mev.web.configuration.PersistenceConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;

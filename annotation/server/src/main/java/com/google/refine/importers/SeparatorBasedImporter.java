@@ -93,8 +93,7 @@ public class SeparatorBasedImporter extends TabularImportingParserBase {
         if (sep == null || "".equals(sep)) {
             sep = "\\t";
         }
-        char charSep = sep.charAt(0);
-        System.out.println("*********charSEp:"+charSep);
+        char charSep = sep.charAt(0);        
         
         sep = StringEscapeUtils.unescapeJava(sep);
         boolean processQuotes = JSONUtilities.getBoolean(options, "processQuotes", true);

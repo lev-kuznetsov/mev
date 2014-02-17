@@ -68,6 +68,7 @@ public class WorkspaceController {
   public void upload (@RequestParam ("upload") MultipartFile upload) throws DatasetBuilderException,
                                                                     InvalidDatasetNameException,
                                                                     InvalidDimensionTypeException {
+    log.warn (new Exception ("STACK TRACE"));
     Dataset dataset = builder.build (new MultipartTsvInput (upload));
     if (log.isDebugEnabled ())
       log.debug ("Uploaded " + dataset);

@@ -21,12 +21,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import edu.dfci.cccb.mev.annotation.support.jooq.JooqUtil;
-import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConrigurationMock;
+import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
 
 
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={ProbeAnnotationsPersistanceConrigurationMock.class})
+@ContextConfiguration(classes={ProbeAnnotationsPersistanceConfigTest.class})
 public class TestJooqUtil {
   
   @Inject @Named("probe-annotations-datasource") DataSource dataSource;

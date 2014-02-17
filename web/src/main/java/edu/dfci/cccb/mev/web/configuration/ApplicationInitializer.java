@@ -23,6 +23,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 
 import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfiguration;
+import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.hcl.rest.configuration.HclRestConfiguration;
 import edu.dfci.cccb.mev.limma.rest.configuration.LimmaRestConfiguration;
@@ -46,6 +47,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     mvcContext.register (DispatcherConfiguration.class, PersistenceConfiguration.class, ContainerConfigurations.class);
 
     mvcContext.register (DatasetRestConfiguration.class);
+    mvcContext.register (ProbeAnnotationsConfigurationMain.class);
     mvcContext.register (AnnotationServerConfiguration.class);
     mvcContext.register (HclRestConfiguration.class);
     mvcContext.register (LimmaRestConfiguration.class);
