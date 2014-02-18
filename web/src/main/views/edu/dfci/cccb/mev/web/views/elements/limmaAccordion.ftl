@@ -15,7 +15,7 @@
 	            <div class="span12>
 	            
 		            <div class="row-fluid">
-			            <button class="btn pull-right btn-success" >
+			            <button class="btn pull-left btn-success" >
 			              <a href="/dataset/{{datasetName}}/analysis/{{limma.name}}?format=tsv">
 			              <i class="icon-white icon-download"></i> Download
 			              </a> 
@@ -25,10 +25,6 @@
 			              <hr>
 			              <p>No Results!</p>
 			              
-			            </div>
-			            
-			            <div id="showTableDialog" ng-hide="showLimmaTables">
-			              <a href="" ng-click="expandRight()">Expand to see table...</a>
 			            </div>
 			            
 			        </div>
@@ -43,7 +39,7 @@
 		                                    </tr>
 		                            </thead>
 		                            <tbody>
-		                                    <tr ng-repeat="row in limma.datar.results">
+		                                    <tr ng-repeat="row in limma.datar.results | orderBy:'-pValue' ">
 		                                            <td>
 		                                                    {{row["id"]}}
 		                                            </td>
