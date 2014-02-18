@@ -63,8 +63,8 @@ define (
                     pageWidth = jq('body').width() - 50,
                     showSidePanel = true;
                     
-                    rightPanel.css('height', "90%");
-                    leftPanel.css('height', "90%");
+                    rightPanel.css('height', "100%");
+                    leftPanel.css('height', "100%");
                     
                     var isDragging = false;
                     
@@ -177,6 +177,8 @@ define (
                 scope.buildPreviousAnalysisList ();
                 
                 scope.datasetName = $routeParams.datasetName;
+                
+                
 
               }
             };
@@ -577,7 +579,7 @@ define (
                       // templateUrl : "/container/view/elements/visHeatmap",
                       link : function (scope, elems, attr) {
                     	  
-                    	jq('div.fixed-height').css('height', jq ('#rightPanel').css ('height').slice (0, -2)* .8 )
+                    	jq('div.fixed-height').css('height', jq ('#leftPanel').css ('height').slice (0, -2)* .8 )
 
                         var svgWidth = Math.floor (jq ('#rightPanel').css (
                             'width').slice (0, -2) * .9), svgHeight = Math //svgheight no longer!
