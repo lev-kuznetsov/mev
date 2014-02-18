@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>mev-annotation-jooq</artifactId>
+	<packaging>jar</packaging>
+
+	<name>MeV Annotation JOOQ Data Access </name>
+	<url>http://github.com/dfci-cccb/mev</url>
+
+	<parent>
+		<groupId>edu.dfci.cccb</groupId>
+		<artifactId>mev-annotation</artifactId>
+		<version>BAYLIE-SNAPSHOT</version>
+	</parent>
+	
+	<properties>
+		<h2.version>1.3.174</h2.version>
+		<hibernate.version>4.2.7.SP1</hibernate.version>
+		
+		<jooq.codegen.db.driver>org.h2.Driver</jooq.codegen.db.driver>
+		<jooq.codegen.db.url>jdbc:h2:file:${project.build.directory}/mev-probe-annotations-codegen</jooq.codegen.db.url>
+		<jooq.codegen.db.username>sa</jooq.codegen.db.username>
+		<jooq.codegen.db.password></jooq.codegen.db.password>
+		
+		<jooq.codegen.db.dialect>org.jooq.util.h2.H2Database</jooq.codegen.db.dialect>
+		<skip.db.creation>false</skip.db.creation>
+	</properties>
+	
+	<dependencies>
+	    <!-- jOOQ -->
+	    <dependency>
+	      <groupId>org.jooq</groupId>
+	      <artifactId>jooq</artifactId>
+	      <version>3.2.2</version>
+	    </dependency>
+		
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+		<!-- H2 -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${h2.version}</version>
+		</dependency>
+
+		<!-- DataSource -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<!-- Spring Test -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+	
+	</dependencies>
+
+	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>1.5</version>
+
+				<configuration>
+					<skip>${skip.db.creation}</skip>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>create-database-h2</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<driver>${jooq.codegen.db.driver}</driver>
+							<url>${jooq.codegen.db.url}</url>
+							<username>${jooq.codegen.db.username}</username>
+							<password>${jooq.codegen.db.password}</password>
+
+							<autocommit>true</autocommit>
+							<srcFiles>
+								<srcFile>src/main/resources/create-probe-annotaions-schema.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+				</executions>
+
+				<dependencies>
+					<dependency>
+						<groupId>com.h2database</groupId>
+						<artifactId>h2</artifactId>
+						<version>1.3.174</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.jooq</groupId>
+				<artifactId>jooq-codegen-maven</artifactId>
+				<version>3.2.3</version>
+
+				<executions>
+					<execution>
+						<id>generate-h2</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<dependencies>
+					<dependency>
+						<groupId>com.h2database</groupId>
+						<artifactId>h2</artifactId>
+						<version>${h2.version}</version>
+					</dependency>
+				</dependencies>
+
+				<configuration>
+					<jdbc>
+						<driver>${jooq.codegen.db.driver}</driver>
+						<url>${jooq.codegen.db.url}</url>
+						<user>${jooq.codegen.db.username}</user>
+						<password>${jooq.codegen.db.password}</password>
+					</jdbc>
+
+					<generator>
+						<database>
+							<name>${jooq.codegen.db.dialect}</name>
+							<includes>.*</includes>
+							<excludes></excludes>
+							<inputSchema>PUBLIC</inputSchema>
+						</database>
+						<generate>
+							<records>true</records>
+						</generate>
+						<target>
+							<packageName>edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq</packageName>
+							<directory>${basedir}/src/main/java</directory>
+						</target>
+					</generator>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											sql-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.5,)
+										</versionRange>
+										<goals>
+											<goal>execute</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.jooq</groupId>
+										<artifactId>
+											jooq-codegen-maven
+										</artifactId>
+										<versionRange>
+											[3.2.3,)
+										</versionRange>
+										<goals>
+											<goal>generate</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
