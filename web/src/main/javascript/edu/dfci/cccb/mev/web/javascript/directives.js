@@ -125,7 +125,7 @@ define (
             	  
             	  	scope.clusterAnalysisClickOpen = function(id) {
             	  		
-            	  		jq('#clustersTabLink').trigger("click");
+            	  		jq('a#clustersTabLink').trigger("click");
             	  		
             	  		jq(id.href).collapse("show");
             	  		
@@ -136,7 +136,7 @@ define (
             	  	
             	  	scope.limmaAnalysisClickOpen = function(id) {
             	  		
-            	  		jq('#limmaPane').trigger("click");
+            	  		jq('a#limmaTabLink').trigger("click");
             	  		
             	  		jq(id.href).collapse("show");
             	  		
