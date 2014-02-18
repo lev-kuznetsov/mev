@@ -63,8 +63,8 @@ define (
                     pageWidth = jq('body').width() - 50,
                     showSidePanel = true;
                     
-                    rightPanel.css('height', "100%");
-                    leftPanel.css('height', "100%");
+                    rightPanel.css('height', "80%");
+                    leftPanel.css('height', "80%");
                     
                     var isDragging = false;
                     
