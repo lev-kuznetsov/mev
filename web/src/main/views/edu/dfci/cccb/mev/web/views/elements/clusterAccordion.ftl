@@ -1,5 +1,3 @@
-<span></span>
-
 <div class="accordion" id="{{cluster.parentId}}" ng-repeat="cluster in previousHCLClusters">
     <div class="accordion-group">
     
@@ -31,4 +29,3 @@
     </div> <!-- End Accordion Grouping -->
 </div> <!-- End Accordion Definition -->
 
-<br>

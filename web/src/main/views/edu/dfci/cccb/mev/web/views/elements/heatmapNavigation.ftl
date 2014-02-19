@@ -1,4 +1,4 @@
-<div class="navbar navbar-static-top">
+<div class="navbar">
 
 	<div class="navbar-inner">
 	

@@ -1,4 +1,3 @@
-<span></span>
 <div class="accordion" id="{{cluster.parentId}}" ng-repeat="limma in previousLimmaAnalysis">
     <div class="accordion-group">
     
@@ -15,20 +14,29 @@
 	            <div class="span12>
 	            
 		            <div class="row-fluid">
-			            <button class="btn pull-right btn-success" >
-			              <a href="/dataset/{{datasetName}}/analysis/{{limma.name}}?format=tsv">
-			              <i class="icon-white icon-download"></i> Download
-			              </a> 
+		            
+		              <div class="pull-left">
+		              
+		                <button class="btn btn-success" >
+			                <a href="/dataset/{{datasetName}}/analysis/{{limma.name}}?format=tsv">
+			                  <i class="icon-white icon-download"></i> Download
+			                </a> 
 			            </button>
+		              
+		              </div>
+			            
+			          <div class="pull-right">
+			            <form class="form-inline">
+						  Thresholds: <input type="text" class="input-small" placeholder="P-Value">
+						  <input type="text"  class="input-small" placeholder="Log Fold">
+						 
+						</form>
+					  </div>
 			            
 			            <div id="limmaResultsNotSignificant" ng-hide="limma.datar.results">
 			              <hr>
 			              <p>No Results!</p>
 			              
-			            </div>
-			            
-			            <div id="showTableDialog" ng-hide="showLimmaTables">
-			              <a href="" ng-click="expandRight()">Expand to see table...</a>
 			            </div>
 			            
 			        </div>
@@ -43,7 +51,7 @@
 		                                    </tr>
 		                            </thead>
 		                            <tbody>
-		                                    <tr ng-repeat="row in limma.datar.results">
+		                                    <tr ng-repeat="row in limma.datar.results | orderBy:'-pValue' ">
 		                                            <td>
 		                                                    {{row["id"]}}
 		                                            </td>
@@ -73,4 +81,3 @@
     
     </div> <!-- End Accordion Grouping -->
 </div> <!-- End Accordion Definition -->
-<br>

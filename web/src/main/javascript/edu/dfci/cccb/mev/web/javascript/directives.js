@@ -63,8 +63,8 @@ define (
                     pageWidth = jq('body').width() - 50,
                     showSidePanel = true;
                     
-                    rightPanel.css('height', "90%");
-                    leftPanel.css('height', "90%");
+                    rightPanel.css('height', "80%");
+                    leftPanel.css('height', "80%");
                     
                     var isDragging = false;
                     
@@ -76,7 +76,7 @@ define (
                     jq(document).mouseup(function(){
                     	isDragging = false;
                     }).mousemove(function(mouse){
-                    	if(isDragging && mouse.pageX < pageWidth*(1/3) && mouse.pageX > 0 ){
+                    	if(isDragging && mouse.pageX < pageWidth*(9/10) && mouse.pageX > 0 ){
                     		showSidePanel = true;
                     		leftPanel.css("width", mouse.pageX);
                     		rightPanel.css("width", pageWidth - mouse.pageX);
@@ -125,7 +125,7 @@ define (
             	  
             	  	scope.clusterAnalysisClickOpen = function(id) {
             	  		
-            	  		jq('#clustersTabLink').trigger("click");
+            	  		jq('a#clustersTabLink').trigger("click");
             	  		
             	  		jq(id.href).collapse("show");
             	  		
@@ -136,7 +136,7 @@ define (
             	  	
             	  	scope.limmaAnalysisClickOpen = function(id) {
             	  		
-            	  		jq('#limmaPane').trigger("click");
+            	  		jq('a#limmaTabLink').trigger("click");
             	  		
             	  		jq(id.href).collapse("show");
             	  		
@@ -177,6 +177,8 @@ define (
                 scope.buildPreviousAnalysisList ();
                 
                 scope.datasetName = $routeParams.datasetName;
+                
+                
 
               }
             };
@@ -480,7 +482,7 @@ define (
                     	var padding = 20;
                     	var dendogram = {
                           height: 200 + padding,
-                          width: jq("#rightPanel").css("width").split("px")[0] * .75 // Nicely define width
+                          width: pageWidth = jq('body').width() * (2/5) // Nicely define width
                         };
                     	
                     	var svg = d3.select(elems[0]).append("svg")
@@ -577,7 +579,7 @@ define (
                       // templateUrl : "/container/view/elements/visHeatmap",
                       link : function (scope, elems, attr) {
                     	  
-                    	jq('div.fixed-height').css('height', jq ('#rightPanel').css ('height').slice (0, -2)* .8 )
+                    	jq('div.fixed-height').css('height', jq ('#leftPanel').css ('height').slice (0, -2)* .8 )
 
                         var svgWidth = Math.floor (jq ('#rightPanel').css (
                             'width').slice (0, -2) * .9), svgHeight = Math //svgheight no longer!
