@@ -29,6 +29,14 @@
 	</properties>
 	
 	<dependencies>
+		<!-- MeV Annotations -->
+		<dependency>
+	      <groupId>edu.dfci.cccb</groupId>
+	      <artifactId>mev-annotation-domain</artifactId>
+	      <version>BAYLIE-SNAPSHOT</version>
+	    </dependency>
+		
+		
 	    <!-- jOOQ -->
 	    <dependency>
 	      <groupId>org.jooq</groupId>

@@ -1,9 +1,5 @@
 package edu.dfci.cccb.mev.annotation.domain.probe.simple;
 
-import static java.util.UUID.randomUUID;
-import static org.jooq.impl.DSL.tableByName;
-import static org.jooq.impl.DSL.using;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -20,19 +16,11 @@ import javax.sql.DataSource;
 import lombok.SneakyThrows;
 
 import org.apache.commons.lang.NotImplementedException;
-import org.apache.poi.hssf.record.TableRecord;
-import org.jooq.DSLContext;
-import org.jooq.Field;
-import org.jooq.Table;
-
-import com.sugarcrm.ws.soap.Array;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotation;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
-import edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.Tables;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.dataset.domain.contract.MevException;
 
 public class SimpleProbeAnnotations implements ProbeAnnotations{
 

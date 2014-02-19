@@ -29,8 +29,6 @@ import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
 import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2ProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2ProbeAnnotationsLoader;
-import edu.dfci.cccb.mev.annotation.domain.probe.jooq.JooqProbeAnnotations;
-import edu.dfci.cccb.mev.annotation.domain.probe.jooq.JooqProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.domain.probe.metafile.MetafileProbeAnnotationSource;
 import edu.dfci.cccb.mev.annotation.domain.probe.metafile.MetafileProbeAnnotationSources;
 import edu.dfci.cccb.mev.io.utils.CCCPHelpers;

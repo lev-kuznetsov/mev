@@ -1,9 +1,10 @@
 package edu.dfci.cccb.mev.test.annotation.server.configuration;
 
+import static edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain.MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX;
+
 import java.io.IOException;
 import java.net.URL;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
@@ -14,16 +15,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsLoaderConfiguration;
-import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsPersistenceConfiguration;
-import static edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain.MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX;
-import static edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsPersistenceConfiguration.*;
 
 @Log4j
 @Profile("test")
