@@ -107,9 +107,9 @@ public class FileProjectManager extends ProjectManager {
   }
 
   public SessionWorkspaceDir getWorkspaceDir () {
-    logger.warn ("***************************************************************************************");
-    logger.warn ("**************************Get workspace directory: {}", _workspaceDir.getAbsolutePath ());
-    logger.warn ("***************************************************************************************");
+    logger.info ("***************************************************************************************");
+    logger.info ("**************************Get workspace directory: {}", _workspaceDir.getAbsolutePath ());
+    logger.info ("***************************************************************************************");
 
     return _workspaceDir;
   }

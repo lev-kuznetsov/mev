@@ -11,9 +11,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
 
-import lombok.extern.log4j.Log4j;
-
-import org.eclipse.jetty.util.log.Log;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +22,6 @@ import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationE
 import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
 
-@Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={ProbeAnnotationsPersistanceConfigTest.class})
 public class TestH2ProbeAnnotationsLoader {

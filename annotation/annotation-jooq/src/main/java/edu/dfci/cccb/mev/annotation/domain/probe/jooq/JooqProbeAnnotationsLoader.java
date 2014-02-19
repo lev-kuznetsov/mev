@@ -4,7 +4,6 @@ import static edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.Tables.MEV_PROB
 import static org.jooq.impl.DSL.using;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.DirectoryStream;

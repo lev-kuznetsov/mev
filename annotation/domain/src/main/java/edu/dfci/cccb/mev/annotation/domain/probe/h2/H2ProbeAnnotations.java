@@ -15,7 +15,6 @@ import javax.inject.Named;
 import javax.sql.DataSource;
 
 import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j;
 
 import org.apache.http.MethodNotSupportedException;
 import org.h2.tools.Csv;
@@ -24,7 +23,6 @@ import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotation;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
-@Log4j
 public class H2ProbeAnnotations implements ProbeAnnotations {
 
   private final String TABLE_NAME_PREFIX="PROBE_ANNOT_";  

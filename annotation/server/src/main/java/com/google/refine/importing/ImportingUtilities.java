@@ -101,7 +101,6 @@ import com.google.refine.importing.UrlRewriter.Result;
 import com.google.refine.model.Project;
 import com.google.refine.util.JSONUtilities;
 
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
@@ -236,7 +235,7 @@ public class ImportingUtilities {
       }
     });
 
-    @SuppressWarnings ("unchecked") List<FileItem> tempFiles = (List<FileItem>) upload.parseRequest (request);
+    List<FileItem> tempFiles = (List<FileItem>) upload.parseRequest (request);
 
     Dataset heatmap = (Dataset) request.getAttribute (REQUEST_ATTEIBUTE_DATASET);
     

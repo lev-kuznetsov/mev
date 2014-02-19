@@ -1,7 +1,5 @@
 package edu.dfci.cccb.mev.test.annotation.domain.probe.dal.jooq;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -22,7 +20,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.jooq.JooqProbeAnnotations;
-import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsPersistenceConfiguration;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListSelections;
@@ -39,6 +36,11 @@ public class TestJooqProbeAnnotations {
   @Test
   public void testGetAsStream () throws SQLException, IOException {
     List<String> keys = new ArrayList<String> (){
+      /**
+       * 
+       */
+      private static final long serialVersionUID = 1L;
+
       {
         add("11986_at");
         add("12025_at");

@@ -1,7 +1,6 @@
 package edu.dfci.cccb.mev.annotation.domain.probe.h2;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.DirectoryStream;
@@ -16,7 +15,6 @@ import javax.inject.Named;
 import javax.sql.DataSource;
 
 import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -25,12 +23,9 @@ import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationSources
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
 
-@Log4j
 public class H2ProbeAnnotationsLoader implements ProbeAnnotationsLoader {
 
-  private URL rootFolder;
-  private Path rootPath;
-  private final String suffix;
+  private Path rootPath;  
   private final DataSource dataSource;
   
   public final static String TABLE_NAME_PREFIX="PROBE_ANNOT_";  
@@ -38,7 +33,7 @@ public class H2ProbeAnnotationsLoader implements ProbeAnnotationsLoader {
   private final static String FULL_TABLE_NAME=TABLE_NAME_PREFIX+PARAM_TABLE_NAME;
   private final static String PARAM_FILE_PATH="[file_path]";
   
-  private final static String TRUNCATE_TABLE_STATEMENT="TRUNCATE TABLE PUBLIC.\""+FULL_TABLE_NAME+"\"";
+//  private final static String TRUNCATE_TABLE_STATEMENT="TRUNCATE TABLE PUBLIC.\""+FULL_TABLE_NAME+"\"";
   private final static String DROP_TABLE_STATEMENT="DROP TABLE IF EXISTS PUBLIC.\""+FULL_TABLE_NAME+"\"";
   private final static String CREATE_TABLE_STATEMENT
   ="CREATE CACHED TABLE IF NOT EXISTS PUBLIC.\""+FULL_TABLE_NAME+"\"("+
@@ -62,22 +57,9 @@ public class H2ProbeAnnotationsLoader implements ProbeAnnotationsLoader {
   
   
   public H2ProbeAnnotationsLoader (@Named("probe-annotations-datasource") DataSource dataSource){
-    this.dataSource=dataSource;
-    this.suffix="*.tsv";
+    this.dataSource=dataSource;    
   }
   
-  public H2ProbeAnnotationsLoader (@Named("probe-annotations-datasource") DataSource dataSource, 
-                                  URL rootFolder, String suffix) throws URISyntaxException, IOException {
-    this.rootFolder=rootFolder;
-    this.suffix=suffix;
-    this.dataSource=dataSource;
-    
-    rootPath = Paths.get(rootFolder.toURI ());
-    if(rootPath==null)
-      throw new IOException ("Root Folder "+rootFolder.toURI ()+" not found");
-        
-  }
-
   @Override
   public int loadAll (URL rootFolder, String suffix) throws AnnotationException {
     int count=0;

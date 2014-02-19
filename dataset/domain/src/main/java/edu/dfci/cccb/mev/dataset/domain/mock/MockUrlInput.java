@@ -16,7 +16,6 @@ package edu.dfci.cccb.mev.dataset.domain.mock;
 
 import static org.apache.commons.io.FilenameUtils.getBaseName;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;

@@ -14,7 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import edu.dfci.cccb.mev.presets.contract.Presets;
-import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)

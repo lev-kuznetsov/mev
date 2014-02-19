@@ -1,9 +1,6 @@
 package com.google.refine.commands.project;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -25,8 +22,6 @@ import com.google.refine.browsing.Engine;
 import com.google.refine.browsing.FilteredRows;
 import com.google.refine.browsing.RowVisitor;
 import com.google.refine.commands.Command;
-import com.google.refine.history.HistoryEntry;
-import com.google.refine.model.AbstractOperation;
 import com.google.refine.model.Column;
 import com.google.refine.model.Project;
 import com.google.refine.model.Row;
@@ -70,7 +65,6 @@ public class ImportPresetDatasetCommand extends Command {
       final List<Integer> unmatchedRowIndices = new ArrayList<Integer>();
       
       RowVisitor visitor = new RowVisitor () {
-        int rowCount = 0;
         Column theIdColumn;
 
         @Override
@@ -94,7 +88,6 @@ public class ImportPresetDatasetCommand extends Command {
           String cellData = row.getCell (theIdColumn.getCellIndex ()).value.toString ();
           if (cellData != null) {
             keys.add (cellData);
-            rowCount++;
           }
           return false;
         }

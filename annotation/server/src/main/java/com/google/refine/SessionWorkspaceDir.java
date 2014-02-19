@@ -1,9 +1,6 @@
 package com.google.refine;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
-
 import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
 
 

@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,17 +27,17 @@ public class SimpleProbeAnnotations implements ProbeAnnotations{
   @SneakyThrows
   public SimpleProbeAnnotations (URL rootFolder) throws URISyntaxException, IOException {
     
-    this.rootFolder=rootFolder;
-    String[] segments = rootFolder.getPath().split("/");
-    annotationType =segments[segments.length-2];
-    
-    Path path = Paths.get (rootFolder.toURI ());
-    try(DirectoryStream<Path> ds = Files.newDirectoryStream (path, "*.annot.out.tsv")){
-      for(Path file : ds){
-        
-      }
-    }
-    
+//    this.rootFolder=rootFolder;
+//    String[] segments = rootFolder.getPath().split("/");
+//    annotationType =segments[segments.length-2];
+//    
+//    Path path = Paths.get (rootFolder.toURI ());
+//    try(DirectoryStream<Path> ds = Files.newDirectoryStream (path, "*.annot.out.tsv")){
+//      for(Path file : ds){
+//        
+//      }
+//    }
+
     throw new AnnotationException ("Method not implemented");
     
   }

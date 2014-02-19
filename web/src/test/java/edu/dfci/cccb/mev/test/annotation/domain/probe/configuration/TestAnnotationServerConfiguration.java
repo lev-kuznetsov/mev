@@ -24,17 +24,13 @@ import org.springframework.web.context.WebApplicationContext;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
-import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfiguration;
-import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsPersistenceConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
-import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 import edu.dfci.cccb.mev.test.annotation.server.configuration.AnnotationServerConfigurationMock;
 import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
 import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 import edu.dfci.cccb.mev.web.configuration.DispatcherConfiguration;
 import edu.dfci.cccb.mev.web.configuration.PersistenceConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
-
 
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -79,7 +75,8 @@ public class TestAnnotationServerConfiguration {
             .andExpect (MockMvcResultMatchers.jsonPath ("$[0].dataLevel").exists ())
             .andExpect (MockMvcResultMatchers.jsonPath ("$[0].descriptor").doesNotExist ())
             .andReturn ();
-    String content = result.getResponse().getContentAsString();    
+    String content = result.getResponse().getContentAsString();
+    log.debug ("content:"+content);
   }
   
   @Test 

@@ -100,7 +100,6 @@ public class ExportSetCommand extends Command {
       final List<String> keys = new ArrayList<String> ();
 
       RowVisitor visitor = new RowVisitor () {
-                int rowCount = 0;
         Column theIdColumn;
 
         @Override
@@ -124,7 +123,6 @@ public class ExportSetCommand extends Command {
           String cellData = row.getCell (theIdColumn.getCellIndex ()).value.toString ();
           if (cellData != null) {
             keys.add (cellData);
-            rowCount++;
           }
           return false;
         }

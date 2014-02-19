@@ -4,16 +4,9 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 import static org.springframework.context.annotation.FilterType.ANNOTATION;
 import static org.springframework.context.annotation.ScopedProxyMode.NO;
 
-import org.springframework.core.io.ClassPathResource;
-
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 

@@ -16,23 +16,17 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
-import org.springframework.ui.velocity.SpringResourceLoader;
 import org.springframework.util.ResourceUtils;
 
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationSources;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
 import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2ProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2ProbeAnnotationsLoader;
-import edu.dfci.cccb.mev.annotation.domain.probe.metafile.MetafileProbeAnnotationSource;
-import edu.dfci.cccb.mev.annotation.domain.probe.metafile.MetafileProbeAnnotationSources;
 import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
-import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 
 @Log4j
 @Configuration

@@ -1,6 +1,5 @@
 package edu.dfci.cccb.mev.annotation.domain.probe.jooq;
 
-import static java.util.UUID.randomUUID;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.using;
@@ -16,14 +15,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
 
-import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
-import org.jooq.Record;
 import org.jooq.ResultQuery;
-import org.jooq.SelectQuery;
 import org.jooq.Table;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotation;
@@ -31,7 +27,6 @@ import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.Tables;
 import edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.tables.records.MevProbeAnnotationsRecord;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import static edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.Tables.*;
 
 
 @Log4j
@@ -91,10 +86,11 @@ public class JooqProbeAnnotations implements ProbeAnnotations {
     }
     return input;
   }
-
+  
   @Override
   public List<String> getSources () {
     return new ArrayList<String> (){
+      private static final long serialVersionUID = 1L;
       {
         add(Tables.MEV_PROBE_ANNOTATIONS.getName ());
       }

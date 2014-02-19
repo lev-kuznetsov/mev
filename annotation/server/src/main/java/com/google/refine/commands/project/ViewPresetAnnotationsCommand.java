@@ -1,8 +1,6 @@
 package com.google.refine.commands.project;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -36,15 +34,6 @@ import com.google.refine.operations.row.ImportPresetsRowRemovalOperation;
 import com.google.refine.process.Process;
 import com.google.refine.util.ParsingUtilities;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
-import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
-import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
-import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
-import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
-import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
-import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.UrlTsvInput;
-import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import freemarker.template.utility.NullArgumentException;
 
@@ -102,7 +91,6 @@ public class ViewPresetAnnotationsCommand extends Command {
                 final List<Integer> unmatchedRowIndices = new ArrayList <Integer>();
                 
                 RowVisitor visitor = new RowVisitor () {
-                  int rowCount = 0;
                   Column theIdColumn;
 
                   @Override
@@ -120,7 +108,6 @@ public class ViewPresetAnnotationsCommand extends Command {
                     if (mapHeader.containsKey (cellData)) {
 //                      if(logger.isDebugEnabled ())
 //                        logger.debug ("++ will import"+cellData);
-                      rowCount++;
                     }else{
                       unmatchedRowIndices.add(rowIndex);
 //                      if(logger.isDebugEnabled ())

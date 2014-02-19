@@ -1,6 +1,8 @@
 package edu.dfci.cccb.mev.test.annotation.domain.probe.dal.h2;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,13 +32,11 @@ import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
 import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2ProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2ProbeAnnotationsLoader;
-import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsPersistenceConfiguration;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListSelections;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
-import static org.hamcrest.core.Is.is;
 
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -57,6 +57,11 @@ public class TestH2ProbeAnnotations {
   public void testGetAsStream () throws SQLException, IOException {
     
     List<String> keys = new ArrayList<String> (){
+      /**
+       * 
+       */
+      private static final long serialVersionUID = 1L;
+
       {
         add("1007_s_at");
         add("1053_at");
@@ -77,22 +82,10 @@ public class TestH2ProbeAnnotations {
   @Test 
   public void testGetSources () throws SQLException, IOException, AnnotationException {
 
-//    URL url = TestH2ProbeAnnotationsLoader.class.getResource ("/array_annotations/from_affymetrix/annotation_files/");
-//    assertNotNull (url);    
-//    ProbeAnnotationsLoader loader = new H2ProbeAnnotationsLoader (dataSource);    
-//    loader.loadAll (url, "*.annot.out.tsv");
-
-    List<String> keys = new ArrayList<String> (){
-      {
-        add("1007_s_at");
-        add("1053_at");
-        add("13029_at");
-      }
-    };
-    Dimension dimension = new SimpleDimension(Type.ROW, keys, new ArrayListSelections (), null );    
     ProbeAnnotations probeAnns = new H2ProbeAnnotations(dataSource);
     List<String> sourceNames = probeAnns.getSources ();
     List<String> expectedSourceNames = new ArrayList<String>(){
+      private static final long serialVersionUID = 1L;
       {
         add("HT_HG-U133A.na33.top3.annot.out.tsv");
       }

@@ -2,6 +2,8 @@ package edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions;
 
 public class ProbeAnnotationSourceNotFoundException extends AnnotationException {
 
+  private static final long serialVersionUID = 1L;
+
   public ProbeAnnotationSourceNotFoundException () {   }
 
   public ProbeAnnotationSourceNotFoundException (String message) {

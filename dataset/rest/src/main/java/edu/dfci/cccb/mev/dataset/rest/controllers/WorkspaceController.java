@@ -18,11 +18,7 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import lombok.Getter;
@@ -43,7 +39,6 @@ import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.MultipartTsvInput;
-import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.UrlTsvInput;
 
 /**
  * @author levk

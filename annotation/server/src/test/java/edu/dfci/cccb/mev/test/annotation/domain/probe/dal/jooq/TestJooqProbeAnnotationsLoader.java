@@ -19,7 +19,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
 import edu.dfci.cccb.mev.annotation.domain.probe.jooq.JooqProbeAnnotationsLoader;
-import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsPersistenceConfiguration;
 import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)

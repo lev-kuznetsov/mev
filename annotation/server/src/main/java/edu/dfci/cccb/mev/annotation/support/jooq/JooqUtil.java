@@ -9,7 +9,6 @@ import lombok.extern.log4j.Log4j;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Row1;
-import org.jooq.Row2;
 import org.jooq.Table;
 
 import static org.jooq.impl.DSL.*;
@@ -18,6 +17,7 @@ public class JooqUtil {
 
   public Table<Record> getTableBasedOnList(DSLContext create, List<String> list)
   {
+    @SuppressWarnings ("unchecked")
     Row1<String>[] values = (Row1<String>[]) Array.newInstance (Row1.class, list.size ());
     
     Iterator<String> it = list.iterator ();

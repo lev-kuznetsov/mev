@@ -1,6 +1,7 @@
 package edu.dfci.cccb.mev.test.annotation.server.support.jooq;
 
 import static org.jooq.impl.DSL.using;
+import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -40,25 +41,16 @@ public class TestJooqUtil {
   public void test () throws SQLException {
     DSLContext context = using (dataSource.getConnection ());
     List<String> list = new ArrayList <String>(){
+      private static final long serialVersionUID = 1L;
       {
         add("probe1");
         add("probe2");
         add("probe3");
       }
     };
-   
     Table<Record> table = new JooqUtil ().getTableBasedOnList (context, list);
-    
-    List<String> list2 = new ArrayList <String>(){
-      {        
-        add("probe2");
-        add("probe3");
-        add("probe4");
-      }
-    };
-    Table<Record> table2 = new JooqUtil ().getTableBasedOnList (context, list2);
-    
-    //assertEquals ("probe1\tprobe2\tprobe3", context.selectFrom (table).fetch ().formatCSV ('\t'));
+        
+    assertEquals ("c1\nprobe1\nprobe2\nprobe3\n", context.selectFrom (table).fetch ().formatCSV ('\t'));
     
     List<?> record = context.select().from (table).fetch ();
     log.debug ("record: " + record);
