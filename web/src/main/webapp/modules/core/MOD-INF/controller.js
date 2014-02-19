@@ -51,7 +51,7 @@ var templatedFiles = {
 };
 
 function registerCommands() {
-  var RS = Packages.com.google.refine.RefineServlet;
+  var RS = Packages.edu.dfci.cccb.mev.annotation.server.servlet.RefineServlet;
   
   RS.registerCommand(module, "get-version", new Packages.com.google.refine.commands.GetVersionCommand());
 

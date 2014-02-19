@@ -74,9 +74,8 @@
     <profile>
       <id>prod</id>
       <properties>
-      	<mev.spring_profiles_active>prod</mev.spring_profiles_active>      	
-		<mev.java.io.tmpdir>/home/antony/work/danafarber/mev/tmpdir</mev.java.io.tmpdir>
-<!-- 		<mev.java.io.tmpdir>/cephfs/projects/mev/work</mev.java.io.tmpdir>      	 -->
+      	<mev.spring_profiles_active>prod</mev.spring_profiles_active>      			
+		<mev.java.io.tmpdir>/cephfs/projects/mev/work</mev.java.io.tmpdir>
         <mev.Rscript>/cephfs/projects/mev/lib/R/default/bin/Rscript</mev.Rscript>           
       </properties>
     </profile>

@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.dfci.cccb.mev.annotation.server.servlet.RefineServlet;
+
 public interface HttpResponder {
     public void init(RefineServlet servlet);
 

@@ -51,9 +51,10 @@ import org.json.JSONException;
 import org.json.JSONWriter;
 
 import com.google.refine.Jsonizable;
-import com.google.refine.RefineServlet;
 import com.google.refine.model.Recon;
 import com.google.refine.model.ReconCandidate;
+
+import edu.dfci.cccb.mev.annotation.server.servlet.RefineServlet;
 
 /**
  * A serializable pool of ReconCandidates indexed by ID.

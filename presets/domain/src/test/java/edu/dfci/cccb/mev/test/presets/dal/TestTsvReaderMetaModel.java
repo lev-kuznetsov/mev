@@ -17,7 +17,7 @@ public class TestTsvReaderMetaModel {
   static URL data;
   @BeforeClass
   public static void initData(){
-    data = TestTsvReaderMetaModel.class.getResource ("/tcga/file_metadata.tsv");
+    data = TestTsvReaderMetaModel.class.getResource ("/tcga/mev.file_metadata.tsv");
     assertNotNull(data);
   }
   

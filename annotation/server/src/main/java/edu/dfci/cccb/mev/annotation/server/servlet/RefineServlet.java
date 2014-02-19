@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
  */
 
-package com.google.refine;
+package edu.dfci.cccb.mev.annotation.server.servlet;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,15 +46,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.log4j.Log4j;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.refine.ProjectManager;
 import com.google.refine.commands.Command;
 import com.google.refine.importing.ImportingManager;
 
 import edu.mit.simile.butterfly.Butterfly;
 import edu.mit.simile.butterfly.ButterflyModule;
 
+@Log4j
 public class RefineServlet extends Butterfly {
 
   static private String ASSIGNED_VERSION = "2.6";
@@ -168,35 +172,17 @@ public class RefineServlet extends Butterfly {
       // if (request.getServletPath().startsWith("/command/")) {
       String commandKey = getCommandKey (request);
       Command command = commands.get (commandKey);
+      if (log.isDebugEnabled ())
+        log.debug (request.getMethod () + " for command " + commandKey);
       if (command != null) {
         if (request.getMethod ().equals ("GET")) {
-          if (!logger.isTraceEnabled () && command.logRequests ()) {
-            logger.info ("GET {}", request.getPathInfo ());
-          }
-          logger.trace ("> GET {}", commandKey);
           command.doGet (request, response);
-          logger.trace ("< GET {}", commandKey);
         } else if (request.getMethod ().equals ("POST")) {
-          if (!logger.isTraceEnabled () && command.logRequests ()) {
-            logger.info ("POST {}", request.getPathInfo ());
-          }
-          logger.debug ("> POST {}", commandKey);
           command.doPost (request, response);
-          logger.debug ("< POST {}", commandKey);
         } else if (request.getMethod ().equals ("PUT")) {
-          if (!logger.isTraceEnabled () && command.logRequests ()) {
-            logger.info ("PUT {}", request.getPathInfo ());
-          }
-          logger.trace ("> PUT {}", commandKey);
           command.doPut (request, response);
-          logger.trace ("< PUT {}", commandKey);
         } else if (request.getMethod ().equals ("DELETE")) {
-          if (!logger.isTraceEnabled () && command.logRequests ()) {
-            logger.info ("DELETE {}", request.getPathInfo ());
-          }
-          logger.trace ("> DELETE {}", commandKey);
           command.doDelete (request, response);
-          logger.trace ("< DELETE {}", commandKey);
         } else {
           response.sendError (405);
         }
