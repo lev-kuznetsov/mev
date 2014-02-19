@@ -17,15 +17,22 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import lombok.SneakyThrows;
+
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.poi.hssf.record.TableRecord;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Table;
 
+import com.sugarcrm.ws.soap.Array;
+
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotation;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
 import edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.Tables;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.MevException;
 
 public class SimpleProbeAnnotations implements ProbeAnnotations{
 
@@ -33,6 +40,7 @@ public class SimpleProbeAnnotations implements ProbeAnnotations{
   URL rootFolder;
   ArrayList<ProbeAnnotation> probeList;
   
+  @SneakyThrows
   public SimpleProbeAnnotations (URL rootFolder) throws URISyntaxException, IOException {
     
     this.rootFolder=rootFolder;
@@ -45,7 +53,9 @@ public class SimpleProbeAnnotations implements ProbeAnnotations{
         
       }
     }
-        
+    
+    throw new AnnotationException ("Method not implemented");
+    
   }
 
   public SimpleProbeAnnotations(URL rootFolder, DataSource dataSource){
@@ -59,11 +69,17 @@ public class SimpleProbeAnnotations implements ProbeAnnotations{
   }
 
   @Override
-  public InputStream getAsStream (Dimension dimension) {
-     
-    return null;
+  @SneakyThrows
+  public InputStream getAsStream (Dimension dimension, String source) {
+     throw new NotImplementedException ("method getAsStream() is not implemented");
   }
-  
+
+  @Override
+  @SneakyThrows
+  public List<String> getSources () {
+    throw new AnnotationException ("Method not implemented");
+  }
+
   
 
 }

@@ -39,25 +39,31 @@
 			<id>devel.kiwi-project</id>
 			<url>http://devel.kiwi-project.eu:8080/nexus/content/groups/public/</url>
 		</repository>
+<!-- 		
 		<repository>
 			<id>dev.nightlabs.org</id>
 			<url>http://dev.nightlabs.org/maven-repository/repo/</url>
 		</repository>
+ -->
 		<repository>
 			<!-- Marc4j 2.4 -->
 			<id>indexdata.com</id>
 			<url>http://maven.indexdata.com/</url>
 		</repository>
-		<!-- <repository> OpenCSV v.2.4 <id>nuiton.org</id> <url>http://maven.nuiton.org/nexus/content/groups/public/</url> 
-			</repository> -->
 
 	</repositories>
 
 
 	<dependencies>
 
-		<!-- Dataset package -->
+		<!-- Annotations Domain package -->
+		<dependency>
+			<groupId>edu.dfci.cccb</groupId>
+			<artifactId>mev-annotation-domain</artifactId>
+			<version>BAYLIE-SNAPSHOT</version>
+		</dependency>
 
+		<!-- Dataset package -->
 		<dependency>
 			<groupId>edu.dfci.cccb</groupId>
 			<artifactId>mev-dataset-domain</artifactId>
@@ -120,8 +126,6 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>4.2.7.SP1</version>
 		</dependency>
-
-
 
 		<!-- H2 -->
 
@@ -220,148 +224,6 @@
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sql-maven-plugin</artifactId>
-				<version>1.5</version>
-
-				<configuration>
-					<skip>${skip.db.creation}</skip>
-				</configuration>
-
-				<executions>
-					<execution>
-						<id>create-database-h2</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<driver>${jooq.codegen.db.driver}</driver>
-							<url>${jooq.codegen.db.url}</url>
-							<username>${jooq.codegen.db.username}</username>
-							<password>${jooq.codegen.db.password}</password>
-
-							<autocommit>true</autocommit>
-							<srcFiles>
-								<srcFile>src/main/resources/create-probe-annotaions-schema.sql</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-				</executions>
-
-				<dependencies>
-					<dependency>
-						<groupId>com.h2database</groupId>
-						<artifactId>h2</artifactId>
-						<version>1.3.174</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			<plugin>
-				<groupId>org.jooq</groupId>
-				<artifactId>jooq-codegen-maven</artifactId>
-				<version>3.2.3</version>
-
-				<executions>
-					<execution>
-						<id>generate-h2</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-
-				<dependencies>
-					<dependency>
-						<groupId>com.h2database</groupId>
-						<artifactId>h2</artifactId>
-						<version>${h2.version}</version>
-					</dependency>
-				</dependencies>
-
-				<configuration>
-					<jdbc>
-						<driver>${jooq.codegen.db.driver}</driver>
-						<url>${jooq.codegen.db.url}</url>
-						<user>${jooq.codegen.db.username}</user>
-						<password>${jooq.codegen.db.password}</password>
-					</jdbc>
-
-					<generator>
-						<database>
-							<name>${jooq.codegen.db.dialect}</name>
-							<includes>.*</includes>
-							<excludes></excludes>
-							<inputSchema>PUBLIC</inputSchema>
-						</database>
-						<generate>
-							<records>true</records>
-						</generate>
-						<target>
-							<packageName>edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq</packageName>
-							<directory>${basedir}/src/main/java</directory>
-						</target>
-					</generator>
-				</configuration>
-			</plugin>
-		</plugins>
-
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.jooq</groupId>
-										<artifactId>
-											jooq-codegen-maven
-										</artifactId>
-										<versionRange>
-											[3.2.2,)
-										</versionRange>
-										<goals>
-											<goal>generate</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.codehaus.mojo
-										</groupId>
-										<artifactId>
-											sql-maven-plugin
-										</artifactId>
-										<versionRange>
-											[1.5,)
-										</versionRange>
-										<goals>
-											<goal>execute</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 

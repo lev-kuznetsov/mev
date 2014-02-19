@@ -23,10 +23,16 @@ import org.springframework.core.env.Environment;
 import org.springframework.ui.velocity.SpringResourceLoader;
 import org.springframework.util.ResourceUtils;
 
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationSources;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
+import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2ProbeAnnotations;
+import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.domain.probe.jooq.JooqProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.jooq.JooqProbeAnnotationsLoader;
+import edu.dfci.cccb.mev.annotation.domain.probe.metafile.MetafileProbeAnnotationSource;
+import edu.dfci.cccb.mev.annotation.domain.probe.metafile.MetafileProbeAnnotationSources;
 import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 
@@ -40,7 +46,8 @@ import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 public class ProbeAnnotationsLoaderConfiguration {
 
   @Inject Environment environment;
-  public static final String MEV_PROBE_ANNOTATIONS_ROOT_FOLDER_URL="mev.annotations.probe.root.url";  
+  public static final String MEV_PROBE_ANNOTATIONS_ROOT_FOLDER_URL="mev.annotations.probe.root.url";
+  public static final String MEV_PROBE_ANNOTATIONS_RELOAD_FLAG="mev.annotations.probe.reload.flag";
   public static final String MEV_PROBE_ANNOTATIONS_AFFYMETRIX_FOLDER="mev.annotations.probe.affymetrix.folder";
   public static final String MEV_PROBE_ANNOTATIONS_AFFYMETRIX_SUFFIX="mev.annotations.probe.affymetrix.file.suffix";
   
@@ -63,10 +70,12 @@ public class ProbeAnnotationsLoaderConfiguration {
 
     return probeAnnotationsRootURL;    
   }
-  
-  @Bean(name="affymatrix-probe-annotations-loader")
+ 
+
+
+  @Bean
   public ProbeAnnotationsLoader loadProbeAnnotations(@Named(value="probe-annotations-root") URL root,
-                                                     @Named("probe-annotations-datasource") DataSource dataSource) throws SQLException, IOException, URISyntaxException{
+                                                     @Named("probe-annotations-datasource") DataSource dataSource) throws SQLException, IOException, URISyntaxException, AnnotationException{
     
     //find annotation folder
     String annotationsFolder = environment.getProperty (MEV_PROBE_ANNOTATIONS_AFFYMETRIX_FOLDER);
@@ -79,15 +88,18 @@ public class ProbeAnnotationsLoaderConfiguration {
     log.info ("annotationFolderURL.toString():" + annotationFolderURL.toString ());
     
     String fileSuffix = environment.getProperty((MEV_PROBE_ANNOTATIONS_AFFYMETRIX_SUFFIX), "*.annot.out.tsv");    
-    ProbeAnnotationsLoader loader = new JooqProbeAnnotationsLoader (dataSource);
+    ProbeAnnotationsLoader loader = new H2ProbeAnnotationsLoader (dataSource);
     
-    loader.init (annotationFolderURL, fileSuffix);
+    String sReload = environment.getProperty (MEV_PROBE_ANNOTATIONS_RELOAD_FLAG, "false");
+    boolean reload = Boolean.parseBoolean (sReload);
+    if(reload)
+      loader.loadAll (annotationFolderURL, fileSuffix);
     return loader;
-    
   }
+
   
-  @Bean(name="affymatrix-probe-annotations")
+  @Bean
   public ProbeAnnotations getProbeAnnotations(@Named("probe-annotations-datasource") DataSource dataSource) throws MalformedURLException, SQLException{
-    return new JooqProbeAnnotations (dataSource);
+    return new H2ProbeAnnotations (dataSource);
   }  
 }

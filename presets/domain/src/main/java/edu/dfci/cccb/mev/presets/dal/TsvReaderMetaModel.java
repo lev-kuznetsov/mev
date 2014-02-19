@@ -52,7 +52,6 @@ public class TsvReaderMetaModel implements TsvReader {
     List<Object[]> result = dataset.toObjectArrays ();
     dataset.close ();
     return result;
-    
   }
-
+  
  }

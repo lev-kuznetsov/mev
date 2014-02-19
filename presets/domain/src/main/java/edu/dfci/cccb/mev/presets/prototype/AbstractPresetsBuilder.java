@@ -4,11 +4,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.dfci.cccb.mev.presets.dal.TsvReader;
+import edu.dfci.cccb.mev.presets.dal.TsvReaderMetaModel;
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetsBuilder;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
-import edu.dfci.cccb.mev.presets.dal.TsvReader;
-import edu.dfci.cccb.mev.presets.dal.TsvReaderMetaModel;
 
 public abstract class AbstractPresetsBuilder implements PresetsBuilder{
 //  @Override
