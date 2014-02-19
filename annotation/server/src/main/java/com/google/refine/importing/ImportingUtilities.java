@@ -101,7 +101,6 @@ import com.google.refine.importing.UrlRewriter.Result;
 import com.google.refine.model.Project;
 import com.google.refine.util.JSONUtilities;
 
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
@@ -236,7 +235,7 @@ public class ImportingUtilities {
       }
     });
 
-    @SuppressWarnings ("unchecked") List<FileItem> tempFiles = (List<FileItem>) upload.parseRequest (request);
+    List<FileItem> tempFiles = (List<FileItem>) upload.parseRequest (request);
 
     Dataset heatmap = (Dataset) request.getAttribute (REQUEST_ATTEIBUTE_DATASET);
     
@@ -422,55 +421,62 @@ public class ImportingUtilities {
     if (uploadCount <= 0) {
 
       if (heatmap != null) {
+        
         String encoding = request.getCharacterEncoding ();
         if (encoding == null) {
           encoding = "UTF-8";
         }
-
-        File file = allocateFile (rawDataDir, "heatmap.tsv");
-
-        JSONObject fileRecord = new JSONObject ();
-        JSONUtilities.safePut (fileRecord, "origin", "heatmap.tsv");
-        JSONUtilities.safePut (fileRecord, "declaredEncoding", encoding);
-        JSONUtilities.safePut (fileRecord, "declaredMimeType", (String) null);
-        JSONUtilities.safePut (fileRecord, "format", "text/line-based/*sv");
-        JSONUtilities.safePut (fileRecord, "fileName", heatmap.name ()+sDimension);
-        JSONUtilities.safePut (fileRecord, "location", getRelativePath (file, rawDataDir));
-
-        progress.setProgress ("Uploading pasted heatmap text",
-                              calculateProgressPercent (update.totalExpectedSize, update.totalRetrievedSize));
-
         InputStream stream=null;
         if(dimension.type ()==Dimension.Type.COLUMN){
           //use the dataset keys for column annotations          
-          StringBuilder builder = new StringBuilder (StringUtils.join (
+          StringBuilder builder = new StringBuilder ("Dataset Column Heading\n"+StringUtils.join (
                                                                      dimension.keys (),
                                                                      "\n"));
           stream = new ByteArrayInputStream (builder.toString ().getBytes (encoding));
         }else{
           String rowAnnotationSource = (String) request.getAttribute ("annotationSource");
-          if(rowAnnotationSource.equals ("probe")){
-            //user asked to load our probe annotations
-            if(logger.isDebugEnabled ())
-              logger.debug ("Using ROW PROBE annotations");
-            stream = ProjectManager.getSingleton ().getProbeaAnnotations ().getAsStream (dimension);
-          }else{
+          if(rowAnnotationSource.equals ("dataset")){
+
             if(logger.isDebugEnabled ())
               logger.debug ("Using ROW KEYS annotations");
             //use the dataset keys for row annotations
-            StringBuilder builder = new StringBuilder (StringUtils.join (
+            StringBuilder builder = new StringBuilder ("Dataset Row Heading\n"+StringUtils.join (
                                                                          dimension.keys (),
                                                                          "\n"));
             stream = new ByteArrayInputStream (builder.toString ().getBytes (encoding));
+
+          }else if(rowAnnotationSource.equals ("probe")){
+            //do nothing - let user select the probe list to import
+            if(logger.isDebugEnabled ())
+              logger.debug ("Skipping import - User must specify which PROBE Annotations to use");
+          }else{
+            
+            //user asked to load our probe annotations
+            if(logger.isDebugEnabled ())
+              logger.debug ("Using ROW PROBE annotations");
+            stream = ProjectManager.getSingleton ().getProbeaAnnotations ().getAsStream (dimension, rowAnnotationSource);
           }
         }
         
-        
-
-        JSONUtilities.safePut (fileRecord, "size", saveStreamToFile (stream, file, null));
-        JSONUtilities.append (fileRecords, fileRecord);
-
-        clipboardCount++;
+        if(stream!=null){
+          File file = allocateFile (rawDataDir, "heatmap.tsv");
+  
+          JSONObject fileRecord = new JSONObject ();
+          JSONUtilities.safePut (fileRecord, "origin", "heatmap.tsv");
+          JSONUtilities.safePut (fileRecord, "declaredEncoding", encoding);
+          JSONUtilities.safePut (fileRecord, "declaredMimeType", (String) null);
+          JSONUtilities.safePut (fileRecord, "format", "text/line-based/*sv");
+          JSONUtilities.safePut (fileRecord, "fileName", heatmap.name ()+sDimension);
+          JSONUtilities.safePut (fileRecord, "location", getRelativePath (file, rawDataDir));
+  
+          progress.setProgress ("Uploading pasted heatmap text",
+                                calculateProgressPercent (update.totalExpectedSize, update.totalRetrievedSize));
+  
+          JSONUtilities.safePut (fileRecord, "size", saveStreamToFile (stream, file, null));
+          JSONUtilities.append (fileRecords, fileRecord);
+  
+          clipboardCount++;
+        }
       }
     }
 

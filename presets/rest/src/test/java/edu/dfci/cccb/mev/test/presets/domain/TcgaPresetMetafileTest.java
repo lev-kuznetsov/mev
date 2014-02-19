@@ -18,11 +18,11 @@ import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.PresetsBuilder;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
-import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationMock;
+import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={PresetsRestConfigurationMock.class})
+@ContextConfiguration(classes={PresetsRestConfigurationTest.class})
 public class TcgaPresetMetafileTest {
 
   private @Inject PresetsBuilder builder;

@@ -14,8 +14,11 @@
     <version>BAYLIE-SNAPSHOT</version>
   </parent>
 
-  <modules>
+  <modules>    
+    <module>domain</module>
+    <module>annotation-jooq</module>
     <module>server</module>
   </modules>
+
 
 </project>

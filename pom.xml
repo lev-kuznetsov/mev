@@ -45,38 +45,42 @@
 
     <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+    
+    <!-- MEV Defaults -->
+    <mev.Rscript>Rscript</mev.Rscript>
+    <mev.java.io.tmpdir>${java.io.tmpdir}</mev.java.io.tmpdir>    
   </properties>
-
+  
   <profiles>
     <profile>
-      <id>dev</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
+      <id>test</id>
       <properties>
-        <spring.prifiles.active>dev</spring.prifiles.active>
-        <mev.work.directory>${java.io.tmpdir}</mev.work.directory>
-        <mev.Rscript>Rscript</mev.Rscript>
+        <mev.spring_profiles_active>test</mev.spring_profiles_active>        
+      </properties>
+    </profile>
+    <profile>
+      <id>embedded</id>
+      <activation><activeByDefault>true</activeByDefault></activation>
+      <properties>
+        <mev.spring_profiles_active>embedded</mev.spring_profiles_active>        
+      </properties>
+    </profile>
+    <profile>
+      <id>local</id>
+      <properties>
+      	<mev.spring_profiles_active>local</mev.spring_profiles_active>      			
       </properties>
     </profile>
     <profile>
       <id>prod</id>
       <properties>
-        <spring.prifiles.active>prod</spring.prifiles.active>
-        <mev.work.directory>/cephfs/projects/mev/work</mev.work.directory>
-        <mev.Rscript>/cephfs/projects/mev/lib/R/default/bin/Rscript</mev.Rscript>
-      </properties>
-    </profile>
-    <profile>
-      <id>test</id>
-      <properties>
-        <spring.prifiles.active>test</spring.prifiles.active>
-        <mev.work.directory>${java.io.tmpdir}</mev.work.directory>
-        <mev.Rscript>Rscript</mev.Rscript>
+      	<mev.spring_profiles_active>prod</mev.spring_profiles_active>      	
+		<mev.java.io.tmpdir>/home/antony/work/danafarber/mev/tmpdir</mev.java.io.tmpdir>
+<!-- 		<mev.java.io.tmpdir>/cephfs/projects/mev/work</mev.java.io.tmpdir>      	 -->
+        <mev.Rscript>/cephfs/projects/mev/lib/R/default/bin/Rscript</mev.Rscript>           
       </properties>
     </profile>
   </profiles>
-
 
   <dependencies>
 
@@ -232,10 +236,25 @@
         <version>2.16</version>
         <configuration>
           <systemPropertyVariables>
+            <edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>${mev.Rscript}</edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>	          
+            <spring_profiles_active>test</spring_profiles_active>
             <spring.profiles.active>test</spring.profiles.active>
           </systemPropertyVariables>
         </configuration>
       </plugin>
+      
+      <plugin>
+       <groupId>org.apache.maven.plugins</groupId>
+       <artifactId>maven-jar-plugin</artifactId>
+       <version>2.2</version>
+       <executions>
+         <execution>
+           <goals>
+             <goal>test-jar</goal>
+           </goals>
+         </execution>
+       </executions>
+     </plugin>
     </plugins>
 
   </build>

@@ -33,7 +33,7 @@
   </logger>
   <logger name="org.jooq">
     <level value="info"></level>
-  </logger>  
+  </logger>
   <root>
     <priority value="debug"></priority>
     <appender-ref ref="stderr" />
