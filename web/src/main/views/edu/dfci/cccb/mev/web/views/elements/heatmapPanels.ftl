@@ -1,4 +1,4 @@
-<span heatmap-Navigation></span
+<span heatmap-Navigation></span>
 
 <br>
 
@@ -19,7 +19,7 @@
 		<div id="rightPanel">
 				
 	    		<analysis-Menu-Bar></analysis-Menu-Bar>
-				<div id="heatmapTabPane" class="tab-pane" expression-Panel></div>
+				<div id="expressionPanel" expression-Panel></div>
 		</div>
 			
 	</div>

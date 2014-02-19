@@ -76,7 +76,7 @@ define (
                     jq(document).mouseup(function(){
                     	isDragging = false;
                     }).mousemove(function(mouse){
-                    	if(isDragging && mouse.pageX < pageWidth*(1/3) && mouse.pageX > 0 ){
+                    	if(isDragging && mouse.pageX < pageWidth*(9/10) && mouse.pageX > 0 ){
                     		showSidePanel = true;
                     		leftPanel.css("width", mouse.pageX);
                     		rightPanel.css("width", pageWidth - mouse.pageX);
@@ -482,7 +482,7 @@ define (
                     	var padding = 20;
                     	var dendogram = {
                           height: 200 + padding,
-                          width: jq("#rightPanel").css("width").split("px")[0] * .75 // Nicely define width
+                          width: pageWidth = jq('body').width() * (2/5) // Nicely define width
                         };
                     	
                     	var svg = d3.select(elems[0]).append("svg")
