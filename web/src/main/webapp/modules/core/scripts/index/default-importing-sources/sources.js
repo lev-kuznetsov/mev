@@ -58,7 +58,12 @@ ThisComputerImportingSourceUI.prototype.attachUI = function(bodyDiv) {
       self._controller.startImportJob(self._elmts.form, $.i18n._('core-index-import')["uploading-data"]);
     }
   });
-  self._controller.startImportJob(self._elmts.form, $.i18n._('core-index-import')["uploading-data"]);
+  //ap
+  if(window.location.href.contains("/probe/")){
+	  //if probe, don't kick off thejob right away, wait for user to select the annotations
+  }else{
+	  self._controller.startImportJob(self._elmts.form, $.i18n._('core-index-import')["uploading-data"]);
+  }
 };
 
 ThisComputerImportingSourceUI.prototype.focus = function() {
@@ -135,4 +140,45 @@ ClipboardImportingSourceUI.prototype.attachUI = function(bodyDiv) {
 
 ClipboardImportingSourceUI.prototype.focus = function() {
   this._elmts.textInput.focus();
+};
+
+
+/////////////////
+function ProbeAnnotationsImportingSourceUI(controller) {
+  this._controller = controller;
+}
+
+//ap:disable clipboard for MeV
+Refine.DefaultImportingController.sources.push({
+  "label": $.i18n._("Probe Annotations"),
+  "id": "probe-annotations",
+  "uiClass": ProbeAnnotationsImportingSourceUI
+});
+
+ProbeAnnotationsImportingSourceUI.prototype.attachUI = function(bodyDiv) {
+  var self = this;
+
+  bodyDiv.html(DOM.loadHTML("core", "scripts/index/default-importing-sources/import-from-probe-annotations-form.html"));
+
+  this._elmts = DOM.bind(bodyDiv);
+  
+  $('#or-import-probe-annotations').text('Select Probe Annotations');
+  
+  if(window.location.href.contains("/probe/")){
+	  
+  }
+  /*
+  this._elmts.nextButton.html($.i18n._('core-buttons')["next"]);
+  this._elmts.nextButton.click(function(evt) {
+    if ($.trim(self._elmts.textInput[0].value).length === 0) {
+      window.alert($.i18n._('core-index-import')["warning-clipboard"]);
+    } else {
+      self._controller.startImportJob(self._elmts.form, $.i18n._('core-index-import')["uploading-pasted-data"]);
+    }
+  });
+  */
+};
+
+ProbeAnnotationsImportingSourceUI.prototype.focus = function() {
+  //this._elmts.textInput.focus();
 };
