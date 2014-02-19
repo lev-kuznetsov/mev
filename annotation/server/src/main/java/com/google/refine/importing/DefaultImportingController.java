@@ -50,11 +50,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONWriter;
 
-import com.google.refine.RefineServlet;
 import com.google.refine.commands.HttpUtilities;
 import com.google.refine.importing.ImportingManager.Format;
 import com.google.refine.util.JSONUtilities;
 import com.google.refine.util.ParsingUtilities;
+
+import edu.dfci.cccb.mev.annotation.server.servlet.RefineServlet;
 
 public class DefaultImportingController implements ImportingController {
 
