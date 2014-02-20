@@ -47,11 +47,13 @@
 		                    <table class="table table-striped table-bordered">
 		                            <thead>
 		                                    <tr>
-		                                      <th ng-repeat="header in ['ID', 'Log-Fold-Change', 'Average Expression', 'P-Value', 'Q-Value']">{{header}}</th>
+		                                      <th ng-repeat="tableHeader in ['ID', 'Log-Fold-Change', 'Average Expression', 'P-Value', 'Q-Value']">
+		                                      	<p ng-click="reorderLimmaTable(tableHeader)"> {{tableHeader}}</p>
+		                                      </th>
 		                                    </tr>
 		                            </thead>
 		                            <tbody>
-		                                    <tr ng-repeat="row in limma.datar.results | orderBy:'-pValue' ">
+		                                    <tr ng-repeat="row in limma.datar.results | orderBy: limmaTableOrdering ">
 		                                            <td>
 		                                                    {{row["id"]}}
 		                                            </td>
