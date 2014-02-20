@@ -63,7 +63,20 @@ button.analysisnav {
 			</button>
 		</a>
 		<ul class="dropdown-menu">
-			<li><a href=""></a></li>
+			<li><a href="#settingsModal" data-toggle="modal">Heatmap Settings</a></li>
+		</ul>
+	</div>
+	
+	<div class="dropdown">
+		
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+			<button class="analysisnav">
+				<img src="/container/style/img/visualization.png" height="42" width="42"> Annotations 
+			</button>
+		</a>
+		<ul class="dropdown-menu">
+			<li><a href="" ng-click="showAnnotations(selection, 'row')" class="ng-scope">Row Annotations</a></li>
+			<li><a href="" ng-click="showAnnotations(selection, 'column')" class="ng-scope">Column Annotations</a></li>
 		</ul>
 	</div>
 	
