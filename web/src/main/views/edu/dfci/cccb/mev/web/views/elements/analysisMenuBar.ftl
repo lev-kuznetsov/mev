@@ -63,7 +63,7 @@ button.analysisnav {
 			</button>
 		</a>
 		<ul class="dropdown-menu">
-			<li><a href=""></a></li>
+			<li><a href="#settingsModal" data-toggle="modal">Heatmap Settings</a></li>
 		</ul>
 	</div>
 	
