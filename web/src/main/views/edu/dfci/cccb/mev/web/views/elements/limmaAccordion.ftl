@@ -27,8 +27,8 @@
 			            
 			          <div class="pull-right">
 			            <form class="form-inline">
-						  Thresholds: <input type="text" class="input-small" placeholder="P-Value">
-						  <input type="text"  class="input-small" placeholder="Log Fold">
+						  Thresholds: <input type="text" class="input-small" placeholder="P-Value" ng-model="pvalueThreshold">
+						  <input type="text"  class="input-small" placeholder="Log Fold" ng-model="logFoldThreshold>
 						 
 						</form>
 					  </div>
@@ -58,16 +58,16 @@
 		                                                    {{row["id"]}}
 		                                            </td>
 		                                            <td>
-		                                                    {{row["logFoldChange"]}}
+		                                                    {{row["logFoldChange"] | filterTernary: logFoldThreshold: row["logFoldChange"] => logFoldThreshold :True  | number:4}}
 		                                            </td>
 		                                            <td>
-		                                                    {{row["averageExpression"]}}
+		                                                    {{row["averageExpression"] | number:4}}
 		                                            </td>
 		                                            <td>
-		                                                    {{row["pValue"]}}
+		                                                    {{row["pValue"] | filterTernary: pvalueThreshold : row["pValue"] => pvalueThreshold : True  | number:4}} 
 		                                            </td>
 		                                            <td>
-		                                                    {{row["qValue"]}}
+		                                                    {{row["qValue"] | number:4}}
 		                                            </td>
 		                                    </tr>
 		                            </tbody>
