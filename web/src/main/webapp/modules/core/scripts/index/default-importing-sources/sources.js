@@ -157,28 +157,55 @@ Refine.DefaultImportingController.sources.push({
 
 ProbeAnnotationsImportingSourceUI.prototype.attachUI = function(bodyDiv) {
   var self = this;
-
   bodyDiv.html(DOM.loadHTML("core", "scripts/index/default-importing-sources/import-from-probe-annotations-form.html"));
-
   this._elmts = DOM.bind(bodyDiv);
-  
-  $('#or-import-probe-annotations').text('Select Probe Annotations');
-  
-  if(window.location.href.contains("/probe/")){
-	  
-  }
-  /*
-  this._elmts.nextButton.html($.i18n._('core-buttons')["next"]);
-  this._elmts.nextButton.click(function(evt) {
-    if ($.trim(self._elmts.textInput[0].value).length === 0) {
-      window.alert($.i18n._('core-index-import')["warning-clipboard"]);
-    } else {
-      self._controller.startImportJob(self._elmts.form, $.i18n._('core-index-import')["uploading-pasted-data"]);
-    }
-  });
-  */
+    
+  this._fetchProbeAnnotationPlatforms();
 };
 
+ProbeAnnotationsImportingSourceUI.prototype._fetchProbeAnnotationPlatforms = function() {
+  var self = this;
+  $.getJSON(
+	  "/annotations/platforms/",
+	  {format: "json"},
+	  function(data) {		
+	    self._renderPlatforms(data);	        
+	  },
+	  "json"
+  );
+};
+
+ProbeAnnotationsImportingSourceUI.prototype._renderPlatforms = function(platforms) {
+	var container = $("#platforms-container").empty();
+	  if (!platforms.length) {
+	    $("#no-platforms-message").clone().show().appendTo(container);
+	  } else {
+		  var table = $(
+		      '<table class="list-table"><tr>' +
+		      '<th>Select Probe Annotations</th>' +
+		      '</tr></table>'
+		    ).appendTo(container)[0];
+		  
+		  var renderPlatform = function(platform) {
+		      var tr = table.insertRow(table.rows.length);
+		      tr.className = "platform";
+		      
+		      $('<a></a>')
+		      .addClass("platform")		      
+		      .attr("href","../"+platform.id+"/")		                      
+		      .html(platform.name)
+		      .appendTo(
+		        $(tr.insertCell(tr.cells.length)).css('width', '100%')
+		      );
+		  };
+
+		  for (var i = 0; i < platforms.length; i++) {
+		      renderPlatform(platforms[i]);
+		    }
+	  }
+};
+	
+	
 ProbeAnnotationsImportingSourceUI.prototype.focus = function() {
   //this._elmts.textInput.focus();
 };
