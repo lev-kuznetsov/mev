@@ -1,8 +1,5 @@
 package edu.dfci.cccb.mev.annotation.server.configuration;
 
-import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
-import static org.springframework.context.annotation.ScopedProxyMode.NO;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,7 +14,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 import org.springframework.util.ResourceUtils;
 
@@ -65,6 +61,7 @@ public class ProbeAnnotationsConfigurationMain {
   @Bean(name="probe-annotatinos-platforms-metafile") @Profile("!test")
   public URL probeAnnotationsPlatformsMetafile() throws MalformedURLException, IOException{
     String probeAnnotationsPlatformsMetafile = environment.getProperty (MEV_PROBE_ANNOTATIONS_PLATFORM_METAFILE);
+    log.info (MEV_PROBE_ANNOTATIONS_PLATFORM_METAFILE+" property is set to:" + probeAnnotationsPlatformsMetafile);
     URL probeAnnotationsMetafileURL = ResourceUtils.getURL (probeAnnotationsPlatformsMetafile);
     if(probeAnnotationsMetafileURL.getProtocol ().equals (""))
       probeAnnotationsMetafileURL=new URL(probeAnnotationsRoot (), probeAnnotationsPlatformsMetafile);
@@ -72,7 +69,7 @@ public class ProbeAnnotationsConfigurationMain {
     
     if(!CCCPHelpers.UrlUtils.checkExists(probeAnnotationsMetafileURL))
       throw new IOException ("Probe Annotations Platforms Metafile URL not found: " + probeAnnotationsMetafileURL.toString ());
-
+       
     return probeAnnotationsMetafileURL;    
   }
 
