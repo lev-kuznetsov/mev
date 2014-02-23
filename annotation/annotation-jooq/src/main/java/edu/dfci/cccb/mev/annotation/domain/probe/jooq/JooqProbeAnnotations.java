@@ -8,7 +8,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,20 +22,20 @@ import org.jooq.ResultQuery;
 import org.jooq.Table;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotation;
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.Tables;
-import edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.tables.records.MevProbeAnnotationsRecord;
+import edu.dfci.cccb.mev.annotation.domain.probe.prototype.AbstractProbeAnnotations;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
 
 @Log4j
-public class JooqProbeAnnotations implements ProbeAnnotations {
+public class JooqProbeAnnotations extends AbstractProbeAnnotations {
 
-  
+  public final static String TABLE_NAME_PREFIX="PROBE_ANNOT_";  
   private final DSLContext context;
   
   @Inject 
-  public JooqProbeAnnotations (@Named("probe-annotations-datasource") DataSource dataSource) throws SQLException {
+  public JooqProbeAnnotations (String platformId, @Named("probe-annotations-datasource") DataSource dataSource) throws SQLException {
+    super(platformId);
     context = using (dataSource.getConnection ()); 
   }
 
@@ -46,31 +45,32 @@ public class JooqProbeAnnotations implements ProbeAnnotations {
     return null;
   }
 
-  public InputStream getAsStream (Dimension dimension) {
-    
-//    SelectQuery<Tables> query = context.selectQuery()
-            
-    InputStream input=null;    
-    ResultQuery<MevProbeAnnotationsRecord> query = context.selectFrom(Tables.MEV_PROBE_ANNOTATIONS)
-            .where(Tables.MEV_PROBE_ANNOTATIONS.PROBESET_ID.in (dimension.keys ()));
-     log.debug(query.toString ());
-     String csv = query.fetch().formatCSV('\t');
-     try {
-      input = new ByteArrayInputStream (csv.getBytes ("UTF-8"));
-    } catch (UnsupportedEncodingException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    return input;
-  }
+//TODO:remove  
+//  public InputStream getAsStream (Dimension dimension) {
+//    
+////    SelectQuery<Tables> query = context.selectQuery()
+//            
+//    InputStream input=null;    
+//    ResultQuery<MevProbeAnnotationsRecord> query = context.selectFrom(Tables.MEV_PROBE_ANNOTATIONS)
+//            .where(Tables.MEV_PROBE_ANNOTATIONS.PROBESET_ID.in (dimension.keys ()));
+//     log.debug(query.toString ());
+//     String csv = query.fetch().formatCSV('\t');
+//     try {
+//      input = new ByteArrayInputStream (csv.getBytes ("UTF-8"));
+//    } catch (UnsupportedEncodingException e) {
+//      // TODO Auto-generated catch block
+//      e.printStackTrace();
+//    }
+//    return input;
+//  }
   
   
   @Override
-  public InputStream getAsStream (Dimension dimension, String sourceName) {
+  public InputStream getAsStream (Dimension dimension) {
     
 //    SelectQuery<Tables> query = context.selectQuery()
     
-    Table<?>  table = tableByName ("PUBLIC.\""+sourceName+"\"");
+    Table<?>  table = tableByName (TABLE_NAME_PREFIX+this.platformId ());
     Field<String> probeId = fieldByName (String.class, "PROBESET_ID");
     
     InputStream input=null;    
@@ -87,14 +87,4 @@ public class JooqProbeAnnotations implements ProbeAnnotations {
     return input;
   }
   
-  @Override
-  public List<String> getSources () {
-    return new ArrayList<String> (){
-      private static final long serialVersionUID = 1L;
-      {
-        add(Tables.MEV_PROBE_ANNOTATIONS.getName ());
-      }
-    };
-  }
-
 }

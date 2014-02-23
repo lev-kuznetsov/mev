@@ -454,7 +454,8 @@ public class ImportingUtilities {
             //user asked to load our probe annotations
             if(logger.isDebugEnabled ())
               logger.debug ("Using ROW PROBE annotations");
-            stream = ProjectManager.getSingleton ().getProbeaAnnotations ().getAsStream (dimension, rowAnnotationSource);
+            stream = ProjectManager.getSingleton ().getProbeAnnotationPlatforms ()
+                    .get (rowAnnotationSource).annotations ().getAsStream (dimension);
           }
         }
         

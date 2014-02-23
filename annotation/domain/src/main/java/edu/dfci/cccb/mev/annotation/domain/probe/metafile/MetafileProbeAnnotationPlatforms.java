@@ -10,26 +10,33 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import lombok.Getter;
+import lombok.Setter;
+
 import org.eobjects.metamodel.csv.CsvConfiguration;
 import org.eobjects.metamodel.csv.CsvDataContext;
 import org.eobjects.metamodel.data.DataSet;
 import org.eobjects.metamodel.schema.Schema;
 import org.eobjects.metamodel.schema.Table;
 
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationSource;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatform;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatformFactory;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.ProbeAnnotationSourceNotFoundException;
-import edu.dfci.cccb.mev.annotation.domain.probe.prototype.AbstractProbeAnnotatinsSources;
+import edu.dfci.cccb.mev.annotation.domain.probe.prototype.AbstractProbeAnnotationPlatforms;
 
-public class MetafileProbeAnnotationSources extends AbstractProbeAnnotatinsSources {
+public class MetafileProbeAnnotationPlatforms extends AbstractProbeAnnotationPlatforms {
 
-  private final List<ProbeAnnotationSource> sources;
+  private final List<ProbeAnnotationPlatform> platforms;    
+  @Getter @Setter @Inject ProbeAnnotationPlatformFactory platformFactory;
   
-  
-  
-  public MetafileProbeAnnotationSources (URL root, URL metadata) throws MalformedURLException {
-
-    sources = new ArrayList<ProbeAnnotationSource>();
+  @Inject
+  public MetafileProbeAnnotationPlatforms (@Named("probe-annotatinos-platforms-metafile") URL metadata, ProbeAnnotationPlatformFactory platformFactory) throws MalformedURLException {
     
+    this.platformFactory=platformFactory;
+    platforms = new ArrayList<ProbeAnnotationPlatform>();
     CsvConfiguration config = new CsvConfiguration(
       DEFAULT_COLUMN_NAME_LINE, DEFAULT_ENCODING, '\t', DEFAULT_QUOTE_CHAR, DEFAULT_ESCAPE_CHAR, true, false);
     
@@ -45,20 +52,20 @@ public class MetafileProbeAnnotationSources extends AbstractProbeAnnotatinsSourc
     
     try(DataSet dataset = sourceDataContext.materializeMainSchemaTable (sourceTable, sourceTable.getColumns (), 0)){
       while(dataset.next ()){
-        sources.add (new MetafileProbeAnnotationSource (root, dataset.getRow ().getValues ()));
+        platforms.add (platformFactory.create (dataset.getRow ().getValues ()));
       }
     }
             
   }
 
   @Override
-  public List<ProbeAnnotationSource> getAll () {
-    return sources;
+  public List<ProbeAnnotationPlatform> getAll () {
+    return platforms;
   }
 
   @Override
-  public ProbeAnnotationSource get (String name) throws ProbeAnnotationSourceNotFoundException {
-    for(ProbeAnnotationSource source : sources)
+  public ProbeAnnotationPlatform get (String name) throws ProbeAnnotationSourceNotFoundException {
+    for(ProbeAnnotationPlatform source : platforms)
       return source;
     throw new ProbeAnnotationSourceNotFoundException("Cant fine name: '"+name+"'");
   }

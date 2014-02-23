@@ -4,7 +4,7 @@ import java.util.List;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.ProbeAnnotationSourceNotFoundException;
 
-public interface ProbeAnnotationSources {
-  List<ProbeAnnotationSource> getAll();
-  ProbeAnnotationSource get(String name) throws ProbeAnnotationSourceNotFoundException;
+public interface ProbeAnnotationPlatforms {
+  List<ProbeAnnotationPlatform> getAll();
+  ProbeAnnotationPlatform get(String id) throws ProbeAnnotationSourceNotFoundException;
 }

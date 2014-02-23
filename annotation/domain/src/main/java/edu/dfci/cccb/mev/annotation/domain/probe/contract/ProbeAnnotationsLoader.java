@@ -7,8 +7,7 @@ import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationE
 public interface ProbeAnnotationsLoader {
 
   public abstract int loadAll (URL rootFolder, String suffix) throws AnnotationException;
-  public abstract int loadAll (ProbeAnnotationSources probeAnnotationSources) throws AnnotationException;
-
+  public abstract int loadAll (ProbeAnnotationPlatforms probeAnnotationPlatforms) throws AnnotationException;
   public abstract void loadUrlResource (URL url) throws AnnotationException;
 
 }

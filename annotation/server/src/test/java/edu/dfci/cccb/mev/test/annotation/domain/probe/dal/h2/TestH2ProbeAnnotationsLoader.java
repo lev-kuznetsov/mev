@@ -20,10 +20,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
 import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2ProbeAnnotationsLoader;
+import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain;
+import edu.dfci.cccb.mev.test.annotation.domain.probe.configuration.TestProbeAnnotationsConfiguration;
 import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={ProbeAnnotationsPersistanceConfigTest.class})
+@ContextConfiguration(classes={ProbeAnnotationsConfigurationMain.class, ProbeAnnotationsPersistanceConfigTest.class})
 public class TestH2ProbeAnnotationsLoader {
   
   @Inject @Named("probe-annotations-datasource") DataSource dataSource;
@@ -39,7 +41,7 @@ public class TestH2ProbeAnnotationsLoader {
     
   @Test 
   public void testLoadUrlResource () throws SQLException, IOException, AnnotationException {
-    URL url = TestH2ProbeAnnotationsLoader.class.getResource ("/array_annotations/from_affymetrix/annotation_files/HT_HG-U133A.na33.top3.annot.out.tsv");
+    URL url = ProbeAnnotationsPersistanceConfigTest.class.getResource ("array_annotations/from_affymetrix/annotation_files/HT_HG-U133A.na33.top3.annot.out.tsv");
     assertNotNull (url);
     
     ProbeAnnotationsLoader loader = new H2ProbeAnnotationsLoader (dataSource);
@@ -51,7 +53,7 @@ public class TestH2ProbeAnnotationsLoader {
   public void testInit_Force() throws SQLException, IOException, URISyntaxException, AnnotationException{
     
     //this folder has a file in it which tells the loader to reload the database: 'reload.flag'
-    URL url = TestH2ProbeAnnotationsLoader.class.getResource ("/array_annotations/from_affymetrix_force/annotation_files/");
+    URL url = ProbeAnnotationsPersistanceConfigTest.class.getResource ("array_annotations/from_affymetrix_force/annotation_files/");
     assertNotNull (url);
     
     ProbeAnnotationsLoader loader = new H2ProbeAnnotationsLoader (dataSource);

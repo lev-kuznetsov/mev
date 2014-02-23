@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,8 +22,8 @@ import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.io.FilenameUtils;
 
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationSource;
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationSources;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatform;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatforms;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
 
@@ -86,10 +87,10 @@ public class H2ProbeAnnotationsLoader implements ProbeAnnotationsLoader {
   }
   
   @Override
-  public int loadAll (ProbeAnnotationSources probeAnnotationSources) throws AnnotationException {
+  public int loadAll (ProbeAnnotationPlatforms probeAnnotationPlatforms) throws AnnotationException {
     int count=0;
-    for(ProbeAnnotationSource probeAnnotationSource : probeAnnotationSources.getAll ()){
-        loadUrlResource (probeAnnotationSource.url ());
+    for(ProbeAnnotationPlatform probeAnnotationPlatform : probeAnnotationPlatforms.getAll ()){
+        loadUrlResource (probeAnnotationPlatform.annotationsUrl ());
         count++;
     }
     return count;
@@ -99,29 +100,35 @@ public class H2ProbeAnnotationsLoader implements ProbeAnnotationsLoader {
   
   
   @Override
-  @SneakyThrows  
+   
   public void loadUrlResource (URL url) throws AnnotationException {
       try(Connection connection = dataSource.getConnection ()){
         
         
-        List<String> allowedAnnotations = new ArrayList<String> (){
-          {
-            add("HG-U133A_2.na33.annot.out.tsv");
-            add("HG-U133_Plus_2.na33.annot.out.tsv");
-            add("HT_HG-U133A.na33.annot.out.tsv");
-          }
-        };
+//        List<String> allowedAnnotations = new ArrayList<String> (){
+//          private static final long serialVersionUID = 1L;
+//          {
+//            add("HG-U133A_2.na33.annot.out.tsv");
+//            add("HG-U133_Plus_2.na33.annot.out.tsv");
+//            add("HT_HG-U133A.na33.annot.out.tsv");
+//          }
+//        };
                 
         String tableName = FilenameUtils.getName (url.getPath ());        
-        if (allowedAnnotations.contains (tableName)==false) return;
+//        if (allowedAnnotations.contains (tableName)==false) return;
         
         log.debug ("****Loading Proba Annotations file: " + tableName);
         
         String dropTableSql = DROP_TABLE_STATEMENT.replace (PARAM_TABLE_NAME, tableName);
         String createTableSql = CREATE_TABLE_STATEMENT.replace (PARAM_TABLE_NAME, tableName);
         
-        Path filePath = Paths.get (url.toURI());
-        String insertTableSql = INSERT_STATEMENT.replace (PARAM_TABLE_NAME, tableName).replace (PARAM_FILE_PATH, filePath.toAbsolutePath ().toString ());
+//        Path filePath;
+//        try {filePath = Paths.get (url.toURI());} 
+//        catch (URISyntaxException | FileSystemNotFoundException e){
+//                throw  new AnnotationException ("Could not find URL:"+url, e); 
+//        }
+        
+        String insertTableSql = INSERT_STATEMENT.replace (PARAM_TABLE_NAME, tableName).replace (PARAM_FILE_PATH, url.toString ());
         
         String createIndexSql = CREATE_INDEX_STATEMENT.replace (PARAM_TABLE_NAME, tableName);
         
@@ -132,9 +139,12 @@ public class H2ProbeAnnotationsLoader implements ProbeAnnotationsLoader {
           statement.execute (createIndexSql);
         }catch(SQLException e){
           connection.rollback ();
-          throw e;
+          throw new AnnotationException("", e);
         }
         connection.commit ();
+        
+      } catch (SQLException e) {
+        throw new AnnotationException ("Sql Error while loading resource:"+url, e);
       }
   }
 }
