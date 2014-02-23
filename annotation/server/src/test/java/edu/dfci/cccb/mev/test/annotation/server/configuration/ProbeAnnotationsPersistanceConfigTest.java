@@ -21,7 +21,6 @@ import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain;
-import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsLoaderConfiguration;
 
 @Log4j
 @Profile("test")

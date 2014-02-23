@@ -1,7 +1,7 @@
 package edu.dfci.cccb.mev.test.annotation.domain.probe.dal.jooq;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.core.Is.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

@@ -21,7 +21,6 @@ import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
 import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain;
-import edu.dfci.cccb.mev.test.annotation.domain.probe.configuration.TestProbeAnnotationsConfiguration;
 import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
