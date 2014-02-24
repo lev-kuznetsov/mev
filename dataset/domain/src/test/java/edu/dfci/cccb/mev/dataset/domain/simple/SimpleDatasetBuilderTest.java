@@ -89,7 +89,7 @@ public class SimpleDatasetBuilderTest {
     
   }
   
-  @Test @Ignore
+  @Test 
   public void buildNoSelectionFilter5cols90K() throws DatasetBuilderException, InvalidDatasetNameException, InvalidDimensionTypeException{
 
     URL dataUrl = this.getClass ().getResource ("/tcga/tcga_data/COAD/Level_2/COAD.AgilentG4502A_07_3.Level_2.cols5.tsv");
@@ -99,7 +99,7 @@ public class SimpleDatasetBuilderTest {
     
   }
  
-  @Test @Ignore
+  @Test 
   public void buildWithSelection5colsOutOf180() throws DatasetBuilderException, InvalidDatasetNameException, InvalidDimensionTypeException{
     
     List<String> keys = new ArrayList<String> (){
@@ -116,7 +116,7 @@ public class SimpleDatasetBuilderTest {
     
     Selection sourceSelection = new SimpleSelection ("dataset.with.from.selection", new Properties (), keys);
     
-    URL dataUrl = this.getClass ().getResource ("/tcga/tcga_data/COAD/Level_2/COAD.AgilentG4502A_07_3.Level_2.tsv");
+    URL dataUrl = this.getClass ().getResource ("/tcga/tcga_data/COAD/Level_2/COAD.AgilentG4502A_07_3.Level_2.cols5.tsv");
     
     assertNotNull (dataUrl);
     

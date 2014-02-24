@@ -20,7 +20,9 @@ import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -77,26 +79,30 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
                                          InvalidDimensionTypeException {
     if(log.isDebugEnabled ())
       log.debug ("Building dataset..."+content.name ());
-    List<String> rows = new ArrayList<> ();
-    List<String> columns = new ArrayList<> ();
+    Map<String, String> rows = new LinkedHashMap<String, String> ();
+    Map<String, String> columns = new LinkedHashMap<String, String> ();
     for (Parser parser = parser (content); parser.next ();) {
       valueStoreBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));
-      if (!rows.contains (parser.projection (ROW)))
-        rows.add (parser.projection (ROW));
-      if (!columns.contains (parser.projection (COLUMN)))
-        columns.add (parser.projection (COLUMN));
+      if (!rows.containsKey (parser.projection (ROW)))
+        rows.put (parser.projection (ROW), parser.projection (ROW));
+      if (!columns.containsKey (parser.projection (COLUMN)))
+        columns.put (parser.projection (COLUMN), parser.projection (ROW));
     }
+    
+    List<String> rowsList = new ArrayList<String>(rows.values());
+    List<String> columnsList = new ArrayList<String>(columns.values());
+    
     return aggregate (content.name (), valueStoreBuilder.build (), analyses (),
-                      dimension (ROW, rows, selections (), annotation ()),
-                      dimension (COLUMN, columns, selections (), annotation ()));
+                      dimension (ROW, rowsList, selections (), annotation ()),
+                      dimension (COLUMN, columnsList, selections (), annotation ()));
   }
-
+  
   @Override
   public Dataset build (RawInput content, Selection columnSelection) throws DatasetBuilderException,
                                                                     InvalidDatasetNameException,
                                                                     InvalidDimensionTypeException {
-    List<String> rows = new ArrayList<> ();
-    List<String> columns = new ArrayList<> ();
+    Map<String, String> rows = new LinkedHashMap<String, String> ();
+    Map<String, String> columns = new LinkedHashMap<String, String> ();
     if(log.isDebugEnabled ())
       log.debug ("**selection: " + columnSelection.keys ());
     for (Parser parser = parser (content); parser.next ();) {
@@ -106,19 +112,22 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
 //          log.debug("+++adding:"+parser.projection (COLUMN));        
         
         valueStoreBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));        
-        if (!rows.contains (parser.projection (ROW)))
-          rows.add (parser.projection (ROW));
-        if (!columns.contains (parser.projection (COLUMN)))
-          columns.add (parser.projection (COLUMN));
+        if (!rows.containsKey (parser.projection (ROW)))
+          rows.put (parser.projection (ROW), parser.projection (ROW));
+        if (!columns.containsKey (parser.projection (COLUMN)))
+          columns.put (parser.projection (COLUMN), parser.projection (ROW));
       }else{
 //        if(log.isDebugEnabled ())
 //          log.debug ("---skipping:"+parser.projection (COLUMN));
         
       }
     }
+    List<String> rowsList = new ArrayList<String>(rows.values());
+    List<String> columnsList = new ArrayList<String>(columns.values());
+    
     return aggregate (content.name (), valueStoreBuilder.build (), analyses (),
-                      dimension (ROW, rows, selections (), annotation ()),
-                      dimension (COLUMN, columns, selections (), annotation ()));
+                      dimension (ROW, rowsList, selections (), annotation ()),
+                      dimension (COLUMN, columnsList, selections (), annotation ()));
   }
 
   protected Analyses analyses () {
