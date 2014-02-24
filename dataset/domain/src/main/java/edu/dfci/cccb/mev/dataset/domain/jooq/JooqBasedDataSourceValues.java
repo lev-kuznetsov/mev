@@ -54,12 +54,16 @@ public class JooqBasedDataSourceValues extends AbstractDataSourceValues {
 
   @Override
   public double get (String row, String column) throws InvalidCoordinateException {
-    return context.select (value)
-                  .from (table)
-                  .where (this.row.eq (row))
-                  .and (this.column.eq (column))
-                  .fetchOne ()
-                  .getValue (value);
+    try {
+      return context.select (value)
+                    .from (table)
+                    .where (this.row.eq (row))
+                    .and (this.column.eq (column))
+                    .fetchOne ()
+                    .getValue (value);
+    } catch (RuntimeException e) {
+      throw new RuntimeException (" Failed to fetch row " + row + ", column " + column + " from " + table, e);
+    }
   }
 
   @Override

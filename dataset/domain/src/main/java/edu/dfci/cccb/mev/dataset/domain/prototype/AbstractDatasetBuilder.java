@@ -86,7 +86,7 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
       if (!rows.containsKey (parser.projection (ROW)))
         rows.put (parser.projection (ROW), parser.projection (ROW));
       if (!columns.containsKey (parser.projection (COLUMN)))
-        columns.put (parser.projection (COLUMN), parser.projection (ROW));
+        columns.put (parser.projection (COLUMN), parser.projection (COLUMN));
     }
     
     List<String> rowsList = new ArrayList<String>(rows.values());
@@ -115,7 +115,7 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
         if (!rows.containsKey (parser.projection (ROW)))
           rows.put (parser.projection (ROW), parser.projection (ROW));
         if (!columns.containsKey (parser.projection (COLUMN)))
-          columns.put (parser.projection (COLUMN), parser.projection (ROW));
+          columns.put (parser.projection (COLUMN), parser.projection (COLUMN));
       }else{
 //        if(log.isDebugEnabled ())
 //          log.debug ("---skipping:"+parser.projection (COLUMN));
