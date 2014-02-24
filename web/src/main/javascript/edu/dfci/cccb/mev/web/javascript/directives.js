@@ -150,7 +150,28 @@ define (
           .directive ('limmaAccordionList', [ function () {
             return {
               restrict : 'E',
-              templateUrl : '/container/view/elements/limmaAccordion'
+              templateUrl : '/container/view/elements/limmaAccordion',
+              link: function(scope){
+            	  
+            	  var headers = {'ID':"id", 
+            			  'Log-Fold-Change':"logFoldChange", 
+            			  'Average Expression':"averageExpression", 
+            			  'P-Value':"pValue", 
+            			  'Q-Value':"qValue"}
+            	  
+            	  var ctr = -1;
+            	  scope.limmaTableOrdering = undefined;
+            	  
+            	  scope.reorderLimmaTable = function(header){
+            		  
+            		  ctr = ctr * (-1);
+            		  if (ctr == 1){
+            			  scope.limmaTableOrdering =  headers[header];
+            		  } else {
+            			  scope.limmaTableOrdering =  "-" + headers[header];  
+            		  }
+            	  } 
+              }
               
             };
           } ])

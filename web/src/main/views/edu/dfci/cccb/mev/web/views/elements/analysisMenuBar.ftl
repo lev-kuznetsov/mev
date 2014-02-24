@@ -20,9 +20,7 @@ button.analysisnav {
 	<div class="dropdown">
 		
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			<button class="analysisnav">
-				<img src="/container/style/img/clustering.png" height="42" width="42"> Clustering 
-			</button>
+			Clustering
 		</a>
 		<ul class="dropdown-menu">
 			<li><a data-toggle="modal" role="button" href="#hierarchical">Hierarchical</a></li>
@@ -33,9 +31,7 @@ button.analysisnav {
 	<div class="dropdown">
 		
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			<button class="analysisnav">
-				<img src="/container/style/img/Statistics.png" height="42" width="42"> Statistics 
-			</button>
+				Statistics
 		</a>
 		<ul class="dropdown-menu">
 			<li><a data-toggle="modal" role="button" href="#limma">LIMMA</a></li> 
@@ -46,9 +42,7 @@ button.analysisnav {
 	<div class="dropdown">
 		
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			<button class="analysisnav">
-				<img src="/container/style/img/classification.png" height="42" width="42"> Classification 
-			</button>
+			Classification 
 		</a>
 		<ul class="dropdown-menu">
 			<li><a href=""><p class="muted">Heatmap</p></a></li>
@@ -58,9 +52,7 @@ button.analysisnav {
 	<div class="dropdown">
 		
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			<button class="analysisnav">
-				<img src="/container/style/img/visualization.png" height="42" width="42"> Visualization 
-			</button>
+			Visualization
 		</a>
 		<ul class="dropdown-menu">
 			<li><a href="#settingsModal" data-toggle="modal">Heatmap Settings</a></li>
@@ -70,9 +62,7 @@ button.analysisnav {
 	<div class="dropdown">
 		
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			<button class="analysisnav">
-				<img src="/container/style/img/visualization.png" height="42" width="42"> Annotations 
-			</button>
+			Annotations
 		</a>
 		<ul class="dropdown-menu">
 			<li><a href="" ng-click="showAnnotations(selection, 'row')" class="ng-scope">Row Annotations</a></li>
