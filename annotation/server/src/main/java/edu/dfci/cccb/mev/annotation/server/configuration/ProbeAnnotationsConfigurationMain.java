@@ -56,7 +56,6 @@ public class ProbeAnnotationsConfigurationMain {
 
     return probeAnnotationsRootURL;    
   }
-
   
   @Bean(name="probe-annotatinos-platforms-metafile") @Profile("!test")
   public URL probeAnnotationsPlatformsMetafile() throws MalformedURLException, IOException{
