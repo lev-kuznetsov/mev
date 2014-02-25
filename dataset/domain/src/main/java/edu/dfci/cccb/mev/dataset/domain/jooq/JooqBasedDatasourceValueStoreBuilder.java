@@ -53,15 +53,24 @@ public class JooqBasedDatasourceValueStoreBuilder extends AbstractValueStoreBuil
   private final Field<String> row;
   private final Field<String> column;
   private final Field<Double> value;
-
+  private final boolean isTemporary;
+  private final String id;
+  
   @Inject
   public JooqBasedDatasourceValueStoreBuilder (@Named("mev-datasource")DataSource dataSource) throws SQLException {
+    this(dataSource, randomUUID ().toString (), true);
+  }
+  
+  @Inject
+  public JooqBasedDatasourceValueStoreBuilder (@Named("mev-datasource")DataSource dataSource, String id, boolean isTemporary) throws SQLException {    
+    this.id = id;
+    this.isTemporary = isTemporary;
     context = using (dataSource.getConnection ());
-    table = tableByName (randomUUID ().toString ());
+    table = tableByName (id);
     row = fieldByName (String.class, ROW_FIELD_NAME);
     column = fieldByName (String.class, COLUMN_FIELD_NAME);
-    value = fieldByName (Double.class, VALUE_FIELD_NAME);
-    context.query ("CREATE TEMPORARY TABLE {0}({1} VARCHAR(255), {2} VARCHAR(255), {3} DOUBLE)",
+    value = fieldByName (Double.class, VALUE_FIELD_NAME);        
+    context.query ("CREATE "+ (isTemporary ? "TEMPORARY" : "") + " TABLE {0}({1} VARCHAR(255), {2} VARCHAR(255), {3} DOUBLE)",
                    table,
                    row,
                    column,
@@ -88,6 +97,6 @@ public class JooqBasedDatasourceValueStoreBuilder extends AbstractValueStoreBuil
    * @see edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder#build() */
   @Override
   public Values build () {
-    return new JooqBasedDataSourceValues (context, table, row, column, value);
+    return new JooqBasedDataSourceValues (context, table, row, column, value, isTemporary);
   }
 }

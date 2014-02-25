@@ -7,8 +7,11 @@ import static org.springframework.context.annotation.ScopedProxyMode.NO;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
+import javax.sql.DataSource;
 
 import lombok.extern.log4j.Log4j;
 
@@ -16,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.annotation.Scope;
@@ -25,8 +29,11 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
+import edu.dfci.cccb.mev.dataset.domain.jooq.JooqBasedDatasourceValueStoreBuilder;
 import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
 import edu.dfci.cccb.mev.presets.contract.Preset;
+import edu.dfci.cccb.mev.presets.contract.PresetValuesStoreBuilderFactory;
 import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.simple.SimplePresests;
@@ -43,6 +50,7 @@ import edu.dfci.cccb.mev.presets.simple.TcgaPresetsBuilder;
   @PropertySource ("classpath:/presets.properties"),
   @PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true)
 })
+@Import(value={PresetPersistenceConfiguration.class})
 public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
 
   private final static String TCGA_PROPERTY_MATA_FILENAME="mev.presets.tcga.metadata.filename";
@@ -102,8 +110,6 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
 
     return tcgaPresetRootURL;
     
-    
   }
-  
   
 }

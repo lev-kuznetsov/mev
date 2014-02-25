@@ -38,7 +38,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
-import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.UrlTsvInput;
+import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 
 public class ImportPresetDatasetCommand extends Command {

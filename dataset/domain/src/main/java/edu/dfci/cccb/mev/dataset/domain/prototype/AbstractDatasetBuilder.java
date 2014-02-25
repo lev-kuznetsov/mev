@@ -64,7 +64,7 @@ import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 @Accessors (fluent = false, chain = true)
 @Log4j
 public abstract class AbstractDatasetBuilder implements DatasetBuilder {
-
+ 
   private @Getter @Setter @Inject Collection<? extends ParserFactory> parserFactories;
   private @Getter @Setter @Inject ValueStoreBuilder valueStoreBuilder;
   private @Getter @Setter @Inject SelectionBuilder selectionBuilder;
