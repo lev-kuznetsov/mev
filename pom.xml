@@ -26,6 +26,7 @@
     <module>hcl</module>
     <module>limma</module>
     <module>presets</module>
+    <module>kmeans</module>
     <module>web</module>
 
   </modules>
