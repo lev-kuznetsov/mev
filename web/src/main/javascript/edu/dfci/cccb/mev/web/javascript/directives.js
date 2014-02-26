@@ -349,12 +349,11 @@ define (
               link : function (scope, elems, attrs){
                 
                 scope.dimensions = [
-                  {name: "Row", value: "row"},
-                  {name:"Column", value:"column"}];
-                
+                  {name:"Column", value:"column"}];  //Column dimension forcing #576
                 
                 scope.$watch('analysisDimension', function(newval, oldval){
                   if (newval) {
+                	  
                     API.dataset.selections.get($routeP.datasetName, newval.value).then(function(d){
                       scope.selections = d;
                     })
@@ -362,13 +361,21 @@ define (
                   
                 });
                 
+                
+                //Column dimension forcing #576
+                API.dataset.selections.get($routeP.datasetName, "column").then(function(d){
+                    scope.selections = d;
+                  })
+                
+                scope.analysisDimension = {name:"Column", value:"column"};
+                
                 scope.limmaInit = function(){
                 	
                   params = {
                     dataset: $routeP.datasetName, 
                     name: scope.analysisName,
-                    dimension: scope.analysisDimension.value, 
-                    experiment: scope.analysisExperiment, 
+                    dimension: "column", //Column dimension forcing #576
+                    experiment: scope.analysisExperiment,  
                     control: scope.analysisControl,
                     callback: scope.buildPreviousAnalysisList
                 		  
@@ -382,7 +389,7 @@ define (
                 
                 function resetSelections() {
                   scope.analysisName = "";
-                  scope.analysisDimension = "";
+                  scope.analysisDimension = {name:"Column", value:"column"}; //Column dimension forcing #576 
                   scope.analysisControl = "";
                   scope.analysisExperiment = "";
                 }
