@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatforms;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
 
@@ -20,14 +20,14 @@ import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPe
 public class TestProbeAnnotationsConfiguration {
 
   @Inject @Named("probe-annotations-datasource") DataSource dataSource;
-  @Inject ProbeAnnotationsLoader loader;
-  @Inject ProbeAnnotations annotations;
+  @Inject @Named("probe-annotations-platforms-loader") ProbeAnnotationsLoader loader;    
+  @Inject ProbeAnnotationPlatforms platforms;
   
   @Test
   public void test () {    
     assertNotNull (dataSource);
     assertNotNull (loader);
-    assertNotNull (annotations);
+    assertNotNull (platforms);
 
   }
 

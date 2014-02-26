@@ -5,8 +5,8 @@ import java.util.List;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
-public interface ProbeAnnotations {
+public interface ProbeAnnotations {  
+  String platformId();
   List<ProbeAnnotation> get(Dimension dimension);
-  InputStream getAsStream(Dimension dimension, String source);
-  List<String>getSources();
+  InputStream getAsStream(Dimension dimension);  
 }

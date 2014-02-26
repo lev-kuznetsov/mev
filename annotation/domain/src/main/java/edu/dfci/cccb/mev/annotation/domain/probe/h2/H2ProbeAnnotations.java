@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,22 +19,21 @@ import org.apache.http.MethodNotSupportedException;
 import org.h2.tools.Csv;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotation;
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
+import edu.dfci.cccb.mev.annotation.domain.probe.prototype.AbstractProbeAnnotations;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
-public class H2ProbeAnnotations implements ProbeAnnotations {
+public class H2ProbeAnnotations extends AbstractProbeAnnotations {
 
   private final String TABLE_NAME_PREFIX="PROBE_ANNOT_";  
   private final String PARAM_TABLE_NAME="[table_name]"; 
   private final String FULL_TABLE_NAME=TABLE_NAME_PREFIX+PARAM_TABLE_NAME;
   private final String SELECT_STATEMENT="select * from table(PROBESET_ID VARCHAR=?) t inner join PUBLIC.\""+FULL_TABLE_NAME+"\" mytest on t.PROBESET_ID=mytest.PROBESET_ID";
-  private final DataSource dataSource;
-  private List<String> sources;
+  private final DataSource dataSource;  
   
   @Inject 
-  public H2ProbeAnnotations (@Named("probe-annotations-datasource") DataSource dataSource) throws SQLException {
+  public H2ProbeAnnotations (String platformId, @Named("probe-annotations-datasource") DataSource dataSource) throws SQLException {
+    super(platformId);
     this.dataSource = dataSource;
-    sources = new ArrayList<String> ();
   }
 
   @Override
@@ -46,12 +44,12 @@ public class H2ProbeAnnotations implements ProbeAnnotations {
 
   @Override
   @SneakyThrows
-  public InputStream getAsStream (Dimension dimension, String source) {
+  public InputStream getAsStream (Dimension dimension) {
     
     InputStream input=null;
     
     try(Connection connection = dataSource.getConnection ()){
-      String selectSql = SELECT_STATEMENT.replace (PARAM_TABLE_NAME,  source);
+      String selectSql = SELECT_STATEMENT.replace (PARAM_TABLE_NAME,  this.platformId ());
       try(PreparedStatement prep = connection.prepareStatement(selectSql);){        
         
         prep.setObject (1, dimension.keys ().toArray ());        
@@ -69,22 +67,22 @@ public class H2ProbeAnnotations implements ProbeAnnotations {
     return input;
   }
   
-
-  @Override
-  @SneakyThrows
-  public List<String> getSources () {
-    synchronized (sources) {
-      if(sources.size ()==0){
-        try(Connection connection= dataSource.getConnection ()){
-          try(ResultSet rs = connection.getMetaData ().getTables (null, null, TABLE_NAME_PREFIX+"%", new String[]{"TABLE"}))
-          {
-            while (rs.next()) {              
-              sources.add (rs.getString("TABLE_NAME").replace (TABLE_NAME_PREFIX, ""));
-           }
-         }
-       }      
-      }
-    }
-    return sources;
-  }
+//TODO: remove method (moved to Platform class)
+//  @Override
+//  @SneakyThrows
+//  public List<String> getSources () {
+//    synchronized (sources) {
+//      if(sources.size ()==0){
+//        try(Connection connection= dataSource.getConnection ()){
+//          try(ResultSet rs = connection.getMetaData ().getTables (null, null, TABLE_NAME_PREFIX+"%", new String[]{"TABLE"}))
+//          {
+//            while (rs.next()) {              
+//              sources.add (rs.getString("TABLE_NAME").replace (TABLE_NAME_PREFIX, ""));
+//           }
+//         }
+//       }      
+//      }
+//    }
+//    return sources;
+//  }
 }

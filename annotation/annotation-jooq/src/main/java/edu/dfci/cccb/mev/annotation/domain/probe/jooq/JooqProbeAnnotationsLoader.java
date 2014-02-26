@@ -20,8 +20,8 @@ import lombok.extern.log4j.Log4j;
 
 import org.jooq.DSLContext;
 
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationSource;
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationSources;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatform;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatforms;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
 import edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq.Tables;
@@ -97,9 +97,9 @@ public class JooqProbeAnnotationsLoader implements ProbeAnnotationsLoader {
   }
 
   @Override
-  public int loadAll (ProbeAnnotationSources probeAnnotationSources) throws AnnotationException {
-    for(ProbeAnnotationSource source : probeAnnotationSources.getAll ())
-      loadUrlResource (source.url ());
+  public int loadAll (ProbeAnnotationPlatforms probeAnnotationSources) throws AnnotationException {
+    for(ProbeAnnotationPlatform source : probeAnnotationSources.getAll ())
+      loadUrlResource (source.annotationsUrl ());
     return 0;
   }
   

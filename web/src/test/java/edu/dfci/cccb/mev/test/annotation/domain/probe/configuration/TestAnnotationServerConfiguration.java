@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import lombok.extern.log4j.Log4j;
 
@@ -22,10 +23,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatforms;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
-import edu.dfci.cccb.mev.test.annotation.server.configuration.AnnotationServerConfigurationMock;
 import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
 import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 import edu.dfci.cccb.mev.web.configuration.DispatcherConfiguration;
@@ -39,19 +39,18 @@ import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
                                PersistenceConfiguration.class, 
                                ContainerConfigurations.class, 
                                DatasetRestConfiguration.class,
-                               AnnotationServerConfigurationMock.class,
                                ProbeAnnotationsPersistanceConfigTest.class,
                                PresetsRestConfigurationTest.class
                                })
 public class TestAnnotationServerConfiguration {
 
-  @Inject ProbeAnnotationsLoader loader;
-  @Inject ProbeAnnotations annotations;
+  @Inject @Named("probe-annotations-platforms-loader") ProbeAnnotationsLoader loader;
+  @Inject ProbeAnnotationPlatforms probeAnnotationPlatforms;
   
   @Test
   public void test () {
     assertNotNull (loader);
-    assertNotNull (annotations);
+    assertNotNull (probeAnnotationPlatforms);
 }
 
 

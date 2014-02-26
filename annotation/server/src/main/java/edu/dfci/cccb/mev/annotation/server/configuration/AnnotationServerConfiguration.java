@@ -25,7 +25,7 @@ import com.google.refine.ProjectManager;
 import com.google.refine.SessionWorkspaceDir;
 import com.google.refine.io.FileProjectManager;
 
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatforms;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 
@@ -42,7 +42,7 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
   private @Inject FileProjectManager sessionProjectManager;
   private @Inject DatasetBuilder builder;  
   private @Inject org.springframework.core.env.Environment environment;
-  private @Inject ProbeAnnotations annotations;
+  private @Inject ProbeAnnotationPlatforms annotationPlatforms;
   
   @Bean
   @Scope (value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -51,7 +51,7 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
     projectManager.setWorkspaceDir (new SessionWorkspaceDir ());
     projectManager.setWorkspace (workspace);
     projectManager.setDatasetBuilder (builder);
-    projectManager.setProbeAnnotations (annotations);
+    projectManager.setProbeAnnotationPlatforms (annotationPlatforms);
     return projectManager;
   }
 
