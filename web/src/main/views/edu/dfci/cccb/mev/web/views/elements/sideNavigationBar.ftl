@@ -23,15 +23,9 @@
 				<p class="lead">Previous Analysis</p>
 			</div>
 			
-			    <div class="row-fluid">
-				Clusters:
-				</div>
-				<cluster-Accordion-List></cluster-Accordion-List>
+			<cluster-Accordion-List></cluster-Accordion-List>
 				
-				<div class="row-fluid">
-				LIMMA:
-				</div>
-				<limma-Accordion-List></limma-Accordion-List>
+			<limma-Accordion-List></limma-Accordion-List>
 	
 				
 			

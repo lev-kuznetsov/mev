@@ -27,8 +27,8 @@
 			            
 			          <div class="pull-right">
 			            <form class="form-inline">
-						  Thresholds: <input type="text" class="input-small" placeholder="P-Value">
-						  <input type="text"  class="input-small" placeholder="Log Fold">
+						  Thresholds: <input type="text" class="input-small" placeholder="P-Value" ng-model="pvalueThreshold">
+						  <input type="text"  class="input-small" placeholder="Log Fold" ng-model="logFoldThreshold">
 						 
 						</form>
 					  </div>
@@ -47,25 +47,27 @@
 		                    <table class="table table-striped table-bordered">
 		                            <thead>
 		                                    <tr>
-		                                      <th ng-repeat="header in ['ID', 'Log-Fold-Change', 'Average Expression', 'P-Value', 'Q-Value']">{{header}}</th>
+		                                      <th ng-repeat="tableHeader in ['ID', 'Log-Fold-Change', 'Average Expression', 'P-Value', 'Q-Value']">
+		                                      	<p ng-click="reorderLimmaTable(tableHeader)"> {{tableHeader}}</p>
+		                                      </th>
 		                                    </tr>
 		                            </thead>
 		                            <tbody>
-		                                    <tr ng-repeat="row in limma.datar.results | orderBy:'-pValue' ">
+		                                    <tr ng-repeat="row in limma.datar.results | filterThreshold: pvalueThreshold : 'pValue' | filterThreshold: logFoldThreshold : 'logFoldChange' | orderBy: limmaTableOrdering ">
 		                                            <td>
 		                                                    {{row["id"]}}
 		                                            </td>
 		                                            <td>
-		                                                    {{row["logFoldChange"]}}
+		                                                    {{row["logFoldChange"] | number:4}}
 		                                            </td>
 		                                            <td>
-		                                                    {{row["averageExpression"]}}
+		                                                    {{row["averageExpression"] | number:4}}
 		                                            </td>
 		                                            <td>
-		                                                    {{row["pValue"]}}
+		                                                    {{row["pValue"] | number:4}} 
 		                                            </td>
 		                                            <td>
-		                                                    {{row["qValue"]}}
+		                                                    {{row["qValue"] | number:4}}
 		                                            </td>
 		                                    </tr>
 		                            </tbody>

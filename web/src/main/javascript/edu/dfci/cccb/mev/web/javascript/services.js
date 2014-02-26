@@ -6,6 +6,17 @@ define (
           .module ('myApp.services', [])
           .value ('appVersion', '0.1')
           .value ('appName', 'MeV')
+          .filter('filterThreshold', [function(){
+            
+        	  return function(input, threshold, on){
+        	    var output = input.filter( function(d){
+        	       return (d[on] >= threshold) ? true : false
+        	    });
+        	    
+        	    return (threshold == undefined) ? input : output;
+        	  }
+        	  
+          }])
           .factory ('mainMenuBarOptions', [ function () {
             return [ {
               value : "About",
