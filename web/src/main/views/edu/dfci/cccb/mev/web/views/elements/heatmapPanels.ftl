@@ -2,7 +2,7 @@
 
 <div ng-controller="MainPanelController" class="row-fluid"> <!-- Start Column Expand Tabs -->	
 	
-	<div class="row-fluid">
+	<div class="row-fluid heatmap-container">
 	    
 		<div id="leftPanel">
 		

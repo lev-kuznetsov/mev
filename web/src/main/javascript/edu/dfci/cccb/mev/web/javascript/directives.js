@@ -63,9 +63,6 @@ define (
                     pageWidth = jq('body').width() - 50,
                     showSidePanel = true;
                     
-                    rightPanel.css('height', "80%");
-                    leftPanel.css('height', "80%");
-                    
                     var isDragging = false;
                     
                     centerTab.mousedown(function(mouse){
@@ -606,17 +603,14 @@ define (
                       restrict : 'E',
                       // templateUrl : "/container/view/elements/visHeatmap",
                       link : function (scope, elems, attr) {
-                    	  
-                    	jq('div.fixed-height').css('height', jq ('#leftPanel').css ('height').slice (0, -2)* .8 )
 
                         var svgWidth = Math.floor (jq ('#rightPanel').css (
-                            'width').slice (0, -2) * .9), svgHeight = Math //svgheight no longer!
-                            .floor (jq ('#rightPanel').css ('height').slice (0, -2) * .9);
+                            'width').slice (0, -2) * .9)
 
                         var heatmapMarginLeft = Math.floor (svgWidth * .15), 
                             heatmapMarginRight = Math.floor (svgWidth * .15), 
                             heatmapMarginTop = 200, 
-                            heatmapMarginBottom = Math.floor (svgHeight * .15),
+                            heatmapMarginBottom = 100,
                             heatmapColumnSelectionsGutter = 0,
                             heatmapRowSelectionsGutter = 0;
 

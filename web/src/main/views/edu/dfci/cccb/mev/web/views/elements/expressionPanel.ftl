@@ -7,13 +7,13 @@
 	
 		<div class="tab-content">
 		
-			<div class="tab-pane active fixed-height" id="heatmaptabpane">
+			<div class="tab-pane active" id="heatmaptabpane">
 				<vis-Heatmap></vis-Heatmap>
 			</div>
 			    
-			<div class="tab-pane fixed-height" id="annotationsTabPane">			    
-				<!-- my-iframe id="annotationsIframe" height="70%" width="99%"></my-iframe -->
-				<iframe scrolling="no" frameborder="0" width="99%" height="80%" ng-src="{{annotationsUrl}}" />
+			<div class="tab-pane" id="annotationsTabPane">			    
+				<!-- my-iframe id="annotationsIframe" height="100%" width="99%"></my-iframe -->
+				<iframe scrolling="no" frameborder="0" width="99%" height="100%" ng-src="{{annotationsUrl}}" />
 			</div>
 		
 		</div> <!-- End Tab Content -->
