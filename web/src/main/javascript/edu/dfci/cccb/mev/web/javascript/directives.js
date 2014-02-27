@@ -967,9 +967,14 @@ define (
                         	  holder.push(data.values[i])
                           }
                           
-                          setInterval(function(){
+                          var stream = setInterval(function(){
                         	  drawCells(rects.data(holder, function(d){return [d.column, d.row]}).enter().append("rect"))
-                          }, 1000)
+                        	  
+                          }, 100)
+                          
+                          setTimeout(function(){
+                        	  clearInterval(stream);
+                        	  console.log("timeout")}, 10000)
 
                           //heatmapcells = rects.data (data.values).enter ().append ("rect");
 						              scope.theData=data;
@@ -996,21 +1001,21 @@ define (
                         };
                         
                         var heatmapcells = undefined;
+                        
+                        $('#loading').modal('hide');
 
                         scope.$watch('heatmapData', function(newval, oldval){
 
                             if (newval && !oldval) {
                               
-                              $('#loading').modal('hide');
+                              
                               //redraw previously rendered tree if page loads
                               
                               if (newval.column.root) {
-                                //heatmapMarginTop = 200;
                             	  scope.heatmapTopTree = newval.column.root;
                               }
                               
                               if (newval.row.root) {
-                                //heatmapMarginLeft = Math.floor (svgWidth * .15);
                             	  scope.heatmapLeftTree = newval.row.root;
                               }
                               
