@@ -667,34 +667,23 @@ define (
 
                         var vis = svg.append ("g");
 
-                        var rects = vis.append ("g").attr ("class", "cells")
-                            .selectAll ("rect");
-
-                        var selections = vis.append("g").attr ("class", "selections")
-                            .selectAll ("rect");
+                        vis.append ("g").attr ("class", "cells")
+                        var rects = d3.select("g.cells").selectAll ("rect");
                         
-                        var columnSelections = selections.append("g")
-                            .attr ("class", "colSelections");
+                        vis.append("g").attr ("class", "selections")
+                        var selections = d3.select("g.selections").selectAll ("rect");
                         
-                        var rowSelections = selections.append("g")
-                            .attr ("class", "rowSelections");
+                        selections.append("g").attr ("class", "colSelections")
+                        var columnSelections = d3.select("g.colSelections");
                         
-                        var clip = svg.append("defs").append("svg:clipPath")
-                        	.attr("id", "columnLabelClip")
-                        	.append("svg:rect")
-                        	.attr("id", "clip-rect")
-                       		.attr("x", heatmapMarginLeft)
-                       		.attr("y", (2*heatmapMarginTop)/3)
-                        	.attr("width", heatmapCellsWidth)
-                        	.attr("height", (1*heatmapMarginTop)/3 )
-
-                        var xlabels = vis.append ("g")
-                            //.attr("clip-path", "url(#columnLabelClip)")
-                            .attr ("class", "xlabels");
+                        selections.append("g").attr ("class", "rowSelections");
+                        var rowSelections = d3.select("g.rowSelections");
                         
-
-                        var ylabels = vis.append ("g")
-                            .attr ("class", "ylabels");
+                        vis.append ("g").attr ("class", "xlabels");
+                        var xlabels = d3.select("g.xlabels");
+                        
+                        vis.append ("g").attr ("class", "ylabels")
+                        var ylabels = d3.select("g.ylabels");
 
                         function drawSelections(columnData, rowData) {
                           
@@ -968,15 +957,26 @@ define (
 
                         function drawHeatmap (data) {
                           
-
-                          heatmapcells = rects.data (data.values).enter ().append ("rect");
-						              scope.theData=data;
+                          var holder = [];
+                          
+                          
                           scaleUpdates (data.column, data.row,
-                              data.min, data.max, data.avg);
+                                  data.min, data.max, data.avg);
+                          
+                          for (var i=0; i < data.values.length; i++) {
+                        	  holder.push(data.values[i])
+                          }
+                          
+                          setInterval(function(){
+                        	  drawCells(rects.data(holder, function(d){return [d.column, d.row]}).enter().append("rect"))
+                          }, 1000)
+
+                          //heatmapcells = rects.data (data.values).enter ().append ("rect");
+						              scope.theData=data;
                           
                           drawSelections(data.column, data.row)
 
-                          drawCells (heatmapcells);
+                          //drawCells (heatmapcells);
 
                           drawLabels (xlabels, ylabels);
 
@@ -1074,8 +1074,6 @@ define (
                           if (newval) {
                           
                             var tree = newval;
-                            //heatmapMarginTop = 200;
-                            //updateDrawHeatmap(scope.heatmapData);
                             drawTree(dendogramLeftWindow, Cluster, tree, 'horizontal' )
 
                             
