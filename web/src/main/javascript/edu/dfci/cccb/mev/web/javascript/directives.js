@@ -63,9 +63,6 @@ define (
                     pageWidth = jq('body').width() - 50,
                     showSidePanel = true;
                     
-                    rightPanel.css('height', "80%");
-                    leftPanel.css('height', "80%");
-                    
                     var isDragging = false;
                     
                     centerTab.mousedown(function(mouse){
@@ -349,12 +346,11 @@ define (
               link : function (scope, elems, attrs){
                 
                 scope.dimensions = [
-                  {name: "Row", value: "row"},
-                  {name:"Column", value:"column"}];
-                
+                  {name:"Column", value:"column"}];  //Column dimension forcing #576
                 
                 scope.$watch('analysisDimension', function(newval, oldval){
                   if (newval) {
+                	  
                     API.dataset.selections.get($routeP.datasetName, newval.value).then(function(d){
                       scope.selections = d;
                     })
@@ -362,13 +358,21 @@ define (
                   
                 });
                 
+                
+                //Column dimension forcing #576
+                API.dataset.selections.get($routeP.datasetName, "column").then(function(d){
+                    scope.selections = d;
+                  })
+                
+                scope.analysisDimension = {name:"Column", value:"column"};
+                
                 scope.limmaInit = function(){
                 	
                   params = {
                     dataset: $routeP.datasetName, 
                     name: scope.analysisName,
-                    dimension: scope.analysisDimension.value, 
-                    experiment: scope.analysisExperiment, 
+                    dimension: "column", //Column dimension forcing #576
+                    experiment: scope.analysisExperiment,  
                     control: scope.analysisControl,
                     callback: scope.buildPreviousAnalysisList
                 		  
@@ -382,7 +386,7 @@ define (
                 
                 function resetSelections() {
                   scope.analysisName = "";
-                  scope.analysisDimension = "";
+                  scope.analysisDimension = {name:"Column", value:"column"}; //Column dimension forcing #576 
                   scope.analysisControl = "";
                   scope.analysisExperiment = "";
                 }
@@ -599,17 +603,14 @@ define (
                       restrict : 'E',
                       // templateUrl : "/container/view/elements/visHeatmap",
                       link : function (scope, elems, attr) {
-                    	  
-                    	jq('div.fixed-height').css('height', jq ('#leftPanel').css ('height').slice (0, -2)* .8 )
 
                         var svgWidth = Math.floor (jq ('#rightPanel').css (
-                            'width').slice (0, -2) * .9), svgHeight = Math //svgheight no longer!
-                            .floor (jq ('#rightPanel').css ('height').slice (0, -2) * .9);
+                            'width').slice (0, -2) * .9)
 
                         var heatmapMarginLeft = Math.floor (svgWidth * .15), 
                             heatmapMarginRight = Math.floor (svgWidth * .15), 
                             heatmapMarginTop = 200, 
-                            heatmapMarginBottom = Math.floor (svgHeight * .15),
+                            heatmapMarginBottom = 100,
                             heatmapColumnSelectionsGutter = 0,
                             heatmapRowSelectionsGutter = 0;
 

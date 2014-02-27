@@ -1,16 +1,14 @@
 
-<div class="navbar">
+<div class="navbar navbar-fixed-top">
 
 	<div class="navbar-inner">
 	
-		<a class="brand" href="/"><img src="/container/images/favicon/favicon-32x32.png"/></span> : {{heatmapId}}</a>
-		
-		<ul class="nav pull-right">
+		<ul class="nav pull-left">
 			
 			<li class="dropdown">
 		
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					Clustering
+					CLUSTERING
 				</a>
 				<ul class="dropdown-menu">
 					<li><a data-toggle="modal" role="button" href="#hierarchical">Hierarchical</a></li>
@@ -21,7 +19,7 @@
 			<li class="dropdown">
 		
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						Statistics
+						STATISTICS
 				</a>
 				<ul class="dropdown-menu">
 					<li><a data-toggle="modal" role="button" href="#limma">LIMMA</a></li> 
@@ -32,7 +30,7 @@
 			<li class="dropdown">
 		
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					Classification 
+					CLASSIFICATION
 				</a>
 				<ul class="dropdown-menu">
 					<li><a href=""><p class="muted">Heatmap</p></a></li>
@@ -42,7 +40,7 @@
 			<li class="dropdown">
 		
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					Visualization
+					VISUALIZATIONS
 				</a>
 				<ul class="dropdown-menu">
 					<li><a href="#settingsModal" data-toggle="modal">Heatmap Settings</a></li>
@@ -52,7 +50,7 @@
 			<li class="dropdown">
 		
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					Annotations
+					ANNOTATIONS
 				</a>
 				<ul class="dropdown-menu">
 					<li><a href="" ng-click="showAnnotations(selection, 'row')" class="ng-scope">Row Annotations</a></li>
@@ -63,7 +61,7 @@
 			<li class="dropdown">
 		
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					Data Reduction 
+					REDUCTION
 				</a>
 				<ul class="dropdown-menu">
 					<li><a href=""><p class="muted">Principal Component Analysis</p></a></li>
@@ -73,7 +71,7 @@
 			<li class="dropdown">
 		
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					Export
+					EXPORT
 				</a>
 				<ul class="dropdown-menu">
 					<li><a href=""><p class="muted">TSV</p></a></li>
@@ -82,6 +80,9 @@
 				</ul>
 			</li>
 			
+		</ul>
+		<ul class="nav pull-right">
+			<a class="brand" href="/">mev<img src="/container/images/favicon/favicon-32x32.png"/></a>
 		</ul>
 		
 	</div>

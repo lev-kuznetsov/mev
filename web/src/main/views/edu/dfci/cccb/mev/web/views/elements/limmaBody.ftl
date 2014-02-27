@@ -7,14 +7,15 @@
     </div>
   </div>
 
+  <!--
   <div class="control-group">
     <label for="" class="control-label">Dimension</label>
     <div class="controls">
       <select id="limmaAnalysisDimension" ng-model="analysisDimension" ng-options="dimension.name for dimension in dimensions">
-        <option value="">Choose Dimension </option>
       </select>
     </div>
   </div>
+  -->
 
   <div class="control-group">
     <label for="" class="control-label">Control</label>
