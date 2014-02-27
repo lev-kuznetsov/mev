@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
@@ -25,8 +26,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
-
-import lombok.extern.log4j.Log4j;
 
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -39,6 +38,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.refine.io.FileProjectManager;
 
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatform;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatforms;
 import edu.dfci.cccb.mev.annotation.server.servlet.RefineServlet;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
@@ -59,7 +60,6 @@ import freemarker.template.TemplateModelException;
 
 @Controller
 @RequestMapping ("/annotations")
-@Log4j
 public class AnnotationController extends WebApplicationObjectSupport {
 
   private RefineServlet refineServlet;
@@ -68,6 +68,7 @@ public class AnnotationController extends WebApplicationObjectSupport {
   private @Inject FileProjectManager projectManager;
   private @Inject DatasetBuilder datasetBuilder;
   private @Inject Presets presets;
+  private @Inject ProbeAnnotationPlatforms probeAnnotationPlatforms;
 
   @PostConstruct
   private void createRefineServlet () throws ServletException {
@@ -147,6 +148,14 @@ public class AnnotationController extends WebApplicationObjectSupport {
 
   }
 
+  @ResponseBody
+  @RequestMapping (method = { GET }, value = "/platforms/")
+  public List<ProbeAnnotationPlatform> platforms (HttpServletRequest request, HttpServletResponse response) throws ServletException,
+                                                                                   IOException {
+    return probeAnnotationPlatforms.getAll ();
+  }
+
+  
   @RequestMapping (method = { GET, POST, PUT, DELETE }, value = "/openrefine/**")
   public void openRefine (HttpServletRequest request, HttpServletResponse response) throws ServletException,
                                                                                    IOException {

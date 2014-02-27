@@ -53,7 +53,7 @@ import com.google.refine.model.Project;
 import com.google.refine.preference.PreferenceStore;
 import com.google.refine.preference.TopList;
 
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatforms;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 
@@ -94,12 +94,12 @@ public abstract class ProjectManager {
     return _datasetBuilder;
   }
 
-  private ProbeAnnotations _probeAnnotations;
-  public void setProbeAnnotations (ProbeAnnotations probeAnnotations) {
-    _probeAnnotations = probeAnnotations;
+  private ProbeAnnotationPlatforms _probeAnnotationPlatforms;
+  public void setProbeAnnotationPlatforms (ProbeAnnotationPlatforms probeAnnotations) {
+    _probeAnnotationPlatforms = probeAnnotations;
   }
-  public ProbeAnnotations getProbeaAnnotations() {
-    return _probeAnnotations;
+  public ProbeAnnotationPlatforms getProbeAnnotationPlatforms() {
+    return _probeAnnotationPlatforms;
   }
   
   /**

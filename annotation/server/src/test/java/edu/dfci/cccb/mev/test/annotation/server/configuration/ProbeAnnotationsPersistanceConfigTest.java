@@ -20,12 +20,12 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
-import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsLoaderConfiguration;
+import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain;
 
 @Log4j
 @Profile("test")
 @Configuration 
-@Import(ProbeAnnotationsLoaderConfiguration.class)
+@Import(ProbeAnnotationsConfigurationMain.class)
 public class ProbeAnnotationsPersistanceConfigTest {
 
   @Inject Environment environment; 
@@ -33,17 +33,16 @@ public class ProbeAnnotationsPersistanceConfigTest {
   
   @Bean(name="probe-annotations-root")
   public URL probeAnnotationsRoot() throws IOException{
-    ClassPathResource classPathResource = new ClassPathResource ("/array_annotations/");
-    log.info ("***probeAnnotationsRoot-TEST:"+classPathResource.getURL ()+"****");
-    return classPathResource.getURL ();
+    URL url = this.getClass ().getResource ("array_annotations/");
+    log.info ("***probeAnnotationsRoot-TEST:"+url+"****");
+    return url;
   }
-  @Bean(name="probe-annotations-metafile")
+  @Bean(name="probe-annotatinos-platforms-metafile")
   public URL probeAnnotationsMetafile() throws IOException{
-    ClassPathResource classPathResource = new ClassPathResource ("/array_annotations/ProbeAnnotationSources_metafile.tsv");
-    log.info ("***probeAnnotationsMetgafile-TEST:"+classPathResource.getURL ()+"****");
-    return classPathResource.getURL ();
-  }
-  
+    URL url = this.getClass ().getResource("array_annotations/probe_annotation_platforms_metafile-TEST.tsv");
+    log.info ("***probeAnnotationsMetgafile-TEST:"+url);
+    return url;
+  }  
  
   @Inject @Bean
   public DataSourceInitializer dataSourceInitializer( @Named("probe-annotations-datasource") DataSource dataSource) {
@@ -53,11 +52,11 @@ public class ProbeAnnotationsPersistanceConfigTest {
       ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
       
       String scriptDropAll = environment.getRequiredProperty(MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"db.schema.script.dropall");
-      log.info ("***dataSourceInitializer-dropAllScript-TEST:"+scriptDropAll+"****");
+      log.info ("***dataSourceInitializer-dropAllScript-TEST:"+scriptDropAll);
       populator.addScript(new ClassPathResource(scriptDropAll));
       
       String scriptCreate = environment.getRequiredProperty(MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"db.schema.script");
-      log.info ("***dataSourceInitializer-createScript-TEST:"+scriptCreate+"****");
+      log.info ("***dataSourceInitializer-createScript-TEST:"+scriptCreate);
       populator.addScript(new ClassPathResource(scriptCreate));
       
       
