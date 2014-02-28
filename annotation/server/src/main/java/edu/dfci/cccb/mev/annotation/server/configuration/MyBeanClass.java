@@ -2,7 +2,6 @@ package edu.dfci.cccb.mev.annotation.server.configuration;
 
 import javax.annotation.PostConstruct;
 
-import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
 @Log4j

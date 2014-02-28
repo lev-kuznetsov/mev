@@ -10,8 +10,6 @@ import java.net.URL;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.inject.Provider;
-import javax.sql.DataSource;
 
 import lombok.extern.log4j.Log4j;
 
@@ -29,16 +27,17 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
-import edu.dfci.cccb.mev.dataset.domain.jooq.JooqBasedDatasourceValueStoreBuilder;
 import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
 import edu.dfci.cccb.mev.presets.contract.Preset;
+import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
+import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilderByJooq;
+import edu.dfci.cccb.mev.presets.contract.PresetValuesLoader;
 import edu.dfci.cccb.mev.presets.contract.PresetValuesStoreBuilderFactory;
 import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.simple.SimplePresests;
-import edu.dfci.cccb.mev.presets.simple.TcgaPresetMetafile;
-import edu.dfci.cccb.mev.presets.simple.TcgaPresetsBuilder;
+import edu.dfci.cccb.mev.presets.tcga.TcgaPresetMetafile;
+import edu.dfci.cccb.mev.presets.tcga.TcgaPresetsBuilder;
 
 
 
@@ -55,14 +54,22 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
 
   private final static String TCGA_PROPERTY_MATA_FILENAME="mev.presets.tcga.metadata.filename";
   private final static String TCGA_PROPERTY_ROOT_FOLDER="mev.presets.tcga.metadata.root";
-    
+  private final static String TCGA_PROPERTY_DATASET_RELOAD_FLAG="mev.presets.tcga.data.reload";
+  
   @Inject Environment environment;
   
-  @Bean  
-  public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot, TcgaPresetsBuilder builder) throws URISyntaxException, PresetException, IOException {
+  @Bean  @Inject
+  public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot, 
+                                TcgaPresetsBuilder builder,
+                                PresetValuesLoader loader
+                                ) throws URISyntaxException, PresetException, IOException {
+    
     String metadataFilename = environment.getProperty (TCGA_PROPERTY_MATA_FILENAME);    
+    String reloadFlag = environment.getProperty (TCGA_PROPERTY_DATASET_RELOAD_FLAG);
+    
     log.info (TCGA_PROPERTY_ROOT_FOLDER+" URL:" + tcgaPresetRoot);
     log.info (TCGA_PROPERTY_MATA_FILENAME+":" + metadataFilename);
+    log.info (TCGA_PROPERTY_DATASET_RELOAD_FLAG+":" + reloadFlag);
     
     if(metadataFilename == null)
       return new SimplePresests();
@@ -77,7 +84,10 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
       throw new PresetException ("Metadata resource not found: " + metadataURL.toString ());
     }
     
-    return new SimplePresests (metadataURL, builder);
+    Presets presets = new SimplePresests (metadataURL, builder);
+    if(Boolean.parseBoolean (reloadFlag))
+      loader.loadAll (presets);
+    return presets;
   }
   
   @Bean 
@@ -112,4 +122,8 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
     
   }
   
+  @Bean @Inject
+  public PresetDatasetBuilder presetDatasetBuilder(PresetValuesStoreBuilderFactory valueStoreInjector){
+    return new PresetDatasetBuilderByJooq (valueStoreInjector);
+  }
 }

@@ -7,7 +7,6 @@ import java.util.Properties;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.inject.Provider;
 import javax.sql.DataSource;
 
 import lombok.extern.log4j.Log4j;
@@ -17,26 +16,25 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;
+import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
-import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.jooq.JooqBasedDatasourceValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
+import edu.dfci.cccb.mev.presets.contract.PresetValuesLoader;
 import edu.dfci.cccb.mev.presets.contract.PresetValuesStoreBuilderFactory;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
+import edu.dfci.cccb.mev.presets.dal.SimplePresetValuesLoader;
 
 @Log4j
 @Configuration
@@ -160,14 +158,13 @@ public class PresetPersistenceConfiguration {
 //  }
 
   
-  @Bean  
+  @Bean(name="presetDetasetBuilder", autowire=Autowire.NO)  
   protected DatasetBuilder presetDatasetBuilder(){
-    SimpleDatasetBuilder datasetBuilder = new SimpleDatasetBuilder();
-//    datasetBuilder.setValueStoreBuilder (valueStoreBuilder);
+    SimpleDatasetBuilder datasetBuilder = new SimpleDatasetBuilder();    
     return datasetBuilder;
   }
   
-  @Bean
+  @Bean 
   public PresetValuesStoreBuilderFactory presetValueStoreBuilderFactory(@Named ("presets-datasource") DataSource dataSource){
     return new PresetValuesStoreBuilderFactory() {
       
@@ -180,5 +177,10 @@ public class PresetPersistenceConfiguration {
         }
       }
     };
+  }
+  
+  @Bean 
+  public PresetValuesLoader presestValuesLoader(@Named ("presets-datasource") DataSource dataSource){
+    return new SimplePresetValuesLoader (presetValueStoreBuilderFactory(dataSource), presetDatasetBuilder());
   }
 }

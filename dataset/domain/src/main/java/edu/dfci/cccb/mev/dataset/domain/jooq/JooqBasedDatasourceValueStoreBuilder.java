@@ -69,13 +69,13 @@ public class JooqBasedDatasourceValueStoreBuilder extends AbstractValueStoreBuil
     table = tableByName (id);
     row = fieldByName (String.class, ROW_FIELD_NAME);
     column = fieldByName (String.class, COLUMN_FIELD_NAME);
-    value = fieldByName (Double.class, VALUE_FIELD_NAME);        
-    context.query ("CREATE "+ (isTemporary ? "TEMPORARY" : "") + " TABLE {0}({1} VARCHAR(255), {2} VARCHAR(255), {3} DOUBLE)",
+    value = fieldByName (Double.class, VALUE_FIELD_NAME);          
+    context.query ("CREATE "+ (isTemporary ? "TEMPORARY" : "") + " TABLE IF NOT EXISTS {0}({1} VARCHAR(255), {2} VARCHAR(255), {3} DOUBLE)",
                    table,
                    row,
                    column,
                    value).execute ();
-    context.query ("CREATE UNIQUE INDEX ON {0}({1}, {2})",
+    context.query ("CREATE UNIQUE INDEX IF NOT EXISTS {0} ON {0}({1}, {2})",
                    table,
                    row,
                    column).execute ();

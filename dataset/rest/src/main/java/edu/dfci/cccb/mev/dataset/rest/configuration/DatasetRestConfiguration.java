@@ -32,15 +32,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Named;
-import javax.sql.DataSource;
-
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -53,20 +51,10 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.dataset.domain.contract.ParserFactory;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
-import edu.dfci.cccb.mev.dataset.domain.contract.SelectionBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
-import edu.dfci.cccb.mev.dataset.domain.jooq.JooqBasedDatasourceValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListWorkspace;
-import edu.dfci.cccb.mev.dataset.domain.simple.SharedCachedValueStoreBuilder;
-import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
-import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelectionBuilder;
-import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvComposerFactory;
-import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.DimensionTypeJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDatasetJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDimensionJsonSerializer;
@@ -84,6 +72,7 @@ import edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgum
 @ComponentScan (basePackages = "edu.dfci.cccb.mev.dataset.rest.controllers")
 @ToString
 @Log4j
+@Import({DatasetDomainBuildersConfiguration.class})
 public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
 
   // Domain conversational objects
@@ -94,7 +83,7 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
     return new ArrayListWorkspace ();
   }
 
-  @Bean
+  @Bean 
   @Scope (value = SCOPE_REQUEST, proxyMode = NO)
   public Dataset dataset (final NativeWebRequest request, final DatasetPathVariableMethodArgumentResolver resolver) throws Exception {
     return nonCloseableProxy (resolver.resolveObject (request));
@@ -123,26 +112,6 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
                                                                                         RequestAttributes.SCOPE_REQUEST)).get (ANALYSIS_MAPPING_NAME)));
   }
 
-  // Domain builders
-
-  @Bean
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public ValueStoreBuilder valueFactory (@Named ("mev-datasource") DataSource dataSource) throws Exception {
-    return new SharedCachedValueStoreBuilder (new JooqBasedDatasourceValueStoreBuilder (dataSource));
-    // return new MetamodelBackedValueStoreBuilder ();
-  }
-
-  @Bean
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public DatasetBuilder datasetBuilder () {
-    return new SimpleDatasetBuilder ();
-  }
-
-  @Bean
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
-  public SelectionBuilder selectionBuilder () {
-    return new SimpleSelectionBuilder ();
-  }
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.rest.prototype.MevRestConfigurerAdapter#
@@ -157,21 +126,12 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.rest.prototype.MevRestConfigurerAdapter#
-   * addHttpMessageConverters(java.util.List) */
+   * addHttpMessageConverters(java.util.List) */  
   @Override
   public void addHttpMessageConverters (List<HttpMessageConverter<?>> converters) {
     converters.add (new DatasetTsvMessageConverter ());
   }
 
-  @Bean
-  public SuperCsvComposerFactory superCsvComposerFactory () {
-    return new SuperCsvComposerFactory ();
-  }
-
-  @Bean
-  public ParserFactory tsvParserFactory () {
-    return new SuperCsvParserFactory ();
-  }
 
   /* (non-Javadoc)
    * @see

@@ -18,7 +18,7 @@ import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfiguratio
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={PresetsRestConfigurationTest.class})
-public class PresetRestTest {
+public class TestPresetRest {
   
   @Inject Presets tcgaPresets;
   @Inject URL tcgaPresetsRoot;

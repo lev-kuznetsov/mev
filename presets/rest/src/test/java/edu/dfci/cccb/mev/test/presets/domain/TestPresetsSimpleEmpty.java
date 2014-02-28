@@ -11,7 +11,7 @@ import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetNotFoundException;
 import edu.dfci.cccb.mev.presets.simple.SimplePresests;
 
-public class PresetsSimpleTestEmpty {
+public class TestPresetsSimpleEmpty {
 
   private Presets presets=null;
   

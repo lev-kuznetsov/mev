@@ -9,6 +9,8 @@ import java.net.URL;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import lombok.extern.log4j.Log4j;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,10 +22,10 @@ import edu.dfci.cccb.mev.presets.contract.PresetsBuilder;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 
-
+@Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={PresetsRestConfigurationTest.class})
-public class TcgaPresetMetafileTest {
+public class TestTcgaPresetMetafile {
 
   private @Inject PresetsBuilder builder;
   private @Inject @Named ("tcgaPresetRoot") URL tcgaPresetRoot;
@@ -48,6 +50,14 @@ public class TcgaPresetMetafileTest {
     assertEquals (expectedColumnURL, descriptor.columnUrl ());
     
     
+  }
+  
+  @Test
+  public void testToString() throws PresetException{
+    Preset preset = builder.createPreset (new Object[]{"filename.tsv", "path/of/file", "NS", "Nothing Serious", "HS", "HiSeq", "Level2"});
+    log.debug(preset.toString ());
+    assertEquals("TcgaPresetMetafile(tcgaPresetRoot=file:/home/antony/git/mev/presets/rest/target/test-classes/tcga/, filename=filename.tsv, path=path/of/file, name=filename.tsv, disease=NS, diseaseName=Nothing Serious, platform=HS, platformName=HiSeq, dataLevel=Level2, descriptor=SimplePresetDescriptor(name=filename.tsv, dataUrl=file:/home/antony/git/mev/presets/rest/target/test-classes/tcga/tcga_data/path/of/file/filename.tsv, columnUrl=file:/home/antony/git/mev/presets/rest/target/test-classes/tcga/openrefine/clinical/NS-clinical_annotations-tsv.openrefine.tar.gz))", 
+        preset.toString ());
   }
 
 }

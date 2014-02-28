@@ -79,22 +79,21 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
                                          InvalidDimensionTypeException {
     if(log.isDebugEnabled ())
       log.debug ("Building dataset..."+content.name ());
-    Map<String, String> rows = new LinkedHashMap<String, String> ();
-    Map<String, String> columns = new LinkedHashMap<String, String> ();
-    for (Parser parser = parser (content); parser.next ();) {
+    Parser parser;
+    for (parser = parser (content); parser.next ();) {
       valueStoreBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));
-      if (!rows.containsKey (parser.projection (ROW)))
-        rows.put (parser.projection (ROW), parser.projection (ROW));
-      if (!columns.containsKey (parser.projection (COLUMN)))
-        columns.put (parser.projection (COLUMN), parser.projection (COLUMN));
+//      if (!rows.containsKey (parser.projection (ROW)))
+//        rows.put (parser.projection (ROW), parser.projection (ROW));
+//      if (!columns.containsKey (parser.projection (COLUMN)))
+//        columns.put (parser.projection (COLUMN), parser.projection (COLUMN));
     }
     
-    List<String> rowsList = new ArrayList<String>(rows.values());
-    List<String> columnsList = new ArrayList<String>(columns.values());
+//    List<String> rowsList = new ArrayList<String>(rows.values());
+//    List<String> columnsList = new ArrayList<String>(columns.values());
     
     return aggregate (content.name (), valueStoreBuilder.build (), analyses (),
-                      dimension (ROW, rowsList, selections (), annotation ()),
-                      dimension (COLUMN, columnsList, selections (), annotation ()));
+                      dimension (ROW, parser.rowKeys (), selections (), annotation ()),
+                      dimension (COLUMN, parser.columnKeys (), selections (), annotation ()));
   }
   
   @Override

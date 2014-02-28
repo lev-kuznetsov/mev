@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.presets.simple;
+package edu.dfci.cccb.mev.presets.tcga;
 
 import java.net.URL;
 
@@ -18,6 +18,7 @@ import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.prototype.AbstractTcgaPreset;
+import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
 
 @Accessors(fluent=true)
 @EqualsAndHashCode
@@ -60,7 +61,7 @@ public class TcgaPresetMetafile extends AbstractTcgaPreset {
     this.platform=platform;
     this.platformName=platformName;
     this.dataLevel=dataLevel;
-    this.descriptor = new SimplePresetDescriptor (tcgaPresetRoot, getDataUrlSpec (), getColumnUrlSpec ()); 
+    this.descriptor = new SimplePresetDescriptor (name,tcgaPresetRoot, getDataUrlSpec (), getColumnUrlSpec ()); 
     return this;
   }
    
