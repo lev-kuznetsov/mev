@@ -620,7 +620,7 @@ define (
                         var heatmapCellsHeight = undefined;
                         var heatmapCellHeight = undefined;
 
-                        var window = d3.select (elems[0]);
+                        var window = d3.select ("vis-heatmap");
 
                         // Color Scales
                         var leftshifter = d3.scale.linear ().rangeRound (
@@ -660,15 +660,13 @@ define (
                         var horizontalTreeY = d3.scale.linear().domain([0, 100]);
                         
                         
-                        var svg = window.append ("svg").attr ("class", "chart")
-                        // .attr("pointer-events", "all")
-                        .attr ("width", svgWidth);
-                        
+                        window.append ("svg").attr ("class", "chart").attr ("width", svgWidth);
+                        var svg = d3.select("svg.chart")
 
-                        var vis = svg.append ("g");
+                        var vis = svg;
 
                         vis.append ("g").attr ("class", "cells")
-                        var rects = d3.select("g.cells").selectAll ("rect");
+                        var rects = d3.select("g.cells");
                         
                         vis.append("g").attr ("class", "selections")
                         var selections = d3.select("g.selections").selectAll ("rect");
@@ -957,25 +955,37 @@ define (
 
                         function drawHeatmap (data) {
                           
-                          var holder = [];
+                          var chunks = [];
                           
                           
                           scaleUpdates (data.column, data.row,
                                   data.min, data.max, data.avg);
                           
-                          for (var i=0; i < data.values.length; i++) {
-                        	  holder.push(data.values[i])
+                          function chunker(ar, chunksize) {
+                        	  var R = [];
+                        	  if (chunksize <= 0) {
+                        		  return ar
+                        	  }
+                        	  for (var j=0; j < ar.length; j++) {
+                        		  R.push(ar.slice(j, j+chunksize))
+                        	  }
+                        	  return R;
                           }
                           
-                          var stream = setInterval(function(){
-                        	  drawCells(rects.data(holder, function(d){return [d.column, d.row]}).enter().append("rect"))
-                        	  
-                          }, 100)
-                          
-                          setTimeout(function(){
-                        	  clearInterval(stream);
-                        	  console.log("timeout")}, 10000)
+                          var chunks = chunker(data.values, 100);
+                          var poolPosition = 0;
+                          var stream;
 
+                          function dCells(){
+                        	  drawCells(d3.select("g.cells").selectAll("rects").data(chunks[poolPosition]).enter().append("rect"))
+                        	  poolPosition += 1
+                        	  if (poolPosition >= chunks.length){
+                        		  clearInterval(stream)
+                        	  }
+                          };
+                          
+                          var stream = setInterval(dCells, 1000)
+                          
                           //heatmapcells = rects.data (data.values).enter ().append ("rect");
 						              scope.theData=data;
                           
