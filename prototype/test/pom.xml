@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>mev-prototype-test</artifactId>
+  <packaging>pom</packaging>
+
+  <name>MeV Module Testing Prototype</name>
+  <url>http://github.com/dfci-cccb/mev</url>
+
+  <parent>
+    <groupId>edu.dfci.cccb</groupId>
+    <artifactId>mev-prototype-domain</artifactId>
+    <version>${mev.version}</version>
+    <relativePath>../domain</relativePath>
+  </parent>
+
+  <properties>
+    <jetty.version>9.1.2.v20140210</jetty.version>
+  </properties>
+
+  <dependencyManagement>
+
+    <dependencies>
+
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-server</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-servlet</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-webapp</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-annotations</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+
+    </dependencies>
+
+  </dependencyManagement>
+
+</project>

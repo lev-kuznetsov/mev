@@ -2,21 +2,23 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>edu.dfci.cccb</groupId>
-  <artifactId>mev</artifactId>
-  <version>${mev.version}</version>
+  <artifactId>mev-prototype</artifactId>
   <packaging>pom</packaging>
 
-  <name>MultiExperiment Viewer</name>
+  <name>MeV Module Prototype</name>
   <url>http://github.com/dfci-cccb/mev</url>
 
-  <modules>
-    <module>prototype</module>
-    <module>common</module>
-  </modules>
+  <parent>
+    <groupId>edu.dfci.cccb</groupId>
+    <artifactId>mev</artifactId>
+    <version>${mev.version}</version>
+  </parent>
 
-  <properties>
-    <mev.version>CRYSTAL-SNAPSHOT</mev.version>
-  </properties>
+  <modules>
+    <module>domain</module>
+    <module>services</module>
+    <module>web</module>
+    <module>test</module>
+  </modules>
 
 </project>

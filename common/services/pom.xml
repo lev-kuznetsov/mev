@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>mev-common-services</artifactId>
+  <packaging>jar</packaging>
+
+  <name>MeV Common Module Services Component</name>
+  <url>http://github.com/dfci-cccb/mev</url>
+
+  <parent>
+    <groupId>edu.dfci.cccb</groupId>
+    <artifactId>mev-prototype-services</artifactId>
+    <version>${mev.version}</version>
+    <relativePath>../../prototype/services</relativePath>
+  </parent>
+
+  <properties>
+    <reflections.version>0.9.9-RC1</reflections.version>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-common-domain</artifactId>
+      <version>${mev.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-common-test</artifactId>
+      <version>${mev.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Reflections for component scan -->
+
+    <dependency>
+      <groupId>org.reflections</groupId>
+      <artifactId>reflections</artifactId>
+      <version>${reflections.version}</version>
+    </dependency>
+
+  </dependencies>
+
+</project>

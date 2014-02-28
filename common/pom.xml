@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>mev-common</artifactId>
+  <packaging>pom</packaging>
+
+  <name>MeV Common Plugin API</name>
+  <url>http://github.com/dfci-cccb/mev</url>
+
+  <parent>
+    <groupId>edu.dfci.cccb</groupId>
+    <artifactId>mev-prototype</artifactId>
+    <version>${mev.version}</version>
+    <relativePath>../prototype</relativePath>
+  </parent>
+
+  <modules>
+    <module>domain</module>
+    <module>test</module>
+    <module>services</module>
+    <module>web</module>
+  </modules>
+
+</project>

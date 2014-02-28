@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>mev-prototype-services</artifactId>
+  <packaging>pom</packaging>
+
+  <name>MeV Module Services Prototype</name>
+  <url>http://github.com/dfci-cccb/mev</url>
+
+  <parent>
+    <groupId>edu.dfci.cccb</groupId>
+    <artifactId>mev-prototype-domain</artifactId>
+    <version>${mev.version}</version>
+    <relativePath>../domain</relativePath>
+  </parent>
+
+  <properties>
+    <javax.mail.version>1.4.7</javax.mail.version>
+    <jersey.version>1.18</jersey.version>
+    <cxf.version>3.0.0-milestone1</cxf.version>
+  </properties>
+
+  <dependencies>
+
+    <!-- Servlet Module -->
+
+    <dependency>
+      <groupId>com.google.inject.extensions</groupId>
+      <artifactId>guice-servlet</artifactId>
+      <version>${guice.version}</version>
+    </dependency>
+
+    <!-- JAX-RS -->
+
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
+
+    <!-- JavaEE API -->
+
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-web-api</artifactId>
+      <version>6.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+  </dependencies>
+
+  <repositories>
+
+    <repository>
+      <id>java.net</id>
+      <name>Oracle Repository</name>
+      <url>http://download.java.net/maven/2</url>
+    </repository>
+
+  </repositories>
+
+</project>
