@@ -31,19 +31,30 @@ public class PresetValuesFlatTable implements PresetValues {
     
   }
 
-
+  @Synchronized
+  private void setLastRecord(Record record){
+    this.lastRecord=record;
+  }
+  @Synchronized
+  private boolean isSameRecord(String row){
+    if(this.lastRecord!=null && row.equals (this.lastRecord.getValue (rowIdField)))
+      return true;
+    return false;
+  }
+  
+  
   @Override
   public double get (String row, String column) throws InvalidCoordinateException {
     try {
-      Field<String> columnField = fieldByName (String.class, column.toUpperCase ());      
-      ResultQuery<?> query =context.select (columnField)
-                    .from (table)
-                    .where (this.rowIdField.eq (row));
-//      log.debug ("PresetValuesFlatTable sql:"+query.getSQL ());
-      Record record = query.fetchOne ();      
-      String value = record.getValue (columnField);
-      
-      
+      Field<String> columnField = fieldByName (String.class, column.toUpperCase ());
+      if(!isSameRecord (row)){        
+        ResultQuery<?> query =context.selectFrom (table)
+                .where (this.rowIdField.eq (row));
+      //  log.debug ("PresetValuesFlatTable sql:"+query.getSQL ());      
+        Record record = query.fetchOne ();   
+        setLastRecord (record);
+      }      
+      String value = this.lastRecord.getValue (columnField);
       if ("Inf".equalsIgnoreCase (value))
         return POSITIVE_INFINITY;
       else if ("-Inf".equalsIgnoreCase (value))
