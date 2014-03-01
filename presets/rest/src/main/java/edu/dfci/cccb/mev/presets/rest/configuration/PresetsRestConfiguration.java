@@ -7,9 +7,11 @@ import static org.springframework.context.annotation.ScopedProxyMode.NO;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.sql.SQLException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.sql.DataSource;
 
 import lombok.extern.log4j.Log4j;
 
@@ -122,8 +124,4 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
     
   }
   
-  @Bean @Inject
-  public PresetDatasetBuilder presetDatasetBuilder(PresetValuesStoreBuilderFactory valueStoreInjector){
-    return new PresetDatasetBuilderByJooq (valueStoreInjector);
-  }
 }

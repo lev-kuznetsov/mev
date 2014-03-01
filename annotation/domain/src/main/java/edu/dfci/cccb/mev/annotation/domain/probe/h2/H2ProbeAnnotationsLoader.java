@@ -92,11 +92,7 @@ public class H2ProbeAnnotationsLoader implements ProbeAnnotationsLoader {
     return count;
   }
 
-
-  
-  
-  @Override
-   
+  @Override   
   public void loadUrlResource (URL url) throws AnnotationException {
       try(Connection connection = dataSource.getConnection ()){
         

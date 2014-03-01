@@ -55,7 +55,7 @@ public class JooqBasedDatasourceValueStoreBuilder extends AbstractValueStoreBuil
   private final Field<Double> value;
   private final boolean isTemporary;
   private final String id;
-  
+  private final int BATCH_SIZE=1000;
   @Inject
   public JooqBasedDatasourceValueStoreBuilder (@Named("mev-datasource")DataSource dataSource) throws SQLException {
     this(dataSource, randomUUID ().toString (), true);

@@ -44,6 +44,7 @@ public class PresetsRestConfigurationTest extends WebMvcConfigurerAdapter{
       String scriptDropAll = environment.getRequiredProperty("mev.presets.db.schema.script.dropall");
       log.info ("***dataSourceInitializer-dropAllPresetsScript-TEST:"+scriptDropAll);
       populator.addScript(new ClassPathResource(scriptDropAll));
+      populator.addScript(new ClassPathResource("testPresetValuesFlatTable.sql"));
             
       initializer.setDatabasePopulator(populator);
       return initializer;

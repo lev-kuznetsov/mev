@@ -31,6 +31,9 @@ import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.jooq.JooqBasedDatasourceValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
+import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
+import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilderByJooq;
+import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilderFlatTable;
 import edu.dfci.cccb.mev.presets.contract.PresetValuesLoader;
 import edu.dfci.cccb.mev.presets.contract.PresetValuesStoreBuilderFactory;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
@@ -182,5 +185,11 @@ public class PresetPersistenceConfiguration {
   @Bean 
   public PresetValuesLoader presestValuesLoader(@Named ("presets-datasource") DataSource dataSource){
     return new SimplePresetValuesLoader (presetValueStoreBuilderFactory(dataSource), presetDatasetBuilder());
+  }
+  
+  @Bean @Inject
+  public PresetDatasetBuilder presetDatasetBuilder(@Named("presets-datasource") DataSource dataSource) throws SQLException{
+    log.debug ("***PresetDataSetBuilder: FLATTABLE");
+    return new PresetDatasetBuilderFlatTable (dataSource);
   }
 }
