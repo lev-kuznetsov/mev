@@ -35,10 +35,10 @@ import edu.dfci.cccb.mev.presets.dataset.PresetValuesFlatTable;
 public class PresetDatasetBuilderFlatTable extends AbstractDatasetBuilder implements PresetDatasetBuilder {
 
   private @Inject @Named("presets-datasource") DataSource dataSource;
-  private DSLContext context;
+  private @Inject @Named("presets-jooq-dsl") DSLContext context;
   
   public PresetDatasetBuilderFlatTable (@Named("presets-datasource") DataSource dataSource) throws SQLException {
-    context = using (dataSource.getConnection ());
+    //context = using (dataSource.getConnection ());
   }
 
   @Override
