@@ -964,7 +964,7 @@ define (
                           function chunker(ar, chunksize) {
                         	  var R = [];
                         	  if (chunksize <= 0) {
-                        		  return ar
+                        		  return [ar]
                         	  }
                         	  for (var j=0; j < ar.length; j++) {
                         		  R.push(ar.slice(j, j+chunksize))
@@ -972,7 +972,7 @@ define (
                         	  return R;
                           }
                           
-                          var chunks = chunker(data.values, 100);
+                          var chunks = chunker(data.values,0);
                           var poolPosition = 0;
                           var stream;
 
