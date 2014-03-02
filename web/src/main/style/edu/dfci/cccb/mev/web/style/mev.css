@@ -88,6 +88,8 @@ p.lead {
 	border-bottom:1px solid #B2B2B2;
 	box-shadow: 2px 2px 5px #888888;
 	background: #A3A3A3; 
+	overflow:auto;
+	height: 85vh;
 }
 
 /*div.accordion-heading {
@@ -98,7 +100,6 @@ p.lead {
 	float: left;
 	width: 70%;
 }
-
 
 div#baseline {
 	background: #bcf;
@@ -199,6 +200,8 @@ div.sidepanel-title p{
 div.tab-content {
 	background: #FFFFFF;
 	box-shadow: 2px 2px 5px #888888;
+	overflow:auto;
+	height: 80vh;
 }
 
 div.imports-container {
