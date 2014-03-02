@@ -620,7 +620,7 @@ define (
                         var heatmapCellsHeight = undefined;
                         var heatmapCellHeight = undefined;
 
-                        var window = d3.select (elems[0]);
+                        var window = d3.select ("vis-heatmap");
 
                         // Color Scales
                         var leftshifter = d3.scale.linear ().rangeRound (
@@ -660,41 +660,28 @@ define (
                         var horizontalTreeY = d3.scale.linear().domain([0, 100]);
                         
                         
-                        var svg = window.append ("svg").attr ("class", "chart")
-                        // .attr("pointer-events", "all")
-                        .attr ("width", svgWidth);
-                        
+                        window.append ("svg").attr ("class", "chart").attr ("width", svgWidth);
+                        var svg = d3.select("svg.chart")
 
-                        var vis = svg.append ("g");
+                        var vis = svg;
 
-                        var rects = vis.append ("g").attr ("class", "cells")
-                            .selectAll ("rect");
-
-                        var selections = vis.append("g").attr ("class", "selections")
-                            .selectAll ("rect");
+                        vis.append ("g").attr ("class", "cells")
+                        var rects = d3.select("g.cells");
                         
-                        var columnSelections = selections.append("g")
-                            .attr ("class", "colSelections");
+                        vis.append("g").attr ("class", "selections")
+                        var selections = d3.select("g.selections").selectAll ("rect");
                         
-                        var rowSelections = selections.append("g")
-                            .attr ("class", "rowSelections");
+                        selections.append("g").attr ("class", "colSelections")
+                        var columnSelections = d3.select("g.colSelections");
                         
-                        var clip = svg.append("defs").append("svg:clipPath")
-                        	.attr("id", "columnLabelClip")
-                        	.append("svg:rect")
-                        	.attr("id", "clip-rect")
-                       		.attr("x", heatmapMarginLeft)
-                       		.attr("y", (2*heatmapMarginTop)/3)
-                        	.attr("width", heatmapCellsWidth)
-                        	.attr("height", (1*heatmapMarginTop)/3 )
-
-                        var xlabels = vis.append ("g")
-                            //.attr("clip-path", "url(#columnLabelClip)")
-                            .attr ("class", "xlabels");
+                        selections.append("g").attr ("class", "rowSelections");
+                        var rowSelections = d3.select("g.rowSelections");
                         
-
-                        var ylabels = vis.append ("g")
-                            .attr ("class", "ylabels");
+                        vis.append ("g").attr ("class", "xlabels");
+                        var xlabels = d3.select("g.xlabels");
+                        
+                        vis.append ("g").attr ("class", "ylabels")
+                        var ylabels = d3.select("g.ylabels");
 
                         function drawSelections(columnData, rowData) {
                           
@@ -968,15 +955,43 @@ define (
 
                         function drawHeatmap (data) {
                           
-
-                          heatmapcells = rects.data (data.values).enter ().append ("rect");
-						              scope.theData=data;
+                          var chunks = [];
+                          
+                          
                           scaleUpdates (data.column, data.row,
-                              data.min, data.max, data.avg);
+                                  data.min, data.max, data.avg);
+                          
+                          function chunker(ar, chunksize) {
+                        	  var R = [];
+                        	  if (chunksize <= 0) {
+                        		  return [ar]
+                        	  }
+                        	  for (var j=0; j < ar.length; j++) {
+                        		  R.push(ar.slice(j, j+chunksize))
+                        	  }
+                        	  return R;
+                          }
+                          
+                          var chunks = chunker(data.values,0);
+                          var poolPosition = 0;
+                          var stream;
+
+                          function dCells(){
+                        	  drawCells(d3.select("g.cells").selectAll("rects").data(chunks[poolPosition]).enter().append("rect"))
+                        	  poolPosition += 1
+                        	  if (poolPosition >= chunks.length){
+                        		  clearInterval(stream)
+                        	  }
+                          };
+                          
+                          var stream = setInterval(dCells, 1000)
+                          
+                          //heatmapcells = rects.data (data.values).enter ().append ("rect");
+						              scope.theData=data;
                           
                           drawSelections(data.column, data.row)
 
-                          drawCells (heatmapcells);
+                          //drawCells (heatmapcells);
 
                           drawLabels (xlabels, ylabels);
 
@@ -996,21 +1011,21 @@ define (
                         };
                         
                         var heatmapcells = undefined;
+                        
+                        $('#loading').modal('hide');
 
                         scope.$watch('heatmapData', function(newval, oldval){
 
                             if (newval && !oldval) {
                               
-                              $('#loading').modal('hide');
+                              
                               //redraw previously rendered tree if page loads
                               
                               if (newval.column.root) {
-                                //heatmapMarginTop = 200;
                             	  scope.heatmapTopTree = newval.column.root;
                               }
                               
                               if (newval.row.root) {
-                                //heatmapMarginLeft = Math.floor (svgWidth * .15);
                             	  scope.heatmapLeftTree = newval.row.root;
                               }
                               
@@ -1074,8 +1089,6 @@ define (
                           if (newval) {
                           
                             var tree = newval;
-                            //heatmapMarginTop = 200;
-                            //updateDrawHeatmap(scope.heatmapData);
                             drawTree(dendogramLeftWindow, Cluster, tree, 'horizontal' )
 
                             
