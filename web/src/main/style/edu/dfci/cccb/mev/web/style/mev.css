@@ -15,7 +15,7 @@ div.accordion, div.accordion div{
 
 .accordion-heading .accordion-toggle {
 	padding: 0;
-	color:#F2F789;
+	color:#0088cc;
 }
 .accordion-inner {
 	background:#FFFFFF;
@@ -98,7 +98,7 @@ p.lead {
 
 #rightPanel {
 	float: left;
-	width: 70%;
+	width: 80%;
 }
 
 div#baseline {
@@ -136,7 +136,7 @@ div#analysisnav {
 }
 
 body {
-	background: #E3E9B8;
+	background: #E0E0E0;
 }
 
 div#tab i {
