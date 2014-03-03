@@ -8,6 +8,7 @@ import static org.jooq.impl.DSL.tableByName;
 import lombok.Synchronized;
 import lombok.extern.log4j.Log4j;
 
+import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -20,11 +21,11 @@ import edu.dfci.cccb.mev.presets.contract.PresetValues;
 public class PresetValuesFlatTable implements PresetValues {
 
   private final DSLContext context;
-  private final Table<?> table;
+  private final Table<Record> table;
   private final Field<String> rowIdField = fieldByName (String.class, "COLUMN0");
     
   private Record lastRecord;
-  
+  private String lastRowKey=null; 
   public PresetValuesFlatTable (DSLContext context, String tableName) {
     this.context=context;
     table = tableByName (tableName); 
@@ -34,10 +35,11 @@ public class PresetValuesFlatTable implements PresetValues {
   @Synchronized
   private void setLastRecord(Record record){
     this.lastRecord=record;
+    this.lastRowKey=this.lastRecord.getValue (rowIdField);
   }
   @Synchronized
   private boolean isSameRecord(String row){
-    if(this.lastRecord!=null && row.equals (this.lastRecord.getValue (rowIdField)))
+    if(this.lastRowKey!=null && this.lastRowKey.equals (row))
       return true;
     return false;
   }
@@ -51,7 +53,20 @@ public class PresetValuesFlatTable implements PresetValues {
         ResultQuery<?> query =context.selectFrom (table)
                 .where (this.rowIdField.eq (row));
       //  log.debug ("PresetValuesFlatTable sql:"+query.getSQL ());      
-        Record record = query.fetchOne ();   
+        Record record = query.fetchOne ();
+//        Record record=null;
+//        Cursor<Record> cursor = null;
+//        try {
+//          cursor = context.selectFrom (table).fetchLazy ();
+//          // Cursor has similar methods as Iterator<R>
+//          if(cursor.hasNext ()) {
+//            record = cursor.fetchOne ();              
+//          }
+//        } finally {
+//          if (cursor != null) {
+//            cursor.close ();
+//          }
+//        }
         setLastRecord (record);
       }      
       String value = this.lastRecord.getValue (columnField);

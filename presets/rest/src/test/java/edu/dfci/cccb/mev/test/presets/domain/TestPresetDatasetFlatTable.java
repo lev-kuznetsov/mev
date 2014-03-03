@@ -81,8 +81,8 @@ public class TestPresetDatasetFlatTable {
  
   @Test 
   public void testSmallestTcgaLevel2 () throws PresetException, MalformedURLException, InvalidDimensionTypeException, InvalidCoordinateException, SQLException, InterruptedException {
-    log.debug ("Sleeping .. you can start start profiler now.");    
-    Thread.sleep (1000*15);
+//    log.debug ("Sleeping .. you can start start profiler now.");    
+//    Thread.sleep (1000*15);
     String tsvFileName="LGG.AgilentG4502A_07_3.Level_2.tsv";
     String rootUrl = "file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/";
     PresetDescriptor descriptor = new SimplePresetDescriptor (tsvFileName, 
@@ -103,7 +103,29 @@ public class TestPresetDatasetFlatTable {
     log.debug ("flat-count:"+count+", duration: "+duration);
   }
  
-  
+  @Test 
+  public void testSmallestTcgaLevel22 () throws PresetException, MalformedURLException, InvalidDimensionTypeException, InvalidCoordinateException, SQLException, InterruptedException {
+//    log.debug ("Sleeping .. you can start start profiler now.");    
+//    Thread.sleep (1000*15);
+    String tsvFileName="LGG.AgilentG4502A_07_3.Level_2.tsv";
+    String rootUrl = "file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/";
+    PresetDescriptor descriptor = new SimplePresetDescriptor (tsvFileName, 
+                                                              new URL (rootUrl), 
+                                                              "LGG/Level_2/"+tsvFileName, ""); 
+    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", null);
+ 
+    long startTime = System.nanoTime();    
+    int count=0;
+    for (String row : presetDataset.dimension (Dimension.Type.ROW).keys ()){
+      for (String column : presetDataset.dimension (Dimension.Type.COLUMN).keys ()){
+        double value = presetDataset.values ().get (row, column);
+        count++;
+      }
+    }
+    long endTime = System.nanoTime();
+    long duration = endTime - startTime;
+    log.debug ("flat-count:"+count+", duration: "+duration);
+  }
   
   @Test @Ignore 
   public void largetsSmallestTcga () throws PresetException, MalformedURLException, InvalidDimensionTypeException, InvalidCoordinateException, SQLException, InterruptedException {

@@ -85,8 +85,31 @@ public class TestPresetDatasetNVP {
  
   @Test 
   public void testSmallestTcgaLevel2_NVPStore () throws PresetException, MalformedURLException, InvalidDimensionTypeException, InvalidCoordinateException, SQLException, InterruptedException {
-    log.debug ("Sleeping .. you can start start profiler now.");    
-    Thread.sleep (1000*15);
+//    log.debug ("Sleeping .. you can start start profiler now.");    
+//    Thread.sleep (1000*15);
+    String tsvFileName="LGG.AgilentG4502A_07_3.Level_2.tsv";    
+    PresetDescriptor descriptor = new SimplePresetDescriptor ("NVP_"+tsvFileName, 
+                                                              new URL (rootUrl), 
+                                                              "LGG/Level_2/"+tsvFileName, ""); 
+    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", null);
+ 
+    long startTime = System.nanoTime();    
+    int count=0;
+    for (String row : presetDataset.dimension (Dimension.Type.ROW).keys ()){
+      for (String column : presetDataset.dimension (Dimension.Type.COLUMN).keys ()){
+        double value = presetDataset.values ().get (row, column);
+        count++;
+      }
+    }
+    long endTime = System.nanoTime();
+    long duration = endTime - startTime;
+    log.debug ("nvp-count:"+count+", duration: "+duration);
+  }
+ 
+  @Test 
+  public void testSmallestTcgaLevel2_NVPStore2 () throws PresetException, MalformedURLException, InvalidDimensionTypeException, InvalidCoordinateException, SQLException, InterruptedException {
+//    log.debug ("Sleeping .. you can start start profiler now.");    
+//    Thread.sleep (1000*15);
     String tsvFileName="LGG.AgilentG4502A_07_3.Level_2.tsv";    
     PresetDescriptor descriptor = new SimplePresetDescriptor ("NVP_"+tsvFileName, 
                                                               new URL (rootUrl), 
