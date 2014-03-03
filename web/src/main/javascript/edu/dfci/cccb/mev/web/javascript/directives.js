@@ -1014,14 +1014,13 @@ define (
                         
                         var heatmapcells = undefined;
                         
-                        $('#loading').modal('hide');
+                        
 
                         scope.$watch('heatmapData', function(newval, oldval){
 
                             if (newval && !oldval) {
                               
-                              
-                              //redraw previously rendered tree if page loads
+                            	$('#loading').modal('hide');
                               
                               if (newval.column.root) {
                             	  scope.heatmapTopTree = newval.column.root;
