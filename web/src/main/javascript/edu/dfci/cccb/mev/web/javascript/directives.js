@@ -963,16 +963,18 @@ define (
                           
                           function chunker(ar, chunksize) {
                         	  var R = [];
-                        	  if (chunksize <= 0) {
+                        	  if (chunksize <= 0 || !chunksize) {
                         		  return [ar]
                         	  }
                         	  for (var j=0; j < ar.length; j++) {
-                        		  R.push(ar.slice(j, j+chunksize))
+                        		  var start = j*chunksize;
+                        		  var end = chunksize* (j + 1)
+                        		  R.push(ar.slice(start, end))
                         	  }
                         	  return R;
                           }
                           
-                          var chunks = chunker(data.values,0);
+                          var chunks = chunker(data.values,1000);
                           var poolPosition = 0;
                           var stream;
 
@@ -984,7 +986,7 @@ define (
                         	  }
                           };
                           
-                          var stream = setInterval(dCells, 1000)
+                          var stream = setInterval(dCells, 500)
                           
                           //heatmapcells = rects.data (data.values).enter ().append ("rect");
 						              scope.theData=data;
