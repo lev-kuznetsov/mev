@@ -763,21 +763,24 @@ define (
                           
                           var xband = (XIndex2Pixel(1) - XIndex2Pixel(0))/2;
                           
+                          xlabels.selectAll("text").remove();
                           
-                          
-                          xlabels.selectAll("text").data( XLabel2Index.domain() )
-                           .enter().append("text")
-                          .attr('dx', -heatmapMarginTop)
-                          .attr('y', function(d){ 
-                            return XIndex2Pixel( XLabel2Index(d) ) + xband
-                           })
-                          //.style("text-anchor", "start")
-                          .attr ("transform", "rotate(-90)")
-                          
-                          .text(function(d){return d.substr(0, 8)})
-                          .style("font-size", "14px")
-                        
+                          if (XLabel2Index.domain().length <= 50) {
+                        	
+                             xlabels.selectAll("text").data( XLabel2Index.domain() )
+                               .enter().append("text")
+                               .attr('dx', -heatmapMarginTop)
+                               .attr('y', function(d){ 
+                                  return XIndex2Pixel( XLabel2Index(d) ) + xband + 7;
+                               })
+                               //.style("text-anchor", "start")
+                               .attr ("transform", "rotate(-90)")
+                               .text(function(d){return d.substr(0, 8)})
+                               .style("font-size", "14px")
 
+                        	  
+                          }
+                          
                           
 
                           yAxis.attr (
@@ -954,6 +957,8 @@ define (
                         ;
 
                         function drawHeatmap (data) {
+                        	
+                          scope.theData=data;
                           
                           var chunks = [];
                           
@@ -963,16 +968,18 @@ define (
                           
                           function chunker(ar, chunksize) {
                         	  var R = [];
-                        	  if (chunksize <= 0) {
+                        	  if (chunksize <= 0 || !chunksize) {
                         		  return [ar]
                         	  }
                         	  for (var j=0; j < ar.length; j++) {
-                        		  R.push(ar.slice(j, j+chunksize))
+                        		  var start = j*chunksize;
+                        		  var end = chunksize* (j + 1)
+                        		  R.push(ar.slice(start, end))
                         	  }
                         	  return R;
                           }
                           
-                          var chunks = chunker(data.values,0);
+                          var chunks = chunker(data.values,1000);
                           var poolPosition = 0;
                           var stream;
 
@@ -984,14 +991,9 @@ define (
                         	  }
                           };
                           
-                          var stream = setInterval(dCells, 1000)
-                          
-                          //heatmapcells = rects.data (data.values).enter ().append ("rect");
-						              scope.theData=data;
+                          var stream = setInterval(dCells, 500)
                           
                           drawSelections(data.column, data.row)
-
-                          //drawCells (heatmapcells);
 
                           drawLabels (xlabels, ylabels);
 
