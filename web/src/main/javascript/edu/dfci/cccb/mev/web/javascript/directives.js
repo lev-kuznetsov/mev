@@ -859,7 +859,15 @@ define (
 
                         function scaleUpdates (cols, rows, min, max, avg) {
                         	
+                          var fixedHeight = true;
+                          
+                          if (fixedHeight){
+                        	  heatmapCellsWidth = cols.keys.length*30;
+                        	  svg.attr("width", heatmapMarginLeft + heatmapCellsWidth + heatmapRowSelectionsGutter + 120 )
+                          }
+                        	
                           heatmapCellHeight = 30;
+                          
                           
                           heatmapCellsHeight = heatmapCellHeight*rows.keys.length;
                           dendogramLeft.height = heatmapCellsHeight;
