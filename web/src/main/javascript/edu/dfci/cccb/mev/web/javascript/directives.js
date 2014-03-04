@@ -503,6 +503,21 @@ define (
                       },
                       templateUrl : '/container/view/elements/d3RadialTree',
                       link : function (scope, elems, attr) {
+                    	  
+                    	function noder(d){
+                              
+                           var a = [];
+                              
+                           if (!d.children) {
+                                a.push(d); 
+                           } else {
+                             d.children.forEach(function(child){
+                               noder(child).forEach(function(j){a.push(j)});
+                             });
+                           };
+                              
+                           return a;
+                        };
                     	
                     	var padding = 20;
                     	var dendogram = {
@@ -510,8 +525,10 @@ define (
                           width: pageWidth = jq('body').width() * (2/5) // Nicely define width
                         };
                     	
-                    	var svg = d3.select(elems[0]).append("svg")
-                    	  .attr({width: dendogram.width, height: (dendogram.height + (padding))});
+                    	d3.select(elems[0]).append("svg")
+                  	        .attr({width: dendogram.width, height: (dendogram.height + (padding))});
+                    	
+                    	var svg = d3.select(elems[0]).select("svg")
                     	
                     	var Cluster = d3.layout.cluster()
                           .sort(null)
@@ -521,15 +538,20 @@ define (
                           .value(function(d){return d.distance;})
                           .children(function(d){return d.children;});
                         
-                        var dendogramWindow = svg.append("g")
-                            .attr('class', 'smallDendogram');
+                    	var labelsGutter = 50;
+                        svg.append("g").attr('class', 'smallDendogram');
+                        
+                        var dendogramWindow = d3.select(elems[0]).select("svg").select("g.smallDendogram")
+                        
+                        var xPos = d3.scale.linear().domain([0,1]).range([padding, dendogram.width - padding])
+                        var yPos = d3.scale.linear().domain([0,1]).range([padding, dendogram.height - padding - labelsGutter])
                         
                         function Path(d) {
                             //Path function builder for TOP heatmap tree path attribute
                             
-                            return "M" + ( d.target.x * dendogram.width )  + "," + ( (d.target.y * dendogram.height) + (padding*.5) ) +
-                            "V" + ( (d.source.y * dendogram.height) + (padding*.5) ) +
-                            "H" + ( d.source.x * dendogram.width );
+                            return "M" + ( xPos(d.target.x) ) + "," + ( yPos(d.target.y) )+
+                            "V" + ( yPos(d.source.y) ) +
+                            "H" + ( xPos(d.source.x) );
                             
 
                           };
@@ -540,6 +562,26 @@ define (
                             var nodes = cluster.nodes(tree);
                             var links = cluster.links(nodes);
                             
+                              
+                            var labels = noder(tree);
+                            console.log(labels)
+                            
+                            
+                            if (labels.length <=50){
+                            	canvas.selectAll("text").data(labels)
+                                  .enter().append("text")
+                                  
+                                    .attr("transform", function(d){
+                                    	return "translate("+ xPos(d.x) + "," + yPos(d.y) + ")rotate(90)"
+                                    })
+                                    .attr("text-anchor", "start")
+                                    .attr("dx", 5)
+                                    .attr("dy", 3)
+                                    .text(function(d){return d.name})
+                                    
+                              
+                            }
+                                
                             canvas.selectAll("path")
                                 .data(links)
                               .enter().append("path")
@@ -554,10 +596,10 @@ define (
                             canvas.selectAll("circle").data(nodes).enter().append("circle")
                                .attr("r", 2.5)
                                .attr("cx", function(d){
-                                 return d.x * dendogram.width;
+                                 return xPos(d.x);
                                })
                                .attr("cy", function(d){
-                                 return (d.y * dendogram.height) + (padding*.5);
+                                 return yPos(d.y);
                                })
                                .attr("fill", function(d){
                                  return "red"

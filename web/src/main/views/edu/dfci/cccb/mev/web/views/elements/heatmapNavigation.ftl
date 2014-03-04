@@ -27,6 +27,7 @@
 				</ul>
 			</li>
 			
+			<!--
 			<li class="dropdown">
 		
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -36,6 +37,7 @@
 					<li><a href=""><p class="muted">Heatmap</p></a></li>
 				</ul>
 			</li>
+			-->
 			
 			<li class="dropdown">
 		
@@ -58,6 +60,7 @@
 				</ul>
 			</li>
 			
+			<!--
 			<li class="dropdown">
 		
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -67,7 +70,7 @@
 					<li><a href=""><p class="muted">Principal Component Analysis</p></a></li>
 				</ul>
 			</li>
-			
+			-->
 			<li class="dropdown">
 		
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
