@@ -1034,7 +1034,7 @@ define (
                           var stream;
 
                           function dCells(){
-                        	  drawCells(d3.select("g.cells").selectAll("rects").data(chunks[poolPosition]).enter().append("rect"))
+                        	  drawCells(d3.select("g.cells").selectAll("rect").data(chunks[poolPosition], function(d){ return [d.column, d.row]}).enter().append("rect"))
                         	  poolPosition += 1
                         	  if (poolPosition >= chunks.length){
                         		  clearInterval(stream)
