@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
@@ -32,12 +33,15 @@ import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.jooq.JooqBasedDatasourceValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
-import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilderByJooq;
-import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilderFlatTable;
+import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetValuesLoader;
 import edu.dfci.cccb.mev.presets.contract.PresetValuesStoreBuilderFactory;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.dal.SimplePresetValuesLoader;
+import edu.dfci.cccb.mev.presets.dataset.PresetDatasetBuilderByJooq;
+import edu.dfci.cccb.mev.presets.dataset.flat.PresetDatasetBuilderFlatTable;
+import edu.dfci.cccb.mev.presets.dataset.flat.PresetDatasetBuilderFlatTableDB;
+import edu.dfci.cccb.mev.presets.dataset.flat.PresetDimensionBuilderFlatTable;
 
 @Log4j
 @Configuration
@@ -141,7 +145,7 @@ public class PresetPersistenceConfiguration {
       return jooqConfiguration;
   }
 
-  @Bean(name="presets-jooq-dsl")
+  @Bean(name="presets-jooq-context")
   public DefaultDSLContext dsl() {
       return new DefaultDSLContext(configuration());
   }
@@ -187,9 +191,16 @@ public class PresetPersistenceConfiguration {
     return new SimplePresetValuesLoader (presetValueStoreBuilderFactory(dataSource), presetDatasetBuilder());
   }
   
+  @Bean
+  public PresetDimensionBuilder presetDimensionBuilder(@Named("presets-jooq-context") DSLContext context){
+    return new PresetDimensionBuilderFlatTable (context);
+  }
+  
   @Bean @Inject
-  public PresetDatasetBuilder presetDatasetBuilder(@Named("presets-datasource") DataSource dataSource) throws SQLException{
-    log.debug ("***PresetDataSetBuilder: FLATTABLE");
-    return new PresetDatasetBuilderFlatTable (dataSource);
+  public PresetDatasetBuilder presetDatasetBuilder(@Named("presets-datasource") DataSource dataSource, 
+                                                   @Named("presets-jooq-context") DSLContext context,
+                                                   PresetDimensionBuilder dimensionBuilder) throws SQLException{
+    log.debug ("***PresetDataSetBuilder: FLATTABLE-DB");
+    return new PresetDatasetBuilderFlatTableDB (dataSource, context, dimensionBuilder);
   }
 }

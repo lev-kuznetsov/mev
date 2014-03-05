@@ -1,6 +1,8 @@
-package edu.dfci.cccb.mev.test.presets.domain;
+package edu.dfci.cccb.mev.test.presets.controller.nvp;
 
 import static java.lang.System.getProperty;
+
+import java.sql.SQLException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,12 +19,16 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
+import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
+import edu.dfci.cccb.mev.presets.contract.PresetValuesStoreBuilderFactory;
+import edu.dfci.cccb.mev.presets.dataset.PresetDatasetBuilderByJooq;
+import edu.dfci.cccb.mev.presets.dataset.flat.PresetDatasetBuilderFlatTable;
 import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 
 @Log4j
 @Configuration
 @Import(PresetsRestConfigurationTest.class)
-public class TestPresetsDatasetFlatTableConfig {
+public class TestPresetsDatasetNVPConfig {
 
   @Inject Environment environment;
   @Bean(name="presets-datasource", destroyMethod = "close")
@@ -32,7 +38,7 @@ public class TestPresetsDatasetFlatTableConfig {
     dataSource.setUrl ("jdbc:h2:file:"
                                                         + environment.getProperty ("user.home") 
                                                         + "/mev/data/tcga/"
-                                                        + "mev-presets-FLAT"
+                                                        + "mev-presets-NVP"
                                                         + ";QUERY_CACHE_SIZE=100000"
                                                         + ";CACHE_SIZE=1048576");
     dataSource.setUsername ("sa");
@@ -42,8 +48,7 @@ public class TestPresetsDatasetFlatTableConfig {
 
     return dataSource;
   }
- 
-  
+
   @Inject @Bean
   public DataSourceInitializer dataSourceInitializer( @Named("presets-datasource") DataSource dataSource) {
       DataSourceInitializer initializer = new DataSourceInitializer();
@@ -55,4 +60,9 @@ public class TestPresetsDatasetFlatTableConfig {
       return initializer;
   }
   
+  @Bean @Inject
+  public PresetDatasetBuilder presetDatasetBuilder(PresetValuesStoreBuilderFactory valueStoreInjector) throws SQLException{
+    log.debug ("***PresetDataSetBuilder: NVP");
+    return new PresetDatasetBuilderByJooq (valueStoreInjector);
+  }
 }

@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.test.presets.domain;
+package edu.dfci.cccb.mev.test.presets.domain.dataset.flat.small;
 
 import static java.lang.Double.NEGATIVE_INFINITY;
 import static java.lang.Double.NaN;
@@ -48,15 +48,16 @@ import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
+import edu.dfci.cccb.mev.test.presets.domain.dataset.flat.TestPresetsDatasetFlatTableConfig;
 import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={TestPresetsDatasetFlatTableConfig.class})
-public class TestJooqCursor {
+@ContextConfiguration(classes={TestJooqCursorLGGLevel2Configuration.class})
+public class TestJooqCursorLGGLevel2 {
 
 
   
-  @Inject @Named("presets-jooq-dsl") DSLContext context;
+  @Inject @Named("presets-jooq-context") DSLContext context;
   @Inject Environment environment;
   
   private URL rootUrl=null;
@@ -136,7 +137,7 @@ public class TestJooqCursor {
     log.debug ("flat-count:"+count);    
   }
 
-  @Test 
+  @Test @Ignore
   public void testSelect_OneFieldOneRows () {
     log.debug("... Running testSelect_OneFieldOneRows...");
     String tsvFileName="LGG.AgilentG4502A_07_3.Level_2.tsv";
@@ -151,14 +152,15 @@ public class TestJooqCursor {
     log.debug ("flat-count:"+count);    
   }
 
-  @Test 
+  @Test @Ignore
   public void testSelect_OneFieldOneRows_DoubleLoop () {
     log.debug("... testSelect_OneFieldOneRows_DoubleLoop...");
     String tsvFileName="LGG.AgilentG4502A_07_3.Level_2.tsv";
 
     List<String> allRows = getRowKeys (tsvFileName, ID_FIELD_NAME);
     List<String> allColumns = getColumnKeys (tsvFileName, ID_FIELD_NAME);
-    
+    int count=0;
+    Timer timer = Timer.start ("double-for-loop");
     for(String curRow : allRows){
       List<String> rows = new ArrayList<String>(1);
       rows.add(allRows.get (allRows.size ()-1));
@@ -166,13 +168,14 @@ public class TestJooqCursor {
         List<String> columns = new ArrayList<String>(1);
         columns.add (allColumns.get (3));
         
-        int count = select2(tsvFileName, rows, columns);    
-        log.debug ("flat-count:"+count);
+        count = select2(tsvFileName, rows, columns,false);            
       }
     }
+    timer.read ();
+    log.debug ("flat-count:"+count);
   }
   
-  @Test @Ignore
+  @Test 
   public void testSelect_SomeFieldSomeRows () {
     log.debug("... Running testSelect_SomeFieldSomeRows...");
     String tsvFileName="LGG.AgilentG4502A_07_3.Level_2.tsv";
@@ -223,7 +226,7 @@ public class TestJooqCursor {
    * @param columns
    * @return
    */
-  private int select2(String tableName, List<String> rows, List<String> columns){
+  private int select2(String tableName, List<String> rows, List<String> columns, boolean bTimer){
     Timer timer = Timer.start ("flat-dataset");
     
     Table<Record> table = tableByName (tableName);
@@ -256,8 +259,13 @@ public class TestJooqCursor {
         }
     }
     
-    timer.read ();
+    if(bTimer)
+      timer.read ();
     return totalCellCount;
+  }
+  
+  private int select2(String tableName, List<String> rows, List<String> columns){
+    return select2(tableName, rows, columns, true);
   }
   
   private int select(String tableName, List<String> rows, List<String> columns){

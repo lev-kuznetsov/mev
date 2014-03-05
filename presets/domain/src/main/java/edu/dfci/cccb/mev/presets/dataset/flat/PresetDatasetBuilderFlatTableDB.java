@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.presets.contract;
+package edu.dfci.cccb.mev.presets.dataset.flat;
 
 import static org.jooq.impl.DSL.using;
 
@@ -18,6 +18,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Analyses;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.DimensionBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Parser;
 import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
@@ -27,45 +28,47 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDataset;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
+import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
+import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
+import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
-import edu.dfci.cccb.mev.presets.dataset.PresetValuesFlatTable;
 
 @Log4j
 @Accessors(fluent=false, chain=true)
-public class PresetDatasetBuilderFlatTable extends AbstractDatasetBuilder implements PresetDatasetBuilder {
+public class PresetDatasetBuilderFlatTableDB extends AbstractDatasetBuilder implements PresetDatasetBuilder {
 
   private @Inject @Named("presets-datasource") DataSource dataSource;
-  private @Inject @Named("presets-jooq-dsl") DSLContext context;
+  private @Inject @Named("presets-jooq-context") DSLContext context;
+  private @Inject PresetDimensionBuilder dimensionBuilder;
   
-  public PresetDatasetBuilderFlatTable (@Named("presets-datasource") DataSource dataSource) throws SQLException {
-    //context = using (dataSource.getConnection ());
+  public PresetDatasetBuilderFlatTableDB (@Named("presets-datasource") DataSource dataSource,
+                                        @Named("presets-jooq-context") DSLContext context,
+                                        PresetDimensionBuilder dimensionBuilder
+                                        ) throws SQLException {
+    this.dataSource = dataSource;
+    this.context = context;
+    this.dimensionBuilder=dimensionBuilder;
   }
 
   @Override
   public Dataset build (PresetDescriptor descriptor, String datasetName, Selection columnSelection) throws PresetException {
     try{
       if(log.isDebugEnabled ())
-        log.debug ("Created preset dataset");
+        log.debug ("Creating preset dataset from FLAT table:"+descriptor.name ());
       
-      RawInput content = new UrlTsvInput (descriptor.dataUrl ());
-      Parser parser;
-      for (parser = parser (content); parser.next ();) {}
-      
-      
-      Dimension rows = new SimpleDimension (Dimension.Type.ROW, parser.rowKeys (), super.selections (), super.annotation ());
+      Dimension rows = dimensionBuilder.buildRows (descriptor);
       Dimension columns;
       if(columnSelection!=null)
-        columns = new SimpleDimension (Dimension.Type.COLUMN, columnSelection.keys (), super.selections (), super.annotation ());
+        columns = dimensionBuilder.build (Dimension.Type.COLUMN, descriptor, columnSelection);
       else
-        columns = new SimpleDimension (Dimension.Type.COLUMN, parser.columnKeys (), super.selections (), super.annotation ());
+        columns = dimensionBuilder.buildColumns (descriptor);
       
       if(log.isDebugEnabled ())
         log.debug ("columns="+columns);
       if(log.isDebugEnabled ())
         log.debug ("rows="+rows);
       
-      Values presetValues = new PresetValuesFlatTable (context, descriptor.name ());
-      
+      Values presetValues = new PresetValuesFlatTableIterable (context, descriptor.name (), columns);
       return aggregate (datasetName, presetValues, super.analyses (), columns, rows);
       
     }catch(InvalidDatasetNameException|DatasetBuilderException e){

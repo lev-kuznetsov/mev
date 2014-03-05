@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
-import edu.dfci.cccb.mev.presets.dataset.PresetValuesFlatTable;
+import edu.dfci.cccb.mev.presets.dataset.flat.PresetValuesFlatTable;
 import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)

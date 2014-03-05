@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.test.presets.domain;
+package edu.dfci.cccb.mev.test.presets.domain.dataset.flat.med;
 
 import static java.lang.Double.NEGATIVE_INFINITY;
 import static java.lang.Double.NaN;
@@ -48,19 +48,20 @@ import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
+import edu.dfci.cccb.mev.test.presets.domain.dataset.flat.TestPresetsDatasetFlatTableConfig;
 import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 
 @Log4j
 @RunWith (SpringJUnit4ClassRunner.class)
-@ContextConfiguration (classes = { TestPresetsDatasetFlatTableConfig.class })
-public class TestJooqCursorHuge {
+@ContextConfiguration (classes = { TestJooqCursorLUSCLevel2Configuration.class })
+public class TestJooqCursorLUSCLevel2 {
 
-  @Inject @Named ("presets-jooq-dsl") DSLContext context;
+  @Inject @Named ("presets-jooq-context") DSLContext context;
   @Inject Environment environment;
 
   private URL rootUrl = null;
   private final String ID_FIELD_NAME = "COLUMN0";
-  private String tsvFileName = "GBM.AgilentG4502A_07_2.Level_2.tsv";
+  private String tsvFileName = "LUSC.HT_HG-U133A.Level_2.tsv";
 
   @PostConstruct
   public void init () throws MalformedURLException {
@@ -114,21 +115,13 @@ public class TestJooqCursorHuge {
   public void testSelect_OneFieldAllRows () {
     log.debug ("... Running testSelect_OneFieldAllRows...");
 
-//    List<String> rows = getRowKeys (tsvFileName, ID_FIELD_NAME);
+    List<String> rows = getRowKeys (tsvFileName, ID_FIELD_NAME);
     List<String> allColumns = getColumnKeys (tsvFileName, ID_FIELD_NAME);
     List<String> columns = new ArrayList<String> (1);
     columns.add (allColumns.get (0));
-//TODO:Hardcoded row size just for test;
-    List<String> rows = new ArrayList<String>(90797);
-    
-    for(int i=0;i<90797;i++)
-      rows.add("");
+
     int count = select2 (tsvFileName, rows, columns);
     log.debug ("flat-count:" + count);
-    columns.remove (0);
-    columns.add (allColumns.get (5));    
-    count = select2 (tsvFileName, rows, columns);
-    log.debug ("flat-count2:" + count);
   }
 
   @Test
@@ -146,8 +139,7 @@ public class TestJooqCursorHuge {
     log.debug ("flat-count:" + count);
   }
 
-  @Test
-  @Ignore
+  @Test  
   public void testSelect_SomeFieldSomeRows () {
     log.debug ("... Running testSelect_SomeFieldSomeRows...");
 
@@ -205,10 +197,10 @@ public class TestJooqCursorHuge {
 
     int totalCellCount = 0;
     ResultQuery<Record> query;
-    // List<String> rowKeys = getRowKeys (tableName, ID_FIELD_NAME);
-    // if(rowKeys.size ()==rows.size ())
+    List<String> rowKeys = getRowKeys (tableName, ID_FIELD_NAME);
+    if(rowKeys.size ()==rows.size ()){
     // TODO:hardcoded data size for test only
-    if (90797 == rows.size ()){
+//    if (90797 == rows.size ()){
       query = queryAllRows (selectFields, table);
       totalCellCount = read (query);
     }else {

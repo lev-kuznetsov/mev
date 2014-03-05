@@ -1,8 +1,6 @@
-package edu.dfci.cccb.mev.test.presets.domain;
+package edu.dfci.cccb.mev.test.presets.domain.dataset.flat.small;
 
 import static java.lang.System.getProperty;
-
-import java.sql.SQLException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,16 +17,12 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
-import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
-import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilderByJooq;
-import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilderFlatTable;
-import edu.dfci.cccb.mev.presets.contract.PresetValuesStoreBuilderFactory;
 import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 
 @Log4j
 @Configuration
 @Import(PresetsRestConfigurationTest.class)
-public class TestPresetsDatasetNVPConfig {
+public class TestJooqCursorLGGLevel2Configuration {
 
   @Inject Environment environment;
   @Bean(name="presets-datasource", destroyMethod = "close")
@@ -38,7 +32,7 @@ public class TestPresetsDatasetNVPConfig {
     dataSource.setUrl ("jdbc:h2:file:"
                                                         + environment.getProperty ("user.home") 
                                                         + "/mev/data/tcga/"
-                                                        + "mev-presets-NVP"
+                                                        + "mev-presets-FLAT-LGG.AgilentG4502A_07_3.Level_2.tsv"
                                                         + ";QUERY_CACHE_SIZE=100000"
                                                         + ";CACHE_SIZE=1048576");
     dataSource.setUsername ("sa");
@@ -48,21 +42,14 @@ public class TestPresetsDatasetNVPConfig {
 
     return dataSource;
   }
-
+  
   @Inject @Bean
   public DataSourceInitializer dataSourceInitializer( @Named("presets-datasource") DataSource dataSource) {
       DataSourceInitializer initializer = new DataSourceInitializer();
       initializer.setDataSource(dataSource);
-
-      ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-            
+      ResourceDatabasePopulator populator = new ResourceDatabasePopulator();            
       initializer.setDatabasePopulator(populator);
       return initializer;
   }
   
-  @Bean @Inject
-  public PresetDatasetBuilder presetDatasetBuilder(PresetValuesStoreBuilderFactory valueStoreInjector) throws SQLException{
-    log.debug ("***PresetDataSetBuilder: NVP");
-    return new PresetDatasetBuilderByJooq (valueStoreInjector);
-  }
 }
