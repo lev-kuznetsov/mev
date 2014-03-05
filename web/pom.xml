@@ -21,7 +21,7 @@
     <angularjs.version>1.1.4</angularjs.version>
     <d3.version>3.1.5</d3.version>
     <jquery.version>2.0.3</jquery.version>
-    <bootstrap.version>2.3.2</bootstrap.version>
+    <bootstrap.version>3.1.1</bootstrap.version>
     <log4javascript.version>1.4.5</log4javascript.version>
     <retinajs.version>0.0.2</retinajs.version>
     <requirejs.version>2.1.8</requirejs.version>
