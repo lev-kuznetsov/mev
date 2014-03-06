@@ -139,7 +139,7 @@ body {
 	background: #E0E0E0;
 }
 
-div#tab i {
+div#tab span.glyphicon {
 	margin-top:8px;
 	margin-left:2px;
 }

@@ -2,7 +2,7 @@
 
 <div ng-controller="MainPanelController" class="row-fluid"> <!-- Start Column Expand Tabs -->	
 	
-	<div class="row-fluid heatmap-container">
+	<div class="row heatmap-container">
 	    
 		<div id="leftPanel">
 		
@@ -11,7 +11,7 @@
 		
 		<div id="partition">
 			<div id='tab'>
-				<i class="icon-chevron-left icon-white"></i>
+				<span class="glyphicon glyphicon-chevron-left glyphicon-white"></span>
 			</div>
 		</div>
 		

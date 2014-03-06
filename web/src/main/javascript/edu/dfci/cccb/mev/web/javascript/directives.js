@@ -1,6 +1,6 @@
 define (
-    [ 'angular', 'jquery', 'd3', 'dropzone', 'services' ],
-    function (angular, jq, d3, Dropzone) {
+    [ 'angular', 'jquery', 'd3', 'services' ],
+    function (angular, jq, d3) {
 
 
       return angular

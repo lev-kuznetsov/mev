@@ -1,13 +1,15 @@
-define(['angular', 'directives', 'services', 'controllers', 'setmanager/SetManager'], function(angular){
+define(['angular', 'angularRoute', 'directives', 'services', 'controllers', 'setmanager/SetManager'], function(angular){
 	'use strict';
 	return angular.module('myApp', [
+	     'ngRoute',
 	     'myApp.directives', 
 	     'myApp.services',
 	     'myApp.controllers',
 	     'Mev.SetManager',
 	     'Mev.PresetManager'])
-	.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-	  
+	.config(['$routeProvider', '$locationProvider', '$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {
+		
+	  $sceProvider.enabled(false);
 	  $routeProvider
 		  .when('/dataset', {
 			  templateUrl: '/container/view/partials/heatmap', 
