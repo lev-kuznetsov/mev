@@ -9,16 +9,16 @@
 	</div>
 </div>
      		
-<div class="imports-container">
+<div class="container-fluid imports-container">
 
-	<div class="row-fluid">
+	<div class="row">
 	
-	  <div class="span3">
+	  <div class="col-md-3">
 	  
-	    <div class="row-fluid">
-	        <div class="span10 offset1">
+	    <div class="row">
+	        <div class="col-md-10 col-md-offset-1">
 	        
-	            <div class="row-fluid">
+	            <div class="row">
 	                <div class='uploadDrag'></div>
 	            </div>
 	        </div>
@@ -27,9 +27,8 @@
 	  </div>
 	
 	
-	
-	  <div class="span8">
-	    <div class="row-fluid">
+	  <div class="col-md-8">
+	    <div class="row">
 	      <ul class="nav nav-tabs" id="importTabs">
 	        <li class="active"><a href="#current" data-toggle="tab" ng-click="loadUploads()">Files</a></li>
 	        <li><a href="#googleDrive" data-toggle="tab">Google Drive</a></li>
@@ -40,9 +39,9 @@
 	      
 	         <div class="tab-pane active" id="current">
 	         
-	            <div class="row-fluid">
+	            <div class="row">
 	            
-	              <div class="span12">
+	              <div class="col-md-12">
 	                <div uploads-Table uploads="userUploads"></div>
 	              </div>
 	              
