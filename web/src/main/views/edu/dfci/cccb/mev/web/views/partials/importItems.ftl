@@ -27,6 +27,8 @@
 	
 	
 	  <div class="col-md-8">
+	  
+	  
 	    <div class="row">
 	      <ul class="nav nav-tabs" id="importTabs">
 	        <li class="active"><a href="#current" data-toggle="tab" ng-click="loadUploads()">Files</a></li>
@@ -36,15 +38,9 @@
 	 	  
 	      <div class="tab-content">
 	      
-	         <div class="tab-pane fade active" id="current">
+	         <div class="tab-pane active" id="current">
 	         
-	            <div class="row">
-	            
-	              <div class="col-md-12">
-	                <div uploads-Table uploads="userUploads"></div>
-	              </div>
-	              
-	            </div>
+	            <div uploads-Table uploads="userUploads"></div>
 	           
 	         </div>
 	        

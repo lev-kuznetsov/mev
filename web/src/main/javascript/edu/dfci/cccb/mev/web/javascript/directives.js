@@ -404,10 +404,17 @@ define (
                   scope : {
                     uploads : '='
                   },
+                  //template: "Working",
                   templateUrl : '/container/view/elements/uploadsTable',
                   link : function (scope, elems, attrs) {
 
-                    scope.datasets = scope.uploads
+                    scope.datasets = [];
+                    
+                    scope.$watch("uploads", function(newVal, oldVal){
+                    	if (oldVal != undefined){
+                    		scope.datasets = newVal
+                    	}
+                    })
 
                     
 
