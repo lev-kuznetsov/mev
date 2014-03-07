@@ -146,17 +146,13 @@ define ([ 'jquery', 'angular'], function ($, angular) {
   
     	  $scope.loadUploads = function(){
     		  
-    	    $scope.$apply(function(){
     	    	API.user.datasets.get().then(function(data){
-    	               $scope.userUploads = data;
-    	            });
-    	    });
+    	          $scope.userUploads = data;
+    	        });
 
     	  };
     	  
-    	  API.user.datasets.get().then(function(data){
-    	    $scope.userUploads = data;
-    	  });
+    	  $scope.loadUploads();
     	  
     	  
       }])

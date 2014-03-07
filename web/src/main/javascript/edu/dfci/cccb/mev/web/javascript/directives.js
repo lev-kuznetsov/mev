@@ -398,8 +398,7 @@ define (
             };
 
           }])
-          .directive ('uploadsTable',
-              [ 'API', '$location', function (API, $location) {
+          .directive ('uploadsTable', [ 'API', '$location', function (API, $location) {
                 return {
                   restrict : 'A',
                   scope : {
@@ -408,25 +407,14 @@ define (
                   templateUrl : '/container/view/elements/uploadsTable',
                   link : function (scope, elems, attrs) {
 
-                    scope.datasets = []
+                    scope.datasets = scope.uploads
 
-                    scope.$watch ('uploads', function (newValues, oldValues) {
-
-                      if (newValues != undefined) {
-
-                        scope.datasets = newValues;
-
-                      }
-                      ;
-
-                    });
+                    
 
                   }
                 }
               } ])
-          .directive (
-              'uploadDrag', [ "API",
-              function (API) {
+          .directive ('uploadDrag', [ "API", function (API) {
 
                 return {
                   restrict : 'C',
@@ -459,7 +447,6 @@ define (
                         			
                         			xhr.onreadystatechange = function() {
                         				if(xhr.readyState == 4 && xhr.status == 200){
-                        					
                         					
                         					scope.loadUploads();
                         					
