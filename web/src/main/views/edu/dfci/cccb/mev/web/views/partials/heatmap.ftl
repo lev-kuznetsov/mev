@@ -30,9 +30,12 @@
 			    <h3 id="settingsModalLabel">Heatmap Settings</h3>
 			  </div>
 			  <div class="modal-body">
-			    <div class="row-fluid">
-			          Heatmap Color:
-			          <select ng-model="selectedColor" ng-options="selection for selection in colorOptions"></select>
+			    <div class="row">
+			    
+			    	<div class="form-group">
+            			<label for="heatmapColoring" class="control-label">Heatmap Color:</label>
+			    		<select id="heatmapColoring" ng-model="selectedColor" ng-options="selection for selection in colorOptions"></select>
+			        </div>
 			    </div>
 			    
 			    

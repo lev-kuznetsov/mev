@@ -1,37 +1,33 @@
-<form class="form-horizontal">
+<form role="form">
 
-  <div class="control-group">
-    <label for="inputAnalysisName" class="control-label">Name</label>
-    <div class="controls">
+  <div class="form-group">
+    <label for="limmaAnalysisName" class="control-label">Name</label>
         <input id="limmaAnalysisName" ng-model="analysisName" placeholder="Ex: My_Analysis_1">
-    </div>
   </div>
 
   <!--
-  <div class="control-group">
-    <label for="" class="control-label">Dimension</label>
-    <div class="controls">
+  <div class="form-group">
+    <label for="limmaAnalysisDimension" class="control-label">Dimension</label>
+
       <select id="limmaAnalysisDimension" ng-model="analysisDimension" ng-options="dimension.name for dimension in dimensions">
       </select>
-    </div>
+
   </div>
   -->
 
-  <div class="control-group">
-    <label for="" class="control-label">Control</label>
-    <div class="controls">
+  <div class="form-group">
+    <label for="limmaAnalysisControl" class="control-label">Control</label>
+
       <select id="limmaAnalysisControl" ng-model="analysisControl" ng-options="selection for selection in selections">
       </select>
-    </div>
+
   </div>
   
-  <div class="control-group">
-    <label for="" class="control-label">Experiment</label>
-    <div class="controls">
+  <div class="form-group">
+    <label for="limmaAnalysisExperiment" class="control-label">Experiment</label>
       <select id="limmaAnalysisExperiment" ng-model="analysisExperiment" ng-options="selection for selection in selections">
-        
       </select>
-    </div>
+      
   </div>
   
 </form>

@@ -92,10 +92,6 @@ p.lead {
 	height: 85vh;
 }
 
-/*div.accordion-heading {
-	background: #bcf;
-}*/
-
 #rightPanel {
 	float: left;
 	width: 80%;
@@ -160,14 +156,14 @@ div.sidepanel-title p{
 	color: #FFFFFF;
 }
 
-.nav {
+nav {
 	margin-bottom: 0px;
 }
 .navbar {
 	margin-bottom: 0px;
 }
 
-.navbar-inner {
+nav div.container-fluid {
 	background-image: linear-gradient(to bottom, #FFF, #FFF);
 	border-radius: 0px;
 	box-shadow: 0 6px 7px rgba(0, 0, 0, 0.065);
