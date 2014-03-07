@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.test.presets.controller.nvp;
+package edu.dfci.cccb.mev.web.test.presets.controller.flat.small;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
@@ -81,8 +81,8 @@ import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
                                ContainerConfigurations.class, 
                                DatasetRestConfiguration.class,
                                ProbeAnnotationsPersistanceConfigTest.class                               
-                               , TestPresetsDatasetNVPConfig.class})
-public class TestDatasetSerializerNVP {
+                               , TestJooqCursorLGGLevel2Configuration.class})
+public class TestDatasetSerializerLGG {
 
   private @Inject Environment environment; 
   private @Inject @Named("presets-datasource") DataSource dataSource;
@@ -114,7 +114,7 @@ public class TestDatasetSerializerNVP {
   @Test 
   public void testSerializeDatasetJsonGeneratorSerializerProvider () throws Exception {
     String tsvFileName="LGG.AgilentG4502A_07_3.Level_2.tsv";    
-    PresetDescriptor descriptor = new SimplePresetDescriptor ("NVP_"+tsvFileName, 
+    PresetDescriptor descriptor = new SimplePresetDescriptor (tsvFileName, 
                                                               rootUrl, 
                                                               "LGG/Level_2/"+tsvFileName, ""); 
     Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", null);
@@ -122,7 +122,7 @@ public class TestDatasetSerializerNVP {
     
     
 //    JsonFactory jfactory = new JsonFactory();
-    String jsonFileName = tsvFileName+".json";
+    String jsonFileName = tsvFileName+".flat.json";
     URL jsonURL = new URL(this.rootUrl, jsonFileName);
     log.debug("jsonURL:"+jsonURL);
     File jsonFile = new File(jsonURL.toURI ());
@@ -137,7 +137,7 @@ public class TestDatasetSerializerNVP {
 //    
       
     workspace.put (presetDataset);
-    Timer timer = Timer.start ("LGG-JSON-NVP");
+    Timer timer = Timer.start ("GET-LGG-JSON-FLAT");
     this.mockMvc.perform(get("/dataset/preset_test/data").param ("format", "json")
                                             .session (mocksession)
                                             .accept("application/json"))            
@@ -170,6 +170,7 @@ public class TestDatasetSerializerNVP {
                 }
                 try {
                   writer.write (String.format("%20s = %s", label, value));
+                  writer.flush ();
                 } catch (IOException e) {
                   // TODO Auto-generated catch block
                   e.printStackTrace();

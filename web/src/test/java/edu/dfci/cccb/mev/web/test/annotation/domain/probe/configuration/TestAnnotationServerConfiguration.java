@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.test.annotation.domain.probe.configuration;
+package edu.dfci.cccb.mev.web.test.annotation.domain.probe.configuration;
 
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

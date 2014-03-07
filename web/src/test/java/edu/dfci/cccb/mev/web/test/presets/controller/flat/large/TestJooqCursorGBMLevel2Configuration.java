@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.test.presets.domain.dataset.flat.large;
+package edu.dfci.cccb.mev.web.test.presets.controller.flat.large;
 
 import static java.lang.System.getProperty;
 
@@ -33,6 +33,7 @@ public class TestJooqCursorGBMLevel2Configuration {
                                                         + environment.getProperty ("user.home") 
                                                         + "/mev/data/tcga/"
                                                         + "mev-presets-FLAT-GBM.AgilentG4502A_07_2.Level_2.tsv"
+                                                        + ";AUTO_SERVER=TRUE"
                                                         + ";QUERY_CACHE_SIZE=100000"
                                                         + ";CACHE_SIZE=1048576");
     dataSource.setUsername ("sa");

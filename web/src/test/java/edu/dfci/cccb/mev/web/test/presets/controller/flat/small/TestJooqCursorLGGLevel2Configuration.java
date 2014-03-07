@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.test.presets.domain.dataset.flat.med;
+package edu.dfci.cccb.mev.web.test.presets.controller.flat.small;
 
 import static java.lang.System.getProperty;
 
@@ -22,7 +22,7 @@ import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfiguratio
 @Log4j
 @Configuration
 @Import(PresetsRestConfigurationTest.class)
-public class TestJooqCursorLUSCLevel2Configuration {
+public class TestJooqCursorLGGLevel2Configuration {
 
   @Inject Environment environment;
   @Bean(name="presets-datasource", destroyMethod = "close")
@@ -32,7 +32,7 @@ public class TestJooqCursorLUSCLevel2Configuration {
     dataSource.setUrl ("jdbc:h2:file:"
                                                         + environment.getProperty ("user.home") 
                                                         + "/mev/data/tcga/"
-                                                        + "mev-presets-FLAT-LUSC.HT_HG-U133A.Level_2.tsv"
+                                                        + "mev-presets-FLAT-LGG.AgilentG4502A_07_3.Level_2.tsv"
                                                         + ";QUERY_CACHE_SIZE=100000"
                                                         + ";CACHE_SIZE=1048576");
     dataSource.setUsername ("sa");

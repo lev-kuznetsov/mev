@@ -69,7 +69,7 @@ public class SimpleDatasetJsonSerializer extends JsonSerializer<Dataset> {
     provider.defaultSerializeField (ROW.name ().toLowerCase (), value.dimension (ROW), jgen);
     provider.defaultSerializeField (COLUMN.name ().toLowerCase (), value.dimension (COLUMN), jgen);
     writeValues (jgen, value.values (), value.dimension (ROW).keys (), value.dimension (COLUMN).keys ());
-    jgen.writeEndObject ();
+    jgen.writeEndObject ();        
   }
 
   public void writeValues (JsonGenerator jgen, Values values, List<String> rows, List<String> columns) throws IOException,

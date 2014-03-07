@@ -71,13 +71,14 @@ public class PresetDimensionBuilderFlatTable implements PresetDimensionBuilder{
       Table<Record> table = tableByName (tableName);
       Field<String> fieldRowId = fieldByName (String.class, fieldRowIdName);
       //get rows
-      Timer timer = Timer.start ("get-row-keys");
-      ResultQuery<Record1<String>> queryRowKeys =context.select(fieldRowId).from(table).getQuery ();
+      Timer timer = Timer.start ("get-row-keys");      
+      ResultQuery<Record1<String>> queryRowKeys =context.select(fieldRowId).from(table).getQuery ();      
       String[] arows = queryRowKeys.fetchArray (fieldRowId);
+      timer.read ("fetch-array");
   //    List<String> rows = Arrays.asList (arows);
-      List<String> rows = new ArrayList<String>(arows.length);
+      List<String> rows = new ArrayList<String>(arows.length);      
       Collections.addAll (rows, arows);
-      
+      timer.read ("collection");      
       if(log.isDebugEnabled ()){
         timer.read();
         log.debug ("rows.size(): " + rows.size ());

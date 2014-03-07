@@ -48,7 +48,8 @@ import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
-import edu.dfci.cccb.mev.test.presets.domain.dataset.flat.TestPresetsDatasetFlatTableConfig;
+import edu.dfci.cccb.mev.test.presets.configuration.persistence.flat.TestJooqCursorLUSCLevel2Configuration;
+import edu.dfci.cccb.mev.test.presets.configuration.persistence.flat.TestPresetsDatasetFlatTableConfig;
 import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 
 @Log4j

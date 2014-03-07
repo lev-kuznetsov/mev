@@ -16,8 +16,7 @@
 	</parent>
 
 	<properties>
-  		<jackson.version>2.2.2</jackson.version>
-  		<h2.version>1.3.174</h2.version>
+  		<jackson.version>2.2.2</jackson.version>  		
 		<hibernate.version>4.2.7.SP1</hibernate.version>
   	</properties>
 
@@ -27,6 +26,13 @@
 		<dependency>
 			<groupId>edu.dfci.cccb</groupId>
 			<artifactId>mev-dataset-domain</artifactId>
+			<version>BAYLIE-SNAPSHOT</version>
+		</dependency>
+		
+		<!-- Persistence Configuration -->		
+		<dependency>
+			<groupId>edu.dfci.cccb</groupId>
+			<artifactId>mev-configuration-persistence</artifactId>
 			<version>BAYLIE-SNAPSHOT</version>
 		</dependency>
 
@@ -42,13 +48,6 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
-		</dependency>
-
-		<!-- H2 -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>${h2.version}</version>
 		</dependency>
 
 		<!-- DataSource -->

@@ -18,6 +18,7 @@ import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;
 import org.springframework.beans.factory.annotation.Autowire;
+import org.springframework.context.Lifecycle;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -28,6 +29,8 @@ import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
+import edu.dfci.cccb.mev.configuration.persistense.h2.H2Console;
+import edu.dfci.cccb.mev.configuration.persistense.h2.H2Server;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.jooq.JooqBasedDatasourceValueStoreBuilder;
@@ -58,9 +61,17 @@ public class PresetPersistenceConfiguration {
   
   @Inject
   private Environment environment;
- 
+
+//  @Bean(name="presets-h2-server")
+//  public Lifecycle presetsH2TcpServer(){
+//    int port = environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"h2.tcp.port", Integer.class, 18054);
+//    Lifecycle server = new H2Server("Presets", port, "-tcp","-tcpAllowOthers");    
+//    return server;
+//  }
+
   @Bean(name="presets-datasource", destroyMethod = "close")
   public DataSource dataSource () {
+    
     BasicDataSource dataSource = new BasicDataSource ();
     dataSource.setDriverClassName (environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"database.driver.class", "org.h2.Driver"));
     dataSource.setUrl (environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"database.url",
@@ -164,7 +175,15 @@ public class PresetPersistenceConfiguration {
 //      return initializer;
 //  }
 
-  
+//  @Bean
+//  public Lifecycle presetsH2Console(){
+//    int port = environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"h2.console.port", Integer.class, 18053);
+//    int fetchSize = environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"h2.serverResultSetFetchSize", Integer.class, 1000);
+//    Lifecycle server = new H2Console("Presets", port, "h2.serverResultSetFetchSize", String.valueOf(fetchSize));
+//    server.start ();
+//    return server;
+//  }
+
   @Bean(name="presetDetasetBuilder", autowire=Autowire.NO)  
   protected DatasetBuilder presetDatasetBuilder(){
     SimpleDatasetBuilder datasetBuilder = new SimpleDatasetBuilder();    
@@ -203,4 +222,6 @@ public class PresetPersistenceConfiguration {
     log.debug ("***PresetDataSetBuilder: FLATTABLE-DB");
     return new PresetDatasetBuilderFlatTableDB (dataSource, context, dimensionBuilder);
   }
+  
+  
 }

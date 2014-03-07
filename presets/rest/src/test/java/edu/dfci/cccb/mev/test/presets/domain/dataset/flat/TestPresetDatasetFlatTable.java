@@ -40,6 +40,7 @@ import edu.dfci.cccb.mev.presets.contract.PresetValuesLoader;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
 import edu.dfci.cccb.mev.presets.util.timer.Timer;
+import edu.dfci.cccb.mev.test.presets.configuration.persistence.flat.TestPresetsDatasetFlatTableConfig;
 @Log4j
 @ContextConfiguration(classes={TestPresetsDatasetFlatTableConfig .class})
 @RunWith(SpringJUnit4ClassRunner.class) 
@@ -86,7 +87,7 @@ public class TestPresetDatasetFlatTable {
   }
   
   ////////LGG
-  @Test 
+  @Test @Ignore
   public void testSmallestTcgaLevel2 () throws PresetException, MalformedURLException, InvalidDimensionTypeException, InvalidCoordinateException, SQLException, InterruptedException {
     Dataset presetDataset = getDataset ("LGG.AgilentG4502A_07_3.Level_2.tsv", "LGG/Level_2/");
     Timer timer = Timer.start ("LGG-DOUBLE-LOOP");    
@@ -94,11 +95,11 @@ public class TestPresetDatasetFlatTable {
     timer.read ();
     log.debug ("flat-count:"+count);
   } 
-  @Test 
+  @Test @Ignore
   public void testSmallestTcgaLevel2again () throws PresetException, MalformedURLException, InvalidDimensionTypeException, InvalidCoordinateException, SQLException, InterruptedException {
     testSmallestTcgaLevel2 ();
   }
-  @Test 
+  @Test @Ignore
   public void testSmallestTcgaLevel2Iterate () throws PresetException, MalformedURLException, InvalidDimensionTypeException, InvalidCoordinateException, SQLException, InterruptedException {
     Dataset presetDataset = getDataset ("LGG.AgilentG4502A_07_3.Level_2.tsv", "LGG/Level_2/");
     Timer timer = Timer.start ("LGG-ITERABLE");    
@@ -119,6 +120,8 @@ public class TestPresetDatasetFlatTable {
 
   }
   
+  
+  
   @Test @Ignore
   public void largetTcgaGBM50ColsIterate() throws PresetException, MalformedURLException, InterruptedException{
     if(bWaitForProfiler){
@@ -133,6 +136,7 @@ public class TestPresetDatasetFlatTable {
                                                               new URL (rootUrl), 
                                                               folder+tsvFileName, ""); 
     Dimension columns = dimensionBuilder.buildColumns (descriptor);
+    
     List<String> columnList1=new ArrayList<String> (50);
     List<String> columnList2=new ArrayList<String> (50);
     int colsCount=0;
