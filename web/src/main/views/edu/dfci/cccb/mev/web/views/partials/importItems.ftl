@@ -49,7 +49,8 @@
 	         </div>
 	        
 	        <div class="tab-pane" id="tcga">
-			  <div id="presetMgr" preset-manager ng-controller="PresetManagerController"></div>
+			  <div id="presetMgr" preset-manager ng-controller="PresetManagerController">
+			  </div>
 	        </div>
 	       
 	        
