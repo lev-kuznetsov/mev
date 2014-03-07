@@ -93,21 +93,21 @@ public class PresetPersistenceConfiguration {
   public LocalSessionFactoryBean sessionFactory () {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean ();
     sessionFactory.setDataSource (dataSource());
-    sessionFactory.setPackagesToScan (environment.getProperty ("session.factory.scan.packages",
+    sessionFactory.setPackagesToScan (environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"session.factory.scan.packages",
                                                                String[].class,
                                                                new String[] { "edu.dfci.cccb.mev" }));
     Properties hibernateProperties = new Properties ();
     hibernateProperties.setProperty ("hibernate.hbm2ddl.auto",
-                                     environment.getProperty ("hibernate.hbm2ddl.auto",
+                                     environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"hibernate.hbm2ddl.auto",
                                                               "create-drop"));
     hibernateProperties.setProperty ("hibernate.dialect",
-                                     environment.getProperty ("hibernate.dialect",
+                                     environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"hibernate.dialect",
                                                               "org.hibernate.dialect.H2Dialect"));
     hibernateProperties.setProperty ("hibernate.ejb.naming_strategy",
-                                     environment.getProperty ("hibernate.ejb.naming_strategy",
+                                     environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"hibernate.ejb.naming_strategy",
                                                               "org.hibernate.cfg.ImprovedNamingStrategy"));
     hibernateProperties.setProperty ("hibernate.connection.charSet",
-                                     environment.getProperty ("hibernate.connection.charSet",
+                                     environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"hibernate.connection.charSet",
                                                               "UTF-8"));
     sessionFactory.setHibernateProperties (hibernateProperties);
     return sessionFactory;

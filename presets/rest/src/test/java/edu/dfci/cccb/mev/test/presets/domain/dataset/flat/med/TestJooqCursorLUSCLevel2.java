@@ -112,7 +112,7 @@ public class TestJooqCursorLUSCLevel2 {
     log.debug ("flat-count:" + count);
   }
 
-  @Test
+  @Test @Ignore
   public void testSelect_OneFieldAllRows () {
     log.debug ("... Running testSelect_OneFieldAllRows...");
 
@@ -140,7 +140,7 @@ public class TestJooqCursorLUSCLevel2 {
     log.debug ("flat-count:" + count);
   }
 
-  @Test  
+  @Test  @Ignore
   public void testSelect_SomeFieldSomeRows () {
     log.debug ("... Running testSelect_SomeFieldSomeRows...");
 

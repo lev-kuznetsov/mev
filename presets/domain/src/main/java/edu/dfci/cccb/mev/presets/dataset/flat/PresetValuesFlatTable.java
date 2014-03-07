@@ -41,6 +41,7 @@ public class PresetValuesFlatTable implements PresetValues {
   @Synchronized
   private void setLastRecord(Record record){    
     this.lastMap=record.intoMap ();
+    this.lastRecord=record;
     this.lastRowKey=(String)this.lastMap.get ("COLUMN0");
   }
   @Synchronized
@@ -60,7 +61,7 @@ public class PresetValuesFlatTable implements PresetValues {
         try{
           query =context.selectFrom (table)
                   .where (this.rowIdField.eq (row));
-        //  log.debug ("PresetValuesFlatTable sql:"+query.getSQL ());      
+          log.debug ("PresetValuesFlatTable sql:"+query.getSQL ());      
           Record record = query.fetchOne ();
           
   //        Record record=null;
@@ -82,7 +83,8 @@ public class PresetValuesFlatTable implements PresetValues {
             query.close();            
         }
       } 
-      String value = (String)this.lastMap.get(column);
+//      String value = (String)this.lastMap.get(column);
+      String value = (String)this.lastRecord.getValue (columnField);
       
       if ("Inf".equalsIgnoreCase (value))
         return POSITIVE_INFINITY;

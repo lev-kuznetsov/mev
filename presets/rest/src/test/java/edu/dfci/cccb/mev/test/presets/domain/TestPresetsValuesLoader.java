@@ -2,6 +2,7 @@ package edu.dfci.cccb.mev.test.presets.domain;
 
 import javax.inject.Inject;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,7 +20,7 @@ public class TestPresetsValuesLoader {
   @Inject PresetValuesLoader loader;
   @Inject Presets presets;
   
-  @Test
+  @Test @Ignore
   public void testLoadAll () throws PresetException {
     loader.loadAll (presets);   
   }

@@ -175,7 +175,7 @@ public class TestJooqCursorLGGLevel2 {
     log.debug ("flat-count:"+count);
   }
   
-  @Test 
+  @Test @Ignore
   public void testSelect_SomeFieldSomeRows () {
     log.debug("... Running testSelect_SomeFieldSomeRows...");
     String tsvFileName="LGG.AgilentG4502A_07_3.Level_2.tsv";

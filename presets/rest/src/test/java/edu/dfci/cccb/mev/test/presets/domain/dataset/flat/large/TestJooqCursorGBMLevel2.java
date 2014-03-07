@@ -101,7 +101,7 @@ public class TestJooqCursorGBMLevel2 {
     log.debug ("flat-count:" + count + ", duration: " + duration);
   }
 
-  @Test 
+  @Test @Ignore
   public void testSelect_AllFields () {
     log.debug ("... Running testSelect_AllFields...");
     List<String> rows = getRowKeys (tsvFileName, ID_FIELD_NAME);

@@ -13,6 +13,7 @@ import lombok.extern.log4j.Log4j;
 
 import org.jooq.DSLContext;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.core.env.Environment;
@@ -48,7 +49,7 @@ public class TestDimensionBuilderFlatTable {
 //    this.dimensionBuilder=new PresetDimensionBuilderFlatTable (context);
   }
   
-  @Test 
+  @Test @Ignore
   public void testBuildRows() throws PresetException, MalformedURLException, InterruptedException{
     Thread.sleep (1000*100);
     String tsvFileName="GBM.AgilentG4502A_07_2.Level_2.tsv";
