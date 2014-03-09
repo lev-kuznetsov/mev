@@ -100,10 +100,7 @@ define (
             };
 
           } ])
-          .factory (
-              'API',
-              [
-                  'QHTTP',
+          .factory ( 'API', [ 'QHTTP',
                   'alertService',
                   function (QHTTP, alertService) {
 
