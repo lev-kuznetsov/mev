@@ -146,9 +146,13 @@ define ([ 'jquery', 'angular'], function ($, angular) {
   
     	  $scope.loadUploads = function(){
     		  
-    	    	API.user.datasets.get().then(function(data){
-    	          $scope.userUploads = data;
-    	        });
+    	      API.user.datasets().get().$promise.then(function(d){
+    	          console.log(d) 
+    	      })   
+    	    	
+    	    	//.datasets.get().then(function(data){
+    	          //$scope.userUploads = data;
+    	        //});
 
     	  };
     	  

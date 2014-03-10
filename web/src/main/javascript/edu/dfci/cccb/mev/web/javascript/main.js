@@ -9,10 +9,12 @@ require.config ({
   paths : {
     jquery : [ 'http://codeorigin.jquery.com/jquery-2.1.0', 
                '/library/webjars/jquery/2.1.0/jquery' ],
-    angular : [ //'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular',
+    angular : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular',
                '/library/webjars/angularjs/1.2.13/angular' ],
-    angularRoute : [ //'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min',
+    angularRoute : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min',
                            '/library/webjars/angularjs/1.2.13/angular-route.min' ],
+    angularResource : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-resource',
+                           '/library/webjars/angularjs/1.2.13/angular-resource' ],
     bootstrap : [ '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min',
                  '/library/webjars/bootstrap/3.1.1/js/bootstrap.min' ],
     d3 : [ '//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3', 
@@ -27,6 +29,10 @@ require.config ({
     },
     'angularRoute' : {
         exports : 'ngRoute',
+        deps: ['angular']
+    },
+    'angularResource' : {
+        exports : 'ngResource',
         deps: ['angular']
     },
     'd3' : {

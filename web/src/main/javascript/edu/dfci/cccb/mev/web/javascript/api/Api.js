@@ -1,32 +1,33 @@
 define(['jquery','angular'], function(jquery, angular){
   
-    return angular.module( 'Mev.Api', [])
-        .factory ('API.user', ['$resource', function($resource){
+    return angular.module( 'Mev.Api', ['ngResource'])
+        .factory ('API', ['$resource', function($resource){
             return {
-                user: {
-                    datasets: function(){
+                user : {
+                    datasets : function(){
                         var access = $resource('/dataset',
-                        {format='json'});
+                        {format:'json'},
+                        {get:{method:"GET", isArray:true}});
                         
                         return access;
-                    },
+                    }
                 },
-                dataset: function(){
+                dataset : {
                     
-                    this.selections = function(){
+                    selections : function(){
                         var access = $resource('/dataset/:dataset/:dimension/selection',
-                                {format='json'});
+                                {format:'json'});
                         
                         return access;
                     },
-                    this.data = function(){
-                        var access = $resource('/dataset/:dataset/data?format=json');
+                    data : function(){
+                        var access = $resource('/dataset/:dataset/data?format:json');
                         
                         return access;
                     },
-                    this.analysis = function(){
+                    analysis : function(){
                         var access = $resource('/dataset/:dataset/analysis/:name',
-                            {format='json'},
+                            {format:'json'},
                             {
                                 'create.limma':{
                                     method:'POST', 
@@ -37,7 +38,7 @@ define(['jquery','angular'], function(jquery, angular){
                                 },
                                 'create.hcl':{
                                     method:'Post',
-                                    url:'dataset/:dataset/analyze/hcl/"
+                                    url:'dataset/:dataset/analyze/hcl/'
                                         +  ':name(:dimension,:metric,:algorithm)',
                                 }
                             }

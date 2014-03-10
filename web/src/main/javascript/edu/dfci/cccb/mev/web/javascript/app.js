@@ -1,12 +1,14 @@
-define(['angular', 'angularRoute', 'directives', 'services', 'controllers', 'setmanager/SetManager'], function(angular){
+define(['angular', 'angularResource', 'angularRoute', 'directives', 'services', 'controllers', 'setmanager/SetManager', 'api/Api'], function(angular){
 	'use strict';
 	return angular.module('myApp', [
 	     'ngRoute',
+	     'ngResource',
 	     'myApp.directives', 
 	     'myApp.services',
 	     'myApp.controllers',
 	     'Mev.SetManager',
-	     'Mev.PresetManager'])
+	     'Mev.PresetManager',
+	     'Mev.Api'])
 	.config(['$routeProvider', '$locationProvider', '$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {
 		
 	  $sceProvider.enabled(false);
