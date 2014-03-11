@@ -16,6 +16,7 @@
 
 package edu.dfci.cccb.mev.common.services.guice;
 
+import static edu.dfci.cccb.mev.common.services.servlet.ServicesFilter.SERVICE_ROOT_URL;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML_TYPE;
 
@@ -53,7 +54,7 @@ public class MevServiceModule extends JaxrsServiceModule {
       private final @Delegate JaxrsServiceBinder delegate = binder;
     });
 
-    binder.service ("/services/*");
+    binder.service (SERVICE_ROOT_URL);
   }
 
   /* (non-Javadoc)

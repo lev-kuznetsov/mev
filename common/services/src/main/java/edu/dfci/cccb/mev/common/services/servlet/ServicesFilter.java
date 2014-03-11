@@ -22,9 +22,12 @@ import com.google.inject.servlet.GuiceFilter;
 
 /**
  * Guice web filter
- *
+ * 
  * @author levk
  * @since CRYSTAL
  */
-@WebFilter (filterName = "services", urlPatterns = "/services/*")
-public class ServicesFilter extends GuiceFilter {}
+@WebFilter (filterName = "services", urlPatterns = ServicesFilter.SERVICE_ROOT_URL)
+public class ServicesFilter extends GuiceFilter {
+
+  public static final String SERVICE_ROOT_URL = "/services/*";
+}
