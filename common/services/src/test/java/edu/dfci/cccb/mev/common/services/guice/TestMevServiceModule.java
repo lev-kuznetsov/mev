@@ -21,7 +21,7 @@ import com.google.inject.Provides;
 import edu.dfci.cccb.mev.common.services.guice.annotation.Handles;
 import edu.dfci.cccb.mev.common.services.guice.annotation.Publishes;
 
-public class TestMevServiceModule extends JaxrsServiceModule {
+public class TestMevServiceModule extends MevServiceModule {
 
   @Provides
   @Publishes

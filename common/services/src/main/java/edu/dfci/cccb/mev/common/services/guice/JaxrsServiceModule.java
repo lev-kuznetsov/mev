@@ -66,7 +66,7 @@ public class JaxrsServiceModule extends AbstractJaxrsModule {
    */
   public static final String CONTENT_PARAMETER_VALUES = "jaxrs.content.negotiation.parameter.values";
 
-  public interface JaxrsServiceBinder extends JaxrsBinder {
+  public interface PublishingJaxrsBinder extends JaxrsBinder {
     /**
      * @param type to publish as a service
      * @return
@@ -84,7 +84,9 @@ public class JaxrsServiceModule extends AbstractJaxrsModule {
      * @return
      */
     <T> LinkedBindingBuilder<T> publishing (Key<T> key);
-
+  }
+  
+  public interface JaxrsServiceBinder extends JaxrsBinder, PublishingJaxrsBinder {
     /**
      * @param url service root
      */

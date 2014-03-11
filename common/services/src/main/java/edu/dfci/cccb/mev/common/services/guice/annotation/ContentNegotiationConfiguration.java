@@ -25,7 +25,7 @@ import javax.ws.rs.core.MediaType;
  */
 public interface ContentNegotiationConfiguration {
 
-  interface MappingConfiguration {
+  public interface MappingConfiguration {
     MappingConfiguration map (String value, MediaType content);
 
     MappingConfiguration map (Map<String, MediaType> map);

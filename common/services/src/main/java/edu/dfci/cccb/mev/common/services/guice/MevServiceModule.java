@@ -21,7 +21,9 @@ import static javax.ws.rs.core.MediaType.APPLICATION_XML_TYPE;
 
 import javax.ws.rs.core.MediaType;
 
+import lombok.Delegate;
 import edu.dfci.cccb.mev.common.services.guice.annotation.ContentNegotiationConfiguration;
+import edu.dfci.cccb.mev.common.services.guice.annotation.ContentNegotiationConfiguration.MappingConfiguration;
 
 /**
  * Enables the MeV RESTful services
@@ -29,7 +31,7 @@ import edu.dfci.cccb.mev.common.services.guice.annotation.ContentNegotiationConf
  * @author levk
  * @since CRYSTAL
  */
-public final class MevServicesModule extends JaxrsServiceModule {
+public class MevServiceModule extends JaxrsServiceModule {
 
   /**
    * Content type query parameter name
@@ -46,7 +48,11 @@ public final class MevServicesModule extends JaxrsServiceModule {
    * edu.dfci
    * .cccb.mev.common.services.guice2.JaxrsServiceModule.JaxrsServiceBinder) */
   @Override
-  public void configure (JaxrsServiceBinder binder) {
+  public final void configure (final JaxrsServiceBinder binder) {
+    configure (new PublishingJaxrsBinder () {
+      private final @Delegate JaxrsServiceBinder delegate = binder;
+    });
+
     binder.service ("/services/*");
   }
 
@@ -56,10 +62,24 @@ public final class MevServicesModule extends JaxrsServiceModule {
    * edu.dfci
    * .cccb.mev.common.services.guice.annotation.ContentNegotiationConfiguration) */
   @Override
-  public void configure (ContentNegotiationConfiguration configurer) {
-    configurer.parameter (PARAMETER)
-              .map ("json", APPLICATION_JSON_TYPE)
-              .map ("xml", APPLICATION_XML_TYPE)
-              .map ("tsv", TEXT_TSV_TYPE);
+  public final void configure (ContentNegotiationConfiguration configurer) {
+    configure (configurer.parameter (PARAMETER)
+                         .map ("json", APPLICATION_JSON_TYPE)
+                         .map ("xml", APPLICATION_XML_TYPE)
+                         .map ("tsv", TEXT_TSV_TYPE));
   }
+
+  /**
+   * Configure MeV REST resources
+   * 
+   * @param binder
+   */
+  public void configure (PublishingJaxrsBinder binder) {}
+
+  /**
+   * Configure content negotiation
+   * 
+   * @param configurer
+   */
+  public void configure (MappingConfiguration configurer) {}
 }

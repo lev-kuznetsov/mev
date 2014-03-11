@@ -1,2 +1,2 @@
-edu.dfci.cccb.mev.common.services.guice.MevServicesModule
+edu.dfci.cccb.mev.common.services.guice.MevServiceModule
 edu.dfci.cccb.mev.common.services.guice.TestMevServiceModule
