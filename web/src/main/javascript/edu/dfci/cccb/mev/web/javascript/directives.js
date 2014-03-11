@@ -265,15 +265,6 @@ define(
                                 };
                             }])
                     .directive(
-                            'analysisMenuBar',
-                            [function() {
-                                return {
-                                    restrict : 'E',
-                                    templateUrl : '/container/view/elements/analysisMenuBar'
-
-                                };
-                            }])
-                    .directive(
                             'expressionPanel',
                             [
                                     '$routeParams',
@@ -484,13 +475,22 @@ define(
                                                 // #576
 
                                                 // Column dimension forcing #576
-                                                $http({
-                                                    method:"GET",
-                                                    url:'/dataset/'+ $routeP.datasetName +'/' + "column" +'/selection',
-                                                    params:{format:'json'}
-                                                }).then(function(d) {
-                                                            scope.selections = d;
-                                                });
+                                                $http(
+                                                        {
+                                                            method : "GET",
+                                                            url : '/dataset/'
+                                                                    + $routeP.datasetName
+                                                                    + '/'
+                                                                    + "column"
+                                                                    + '/selection',
+                                                            params : {
+                                                                format : 'json'
+                                                            }
+                                                        })
+                                                        .then(
+                                                                function(d) {
+                                                                    scope.selections = d;
+                                                                });
 
                                                 scope.analysisDimension = {
                                                     name : "Column",
@@ -499,17 +499,27 @@ define(
 
                                                 scope.limmaInit = function() {
 
-                                                    $http({
-                                                        method : 'POST',
-                                                        url : '/dataset/' + $routeP.datasetName + '/analyze/limma/'
-                                                                + scope.analysisName + "(dimension="
-                                                                + "column" + ",experiment="
-                                                                + scope.analysisExperiment + ",control="
-                                                                + scope.analysisControl + ")"
+                                                    $http(
+                                                            {
+                                                                method : 'POST',
+                                                                url : '/dataset/'
+                                                                        + $routeP.datasetName
+                                                                        + '/analyze/limma/'
+                                                                        + scope.analysisName
+                                                                        + "(dimension="
+                                                                        + "column"
+                                                                        + ",experiment="
+                                                                        + scope.analysisExperiment
+                                                                        + ",control="
+                                                                        + scope.analysisControl
+                                                                        + ")"
 
-                                                    }).then(function(){
-                                                        scope.buildPreviousAnalysisList()
-                                                    });
+                                                            })
+                                                            .then(
+                                                                    function() {
+                                                                        scope
+                                                                                .buildPreviousAnalysisList()
+                                                                    });
 
                                                     resetSelections();
 
@@ -533,30 +543,29 @@ define(
                                     }])
                     .directive(
                             'uploadsTable',
-                            [
-                                    function() {
-                                        return {
-                                            restrict : 'A',
-                                            scope : {
-                                                uploads : '='
-                                            },
-                                            templateUrl : '/container/view/elements/uploadsTable',
-                                            link : function(scope, elems, attrs) {
+                            [function() {
+                                return {
+                                    restrict : 'A',
+                                    scope : {
+                                        uploads : '='
+                                    },
+                                    templateUrl : '/container/view/elements/uploadsTable',
+                                    link : function(scope, elems, attrs) {
 
-                                                scope.datasets = [];
+                                        scope.datasets = [];
 
-                                                scope
-                                                        .$watch(
-                                                                "uploads",
-                                                                function(newVal, oldVal) {
-                                                                    if (oldVal != undefined) {
-                                                                        scope.datasets = newVal
-                                                                    }
-                                                                })
+                                        scope
+                                                .$watch(
+                                                        "uploads",
+                                                        function(newVal, oldVal) {
+                                                            if (oldVal != undefined) {
+                                                                scope.datasets = newVal
+                                                            }
+                                                        })
 
-                                            }
-                                        }
-                                    }])
+                                    }
+                                }
+                            }])
                     .directive(
                             'uploadDrag',
                             [function() {

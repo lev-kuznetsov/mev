@@ -30,6 +30,8 @@ define(
                                                 "Green-Black-Red",
                                                 "Yellow-Black-Blue",
                                                 "Red-White-Blue"];
+                                        
+                                        $scope.selectedColor = "Yellow-Black-Blue";
 
                                         $scope.defaultColors = function() {
                                             $scope.selectedColor = "Yellow-Black-Blue";
