@@ -16,33 +16,30 @@
 
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
-import edu.dfci.cccb.mev.common.domain.support.MevException;
+import java.util.Arrays;
 
 /**
- * Superclass for all dataset exceptions
- * 
  * @author levk
- * @since BAYLIE
  */
-public abstract class DatasetException extends MevException {
+public class InvalidCoordinateSetException extends DatasetException {
   private static final long serialVersionUID = 1L;
 
   /**
    * 
    */
-  public DatasetException () {}
+  public InvalidCoordinateSetException () {}
 
   /**
    * @param message
    */
-  public DatasetException (String message) {
+  public InvalidCoordinateSetException (String message) {
     super (message);
   }
 
   /**
    * @param cause
    */
-  public DatasetException (Throwable cause) {
+  public InvalidCoordinateSetException (Throwable cause) {
     super (cause);
   }
 
@@ -50,7 +47,7 @@ public abstract class DatasetException extends MevException {
    * @param message
    * @param cause
    */
-  public DatasetException (String message, Throwable cause) {
+  public InvalidCoordinateSetException (String message, Throwable cause) {
     super (message, cause);
   }
 
@@ -60,11 +57,14 @@ public abstract class DatasetException extends MevException {
    * @param enableSuppression
    * @param writableStackTrace
    */
-  public DatasetException (String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+  public InvalidCoordinateSetException (String message,
+                                        Throwable cause,
+                                        boolean enableSuppression,
+                                        boolean writableStackTrace) {
     super (message, cause, enableSuppression, writableStackTrace);
   }
 
-  public <E extends DatasetException> E dataset (Dataset<?, ?> dataset) {
-    return property ("dataset", dataset.name ());
+  public InvalidCoordinateSetException coordinates (Object... projections) {
+    return property ("coordinates", Arrays.toString (projections));
   }
 }

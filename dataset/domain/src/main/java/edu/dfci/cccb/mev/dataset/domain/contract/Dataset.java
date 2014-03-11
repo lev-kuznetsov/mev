@@ -32,23 +32,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @XmlAccessorType (NONE)
-public interface Dataset <V> {
+public interface Dataset <K, V> {
+
+  /**
+   * @return name
+   */
+  @XmlAttribute
+  String name ();
 
   /**
    * @return dimensions
    */
   @XmlAttribute
-  List<Dimension> dimensions ();
+  List<Dimension<K>> dimensions ();
 
   /**
    * @return value store
    */
   @XmlAttribute
-  Values<V> values ();
+  Values<K, V> values ();
 
   /**
    * @return analyses
    */
   @XmlAttribute
   List<Analysis> analyses ();
+
+  /**
+   * @param type of analysis
+   * @return analyzer
+   */
+  <A extends Analysis> Analyzer<A> analyze (String type);
 }

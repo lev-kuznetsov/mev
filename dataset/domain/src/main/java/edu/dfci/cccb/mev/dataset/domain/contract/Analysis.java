@@ -19,6 +19,7 @@ package edu.dfci.cccb.mev.dataset.domain.contract;
 import static javax.xml.bind.annotation.XmlAccessType.NONE;
 
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -28,4 +29,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @XmlAccessorType (NONE)
-public interface Analysis {}
+public interface Analysis {
+
+  /**
+   * @return type of analysis
+   */
+  @XmlAttribute
+  public String type ();
+}

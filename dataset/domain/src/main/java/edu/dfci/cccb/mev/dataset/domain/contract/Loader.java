@@ -16,24 +16,12 @@
 
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
-import static javax.xml.bind.annotation.XmlAccessType.NONE;
-
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import edu.dfci.cccb.mev.dataset.domain.contract.Parser.Stream;
 
 /**
- * Value store
- * 
  * @author levk
- * @since BAYLIE
  */
-@XmlRootElement
-@XmlAccessorType (NONE)
-public interface Values <K, V> {
+public interface Loader <K, V> {
 
-  /**
-   * @param coordinate
-   * @return value
-   */
-  V get (@SuppressWarnings ("unchecked") K... coordinate) throws InvalidCoordinateSetException;
+  Dataset<K, V> load (String name, Stream<K, V> stream);
 }

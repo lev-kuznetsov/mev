@@ -29,4 +29,4 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @XmlAccessorType (NONE)
-public interface Dimension {}
+public interface Dimension <K> extends Iterable<K> {}

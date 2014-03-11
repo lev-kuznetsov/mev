@@ -22,18 +22,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Value store
+ * Equivalent to AnalysisBuilder in BAYLIE
  * 
  * @author levk
- * @since BAYLIE
+ * @since CRYSTAL
  */
 @XmlRootElement
 @XmlAccessorType (NONE)
-public interface Values <K, V> {
+public interface Analyzer <A extends Analysis> {
 
   /**
-   * @param coordinate
-   * @return value
+   * @return completed analysis
    */
-  V get (@SuppressWarnings ("unchecked") K... coordinate) throws InvalidCoordinateSetException;
+  Analysis analyze ();
 }
