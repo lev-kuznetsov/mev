@@ -17,6 +17,8 @@ require.config ({
                            '/library/webjars/angularjs/1.2.13/angular-resource' ],
     bootstrap : [ '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min',
                  '/library/webjars/bootstrap/3.1.1/js/bootstrap.min' ],
+    bootstrapUi: ['//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.4.0/ui-bootstrap-tpls.min',
+                   'bootstrap-ui'],
     d3 : [ '//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3', 
            '/library/webjars/d3js/3.4.1/d3.min' ],
     retina : [ '/library/webjars/retinajs/0.0.2/retina' ],
@@ -34,6 +36,10 @@ require.config ({
     'angularResource' : {
         exports : 'ngResource',
         deps: ['angular']
+    },
+    'bootstrapUi':{
+            exports : 'ui.bootstrap',
+            deps:['angular']
     },
     'd3' : {
       exports : 'd3'

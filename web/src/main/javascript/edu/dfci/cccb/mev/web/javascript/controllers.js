@@ -81,16 +81,19 @@ define(
                                                                                         url : '/dataset/'
                                                                                                 + $routeParams.datasetName
                                                                                                 + '/analysis/'
-                                                                                                + name
+                                                                                                + name,
+                                                                                        params:{format:'json'}
                                                                                     })
                                                                                     .then(
                                                                                             function(
-                                                                                                    d) {
+                                                                                                    response) {
+                                                                                                
+                                                                                                var data = response.data;
 
                                                                                                 var randstr = prsg(5);
                                                                                                 var randstr2 = prsg(5);
 
-                                                                                                if (d.type == "Hierarchical Clustering") {
+                                                                                                if (data.type == "Hierarchical Clustering") {
 
                                                                                                     $scope.previousHCLClusters
                                                                                                             .push({
@@ -101,11 +104,11 @@ define(
                                                                                                                 dataParent : '#'
                                                                                                                         + randstr2,
                                                                                                                 divId : randstr,
-                                                                                                                datar : d
+                                                                                                                datar : data
                                                                                                             });
 
                                                                                                 } else
-                                                                                                    if (d.type == "LIMMA Differential Expression Analysis") {
+                                                                                                    if (data.type == "LIMMA Differential Expression Analysis") {
 
                                                                                                         $scope.previousLimmaAnalysis
                                                                                                                 .push({
@@ -116,7 +119,7 @@ define(
                                                                                                                     dataParent : '#'
                                                                                                                             + randstr2,
                                                                                                                     divId : randstr,
-                                                                                                                    datar : d
+                                                                                                                    datar : data
                                                                                                                 });
                                                                                                     }
                                                                                             });

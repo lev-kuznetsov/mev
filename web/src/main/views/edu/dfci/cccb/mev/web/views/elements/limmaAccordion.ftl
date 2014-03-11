@@ -1,19 +1,21 @@
-<div class="accordion" id="{{cluster.parentId}}" ng-repeat="limma in previousLimmaAnalysis">
-    <div class="accordion-group">
-    
-	    <div class="accordion-heading">
-	      <a class="accordion-toggle" data-toggle="collapse" data-parent="{{limma.dataParent}}" href="{{limma.href}}">
-	        {{limma.datar.type}} : {{limma.name}}
-	      </a>
-	    </div> <!-- End Heading Div -->
-	    
-	    <div id="{{limma.divId}}" class="accordion-body collapse">
-	      <div class="accordion-inner">
+
+
+<div class="panel-group" id="{{limma.parentId}}" ng-repeat="limma in previousLimmaAnalysis">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="{{limma.dataParent}}" href="{{limma.href}}">
+          {{limma.datar.type}} : {{limma.name}} 
+        </a>
+      </h4>
+    </div>
+    <div id="{{limma.divId}}" class="panel-collapse">
+      <div class="panel-body">
+      
+        	<div class="container">
+	            <div class="col-md-12>
 	            
-	            <div class="row-fluid">
-	            <div class="span12>
-	            
-		            <div class="row-fluid">
+		            <div class="row">
 		            
 		              <div class="pull-left">
 		              
@@ -41,7 +43,7 @@
 			            
 			        </div>
 		            
-		            <div class="row-fluid">
+		            <div class="row">
 			        	<div class="limma-table" id="limmaResultsTable" ng-hide="!limma.datar.results || !showLimmaTables">
 			        	
 		                    <table class="table table-striped table-bordered">
@@ -77,6 +79,26 @@
                 
                 </div> <!-- End Span -->
                 </div> <!-- End Row -->
+	        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="accordion" id="{{limma.parentId}}" ng-repeat="limma in previousLimmaAnalysis">
+    <div class="accordion-group">
+    
+	    <div class="accordion-heading">
+	      <a class="accordion-toggle" data-toggle="collapse" data-parent="{{limma.dataParent}}" href="{{limma.href}}">
+	        {{limma.datar.type}} : {{limma.name}}
+	      </a>
+	    </div> <!-- End Heading Div -->
+	    
+	    <div id="{{limma.divId}}" class="accordion-body collapse">
+	      <div class="accordion-inner">
+	            
+	            
 	        
 	      </div>
 	    </div> <!-- End Body Div -->

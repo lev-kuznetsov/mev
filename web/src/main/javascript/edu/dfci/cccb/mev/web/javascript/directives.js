@@ -152,8 +152,7 @@ define(
                                                                                         pageWidth - 30);
                                                                         showSidePanel = false;
                                                                     } else {
-                                                                        console
-                                                                                .log("clicked")
+                                                                        
                                                                         leftPanel
                                                                                 .css(
                                                                                         "width",
@@ -784,7 +783,6 @@ define(
                                                     .links(nodes);
 
                                             var labels = noder(tree);
-                                            console.log(labels)
 
                                             if (labels.length <= 50) {
                                                 canvas

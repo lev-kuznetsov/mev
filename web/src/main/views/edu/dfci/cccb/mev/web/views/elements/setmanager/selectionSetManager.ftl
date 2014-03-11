@@ -1,14 +1,14 @@
 
-<div id="setmanagerAccordion" class="accordion">
+<div id="setmanagerAccordion" class="panel-group">
 
-	<div class="accordion-group">
-		<div class="accordion-heading" ng-dblclick="sayHelloCtl()">
-			<a class="accordion-toggle" data-toggle="collapse"
+	<div class="panel panel-default">
+		<div class="panel-heading" ng-dblclick="sayHelloCtl()">
+			<a class="accordion-toggle" data-parent="setmanagerAccordion" data-toggle="collapse"
 				href="#collapseSetManagerColumns"> Column Sets </a>			
 		</div><!-- End Heading Div -->
 
-		<div id="collapseSetManagerColumns" class="accordion-body collapse">
-			<div class="accordion-inner">
+		<div id="collapseSetManagerColumns" class="panel-collapse">
+			<div class="panel-body">
 				<selection-set-list 
 					mev-selections="heatmapData.column.selections" 
 					mev-base-url="/annotations/{{heatmapId}}/annotation/column"
@@ -20,15 +20,15 @@
 	</div><!-- End Accordion Grouping -->
 
 
-	<div class="accordion-group">
+	<div class="panel panel-default">
 
-		<div class="accordion-heading">
-			<a class="accordion-toggle" data-toggle="collapse"
+		<div class="panel-heading">
+			<a class="accordion-toggle" data-parent="setmanagerAccordion" data-toggle="collapse"
 				href="#collapseSetManagerRows"> Row Sets </a>
 		</div>		
 
-		<div id="collapseSetManagerRows" class="accordion-body collapse">
-			<div class="accordion-inner">
+		<div id="collapseSetManagerRows" class="panel-collapse">
+			<div class="panel-body">
 			
 				<selection-set-list 
 					mev-selections="heatmapData.row.selections" 
