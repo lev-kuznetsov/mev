@@ -1,7 +1,9 @@
 define ([ 'jquery', 'angular'], function ($, angular) {
 
   return angular.module ('myApp.controllers', []).controller ('HeatmapCtrl',
-      [ '$scope', '$routeParams', 'API', 'pseudoRandomStringGenerator', '$rootScope', '$location', function ($scope, $routeParams, API, prsg, $rS, $loc) {
+      [ '$scope', '$routeParams', '$http', 'pseudoRandomStringGenerator', 
+        '$rootScope', '$location', 
+        function ($scope, $routeParams, $http, prsg, $rS, $loc) {
 
     	if (!$routeParams.datasetName){
     		$loc.path('/');
@@ -23,22 +25,24 @@ define ([ 'jquery', 'angular'], function ($, angular) {
   		$scope.defaultColors()
   		
   		$scope.heatmapData = undefined;
-      $scope.heatmapLeftTree = undefined;
-      $scope.heatmapTopTree = undefined;
-      $scope.heatmapLeftTreeName = undefined;
-      $scope.heatmapTopTreeName = undefined;
-      $scope.previousHCLClusters = undefined;
-      $scope.previousLimmaAnalysis = undefined;
-      $scope.previousAnalysisList = undefined;
+        $scope.heatmapLeftTree = undefined;
+        $scope.heatmapTopTree = undefined;
+        $scope.heatmapLeftTreeName = undefined;
+        $scope.heatmapTopTreeName = undefined;
+        $scope.previousHCLClusters = undefined;
+        $scope.previousLimmaAnalysis = undefined;
+        $scope.previousAnalysisList = undefined;
 
-            
-    	$scope.buildPreviousAnalysisList = function() {
-    		  
-    	$scope.previousHCLClusters = [];
-    		  
-    	$scope.previousLimmaAnalysis = [];
-
-      API.dataset.analysis.list ($routeParams.datasetName).then (
+        $scope.buildPreviousAnalysisList = function() {
+        	  
+        $scope.previousHCLClusters = [];
+        	  
+        $scope.previousLimmaAnalysis = [];
+        
+        $http({
+            method:'GET', 
+            url:'/dataset/'+$routeParams.datasetName+'/analysis/'
+        }).then (
                     function (prevList) {
                       
                     	
@@ -50,10 +54,11 @@ define ([ 'jquery', 'angular'], function ($, angular) {
                             
                             //$rS.$apply();
 
-                             API.analysis.get ({
-                                name : name,
-                                dataset : $routeParams.datasetName
-                              }).then(function(d){ 
+                             $http({
+                                 method:'GET', 
+                                 url:'/dataset/'+ $routeParams.datasetName 
+                                 + '/analysis/'+ name
+                             }).then(function(d){ 
                                 
                                 var randstr = prsg (5);
                                 var randstr2 = prsg (5);
@@ -93,14 +98,20 @@ define ([ 'jquery', 'angular'], function ($, angular) {
             
               $scope.updateHeatmapData = function(prevAnalysis, textForm){
                   
-                  API.analysis.hcl.update({
-                    dataset:$routeParams.datasetName,
-                    name:prevAnalysis
+                  $http({
+                      method : 'POST',
+                      url : '/dataset/' + $routeParams.datasetName + '/analysis/'
+                          + prevAnalysis,
+                      params:{format:'json'}
                     }).then(function(){
                       
                       $('#heatmapTabLink').trigger("click");
                       
-                      API.dataset.get ($routeParams.datasetName).then (
+                      $http({
+                          method : 'GET',
+                          url : '/dataset/' + $routeParams.datasetName + '/data' + '?format=json',
+                          params:{format:json}
+                        }).then (
                           function(data){
                           
                             if (data.column.root) {
@@ -140,20 +151,22 @@ define ([ 'jquery', 'angular'], function ($, angular) {
         
 
       } ])
-      .controller ('ImportsCtrl', [ '$scope', 'API', function ($scope, API) { 
+      .controller ('ImportsCtrl', [ '$scope', '$http', function ($scope, $http) { 
     	  
     	  $scope.userUploads = [];
   
     	  $scope.loadUploads = function(){
-    		  
-    	      API.user.datasets().get().$promise.then(function(d){
-    	          console.log(d) 
-    	      })   
-    	    	
-    	    	//.datasets.get().then(function(data){
-    	          //$scope.userUploads = data;
-    	        //});
+    	      
 
+    	      $http({
+                  method : 'GET',
+                  url : '/dataset',
+                  params : {
+                      format:'json'
+                  }})
+                  .then(function(response){
+                      $scope.userUploads = response.data; 
+                  });
     	  };
     	  
     	  $scope.loadUploads();

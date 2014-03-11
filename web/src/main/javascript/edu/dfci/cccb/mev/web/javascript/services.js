@@ -10,7 +10,7 @@ define (
             
         	  return function(input, threshold, on){
         	    var output = input.filter( function(d){
-        	       return (d[on] >= threshold) ? true : false
+        	       return (d[on] <= threshold) ? true : false
         	    });
         	    
         	    return (threshold == undefined) ? input : output;

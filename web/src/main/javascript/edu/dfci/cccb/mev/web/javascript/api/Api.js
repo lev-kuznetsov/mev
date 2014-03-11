@@ -1,15 +1,24 @@
-define(['jquery','angular'], function(jquery, angular){
-  
-    return angular.module( 'Mev.Api', ['ngResource'])
-        .factory ('API', ['$resource', function($resource){
+define(['jquery', 'angular'], function(jquery, angular) {
+    "use strict";
+    return angular.module('Mev.Api', ['ngResource'])
+        .factory('API', ['$resource', '$http', function($resource, $http) {
             return {
                 user : {
-                    datasets : function(){
-                        var access = $resource('/dataset',
-                        {format:'json'},
-                        {get:{method:"GET", isArray:true}});
+                    datasets : function() {
+                        var q = {
+                            method : 'GET',
+                            url : '/dataset',
+                            params : {
+                                format:'json'
+                            }
+                        };
                         
-                        return access;
+                        return $http({
+                            method : 'GET',
+                            url : '/dataset',
+                            params : {
+                                format:'json'
+                            }});
                     }
                 },
                 dataset : {
@@ -21,7 +30,8 @@ define(['jquery','angular'], function(jquery, angular){
                         return access;
                     },
                     data : function(){
-                        var access = $resource('/dataset/:dataset/data?format:json');
+                        var access = $resource('/dataset/:dataset/data',
+                                {format:'json'});
                         
                         return access;
                     },
@@ -29,6 +39,10 @@ define(['jquery','angular'], function(jquery, angular){
                         var access = $resource('/dataset/:dataset/analysis/:name',
                             {format:'json'},
                             {
+                                'list':{
+                                    method:'GET', 
+                                    url:'/dataset/:dataset/analysis/'
+                                },
                                 'create.limma':{
                                     method:'POST', 
                                     url:'/dataset/:dataset/analyze/limma/'

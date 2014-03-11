@@ -46,16 +46,15 @@ define (
                     scope.heatmapTopTreeName = undefined;
                     
                     document.title = "MeV: " + $routeParams.datasetName;
-
-                    API.dataset.get ($routeParams.datasetName).then (
-                        function(data){ 
+                    
+                    API.dataset.data().get({dataset:$routeParams.datasetName}).$promise.then (
+                        function(data){
                           scope.heatmapData = data;
                           
                         }, function(data){
-                        	//return home if error
-                        	$location.path('/');
+                            //return home if error
+                            $location.path('/');
                         });
-                    
                     
                     var rightPanel = jq('#rightPanel'),
                     leftPanel = jq('#leftPanel'),
@@ -351,7 +350,7 @@ define (
                 scope.$watch('analysisDimension', function(newval, oldval){
                   if (newval) {
                 	  
-                    API.dataset.selections.get($routeP.datasetName, newval.value).then(function(d){
+                    API.dataset.selections().get({dataset:$routeP.datasetName, dimension:newval.value}).$promise.then(function(d){
                       scope.selections = d;
                     })
                   }
@@ -360,7 +359,7 @@ define (
                 
                 
                 //Column dimension forcing #576
-                API.dataset.selections.get($routeP.datasetName, "column").then(function(d){
+                API.dataset.selections().get({dataset:$routeP.datasetName, dimension:"column"}).$promise.then(function(d){
                     scope.selections = d;
                   })
                 
