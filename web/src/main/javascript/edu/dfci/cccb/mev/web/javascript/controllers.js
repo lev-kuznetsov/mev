@@ -17,6 +17,8 @@ define(
                                             $http, prsg, $rS, $loc) {
 
                                         if (!$routeParams.datasetName) {
+                                            
+                                            $('#loading').modal('hide');
                                             $loc.path('/');
 
                                         };
