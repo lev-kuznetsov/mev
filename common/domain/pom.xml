@@ -12,7 +12,7 @@
   <parent>
     <groupId>edu.dfci.cccb</groupId>
     <artifactId>mev-prototype-domain</artifactId>
-    <version>${mev.version}</version>
+    <version>CRYSTAL-SNAPSHOT</version>
     <relativePath>../../prototype/domain</relativePath>
   </parent>
 

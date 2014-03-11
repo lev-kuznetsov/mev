@@ -11,7 +11,7 @@
   <parent>
     <groupId>edu.dfci.cccb</groupId>
     <artifactId>mev-prototype</artifactId>
-    <version>${mev.version}</version>
+    <version>CRYSTAL-SNAPSHOT</version>
   </parent>
 
   <properties>
@@ -21,6 +21,7 @@
     <java.target.version>1.7</java.target.version>
 
     <guice.version>3.0</guice.version>
+    <mycila-guice.version>2.10.ga</mycila-guice.version>
     <org.slf4j.version>1.7.6</org.slf4j.version>
     <log4j.version>1.2.17</log4j.version>
     <lombok.version>1.12.4</lombok.version>
@@ -47,6 +48,18 @@
     <dependency>
       <groupId>com.google.inject</groupId>
       <artifactId>guice</artifactId>
+      <version>${guice.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.mycila</groupId>
+      <artifactId>mycila-guice</artifactId>
+      <version>${mycila-guice.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.inject.extensions</groupId>
+      <artifactId>guice-multibindings</artifactId>
       <version>${guice.version}</version>
     </dependency>
 

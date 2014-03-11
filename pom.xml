@@ -4,7 +4,7 @@
 
   <groupId>edu.dfci.cccb</groupId>
   <artifactId>mev</artifactId>
-  <version>${mev.version}</version>
+  <version>CRYSTAL-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>MultiExperiment Viewer</name>
@@ -13,6 +13,7 @@
   <modules>
     <module>prototype</module>
     <module>common</module>
+    <module>dataset</module>
   </modules>
 
   <properties>

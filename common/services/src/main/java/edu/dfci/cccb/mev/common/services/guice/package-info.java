@@ -15,6 +15,9 @@
  */
 
 /**
+ * Service modules
+ *
  * @author levk
+ * @since CRYSTAL
  */
 package edu.dfci.cccb.mev.common.services.guice;

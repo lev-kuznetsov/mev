@@ -14,31 +14,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.domain.guice;
-
-import static com.google.inject.name.Names.named;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import lombok.Getter;
-import lombok.ToString;
-
-import com.google.inject.AbstractModule;
-
 /**
  * @author levk
+ * @since BAYLIE
  */
-@ToString
-public class TestModule extends AbstractModule {
-
-  private @Getter @Inject @Named ("hello") String hello;
-  private @Getter @Inject @Named ("other") String other;
-
-  /* (non-Javadoc)
-   * @see com.google.inject.AbstractModule#configure() */
-  @Override
-  protected void configure () {
-    bind (String.class).annotatedWith (named ("helloAndOther")).toInstance (hello + other);
-  }
-}
+package edu.dfci.cccb.mev.dataset.services;

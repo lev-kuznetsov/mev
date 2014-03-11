@@ -11,7 +11,7 @@
   <parent>
     <groupId>edu.dfci.cccb</groupId>
     <artifactId>mev</artifactId>
-    <version>${mev.version}</version>
+    <version>CRYSTAL-SNAPSHOT</version>
   </parent>
 
   <modules>

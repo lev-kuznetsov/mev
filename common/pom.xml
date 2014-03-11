@@ -11,7 +11,7 @@
   <parent>
     <groupId>edu.dfci.cccb</groupId>
     <artifactId>mev-prototype</artifactId>
-    <version>${mev.version}</version>
+    <version>CRYSTAL-SNAPSHOT</version>
     <relativePath>../prototype</relativePath>
   </parent>
 

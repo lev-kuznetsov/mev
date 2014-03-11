@@ -16,28 +16,50 @@
 
 package edu.dfci.cccb.mev.common.services.guice;
 
-import static java.util.Arrays.asList;
-import lombok.ToString;
-import lombok.extern.log4j.Log4j;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML_TYPE;
+
+import javax.ws.rs.core.MediaType;
+
+import edu.dfci.cccb.mev.common.services.guice.annotation.ContentNegotiationConfiguration;
 
 /**
+ * Enables the MeV RESTful services
+ * 
  * @author levk
+ * @since CRYSTAL
  */
-@ToString
-@Log4j
-public class MevServicesModule extends CxfJaxrsServiceModule {
+public final class MevServicesModule extends JaxrsServiceModule {
 
-  private static final String SERVICE_URL = "/service/*";
-  private static final String[] JAXRS_SCAN_PACKAGES = "edu.dfci.cccb.mev".split (":");
+  /**
+   * Content type query parameter name
+   */
+  public static final String PARAMETER = "format";
+  /**
+   * Tab separated value media type
+   */
+  public static final MediaType TEXT_TSV_TYPE = new MediaType ("text", "tab-separated-values");
 
   /* (non-Javadoc)
    * @see
-   * edu.dfci.cccb.mev.common.services.guice.JaxrsServerModule#configureServices
-   * () */
+   * edu.dfci.cccb.mev.common.services.guice2.JaxrsServiceModule#configure(
+   * edu.dfci
+   * .cccb.mev.common.services.guice2.JaxrsServiceModule.JaxrsServiceBinder) */
   @Override
-  protected void configureServices () {
-    log.info ("Starting " + this + " under " + SERVICE_URL + " scanning " + asList (JAXRS_SCAN_PACKAGES));
-    service ("/services/*");
-    scan ("edu.dfci.cccb.mev");
+  public void configure (JaxrsServiceBinder binder) {
+    binder.service ("/services/*");
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.common.services.guice2.JaxrsServiceModule#configure(
+   * edu.dfci
+   * .cccb.mev.common.services.guice.annotation.ContentNegotiationConfiguration) */
+  @Override
+  public void configure (ContentNegotiationConfiguration configurer) {
+    configurer.parameter (PARAMETER)
+              .map ("json", APPLICATION_JSON_TYPE)
+              .map ("xml", APPLICATION_XML_TYPE)
+              .map ("tsv", TEXT_TSV_TYPE);
   }
 }

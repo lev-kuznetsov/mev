@@ -14,27 +14,24 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.services.servlet;
+package edu.dfci.cccb.mev.common.services.guice;
 
-import static edu.dfci.cccb.mev.common.domain.guice.Modules.discover;
+import com.google.inject.Provides;
 
-import javax.servlet.annotation.WebListener;
+import edu.dfci.cccb.mev.common.services.guice.annotation.Handles;
+import edu.dfci.cccb.mev.common.services.guice.annotation.Publishes;
 
-import com.google.inject.Injector;
-import com.google.inject.servlet.GuiceServletContextListener;
+public class TestMevServiceModule extends JaxrsServiceModule {
 
-/**
- * Initialization hook
- * 
- * @author levk
- */
-@WebListener
-public class ServiceContextLifecycle extends GuiceServletContextListener {
+  @Provides
+  @Publishes
+  public PojoService pojo () {
+    return new PojoServiceImpl ();
+  }
 
-  /* (non-Javadoc)
-   * @see com.google.inject.servlet.GuiceServletContextListener#getInjector() */
-  @Override
-  protected Injector getInjector () {
-    return discover ();
+  @Provides
+  @Handles
+  public PojoWriter writer () {
+    return new PojoWriter ();
   }
 }

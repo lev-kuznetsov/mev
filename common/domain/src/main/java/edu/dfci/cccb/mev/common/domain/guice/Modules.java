@@ -16,18 +16,12 @@
 
 package edu.dfci.cccb.mev.common.domain.guice;
 
-import static com.google.inject.Guice.createInjector;
-import static com.google.inject.name.Names.named;
 import static java.util.ServiceLoader.load;
 
 import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.Properties;
 
 import lombok.extern.log4j.Log4j;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Injector;
 import com.google.inject.Module;
 
 /**
@@ -40,57 +34,36 @@ import com.google.inject.Module;
 public class Modules {
 
   /**
-   * @param properties to inject into loaded modules
-   * @return injector with discovered modules installed
+   * @return an iteration over discovered modules
    */
-  public static Injector discover (final Properties... properties) {
-    final Injector configurer = createInjector (new AbstractModule () {
+  public static Iterable<Module> discover () {
+    return new Iterable<Module> () {
+      private final Iterable<Module> loader = load (Module.class);
 
-      @Override
-      protected void configure () {
-        for (Properties propertiesContainer : properties)
-          for (Entry<Object, Object> property : propertiesContainer.entrySet ())
-            bind (String.class).annotatedWith (named ((String) property.getKey ()))
-                               .toInstance ((String) property.getValue ());
-      }
-    });
-
-    return configurer.createChildInjector (new Iterable<Module> () {
-
-      /* (non-Javadoc)
-       * @see java.lang.Iterable#iterator() */
       @Override
       public Iterator<Module> iterator () {
         return new Iterator<Module> () {
+          private final Iterator<Module> iterator = loader.iterator ();
 
-          private Iterator<Module> modules = load (Module.class).iterator ();
-
-          /* (non-Javadoc)
-           * @see java.util.Iterator#hasNext() */
           @Override
           public boolean hasNext () {
-            return modules.hasNext ();
+            return iterator.hasNext ();
           }
 
-          /* (non-Javadoc)
-           * @see java.util.Iterator#next() */
           @Override
           public Module next () {
-            Module next = modules.next ();
-            configurer.injectMembers (next);
-            log.info ("Discovered module " + next);
-            return next;
+            Module module = iterator.next ();
+            log.info ("Loaded " + module);
+            return module;
           }
 
-          /* (non-Javadoc)
-           * @see java.util.Iterator#remove() */
           @Override
           public void remove () {
-            throw new UnsupportedOperationException ();
+            iterator.remove ();
           }
         };
       }
-    });
+    };
   }
 
   /**
