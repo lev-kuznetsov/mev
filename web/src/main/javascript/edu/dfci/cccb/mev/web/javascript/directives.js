@@ -470,10 +470,10 @@ define(
                                                 scope.dimensions = [{
                                                     name : "Column",
                                                     value : "column"
-                                                }]; // Column dimension forcing
-                                                // #576
+                                                }]; 
+                                                
+                                                scope.selections = [];
 
-                                                // Column dimension forcing #576
                                                 $http(
                                                         {
                                                             method : "GET",
@@ -488,7 +488,7 @@ define(
                                                         })
                                                         .then(
                                                                 function(d) {
-                                                                    scope.selections = d;
+                                                                    scope.selections = d.data;
                                                                 });
 
                                                 scope.analysisDimension = {
@@ -996,8 +996,7 @@ define(
                                         vis.append("g").attr("class",
                                                 "selections")
                                         var selections = d3.select(
-                                                "g.selections")
-                                                .selectAll("rect");
+                                                "g.selections");
 
                                         selections.append("g").attr(
                                                 "class",
@@ -1055,17 +1054,12 @@ define(
                                                     });
 
                                             // Clearing canvas
-                                            d3
-                                                    .selectAll(
-                                                            ".columnSelection")
-                                                    .remove();
-                                            d3.selectAll(
-                                                    ".rowSelection")
-                                                    .remove();
+                                            columnSelections.selectAll("rect").remove();
+                                            rowSelections.selectAll("rect").remove();
 
                                             // Canvas adding
 
-                                            columnSelections
+                                            columnSelections.selectAll("rect")
                                                     .data(columnCells)
                                                     .enter()
                                                     .append("rect")
@@ -1092,7 +1086,7 @@ define(
                                                                 }
                                                             });
 
-                                            rowSelections
+                                            rowSelections.selectAll("rect")
                                                     .data(rowCells)
                                                     .enter()
                                                     .append("rect")
@@ -1195,11 +1189,11 @@ define(
                                                                 "height" : function(d) {
 
                                                                     return YIndex2Pixel(1)
-                                                                            - YIndex2Pixel(0);
+                                                                            - YIndex2Pixel(0)-1;
                                                                 },
                                                                 "width" : function(d) {
                                                                     return XIndex2Pixel(1)
-                                                                            - XIndex2Pixel(0);
+                                                                            - XIndex2Pixel(0)-1;
                                                                 },
                                                                 "x" : function(d, i) {
                                                                     return XIndex2Pixel(XLabel2Index(d.column));
@@ -1264,7 +1258,7 @@ define(
                                             var fixedHeight = true;
 
                                             if (fixedHeight) {
-                                                heatmapCellsWidth = cols.keys.length * 30;
+                                                heatmapCellsWidth = cols.keys.length * 15;
                                                 svg
                                                         .attr(
                                                                 "width",
@@ -1274,7 +1268,7 @@ define(
                                                                         + 120)
                                             }
 
-                                            heatmapCellHeight = 30;
+                                            heatmapCellHeight = 15;
 
                                             heatmapCellsHeight = heatmapCellHeight
                                                     * rows.keys.length;

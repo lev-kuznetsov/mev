@@ -1,4 +1,4 @@
-define(['angular', 'angularResource', 'angularRoute', 'directives', 'services', 'controllers', 'setmanager/SetManager'], function(angular){
+define(['angular', 'angularResource', 'angularRoute', 'directives', 'services', 'controllers', 'setmanager/SetManager', 'uiBootstrap'], function(angular){
 	'use strict';
 	return angular.module('myApp', [
 	     'ngRoute',
@@ -7,7 +7,8 @@ define(['angular', 'angularResource', 'angularRoute', 'directives', 'services', 
 	     'myApp.services',
 	     'myApp.controllers',
 	     'Mev.SetManager',
-	     'Mev.PresetManager'])
+	     'Mev.PresetManager',
+	     'ui.bootstrap'])
 	.config(['$routeProvider', '$locationProvider', '$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {
 		
 	  $sceProvider.enabled(false);

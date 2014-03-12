@@ -73,8 +73,6 @@ define(
                                                                         .map(function(
                                                                                 name) {
 
-                                                                            // $rS.$apply();
-
                                                                             $http(
                                                                                     {
                                                                                         method : 'GET',
@@ -148,25 +146,23 @@ define(
                                                     .then(
                                                             function() {
 
-                                                                $(
-                                                                        '#heatmapTabLink')
-                                                                        .trigger(
-                                                                                "click");
+                                                                //$('#heatmapTabLink').trigger("click");
 
                                                                 $http(
                                                                         {
                                                                             method : 'GET',
                                                                             url : '/dataset/'
                                                                                     + $routeParams.datasetName
-                                                                                    + '/data'
-                                                                                    + '?format=json',
+                                                                                    + '/data',
                                                                             params : {
-                                                                                format : json
+                                                                                format : 'json'
                                                                             }
                                                                         })
                                                                         .then(
                                                                                 function(
-                                                                                        data) {
+                                                                                        response) {
+                                                                                    
+                                                                                    var data = response.data;
 
                                                                                     if (data.column.root) {
 
@@ -204,7 +200,7 @@ define(
                                                                                     // if
                                                                                     // errored
                                                                                     // out
-                                                                                    $location
+                                                                                    $loc
                                                                                             .path('/');
                                                                                 });
 

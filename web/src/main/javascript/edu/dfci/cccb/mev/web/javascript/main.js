@@ -15,10 +15,10 @@ require.config ({
                            '/library/webjars/angularjs/1.2.13/angular-route.min' ],
     angularResource : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-resource',
                            '/library/webjars/angularjs/1.2.13/angular-resource' ],
-    bootstrap : [ '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min',
-                 '/library/webjars/bootstrap/3.1.1/js/bootstrap.min' ],
-    bootstrapUi: ['//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.4.0/ui-bootstrap-tpls.min',
-                   'bootstrap-ui'],
+    bootstrap : [ '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap',
+                 '/library/webjars/bootstrap/3.1.1/js/bootstrap' ],
+    uiBootstrap: ['//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min',
+                  'bootstrap-ui'],
     d3 : [ '//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3', 
            '/library/webjars/d3js/3.4.1/d3.min' ],
     retina : [ '/library/webjars/retinajs/0.0.2/retina' ],
@@ -37,9 +37,8 @@ require.config ({
         exports : 'ngResource',
         deps: ['angular']
     },
-    'bootstrapUi':{
-            exports : 'ui.bootstrap',
-            deps:['angular']
+    'uiBootstrap':{
+            deps:['angular', 'bootstrap']
     },
     'd3' : {
       exports : 'd3'
@@ -64,8 +63,8 @@ require ([ 'jquery',
           'angular',
           'app',
           'orefine/OrefineBridge',
-          'bootstrap-css',
           'bootstrap',
+          'bootstrap-css',
           'setmanager/SetManager',
           'presets/PresetManager',
           'mainpanel/MainPanel',

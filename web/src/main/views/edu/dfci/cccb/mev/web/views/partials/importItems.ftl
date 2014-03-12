@@ -28,31 +28,18 @@
 	
 	  <div class="col-md-8">
 	  
-	  
-	    <div class="row">
-	      <ul class="nav nav-tabs" id="importTabs">
-	        <li class="active"><a href="#current" data-toggle="tab" ng-click="loadUploads()">Files</a></li>
-	        <!--<li><a href="#googleDrive" data-toggle="tab">Google Drive</a></li>-->
-	        <li><a href="#tcga" data-toggle="tab">TCGA</a></li>
-	      </ul>
-	 	  
-	      <div class="tab-content">
-	      
-	         <div class="tab-pane active" id="current">
-	         
-	            <div uploads-Table uploads="userUploads"></div>
-	           
-	         </div>
-	        
-	        <div class="tab-pane fade" id="tcga">
-			  <div id="presetMgr" preset-manager ng-controller="PresetManagerController">
+	    <tabset>
+			<tab heading="Files">
+				<div uploads-Table uploads="userUploads"></div>
+			</tab>
+
+			<tab heading="TCGA">
+				<div id="presetMgr" preset-manager ng-controller="PresetManagerController">
 			  </div>
-	        </div>
-	       
-	        
-	      </div>
-	      
-	    </div>
+			</tab>
+		</tabset>
+		
+
 	    
 	  </div>
 	

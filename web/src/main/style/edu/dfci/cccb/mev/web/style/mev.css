@@ -1,33 +1,12 @@
 div.accordion, div.accordion div{
 	overflow: hidden;
 }
-.accordion {
-	margin-bottom:0px;
-}
 
-.accordion-group {
-	margin-bottom:5px;
-}
-
-.accordion-heading{
-	padding: 8px 15px;
-}
-
-.accordion-heading .accordion-toggle {
-	padding: 0;
-	color:#0088cc;
-}
 .accordion-inner {
 	background:#FFFFFF;
 	
 }
 
-.accordion-toggle{
-	float: right;	
-}
-.accordion-action-button{
-	float: right;
-}
 .selectionSetListItem div{
 	float: left;
 }
