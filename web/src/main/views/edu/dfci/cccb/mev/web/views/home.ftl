@@ -23,7 +23,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/container/images/mstile-144x144.png">
 
-    <script type="text/javascript" src="/library/webjars/requirejs/2.1.8/require.js"></script>
+    <script type="text/javascript" src="/library/webjars/requirejs/2.1.10/require.js"></script>
     <#list injectors as injector><script src="${injector}"></script></#list>
   </head>
   <body>

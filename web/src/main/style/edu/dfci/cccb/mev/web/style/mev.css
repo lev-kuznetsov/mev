@@ -1,33 +1,12 @@
 div.accordion, div.accordion div{
 	overflow: hidden;
 }
-.accordion {
-	margin-bottom:0px;
-}
 
-.accordion-group {
-	margin-bottom:5px;
-}
-
-.accordion-heading{
-	padding: 8px 15px;
-}
-
-.accordion-heading .accordion-toggle {
-	padding: 0;
-	color:#0088cc;
-}
 .accordion-inner {
 	background:#FFFFFF;
 	
 }
 
-.accordion-toggle{
-	float: right;	
-}
-.accordion-action-button{
-	float: right;
-}
 .selectionSetListItem div{
 	float: left;
 }
@@ -92,10 +71,6 @@ p.lead {
 	height: 85vh;
 }
 
-/*div.accordion-heading {
-	background: #bcf;
-}*/
-
 #rightPanel {
 	float: left;
 	width: 80%;
@@ -139,7 +114,7 @@ body {
 	background: #E0E0E0;
 }
 
-div#tab i {
+div#tab span.glyphicon {
 	margin-top:8px;
 	margin-left:2px;
 }
@@ -160,14 +135,14 @@ div.sidepanel-title p{
 	color: #FFFFFF;
 }
 
-.nav {
+nav {
 	margin-bottom: 0px;
 }
 .navbar {
 	margin-bottom: 0px;
 }
 
-.navbar-inner {
+nav div.container-fluid {
 	background-image: linear-gradient(to bottom, #FFF, #FFF);
 	border-radius: 0px;
 	box-shadow: 0 6px 7px rgba(0, 0, 0, 0.065);

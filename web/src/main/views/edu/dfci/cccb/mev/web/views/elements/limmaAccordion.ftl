@@ -1,19 +1,10 @@
-<div class="accordion" id="{{cluster.parentId}}" ng-repeat="limma in previousLimmaAnalysis">
-    <div class="accordion-group">
-    
-	    <div class="accordion-heading">
-	      <a class="accordion-toggle" data-toggle="collapse" data-parent="{{limma.dataParent}}" href="{{limma.href}}">
-	        {{limma.datar.type}} : {{limma.name}}
-	      </a>
-	    </div> <!-- End Heading Div -->
-	    
-	    <div id="{{limma.divId}}" class="accordion-body collapse">
-	      <div class="accordion-inner">
+<accordion close-others="false">
+	<div  ng-repeat="limma in previousLimmaAnalysis">
+	    <accordion-group heading="{{limma.datar.type}} : {{limma.name}}" is-open="false">
+      		<div class="container">
+	            <div class="col-md-12>
 	            
-	            <div class="row-fluid">
-	            <div class="span12>
-	            
-		            <div class="row-fluid">
+		            <div class="row">
 		            
 		              <div class="pull-left">
 		              
@@ -41,7 +32,7 @@
 			            
 			        </div>
 		            
-		            <div class="row-fluid">
+		            <div class="row">
 			        	<div class="limma-table" id="limmaResultsTable" ng-hide="!limma.datar.results || !showLimmaTables">
 			        	
 		                    <table class="table table-striped table-bordered">
@@ -75,11 +66,8 @@
 		                </div>
 		            </div>
                 
-                </div> <!-- End Span -->
-                </div> <!-- End Row -->
-	        
-	      </div>
-	    </div> <!-- End Body Div -->
-    
-    </div> <!-- End Accordion Grouping -->
-</div> <!-- End Accordion Definition -->
+                </div> <!-- column -->
+			</div> <!-- container-->
+		</accordion-group>
+	</div> <!-- repeat -->
+</accordion>

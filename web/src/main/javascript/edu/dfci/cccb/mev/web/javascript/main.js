@@ -7,19 +7,38 @@
 require.config ({
   baseUrl : "/container/javascript",
   paths : {
-    jquery : [ 'http://codeorigin.jquery.com/jquery-2.0.3', '/library/webjars/jquery/2.0.3/jquery' ],
-    angular : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.min',
-               '/library/webjars/angularjs/1.1.4/angular' ],
-    bootstrap : [ 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min',
-                 '/library/webjars/bootstrap/2.3.2/js/bootstrap.min' ],
-    d3 : [ '/library/webjars/d3js/3.1.5/d3.min' ],
-    dropzone : [ '/library/webjars/dropzone/3.7.1/dropzone-amd-module.min' ],
+    jquery : [ 'http://codeorigin.jquery.com/jquery-2.1.0', 
+               '/library/webjars/jquery/2.1.0/jquery' ],
+    angular : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular',
+               '/library/webjars/angularjs/1.2.13/angular' ],
+    angularRoute : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min',
+                           '/library/webjars/angularjs/1.2.13/angular-route.min' ],
+    angularResource : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-resource',
+                           '/library/webjars/angularjs/1.2.13/angular-resource' ],
+    bootstrap : [ '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap',
+                 '/library/webjars/bootstrap/3.1.1/js/bootstrap' ],
+    uiBootstrap: ['//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min',
+                  'bootstrap-ui'],
+    d3 : [ '//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3', 
+           '/library/webjars/d3js/3.4.1/d3.min' ],
     retina : [ '/library/webjars/retinajs/0.0.2/retina' ],
     notific8 : [ 'notific8.min' ]
   },
   shim : {
     'angular' : {
       exports : 'angular'
+      
+    },
+    'angularRoute' : {
+        exports : 'ngRoute',
+        deps: ['angular']
+    },
+    'angularResource' : {
+        exports : 'ngResource',
+        deps: ['angular']
+    },
+    'uiBootstrap':{
+            deps:['angular', 'bootstrap']
     },
     'd3' : {
       exports : 'd3'
@@ -44,8 +63,8 @@ require ([ 'jquery',
           'angular',
           'app',
           'orefine/OrefineBridge',
-          'bootstrap-css',
           'bootstrap',
+          'bootstrap-css',
           'setmanager/SetManager',
           'presets/PresetManager',
           'mainpanel/MainPanel',

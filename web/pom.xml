@@ -18,13 +18,13 @@
     <jetty.port>8080</jetty.port>
     <jetty.stop.port>18080</jetty.stop.port>
 
-    <angularjs.version>1.1.4</angularjs.version>
-    <d3.version>3.1.5</d3.version>
-    <jquery.version>2.0.3</jquery.version>
-    <bootstrap.version>2.3.2</bootstrap.version>
+    <angularjs.version>1.2.13</angularjs.version>
+    <d3.version>3.4.1</d3.version>
+    <jquery.version>2.1.0-2</jquery.version>
+    <bootstrap.version>3.1.1</bootstrap.version>
     <log4javascript.version>1.4.5</log4javascript.version>
     <retinajs.version>0.0.2</retinajs.version>
-    <requirejs.version>2.1.8</requirejs.version>
+    <requirejs.version>2.1.10</requirejs.version>
     <jetty.version>8.1.13.v20130916</jetty.version>
   </properties>
 

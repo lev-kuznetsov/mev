@@ -1,14 +1,14 @@
 define(['jquery', 'angular'], function (jquery, angular){
 	angular.module('Mev.PresetManager', [])
 		.controller('PresetManagerController', ['$scope', '$element', '$attrs', 'PresetService', function($scope, $element, $attrs, presetService){			
-			$scope.presets = presetService.getPresetList();
+			presetService.getPresetList().then(function(d){$scope.presets=d;});
 			$scope.orderByColumn="name";
 			$scope.orderByReverse=false;
 			$scope.importPresetUrl="about:blank";
-			$scope.showImport=false;
+			$scope.showImport=false;			
 		}])
 		.service('PresetService', ['QHTTP', 'alertService', function(QHTTP, alertService){
-			this.getPresetList = function(){
+			this.getPresetList = function(){				
                 var params = {
                   method : 'GET',
                   url : '/presets/tcga?format=json'

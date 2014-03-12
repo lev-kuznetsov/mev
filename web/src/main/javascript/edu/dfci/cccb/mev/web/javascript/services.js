@@ -10,7 +10,7 @@ define (
             
         	  return function(input, threshold, on){
         	    var output = input.filter( function(d){
-        	       return (d[on] >= threshold) ? true : false
+        	       return (d[on] <= threshold) ? true : false
         	    });
         	    
         	    return (threshold == undefined) ? input : output;
@@ -100,10 +100,7 @@ define (
             };
 
           } ])
-          .factory (
-              'API',
-              [
-                  'QHTTP',
+          .factory ( 'offAPI', [ 'QHTTP',
                   'alertService',
                   function (QHTTP, alertService) {
 
