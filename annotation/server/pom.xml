@@ -22,7 +22,6 @@
 		<jooq.codegen.db.password></jooq.codegen.db.password>		
 		<jooq.codegen.db.dialect>org.jooq.util.h2.H2Database</jooq.codegen.db.dialect>
 		<skip.db.creation>false</skip.db.creation>
-		
 	</properties>
 	<repositories>
 		<repository>

@@ -33,7 +33,7 @@ public class MultipartUploadConfiguration {
 
   @Bean
   public MultipartResolver multipartResolver () {
-    final long DEFAULT_MAX_UPLOAD_SIZE = 1024L * 1024L; // 1Mb
+    final long DEFAULT_MAX_UPLOAD_SIZE = 1024L * 1024L * 100; // 10Mb
 
     CommonsMultipartResolver resolver = new CommonsMultipartResolver ();
     resolver.setMaxUploadSize (environment.getProperty ("multipart.upload.max.size",

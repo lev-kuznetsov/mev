@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.web.test.presets.controller.nvp;
+package edu.dfci.cccb.mev.web.test.presets.controller.flat.large;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
@@ -16,6 +16,10 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -54,15 +58,19 @@ import com.fasterxml.jackson.databind.ser.DefaultSerializerProvider;
 
 import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfiguration;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
+import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDatasetJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.hcl.rest.configuration.HclRestConfiguration;
 import edu.dfci.cccb.mev.limma.rest.configuration.LimmaRestConfiguration;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
+import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetValuesLoader;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
@@ -81,14 +89,15 @@ import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
                                ContainerConfigurations.class, 
                                DatasetRestConfiguration.class,
                                ProbeAnnotationsPersistanceConfigTest.class                               
-                               , TestPresetsDatasetNVPConfig.class})
-public class TestDatasetSerializerNVP {
+                               , TestJooqCursorGBMLevel2Configuration.class})
+public class TestDatasetSerializerGBMTEXT {
 
   private @Inject Environment environment; 
   private @Inject @Named("presets-datasource") DataSource dataSource;
   private @Inject PresetDatasetBuilder presetDatasetBuilder;
   private @Inject PresetValuesLoader loader;
   private @Inject Workspace workspace;  
+  private @Inject PresetDimensionBuilder dimensionBuilder;
   private URL rootUrl;  
   @PostConstruct
   public void init() throws MalformedURLException{
@@ -110,45 +119,49 @@ public class TestDatasetSerializerNVP {
     applicationContext.getBean(Workspace.class);
   }
   
+  @Test @Ignore
+  public void testSerializeDatasetJsonGeneratorSerializerProvider3 () throws Exception {
+    testSerializeDatasetJsonGeneratorSerializerProvider();
+  }
   
-  @Test @Ignore 
+  @Test @Ignore
+  public void testSerializeDatasetJsonGeneratorSerializerProvider2 () throws Exception {
+    testSerializeDatasetJsonGeneratorSerializerProvider();
+  }
+  
+  @Test @Ignore
   public void testSerializeDatasetJsonGeneratorSerializerProvider () throws Exception {
-    String tsvFileName="LGG.AgilentG4502A_07_3.Level_2.tsv";    
-    PresetDescriptor descriptor = new SimplePresetDescriptor ("NVP_"+tsvFileName, 
+    String tableName="GBM.AgilentG4502A_07_2.Level_2.tsv.text";
+    String tsvFileName="GBM.AgilentG4502A_07_2.Level_2.tsv";    
+    PresetDescriptor descriptor = new SimplePresetDescriptor (tableName, 
                                                               rootUrl, 
-                                                              "LGG/Level_2/"+tsvFileName, ""); 
-    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", null);
+                                                              "GBM/Level_2/"+tsvFileName, "");
+    
+    Dimension columns = dimensionBuilder.buildColumns (descriptor);
+    List<String> columnList1=new ArrayList<String> (50);
+    List<String> columnList2=new ArrayList<String> (50);
+    Random rand = new Random ();
+    for(int i=0; i<50; i++){
+      int randomCol = rand.nextInt (columns.keys ().size ());
+      columnList1.add (columns.keys ().get (randomCol));
+            
+    }
+    Selection selection = new SimpleSelection("presest_test", new Properties (), columnList1);
+    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", selection);
     log.debug("dataset.name: "+presetDataset.name ());
-    
-    
-//    JsonFactory jfactory = new JsonFactory();
-    String jsonFileName = tsvFileName+".json";
-    URL jsonURL = new URL(this.rootUrl, jsonFileName);
-    log.debug("jsonURL:"+jsonURL);
-    File jsonFile = new File(jsonURL.toURI ());
-    FileOutputStream jsonFileStream = new FileOutputStream(jsonFile);
-//    
-//    try(OutputStreamWriter out = new OutputStreamWriter(jsonFileStream);){
-//        JsonGenerator jgen = jfactory.createGenerator (new FileOutputStream (jsonFile));
-//        
-//        SimpleDatasetJsonSerializer jsonSerializer = new SimpleDatasetJsonSerializer();  
-//        jsonSerializer.serialize (presetDataset, jgen, provider);
-//      }    
-//    
-      
+        
     workspace.put (presetDataset);
-    Timer timer = Timer.start ("LGG-JSON-NVP");
+    Timer timer = Timer.start ("GET-GBM-JSON-FLAT");
     this.mockMvc.perform(get("/dataset/preset_test/data").param ("format", "json")
                                             .session (mocksession)
                                             .accept("application/json"))            
             .andExpect (status ().isOk ())
             .andReturn ();
-    timer.read ();
-//            .andDo (new FilePrintingResultHandler (jsonURL));
-//    String content = result.getResponse().getContentAsString();    
-//    log.debug ("content:"+content);
+    timer.read ("selection");
   }
 
+  
+  
   private static class FilePrintingResultHandler extends PrintingResultHandler {
     
     
@@ -170,6 +183,7 @@ public class TestDatasetSerializerNVP {
                 }
                 try {
                   writer.write (String.format("%20s = %s", label, value));
+                  writer.flush ();
                 } catch (IOException e) {
                   // TODO Auto-generated catch block
                   e.printStackTrace();

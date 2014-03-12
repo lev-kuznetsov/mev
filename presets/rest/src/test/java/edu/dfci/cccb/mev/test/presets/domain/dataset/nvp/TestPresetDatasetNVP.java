@@ -60,7 +60,7 @@ public class TestPresetDatasetNVP {
 //      loader.load (descriptor);
   }  
   
-  @Test 
+  @Test @Ignore
   public void testSmallestTcga_NVPStore () throws PresetException, MalformedURLException, InvalidDimensionTypeException, InvalidCoordinateException, SQLException, InterruptedException {
     log.debug ("Sleeping .. you can start start profiler now.");    
     Thread.sleep (1000*15);

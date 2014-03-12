@@ -68,6 +68,45 @@ public class PresetPersistenceConfiguration {
 //    Lifecycle server = new H2Server("Presets", port, "-tcp","-tcpAllowOthers");    
 //    return server;
 //  }
+//
+//  @Bean
+//  public Lifecycle presetsH2Console(){
+//    int port = environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"h2.console.port", Integer.class, 18053);
+//    int fetchSize = environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"h2.serverResultSetFetchSize", Integer.class, 1000);
+//    Lifecycle server = new H2Console("Presets", port, "h2.serverResultSetFetchSize", String.valueOf(fetchSize));
+//    server.start ();
+//    return server;
+//  }
+//@Bean(name="presets-h2-server")
+//public Lifecycle presetsH2TcpServer(){
+//  int port = environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"h2.tcp.port", Integer.class, 18054);
+//  Lifecycle server = new H2Server("Presets", port, "-tcp","-tcpAllowOthers");    
+//  return server;
+//}  
+//  @Bean(name="presetDetasetBuilder", autowire=Autowire.NO)  
+//  protected DatasetBuilder presetDatasetBuilder(){
+//    SimpleDatasetBuilder datasetBuilder = new SimpleDatasetBuilder();    
+//    return datasetBuilder;
+//  }
+//  
+//  @Bean 
+//  public PresetValuesLoader presestValuesLoader(@Named ("presets-datasource") DataSource dataSource){
+//    return new SimplePresetValuesLoader (presetValueStoreBuilderFactory(dataSource), presetDatasetBuilder());
+//  }
+  
+//  @Bean
+//  public PresetDimensionBuilder presetDimensionBuilder(@Named("presets-jooq-context") DSLContext context){
+//    return new PresetDimensionBuilderFlatTable (context);
+//  }
+  
+//  @Bean(name="presets-dataset-builder") @Inject 
+//  public PresetDatasetBuilder presetDatasetBuilder(@Named("presets-datasource") DataSource dataSource, 
+//                                                   @Named("presets-jooq-context") DSLContext context,
+//                                                   PresetDimensionBuilder dimensionBuilder) throws SQLException{
+//    log.debug ("***PresetDataSetBuilder: FLATTABLE-DB");
+//    return new PresetDatasetBuilderFlatTableDB (dataSource, context, dimensionBuilder);
+//  }
+
 
   @Bean(name="presets-datasource", destroyMethod = "close")
   public DataSource dataSource () {
@@ -84,15 +123,15 @@ public class PresetPersistenceConfiguration {
     dataSource.setPassword (environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"database.password", ""));
     
     log.info ("*** presets-datasource config: " + dataSource.getUrl ());    
-
+  
     return dataSource;
   }
   
-
-  @Bean
-  public LocalSessionFactoryBean sessionFactory () {
+  
+  @Bean(name="presets-session-factory") @Inject
+  public LocalSessionFactoryBean sessionFactory (@Named("presets-datasource") DataSource datasource) {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean ();
-    sessionFactory.setDataSource (dataSource());
+    sessionFactory.setDataSource (datasource);
     sessionFactory.setPackagesToScan (environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"session.factory.scan.packages",
                                                                String[].class,
                                                                new String[] { "edu.dfci.cccb.mev" }));
@@ -113,115 +152,53 @@ public class PresetPersistenceConfiguration {
     return sessionFactory;
   }
   
-  @Bean
-  public LazyConnectionDataSourceProxy lazyConnectionDataSource() {
-      return new LazyConnectionDataSourceProxy(dataSource());
+  @Bean(name="presets-lazy-connection-datasource") @Inject
+  public LazyConnectionDataSourceProxy lazyConnectionDataSource(@Named("presets-datasource") DataSource datasource) {
+      return new LazyConnectionDataSourceProxy(datasource);
   }
-
-  @Bean
-  public TransactionAwareDataSourceProxy transactionAwareDataSource() {
-      return new TransactionAwareDataSourceProxy(lazyConnectionDataSource());
+  
+  @Bean(name="presets-transaction-aware-datasrouce") @Inject
+  public TransactionAwareDataSourceProxy transactionAwareDataSource(@Named("presets-lazy-connection-datasource") LazyConnectionDataSourceProxy lazyProxy) {
+      return new TransactionAwareDataSourceProxy(lazyProxy);
   }
-
+  
   @Bean
-  public DataSourceTransactionManager transactionManager() {
-      return new DataSourceTransactionManager(lazyConnectionDataSource());
+  public DataSourceTransactionManager transactionManager(@Named("presets-datasource") DataSource datasource) {
+      return new DataSourceTransactionManager(datasource);
   }
-
-  @Bean
-  public DataSourceConnectionProvider connectionProvider() {
-      return new DataSourceConnectionProvider(transactionAwareDataSource());
+  
+  @Bean(name="presets-connection-provider") @Inject
+  public DataSourceConnectionProvider connectionProvider(@Named("presets-transaction-aware-datasrouce") TransactionAwareDataSourceProxy proxy) {
+      return new DataSourceConnectionProvider(proxy);
   }
-
+  
   /*
   @Bean
   public JOOQToSpringExceptionTransformer jooqToSpringExceptionTransformer() {
       return new JOOQToSpringExceptionTransformer();
   }
-*/
+  */
   
-  @Bean
-  public DefaultConfiguration configuration() {
+  @Bean(name="presets-jooq-configuration") @Inject
+  public DefaultConfiguration configuration(@Named("presets-connection-provider") DataSourceConnectionProvider provider) {
       DefaultConfiguration jooqConfiguration = new DefaultConfiguration();
-
-      jooqConfiguration.set(connectionProvider());
-//      jooqConfiguration.set(new DefaultExecuteListenerProvider(
-//          jooqToSpringExceptionTransformer()
-//      ));
-
+  
+      jooqConfiguration.set(provider);
+  //    jooqConfiguration.set(new DefaultExecuteListenerProvider(
+  //        jooqToSpringExceptionTransformer()
+  //    ));
+  
       String sqlDialectName = environment.getRequiredProperty(MEV_PRESETS_PROPERTY_PREFIX+"jooq.sql.dialect");
       SQLDialect dialect = SQLDialect.valueOf(sqlDialectName);
       jooqConfiguration.set(dialect);
-
+  
       return jooqConfiguration;
   }
+  
+  @Bean(name="presets-jooq-context") @Inject
+  public DefaultDSLContext dsl(@Named("presets-jooq-configuration") DefaultConfiguration config) {
+      return new DefaultDSLContext(config);
+  }
 
-  @Bean(name="presets-jooq-context")
-  public DefaultDSLContext dsl() {
-      return new DefaultDSLContext(configuration());
-  }
-
-//  @Bean
-//  public DataSourceInitializer dataSourceInitializer() {
-//      DataSourceInitializer initializer = new DataSourceInitializer();
-//      initializer.setDataSource(dataSource());
-//
-//      ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-//      populator.addScript(
-//              new ClassPathResource(environment.getRequiredProperty(MEV_PRESETS_PROPERTY_PREFIX+"db.schema.script"))
-//      );
-//
-//      initializer.setDatabasePopulator(populator);
-//      return initializer;
-//  }
-
-//  @Bean
-//  public Lifecycle presetsH2Console(){
-//    int port = environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"h2.console.port", Integer.class, 18053);
-//    int fetchSize = environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"h2.serverResultSetFetchSize", Integer.class, 1000);
-//    Lifecycle server = new H2Console("Presets", port, "h2.serverResultSetFetchSize", String.valueOf(fetchSize));
-//    server.start ();
-//    return server;
-//  }
-
-  @Bean(name="presetDetasetBuilder", autowire=Autowire.NO)  
-  protected DatasetBuilder presetDatasetBuilder(){
-    SimpleDatasetBuilder datasetBuilder = new SimpleDatasetBuilder();    
-    return datasetBuilder;
-  }
-  
-  @Bean 
-  public PresetValuesStoreBuilderFactory presetValueStoreBuilderFactory(@Named ("presets-datasource") DataSource dataSource){
-    return new PresetValuesStoreBuilderFactory() {
-      
-      @Override
-      public ValueStoreBuilder create (String id) throws PresetException{ 
-        try{
-          return new JooqBasedDatasourceValueStoreBuilder(dataSource(), id, false); 
-        }catch(SQLException e){
-          throw new PresetException ("Could not create JooqBasedDatasourceValueStoreBuilder(id="+id+", isTemporary=false)", e);
-        }
-      }
-    };
-  }
-  
-  @Bean 
-  public PresetValuesLoader presestValuesLoader(@Named ("presets-datasource") DataSource dataSource){
-    return new SimplePresetValuesLoader (presetValueStoreBuilderFactory(dataSource), presetDatasetBuilder());
-  }
-  
-  @Bean
-  public PresetDimensionBuilder presetDimensionBuilder(@Named("presets-jooq-context") DSLContext context){
-    return new PresetDimensionBuilderFlatTable (context);
-  }
-  
-  @Bean @Inject
-  public PresetDatasetBuilder presetDatasetBuilder(@Named("presets-datasource") DataSource dataSource, 
-                                                   @Named("presets-jooq-context") DSLContext context,
-                                                   PresetDimensionBuilder dimensionBuilder) throws SQLException{
-    log.debug ("***PresetDataSetBuilder: FLATTABLE-DB");
-    return new PresetDatasetBuilderFlatTableDB (dataSource, context, dimensionBuilder);
-  }
-  
   
 }

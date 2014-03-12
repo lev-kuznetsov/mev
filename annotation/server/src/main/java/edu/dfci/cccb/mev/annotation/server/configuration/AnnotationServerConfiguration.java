@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import lombok.ToString;
 
@@ -40,7 +41,7 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
 
   private @Inject Workspace workspace;
   private @Inject FileProjectManager sessionProjectManager;
-  private @Inject PresetDatasetBuilder builder;  
+  private @Inject @Named("presets-dataset-builder") PresetDatasetBuilder builder;  
   private @Inject org.springframework.core.env.Environment environment;
   private @Inject ProbeAnnotationPlatforms annotationPlatforms;
   

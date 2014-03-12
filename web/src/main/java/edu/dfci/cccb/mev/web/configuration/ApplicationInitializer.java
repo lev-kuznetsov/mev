@@ -14,10 +14,17 @@
  */
 package edu.dfci.cccb.mev.web.configuration;
 
+import java.util.EnumSet;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.Filter;
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
 
+import org.eclipse.jetty.servlet.FilterHolder;
+import org.eclipse.jetty.servlets.GzipFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -47,15 +54,25 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     mvcContext.register (DispatcherConfiguration.class, PersistenceConfiguration.class, ContainerConfigurations.class);
 
     mvcContext.register (DatasetRestConfiguration.class);
-    mvcContext.register (ProbeAnnotationsConfigurationMain.class);
+    mvcContext.register (PresetsRestConfiguration.class);
+    mvcContext.register (ProbeAnnotationsConfigurationMain.class);    
     mvcContext.register (AnnotationServerConfiguration.class);
     mvcContext.register (HclRestConfiguration.class);
-    mvcContext.register (LimmaRestConfiguration.class);
-    mvcContext.register (PresetsRestConfiguration.class);
+    mvcContext.register (LimmaRestConfiguration.class);    
 
     DispatcherServlet dispatcher = new DispatcherServlet (mvcContext);
     Dynamic registration = servletContext.addServlet ("dispatcher", dispatcher);
+    
     registration.setLoadOnStartup (1);
     registration.addMapping ("/");
+    
+    EnumSet<DispatcherType> all = EnumSet.of(DispatcherType.ASYNC, DispatcherType.ERROR, DispatcherType.FORWARD, DispatcherType.INCLUDE, DispatcherType.REQUEST);
+        
+    FilterRegistration.Dynamic gzipFilterChain = servletContext.addFilter ("GzipFilter", GzipFilter.class);
+    gzipFilterChain.setInitParameter ("mimeTypes", "application/json");
+    gzipFilterChain.setInitParameter ("minGzipSize", "0");
+    EnumSet<DispatcherType> dispatcherType = EnumSet.of(DispatcherType.REQUEST);
+    gzipFilterChain.addMappingForUrlPatterns (all, false, "/*");
+    
   }
 }

@@ -150,7 +150,7 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
    * @see edu.dfci.cccb.mev.dataset.domain.contract.builders.Parser#next() */
   @Override
   public boolean next () throws DatasetBuilderException {
-    while (!currentRow.hasNext ())
+    while (!currentRow.hasNext ()){
       try {
         List<?> values = reader.read (processors);
         if (values == null)
@@ -164,6 +164,7 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
       } catch (IOException e) {
         throw new InputContentStreamException (e);
       }
+    }
     Entry<String, Double> next = currentRow.next ();
     currentColumnName = next.getKey ();    
     currentValue = next.getValue ();

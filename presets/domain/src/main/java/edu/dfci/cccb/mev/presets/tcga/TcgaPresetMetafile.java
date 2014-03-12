@@ -61,7 +61,7 @@ public class TcgaPresetMetafile extends AbstractTcgaPreset {
     this.platform=platform;
     this.platformName=platformName;
     this.dataLevel=dataLevel;
-    this.descriptor = new SimplePresetDescriptor (name,tcgaPresetRoot, getDataUrlSpec (), getColumnUrlSpec ()); 
+    this.descriptor = new SimplePresetDescriptor ("PRESET-"+name,tcgaPresetRoot, getDataUrlSpec (), getColumnUrlSpec ()); 
     return this;
   }
    

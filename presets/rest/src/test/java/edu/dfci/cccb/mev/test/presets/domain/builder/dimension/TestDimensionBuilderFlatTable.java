@@ -51,8 +51,8 @@ public class TestDimensionBuilderFlatTable {
   
   @Test @Ignore
   public void testBuildRows() throws PresetException, MalformedURLException, InterruptedException{
-    Thread.sleep (1000*100);
-    String tsvFileName="GBM.AgilentG4502A_07_2.Level_2.tsv";
+//    Thread.sleep (1000*100);
+    String tsvFileName="GBM.AgilentG4502A_07_2.Level_2.tsv";    
     String folder="GBM/Level_2/";
     
     String rootUrl = "file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/";
@@ -64,17 +64,17 @@ public class TestDimensionBuilderFlatTable {
     timer.read ();
   }
   
-  @Test
+  @Test @Ignore
   public void testBuildRows2() throws PresetException, MalformedURLException, InterruptedException{
     testBuildRows ();
   }
   
-  @Test
+  @Test @Ignore
   public void testBuildRows3() throws PresetException, MalformedURLException, InterruptedException{
     testBuildRows ();
   }
   
-  @Test
+  @Test @Ignore
   public void testBuildRows4() throws PresetException, MalformedURLException, InterruptedException{
     testBuildRows ();
   }

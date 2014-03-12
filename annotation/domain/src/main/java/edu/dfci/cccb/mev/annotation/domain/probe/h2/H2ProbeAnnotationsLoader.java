@@ -114,7 +114,7 @@ public class H2ProbeAnnotationsLoader implements ProbeAnnotationsLoader {
           statement.execute (createIndexSql);
         }catch(SQLException e){
           connection.rollback ();
-          throw new AnnotationException("", e);
+          throw new AnnotationException("Failed whle importing probe annotation url: " + url, e);
         }
         connection.commit ();
         

@@ -49,14 +49,13 @@ public class TestTcgaPresetMetafile {
     URL expectedColumnURL = new URL(tcgaPresetRoot, "openrefine/clinical/NS-clinical_annotations-tsv.openrefine.tar.gz");    
     assertEquals (expectedColumnURL, descriptor.columnUrl ());
     
-    
   }
   
   @Test
   public void testToString() throws PresetException{
     Preset preset = builder.createPreset (new Object[]{"filename.tsv", "path/of/file", "NS", "Nothing Serious", "HS", "HiSeq", "Level2"});
     log.debug(preset.toString ());
-    assertEquals("TcgaPresetMetafile(tcgaPresetRoot=file:/home/antony/git/mev/presets/rest/target/test-classes/tcga/, filename=filename.tsv, path=path/of/file, name=filename.tsv, disease=NS, diseaseName=Nothing Serious, platform=HS, platformName=HiSeq, dataLevel=Level2, descriptor=SimplePresetDescriptor(name=filename.tsv, dataUrl=file:/home/antony/git/mev/presets/rest/target/test-classes/tcga/tcga_data/path/of/file/filename.tsv, columnUrl=file:/home/antony/git/mev/presets/rest/target/test-classes/tcga/openrefine/clinical/NS-clinical_annotations-tsv.openrefine.tar.gz))", 
+    assertEquals("TcgaPresetMetafile(tcgaPresetRoot=file:/home/antony/git/mev/presets/rest/target/test-classes/tcga/, filename=filename.tsv, path=path/of/file, name=filename.tsv, disease=NS, diseaseName=Nothing Serious, platform=HS, platformName=HiSeq, dataLevel=Level2, descriptor=SimplePresetDescriptor(name=PRESET-filename.tsv, dataUrl=file:/home/antony/git/mev/presets/rest/target/test-classes/tcga/tcga_data/path/of/file/filename.tsv, columnUrl=file:/home/antony/git/mev/presets/rest/target/test-classes/tcga/openrefine/clinical/NS-clinical_annotations-tsv.openrefine.tar.gz))", 
         preset.toString ());
   }
 

@@ -136,6 +136,13 @@
 		<scope>provided</scope>
 	</dependency>
 	
+	<dependency>
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>jetty-servlets</artifactId>
+		<version>${jetty.version}</version>
+	</dependency>
+            
+	
 	<!-- Unit Testing -->
 	<dependency>
 		<groupId>com.jayway.jsonpath</groupId>
@@ -157,7 +164,15 @@
       <version>BAYLIE-SNAPSHOT</version>
 	  <type>test-jar</type>
 	  <scope>test</scope>
-	</dependency>	
+	</dependency>
+	
+	<dependency>
+	  <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-presets-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+	  <type>test-jar</type>
+	  <scope>test</scope>
+	</dependency>		
     <!-- Webjars -->
 
     <dependency>

@@ -31,6 +31,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Value;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleValue;
 import edu.dfci.cccb.mev.presets.contract.PresetValues;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
+import edu.dfci.cccb.mev.presets.util.timer.Timer;
 @Log4j
 public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Value> {
 
@@ -49,6 +50,7 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
 
   private final PresetValuesQueryHelper queryHelper;
   public PresetValuesFlatTableIterable (DSLContext context, String tableName, Dimension columns) {
+    log.debug ("*** ValueStore Iterable ***");
     this.context=context;    
     this.columns=columns;
     this.tableName = tableName;
@@ -90,6 +92,7 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
       return hasNextRow () || hasNextField ();
     }
     private Cursor<Record> openCursor(){
+      Timer timer = Timer.start ("open-cursor");
       Cursor<Record> cursor;
       ResultQuery<Record> query=null;
       try{
@@ -98,6 +101,7 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
       }finally{
         if(query!=null) query.close();            
       }
+      timer.read ();
       return cursor;
     }
     
@@ -145,8 +149,13 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
           value = NaN;
         else if (sValue==null)
           value = NaN;
-        else
-          value = Double.parseDouble (sValue);
+        else{
+          try{
+            value = Double.parseDouble (sValue);
+          }catch(NumberFormatException e){
+            throw new PresetException ("Cannot convert to double value:"+sValue,e);
+          }
+        }
         
         return new SimpleValue(row, column, value);
       }else{
@@ -162,8 +171,11 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
 
     @Override
     public void close () throws Exception {
-      if(cursor!=null)
-        cursor.close ();      
+      if(cursor!=null){
+        if(log.isDebugEnabled ())
+          log.debug ("***closing cursor");
+        cursor.close ();
+      }
     }
     
     @SneakyThrows
