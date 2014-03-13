@@ -115,6 +115,10 @@ define(
                                                                                         "width",
                                                                                         pageWidth
                                                                                                 - mouse.pageX);
+                                                                        
+                                                                        jq('span#tab-icon')
+                                                                            .attr("class", "glyphicon glyphicon-chevron-left glyphicon-white")
+                                                                            
                                                                         leftPanel
                                                                                 .children()
                                                                                 .show();
@@ -124,12 +128,8 @@ define(
                                                                             && mouse.pageX < pageWidth
                                                                                     * (1 / 7)
                                                                             && mouse.pageX > 0) {
-                                                                        leftPanel
-                                                                                .children()
-                                                                                .hide();
-                                                                        jq(
-                                                                                'div#tab')
-                                                                                .click()
+                                                                        leftPanel.children().hide();
+                                                                        jq('div#tab').click()
                                                                     }
 
                                                                 });
@@ -139,6 +139,8 @@ define(
                                                                 function() {
 
                                                                     if (showSidePanel) {
+                                                                        jq('span#tab-icon')
+                                                                            .attr("class", "glyphicon glyphicon-chevron-right glyphicon-white")
                                                                         leftPanel
                                                                                 .css(
                                                                                         "width",
@@ -151,8 +153,11 @@ define(
                                                                                         "width",
                                                                                         pageWidth - 30);
                                                                         showSidePanel = false;
-                                                                    } else {
                                                                         
+                                                                        
+                                                                    } else {
+                                                                        jq('span#tab-icon')
+                                                                            .attr("class", "glyphicon glyphicon-chevron-left glyphicon-white")
                                                                         leftPanel
                                                                                 .css(
                                                                                         "width",

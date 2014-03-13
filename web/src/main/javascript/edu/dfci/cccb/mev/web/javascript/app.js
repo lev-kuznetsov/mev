@@ -1,4 +1,12 @@
-define(['angular', 'angularResource', 'angularRoute', 'directives', 'services', 'controllers', 'setmanager/SetManager', 'uiBootstrap'], function(angular){
+define(['angular', 
+        'angularResource', 
+        'angularRoute', 
+        'directives', 
+        'services', 
+        'controllers', 
+        'setmanager/SetManager', 
+        'uiBootstrap', 
+        'uiBootstrapTpls'], function(angular){
 	'use strict';
 	return angular.module('myApp', [
 	     'ngRoute',

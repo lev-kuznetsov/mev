@@ -114,9 +114,10 @@ body {
 	background: #E0E0E0;
 }
 
-div#tab span.glyphicon {
+span#tab-icon {
 	margin-top:8px;
-	margin-left:2px;
+	margin-left:0px;
+	color: #fff
 }
 
 div#prevElement {
