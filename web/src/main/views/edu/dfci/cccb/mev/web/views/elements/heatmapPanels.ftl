@@ -11,7 +11,8 @@
 		
 		<div id="partition">
 			<div id='tab'>
-				<span class="glyphicon glyphicon-chevron-left glyphicon-white"></span>
+				<span id="tab-icon" class="glyphicon glyphicon-chevron-left glyphicon-white"></span>
+				
 			</div>
 		</div>
 		
