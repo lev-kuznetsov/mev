@@ -167,16 +167,25 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
   
 
   @Bean @Profile("!test") @Inject 
-  public String prefetchPresetRowKeys(Presets presets, 
-                                    PresetDimensionBuilder builder,
-                                    @Named("mev-presets-loader") PresetValuesLoader loader) throws PresetException{
+  public String prefetchPresetRowKeys(final Presets presets, 
+                                    final PresetDimensionBuilder builder,
+                                    final @Named("mev-presets-loader") PresetValuesLoader loader) throws PresetException{
     
     loader.loadAll (presets);   
     
-    for(Preset preset : presets.getAll ()){           
-      log.debug ("***Prefetching row keys for PRESET: "+preset.name ());
-      builder.buildRows (preset.descriptor ());
-    } 
+    (new Thread(new Runnable() {
+      
+      @Override
+      public void run () {
+        for(Preset preset : presets.getAll ()){           
+          log.debug ("***Prefetching row keys for PRESET: "+preset.name ());
+          builder.buildRows (preset.descriptor ());
+        }
+      }
+    }
+    )).start();
+    
+    
     return "done";
   }
 }
