@@ -11,6 +11,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
@@ -28,6 +29,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.annotation.Scope;
@@ -41,6 +43,8 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.DimensionBuilder;
 import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
@@ -77,8 +81,7 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
   
   @Bean  @Inject
   public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot, 
-                                TcgaPresetsBuilder builder
-//                                ,PresetValuesLoader loader
+                                TcgaPresetsBuilder builder                                  
                                 ) throws URISyntaxException, PresetException, IOException {
     
     String metadataFilename = environment.getProperty (TCGA_PROPERTY_MATA_FILENAME);    
@@ -103,7 +106,7 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
     
     Presets presets = new SimplePresests (metadataURL, builder);
 //    if(Boolean.parseBoolean (reloadFlag))
-//      loader.loadAll (presets);
+//      loader.loadAll (presets);    
     return presets;
   }
   
@@ -152,6 +155,18 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
   @Bean @Inject
   public PresetDimensionBuilder presetDimensionBuilder(@Named("presets-jooq-context") DSLContext context){
     log.debug ("***PresetDIMMENSIONBuilder: FLATTABLE-DB");
-    return new PresetDimensionBuilderFlatTable (context);
+    PresetDimensionBuilder builder = new PresetDimensionBuilderFlatTable (context);    
+    return builder;
+  }
+  
+
+  @Bean @Profile("!test") @Inject 
+  public String prefetchPresetRowKeys(Presets presets, 
+                                    PresetDimensionBuilder builder){
+    for(Preset preset : presets.getAll ()){           
+      log.debug ("***Prefetching row keys for PRESET: "+preset.name ());
+      builder.buildRows (preset.descriptor ());
+    } 
+    return "done";
   }
 }

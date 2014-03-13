@@ -33,7 +33,7 @@ import edu.dfci.cccb.mev.presets.contract.PresetValues;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.util.timer.Timer;
 @Log4j
-public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Value> {
+public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Value>, AutoCloseable {
 
   //cache
   private Map<String, Object> lastMap;
@@ -240,6 +240,11 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
     for(String columnName : columns)
       selectFields.add (fieldByName(String.class, columnName));
     return selectFields;
+  }
+
+  @Override
+  public void close () throws Exception {
+        //nothing to close;
   }
 
 
