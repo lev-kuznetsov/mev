@@ -64,6 +64,19 @@ public class HSQLPresetLoader extends AbstractPresetValuesLoader {
     this.batchSize=batchSize;
   }
   
+  private String formatFilePath(String filePath){
+     return filePath.replaceFirst ("[/]{2,}", "/");
+  }
+  private void executeStatement(Statement statement, String sql) throws PresetException{    
+      try {
+        if(log.isDebugEnabled ())
+          log.debug (sql);
+        statement.execute (sql);
+      } catch (SQLException e) {
+        throw new PresetException("Error while executing sq: " + sql, e);
+      }    
+  }
+  
   @Override @SneakyThrows(SQLException.class)
   public void load (URL url) throws PresetException{
     
@@ -91,7 +104,8 @@ public class HSQLPresetLoader extends AbstractPresetValuesLoader {
         
 //    create schema    
 //    Table targetTable = metaModelHelper.createTable (dbDataContext, csvDataContext, csvTable, tableName, getColumnTypeMapperVarchar (csvDataContext, csvTable));    
-    String filePath = url.getPath ().replace (url.getProtocol (), "").replaceAll ("//", "");
+//    String filePath = url.getPath ().replace (url.getProtocol (), "").replaceAll ("//", "res:");
+    String filePath = formatFilePath(url.getPath ());
     
     try(Connection conn = dataSource.getConnection ()){
       try(Statement statement = conn.createStatement ()){
@@ -101,34 +115,26 @@ public class HSQLPresetLoader extends AbstractPresetValuesLoader {
         
         MetaModelHelper.CreateTableScript creatScript = metaModelHelper.createTableSQL (dbDataContext, csvDataContext, csvTable, "\""+textTableName+"\"", getColumnTypeMapperVarchar (csvDataContext, csvTable));      
         String createTextTable = creatScript.getSql ().replace ("CREATE TABLE", "CREATE TEXT TABLE");      
-        log.debug(createTextTable);
-        statement.execute (createTextTable);        
+        executeStatement (statement, createTextTable);        
         
         creatScript = metaModelHelper.createTableSQL (dbDataContext, csvDataContext, csvTable, "\""+tableName+"\"", getColumnTypeMapperVarchar (csvDataContext, csvTable));              
         String createTable = creatScript.getSql ().replace ("CREATE TABLE", "CREATE CACHED TABLE"); 
-        log.debug (createTable);
-        statement.execute (createTable);
-        
-        
-        String setTextTableONSql = "SET TABLE PUBLIC.\""+textTableName+"\" SOURCE \"/"+filePath+";fs=\\t;ignore_first=true;cache_rows=1000;cache_size=100\"";
-        log.debug (setTextTableONSql);
-        statement.execute (setTextTableONSql);                
+        executeStatement (statement, createTable);        
+                
+        String setTextTableONSql = "SET TABLE PUBLIC.\""+textTableName+"\" SOURCE \""+filePath+";fs=\\t;ignore_first=true;cache_rows=1000;cache_size=100\"";
+        executeStatement (statement, setTextTableONSql);
         
         String insertSql = "INSERT INTO \""+tableName+"\" (SELECT * FROM \""+textTableName+"\")";
-        log.debug (insertSql);
-        statement.execute (insertSql);
+        executeStatement (statement, insertSql);
         
         String setTextTableOFFSql = "SET TABLE \""+textTableName+"\" SOURCE OFF"; 
-        log.debug (setTextTableOFFSql);
-        statement.execute (setTextTableOFFSql);
+        executeStatement (statement, setTextTableOFFSql);
         
         String dropTextTable = "DROP TABLE \""+textTableName+"\""; 
-        log.debug (dropTextTable);
-        statement.execute (dropTextTable);
+        executeStatement (statement, dropTextTable);        
 
         String createIndex = "CREATE UNIQUE INDEX \""+tableName+"\" ON \""+tableName+"\"(COLUMN0)";
-        log.debug(createIndex);
-        statement.execute (createIndex);
+        executeStatement (statement, createIndex);
                 
 //        metaModelHelper.insertTableData (dbDataContext, targetTable, csvDataContext, csvTable);
         

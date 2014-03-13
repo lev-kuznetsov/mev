@@ -53,6 +53,7 @@ import edu.dfci.cccb.mev.presets.contract.PresetValuesLoader;
 import edu.dfci.cccb.mev.presets.contract.PresetValuesStoreBuilderFactory;
 import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
+import edu.dfci.cccb.mev.presets.dal.HSQLPresetLoader;
 import edu.dfci.cccb.mev.presets.dataset.PresetDatasetBuilderByJooq;
 import edu.dfci.cccb.mev.presets.dataset.flat.PresetDatasetBuilderFlatTableDB;
 import edu.dfci.cccb.mev.presets.dataset.flat.PresetDimensionBuilderFlatTable;
@@ -79,17 +80,24 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
   
   @Inject Environment environment;
   
+  @Bean(name="mev-presets-loader") @Inject 
+  public PresetValuesLoader presestValuesLoader(@Named ("presets-datasource") DataSource dataSource){    
+    String reloadFlag = environment.getProperty (TCGA_PROPERTY_DATASET_RELOAD_FLAG);
+    log.info (TCGA_PROPERTY_DATASET_RELOAD_FLAG+":" + reloadFlag);
+    return new HSQLPresetLoader (dataSource, Boolean.parseBoolean (reloadFlag), 1000);
+  }
+  
   @Bean  @Inject
   public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot, 
-                                TcgaPresetsBuilder builder                                  
+                                TcgaPresetsBuilder builder                                
                                 ) throws URISyntaxException, PresetException, IOException {
     
     String metadataFilename = environment.getProperty (TCGA_PROPERTY_MATA_FILENAME);    
-    String reloadFlag = environment.getProperty (TCGA_PROPERTY_DATASET_RELOAD_FLAG);
+    
     
     log.info (TCGA_PROPERTY_ROOT_FOLDER+" URL:" + tcgaPresetRoot);
     log.info (TCGA_PROPERTY_MATA_FILENAME+":" + metadataFilename);
-    log.info (TCGA_PROPERTY_DATASET_RELOAD_FLAG+":" + reloadFlag);
+    
     
     if(metadataFilename == null)
       return new SimplePresests();
@@ -104,9 +112,7 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
       throw new PresetException ("Metadata resource not found: " + metadataURL.toString ());
     }
     
-    Presets presets = new SimplePresests (metadataURL, builder);
-//    if(Boolean.parseBoolean (reloadFlag))
-//      loader.loadAll (presets);    
+    Presets presets = new SimplePresests (metadataURL, builder);    
     return presets;
   }
   
@@ -162,7 +168,11 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
 
   @Bean @Profile("!test") @Inject 
   public String prefetchPresetRowKeys(Presets presets, 
-                                    PresetDimensionBuilder builder){
+                                    PresetDimensionBuilder builder,
+                                    @Named("mev-presets-loader") PresetValuesLoader loader) throws PresetException{
+    
+    loader.loadAll (presets);   
+    
     for(Preset preset : presets.getAll ()){           
       log.debug ("***Prefetching row keys for PRESET: "+preset.name ());
       builder.buildRows (preset.descriptor ());

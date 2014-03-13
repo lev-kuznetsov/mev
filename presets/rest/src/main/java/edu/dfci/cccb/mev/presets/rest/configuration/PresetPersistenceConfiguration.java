@@ -24,9 +24,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
 import edu.dfci.cccb.mev.configuration.persistense.h2.H2Console;
@@ -199,6 +202,5 @@ public class PresetPersistenceConfiguration {
   public DefaultDSLContext dsl(@Named("presets-jooq-configuration") DefaultConfiguration config) {
       return new DefaultDSLContext(config);
   }
-
   
 }

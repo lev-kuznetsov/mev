@@ -269,7 +269,11 @@
             <systemProperty>
               <name>edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable</name>
               <value>${mev.Rscript}</value>
-            </systemProperty>             	   
+            </systemProperty>
+            <systemProperty>
+            	<name>textdb.allow_full_path</name>
+            	<value>${mev.hsqldb.textdb.allow_full_path}</value>
+            </systemProperty>        	   
           </systemProperties>
         </configuration>
       </plugin>

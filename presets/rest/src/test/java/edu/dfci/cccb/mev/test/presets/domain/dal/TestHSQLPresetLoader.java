@@ -1,6 +1,7 @@
 package edu.dfci.cccb.mev.test.presets.domain.dal;
 
 import static org.junit.Assert.*;
+import static org.hamcrest.core.Is.*;
 
 import java.net.URL;
 
@@ -8,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
 
+import org.hamcrest.core.Is;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,9 +29,29 @@ public class TestHSQLPresetLoader {
   @Inject Presets presets;
   @Inject @Named("presets-datasource") DataSource dataSource;
   
-  @Test @Ignore
+  @Test 
   public void testLoadURL () throws PresetException, PresetNotFoundException {
     HSQLPresetLoader loader = new HSQLPresetLoader (dataSource, true, 1000);
     loader.load (presets.get (presets.list ().get(0)));
+  }
+  
+  @Test
+  public void testFormatFilePath(){
+    String regEx = "[/]{2,}";
+    String filePath = "////home/antony/file.txt";
+    String formattedFilePath = filePath.replaceFirst (regEx, "/");
+    String expectedFilePath="/home/antony/file.txt";
+    
+    //test multiple "///" at the start of path
+    assertThat(formattedFilePath, is (expectedFilePath));
+    
+    //test single "/" at the start of path 
+    formattedFilePath = formattedFilePath.replaceFirst (regEx, "/");
+    assertThat(formattedFilePath, is (expectedFilePath));
+    
+    //test no "/" at the start of path 
+    formattedFilePath = "home/antony/file.txt".replaceFirst (regEx, "/");
+    assertThat(formattedFilePath, is ("home/antony/file.txt"));
+    
   }
 }
