@@ -124,12 +124,8 @@ define(
                                                                             && mouse.pageX < pageWidth
                                                                                     * (1 / 7)
                                                                             && mouse.pageX > 0) {
-                                                                        leftPanel
-                                                                                .children()
-                                                                                .hide();
-                                                                        jq(
-                                                                                'div#tab')
-                                                                                .click()
+                                                                        leftPanel.children().hide();
+                                                                        jq('div#tab').click()
                                                                     }
 
                                                                 });

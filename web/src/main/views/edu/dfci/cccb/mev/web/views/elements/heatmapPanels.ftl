@@ -2,7 +2,7 @@
 
 <div ng-controller="MainPanelController" class="container-fluid heatmap-container"> <!-- Start Column Expand Tabs -->	
 	
-	<div class="row">
+
 	    
 		<div id="leftPanel">
 		
@@ -21,6 +21,6 @@
 				<div id="expressionPanel" expression-Panel></div>
 		</div>
 			
-	</div>
+
 		
 </div>
