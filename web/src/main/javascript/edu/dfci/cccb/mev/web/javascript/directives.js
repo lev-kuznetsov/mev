@@ -475,23 +475,8 @@ define(
                                                 }]; 
                                                 
                                                 scope.selections = [];
-
-                                                $http(
-                                                        {
-                                                            method : "GET",
-                                                            url : '/dataset/'
-                                                                    + $routeP.datasetName
-                                                                    + '/'
-                                                                    + "column"
-                                                                    + '/selection',
-                                                            params : {
-                                                                format : 'json'
-                                                            }
-                                                        })
-                                                        .then(
-                                                                function(d) {
-                                                                    scope.selections = d.data;
-                                                                });
+                                                
+                                                pullSelections();
 
                                                 scope.analysisDimension = {
                                                     name : "Column",
@@ -523,8 +508,32 @@ define(
                                                                     });
 
                                                     resetSelections();
+                                                    pullSelections();
+                                                    
+                                                   
 
                                                 };
+                                                
+                                                function pullSelections(){
+                                                    
+                                                    $http(
+                                                            {
+                                                                method : "GET",
+                                                                url : '/dataset/'
+                                                                        + $routeP.datasetName
+                                                                        + '/'
+                                                                        + "column"
+                                                                        + '/selection',
+                                                                params : {
+                                                                    format : 'json'
+                                                                }
+                                                            })
+                                                            .then(
+                                                                    function(d) {
+                                                                        scope.selections = d.data;
+                                                                    });
+                                                    
+                                                }
 
                                                 function resetSelections() {
                                                     scope.analysisName = "";
