@@ -5,7 +5,7 @@ define(['angular',
         'services', 
         'controllers', 
         'setmanager/SetManager', 
-        'uiBootstrap', 
+//        'uiBootstrap', 
         'uiBootstrapTpls'], function(angular){
 	'use strict';
 	return angular.module('myApp', [

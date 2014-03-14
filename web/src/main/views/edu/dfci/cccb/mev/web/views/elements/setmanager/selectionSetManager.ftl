@@ -5,8 +5,8 @@
 		<selection-set-list 
 					mev-selections="heatmapData.column.selections" 
 					mev-base-url="/annotations/{{heatmapId}}/annotation/column"
-					mev-demintion="column">
-					You may define sets using <a href="" ng-click="showAnnotations(selection, 'column')">column annotations</a> or by performing a clustering analysis.				
+					mev-demintion="column">				
+					You may define sets using <a href="#" target="_self" ng-click="showAnnotations(selection, 'column')">column annotations</a> or by performing a clustering analysis.				
 		</selection-set-list>
 	</accordion-group>
 

@@ -264,7 +264,29 @@ define(
                                                 + '/annotation';
                                         $scope.annotationsUrl = $scope.baseUrl
                                                 + '/column/new/dataset/';
-
+                                        $scope.activeTab="visualize";
+                                        $scope.visualizeTabActive=true;
+                                        $scope.annotationsTabActive=false;
+                                        
+                                        $scope.setActiveTab = function(name){
+                                        	$scope.activeTab = name;
+                                        	if(name=='annotations'){
+                                        		alert('annot active');
+                                        		$scope.visualizeTabActive=false;
+                                        		$scope.annotationsTabActive=true;
+                                        	}else{
+                                        		$scope.visualizeTabActive=true;
+                                        		$scope.annotationsTabActive=false;
+                                        	}
+                                        		
+                                        };
+                                        $scope.isActiveTab = function(name){
+                                        	if($scope.activeTab==name)
+                                        		return true;
+                                        	else
+                                        		return false;
+                                        };
+                                        
                                         $scope
                                                 .$on(
                                                         'ViewAnnotationsEvent',
@@ -273,6 +295,7 @@ define(
                                                                 selection,
                                                                 dimension,
                                                                 annotationSource) {
+                                                        	alert('view ann!');
                                                             var annotationsUrl = $scope.baseUrl
                                                                     + "/"
                                                                     + dimension
@@ -294,12 +317,14 @@ define(
                                                                 annotationsUrl += selection.properties.selectionFacetLink;
                                                             }
 
-                                                            $scope.annotationsUrl = annotationsUrl;
-                                                            var elm = document
-                                                                    .querySelector('#annotationsTabLink');
-                                                            $(elm)
-                                                                    .trigger(
-                                                                            'click');
+                                                            $scope.annotationsUrl = annotationsUrl;                                                            
+                                                            $scope.setActiveTab("annotations");
+//                                                            var elm = document
+//                                                                    .querySelector('#annotationsTabLink');
+//                                                            $(elm)
+//                                                                    .trigger(
+//                                                                            'click');
+                                                            
                                                             // var
                                                             // annotationsTab =
                                                             // angular.element(elm);

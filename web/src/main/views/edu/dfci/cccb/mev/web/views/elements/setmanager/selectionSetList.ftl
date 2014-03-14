@@ -1,6 +1,5 @@
 <div>
-
-<div class="selectionSetList">
+<div class="selectionSetList">	
 	<div ng-show="selections.length>0" ng-repeat="selection in selections"
 		class="selectionSetListItem">
 		<a data-toggle="modal" role="button" data-target="#editModal" ng-click="setSelected(selection)">
@@ -9,8 +8,8 @@
 		</a>
 		<div>
 			<!-- href="{{baseUrl}}/{{selection.name}}/{{selection.properties.selectionFacetLink}} -->
-			<a href=""
-				ng-click="showAnnotations(selection, dimension)">{{selection.name}}</a>
+			<a href="#"
+				ng-click="showAnnotations(selection, 'column')"">{{selection.name}}</a>
 		</div>
 		<div class="selectionSetDescription">{{selection.properties.selectionDescription}}</div>
 		<div class="selectionSetKeys">
@@ -18,6 +17,7 @@
 		</div>
 	</div>
 	<div ng-show="selections.length<=0" class="selectionSetListItem">
+		<input type='button' value='hi' ng-click="showAnnotations(selection, 'row')"/>
 		<span ng-transclude>No sets defined.</span>
 	</div>
 </div>

@@ -17,8 +17,8 @@ require.config ({
                            '/library/webjars/angularjs/1.2.13/angular-resource' ],
     bootstrap : [ '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap',
                  '/library/webjars/bootstrap/3.1.1/js/bootstrap' ],
-    uiBootstrap: ['//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min',
-                  'bootstrap-ui'],
+//    uiBootstrap: ['//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min',
+//                  'bootstrap-ui'],
     uiBootstrapTpls: ['//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min',
                   'bootstrap-ui-tpls'],
     d3 : [ '//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3', 
@@ -39,9 +39,9 @@ require.config ({
         exports : 'ngResource',
         deps: ['angular']
     },
-    'uiBootstrap':{
-            deps:['angular', 'bootstrap']
-    },
+//    'uiBootstrap':{
+//            deps:['angular', 'bootstrap']
+//    },
     'uiBootstrapTpls':{
         deps:['angular', 'bootstrap']
     },
