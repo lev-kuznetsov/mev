@@ -161,17 +161,14 @@ define(
                                                                         leftPanel
                                                                                 .css(
                                                                                         "width",
-                                                                                        pageWidth
-                                                                                                * (1 / 3));
+                                                                                        pageWidth* (9 / 10));
                                                                         leftPanel
                                                                                 .children()
                                                                                 .show();
                                                                         rightPanel
                                                                                 .css(
                                                                                         "width",
-                                                                                        pageWidth
-                                                                                                * (2 / 3)
-                                                                                                - 30);
+                                                                                        pageWidth *(1- (9 / 10) ) );
                                                                         showSidePanel = true;
                                                                     }
 
@@ -478,23 +475,8 @@ define(
                                                 }]; 
                                                 
                                                 scope.selections = [];
-
-                                                $http(
-                                                        {
-                                                            method : "GET",
-                                                            url : '/dataset/'
-                                                                    + $routeP.datasetName
-                                                                    + '/'
-                                                                    + "column"
-                                                                    + '/selection',
-                                                            params : {
-                                                                format : 'json'
-                                                            }
-                                                        })
-                                                        .then(
-                                                                function(d) {
-                                                                    scope.selections = d.data;
-                                                                });
+                                                
+                                                pullSelections();
 
                                                 scope.analysisDimension = {
                                                     name : "Column",
@@ -526,8 +508,32 @@ define(
                                                                     });
 
                                                     resetSelections();
+                                                    pullSelections();
+                                                    
+                                                   
 
                                                 };
+                                                
+                                                function pullSelections(){
+                                                    
+                                                    $http(
+                                                            {
+                                                                method : "GET",
+                                                                url : '/dataset/'
+                                                                        + $routeP.datasetName
+                                                                        + '/'
+                                                                        + "column"
+                                                                        + '/selection',
+                                                                params : {
+                                                                    format : 'json'
+                                                                }
+                                                            })
+                                                            .then(
+                                                                    function(d) {
+                                                                        scope.selections = d.data;
+                                                                    });
+                                                    
+                                                }
 
                                                 function resetSelections() {
                                                     scope.analysisName = "";

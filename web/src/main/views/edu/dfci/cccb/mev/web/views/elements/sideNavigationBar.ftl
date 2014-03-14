@@ -12,10 +12,7 @@
 	
 	
 		<div class="row"=>
-		
-			<div class="sidepanel-title row">
-				<p class="pull-right">Previous Analysis</p>
-			</div>
+		<hr>
 			
 			<cluster-Accordion-List></cluster-Accordion-List>
 				

@@ -1,8 +1,7 @@
 <accordion close-others="false">
 	<div  ng-repeat="limma in previousLimmaAnalysis">
 	    <accordion-group heading="{{limma.datar.type}} : {{limma.name}}" is-open="false">
-      		<div class="container">
-	            <div class="col-md-12>
+
 	            
 		            <div class="row">
 		            
@@ -39,7 +38,20 @@
 		                            <thead>
 		                                    <tr>
 		                                      <th ng-repeat="tableHeader in ['ID', 'Log-Fold-Change', 'Average Expression', 'P-Value', 'Q-Value']">
-		                                      	<p ng-click="reorderLimmaTable(tableHeader)"> {{tableHeader}}</p>
+		                                      	
+		                                      	<div class="dropdown">
+		                                      		<p class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu">
+												    	 {{tableHeader}}<span class="caret"></span>
+													</p>
+													<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+													
+														<li>
+													      <p ng-click="reorderLimmaTable(tableHeader)">Order By</p>
+													    </li>
+													    
+													</ul>
+		                                      	</div>
+		                                      	
 		                                      </th>
 		                                    </tr>
 		                            </thead>
@@ -66,8 +78,7 @@
 		                </div>
 		            </div>
                 
-                </div> <!-- column -->
-			</div> <!-- container-->
+
 		</accordion-group>
 	</div> <!-- repeat -->
 </accordion>
