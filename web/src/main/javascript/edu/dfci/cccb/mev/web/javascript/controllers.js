@@ -258,30 +258,32 @@ define(
                                     '$element',
                                     '$attrs',
                                     function($scope, $element, $attrs) {
-                                        
+                                    	
                                         $scope.baseUrl = '/annotations/'
                                                 + $scope.heatmapId
                                                 + '/annotation';
                                         $scope.annotationsUrl = $scope.baseUrl
                                                 + '/column/new/dataset/';
-                                        $scope.activeTab="visualize";
-                                        $scope.visualizeTabActive=true;
-                                        $scope.annotationsTabActive=false;
                                         
+                                        $scope.tabs={};
+                                        if($scope.tabs!=undefined){
+                                        	$scope.tabs.activeTab='visualize';
+                                        	$scope.tabs.visualizeTabActive=true;
+                                        	$scope.tabs.annotationsTabActive=false;
+                                        }
                                         $scope.setActiveTab = function(name){
-                                        	$scope.activeTab = name;
-                                        	if(name=='annotations'){
-                                        		alert('annot active');
-                                        		$scope.visualizeTabActive=false;
-                                        		$scope.annotationsTabActive=true;
+                                        	$scope.tabs.activeTab = name;
+                                        	if(name=='annotations'){                                        		
+                                        		$scope.tabs.visualizeTabActive=false;
+                                        		$scope.tabs.annotationsTabActive=true;
                                         	}else{
-                                        		$scope.visualizeTabActive=true;
-                                        		$scope.annotationsTabActive=false;
+                                        		$scope.tabs.visualizeTabActive=true;
+                                        		$scope.tabs.annotationsTabActive=false;
                                         	}
                                         		
                                         };
                                         $scope.isActiveTab = function(name){
-                                        	if($scope.activeTab==name)
+                                        	if($scope.tabs.activeTab==name)
                                         		return true;
                                         	else
                                         		return false;
@@ -295,7 +297,6 @@ define(
                                                                 selection,
                                                                 dimension,
                                                                 annotationSource) {
-                                                        	alert('view ann!');
                                                             var annotationsUrl = $scope.baseUrl
                                                                     + "/"
                                                                     + dimension
@@ -317,7 +318,7 @@ define(
                                                                 annotationsUrl += selection.properties.selectionFacetLink;
                                                             }
 
-                                                            $scope.annotationsUrl = annotationsUrl;                                                            
+                                                            $scope.annotationsUrl = annotationsUrl;                                                             
                                                             $scope.setActiveTab("annotations");
 //                                                            var elm = document
 //                                                                    .querySelector('#annotationsTabLink');

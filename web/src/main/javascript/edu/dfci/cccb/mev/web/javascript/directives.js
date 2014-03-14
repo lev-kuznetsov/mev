@@ -272,7 +272,7 @@ define(
                                     function($routeParams) {
                                         return {
                                             restrict : 'AC',
-                                            templateUrl : '/container/view/elements/expressionPanel',
+                                            templateUrl : '/container/view/elements/expressionPanel',                                            
                                             link : function(scope) {
 
                                                 scope

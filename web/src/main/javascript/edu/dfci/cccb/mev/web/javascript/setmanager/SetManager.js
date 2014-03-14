@@ -6,6 +6,7 @@ define(['jquery','angular'], function(jquery, angular){
 					  heatmapId: '@heatmapId',
 					  heatmapData: '=heatmapData'
 				  },
+				  controller: 'SelectionSetManagerCtl',				  
 				  restrict : 'EA',
 				  templateUrl : '/container/view/elements/setmanager/selectionSetManager'
 			  };

@@ -8,16 +8,15 @@
 		</a>
 		<div>
 			<!-- href="{{baseUrl}}/{{selection.name}}/{{selection.properties.selectionFacetLink}} -->
-			<a href="#"
-				ng-click="showAnnotations(selection, 'column')"">{{selection.name}}</a>
+			<a href=""
+				ng-click="showAnnotations(selection, dimension)"">{{selection.name}}</a>
 		</div>
 		<div class="selectionSetDescription">{{selection.properties.selectionDescription}}</div>
 		<div class="selectionSetKeys">
 			<span ng-repeat="key in selection.keys"> {{key}}, </span>
 		</div>
 	</div>
-	<div ng-show="selections.length<=0" class="selectionSetListItem">
-		<input type='button' value='hi' ng-click="showAnnotations(selection, 'row')"/>
+	<div ng-show="selections.length<=0" class="selectionSetListItem">	
 		<span ng-transclude>No sets defined.</span>
 	</div>
 </div>
