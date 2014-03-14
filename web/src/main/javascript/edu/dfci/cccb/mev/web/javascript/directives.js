@@ -161,17 +161,14 @@ define(
                                                                         leftPanel
                                                                                 .css(
                                                                                         "width",
-                                                                                        pageWidth
-                                                                                                * (1 / 3));
+                                                                                        pageWidth* (9 / 10));
                                                                         leftPanel
                                                                                 .children()
                                                                                 .show();
                                                                         rightPanel
                                                                                 .css(
                                                                                         "width",
-                                                                                        pageWidth
-                                                                                                * (2 / 3)
-                                                                                                - 30);
+                                                                                        pageWidth *(1- (9 / 10) ) );
                                                                         showSidePanel = true;
                                                                     }
 
