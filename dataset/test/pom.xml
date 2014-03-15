@@ -6,7 +6,7 @@
   <artifactId>mev-dataset-test</artifactId>
   <packaging>jar</packaging>
 
-  <name>MeV Common Module Test Component</name>
+  <name>MeV Dataset Module Test Component</name>
   <url>http://github.com/dfci-cccb/mev</url>
 
   <parent>

@@ -14,26 +14,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain.contract;
-
-import static javax.xml.bind.annotation.XmlAccessType.NONE;
-
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
- * Analysis
- * 
  * @author levk
  */
-@XmlRootElement
-@XmlAccessorType (NONE)
-public interface Analysis {
-
-  /**
-   * @return type of analysis
-   */
-  @XmlAttribute
-  public String type ();
-}
+package edu.dfci.cccb.mev.common.services.support.messages;

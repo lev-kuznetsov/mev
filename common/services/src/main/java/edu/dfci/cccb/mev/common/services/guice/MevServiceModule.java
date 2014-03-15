@@ -16,15 +16,22 @@
 
 package edu.dfci.cccb.mev.common.services.guice;
 
-import static edu.dfci.cccb.mev.common.services.servlet.ServicesFilter.SERVICE_ROOT_URL;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
-import static javax.ws.rs.core.MediaType.APPLICATION_XML_TYPE;
 
 import javax.ws.rs.core.MediaType;
 
-import lombok.Delegate;
-import edu.dfci.cccb.mev.common.services.guice.annotation.ContentNegotiationConfiguration;
-import edu.dfci.cccb.mev.common.services.guice.annotation.ContentNegotiationConfiguration.MappingConfiguration;
+import com.google.inject.Binder;
+import com.google.inject.Module;
+
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationConfigurer;
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationMapper;
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.ExceptionBinder;
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.MessageReaderBinder;
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.MessageWriterBinder;
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceBinder;
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceModule;
+import edu.dfci.cccb.mev.common.services.support.messages.JacksonMessageWriter;
 
 /**
  * Enables the MeV RESTful services
@@ -32,55 +39,92 @@ import edu.dfci.cccb.mev.common.services.guice.annotation.ContentNegotiationConf
  * @author levk
  * @since CRYSTAL
  */
-public class MevServiceModule extends JaxrsServiceModule {
+public class MevServiceModule implements Module {
 
-  /**
-   * Content type query parameter name
-   */
-  public static final String PARAMETER = "format";
-  /**
-   * Tab separated value media type
-   */
   public static final MediaType TEXT_TSV_TYPE = new MediaType ("text", "tab-separated-values");
+  public static final String TEXT_TSV = "text/tab-separated-values";
+
+  private static final String PARAMETER = "format";
+  private static final String SERVICE_URL = "/services/*";
 
   /* (non-Javadoc)
-   * @see
-   * edu.dfci.cccb.mev.common.services.guice2.JaxrsServiceModule#configure(
-   * edu.dfci
-   * .cccb.mev.common.services.guice2.JaxrsServiceModule.JaxrsServiceBinder) */
+   * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
-  public final void configure (final JaxrsServiceBinder binder) {
-    configure (new PublishingJaxrsBinder () {
-      private final @Delegate JaxrsServiceBinder delegate = binder;
+  public final void configure (Binder binder) {
+    binder.install (new ServiceModule () {
+      @Override
+      public void configure (ContentNegotiationConfigurer content) {
+        MevServiceModule.this.configure (content.parameter (PARAMETER)
+                                                .map ("json", APPLICATION_JSON_TYPE)
+                                                .map ("tsv", TEXT_TSV_TYPE));
+      }
+
+      @Override
+      public void configure (ExceptionBinder binder) {
+        MevServiceModule.this.configure (binder);
+      }
+
+      @Override
+      public void configure (MessageReaderBinder binder) {
+        MevServiceModule.this.configure (binder);
+      }
+
+      @Override
+      public void configure (MessageWriterBinder binder) {
+        MevServiceModule.this.configure (binder);
+      }
+
+      @Override
+      public void configure (ResourceBinder binder) {
+        MevServiceModule.this.configure (binder);
+      }
     });
 
-    binder.service (SERVICE_ROOT_URL);
-  }
+    binder.install (new ServiceModule () {
+      @Override
+      public void configure (MessageWriterBinder binder) {
+        binder.use (JacksonMessageWriter.class);
+      }
 
-  /* (non-Javadoc)
-   * @see
-   * edu.dfci.cccb.mev.common.services.guice2.JaxrsServiceModule#configure(
-   * edu.dfci
-   * .cccb.mev.common.services.guice.annotation.ContentNegotiationConfiguration) */
-  @Override
-  public final void configure (ContentNegotiationConfiguration configurer) {
-    configure (configurer.parameter (PARAMETER)
-                         .map ("json", APPLICATION_JSON_TYPE)
-                         .map ("xml", APPLICATION_XML_TYPE)
-                         .map ("tsv", TEXT_TSV_TYPE));
+      @Override
+      public void configure (ServiceBinder binder) {
+        binder.service (SERVICE_URL);
+      }
+
+      @Override
+      public boolean equals (Object obj) {
+        return obj != null && getClass ().equals (obj.getClass ());
+      }
+
+      @Override
+      public int hashCode () {
+        return getClass ().hashCode ();
+      }
+    });
   }
 
   /**
-   * Configure MeV REST resources
-   * 
-   * @param binder
+   * @see ServiceModule#configure(ExceptionBinder)
    */
-  public void configure (PublishingJaxrsBinder binder) {}
+  public void configure (ExceptionBinder binder) {}
 
   /**
-   * Configure content negotiation
-   * 
-   * @param configurer
+   * @see ServiceModule#configure(MessageReaderBinder)
    */
-  public void configure (MappingConfiguration configurer) {}
+  public void configure (MessageReaderBinder binder) {}
+
+  /**
+   * @see ServiceModule#configure(MessageWriterBinder)
+   */
+  public void configure (MessageWriterBinder binder) {}
+
+  /**
+   * @see ServiceModule#configure(ResourceBinder)
+   */
+  public void configure (ResourceBinder binder) {}
+
+  /**
+   * @see ServiceModule#configure(ContentNegotiationConfigurer)
+   */
+  public void configure (ContentNegotiationMapper content) {}
 }

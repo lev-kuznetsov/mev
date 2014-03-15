@@ -14,21 +14,10 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.services.guice;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
-
-import com.google.inject.ImplementedBy;
-
 /**
+ * Jackson JSON processor definitions
+ * 
  * @author levk
+ * @since CRYSTAL
  */
-@Path ("/pojo")
-@ImplementedBy (PojoServiceImpl.class)
-public interface PojoService {
-
-  @GET
-  public Pojo pojo (@QueryParam ("word") String word, @QueryParam ("number") int number);
-}
+package edu.dfci.cccb.mev.common.domain.guice.jackson;

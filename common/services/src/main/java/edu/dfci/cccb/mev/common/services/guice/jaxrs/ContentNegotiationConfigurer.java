@@ -14,26 +14,24 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.services.guice.annotation;
-
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
-import com.google.inject.Module;
+package edu.dfci.cccb.mev.common.services.guice.jaxrs;
 
 /**
- * Marks a {@link Module} method as a provider for a JAX-RS provider. The
- * method's return type is bound to it's returned value. Guice will pass
- * dependencies to the method as parameters.
+ * Configures content negotiation
  * 
  * @author levk
  * @since CRYSTAL
  */
-@Target (METHOD)
-@Retention (RUNTIME)
-@Documented
-public @interface Handles {}
+public interface ContentNegotiationConfigurer {
+
+  /**
+   * @return extension mapper
+   */
+  ContentNegotiationMapper extension ();
+
+  /**
+   * @param name of the query parameter
+   * @return query parameter mapper
+   */
+  ContentNegotiationMapper parameter (String name);
+}

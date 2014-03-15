@@ -15,9 +15,6 @@
  */
 
 /**
- * Annotations
- *
  * @author levk
- * @since CRYSTAL
  */
-package edu.dfci.cccb.mev.common.services.guice.annotation;
+package edu.dfci.cccb.mev.dataset.domain.contract.model.json;

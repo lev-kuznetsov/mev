@@ -51,16 +51,4 @@ public interface Dataset <K, V> {
    */
   @XmlAttribute
   Values<K, V> values ();
-
-  /**
-   * @return analyses
-   */
-  @XmlAttribute
-  List<Analysis> analyses ();
-
-  /**
-   * @param type of analysis
-   * @return analyzer
-   */
-  <A extends Analysis> Analyzer<A> analyze (String type);
 }

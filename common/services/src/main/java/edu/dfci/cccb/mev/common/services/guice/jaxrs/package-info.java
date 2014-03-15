@@ -14,14 +14,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.services.guice;
-
 /**
  * @author levk
  */
-public class SimpleHelloServiceImpl implements HelloService {
-
-  public String hello (String param) {
-    return "world";
-  }
-}
+package edu.dfci.cccb.mev.common.services.guice.jaxrs;

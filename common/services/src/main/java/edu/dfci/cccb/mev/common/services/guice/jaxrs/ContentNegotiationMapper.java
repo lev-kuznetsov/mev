@@ -14,28 +14,30 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.services.guice;
+package edu.dfci.cccb.mev.common.services.guice.jaxrs;
 
-import static org.apache.cxf.helpers.IOUtils.readStringFromStream;
-import static org.junit.Assert.assertEquals;
+import java.util.Map;
 
-import java.net.URL;
-
-import org.junit.Test;
-
-import edu.dfci.cccb.mev.common.test.jetty.Jetty9;
+import javax.ws.rs.core.MediaType;
 
 /**
+ * Maps string to media type
+ * 
  * @author levk
+ * @since CRYSTAL
  */
-public class MevServicesModuleTest {
+public interface ContentNegotiationMapper {
 
-  @Test
-  public void discoveredTestModule () throws Exception {
-    try (Jetty9 jetty = new Jetty9 ()) {
-      URL url = new URL ("http://localhost:" + jetty.port () + "/services/pojo?word=hello&number=5");
-      assertEquals ("(hello,5)",
-                    readStringFromStream (url.openStream ()));
-    }
-  }
+  /**
+   * @param key
+   * @param type
+   * @return this mapper
+   */
+  ContentNegotiationMapper map (String key, MediaType type);
+
+  /**
+   * @param map
+   * @return this mapper
+   */
+  ContentNegotiationMapper map (Map<String, MediaType> map);
 }

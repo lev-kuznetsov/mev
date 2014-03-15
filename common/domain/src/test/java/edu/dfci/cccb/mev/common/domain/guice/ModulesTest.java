@@ -14,25 +14,22 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain.contract;
+package edu.dfci.cccb.mev.common.domain.guice;
 
-import static javax.xml.bind.annotation.XmlAccessType.NONE;
+import static edu.dfci.cccb.mev.common.domain.guice.Modules.discover;
+import static org.junit.Assert.fail;
 
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import org.junit.Test;
 
-/**
- * Equivalent to AnalysisBuilder in BAYLIE
- * 
- * @author levk
- * @since CRYSTAL
- */
-@XmlRootElement
-@XmlAccessorType (NONE)
-public interface Analyzer <A extends Analysis> {
+import com.google.inject.Module;
 
-  /**
-   * @return completed analysis
-   */
-  Analysis analyze ();
+public class ModulesTest {
+
+  @Test
+  public void discovery () {
+    for (Module module : discover ())
+      if (module instanceof MevDomainModule)
+        return;
+    fail ();
+  }
 }

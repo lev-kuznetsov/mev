@@ -53,7 +53,7 @@ public class Modules {
           @Override
           public Module next () {
             Module module = iterator.next ();
-            log.info ("Loaded " + module);
+            log.info ("Loaded " + module.getClass ().getName ());
             return module;
           }
 

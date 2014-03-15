@@ -14,24 +14,23 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.services.guice.annotation;
-
-import java.util.Map;
-
-import javax.ws.rs.core.MediaType;
+package edu.dfci.cccb.mev.common.services.guice.jaxrs;
 
 /**
+ * Defines JAX-RS service root
+ * 
  * @author levk
+ * @since CRYSTAL
  */
-public interface ContentNegotiationConfiguration {
+public interface ServiceBinder {
 
-  public interface MappingConfiguration {
-    MappingConfiguration map (String value, MediaType content);
+  /**
+   * @param url
+   */
+  void service (String url);
 
-    MappingConfiguration map (Map<String, MediaType> map);
-  }
-
-  MappingConfiguration parameter (String name);
-
-  MappingConfiguration extension ();
+  /**
+   * @param regex
+   */
+  void serviceRegex (String regex);
 }

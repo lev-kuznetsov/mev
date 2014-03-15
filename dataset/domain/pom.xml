@@ -24,16 +24,6 @@
       <version>${mev.version}</version>
     </dependency>
 
-    <!-- Unit testing -->
-
-    <!-- JAXB -->
-
-    <dependency>
-      <groupId>com.fasterxml.jackson.module</groupId>
-      <artifactId>jackson-module-jaxb-annotations</artifactId>
-      <scope>test</scope>
-    </dependency>
-
   </dependencies>
 
 </project>

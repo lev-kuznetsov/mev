@@ -16,15 +16,28 @@
 
 package edu.dfci.cccb.mev.common.services.guice;
 
-import lombok.Getter;
-import lombok.Setter;
+import static org.apache.cxf.helpers.IOUtils.readStringFromStream;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
+import java.net.URL;
+
+import org.junit.Test;
+
+import edu.dfci.cccb.mev.common.test.jetty.Jetty9;
 
 /**
  * @author levk
  */
-public class Pojo {
+public class MevServiceModuleTest {
 
-  private @Getter @Setter String word;
-  
-  private @Getter @Setter int number;
+  @Test
+  public void discoveredTestModule () throws Exception {
+    try (Jetty9 jetty = new Jetty9 ()) {
+      URL url = new URL ("http://localhost:" + jetty.port () + "/services/echo?word=hello&format=json");
+      assertThat (readStringFromStream (url.openStream ()), is ("\"hello\""));
+      url = new URL ("http://localhost:" + jetty.port () + "/services/simple?foo=bar&format=json");
+      assertThat (readStringFromStream (url.openStream ()), is ("{\"foo\":\"bar\"}"));
+    }
+  }
 }

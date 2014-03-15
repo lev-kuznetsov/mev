@@ -14,13 +14,18 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.services.guice;
+package edu.dfci.cccb.mev.common.services.support.messages;
+
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
@@ -28,12 +33,27 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * @author levk
  */
 @Provider
-@Produces ({ "text/html", "text/plain" })
-public class PojoWriter implements MessageBodyWriter<Pojo> {
+@Singleton
+@EqualsAndHashCode (exclude = "mapper")
+@Produces (APPLICATION_JSON)
+@ToString (exclude = "mapper")
+public class JacksonMessageWriter implements MessageBodyWriter<Object> {
+
+  private final ObjectMapper mapper;
+
+  @Inject
+  public JacksonMessageWriter (ObjectMapper mapper) {
+    this.mapper = mapper;
+  }
 
   /* (non-Javadoc)
    * @see javax.ws.rs.ext.MessageBodyWriter#isWriteable(java.lang.Class,
@@ -41,7 +61,7 @@ public class PojoWriter implements MessageBodyWriter<Pojo> {
    * javax.ws.rs.core.MediaType) */
   @Override
   public boolean isWriteable (Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-    return Pojo.class.isAssignableFrom (type);
+    return APPLICATION_JSON_TYPE.equals (mediaType);
   }
 
   /* (non-Javadoc)
@@ -49,7 +69,7 @@ public class PojoWriter implements MessageBodyWriter<Pojo> {
    * java.lang.Class, java.lang.reflect.Type, java.lang.annotation.Annotation[],
    * javax.ws.rs.core.MediaType) */
   @Override
-  public long getSize (Pojo t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
+  public long getSize (Object t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
     return -1;
   }
 
@@ -59,13 +79,13 @@ public class PojoWriter implements MessageBodyWriter<Pojo> {
    * javax.ws.rs.core.MediaType, javax.ws.rs.core.MultivaluedMap,
    * java.io.OutputStream) */
   @Override
-  public void writeTo (Pojo t,
+  public void writeTo (Object t,
                        Class<?> type,
                        Type genericType,
                        Annotation[] annotations,
                        MediaType mediaType,
                        MultivaluedMap<String, Object> httpHeaders,
                        OutputStream entityStream) throws IOException, WebApplicationException {
-    entityStream.write (("(" + t.getWord () + "," + t.getNumber () + ")").getBytes ());
+    mapper.writeValue (entityStream, t);
   }
 }

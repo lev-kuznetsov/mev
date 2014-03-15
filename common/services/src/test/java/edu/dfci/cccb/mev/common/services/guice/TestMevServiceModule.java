@@ -16,22 +16,61 @@
 
 package edu.dfci.cccb.mev.common.services.guice;
 
-import com.google.inject.Provides;
+import javax.inject.Singleton;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
-import edu.dfci.cccb.mev.common.services.guice.annotation.Handles;
-import edu.dfci.cccb.mev.common.services.guice.annotation.Publishes;
+import com.google.inject.servlet.RequestScoped;
 
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
+
+/**
+ * @author levk
+ */
 public class TestMevServiceModule extends MevServiceModule {
 
-  @Provides
-  @Publishes
-  public PojoService pojo () {
-    return new PojoServiceImpl ();
+  @XmlRootElement
+  @XmlAccessorType (XmlAccessType.NONE)
+  public static class Pojo {
+    private final @XmlAttribute String foo;
+
+    public Pojo (String foo) {
+      this.foo = foo;
+    }
   }
 
-  @Provides
-  @Handles
-  public PojoWriter writer () {
-    return new PojoWriter ();
+  @Path ("/simple")
+  public interface Simple {
+    @GET
+    Pojo pojo (@QueryParam ("foo") String foo);
+  }
+
+  public static class SimpleImpl implements Simple {
+    public Pojo pojo (String foo) {
+      return new Pojo (foo);
+    }
+  }
+
+  @Path ("/echo")
+  public interface Echo {
+    @GET
+    String echo (@QueryParam ("word") String word);
+  }
+
+  public static class EchoImpl implements Echo {
+    public String echo (String echo) {
+      return echo;
+    }
+  }
+
+  @Override
+  public void configure (ResourceBinder binder) {
+    binder.publish (Simple.class).to (SimpleImpl.class).in (RequestScoped.class);
+    binder.publish (Echo.class).to (EchoImpl.class).in (Singleton.class);
   }
 }

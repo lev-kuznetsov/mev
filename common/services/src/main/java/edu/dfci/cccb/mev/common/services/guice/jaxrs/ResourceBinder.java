@@ -14,25 +14,34 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.services.guice;
+package edu.dfci.cccb.mev.common.services.guice.jaxrs;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
+import com.google.inject.Binder;
+import com.google.inject.Key;
+import com.google.inject.TypeLiteral;
+import com.google.inject.binder.AnnotatedBindingBuilder;
+import com.google.inject.binder.LinkedBindingBuilder;
 
 /**
+ * Publishes resources
+ * 
  * @author levk
+ * @since CRYSTAL
  */
-@Singleton
-public class InjectedScopedHelloServiceImpl implements HelloService {
+public interface ResourceBinder {
 
-  private @Inject @Named ("greeting") String greeting;
-  private Set<String> alreadySaidHelloThisSession = new HashSet<> ();
+  /**
+   * See the EDSL examples at {@link Binder}.
+   */
+  <T> LinkedBindingBuilder<T> publish (Key<T> key);
 
-  public String hello (String param) {
-    return greeting + " " + param + (alreadySaidHelloThisSession.add (param) ? "" : " again") + "!";
-  }
+  /**
+   * See the EDSL examples at {@link Binder}.
+   */
+  <T> AnnotatedBindingBuilder<T> publish (TypeLiteral<T> typeLiteral);
+
+  /**
+   * See the EDSL examples at {@link Binder}.
+   */
+  <T> AnnotatedBindingBuilder<T> publish (Class<T> type);
 }
