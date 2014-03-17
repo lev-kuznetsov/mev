@@ -13,6 +13,7 @@ import lombok.extern.log4j.Log4j;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -26,7 +27,7 @@ import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfiguratio
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={PresetsRestConfigurationTest.class})
 public class TestTcgaPresetMetafile {
-
+  
   private @Inject PresetsBuilder builder;
   private @Inject @Named ("tcgaPresetRoot") URL tcgaPresetRoot;
   
@@ -55,8 +56,9 @@ public class TestTcgaPresetMetafile {
   public void testToString() throws PresetException{
     Preset preset = builder.createPreset (new Object[]{"filename.tsv", "path/of/file", "NS", "Nothing Serious", "HS", "HiSeq", "Level2"});
     log.debug(preset.toString ());
-    assertEquals("TcgaPresetMetafile(tcgaPresetRoot=file:/home/antony/git/mev/presets/rest/target/test-classes/tcga/, filename=filename.tsv, path=path/of/file, name=filename.tsv, disease=NS, diseaseName=Nothing Serious, platform=HS, platformName=HiSeq, dataLevel=Level2, descriptor=SimplePresetDescriptor(name=PRESET-filename.tsv, dataUrl=file:/home/antony/git/mev/presets/rest/target/test-classes/tcga/tcga_data/path/of/file/filename.tsv, columnUrl=file:/home/antony/git/mev/presets/rest/target/test-classes/tcga/openrefine/clinical/NS-clinical_annotations-tsv.openrefine.tar.gz))", 
-        preset.toString ());
+    String expected = "TcgaPresetMetafile(tcgaPresetRoot="+tcgaPresetRoot.toString ()+", filename=filename.tsv, path=path/of/file, name=filename.tsv, disease=NS, diseaseName=Nothing Serious, platform=HS, platformName=HiSeq, dataLevel=Level2, descriptor=SimplePresetDescriptor(name=PRESET-filename.tsv, dataUrl="+tcgaPresetRoot.toString ()+"tcga_data/path/of/file/filename.tsv, columnUrl="+tcgaPresetRoot.toString ()+"openrefine/clinical/NS-clinical_annotations-tsv.openrefine.tar.gz))";
+    log.debug (expected);
+    assertEquals(expected, preset.toString ());
   }
 
 }
