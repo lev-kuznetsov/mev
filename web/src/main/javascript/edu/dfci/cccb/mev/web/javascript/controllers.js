@@ -48,6 +48,32 @@ define(
                                         $scope.previousHCLClusters = undefined;
                                         $scope.previousLimmaAnalysis = undefined;
                                         $scope.previousAnalysisList = undefined;
+                                        $scope.clickSelectionMode = false;
+                                        
+                                        $scope.currentSelections = {
+                                           horizontal:[],
+                                           vertical:[]
+                                        }
+                                        
+                                        $scope.selectionAlerts = [];
+                                        
+                                        $scope.addClickedSelections = function(type) {
+                                            
+                                                if($scope.currentSelections.length <= 0){
+                                                    
+                                                } else {
+                                                    $http({
+                                                        method:"PUT", 
+                                                        url:"/dataset/" + $routeParams.datasetName + "/" 
+                                                        + ( (type == 'horitontal')? 'column':'row' ) 
+                                                        + "/selection/" + $scope.currentSelections[type]})
+                                                    .then(function(res){
+                                                        return
+                                                    });
+                                                }
+                                                
+                                            
+                                        }
 
                                         $scope.buildPreviousAnalysisList = function() {
 
