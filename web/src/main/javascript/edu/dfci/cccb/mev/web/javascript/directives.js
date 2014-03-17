@@ -1686,7 +1686,7 @@ define(
 
                                                                 var tree = newval;
                                                                 drawTree(
-                                                                        dendogramLeftWindow,
+                                                                        dendogramTopWindow,
                                                                         Cluster,
                                                                         tree,
                                                                         'horizontal')
@@ -1703,13 +1703,8 @@ define(
                                                             if (newval) {
 
                                                                 var tree = newval;
-                                                                // heatmapMarginLeft
-                                                                // = Math.floor
-                                                                // (svgWidth *
-                                                                // .15);
-                                                                // updateDrawHeatmap(scope.heatmapData);
                                                                 drawTree(
-                                                                        dendogramTopWindow,
+                                                                        dendogramLeftWindow,
                                                                         Cluster,
                                                                         tree,
                                                                         'vertical')
@@ -1773,17 +1768,17 @@ define(
                                                             "cx",
                                                             function(d) {
 
-                                                                return (type == 'vertical')
-                                                                        ? verticalTreeX(d.y)
-                                                                        : horizontalTreeX(d.x);
+                                                                return (type == 'horizontal')
+                                                                        ? horizontalTreeX(d.x)
+                                                                        : verticalTreeX(d.y);
 
                                                             })
                                                     .attr(
                                                             "cy",
                                                             function(d) {
-                                                                return (type == 'vertical')
-                                                                        ? verticalTreeY(d.x)
-                                                                        : horizontalTreeY(d.y);
+                                                                return (type == 'horizontal')
+                                                                        ? horizontalTreeY(d.y)
+                                                                        : verticalTreeY(d.x);
                                                             })
                                                     .attr(
                                                             "fill",
