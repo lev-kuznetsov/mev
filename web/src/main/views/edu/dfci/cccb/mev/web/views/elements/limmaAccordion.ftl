@@ -1,6 +1,5 @@
 <accordion close-others="false">
-	<div  ng-repeat="limma in previousLimmaAnalysis">
-	    <accordion-group heading="{{limma.datar.type}} : {{limma.name}}" is-open="false">
+	    <accordion-group ng-repeat="limma in previousLimmaAnalysis" heading="{{limma.datar.type}} : {{limma.name}}" is-open="false">
 
 	            
 		            <div class="row">
@@ -77,8 +76,7 @@
 		                    </table>
 		                </div>
 		            </div>
-                
 
 		</accordion-group>
-	</div> <!-- repeat -->
+		
 </accordion>
