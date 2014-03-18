@@ -578,7 +578,7 @@ define(
                             }])
                     .directive(
                             'uploadDrag',
-                            [function() {
+                            [ function(){
 
                                 return {
                                     restrict : 'C',
@@ -905,13 +905,12 @@ define(
                             })
                     .directive(
                             'visHeatmap',
-                            [function() {
+                            ["$routeParams","$http", function($routeParams, $http) {
 
                                 return {
 
                                     restrict : 'E',
-                                    // templateUrl :
-                                    // "/container/view/elements/visHeatmap",
+                                    templateUrl : "/container/view/elements/visHeatmap",
                                     link : function(scope, elems, attr) {
 
                                         var svgWidth = Math
@@ -1666,15 +1665,61 @@ define(
                                                                 4,
                                                                 (2 * heatmapMarginTop) / 3]);
 
-                                        var dendogramLeftWindow = svg
+                                        svg
                                                 .append("g")
                                                 .attr('class',
                                                         'leftDendogram');
 
-                                        var dendogramTopWindow = svg
+                                        var dendogramLeftWindow = d3.select("g.leftDendogram")
+                                        svg
                                                 .append("g")
                                                 .attr('class',
                                                         'topDendogram');
+                                        var dendogramTopWindow = d3.select("g.topDendogram")
+                                        
+                                        svg
+                                                .append("g")
+                                                .attr('class',
+                                                        'selectionsBox');
+                                        
+                                        var selectionsBox = d3.select('g.selectionsBox');
+                                        selectionsBox
+                                            .append('rect')
+                                            .attr({
+                                                "x": 10,
+                                                "y": 40,
+                                                "width": heatmapMarginLeft*.8,
+                                                "height": 60,
+                                                "rx":10,
+                                                "ry":10,
+                                                "style":"stroke-width:1;stroke:black;fill:none"
+                                            });
+                                        
+                                        scope.addTreeSelection = function(params){
+                                            if (scope.treeSelections[params.dimension.type].length > 0){
+                                                
+                                                $http({
+                                                    method:"PUT", 
+                                                    url:"/dataset/" + $routeParams.datasetName + "/" 
+                                                    + params.dimension.value 
+                                                    + "/selection/" + params.name, 
+                                                    data:{
+                                                        "name":params.name,
+                                                        "properties":{
+                                                            "selectionFacetLink":"f",
+                                                            "selectionColor":params.color,
+                                                            "selectionDescription":params.name,
+                                                            "keys":scope.treeSelections[params.dimension.type]
+                                                        }
+                                                    }
+                                                })
+                                                .then(function(res){
+                                                    return
+                                                });
+                                                
+                                            }
+                                        };
+                                        
 
                                         // Left Dendogram Builder
                                         scope
@@ -1691,6 +1736,17 @@ define(
                                                                         tree,
                                                                         'horizontal')
 
+                                                                selectionsBox.append("text")
+                                                                    .attr({
+                                                                        'id': "columnSelectionAdd",
+                                                                        'x': 20,
+                                                                        'y': 65,
+                                                                        'data-toggle': 'modal',
+                                                                        'role': 'button',
+                                                                        'data-target': "#columnSelectionsModal"
+                                                                    })
+                                                                    .text("Add Column Selections");
+                                                                    
                                                             }
 
                                                         });
@@ -1707,7 +1763,17 @@ define(
                                                                         dendogramLeftWindow,
                                                                         Cluster,
                                                                         tree,
-                                                                        'vertical')
+                                                                        'vertical');
+                                                                selectionsBox.append("text")
+                                                                .attr({
+                                                                    'id': "rowSelectionAdd",
+                                                                    'x': 20,
+                                                                    'y': 75,
+                                                                    'data-toggle': 'modal',
+                                                                    'role': 'button',
+                                                                    'data-target': "#rowSelectionsModal"
+                                                                })
+                                                                .text("Add Row Selections");
 
                                                             }
 
