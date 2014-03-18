@@ -1168,6 +1168,10 @@ define(
                                                         .style(
                                                                 "font-size",
                                                                 "14px")
+                                                        .append("title")
+                                                        .text(function(d) {
+                                                                return d
+                                                            })
 
                                             }
 
@@ -1687,7 +1691,7 @@ define(
                                             .append('rect')
                                             .attr({
                                                 "x": 10,
-                                                "y": 40,
+                                                "y": 20,
                                                 "width": heatmapMarginLeft*.8,
                                                 "height": heatmapMarginTop*.8,
                                                 "rx":10,
@@ -1700,7 +1704,7 @@ define(
                                             'id': "legendTitle",
                                             'text-anchor':'middle',
                                             'x': ((heatmapMarginLeft*.8)/2 ) + 10,
-                                            'y': (40) + 20,
+                                            'y': (20) + 20,
                                             'style':'font-size:20'
                                             
                                         })
@@ -1710,7 +1714,7 @@ define(
                                             .attr({
                                                 'id': "columnSelectionAdd",
                                                 'x': 20,
-                                                'y': ((heatmapMarginTop*.8)+40)-22,
+                                                'y': ((heatmapMarginTop*.8)+20)-22,
                                                 'data-toggle': 'modal',
                                                 'role': 'button',
                                                 'data-target': "#columnSelectionsModal"
@@ -1721,7 +1725,7 @@ define(
                                             .attr({
                                                 'id': "rowSelectionAdd",
                                                 'x': 20,
-                                                'y': ((heatmapMarginTop*.8)+40)-10,
+                                                'y': ((heatmapMarginTop*.8)+20)-10,
                                                 'data-toggle': 'modal',
                                                 'role': 'button',
                                                 'data-target': "#rowSelectionsModal"
@@ -1870,7 +1874,10 @@ define(
                                                             "click",
                                                             function(d) {
                                                                 nodeclick(d, canvas, type)
-                                                            });
+                                                            })
+                                                    .on('mouseover', function(){
+                                                        //console.log(this)
+                                                    });
 
                                         };
                                         
