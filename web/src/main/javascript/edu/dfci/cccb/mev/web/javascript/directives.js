@@ -1689,11 +1689,44 @@ define(
                                                 "x": 10,
                                                 "y": 40,
                                                 "width": heatmapMarginLeft*.8,
-                                                "height": 60,
+                                                "height": heatmapMarginTop*.8,
                                                 "rx":10,
                                                 "ry":10,
-                                                "style":"stroke-width:1;stroke:black;fill:none"
+                                                "style":"stroke-width:1;stroke:grey;fill:none"
                                             });
+                                        
+                                        selectionsBox.append("text")
+                                        .attr({
+                                            'id': "legendTitle",
+                                            'text-anchor':'middle',
+                                            'x': ((heatmapMarginLeft*.8)/2 ) + 10,
+                                            'y': (40) + 20,
+                                            'style':'font-size:20'
+                                            
+                                        })
+                                        .text("Legend");
+                                        
+                                        selectionsBox.append("text")
+                                            .attr({
+                                                'id': "columnSelectionAdd",
+                                                'x': 20,
+                                                'y': ((heatmapMarginTop*.8)+40)-22,
+                                                'data-toggle': 'modal',
+                                                'role': 'button',
+                                                'data-target': "#columnSelectionsModal"
+                                            })
+                                            .text("Add Column Selections");
+                                        
+                                        selectionsBox.append("text")
+                                            .attr({
+                                                'id': "rowSelectionAdd",
+                                                'x': 20,
+                                                'y': ((heatmapMarginTop*.8)+40)-10,
+                                                'data-toggle': 'modal',
+                                                'role': 'button',
+                                                'data-target': "#rowSelectionsModal"
+                                            })
+                                            .text("Add Row Selections");
                                         
                                         scope.addTreeSelection = function(params){
                                             if (scope.treeSelections[params.dimension.type].length > 0){
@@ -1702,15 +1735,14 @@ define(
                                                     method:"PUT", 
                                                     url:"/dataset/" + $routeParams.datasetName + "/" 
                                                     + params.dimension.value 
-                                                    + "/selection/" + params.name, 
-                                                    data:{
-                                                        "name":params.name,
-                                                        "properties":{
-                                                            "selectionFacetLink":"f",
-                                                            "selectionColor":params.color,
-                                                            "selectionDescription":params.name,
-                                                            "keys":scope.treeSelections[params.dimension.type]
-                                                        }
+                                                    + "/selection/" + params.name,
+                                                    params:{
+                                                        format:'json',
+                                                        properties : [{
+                                                            selectionColor:'#ff0000', 
+                                                            selectionDescription:'first mock selection'
+                                                        }],
+                                                        keys: scope.treeSelections[params.dimension.type]
                                                     }
                                                 })
                                                 .then(function(res){
@@ -1735,17 +1767,6 @@ define(
                                                                         Cluster,
                                                                         tree,
                                                                         'horizontal')
-
-                                                                selectionsBox.append("text")
-                                                                    .attr({
-                                                                        'id': "columnSelectionAdd",
-                                                                        'x': 20,
-                                                                        'y': 65,
-                                                                        'data-toggle': 'modal',
-                                                                        'role': 'button',
-                                                                        'data-target': "#columnSelectionsModal"
-                                                                    })
-                                                                    .text("Add Column Selections");
                                                                     
                                                             }
 
@@ -1764,17 +1785,6 @@ define(
                                                                         Cluster,
                                                                         tree,
                                                                         'vertical');
-                                                                selectionsBox.append("text")
-                                                                .attr({
-                                                                    'id': "rowSelectionAdd",
-                                                                    'x': 20,
-                                                                    'y': 75,
-                                                                    'data-toggle': 'modal',
-                                                                    'role': 'button',
-                                                                    'data-target': "#rowSelectionsModal"
-                                                                })
-                                                                .text("Add Row Selections");
-
                                                             }
 
                                                         });
