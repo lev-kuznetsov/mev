@@ -35,14 +35,6 @@
 
     <!-- MetaModel -->
 
-	<!-- 
-    <dependency>
-      <groupId>org.eobjects.metamodel</groupId>
-      <artifactId>MetaModel-full</artifactId>
-      <version>3.4.8</version>
-    </dependency>
-	 -->
-	 
 	 <dependency>
       <groupId>org.eobjects.metamodel</groupId>
       <artifactId>MetaModel-core</artifactId>
@@ -58,6 +50,20 @@
       <artifactId>MetaModel-jdbc</artifactId>
       <version>3.4.8</version>
     </dependency>
-  </dependencies>
 
+      <!-- Jackson 2 -->
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    
+  </dependencies>
 </project>

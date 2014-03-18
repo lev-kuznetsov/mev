@@ -9,10 +9,7 @@
     <groupId>edu.dfci.cccb</groupId>
     <artifactId>mev-presets</artifactId>
     <version>BAYLIE-SNAPSHOT</version>
-  </parent>
-  <properties>
-  	<jackson.version>2.2.2</jackson.version>
-  </properties>
+  </parent>  
   
   <dependencies>
       <!-- MetaModel -->
