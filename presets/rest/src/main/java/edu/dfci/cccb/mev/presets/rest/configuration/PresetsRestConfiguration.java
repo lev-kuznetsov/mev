@@ -7,15 +7,20 @@ import static org.springframework.context.annotation.ScopedProxyMode.NO;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.sql.SQLException;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.sql.DataSource;
 
 import lombok.extern.log4j.Log4j;
 
+import org.jooq.DSLContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.annotation.Scope;
@@ -27,11 +32,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
 import edu.dfci.cccb.mev.presets.contract.Preset;
+import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
+import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
+import edu.dfci.cccb.mev.presets.contract.PresetValuesLoader;
 import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
+import edu.dfci.cccb.mev.presets.dal.HSQLPresetLoader;
+import edu.dfci.cccb.mev.presets.dataset.flat.PresetDatasetBuilderFlatTableDB;
+import edu.dfci.cccb.mev.presets.dataset.flat.PresetDimensionBuilderFlatTable;
 import edu.dfci.cccb.mev.presets.simple.SimplePresests;
-import edu.dfci.cccb.mev.presets.simple.TcgaPresetMetafile;
-import edu.dfci.cccb.mev.presets.simple.TcgaPresetsBuilder;
+import edu.dfci.cccb.mev.presets.tcga.TcgaPresetMetafile;
+import edu.dfci.cccb.mev.presets.tcga.TcgaPresetsBuilder;
 
 
 
@@ -43,18 +54,33 @@ import edu.dfci.cccb.mev.presets.simple.TcgaPresetsBuilder;
   @PropertySource ("classpath:/presets.properties"),
   @PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true)
 })
+@Import(value={PresetPersistenceConfiguration.class})
 public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
 
   private final static String TCGA_PROPERTY_MATA_FILENAME="mev.presets.tcga.metadata.filename";
   private final static String TCGA_PROPERTY_ROOT_FOLDER="mev.presets.tcga.metadata.root";
-    
+  private final static String TCGA_PROPERTY_DATASET_RELOAD_FLAG="mev.presets.tcga.data.reload";
+  
   @Inject Environment environment;
   
-  @Bean  
-  public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot, TcgaPresetsBuilder builder) throws URISyntaxException, PresetException, IOException {
+  @Bean(name="mev-presets-loader") @Inject 
+  public PresetValuesLoader presestValuesLoader(@Named ("presets-datasource") DataSource dataSource){    
+    String reloadFlag = environment.getProperty (TCGA_PROPERTY_DATASET_RELOAD_FLAG);
+    log.info (TCGA_PROPERTY_DATASET_RELOAD_FLAG+":" + reloadFlag);
+    return new HSQLPresetLoader (dataSource, Boolean.parseBoolean (reloadFlag), 1000);
+  }
+  
+  @Bean  @Inject
+  public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot, 
+                                TcgaPresetsBuilder builder                                
+                                ) throws URISyntaxException, PresetException, IOException {
+    
     String metadataFilename = environment.getProperty (TCGA_PROPERTY_MATA_FILENAME);    
+    
+    
     log.info (TCGA_PROPERTY_ROOT_FOLDER+" URL:" + tcgaPresetRoot);
     log.info (TCGA_PROPERTY_MATA_FILENAME+":" + metadataFilename);
+    
     
     if(metadataFilename == null)
       return new SimplePresests();
@@ -69,7 +95,8 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
       throw new PresetException ("Metadata resource not found: " + metadataURL.toString ());
     }
     
-    return new SimplePresests (metadataURL, builder);
+    Presets presets = new SimplePresests (metadataURL, builder);    
+    return presets;
   }
   
   @Bean 
@@ -102,8 +129,46 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
 
     return tcgaPresetRootURL;
     
-    
+  }
+
+  //********************PERSISTENSE**************************//
+  
+  @Bean(name="presets-dataset-builder") @Inject 
+  public PresetDatasetBuilder presetDatasetBuilder(@Named("presets-datasource") DataSource dataSource, 
+                                                   @Named("presets-jooq-context") DSLContext context,
+                                                   PresetDimensionBuilder dimensionBuilder) throws SQLException{
+    log.debug ("***PresetDataSetBuilder: FLATTABLE-DB");
+    return new PresetDatasetBuilderFlatTableDB (dataSource, context, presetDimensionBuilder(context));
+  }
+
+  @Bean @Inject
+  public PresetDimensionBuilder presetDimensionBuilder(@Named("presets-jooq-context") DSLContext context){
+    log.debug ("***PresetDIMMENSIONBuilder: FLATTABLE-DB");
+    PresetDimensionBuilder builder = new PresetDimensionBuilderFlatTable (context);    
+    return builder;
   }
   
-  
+
+  @Bean @Profile("!test") @Inject 
+  public String prefetchPresetRowKeys(final Presets presets, 
+                                    final PresetDimensionBuilder builder,
+                                    final @Named("mev-presets-loader") PresetValuesLoader loader) throws PresetException{
+    
+    loader.loadAll (presets);   
+    
+    (new Thread(new Runnable() {
+      
+      @Override
+      public void run () {
+        for(Preset preset : presets.getAll ()){           
+          log.debug ("***Prefetching row keys for PRESET: "+preset.name ());
+          builder.buildRows (preset.descriptor ());
+        }
+      }
+    }
+    )).start();
+    
+    
+    return "done";
+  }
 }

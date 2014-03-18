@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import lombok.ToString;
 
@@ -26,8 +27,8 @@ import com.google.refine.SessionWorkspaceDir;
 import com.google.refine.io.FileProjectManager;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatforms;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
+import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
 
 @Configuration
 @ComponentScan (value = "edu.dfci.cccb.mev.annotation",
@@ -40,7 +41,7 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
 
   private @Inject Workspace workspace;
   private @Inject FileProjectManager sessionProjectManager;
-  private @Inject DatasetBuilder builder;  
+  private @Inject @Named("presets-dataset-builder") PresetDatasetBuilder builder;  
   private @Inject org.springframework.core.env.Environment environment;
   private @Inject ProbeAnnotationPlatforms annotationPlatforms;
   

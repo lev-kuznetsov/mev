@@ -39,34 +39,43 @@ public class JooqBasedDataSourceValues extends AbstractDataSourceValues {
   private final Field<String> row;
   private final Field<String> column;
   private final Field<Double> value;
+  private final boolean isTemporary;
 
   public JooqBasedDataSourceValues (DSLContext context,
                                     Table<?> table,
                                     Field<String> row,
                                     Field<String> column,
-                                    Field<Double> value) {
+                                    Field<Double> value,
+                                    boolean isTemporary) {
     this.context = context;
     this.table = table;
     this.row = row;
     this.column = column;
     this.value = value;
+    this.isTemporary = isTemporary;
   }
 
   @Override
   public double get (String row, String column) throws InvalidCoordinateException {
-    return context.select (value)
-                  .from (table)
-                  .where (this.row.eq (row))
-                  .and (this.column.eq (column))
-                  .fetchOne ()
-                  .getValue (value);
+    try {
+      return context.select (value)
+                    .from (table)
+                    .where (this.row.eq (row))
+                    .and (this.column.eq (column))
+                    .fetchOne ()
+                    .getValue (value);
+    } catch (RuntimeException e) {
+      throw new RuntimeException (" Failed to fetch row " + row + ", column " + column + " from " + table, e);
+    }
   }
 
   @Override
   public void close () throws Exception {
-    if (log.isDebugEnabled ())
-      log.debug ("Dropping table " + table);
-    context.query ("DROP TABLE IF EXISTS {0}", table);
+    if(isTemporary){
+      if (log.isDebugEnabled ())
+        log.debug ("Dropping table " + table);
+      context.query ("DROP TABLE IF EXISTS {0}", table);
+    }
   }
 
   /* (non-Javadoc)

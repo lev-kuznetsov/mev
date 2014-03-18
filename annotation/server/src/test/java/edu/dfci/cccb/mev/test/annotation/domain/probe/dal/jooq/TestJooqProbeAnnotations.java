@@ -55,9 +55,6 @@ public class TestJooqProbeAnnotations {
   @Test
   public void testGetAsStream () throws SQLException, IOException {
     List<String> keys = new ArrayList<String> (){
-      /**
-       * 
-       */
       private static final long serialVersionUID = 1L;
 
       {

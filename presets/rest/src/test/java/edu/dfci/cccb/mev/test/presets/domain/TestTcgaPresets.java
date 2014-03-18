@@ -52,7 +52,6 @@ public class TestTcgaPresets {
     expectedPresets.add (presetProvider.get().init(values3));
     Object[] values6 = {"BRCA.IlluminaHiSeq_RNASeq.Level_3.Expression-Gene.RPKM.tsv","BRCA/Level_3","BRCA","Breast invasive carcinoma","IlluminaHiSeq_RNASeq","Illumina HiSeq 2000 RNA Sequencing","Level_3"};
     expectedPresets.add (presetProvider.get().init(values6));
-
   }
    
   @Test 

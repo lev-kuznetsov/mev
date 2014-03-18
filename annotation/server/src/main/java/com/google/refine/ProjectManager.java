@@ -54,8 +54,8 @@ import com.google.refine.preference.PreferenceStore;
 import com.google.refine.preference.TopList;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatforms;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
+import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
 
 /**
  * ProjectManager is responsible for loading and saving the workspace and
@@ -86,11 +86,11 @@ public abstract class ProjectManager {
     return _workspace;
   }
 
-  private DatasetBuilder _datasetBuilder;
-  public void setDatasetBuilder (DatasetBuilder datasetBuilder) {
+  private PresetDatasetBuilder _datasetBuilder;
+  public void setDatasetBuilder (PresetDatasetBuilder datasetBuilder) {
     _datasetBuilder = datasetBuilder;
   }
-  public DatasetBuilder getDatasetBuilder () {
+  public PresetDatasetBuilder getDatasetBuilder () {
     return _datasetBuilder;
   }
 

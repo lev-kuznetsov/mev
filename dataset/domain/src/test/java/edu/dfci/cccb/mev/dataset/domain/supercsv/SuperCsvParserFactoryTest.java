@@ -17,8 +17,12 @@ package edu.dfci.cccb.mev.dataset.domain.supercsv;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -40,5 +44,25 @@ public class SuperCsvParserFactoryTest {
       assertEquals (index / 10.0, p.value (), 0.0);
     }
     assertFalse (p.next ());
+    
+    List<String> expectedColumns = new ArrayList<String>(){
+      private static final long serialVersionUID = 1L;
+
+    {      
+      add("sa");
+      add("sb");
+      add("sc");
+    }};    
+    assertThat(p.columnKeys (), is(expectedColumns));
+    
+    List<String> expectedRows= new ArrayList<String>(){
+      private static final long serialVersionUID = 1L;
+
+    {
+      add("g1");
+      add("g2");
+    }};    
+    assertThat(p.rowKeys (), is(expectedRows));
+    
   }
 }

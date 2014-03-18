@@ -15,7 +15,6 @@ import javax.sql.DataSource;
 
 import lombok.SneakyThrows;
 
-import org.apache.http.MethodNotSupportedException;
 import org.h2.tools.Csv;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotation;
@@ -39,7 +38,7 @@ public class H2ProbeAnnotations extends AbstractProbeAnnotations {
   @Override
   @SneakyThrows
   public List<ProbeAnnotation> get (Dimension dimension) {
-    throw new MethodNotSupportedException ("The get(Dimension dimension) method has not been implemented yet");
+    throw new UnsupportedOperationException("The get(Dimension dimension) method has not been implemented yet");    
   }
 
   @Override

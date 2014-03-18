@@ -17,6 +17,7 @@
   <modules>
     <module>rest</module>
     <module>client</module>
+    <module>persistence</module>
   </modules>
 
   <properties>
@@ -24,14 +25,6 @@
   </properties>
 
   <dependencies>
-
-    <!-- Servlet API -->
-
-    <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-web-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
 
     <!-- Spring -->
 

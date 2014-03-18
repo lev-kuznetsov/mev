@@ -15,8 +15,7 @@
 		<version>BAYLIE-SNAPSHOT</version>
 	</parent>
 	
-	<properties>
-		<h2.version>1.3.174</h2.version>
+	<properties>		
 		<hibernate.version>4.2.7.SP1</hibernate.version>
 		
 		<jooq.codegen.db.driver>org.h2.Driver</jooq.codegen.db.driver>
@@ -51,11 +50,11 @@
 			<version>${hibernate.version}</version>
 		</dependency>
 
-		<!-- H2 -->
+		<!-- Persistence Configuration -->		
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>${h2.version}</version>
+			<groupId>edu.dfci.cccb</groupId>
+			<artifactId>mev-configuration-persistence</artifactId>
+			<version>BAYLIE-SNAPSHOT</version>
 		</dependency>
 
 		<!-- DataSource -->
