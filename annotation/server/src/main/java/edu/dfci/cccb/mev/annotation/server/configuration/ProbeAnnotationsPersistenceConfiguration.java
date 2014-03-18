@@ -12,10 +12,7 @@ import javax.sql.DataSource;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.jooq.SQLDialect;
 import org.jooq.impl.DataSourceConnectionProvider;
-import org.jooq.impl.DefaultConfiguration;
-import org.jooq.impl.DefaultDSLContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;

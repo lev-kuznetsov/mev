@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import static org.hamcrest.core.Is.*;
 import static org.jooq.impl.DSL.using;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.inject.Inject;

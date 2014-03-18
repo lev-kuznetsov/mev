@@ -1,7 +1,5 @@
 package edu.dfci.cccb.mev.test.presets.configuration.persistence.flat;
 
-import static java.lang.System.getProperty;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
@@ -13,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 

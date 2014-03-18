@@ -48,8 +48,7 @@ public class PresetValuesQueryHelper {
             .getQuery ();    
   }  
 
-  public ResultQuery<Record> queryValue(String row, String column, Table table, Field<String> fieldRowId){
-    Field<String> columnField = fieldByName (String.class, column.toUpperCase ());
+  public ResultQuery<Record> queryValue(String row, String column, Table<Record> table, Field<String> fieldRowId){    
     return context.selectFrom (table)
             .where (fieldRowId.eq (row));
   }

@@ -1,6 +1,5 @@
 package edu.dfci.cccb.mev.presets.rest.configuration;
 
-import static java.lang.System.getProperty;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 import static org.springframework.context.annotation.FilterType.ANNOTATION;
 import static org.springframework.context.annotation.ScopedProxyMode.NO;
@@ -9,21 +8,13 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Properties;
-
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
 
 import lombok.extern.log4j.Log4j;
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DataSourceConnectionProvider;
-import org.jooq.impl.DefaultConfiguration;
-import org.jooq.impl.DefaultDSLContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
@@ -34,27 +25,19 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
-import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.dataset.domain.contract.DimensionBuilder;
 import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetValuesLoader;
-import edu.dfci.cccb.mev.presets.contract.PresetValuesStoreBuilderFactory;
 import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.dal.HSQLPresetLoader;
-import edu.dfci.cccb.mev.presets.dataset.PresetDatasetBuilderByJooq;
 import edu.dfci.cccb.mev.presets.dataset.flat.PresetDatasetBuilderFlatTableDB;
 import edu.dfci.cccb.mev.presets.dataset.flat.PresetDimensionBuilderFlatTable;
 import edu.dfci.cccb.mev.presets.simple.SimplePresests;

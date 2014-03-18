@@ -1,7 +1,5 @@
 package edu.dfci.cccb.mev.presets.dataset.flat;
 
-import static org.jooq.impl.DSL.using;
-
 import java.sql.SQLException;
 
 import javax.inject.Inject;
@@ -10,8 +8,6 @@ import javax.sql.DataSource;
 
 import org.jooq.DSLContext;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analyses;

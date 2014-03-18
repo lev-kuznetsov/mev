@@ -1,7 +1,6 @@
 package edu.dfci.cccb.mev.presets.util.timer;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

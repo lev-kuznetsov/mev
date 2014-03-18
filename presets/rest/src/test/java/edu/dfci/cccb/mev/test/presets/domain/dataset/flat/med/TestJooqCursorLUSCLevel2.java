@@ -5,23 +5,16 @@ import static java.lang.Double.NaN;
 import static java.lang.Double.POSITIVE_INFINITY;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.tableByName;
-import static org.junit.Assert.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Formatter;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
 import lombok.extern.log4j.Log4j;
 
@@ -30,9 +23,7 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record1;
-import org.jooq.Result;
 import org.jooq.ResultQuery;
-import org.jooq.Select;
 import org.jooq.Table;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -41,16 +32,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.dataset.domain.contract.Parser;
-import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
-import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
-import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
-import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
+import edu.dfci.cccb.mev.presets.util.timer.Timer;
 import edu.dfci.cccb.mev.test.presets.configuration.persistence.flat.TestJooqCursorLUSCLevel2Configuration;
-import edu.dfci.cccb.mev.test.presets.configuration.persistence.flat.TestPresetsDatasetFlatTableConfig;
-import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 
 @Log4j
 @RunWith (SpringJUnit4ClassRunner.class)
@@ -60,7 +43,7 @@ public class TestJooqCursorLUSCLevel2 {
   @Inject @Named ("presets-jooq-context") DSLContext context;
   @Inject Environment environment;
 
-  private URL rootUrl = null;
+  @SuppressWarnings("unused") private URL rootUrl = null;
   private final String ID_FIELD_NAME = "COLUMN0";
   private String tsvFileName = "LUSC.HT_HG-U133A.Level_2.tsv";
 
@@ -70,10 +53,9 @@ public class TestJooqCursorLUSCLevel2 {
   }
 
   @Test
-  @Ignore
+  @Ignore @SuppressWarnings("unused")
   public void testSimpleSelectAll () {
     Table<Record> table = tableByName (tsvFileName);
-    Field<String> fieldRowId = fieldByName (String.class, ID_FIELD_NAME);
 
     long startTime = System.nanoTime ();
     int count = 0;
@@ -81,7 +63,7 @@ public class TestJooqCursorLUSCLevel2 {
     // log.debug ("PresetValuesFlatTable sql:"+query.getSQL ());
     Cursor<Record> cursor = null;
     try {
-      cursor = context.selectFrom (table).fetchLazy ();
+      cursor = query.fetchLazy ();
       // Cursor has similar methods as Iterator<R>
       while (cursor.hasNext ()) {
         Record record = cursor.fetchOne ();
@@ -189,6 +171,7 @@ public class TestJooqCursorLUSCLevel2 {
    * @param columns
    * @return
    */
+  @SuppressWarnings(value={"all"})
   private int select2 (String tableName, List<String> rows, List<String> columns) {
     Timer timer = Timer.start ("flat-dataset");
 
@@ -228,11 +211,11 @@ public class TestJooqCursorLUSCLevel2 {
     return totalCellCount;
   }
 
+  @SuppressWarnings(value={"unused"})
   private int select (String tableName, List<String> rows, List<String> columns) {
     Timer timer = Timer.start ("flat-dataset");
 
-    Table<Record> table = tableByName (tableName);
-    Field<String> fieldRowId = fieldByName (String.class, ID_FIELD_NAME);
+    Table<Record> table = tableByName (tableName);    
     List<Field<String>> selectFields = createFieldList (columns);
 
     ResultQuery<Record> query;
@@ -257,7 +240,7 @@ public class TestJooqCursorLUSCLevel2 {
         Record record = cursor.fetchOne ();
         for (Field<?> columnField : record.fields ()) {
           String sValue = (String) record.getValue (columnField);
-          double value = NaN;
+          @SuppressWarnings("unused") double value = NaN;
           if ("Inf".equalsIgnoreCase (sValue))
             value = POSITIVE_INFINITY;
           else if ("-Inf".equalsIgnoreCase (sValue))
@@ -302,7 +285,7 @@ public class TestJooqCursorLUSCLevel2 {
 
   private List<String> rowKeys = null;
 
-  @Synchronized
+  @Synchronized @SuppressWarnings("unused")
   private List<String> getRowKeys (String tableName, String fieldRowIdName) {
     Timer timer = Timer.start ("get-row-keys");
     if (this.rowKeys == null) {
@@ -330,7 +313,6 @@ public class TestJooqCursorLUSCLevel2 {
   private List<String> getColumnKeys (String tableName, String fieldRowIdName) {
     // get columns
     Table<Record> table = tableByName (tableName);
-    Field<String> fieldRowId = fieldByName (String.class, fieldRowIdName);
     Timer timer = Timer.start ("get-column-keys");
     ResultQuery<Record> queryColumnKeys = context.selectFrom (table).limit (1).getQuery ();
     Record recordColumnKeys = queryColumnKeys.fetchOne ();
@@ -344,43 +326,5 @@ public class TestJooqCursorLUSCLevel2 {
     return columns;
   }
 
-  private static class Timer {
-    private static DecimalFormat formatter = new DecimalFormat ("0.######E0");
-    String name;
-    long startTime = 0;
-    long lastPolledTime = 0;
-
-    public Timer () {
-      this ("timer");
-    };
-
-    public Timer (String name) {
-      this.name = name;
-      this.startTime = System.nanoTime ();
-    }
-
-    public long start () {
-      return this.startTime = System.nanoTime ();
-    }
-
-    public long poll () {
-      this.lastPolledTime = System.nanoTime ();
-      return this.lastPolledTime - startTime;
-    }
-
-    public long stop () {
-      long endTime = System.nanoTime ();
-      return endTime - startTime;
-    }
-
-    public long read () {
-      long duration = stop ();
-      log.debug ("Timer::" + name + ":" + formatter.format (duration));
-      return duration;
-    }
-
-    public static Timer start (String name) {
-      return new Timer (name);
-    }
-  }
+  
 }

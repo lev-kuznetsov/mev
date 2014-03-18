@@ -5,9 +5,6 @@ import static org.h2.tools.Server.createWebServer;
 
 import java.sql.SQLException;
 
-import javax.annotation.PostConstruct;
-
-import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
 import lombok.extern.log4j.Log4j;
 
@@ -24,11 +21,11 @@ public class H2Console implements Lifecycle {
   
   public H2Console (String name, int port, String ... args) {
     this.name = name;
-    this.args = new String[args.length+1];
-    this.args[0] = valueOf(port);
-    for(int i=1;i<this.args.length;i++)
-      this.args[i]=args[i-1];      
     this.port = port;    
+    this.args = new String[args.length+1];
+    this.args[0] = valueOf(this.port);
+    for(int i=1;i<this.args.length;i++)
+      this.args[i]=args[i-1];          
   }
 
   @Override

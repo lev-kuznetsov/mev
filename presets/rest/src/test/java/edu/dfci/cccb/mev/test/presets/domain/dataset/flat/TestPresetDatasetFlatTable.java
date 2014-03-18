@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -16,13 +15,10 @@ import javax.sql.DataSource;
 import lombok.extern.log4j.Log4j;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -36,7 +32,6 @@ import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
-import edu.dfci.cccb.mev.presets.contract.PresetValuesLoader;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
 import edu.dfci.cccb.mev.presets.util.timer.Timer;
@@ -50,8 +45,7 @@ public class TestPresetDatasetFlatTable {
   private @Inject @Named("presets-datasource") DataSource dataSource;
   private @Inject PresetDatasetBuilder presetDatasetBuilder;
   private @Inject PresetDimensionBuilder dimensionBuilder;
-  private @Inject PresetValuesLoader loader;
-  private String rootUrl;
+  @SuppressWarnings("unused") private String rootUrl;
   private boolean bWaitForProfiler=false;
   @PostConstruct
   public void init(){
@@ -177,6 +171,7 @@ public class TestPresetDatasetFlatTable {
 
   }
   
+  @SuppressWarnings(value={"unused", "unchecked"})
   private int datasetIterate(Dataset dataset){
     int count=0;
     for(Value oValue : (Iterable<Value>)dataset.values ()){
@@ -185,6 +180,7 @@ public class TestPresetDatasetFlatTable {
     }
     return count;
   }
+  @SuppressWarnings("unused")
   private int datasetDoublLoop(Dataset dataset) throws InvalidDimensionTypeException, InvalidCoordinateException{
     int count=0;
     for (String row : dataset.dimension (Dimension.Type.ROW).keys ()){

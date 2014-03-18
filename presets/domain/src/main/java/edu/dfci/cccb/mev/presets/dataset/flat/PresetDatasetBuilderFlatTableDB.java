@@ -1,7 +1,5 @@
 package edu.dfci.cccb.mev.presets.dataset.flat;
 
-import static org.jooq.impl.DSL.using;
-
 import java.sql.SQLException;
 
 import javax.inject.Inject;
@@ -10,24 +8,17 @@ import javax.sql.DataSource;
 
 import org.jooq.DSLContext;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analyses;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.dataset.domain.contract.DimensionBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Parser;
-import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDataset;
-import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
-import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;

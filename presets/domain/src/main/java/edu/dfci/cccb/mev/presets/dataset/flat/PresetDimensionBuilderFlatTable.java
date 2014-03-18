@@ -90,8 +90,7 @@ public class PresetDimensionBuilderFlatTable implements PresetDimensionBuilder{
 
   private List<String> getColumnKeys(String tableName, String fieldRowIdName){
     //get columns
-    Table<Record> table = tableByName (tableName);
-    Field<String> fieldRowId = fieldByName (String.class, fieldRowIdName);
+    Table<Record> table = tableByName (tableName);    
     Timer timer = Timer.start ("get-column-keys");
     ResultQuery<Record> queryColumnKeys =context.selectFrom(table).limit (1) .getQuery ();
     Record recordColumnKeys = queryColumnKeys.fetchOne ();

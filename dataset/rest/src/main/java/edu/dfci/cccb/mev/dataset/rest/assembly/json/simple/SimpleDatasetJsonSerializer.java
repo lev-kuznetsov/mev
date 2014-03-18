@@ -72,6 +72,7 @@ public class SimpleDatasetJsonSerializer extends JsonSerializer<Dataset> {
     jgen.writeEndObject ();        
   }
 
+  @SuppressWarnings("unchecked")
   public void writeValues (JsonGenerator jgen, Values values, List<String> rows, List<String> columns) throws IOException,
                                                                                                        JsonProcessingException,
                                                                                                        InvalidCoordinateException {
@@ -93,7 +94,8 @@ public class SimpleDatasetJsonSerializer extends JsonSerializer<Dataset> {
           jgen.writeEndObject ();
         }
       }
-    }else{      
+    }else{
+      
       for(Value oValue : (Iterable<Value>)values){
         double value = oValue.value ();
         min = min > value ? value : min;

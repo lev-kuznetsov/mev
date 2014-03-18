@@ -12,13 +12,10 @@ import javax.sql.DataSource;
 import lombok.extern.log4j.Log4j;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -28,7 +25,6 @@ import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
-import edu.dfci.cccb.mev.presets.contract.PresetValuesLoader;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
 @Log4j
@@ -39,7 +35,6 @@ public class TestPresetDatasetNVP {
   private @Inject Environment environment; 
   private @Inject @Named("presets-datasource") DataSource dataSource;
   private @Inject PresetDatasetBuilder presetDatasetBuilder;
-  private @Inject PresetValuesLoader loader;
   private String rootUrl;
   
   @PostConstruct
@@ -60,7 +55,7 @@ public class TestPresetDatasetNVP {
 //      loader.load (descriptor);
   }  
   
-  @Test @Ignore
+  @Test @Ignore @SuppressWarnings("unused")
   public void testSmallestTcga_NVPStore () throws PresetException, MalformedURLException, InvalidDimensionTypeException, InvalidCoordinateException, SQLException, InterruptedException {
     log.debug ("Sleeping .. you can start start profiler now.");    
     Thread.sleep (1000*15);
@@ -83,7 +78,7 @@ public class TestPresetDatasetNVP {
     log.debug ("nvp-count:"+count+", duration: "+duration);
   }
  
-  @Test @Ignore
+  @Test @Ignore @SuppressWarnings("unused")
   public void testSmallestTcgaLevel2_NVPStore () throws PresetException, MalformedURLException, InvalidDimensionTypeException, InvalidCoordinateException, SQLException, InterruptedException {
 //    log.debug ("Sleeping .. you can start start profiler now.");    
 //    Thread.sleep (1000*15);

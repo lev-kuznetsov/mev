@@ -1,7 +1,6 @@
 package edu.dfci.cccb.mev.presets.dal.metamodel;
 
 import java.net.URL;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lombok.Getter;
@@ -13,7 +12,6 @@ import org.eobjects.metamodel.DataContext;
 import org.eobjects.metamodel.UpdateCallback;
 import org.eobjects.metamodel.UpdateScript;
 import org.eobjects.metamodel.UpdateableDataContext;
-import org.eobjects.metamodel.convert.Converters;
 import org.eobjects.metamodel.convert.StringToDoubleConverter;
 import org.eobjects.metamodel.create.ColumnCreationBuilder;
 import org.eobjects.metamodel.create.CreateTableColumnBuilder;
@@ -24,10 +22,8 @@ import org.eobjects.metamodel.data.DataSet;
 import org.eobjects.metamodel.data.Row;
 import org.eobjects.metamodel.drop.TableDropBuilder;
 import org.eobjects.metamodel.insert.RowInsertionBuilder;
-import org.eobjects.metamodel.intercept.TableCreationInterceptor;
 import org.eobjects.metamodel.query.Query;
 import org.eobjects.metamodel.query.SelectItem;
-import org.eobjects.metamodel.schema.Column;
 import org.eobjects.metamodel.schema.ColumnType;
 import org.eobjects.metamodel.schema.Schema;
 import org.eobjects.metamodel.schema.Table;
@@ -77,10 +73,7 @@ public class MetaModelHelper {
       this.targetDataContext=targetDataContext; 
       this.targetTableName=targetTableName;     
     }
-    public void run(UpdateCallback callback) {        
-        //get the target data context
-        DataContext dc = callback.getDataContext();
-        
+    public void run(UpdateCallback callback) {                
         //drop table        
         TableDropBuilder tdb = callback.dropTable(targetDataContext.getDefaultSchema(), targetTableName);
         tdb.execute();
@@ -130,10 +123,7 @@ public class MetaModelHelper {
     public Table getTable(){
       return table;
     }
-    public void run(UpdateCallback callback) {        
-        //get the target data context
-        DataContext dc = callback.getDataContext();
-        
+    public void run(UpdateCallback callback) {                
         //create schema
         TableCreationBuilder tcb = callback.createTable(targetDataContext.getDefaultSchema(), targetTableName);
         

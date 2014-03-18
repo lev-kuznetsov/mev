@@ -21,12 +21,13 @@ public class H2Server implements Lifecycle {
   
   public H2Server (String name, int port, String ... args) {
     this.name = name;
+    this.port = port;    
     this.args = new String[args.length+2];
     this.args[0] = "-tcpPort";
-    this.args[1] = valueOf(port);
+    this.args[1] = valueOf(this.port);
     for(int i=2;i<this.args.length;i++)
       this.args[i]=args[i-2];      
-    this.port = port;    
+    
   }
 
   @Override

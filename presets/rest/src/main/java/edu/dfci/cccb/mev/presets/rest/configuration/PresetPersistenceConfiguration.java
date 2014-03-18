@@ -2,7 +2,6 @@ package edu.dfci.cccb.mev.presets.rest.configuration;
 
 import static java.lang.System.getProperty;
 
-import java.sql.SQLException;
 import java.util.Properties;
 
 import javax.inject.Inject;
@@ -12,42 +11,19 @@ import javax.sql.DataSource;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;
-import org.springframework.beans.factory.annotation.Autowire;
-import org.springframework.context.Lifecycle;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
-
-import edu.dfci.cccb.mev.configuration.persistense.h2.H2Console;
-import edu.dfci.cccb.mev.configuration.persistense.h2.H2Server;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
-import edu.dfci.cccb.mev.dataset.domain.jooq.JooqBasedDatasourceValueStoreBuilder;
-import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
-import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
-import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
-import edu.dfci.cccb.mev.presets.contract.PresetValuesLoader;
-import edu.dfci.cccb.mev.presets.contract.PresetValuesStoreBuilderFactory;
-import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
-import edu.dfci.cccb.mev.presets.dal.SimplePresetValuesLoader;
-import edu.dfci.cccb.mev.presets.dataset.PresetDatasetBuilderByJooq;
-import edu.dfci.cccb.mev.presets.dataset.flat.PresetDatasetBuilderFlatTable;
-import edu.dfci.cccb.mev.presets.dataset.flat.PresetDatasetBuilderFlatTableDB;
-import edu.dfci.cccb.mev.presets.dataset.flat.PresetDimensionBuilderFlatTable;
 
 @Log4j
 @Configuration
@@ -63,8 +39,8 @@ public class PresetPersistenceConfiguration {
   }
   
   @Inject
-  private Environment environment;
-
+  private Environment environment;  
+ 
 //  @Bean(name="presets-h2-server")
 //  public Lifecycle presetsH2TcpServer(){
 //    int port = environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"h2.tcp.port", Integer.class, 18054);
@@ -110,7 +86,7 @@ public class PresetPersistenceConfiguration {
 //    return new PresetDatasetBuilderFlatTableDB (dataSource, context, dimensionBuilder);
 //  }
 
-
+  
   @Bean(name="presets-datasource", destroyMethod = "close")
   public DataSource dataSource () {
     

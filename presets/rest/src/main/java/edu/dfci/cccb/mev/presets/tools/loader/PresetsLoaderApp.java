@@ -23,12 +23,13 @@ public class PresetsLoaderApp {
   @Inject Presets presets;
   
   public static void main (String[] args) throws PresetException {
-    final AnnotationConfigApplicationContext springContext = new AnnotationConfigApplicationContext ();
-    springContext.register(DatasetDomainBuildersConfiguration.class);
-    springContext.register (PresetsLoaderConfiguration.class);
-    springContext.refresh ();
-    final PresetsLoaderApp app = springContext.getBean (PresetsLoaderApp.class);
-    app.run (args);
+    try(final AnnotationConfigApplicationContext springContext = new AnnotationConfigApplicationContext ()){
+      springContext.register(DatasetDomainBuildersConfiguration.class);
+      springContext.register (PresetsLoaderConfiguration.class);
+      springContext.refresh ();
+      final PresetsLoaderApp app = springContext.getBean (PresetsLoaderApp.class);
+      app.run (args);
+    }    
   }
   private boolean checkInclude(String[] includeFilters, Preset preset){
     for(String filter : includeFilters){

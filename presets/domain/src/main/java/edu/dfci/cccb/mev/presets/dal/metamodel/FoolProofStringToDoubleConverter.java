@@ -22,9 +22,7 @@ public class FoolProofStringToDoubleConverter extends StringToDoubleConverter {
     else if ("NA".equalsIgnoreCase (physicalValue))
       value = NaN;
     else if ("null".equalsIgnoreCase (physicalValue))
-      value = NaN;
-    else if (physicalValue==null)
-      value = NaN;
+      value = NaN;    
     else if (physicalValue.length() == 0)
       value = NaN;
     else

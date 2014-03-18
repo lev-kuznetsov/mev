@@ -3,14 +3,10 @@ package edu.dfci.cccb.mev.test.presets.domain.dal;
 import static org.junit.Assert.*;
 import static org.hamcrest.core.Is.*;
 
-import java.net.URL;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
 
-import org.hamcrest.core.Is;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

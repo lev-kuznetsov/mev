@@ -6,13 +6,11 @@ import static java.lang.Double.POSITIVE_INFINITY;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.tableByName;
 
-import java.util.Iterator;
 import java.util.Map;
 
 import lombok.Synchronized;
 import lombok.extern.log4j.Log4j;
 
-import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -20,7 +18,6 @@ import org.jooq.ResultQuery;
 import org.jooq.Table;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Value;
 import edu.dfci.cccb.mev.presets.contract.PresetValues;
 @Log4j
 public class PresetValuesFlatTable implements PresetValues {

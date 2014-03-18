@@ -37,12 +37,12 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
 
   //cache
   private Map<String, Object> lastMap;
-  private Record lastRecord;
+  @SuppressWarnings("unused") private Record lastRecord;
   private String lastRowKey=null;
   
   //fields
   private final @Inject @Named("presets-jooq-context") DSLContext context;  
-  private final Dimension columns;
+  @SuppressWarnings("unused") private final Dimension columns;
   private final String tableName;
   private final List<Field<String>>fieldList;
   private final Table<Record> table;
@@ -61,6 +61,7 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
   
   @Synchronized
   private void setLastRecord(Record record){    
+    this.lastRecord=record;
     this.lastMap=record.intoMap ();
     this.lastRowKey=(String)this.lastMap.get ("COLUMN0");
   }
@@ -186,28 +187,13 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
   
   @Override
   public double get (String row, String column) throws InvalidCoordinateException {
-    try {
-      Field<String> columnField = fieldByName (String.class, column.toUpperCase ());
+    try {      
       ResultQuery<?> query=null;
       if(!isSameRecord (row)){        
         try{
           query =queryHelper.queryValue (row, column, table, fieldRowId);
         //  log.debug ("PresetValuesFlatTable sql:"+query.getSQL ());      
-          Record record = query.fetchOne ();
-          
-  //        Record record=null;
-  //        Cursor<Record> cursor = null;
-  //        try {
-  //          cursor = context.selectFrom (table).fetchLazy ();
-  //          // Cursor has similar methods as Iterator<R>
-  //          if(cursor.hasNext ()) {
-  //            record = cursor.fetchOne ();              
-  //          }
-  //        } finally {
-  //          if (cursor != null) {
-  //            cursor.close ();
-  //          }
-  //        }
+          Record record = query.fetchOne ();          
           setLastRecord (record);
         }finally{
           if(query!=null) 

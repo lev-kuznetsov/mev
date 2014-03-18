@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.sound.sampled.TargetDataLine;
 import javax.sql.DataSource;
 
 import lombok.Getter;
@@ -17,20 +16,11 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.eobjects.metamodel.DataContext;
-import org.eobjects.metamodel.UpdateCallback;
-import org.eobjects.metamodel.UpdateScript;
 import org.eobjects.metamodel.UpdateableDataContext;
 import org.eobjects.metamodel.convert.Converters;
-import org.eobjects.metamodel.create.ColumnCreationBuilder;
-import org.eobjects.metamodel.create.CreateTable;
-import org.eobjects.metamodel.create.CreateTableColumnBuilder;
-import org.eobjects.metamodel.create.TableCreationBuilder;
 import org.eobjects.metamodel.csv.CsvDataContext;
 import org.eobjects.metamodel.jdbc.JdbcDataContext;
-import org.eobjects.metamodel.query.Query;
 import org.eobjects.metamodel.schema.Column;
 import org.eobjects.metamodel.schema.ColumnType;
 import org.eobjects.metamodel.schema.Table;
@@ -39,7 +29,6 @@ import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.dal.metamodel.FoolProofStringToDoubleConverter;
 import edu.dfci.cccb.mev.presets.dal.metamodel.MetaModelHelper;
 import edu.dfci.cccb.mev.presets.dal.metamodel.MetaModelHelper.ColumnTypeDescriptor;
-import edu.dfci.cccb.mev.presets.dal.metamodel.MetaModelHelper.CreateTableScript;
 import edu.dfci.cccb.mev.presets.prototype.AbstractPresetValuesLoader;
 
 @Log4j
@@ -47,7 +36,7 @@ public class HSQLPresetLoader extends AbstractPresetValuesLoader {
 
   final private String INDEX_COL_NAME = "COLUMN0";
   final private boolean reloadFlag;
-  final private int batchSize;
+  @SuppressWarnings("unused") final private int batchSize;
   
   private @Getter @Setter @Inject @Named("presets-datasource") DataSource dataSource;
   private MetaModelHelper metaModelHelper;
@@ -81,15 +70,13 @@ public class HSQLPresetLoader extends AbstractPresetValuesLoader {
   public void load (URL url) throws PresetException{
     
     CsvDataContext csvDataContext = metaModelHelper.createCsvContext (url);
-    Table csvTable = metaModelHelper.getCsvTable (csvDataContext);    
-    Column indexColumn = csvTable.getColumn (0);
-    boolean tableDroppedFlag=false;
+    Table csvTable = metaModelHelper.getCsvTable (csvDataContext);        
+  
     String tableName = getTableName(url);
     if(metaModelHelper.exists (dbDataContext, tableName)){
       if(this.reloadFlag){
         log.info ("Dropping table "+tableName);
         metaModelHelper.dropTable (dbDataContext, tableName);
-        tableDroppedFlag=true;
       }else{
         log.info ("Table "+tableName+" already exists, skipping import");
         return;
@@ -99,7 +86,6 @@ public class HSQLPresetLoader extends AbstractPresetValuesLoader {
     if(metaModelHelper.exists (dbDataContext, textTableName)){
       log.info ("Dropping table "+textTableName);
       metaModelHelper.dropTable (dbDataContext, textTableName);
-      tableDroppedFlag=true;    
     }
         
 //    create schema    
