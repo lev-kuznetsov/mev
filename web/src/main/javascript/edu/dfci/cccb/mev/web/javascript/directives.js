@@ -474,10 +474,6 @@ define(
                                                     value : "column"
                                                 }]; 
                                                 
-                                                scope.selections = [];
-                                                
-                                                pullSelections();
-
                                                 scope.analysisDimension = {
                                                     name : "Column",
                                                     value : "column"
@@ -513,27 +509,6 @@ define(
                                                    
 
                                                 };
-                                                
-                                                function pullSelections(){
-                                                    
-                                                    $http(
-                                                            {
-                                                                method : "GET",
-                                                                url : '/dataset/'
-                                                                        + $routeP.datasetName
-                                                                        + '/'
-                                                                        + "column"
-                                                                        + '/selection',
-                                                                params : {
-                                                                    format : 'json'
-                                                                }
-                                                            })
-                                                            .then(
-                                                                    function(d) {
-                                                                        scope.selections = d.data;
-                                                                    });
-                                                    
-                                                }
 
                                                 function resetSelections() {
                                                     scope.analysisName = "";

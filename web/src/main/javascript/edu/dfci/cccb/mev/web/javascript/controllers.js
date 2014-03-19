@@ -321,8 +321,7 @@ define(
                                                     });                             
                                         
                                        $scope.$on('SeletionAddedEvent', function(dimensionType){
-                                    	  console.debug("selection added: "+angular.toJson(dimensionType));
-                                    	  console.debug("$scope.heatmapData.column.selections:"+angular.toJson($scope.heatmapData.column.selections));                                    	  
+                                    	  console.debug("selection added: "+angular.toJson(dimensionType)+"$scope.heatmapData.column.selections:"+angular.toJson($scope.heatmapData.column.selections));                                    	  
                                     	  MevSelectionService.getColumnSelectionQ().then(function(d){                                    		  
                                     		  console.debug("selections:"+angular.toJson($scope.selections));
                                     		  $scope.heatmapData.column.selections=d;
