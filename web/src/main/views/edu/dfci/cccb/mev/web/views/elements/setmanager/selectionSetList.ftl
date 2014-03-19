@@ -9,7 +9,7 @@
 		<div>
 			<!-- href="{{baseUrl}}/{{selection.name}}/{{selection.properties.selectionFacetLink}} -->
 			<a href=""
-				ng-click="showAnnotations(selection, dimension)"">{{selection.name}}</a>
+				ng-click="showAnnotations(selection, dimension)">{{selection.name}}</a>
 		</div>
 		<div class="selectionSetDescription">{{selection.properties.selectionDescription}}</div>
 		<div class="selectionSetKeys">
