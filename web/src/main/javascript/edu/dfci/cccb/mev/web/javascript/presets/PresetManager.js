@@ -25,10 +25,10 @@ define(['jquery', 'angular'], function (jquery, angular){
                     },
                     function (d, s) {
                       var message = "Could not pull your dataset list If "
-                          + "problem persists, please contact us."
+                          + "problem persists, please contact us.";
 
                       var header = "Could Not Pull List Of Datasets (Error Code: "
-                          + s + ")"
+                          + s + ")";
                       alertService.error (message, header);
                     });              
 			};

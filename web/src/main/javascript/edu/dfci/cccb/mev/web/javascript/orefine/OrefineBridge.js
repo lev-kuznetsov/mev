@@ -23,9 +23,20 @@ define(['jquery', 'angular'], function(jquery, angular){
 			var presetMgrDOM = angular.element(elm);
 			
 			var presetManagerScope=presetMgrDOM.scope();
-			console.log("presetManagerScope:"+angular.toJson(presetManagerScope));			
-			presetManagerScope.showPresetList();			
+			var presetManagerController=presetMgrDOM.controller();
+			console.log("presetManagerScope:"+angular.toJson(presetManagerScope));
+			console.log("presetManagerScope.orderByColumn:"+presetManagerScope.orderByColumn);
+			
+			console.log("presetManagerController.orderByColumn:"+presetManagerController.orderByColumn);
+						
+			presetManagerScope.showPresetList();
 			presetManagerScope.$apply();
+			
+//			presetManagerScope.$parent.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.showPresetList();	
+//			presetManagerScope.$apply(function(){
+//				presetManagerScope.showPresetList();
+//			});
+			
 		}
 	
 		
