@@ -14,13 +14,14 @@ import javax.inject.Named;
 import javax.sql.DataSource;
 
 import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j;
 
 import org.h2.tools.Csv;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotation;
 import edu.dfci.cccb.mev.annotation.domain.probe.prototype.AbstractProbeAnnotations;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-
+@Log4j
 public class H2ProbeAnnotations extends AbstractProbeAnnotations {
 
   private final String TABLE_NAME_PREFIX="PROBE_ANNOT_";  
@@ -49,6 +50,8 @@ public class H2ProbeAnnotations extends AbstractProbeAnnotations {
     
     try(Connection connection = dataSource.getConnection ()){
       String selectSql = SELECT_STATEMENT.replace (PARAM_TABLE_NAME,  this.platformId ());
+      if(log.isDebugEnabled ())
+        log.debug ("Select Probe Annotations:" + selectSql);
       try(PreparedStatement prep = connection.prepareStatement(selectSql);){        
         
         prep.setObject (1, dimension.keys ().toArray ());        
@@ -66,22 +69,4 @@ public class H2ProbeAnnotations extends AbstractProbeAnnotations {
     return input;
   }
   
-//TODO: remove method (moved to Platform class)
-//  @Override
-//  @SneakyThrows
-//  public List<String> getSources () {
-//    synchronized (sources) {
-//      if(sources.size ()==0){
-//        try(Connection connection= dataSource.getConnection ()){
-//          try(ResultSet rs = connection.getMetaData ().getTables (null, null, TABLE_NAME_PREFIX+"%", new String[]{"TABLE"}))
-//          {
-//            while (rs.next()) {              
-//              sources.add (rs.getString("TABLE_NAME").replace (TABLE_NAME_PREFIX, ""));
-//           }
-//         }
-//       }      
-//      }
-//    }
-//    return sources;
-//  }
 }
