@@ -101,18 +101,16 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
       header = reader.getHeader (true);      
       List<String> firstDataLine = reader.read ();
       processors = new CellProcessor[header.length];
-      Map<String, Double> firstProcessedLine = new HashMap<> ();
-      int colIndex=1;
+      Map<String, Double> firstProcessedLine = new HashMap<> ();      
       for (int index = header.length; --index > 0;){
         try {
           firstProcessedLine.put (header[index],
                                   (Double) DOUBLE_CELL_PROCESSOR.execute (firstDataLine.get (index), null));
           processors[index] = DOUBLE_CELL_PROCESSOR;
+          columns.put (header[header.length-index+1], header[header.length-index+1]);
         } catch (SuperCsvCellProcessorException e) {
           processors[index] = IGNORE_CELL_PROCESSOR;
-        }
-        columns.put (header[colIndex], header[colIndex]);
-        colIndex++;
+        }                
       }      
       processors[0] = ROW_ID_PROCESSOR;
       currentRowName = firstDataLine.get (0);      
