@@ -372,6 +372,35 @@ define (
                       }
                     }
 
-                  } ]);
+                  } ])
+                  .service('MevSelectionService', ['QHTTP', 'alertService', '$routeParams', function(QHTTP, alertService, $routeParams){
+                	  this.getColumnSelectionQ = function(){                          
+                		  return QHTTP(createSelectionRequest('column'), successCallback, errorCallback);                                            
+	                  };
+	                  this.getRowSelectionQ = function(){                          
+	                  	  return QHTTP(createSelectionRequest('row'), successCallback, errorCallback);                                            
+	                  };
+	                  
+	                  //helper functions
+                	  var createSelectionRequest = function(dimensionType){
+                		  return {
+                              method : "GET",
+                              url : '/dataset/'
+                                      + $routeParams.datasetName
+                                      + '/'
+                                      + dimensionType
+                                      + '/selections',
+                              params : {
+                                  format : 'json'
+                              }
+                		  };
+                	  };                	  
+                	  var successCallback = function (d, s) {return d;};
+                	  var errorCallback = function (d, s) {
+                		  var message = "Could not pull selections. If problem persists, please contact us.";
+                          var header = "Could Not Pull List Of Selections (Error Code: "+ s + ")";
+                          alertService.error (message, header);
+                      };
+                  }]);
 
     });
