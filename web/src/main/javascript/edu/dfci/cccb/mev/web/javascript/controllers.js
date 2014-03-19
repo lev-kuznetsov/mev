@@ -319,12 +319,12 @@ define(
                                                             }
 
                                                             $scope.annotationsUrl = annotationsUrl;                                                             
-                                                            $scope.setActiveTab("annotations");
-//                                                            var elm = document
-//                                                                    .querySelector('#annotationsTabLink');
-//                                                            $(elm)
-//                                                                    .trigger(
-//                                                                            'click');
+//                                                            $scope.setActiveTab("annotations");
+                                                            var elm = document
+                                                                    .querySelector('#annotationsTabLink');
+                                                            $(elm)
+                                                                    .trigger(
+                                                                            'click');
                                                             
                                                             // var
                                                             // annotationsTab =
