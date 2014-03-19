@@ -1717,7 +1717,8 @@ define(
                                                 'y': ((heatmapMarginTop*.8)+20)-22,
                                                 'data-toggle': 'modal',
                                                 'role': 'button',
-                                                'data-target': "#columnSelectionsModal"
+                                                'data-target': "#columnSelectionsModal",
+                                                'style':'font-size:10'
                                             })
                                             .text("Add Column Selections");
                                         
@@ -1728,7 +1729,8 @@ define(
                                                 'y': ((heatmapMarginTop*.8)+20)-10,
                                                 'data-toggle': 'modal',
                                                 'role': 'button',
-                                                'data-target': "#rowSelectionsModal"
+                                                'data-target': "#rowSelectionsModal",
+                                                'style':'font-size:10'
                                             })
                                             .text("Add Row Selections");
                                         
