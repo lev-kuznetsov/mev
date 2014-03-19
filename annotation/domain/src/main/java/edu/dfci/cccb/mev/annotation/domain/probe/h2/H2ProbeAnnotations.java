@@ -50,8 +50,10 @@ public class H2ProbeAnnotations extends AbstractProbeAnnotations {
     
     try(Connection connection = dataSource.getConnection ()){
       String selectSql = SELECT_STATEMENT.replace (PARAM_TABLE_NAME,  this.platformId ());
-      if(log.isDebugEnabled ())
+      if(log.isDebugEnabled ()){
         log.debug ("Select Probe Annotations:" + selectSql);
+        log.debug ("dimension.keys().toArray(): " + dimension.keys ().toArray ());
+      }
       try(PreparedStatement prep = connection.prepareStatement(selectSql);){        
         
         prep.setObject (1, dimension.keys ().toArray ());        
