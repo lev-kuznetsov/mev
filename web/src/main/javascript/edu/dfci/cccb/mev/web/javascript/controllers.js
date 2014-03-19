@@ -258,13 +258,37 @@ define(
                                     '$element',
                                     '$attrs',
                                     function($scope, $element, $attrs) {
-                                        
+                                    	
                                         $scope.baseUrl = '/annotations/'
                                                 + $scope.heatmapId
                                                 + '/annotation';
                                         $scope.annotationsUrl = $scope.baseUrl
                                                 + '/column/new/dataset/';
-
+                                        
+                                        $scope.tabs={};
+                                        if($scope.tabs!=undefined){
+                                        	$scope.tabs.activeTab='visualize';
+                                        	$scope.tabs.visualizeTabActive=true;
+                                        	$scope.tabs.annotationsTabActive=false;
+                                        }
+                                        $scope.setActiveTab = function(name){
+                                        	$scope.tabs.activeTab = name;
+                                        	if(name=='annotations'){                                        		
+                                        		$scope.tabs.visualizeTabActive=false;
+                                        		$scope.tabs.annotationsTabActive=true;
+                                        	}else{
+                                        		$scope.tabs.visualizeTabActive=true;
+                                        		$scope.tabs.annotationsTabActive=false;
+                                        	}
+                                        		
+                                        };
+                                        $scope.isActiveTab = function(name){
+                                        	if($scope.tabs.activeTab==name)
+                                        		return true;
+                                        	else
+                                        		return false;
+                                        };
+                                        
                                         $scope
                                                 .$on(
                                                         'ViewAnnotationsEvent',
@@ -294,12 +318,14 @@ define(
                                                                 annotationsUrl += selection.properties.selectionFacetLink;
                                                             }
 
-                                                            $scope.annotationsUrl = annotationsUrl;
+                                                            $scope.annotationsUrl = annotationsUrl;                                                             
+//                                                            $scope.setActiveTab("annotations");
                                                             var elm = document
                                                                     .querySelector('#annotationsTabLink');
                                                             $(elm)
                                                                     .trigger(
                                                                             'click');
+                                                            
                                                             // var
                                                             // annotationsTab =
                                                             // angular.element(elm);

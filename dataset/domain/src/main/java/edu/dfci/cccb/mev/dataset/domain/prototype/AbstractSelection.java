@@ -15,6 +15,7 @@
 package edu.dfci.cccb.mev.dataset.domain.prototype;
 
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 
@@ -22,6 +23,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
  * @author levk
  * 
  */
+@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
 public abstract class AbstractSelection implements Selection {}

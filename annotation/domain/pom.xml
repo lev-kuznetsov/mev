@@ -16,7 +16,6 @@
 	</parent>
 
 	<properties>
-  		<jackson.version>2.2.2</jackson.version>  		
 		<hibernate.version>4.2.7.SP1</hibernate.version>
   	</properties>
 

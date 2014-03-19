@@ -20,7 +20,7 @@
     </filter>
   </appender>
   <logger name="org.springframework">
-    <level value="info"></level>
+    <level value="trace"></level>
   </logger>
   <logger name="org.hibernate">
     <level value="info"></level>

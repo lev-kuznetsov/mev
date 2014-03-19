@@ -6,6 +6,7 @@ define(['jquery','angular'], function(jquery, angular){
 					  heatmapId: '@heatmapId',
 					  heatmapData: '=heatmapData'
 				  },
+				  controller: 'SelectionSetManagerCtl',				  
 				  restrict : 'EA',
 				  templateUrl : '/container/view/elements/setmanager/selectionSetManager'
 			  };
@@ -61,7 +62,7 @@ define(['jquery','angular'], function(jquery, angular){
 		.controller('SelectionSetManagerCtl', ['$scope', '$element', '$attrs', function($scope, $element, $attrs){
 			
 			$scope.sayHelloCtl = function() {
-				//alert($scope.heatmapId + ":" + $scope.heatmapData.column.selections.length + ":" + $scope.$id);
+				alert($scope.heatmapId + ":" + $scope.heatmapData.column.selections.length + ":" + $scope.$id);
 			};		
 			
 			//alert(angular.toJson($attrs) );
@@ -81,24 +82,23 @@ define(['jquery','angular'], function(jquery, angular){
 				$scope.selectedItem.properties = item.properties;
 			};
 			$scope.showAnnotations = function(selection, dimention, annotationSource){
-				//alert(angular.toJson(selection));
 				$scope.$emit('ViewAnnotationsEvent', selection, dimention, annotationSource);				
 				
-			}
+			};
 			$scope.addItem = function(item){
 				//alert('in addItem');				
 				$scope.$apply(function(){
 					
 					if(item.dimension.toLowerCase()=="column"){
-						$scope.heatmapData.column.selections = jquery.grep($scope.heatmapData.column.selections, function(e, i){return e.name==item.name}, true);
+						$scope.heatmapData.column.selections = jquery.grep($scope.heatmapData.column.selections, function(e, i){return e.name==item.name;}, true);
 						$scope.heatmapData.column.selections.push(item);
 					}else{
-						$scope.heatmapData.row.selections = jquery.grep($scope.heatmapData.row.selections, function(e, i){return e.name==item.name}, true);
+						$scope.heatmapData.row.selections = jquery.grep($scope.heatmapData.row.selections, function(e, i){return e.name==item.name;}, true);
 						$scope.heatmapData.row.selections.push(item);						
 					}
 					
 				});
-			}
+			};
 			
 			
 		}]);
