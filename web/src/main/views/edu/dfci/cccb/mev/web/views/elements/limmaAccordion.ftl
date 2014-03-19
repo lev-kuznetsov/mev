@@ -1,82 +1,88 @@
-<accordion close-others="false">
-	    <accordion-group ng-repeat="limma in previousLimmaAnalysis" heading="{{limma.datar.type}} : {{limma.name}}" is-open="false">
+<div class="containter-fluid">
 
-	            
-		            <div class="row">
-		            
-		              <div class="pull-left">
-		              
-		                <button class="btn btn-success" >
-			                <a href="/dataset/{{datasetName}}/analysis/{{limma.name}}?format=tsv">
-			                  <i class="icon-white icon-download"></i> Download
-			                </a> 
-			            </button>
-		              
-		              </div>
-			            
-			          <div class="pull-right">
-			            <form class="form-inline">
-						  Thresholds: <input type="text" class="input-small" placeholder="P-Value" ng-model="pvalueThreshold">
-						  <input type="text"  class="input-small" placeholder="Log Fold" ng-model="logFoldThreshold">
-						 
-						</form>
-					  </div>
-			            
-			            <div id="limmaResultsNotSignificant" ng-hide="limma.datar.results">
-			              <hr>
-			              <p>No Results!</p>
-			              
-			            </div>
-			            
-			        </div>
-		            
-		            <div class="row">
-			        	<div class="limma-table" id="limmaResultsTable" ng-hide="!limma.datar.results || !showLimmaTables">
-			        	
-		                    <table class="table table-striped table-bordered">
-		                            <thead>
-		                                    <tr>
-		                                      <th ng-repeat="tableHeader in ['ID', 'Log-Fold-Change', 'Average Expression', 'P-Value', 'Q-Value']">
-		                                      	
-		                                      	<div class="dropdown">
-		                                      		<p class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu">
-												    	 {{tableHeader}}<span class="caret"></span>
-													</p>
-													<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-													
-														<li>
-													      <p ng-click="reorderLimmaTable(tableHeader)">Order By</p>
-													    </li>
-													    
-													</ul>
-		                                      	</div>
-		                                      	
-		                                      </th>
-		                                    </tr>
-		                            </thead>
-		                            <tbody>
-		                                    <tr ng-repeat="row in limma.datar.results | filterThreshold: pvalueThreshold : 'pValue' | filterThreshold: logFoldThreshold : 'logFoldChange' | orderBy: limmaTableOrdering ">
-		                                            <td>
-		                                                    {{row["id"]}}
-		                                            </td>
-		                                            <td>
-		                                                    {{row["logFoldChange"] | number:4}}
-		                                            </td>
-		                                            <td>
-		                                                    {{row["averageExpression"] | number:4}}
-		                                            </td>
-		                                            <td>
-		                                                    {{row["pValue"] | number:4}} 
-		                                            </td>
-		                                            <td>
-		                                                    {{row["qValue"] | number:4}}
-		                                            </td>
-		                                    </tr>
-		                            </tbody>
-		                    </table>
-		                </div>
-		            </div>
-
-		</accordion-group>
-		
-</accordion>
+		<accordion close-others="false">
+			    <accordion-group ng-repeat="limma in previousLimmaAnalysis" heading="{{limma.datar.type}} : {{limma.name}}" is-open="false">
+			    	<div class="col-md-12">
+			    	
+			    			<div class="row">
+				              <div class="pull-right">
+				              
+				                <button class="btn btn-success" >
+					                <a href="/dataset/{{datasetName}}/analysis/{{limma.name}}?format=tsv">
+					                  <i class="icon-white icon-download"></i> Download
+					                </a> 
+					            </button>
+				              
+				              </div>	    			
+			    			</div>
+			    			<br>
+				            
+				            <div class="row">
+					        	<div class="limma-table" id="limmaResultsTable" ng-hide="!limma.datar.results || !showLimmaTables">
+					        	
+				                    <table class="table table-striped table-bordered">
+				                            <thead>
+				                            		<tr>
+				                            			<td colspan='5'>
+				                            				<h3>Filtering</h3>
+				                            				<hr>
+				                            				<form-group>
+				                            					<form>
+				                            						Genes: <input type="text" class="input-small" ng-model="search.id">
+				                            					<form>
+															</form-group>
+															<br>
+															<br>
+															<form-group>
+																<form class="form-inline">
+																	Threshold: <input type="text" class="input-small" placeholder="P-Value" ng-model="pvalueThreshold">
+																	<input type="text"  class="input-small" placeholder="Log Fold" ng-model="logFoldThreshold">
+				                            					</form>
+				                            				</form-group>
+				                            			</td>
+				                            		</tr>
+				                            		<tr>
+				                            			<td colspan='5'>
+				                            			<h3>Results</h3>
+				                            			</td>
+				                            		</tr>
+				                                    <tr>
+				                                      <th ng-repeat="tableHeader in ['ID', 'Log-Fold-Change', 'Average Expression', 'P-Value', 'Q-Value']">
+				                                      	
+				                                      	<div class="dropdown">
+				                                      		<p class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu">
+														    	 {{tableHeader}}<span class="caret" ng-click="reorderLimmaTable(tableHeader)"></span>
+															</p>
+															
+				                                      	</div>
+				                                      	
+				                                      </th>
+				                                    </tr>
+				                            </thead>
+				                            <tbody>
+				                                    <tr ng-repeat="row in limma.datar.results |filter:search| filterThreshold: pvalueThreshold : 'pValue' | filterThreshold: logFoldThreshold : 'logFoldChange' | orderBy: limmaTableOrdering ">
+				                                            <td>
+				                                                    {{row["id"]}}
+				                                            </td>
+				                                            <td>
+				                                                    {{row["logFoldChange"] | number:4}}
+				                                            </td>
+				                                            <td>
+				                                                    {{row["averageExpression"] | number:4}}
+				                                            </td>
+				                                            <td>
+				                                                    {{row["pValue"] | number:4}} 
+				                                            </td>
+				                                            <td>
+				                                                    {{row["qValue"] | number:4}}
+				                                            </td>
+				                                    </tr>
+				                            </tbody>
+				                    </table>
+				                </div>
+				            </div>
+					</div>
+				</accordion-group>
+				
+		</accordion>
+</div>
