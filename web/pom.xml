@@ -157,14 +157,6 @@
 	  <type>test-jar</type>
 	  <scope>test</scope>
 	</dependency>
-
-	<dependency>
-	  <groupId>edu.dfci.cccb</groupId>
-      <artifactId>mev-annotation-server</artifactId>
-      <version>BAYLIE-SNAPSHOT</version>
-	  <type>test-jar</type>
-	  <scope>test</scope>
-	</dependency>
 	
 	<dependency>
 	  <groupId>edu.dfci.cccb</groupId>
