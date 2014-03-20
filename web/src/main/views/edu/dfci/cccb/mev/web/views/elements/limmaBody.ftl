@@ -18,14 +18,14 @@
   <div class="form-group">
     <label for="limmaAnalysisControl" class="control-label">Control</label>
 
-      <select id="limmaAnalysisControl" ng-model="analysisControl" ng-options="selection for selection in selections">
+      <select id="limmaAnalysisControl" ng-model="analysisControl" ng-options="selection.name for selection in heatmapData.column.selections">
       </select>
 
   </div>
   
   <div class="form-group">
     <label for="limmaAnalysisExperiment" class="control-label">Experiment</label>
-      <select id="limmaAnalysisExperiment" ng-model="analysisExperiment" ng-options="selection for selection in selections">
+      <select id="limmaAnalysisExperiment" ng-model="analysisExperiment" ng-options="selection.name for selection in heatmapData.column.selections">
       </select>
       
   </div>

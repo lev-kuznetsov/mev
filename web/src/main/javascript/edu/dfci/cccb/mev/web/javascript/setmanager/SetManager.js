@@ -96,8 +96,8 @@ define(['jquery','angular'], function(jquery, angular){
 						$scope.heatmapData.row.selections = jquery.grep($scope.heatmapData.row.selections, function(e, i){return e.name==item.name;}, true);
 						$scope.heatmapData.row.selections.push(item);						
 					}
-					
 				});
+				$scope.$emit('SeletionAddedEvent', 'column');
 			};
 			
 			

@@ -36,9 +36,9 @@ public class SuperCsvParserFactoryTest {
 
   @Test
   public void testParser () throws Exception {
-    Parser p = new SuperCsvParserFactory ().parse (new ByteArrayInputStream (("id\tsa\tsb\tsc\n" +
-                                                                              "g1\t.1\t.2\t.3\n" +
-                                                                              "g2\t.4\t.5\t.6").getBytes ()));
+    Parser p = new SuperCsvParserFactory ().parse (new ByteArrayInputStream (("\t\tsa\tsb\tsc\n" +
+                                                                              "g1\tp1\t.1\t.2\t.3\n" +
+                                                                              "g2\tp2\t.4\t.5\t.6").getBytes ()));
     for (int index = 1; index < 7; index++) {
       assertTrue (p.next ());
       assertEquals (index / 10.0, p.value (), 0.0);
