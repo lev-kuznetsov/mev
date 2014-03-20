@@ -17,7 +17,10 @@ package edu.dfci.cccb.mev.r.mock.cli;
 import static java.io.File.createTempFile;
 import static java.lang.Integer.parseInt;
 import static java.lang.Runtime.getRuntime;
+import static java.lang.System.currentTimeMillis;
 import static java.lang.System.getProperty;
+import static java.lang.Thread.currentThread;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.valueOf;
 
 import java.io.BufferedReader;
@@ -82,20 +85,31 @@ public class CliRScriptEngine extends AbstractScriptEngine {
           final String command = rScriptExecutable + " "
                                  + rScriptLaunchingOptions + script.getAbsolutePath ();
           log.debug ("Launching R script " + script + " using " + command);
+          final long before = currentTimeMillis ();
           final Process r = getRuntime ().exec (command);
           new Thread () {
+            private Thread original;
+
             public void run () {
               try {
                 Thread.sleep (rMaximumRuntimeUnit.toMillis (rMaximumRuntime));
                 r.exitValue ();
                 return;
               } catch (InterruptedException | IllegalThreadStateException e) {
-                log.warn ("Forcibly destroying LIMMA process lauched with command " + command + " after waiting for "
-                          + rMaximumRuntime + " " + rMaximumRuntimeUnit.toString ().toLowerCase (), e);
+                log.warn ("Forcibly destroying LIMMA process lauched with command "
+                          + command + " after waiting for "
+                          + rMaximumRuntimeUnit.convert (currentTimeMillis () - before, MILLISECONDS) + " "
+                          + rMaximumRuntimeUnit.toString ().toLowerCase ());
+                original.interrupt ();
                 r.destroy ();
               }
             }
-          }.start ();
+
+            private Thread initialize (Thread original) {
+              this.original = original;
+              return this;
+            }
+          }.initialize (currentThread ()).start ();
           int result = r.waitFor ();
           if (log.isDebugEnabled ())
             try (ByteArrayOutputStream buffer = new ByteArrayOutputStream ();

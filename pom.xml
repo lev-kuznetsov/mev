@@ -65,7 +65,7 @@
       <properties>
         <spring.prifiles.active>prod</spring.prifiles.active>
         <mev.work.directory>/cephfs/projects/mev/work</mev.work.directory>
-        <mev.Rscript>/cephfs/projects/mev/lib/R/default/bin/Rscript</mev.Rscript>
+        <mev.Rscript>nice 20 /cephfs/projects/mev/lib/R/default/bin/Rscript</mev.Rscript>
       </properties>
     </profile>
     <profile>
