@@ -1694,6 +1694,18 @@ define(
                                                                 }
 
                                                         });
+                                        
+                                        scope.$watch('heatmapData.column.keys', function(newval, oldval){
+                                            if (newval){
+                                                updateDrawHeatmap(scope.heatmapData);
+                                            }
+                                        });
+                                        
+                                        scope.$watch('heatmapData.row.keys', function(newval, oldval){
+                                            if (newval){
+                                                updateDrawHeatmap(scope.heatmapData);
+                                            }
+                                        });
 
                                         // Dendogram Stuff
 
