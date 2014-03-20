@@ -917,7 +917,8 @@ define(
                                                 .floor(jq(
                                                         '#rightPanel')
                                                         .css('width')
-                                                        .slice(0, -2) * .9)
+                                                        .slice(0, -2) * .9);
+                                                        
 
                                         var heatmapMarginLeft = Math
                                                 .floor(svgWidth * .15), heatmapMarginRight = Math
@@ -926,6 +927,15 @@ define(
                                         var heatmapCellsWidth = svgWidth
                                                 - heatmapMarginLeft
                                                 - heatmapMarginRight;
+                                        
+                                        var legendPosition = {
+                                                margin:{
+                                                    left: 5,
+                                                    top:10
+                                                },
+                                                width:heatmapMarginLeft*.80,
+                                                height: heatmapMarginTop*.80
+                                              };
 
                                         var heatmapCellsHeight = undefined;
                                         var heatmapCellHeight = undefined;
@@ -1029,6 +1039,10 @@ define(
                                                 "ylabels")
                                         var ylabels = d3
                                                 .select("g.ylabels");
+                                        
+                                        vis.append("g").attr("class", "legend");
+                                        var legend = d3.select('g.legend');
+                                        
 
                                         function drawSelections(columnData, rowData) {
 
@@ -1547,7 +1561,83 @@ define(
 
                                             drawLabels(xlabels,
                                                     ylabels);
+                                            
+                                            drawColorScale(data.min,
+                                                    data.max,
+                                                    data.avg);
 
+                                        };
+                                        
+                                        function drawColorScale(min, max){
+                                            var arr = d3.range(101)
+                                            
+                                            var scale = d3.scale.linear().domain([0, arr.length]).range([min, max])
+                                            
+                                            var yPosition = d3.scale.linear().domain([0, arr.length])
+                                                .range([40 + legendPosition.margin.top, 
+                                                        (legendPosition.margin.top + legendPosition.height) - 40 ])
+                                            
+                                            var colorScaleCellSpacing = yPosition(1) - yPosition(0);
+                                            
+                                            d3.select("g.colorScale").selectAll('rect').remove()
+                                            
+                                            d3.select("g.colorScale").selectAll('rect').data(arr).enter()
+                                                .append('rect')
+                                                .attr({
+                                                    y: function(d, i){
+                                                        return yPosition(i);
+                                                    },
+                                                    x: legendPosition.margin.left + (legendPosition.width*.1),
+                                                    width: legendPosition.width*.4,
+                                                    height: colorScaleCellSpacing,
+                                                    fill: function(d, i){
+                                                        return cellColor(scale(i))
+                                                    }
+                                                })
+                                                
+                                            d3.select("g.colorScale").selectAll("line").data(arr).enter()
+                                                .append("line")
+                                                .attr({
+                                                    "class": "colorScaleAxis", 
+                                                    x1:legendPosition.margin.left + (legendPosition.width*.1)//start of rects
+                                                        + legendPosition.width*.4 //widths of rects
+                                                        + 6, //spacing
+                                                    x2: legendPosition.margin.left + (legendPosition.width*.1)//start of rects
+                                                        + legendPosition.width*.4 //widths of rects
+                                                        + 13, //spacing
+                                                    y1:function(d, i){
+                                                        return yPosition(i) + (colorScaleCellSpacing/2) ;
+                                                    },
+                                                    y2:function(d, i){
+                                                        return yPosition(i) + (colorScaleCellSpacing/2);
+                                                    },
+                                                    stroke: function(d, i){ 
+                                                        return (i%25 == 0)? "black":"none";
+                                                    },
+                                                    "stroke-width": 1
+                                                });
+                                            
+                                            d3.select("g.colorScale").selectAll("text").data(arr).enter()
+                                                .append("text")
+                                                .attr({
+                                                    x: legendPosition.margin.left + (legendPosition.width*.1)//start of rects
+                                                    + legendPosition.width*.4 //widths of rects
+                                                    + 16, //spacing
+                                                    y:function(d, i){
+                                                        return yPosition(i) + (colorScaleCellSpacing/2) + 3 ;
+                                                    },
+                                                    'style':'font-size:8'
+                                                })
+                                                .text(function(d, i){
+                                                    var returnstring = String(scale(i)).split(".")[0]
+                                                    if (returnstring.length > 1){
+                                                        returnstring = returnstring + "." + String(scale(i)).split(".")[1][3]
+                                                    }
+                                                    return (i%50 == 0)? returnstring:""
+                                                }).append("title")
+                                                    .text(function(d, i){
+                                                        return scale(i);
+                                                    })
                                         };
 
                                         function updateDrawHeatmap(data) {
@@ -1566,6 +1656,7 @@ define(
                                             drawSelections(
                                                     data.column,
                                                     data.row);
+                                            
 
                                         };
 
@@ -1681,40 +1772,35 @@ define(
                                                         'topDendogram');
                                         var dendogramTopWindow = d3.select("g.topDendogram")
                                         
-                                        svg
-                                                .append("g")
-                                                .attr('class',
-                                                        'selectionsBox');
-                                        
-                                        var selectionsBox = d3.select('g.selectionsBox');
-                                        selectionsBox
+                                        legend
                                             .append('rect')
                                             .attr({
-                                                "x": 10,
-                                                "y": 20,
-                                                "width": heatmapMarginLeft*.8,
-                                                "height": heatmapMarginTop*.8,
+                                                "x": legendPosition.margin.left,
+                                                "y": legendPosition.margin.top,
+                                                "width": legendPosition.width,
+                                                "height": legendPosition.height,
                                                 "rx":10,
                                                 "ry":10,
+                                                "class": "legendBorder",
                                                 "style":"stroke-width:1;stroke:grey;fill:none"
                                             });
                                         
-                                        selectionsBox.append("text")
+                                        legend.append("text")
                                         .attr({
                                             'id': "legendTitle",
                                             'text-anchor':'middle',
-                                            'x': ((heatmapMarginLeft*.8)/2 ) + 10,
-                                            'y': (20) + 20,
+                                            'x': ((legendPosition.height)/2 ) + legendPosition.margin.left - 14,
+                                            'y': 20 + legendPosition.margin.top,
                                             'style':'font-size:20'
                                             
                                         })
                                         .text("Legend");
                                         
-                                        selectionsBox.append("text")
+                                        legend.append("text")
                                             .attr({
                                                 'id': "columnSelectionAdd",
                                                 'x': 20,
-                                                'y': ((heatmapMarginTop*.8)+20)-22,
+                                                'y': ((legendPosition.margin.top)+legendPosition.height)-22,
                                                 'data-toggle': 'modal',
                                                 'role': 'button',
                                                 'data-target': "#columnSelectionsModal",
@@ -1722,17 +1808,20 @@ define(
                                             })
                                             .text("Add Column Selections");
                                         
-                                        selectionsBox.append("text")
+                                        legend.append("text")
                                             .attr({
                                                 'id': "rowSelectionAdd",
                                                 'x': 20,
-                                                'y': ((heatmapMarginTop*.8)+20)-10,
+                                                'y': ((legendPosition.margin.top)+legendPosition.height)-10,
                                                 'data-toggle': 'modal',
                                                 'role': 'button',
                                                 'data-target': "#rowSelectionsModal",
                                                 'style':'font-size:10'
                                             })
                                             .text("Add Row Selections");
+                                        
+                                        legend.append("g").attr("class", "colorScale");
+                                        var colorScale = d3.select("g.colorScale")
                                         
                                         scope.addTreeSelection = function(params){
                                             if (scope.treeSelections[params.dimension.type].length > 0){
@@ -1803,6 +1892,7 @@ define(
                                                             if (newval) {
 
                                                                 redrawCells(heatmapcells);
+                                                                drawColorScale(scope.heatmapData.min, scope.heatmapData.max)
 
                                                             }
 
