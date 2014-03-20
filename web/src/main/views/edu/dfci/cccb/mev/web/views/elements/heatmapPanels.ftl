@@ -1,27 +1,27 @@
-<span heatmap-Navigation></span
+<span heatmap-Navigation></span>
 
-<br>
+<div ng-controller="MainPanelController" class="container-fluid heatmap-container"> <!-- Start Column Expand Tabs -->	
+	
 
-<div ng-controller="MainPanelController" class="row-fluid"> <!-- Start Column Expand Tabs -->	
-	<div class="row-fluid">
 	    
 		<div id="leftPanel">
+		
 				<side-Navigation-Bar></side-Navigation-Bar>
 		</div>
 		
 		<div id="partition">
 			<div id='tab'>
-				<i class="icon-chevron-left icon-white"></i>
+				<span id="tab-icon" class="glyphicon glyphicon-chevron-left glyphicon-white"></span>
+				
 			</div>
 		</div>
 		
 		
 		<div id="rightPanel">
 				
-	    		<analysis-Menu-Bar></analysis-Menu-Bar>
-				<div id="heatmapTabPane" class="tab-pane" expression-Panel></div>
+				<div id="expressionPanel" expression-Panel></div>
 		</div>
 			
-	</div>
+
 		
 </div>

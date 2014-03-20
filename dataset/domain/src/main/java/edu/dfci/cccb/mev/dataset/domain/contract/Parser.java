@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
+import java.util.List;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 
 /**
@@ -27,4 +29,9 @@ public interface Parser {
   double value ();
 
   boolean next () throws DatasetBuilderException;
+  
+  List<String> columnKeys();
+  List<String> rowKeys();
+  
+  
 }

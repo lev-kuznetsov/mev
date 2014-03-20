@@ -31,12 +31,18 @@
   <logger name="com.google.refine">
     <level value="info"></level>
   </logger>
+  <logger name="refine">
+    <level value="info"></level>
+  </logger>
+  <logger name="butterfly">
+    <level value="warn"></level>
+  </logger>
   <logger name="org.jooq">
     <level value="info"></level>
-  </logger>  
+  </logger>
   <root>
     <priority value="debug"></priority>
     <appender-ref ref="stderr" />
     <appender-ref ref="stdout" />
-  </root>
+  </root>  
 </log4j:configuration>

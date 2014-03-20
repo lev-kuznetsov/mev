@@ -82,7 +82,13 @@ Refine.CreateProjectUI.prototype.resize = function() {
 Refine.CreateProjectUI.prototype._initializeUI = function() {
   for (var i = 0; i < Refine.CreateProjectUI.controllers.length; i++) {
     this._controllers.push(new Refine.CreateProjectUI.controllers[i](this));
-  }
+  }  
+  if(window.location.href.contains("/probe/")){
+	  //if probe, don't kick off thejob right away, wait for user to select the annotations
+	  this.selectImportSource("probe-annotations");
+  }else{
+	  //self._controller.startImportJob(self._elmts.form, $.i18n._('core-index-import')["uploading-data"]);
+  }  
 };
 
 Refine.CreateProjectUI.prototype.addSourceSelectionUI = function(sourceSelectionUI) {

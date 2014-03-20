@@ -1,52 +1,24 @@
 
-<br>
+<div class="fixed-height">
 
-
-
-<div class="row-fluid"=>
-
+	<div class="col-md-10 col-md-offset-1">
+		<div class="row"=>
+			<div class="sidepanel-title row">
+				<p class="pull-right">Selections</p>
+			</div>
 	
-	<div class="span10 offset1">
-	
-		<div class="sidepanel-title">
-			<p class="lead">Selections</p>
+			<selection-set-manager id="selectionSetMgr" ng-controller="SelectionSetManagerCtl" heatmap-data="heatmapData" heatmap-id="{{heatmapId}}"></selection-set-manager>
 		</div>
-
-		<selection-set-manager id="selectionSetMgr" ng-controller="SelectionSetManagerCtl" heatmap-data="heatmapData" heatmap-id="{{heatmapId}}"></selection-set-manager>
-	</div>
-</div>
-
-<div class="row-fluid"=>
-	<div class="span10 offset1">
 	
-		<div class="sidepanel-title">
-			<p class="lead">Previous Analysis</p>
-		</div>
-		
-			Clusters 
+	
+		<div class="row"=>
+		<hr>
 			
+			<cluster-Accordion-List></cluster-Accordion-List>
 				
-			<div ng-repeat="analysis in previousHCLClusters">
-				<div class="row-fluid">
-					<div id="prevElement">
-					
-						<a ng-click="clusterAnalysisClickOpen(analysis)">{{analysis.name}}</a>
-					
-					</div>
-				</div>
-			</div>
-			
-			LIMMA
-			
-			
-			<div ng-repeat="analysis in previousLimmaAnalysis">
-				<div class="row-fluid">
-					<div id="prevElement">
-						<a ng-click="limmaAnalysisClickOpen({{analysis}})">{{analysis.name}} </a>
-					</div>
-				</div>
-			</div>
-			
+			<limma-Accordion-List></limma-Accordion-List>
+		</div>
 		
 	</div>
-</div>
+	
+<div>

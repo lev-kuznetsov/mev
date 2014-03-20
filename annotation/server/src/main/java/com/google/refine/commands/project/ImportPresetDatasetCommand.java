@@ -1,20 +1,13 @@
 package com.google.refine.commands.project;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import lombok.Getter;
-import lombok.Setter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +18,6 @@ import com.google.refine.browsing.Engine;
 import com.google.refine.browsing.FilteredRows;
 import com.google.refine.browsing.RowVisitor;
 import com.google.refine.commands.Command;
-import com.google.refine.history.HistoryEntry;
-import com.google.refine.model.AbstractOperation;
 import com.google.refine.model.Column;
 import com.google.refine.model.Project;
 import com.google.refine.model.Row;
@@ -34,22 +25,16 @@ import com.google.refine.operations.row.ImportPresetsRowRemovalOperation;
 import com.google.refine.process.Process;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
-import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
-import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
-import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.UrlTsvInput;
+import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
+import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 
 public class ImportPresetDatasetCommand extends Command {
   final static protected Logger logger = LoggerFactory.getLogger("ImportPresetDatasetCommand");
-  private @Getter @Setter @Inject Workspace workspace;
-  private @Getter @Setter @Inject DatasetBuilder builder;
 
   @Override
   public void doPost (final HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -70,7 +55,6 @@ public class ImportPresetDatasetCommand extends Command {
       final List<Integer> unmatchedRowIndices = new ArrayList<Integer>();
       
       RowVisitor visitor = new RowVisitor () {
-        int rowCount = 0;
         Column theIdColumn;
 
         @Override
@@ -94,7 +78,6 @@ public class ImportPresetDatasetCommand extends Command {
           String cellData = row.getCell (theIdColumn.getCellIndex ()).value.toString ();
           if (cellData != null) {
             keys.add (cellData);
-            rowCount++;
           }
           return false;
         }
@@ -109,9 +92,10 @@ public class ImportPresetDatasetCommand extends Command {
             RawInput newDatasetContent = new UrlTsvInput (descriptor.dataUrl ());            
             newDatasetContent.name (newDatasetName);
             logger.info (String.format ("***Import Dataset: %s *******************", descriptor.dataUrl ().toString ()));
-            dataset = ProjectManager.getSingleton ().getDatasetBuilder ().build (newDatasetContent, sourceSelection);
+            dataset = ProjectManager.getSingleton ().getDatasetBuilder ().build (descriptor, newDatasetName, sourceSelection);
             
-          } catch (DatasetBuilderException | InvalidDatasetNameException | InvalidDimensionTypeException e) {
+//          } catch (DatasetBuilderException | InvalidDatasetNameException | InvalidDimensionTypeException e) {
+          } catch (PresetException e) {
             e.printStackTrace();
           }
           

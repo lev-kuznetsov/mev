@@ -45,7 +45,8 @@ import org.json.JSONObject;
 import org.json.JSONWriter;
 
 import com.google.refine.Jsonizable;
-import com.google.refine.RefineServlet;
+
+import edu.dfci.cccb.mev.annotation.server.servlet.RefineServlet;
 
 public class PreferenceStore implements Jsonizable {
     private boolean dirty = false;

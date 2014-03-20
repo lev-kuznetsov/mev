@@ -1,6 +1,14 @@
 <div class="mev-preset-list-wrapper">
 <div class="mev-filter-form-wrapper">
-<form class="mev-filter-form"><input ng-model="filterText" placeholder="filter" type="text" value="" id="hi"></input></form>
+	<form class="mev-filter-form form-inline" role="form"">
+		<div class="form-group">
+			<label class="sr-only" for="filterText">filter</label>
+			<input id="filterText" class="form-control input-sm" ng-model="filter.text" placeholder="filter" type="text" value="" />
+		</div>
+		<label class="radio-inline" ng-repeat="level in data.levels">
+		  {{level}}<input  id="filterText{{$index}}" type="radio" value="{{level}}" ng-model="filter.level" ng-change="filter.text=''">
+		</label>	
+	</form>
 </div>
 <table ng-show="showImport==false" class="mev-table-tight table table-striped" style="font-size:14px;">
 <thead>
@@ -11,7 +19,7 @@
 </tr>
 </thead>
 <tbody>
-<tr ng-repeat="preset in presets | filter:filterText | orderBy:orderByColumn:orderByReverse">
+<tr ng-repeat="preset in presets | filter:filter.text | filter:filter.level | orderBy:orderByColumn:orderByReverse">
 <td><a href="" ng-click="showImportPreset(preset.name)">{{preset.name}}</a></td>
 <td>{{preset.diseaseName}}</td>
 <td>{{preset.platform}}</td>

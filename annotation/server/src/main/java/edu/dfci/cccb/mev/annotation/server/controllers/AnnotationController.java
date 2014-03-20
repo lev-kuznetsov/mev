@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
@@ -26,8 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
-import lombok.extern.log4j.Log4j;
-
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,9 +36,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationObjectSupport;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.refine.RefineServlet;
 import com.google.refine.io.FileProjectManager;
 
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatform;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatforms;
+import edu.dfci.cccb.mev.annotation.server.servlet.RefineServlet;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
@@ -59,16 +60,16 @@ import freemarker.template.TemplateModelException;
 
 @Controller
 @RequestMapping ("/annotations")
-@Log4j
 public class AnnotationController extends WebApplicationObjectSupport {
 
-  private RefineServlet refineServlet;  
+  private RefineServlet refineServlet;
   private @Inject Environment environment;
   private @Inject Workspace workspace;
   private @Inject FileProjectManager projectManager;
   private @Inject DatasetBuilder datasetBuilder;
   private @Inject Presets presets;
-  
+  private @Inject ProbeAnnotationPlatforms probeAnnotationPlatforms;
+
   @PostConstruct
   private void createRefineServlet () throws ServletException {
     refineServlet = new RefineServlet ();
@@ -147,62 +148,74 @@ public class AnnotationController extends WebApplicationObjectSupport {
 
   }
 
-  @RequestMapping(method={GET, POST, PUT, DELETE}, value="/openrefine/**")
-  public void openRefine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-    
+  @ResponseBody
+  @RequestMapping (method = { GET }, value = "/platforms/")
+  public List<ProbeAnnotationPlatform> platforms (HttpServletRequest request, HttpServletResponse response) throws ServletException,
+                                                                                   IOException {
+    return probeAnnotationPlatforms.getAll ();
+  }
+
+  
+  @RequestMapping (method = { GET, POST, PUT, DELETE }, value = "/openrefine/**")
+  public void openRefine (HttpServletRequest request, HttpServletResponse response) throws ServletException,
+                                                                                   IOException {
+
     HttpServletRequest wrappedRequest = new HttpServletRequestWrapper (request) {
       @Override
       public String getPathInfo () {
         return super.getServletPath ().replace ("/annotations/openrefine", "");
       }
     };
-    
+
     this.refineServlet.service (wrappedRequest, response);
   }
-  
-  @RequestMapping(method={GET, POST, PUT, DELETE}, value="/import-dataset/**")
-  public void importDataset(@RequestParam(value="import-preset", required=false) String presetName,
-                            HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, PresetNotFoundException{
-    
+
+  @RequestMapping (method = { GET, POST, PUT, DELETE }, value = "/import-dataset/**")
+  public void importDataset (@RequestParam (value = "import-preset", required = false) String presetName,
+                             HttpServletRequest request, HttpServletResponse response) throws ServletException,
+                                                                                      IOException,
+                                                                                      PresetNotFoundException {
+
     HttpServletRequest wrappedRequest = new HttpServletRequestWrapper (request) {
       @Override
       public String getPathInfo () {
         return super.getServletPath ().replace ("/annotations/import-dataset", "");
       }
     };
-    
-    if(presetName!=null && presetName.equals ("")==false){
+
+    if (presetName != null && presetName.equals ("") == false) {
       Preset preset = presets.get (presetName);
       wrappedRequest.setAttribute ("descriptor", preset.descriptor ());
     }
     this.refineServlet.service (wrappedRequest, response);
   }
-  
-  @RequestMapping(method={GET, POST, PUT, DELETE}, value = {"/"
-          + DATASET_URL_ELEMENT + "/annotation/"
-          + DIMENSION_URL_ELEMENT + "/{selectionName}/{annotationSource}/**"
-          
+
+  @RequestMapping (method = { GET, POST, PUT, DELETE }, value = { "/"
+                                                                  + DATASET_URL_ELEMENT + "/annotation/"
+                                                                  + DIMENSION_URL_ELEMENT
+                                                                  + "/{selectionName}/{annotationSource}/**"
 
   })
   @ResponseBody
   public void handleAnnotationByName (@PathVariable (DATASET_MAPPING_NAME) final String heatmapId,
-                                @PathVariable (DIMENSION_MAPPING_NAME) final String dimension,
-                                @PathVariable (value="selectionName") final String selectionName,           
-                                @PathVariable(value="annotationSource") final String annotationSrouce,
-                                HttpServletRequest request, HttpServletResponse response) throws ServletException,
-                                                                                         IOException,
-                                                                                         DatasetNotFoundException {
-    log.debug (String.format ("Handling annotation request: %s", request.getServletPath ()));
-    
+                                      @PathVariable (DIMENSION_MAPPING_NAME) final String dimension,
+                                      @PathVariable (value = "selectionName") final String selectionName,
+                                      @PathVariable (value = "annotationSource") final String annotationSrouce,
+                                      HttpServletRequest request, HttpServletResponse response) throws ServletException,
+                                                                                               IOException,
+                                                                                               DatasetNotFoundException {
     HttpServletRequest wrappedRequest = new HttpServletRequestWrapper (request) {
       @Override
       public String getPathInfo () {
-        return super.getServletPath ().replace ("/annotations/" + heatmapId + "/annotation/" + dimension + "/" + selectionName + "/" + annotationSrouce, "");
+        return super.getServletPath ().replace ("/annotations/"
+                                                        + heatmapId + "/annotation/" + dimension + "/" + selectionName
+                                                        + "/" + annotationSrouce,
+                                                "");
       }
     };
 
     Dataset heatmap = workspace.get (heatmapId);
-    long projectId = projectManager.getProjectID (heatmap.name ()+dimension);
+    long projectId = projectManager.getProjectID (heatmap.name () + dimension);
     if (projectId != -1) {
       if (wrappedRequest.getPathInfo ().trim ().equals ("/")) {
         if (wrappedRequest.getParameter ("reset") != null) {
@@ -217,10 +230,11 @@ public class AnnotationController extends WebApplicationObjectSupport {
     wrappedRequest.setAttribute ("dataset", heatmap);
     wrappedRequest.setAttribute ("dimension", dimension);
     wrappedRequest.setAttribute ("annotationSource", annotationSrouce);
-    if(!selectionName.equalsIgnoreCase ("new"))
+    if (!selectionName.equalsIgnoreCase ("new"))
       wrappedRequest.setAttribute ("selectionName", selectionName);
-    this.refineServlet.service (wrappedRequest, response);    
+    this.refineServlet.service (wrappedRequest, response);
   }
+
   /**
    * Internal implementation of the ServletConfig interface, to be passed to the
    * wrapped servlet. Delegates to ServletWrappingController fields and methods

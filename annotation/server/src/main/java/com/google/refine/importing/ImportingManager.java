@@ -50,8 +50,7 @@ import org.json.JSONWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.refine.RefineServlet;
-
+import edu.dfci.cccb.mev.annotation.server.servlet.RefineServlet;
 import edu.mit.simile.butterfly.ButterflyModule;
 
 public class ImportingManager {

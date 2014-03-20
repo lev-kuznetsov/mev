@@ -1,13 +1,25 @@
-define(['angular', 'directives', 'services', 'controllers', 'setmanager/SetManager'], function(angular){
+define(['angular', 
+        'angularResource', 
+        'angularRoute', 
+        'directives', 
+        'services', 
+        'controllers', 
+        'setmanager/SetManager', 
+//        'uiBootstrap', 
+        'uiBootstrapTpls'], function(angular){
 	'use strict';
 	return angular.module('myApp', [
+	     'ngRoute',
+	     'ngResource',
 	     'myApp.directives', 
 	     'myApp.services',
 	     'myApp.controllers',
 	     'Mev.SetManager',
-	     'Mev.PresetManager'])
-	.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-	  
+	     'Mev.PresetManager',
+	     'ui.bootstrap'])
+	.config(['$routeProvider', '$locationProvider', '$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {
+		
+	  $sceProvider.enabled(false);
 	  $routeProvider
 		  .when('/dataset', {
 			  templateUrl: '/container/view/partials/heatmap', 
@@ -24,7 +36,7 @@ define(['angular', 'directives', 'services', 'controllers', 'setmanager/SetManag
 		  
 		  $routeProvider.otherwise({redirectTo: '/home'});
 		  
-		  //$locationProvider.html5Mode(true);
+		  //$locationProvider.html5Mode(true).hashPrefix('!');
 		  
 		}]);
 	

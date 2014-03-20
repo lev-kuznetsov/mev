@@ -34,6 +34,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
+import edu.dfci.cccb.mev.dataset.domain.contract.Value;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 
 /**
@@ -68,28 +69,46 @@ public class SimpleDatasetJsonSerializer extends JsonSerializer<Dataset> {
     provider.defaultSerializeField (ROW.name ().toLowerCase (), value.dimension (ROW), jgen);
     provider.defaultSerializeField (COLUMN.name ().toLowerCase (), value.dimension (COLUMN), jgen);
     writeValues (jgen, value.values (), value.dimension (ROW).keys (), value.dimension (COLUMN).keys ());
-    jgen.writeEndObject ();
+    jgen.writeEndObject ();        
   }
 
-  private void writeValues (JsonGenerator jgen, Values values, List<String> rows, List<String> columns) throws IOException,
+  @SuppressWarnings("unchecked")
+  public void writeValues (JsonGenerator jgen, Values values, List<String> rows, List<String> columns) throws IOException,
                                                                                                        JsonProcessingException,
                                                                                                        InvalidCoordinateException {
     double min = MAX_VALUE, max = -MAX_VALUE, sum = .0;
     int count = 0;
     jgen.writeArrayFieldStart ("values");
-    for (String row : rows)
-      for (String column : columns) {
-        double value = values.get (row, column);
+    if(!(values instanceof Iterable<?>)){
+      for (String row : rows){
+        for (String column : columns) {
+          double value = values.get (row, column);
+          min = min > value ? value : min;
+          max = max < value ? value : max;
+          sum += value;
+          count++;
+          jgen.writeStartObject ();
+          jgen.writeStringField ("row", row);
+          jgen.writeStringField ("column", column);
+          jgen.writeNumberField ("value", value);
+          jgen.writeEndObject ();
+        }
+      }
+    }else{
+      
+      for(Value oValue : (Iterable<Value>)values){
+        double value = oValue.value ();
         min = min > value ? value : min;
         max = max < value ? value : max;
         sum += value;
         count++;
         jgen.writeStartObject ();
-        jgen.writeStringField ("row", row);
-        jgen.writeStringField ("column", column);
-        jgen.writeNumberField ("value", values.get (row, column));
+        jgen.writeStringField ("row", oValue.row ());
+        jgen.writeStringField ("column", oValue.column ());
+        jgen.writeNumberField ("value", value);
         jgen.writeEndObject ();
       }
+    }
     jgen.writeEndArray ();
     jgen.writeNumberField ("min", min);
     jgen.writeNumberField ("max", max);

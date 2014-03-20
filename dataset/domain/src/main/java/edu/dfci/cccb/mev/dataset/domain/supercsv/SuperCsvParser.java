@@ -20,8 +20,10 @@ import static java.lang.Double.POSITIVE_INFINITY;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -78,6 +80,7 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
     @Override
     public Object execute (Object value, CsvContext context) {
       currentRowName = value.toString ();
+      rows.put (currentRowName, currentRowName);
       return null;
     }
   };
@@ -89,24 +92,29 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
   private String currentColumnName;
   private double currentValue;
   private Iterator<Entry<String, Double>> currentRow;
+  private final Map<String, String> rows = new LinkedHashMap<String, String> ();
+  private final Map<String, String> columns = new LinkedHashMap<String, String> ();  
 
   protected SuperCsvParser (CsvListReader reader) throws DatasetBuilderException {
     this.reader = reader;
     try {
-      header = reader.getHeader (true);
+      header = reader.getHeader (true);      
       List<String> firstDataLine = reader.read ();
       processors = new CellProcessor[header.length];
-      Map<String, Double> firstProcessedLine = new HashMap<> ();
-      for (int index = header.length; --index > 0;)
+      Map<String, Double> firstProcessedLine = new HashMap<> ();      
+      for (int index = 1; index < header.length; index++){
         try {
           firstProcessedLine.put (header[index],
                                   (Double) DOUBLE_CELL_PROCESSOR.execute (firstDataLine.get (index), null));
           processors[index] = DOUBLE_CELL_PROCESSOR;
+          columns.put (header[index], header[index]);          
         } catch (SuperCsvCellProcessorException e) {
           processors[index] = IGNORE_CELL_PROCESSOR;
-        }
+        }                
+      }         
       processors[0] = ROW_ID_PROCESSOR;
-      currentRowName = firstDataLine.get (0);
+      currentRowName = firstDataLine.get (0);      
+      rows.put (currentRowName, currentRowName);
       currentRow = firstProcessedLine.entrySet ().iterator ();
     } catch (IOException e) {
       throw new InputContentStreamException (e);
@@ -140,7 +148,7 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
    * @see edu.dfci.cccb.mev.dataset.domain.contract.builders.Parser#next() */
   @Override
   public boolean next () throws DatasetBuilderException {
-    while (!currentRow.hasNext ())
+    while (!currentRow.hasNext ()){
       try {
         List<?> values = reader.read (processors);
         if (values == null)
@@ -154,8 +162,9 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
       } catch (IOException e) {
         throw new InputContentStreamException (e);
       }
+    }
     Entry<String, Double> next = currentRow.next ();
-    currentColumnName = next.getKey ();
+    currentColumnName = next.getKey ();    
     currentValue = next.getValue ();
     return true;
   }
@@ -165,5 +174,16 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
   @Override
   public void close () throws IOException {
     reader.close ();
+  }
+
+  @Override
+  public List<String> columnKeys () {
+    return new ArrayList<String>(columns.values());
+    
+  }
+
+  @Override
+  public List<String> rowKeys () { 
+    return new ArrayList<String>(rows.values());
   }
 }

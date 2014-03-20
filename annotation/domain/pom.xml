@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>mev-annotation-domain</artifactId>
+	<packaging>jar</packaging>
+
+	<name>MeV Annotation Domain API</name>
+	<url>http://github.com/dfci-cccb/mev</url>
+
+	<parent>
+		<groupId>edu.dfci.cccb</groupId>
+		<artifactId>mev-annotation</artifactId>
+		<version>BAYLIE-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<hibernate.version>4.2.7.SP1</hibernate.version>
+  	</properties>
+
+	<dependencies>
+		
+		<!-- Dataset package -->		
+		<dependency>
+			<groupId>edu.dfci.cccb</groupId>
+			<artifactId>mev-dataset-domain</artifactId>
+			<version>BAYLIE-SNAPSHOT</version>
+		</dependency>
+		
+		<!-- Persistence Configuration -->		
+		<dependency>
+			<groupId>edu.dfci.cccb</groupId>
+			<artifactId>mev-configuration-persistence</artifactId>
+			<version>BAYLIE-SNAPSHOT</version>
+		</dependency>
+
+		<!-- IO package -->		
+		<dependency>
+			<groupId>edu.dfci.cccb</groupId>
+			<artifactId>mev-io</artifactId>
+			<version>BAYLIE-SNAPSHOT</version>
+		</dependency>
+		
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+		<!-- DataSource -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+				
+	    <!-- Jackson 2 -->
+	    <dependency>
+	      <groupId>com.fasterxml.jackson.core</groupId>
+	      <artifactId>jackson-core</artifactId>
+	      <version>${jackson.version}</version>
+	    </dependency>
+	
+	    <dependency>
+	      <groupId>com.fasterxml.jackson.core</groupId>
+	      <artifactId>jackson-databind</artifactId>
+	      <version>${jackson.version}</version>
+	    </dependency>
+	    
+	</dependencies>
+
+	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+	</build>
+</project>

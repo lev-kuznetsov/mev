@@ -20,5 +20,5 @@ package edu.dfci.cccb.mev.dataset.domain.contract;
  */
 public interface Values {
 
-  double get (String row, String column) throws InvalidCoordinateException;
+  double get (String row, String column) throws InvalidCoordinateException;  
 }

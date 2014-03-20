@@ -35,6 +35,7 @@ import org.h2.tools.Server;
 import org.springframework.context.Lifecycle;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -102,7 +103,7 @@ public class PersistenceConfiguration {
     return new DataSourceTransactionManager (dataSource);
   }
 
-  @Bean
+  @Bean @Profile("!test")
   public Lifecycle h2ConsoleServer () {
     return new Lifecycle () {
 

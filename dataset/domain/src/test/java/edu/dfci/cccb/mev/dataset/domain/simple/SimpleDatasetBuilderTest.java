@@ -66,6 +66,7 @@ public class SimpleDatasetBuilderTest {
   public void buildWithSelection() throws DatasetBuilderException, InvalidDatasetNameException, InvalidDimensionTypeException{
     
     List<String> keys = new ArrayList<String> (){
+      private static final long serialVersionUID = 1L;
       {
         add("66a354fe-454e-40a6-8464-a7d97236d398_miR_gene_expression");
         add("9635a2c4-fd8b-4b4c-9338-def32b6dd8d3_miR_gene_expression");
@@ -88,7 +89,7 @@ public class SimpleDatasetBuilderTest {
     
   }
   
-  @Test @Ignore
+  @Test 
   public void buildNoSelectionFilter5cols90K() throws DatasetBuilderException, InvalidDatasetNameException, InvalidDimensionTypeException{
 
     URL dataUrl = this.getClass ().getResource ("/tcga/tcga_data/COAD/Level_2/COAD.AgilentG4502A_07_3.Level_2.cols5.tsv");
@@ -98,10 +99,11 @@ public class SimpleDatasetBuilderTest {
     
   }
  
-  @Test @Ignore
+  @Test 
   public void buildWithSelection5colsOutOf180() throws DatasetBuilderException, InvalidDatasetNameException, InvalidDimensionTypeException{
     
     List<String> keys = new ArrayList<String> (){
+      private static final long serialVersionUID = 1L;
       {
         add("TCGA-A6-2677-01A-01R-0821-07");
         add("TCGA-AA-3560-01A-01R-0821-07");
@@ -114,7 +116,7 @@ public class SimpleDatasetBuilderTest {
     
     Selection sourceSelection = new SimpleSelection ("dataset.with.from.selection", new Properties (), keys);
     
-    URL dataUrl = this.getClass ().getResource ("/tcga/tcga_data/COAD/Level_2/COAD.AgilentG4502A_07_3.Level_2.tsv");
+    URL dataUrl = this.getClass ().getResource ("/tcga/tcga_data/COAD/Level_2/COAD.AgilentG4502A_07_3.Level_2.cols5.tsv");
     
     assertNotNull (dataUrl);
     

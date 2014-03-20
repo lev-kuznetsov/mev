@@ -6,6 +6,17 @@ define (
           .module ('myApp.services', [])
           .value ('appVersion', '0.1')
           .value ('appName', 'MeV')
+          .filter('filterThreshold', [function(){
+            
+        	  return function(input, threshold, on){
+        	    var output = input.filter( function(d){
+        	       return (d[on] <= threshold) ? true : false
+        	    });
+        	    
+        	    return (threshold == undefined) ? input : output;
+        	  }
+        	  
+          }])
           .factory ('mainMenuBarOptions', [ function () {
             return [ {
               value : "About",
@@ -89,10 +100,7 @@ define (
             };
 
           } ])
-          .factory (
-              'API',
-              [
-                  'QHTTP',
+          .factory ( 'offAPI', [ 'QHTTP',
                   'alertService',
                   function (QHTTP, alertService) {
 
@@ -364,6 +372,35 @@ define (
                       }
                     }
 
-                  } ]);
+                  } ])
+                  .service('MevSelectionService', ['QHTTP', 'alertService', '$routeParams', function(QHTTP, alertService, $routeParams){
+                	  this.getColumnSelectionQ = function(){                          
+                		  return QHTTP(createSelectionRequest('column'), successCallback, errorCallback);                                            
+	                  };
+	                  this.getRowSelectionQ = function(){                          
+	                  	  return QHTTP(createSelectionRequest('row'), successCallback, errorCallback);                                            
+	                  };
+	                  
+	                  //helper functions
+                	  var createSelectionRequest = function(dimensionType){
+                		  return {
+                              method : "GET",
+                              url : '/dataset/'
+                                      + $routeParams.datasetName
+                                      + '/'
+                                      + dimensionType
+                                      + '/selections',
+                              params : {
+                                  format : 'json'
+                              }
+                		  };
+                	  };                	  
+                	  var successCallback = function (d, s) {return d;};
+                	  var errorCallback = function (d, s) {
+                		  var message = "Could not pull selections. If problem persists, please contact us.";
+                          var header = "Could Not Pull List Of Selections (Error Code: "+ s + ")";
+                          alertService.error (message, header);
+                      };
+                  }]);
 
     });

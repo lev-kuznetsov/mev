@@ -28,3 +28,8 @@ src/**/html/app/data/*
 # Maven target
 target/
 /target
+
+#HSQL
+mem.log
+mem.properties
+mem.script

@@ -42,7 +42,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.refine.RefineServlet;
+import edu.dfci.cccb.mev.annotation.server.servlet.RefineServlet;
 
 public class GetVersionCommand extends Command {
     

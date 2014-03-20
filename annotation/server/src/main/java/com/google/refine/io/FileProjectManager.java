@@ -50,6 +50,8 @@ import java.util.zip.GZIPInputStream;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
+import lombok.extern.log4j.Log4j;
+
 import org.apache.tools.tar.TarEntry;
 import org.apache.tools.tar.TarInputStream;
 import org.apache.tools.tar.TarOutputStream;
@@ -73,6 +75,7 @@ import com.google.refine.preference.TopList;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.presets.contract.Presets;
 
+@Log4j
 public class FileProjectManager extends ProjectManager {
   final static public String REQUEST_ATTEIBUTE_DATASET = "dataset";
   final static public String REQUEST_ATTEIBUTE_DIMENSION = "dimension";
@@ -106,11 +109,8 @@ public class FileProjectManager extends ProjectManager {
     _workspaceDir = workspace;
   }
 
-  public SessionWorkspaceDir getWorkspaceDir () {
-    logger.warn ("***************************************************************************************");
-    logger.warn ("**************************Get workspace directory: {}", _workspaceDir.getAbsolutePath ());
-    logger.warn ("***************************************************************************************");
-
+  public SessionWorkspaceDir getWorkspaceDir () {    
+    log.info ("Get workspace directory: " + _workspaceDir.getAbsolutePath ());
     return _workspaceDir;
   }
 

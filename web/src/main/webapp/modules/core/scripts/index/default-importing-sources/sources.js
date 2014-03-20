@@ -58,7 +58,12 @@ ThisComputerImportingSourceUI.prototype.attachUI = function(bodyDiv) {
       self._controller.startImportJob(self._elmts.form, $.i18n._('core-index-import')["uploading-data"]);
     }
   });
-  self._controller.startImportJob(self._elmts.form, $.i18n._('core-index-import')["uploading-data"]);
+  //ap
+  if(window.location.href.contains("/probe/")){
+	  //if probe, don't kick off thejob right away, wait for user to select the annotations
+  }else{
+	  self._controller.startImportJob(self._elmts.form, $.i18n._('core-index-import')["uploading-data"]);
+  }
 };
 
 ThisComputerImportingSourceUI.prototype.focus = function() {
@@ -135,4 +140,72 @@ ClipboardImportingSourceUI.prototype.attachUI = function(bodyDiv) {
 
 ClipboardImportingSourceUI.prototype.focus = function() {
   this._elmts.textInput.focus();
+};
+
+
+/////////////////
+function ProbeAnnotationsImportingSourceUI(controller) {
+  this._controller = controller;
+}
+
+//ap:disable clipboard for MeV
+Refine.DefaultImportingController.sources.push({
+  "label": $.i18n._("Probe Annotations"),
+  "id": "probe-annotations",
+  "uiClass": ProbeAnnotationsImportingSourceUI
+});
+
+ProbeAnnotationsImportingSourceUI.prototype.attachUI = function(bodyDiv) {
+  var self = this;
+  bodyDiv.html(DOM.loadHTML("core", "scripts/index/default-importing-sources/import-from-probe-annotations-form.html"));
+  this._elmts = DOM.bind(bodyDiv);
+    
+  this._fetchProbeAnnotationPlatforms();
+};
+
+ProbeAnnotationsImportingSourceUI.prototype._fetchProbeAnnotationPlatforms = function() {
+  var self = this;
+  $.getJSON(
+	  "/annotations/platforms/",
+	  {format: "json"},
+	  function(data) {		
+	    self._renderPlatforms(data);	        
+	  },
+	  "json"
+  );
+};
+
+ProbeAnnotationsImportingSourceUI.prototype._renderPlatforms = function(platforms) {
+	var container = $("#platforms-container").empty();
+	  if (!platforms.length) {
+	    $("#no-platforms-message").clone().show().appendTo(container);
+	  } else {
+		  var table = $(
+		      '<table class="list-table"><tr>' +
+		      '<th>Select Probe Annotations</th>' +
+		      '</tr></table>'
+		    ).appendTo(container)[0];
+		  
+		  var renderPlatform = function(platform) {
+		      var tr = table.insertRow(table.rows.length);
+		      tr.className = "platform";
+		      
+		      $('<a></a>')
+		      .addClass("platform")		      
+		      .attr("href","../"+platform.id+"/")		                      
+		      .html(platform.name)
+		      .appendTo(
+		        $(tr.insertCell(tr.cells.length)).css('width', '100%')
+		      );
+		  };
+
+		  for (var i = 0; i < platforms.length; i++) {
+		      renderPlatform(platforms[i]);
+		    }
+	  }
+};
+	
+	
+ProbeAnnotationsImportingSourceUI.prototype.focus = function() {
+  //this._elmts.textInput.focus();
 };
