@@ -14,20 +14,20 @@ import javax.inject.Named;
 import javax.sql.DataSource;
 
 import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j;
 
-import org.apache.http.MethodNotSupportedException;
 import org.h2.tools.Csv;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotation;
 import edu.dfci.cccb.mev.annotation.domain.probe.prototype.AbstractProbeAnnotations;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-
+@Log4j
 public class H2ProbeAnnotations extends AbstractProbeAnnotations {
 
   private final String TABLE_NAME_PREFIX="PROBE_ANNOT_";  
   private final String PARAM_TABLE_NAME="[table_name]"; 
   private final String FULL_TABLE_NAME=TABLE_NAME_PREFIX+PARAM_TABLE_NAME;
-  private final String SELECT_STATEMENT="select * from table(PROBESET_ID VARCHAR=?) t inner join PUBLIC.\""+FULL_TABLE_NAME+"\" mytest on t.PROBESET_ID=mytest.PROBESET_ID";
+  private final String SELECT_STATEMENT="select * from table(PROBESET_ID VARCHAR=?) t left outer join PUBLIC.\""+FULL_TABLE_NAME+"\" mytest on t.PROBESET_ID=mytest.PROBESET_ID";
   private final DataSource dataSource;  
   
   @Inject 
@@ -39,7 +39,7 @@ public class H2ProbeAnnotations extends AbstractProbeAnnotations {
   @Override
   @SneakyThrows
   public List<ProbeAnnotation> get (Dimension dimension) {
-    throw new MethodNotSupportedException ("The get(Dimension dimension) method has not been implemented yet");
+    throw new UnsupportedOperationException("The get(Dimension dimension) method has not been implemented yet");    
   }
 
   @Override
@@ -50,6 +50,10 @@ public class H2ProbeAnnotations extends AbstractProbeAnnotations {
     
     try(Connection connection = dataSource.getConnection ()){
       String selectSql = SELECT_STATEMENT.replace (PARAM_TABLE_NAME,  this.platformId ());
+      if(log.isDebugEnabled ()){
+        log.debug ("Select Probe Annotations:" + selectSql);
+        log.debug ("dimension.keys().toArray(): " + dimension.keys ().toArray ());
+      }
       try(PreparedStatement prep = connection.prepareStatement(selectSql);){        
         
         prep.setObject (1, dimension.keys ().toArray ());        
@@ -67,22 +71,4 @@ public class H2ProbeAnnotations extends AbstractProbeAnnotations {
     return input;
   }
   
-//TODO: remove method (moved to Platform class)
-//  @Override
-//  @SneakyThrows
-//  public List<String> getSources () {
-//    synchronized (sources) {
-//      if(sources.size ()==0){
-//        try(Connection connection= dataSource.getConnection ()){
-//          try(ResultSet rs = connection.getMetaData ().getTables (null, null, TABLE_NAME_PREFIX+"%", new String[]{"TABLE"}))
-//          {
-//            while (rs.next()) {              
-//              sources.add (rs.getString("TABLE_NAME").replace (TABLE_NAME_PREFIX, ""));
-//           }
-//         }
-//       }      
-//      }
-//    }
-//    return sources;
-//  }
 }

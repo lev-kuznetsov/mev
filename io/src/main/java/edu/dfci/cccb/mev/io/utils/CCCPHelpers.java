@@ -10,6 +10,8 @@ import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 
+import org.apache.commons.io.FilenameUtils;
+
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -54,5 +56,10 @@ public class CCCPHelpers {
         return false;
       }
     }
+    
+    public static String getFileName(URL url){
+      return FilenameUtils.getName (url.getFile ());
+    }
   }
+  
 }

@@ -1,6 +1,5 @@
 <div>
-
-<div class="selectionSetList">
+<div class="selectionSetList">	
 	<div ng-show="selections.length>0" ng-repeat="selection in selections"
 		class="selectionSetListItem">
 		<a data-toggle="modal" role="button" data-target="#editModal" ng-click="setSelected(selection)">
@@ -17,7 +16,7 @@
 			<span ng-repeat="key in selection.keys"> {{key}}, </span>
 		</div>
 	</div>
-	<div ng-show="selections.length<=0" class="selectionSetListItem">
+	<div ng-show="selections.length<=0" class="selectionSetListItem">	
 		<span ng-transclude>No sets defined.</span>
 	</div>
 </div>

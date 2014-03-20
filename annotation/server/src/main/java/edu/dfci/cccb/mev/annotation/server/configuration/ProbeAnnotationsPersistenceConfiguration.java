@@ -12,10 +12,7 @@ import javax.sql.DataSource;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.jooq.SQLDialect;
 import org.jooq.impl.DataSourceConnectionProvider;
-import org.jooq.impl.DefaultConfiguration;
-import org.jooq.impl.DefaultDSLContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -114,26 +111,26 @@ public class ProbeAnnotationsPersistenceConfiguration {
   }
 */
   
-  @Bean
-  public DefaultConfiguration configuration() {
-      DefaultConfiguration jooqConfiguration = new DefaultConfiguration();
+//  @Bean
+//  public DefaultConfiguration configuration() {
+//      DefaultConfiguration jooqConfiguration = new DefaultConfiguration();
+//
+//      jooqConfiguration.set(connectionProvider());
+////      jooqConfiguration.set(new DefaultExecuteListenerProvider(
+////          jooqToSpringExceptionTransformer()
+////      ));
+//
+//      String sqlDialectName = environment.getRequiredProperty(MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"jooq.sql.dialect");
+//      SQLDialect dialect = SQLDialect.valueOf(sqlDialectName);
+//      jooqConfiguration.set(dialect);
+//
+//      return jooqConfiguration;
+//  }
 
-      jooqConfiguration.set(connectionProvider());
-//      jooqConfiguration.set(new DefaultExecuteListenerProvider(
-//          jooqToSpringExceptionTransformer()
-//      ));
-
-      String sqlDialectName = environment.getRequiredProperty(MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"jooq.sql.dialect");
-      SQLDialect dialect = SQLDialect.valueOf(sqlDialectName);
-      jooqConfiguration.set(dialect);
-
-      return jooqConfiguration;
-  }
-
-  @Bean
-  public DefaultDSLContext dsl() {
-      return new DefaultDSLContext(configuration());
-  }
+//  @Bean(name="probe-annotations-jooq-context")cd 
+//  public DefaultDSLContext dsl() {
+//      return new DefaultDSLContext(configuration());
+//  }
 
   @Bean
   public DataSourceInitializer dataSourceInitializer() {

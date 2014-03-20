@@ -44,18 +44,21 @@ public class ApplicationInitializer implements WebApplicationInitializer {
   public void onStartup (ServletContext servletContext) throws ServletException {
     AnnotationConfigWebApplicationContext mvcContext = new AnnotationConfigWebApplicationContext ();
 
+    
+    
     mvcContext.register (DispatcherConfiguration.class, PersistenceConfiguration.class, ContainerConfigurations.class);
 
-    mvcContext.register (DatasetRestConfiguration.class);
-    mvcContext.register (ProbeAnnotationsConfigurationMain.class);
+    mvcContext.register (DatasetRestConfiguration.class);        
+    mvcContext.register (PresetsRestConfiguration.class);
+    mvcContext.register (ProbeAnnotationsConfigurationMain.class);    
     mvcContext.register (AnnotationServerConfiguration.class);
     mvcContext.register (HclRestConfiguration.class);
-    mvcContext.register (LimmaRestConfiguration.class);
-    mvcContext.register (PresetsRestConfiguration.class);
+    mvcContext.register (LimmaRestConfiguration.class);    
 
     DispatcherServlet dispatcher = new DispatcherServlet (mvcContext);
     Dynamic registration = servletContext.addServlet ("dispatcher", dispatcher);
+    
     registration.setLoadOnStartup (1);
-    registration.addMapping ("/");
+    registration.addMapping ("/");    
   }
 }

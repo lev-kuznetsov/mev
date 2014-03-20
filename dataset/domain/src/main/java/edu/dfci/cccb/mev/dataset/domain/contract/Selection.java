@@ -17,19 +17,26 @@ package edu.dfci.cccb.mev.dataset.domain.contract;
 import java.util.List;
 import java.util.Properties;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
+
 /**
  * @author levk
  * 
  */
+@JsonDeserialize(as=SimpleSelection.class)
 public interface Selection {
 
   final String VALID_SELECTION_NAME_REGEX = "[a-zA-Z0-9_\\-\\+\\ \\.]+";
 
-  String name ();
+  @JsonProperty String name ();
 
-  Properties properties ();
+  @JsonProperty Properties properties ();
 
-  List<String> keys ();
+  @JsonProperty List<String> keys ();
 
-  Dataset export (String name);
+  @JsonIgnore Dataset export (String name);
 }

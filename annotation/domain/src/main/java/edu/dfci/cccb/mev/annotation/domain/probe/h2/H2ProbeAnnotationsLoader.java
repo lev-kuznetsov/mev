@@ -92,11 +92,7 @@ public class H2ProbeAnnotationsLoader implements ProbeAnnotationsLoader {
     return count;
   }
 
-
-  
-  
-  @Override
-   
+  @Override   
   public void loadUrlResource (URL url) throws AnnotationException {
       try(Connection connection = dataSource.getConnection ()){
         
@@ -118,7 +114,7 @@ public class H2ProbeAnnotationsLoader implements ProbeAnnotationsLoader {
           statement.execute (createIndexSql);
         }catch(SQLException e){
           connection.rollback ();
-          throw new AnnotationException("", e);
+          throw new AnnotationException("Failed whle importing probe annotation url: " + url, e);
         }
         connection.commit ();
         

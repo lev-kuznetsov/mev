@@ -2,7 +2,7 @@
 
 <accordion close-others="false">
 	<div ng-repeat="cluster in previousHCLClusters">
-    	<accordion-group heading="{{cluster.datar.type}} : {{cluster.name}}" is-open="false">
+    	<accordion-group heading="{{cluster.datar.type}} : {{cluster.name}}" is-open="isItOpen">
       		<div class="row">
 	          <div class="span12">
 	          <button class="btn btn-success pull-right" ng-click="updateHeatmapData(cluster.name, cluster.datar)">

@@ -37,8 +37,8 @@ define(
 
                                         $scope.defaultColors = function() {
                                             $scope.selectedColor = "Yellow-Black-Blue";
-                                        }
-                                        $scope.defaultColors()
+                                        };
+                                        $scope.defaultColors();
 
                                         $scope.heatmapData = undefined;
                                         $scope.heatmapLeftTree = undefined;
@@ -202,59 +202,82 @@ define(
 
                                     }])
                     .controller(
-                            'MainPanelController',
-                            [
+                            'MainPanelController',                            		
+                            [		'MevSelectionService',
                                     '$scope',
                                     '$element',
                                     '$attrs',
-                                    function($scope, $element, $attrs) {
-                                        
+                                    function(MevSelectionService, $scope, $element, $attrs) {
+                                    	
                                         $scope.baseUrl = '/annotations/'
                                                 + $scope.heatmapId
                                                 + '/annotation';
                                         $scope.annotationsUrl = $scope.baseUrl
                                                 + '/column/new/dataset/';
-
-                                        $scope
-                                                .$on(
-                                                        'ViewAnnotationsEvent',
-                                                        function(
-                                                                event,
-                                                                selection,
-                                                                dimension,
-                                                                annotationSource) {
-                                                            var annotationsUrl = $scope.baseUrl
-                                                                    + "/"
-                                                                    + dimension
+                                        
+                                        $scope.tabs={};
+                                        if($scope.tabs!=undefined){
+                                        	$scope.tabs.activeTab='visualize';
+                                        	$scope.tabs.visualizeTabActive=true;
+                                        	$scope.tabs.annotationsTabActive=false;
+                                        }
+                                        $scope.setActiveTab = function(name){
+                                        	$scope.tabs.activeTab = name;
+                                        	if(name=='annotations'){                                        		
+                                        		$scope.tabs.visualizeTabActive=false;
+                                        		$scope.tabs.annotationsTabActive=true;
+                                        	}else{
+                                        		$scope.tabs.visualizeTabActive=true;
+                                        		$scope.tabs.annotationsTabActive=false;
+                                        	}
+                                        		
+                                        };
+                                        $scope.isActiveTab = function(name){
+                                        	if($scope.tabs.activeTab==name)
+                                        		return true;
+                                        	else
+                                        		return false;
+                                        };
+                                                                                                                        
+                                        $scope.$on('ViewAnnotationsEvent', function(
+                                                            event,
+                                                            selection,
+                                                            dimension,
+                                                            annotationSource) {
+                                                        var annotationsUrl = $scope.baseUrl
+                                                                + "/"
+                                                                + dimension
+                                                                + "/";
+                                                        if (typeof selection != 'undefined') {
+                                                            annotationsUrl += selection.name
                                                                     + "/";
-                                                            if (typeof selection != 'undefined') {
-                                                                annotationsUrl += selection.name
-                                                                        + "/";
-                                                            } else {
-                                                                annotationsUrl += "new/";
-                                                            }
-                                                            if (typeof annotationSource != 'undefined') {
-                                                                annotationsUrl += annotationSource
-                                                                        + "/";
-                                                            } else {
-                                                                annotationsUrl += "dataset/";
-                                                            }
+                                                        } else {
+                                                            annotationsUrl += "new/";
+                                                        }
+                                                        if (typeof annotationSource != 'undefined') {
+                                                            annotationsUrl += annotationSource
+                                                                    + "/";
+                                                        } else {
+                                                            annotationsUrl += "dataset/";
+                                                        }
 
-                                                            if (typeof selection != 'undefined') {
-                                                                annotationsUrl += selection.properties.selectionFacetLink;
-                                                            }
+                                                        if (typeof selection != 'undefined') {
+                                                            annotationsUrl += selection.properties.selectionFacetLink;
+                                                        }
 
-                                                            $scope.annotationsUrl = annotationsUrl;
-                                                            var elm = document
-                                                                    .querySelector('#annotationsTabLink');
-                                                            $(elm)
-                                                                    .trigger(
-                                                                            'click');
-                                                            // var
-                                                            // annotationsTab =
-                                                            // angular.element(elm);
-                                                            // annotationsTab.trigger("click");
-                                                        });
+                                                        $scope.annotationsUrl = annotationsUrl;                                                             
+                                                        var elm = document.querySelector('#annotationsTabLink');
+                                                        $(elm).trigger('click');
+                                                    });                             
+                                        
+                                       $scope.$on('SeletionAddedEvent', function(dimensionType){
+                                    	  console.debug("selection added: "+angular.toJson(dimensionType)+"$scope.heatmapData.column.selections:"+angular.toJson($scope.heatmapData.column.selections));                                    	  
+                                    	  MevSelectionService.getColumnSelectionQ().then(function(d){                                    		  
+                                    		  console.debug("selections:"+angular.toJson($scope.selections));
+                                    		  $scope.heatmapData.column.selections=d;
+                                    	  });
+                                    	  
+                                       });
 
                                     }]);
 

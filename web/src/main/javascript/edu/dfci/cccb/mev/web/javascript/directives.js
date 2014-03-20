@@ -261,8 +261,7 @@ define(
                             [function() {
                                 return {
                                     restrict : 'E',
-                                    templateUrl : '/container/view/elements/clusterAccordion'
-
+                                    templateUrl : '/container/view/elements/clusterAccordion'                                    
                                 };
                             }])
                     .directive(
@@ -272,7 +271,7 @@ define(
                                     function($routeParams) {
                                         return {
                                             restrict : 'AC',
-                                            templateUrl : '/container/view/elements/expressionPanel',
+                                            templateUrl : '/container/view/elements/expressionPanel',                                            
                                             link : function(scope) {
 
                                                 scope
@@ -474,10 +473,6 @@ define(
                                                     value : "column"
                                                 }]; 
                                                 
-                                                scope.selections = [];
-                                                
-                                                pullSelections();
-
                                                 scope.analysisDimension = {
                                                     name : "Column",
                                                     value : "column"
@@ -495,9 +490,9 @@ define(
                                                                         + "(dimension="
                                                                         + "column"
                                                                         + ",experiment="
-                                                                        + scope.analysisExperiment
+                                                                        + scope.analysisExperiment.name
                                                                         + ",control="
-                                                                        + scope.analysisControl
+                                                                        + scope.analysisControl.name
                                                                         + ")"
 
                                                             })
@@ -507,33 +502,11 @@ define(
                                                                                 .buildPreviousAnalysisList()
                                                                     });
 
-                                                    resetSelections();
-                                                    pullSelections();
+                                                    resetSelections();                                                    
                                                     
                                                    
 
                                                 };
-                                                
-                                                function pullSelections(){
-                                                    
-                                                    $http(
-                                                            {
-                                                                method : "GET",
-                                                                url : '/dataset/'
-                                                                        + $routeP.datasetName
-                                                                        + '/'
-                                                                        + "column"
-                                                                        + '/selection',
-                                                                params : {
-                                                                    format : 'json'
-                                                                }
-                                                            })
-                                                            .then(
-                                                                    function(d) {
-                                                                        scope.selections = d.data;
-                                                                    });
-                                                    
-                                                }
 
                                                 function resetSelections() {
                                                     scope.analysisName = "";

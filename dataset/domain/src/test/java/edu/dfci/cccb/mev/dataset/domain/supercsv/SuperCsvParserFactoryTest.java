@@ -17,8 +17,12 @@ package edu.dfci.cccb.mev.dataset.domain.supercsv;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -32,13 +36,33 @@ public class SuperCsvParserFactoryTest {
 
   @Test
   public void testParser () throws Exception {
-    Parser p = new SuperCsvParserFactory ().parse (new ByteArrayInputStream (("id\tsa\tsb\tsc\n" +
-                                                                              "g1\t.1\t.2\t.3\n" +
-                                                                              "g2\t.4\t.5\t.6").getBytes ()));
+    Parser p = new SuperCsvParserFactory ().parse (new ByteArrayInputStream (("\t\tsa\tsb\tsc\n" +
+                                                                              "g1\tp1\t.1\t.2\t.3\n" +
+                                                                              "g2\tp2\t.4\t.5\t.6").getBytes ()));
     for (int index = 1; index < 7; index++) {
       assertTrue (p.next ());
       assertEquals (index / 10.0, p.value (), 0.0);
     }
     assertFalse (p.next ());
+    
+    List<String> expectedColumns = new ArrayList<String>(){
+      private static final long serialVersionUID = 1L;
+
+    {      
+      add("sa");
+      add("sb");
+      add("sc");
+    }};    
+    assertThat(p.columnKeys (), is(expectedColumns));
+    
+    List<String> expectedRows= new ArrayList<String>(){
+      private static final long serialVersionUID = 1L;
+
+    {
+      add("g1");
+      add("g2");
+    }};    
+    assertThat(p.rowKeys (), is(expectedRows));
+    
   }
 }

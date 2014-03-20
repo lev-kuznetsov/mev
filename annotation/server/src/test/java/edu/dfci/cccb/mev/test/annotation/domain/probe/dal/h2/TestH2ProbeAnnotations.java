@@ -59,7 +59,7 @@ public class TestH2ProbeAnnotations {
       {
         add("1007_s_at");
         add("1053_at");
-        add("13029_at");
+        add("13029_at"); //not in the annotation file
       }
     };
     Dimension dimension = new SimpleDimension(Type.ROW, keys, new ArrayListSelections (), null );
@@ -73,19 +73,4 @@ public class TestH2ProbeAnnotations {
     log.debug ("Probes: " + theString);
   }
 
-//  //TODO:remove this test
-//  @Test @Ignore
-//  public void testGetSources () throws SQLException, IOException, AnnotationException {
-//
-//    ProbeAnnotations probeAnns = new H2ProbeAnnotations(dataSource);
-//    List<String> sourceNames = probeAnns.getSources ();
-//    List<String> expectedSourceNames = new ArrayList<String>(){
-//      private static final long serialVersionUID = 1L;
-//      {
-//        add("HT_HG-U133A.na33.top3.annot.out.tsv");
-//      }
-//    };
-//    assertThat(sourceNames, is(expectedSourceNames));
-//    log.debug (sourceNames.toString ());
-//  }
 }
