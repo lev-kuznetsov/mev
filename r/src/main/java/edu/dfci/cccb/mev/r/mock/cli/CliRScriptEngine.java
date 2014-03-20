@@ -15,8 +15,10 @@
 package edu.dfci.cccb.mev.r.mock.cli;
 
 import static java.io.File.createTempFile;
+import static java.lang.Integer.parseInt;
 import static java.lang.Runtime.getRuntime;
 import static java.lang.System.getProperty;
+import static java.util.concurrent.TimeUnit.valueOf;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -29,6 +31,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
+import java.util.concurrent.TimeUnit;
 
 import javax.script.AbstractScriptEngine;
 import javax.script.Bindings;
@@ -51,6 +54,10 @@ public class CliRScriptEngine extends AbstractScriptEngine {
                                                                   + ".rScriptExecutable", "Rscript");
   private @Getter @Setter String rScriptLaunchingOptions = getProperty (CliRScriptEngine.class.getName ()
                                                                         + ".rScriptLaunchingOptions", "");
+  private @Getter @Setter int rMaximumRuntime = parseInt (getProperty (CliRScriptEngine.class.getName ()
+                                                                       + ".rMaximumRuntime", "30"));
+  private @Getter @Setter TimeUnit rMaximumRuntimeUnit = valueOf (getProperty (CliRScriptEngine.class.getName ()
+                                                                               + ".rMaximumRuntimeUnit", "SECONDS"));
 
   /* (non-Javadoc)
    * @see javax.script.ScriptEngine#eval(java.lang.String,
@@ -72,10 +79,23 @@ public class CliRScriptEngine extends AbstractScriptEngine {
         try (Writer writer = new BufferedWriter (new FileWriter (script))) {
           for (int c; (c = reader.read ()) >= 0; writer.write (c));
           writer.flush ();
-          String command = rScriptExecutable + " "
-                           + rScriptLaunchingOptions + script.getAbsolutePath ();
+          final String command = rScriptExecutable + " "
+                                 + rScriptLaunchingOptions + script.getAbsolutePath ();
           log.debug ("Launching R script " + script + " using " + command);
-          Process r = getRuntime ().exec (command);
+          final Process r = getRuntime ().exec (command);
+          new Thread () {
+            public void run () {
+              try {
+                Thread.sleep (rMaximumRuntimeUnit.toMillis (rMaximumRuntime));
+                r.exitValue ();
+                return;
+              } catch (InterruptedException | IllegalThreadStateException e) {
+                log.warn ("Forcibly destroying LIMMA process lauched with command " + command + " after waiting for "
+                          + rMaximumRuntime + " " + rMaximumRuntimeUnit.toString ().toLowerCase (), e);
+                r.destroy ();
+              }
+            }
+          }.start ();
           int result = r.waitFor ();
           if (log.isDebugEnabled ())
             try (ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
