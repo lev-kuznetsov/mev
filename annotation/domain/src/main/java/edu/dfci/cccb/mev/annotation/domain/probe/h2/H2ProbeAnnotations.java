@@ -27,7 +27,7 @@ public class H2ProbeAnnotations extends AbstractProbeAnnotations {
   private final String TABLE_NAME_PREFIX="PROBE_ANNOT_";  
   private final String PARAM_TABLE_NAME="[table_name]"; 
   private final String FULL_TABLE_NAME=TABLE_NAME_PREFIX+PARAM_TABLE_NAME;
-  private final String SELECT_STATEMENT="select * from table(PROBESET_ID VARCHAR=?) t inner join PUBLIC.\""+FULL_TABLE_NAME+"\" mytest on t.PROBESET_ID=mytest.PROBESET_ID";
+  private final String SELECT_STATEMENT="select * from table(PROBESET_ID VARCHAR=?) t left outer join PUBLIC.\""+FULL_TABLE_NAME+"\" mytest on t.PROBESET_ID=mytest.PROBESET_ID";
   private final DataSource dataSource;  
   
   @Inject 

@@ -59,7 +59,7 @@ public class TestH2ProbeAnnotations {
       {
         add("1007_s_at");
         add("1053_at");
-        add("13029_at");
+        add("13029_at"); //not in the annotation file
       }
     };
     Dimension dimension = new SimpleDimension(Type.ROW, keys, new ArrayListSelections (), null );
