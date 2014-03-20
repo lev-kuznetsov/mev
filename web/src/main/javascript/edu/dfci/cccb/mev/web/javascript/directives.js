@@ -1669,13 +1669,15 @@ define(
                                                         });
                                         
                                         scope.$watch('heatmapData.column.keys', function(newval, oldval){
-                                            if (newval){
+                                            if (newval
+                                                    && oldval){
                                                 updateDrawHeatmap(scope.heatmapData);
                                             }
                                         });
                                         
                                         scope.$watch('heatmapData.row.keys', function(newval, oldval){
-                                            if (newval){
+                                            if (newval
+                                                    && oldval){
                                                 updateDrawHeatmap(scope.heatmapData);
                                             }
                                         });
@@ -1806,31 +1808,63 @@ define(
                                             .text("Add Row Selections");
                                         
                                         legend.append("g").attr("class", "colorScale");
-                                        var colorScale = d3.select("g.colorScale")
+                                        var colorScale = d3.select("g.colorScale");
                                         
-                                        scope.addTreeSelection = function(params){
-                                            if (scope.treeSelections[params.dimension.type].length > 0){
+                                        scope.treeSelections = {
+                                                horizontal:[],
+                                                vertical:[]
+                                        };
+                                        
+                                        //Add Tree Selection Function
+                                        scope.addTreeSelection = function(type, orientation, name){
+                                            
+                                            var params = {
+                                                    'dimension':{'type':type, 'value':orientation},
+                                                    'name':name,
+                                                    'color':'#ff0000'
+                                            }
+                                            
+                                            if (scope.treeSelections[params.dimension.value].length > 0){
                                                 
                                                 $http({
                                                     method:"PUT", 
                                                     url:"/dataset/" + $routeParams.datasetName + "/" 
-                                                    + params.dimension.value 
+                                                    + params.dimension.type 
                                                     + "/selection/" + params.name,
                                                     params:{
                                                         format:'json',
                                                         properties : [{
-                                                            selectionColor:'#ff0000', 
+                                                            selectionColor:params.color, 
                                                             selectionDescription:'first mock selection'
                                                         }],
-                                                        keys: scope.treeSelections[params.dimension.type]
+                                                        keys: scope.treeSelections[params.dimension.value]
                                                     }
                                                 })
                                                 .then(function(res){
-                                                    return
+                                                    if (res.status ==200){
+                                                        scope.$emit('SeletionAddedEvent', params.dimension.type);
+                                                    }
+                                                    
                                                 });
                                                 
                                             }
                                         };
+                                        
+                                        scope.$watch('heatmapData.column.selections', function(newval, oldval){
+                                            if(newval
+                                                    && oldval){
+                                                updateDrawHeatmap(scope.heatmapData)
+                                            }
+                                            
+                                        })
+                                        
+                                        scope.$watch('heatmapData.row.selections', function(newval, oldval){
+                                            if(newval
+                                                    && oldval){
+                                                updateDrawHeatmap(scope.heatmapData)
+                                            }
+                                            
+                                        })
                                         
 
                                         // Left Dendogram Builder
@@ -1958,10 +1992,7 @@ define(
 
                                         };
                                         
-                                        scope.treeSelections = {
-                                                horizontal:[],
-                                                vertical:[]
-                                        };
+                                        
                                         
                                         var walk = function(d, nColor, pColor,  canvas, type){
 

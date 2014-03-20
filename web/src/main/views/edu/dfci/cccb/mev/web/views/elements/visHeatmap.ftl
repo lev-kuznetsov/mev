@@ -7,7 +7,7 @@
 		        <input id="columnSelectionName" ng-model="columnSelectionName">
 		</div>
 		
-		<button class="btn btn-success btn-block" ng-click="" data-dismiss="modal" aria-hidden="true">Add Selections</button>
+		<button class="btn btn-success btn-block" ng-click="addTreeSelection('column', 'horizontal', columnSelectionName)" data-dismiss="modal" aria-hidden="true">Add Selections</button>
 		
 		
 	</form>
@@ -21,7 +21,7 @@
 		        <input id="rowSelectionName" ng-model="rowSelectionName">
 		</div>
 		
-		<button class="btn btn-success btn-block" ng-click="" data-dismiss="modal" aria-hidden="true">Add Selections</button>
+		<button class="btn btn-success btn-block" ng-click="addTreeSelection('row', 'vertical', rowSelectionName)" data-dismiss="modal" aria-hidden="true">Add Selections</button>
 		
 		
 	</form>
