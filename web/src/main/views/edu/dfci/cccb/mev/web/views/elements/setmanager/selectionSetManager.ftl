@@ -1,7 +1,9 @@
 
 
 <accordion id="setmanagerAccordion" close-others="false" >
-	<accordion-group heading="Column Sets" is-open="true">
+	<accordion-group heading="Column Sets" is-open="isItOpen" ng-init="isItOpen=true">
+	
+	
 		<selection-set-list 
 					mev-selections="heatmapData.column.selections" 
 					mev-base-url="/annotations/{{heatmapId}}/annotation/column"

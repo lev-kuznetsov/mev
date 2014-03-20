@@ -261,8 +261,7 @@ define(
                             [function() {
                                 return {
                                     restrict : 'E',
-                                    templateUrl : '/container/view/elements/clusterAccordion'
-
+                                    templateUrl : '/container/view/elements/clusterAccordion'                                    
                                 };
                             }])
                     .directive(
@@ -491,9 +490,9 @@ define(
                                                                         + "(dimension="
                                                                         + "column"
                                                                         + ",experiment="
-                                                                        + scope.analysisExperiment
+                                                                        + scope.analysisExperiment.name
                                                                         + ",control="
-                                                                        + scope.analysisControl
+                                                                        + scope.analysisControl.name
                                                                         + ")"
 
                                                             })
@@ -503,8 +502,7 @@ define(
                                                                                 .buildPreviousAnalysisList()
                                                                     });
 
-                                                    resetSelections();
-                                                    pullSelections();
+                                                    resetSelections();                                                    
                                                     
                                                    
 
