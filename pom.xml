@@ -84,7 +84,7 @@
       <properties>
         <mev.spring_profiles_active>prod</mev.spring_profiles_active>
         <mev.java.io.tmpdir>/cephfs/projects/mev/work</mev.java.io.tmpdir>
-        <mev.Rscript>nice 20 /cephfs/projects/mev/lib/R/default/bin/Rscript</mev.Rscript>
+        <mev.Rscript>nice -20 /cephfs/projects/mev/lib/R/default/bin/Rscript</mev.Rscript>
       </properties>
     </profile>
   </profiles>
