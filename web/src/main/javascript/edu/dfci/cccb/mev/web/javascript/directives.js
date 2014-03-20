@@ -490,9 +490,9 @@ define(
                                                                         + "(dimension="
                                                                         + "column"
                                                                         + ",experiment="
-                                                                        + scope.analysisExperiment
+                                                                        + scope.analysisExperiment.name
                                                                         + ",control="
-                                                                        + scope.analysisControl
+                                                                        + scope.analysisControl.name
                                                                         + ")"
 
                                                             })
@@ -502,8 +502,7 @@ define(
                                                                                 .buildPreviousAnalysisList()
                                                                     });
 
-                                                    resetSelections();
-                                                    pullSelections();
+                                                    resetSelections();                                                    
                                                     
                                                    
 
