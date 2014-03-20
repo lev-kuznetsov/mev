@@ -261,8 +261,7 @@ define(
                             [function() {
                                 return {
                                     restrict : 'E',
-                                    templateUrl : '/container/view/elements/clusterAccordion'
-
+                                    templateUrl : '/container/view/elements/clusterAccordion'                                    
                                 };
                             }])
                     .directive(
