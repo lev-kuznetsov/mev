@@ -40,46 +40,16 @@ define(
                             'heatmapPanels',
                             [
                                     '$routeParams',
-                                    '$http',
-                                    'alertService',
-                                    '$location',
-                                    function($routeParams, $http, alertService, $location) {
+                                    function($routeParams) {
                                         return {
                                             restrict : 'A',
                                             templateUrl : '/container/view/elements/heatmapPanels',
                                             link : function(scope, elems, attrs) {
-
-                                                scope.heatmapData = undefined;
-                                                scope.heatmapLeftTree = undefined;
-                                                scope.heatmapTopTree = undefined;
-                                                scope.heatmapLeftTreeName = undefined;
-                                                scope.heatmapTopTreeName = undefined;
-
+                                                
                                                 document.title = "MeV: "
                                                         + $routeParams.datasetName;
 
-                                                $http(
-                                                        {
-                                                            method : 'GET',
-                                                            url : '/dataset/'
-                                                                    + $routeParams.datasetName
-                                                                    + '/data',
-                                                            params : {
-                                                                format : 'json'
-                                                            }
-                                                        })
-                                                        .then(
-                                                                function(data) {
-                                                                    scope.heatmapData = data.data;
-
-                                                                },
-                                                                function(data) {
-                                                                    // return
-                                                                    // home if
-                                                                    // error
-                                                                    $location
-                                                                            .path('/');
-                                                                });
+                                                
 
                                                 var rightPanel = jq('#rightPanel'), leftPanel = jq('#leftPanel'), centerTab = jq('div#tab'), pageWidth = jq(
                                                         'body')
@@ -274,8 +244,7 @@ define(
                                             templateUrl : '/container/view/elements/expressionPanel',                                            
                                             link : function(scope) {
 
-                                                scope
-                                                        .buildPreviousAnalysisList();
+                                                scope.buildPreviousAnalysisList();
 
                                                 scope.datasetName = $routeParams.datasetName;
 
@@ -371,7 +340,8 @@ define(
                             [
                                     '$http',
                                     '$routeParams',
-                                    function($http, $routeParams) {
+                                    'alertService',
+                                    function($http, $routeParams, alertService) {
 
                                         return {
                                             restrict : 'C',
@@ -405,6 +375,13 @@ define(
                                                         algorithm : scope.selectedAlgorithm,
 
                                                     };
+                                                    
+                                                    var message = "Started clustering analysis for "
+                                                        + q.name;
+
+                                                    var header = "Hierarchical Clustering Analysis";
+                                                     
+                                                    alertService.info(message,header);
 
                                                     $http(
                                                             {
@@ -423,11 +400,28 @@ define(
                                                                         + ')'
 
                                                             })
-                                                            .then(
-                                                                    function() {
-                                                                        scope
-                                                                                .buildPreviousAnalysisList()
+                                                            .success(function(data, status, headers, config) {
+                                                                            
+                                                                            scope.buildPreviousAnalysisList()
+                                                                            var message = "Clustering analysis for "
+                                                                                + q.name + " complete!";
+
+                                                                            var header = "Hierarchical Clustering Analysis";
+                                                                             
+                                                                            alertService.success(message,header);
+                                                                        
                                                                     })
+                                                                    
+                                                            .error(function(data, status, headers, config) {
+                                                                
+                                                                var message = "Could not perform clustering. If "
+                                                                    + "problem persists, please contact us.";
+                                                                var header = "Clustering Problem (Error Code: "
+                                                                    + status
+                                                                    + ")";
+                                                                alertService.error(message,header);
+                                                                
+                                                            });
 
                                                     resetSelections()
 
@@ -479,6 +473,14 @@ define(
                                                 };
 
                                                 scope.limmaInit = function() {
+                                                    
+
+                                                    var message = "Started limma analysis for "
+                                                        + scope.analysisName;
+
+                                                    var header = "LIMMA Analysis";
+                                                     
+                                                    alertService.info(message,header);
 
                                                     $http(
                                                             {
@@ -496,11 +498,28 @@ define(
                                                                         + ")"
 
                                                             })
-                                                            .then(
-                                                                    function() {
+                                                            .success(
+                                                                    function(data, status, headers, config) {
+                                                                        
+                                                                        var message = "Completed limma analysis for "
+                                                                            + scope.analysisName;
+
+                                                                        var header = "LIMMA Analysis Complete";
+                                                                         
+                                                                        alertService.success(message,header);
                                                                         scope
                                                                                 .buildPreviousAnalysisList()
-                                                                    });
+                                                                    })
+                                                            .error(function(data, status, headers, config) {
+                                                                var message = "Error on limma analysis for "
+                                                                    + scope.analysisName;
+
+                                                                var header = "LIMMA Analysis Problem (Error Code: "
+                                                                    + status
+                                                                    + ")";
+                                                                 
+                                                                alertService.success(message,header);
+                                                            });
 
                                                     resetSelections();                                                    
                                                     
@@ -1840,11 +1859,22 @@ define(
                                                         keys: scope.treeSelections[params.dimension.value]
                                                     }
                                                 })
-                                                .then(function(res){
-                                                    if (res.status ==200){
+                                                .success(function(response){
                                                         scope.$emit('SeletionAddedEvent', params.dimension.type);
-                                                    }
-                                                    
+                                                        var message = "Added New Selection!";
+                                                        var header = "Heatmap Selection Addition";
+                                                         
+                                                        alertService.success(message,header);
+                                                })
+                                                .error(function(data, status, headers, config) {
+                                                    var message = "Couldn't add new selection. If "
+                                                        + "problem persists, please contact us.";
+
+                                                     var header = "Heatmap Download Problem (Error Code: "
+                                                        + status
+                                                        + ")";
+                                                     
+                                                     alertService.error(message,header);
                                                 });
                                                 
                                             }
@@ -1908,7 +1938,7 @@ define(
                                                         'selectedColor',
                                                         function(newval, oldval) {
 
-                                                            if (newval) {
+                                                            if (newval && oldval && scope.heatmapData) {
 
                                                                 redrawCells(heatmapcells);
                                                                 drawColorScale(scope.heatmapData.min, scope.heatmapData.max)
