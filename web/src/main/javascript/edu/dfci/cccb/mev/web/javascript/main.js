@@ -53,7 +53,7 @@ require.config ({
     'bootstrap' : {
       deps : [ 'jquery' ]
     },
-    'bootstrap-css' : {
+    'css-loader' : {
       deps : [ 'bootstrap' ]
     },
     'notific8' : {
@@ -71,7 +71,7 @@ require ([ 'jquery',
           'app',
           'orefine/OrefineBridge',
           'bootstrap',
-          'bootstrap-css',
+          'css-loader',
           'setmanager/SetManager',
           'presets/PresetManager',
           'mainpanel/MainPanel',

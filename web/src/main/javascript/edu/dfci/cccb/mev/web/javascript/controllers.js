@@ -1,5 +1,5 @@
 define(
-        ['jquery', 'angular'],
+        ['jquery', 'angular', 'notific8'],
         function($, angular) {
 
             return angular
@@ -13,12 +13,14 @@ define(
                                     'pseudoRandomStringGenerator',
                                     '$rootScope',
                                     '$location',
-                                    function($scope, $routeParams,
-                                            $http, prsg, $rS, $loc) {
+                                    'logger',
+                                    'alertService',
+                                    function($scope, $routeParams, $http, prsg, $rS, $loc, log, alertService) {
 
                                         if (!$routeParams.datasetName) {
-                                            
-                                            $('#loading').modal('hide');
+
+                                            $('#loading').modal(
+                                                    'hide');
                                             $loc.path('/');
 
                                         };
@@ -32,7 +34,7 @@ define(
                                                 "Green-Black-Red",
                                                 "Yellow-Black-Blue",
                                                 "Red-White-Blue"];
-                                        
+
                                         $scope.selectedColor = "Yellow-Black-Blue";
 
                                         $scope.defaultColors = function() {
@@ -48,6 +50,7 @@ define(
                                         $scope.previousHCLClusters = undefined;
                                         $scope.previousLimmaAnalysis = undefined;
                                         $scope.previousAnalysisList = undefined;
+                                        $scope.clickSelectionMode = false;
 
                                         $scope.buildPreviousAnalysisList = function() {
 
@@ -60,18 +63,53 @@ define(
                                                         method : 'GET',
                                                         url : '/dataset/'
                                                                 + $routeParams.datasetName
-                                                                + '/analysis/',
-                                                        params:{format:'json'}
+                                                                + '/data',
+                                                        params : {
+                                                            format : 'json'
+                                                        }
                                                     })
-                                                    .then(
-                                                            function(
-                                                                    prevList) {
+                                                    .success(
+                                                            function(data, status, headers, config) {
+                                                                $scope.heatmapData = data;
+                                                      })
+                                                      .error(function(data, status, headers, config) {
+                                                          
+                                                          var message = "Could not retrieve dataset "
+                                                                  + $routeParams.datasetName
+                                                                  + ". If the"
+                                                                  + "problem persists, please contact us.";
+        
+                                                          var header = "Heatmap Download Problem (Error Code: "
+                                                                  + status
+                                                                  + ")";
+        
+                                                          alertService
+                                                                  .error(
+                                                                          message,
+                                                                          header);
+                                                          $loc
+                                                                  .path('/');
+                                                              });
 
-                                                                $scope.previousAnalysisList = prevList.data;
+                                            $http(
+                                                    {
+                                                        method : 'GET',
+                                                        url : '/dataset/'
+                                                                + $routeParams.datasetName
+                                                                + '/analysis/',
+                                                        params : {
+                                                            format : 'json'
+                                                        }
+                                                    })
+                                                    .success(
+                                                            function(data, status, headers, config) {
 
-                                                                prevList.data
-                                                                        .map(function(
-                                                                                name) {
+                                                                var prevList = data;
+
+                                                                $scope.previousAnalysisList = prevList;
+
+                                                                prevList
+                                                                        .map(function(name) {
 
                                                                             $http(
                                                                                     {
@@ -80,13 +118,12 @@ define(
                                                                                                 + $routeParams.datasetName
                                                                                                 + '/analysis/'
                                                                                                 + name,
-                                                                                        params:{format:'json'}
+                                                                                        params : {
+                                                                                            format : 'json'
+                                                                                        }
                                                                                     })
-                                                                                    .then(
-                                                                                            function(
-                                                                                                    response) {
-                                                                                                
-                                                                                                var data = response.data;
+                                                                                    .success(
+                                                                                            function(data, status, headers, config) {
 
                                                                                                 var randstr = prsg(5);
                                                                                                 var randstr2 = prsg(5);
@@ -120,17 +157,52 @@ define(
                                                                                                                     datar : data
                                                                                                                 });
                                                                                                     }
+
+                                                                                            })
+                                                                                    .error(
+                                                                                            function(data, status, headers, config) {
+                                                                                                var message = "Could not retrieve previous analysis"
+                                                                                                        + name
+                                                                                                        + ". If the"
+                                                                                                        + "problem persists, please contact us.";
+
+                                                                                                var header = "Heatmap Download Problem (Error Code: "
+                                                                                                        + status
+                                                                                                        + ")";
+
+                                                                                                alertService
+                                                                                                        .error(
+                                                                                                                message,
+                                                                                                                header);
+                                                                                                $loc
+                                                                                                        .path('/');
                                                                                             });
 
                                                                         });
+
+                                                            })
+                                                    .error(
+                                                            function(data, status, headers, config) {
+
+                                                                var message = "Could not download previous analysis list. If "
+                                                                        + "problem persists, please contact us.";
+
+                                                                var header = "Previous Analysis Download Problem (Error Code: "
+                                                                        + status
+                                                                        + ")";
+
+                                                                alertService
+                                                                        .error(
+                                                                                message,
+                                                                                header);
+                                                                $loc
+                                                                        .path('/');
 
                                                             });
 
                                         };
 
-                                        $scope.updateHeatmapData = function(
-                                                prevAnalysis,
-                                                textForm) {
+                                        $scope.updateHeatmapData = function(prevAnalysis, textForm) {
 
                                             $http(
                                                     {
@@ -143,82 +215,33 @@ define(
                                                             format : 'json'
                                                         }
                                                     })
-                                                    .then(
-                                                            function() {
-
-                                                                //$('#heatmapTabLink').trigger("click");
-
-                                                                $http(
-                                                                        {
-                                                                            method : 'GET',
-                                                                            url : '/dataset/'
-                                                                                    + $routeParams.datasetName
-                                                                                    + '/data',
-                                                                            params : {
-                                                                                format : 'json'
-                                                                            }
-                                                                        })
-                                                                        .then(
-                                                                                function(
-                                                                                        response) {
-                                                                                    
-                                                                                    var data = response.data;
-
-                                                                                    if (data.column.root) {
-
-                                                                                        // apply
-                                                                                        // column
-                                                                                        // cluster
-                                                                                        // to
-                                                                                        // dendogram
-
-                                                                                        $scope.heatmapTopTree = data.column.root;
-
-                                                                                    };
-
-                                                                                    if (data.row.root) {
-
-                                                                                        $scope.heatmapLeftTree = data.row.root;
-
-                                                                                    };
-
-                                                                                    // Apply
-                                                                                    // new
-                                                                                    // ordering
-                                                                                    // and
-                                                                                    // dataset
-                                                                                    // to
-                                                                                    // held
-                                                                                    // heatmap
-                                                                                    $scope.heatmapData = data;
-
-                                                                                },
-                                                                                function() {
-                                                                                    // Redirect
-                                                                                    // to
-                                                                                    // home
-                                                                                    // if
-                                                                                    // errored
-                                                                                    // out
-                                                                                    $loc
-                                                                                            .path('/');
-                                                                                });
-
-                                                            },
-                                                            function() {
-
+                                                    .success(
+                                                            function(data, status, headers, config) {
+                                                                if (data.type == 'row') {
+                                                                    console
+                                                                            .log(data)
+                                                                    $scope.heatmapLeftTree = data.root;
+                                                                    $scope.heatmapData.row = data;
+                                                                } else
+                                                                    if (res.data.type == 'column') {
+                                                                        $scope.heatmapTopTree = data.root;
+                                                                        $scope.heatmapData.column = data;
+                                                                    }
+                                                            })
+                                                    .error(
+                                                            function(data, status, headers, config) {
                                                                 var message = "Could not update heatmap. If "
-                                                                        + "problem persists, please contact us."
+                                                                        + "problem persists, please contact us.";
 
-                                                                var header = "Heatmap Clustering Update Problem (Error Code: "
-                                                                        + s
-                                                                        + ")"
+                                                                var header = "Heatmap Update Problem (Error Code: "
+                                                                        + status
+                                                                        + ")";
+
                                                                 alertService
                                                                         .error(
                                                                                 message,
                                                                                 header);
-
-                                                            })
+                                                            });
 
                                         };
 
@@ -228,7 +251,8 @@ define(
                             [
                                     '$scope',
                                     '$http',
-                                    function($scope, $http) {
+                                    'alertService',
+                                    function($scope, $http, alertService) {
 
                                         $scope.userUploads = [];
 
@@ -241,80 +265,113 @@ define(
                                                     format : 'json'
                                                 }
                                             })
-                                                    .then(
-                                                            function(
-                                                                    response) {
-                                                                $scope.userUploads = response.data;
-                                                            });
+                                            .success(function(data, status, headers, config) {
+                                                                $scope.userUploads = data;
+                                                                
+                                                                var message = "Could not upload data. If "
+                                                                    + "problem persists, please contact us.";
+
+                                                                var header = "Heatmap Update Problem (Error Code: "
+                                                                    + status
+                                                                    + ")";
+
+                                                                alertService
+                                                                    .error(
+                                                                            message,
+                                                                            header);
+                                                                
+                                             })
+                                             .error(function(data, status, headers, config) {
+                                                        var message = "Could not upload data. If "
+                                                            + "problem persists, please contact us.";
+
+                                                        var header = "Heatmap Update Problem (Error Code: "
+                                                            + status
+                                                            + ")";
+
+                                                        alertService
+                                                            .error(
+                                                                    message,
+                                                                    header);
+                                              });
                                         };
 
                                         $scope.loadUploads();
 
                                     }])
                     .controller(
-                            'MainPanelController',                            		
-                            [		'MevSelectionService',
+                            'MainPanelController',
+                            [
+                                    'MevSelectionService',
                                     '$scope',
                                     '$element',
                                     '$attrs',
                                     function(MevSelectionService, $scope, $element, $attrs) {
-                                    	
+
                                         $scope.baseUrl = '/annotations/'
                                                 + $scope.heatmapId
                                                 + '/annotation';
                                         $scope.annotationsUrl = $scope.baseUrl
                                                 + '/column/new/dataset/';
-                                        
-                                        $scope.tabs={};
-                                        if($scope.tabs!=undefined){
-                                        	$scope.tabs.activeTab='visualize';
-                                        	$scope.tabs.visualizeTabActive=true;
-                                        	$scope.tabs.annotationsTabActive=false;
+
+                                        $scope.tabs = {};
+                                        if ($scope.tabs != undefined) {
+                                            $scope.tabs.activeTab = 'visualize';
+                                            $scope.tabs.visualizeTabActive = true;
+                                            $scope.tabs.annotationsTabActive = false;
                                         }
-                                        $scope.setActiveTab = function(name){
-                                        	$scope.tabs.activeTab = name;
-                                        	if(name=='annotations'){                                        		
-                                        		$scope.tabs.visualizeTabActive=false;
-                                        		$scope.tabs.annotationsTabActive=true;
-                                        	}else{
-                                        		$scope.tabs.visualizeTabActive=true;
-                                        		$scope.tabs.annotationsTabActive=false;
-                                        	}
-                                        		
+                                        $scope.setActiveTab = function(name) {
+                                            $scope.tabs.activeTab = name;
+                                            if (name == 'annotations') {
+                                                $scope.tabs.visualizeTabActive = false;
+                                                $scope.tabs.annotationsTabActive = true;
+                                            } else {
+                                                $scope.tabs.visualizeTabActive = true;
+                                                $scope.tabs.annotationsTabActive = false;
+                                            }
+
                                         };
-                                        $scope.isActiveTab = function(name){
-                                        	if($scope.tabs.activeTab==name)
-                                        		return true;
-                                        	else
-                                        		return false;
+                                        $scope.isActiveTab = function(name) {
+                                            if ($scope.tabs.activeTab == name)
+                                                return true;
+                                            else
+                                                return false;
                                         };
-                                                                                                                        
-                                        $scope.$on('ViewAnnotationsEvent', function(
-                                                            event,
-                                                            selection,
-                                                            dimension,
-                                                            annotationSource) {
-                                                        var annotationsUrl = $scope.baseUrl
-                                                                + "/"
-                                                                + dimension
-                                                                + "/";
-                                                        if (typeof selection != 'undefined') {
-                                                            annotationsUrl += selection.name
+
+                                        $scope
+                                                .$on(
+                                                        'ViewAnnotationsEvent',
+                                                        function(event, selection, dimension, annotationSource) {
+                                                            var annotationsUrl = $scope.baseUrl
+                                                                    + "/"
+                                                                    + dimension
                                                                     + "/";
-                                                        } else {
-                                                            annotationsUrl += "new/";
-                                                        }
-                                                        if (typeof annotationSource != 'undefined') {
-                                                            annotationsUrl += annotationSource
-                                                                    + "/";
-                                                        } else {
-                                                            annotationsUrl += "dataset/";
-                                                        }
+                                                            if (typeof selection != 'undefined') {
+                                                                annotationsUrl += selection.name
+                                                                        + "/";
+                                                            } else {
+                                                                annotationsUrl += "new/";
+                                                            }
+                                                            if (typeof annotationSource != 'undefined') {
+                                                                annotationsUrl += annotationSource
+                                                                        + "/";
+                                                            } else {
+                                                                annotationsUrl += "dataset/";
+                                                            }
 
                                                         if (typeof selection != 'undefined') {
-                                                            annotationsUrl += selection.properties.selectionFacetLink;
+                                                        	if(typeof selection.properties.selectionFacetLink != 'undefined')
+                                                        		annotationsUrl += selection.properties.selectionFacetLink;
+                                                        	else{
+                                                        		var facetUrl = "{\"facets\":[{\"c\":{\"type\":\"text\",\"name\":\"ID\",\"columnName\":\"MEVID\",\"mode\":\"regex\",\"caseSensitive\":false,\"query\":\""+
+                                                        		selection.keys.join("|")
+                                                        		+"\"}}]}"; 
+                                                        		var randomProjectId=Math.floor(Math.random()*11)
+                                                        		annotationsUrl += "project?project=MEV-"+randomProjectId+"&ui="+window.escape(facetUrl);
+                                                        		;
+                                                        	}
                                                         }
-
+                                                        console.log("annotationsUrl:"+annotationsUrl)
                                                         $scope.annotationsUrl = annotationsUrl;                                                             
                                                         var elm = document.querySelector('#annotationsTabLink');
                                                         $(elm).trigger('click');
