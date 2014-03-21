@@ -193,9 +193,21 @@ define(
                                     }
                                 };
                             }])
+                            .directive('limmaAccordionList',[function() {
+                                    return {
+                                        
+                                        restrict : 'E',
+                                        templateUrl : '/container/view/elements/limmaAccordionList',
+                                        link : function(scope) {
+                                            var blah = 2;
+                                        }
+                                        
+                                    };
+
+                            }])
                     .directive(
-                            'limmaAccordionList',
-                            [function() {
+                            'limmaAccordion',
+                            ['$filter', '$routeParams', '$http', 'alertService', function($filter, $routeParams, $http, alertService) {
                                 return {
                                     restrict : 'E',
                                     templateUrl : '/container/view/elements/limmaAccordion',
@@ -207,6 +219,62 @@ define(
                                             'Average Expression' : "averageExpression",
                                             'P-Value' : "pValue",
                                             'Q-Value' : "qValue"
+                                        }
+                                        
+                                        scope.filterParams = {
+                                                'id' : '',
+                                                'logFoldThreshold' : undefined,
+                                                'pValueThreshold' : undefined
+                                        }
+                                        
+                                        scope.selectionsName = 'KingDeeDeeDee'
+                                        
+                                        scope.addSelections = function(){
+                                            
+                                            var userselections = scope.limma.datar.results;
+                                            
+                                            var step1 = $filter('filter')(scope.limma.datar.results, {
+                                                id: scope.filterParams.id
+                                            });
+                                            
+                                            var step2 = $filter('filterThreshold')(step1, scope.filterParams.logFoldThreshold, 'logFoldChange')
+                                            var step3= $filter('filterThreshold')(step2, scope.filterParams.pValueThreshold, 'pValue')
+                                            var step4 = step3.map(function(d){
+                                                return d.id
+                                            })
+                                            
+                                            $http({
+                                                method:"PUT", 
+                                                url:"/dataset/" + $routeParams.datasetName + "/" 
+                                                + 'row' 
+                                                + "/selection/" + scope.selectionsName,
+                                                params:{
+                                                    format:'json',
+                                                    properties : [{
+                                                        selectionColor:'#d38394', 
+                                                        selectionDescription:'first mock selection'
+                                                    }],
+                                                    keys: step4
+                                                }
+                                            })
+                                            .success(function(response){
+                                                    scope.$emit('SeletionAddedEvent', 'column');
+                                                    var message = "Added New Selection!";
+                                                    var header = "Heatmap Selection Addition";
+                                                     
+                                                    alertService.success(message,header);
+                                            })
+                                            .error(function(data, status, headers, config) {
+                                                var message = "Couldn't add new selection. If "
+                                                    + "problem persists, please contact us.";
+
+                                                 var header = "Heatmap Download Problem (Error Code: "
+                                                    + status
+                                                    + ")";
+                                                 
+                                                 alertService.error(message,header);
+                                            });
+                                            
                                         }
 
                                         var ctr = -1;
@@ -455,7 +523,8 @@ define(
                             [
                                     "$http",
                                     "$routeParams",
-                                    function($http, $routeP) {
+                                    "alertService",
+                                    function($http, $routeP,alertService) {
 
                                         return {
                                             restrict : 'C',
@@ -897,7 +966,7 @@ define(
                             })
                     .directive(
                             'visHeatmap',
-                            ["$routeParams","$http", function($routeParams, $http) {
+                            ["$routeParams","$http", "alertService", function($routeParams, $http, alertService) {
 
                                 return {
 
@@ -1563,7 +1632,7 @@ define(
                                         function drawColorScale(min, max){
                                             var arr = d3.range(101)
                                             
-                                            var scale = d3.scale.linear().domain([0, arr.length]).range([min, max])
+                                            var scale = d3.scale.linear().domain([0, arr.length]).range([max, min])
                                             
                                             var yPosition = d3.scale.linear().domain([0, arr.length])
                                                 .range([40 + legendPosition.margin.top, 
