@@ -69,7 +69,7 @@ public class AnnotationController extends WebApplicationObjectSupport {
   private @Inject DatasetBuilder datasetBuilder;
   private @Inject Presets presets;
   private @Inject ProbeAnnotationPlatforms probeAnnotationPlatforms;
-
+  
   @PostConstruct
   private void createRefineServlet () throws ServletException {
     refineServlet = new RefineServlet ();
@@ -216,7 +216,8 @@ public class AnnotationController extends WebApplicationObjectSupport {
 
     Dataset heatmap = workspace.get (heatmapId);
     long projectId = projectManager.getProjectID (heatmap.name () + dimension);
-    if (projectId != -1) {
+    if (projectId != -1) {      
+      
       if (wrappedRequest.getPathInfo ().trim ().equals ("/")) {
         if (wrappedRequest.getParameter ("reset") != null) {
           projectManager.deleteProject (projectId);
@@ -224,6 +225,21 @@ public class AnnotationController extends WebApplicationObjectSupport {
           response.sendRedirect ("project?project=" + projectId);
           return;
         }
+      }else if(request.getQueryString ()!=null){
+        String sProjectId = request.getParameter ("project");
+        if(sProjectId!=null){
+          if(!Long.toString (projectId).equalsIgnoreCase (sProjectId)){
+            String qs = request.getQueryString ();            
+            qs = qs.replace ("project="+sProjectId, "");        
+            response.sendRedirect ("project?project=" + projectId+qs);
+          }
+        }
+      }
+    }else{
+      String sProjectId = request.getParameter ("project");
+      if(sProjectId!=null && sProjectId.startsWith ("MEV-")){
+        response.sendRedirect ("index");
+        return;
       }
     }
 
