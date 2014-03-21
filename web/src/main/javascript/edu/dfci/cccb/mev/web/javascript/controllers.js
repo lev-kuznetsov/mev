@@ -359,41 +359,32 @@ define(
                                                                 annotationsUrl += "dataset/";
                                                             }
 
-                                                            if (typeof selection != 'undefined') {
-                                                                annotationsUrl += selection.properties.selectionFacetLink;
-                                                            }
-
-                                                            $scope.annotationsUrl = annotationsUrl;
-                                                            var elm = document
-                                                                    .querySelector('#annotationsTabLink');
-                                                            $(elm)
-                                                                    .trigger(
-                                                                            'click');
-                                                        });
-
-                                        $scope
-                                                .$on(
-                                                        'SeletionAddedEvent',
-                                                        function(dimensionType) {
-                                                            console
-                                                                    .debug("selection added: "
-                                                                            + angular
-                                                                                    .toJson(dimensionType)
-                                                                            + "$scope.heatmapData.column.selections:"
-                                                                            + angular
-                                                                                    .toJson($scope.heatmapData.column.selections));
-                                                            MevSelectionService
-                                                                    .getColumnSelectionQ()
-                                                                    .then(
-                                                                            function(d) {
-                                                                                console
-                                                                                        .debug("selections:"
-                                                                                                + angular
-                                                                                                        .toJson($scope.selections));
-                                                                                $scope.heatmapData.column.selections = d;
-                                                                            });
-
-                                                        });
+                                                        if (typeof selection != 'undefined') {
+                                                        	if(typeof selection.properties.selectionFacetLink != 'undefined')
+                                                        		annotationsUrl += selection.properties.selectionFacetLink;
+                                                        	else{
+                                                        		var facetUrl = "{\"facets\":[{\"c\":{\"type\":\"text\",\"name\":\"ID\",\"columnName\":\"MEVID\",\"mode\":\"regex\",\"caseSensitive\":false,\"query\":\""+
+                                                        		selection.keys.join("|")
+                                                        		+"\"}}]}"; 
+                                                        		var randomProjectId=Math.floor(Math.random()*11)
+                                                        		annotationsUrl += "project?project=MEV-"+randomProjectId+"&ui="+window.escape(facetUrl);
+                                                        		;
+                                                        	}
+                                                        }
+                                                        console.log("annotationsUrl:"+annotationsUrl)
+                                                        $scope.annotationsUrl = annotationsUrl;                                                             
+                                                        var elm = document.querySelector('#annotationsTabLink');
+                                                        $(elm).trigger('click');
+                                                    });                             
+                                        
+                                       $scope.$on('SeletionAddedEvent', function(dimensionType){
+                                    	  console.debug("selection added: "+angular.toJson(dimensionType)+"$scope.heatmapData.column.selections:"+angular.toJson($scope.heatmapData.column.selections));                                    	  
+                                    	  MevSelectionService.getColumnSelectionQ().then(function(d){                                    		  
+                                    		  console.debug("selections:"+angular.toJson($scope.selections));
+                                    		  $scope.heatmapData.column.selections=d;
+                                    	  });
+                                    	  
+                                       });
 
                                     }]);
 

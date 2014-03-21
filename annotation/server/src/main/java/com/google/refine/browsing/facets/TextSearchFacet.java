@@ -36,6 +36,8 @@ package com.google.refine.browsing.facets;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
+import lombok.extern.log4j.Log4j;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONWriter;
@@ -50,7 +52,7 @@ import com.google.refine.expr.Evaluable;
 import com.google.refine.grel.ast.VariableExpr;
 import com.google.refine.model.Column;
 import com.google.refine.model.Project;
-
+@Log4j
 public class TextSearchFacet implements Facet {
     /*
      *  Configuration
@@ -88,7 +90,15 @@ public class TextSearchFacet implements Facet {
         _name = o.getString("name");
         _columnName = o.getString("columnName");
         
-        Column column = project.columnModel.getColumnByName(_columnName);
+        //ap:adhoc selections
+        Column column;
+        if(_columnName.equalsIgnoreCase ("MEVID")){          
+          column = project.columnModel.getColumnByCellIndex (0);
+          log.debug ("Mapping MEVID to " + column.getName ());
+        }else{
+          column = project.columnModel.getColumnByName(_columnName);
+        }
+        
         _cellIndex = column != null ? column.getCellIndex() : -1;
         
         if (!o.isNull("query")) {
