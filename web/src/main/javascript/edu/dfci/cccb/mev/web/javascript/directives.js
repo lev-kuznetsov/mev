@@ -258,7 +258,7 @@ define(
                                                 }
                                             })
                                             .success(function(response){
-                                                    scope.$emit('SeletionAddedEvent', 'column');
+                                                    scope.$emit('SeletionAddedEvent', 'row');
                                                     var message = "Added New Selection!";
                                                     var header = "Heatmap Selection Addition";
                                                      
@@ -1950,6 +1950,7 @@ define(
                                         };
                                         
                                         scope.$watch('heatmapData.column.selections', function(newval, oldval){
+                                            
                                             if(newval
                                                     && oldval){
                                                 updateDrawHeatmap(scope.heatmapData)
