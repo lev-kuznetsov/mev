@@ -1358,8 +1358,8 @@ define(
                                                                 rows.keys)
                                                         .rangeBands(
                                                                 [
-                                                                        heatmapMarginTop,
-                                                                        heatmapMarginTop
+                                                                        heatmapMarginTop + heatmapColumnSelectionsGutter,
+                                                                        heatmapMarginTop + heatmapColumnSelectionsGutter
                                                                                 + heatmapCellsHeight]);
                                             };
 
