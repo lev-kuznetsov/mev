@@ -384,6 +384,11 @@ define(
                                     		  $scope.heatmapData.column.selections=d;
                                     	  });
                                     	  
+                                    	  MevSelectionService.getRowSelectionQ().then(function(d){                                            
+                                              console.debug("selections:"+angular.toJson($scope.selections));
+                                              $scope.heatmapData.row.selections=d;
+                                          });
+                                    	  
                                        });
 
                                     }]);
