@@ -551,7 +551,7 @@ define(
                             }])
                     .directive(
                             'uploadDrag',
-                            [function() {
+                            [ function(){
 
                                 return {
                                     restrict : 'C',
@@ -878,20 +878,20 @@ define(
                             })
                     .directive(
                             'visHeatmap',
-                            [function() {
+                            ["$routeParams","$http", function($routeParams, $http) {
 
                                 return {
 
                                     restrict : 'E',
-                                    // templateUrl :
-                                    // "/container/view/elements/visHeatmap",
+                                    templateUrl : "/container/view/elements/visHeatmap",
                                     link : function(scope, elems, attr) {
 
                                         var svgWidth = Math
                                                 .floor(jq(
                                                         '#rightPanel')
                                                         .css('width')
-                                                        .slice(0, -2) * .9)
+                                                        .slice(0, -2) * .9);
+                                                        
 
                                         var heatmapMarginLeft = Math
                                                 .floor(svgWidth * .15), heatmapMarginRight = Math
@@ -900,6 +900,15 @@ define(
                                         var heatmapCellsWidth = svgWidth
                                                 - heatmapMarginLeft
                                                 - heatmapMarginRight;
+                                        
+                                        var legendPosition = {
+                                                margin:{
+                                                    left: 5,
+                                                    top:10
+                                                },
+                                                width:heatmapMarginLeft*.80,
+                                                height: heatmapMarginTop*.80
+                                              };
 
                                         var heatmapCellsHeight = undefined;
                                         var heatmapCellHeight = undefined;
@@ -1003,6 +1012,10 @@ define(
                                                 "ylabels")
                                         var ylabels = d3
                                                 .select("g.ylabels");
+                                        
+                                        vis.append("g").attr("class", "legend");
+                                        var legend = d3.select('g.legend');
+                                        
 
                                         function drawSelections(columnData, rowData) {
 
@@ -1142,6 +1155,10 @@ define(
                                                         .style(
                                                                 "font-size",
                                                                 "14px")
+                                                        .append("title")
+                                                        .text(function(d) {
+                                                                return d
+                                                            })
 
                                             }
 
@@ -1517,7 +1534,83 @@ define(
 
                                             drawLabels(xlabels,
                                                     ylabels);
+                                            
+                                            drawColorScale(data.min,
+                                                    data.max,
+                                                    data.avg);
 
+                                        };
+                                        
+                                        function drawColorScale(min, max){
+                                            var arr = d3.range(101)
+                                            
+                                            var scale = d3.scale.linear().domain([0, arr.length]).range([min, max])
+                                            
+                                            var yPosition = d3.scale.linear().domain([0, arr.length])
+                                                .range([40 + legendPosition.margin.top, 
+                                                        (legendPosition.margin.top + legendPosition.height) - 40 ])
+                                            
+                                            var colorScaleCellSpacing = yPosition(1) - yPosition(0);
+                                            
+                                            d3.select("g.colorScale").selectAll('rect').remove()
+                                            
+                                            d3.select("g.colorScale").selectAll('rect').data(arr).enter()
+                                                .append('rect')
+                                                .attr({
+                                                    y: function(d, i){
+                                                        return yPosition(i);
+                                                    },
+                                                    x: legendPosition.margin.left + (legendPosition.width*.1),
+                                                    width: legendPosition.width*.4,
+                                                    height: colorScaleCellSpacing,
+                                                    fill: function(d, i){
+                                                        return cellColor(scale(i))
+                                                    }
+                                                })
+                                                
+                                            d3.select("g.colorScale").selectAll("line").data(arr).enter()
+                                                .append("line")
+                                                .attr({
+                                                    "class": "colorScaleAxis", 
+                                                    x1:legendPosition.margin.left + (legendPosition.width*.1)//start of rects
+                                                        + legendPosition.width*.4 //widths of rects
+                                                        + 6, //spacing
+                                                    x2: legendPosition.margin.left + (legendPosition.width*.1)//start of rects
+                                                        + legendPosition.width*.4 //widths of rects
+                                                        + 13, //spacing
+                                                    y1:function(d, i){
+                                                        return yPosition(i) + (colorScaleCellSpacing/2) ;
+                                                    },
+                                                    y2:function(d, i){
+                                                        return yPosition(i) + (colorScaleCellSpacing/2);
+                                                    },
+                                                    stroke: function(d, i){ 
+                                                        return (i%25 == 0)? "black":"none";
+                                                    },
+                                                    "stroke-width": 1
+                                                });
+                                            
+                                            d3.select("g.colorScale").selectAll("text").data(arr).enter()
+                                                .append("text")
+                                                .attr({
+                                                    x: legendPosition.margin.left + (legendPosition.width*.1)//start of rects
+                                                    + legendPosition.width*.4 //widths of rects
+                                                    + 16, //spacing
+                                                    y:function(d, i){
+                                                        return yPosition(i) + (colorScaleCellSpacing/2) + 3 ;
+                                                    },
+                                                    'style':'font-size:8'
+                                                })
+                                                .text(function(d, i){
+                                                    var returnstring = String(scale(i)).split(".")[0]
+                                                    if (returnstring.length > 1){
+                                                        returnstring = returnstring + "." + String(scale(i)).split(".")[1][3]
+                                                    }
+                                                    return (i%50 == 0)? returnstring:""
+                                                }).append("title")
+                                                    .text(function(d, i){
+                                                        return scale(i);
+                                                    })
                                         };
 
                                         function updateDrawHeatmap(data) {
@@ -1536,6 +1629,7 @@ define(
                                             drawSelections(
                                                     data.column,
                                                     data.row);
+                                            
 
                                         };
 
@@ -1573,6 +1667,20 @@ define(
                                                                 }
 
                                                         });
+                                        
+                                        scope.$watch('heatmapData.column.keys', function(newval, oldval){
+                                            if (newval
+                                                    && oldval){
+                                                updateDrawHeatmap(scope.heatmapData);
+                                            }
+                                        });
+                                        
+                                        scope.$watch('heatmapData.row.keys', function(newval, oldval){
+                                            if (newval
+                                                    && oldval){
+                                                updateDrawHeatmap(scope.heatmapData);
+                                            }
+                                        });
 
                                         // Dendogram Stuff
 
@@ -1639,15 +1747,125 @@ define(
                                                                 4,
                                                                 (2 * heatmapMarginTop) / 3]);
 
-                                        var dendogramLeftWindow = svg
+                                        svg
                                                 .append("g")
                                                 .attr('class',
                                                         'leftDendogram');
 
-                                        var dendogramTopWindow = svg
+                                        var dendogramLeftWindow = d3.select("g.leftDendogram")
+                                        svg
                                                 .append("g")
                                                 .attr('class',
                                                         'topDendogram');
+                                        var dendogramTopWindow = d3.select("g.topDendogram")
+                                        
+                                        legend
+                                            .append('rect')
+                                            .attr({
+                                                "x": legendPosition.margin.left,
+                                                "y": legendPosition.margin.top,
+                                                "width": legendPosition.width,
+                                                "height": legendPosition.height,
+                                                "rx":10,
+                                                "ry":10,
+                                                "class": "legendBorder",
+                                                "style":"stroke-width:1;stroke:grey;fill:none"
+                                            });
+                                        
+                                        legend.append("text")
+                                        .attr({
+                                            'id': "legendTitle",
+                                            'text-anchor':'middle',
+                                            'x': ((legendPosition.height)/2 ) + legendPosition.margin.left - 14,
+                                            'y': 20 + legendPosition.margin.top,
+                                            'style':'font-size:20'
+                                            
+                                        })
+                                        .text("Legend");
+                                        
+                                        legend.append("text")
+                                            .attr({
+                                                'id': "columnSelectionAdd",
+                                                'x': 20,
+                                                'y': ((legendPosition.margin.top)+legendPosition.height)-22,
+                                                'data-toggle': 'modal',
+                                                'role': 'button',
+                                                'data-target': "#columnSelectionsModal",
+                                                'style':'font-size:10'
+                                            })
+                                            .text("Add Column Selections");
+                                        
+                                        legend.append("text")
+                                            .attr({
+                                                'id': "rowSelectionAdd",
+                                                'x': 20,
+                                                'y': ((legendPosition.margin.top)+legendPosition.height)-10,
+                                                'data-toggle': 'modal',
+                                                'role': 'button',
+                                                'data-target': "#rowSelectionsModal",
+                                                'style':'font-size:10'
+                                            })
+                                            .text("Add Row Selections");
+                                        
+                                        legend.append("g").attr("class", "colorScale");
+                                        var colorScale = d3.select("g.colorScale");
+                                        
+                                        scope.treeSelections = {
+                                                horizontal:[],
+                                                vertical:[]
+                                        };
+                                        
+                                        //Add Tree Selection Function
+                                        scope.addTreeSelection = function(type, orientation, name){
+                                            
+                                            var params = {
+                                                    'dimension':{'type':type, 'value':orientation},
+                                                    'name':name,
+                                                    'color':'#ff0000'
+                                            }
+                                            
+                                            if (scope.treeSelections[params.dimension.value].length > 0){
+                                                
+                                                $http({
+                                                    method:"PUT", 
+                                                    url:"/dataset/" + $routeParams.datasetName + "/" 
+                                                    + params.dimension.type 
+                                                    + "/selection/" + params.name,
+                                                    params:{
+                                                        format:'json',
+                                                        properties : [{
+                                                            selectionColor:params.color, 
+                                                            selectionDescription:'first mock selection'
+                                                        }],
+                                                        keys: scope.treeSelections[params.dimension.value]
+                                                    }
+                                                })
+                                                .then(function(res){
+                                                    if (res.status ==200){
+                                                        scope.$emit('SeletionAddedEvent', params.dimension.type);
+                                                    }
+                                                    
+                                                });
+                                                
+                                            }
+                                        };
+                                        
+                                        scope.$watch('heatmapData.column.selections', function(newval, oldval){
+                                            if(newval
+                                                    && oldval){
+                                                updateDrawHeatmap(scope.heatmapData)
+                                            }
+                                            
+                                        })
+                                        
+                                        scope.$watch('heatmapData.row.selections', function(newval, oldval){
+                                            if(newval
+                                                    && oldval){
+                                                updateDrawHeatmap(scope.heatmapData)
+                                            }
+                                            
+                                        })
+                                        
 
                                         // Left Dendogram Builder
                                         scope
@@ -1659,11 +1877,11 @@ define(
 
                                                                 var tree = newval;
                                                                 drawTree(
-                                                                        dendogramLeftWindow,
+                                                                        dendogramTopWindow,
                                                                         Cluster,
                                                                         tree,
                                                                         'horizontal')
-
+                                                                    
                                                             }
 
                                                         });
@@ -1676,17 +1894,11 @@ define(
                                                             if (newval) {
 
                                                                 var tree = newval;
-                                                                // heatmapMarginLeft
-                                                                // = Math.floor
-                                                                // (svgWidth *
-                                                                // .15);
-                                                                // updateDrawHeatmap(scope.heatmapData);
                                                                 drawTree(
-                                                                        dendogramTopWindow,
+                                                                        dendogramLeftWindow,
                                                                         Cluster,
                                                                         tree,
-                                                                        'vertical')
-
+                                                                        'vertical');
                                                             }
 
                                                         });
@@ -1699,15 +1911,19 @@ define(
                                                             if (newval) {
 
                                                                 redrawCells(heatmapcells);
+                                                                drawColorScale(scope.heatmapData.min, scope.heatmapData.max)
 
                                                             }
 
                                                         });
+                                        
+
 
                                         function drawTree(canvas, cluster, tree, type) {
 
                                             canvas.selectAll('*')
                                                     .remove();
+                                            
                                             var nodes = cluster
                                                     .nodes(tree);
                                             var links = cluster
@@ -1746,17 +1962,17 @@ define(
                                                             "cx",
                                                             function(d) {
 
-                                                                return (type == 'vertical')
-                                                                        ? verticalTreeX(d.y)
-                                                                        : horizontalTreeX(d.x);
+                                                                return (type == 'horizontal')
+                                                                        ? horizontalTreeX(d.x)
+                                                                        : verticalTreeX(d.y);
 
                                                             })
                                                     .attr(
                                                             "cy",
                                                             function(d) {
-                                                                return (type == 'vertical')
-                                                                        ? verticalTreeY(d.x)
-                                                                        : horizontalTreeY(d.y);
+                                                                return (type == 'horizontal')
+                                                                        ? horizontalTreeY(d.y)
+                                                                        : verticalTreeY(d.x);
                                                             })
                                                     .attr(
                                                             "fill",
@@ -1768,38 +1984,98 @@ define(
                                                     .on(
                                                             "click",
                                                             function(d) {
-                                                                noder(d); // TODO
-                                                                // add
-                                                                // selections
-                                                                // function
-                                                                // to
-                                                                // this
-                                                            });
+                                                                nodeclick(d, canvas, type)
+                                                            })
+                                                    .on('mouseover', function(){
+                                                        //console.log(this)
+                                                    });
 
                                         };
+                                        
+                                        
+                                        
+                                        var walk = function(d, nColor, pColor,  canvas, type){
 
-                                        function noder(d) {
+                                            d.children.forEach(function(dc){ //Loop through each child, recursively calling walk() as necessary.
 
-                                            var a = [];
+                                                canvas.selectAll('circle')
+                                                    .filter(function(db){
+                                                        return dc === db ? 1 : 0;
+                                                    })
+                                                    .transition().style("fill",nColor).duration(500)
+                                                    .transition().duration(500);
 
-                                            if (!d.children) {
-                                                a.push(d.name);
+                                                canvas.selectAll("path")
+                                                    .filter(function(dp){
+                                                        return (dc.x === dp.source.x && dc.y === dp.source.y) ? 1 : 0;
+                                                    })
+                                                    .transition().style("stroke", pColor).duration(500);
+
+                                                if(dc.children){ //Check if children exist, if so, recurse the previous function.
+                                                    walk(dc, nColor, pColor, canvas, type);
+                                                } else {
+                                                    if(nColor == '#00ff00'){
+                                                        if(scope.treeSelections[type].indexOf(dc.name) == -1){
+                                                            scope.treeSelections[type].push(dc.name);
+                                                        };
+                                                    } else {
+                                                        var index = scope.treeSelections[type].indexOf(dc.name);
+                                                        scope.treeSelections[type].splice(index, 1);
+                                                    }
+                                                };
+                                            });
+                                        };
+                                        
+                                        var nodeclick = function(d, canvas, type){
+                                           
+
+                                            var nColor = (type == 'horizontal')? 'blue' : 'red'; //Initial nonselected color of a node.
+                                            var pColor = (type == 'horizontal')? 'blue' : 'red'; //Initial nonselected color of a branch.
+
+                                            var cir = canvas //Selects all the circles representing nodes but only those which were the clicked circle, using datum as the equality filter.
+                                                .selectAll("circle")
+                                                .filter(function(db){
+                                                    return d === db ? 1 : 0;
+                                                });
+
+                                            var path = canvas.selectAll("path") //Selects all paths but only those which have the same source coordinates as the node clicked.
+                                                .filter(function(dp){
+                                                    return (d.x === dp.source.x && d.y === dp.source.y) ? 1 : 0;
+                                                });
+
+                                            //Check the state of the clicked node. If 'active' (color is green) swap to inactive colors and pass those colors down to all children and vice versa.
+                                            if(cir.style('fill') == '#00ff00'){
+
+                                                cir.style('fill', nColor)
+                                                    .transition().duration(500); //Change radius of nonactive nodes.
+
+                                                path.transition().style('stroke', pColor).duration(500);
+
                                             } else {
-                                                d.children
-                                                        .forEach(function(child) {
-                                                            noder(
-                                                                    child)
-                                                                    .forEach(
-                                                                            function(name) {
-                                                                                a
-                                                                                        .push(name)
-                                                                            });
-                                                        });
+
+                                                nColor = '#00ff00';
+                                                pColor = '#00ff00';
+                                                cir.style('fill', nColor)
+                                                    .transition().duration(500);
+                                                path.transition().style('stroke', pColor).duration(500);
+
                                             };
 
-                                            return a;
-                                        };
+                                            if(d.children){ //Check if the node clicked is not a leaf. If the node has children, travel down the three updating the colors to indicate selection.
+                                                walk(d, nColor, pColor, canvas, type);
+                                            } else {
+                                                if(nColor == '#00ff00'){ //Check color to see if indicated action is a select/deselect
+                                                    if(scope.treeSelections[type].indexOf(d.name) == -1){ //Check if gene already is in the array.
+                                                        scope.treeSelections[type].push(d.name)
+                                                    }
+                                                } else { //Algorithm for removing genes from the list on a deselect.
+                                                    var index = scope.treeSelections[type].indexOf(d.name); //Get the index of the given gene in the gene array.
+                                                    scope.treeSelections[type].splice(index, 1); //Splice that gene out of the array using its gotten index.
+                                                };
+                                            };
 
+                                        };
+                                        
                                         function horizontalPath(d) {
                                             // Path function builder for TOP
                                             // heatmap tree path attribute

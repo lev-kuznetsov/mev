@@ -48,14 +48,15 @@ define(
                                         $scope.previousHCLClusters = undefined;
                                         $scope.previousLimmaAnalysis = undefined;
                                         $scope.previousAnalysisList = undefined;
+                                        $scope.clickSelectionMode = false;
 
                                         $scope.buildPreviousAnalysisList = function() {
 
-                                            $scope.previousHCLClusters = [];
+                                        $scope.previousHCLClusters = [];
 
-                                            $scope.previousLimmaAnalysis = [];
+                                        $scope.previousLimmaAnalysis = [];
 
-                                            $http(
+                                        $http(
                                                     {
                                                         method : 'GET',
                                                         url : '/dataset/'
@@ -143,82 +144,31 @@ define(
                                                             format : 'json'
                                                         }
                                                     })
-                                                    .then(
-                                                            function() {
+                                                    .then(function(res) {
+                                                        if(res.status == 200){
+                                                            if (res.data.type == 'row') {
+                                                                console.log(res.data)
+                                                                $scope.heatmapLeftTree = res.data.root;
+                                                                $scope.heatmapData.row = res.data;
+                                                            } else if (res.data.type == 'column') {
+                                                                $scope.heatmapTopTree = res.data.root;
+                                                                $scope.heatmapData.column= res.data;
+                                                            }
+                                                        } else {
+                                                             var message = "Could not update heatmap. If "
+                                                                + "problem persists, please contact us.";
 
-                                                                //$('#heatmapTabLink').trigger("click");
+                                                             var header = "Heatmap Update Problem (Error Code: "
+                                                                + res.status
+                                                                + ")";
+                                                             
+                                                             alertService.error(message,header);
+                                                                
+                                                        }
 
-                                                                $http(
-                                                                        {
-                                                                            method : 'GET',
-                                                                            url : '/dataset/'
-                                                                                    + $routeParams.datasetName
-                                                                                    + '/data',
-                                                                            params : {
-                                                                                format : 'json'
-                                                                            }
-                                                                        })
-                                                                        .then(
-                                                                                function(
-                                                                                        response) {
-                                                                                    
-                                                                                    var data = response.data;
+                                                                
 
-                                                                                    if (data.column.root) {
-
-                                                                                        // apply
-                                                                                        // column
-                                                                                        // cluster
-                                                                                        // to
-                                                                                        // dendogram
-
-                                                                                        $scope.heatmapTopTree = data.column.root;
-
-                                                                                    };
-
-                                                                                    if (data.row.root) {
-
-                                                                                        $scope.heatmapLeftTree = data.row.root;
-
-                                                                                    };
-
-                                                                                    // Apply
-                                                                                    // new
-                                                                                    // ordering
-                                                                                    // and
-                                                                                    // dataset
-                                                                                    // to
-                                                                                    // held
-                                                                                    // heatmap
-                                                                                    $scope.heatmapData = data;
-
-                                                                                },
-                                                                                function() {
-                                                                                    // Redirect
-                                                                                    // to
-                                                                                    // home
-                                                                                    // if
-                                                                                    // errored
-                                                                                    // out
-                                                                                    $loc
-                                                                                            .path('/');
-                                                                                });
-
-                                                            },
-                                                            function() {
-
-                                                                var message = "Could not update heatmap. If "
-                                                                        + "problem persists, please contact us."
-
-                                                                var header = "Heatmap Clustering Update Problem (Error Code: "
-                                                                        + s
-                                                                        + ")"
-                                                                alertService
-                                                                        .error(
-                                                                                message,
-                                                                                header);
-
-                                                            })
+                                                   });
 
                                         };
 
