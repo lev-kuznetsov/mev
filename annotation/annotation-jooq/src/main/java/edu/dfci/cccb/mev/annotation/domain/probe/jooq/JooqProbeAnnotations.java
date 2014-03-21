@@ -7,6 +7,7 @@ import static org.jooq.impl.DSL.using;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import org.jooq.ResultQuery;
 import org.jooq.Table;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotation;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
 import edu.dfci.cccb.mev.annotation.domain.probe.prototype.AbstractProbeAnnotations;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
@@ -84,6 +86,12 @@ public class JooqProbeAnnotations extends AbstractProbeAnnotations {
       e.printStackTrace();
     }
     return input;
+  }
+
+  @Override
+  public void loadUrlResource (URL url) throws AnnotationException {
+    // TODO Auto-generated method stub
+    
   }
   
 }

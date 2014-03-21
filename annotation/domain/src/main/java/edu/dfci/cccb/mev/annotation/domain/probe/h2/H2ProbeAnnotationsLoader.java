@@ -86,7 +86,7 @@ public class H2ProbeAnnotationsLoader implements ProbeAnnotationsLoader {
   public int loadAll (ProbeAnnotationPlatforms probeAnnotationPlatforms) throws AnnotationException {
     int count=0;
     for(ProbeAnnotationPlatform probeAnnotationPlatform : probeAnnotationPlatforms.getAll ()){
-        loadUrlResource (probeAnnotationPlatform.annotationsUrl ());
+        probeAnnotationPlatform.annotations ().loadUrlResource (probeAnnotationPlatform.annotationsUrl ());
         count++;
     }
     return count;
@@ -98,7 +98,7 @@ public class H2ProbeAnnotationsLoader implements ProbeAnnotationsLoader {
         
         String tableName = FilenameUtils.getName (url.getPath ());        
         
-        log.debug ("****Loading Proba Annotations file: " + tableName);
+        log.debug ("****Loading Annotations file: " + tableName);
         
         String dropTableSql = DROP_TABLE_STATEMENT.replace (PARAM_TABLE_NAME, tableName);
         String createTableSql = CREATE_TABLE_STATEMENT.replace (PARAM_TABLE_NAME, tableName);

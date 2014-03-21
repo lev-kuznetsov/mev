@@ -1,74 +1,58 @@
 package edu.dfci.cccb.mev.annotation.domain.probe.h2;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.StringWriter;
+import java.net.URL;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.sql.Statement;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
 
-import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j;
+import org.apache.commons.io.FilenameUtils;
 
-import org.h2.tools.Csv;
+import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
+import edu.dfci.cccb.mev.annotation.domain.probe.prototype.AbstractH2Annotations;
 
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotation;
-import edu.dfci.cccb.mev.annotation.domain.probe.prototype.AbstractProbeAnnotations;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-@Log4j
-public class H2ProbeAnnotations extends AbstractProbeAnnotations {
-
-  private final String TABLE_NAME_PREFIX="PROBE_ANNOT_";  
-  private final String PARAM_TABLE_NAME="[table_name]"; 
-  private final String FULL_TABLE_NAME=TABLE_NAME_PREFIX+PARAM_TABLE_NAME;
-  private final String SELECT_STATEMENT="select * from table(PROBESET_ID VARCHAR=?) t left outer join PUBLIC.\""+FULL_TABLE_NAME+"\" mytest on t.PROBESET_ID=mytest.PROBESET_ID";
-  private final DataSource dataSource;  
+public class H2ProbeAnnotations extends AbstractH2Annotations {
+  
   
   @Inject 
   public H2ProbeAnnotations (String platformId, @Named("probe-annotations-datasource") DataSource dataSource) throws SQLException {
-    super(platformId);
-    this.dataSource = dataSource;
-  }
-
-  @Override
-  @SneakyThrows
-  public List<ProbeAnnotation> get (Dimension dimension) {
-    throw new UnsupportedOperationException("The get(Dimension dimension) method has not been implemented yet");    
-  }
-
-  @Override
-  @SneakyThrows
-  public InputStream getAsStream (Dimension dimension) {
-    
-    InputStream input=null;
-    
-    try(Connection connection = dataSource.getConnection ()){
-      String selectSql = SELECT_STATEMENT.replace (PARAM_TABLE_NAME,  this.platformId ());
-      if(log.isDebugEnabled ()){
-        log.debug ("Select Probe Annotations:" + selectSql);
-        log.debug ("dimension.keys().toArray(): " + dimension.keys ().toArray ());
-      }
-      try(PreparedStatement prep = connection.prepareStatement(selectSql);){        
-        
-        prep.setObject (1, dimension.keys ().toArray ());        
-        try(ResultSet rs = prep.executeQuery();){
-          Csv csv = new Csv();
-          csv.setFieldSeparatorWrite ("\t");          
-          StringWriter writer = new StringWriter();
-          csv.write (writer, rs);
-          
-          byte[] barray = writer.toString().getBytes("UTF-8");
-          input = new ByteArrayInputStream(barray);
-        }
-      }
-    }    
-    return input;
+    super(platformId, dataSource);
   }
   
+  @Override
+  protected String getSelectStatement () {
+    return "select * from table(PROBESET_ID VARCHAR=?) t "
+                    + "left outer join PUBLIC.\""+getFullTableName ()+"\" annotations on t.PROBESET_ID=annotations.PROBESET_ID";
+  }
+
+  @Override
+  protected String getTableNamePrefix () {
+    return "PROBE_ANNOT_";
+  }
+
+  @Override
+  protected String getCreateTableSql () {
+    return "CREATE CACHED TABLE IF NOT EXISTS PUBLIC.\""+getFullTableName()+"\"("+
+                    "CHIP_VENDOR VARCHAR,"+
+                    "CHIP_TYPE VARCHAR,"+
+                    "CREATE_DATE VARCHAR,"+
+                    "genome_species VARCHAR,"+
+                    "genome_version VARCHAR,"+
+                    "netaffx_annotation_netaffx_build VARCHAR,"+
+                    "PROBESET_ID VARCHAR PRIMARY KEY,"+
+                    "GENE_SYMBOL VARCHAR,"+
+                    "GENE_DESC VARCHAR,"+
+                    "CHR_LOCATION VARCHAR,"+
+                    "STRAND VARCHAR,"+
+                    "REFSEQ_ACCN VARCHAR)";
+  }
+  
+  @Override
+  protected String getUniqueIdColumnName () {
+    return "PROBESET_ID";
+  }
+
 }

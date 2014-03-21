@@ -90,7 +90,9 @@ public class ProbeAnnotationsConfigurationMain {
   
   @Bean @Inject
   public ProbeAnnotationPlatforms probeAnnotationPlatforms(@Named("probe-annotations-platforms-loader")ProbeAnnotationsLoader loader) throws MalformedURLException, IOException, AnnotationException{
-    ProbeAnnotationPlatforms probeAnnotationPlatforms = new MetafileProbeAnnotationPlatforms(probeAnnotationsPlatformsMetafile(), platformFactory ());
+    
+    ProbeAnnotationPlatforms probeAnnotationPlatforms = new MetafileProbeAnnotationPlatforms(platformFactory ());    
+    probeAnnotationPlatforms.loadFromFile (probeAnnotationsPlatformsMetafile());
     
     String sReload = environment.getProperty (MEV_PROBE_ANNOTATIONS_RELOAD_FLAG, "false");
     if(Boolean.parseBoolean (sReload)){
