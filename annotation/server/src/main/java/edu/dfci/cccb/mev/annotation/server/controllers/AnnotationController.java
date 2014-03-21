@@ -235,6 +235,12 @@ public class AnnotationController extends WebApplicationObjectSupport {
           }
         }
       }
+    }else{
+      String sProjectId = request.getParameter ("project");
+      if(sProjectId!=null && sProjectId.startsWith ("MEV-")){
+        response.sendRedirect ("index");
+        return;
+      }
     }
 
     wrappedRequest.setAttribute ("dataset", heatmap);

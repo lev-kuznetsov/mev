@@ -262,9 +262,18 @@ define(
                                                         }
 
                                                         if (typeof selection != 'undefined') {
-                                                            annotationsUrl += selection.properties.selectionFacetLink;
+                                                        	if(typeof selection.properties.selectionFacetLink != 'undefined')
+                                                        		annotationsUrl += selection.properties.selectionFacetLink;
+                                                        	else{
+                                                        		var facetUrl = "{\"facets\":[{\"c\":{\"type\":\"text\",\"name\":\"ID\",\"columnName\":\"MEVID\",\"mode\":\"regex\",\"caseSensitive\":false,\"query\":\""+
+                                                        		selection.keys.join("|")
+                                                        		+"\"}}]}"; 
+                                                        		var randomProjectId=Math.floor(Math.random()*11)
+                                                        		annotationsUrl += "project?project=MEV-"+randomProjectId+"&ui="+window.escape(facetUrl);
+                                                        		;
+                                                        	}
                                                         }
-
+                                                        console.log("annotationsUrl:"+annotationsUrl)
                                                         $scope.annotationsUrl = annotationsUrl;                                                             
                                                         var elm = document.querySelector('#annotationsTabLink');
                                                         $(elm).trigger('click');
