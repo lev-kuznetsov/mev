@@ -69,7 +69,7 @@ public class AnnotationController extends WebApplicationObjectSupport {
   private @Inject DatasetBuilder datasetBuilder;
   private @Inject Presets presets;
   private @Inject ProbeAnnotationPlatforms probeAnnotationPlatforms;
-
+  
   @PostConstruct
   private void createRefineServlet () throws ServletException {
     refineServlet = new RefineServlet ();
