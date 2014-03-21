@@ -1,17 +1,10 @@
 package edu.dfci.cccb.mev.annotation.domain.probe.h2;
 
-import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
 
-import org.apache.commons.io.FilenameUtils;
-
-import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
 import edu.dfci.cccb.mev.annotation.domain.probe.prototype.AbstractH2Annotations;
 
 public class H2ProbeAnnotations extends AbstractH2Annotations {

@@ -5,7 +5,6 @@ import java.util.List;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.experimental.Accessors;
-import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotation;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;

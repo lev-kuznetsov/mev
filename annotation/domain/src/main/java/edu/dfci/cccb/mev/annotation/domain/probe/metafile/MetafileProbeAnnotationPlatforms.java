@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
-
 import lombok.Getter;
 import lombok.Setter;
 
