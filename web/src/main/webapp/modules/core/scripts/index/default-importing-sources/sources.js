@@ -150,7 +150,7 @@ function ProbeAnnotationsImportingSourceUI(controller) {
 
 //ap:disable clipboard for MeV
 Refine.DefaultImportingController.sources.push({
-  "label": $.i18n._("Probe Annotations"),
+  "label": $.i18n._("Annotations"),
   "id": "probe-annotations",
   "uiClass": ProbeAnnotationsImportingSourceUI
 });
@@ -182,7 +182,7 @@ ProbeAnnotationsImportingSourceUI.prototype._renderPlatforms = function(platform
 	  } else {
 		  var table = $(
 		      '<table class="list-table"><tr>' +
-		      '<th>Select Probe Annotations</th>' +
+		      '<th>Select Annotations</th>' +
 		      '</tr></table>'
 		    ).appendTo(container)[0];
 		  
