@@ -19,8 +19,6 @@ define(
 
                                         if (!$routeParams.datasetName) {
 
-                                            $('#loading').modal(
-                                                    'hide');
                                             $loc.path('/');
 
                                         };
@@ -223,7 +221,7 @@ define(
                                                                     $scope.heatmapLeftTree = data.root;
                                                                     $scope.heatmapData.row = data;
                                                                 } else
-                                                                    if (res.data.type == 'column') {
+                                                                    if (data.type == 'column') {
                                                                         $scope.heatmapTopTree = data.root;
                                                                         $scope.heatmapData.column = data;
                                                                     }
@@ -266,23 +264,10 @@ define(
                                                 }
                                             })
                                             .success(function(data, status, headers, config) {
-                                                                $scope.userUploads = data;
-                                                                
-                                                                var message = "Could not upload data. If "
-                                                                    + "problem persists, please contact us.";
-
-                                                                var header = "Heatmap Update Problem (Error Code: "
-                                                                    + status
-                                                                    + ")";
-
-                                                                alertService
-                                                                    .error(
-                                                                            message,
-                                                                            header);
-                                                                
+                                                                $scope.userUploads = data;      
                                              })
                                              .error(function(data, status, headers, config) {
-                                                        var message = "Could not upload data. If "
+                                                        var message = "Could not upload datasets. If "
                                                             + "problem persists, please contact us.";
 
                                                         var header = "Heatmap Update Problem (Error Code: "
@@ -306,7 +291,8 @@ define(
                                     '$scope',
                                     '$element',
                                     '$attrs',
-                                    function(MevSelectionService, $scope, $element, $attrs) {
+                                    'alertService',
+                                    function(MevSelectionService, $scope, $element, $attrs , alertService) {
 
                                         $scope.baseUrl = '/annotations/'
                                                 + $scope.heatmapId
@@ -377,17 +363,22 @@ define(
                                                         $(elm).trigger('click');
                                                     });                             
                                         
-                                       $scope.$on('SeletionAddedEvent', function(dimensionType){
-                                    	  console.debug("selection added: "+angular.toJson(dimensionType)+"$scope.heatmapData.column.selections:"+angular.toJson($scope.heatmapData.column.selections));                                    	  
-                                    	  MevSelectionService.getColumnSelectionQ().then(function(d){                                    		  
-                                    		  console.debug("selections:"+angular.toJson($scope.selections));
-                                    		  $scope.heatmapData.column.selections=d;
-                                    	  });
-                                    	  
-                                    	  MevSelectionService.getRowSelectionQ().then(function(d){                                            
-                                              console.debug("selections:"+angular.toJson($scope.selections));
-                                              $scope.heatmapData.row.selections=d;
-                                          });
+                                       $scope.$on('SeletionAddedEvent', function(event, dimensionType){
+                                    	  console.debug("selection added: "+angular.toJson(dimensionType)+"$scope.heatmapData.column.selections:"+angular.toJson($scope.heatmapData.column.selections));
+
+                                    	  if(dimensionType=='column'){
+                                        	  MevSelectionService.getColumnSelectionQ().then(function(d){
+                                        		  $scope.heatmapData.column.selections=d;
+                                        	  });
+                                    	  }else if(dimensionType=='row'){
+                                        	  MevSelectionService.getRowSelectionQ().then(function(d){
+                                                  $scope.heatmapData.row.selections=d;
+                                              });
+                                    	  } else {
+                                    	      alertService.error(
+                                                      "Invalid dimension type:"+dimensionType,
+                                                      "Selection Add Event Error ");
+                                    	  }
                                     	  
                                        });
 
