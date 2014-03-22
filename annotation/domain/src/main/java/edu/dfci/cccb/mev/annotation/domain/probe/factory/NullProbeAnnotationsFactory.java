@@ -10,7 +10,7 @@ public class NullProbeAnnotationsFactory implements ProbeAnnotationsFactory {
   }
 
   @Override
-  public ProbeAnnotations create (String platformId) {
+  public ProbeAnnotations create (String platformId, String type) {
     return null;
   }
 

@@ -1,31 +1,40 @@
-function ExportSetDialog() { 	
-    this._createDialog();
-    
+function ExportSetDialog(isNew) { 	
+    this._createDialog(isNew);    
 }
 
 ExportSetDialog.prototype._lastItem=null;
 
 
-ExportSetDialog.prototype._createDialog = function() {
+ExportSetDialog.prototype._createDialog = function(isNew) {
     var self = this;
-    var dialog = $(DOM.loadHTML("core", "scripts/dialogs/export-set-dialog.html"));
-    this._elmts = DOM.bind(dialog);
+    this.isNew=isNew;
+    if(isNew)	
+    	this.dialog = $(DOM.loadHTML("core", "scripts/dialogs/export-set-dialog.html"));
+	else
+		this.dialog = $(DOM.loadHTML("core", "scripts/dialogs/update-set-dialog.html"));
+    this._elmts = DOM.bind(this.dialog);
     this._name="";
     this._description="";
     this._color="";
     this._dimension="";
-    if(theProject.metadata.customMetadata){
-    	if(theProject.metadata.customMetadata.selectionName)
-    		this._name=theProject.metadata.customMetadata.selectionName;
-    	if(theProject.metadata.customMetadata.selectionDescription)
-    		this._description=theProject.metadata.customMetadata.selectionDescription;
-    	if(theProject.metadata.customMetadata.selectionColor)
-    		this._color=theProject.metadata.customMetadata.selectionColor;
-    	else
-    		this._color='#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
-    	if(theProject.metadata.customMetadata.dimension)
-    		this._dimension=theProject.metadata.customMetadata.dimension;
-    	
+    this._oldName="";
+    this._oldDescription="";
+    this._oldColor="";
+	if(theProject.metadata.customMetadata.selectionName)
+		this._oldName=theProject.metadata.customMetadata.selectionName;
+	if(theProject.metadata.customMetadata.selectionDescription)
+		this._oldDescription=theProject.metadata.customMetadata.selectionDescription;	
+	if(theProject.metadata.customMetadata.selectionColor)
+		this._oldColor=theProject.metadata.customMetadata.selectionColor;	
+	if(theProject.metadata.customMetadata.dimension)
+		this._dimension=theProject.metadata.customMetadata.dimension;	
+    if(isNew==false){
+    	this._name=this._oldName;
+    	this._description=this._oldDescription;
+    	this._color=this._oldColor;    	    	
+    	$(this.dialog+"#set-name").text(this._name);
+    }else{    	
+    	this._color='#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
     }
     this._elmts.setName[0].value=this._name;
     this._elmts.setDescription[0].value=this._description;
@@ -48,7 +57,7 @@ ExportSetDialog.prototype._createDialog = function() {
     });
     */
     this._elmts.setColor.colorpicker({showOn:"button"});
-    this._level = DialogSystem.showDialog(dialog);
+    this._level = DialogSystem.showDialog(this.dialog);
 };
 
 ExportSetDialog.prototype._dismiss = function() {
@@ -73,7 +82,7 @@ ExportSetDialog.prototype._validate = function()
 		//this._elmts.setColor.colorpicker("showPalette");
 		return false;
 	  }
-
+	  
 	  this._name=name;
 	  this._color=color;
 	  this._description = this._elmts.setDescription[0].value;
@@ -103,8 +112,10 @@ ExportSetDialog.prototype._exportAjax = function(){
 		        var currentUrl = window.location.href;
 		        console.log("currentUrl:"+currentUrl);
 		        var newUrl = currentUrl.replace("/new/", "/"+Refine._lastItem.name+"/");
+		        if(Refine._lastItem.oldName!="")
+		        	newUrl = newUrl.replace("/"+Refine._lastItem.oldName+"/", "/"+Refine._lastItem.name+"/");
 		        console.log("newUrl:"+newUrl);
-		        window.location.replace(newUrl);
+		        window.location.replace(newUrl+Refine._lastItem.properties.selectionFacetLink);
 		      } else {
 		        alert($.i18n._('core-index')["error-rename"]+" " + data.message);
 		      }
@@ -113,13 +124,14 @@ ExportSetDialog.prototype._exportAjax = function(){
 		 
 		Refine._lastItem={
 			name: this._name,
+			oldName: this._oldName,
 			dimension: this._dimension,
 			properties: {
 				selectionDescription: this._description,
 				selectionColor: this._color,
 				selectionFacetLink: Refine.getPermanentLink(),
 			}
-		};		
+		};
 		$.ajax(postRequest);
 };
 

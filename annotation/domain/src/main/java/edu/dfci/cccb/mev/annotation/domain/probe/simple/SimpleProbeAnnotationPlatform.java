@@ -20,6 +20,6 @@ public class SimpleProbeAnnotationPlatform extends AbstractProbeAnnotationPlatfo
   
   public SimpleProbeAnnotationPlatform (String name, URL annotationsUrl) {
     super(name, annotationsUrl);
-    annotations = simpleProbeAnnotationsBuilder.create(annotationsUrl.toString ());
+    annotations = simpleProbeAnnotationsBuilder.create(annotationsUrl.toString (), "Level2");
   }
 }

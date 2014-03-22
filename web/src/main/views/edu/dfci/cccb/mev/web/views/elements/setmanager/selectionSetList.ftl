@@ -14,7 +14,7 @@
 		<div class="selectionSetDescription">{{selection.properties.selectionDescription}}</div>
 		<div class="selectionSetKeys">
 			<span ng-repeat="key in selection.keys"> {{key}}, </span>
-		</div>
+		</div>		
 	</div>
 	<div ng-show="selections.length<=0" class="selectionSetListItem">	
 		<span ng-transclude>No sets defined.</span>

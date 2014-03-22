@@ -18,6 +18,7 @@ public class MetafileProbeAnnotationPlatform extends AbstractProbeAnnotationPlat
   
   private @Getter String fileName;
   private @Getter String filePath;  
+  private @Getter String type;
   private @Getter URL rootUrl;  
   private @Setter @Getter @Inject ProbeAnnotationsFactory annotationsFactory;
   private final @Getter ProbeAnnotations annotations;
@@ -28,19 +29,21 @@ public class MetafileProbeAnnotationPlatform extends AbstractProbeAnnotationPlat
                                          ProbeAnnotationsFactory annotationsFactory) throws MalformedURLException{
     this(
          (String)values[0],
-         (String)values[1], 
+         (String)values[1],
+         (String)values[2],
          root, 
          annotationsFactory
         );
   }
   
-  public MetafileProbeAnnotationPlatform(String fileName, String filePath, URL root, ProbeAnnotationsFactory annotationsFactory) throws MalformedURLException
+  public MetafileProbeAnnotationPlatform(String fileName, String filePath, String type, URL root, ProbeAnnotationsFactory annotationsFactory) throws MalformedURLException
   {
     super(fileName, new URL(root, filePath+fileName));
     this.rootUrl=root;    
     this.fileName=fileName;
     this.filePath=filePath;
-    annotations=annotationsFactory.create (fileName);
+    this.type=type;
+    annotations=annotationsFactory.create (fileName, type);
   }
 
 }
