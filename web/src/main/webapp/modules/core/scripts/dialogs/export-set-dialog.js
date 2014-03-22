@@ -112,7 +112,8 @@ ExportSetDialog.prototype._exportAjax = function(){
 		        var currentUrl = window.location.href;
 		        console.log("currentUrl:"+currentUrl);
 		        var newUrl = currentUrl.replace("/new/", "/"+Refine._lastItem.name+"/");
-		        newUrl = newUrl.replace("/"+Refine._lastItem.oldName+"/", "/"+Refine._lastItem.name+"/");
+		        if(Refine._lastItem.oldName!="")
+		        	newUrl = newUrl.replace("/"+Refine._lastItem.oldName+"/", "/"+Refine._lastItem.name+"/");
 		        console.log("newUrl:"+newUrl);
 		        window.location.replace(newUrl+Refine._lastItem.properties.selectionFacetLink);
 		      } else {
