@@ -26,7 +26,6 @@ import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationE
 @Log4j
 public class H2ProbeAnnotationsLoader implements ProbeAnnotationsLoader {
 
-  private Path rootPath;  
   private final DataSource dataSource;
   
   public final static String TABLE_NAME_PREFIX="PROBE_ANNOT_";  
@@ -66,7 +65,7 @@ public class H2ProbeAnnotationsLoader implements ProbeAnnotationsLoader {
     int count=0;
     
     try{
-      rootPath = Paths.get(rootFolder.toURI ());
+      Path rootPath = Paths.get(rootFolder.toURI ());
       if(rootPath==null)
         throw new IOException ("Root Folder "+rootFolder.toURI ()+" not found");
       
