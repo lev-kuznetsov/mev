@@ -6,11 +6,12 @@ define (
           .module ('myApp.services', [])
           .value ('appVersion', '0.1')
           .value ('appName', 'MeV')
+          .value ('debugStatus', true)
           .filter('filterThreshold', [function(){
             
         	  return function(input, threshold, on){
         	    var output = input.filter( function(d){
-        	       return (d[on] <= threshold) ? true : false
+        	       return (d[on] <= threshold ) ? true : false
         	    });
         	    
         	    return (threshold == undefined) ? input : output;
@@ -26,9 +27,41 @@ define (
               url : "#"
             } ];
           } ])
-          .factory ('analysisOptions', function () {
-
-          })
+          .factory ('logger', ['debugStatus', function (debug) {
+              
+              function wrapper(message, type){
+                  
+                  var val = message
+                  
+                  if (type == 'I'){
+                      val = "INF: " + message; 
+                  } else if (type == 'E') {
+                      val = "ERR: " + message; 
+                  } else if (type == 'W') {
+                      val = "WAR: " + message; 
+                  } else if (type == 'S') {
+                      val = "SUC: " + message;
+                  } 
+                  
+                  return val
+              }
+              
+              return {
+                  error : function(message, type){
+                      wrapper(message, 'E')
+                  },
+                  info : function(message, type){
+                      wrapper(message, 'I')
+                  },
+                  warning : function(message, type){
+                      wrapper(message, 'W')
+                  },
+                  success : function(message, type){
+                      wrapper(message, 'S')
+                  },
+              }
+              
+          }])
           .factory (
               'pseudoRandomStringGenerator',
               function () {
