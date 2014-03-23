@@ -154,6 +154,8 @@ function initializeUI(uiState) {
 	  $("#or-proj-reset").hide();
 	  $("#export-set").hide();
 	  $("#export-set-button").hide();
+	  $("#update-set").hide();
+	  $("#update-set-button").hide();
 	  $("#or-proj-import-preset-link").show();
 	  $("#or-proj-import-preset").show();
 	  $("#or-proj-import-preset-list-link").show();
