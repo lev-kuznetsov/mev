@@ -82,6 +82,11 @@ public class Views {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/modal.ftl").build ();
   }
 
+  @Bean (name = "elements/limmaAccordionList")
+  public FreeMarkerView elementLimmaAccordionList (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/limmaAccordionList.ftl").build ();
+  }
+  
   @Bean (name = "elements/limmaAccordion")
   public FreeMarkerView elementLimmaAccordion (FreeMarkerViewBuilder builder) {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/limmaAccordion.ftl").build ();
