@@ -57,7 +57,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <a href="javascript:{};" class="button" id="or-proj-import-preset-list-link"><span id="or-proj-import-preset-list">Back to List</span></a>
         <a href="javascript:{};" class="button button-primary" id="or-proj-import-preset-link"><span id="or-proj-import-preset">Import Selected Samples</span></a>        
         <a class="button" bind="exportButton" id="export-button" href="#export"><span class="button-menu" id="or-proj-export"></span></a>
-        <a class="button" bind="exportSet" id="export-set" href="#export-set"><span id="export-set-button">Save Set</span></a>
+        <a class="button" bind="updateSet" id="update-set" href="javascript:{};"><span id="update-set-button">Update Set</span></a>
+        <a class="button default-button" bind="exportSet" id="export-set" href="javascript:{};"><span id="export-set-button">Save New Set</span></a>
         <a class="button" bind="close" id="close-link" href="#close"><span id="close-button">Close</span></a>
         <a href="https://github.com/OpenRefine/OpenRefine/wiki/Documentation-For-Users" target="_blank" class="button" id="or-proj-help-link"><span id="or-proj-help"></span></a>
       </div>

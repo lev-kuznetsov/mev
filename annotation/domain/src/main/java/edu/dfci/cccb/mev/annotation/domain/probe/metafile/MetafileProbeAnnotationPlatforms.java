@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,31 +31,34 @@ public class MetafileProbeAnnotationPlatforms extends AbstractProbeAnnotationPla
   @Getter @Setter @Inject ProbeAnnotationPlatformFactory platformFactory;
   
   @Inject
-  public MetafileProbeAnnotationPlatforms (@Named("probe-annotatinos-platforms-metafile") URL metadata, ProbeAnnotationPlatformFactory platformFactory) throws MalformedURLException {
+  public MetafileProbeAnnotationPlatforms (ProbeAnnotationPlatformFactory platformFactory) throws MalformedURLException {
     
     this.platformFactory=platformFactory;
     platforms = new ArrayList<ProbeAnnotationPlatform>();
-    CsvConfiguration config = new CsvConfiguration(
-      DEFAULT_COLUMN_NAME_LINE, DEFAULT_ENCODING, '\t', DEFAULT_QUOTE_CHAR, DEFAULT_ESCAPE_CHAR, true, false);
-    
-    CsvDataContext sourceDataContext;
-    Table sourceTable;
-    sourceDataContext = new CsvDataContext (metadata, config);                                                     
-    Schema csvSchema = sourceDataContext.getDefaultSchema();
-    
-    Table[] tables = csvSchema.getTables();
-    assert tables.length == 1;
-    sourceTable = tables[0];    
-
-    
-    try(DataSet dataset = sourceDataContext.materializeMainSchemaTable (sourceTable, sourceTable.getColumns (), 0)){
-      while(dataset.next ()){
-        platforms.add (platformFactory.create (dataset.getRow ().getValues ()));
-      }
-    }
-            
+                
   }
 
+  public void loadFromFile(URL metadata){
+    CsvConfiguration config = new CsvConfiguration(DEFAULT_COLUMN_NAME_LINE, DEFAULT_ENCODING, '\t', DEFAULT_QUOTE_CHAR, DEFAULT_ESCAPE_CHAR, true, false);
+     
+     CsvDataContext sourceDataContext;
+     Table sourceTable;
+     sourceDataContext = new CsvDataContext (metadata, config);                                                     
+     Schema csvSchema = sourceDataContext.getDefaultSchema();
+     
+     Table[] tables = csvSchema.getTables();
+     assert tables.length == 1;
+     sourceTable = tables[0];    
+    
+     
+     try(DataSet dataset = sourceDataContext.materializeMainSchemaTable (sourceTable, sourceTable.getColumns (), 0)){
+       while(dataset.next ()){
+         platforms.add (platformFactory.create (dataset.getRow ().getValues ()));
+       }
+     }
+
+  }
+  
   @Override
   public List<ProbeAnnotationPlatform> getAll () {
     return platforms;
@@ -65,8 +66,10 @@ public class MetafileProbeAnnotationPlatforms extends AbstractProbeAnnotationPla
 
   @Override
   public ProbeAnnotationPlatform get (String name) throws ProbeAnnotationSourceNotFoundException {
-    for(ProbeAnnotationPlatform source : platforms)
-      return source;
+    for(ProbeAnnotationPlatform source : platforms){
+      if(source.name ().equalsIgnoreCase (name))
+        return source;
+    }
     throw new ProbeAnnotationSourceNotFoundException("Cant fine name: '"+name+"'");
   }
 

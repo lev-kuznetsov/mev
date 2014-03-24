@@ -154,27 +154,39 @@ function initializeUI(uiState) {
 	  $("#or-proj-reset").hide();
 	  $("#export-set").hide();
 	  $("#export-set-button").hide();
+	  $("#update-set").hide();
+	  $("#update-set-button").hide();
 	  $("#or-proj-import-preset-link").show();
 	  $("#or-proj-import-preset").show();
 	  $("#or-proj-import-preset-list-link").show();
 	  $("#or-proj-import-preset-lit").show();
-  }else{
+  }else{	  	
 	  $("#or-proj-import-preset-link").hide();
 	  $("#or-proj-import-preset").hide();
 	  $("#or-proj-import-preset-list-link").hide();
 	  $("#or-proj-import-preset-lit").hide();
-	  if(theProject.metadata.customMetadata.dimension)
+	  if(theProject.metadata.customMetadata.dimension)  
 		  title = toProperCase(theProject.metadata.customMetadata.dimension);
+	  
 	  title+=" Annotations"
-	  if(theProject.metadata.customMetadata.selectionName!="")
+	  if(theProject.metadata.customMetadata.selectionName!=""){
 		  title += " (" + theProject.metadata.customMetadata.selectionName + ")";
+		  $("#export-set").removeClass("default-button");
+		  $("#update-set").show();
+		  $("#update-set-button").show();
+		  $("#export-set").removeClass("default-button");
+		  $("#update-set").addClass("default-button");
+	  }else{
+		  $("#update-set").hide();
+		  $("#update-set-button").hide();
+	  }
   }
-  
   Refine.setTitle(false, title);
   $("#or-proj-import-preset").click(Refine._importPreset);
   $("#or-proj-import-preset-list").click(Refine._viewToPresetList);
   $("#or-proj-reset").click(Refine._reset);
   $("#export-set-button").click(Refine._exportSet);
+  $("#update-set-button").click(Refine._updateSet);
   $("#close-button").click(Refine._close);  
   //ap:disable project renaming for MeV
   //$('#project-name-button').click(Refine._renameProject);  
@@ -278,9 +290,11 @@ Refine._renameProject = function() {
 };
 
 Refine._exportSet = function() {
-  new ExportSetDialog();
+  new ExportSetDialog(true);
 };
-
+Refine._updateSet = function() {
+  new ExportSetDialog(false);
+};
 Refine._importPreset = function(){
 	new ImportPresetDialog();
 };

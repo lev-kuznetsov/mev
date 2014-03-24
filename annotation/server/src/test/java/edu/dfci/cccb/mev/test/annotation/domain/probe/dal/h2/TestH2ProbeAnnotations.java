@@ -25,6 +25,7 @@ import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatfor
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
+import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2GeneAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2ProbeAnnotations;
 import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
@@ -48,7 +49,7 @@ public class TestH2ProbeAnnotations {
   }
   
   @Test 
-  public void testGetAsStream () throws SQLException, IOException {
+  public void testGetAsStreamProbes () throws SQLException, IOException {
     
     List<String> keys = new ArrayList<String> (){
       /**
@@ -65,6 +66,32 @@ public class TestH2ProbeAnnotations {
     Dimension dimension = new SimpleDimension(Type.ROW, keys, new ArrayListSelections (), null );
     
     ProbeAnnotations probeAnns = new H2ProbeAnnotations("HT_HG-U133A.na33.top3.annot.out.tsv", dataSource);
+    InputStream input = probeAnns.getAsStream (dimension);
+    
+    StringWriter writer = new StringWriter();
+    IOUtils.copy(input, writer, "UTF-8");
+    String theString = writer.toString();
+    log.debug ("Probes: " + theString);
+  }
+
+  @Test 
+  public void testGetAsStreamGenes () throws SQLException, IOException {
+    
+    List<String> keys = new ArrayList<String> (){
+      /**
+       * 
+       */
+      private static final long serialVersionUID = 1L;
+
+      {
+        add("RFC2");
+        add("HSPA6");
+        add("not_found"); //not in the annotation file
+      }
+    };
+    Dimension dimension = new SimpleDimension(Type.ROW, keys, new ArrayListSelections (), null );
+    
+    ProbeAnnotations probeAnns = new H2GeneAnnotations("GENE.top3.annot.out.tsv", dataSource);
     InputStream input = probeAnns.getAsStream (dimension);
     
     StringWriter writer = new StringWriter();

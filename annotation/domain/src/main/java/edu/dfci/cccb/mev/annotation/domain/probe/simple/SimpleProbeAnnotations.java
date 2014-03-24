@@ -79,6 +79,12 @@ public class SimpleProbeAnnotations implements ProbeAnnotations{
     return platformId;
   }
 
+  @Override
+  public void loadUrlResource (URL url) throws AnnotationException {
+    // TODO Auto-generated method stub
+    
+  }
+
   
 
 }

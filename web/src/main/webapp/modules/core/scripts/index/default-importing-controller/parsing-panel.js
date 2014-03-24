@@ -130,7 +130,7 @@ Refine.DefaultImportingController.prototype._prepareParsingPanel = function() {
   $('#or-import-updating').text($.i18n._('core-index-import')["updating-preview"]);
   $('#or-import-parseas').text($.i18n._('core-index-import')["parse-as"]);
   
-  this._parsingPanelElmts.probeAnnotationsButton.html('Lookup Probe Annotations');
+  this._parsingPanelElmts.probeAnnotationsButton.html('Lookup Annotations');
   this._parsingPanelElmts.datasetAnnotationsButton.html('Use Dataset Annotations');
   if(self._getAnnotationSource()=="probe"){
 	  this._parsingPanelElmts.datasetAnnotationsButton.css("display", "inline");

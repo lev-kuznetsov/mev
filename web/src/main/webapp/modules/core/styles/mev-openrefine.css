@@ -240,13 +240,13 @@ color: #0088cc;
 text-decoration: none;
 }
 
-#export-set {
+a.default-button {
 background: -webkit-gradient(linear, left top, left bottom, from(#51a351), to(#418241));
 background: -moz-linear-gradient(top, #51a351, #418241);
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#51a351', endColorstr='#418241');
 }
 
-#export-set-button, #export-set.button{ 
+a.default-button span{ 
 color: #ffffff;
 background-color: #51a351;
 }
