@@ -1,4 +1,3 @@
-<accordion close-others="false">
 	    <accordion-group ng-repeat="limma in previousLimmaAnalysis" heading="{{limma.datar.type}} : {{limma.name}}" is-open="isLimmaOpen" ng-init="isLimmaOpen=false">
 	    	<div class="col-md-12">
 	    	
@@ -10,6 +9,8 @@
 			                  <i class="icon-white icon-download"></i> Download
 			                </a> 
 			            </button>
+		              
+			            
 		              
 		              </div>	    			
 	    			</div>
@@ -25,17 +26,23 @@
 		                            				<hr>
 		                            				<form-group>
 		                            					<form>
-		                            						Genes: <input type="text" class="input-small" ng-model="search.id">
+		                            						Genes: <input type="text" class="input-small" ng-model="filterParams.id">
 		                            					<form>
 													</form-group>
 													<br>
 													<br>
 													<form-group>
 														<form class="form-inline">
-															Threshold: <input type="text" class="input-small" placeholder="P-Value" ng-model="pvalueThreshold">
-															<input type="text"  class="input-small" placeholder="Log Fold" ng-model="logFoldThreshold">
+															Threshold: <input type="text" class="input-small" placeholder="P-Value" ng-model="filterParams.pValueThreshold">
+															<input type="text"  class="input-small" placeholder="Log Fold" ng-model="filterParams.logFoldThreshold">
 		                            					</form>
 		                            				</form-group>
+		                            				
+		                            				<button class="btn btn btn-info pull-right" >
+										                <a ng-click="addSelections()">
+										                  </i> Create Selections From Results
+										                </a> 
+										            </button>
 		                            				
 		                            				<h3>Results</h3>
 		                            				<hr>
@@ -55,7 +62,7 @@
 					                                    </tr>
 	
 							                            <tbody>
-							                                    <tr ng-repeat="row in limma.datar.results |filter:search| filterThreshold: pvalueThreshold : 'pValue' | filterThreshold: logFoldThreshold : 'logFoldChange' | orderBy: limmaTableOrdering ">
+							                                    <tr ng-repeat="row in limma.datar.results |filter:filterParams.id| filterThreshold: filterParams.pValueThreshold : 'pValue' | filterThreshold: filterParams.logFoldThreshold : 'logFoldChange' | orderBy: limmaTableOrdering ">
 							                                            <td>
 							                                                    {{row["id"]}}
 							                                            </td>
@@ -84,6 +91,3 @@
 		            </div>
 			</div>
 		</accordion-group>
-		
-</accordion>
-
