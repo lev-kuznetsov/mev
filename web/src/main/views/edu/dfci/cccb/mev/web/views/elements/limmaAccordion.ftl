@@ -1,4 +1,4 @@
-	    <accordion-group ng-repeat="limma in previousLimmaAnalysis" heading="{{limma.datar.type}} : {{limma.name}}" is-open="isLimmaOpen" ng-init="isLimmaOpen=false">
+	    <accordion-group heading="{{limma.datar.type}} : {{limma.name}}" is-open="isLimmaOpen" ng-init="isLimmaOpen=false">
 	    	<div class="col-md-12">
 	    	
 	    			<div class="row">
@@ -38,8 +38,8 @@
 		                            					</form>
 		                            				</form-group>
 		                            				
-		                            				<button class="btn btn btn-info pull-right" >
-										                <a ng-click="addSelections()">
+										            <button class="btn btn-info pull-right" >
+										                <a data-target="#selectionAdd{{limma.name}}" data-toggle="modal">
 										                  </i> Create Selections From Results
 										                </a> 
 										            </button>
@@ -91,3 +91,25 @@
 		            </div>
 			</div>
 		</accordion-group>
+		
+		<bsmodal bindid="selectionAdd{{limma.name}}" func="" header="Add New Selection for {{limma.name}}">
+
+			<div class="row">
+			
+				<form-group>
+					<form>
+						Name: <input type="text" class="input-small" ng-model="selectionParams.name">
+					<form>
+				</form-group>
+			
+			</div>
+			
+			<div class="row">
+			
+	            <button class="btn btn-success pull-right" >
+	                <a ng-click="addSelections()" data-dismiss="modal" aria-hidden="true">
+	                  Create Selections From Results
+	                </a> 
+	            </button>
+            </div>
+		</bsmodal> 

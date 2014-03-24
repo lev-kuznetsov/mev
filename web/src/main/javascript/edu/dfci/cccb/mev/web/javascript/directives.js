@@ -197,10 +197,7 @@ define(
                                     return {
                                         
                                         restrict : 'E',
-                                        templateUrl : '/container/view/elements/limmaAccordionList',
-                                        link : function(scope) {
-                                            var blah = 2;
-                                        }
+                                        templateUrl : '/container/view/elements/limmaAccordionList'
                                         
                                     };
 
@@ -227,7 +224,10 @@ define(
                                                 'pValueThreshold' : undefined
                                         }
                                         
-                                        scope.selectionsName = 'KingDeeDeeDee'
+                                        scope.selectionParams = {
+                                                name: undefined,
+                                                color: '#'+Math.floor(Math.random()*16777215).toString(16)
+                                        }
                                         
                                         scope.addSelections = function(){
                                             
@@ -243,15 +243,17 @@ define(
                                                 return d.id
                                             })
                                             
+                                            console.log(scope.selectionParams.color)
+                                            
                                             $http({
                                                 method:"PUT", 
                                                 url:"/dataset/" + $routeParams.datasetName + "/" 
                                                 + 'row' 
-                                                + "/selection/" + scope.selectionsName,
+                                                + "/selection/" + scope.selectionParams.name,
                                                 params:{
                                                     format:'json',
                                                     properties : [{
-                                                        selectionColor:'#d38394', 
+                                                        selectionColor: scope.selectionParams.color, 
                                                         selectionDescription:'first mock selection'
                                                     }],
                                                     keys: step4
@@ -259,7 +261,7 @@ define(
                                             })
                                             .success(function(response){
                                                     scope.$emit('SeletionAddedEvent', 'row');
-                                                    var message = "Added New Selection!";
+                                                    var message = "Added " + scope.selectionParams.name + " as new Selection!";
                                                     var header = "Heatmap Selection Addition";
                                                      
                                                     alertService.success(message,header);
