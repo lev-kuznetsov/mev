@@ -97,7 +97,7 @@ define(['jquery','angular'], function(jquery, angular){
 						$scope.heatmapData.row.selections.push(item);						
 					}
 				});
-				$scope.$emit('SeletionAddedEvent', 'column');
+				$scope.$emit('SeletionAddedEvent', item.dimension.toLowerCase());
 			};
 			
 			
