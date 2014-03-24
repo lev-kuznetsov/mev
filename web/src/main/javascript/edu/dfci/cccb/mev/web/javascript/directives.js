@@ -268,7 +268,7 @@ define(
                                                 var message = "Couldn't add new selection. If "
                                                     + "problem persists, please contact us.";
 
-                                                 var header = "Heatmap Download Problem (Error Code: "
+                                                 var header = "Selection Addition Problem (Error Code: "
                                                     + status
                                                     + ")";
                                                  
