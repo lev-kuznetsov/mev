@@ -13,8 +13,8 @@ define (
         	    var output = input.filter( function(d){
         	       return (d[on] <= threshold ) ? true : false
         	    });
+        	    return (threshold == undefined || threshold == '') ? input : output;
         	    
-        	    return (threshold == undefined) ? input : output;
         	  }
         	  
           }])
