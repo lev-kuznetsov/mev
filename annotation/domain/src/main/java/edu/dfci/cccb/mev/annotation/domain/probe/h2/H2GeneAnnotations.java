@@ -13,7 +13,7 @@ public class H2GeneAnnotations extends AbstractH2Annotations {
 
   @Override
   protected String getSelectStatement () {
-    return "select * from table(GENE_SYMBOL VARCHAR=?) t "
+    return "select annotations.* from table(GENE_SYMBOL VARCHAR=?) t "
                     + "left outer join PUBLIC.\""+getFullTableName ()+"\" annotations on t.GENE_SYMBOL=annotations.Symbol";
   }
 
