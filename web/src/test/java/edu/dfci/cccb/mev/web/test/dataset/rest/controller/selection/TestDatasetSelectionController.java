@@ -95,7 +95,7 @@ public class TestDatasetSelectionController {
     workspace.put (mockDataset);
   }
   
-  @Test @Ignore
+  @Test 
   public void testGetSelections () throws Exception {
       
     //create selection
@@ -153,7 +153,7 @@ public class TestDatasetSelectionController {
   }
 
   
-  @Test @Ignore
+  @Test 
   public void testPostSelections () throws Exception {
       
     //create selection
