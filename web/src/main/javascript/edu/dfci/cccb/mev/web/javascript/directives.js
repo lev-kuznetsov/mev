@@ -1920,11 +1920,8 @@ define(
                                                     + params.dimension.type 
                                                     + "/selection/" + params.name,
                                                     params:{
-                                                        format:'json',
-                                                        properties : [{
-                                                            selectionColor:params.color, 
-                                                            selectionDescription:'first mock selection'
-                                                        }],
+                                                    	selectionDescription: 'first mock selection',
+                                                        selectionColor: params.color,                                                        
                                                         keys: scope.treeSelections[params.dimension.value]
                                                     }
                                                 })
