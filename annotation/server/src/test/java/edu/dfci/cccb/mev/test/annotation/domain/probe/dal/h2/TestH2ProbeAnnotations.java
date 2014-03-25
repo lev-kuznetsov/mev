@@ -91,7 +91,7 @@ public class TestH2ProbeAnnotations {
     };
     Dimension dimension = new SimpleDimension(Type.ROW, keys, new ArrayListSelections (), null );
     
-    ProbeAnnotations probeAnns = new H2GeneAnnotations("GENE.top3.annot.out.tsv", dataSource);
+    ProbeAnnotations probeAnns = new H2GeneAnnotations("geneSymbol_goAnnotations.top3.tsv", dataSource);
     InputStream input = probeAnns.getAsStream (dimension);
     
     StringWriter writer = new StringWriter();

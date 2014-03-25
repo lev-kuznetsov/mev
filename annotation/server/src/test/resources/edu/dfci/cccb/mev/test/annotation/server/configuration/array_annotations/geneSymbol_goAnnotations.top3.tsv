@@ -1,0 +1,4 @@
+Symbol	Name	GO:biological_process	GO:cellular_component	GO:molecular_function
+RPS11	40S ribosomal protein S11	translational elongation	cytosol|cytosolic small ribosomal subunit|intracellular|ribosome	protein binding|rRNA binding|structural constituent of ribosome
+ELMO2	Engulfment and cell motility protein 2	apoptosis|phagocytosis	cytoplasm|cytoskeleton	binding|SH3 domain binding
+CREB3L1	cAMP-responsive element-binding protein 3-like protein 1	regulation of transcription, DNA-dependent|response to unfolded protein	endoplasmic reticulum|endoplasmic reticulum membrane|integral to membrane|membrane|nucleus	protein dimerization activity|sequence-specific DNA binding|transcription factor activity

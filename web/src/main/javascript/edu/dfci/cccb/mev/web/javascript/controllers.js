@@ -225,6 +225,7 @@ define(
                                                                         $scope.heatmapTopTree = data.root;
                                                                         $scope.heatmapData.column = data;
                                                                     }
+                                                                $scope.$broadcast('ViewVisualizeTabEvent');
                                                             })
                                                     .error(
                                                             function(data, status, headers, config) {
@@ -315,8 +316,8 @@ define(
                                                 $scope.tabs.visualizeTabActive = true;
                                                 $scope.tabs.annotationsTabActive = false;
                                             }
-
                                         };
+                                        
                                         $scope.isActiveTab = function(name) {
                                             if ($scope.tabs.activeTab == name)
                                                 return true;
@@ -324,9 +325,7 @@ define(
                                                 return false;
                                         };
 
-                                        $scope
-                                                .$on(
-                                                        'ViewAnnotationsEvent',
+                                        $scope.$on('ViewAnnotationsEvent',
                                                         function(event, selection, dimension, annotationSource) {
                                                             var annotationsUrl = $scope.baseUrl
                                                                     + "/"
@@ -364,8 +363,9 @@ define(
                                                         $scope.annotationsUrl = annotationsUrl;                                                             
                                                         var elm = document.querySelector('#annotationsTabLink');
                                                         $(elm).trigger('click');
-                                                    });                             
+                                                    });//end:ViewAnnotationsEvent                     
                                         
+                                       
                                        $scope.$on('SeletionAddedEvent', function(event, dimensionType){
                                     	  console.debug("selection added: "+angular.toJson(dimensionType)+"$scope.heatmapData.column.selections:"+angular.toJson($scope.heatmapData.column.selections));
 
@@ -382,9 +382,16 @@ define(
                                                       "Invalid dimension type:"+dimensionType,
                                                       "Selection Add Event Error ");
                                     	  }
-                                    	  
-                                       });
+                                       }); //end:SelectionAddedEvent
+                                       
 
+                                       $scope.$on('ViewVisualizeTabEvent',
+                                           function(event) {                                    	   		
+                                               	var elm = document.querySelector('#heatmapTabLink');
+                                               	$(elm).trigger('click');
+                                               	event.preventDefault(); //mark event as handled, so further propagation will have no affect
+                                       		});//end:ViewVisualizeTabEvent
+                                       
                                     }]);
 
         });

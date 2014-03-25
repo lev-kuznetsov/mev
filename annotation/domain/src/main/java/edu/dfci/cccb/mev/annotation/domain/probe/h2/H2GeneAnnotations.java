@@ -14,7 +14,7 @@ public class H2GeneAnnotations extends AbstractH2Annotations {
   @Override
   protected String getSelectStatement () {
     return "select * from table(GENE_SYMBOL VARCHAR=?) t "
-                    + "left outer join PUBLIC.\""+getFullTableName ()+"\" annotations on t.GENE_SYMBOL=annotations.GENE_SYMBOL";
+                    + "left outer join PUBLIC.\""+getFullTableName ()+"\" annotations on t.GENE_SYMBOL=annotations.Symbol";
   }
 
   @Override
@@ -25,17 +25,16 @@ public class H2GeneAnnotations extends AbstractH2Annotations {
   @Override
   protected String getCreateTableSql () {
     return "CREATE CACHED TABLE IF NOT EXISTS PUBLIC.\""+getFullTableName()+"\"("+
-                    "genome_species VARCHAR,"+
-                    "genome_version VARCHAR,"+
-                    "GENE_SYMBOL VARCHAR,"+
-                    "GENE_DESC VARCHAR,"+
-                    "CHR_LOCATION VARCHAR,"+
-                    "STRAND VARCHAR,"+
-                    "REFSEQ_ACCN VARCHAR)";
+                    "Symbol VARCHAR,"+
+                    "Name VARCHAR,"+
+                    "GO_biological_process VARCHAR,"+
+                    "GO_cellular_component VARCHAR,"+
+                    "GO_molecular_function VARCHAR,"+
+                    ")";
   }
 
   @Override
   protected String getUniqueIdColumnName () {
-    return "GENE_SYMBOL";
+    return "Symbol";
   }
 }
