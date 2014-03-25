@@ -26,6 +26,7 @@ import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfigu
 import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.hcl.rest.configuration.HclRestConfiguration;
+import edu.dfci.cccb.mev.kmeans.rest.configuration.KMeansRestConfiguration;
 import edu.dfci.cccb.mev.limma.rest.configuration.LimmaRestConfiguration;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
@@ -44,21 +45,20 @@ public class ApplicationInitializer implements WebApplicationInitializer {
   public void onStartup (ServletContext servletContext) throws ServletException {
     AnnotationConfigWebApplicationContext mvcContext = new AnnotationConfigWebApplicationContext ();
 
-    
-    
     mvcContext.register (DispatcherConfiguration.class, PersistenceConfiguration.class, ContainerConfigurations.class);
 
-    mvcContext.register (DatasetRestConfiguration.class);        
+    mvcContext.register (DatasetRestConfiguration.class);
     mvcContext.register (PresetsRestConfiguration.class);
-    mvcContext.register (ProbeAnnotationsConfigurationMain.class);    
+    mvcContext.register (ProbeAnnotationsConfigurationMain.class);
     mvcContext.register (AnnotationServerConfiguration.class);
     mvcContext.register (HclRestConfiguration.class);
-    mvcContext.register (LimmaRestConfiguration.class);    
+    mvcContext.register (LimmaRestConfiguration.class);
+    mvcContext.register (KMeansRestConfiguration.class);
 
     DispatcherServlet dispatcher = new DispatcherServlet (mvcContext);
     Dynamic registration = servletContext.addServlet ("dispatcher", dispatcher);
-    
+
     registration.setLoadOnStartup (1);
-    registration.addMapping ("/");    
+    registration.addMapping ("/");
   }
 }
