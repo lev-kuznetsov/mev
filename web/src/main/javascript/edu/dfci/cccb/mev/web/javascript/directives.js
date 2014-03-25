@@ -53,7 +53,7 @@ define(
 
                                                 var rightPanel = jq('#rightPanel'), leftPanel = jq('#leftPanel'), centerTab = jq('div#tab'), pageWidth = jq(
                                                         'body')
-                                                        .width() - 50, showSidePanel = true;
+                                                        .width() - 50, panelCycle = 1;
 
                                                 var isDragging = false;
 
@@ -75,7 +75,7 @@ define(
                                                                             && mouse.pageX < pageWidth
                                                                                     * (9 / 10)
                                                                             && mouse.pageX > 0) {
-                                                                        showSidePanel = true;
+                                                                        showSidePanel = 1;
                                                                         leftPanel
                                                                                 .css(
                                                                                         "width",
@@ -103,46 +103,102 @@ define(
                                                                     }
 
                                                                 });
+                                                
+                                                var delay = 700, clicks = 0, timer = null;
+                                                
+                                                jq('div#tab').on("click", function(e){
+                                                    clicks++;
+                                                    if (clicks === 1){
+                                                        timer = setTimeout(function(){
+                                                            collapseSidePanel();
+                                                            clicks = 0;
+                                                        }, delay);
+                                                    } else if (clicks === 2) {
+                                                        clearTimeout(timer);
+                                                        expandSidePanel();
+                                                        clicks = 0;
+                                                    }
+                                                })
+                                                .on("dblclick", function(e){
+                                                   e.preventDefault(); 
+                                                });
+                                                
+                                                function expandSidePanel() { //Double click to expand
+                                                    if (panelCycle == 1) { //Middle value to left expand full
+                                                        
+                                                        jq('span#tab-icon')
+                                                            .attr("class", "glyphicon glyphicon-chevron-left glyphicon-white");
+                                                        
+                                                        leftPanel
+                                                            .css(
+                                                                    "width",
+                                                                    pageWidth* (9 / 10));
+                                                        leftPanel
+                                                            .children()
+                                                            .show();
+                                                        
+                                                        rightPanel
+                                                            .css(
+                                                                    "width",
+                                                                    pageWidth *(1- (9 / 10) ) );
+                                                        
+                                                        panelCycle = 2;
+                                                        
+                                                    } else if (panelCycle == 0){ //left hidden to middle
+                                                        jq('span#tab-icon')
+                                                            .attr("class", "glyphicon glyphicon-chevron-left glyphicon-white")
+                                                        
+                                                        leftPanel
+                                                            .css("width", pageWidth* (3 / 10));
+                                                        
+                                                        leftPanel
+                                                            .children()
+                                                            .show();
+                                                        
+                                                        rightPanel.css("width",
+                                                                    pageWidth *(1- (3 / 10) ) );
+                                                        
+                                                        panelCycle = 1;
+                                                    }
+                                                };
 
-                                                jq('div#tab')
-                                                        .click(
-                                                                function() {
+                                                function collapseSidePanel() { //Click to close
 
-                                                                    if (showSidePanel) {
-                                                                        jq('span#tab-icon')
-                                                                            .attr("class", "glyphicon glyphicon-chevron-right glyphicon-white")
-                                                                        leftPanel
-                                                                                .css(
-                                                                                        "width",
-                                                                                        0);
-                                                                        leftPanel
-                                                                                .children()
-                                                                                .hide();
-                                                                        rightPanel
-                                                                                .css(
-                                                                                        "width",
-                                                                                        pageWidth - 30);
-                                                                        showSidePanel = false;
-                                                                        
-                                                                        
-                                                                    } else {
-                                                                        jq('span#tab-icon')
-                                                                            .attr("class", "glyphicon glyphicon-chevron-left glyphicon-white")
-                                                                        leftPanel
-                                                                                .css(
-                                                                                        "width",
-                                                                                        pageWidth* (9 / 10));
-                                                                        leftPanel
-                                                                                .children()
-                                                                                .show();
-                                                                        rightPanel
-                                                                                .css(
-                                                                                        "width",
-                                                                                        pageWidth *(1- (9 / 10) ) );
-                                                                        showSidePanel = true;
-                                                                    }
+                                                    if (panelCycle == 1) { //Middle value to left close
+                                                        
+                                                        jq('span#tab-icon')
+                                                            .attr("class", "glyphicon glyphicon-chevron-right glyphicon-white");
+                                                        
+                                                        leftPanel
+                                                                .css(
+                                                                        "width",
+                                                                        0);
+                                                        leftPanel
+                                                                .children()
+                                                                .hide();
+                                                        rightPanel
+                                                                .css(
+                                                                        "width",
+                                                                        pageWidth - 30);
+                                                        panelCycle = 0;
+                                                        
+                                                        
+                                                    } else if (panelCycle == 2) { //Left expanded full to middle
+                                                        jq('span#tab-icon')
+                                                            .attr("class", "glyphicon glyphicon-chevron-left glyphicon-white")
+                                                        leftPanel
+                                                            .css("width", pageWidth* (3 / 10));
+                                                        
+                                                        leftPanel
+                                                            .children()
+                                                            .show();
+                                                        
+                                                        rightPanel.css("width",pageWidth *(1- (3 / 10) ) );
+                                                        
+                                                        panelCycle = 1;
+                                                    }
 
-                                                                })
+                                                };
 
                                                 scope.showLimmaTables = true;
 
