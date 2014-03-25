@@ -1973,16 +1973,16 @@ define(
                                             if (scope.treeSelections[params.dimension.value].length > 0){
                                                 
                                                 $http({
-                                                    method:"PUT", 
+                                                    method:"POST", 
                                                     url:"/dataset/" + $routeParams.datasetName + "/" 
                                                     + params.dimension.type 
-                                                    + "/selection/" + params.name,
-                                                    params:{
-                                                        format:'json',
-                                                        properties : [{
-                                                            selectionColor:params.color, 
-                                                            selectionDescription:'first mock selection'
-                                                        }],
+                                                    + "/selection/",
+                                                    data:{
+                                                    	name: params.name,
+                                                    	properties: {
+                                                    		selectionDescription: 'first mock selection',
+                                                    		selectionColor: params.color,                     
+                                                    	},
                                                         keys: scope.treeSelections[params.dimension.value]
                                                     }
                                                 })

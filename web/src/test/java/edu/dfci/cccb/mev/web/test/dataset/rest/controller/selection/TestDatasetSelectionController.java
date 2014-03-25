@@ -95,7 +95,7 @@ public class TestDatasetSelectionController {
     workspace.put (mockDataset);
   }
   
-  @Test @Ignore
+  @Test 
   public void testGetSelections () throws Exception {
       
     //create selection
@@ -120,7 +120,7 @@ public class TestDatasetSelectionController {
      .andReturn ();
   }
 
-  @Test @Ignore
+  @Test 
   public void testPutSelections () throws Exception {
       
     //create selection
@@ -137,7 +137,8 @@ public class TestDatasetSelectionController {
     @SuppressWarnings("unused")
     MvcResult mvcResult = this.mockMvc.perform(
                                                put("/dataset/mock_set/column/selection/first")                                               
-                                               .param ("properties", properties.toString ())
+                                               .param ("selectionDescription", properties.getProperty ("selectionDescription"))
+                                               .param ("selectionColor", properties.getProperty ("selectionColor"))
                                                .param ("keys", keys.toString ())
                                                .session (mockHttpSession)
                                                .accept("application/json")
@@ -147,7 +148,7 @@ public class TestDatasetSelectionController {
      .andReturn ();
     
     Selection actual = column.selections ().get ("first");    
-    Selection expected = new SimpleSelection ("first", properties, keys);;    
+    Selection expected = new SimpleSelection ("first", properties, keys);   
     assertThat(actual, equalTo (expected));
   }
 
@@ -158,7 +159,7 @@ public class TestDatasetSelectionController {
     //create selection
     final Properties properties = new Properties ();
     properties.put ("selectionDescription", "first mock selection");
-    properties.put ("selectionColor", "#ff0000");    
+    properties.put ("selectionColor", "#ff0000");
     final List<String> keys = new ArrayList<String> ();
     keys.add ("sa");
     keys.add ("sc");    
