@@ -18,7 +18,7 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><a data-toggle="modal" role="button" data-target="#hierarchical">Hierarchical</a></li>
-						<li><a data-toggle="modal" role="button" class="disabled" href=""><p class="muted">K-Means/Medians</p></a></li>
+						<li><a data-toggle="modal" role="button" data-target="#kmeansclust">K-Means</a></li>
 					</ul>
 				</li>
 				
