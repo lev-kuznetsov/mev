@@ -282,7 +282,7 @@ define(
                                         
                                         scope.selectionParams = {
                                                 name: undefined,
-                                                color: '#'+Math.floor(Math.random()*16777215).toString(16)
+                                                color: '#'+Math.floor(Math.random()*16777216).toString(16)
                                         }
                                         
                                         scope.addSelections = function(){
@@ -302,18 +302,19 @@ define(
                                             console.log(scope.selectionParams.color)
                                             
                                             $http({
-                                                method:"PUT", 
+                                                method:"POST", 
                                                 url:"/dataset/" + $routeParams.datasetName + "/" 
                                                 + 'row' 
-                                                + "/selection/" + scope.selectionParams.name,
-                                                params:{
-                                                    format:'json',
-                                                    properties : [{
-                                                        selectionColor: scope.selectionParams.color, 
-                                                        selectionDescription:'first mock selection'
-                                                    }],
-                                                    keys: step4
+                                                + "/selection",
+                                                data:{
+                                                    name: scope.selectionParams.name,
+                                                    properties: {
+                                                        selectionDescription: 'first mock selection',
+                                                        selectionColor:scope.selectionParams.color,                     
+                                                    },
+                                                    keys:step4
                                                 }
+                                        
                                             })
                                             .success(function(response){
                                                     scope.$emit('SeletionAddedEvent', 'row');
@@ -1967,7 +1968,7 @@ define(
                                             var params = {
                                                     'dimension':{'type':type, 'value':orientation},
                                                     'name':name,
-                                                    'color':'#ff0000'
+                                                    'color': '#'+Math.floor(Math.random()*16777216).toString(16)
                                             }
                                             
                                             if (scope.treeSelections[params.dimension.value].length > 0){
