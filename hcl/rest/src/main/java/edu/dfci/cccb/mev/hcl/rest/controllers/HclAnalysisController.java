@@ -98,7 +98,14 @@ public class HclAnalysisController {
     }.run (); // .start (); TODO: async analysis
   }
 
+  @Deprecated
   @RequestMapping (value = "/analysis/" + ANALYSIS_URL_ELEMENT,
+                   method = POST)
+  public Dimension applyNoType (@PathVariable (ANALYSIS_MAPPING_NAME) Hcl analysis) throws DatasetException {
+    return analysis.apply ();
+  }
+
+  @RequestMapping (value = "/analysis/" + ANALYSIS_URL_ELEMENT + "/hcl",
                    method = POST)
   public Dimension apply (@PathVariable (ANALYSIS_MAPPING_NAME) Hcl analysis) throws DatasetException {
     return analysis.apply ();

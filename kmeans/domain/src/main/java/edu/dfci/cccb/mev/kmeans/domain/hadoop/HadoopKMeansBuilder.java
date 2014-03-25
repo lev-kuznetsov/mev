@@ -30,7 +30,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
+import lombok.experimental.Accessors;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -62,7 +65,10 @@ import edu.dfci.cccb.mev.kmeans.domain.prototype.AbstractKMeansBuilder;
  * @author levk
  * 
  */
+@Accessors (fluent = true, chain = true)
 public class HadoopKMeansBuilder extends AbstractKMeansBuilder {
+
+  private @Getter @Setter Metric metric = Metric.EUCLIDEAN;
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder#build() */
@@ -211,7 +217,7 @@ public class HadoopKMeansBuilder extends AbstractKMeansBuilder {
              new Path (points.getAbsolutePath ()),
              new Path (clusters.getAbsolutePath ()),
              new Path (output.getAbsolutePath ()),
-             new EuclideanDistanceMeasure (),
+             metric.measurer (),
              0.001,
              10,
              true,
