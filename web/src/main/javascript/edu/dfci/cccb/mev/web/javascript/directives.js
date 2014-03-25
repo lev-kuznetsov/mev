@@ -567,16 +567,81 @@ define(
 
                                     }])
                     .directive(
-                            'modalKmeans',
-                            function() {
+                            'modalKmeans',['$routeParams', '$http', 'alertService',
+                            function($routeParams, $http, alertService) {
 
                                 return {
                                     restrict : 'C',
-                                    templateUrl : "/container/view/elements/kMeansBody"
+                                    templateUrl : "/container/view/elements/kMeansBody",
+                                    link: function(scope){
+                                        
+                                        scope.options = {
+                                                'dimensions':[{'name': 'Rows', 'value':'row'},
+                                                              {'name': 'Columns', 'value':'column'} ],
+                                                'clusters':[1, 2, 3, 4, 5, 6, 7, 8],
+                                                'metrics':[{'name': 'Euclidean', 'value':'euclidean'} ],
+                                                'iterations': [100, 1000]
+                                        }
+                                        
+                                        scope.params = {
+                                                'analysisName':'',
+                                                'analysisDimension':'',
+                                                'analysisClusters': 1,
+                                                'analysisMetric':'',
+                                                'analysisIterations':100,
+                                                'analysisConvergence': 0.01
+                                        }
+                                        
+                                        scope.kMeansInit = function(){
+                                            $http(
+                                                    {
+
+                                                        method : 'POST',
+                                                        url : 'dataset/'
+                                                                + $routeParams.datasetName
+                                                                + '/analyze/kmeans/'
+                                                                + scope.params.analysisName
+                                                                + '(dimension='
+                                                                + scope.params.analysisDimension.value
+                                                                + ',k='
+                                                                + scope.params.analysisClusters
+                                                                + ',metric='
+                                                                + scope.params.analysisMetric.value
+                                                                + ',iterations='
+                                                                + scope.params.analysisIterations
+                                                                + ',convergence='
+                                                                + scope.params.analysisConvergence
+                                                                + ')'
+
+                                                    })
+                                                    .success(function(data, status, headers, config) {
+                                                                    
+                                                                    scope.buildPreviousAnalysisList()
+                                                                    var message = "K-Means analysis for "
+                                                                        + scope.params.analysisName + " complete!";
+
+                                                                    var header = "K-Means Clustering Analysis";
+                                                                     
+                                                                    alertService.success(message,header);
+                                                                
+                                                            })
+                                                            
+                                                    .error(function(data, status, headers, config) {
+                                                        
+                                                        var message = "Could not perform k-means clustering. If "
+                                                            + "problem persists, please contact us.";
+                                                        var header = "Clustering Problem (Error Code: "
+                                                            + status
+                                                            + ")";
+                                                        alertService.error(message,header);
+                                                        
+                                                    });
+                                        }
+                                    }
 
                                 };
 
-                            })
+                            }])
                     .directive(
                             'modalLimma',
                             [

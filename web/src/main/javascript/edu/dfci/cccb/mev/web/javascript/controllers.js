@@ -85,8 +85,7 @@ define(
                                                                   .error(
                                                                           message,
                                                                           header);
-                                                          $loc
-                                                                  .path('/');
+
                                                               });
 
                                             $http(
