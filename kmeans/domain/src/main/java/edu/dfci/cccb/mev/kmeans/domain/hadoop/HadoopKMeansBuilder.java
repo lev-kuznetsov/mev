@@ -68,7 +68,7 @@ import edu.dfci.cccb.mev.kmeans.domain.prototype.AbstractKMeansBuilder;
 @Accessors (fluent = true, chain = true)
 public class HadoopKMeansBuilder extends AbstractKMeansBuilder {
 
-  private @Getter @Setter Metric metric;
+  private @Getter @Setter Metric metric = Metric.EUCLIDEAN;
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder#build() */
