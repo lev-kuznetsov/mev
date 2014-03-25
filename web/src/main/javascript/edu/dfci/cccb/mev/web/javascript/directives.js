@@ -589,7 +589,7 @@ define(
                                                 'analysisClusters': 1,
                                                 'analysisMetric':'',
                                                 'analysisIterations':100,
-                                                'analysisConvergence': 0.01
+                                                'analysisConvergence': 0
                                         }
                                         
                                         scope.kMeansInit = function(){
