@@ -25,9 +25,6 @@ import java.net.URL;
 
 import org.junit.Test;
 
-/**
- * @author levk
- */
 public class Jetty9Test {
 
   @Test

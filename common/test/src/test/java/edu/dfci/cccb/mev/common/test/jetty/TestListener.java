@@ -22,9 +22,6 @@ import javax.servlet.annotation.WebListener;
 
 import lombok.Getter;
 
-/**
- * @author levk
- */
 @WebListener
 public class TestListener implements ServletContextListener {
 

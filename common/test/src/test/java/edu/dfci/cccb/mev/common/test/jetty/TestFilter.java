@@ -27,9 +27,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @author levk
- */
 @WebFilter ("/test/filter")
 public class TestFilter implements Filter {
 

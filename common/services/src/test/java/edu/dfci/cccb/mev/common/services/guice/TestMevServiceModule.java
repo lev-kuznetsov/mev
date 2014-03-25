@@ -29,9 +29,6 @@ import com.google.inject.servlet.RequestScoped;
 
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
 
-/**
- * @author levk
- */
 public class TestMevServiceModule extends MevServiceModule {
 
   @XmlRootElement

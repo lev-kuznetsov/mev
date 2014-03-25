@@ -1,5 +1,0 @@
-noArg = {"exception":{"exception.type":"edu.dfci.cccb.mev.common.domain.support.MevExceptionTest$MevEImpl"}}
-withCause = {"exception":{"exception.type":"edu.dfci.cccb.mev.common.domain.support.MevExceptionTest$MevEImpl","exception.cause":{"exception":{"exception.type":"edu.dfci.cccb.mev.common.domain.support.MevExceptionTest$MevEImpl"}}}}
-withMessage = {"exception":{"exception.type":"edu.dfci.cccb.mev.common.domain.support.MevExceptionTest$MevEImpl","exception.message":"hello"}}
-withNonMevCause = {"exception":{"exception.type":"edu.dfci.cccb.mev.common.domain.support.MevExceptionTest$MevEImpl","exception.cause":"java.lang.NullPointerException:null"}}
-withCustomProperty = {"exception":{"hello":"world","exception.type":"edu.dfci.cccb.mev.common.domain.support.MevExceptionTest$1"}}

@@ -19,9 +19,7 @@ package edu.dfci.cccb.mev.common.web.servlet;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
-/**
- * @author levk
- */
+// This class is here for unit tests - JAX-RS module will report a fault if no resources are registered
 @Path ("/__nothing")
 public class DummyResource {
 

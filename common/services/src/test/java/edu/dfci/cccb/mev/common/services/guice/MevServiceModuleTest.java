@@ -26,9 +26,6 @@ import org.junit.Test;
 
 import edu.dfci.cccb.mev.common.test.jetty.Jetty9;
 
-/**
- * @author levk
- */
 public class MevServiceModuleTest {
 
   @Test

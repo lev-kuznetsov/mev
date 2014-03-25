@@ -17,7 +17,8 @@
 package edu.dfci.cccb.mev.common.domain.support;
 
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -28,9 +29,6 @@ import org.junit.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 
-/**
- * @author levk
- */
 public class MevExceptionTest {
 
   @BeforeClass
@@ -62,34 +60,44 @@ public class MevExceptionTest {
 
   @Test
   public void noArg () throws Exception {
-    assertEquals (expected.getProperty ("noArg"), mapper.writeValueAsString (new MevEImpl ()));
+    assertThat (mapper.writeValueAsString (new MevEImpl ()),
+                is ("{\"exception\":{\"exception.type\":\"edu.dfci.cccb.mev.common.domain.sup"
+                    + "port.MevExceptionTest$MevEImpl\"}}"));
   }
 
   @Test
   public void withCause () throws Exception {
-    assertEquals (expected.getProperty ("withCause"), mapper.writeValueAsString (new MevEImpl (new MevEImpl ())));
+    assertThat (mapper.writeValueAsString (new MevEImpl (new MevEImpl ())),
+                is ("{\"exception\":{\"exception.type\":\"edu.dfci.cccb.mev.common.domain.sup"
+                    + "port.MevExceptionTest$MevEImpl\",\"exception.cause\":{\"exception"
+                    + "\":{\"exception.type\":\"edu.dfci.cccb.mev.common.domain.support.M"
+                    + "evExceptionTest$MevEImpl\"}}}}"));
   }
 
   @Test
   public void withMessage () throws Exception {
-    assertEquals (expected.getProperty ("withMessage"), mapper.writeValueAsString (new MevEImpl ("hello")));
+    assertThat (mapper.writeValueAsString (new MevEImpl ("hello")),
+                is ("{\"exception\":{\"exception.type\":\"edu.dfci.cccb.mev.common.domain.sup"
+                    + "port.MevExceptionTest$MevEImpl\",\"exception.message\":\"hello\"}}"));
   }
 
   @Test
   public void withNonMevCause () throws Exception {
-    assertEquals (expected.getProperty ("withNonMevCause"),
-                  mapper.writeValueAsString (new MevEImpl (new NullPointerException ())));
+    assertThat (mapper.writeValueAsString (new MevEImpl (new NullPointerException ())),
+                is ("{\"exception\":{\"exception.type\":\"edu.dfci.cccb.mev.common.domain.sup"
+                    + "port.MevExceptionTest$MevEImpl\",\"exception.cause\":\"java.lang.N"
+                    + "ullPointerException:null\"}}"));
   }
 
   @Test
   public void withCustomProperty () throws Exception {
-    assertEquals (expected.getProperty ("withCustomProperty"),
-                  mapper.writeValueAsString (new MevEImpl () {
-                    private static final long serialVersionUID = 1L;
+    assertThat (mapper.writeValueAsString (new MevEImpl () {
+      private static final long serialVersionUID = 1L;
 
-                    {
-                      property ("hello", "world");
-                    }
-                  }));
+      {
+        property ("hello", "world");
+      }
+    }), is ("{\"exception\":{\"hello\":\"world\",\"exception.type\":\"edu.dfci.cccb.mev.commo"
+            + "n.domain.support.MevExceptionTest$1\"}}"));
   }
 }
