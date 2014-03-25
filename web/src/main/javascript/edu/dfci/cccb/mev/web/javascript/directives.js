@@ -282,7 +282,7 @@ define(
                                         
                                         scope.selectionParams = {
                                                 name: undefined,
-                                                color: '#'+Math.floor(Math.random()*16777216).toString(16)
+                                                color: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
                                         }
                                         
                                         scope.addSelections = function(){
@@ -1968,7 +1968,7 @@ define(
                                             var params = {
                                                     'dimension':{'type':type, 'value':orientation},
                                                     'name':name,
-                                                    'color': '#'+Math.floor(Math.random()*16777216).toString(16)
+                                                    'color': '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
                                             }
                                             
                                             if (scope.treeSelections[params.dimension.value].length > 0){
