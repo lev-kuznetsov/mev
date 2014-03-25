@@ -15,9 +15,96 @@
     <version>BAYLIE-SNAPSHOT</version>
   </parent>
 
+  <properties>
+    <mahout.version>0.5</mahout.version>
+    <mahout.groupid>org.apache.mahout</mahout.groupid>
+  </properties>
+
   <dependencies>
 
-    <!-- Math packages -->
+    <!-- Mahout -->
+
+    <dependency>
+      <groupId>${mahout.groupid}</groupId>
+      <artifactId>mahout-core</artifactId>
+      <version>${mahout.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jcl</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.google.collections</groupId>
+          <artifactId>google-collections</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>${mahout.groupid}</groupId>
+      <artifactId>mahout-core</artifactId>
+      <type>test-jar</type>
+      <scope>test</scope>
+      <version>${mahout.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jcl</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>${mahout.groupid}</groupId>
+      <artifactId>mahout-math</artifactId>
+      <version>${mahout.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jcl</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>${mahout.groupid}</groupId>
+      <artifactId>mahout-math</artifactId>
+      <type>test-jar</type>
+      <scope>test</scope>
+      <version>${mahout.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jcl</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>${mahout.groupid}</groupId>
+      <artifactId>mahout-utils</artifactId>
+      <version>${mahout.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jcl</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>${mahout.groupid}</groupId>
+      <artifactId>mahout-examples</artifactId>
+      <version>${mahout.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jcl</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- Java-ML packages -->
 
     <dependency>
       <groupId>net.sf</groupId>
@@ -30,6 +117,14 @@
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
       <artifactId>mev-dataset-domain</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
+    <!-- IO Utils -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-io</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
