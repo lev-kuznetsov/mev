@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 
 import com.fasterxml.jackson.databind.JsonSerializer;
 
@@ -32,6 +33,7 @@ import edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter;
 import edu.dfci.cccb.mev.kmeans.domain.contract.KMeansBuilder;
 import edu.dfci.cccb.mev.kmeans.domain.hadoop.HadoopKMeansBuilder;
 import edu.dfci.cccb.mev.kmeans.rest.assembly.json.KMeansJsonSerializer;
+import edu.dfci.cccb.mev.kmeans.rest.resolvers.MetricPathVariableMethodArgumentResolver;
 
 /**
  * @author levk
@@ -55,5 +57,14 @@ public class KMeansRestConfiguration extends MevRestConfigurerAdapter {
   @Override
   public void addJsonSerializers (List<JsonSerializer<?>> serializers) {
     serializers.add (new KMeansJsonSerializer ());
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
+   * #addArgumentResolvers(java.util.List) */
+  @Override
+  public void addArgumentResolvers (List<HandlerMethodArgumentResolver> argumentResolvers) {
+    argumentResolvers.add (new MetricPathVariableMethodArgumentResolver ());
   }
 }
