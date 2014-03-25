@@ -20,9 +20,6 @@ import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.io.IOException;
-import java.util.Properties;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -36,13 +33,7 @@ public class MevExceptionTest {
     mapper.setAnnotationIntrospector (new JaxbAnnotationIntrospector (defaultInstance ()));
   }
 
-  @BeforeClass
-  public static void readExpectedValues () throws IOException {
-    expected.load (MevExceptionTest.class.getResourceAsStream ("/MevException.expected.json"));
-  }
-
   private static ObjectMapper mapper = new ObjectMapper ();
-  private static Properties expected = new Properties ();
 
   private static class MevEImpl extends MevException {
     private static final long serialVersionUID = 1L;
