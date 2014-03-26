@@ -23,6 +23,7 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
 import edu.dfci.cccb.mev.kmeans.domain.contract.KMeans;
@@ -38,7 +39,7 @@ import edu.dfci.cccb.mev.kmeans.domain.simple.SimpleFlatClusteredDimension;
 public abstract class AbstractKMeans extends AbstractAnalysis<AbstractKMeans> implements KMeans {
 
   private @Getter @Setter Set<Set<String>> clusters;
-  private @Getter @Setter Dimension dimension;
+  private @Setter Dimension dimension;
   private @Getter @Setter Dataset dataset;
 
   /* (non-Javadoc)
@@ -51,5 +52,12 @@ public abstract class AbstractKMeans extends AbstractAnalysis<AbstractKMeans> im
                                                          dimension.annotation ());
     dataset.set (result);
     return result;
+  }
+
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.kmeans.domain.contract.KMeans#dimension() */
+  @Override
+  public Type dimension () {
+    return dimension.type ();
   }
 }

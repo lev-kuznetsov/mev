@@ -18,6 +18,7 @@ import java.util.Set;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 
 /**
@@ -27,6 +28,8 @@ import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 public interface KMeans extends Analysis {
 
   Set<Set<String>> clusters ();
+  
+  Type dimension ();
 
   Dimension apply () throws InvalidDimensionTypeException;
 }

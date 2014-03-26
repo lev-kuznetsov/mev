@@ -104,14 +104,6 @@
       </exclusions>
     </dependency>
 
-    <!-- Java-ML packages -->
-
-    <dependency>
-      <groupId>net.sf</groupId>
-      <artifactId>javaml</artifactId>
-      <version>0.1.7</version>
-    </dependency>
-
     <!-- MeV Dataset Domain -->
 
     <dependency>
@@ -129,13 +121,5 @@
     </dependency>
 
   </dependencies>
-
-  <repositories>
-    <repository>
-      <id>corp.array.ca</id>
-      <name>JavaML</name>
-      <url>http://corp.array.ca/nest-web/maven/</url>
-    </repository>
-  </repositories>
 
 </project>

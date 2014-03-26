@@ -47,6 +47,7 @@ public class KMeansJsonSerializer extends AbstractAnalysisJsonSerializer<KMeans>
   protected void serializeAnalysisContent (KMeans value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
                                                                                                          JsonProcessingException {
     super.serializeAnalysisContent (value, jgen, provider);
+    provider.defaultSerializeField ("dimension", value.dimension (), jgen);
     provider.defaultSerializeField ("clusters", value.clusters (), jgen);
   }
 }
