@@ -282,7 +282,7 @@ define(
                                         
                                         scope.selectionParams = {
                                                 name: undefined,
-                                                color: '#'+Math.floor(Math.random()*16777215).toString(16)
+                                                color: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
                                         }
                                         
                                         scope.addSelections = function(){
@@ -302,18 +302,19 @@ define(
                                             console.log(scope.selectionParams.color)
                                             
                                             $http({
-                                                method:"PUT", 
+                                                method:"POST", 
                                                 url:"/dataset/" + $routeParams.datasetName + "/" 
                                                 + 'row' 
-                                                + "/selection/" + scope.selectionParams.name,
-                                                params:{
-                                                    format:'json',
-                                                    properties : [{
-                                                        selectionColor: scope.selectionParams.color, 
-                                                        selectionDescription:'first mock selection'
-                                                    }],
-                                                    keys: step4
+                                                + "/selection",
+                                                data:{
+                                                    name: scope.selectionParams.name,
+                                                    properties: {
+                                                        selectionDescription: 'first mock selection',
+                                                        selectionColor:scope.selectionParams.color,                     
+                                                    },
+                                                    keys:step4
                                                 }
+                                        
                                             })
                                             .success(function(response){
                                                     scope.$emit('SeletionAddedEvent', 'row');
@@ -566,16 +567,81 @@ define(
 
                                     }])
                     .directive(
-                            'modalKmeans',
-                            function() {
+                            'modalKmeans',['$routeParams', '$http', 'alertService',
+                            function($routeParams, $http, alertService) {
 
                                 return {
                                     restrict : 'C',
-                                    templateUrl : "/container/view/elements/kMeansBody"
+                                    templateUrl : "/container/view/elements/kMeansBody",
+                                    link: function(scope){
+                                        
+                                        scope.options = {
+                                                'dimensions':[{'name': 'Rows', 'value':'row'},
+                                                              {'name': 'Columns', 'value':'column'} ],
+                                                'clusters':[1, 2, 3, 4, 5, 6, 7, 8],
+                                                'metrics':[{'name': 'Euclidean', 'value':'euclidean'} ],
+                                                'iterations': [100, 1000]
+                                        }
+                                        
+                                        scope.params = {
+                                                'analysisName':'',
+                                                'analysisDimension':'',
+                                                'analysisClusters': 1,
+                                                'analysisMetric':'',
+                                                'analysisIterations':100,
+                                                'analysisConvergence': 0
+                                        }
+                                        
+                                        scope.kMeansInit = function(){
+                                            $http(
+                                                    {
+
+                                                        method : 'POST',
+                                                        url : 'dataset/'
+                                                                + $routeParams.datasetName
+                                                                + '/analyze/kmeans/'
+                                                                + scope.params.analysisName
+                                                                + '(dimension='
+                                                                + scope.params.analysisDimension.value
+                                                                + ',k='
+                                                                + scope.params.analysisClusters
+                                                                + ',metric='
+                                                                + scope.params.analysisMetric.value
+                                                                + ',iterations='
+                                                                + scope.params.analysisIterations
+                                                                + ',convergence='
+                                                                + scope.params.analysisConvergence
+                                                                + ')'
+
+                                                    })
+                                                    .success(function(data, status, headers, config) {
+                                                                    
+                                                                    scope.buildPreviousAnalysisList()
+                                                                    var message = "K-Means analysis for "
+                                                                        + scope.params.analysisName + " complete!";
+
+                                                                    var header = "K-Means Clustering Analysis";
+                                                                     
+                                                                    alertService.success(message,header);
+                                                                
+                                                            })
+                                                            
+                                                    .error(function(data, status, headers, config) {
+                                                        
+                                                        var message = "Could not perform k-means clustering. If "
+                                                            + "problem persists, please contact us.";
+                                                        var header = "Clustering Problem (Error Code: "
+                                                            + status
+                                                            + ")";
+                                                        alertService.error(message,header);
+                                                        
+                                                    });
+                                        }
+                                    }
 
                                 };
 
-                            })
+                            }])
                     .directive(
                             'modalLimma',
                             [
@@ -1967,22 +2033,22 @@ define(
                                             var params = {
                                                     'dimension':{'type':type, 'value':orientation},
                                                     'name':name,
-                                                    'color':'#ff0000'
+                                                    'color': '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
                                             }
                                             
                                             if (scope.treeSelections[params.dimension.value].length > 0){
                                                 
                                                 $http({
-                                                    method:"PUT", 
+                                                    method:"POST", 
                                                     url:"/dataset/" + $routeParams.datasetName + "/" 
                                                     + params.dimension.type 
-                                                    + "/selection/" + params.name,
-                                                    params:{
-                                                        format:'json',
-                                                        properties : [{
-                                                            selectionColor:params.color, 
-                                                            selectionDescription:'first mock selection'
-                                                        }],
+                                                    + "/selection/",
+                                                    data:{
+                                                    	name: params.name,
+                                                    	properties: {
+                                                    		selectionDescription: 'first mock selection',
+                                                    		selectionColor: params.color,                     
+                                                    	},
                                                         keys: scope.treeSelections[params.dimension.value]
                                                     }
                                                 })

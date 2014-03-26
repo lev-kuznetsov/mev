@@ -40,6 +40,12 @@
   <logger name="org.jooq">
     <level value="info"></level>
   </logger>
+  <logger name="org.apache.hadoop">
+    <level value="warn"></level>
+  </logger>
+  <logger name="org.apache.mahout">
+    <level value="warn"></level>
+  </logger>  
   <root>
     <priority value="debug"></priority>
     <appender-ref ref="stderr" />

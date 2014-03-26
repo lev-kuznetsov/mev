@@ -33,8 +33,8 @@ import edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter;
 import edu.dfci.cccb.mev.kmeans.domain.contract.KMeansBuilder;
 import edu.dfci.cccb.mev.kmeans.domain.hadoop.HadoopKMeansBuilder;
 import edu.dfci.cccb.mev.kmeans.rest.assembly.json.KMeansJsonSerializer;
-import edu.dfci.cccb.mev.kmeans.rest.resolvers.MetricPathVariableMethodArgumentResolver;
-
+import edu.dfci.cccb.mev.kmeans.rest.resolvers.KMeansMetricPathVariableMethodArgumentResolver;
+import static java.util.Arrays.asList;
 /**
  * @author levk
  * 
@@ -64,7 +64,8 @@ public class KMeansRestConfiguration extends MevRestConfigurerAdapter {
    * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
    * #addArgumentResolvers(java.util.List) */
   @Override
-  public void addArgumentResolvers (List<HandlerMethodArgumentResolver> argumentResolvers) {
-    argumentResolvers.add (new MetricPathVariableMethodArgumentResolver ());
-  }
+  public void addPreferredArgumentResolvers (List<HandlerMethodArgumentResolver> resolvers) {    
+    resolvers.addAll (asList (new KMeansMetricPathVariableMethodArgumentResolver ()));
+  } 
+  
 }

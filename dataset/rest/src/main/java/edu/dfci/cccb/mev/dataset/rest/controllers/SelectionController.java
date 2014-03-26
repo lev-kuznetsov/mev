@@ -41,6 +41,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.NativeWebRequest;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
@@ -77,12 +78,14 @@ public class SelectionController {
   @RequestMapping (value = "/selection/" + SELECTION_URL_ELEMENT, method = PUT)
   @ResponseStatus (OK)
   public void select (@PathVariable (SELECTION_MAPPING_NAME) String name,
-                      @RequestParam (value = "properties", required = false) Properties properties,
+                      @RequestParam (value = "selectionDescription", required = false) String description,
+                      @RequestParam (value = "selectionColor", required = false) String color,
                       @RequestParam ("keys") List<String> keys) {
     Selection selection = builder.name (name)
-                                 .properties (properties == null ? new Properties () : properties)
+                                 .property ("selectionDescription", description)
+                                 .property ("selectionColor", color)
                                  .keys (keys)
-                                 .build ();
+                                 .build ();    
     if (log.isDebugEnabled ())
       log.debug ("Adding selection " + selection);
     dimension.selections ().put (selection);    
