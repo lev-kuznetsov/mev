@@ -1,5 +1,4 @@
 
-
 <accordion close-others="false">
 	<div ng-repeat="cluster in previousHCLClusters">
     	<accordion-group heading="{{cluster.datar.type}} : {{cluster.name}}" is-open="isItOpen">

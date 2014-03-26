@@ -258,7 +258,7 @@ define(
                                     };
 
                             }])
-                    .directive(
+                            .directive(
                             'limmaAccordion',
                             ['$filter', '$routeParams', '$http', 'alertService', function($filter, $routeParams, $http, alertService) {
                                 return {
@@ -353,16 +353,43 @@ define(
 
                                 };
                             }])
-                    .directive(
-                            'clusterAccordionList',
-                            [function() {
-                                return {
-                                    restrict : 'E',
-                                    templateUrl : '/container/view/elements/clusterAccordion'                                    
-                                };
+                            .directive(
+                                'hclAccordionList',
+                                [function() {
+                                    return {
+                                        restrict : 'E',
+                                        templateUrl : '/container/view/elements/hclAccordionList'                                    
+                                    };
                             }])
-                    .directive(
-                            'expressionPanel',
+                            .directive(
+                                'kmeansAccordionList',
+                                [function() {
+                                    return {
+                                        restrict : 'E',
+                                        templateUrl : '/container/view/elements/kmeansAccordionList'                                    
+                                    };
+                            }])
+                            .directive(
+                                'kmeansAccordion',
+                                [function() {
+                                    return {
+                                        restrict : 'E',
+                                        templateUrl : '/container/view/elements/kmeansAccordion',
+                                        link: function(scope){
+                                            scope.applyCluster = function(cluster){
+
+                                                if (cluster.type == "row"){
+                                                    scope.heatmapLeftClustering = cluster.clusters
+                                                } else if (cluster.type == "column"){
+                                                    scope.heatmapTopClustering = cluster.clusters
+                                                }
+                                                
+                                            }
+                                        }
+                                    };
+                            }])
+                            .directive(
+                                    'expressionPanel',
                             [
                                     '$routeParams',
                                     function($routeParams) {

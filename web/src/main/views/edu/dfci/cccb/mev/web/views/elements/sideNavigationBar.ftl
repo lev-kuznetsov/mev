@@ -9,10 +9,12 @@
 
 		<div class="row"=>
 		<hr>
-			
-			<cluster-Accordion-List></cluster-Accordion-List>
+			<hcl-Accordion-List></hcl-Accordion-List>
 				
 			<limma-Accordion-List></limma-Accordion-List>
+			
+			<kmeans-Accordion-List></kmeans-Accordion-List>
+			
 		</div>
 		
 	</div>

@@ -43,6 +43,8 @@ define(
                                         $scope.heatmapData = undefined;
                                         $scope.heatmapLeftTree = undefined;
                                         $scope.heatmapTopTree = undefined;
+                                        $scope.heatmapTopClustering = undefined;
+                                        $scope.heatmapLeftClustering = undefined;
                                         $scope.heatmapLeftTreeName = undefined;
                                         $scope.heatmapTopTreeName = undefined;
                                         $scope.previousHCLClusters = undefined;
