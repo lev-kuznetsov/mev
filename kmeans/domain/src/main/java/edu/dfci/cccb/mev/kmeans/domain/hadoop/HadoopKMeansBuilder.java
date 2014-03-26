@@ -240,6 +240,8 @@ public class HadoopKMeansBuilder extends AbstractKMeansBuilder {
 
           return new AbstractKMeans () {}.dataset (dataset ())
                                          .dimension (dimension ())
+                                         .name (name ())
+                                         .type (type())
                                          .clusters (new HashSet<> (result.values ()));
         }
       } catch (ClassNotFoundException | InterruptedException e) {
