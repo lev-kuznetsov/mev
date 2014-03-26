@@ -47,6 +47,7 @@ define(
                                         $scope.heatmapTopTreeName = undefined;
                                         $scope.previousHCLClusters = undefined;
                                         $scope.previousLimmaAnalysis = undefined;
+                                        $scope.previousKMeansClusters = undefined;
                                         $scope.previousAnalysisList = undefined;
                                         $scope.clickSelectionMode = false;
 
@@ -55,6 +56,8 @@ define(
                                             $scope.previousHCLClusters = [];
 
                                             $scope.previousLimmaAnalysis = [];
+
+                                            $scope.previousKMeansClusters = [];
 
                                             $http(
                                                     {
@@ -153,7 +156,9 @@ define(
                                                                                                                     divId : randstr,
                                                                                                                     datar : data
                                                                                                                 });
-                                                                                                    }
+                                                                                                } else if (data.type == "K-means Clustering"){
+                                                                                                    $scope.previousKMeansClusters.push(data);
+                                                                                                }
 
                                                                                             })
                                                                                     .error(
@@ -171,8 +176,7 @@ define(
                                                                                                         .error(
                                                                                                                 message,
                                                                                                                 header);
-                                                                                                $loc
-                                                                                                        .path('/');
+
                                                                                             });
 
                                                                         });
