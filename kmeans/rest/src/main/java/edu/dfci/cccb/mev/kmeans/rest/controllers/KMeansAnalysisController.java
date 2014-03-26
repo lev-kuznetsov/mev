@@ -19,8 +19,8 @@ import static edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMetho
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_URL_ELEMENT;
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver.DIMENSION_MAPPING_NAME;
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver.DIMENSION_URL_ELEMENT;
-import static edu.dfci.cccb.mev.kmeans.rest.resolvers.MetricPathVariableMethodArgumentResolver.METRIC_MAPPING_NAME;
-import static edu.dfci.cccb.mev.kmeans.rest.resolvers.MetricPathVariableMethodArgumentResolver.METRIC_URL_ELEMENT;
+import static edu.dfci.cccb.mev.kmeans.rest.resolvers.KMeansMetricPathVariableMethodArgumentResolver.METRIC_MAPPING_NAME;
+import static edu.dfci.cccb.mev.kmeans.rest.resolvers.KMeansMetricPathVariableMethodArgumentResolver.METRIC_URL_ELEMENT;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
@@ -71,7 +71,7 @@ public class KMeansAnalysisController {
                      final @PathVariable (METRIC_MAPPING_NAME) Metric metric,
                      final @PathVariable ("iterations") int iterations,
                      final @PathVariable ("convergence") double convergenceDelta) throws DatasetException {
-    dataset.analyses ().put (kmeans.k (k).dimension (dimension).metric (metric).dataset (dataset).build ());
+    dataset.analyses ().put (kmeans.name (name).k (k).dimension (dimension).metric (metric).dataset (dataset).build ());
   }
 
   @RequestMapping (value = "/analysis/" + ANALYSIS_URL_ELEMENT + "/kmeans",

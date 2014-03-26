@@ -20,7 +20,9 @@ import java.lang.reflect.Method;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 
+import org.springframework.core.MethodParameter;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import edu.dfci.cccb.mev.dataset.rest.resolvers.AbstractTypedPathVariableMethodArgumentResolver;
@@ -30,17 +32,23 @@ import edu.dfci.cccb.mev.kmeans.domain.hadoop.Metric;
  * @author levk
  * 
  */
+@Log4j
 @EqualsAndHashCode (callSuper = true)
 @ToString
-public class MetricPathVariableMethodArgumentResolver extends AbstractTypedPathVariableMethodArgumentResolver<Metric> {
+public class KMeansMetricPathVariableMethodArgumentResolver extends AbstractTypedPathVariableMethodArgumentResolver<Metric> {
 
   public static final String METRIC_MAPPING_NAME = "metric";
   public static final String METRIC_URL_ELEMENT = "{" + METRIC_MAPPING_NAME + "}";
 
   /**
    */
-  public MetricPathVariableMethodArgumentResolver () {
+  public KMeansMetricPathVariableMethodArgumentResolver () {
     super (Metric.class, METRIC_MAPPING_NAME);
+  }
+  
+  @Override
+  public boolean supportsParameter (MethodParameter parameter) {
+    return super.supportsParameter (parameter);
   }
 
   /* (non-Javadoc)
@@ -50,6 +58,8 @@ public class MetricPathVariableMethodArgumentResolver extends AbstractTypedPathV
    * org.springframework.web.context.request.NativeWebRequest) */
   @Override
   public Metric resolveObject (String value, Method method, NativeWebRequest request) {
+    if (log.isDebugEnabled ())
+      log.debug ("resolveObject: " + value + "," + method);
     return from (value);
   }
 
@@ -60,6 +70,8 @@ public class MetricPathVariableMethodArgumentResolver extends AbstractTypedPathV
    * org.springframework.web.context.request.NativeWebRequest) */
   @Override
   public Metric resolveObject (String value, NativeWebRequest request) {
+    if (log.isDebugEnabled ())
+      log.debug ("resolveObject: " + value);
     return from (value);
   }
 }
