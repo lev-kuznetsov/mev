@@ -24,7 +24,7 @@ define(
                                         };
 
                                         $scope.pageLoading = true;
-                                        $('#loading').modal();
+                                        //$('#loading').modal();
 
                                         $scope.heatmapId = $routeParams.datasetName;
 
@@ -52,6 +52,25 @@ define(
                                         $scope.previousKMeansClusters = undefined;
                                         $scope.previousAnalysisList = undefined;
                                         $scope.clickSelectionMode = false;
+                                        
+                                        $scope.updateClusters = function(cluster){
+                                            if (cluster.dimension == "row"){
+                                                $scope.heatmapLeftClustering = cluster;
+                                                $scope.heatmapLeftTree = undefined;
+                                                $scope.heatmapLeftTreeName = undefined;
+                                            } else if (cluster.dimension == "column"){
+                                                $scope.heatmapTopClustering = cluster;
+                                                $scope.heatmapTopTree = undefined;
+                                                $scope.heatmapTopTreeName = undefined;
+                                            }
+                                        }
+                                        $scope.clearCluster = function(dimension){
+                                            if (dimension == "row"){
+                                                $scope.heatmapLeftClustering = undefined;
+                                            } else {
+                                                $scope.heatmapTopClustering = undefined;
+                                            }
+                                        }
 
                                         $scope.buildPreviousAnalysisList = function() {
 
@@ -221,8 +240,7 @@ define(
                                                     .success(
                                                             function(data, status, headers, config) {
                                                                 if (data.type == 'row') {
-                                                                    console
-                                                                            .log(data)
+                                                                    
                                                                     $scope.heatmapLeftTree = data.root;
                                                                     $scope.heatmapData.row = data;
                                                                 } else

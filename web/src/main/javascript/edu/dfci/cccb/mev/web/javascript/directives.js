@@ -376,13 +376,10 @@ define(
                                         restrict : 'E',
                                         templateUrl : '/container/view/elements/kmeansAccordion',
                                         link: function(scope){
-                                            scope.applyCluster = function(cluster){
 
-                                                if (cluster.type == "row"){
-                                                    scope.heatmapLeftClustering = cluster.clusters
-                                                } else if (cluster.type == "column"){
-                                                    scope.heatmapTopClustering = cluster.clusters
-                                                }
+                                            scope.applyCluster = function(cluster){ 
+    
+                                                    scope.updateClusters(cluster)
                                                 
                                             }
                                         }
@@ -1889,10 +1886,12 @@ define(
 
                                                                 if (newval.column.root) {
                                                                     scope.heatmapTopTree = newval.column.root;
+                                                                    scope.clearCluster('column')
                                                                 }
 
                                                                 if (newval.row.root) {
                                                                     scope.heatmapLeftTree = newval.row.root;
+                                                                    scope.clearCluster('row')
                                                                 }
 
                                                                 drawHeatmap(newval);
@@ -2118,13 +2117,47 @@ define(
                                         })
                                         
 
-                                        // Left Dendogram Builder
+                                        scope.$watch('heatmapLeftClustering', function(newval, oldval){
+                                            if (newval){
+                                                
+                                                var row = [];
+                                                for (var i=0; i<newval.clusters.length; i++) {
+                                                    for (var j=0; j<newval.clusters[i].length; j++){
+                                                        row.push(newval.clusters[i][j])
+                                                    }
+                                                }
+                                                
+                                                scope.heatmapData.row.keys = row
+                                                //drawCluster(newval);
+                                            }
+                                        })
+
+                                        scope.$watch('heatmapTopClustering', function(newval, oldval){
+                                            
+                                            if (newval){
+                                                
+                                                var col = [];
+                                                for (var i=0; i<newval.clusters.length; i++) {
+                                                    for (var j=0; j<newval.clusters[i].length; j++){
+                                                        col.push(newval.clusters[i][j])
+                                                    }
+                                                }
+                                                
+                                                scope.heatmapData.column.keys = col
+                                                //drawCluster(newval);
+                                            }
+                                            
+                                            
+                                        })
+                                        
                                         scope
                                                 .$watch(
                                                         'heatmapTopTree',
                                                         function(newval, oldval) {
 
                                                             if (newval) {
+                                                                
+                                                                scope.clearCluster('column')
 
                                                                 var tree = newval;
                                                                 drawTree(
@@ -2144,6 +2177,8 @@ define(
 
                                                             if (newval) {
 
+                                                                scope.clearCluster('row')
+                                                                
                                                                 var tree = newval;
                                                                 drawTree(
                                                                         dendogramLeftWindow,
@@ -2168,6 +2203,7 @@ define(
 
                                                         });
                                         
+
 
 
                                         function drawTree(canvas, cluster, tree, type) {
