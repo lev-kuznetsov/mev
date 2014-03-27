@@ -23,6 +23,7 @@ import javax.ws.rs.core.MediaType;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 
+import edu.dfci.cccb.mev.common.domain.guice.utilities.SingletonModule;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationConfigurer;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationMapper;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ExceptionBinder;
@@ -54,9 +55,7 @@ public class MevServiceModule implements Module {
     binder.install (new ServiceModule () {
       @Override
       public void configure (ContentNegotiationConfigurer content) {
-        MevServiceModule.this.configure (content.parameter (PARAMETER)
-                                                .map ("json", APPLICATION_JSON_TYPE)
-                                                .map ("tsv", TEXT_TSV_TYPE));
+        MevServiceModule.this.configure (content.parameter (PARAMETER));
       }
 
       @Override
@@ -80,25 +79,38 @@ public class MevServiceModule implements Module {
       }
     });
 
-    binder.install (new ServiceModule () {
-      @Override
-      public void configure (MessageWriterBinder binder) {
-        binder.use (JacksonMessageWriter.class);
-      }
+    binder.install (new SingletonModule () {
 
       @Override
-      public void configure (ServiceBinder binder) {
-        binder.service (SERVICE_URL);
-      }
+      public void configure (Binder binder) {
+        binder.install (new ServiceModule () {
+          @Override
+          public void configure (ContentNegotiationConfigurer content) {
+            content.parameter (PARAMETER)
+                   .map ("json", APPLICATION_JSON_TYPE)
+                   .map ("tsv", TEXT_TSV_TYPE);
+          }
 
-      @Override
-      public boolean equals (Object obj) {
-        return obj != null && getClass ().equals (obj.getClass ());
-      }
+          @Override
+          public void configure (MessageWriterBinder binder) {
+            binder.use (JacksonMessageWriter.class);
+          }
 
-      @Override
-      public int hashCode () {
-        return getClass ().hashCode ();
+          @Override
+          public void configure (ServiceBinder binder) {
+            binder.service (SERVICE_URL);
+          }
+
+          @Override
+          public boolean equals (Object obj) {
+            return obj != null && getClass ().equals (obj.getClass ());
+          }
+
+          @Override
+          public int hashCode () {
+            return getClass ().hashCode ();
+          }
+        });
       }
     });
   }

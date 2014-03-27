@@ -9,7 +9,13 @@
     </layout>
   </appender>
   <logger name="edu.dfci.cccb.mev">
-    <level value="warn"></level>
+    <level value="warn" />
+  </logger>
+  <logger name="org.apache.commons.configuration">
+    <level value="info" />
+  </logger>
+  <logger name="com.mchange">
+    <level value="warn" />
   </logger>
   <root>
     <priority value="debug"></priority>

@@ -18,9 +18,9 @@ package edu.dfci.cccb.mev.common.services.context;
 
 import static com.google.inject.Guice.createInjector;
 import static com.google.inject.name.Names.bindProperties;
+import static edu.dfci.cccb.mev.common.domain.guice.MevDomainModule.load;
 import static edu.dfci.cccb.mev.common.domain.guice.Modules.discover;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.ServiceLoader;
@@ -95,21 +95,5 @@ public class MevInitializer extends GuiceServletContextListener {
           bindProperties (binder (), each);
       }
     });
-  }
-
-  /**
-   * @param resources names of classpath resources containing properties
-   * @return loaded properties
-   */
-  private Properties load (String... resources) {
-    try {
-      Properties properties = new Properties ();
-      for (String resource : resources)
-        properties.load (MevInitializer.class.getResourceAsStream (resource));
-
-      return properties;
-    } catch (IOException e) {
-      throw new RuntimeException (e);
-    }
   }
 }
