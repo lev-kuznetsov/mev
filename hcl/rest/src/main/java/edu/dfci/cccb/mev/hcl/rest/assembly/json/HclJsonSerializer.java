@@ -47,8 +47,9 @@ public class HclJsonSerializer extends AbstractAnalysisJsonSerializer<Hcl> {
    * com.fasterxml.jackson.databind.SerializerProvider) */
   @Override
   protected void serializeAnalysisContent (Hcl value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
-                                                                                                            JsonProcessingException {
+                                                                                                      JsonProcessingException {
     super.serializeAnalysisContent (value, jgen, provider);
     provider.defaultSerializeField ("root", value.root (), jgen);
+    provider.defaultSerializeField ("dimension", value.dimension (), jgen);
   }
 }

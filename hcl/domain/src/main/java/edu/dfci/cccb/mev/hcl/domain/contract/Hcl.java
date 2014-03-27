@@ -17,6 +17,7 @@ package edu.dfci.cccb.mev.hcl.domain.contract;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 
 /**
  * @author levk
@@ -27,4 +28,6 @@ public interface Hcl extends Analysis {
   Node root ();
 
   Dimension apply () throws DatasetException;
+  
+  Type dimension ();
 }
