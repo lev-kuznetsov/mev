@@ -54,6 +54,7 @@ define(
                                         $scope.clickSelectionMode = false;
                                         
                                         $scope.updateClusters = function(cluster){
+                                            console.log(cluster)
                                             if (cluster.dimension == "row"){
                                                 $scope.heatmapLeftClustering = cluster;
                                                 $scope.heatmapLeftTree = undefined;
@@ -65,6 +66,14 @@ define(
                                             }
                                         }
                                         $scope.clearCluster = function(dimension){
+                                            if (dimension == "row"){
+                                                $scope.heatmapLeftClustering = undefined;
+                                            } else {
+                                                $scope.heatmapTopClustering = undefined;
+                                            }
+                                        }
+                                        
+                                        $scope.clearTree = function(dimension){
                                             if (dimension == "row"){
                                                 $scope.heatmapLeftClustering = undefined;
                                             } else {
@@ -123,9 +132,9 @@ define(
                                                         }
                                                     })
                                                     .success(
-                                                            function(data, status, headers, config) {
+                                                            function(res, status, headers, config) {
 
-                                                                var prevList = data;
+                                                                var prevList = res;
 
                                                                 $scope.previousAnalysisList = prevList;
 
@@ -151,17 +160,16 @@ define(
 
                                                                                                 if (data.type == "Hierarchical Clustering") {
 
+                                                                                                    data.name = name;
+                                                                                                    data.href = "#" + randstr;
+                                                                                                    data.parentId = randstr2;
+                                                                                                    data.dataParent = '#' + randstr2;
+                                                                                                    data.divId = randstr;
+                                                                                                    
+                                                                                                    
+                                     
                                                                                                     $scope.previousHCLClusters
-                                                                                                            .push({
-                                                                                                                name : name,
-                                                                                                                href : "#"
-                                                                                                                        + randstr,
-                                                                                                                parentId : randstr2,
-                                                                                                                dataParent : '#'
-                                                                                                                        + randstr2,
-                                                                                                                divId : randstr,
-                                                                                                                datar : data
-                                                                                                            });
+                                                                                                            .push(data);
 
                                                                                                 } else
                                                                                                     if (data.type == "LIMMA Differential Expression Analysis") {
@@ -224,7 +232,9 @@ define(
 
                                         };
 
-                                        $scope.updateHeatmapData = function(prevAnalysis, textForm) {
+                                        $scope.updateHeatmapTree = function(tree) {
+
+                                            $scope.$broadcast('ViewVisualizeTabEvent');
 
                                             $http(
                                                     {
@@ -232,23 +242,35 @@ define(
                                                         url : '/dataset/'
                                                                 + $routeParams.datasetName
                                                                 + '/analysis/'
-                                                                + prevAnalysis,
+                                                                + tree.name,
                                                         params : {
                                                             format : 'json'
                                                         }
                                                     })
                                                     .success(
                                                             function(data, status, headers, config) {
-                                                                if (data.type == 'row') {
+                                                                
+                                                                tree.keys = data.keys
+                                                                console.log(tree)
+                                                                if (tree.dimension == 'row') {
                                                                     
-                                                                    $scope.heatmapLeftTree = data.root;
+                                                                    $scope.clearCluster('row')
+                                                                    $scope.heatmapLeftTree = tree;
+                                                                    $scope.heatmapLeftTreeName = tree.name;
                                                                     $scope.heatmapData.row = data;
-                                                                } else
-                                                                    if (data.type == 'column') {
-                                                                        $scope.heatmapTopTree = data.root;
-                                                                        $scope.heatmapData.column = data;
-                                                                    }
+                                                                    
+                                                                    
+                                                                } else if (tree.dimension == 'column') {
+
+                                                                    $scope.clearCluster('column')
+                                                                    $scope.heatmapTopTree = data;
+                                                                    $scope.heatmapTopTreeName = tree.name;
+                                                                    $scope.heatmapData.column = data;
+                                                                
+                                                                }
                                                                 $scope.$broadcast('ViewVisualizeTabEvent');
+                                                                console.log($scope.heatmapLeftTree)
+                                                                console.log($scope.heatmapTopTree)
                                                             })
                                                     .error(
                                                             function(data, status, headers, config) {

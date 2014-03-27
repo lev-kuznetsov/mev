@@ -1885,12 +1885,12 @@ define(
                                                                                 'hide');
 
                                                                 if (newval.column.root) {
-                                                                    scope.heatmapTopTree = newval.column.root;
+                                                                    scope.heatmapTopTree = newval.column;
                                                                     scope.clearCluster('column')
                                                                 }
 
                                                                 if (newval.row.root) {
-                                                                    scope.heatmapLeftTree = newval.row.root;
+                                                                    scope.heatmapLeftTree = newval.row;
                                                                     scope.clearCluster('row')
                                                                 }
 
@@ -2128,7 +2128,7 @@ define(
                                                 }
                                                 
                                                 scope.heatmapData.row.keys = row
-                                                //drawCluster(newval);
+                                                drawCluster(newval, dendogramLeftWindow);
                                             }
                                         })
 
@@ -2144,11 +2144,15 @@ define(
                                                 }
                                                 
                                                 scope.heatmapData.column.keys = col
-                                                //drawCluster(newval);
+                                                drawCluster(newval, dendogramTopWindow);
                                             }
                                             
                                             
                                         })
+                                        
+                                        function drawCluster(cluster, canvas){
+                                            canvas.selectAll('*').remove()
+                                        }
                                         
                                         scope
                                                 .$watch(
@@ -2156,10 +2160,9 @@ define(
                                                         function(newval, oldval) {
 
                                                             if (newval) {
-                                                                
                                                                 scope.clearCluster('column')
 
-                                                                var tree = newval;
+                                                                var tree = newval.root;
                                                                 drawTree(
                                                                         dendogramTopWindow,
                                                                         Cluster,
@@ -2179,7 +2182,7 @@ define(
 
                                                                 scope.clearCluster('row')
                                                                 
-                                                                var tree = newval;
+                                                                var tree = newval.root;
                                                                 drawTree(
                                                                         dendogramLeftWindow,
                                                                         Cluster,
