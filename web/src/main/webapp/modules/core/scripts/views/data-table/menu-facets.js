@@ -32,6 +32,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
+  var doTextTransform = function(expression, onError, repeat, repeatCount) {
+    Refine.postCoreProcess(
+      "text-transform",
+      {
+        columnName: column.name, 
+        expression: expression, 
+        onError: onError,
+        repeat: repeat,
+        repeatCount: repeatCount
+      },
+      null,
+      { cellsChanged: true }
+    );
+  };
+  
   var doFilterByExpressionPrompt = function(expression, type) {
     DataTableView.promptExpressionOnVisibleRows(
       column,
@@ -57,6 +72,8 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
       id: "core/text-facet",
       label: $.i18n._('core-views')["text-facet"],
       click: function() {
+    	//ap:prune - added column transform before facet
+    	doTextTransform("value.toString()", "keep-original", false, "");
         ui.browsingEngine.addFacet(
             "list",
             {
@@ -71,6 +88,8 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
       id: "core/numeric-facet",
       label:  $.i18n._('core-views')["numeric-facet"],
       click: function() {
+    	//ap:prune - added column transform before facet
+    	doTextTransform("value.toNumber()", "keep-original", false, "");
         ui.browsingEngine.addFacet(
             "range",
             {
@@ -86,6 +105,8 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
       id: "core/time-facet",
       label: $.i18n._('core-views')["timeline-facet"],
       click: function() {
+    	//ap:prune - added column transform before facet
+    	doTextTransform("value.toDate()", "keep-original", false, "");
         ui.browsingEngine.addFacet(
             "timerange",
             {
@@ -97,13 +118,15 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
         );
       }
     },
+    /**** ap:prune
     {
       id: "core/scatterplot-facet",
       label: $.i18n._('core-views')["scatterplot-facet"],
       click: function() {
         new ScatterplotDialog(column.name);
       }
-    },
+    },*/
+    /*** ap:prune
     {},
     {
       id: "core/custom-text-facet",
@@ -115,7 +138,7 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
     {
       id: "core/custom-numeric-facet",
       label: $.i18n._('core-views')["custom-numeric"]+'...',
-      click: function() {
+      click: function() {    	
         doFilterByExpressionPrompt(null, "range");
       }
     },
@@ -260,10 +283,10 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
           }
         }
       ]
-    }
+    }*/
   ]);
 
-  MenuSystem.insertAfter(menu, [ "core/facet" ], [
+  MenuSystem.insertBefore(menu, [ "core/facet" ], [
     {
       label: $.i18n._('core-views')["text-filter"],
       click: function() {
