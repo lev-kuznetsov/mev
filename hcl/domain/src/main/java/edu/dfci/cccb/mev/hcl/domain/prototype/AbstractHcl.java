@@ -22,6 +22,7 @@ import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
 import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 import edu.dfci.cccb.mev.hcl.domain.contract.Node;
@@ -37,7 +38,7 @@ import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHierarchicallyClusteredDimensio
 public abstract class AbstractHcl extends AbstractAnalysis<AbstractHcl> implements Hcl {
 
   private @Getter @Setter Node root;
-  private @Getter @Setter Dimension dimension;
+  private @Setter Dimension dimension;
   private @Getter @Setter Dataset dataset;
 
   /* (non-Javadoc)
@@ -50,5 +51,12 @@ public abstract class AbstractHcl extends AbstractAnalysis<AbstractHcl> implemen
                                                                    dimension.annotation ());
     dataset.set (result);
     return result;
+  }
+
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.hcl.domain.contract.Hcl#dimension() */
+  @Override
+  public Type dimension () {
+    return dimension.type ();
   }
 }
