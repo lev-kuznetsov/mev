@@ -54,6 +54,39 @@ define(
                                         $scope.previousKMeansClusters = undefined;
                                         $scope.previousAnalysisList = undefined;
                                         $scope.clickSelectionMode = false;
+                                        
+                                        $http(
+                                                {
+                                                    method : 'GET',
+                                                    url : '/dataset/'
+                                                            + $routeParams.datasetName
+                                                            + '/data',
+                                                    params : {
+                                                        format : 'json'
+                                                    }
+                                                })
+                                                .success(
+                                                        function(data, status, headers, config) {
+                                                            
+                                                            $scope.heatmapData = data;
+                                                  })
+                                                  .error(function(data, status, headers, config) {
+                                                      
+                                                      var message = "Could not retrieve dataset "
+                                                              + $routeParams.datasetName
+                                                              + ". If the"
+                                                              + "problem persists, please contact us.";
+    
+                                                      var header = "Heatmap Download Problem (Error Code: "
+                                                              + status
+                                                              + ")";
+    
+                                                      alertService
+                                                              .error(
+                                                                      message,
+                                                                      header);
+
+                                                          });
 
                                         $scope.buildPreviousAnalysisList = function() {
 
@@ -62,39 +95,6 @@ define(
                                             $scope.previousLimmaAnalysis = [];
 
                                             $scope.previousKMeansClusters = [];
-
-                                            $http(
-                                                    {
-                                                        method : 'GET',
-                                                        url : '/dataset/'
-                                                                + $routeParams.datasetName
-                                                                + '/data',
-                                                        params : {
-                                                            format : 'json'
-                                                        }
-                                                    })
-                                                    .success(
-                                                            function(data, status, headers, config) {
-                                                                
-                                                                $scope.heatmapData = data;
-                                                      })
-                                                      .error(function(data, status, headers, config) {
-                                                          
-                                                          var message = "Could not retrieve dataset "
-                                                                  + $routeParams.datasetName
-                                                                  + ". If the"
-                                                                  + "problem persists, please contact us.";
-        
-                                                          var header = "Heatmap Download Problem (Error Code: "
-                                                                  + status
-                                                                  + ")";
-        
-                                                          alertService
-                                                                  .error(
-                                                                          message,
-                                                                          header);
-
-                                                              });
 
                                             $http(
                                                     {
