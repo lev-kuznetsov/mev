@@ -1,9 +1,9 @@
 define(
-        ['angular', 'jquery', 'd3', 'services'],
+        ['angular', 'jquery', 'd3', 'services', 'colorbrewer/ColorBrewer'],
         function(angular, jq, d3) {
 
             return angular
-                    .module('myApp.directives', [])
+                    .module('myApp.directives', ['d3colorBrewer'])
                     .directive('appVersion',
                             ['appVersion', function(version) {
                                 return function(scope, elm, attrs) {
@@ -598,7 +598,7 @@ define(
                                         scope.options = {
                                                 'dimensions':[{'name': 'Rows', 'value':'row'},
                                                               {'name': 'Columns', 'value':'column'} ],
-                                                'clusters':[1, 2, 3, 4, 5, 6, 7, 8],
+                                                'clusters':[2, 3, 4, 5, 6, 7, 8],
                                                 'metrics':[{'name': 'Euclidean', 'value':'euclidean'} ],
                                                 'iterations': [100, 1000]
                                         }
@@ -606,7 +606,7 @@ define(
                                         scope.params = {
                                                 'analysisName':'',
                                                 'analysisDimension':'',
-                                                'analysisClusters': 1,
+                                                'analysisClusters': 2,
                                                 'analysisMetric':'',
                                                 'analysisIterations':100,
                                                 'analysisConvergence': 0
@@ -1118,7 +1118,8 @@ define(
                             })
                     .directive(
                             'visHeatmap',
-                            ["$routeParams","$http", "alertService", function($routeParams, $http, alertService) {
+                            ["$routeParams","$http", "alertService", "d3colors", 
+                             function($routeParams, $http, alertService, d3colors) {
 
                                 return {
 
@@ -2140,9 +2141,16 @@ define(
                                             
                                             if (cluster.dimension == "column"){
                                                 
-                                                cluster.clusters.map(function(group){
-                                                    
-                                                    var fill = '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
+                                                var colors = d3.scale.ordinal()
+                                                .domain(d3.range(cluster.clusters.length) )
+                                                
+                                                if (cluster.clusters.length > 2){
+                                                    colors.range(d3colors.Set1[cluster.clusters.length] );
+                                                } else {
+                                                    colors.range(["blue", "red" ]);
+                                                }
+                                                
+                                                cluster.clusters.map(function(group, index){
                                                     
                                                     canvas.selectAll('rect').data(group, function(d){return d}).enter()
                                                         .append('rect')
@@ -2160,7 +2168,7 @@ define(
                                                                 return horizontalTreeY(.5) - horizontalTreeY(0)
                                                             },
                                                             'fill':function(d, i){
-                                                                return fill
+                                                                return colors(index)
                                                             }
                                                         })
                                                 });
