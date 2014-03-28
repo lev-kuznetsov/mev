@@ -27,6 +27,8 @@
     <module>limma</module>
     <module>presets</module>
     <module>kmeans</module>
+    <module>t-test</module>
+    <module>anova</module>
     <module>web</module>
 
   </modules>
