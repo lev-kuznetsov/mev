@@ -377,11 +377,7 @@ define(
                                         templateUrl : '/container/view/elements/kmeansAccordion',
                                         link: function(scope){
 
-                                            scope.applyCluster = function(cluster){ 
-    
-                                                    scope.updateClusters(cluster)
-                                                
-                                            }
+                                            return
                                         }
                                     };
                             }])
@@ -617,6 +613,14 @@ define(
                                         }
                                         
                                         scope.kMeansInit = function(){
+                                            
+                                            var message = "Started K-Means analysis for "
+                                                + scope.params.analysisName;
+
+                                            var header = "K-Means Clustering Analysis";
+                                             
+                                            alertService.info(message,header);
+                                            
                                             $http(
                                                     {
 
@@ -1885,13 +1889,11 @@ define(
                                                                                 'hide');
 
                                                                 if (newval.column.root) {
-                                                                    scope.heatmapTopTree = newval.column;
-                                                                    scope.clearCluster('column')
+                                                                    scope.heatmapViews.top = newval.column;
                                                                 }
 
                                                                 if (newval.row.root) {
-                                                                    scope.heatmapLeftTree = newval.row;
-                                                                    scope.clearCluster('row')
+                                                                    scope.heatmapViews.side = newval.row;
                                                                 }
 
                                                                 drawHeatmap(newval);
@@ -1907,15 +1909,13 @@ define(
                                                         });
                                         
                                         scope.$watch('heatmapData.column.keys', function(newval, oldval){
-                                            if (newval
-                                                    && oldval){
+                                            if (newval){
                                                 updateDrawHeatmap(scope.heatmapData);
                                             }
                                         });
                                         
                                         scope.$watch('heatmapData.row.keys', function(newval, oldval){
-                                            if (newval
-                                                    && oldval){
+                                            if (newval){
                                                 updateDrawHeatmap(scope.heatmapData);
                                             }
                                         });
@@ -2132,62 +2132,107 @@ define(
                                             }
                                         })
 
-                                        scope.$watch('heatmapTopClustering', function(newval, oldval){
-                                            
-                                            if (newval){
-                                                
-                                                var col = [];
-                                                for (var i=0; i<newval.clusters.length; i++) {
-                                                    for (var j=0; j<newval.clusters[i].length; j++){
-                                                        col.push(newval.clusters[i][j])
-                                                    }
-                                                }
-                                                
-                                                scope.heatmapData.column.keys = col
-                                                drawCluster(newval, dendogramTopWindow);
-                                            }
-                                            
-                                            
-                                        })
+                      
                                         
                                         function drawCluster(cluster, canvas){
-                                            canvas.selectAll('*').remove()
-                                        }
+                                            
+                                            canvas.selectAll('*').remove();
+                                            
+                                            if (cluster.dimension == "column"){
+                                                
+                                                cluster.clusters.map(function(group){
+                                                    
+                                                    var fill = '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
+                                                    
+                                                    canvas.selectAll('rect').data(group, function(d){return d}).enter()
+                                                        .append('rect')
+                                                        .attr({
+                                                            'x': function(d, i){
+                                                                return XIndex2Pixel(XLabel2Index(d));
+                                                            },
+                                                            'y': function(d, i){
+                                                                return horizontalTreeY(.5)
+                                                            },
+                                                            'width': function(d, i){
+                                                                return XIndex2Pixel(1) - XIndex2Pixel(0)-1
+                                                            },
+                                                            'height': function(d, i){
+                                                                return horizontalTreeY(.5) - horizontalTreeY(0)
+                                                            },
+                                                            'fill':function(d, i){
+                                                                return fill
+                                                            }
+                                                        })
+                                                });
+                                                
+                                            } else if (cluster.dimension == "row") {
+                                                
+                                                cluster.clusters.map(function(group){
+                                                    
+                                                    var fill = '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
+                                                    
+                                                    canvas.selectAll('rect').data(group, function(d){return d}).enter()
+                                                        .append('rect')
+                                                        .attr({
+                                                            'y': function(d, i){
+                                                                return YIndex2Pixel(YLabel2Index(d));
+                                                            },
+                                                            'x': function(d, i){
+                                                                return verticalTreeX(.5) -1
+                                                            },
+                                                            'height': function(d, i){
+                                                                return YIndex2Pixel(1) - YIndex2Pixel(0)-1
+                                                            },
+                                                            'width': function(d, i){
+                                                                return verticalTreeX(.5) - verticalTreeX(0)
+                                                            },
+                                                            'fill':function(d, i){
+                                                                return fill
+                                                            }
+                                                        })
+                                                });
+                                                
+                                            }
+                                        };
                                         
                                         scope
                                                 .$watch(
-                                                        'heatmapTopTree',
+                                                        'heatmapViews.top',
                                                         function(newval, oldval) {
 
-                                                            if (newval) {
-                                                                scope.clearCluster('column')
+                                                            if (newval.type == "Hierarchical Clustering") {
 
-                                                                var tree = newval.root;
                                                                 drawTree(
                                                                         dendogramTopWindow,
                                                                         Cluster,
-                                                                        tree,
+                                                                        scope.heatmapViews.top.root,
                                                                         'horizontal')
                                                                     
+                                                            } else if (newval.type == "K-means Clustering") {
+
+                                                                scope.heatmapData.column.keys = newval.keys
+                                                                drawCluster(newval, dendogramTopWindow);
                                                             }
 
                                                         });
 
                                         scope
                                                 .$watch(
-                                                        'heatmapLeftTree',
+                                                        'heatmapViews.side',
                                                         function(newval, oldval) {
 
-                                                            if (newval) {
-
-                                                                scope.clearCluster('row')
+                                                            if (newval.type == "Hierarchical Clustering") {
                                                                 
                                                                 var tree = newval.root;
                                                                 drawTree(
                                                                         dendogramLeftWindow,
                                                                         Cluster,
-                                                                        tree,
+                                                                        scope.heatmapViews.side.root,
                                                                         'vertical');
+                                                            } else if (newval.type == "K-means Clustering") {
+                                                                
+                                                                scope.heatmapData.row.keys = newval.keys
+                                                                drawCluster(newval, dendogramTopWindow);
                                                             }
 
                                                         });
@@ -2205,6 +2250,7 @@ define(
                                                             }
 
                                                         });
+                                        
                                         
 
 

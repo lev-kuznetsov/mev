@@ -41,45 +41,19 @@ define(
                                         $scope.defaultColors();
 
                                         $scope.heatmapData = undefined;
-                                        $scope.heatmapLeftTree = undefined;
-                                        $scope.heatmapTopTree = undefined;
-                                        $scope.heatmapTopClustering = undefined;
-                                        $scope.heatmapLeftClustering = undefined;
-                                        $scope.heatmapLeftTreeName = undefined;
-                                        $scope.heatmapTopTreeName = undefined;
+                                        
+
+                                        $scope.heatmapViews = {
+                                                top: undefined,
+                                                side: undefined
+                                                
+                                        }
+                                        
                                         $scope.previousHCLClusters = undefined;
                                         $scope.previousLimmaAnalysis = undefined;
                                         $scope.previousKMeansClusters = undefined;
                                         $scope.previousAnalysisList = undefined;
                                         $scope.clickSelectionMode = false;
-                                        
-                                        $scope.updateClusters = function(cluster){
-                                            console.log(cluster)
-                                            if (cluster.dimension == "row"){
-                                                $scope.heatmapLeftClustering = cluster;
-                                                $scope.heatmapLeftTree = undefined;
-                                                $scope.heatmapLeftTreeName = undefined;
-                                            } else if (cluster.dimension == "column"){
-                                                $scope.heatmapTopClustering = cluster;
-                                                $scope.heatmapTopTree = undefined;
-                                                $scope.heatmapTopTreeName = undefined;
-                                            }
-                                        }
-                                        $scope.clearCluster = function(dimension){
-                                            if (dimension == "row"){
-                                                $scope.heatmapLeftClustering = undefined;
-                                            } else {
-                                                $scope.heatmapTopClustering = undefined;
-                                            }
-                                        }
-                                        
-                                        $scope.clearTree = function(dimension){
-                                            if (dimension == "row"){
-                                                $scope.heatmapLeftClustering = undefined;
-                                            } else {
-                                                $scope.heatmapTopClustering = undefined;
-                                            }
-                                        }
 
                                         $scope.buildPreviousAnalysisList = function() {
 
@@ -101,6 +75,7 @@ define(
                                                     })
                                                     .success(
                                                             function(data, status, headers, config) {
+                                                                
                                                                 $scope.heatmapData = data;
                                                       })
                                                       .error(function(data, status, headers, config) {
@@ -231,61 +206,86 @@ define(
                                                             });
 
                                         };
+                                        
+                                        $scope.updateHierarchical = function(inputData){
+                                            
+                                            $http({
+                                                method : 'POST',
+                                                url : '/dataset/'
+                                                        + $routeParams.datasetName
+                                                        + '/analysis/'
+                                                        + inputData.name,
+                                                params : {
+                                                    format : 'json'
+                                                }
+                                            })
+                                            .success(function(data, status, headers, config) {
+                                                    
+                                                    inputData.keys = data.keys
+                                                    inputData.dimension = data.type
+                                                    
+                                                    if (inputData.dimension == 'row') {
+                                                        
+                                                        $scope.heatmapViews.side = inputData;
+                                                        $scope.heatmapData.row.keys = inputData.keys;
+                                                        
+                                                    } else if (inputData.dimension == 'column') {
+                                                        
+                                                        $scope.heatmapViews.top = inputData;
+                                                        $scope.heatmapData.column.keys = inputData.keys;
+                                                        
+                                                    }
+                                                    $scope.$broadcast('ViewVisualizeTabEvent');
+                                                })
+                                                .error(function(data, status, headers, config) {
+                                                            var message = "Could not update heatmap. If "
+                                                                    + "problem persists, please contact us.";
 
-                                        $scope.updateHeatmapTree = function(tree) {
+                                                            var header = "Heatmap Update Problem (Error Code: "
+                                                                    + status
+                                                                    + ")";
+
+                                                            alertService
+                                                                    .error(
+                                                                            message,
+                                                                            header);
+                                                 });
+                                        }
+                                        
+                                        $scope.updateKMeans = function(inputData){
+                                            
+                                            var keys = [];
+                                            for (var i=0; i<inputData.clusters.length; i++){
+                                                for (var j=0; j<inputData.clusters[i].length; j++){
+                                                    keys.push(inputData.clusters[i][j])
+                                                }
+                                            }
+                                            inputData.keys = keys;
+                                            if (inputData.dimension == 'row') {
+                                                
+                                                $scope.heatmapViews.side = inputData;
+                                                $scope.heatmapData.row.keys = inputData.keys;
+                                                
+                                            } else if (inputData.dimension == 'column') {
+                                                
+                                                $scope.heatmapViews.top = inputData;
+                                                $scope.heatmapData.column.keys = inputData.keys;
+                                                
+                                            }
+                                        };
+
+                                        $scope.updateHeatmapView = function(inputData) {
 
                                             $scope.$broadcast('ViewVisualizeTabEvent');
 
-                                            $http(
-                                                    {
-                                                        method : 'POST',
-                                                        url : '/dataset/'
-                                                                + $routeParams.datasetName
-                                                                + '/analysis/'
-                                                                + tree.name,
-                                                        params : {
-                                                            format : 'json'
-                                                        }
-                                                    })
-                                                    .success(
-                                                            function(data, status, headers, config) {
-                                                                
-                                                                tree.keys = data.keys
-                                                                console.log(tree)
-                                                                if (tree.dimension == 'row') {
-                                                                    
-                                                                    $scope.clearCluster('row')
-                                                                    $scope.heatmapLeftTree = tree;
-                                                                    $scope.heatmapLeftTreeName = tree.name;
-                                                                    $scope.heatmapData.row = data;
-                                                                    
-                                                                    
-                                                                } else if (tree.dimension == 'column') {
+                                            if (inputData.type == "Hierarchical Clustering"){
+                                                $scope.updateHierarchical(inputData)
+                                            } else if (inputData.type == "K-means Clustering") {
+                                                $scope.updateKMeans(inputData)
+                                            }
+                                                
 
-                                                                    $scope.clearCluster('column')
-                                                                    $scope.heatmapTopTree = data;
-                                                                    $scope.heatmapTopTreeName = tree.name;
-                                                                    $scope.heatmapData.column = data;
-                                                                
-                                                                }
-                                                                $scope.$broadcast('ViewVisualizeTabEvent');
-                                                                console.log($scope.heatmapLeftTree)
-                                                                console.log($scope.heatmapTopTree)
-                                                            })
-                                                    .error(
-                                                            function(data, status, headers, config) {
-                                                                var message = "Could not update heatmap. If "
-                                                                        + "problem persists, please contact us.";
-
-                                                                var header = "Heatmap Update Problem (Error Code: "
-                                                                        + status
-                                                                        + ")";
-
-                                                                alertService
-                                                                        .error(
-                                                                                message,
-                                                                                header);
-                                                            });
+                                            
 
                                         };
 
