@@ -280,6 +280,7 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
   };
 
   MenuSystem.appendTo(menu, [ "core/edit-column" ], [
+      /*** ap:prune
       {
         id: "core/split-column",
         label: $.i18n._('core-views')["split-into-col"]+"...",
@@ -308,10 +309,11 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
         click: doRemoveColumn
       },
       {},
+      */
       {
         id: "core/move-column-to-beginning",
         label: $.i18n._('core-views')["move-to-beg"],
-        click: function() { doMoveColumnTo(0); }
+        click: function() { doMoveColumnTo(1); }
       },
       {
         id: "core/move-column-to-end",

@@ -150,6 +150,22 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
   };
 
   MenuSystem.appendTo(menu, [ "core/edit-cells" ], [
+	{
+	    id: "core/to-number",
+	    label: $.i18n._('core-views')["to-number"],
+	    click: function() { doTextTransform("value.toNumber()", "keep-original", false, ""); }
+	  },
+	  {
+	    id: "core/to-date",
+	    label: $.i18n._('core-views')["to-date"],
+	    click: function() { doTextTransform("value.toDate()", "keep-original", false, ""); }
+	  },
+	  {
+	    id: "core/to-text",
+	    label: $.i18n._('core-views')["to-text"],
+	    click: function() { doTextTransform("value.toString()", "keep-original", false, ""); }
+	  },
+    /* *** ap:prune
     {
       id: "core/text-transform",
       label: $.i18n._('core-views')["transform"]+"...",
@@ -243,6 +259,7 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
       label: $.i18n._('core-views')["cluster-edit"]+"...",
       click: function() { new ClusteringDialog(column.name, "value"); }
     }
+    */
   ]);
 
   var doTransposeColumnsIntoRows = function() {

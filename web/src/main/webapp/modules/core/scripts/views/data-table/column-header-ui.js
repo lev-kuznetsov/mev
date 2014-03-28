@@ -106,23 +106,6 @@ DataTableColumnHeaderUI.prototype._createMenuForColumnHeader = function(elmt) {
       submenu: []
     },
     {},
-    {
-      id: "core/edit-cells",
-      label: $.i18n._('core-views')["edit-cells"],
-      width: "170px",
-      submenu: []
-    },
-    {
-      id: "core/edit-column",
-      label: $.i18n._('core-views')["edit-column"],
-      submenu: []
-    },
-    {
-      id: "core/transpose",
-      label: $.i18n._('core-views')["transpose"],
-      submenu: []
-    },
-    {},
     (
       this._dataTableView._getSortingCriterionForColumn(this._column.name) === null ?
         {
@@ -139,8 +122,28 @@ DataTableColumnHeaderUI.prototype._createMenuForColumnHeader = function(elmt) {
         }
     ),
     {
+        id: "core/edit-cells",
+//        label: $.i18n._('core-views')["edit-cells"], //ap:prune
+        label: "Convert",
+        width: "170px",
+        submenu: []
+    },
+    {},    
+    {
+      id: "core/edit-column",
+//      label: $.i18n._('core-views')["edit-column"],
+      label: "Move",
+      submenu: []
+    },
+    /**** ap:prune
+     {
+      id: "core/transpose",
+      label: $.i18n._('core-views')["transpose"],
+      submenu: []
+    },*/    
+    {
       id: "core/view",
-      label: "View",
+      label: "Collapse",
       tooltip: $.i18n._('core-views')["collapse-expand"],
       submenu: [
         {
@@ -182,7 +185,8 @@ DataTableColumnHeaderUI.prototype._createMenuForColumnHeader = function(elmt) {
           }
         }
       ]
-    },
+    }
+    /**** ap:prune menues
     {},
     {
       id: "core/reconcile",
@@ -191,6 +195,7 @@ DataTableColumnHeaderUI.prototype._createMenuForColumnHeader = function(elmt) {
       width: "170px",
       submenu: []
     }
+    */
   ];
 
   for (var i = 0; i < DataTableColumnHeaderUI._extenders.length; i++) {

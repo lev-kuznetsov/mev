@@ -211,10 +211,12 @@ function registerImporting() {
   // TODO: Can we get away with just reusing Excel importer UI?
   IM.registerFormat("text/xml/ods", "Open Document Format spreadsheets (.ods)", "ExcelParserUI", new Packages.com.google.refine.importers.OdsImporter());
   //IM.registerFormat("text/xml/rdf", "RDF/XML files", "RdfTriplesParserUI", new Packages.com.google.refine.importers.RdfXmlTripleImporter());
-  IM.registerFormat("text/json", "JSON files", "JsonParserUI", new Packages.com.google.refine.importers.JsonImporter());
-  IM.registerFormat("text/marc", "MARC files");
+  //ap:remove some format for mev
+//  IM.registerFormat("text/json", "JSON files", "JsonParserUI", new Packages.com.google.refine.importers.JsonImporter());
+//  IM.registerFormat("text/marc", "MARC files");
 
-  IM.registerFormat("binary", "Binary files"); // generic format, no parser to handle it
+//  IM.registerFormat("binary", "Binary files"); // generic format, no parser to handle it
+
   IM.registerFormat("binary/xls", "Excel files", "ExcelParserUI", new Packages.com.google.refine.importers.ExcelImporter());
 
   IM.registerFormat("service", "Services"); // generic format, no parser to handle it
