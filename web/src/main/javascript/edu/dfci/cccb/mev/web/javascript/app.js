@@ -4,8 +4,7 @@ define(['angular',
         'directives', 
         'services', 
         'controllers', 
-        'setmanager/SetManager'
-//        ,'uiBootstrap'
+        'setmanager/SetManager',
         ,'uiBootstrapTpls'
         ], function(angular){
 	'use strict';
@@ -16,7 +15,7 @@ define(['angular',
 	     'myApp.services',
 	     'myApp.controllers',
 	     'Mev.SetManager',
-	     'Mev.PresetManager'
+	     'Mev.PresetManager',
 	     ,'ui.bootstrap'
 	     ])
 	.config(['$routeProvider', '$locationProvider', '$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {
