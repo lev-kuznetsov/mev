@@ -391,8 +391,6 @@ define(
                                             templateUrl : '/container/view/elements/expressionPanel',                                            
                                             link : function(scope) {
 
-                                                scope.buildPreviousAnalysisList();
-
                                                 scope.datasetName = $routeParams.datasetName;
 
                                             }
@@ -495,36 +493,35 @@ define(
                                             templateUrl : "/container/view/elements/hierarchicalbody",
                                             link : function(scope, elems, attrs) {
 
-                                                scope.availableMetrics = [
-                                                        'euclidean',
-                                                        'manhattan',
-                                                        'pearson'];
-
-                                                scope.availableAlgorithms = [
-                                                        'average',
-                                                        'complete',
-                                                        'single'];
-
-                                                scope.dimensions = [{
-                                                    name : 'Rows',
-                                                    value : 'row'
-                                                }, {
-                                                    name : 'Columns',
-                                                    value : 'column'
-                                                }];
+                                                scope.options = {
+                                                        metrics : [{name:"Euclidean", value:"euclidean"},
+                                                                   {name:"Manhattan", value:"manhattan"},
+                                                                   {name:"Pearson", value:"pearson"}],
+                                                        linkage : [{name:"Complete", value:'complete'},
+                                                                   {name:"Average", value:'average'},
+                                                                   {name:"Single", value:'single'}],
+                                                        dimensions : [{
+                                                                        name : 'Rows',
+                                                                        value : 'row'
+                                                                    }, {
+                                                                        name : 'Columns',
+                                                                        value : 'column'
+                                                                    }]
+                                                };
+                                                
+                                                scope.params = {
+                                                        metric : scope.options.metrics[0],
+                                                        dimension : scope.options.dimensions[1],
+                                                        linkage : scope.options.linkage[0],
+                                                        name : undefined
+                                                }
+                                                
+                                                scope.params.selectedMetric = {name:"Euclidean", value:"euclidean"}
 
                                                 scope.clusterInit = function() {
-                                                    var q = {
-                                                        name : scope.clusterName,
-                                                        dataset : $routeParams.datasetName,
-                                                        dimension : scope.selectedDimension,
-                                                        metric : scope.selectedMetric,
-                                                        algorithm : scope.selectedAlgorithm,
 
-                                                    };
-                                                    
                                                     var message = "Started clustering analysis for "
-                                                        + q.name;
+                                                        + scope.params.name;
 
                                                     var header = "Hierarchical Clustering Analysis";
                                                      
@@ -535,15 +532,15 @@ define(
 
                                                                 method : 'POST',
                                                                 url : 'dataset/'
-                                                                        + q.dataset
+                                                                        + $routeParams.datasetName
                                                                         + '/analyze/hcl/'
-                                                                        + q.name
+                                                                        + scope.params.name
                                                                         + '('
-                                                                        + q.dimension.value
+                                                                        + scope.params.dimension.value
                                                                         + ','
-                                                                        + q.metric
+                                                                        + scope.params.metric.value
                                                                         + ','
-                                                                        + q.algorithm
+                                                                        + scope.params.linkage.value
                                                                         + ')'
 
                                                             })
@@ -551,11 +548,12 @@ define(
                                                                             
                                                                             scope.buildPreviousAnalysisList()
                                                                             var message = "Clustering analysis for "
-                                                                                + q.name + " complete!";
+                                                                                + scope.params.name + " complete!";
 
                                                                             var header = "Hierarchical Clustering Analysis";
                                                                              
                                                                             alertService.success(message,header);
+                                                                            resetSelections()
                                                                         
                                                                     })
                                                                     
@@ -567,18 +565,19 @@ define(
                                                                     + status
                                                                     + ")";
                                                                 alertService.error(message,header);
+                                                                resetSelections()
                                                                 
                                                             });
-
-                                                    resetSelections()
 
                                                 };
 
                                                 function resetSelections() {
-                                                    scope.clusterName = "";
-                                                    scope.selectedDimension = "";
-                                                    scope.selectedMetric = "";
-                                                    scope.selectedAlgorithm = "";
+                                                    scope.params = {
+                                                            metric : scope.options.metrics[0],
+                                                            dimension : scope.options.dimensions[1],
+                                                            linkage : scope.options.linkage[0],
+                                                            name : undefined
+                                                    }
                                                 }
 
                                             }
@@ -605,10 +604,10 @@ define(
                                         
                                         scope.params = {
                                                 'analysisName':'',
-                                                'analysisDimension':'',
-                                                'analysisClusters': 2,
-                                                'analysisMetric':'',
-                                                'analysisIterations':100,
+                                                'analysisDimension':scope.options.dimensions[0],
+                                                'analysisClusters': scope.options.clusters[3],
+                                                'analysisMetric':scope.options.metrics[0],
+                                                'analysisIterations':scope.options.iterations[0],
                                                 'analysisConvergence': 0
                                         }
                                         
