@@ -92,9 +92,19 @@ public class Views {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/limmaAccordion.ftl").build ();
   }
   
-  @Bean (name = "elements/clusterAccordion")
-  public FreeMarkerView elementClusterAccordion (FreeMarkerViewBuilder builder) {
-    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/clusterAccordion.ftl").build ();
+  @Bean (name = "elements/hclAccordionList")
+  public FreeMarkerView elementHclAccordionList (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/hclAccordionList.ftl").build ();
+  }
+  
+  @Bean (name = "elements/kmeansAccordionList")
+  public FreeMarkerView elementKmeansAccordionList (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/kmeansAccordionList.ftl").build ();
+  }
+  
+  @Bean (name = "elements/kmeansAccordion")
+  public FreeMarkerView elementKmeansAccordion (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/kmeansAccordion.ftl").build ();
   }
 
   @Bean (name = "elements/table")
