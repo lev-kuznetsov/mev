@@ -1,9 +1,9 @@
 define(
-        ['angular', 'jquery', 'd3', 'services'],
+        ['angular', 'jquery', 'd3', 'services', 'colorbrewer/ColorBrewer'],
         function(angular, jq, d3) {
 
             return angular
-                    .module('myApp.directives', [])
+                    .module('myApp.directives', ['d3colorBrewer'])
                     .directive('appVersion',
                             ['appVersion', function(version) {
                                 return function(scope, elm, attrs) {
@@ -391,8 +391,6 @@ define(
                                             templateUrl : '/container/view/elements/expressionPanel',                                            
                                             link : function(scope) {
 
-                                                scope.buildPreviousAnalysisList();
-
                                                 scope.datasetName = $routeParams.datasetName;
 
                                             }
@@ -495,36 +493,35 @@ define(
                                             templateUrl : "/container/view/elements/hierarchicalbody",
                                             link : function(scope, elems, attrs) {
 
-                                                scope.availableMetrics = [
-                                                        'euclidean',
-                                                        'manhattan',
-                                                        'pearson'];
-
-                                                scope.availableAlgorithms = [
-                                                        'average',
-                                                        'complete',
-                                                        'single'];
-
-                                                scope.dimensions = [{
-                                                    name : 'Rows',
-                                                    value : 'row'
-                                                }, {
-                                                    name : 'Columns',
-                                                    value : 'column'
-                                                }];
+                                                scope.options = {
+                                                        metrics : [{name:"Euclidean", value:"euclidean"},
+                                                                   {name:"Manhattan", value:"manhattan"},
+                                                                   {name:"Pearson", value:"pearson"}],
+                                                        linkage : [{name:"Complete", value:'complete'},
+                                                                   {name:"Average", value:'average'},
+                                                                   {name:"Single", value:'single'}],
+                                                        dimensions : [{
+                                                                        name : 'Rows',
+                                                                        value : 'row'
+                                                                    }, {
+                                                                        name : 'Columns',
+                                                                        value : 'column'
+                                                                    }]
+                                                };
+                                                
+                                                scope.params = {
+                                                        metric : scope.options.metrics[0],
+                                                        dimension : scope.options.dimensions[1],
+                                                        linkage : scope.options.linkage[0],
+                                                        name : undefined
+                                                }
+                                                
+                                                scope.params.selectedMetric = {name:"Euclidean", value:"euclidean"}
 
                                                 scope.clusterInit = function() {
-                                                    var q = {
-                                                        name : scope.clusterName,
-                                                        dataset : $routeParams.datasetName,
-                                                        dimension : scope.selectedDimension,
-                                                        metric : scope.selectedMetric,
-                                                        algorithm : scope.selectedAlgorithm,
 
-                                                    };
-                                                    
                                                     var message = "Started clustering analysis for "
-                                                        + q.name;
+                                                        + scope.params.name;
 
                                                     var header = "Hierarchical Clustering Analysis";
                                                      
@@ -535,15 +532,15 @@ define(
 
                                                                 method : 'POST',
                                                                 url : 'dataset/'
-                                                                        + q.dataset
+                                                                        + $routeParams.datasetName
                                                                         + '/analyze/hcl/'
-                                                                        + q.name
+                                                                        + scope.params.name
                                                                         + '('
-                                                                        + q.dimension.value
+                                                                        + scope.params.dimension.value
                                                                         + ','
-                                                                        + q.metric
+                                                                        + scope.params.metric.value
                                                                         + ','
-                                                                        + q.algorithm
+                                                                        + scope.params.linkage.value
                                                                         + ')'
 
                                                             })
@@ -551,11 +548,12 @@ define(
                                                                             
                                                                             scope.buildPreviousAnalysisList()
                                                                             var message = "Clustering analysis for "
-                                                                                + q.name + " complete!";
+                                                                                + scope.params.name + " complete!";
 
                                                                             var header = "Hierarchical Clustering Analysis";
                                                                              
                                                                             alertService.success(message,header);
+                                                                            resetSelections()
                                                                         
                                                                     })
                                                                     
@@ -567,18 +565,19 @@ define(
                                                                     + status
                                                                     + ")";
                                                                 alertService.error(message,header);
+                                                                resetSelections()
                                                                 
                                                             });
-
-                                                    resetSelections()
 
                                                 };
 
                                                 function resetSelections() {
-                                                    scope.clusterName = "";
-                                                    scope.selectedDimension = "";
-                                                    scope.selectedMetric = "";
-                                                    scope.selectedAlgorithm = "";
+                                                    scope.params = {
+                                                            metric : scope.options.metrics[0],
+                                                            dimension : scope.options.dimensions[1],
+                                                            linkage : scope.options.linkage[0],
+                                                            name : undefined
+                                                    }
                                                 }
 
                                             }
@@ -598,17 +597,17 @@ define(
                                         scope.options = {
                                                 'dimensions':[{'name': 'Rows', 'value':'row'},
                                                               {'name': 'Columns', 'value':'column'} ],
-                                                'clusters':[1, 2, 3, 4, 5, 6, 7, 8],
+                                                'clusters':[2, 3, 4, 5, 6, 7, 8],
                                                 'metrics':[{'name': 'Euclidean', 'value':'euclidean'} ],
                                                 'iterations': [100, 1000]
                                         }
                                         
                                         scope.params = {
                                                 'analysisName':'',
-                                                'analysisDimension':'',
-                                                'analysisClusters': 1,
-                                                'analysisMetric':'',
-                                                'analysisIterations':100,
+                                                'analysisDimension':scope.options.dimensions[0],
+                                                'analysisClusters': scope.options.clusters[3],
+                                                'analysisMetric':scope.options.metrics[0],
+                                                'analysisIterations':scope.options.iterations[0],
                                                 'analysisConvergence': 0
                                         }
                                         
@@ -1118,7 +1117,8 @@ define(
                             })
                     .directive(
                             'visHeatmap',
-                            ["$routeParams","$http", "alertService", function($routeParams, $http, alertService) {
+                            ["$routeParams","$http", "alertService", "d3colors", 
+                             function($routeParams, $http, alertService, d3colors) {
 
                                 return {
 
@@ -2140,9 +2140,16 @@ define(
                                             
                                             if (cluster.dimension == "column"){
                                                 
-                                                cluster.clusters.map(function(group){
-                                                    
-                                                    var fill = '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
+                                                var colors = d3.scale.ordinal()
+                                                .domain(d3.range(cluster.clusters.length) )
+                                                
+                                                if (cluster.clusters.length > 2){
+                                                    colors.range(d3colors.Set1[cluster.clusters.length] );
+                                                } else {
+                                                    colors.range(["blue", "red" ]);
+                                                }
+                                                
+                                                cluster.clusters.map(function(group, index){
                                                     
                                                     canvas.selectAll('rect').data(group, function(d){return d}).enter()
                                                         .append('rect')
@@ -2160,7 +2167,7 @@ define(
                                                                 return horizontalTreeY(.5) - horizontalTreeY(0)
                                                             },
                                                             'fill':function(d, i){
-                                                                return fill
+                                                                return colors(index)
                                                             }
                                                         })
                                                 });
