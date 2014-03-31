@@ -82,7 +82,8 @@ public class ImportPresetDatasetCommand extends Command {
 
           for (Column column : columns) {
             String name = column.getName ();
-            if (name.equalsIgnoreCase ("annotationId") || name.equalsIgnoreCase ("id")) {
+            if (name.equalsIgnoreCase ("annotationId") || name.equalsIgnoreCase ("id") 
+                    || name.equalsIgnoreCase ("probeset_id") || name.equalsIgnoreCase ("symbol")) {
               theIdColumn = column;
               break;
             }

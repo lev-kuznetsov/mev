@@ -13,6 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.log4j.Log4j;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +36,7 @@ import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
 import freemarker.template.utility.NullArgumentException;
 
+@Log4j
 public class ViewPresetRowAnnotationsCommand extends Command {
 
   final static protected Logger logger = LoggerFactory.getLogger("ViewPresetRowAnnotationsCommand");
@@ -108,8 +111,14 @@ public class ViewPresetRowAnnotationsCommand extends Command {
 
                   // if no id column found, assume first column is the id
                   List<Column> columns = project.columnModel.columns;
-                  theIdColumn = columns.get (0);
-
+                  
+                  theIdColumn = project.columnModel.getColumnByName ("probeset_id");
+                  if(theIdColumn==null){
+                    theIdColumn = project.columnModel.getColumnByName ("Symbol");  
+                  }
+                  if(theIdColumn==null){
+                    theIdColumn = columns.get (0);  
+                  }
                 }
 
                 @Override
