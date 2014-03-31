@@ -45,11 +45,14 @@ public class TestPresetDatasetFlatTable {
   private @Inject @Named("presets-datasource") DataSource dataSource;
   private @Inject PresetDatasetBuilder presetDatasetBuilder;
   private @Inject PresetDimensionBuilder dimensionBuilder;
-  @SuppressWarnings("unused") private String rootUrl;
+  private String dataRootUrl;
+  private String annotationsRootUrl;
+  
   private boolean bWaitForProfiler=false;
   @PostConstruct
   public void init(){
-    this.rootUrl = "file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/";
+    this.dataRootUrl = "file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/";    
+    this.annotationsRootUrl = "file://"+environment.getProperty ("user.home")+"/mev/data/array_annotations/";
   }
   
   @Before
@@ -125,10 +128,10 @@ public class TestPresetDatasetFlatTable {
     String tsvFileName="GBM.AgilentG4502A_07_2.Level_2.tsv";
     String folder="GBM/Level_2/";
     
-    String rootUrl = "file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/";
     PresetDescriptor descriptor = new SimplePresetDescriptor (tsvFileName, 
-                                                              new URL (rootUrl), 
-                                                              folder+tsvFileName, ""); 
+                                                              new URL (dataRootUrl), 
+                                                              folder+tsvFileName, "",
+                                                              new URL(annotationsRootUrl), ""); 
     Dimension columns = dimensionBuilder.buildColumns (descriptor);
     
     List<String> columnList1=new ArrayList<String> (50);
@@ -144,14 +147,14 @@ public class TestPresetDatasetFlatTable {
         break;      
     }
     Selection selection = new SimpleSelection("presest_test", new Properties (), columnList1);
-    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", selection);
+    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", selection, null);
     Timer timer = Timer.start ("GBM-ITERATE-50COLS");    
     int count=datasetIterate (presetDataset);    
     timer.read ();
     log.debug ("flat-count:"+count);
     
     selection = new SimpleSelection("presest_test", new Properties (), columnList2);
-    presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", selection);
+    presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", selection, null);
     timer = Timer.start ("GBM-ITERATE-50COLS-2");    
     count=datasetIterate (presetDataset);    
     timer.read ();
@@ -196,12 +199,11 @@ public class TestPresetDatasetFlatTable {
       log.debug ("Sleeping .. you can start start profiler now.");
       Thread.sleep (1000*15);
     }    
-    ;
-    String rootUrl = "file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/";
     PresetDescriptor descriptor = new SimplePresetDescriptor (tsvFileName, 
-                                                              new URL (rootUrl), 
-                                                              folder+tsvFileName, ""); 
-    return presetDatasetBuilder.build (descriptor, "preset_test", null);
+                                                              new URL (dataRootUrl), 
+                                                              folder+tsvFileName, "",
+                                                              new URL(annotationsRootUrl), ""); 
+    return presetDatasetBuilder.build (descriptor, "preset_test", null, null);
   }
   
 }

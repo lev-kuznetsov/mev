@@ -43,16 +43,18 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
   //fields
   private final @Inject @Named("presets-jooq-context") DSLContext context;  
   @SuppressWarnings("unused") private final Dimension columns;
+  @SuppressWarnings("unused") private final Dimension rows;
   private final String tableName;
   private final List<Field<String>>fieldList;
   private final Table<Record> table;
   private final Field<String> fieldRowId = fieldByName (String.class, "COLUMN0");
 
   private final PresetValuesQueryHelper queryHelper;
-  public PresetValuesFlatTableIterable (DSLContext context, String tableName, Dimension columns) {
+  public PresetValuesFlatTableIterable (DSLContext context, String tableName, Dimension columns, Dimension rows) {
     log.debug ("*** ValueStore Iterable ***");
     this.context=context;    
     this.columns=columns;
+    this.rows=rows;
     this.tableName = tableName;
     this.queryHelper = new PresetValuesQueryHelper (context);
     this.fieldList = createFieldList (columns.keys ());
@@ -97,7 +99,8 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
       Cursor<Record> cursor;
       ResultQuery<Record> query=null;
       try{
-        query = queryHelper.queryAllRows (fieldList, table);
+//        query = queryHelper.queryAllRows (fieldList, table);
+        query = queryHelper.queryINRows (fieldList, rows.keys (), table);
         cursor = query.fetchLazy ();
       }finally{
         if(query!=null) query.close();            

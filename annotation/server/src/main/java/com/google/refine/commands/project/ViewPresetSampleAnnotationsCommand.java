@@ -37,9 +37,9 @@ import com.google.refine.util.ParsingUtilities;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import freemarker.template.utility.NullArgumentException;
 
-public class ViewPresetAnnotationsCommand extends Command {
+public class ViewPresetSampleAnnotationsCommand extends Command {
 
-  final static protected Logger logger = LoggerFactory.getLogger("ViewPresetAnnotationsCommand");
+  final static protected Logger logger = LoggerFactory.getLogger("ViewPresetSampleAnnotationsCommand");
   
   @Override
   public void doGet (final HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -58,8 +58,8 @@ public class ViewPresetAnnotationsCommand extends Command {
 //        File file = new File( descriptor.columnUrl ().getFile() );        
 //        String fileName = file.getName().toLowerCase();
 //        InputStream stream = new FileInputStream (file);
-        InputStream stream = descriptor.columnUrl ().openStream ();
-        String fileName = descriptor.columnUrl ().getFile ();
+        InputStream stream=descriptor.columnUrl ().openStream ();;         
+        String fileName=descriptor.columnUrl ().getFile ();; 
         
         ProjectManager.getSingleton().importProject(projectID, stream, !fileName.endsWith(".tar"));
         ProjectManager.getSingleton().loadProjectMetadata(projectID);
@@ -141,7 +141,7 @@ public class ViewPresetAnnotationsCommand extends Command {
             }
             
             redirect(response, "/annotations/import-dataset/project?"
-                     +"import-preset="+datasetName+"&project=" + projectID);
+                     +"import-preset="+datasetName+"&project=" + projectID+"&dimension=column");
         } else {
             respondWithErrorPage(request, response, "Failed to import project. Reason unknown.", null);
         }

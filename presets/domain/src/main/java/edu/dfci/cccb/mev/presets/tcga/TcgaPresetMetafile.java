@@ -26,6 +26,7 @@ import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
 public class TcgaPresetMetafile extends AbstractTcgaPreset {
 
   @JsonIgnore(value=true) private @Setter  @Inject @Named ("tcgaPresetRoot") URL tcgaPresetRoot;
+  @JsonIgnore(value=true) private @Setter  @Inject @Named ("probe-annotations-root") URL rowAnnotationsRoot;  
   @JsonIgnore(value=true) private String filename;
   @JsonIgnore(value=true) private String path;
   @JsonProperty(value="name") private @Getter String name;
@@ -61,18 +62,26 @@ public class TcgaPresetMetafile extends AbstractTcgaPreset {
     this.platform=platform;
     this.platformName=platformName;
     this.dataLevel=dataLevel;
-    this.descriptor = new SimplePresetDescriptor ("PRESET-"+name,tcgaPresetRoot, getDataUrlSpec (), getColumnUrlSpec ()); 
+    this.descriptor = new SimplePresetDescriptor ("PRESET-"+name,tcgaPresetRoot, getDataUrlSpec (), getColumnUrlSpec (), rowAnnotationsRoot, getRowUrlSpec ()); 
     return this;
   }
    
-  private String getDataUrlSpec() {
+  protected String getDataUrlSpec() {
     return "tcga_data/"+path+"/"+filename;
   }
-  private String getColumnUrlSpec() {
+  protected String getColumnUrlSpec() {
     //ACC-clinical_annotations-tsv.openrefine.tar.gz
     return "openrefine/clinical/"+disease+"-clinical_annotations-tsv.openrefine.tar.gz";
   }
-
+  protected String getRowUrlSpec() {
+    //ACC-clinical_annotations-tsv.openrefine.tar.gz
+    if(this.dataLevel.trim().equalsIgnoreCase ("level_3"))
+      //geneSymbol_goAnnotations-tsv.google-refine.tar.gz
+      return "openrefine/geneSymbol_goAnnotations-tsv.google-refine.tar.gz";
+    else
+      //HG-U133_Plus_2-na33-annot-out-tsv.google-refine.tar.gz
+      return "openrefine/"+this.platform+"-na33-annot-out-tsv.google-refine.tar.gz";              
+  }
 
   
 }

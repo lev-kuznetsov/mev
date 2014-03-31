@@ -10,4 +10,5 @@ public interface PresetDescriptor {
   String name();
   URL dataUrl();
   URL columnUrl();  
+  URL rowUrl();
 }

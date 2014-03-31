@@ -56,6 +56,7 @@ import com.google.refine.preference.TopList;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatforms;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
+import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
 
 /**
  * ProjectManager is responsible for loading and saving the workspace and
@@ -101,6 +102,15 @@ public abstract class ProjectManager {
   public ProbeAnnotationPlatforms getProbeAnnotationPlatforms() {
     return _probeAnnotationPlatforms;
   }
+
+  private PresetDimensionBuilder _dimensionBuilder;
+  public void setDimensionBuilder (PresetDimensionBuilder dimensionBuilder) {
+    _dimensionBuilder = dimensionBuilder;
+  }
+  public PresetDimensionBuilder getDimensionBuilder () {
+    return _dimensionBuilder;
+  }
+
   
   /**
    * What caches the joins between projects.

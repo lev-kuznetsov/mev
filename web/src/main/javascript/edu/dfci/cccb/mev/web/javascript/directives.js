@@ -2207,20 +2207,21 @@ define(
                                                         'heatmapViews.top',
                                                         function(newval, oldval) {
 
-                                                            if (newval.type == "Hierarchical Clustering") {
-
-                                                                drawTree(
-                                                                        dendogramTopWindow,
-                                                                        Cluster,
-                                                                        scope.heatmapViews.top.root,
-                                                                        'horizontal')
-                                                                    
-                                                            } else if (newval.type == "K-means Clustering") {
-
-                                                                scope.heatmapData.column.keys = newval.keys
-                                                                drawCluster(newval, dendogramTopWindow);
-                                                            }
-
+                                                        	if(typeof newval!="undefined"){
+	                                                            if ( newval.type == "Hierarchical Clustering") {
+	
+	                                                                drawTree(
+	                                                                        dendogramTopWindow,
+	                                                                        Cluster,
+	                                                                        scope.heatmapViews.top.root,
+	                                                                        'horizontal')
+	                                                                    
+	                                                            } else if (newval.type == "K-means Clustering") {
+	
+	                                                                scope.heatmapData.column.keys = newval.keys
+	                                                                drawCluster(newval, dendogramTopWindow);
+	                                                            }
+                                                        	}
                                                         });
 
                                         scope
@@ -2228,20 +2229,21 @@ define(
                                                         'heatmapViews.side',
                                                         function(newval, oldval) {
 
-                                                            if (newval.type == "Hierarchical Clustering") {
-                                                                
-                                                                var tree = newval.root;
-                                                                drawTree(
-                                                                        dendogramLeftWindow,
-                                                                        Cluster,
-                                                                        scope.heatmapViews.side.root,
-                                                                        'vertical');
-                                                            } else if (newval.type == "K-means Clustering") {
-                                                                
-                                                                scope.heatmapData.row.keys = newval.keys
-                                                                drawCluster(newval, dendogramTopWindow);
-                                                            }
-
+                                                        	if(typeof newval!="undefined"){
+	                                                            if (newval.type == "Hierarchical Clustering") {
+	                                                                
+	                                                                var tree = newval.root;
+	                                                                drawTree(
+	                                                                        dendogramLeftWindow,
+	                                                                        Cluster,
+	                                                                        scope.heatmapViews.side.root,
+	                                                                        'vertical');
+	                                                            } else if (newval.type == "K-means Clustering") {
+	                                                                
+	                                                                scope.heatmapData.row.keys = newval.keys
+	                                                                drawCluster(newval, dendogramTopWindow);
+	                                                            }
+                                                        	}
                                                         });
 
                                         scope

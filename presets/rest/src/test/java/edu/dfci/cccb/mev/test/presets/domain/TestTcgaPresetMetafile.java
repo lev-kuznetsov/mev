@@ -9,8 +9,6 @@ import java.net.URL;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import lombok.extern.log4j.Log4j;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,13 +20,13 @@ import edu.dfci.cccb.mev.presets.contract.PresetsBuilder;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 
-@Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={PresetsRestConfigurationTest.class})
 public class TestTcgaPresetMetafile {
   
   private @Inject PresetsBuilder builder;
   private @Inject @Named ("tcgaPresetRoot") URL tcgaPresetRoot;
+  @Inject @Named ("probe-annotations-root") URL rowAnnotationsRoot;
   
   @Test
   public void testTcgaPresetRoot() throws IOException{
@@ -48,16 +46,10 @@ public class TestTcgaPresetMetafile {
     
     URL expectedColumnURL = new URL(tcgaPresetRoot, "openrefine/clinical/NS-clinical_annotations-tsv.openrefine.tar.gz");    
     assertEquals (expectedColumnURL, descriptor.columnUrl ());
-    
+  
+    URL expectedRowURL = new URL(rowAnnotationsRoot, "openrefine/HS-na33-annot-out-tsv.google-refine.tar.gz");    
+    assertEquals (expectedRowURL, descriptor.rowUrl ());
+  
   }
   
-  @Test
-  public void testToString() throws PresetException{
-    Preset preset = builder.createPreset (new Object[]{"filename.tsv", "path/of/file", "NS", "Nothing Serious", "HS", "HiSeq", "Level2"});
-    log.debug(preset.toString ());
-    String expected = "TcgaPresetMetafile(tcgaPresetRoot="+tcgaPresetRoot.toString ()+", filename=filename.tsv, path=path/of/file, name=filename.tsv, disease=NS, diseaseName=Nothing Serious, platform=HS, platformName=HiSeq, dataLevel=Level2, descriptor=SimplePresetDescriptor(name=PRESET-filename.tsv, dataUrl="+tcgaPresetRoot.toString ()+"tcga_data/path/of/file/filename.tsv, columnUrl="+tcgaPresetRoot.toString ()+"openrefine/clinical/NS-clinical_annotations-tsv.openrefine.tar.gz))";
-    log.debug (expected);
-    assertEquals(expected, preset.toString ());
-  }
-
 }

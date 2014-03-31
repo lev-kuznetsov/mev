@@ -42,12 +42,17 @@ public class PresetDatasetBuilderFlatTableDB extends AbstractDatasetBuilder impl
   }
 
   @Override
-  public Dataset build (PresetDescriptor descriptor, String datasetName, Selection columnSelection) throws PresetException {
+  public Dataset build (PresetDescriptor descriptor, String datasetName, Selection columnSelection, Selection rowSelection) throws PresetException {
     try{
       if(log.isDebugEnabled ())
         log.debug ("Creating preset dataset from FLAT table:"+descriptor.name ());
       
-      Dimension rows = dimensionBuilder.buildRows (descriptor);
+      Dimension rows;
+      if(columnSelection!=null)
+        rows = dimensionBuilder.build (Dimension.Type.ROW, descriptor, rowSelection);
+      else
+        rows = dimensionBuilder.buildRows (descriptor);
+      
       Dimension columns;
       if(columnSelection!=null)
         columns = dimensionBuilder.build (Dimension.Type.COLUMN, descriptor, columnSelection);
@@ -59,7 +64,7 @@ public class PresetDatasetBuilderFlatTableDB extends AbstractDatasetBuilder impl
       if(log.isDebugEnabled ())
         log.debug ("rows="+rows);
       
-      Values presetValues = new PresetValuesFlatTableIterable (context, descriptor.name (), columns);
+      Values presetValues = new PresetValuesFlatTableIterable (context, descriptor.name (), columns, rows);
       return aggregate (datasetName, presetValues, super.analyses (), columns, rows);
       
     }catch(InvalidDatasetNameException|DatasetBuilderException e){

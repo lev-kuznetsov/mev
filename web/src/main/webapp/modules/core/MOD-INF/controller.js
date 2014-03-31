@@ -66,9 +66,10 @@ function registerCommands() {
   RS.registerCommand(module, "export-project", new Packages.com.google.refine.commands.project.ExportProjectCommand());
   RS.registerCommand(module, "export-rows", new Packages.com.google.refine.commands.project.ExportRowsCommand());
   RS.registerCommand(module, "export-set", new Packages.com.google.refine.commands.project.ExportSetCommand());
-  RS.registerCommand(module, "view-preset-annotations", new Packages.com.google.refine.commands.project.ViewPresetAnnotationsCommand());
+  RS.registerCommand(module, "view-preset-sample-annotations", new Packages.com.google.refine.commands.project.ViewPresetSampleAnnotationsCommand());
+  RS.registerCommand(module, "view-preset-row-annotations", new Packages.com.google.refine.commands.project.ViewPresetRowAnnotationsCommand());
   RS.registerCommand(module, "import-preset-dataset", new Packages.com.google.refine.commands.project.ImportPresetDatasetCommand());
-  
+  RS.registerCommand(module, "import-preset-filter-samples", new Packages.com.google.refine.commands.project.ImportPresetFilterSamplesCommand());
   
   RS.registerCommand(module, "get-project-metadata", new Packages.com.google.refine.commands.project.GetProjectMetadataCommand());
   RS.registerCommand(module, "get-all-project-metadata", new Packages.com.google.refine.commands.workspace.GetAllProjectMetadataCommand());
@@ -456,7 +457,8 @@ function init() {
       "scripts/dialogs/custom-tabular-exporter-dialog.js",
       
       "scripts/dialogs/export-set-dialog.js",
-      "scripts/dialogs/import-preset-dialog.js"
+      "scripts/dialogs/import-preset-samples-dialog.js",
+      "scripts/dialogs/import-preset-rows-dialog.js"
       
     ]
   );

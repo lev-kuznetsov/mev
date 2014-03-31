@@ -38,7 +38,7 @@ define(['jquery', 'angular'], function (jquery, angular){
 				link: function(scope){
 					
 					scope.showImportPreset = function(presetName){						
-						scope.importPresetUrl="/annotations/import-dataset/command/core/view-preset-annotations?import-preset="+presetName;
+						scope.importPresetUrl="/annotations/import-dataset/command/core/view-preset-sample-annotations?import-preset="+presetName+"&dimension=column";
 						scope.showImport=true;
 					};					
 					scope.showPresetList = function(){

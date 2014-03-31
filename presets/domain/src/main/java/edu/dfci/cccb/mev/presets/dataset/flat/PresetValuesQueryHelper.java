@@ -31,8 +31,7 @@ public class PresetValuesQueryHelper {
             .getQuery ();    
   }
   
-  public ResultQuery<Record> queryINRows(String tableName, List<Field<String>> selectFields, List<String> rows){
-    Table<Record> table = tableByName (tableName);
+  public ResultQuery<Record> queryINRows(List<Field<String>> selectFields, List<String> rows, Table<Record> table){    
     Field<String> fieldRowId = fieldByName (String.class, ID_FIELD_NAME); 
     return context.select(selectFields)
             .from(table).where (fieldRowId.in (rows))

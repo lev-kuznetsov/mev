@@ -1,21 +1,21 @@
-function ImportPresetDialog() { 	
+function ImportPresetRowsDialog() { 	
 	
     this._createDialog();
     
 }
 
-ImportPresetDialog.prototype._lastItem=null;
+ImportPresetRowsDialog.prototype._lastItem=null;
 
 
-ImportPresetDialog.prototype._createDialog = function() {
+ImportPresetRowsDialog.prototype._createDialog = function() {
 		
-	if(theProject.rowModel.filtered>50){
-		alert("Cannot import more than 50 samples");
+	if(theProject.rowModel.filtered>1000){
+		alert("Cannot import more than 1000 rows");
 		return;
 	}
 	
     var self = this;
-    var dialog = $(DOM.loadHTML("core", "scripts/dialogs/import-preset-dialog.html"));
+    var dialog = $(DOM.loadHTML("core", "scripts/dialogs/import-preset-rows-dialog.html"));
     this._elmts = DOM.bind(dialog);
     this._name="";
     
@@ -47,11 +47,11 @@ ImportPresetDialog.prototype._createDialog = function() {
     this._level = DialogSystem.showDialog(dialog);
 };
 
-ImportPresetDialog.prototype._dismiss = function() {
+ImportPresetRowsDialog.prototype._dismiss = function() {
     DialogSystem.dismissUntil(this._level - 1);
 };
 
-ImportPresetDialog.prototype._validate = function()
+ImportPresetRowsDialog.prototype._validate = function()
 {
 	  //var name = window.prompt("Esport set name", "open-refine-exported-set");
 	  var name = this._elmts.setName[0].value.trim();	  
@@ -66,7 +66,7 @@ ImportPresetDialog.prototype._validate = function()
 	  return true;
 };
 
-ImportPresetDialog.prototype._exportAjax = function(onSuccess, onError){
+ImportPresetRowsDialog.prototype._exportAjax = function(onSuccess, onError){
 	var postRequest = {
 		    type: "POST",
 		    url: "command/core/import-preset-dataset",
@@ -74,6 +74,8 @@ ImportPresetDialog.prototype._exportAjax = function(onSuccess, onError){
 		    	"project" : theProject.id, 
 		    	//"import-preset" : theProject.metadata.name,
 		    	"import-preset" : $.url().param('import-preset'),
+		    	"samples" : $.url().param('samples'),
+		    	"samplesprojname" : $.url().param('samplesprojname'),
 		    	"newDatasetName" : this._name,		    	
 		    	"engine" : JSON.stringify(ui.browsingEngine.getJSON())
 		    	},
@@ -94,7 +96,7 @@ ImportPresetDialog.prototype._exportAjax = function(onSuccess, onError){
 		$.ajax(postRequest);
 };
 
-ImportPresetDialog.prototype._exportWait = function(){
+ImportPresetRowsDialog.prototype._exportWait = function(){
 	  var done = false;
 	  var dismissBusy = null;
 	  Refine.setAjaxInProgress();
@@ -120,9 +122,11 @@ ImportPresetDialog.prototype._exportWait = function(){
 	        parent.OpenRefineBridge.openDataset(Refine._lastItem);
 	        var currentUrl = window.location.href;
 	        console.log("currentUrl:"+currentUrl);
-	        var newUrl = "/#/dataset/"+Refine._lastItem.name+"/";
+//	        var newUrl = "/#/dataset/"+Refine._lastItem.name+"/";
+	        var newUrl = "/annotations/import-dataset/command/core/view-preset-row-annotations?"+
+	        "import-preset="+$.url().param('import-preset')+"&dimension=row&samples="+data.keys;	        
 	        console.log("newUrl:"+newUrl);
-	        //window.location.replace(newUrl);
+//	        window.location.replace(newUrl);
 	      } else {
 	        alert($.i18n._("Error while importing dataset:" + data.message));
 	      }	    
@@ -138,7 +142,7 @@ ImportPresetDialog.prototype._exportWait = function(){
 	  
 };
 
-ImportPresetDialog.prototype._export = function() {  
+ImportPresetRowsDialog.prototype._export = function() {  
 
 	  var form = document.createElement("form");	  
 	  $(form)
