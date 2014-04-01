@@ -35,11 +35,12 @@ public class TestPresetDatasetNVP {
   private @Inject Environment environment; 
   private @Inject @Named("presets-datasource") DataSource dataSource;
   private @Inject PresetDatasetBuilder presetDatasetBuilder;
-  private String rootUrl;
-  
+  private URL dataRootUrl;
+  private URL annotationsRootUrl ;  
   @PostConstruct
-  public void init(){
-    this.rootUrl = "file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/";
+  public void init() throws MalformedURLException{
+    this.dataRootUrl = new URL("file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/");    
+    this.annotationsRootUrl = new URL("file://"+environment.getProperty ("user.home")+"/mev/data/array_annotations/");
   }
   
   @Before
@@ -60,10 +61,12 @@ public class TestPresetDatasetNVP {
     log.debug ("Sleeping .. you can start start profiler now.");    
     Thread.sleep (1000*15);
     String tsvFileName="KIRP.AgilentG4502A_07_3.Level_3.tsv";    
-    PresetDescriptor descriptor = new SimplePresetDescriptor ("NVP_"+tsvFileName, 
-                                                              new URL (rootUrl), 
-                                                              "KIRP/Level_3/"+tsvFileName, ""); 
-    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", null);
+    String folder="KIRP/Level_3/";
+    PresetDescriptor descriptor = new SimplePresetDescriptor (tsvFileName, 
+                                                              dataRootUrl, 
+                                                              folder+tsvFileName, "",
+                                                              annotationsRootUrl, "");
+    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", null,null);
  
     long startTime = System.nanoTime();    
     int count=0;
@@ -83,10 +86,12 @@ public class TestPresetDatasetNVP {
 //    log.debug ("Sleeping .. you can start start profiler now.");    
 //    Thread.sleep (1000*15);
     String tsvFileName="LGG.AgilentG4502A_07_3.Level_2.tsv";    
-    PresetDescriptor descriptor = new SimplePresetDescriptor ("NVP_"+tsvFileName, 
-                                                              new URL (rootUrl), 
-                                                              "LGG/Level_2/"+tsvFileName, ""); 
-    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", null);
+    String folder="LGG/Level_2/";
+    PresetDescriptor descriptor = new SimplePresetDescriptor (tsvFileName, 
+                                                              dataRootUrl, 
+                                                              folder+tsvFileName, "",
+                                                              annotationsRootUrl, "");
+    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", null, null);
  
     long startTime = System.nanoTime();    
     int count=0;

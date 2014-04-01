@@ -26,8 +26,6 @@ import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUES
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Properties;
-
 import javax.inject.Inject;
 
 import lombok.Getter;
@@ -41,8 +39,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.NativeWebRequest;
-
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionBuilder;

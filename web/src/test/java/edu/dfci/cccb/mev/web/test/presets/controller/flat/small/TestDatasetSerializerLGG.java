@@ -56,10 +56,12 @@ public class TestDatasetSerializerLGG {
   private @Inject @Named("presets-datasource") DataSource dataSource;
   private @Inject PresetDatasetBuilder presetDatasetBuilder;
     private @Inject Workspace workspace;  
-  private URL rootUrl;  
+  private URL dataRootUrl;  
+  private URL annotationsRootUrl;
   @PostConstruct
   public void init() throws MalformedURLException{
-    this.rootUrl = new URL("file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/");
+    this.dataRootUrl = new URL("file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/");    
+    this.annotationsRootUrl = new URL("file://"+environment.getProperty ("user.home")+"/mev/data/array_annotations/");
   }
   
   @Autowired WebApplicationContext applicationContext;  
@@ -81,16 +83,18 @@ public class TestDatasetSerializerLGG {
   @Test @Ignore
   public void testSerializeDatasetJsonGeneratorSerializerProvider () throws Exception {
     String tsvFileName="LGG.AgilentG4502A_07_3.Level_2.tsv";    
+    String folder="LGG/Level_2/";
     PresetDescriptor descriptor = new SimplePresetDescriptor (tsvFileName, 
-                                                              rootUrl, 
-                                                              "LGG/Level_2/"+tsvFileName, ""); 
-    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", null);
+                                                              dataRootUrl, 
+                                                              folder+tsvFileName, "",
+                                                              annotationsRootUrl, "");
+    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", null, null);
     log.debug("dataset.name: "+presetDataset.name ());
     
     
 //    JsonFactory jfactory = new JsonFactory();
     String jsonFileName = tsvFileName+".flat.json";
-    URL jsonURL = new URL(this.rootUrl, jsonFileName);
+    URL jsonURL = new URL(this.dataRootUrl, jsonFileName);
     log.debug("jsonURL:"+jsonURL);
       
     workspace.put (presetDataset);

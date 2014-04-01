@@ -143,7 +143,7 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
 
   @Bean @Inject
   public PresetDimensionBuilder presetDimensionBuilder(@Named("presets-jooq-context") DSLContext context){
-    log.debug ("***PresetDIMMENSIONBuilder: FLATTABLE-DB");
+    log.debug ("***PresetDIMENSIONBuilder: FLATTABLE-DB");
     PresetDimensionBuilder builder = new PresetDimensionBuilderFlatTable (context);    
     return builder;
   }

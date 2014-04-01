@@ -13,6 +13,7 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
@@ -21,10 +22,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetDomainBuildersConfiguration;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
+import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
 
 @Log4j
+@Profile("test")
 @Configuration
-@Import ({DatasetDomainBuildersConfiguration.class, PresetsRestConfiguration.class})
+@Import ({DatasetDomainBuildersConfiguration.class, PresetsRestConfiguration.class, ProbeAnnotationsPersistanceConfigTest.class})
 public class PresetsRestConfigurationTest extends WebMvcConfigurerAdapter{
 
   @Inject Environment environment;

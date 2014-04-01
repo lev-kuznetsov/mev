@@ -31,11 +31,15 @@ public class TestDimensionBuilderFlatTable {
   private @Inject Environment environment;
   private @Inject PresetDimensionBuilder dimensionBuilder;
   private @Inject @Named("presets-jooq-context") DSLContext context;
-  
+  private URL dataRootUrl;
+  private URL annotationsRootUrl;
+    
   @PostConstruct
-  public void init(){
-//     this.dimensionBuilder=new PresetDimensionBuilderFlatTable (context);
+  public void init() throws MalformedURLException{
+    this.dataRootUrl = new URL("file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/");    
+    this.annotationsRootUrl = new URL("file://"+environment.getProperty ("user.home")+"/mev/data/array_annotations/");
   }
+  
   @Before
   public void setup(){
 //    this.dimensionBuilder=new PresetDimensionBuilderFlatTable (context);
@@ -47,10 +51,10 @@ public class TestDimensionBuilderFlatTable {
     String tsvFileName="GBM.AgilentG4502A_07_2.Level_2.tsv";    
     String folder="GBM/Level_2/";
     
-    String rootUrl = "file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/";
     PresetDescriptor descriptor = new SimplePresetDescriptor (tsvFileName, 
-                                                              new URL (rootUrl), 
-                                                              folder+tsvFileName, ""); 
+                                                              dataRootUrl, 
+                                                              folder+tsvFileName, "",
+                                                              annotationsRootUrl, "");
     Timer timer = Timer.start ("GBM-DIMENSION-BUILDER");
     Dimension rows = dimensionBuilder.buildRows (descriptor);
     timer.read ();

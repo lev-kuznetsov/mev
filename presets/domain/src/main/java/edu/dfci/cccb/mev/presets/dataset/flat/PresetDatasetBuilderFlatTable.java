@@ -40,7 +40,7 @@ public class PresetDatasetBuilderFlatTable extends AbstractDatasetBuilder implem
   }
 
   @Override
-  public Dataset build (PresetDescriptor descriptor, String datasetName, Selection columnSelection) throws PresetException {
+  public Dataset build (PresetDescriptor descriptor, String datasetName, Selection columnSelection, Selection rowSelection) throws PresetException {
     try{
       if(log.isDebugEnabled ())
         log.debug ("Created preset dataset");
@@ -50,7 +50,12 @@ public class PresetDatasetBuilderFlatTable extends AbstractDatasetBuilder implem
       for (parser = parser (content); parser.next ();) {}
       
       
-      Dimension rows = new SimpleDimension (Dimension.Type.ROW, parser.rowKeys (), super.selections (), super.annotation ());
+      Dimension rows;
+      if(columnSelection!=null)
+        rows = new SimpleDimension (Dimension.Type.ROW, rowSelection.keys (), super.selections (), super.annotation ());
+      else
+        rows = new SimpleDimension (Dimension.Type.ROW, parser.rowKeys (), super.selections (), super.annotation ());
+      
       Dimension columns;
       if(columnSelection!=null)
         columns = new SimpleDimension (Dimension.Type.COLUMN, columnSelection.keys (), super.selections (), super.annotation ());
