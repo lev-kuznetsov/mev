@@ -1411,13 +1411,13 @@ define(
                                                                     + ")")
                                                     .call(yAxisd3)
                                                     .selectAll("text")
-                                                    .style(
-                                                            "text-anchor",
-                                                            "start")
-                                                    .attr(
-                                                            "dy",
-                                                            ((YIndex2Pixel(1) - YIndex2Pixel(0)) / 2)
-                                                                    + "px");
+                                                    .style({
+                                                            "text-anchor": "start"
+                                                    })
+                                                    .attr("dy",function(){
+                                                        
+                                                        return 12 + "px"
+                                                    });
 
                                         };
 
@@ -1495,8 +1495,6 @@ define(
                                         };
 
                                         function scaleUpdates(cols, rows, min, max, avg) {
-                                            
-                                            console.log(min, max, avg)
 
                                             var fixedHeight = true;
 
