@@ -288,6 +288,8 @@ define(
                                             
 
                                         };
+                                        
+                                        $scope.buildPreviousAnalysisList();
 
                                     }])
                     .controller(
