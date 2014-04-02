@@ -2263,7 +2263,7 @@ define(
                                                             } else if (newval.type == "K-means Clustering") {
                                                                 
                                                                 scope.heatmapData.row.keys = newval.keys
-                                                                drawCluster(newval, dendogramTopWindow);
+                                                                drawCluster(newval,  dendogramLeftWindow);
                                                             }
 
                                                         });
