@@ -1411,13 +1411,13 @@ define(
                                                                     + ")")
                                                     .call(yAxisd3)
                                                     .selectAll("text")
-                                                    .style(
-                                                            "text-anchor",
-                                                            "start")
-                                                    .attr(
-                                                            "dy",
-                                                            ((YIndex2Pixel(1) - YIndex2Pixel(0)) / 2)
-                                                                    + "px");
+                                                    .style({
+                                                            "text-anchor": "start"
+                                                    })
+                                                    .attr("dy",function(){
+                                                        
+                                                        return 12 + "px"
+                                                    });
 
                                         };
 
@@ -1707,12 +1707,60 @@ define(
                                                             (2 * heatmapMarginTop) / 3]);
 
                                         };
+                                        
+                                        var scrollable = $("div.tab-content"), delay = 150, timer = null;
+                                        
+                                        $("div.tab-content").on("scroll", function(e){
+                                            
+                                            
+                                            
+                                            timer = setTimeout(function(){
+                                                
+                                                updateCurrentView();
+                                                
+                                                var rects = d3.select("g.cells")
+                                                .selectAll("rect")
+                                                .data(scope.currentView.cells,
+                                                    function(d) {
+                                                        return [d.column,d.row]
+                                                });
+                                                
+                                                drawCells(rects.enter().append("rect"));
+                                                rects.exit().remove();
+                                                
+                                                
+                                            }, delay);
+                                            
+                                        });
+                                        
+                                        
+                                        function dimsFilter(toppixels, bottompixels) {
+                                            
+                                            
+                                            if (toppixels <  heatmapColumnSelectionsGutter + heatmapMarginTop) {
+                                                
+                                                var numRows = ((bottompixels - heatmapColumnSelectionsGutter - heatmapMarginTop ) / heatmapCellHeight) + 1
+                                                var startRow = 0
+                                                var endRow = numRows
+                                            
+                                            } else {
+                                                var startRow = Math.floor( (toppixels - heatmapColumnSelectionsGutter - heatmapMarginTop) / heatmapCellHeight )
+                                                var numRows =  ( (bottompixels - toppixels) / heatmapCellHeight) + 1
+                                                var endRow = startRow + numRows
+                                            }
+                                            
+                                            return {
+                                                'columns':scope.heatmapData.column.keys, 
+                                                'rows':scope.heatmapData.row.keys.slice(startRow, endRow)
+                                            }
+                                            
+                                            
+
+                                        }
 
                                         function drawHeatmap(data) {
 
                                             scope.theData = data;
-
-                                            var chunks = [];
 
                                             scaleUpdates(data.column,
                                                     data.row,
@@ -1720,57 +1768,24 @@ define(
                                                     data.max,
                                                     data.avg);
 
-                                            function chunker(ar, chunksize) {
-                                                var R = [];
-                                                if (chunksize <= 0
-                                                        || !chunksize) {
-                                                    return [ar]
-                                                }
-                                                for ( var j = 0; j < ar.length; j++) {
-                                                    var start = j
-                                                            * chunksize;
-                                                    var end = chunksize
-                                                            * (j + 1)
-                                                    R.push(ar.slice(
-                                                            start,
-                                                            end))
-                                                }
-                                                return R;
-                                            }
-
-                                            var chunks = chunker(
-                                                    data.values, 1000);
-                                            var poolPosition = 0;
-                                            var stream;
-
-                                            function dCells() {
-                                                drawCells(d3
-                                                        .select(
-                                                                "g.cells")
-                                                        .selectAll(
-                                                                "rect")
-                                                        .data(
-                                                                chunks[poolPosition],
-                                                                function(d) {
-                                                                    return [
-                                                                            d.column,
-                                                                            d.row]
-                                                                })
-                                                        .enter()
-                                                        .append(
-                                                                "rect"))
-                                                poolPosition += 1
-                                                if (poolPosition >= chunks.length) {
-                                                    clearInterval(stream)
-                                                }
-                                            };
-
-                                            var stream = setInterval(
-                                                    dCells, 500)
-
                                             drawSelections(
                                                     data.column,
                                                     data.row)
+                                            
+                                                    
+                                            updateCurrentView()
+                                            
+                                            var rects = d3.select("g.cells")
+                                                .selectAll("rect")
+                                                .data(scope.currentView.cells,
+                                                    function(d) {
+                                                        return [d.column,d.row]
+                                                })
+                                                
+                                            drawCells(rects.enter().append("rect"))
+                                            rects.exit().remove()
+                                                
+                                            drawCells(rects);
 
                                             drawLabels(xlabels,
                                                     ylabels);
@@ -1860,8 +1875,21 @@ define(
                                                     data.min,
                                                     data.max,
                                                     data.avg);
-
-                                            redrawCells(heatmapcells);
+                                            
+                                            updateCurrentView()
+                                            
+                                            d3.select("g.cells")
+                                                .selectAll("rect").remove()
+                                            
+                                            var rects = d3.select("g.cells")
+                                                .selectAll("rect")
+                                                .data(scope.currentView.cells,
+                                                    function(d) {
+                                                        return [d.column,d.row]
+                                                })
+                                            
+                                            drawCells(rects.enter().append("rect"))
+                                            
 
                                             drawLabels(xlabels,
                                                     ylabels);
@@ -1874,14 +1902,33 @@ define(
                                         };
 
                                         var heatmapcells = undefined;
+                                        
+                                        scope.currentView = {
+                                                cells:[]
+                                        };
+                                        
+                                        function updateCurrentView(){
+                                            var top = scrollable.scrollTop(),
+                                            height = scrollable.height(),
+                                            bottom = top + height;
+                                            currentDims = dimsFilter( top, bottom);
+                                            
+                                            scope.currentView.cells = filterCells(currentDims.columns, currentDims.rows)
+                                        }
+                                        
+                                        function filterCells(cols, rows) {
+                                            return scope.heatmapData.values.filter(function(d){
+                                                return (cols.indexOf(d.column) > -1 && rows.indexOf(d.row) > -1 ) ? true : false
+                                            })
+                                        };
 
                                         scope
                                                 .$watch(
                                                         'heatmapData',
                                                         function(newval, oldval) {
+                                                            
 
-                                                            if (newval
-                                                                    && !oldval) {
+                                                            if (newval) {
 
                                                                 $(
                                                                         '#loading')
@@ -1895,16 +1942,11 @@ define(
                                                                 if (newval.row.root) {
                                                                     scope.heatmapViews.side = newval.row;
                                                                 }
-
+                                                                
                                                                 drawHeatmap(newval);
+                                                                
 
-                                                            } else
-                                                                if (newval
-                                                                        && oldval) {
-
-                                                                    updateDrawHeatmap(newval);
-
-                                                                }
+                                                            }
 
                                                         });
                                         
@@ -2011,15 +2053,15 @@ define(
                                             });
                                         
                                         legend.append("text")
-                                        .attr({
-                                            'id': "legendTitle",
-                                            'text-anchor':'middle',
-                                            'x': ((legendPosition.height)/2 ) + legendPosition.margin.left - 14,
-                                            'y': 20 + legendPosition.margin.top,
-                                            'style':'font-size:20'
+                                            .attr({
+                                                'id': "legendTitle",
+                                                'text-anchor':'middle',
+                                                'x': ((legendPosition.height)/2 ) + legendPosition.margin.left - 14,
+                                                'y': 20 + legendPosition.margin.top,
+                                                'style':'font-size:20'
                                             
-                                        })
-                                        .text("Legend");
+                                            })
+                                            .text("Legend");
                                         
                                         legend.append("text")
                                             .attr({
@@ -2060,7 +2102,7 @@ define(
                                                     'dimension':{'type':type, 'value':orientation},
                                                     'name':name,
                                                     'color': '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
-                                            }
+                                            };
                                             
                                             if (scope.treeSelections[params.dimension.value].length > 0){
                                                 
@@ -2096,7 +2138,7 @@ define(
                                                      alertService.error(message,header);
                                                 });
                                                 
-                                            }
+                                            };
                                         };
                                         
                                         scope.$watch('heatmapData.column.selections', function(newval, oldval){
@@ -2106,7 +2148,7 @@ define(
                                                 updateDrawHeatmap(scope.heatmapData)
                                             }
                                             
-                                        })
+                                        });
                                         
                                         scope.$watch('heatmapData.row.selections', function(newval, oldval){
                                             if(newval
@@ -2114,25 +2156,7 @@ define(
                                                 updateDrawHeatmap(scope.heatmapData)
                                             }
                                             
-                                        })
-                                        
-
-                                        scope.$watch('heatmapLeftClustering', function(newval, oldval){
-                                            if (newval){
-                                                
-                                                var row = [];
-                                                for (var i=0; i<newval.clusters.length; i++) {
-                                                    for (var j=0; j<newval.clusters[i].length; j++){
-                                                        row.push(newval.clusters[i][j])
-                                                    }
-                                                }
-                                                
-                                                scope.heatmapData.row.keys = row
-                                                drawCluster(newval, dendogramLeftWindow);
-                                            }
-                                        })
-
-                      
+                                        });
                                         
                                         function drawCluster(cluster, canvas){
                                             
@@ -2229,21 +2253,20 @@ define(
                                                         'heatmapViews.side',
                                                         function(newval, oldval) {
 
-                                                        	if(typeof newval!="undefined"){
-	                                                            if (newval.type == "Hierarchical Clustering") {
-	                                                                
-	                                                                var tree = newval.root;
-	                                                                drawTree(
-	                                                                        dendogramLeftWindow,
-	                                                                        Cluster,
-	                                                                        scope.heatmapViews.side.root,
-	                                                                        'vertical');
-	                                                            } else if (newval.type == "K-means Clustering") {
-	                                                                
-	                                                                scope.heatmapData.row.keys = newval.keys
-	                                                                drawCluster(newval, dendogramTopWindow);
-	                                                            }
-                                                        	}
+                                                            if (newval.type == "Hierarchical Clustering") {
+                                                                
+                                                                var tree = newval.root;
+                                                                drawTree(
+                                                                        dendogramLeftWindow,
+                                                                        Cluster,
+                                                                        scope.heatmapViews.side.root,
+                                                                        'vertical');
+                                                            } else if (newval.type == "K-means Clustering") {
+                                                                
+                                                                scope.heatmapData.row.keys = newval.keys
+                                                                drawCluster(newval,  dendogramLeftWindow);
+                                                            }
+
                                                         });
 
                                         scope

@@ -8,6 +8,6 @@
 	
 	</div>
 	
-	<button class="btn" ng-click="updateHeatmapView(analysis)">Apply </button>
+	<button class="btn btn-success" ng-click="updateHeatmapView(analysis)">Apply </button>
 	
 </accordion-group>
