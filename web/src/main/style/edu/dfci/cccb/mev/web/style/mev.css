@@ -176,7 +176,7 @@ nav div.container-fluid {
 div.tab-content {
 	background: #FFFFFF;
 	box-shadow: 2px 2px 5px #888888;
-	overflow:auto;
+	overflow:scroll;
 	height: 80vh;
 }
 
