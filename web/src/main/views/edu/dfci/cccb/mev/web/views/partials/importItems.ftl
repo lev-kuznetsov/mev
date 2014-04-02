@@ -36,7 +36,7 @@
 	        <li><a href="#tcga" data-toggle="tab" target="_self">TCGA</a></li>
 	      </ul>
 	 	  
-	      <div class="tab-content">
+	      <div class="tab-content" id="import">
 	      
 	         <div class="tab-pane active" id="current">
 	         

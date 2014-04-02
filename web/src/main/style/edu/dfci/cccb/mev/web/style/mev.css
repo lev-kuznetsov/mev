@@ -180,6 +180,10 @@ div.tab-content {
 	height: 80vh;
 }
 
+div.tab-content#import {
+	overflow:auto;
+}
+
 div.imports-container {
 
 	margin-top: 60px;
