@@ -29,6 +29,7 @@ import com.google.refine.io.FileProjectManager;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatforms;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
+import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
 
 @Configuration
 @ComponentScan (value = "edu.dfci.cccb.mev.annotation",
@@ -44,6 +45,7 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
   private @Inject @Named("presets-dataset-builder") PresetDatasetBuilder builder;  
   private @Inject org.springframework.core.env.Environment environment;
   private @Inject ProbeAnnotationPlatforms annotationPlatforms;
+  private @Inject PresetDimensionBuilder dimensionBuilder;
   
   @Bean
   @Scope (value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -52,6 +54,7 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
     projectManager.setWorkspaceDir (new SessionWorkspaceDir ());
     projectManager.setWorkspace (workspace);
     projectManager.setDatasetBuilder (builder);
+    projectManager.setDimensionBuilder (dimensionBuilder);
     projectManager.setProbeAnnotationPlatforms (annotationPlatforms);
     return projectManager;
   }

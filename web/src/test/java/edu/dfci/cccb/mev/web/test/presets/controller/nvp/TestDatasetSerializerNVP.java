@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -56,10 +57,13 @@ public class TestDatasetSerializerNVP {
   private @Inject @Named("presets-datasource") DataSource dataSource;
   private @Inject PresetDatasetBuilder presetDatasetBuilder;  
   private @Inject Workspace workspace;  
-  private URL rootUrl;  
+  private URL dataRootUrl;
+  private URL annotationsRootUrl;
+  
   @PostConstruct
   public void init() throws MalformedURLException{
-    this.rootUrl = new URL("file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/");
+    this.dataRootUrl = new URL("file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/");    
+    this.annotationsRootUrl = new URL("file://"+environment.getProperty ("user.home")+"/mev/data/array_annotations/");
   }
   
   @Autowired WebApplicationContext applicationContext;  
@@ -81,16 +85,18 @@ public class TestDatasetSerializerNVP {
   @Test @Ignore 
   public void testSerializeDatasetJsonGeneratorSerializerProvider () throws Exception {
     String tsvFileName="LGG.AgilentG4502A_07_3.Level_2.tsv";    
-    PresetDescriptor descriptor = new SimplePresetDescriptor ("NVP_"+tsvFileName, 
-                                                              rootUrl, 
-                                                              "LGG/Level_2/"+tsvFileName, ""); 
-    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", null);
+    String folder="LGG/Level_2/";
+    PresetDescriptor descriptor = new SimplePresetDescriptor (tsvFileName, 
+                                                              dataRootUrl, 
+                                                              folder+tsvFileName, "",
+                                                              annotationsRootUrl, "");
+    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", null, null);
     log.debug("dataset.name: "+presetDataset.name ());
     
     
 //    JsonFactory jfactory = new JsonFactory();
     String jsonFileName = tsvFileName+".json";
-    URL jsonURL = new URL(this.rootUrl, jsonFileName);
+    URL jsonURL = new URL(this.dataRootUrl, jsonFileName);
     log.debug("jsonURL:"+jsonURL);
     
     workspace.put (presetDataset);

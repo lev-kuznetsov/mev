@@ -46,6 +46,22 @@
 			<version>BAYLIE-SNAPSHOT</version>
 		</dependency>
 
+		<!-- Mev Annotations -->
+		<dependency>
+			<groupId>edu.dfci.cccb</groupId>
+			<artifactId>mev-annotation-server</artifactId>
+			<version>BAYLIE-SNAPSHOT</version>
+		</dependency>
+
+		<!-- Mev Annotations -->
+		<dependency>
+			<groupId>edu.dfci.cccb</groupId>
+			<artifactId>mev-annotation-server</artifactId>
+			<version>BAYLIE-SNAPSHOT</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		
 		<!-- JPA -->
 
 		<dependency>

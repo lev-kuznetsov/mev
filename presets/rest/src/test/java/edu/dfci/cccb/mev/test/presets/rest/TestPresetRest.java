@@ -7,6 +7,7 @@ import java.io.File;
 import java.net.URL;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +22,7 @@ import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfiguratio
 public class TestPresetRest {
   
   @Inject Presets tcgaPresets;
-  @Inject URL tcgaPresetsRoot;
+  @Inject @Named ("tcgaPresetRoot") URL tcgaPresetsRoot;
   
   @Test
   public void testTcgaPresetsRoot ()  {

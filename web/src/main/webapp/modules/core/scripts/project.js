@@ -155,14 +155,27 @@ function initializeUI(uiState) {
 	  $("#export-set").hide();
 	  $("#export-set-button").hide();
 	  $("#update-set").hide();
-	  $("#update-set-button").hide();
-	  $("#or-proj-import-preset-link").show();
-	  $("#or-proj-import-preset").show();
+	  $("#update-set-button").hide();	  
 	  $("#or-proj-import-preset-list-link").show();
 	  $("#or-proj-import-preset-lit").show();
+	  if($.url().param('dimension')=="column"){  
+		  $("#or-proj-import-preset-samples-link").show();
+		  $("#or-proj-import-preset-samples").show();
+		  $("#or-proj-import-preset-rows-link").hide();
+		  $("#or-proj-import-preset-rows").hide();
+	  }else if($.url().param('dimension')=="row"){
+		  $("#or-proj-import-preset-samples-link").hide();
+		  $("#or-proj-import-preset-samples").hide();
+		  $("#or-proj-import-preset-rows-link").show();
+		  $("#or-proj-import-preset-rows").show();
+	  }else{
+		  alert("Invalid dimension: " + $.url().param('dimension'));
+	  }
   }else{	  	
-	  $("#or-proj-import-preset-link").hide();
-	  $("#or-proj-import-preset").hide();
+	  $("#or-proj-import-preset-samples-link").hide();
+	  $("#or-proj-import-preset-samples").hide();
+	  $("#or-proj-import-preset-rows-link").hide();
+	  $("#or-proj-import-preset-rows").hide();
 	  $("#or-proj-import-preset-list-link").hide();
 	  $("#or-proj-import-preset-lit").hide();
 	  if(theProject.metadata.customMetadata.dimension)  
@@ -182,7 +195,8 @@ function initializeUI(uiState) {
 	  }
   }
   Refine.setTitle(false, title);
-  $("#or-proj-import-preset").click(Refine._importPreset);
+  $("#or-proj-import-preset-samples").click(Refine._importPresetSamples);
+  $("#or-proj-import-preset-rows").click(Refine._importPresetRows);
   $("#or-proj-import-preset-list").click(Refine._viewToPresetList);
   $("#or-proj-reset").click(Refine._reset);
   $("#export-set-button").click(Refine._exportSet);
@@ -295,8 +309,16 @@ Refine._exportSet = function() {
 Refine._updateSet = function() {
   new ExportSetDialog(false);
 };
-Refine._importPreset = function(){
-	new ImportPresetDialog();
+Refine._importPresetSamples = function(){
+//	new ImportPresetSamplesDialog();
+	if(!ImportPresetSamplesDialog._isRowLimitMet()){
+		alert("Cannot import more than 50 samples");
+		return;
+	}
+	ImportPresetSamplesDialog._exportWait();
+};
+Refine._importPresetRows = function(){
+	new ImportPresetRowsDialog();
 };
 
 Refine._viewToPresetList = function(){

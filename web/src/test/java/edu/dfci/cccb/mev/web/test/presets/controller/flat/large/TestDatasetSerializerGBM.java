@@ -67,10 +67,12 @@ public class TestDatasetSerializerGBM {
 //  private @Inject PresetValuesLoader loader;
   private @Inject Workspace workspace;  
   private @Inject PresetDimensionBuilder dimensionBuilder;
-  private URL rootUrl;  
+  private URL dataRootUrl;
+  private URL annotationsRootUrl ;  
   @PostConstruct
   public void init() throws MalformedURLException{
-    this.rootUrl = new URL("file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/");
+    this.dataRootUrl = new URL("file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/");    
+    this.annotationsRootUrl = new URL("file://"+environment.getProperty ("user.home")+"/mev/data/array_annotations/");
   }
   
   @Autowired WebApplicationContext applicationContext;  
@@ -100,10 +102,12 @@ public class TestDatasetSerializerGBM {
   
   @Test @Ignore 
   public void testSerializeDatasetJsonGeneratorSerializerProvider () throws Exception {
-    String tsvFileName="GBM.AgilentG4502A_07_2.Level_2.tsv";    
+    String tsvFileName="GBM.AgilentG4502A_07_2.Level_2.tsv";  
+    String folder="GBM/Level_2/";    
     PresetDescriptor descriptor = new SimplePresetDescriptor (tsvFileName, 
-                                                              rootUrl, 
-                                                              "GBM/Level_2/"+tsvFileName, "");
+                                                              dataRootUrl, 
+                                                              folder+tsvFileName, "",
+                                                              annotationsRootUrl, "");
     
     Dimension columns = dimensionBuilder.buildColumns (descriptor);
     List<String> columnList1=new ArrayList<String> (50);
@@ -114,7 +118,7 @@ public class TestDatasetSerializerGBM {
             
     }
     Selection selection = new SimpleSelection("presest_test", new Properties (), columnList1);
-    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", selection);
+    Dataset presetDataset = presetDatasetBuilder.build (descriptor, "preset_test", selection, null);
     log.debug("dataset.name: "+presetDataset.name ());
         
     workspace.put (presetDataset);

@@ -7,5 +7,5 @@ import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 
 public interface PresetDatasetBuilder extends DatasetBuilder {
 
-  Dataset build (PresetDescriptor descriptor, String datasetName, Selection columnSelection) throws PresetException;
+  Dataset build (PresetDescriptor descriptor, String datasetName, Selection columnSelection, Selection rowSelection) throws PresetException;
 }

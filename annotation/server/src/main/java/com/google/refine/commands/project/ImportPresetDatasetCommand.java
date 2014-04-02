@@ -2,6 +2,7 @@ package com.google.refine.commands.project;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -26,12 +27,14 @@ import com.google.refine.process.Process;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
+import freemarker.template.utility.NullArgumentException;
 
 public class ImportPresetDatasetCommand extends Command {
   final static protected Logger logger = LoggerFactory.getLogger("ImportPresetDatasetCommand");
@@ -48,11 +51,24 @@ public class ImportPresetDatasetCommand extends Command {
       Project project = getProject (request);
       final Engine engine = getEngine (request, project);      
       
-      final Dimension.Type dimensionType = Dimension.Type.COLUMN;
+      final Dimension.Type dimensionType = Dimension.Type.ROW;
       final String newDatasetName = request.getParameter ("newDatasetName");
       final Properties properties = new Properties ();      
       final List<String> keys = new ArrayList<String> ();
       final List<Integer> unmatchedRowIndices = new ArrayList<Integer>();
+      
+      final String sSamples = request.getParameter ("samples");
+      if(sSamples==null)
+        throw new NullArgumentException ("samples filter parameter not provided");
+      
+      final List<String> samples = Arrays.asList (sSamples.split (","));
+      if(samples.size ()<=0)
+        throw new NullArgumentException ("samples filter size is 0: "+sSamples);
+      final Selection samplesSelection = new SimpleSelection ("samples", new Properties (), samples);
+      
+      final String samplesProjectName=request.getParameter ("samplesprojname");
+      if(samplesProjectName==null)
+        throw new NullArgumentException ("samplesProjectName parameter not provided");
       
       RowVisitor visitor = new RowVisitor () {
         Column theIdColumn;
@@ -66,7 +82,8 @@ public class ImportPresetDatasetCommand extends Command {
 
           for (Column column : columns) {
             String name = column.getName ();
-            if (name.equalsIgnoreCase ("annotationId") || name.equalsIgnoreCase ("id")) {
+            if (name.equalsIgnoreCase ("annotationId") || name.equalsIgnoreCase ("id") 
+                    || name.equalsIgnoreCase ("probeset_id") || name.equalsIgnoreCase ("symbol")) {
               theIdColumn = column;
               break;
             }
@@ -84,7 +101,7 @@ public class ImportPresetDatasetCommand extends Command {
 
         @Override
         public void end (Project project) {
-          Selection sourceSelection = new SimpleSelection (newDatasetName, properties, keys);
+          Selection rowsSelection = new SimpleSelection (newDatasetName, properties, keys);
           Dataset dataset=null;
           //File datafile = new File("/tmp/textxxx/presets/"+sourceDatasetName+"/"+sourceDatasetName+".tsv");
           PresetDescriptor descriptor = (PresetDescriptor)request.getAttribute ("descriptor");
@@ -92,7 +109,7 @@ public class ImportPresetDatasetCommand extends Command {
             RawInput newDatasetContent = new UrlTsvInput (descriptor.dataUrl ());            
             newDatasetContent.name (newDatasetName);
             logger.info (String.format ("***Import Dataset: %s *******************", descriptor.dataUrl ().toString ()));
-            dataset = ProjectManager.getSingleton ().getDatasetBuilder ().build (descriptor, newDatasetName, sourceSelection);
+            dataset = ProjectManager.getSingleton ().getDatasetBuilder ().build (descriptor, newDatasetName, samplesSelection, rowsSelection);
             
 //          } catch (DatasetBuilderException | InvalidDatasetNameException | InvalidDimensionTypeException e) {
           } catch (PresetException e) {
@@ -120,11 +137,17 @@ public class ImportPresetDatasetCommand extends Command {
         }
       };
 
-      
+      long samplesProjectId = ProjectManager.getSingleton ().getProjectID (samplesProjectName);
+      ProjectMetadata samplesProjectMetadata = ProjectManager.getSingleton ().getProjectMetadata (samplesProjectId);
+      String newSamplesProjectName = newDatasetName+Type.COLUMN.toString ();
+      samplesProjectMetadata.setName (newSamplesProjectName);
+      logger.info (String.format ("***Renamed samples project from " + samplesProjectName + " to " + newSamplesProjectName));
       
       FilteredRows filteredRows = engine.getAllFilteredRows ();
       filteredRows.accept (project, visitor);
       ProjectManager.getSingleton ().save (true);
+      
+      
       logger.info (String.format ("***Import Dataset Respone: OK"));
       respond (response, "{ \"code\" : \"ok\" }");
 

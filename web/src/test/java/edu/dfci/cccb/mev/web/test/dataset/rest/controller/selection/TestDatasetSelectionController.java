@@ -17,7 +17,6 @@ import javax.inject.Inject;
 import lombok.extern.log4j.Log4j;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.http.MediaType;
