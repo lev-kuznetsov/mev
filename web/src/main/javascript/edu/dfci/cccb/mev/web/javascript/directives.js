@@ -1930,10 +1930,7 @@ define(
 
                                                             if (newval) {
 
-                                                                $(
-                                                                        '#loading')
-                                                                        .modal(
-                                                                                'hide');
+                                                                $('#loading').modal('hide');
 
                                                                 if (newval.column.root) {
                                                                     scope.heatmapViews.top = newval.column;

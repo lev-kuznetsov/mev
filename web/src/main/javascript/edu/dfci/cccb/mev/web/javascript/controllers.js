@@ -24,7 +24,7 @@ define(
                                         };
 
                                         $scope.pageLoading = true;
-                                        //$('#loading').modal();
+                                        $('#loading').modal();
 
                                         $scope.heatmapId = $routeParams.datasetName;
 
@@ -65,7 +65,8 @@ define(
                                             }
                                         })
                                         .success(function(data, status, headers, config) {
-                                                    $scope.heatmapData = data;
+                                            $scope.heatmapData = data;
+                                            $('#loading').modal('hide');
                                         })
                                         .error(function(data, status, headers, config) {
                                               
@@ -293,6 +294,8 @@ define(
                                     '$http',
                                     'alertService',
                                     function($scope, $http, alertService) {
+                                        
+                                        $('#loading').modal('hide');
 
                                         $scope.userUploads = [];
 
@@ -306,7 +309,8 @@ define(
                                                 }
                                             })
                                             .success(function(data, status, headers, config) {
-                                                                $scope.userUploads = data;      
+                                                  $scope.userUploads = data; 
+                                                  
                                              })
                                              .error(function(data, status, headers, config) {
                                                         var message = "Could not upload datasets. If "
