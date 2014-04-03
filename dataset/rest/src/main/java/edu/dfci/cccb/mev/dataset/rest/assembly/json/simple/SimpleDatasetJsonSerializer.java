@@ -18,6 +18,8 @@ import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
 import static java.lang.Double.MAX_VALUE;
 import static java.lang.Double.NaN;
+import static java.lang.Double.isInfinite;
+import static java.lang.Double.isNaN;
 
 import java.io.IOException;
 import java.util.List;
@@ -69,24 +71,30 @@ public class SimpleDatasetJsonSerializer extends JsonSerializer<Dataset> {
     provider.defaultSerializeField (ROW.name ().toLowerCase (), value.dimension (ROW), jgen);
     provider.defaultSerializeField (COLUMN.name ().toLowerCase (), value.dimension (COLUMN), jgen);
     writeValues (jgen, value.values (), value.dimension (ROW).keys (), value.dimension (COLUMN).keys ());
-    jgen.writeEndObject ();        
+    jgen.writeEndObject ();
   }
 
-  @SuppressWarnings("unchecked")
+  private boolean doCount (double value) {
+    return !isNaN (value) && !isInfinite (value);
+  }
+
+  @SuppressWarnings ("unchecked")
   public void writeValues (JsonGenerator jgen, Values values, List<String> rows, List<String> columns) throws IOException,
-                                                                                                       JsonProcessingException,
-                                                                                                       InvalidCoordinateException {
+                                                                                                      JsonProcessingException,
+                                                                                                      InvalidCoordinateException {
     double min = MAX_VALUE, max = -MAX_VALUE, sum = .0;
     int count = 0;
     jgen.writeArrayFieldStart ("values");
-    if(!(values instanceof Iterable<?>)){
-      for (String row : rows){
+    if (!(values instanceof Iterable<?>)) {
+      for (String row : rows) {
         for (String column : columns) {
           double value = values.get (row, column);
-          min = min > value ? value : min;
-          max = max < value ? value : max;
-          sum += value;
-          count++;
+          if (doCount (value)) {
+            min = min > value ? value : min;
+            max = max < value ? value : max;
+            sum += value;
+            count++;
+          }
           jgen.writeStartObject ();
           jgen.writeStringField ("row", row);
           jgen.writeStringField ("column", column);
@@ -94,9 +102,9 @@ public class SimpleDatasetJsonSerializer extends JsonSerializer<Dataset> {
           jgen.writeEndObject ();
         }
       }
-    }else{
-      
-      for(Value oValue : (Iterable<Value>)values){
+    } else {
+
+      for (Value oValue : (Iterable<Value>) values) {
         double value = oValue.value ();
         min = min > value ? value : min;
         max = max < value ? value : max;
