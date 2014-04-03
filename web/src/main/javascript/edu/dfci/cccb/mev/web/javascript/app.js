@@ -30,12 +30,15 @@ define(['angular',
 			  templateUrl: '/container/view/partials/heatmap', 
 			  controller: 'HeatmapCtrl'
 		  })
-		  .when('/home', {
+		  .when('/datasets', {
               templateUrl: '/container/view/partials/importItems',
               controller: 'ImportsCtrl'
+          })
+          .when('/home', {
+              templateUrl:'/container/view/partials/home'
           });
 		  
-		  $routeProvider.otherwise({redirectTo: '/home'});
+		  $routeProvider.otherwise({redirectTo: '/datasets'});
 		  
 		  //$locationProvider.html5Mode(true).hashPrefix('!');
 		  

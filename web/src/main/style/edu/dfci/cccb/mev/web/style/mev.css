@@ -180,6 +180,17 @@ div.tab-content {
 	height: 80vh;
 }
 
+div.well#hp-container {
+	background: #FFF;
+	margin-top: 10px;
+	height: 90vh;
+}
+
+div#hp-side-bar {
+	margin-top: 10px;
+	height: 90vh;
+}
+
 div.tab-content#import {
 	overflow:auto;
 }
