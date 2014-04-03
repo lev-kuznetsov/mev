@@ -26,7 +26,8 @@ require.config ({
     d3 : [ '//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3', 
            '/library/webjars/d3js/3.4.1/d3.min' ],
     retina : [ '/library/webjars/retinajs/0.0.2/retina' ],
-    notific8 : [ 'notific8.min' ]
+    notific8 : [ 'notific8.min' ],
+    ngGrid : ['/container/javascript/ng-grid-2.0.7.min', '//cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.7/ng-grid']
   },
   shim : {
     'angular' : {
@@ -59,6 +60,9 @@ require.config ({
     'notific8' : {
       deps : [ 'jquery' ],
       exports : 'notific8'
+    },
+    'ngGrid' : {
+    	deps : ['jquery', 'angular', 'uiBootstrapTpls']
     }
 
   },
@@ -75,7 +79,8 @@ require ([ 'jquery',
           'setmanager/SetManager',
           'presets/PresetManager',
           'mainpanel/MainPanel',
-          'retina' ], function (jquery, angular, app, orb) {
+          'retina', 
+          'ngGrid'], function (jquery, angular, app, orb) {
 
   'use strict';
   var $html = angular.element (document.getElementsByTagName ('html')[0]);

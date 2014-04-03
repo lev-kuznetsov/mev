@@ -1,7 +1,23 @@
 define(['jquery', 'angular'], function (jquery, angular){
 	angular.module('Mev.PresetManager', [])		
 		.controller('PresetManagerController', ['$scope', '$element', '$attrs', 'PresetService', function($scope, $element, $attrs, presetService){			
-			presetService.getPresetList().then(function(d){$scope.presets=d;});
+			$scope.gridOptions = { 
+				data: 'presets',
+				columnDefs: [{field:'diseaseName', displayName:'Desease Name', enableCellEdit: false, visible: false},
+				             {field:'dataLevel', displayName:'Data Level', enableCellEdit: false, width:'10%',
+								cellTemplate: '<div><div class="ngCellText"><a href="" ng-click="showImportPreset(row.getProperty(\'name\'))">{{row.getProperty(col.field)}}</a></div></div>',
+				            	 },			                     
+		                     {field:'platformName', displayName:'Platform', enableCellEdit: false, width:'45%'},
+				             {field: 'name', displayName: 'Dataset', enableCellEdit: false, width:'40%'}
+		                     ],
+		        groups: ['diseaseName'],
+		        groupsCollapsedByDefault: false,
+		        sortInfo: { fields: ['diseaseName', 'dataLevel'], directions: ['asc', 'asc'] },
+		        showFilter: true
+			};						
+			presetService.getPresetList().then(function(d){
+				$scope.presets=d;				
+			});						
 			$scope.orderByColumn="name";
 			$scope.orderByReverse=false;
 			$scope.importPresetUrl="about:blank";
@@ -10,7 +26,15 @@ define(['jquery', 'angular'], function (jquery, angular){
 			$scope.filter={
 					levels: ["Level_3", "Level_2"],
 					level: "Level_3"
-			};			
+			};
+			
+			$('#importTabs').on('click', function (e) {                
+                var elPresetsGrid=$('#presetsGrid');
+                elPresetsGrid.trigger('resize');
+                elPresetsGrid.css("wdith", "100%");
+                var elPresetsGridWrapepr=$('.mev-preset-list-wrapper');
+                elPresetsGridWrapepr.trigger('resize');
+            });
 		}])
 		.service('PresetService', ['QHTTP', 'alertService', function(QHTTP, alertService){
 			this.getPresetList = function(){				
@@ -50,7 +74,7 @@ define(['jquery', 'angular'], function (jquery, angular){
 							return "Level_2";
 						else
 							return "";
-					};
+					};					
 				},
 				restrict: 'EA',
 				templateUrl: '/container/view/elements/presets/presetList'
