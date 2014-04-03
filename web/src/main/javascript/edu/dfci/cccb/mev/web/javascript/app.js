@@ -6,17 +6,19 @@ define(['angular',
         'controllers', 
         'setmanager/SetManager',
         ,'uiBootstrapTpls'
+        ,'ngGrid'
         ], function(angular){
 	'use strict';
 	return angular.module('myApp', [
 	     'ngRoute',
-	     'ngResource',
+	     'ngResource',	     
 	     'myApp.directives', 
 	     'myApp.services',
 	     'myApp.controllers',
 	     'Mev.SetManager',
 	     'Mev.PresetManager',
 	     ,'ui.bootstrap'
+	     ,'ngGrid'
 	     ])
 	.config(['$routeProvider', '$locationProvider', '$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {
 		

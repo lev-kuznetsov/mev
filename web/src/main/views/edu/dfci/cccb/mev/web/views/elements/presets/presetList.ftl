@@ -1,5 +1,5 @@
 <div class="mev-preset-list-wrapper">
-<div class="mev-filter-form-wrapper">
+<div class="mev-filter-form-wrapper" ng-show="false">
 	<form class="mev-filter-form form-inline" role="form"">
 		<div class="form-group">
 			<label class="sr-only" for="filterText">filter</label>
@@ -10,7 +10,9 @@
 		</label>	
 	</form>
 </div>
-<table ng-show="showImport==false" class="mev-table-tight table table-striped" style="font-size:14px;">
+
+<div ng-show="showImport==false" id="presetsGrid" class="gridStyle" ng-grid="gridOptions" ></div>
+<table ng-show="false" class="mev-table-tight table table-striped" style="font-size:14px;">
 <thead>
 <tr>
 <th><a href="" ng-click="orderByColumn='name';orderByReverse=!orderByReverse" >Dataset</a></th>
@@ -26,6 +28,8 @@
 </tr>
 </tbody>
 </table>
+
+
 <div ng-show="showImport" class="row-fluid" id="mev-iframe-import-presets" >
 <iframe  scrolling="no" frameborder="0" width="99%" height="80%" ng-src="{{importPresetUrl}}" />
 </div>
