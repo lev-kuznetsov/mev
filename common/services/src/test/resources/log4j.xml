@@ -11,6 +11,9 @@
   <logger name="org.eclipse.jetty">
     <level value="warn" />
   </logger>
+  <logger name="org.apache.commons.configuration">
+    <level value="info" />
+  </logger>
   <logger name="jndi">
     <level value="info" />
   </logger>

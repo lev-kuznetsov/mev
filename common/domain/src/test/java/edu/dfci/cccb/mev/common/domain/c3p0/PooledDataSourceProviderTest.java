@@ -14,13 +14,15 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.domain.guice;
+package edu.dfci.cccb.mev.common.domain.c3p0;
 
 import javax.sql.DataSource;
 
 import org.junit.Test;
 
 import com.google.inject.Guice;
+
+import edu.dfci.cccb.mev.common.domain.guice.MevDomainModule;
 
 public class PooledDataSourceProviderTest {
 

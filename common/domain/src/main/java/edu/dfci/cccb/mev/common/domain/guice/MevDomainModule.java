@@ -24,6 +24,9 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import lombok.ToString;
+import lombok.extern.log4j.Log4j;
+
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -44,6 +47,8 @@ import edu.dfci.cccb.mev.common.domain.guice.utilities.SingletonModule;
  * @author levk
  * @since CRYSTAL
  */
+@ToString
+@Log4j
 public class MevDomainModule implements Module {
 
   /* (non-Javadoc)
@@ -87,6 +92,7 @@ public class MevDomainModule implements Module {
    * @return loaded properties
    */
   public static Properties load (String... resources) {
+    RuntimeException toThrow = null;
     Properties properties = new Properties ();
     for (String resource : resources)
       try {
@@ -96,8 +102,19 @@ public class MevDomainModule implements Module {
           properties.setProperty (key, configuration.getString (key));
         }
       } catch (ConfigurationException e) {
-        throw new RuntimeException (e);
+        if (toThrow == null)
+          toThrow = new RuntimeException (e);
+        else
+          toThrow.addSuppressed (e);
       }
+
+    if (toThrow != null)
+      throw toThrow;
+
+    StringBuilder statement = new StringBuilder ("Properties\n");
+    for (Object property : properties.keySet ())
+      statement.append (property).append (" = ").append (properties.get (property)).append ('\n');
+    log.info (statement.toString ().trim ());
 
     return properties;
   }

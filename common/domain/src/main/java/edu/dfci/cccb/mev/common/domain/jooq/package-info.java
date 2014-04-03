@@ -15,9 +15,9 @@
  */
 
 /**
- * Domain parts depending on c3p0 pooled connection data source
+ * Domain parts depending on jOOQ 
  * 
  * @author levk
- * @since CRYSTAL
+ * @since BAYLIE
  */
-package edu.dfci.cccb.mev.common.domain.c3p0;
+package edu.dfci.cccb.mev.common.domain.jooq;

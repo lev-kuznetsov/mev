@@ -16,6 +16,10 @@
     <relativePath>../../prototype/domain</relativePath>
   </parent>
 
+  <properties>
+    <jooq.version>3.3.1</jooq.version>
+  </properties>
+
   <dependencies>
 
     <!-- JAXB -->
@@ -23,6 +27,14 @@
     <dependency>
       <groupId>com.fasterxml.jackson.module</groupId>
       <artifactId>jackson-module-jaxb-annotations</artifactId>
+    </dependency>
+
+    <!-- jOOQ -->
+
+    <dependency>
+      <groupId>org.jooq</groupId>
+      <artifactId>jooq</artifactId>
+      <version>${jooq.version}</version>
     </dependency>
 
   </dependencies>
