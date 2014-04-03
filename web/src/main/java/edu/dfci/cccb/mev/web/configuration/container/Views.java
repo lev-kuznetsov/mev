@@ -189,4 +189,9 @@ public class Views {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/partials/importItems.ftl").build ();
   }
   
+  @Bean (name = "partials/home")
+  public FreeMarkerView homePage (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/partials/home.ftl").build ();
+  }
+  
 }
