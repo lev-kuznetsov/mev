@@ -51,83 +51,59 @@ define(
 
                                                 
 
-                                                var rightPanel = jq('#rightPanel'), leftPanel = jq('#leftPanel'), centerTab = jq('div#tab'), pageWidth = jq(
-                                                        'body')
-                                                        .width() - 50, panelCycle = 1;
+                                                var rightPanel = jq('#rightPanel'),
+                                                    leftPanel = jq('#leftPanel'),
+                                                    centerTab = jq('div.tab'),
+                                                    leftTab = jq('div.tab#tab-left'),
+                                                    rightTab = jq('div.tab#tab-right'),
+                                                    pageWidth = jq('body').width() - 50,
+                                                    panelCycle = 1;
 
                                                 var isDragging = false;
 
                                                 centerTab
-                                                        .mousedown(function(mouse) {
-                                                            isDragging = true;
-                                                            mouse
-                                                                    .preventDefault();
-                                                        });
-
-                                                jq(document)
-                                                        .mouseup(
-                                                                function() {
-                                                                    isDragging = false;
-                                                                })
-                                                        .mousemove(
-                                                                function(mouse) {
-                                                                    if (isDragging
-                                                                            && mouse.pageX < pageWidth
-                                                                                    * (9 / 10)
-                                                                            && mouse.pageX > 0) {
-                                                                        showSidePanel = 1;
-                                                                        leftPanel
-                                                                                .css(
-                                                                                        "width",
-                                                                                        mouse.pageX);
-                                                                        rightPanel
-                                                                                .css(
-                                                                                        "width",
-                                                                                        pageWidth
-                                                                                                - mouse.pageX);
-                                                                        
-                                                                        jq('span#tab-icon')
-                                                                            .attr("class", "glyphicon glyphicon-chevron-left glyphicon-white")
-                                                                            
-                                                                        leftPanel
-                                                                                .children()
-                                                                                .show();
-                                                                    }
-
-                                                                    if (isDragging
-                                                                            && mouse.pageX < pageWidth
-                                                                                    * (1 / 7)
-                                                                            && mouse.pageX > 0) {
-                                                                        leftPanel.children().hide();
-                                                                        jq('div#tab').click()
-                                                                    }
-
-                                                                });
-                                                
-                                                var delay = 700, clicks = 0, timer = null;
-                                                
-                                                jq('div#tab').on("click", function(e){
-                                                    clicks++;
-                                                    if (clicks === 1){
-                                                        timer = setTimeout(function(){
-                                                            collapseSidePanel();
-                                                            clicks = 0;
-                                                        }, delay);
-                                                    } else if (clicks === 2) {
-                                                        clearTimeout(timer);
-                                                        expandSidePanel();
-                                                        clicks = 0;
-                                                    }
-                                                })
-                                                .on("dblclick", function(e){
-                                                   e.preventDefault(); 
+                                                .mousedown(function(mouse) {
+                                                    isDragging = true;
+                                                    mouse
+                                                            .preventDefault();
                                                 });
+
+                                                jq(document).mouseup(
+                                                    function() {
+                                                        isDragging = false;
+                                                    })
+                                                .mousemove(function(mouse) {
+                                                    if (isDragging && mouse.pageX < pageWidth
+                                                                    * (9 / 10)
+                                                            && mouse.pageX > 0) {
+                                                        showSidePanel = 1;
+                                                        leftPanel.css("width", mouse.pageX);
+                                                        rightPanel.css( "width", pageWidth
+                                                                                - mouse.pageX);
+                                                            
+                                                        leftPanel.children().show();
+                                                    }
+
+                                                    if (isDragging && mouse.pageX < pageWidth * (1 / 7)
+                                                            && mouse.pageX > 0) {
+                                                        leftPanel.children().hide();
+                                                        jq('div.tab#tab-left').click()
+                                                    }
+
+                                                });
+                                                
+                                                leftTab.on("click", function(e){
+                                                    collapseSidePanel();
+                                                });
+                                                
+                                                rightTab.on("click", function(e){
+                                                    expandSidePanel();
+                                                });
+
                                                 
                                                 function expandSidePanel() { //Double click to expand
                                                     if (panelCycle == 1) { //Middle value to left expand full
                                                         
-                                                        jq('span#tab-icon')
-                                                            .attr("class", "glyphicon glyphicon-chevron-left glyphicon-white");
                                                         
                                                         leftPanel
                                                             .css(
@@ -144,9 +120,7 @@ define(
                                                         
                                                         panelCycle = 2;
                                                         
-                                                    } else if (panelCycle == 0){ //left hidden to middle
-                                                        jq('span#tab-icon')
-                                                            .attr("class", "glyphicon glyphicon-chevron-left glyphicon-white")
+                                                    } else if (panelCycle == 0){
                                                         
                                                         leftPanel
                                                             .css("width", pageWidth* (3 / 10));
@@ -166,8 +140,6 @@ define(
 
                                                     if (panelCycle == 1) { //Middle value to left close
                                                         
-                                                        jq('span#tab-icon')
-                                                            .attr("class", "glyphicon glyphicon-chevron-right glyphicon-white");
                                                         
                                                         leftPanel
                                                                 .css(
@@ -184,8 +156,7 @@ define(
                                                         
                                                         
                                                     } else if (panelCycle == 2) { //Left expanded full to middle
-                                                        jq('span#tab-icon')
-                                                            .attr("class", "glyphicon glyphicon-chevron-left glyphicon-white")
+ 
                                                         leftPanel
                                                             .css("width", pageWidth* (3 / 10));
                                                         

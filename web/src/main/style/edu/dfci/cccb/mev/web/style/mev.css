@@ -84,7 +84,7 @@ div#accent {
 	background: #e3e9ff;
 }
 
-div#tab {
+div.tab {
 	border-top:1px solid #B2B2B2;
 	border-right:1px solid #B2B2B2;
 	border-bottom:1px solid #B2B2B2;
