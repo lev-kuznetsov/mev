@@ -10,10 +10,15 @@
 		</div>
 		
 		<div id="partition">
-			<div id='tab'>
+		
+			<div class="tab" id="tab-left">
 				<span id="tab-icon" class="glyphicon glyphicon-chevron-left glyphicon-white"></span>
-				
 			</div>
+			
+			<div class="tab" id="tab-right">
+				<span id="tab-icon" class="glyphicon glyphicon-chevron-right glyphicon-white"></span>		
+			</div>
+			
 		</div>
 		
 		
