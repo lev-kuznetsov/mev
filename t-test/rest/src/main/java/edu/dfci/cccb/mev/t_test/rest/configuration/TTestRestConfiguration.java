@@ -1,6 +1,7 @@
 package edu.dfci.cccb.mev.t_test.rest.configuration;
 
 import static java.util.Arrays.asList;
+import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.script.ScriptEngineManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.converter.HttpMessageConverter;
 
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -28,27 +30,26 @@ import edu.dfci.cccb.mev.t_test.rest.assembly.tsv.TTestTsvMessageConverter;
 
 @Configuration
 @ComponentScan ("edu.dfci.cccb.mev.t_test.rest.controllers")
+public class TTestRestConfiguration extends MevRestConfigurerAdapter {
 
-public class TTestRestConfiguration extends MevRestConfigurerAdapter{
-
-  @Bean
-  @Named ("one.sample.t-test.builder")
+  @Bean (name = "one.sample.t-test.builder")
+  @Scope (SCOPE_REQUEST)
   public TTestBuilder oneSampleTTestBuilder () {
     return new OneSampleTTestBuilder ();
   }
-  
-  @Bean
-  @Named ("two.sample.t-test.builder")
+
+  @Bean (name = "two.sample.t-test.builder")
+  @Scope (SCOPE_REQUEST)
   public TTestBuilder twoSampleTTestBuilder () {
     return new TwoSampleTTestBuilder ();
   }
-  
-  @Bean
-  @Named ("paired.t-test.builder")
+
+  @Bean (name = "paired.t-test.builder")
+  @Scope (SCOPE_REQUEST)
   public TTestBuilder pairedSampleTTestBuilder () {
     return new PairedTTestBuilder ();
   }
-  
+
   @Bean (name = "R")
   public ScriptEngine r () {
     return new ScriptEngineManager ().getEngineByName ("CliR");

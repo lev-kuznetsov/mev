@@ -24,11 +24,13 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfiguration;
 import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain;
+import edu.dfci.cccb.mev.anova.rest.configuration.AnovaRestConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.hcl.rest.configuration.HclRestConfiguration;
 import edu.dfci.cccb.mev.kmeans.rest.configuration.KMeansRestConfiguration;
 import edu.dfci.cccb.mev.limma.rest.configuration.LimmaRestConfiguration;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
+import edu.dfci.cccb.mev.t_test.rest.configuration.TTestRestConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
 
 /**
@@ -54,6 +56,8 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     mvcContext.register (HclRestConfiguration.class);
     mvcContext.register (LimmaRestConfiguration.class);
     mvcContext.register (KMeansRestConfiguration.class);
+    mvcContext.register (AnovaRestConfiguration.class);
+    mvcContext.register (TTestRestConfiguration.class);
 
     DispatcherServlet dispatcher = new DispatcherServlet (mvcContext);
     Dynamic registration = servletContext.addServlet ("dispatcher", dispatcher);
