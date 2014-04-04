@@ -34,7 +34,6 @@ public class AnovaAnalysisController {
   /* t-test for the one-sample analysis */
   @RequestMapping (value = "/analyze/anova/{name}(dimension="
                            + DIMENSION_URL_ELEMENT
-                           + ",selections={selections}"
                            + ",pval={p_value}"
                            + ",mtc={mult_test_correction})",
                    method = POST)
