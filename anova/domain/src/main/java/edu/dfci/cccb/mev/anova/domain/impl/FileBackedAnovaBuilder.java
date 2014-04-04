@@ -24,11 +24,9 @@ import edu.dfci.cccb.mev.anova.domain.contract.Anova;
 import edu.dfci.cccb.mev.anova.domain.prototype.AbstractAnovaBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
-import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
-import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
+import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
 
 @Log4j
@@ -36,20 +34,17 @@ public class FileBackedAnovaBuilder extends AbstractAnovaBuilder {
 
   @Override
   public Anova build () throws DatasetException {
-    
+
     Dimension dimension = null;
     for (Type of : values ())
       try {
-        Selections allSelections=groupSelections ();
-        for(Selection selection: allSelections.getAll ()){
-            dataset ().dimension (of).selections ().get (selection.name ());
-        }
+        for (String selectionName : groupSelections ())
+          dataset ().dimension (of).selections ().get (selectionName);
         dimension = dataset ().dimension (of);
       } catch (InvalidDimensionTypeException | SelectionNotFoundException e) {}
     if (dimension == null)
       throw new AnovaConfigurationException ();
-    
-    
+
     try {
       TemporaryFolder tempAnovaFolder = new TemporaryFolder ();
 
@@ -61,15 +56,14 @@ public class FileBackedAnovaBuilder extends AbstractAnovaBuilder {
           composerFactory ().compose (dataset ()).write (datasetOut);
         }
 
-        //write the configuration file.
+        // write the configuration file.
         File configFile = new File (tempAnovaFolder, CONFIGURATION_FILENAME);
         try (PrintStream configOut = new PrintStream (new FileOutputStream (configFile))) {
-          
-          Selections allSelections=groupSelections ();
-          int groupId=0;
-          for(Selection selection: allSelections.getAll ()){
-            for(String key: selection.keys ()){
-              configOut.println (key + "\t"+groupId); 
+
+          int groupId = 0;
+          for (String selectionName : groupSelections ()) {
+            for (String key : dimension.selections ().get (selectionName).keys ()) {
+              configOut.println (key + "\t" + groupId);
             }
             groupId++;
           }
@@ -77,21 +71,21 @@ public class FileBackedAnovaBuilder extends AbstractAnovaBuilder {
 
         File fullOutputFile = new File (tempAnovaFolder, FULL_FILENAME);
 
-        //write lines with paths, etc. to the appropriate file locations INTO the R file (injection of a different style...)
+        // write lines with paths, etc. to the appropriate file locations INTO
+        // the R file (injection of a different style...)
         try (ByteArrayOutputStream script = new ByteArrayOutputStream ();
              PrintStream printScript = new PrintStream (script)) {
           printScript.println ("INFILE=\"" + datasetFile.getAbsolutePath () + "\"");
           printScript.println ("SAMPLE_FILE=\"" + configFile.getAbsolutePath () + "\"");
           printScript.println ("OUTFILE=\"" + fullOutputFile.getAbsolutePath () + "\"");
-          if(multipleTestCorrectionFlag ()){
-            printScript.println (CORRECT_FOR_MULTIPLE_TESTING+"=TRUE");
+          if (multipleTestCorrectionFlag ()) {
+            printScript.println (CORRECT_FOR_MULTIPLE_TESTING + "=TRUE");
 
           }
-          else{
-            printScript.println (CORRECT_FOR_MULTIPLE_TESTING+"=FALSE");
+          else {
+            printScript.println (CORRECT_FOR_MULTIPLE_TESTING + "=FALSE");
           }
-          
-          
+
           try (InputStream tTestScript = getClass ().getResourceAsStream ("/mev_anova.R")) {
             for (int c; (c = tTestScript.read ()) >= 0; printScript.write (c));
             printScript.flush ();
