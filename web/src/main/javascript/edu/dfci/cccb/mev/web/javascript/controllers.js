@@ -18,8 +18,10 @@ define(
                                     function($scope, $routeParams, $http, prsg, $rS, $loc, log, alertService) {
 
                                         if (!$routeParams.datasetName) {
-
+                                            
+                                            $('#loading').modal('hide');
                                             $loc.path('/');
+                                            return
 
                                         };
 
@@ -91,6 +93,8 @@ define(
                                             $scope.previousLimmaAnalysis = [];
 
                                             $scope.previousKMeansClusters = [];
+                                            $scope.previousAnova = [];
+                                            $scope.previoustTest = [];
 
                                             $http(
                                                     {
@@ -158,6 +162,10 @@ define(
                                                                                                                 });
                                                                                                 } else if (data.type == "K-means Clustering"){
                                                                                                     $scope.previousKMeansClusters.push(data);
+                                                                                                } else if (data.type == "T Test"){
+                                                                                                    $scope.previoustTest = [];
+                                                                                                } else if (data.type == "Anova") {
+                                                                                                    $scope.previousAnova = [];
                                                                                                 }
 
                                                                                             })
@@ -279,10 +287,7 @@ define(
                                             } else if (inputData.type == "K-means Clustering") {
                                                 $scope.updateKMeans(inputData)
                                             }
-                                                
-
-                                            
-
+                           
                                         };
                                         
                                         $scope.buildPreviousAnalysisList();
