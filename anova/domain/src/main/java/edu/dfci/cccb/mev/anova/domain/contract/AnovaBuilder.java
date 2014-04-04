@@ -5,7 +5,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 
 public interface AnovaBuilder extends AnalysisBuilder<AnovaBuilder, Anova> {
   
-  AnovaBuilder groupSelections(Selections theSelections); 
+  AnovaBuilder groupSelections(String[] theSelections); 
   AnovaBuilder pValue(double p);
   AnovaBuilder multipleTestCorrectionFlag(boolean b);
 }
