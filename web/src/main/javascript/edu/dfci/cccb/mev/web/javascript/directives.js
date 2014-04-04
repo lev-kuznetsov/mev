@@ -1868,7 +1868,20 @@ define(
                                             drawSelections(
                                                     data.column,
                                                     data.row);
-                                            
+
+                                            if (scope.heatmapViews.side.type == "Hierarchical Clustering") {
+                                                
+                                                var tree = scope.heatmapViews.side.root;
+                                                drawTree(dendogramLeftWindow, 
+                                                        Cluster,
+                                                        scope.heatmapViews.side.root,
+                                                        'vertical');
+                                            } else if (scope.heatmapViews.side.type == "K-means Clustering") {
+                                                
+                                                scope.heatmapData.row.keys = scope.heatmapViews.side.keys
+                                                drawCluster(scope.heatmapViews.side,  dendogramLeftWindow);
+                                            }
+                                        
 
                                         };
 
@@ -1893,30 +1906,25 @@ define(
                                             })
                                         };
 
-                                        scope
-                                                .$watch(
-                                                        'heatmapData',
-                                                        function(newval, oldval) {
+                                        scope.$watch('heatmapData',function(newval, oldval) {
                                                             
+                                            if (newval) {
 
-                                                            if (newval) {
+                                                $('#loading').modal('hide');
 
-                                                                $('#loading').modal('hide');
+                                                if (newval.column.root) {
+                                                    scope.heatmapViews.top = newval.column;
+                                                }
 
-                                                                if (newval.column.root) {
-                                                                    scope.heatmapViews.top = newval.column;
-                                                                }
+                                                if (newval.row.root) {
+                                                    scope.heatmapViews.side = newval.row;
+                                                }
+                                                
+                                                drawHeatmap(newval);
+                                                
+                                            }
 
-                                                                if (newval.row.root) {
-                                                                    scope.heatmapViews.side = newval.row;
-                                                                }
-                                                                
-                                                                drawHeatmap(newval);
-                                                                
-
-                                                            }
-
-                                                        });
+                                        });
                                         
                                         scope.$watch('heatmapData.column.keys', function(newval, oldval){
                                             if (newval){
@@ -2111,17 +2119,15 @@ define(
                                         
                                         scope.$watch('heatmapData.column.selections', function(newval, oldval){
                                             
-                                            if(newval
-                                                    && oldval){
+                                            if(newval && oldval){
                                                 updateDrawHeatmap(scope.heatmapData)
                                             }
                                             
                                         });
                                         
                                         scope.$watch('heatmapData.row.selections', function(newval, oldval){
-                                            if(newval
-                                                    && oldval){
-                                                updateDrawHeatmap(scope.heatmapData)
+                                            if(newval && oldval){
+                                                updateDrawHeatmap(scope.heatmapData);
                                             }
                                             
                                         });
