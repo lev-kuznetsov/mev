@@ -1,16 +1,14 @@
 package edu.dfci.cccb.mev.anova.rest.configuration;
 
 import static java.util.Arrays.asList;
+import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
 import java.util.List;
-
-import javax.inject.Named;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.converter.HttpMessageConverter;
 
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -29,14 +27,9 @@ import edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgume
 @ComponentScan ("edu.dfci.cccb.mev.anova.rest.controllers")
 public class AnovaRestConfiguration extends MevRestConfigurerAdapter {
   @Bean
-  @Named ("anova.builder")
+  @Scope (SCOPE_REQUEST)
   public AnovaBuilder anovaBuilder () {
     return new FileBackedAnovaBuilder ();
-  }
-  
-  @Bean (name = "R")
-  public ScriptEngine r () {
-    return new ScriptEngineManager ().getEngineByName ("CliR");
   }
 
   @Bean

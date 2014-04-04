@@ -3,12 +3,11 @@ define(['jquery', 'angular'], function (jquery, angular){
 		.controller('PresetManagerController', ['$scope', '$element', '$attrs', 'PresetService', function($scope, $element, $attrs, presetService){			
 			$scope.gridOptions = { 
 				data: 'presets',
-				columnDefs: [{field:'diseaseName', displayName:'Desease Name', enableCellEdit: false, visible: false},
-				             {field:'dataLevel', displayName:'Data Level', enableCellEdit: false, width:'10%',
-								cellTemplate: '<div><div class="ngCellText"><a href="" ng-click="showImportPreset(row.getProperty(\'name\'))">{{row.getProperty(col.field)}}</a></div></div>',
-				            	 },			                     
-		                     {field:'platformName', displayName:'Platform', enableCellEdit: false, width:'45%'},
-				             {field: 'name', displayName: 'Dataset', enableCellEdit: false, width:'40%'}
+				columnDefs: [{field: 'name', displayName: 'Dataset', enableCellEdit: false, width:'40%',
+								cellTemplate: '<div><div class="ngCellText"><a href="" ng-click="showImportPreset(row.getProperty(\'name\'))">{{row.getProperty(col.field)}}</a></div></div>'},
+				             {field:'diseaseName', displayName:'Desease Name', enableCellEdit: false, visible: false},
+				             {field:'dataLevel', displayName:'Data Level', enableCellEdit: false, width:'10%'},			                     
+		                     {field:'platformName', displayName:'Platform', enableCellEdit: false, width:'45%'}
 		                     ],
 		        groups: ['diseaseName'],
 		        groupsCollapsedByDefault: false,

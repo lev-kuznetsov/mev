@@ -127,6 +127,22 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
+    <!-- Anova Package -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-anova-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
+    <!-- t-Test Package -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-t-test-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
     <!-- Presets -->
 
     <dependency>
@@ -222,8 +238,6 @@
       <artifactId>requirejs</artifactId>
       <version>${requirejs.version}</version>
     </dependency>
-
-
 
   </dependencies>
 
