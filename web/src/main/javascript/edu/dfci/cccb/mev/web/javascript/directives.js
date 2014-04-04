@@ -1679,7 +1679,7 @@ define(
 
                                         };
                                         
-                                        var scrollable = $("div.tab-content"), delay = 150, timer = null;
+                                        var scrollable = $("div.tab-content"), delay = 50, timer = null;
                                         
                                         $("div.tab-content").on("scroll", function(e){
                                             
@@ -1708,16 +1708,16 @@ define(
                                         function dimsFilter(toppixels, bottompixels) {
                                             
                                             
-                                            if (toppixels <  heatmapColumnSelectionsGutter + heatmapMarginTop) {
+                                            if (toppixels <  heatmapColumnSelectionsGutter + heatmapMarginTop + heatmapCellHeight*30) {
                                                 
-                                                var numRows = ((bottompixels - heatmapColumnSelectionsGutter - heatmapMarginTop ) / heatmapCellHeight) + 1
+                                                var numRows = ((bottompixels - heatmapColumnSelectionsGutter - heatmapMarginTop ) / heatmapCellHeight) + 30
                                                 var startRow = 0
                                                 var endRow = numRows
                                             
                                             } else {
-                                                var startRow = Math.floor( (toppixels - heatmapColumnSelectionsGutter - heatmapMarginTop) / heatmapCellHeight )
-                                                var numRows =  ( (bottompixels - toppixels) / heatmapCellHeight) + 1
-                                                var endRow = startRow + numRows
+                                                var startRow = Math.floor( (toppixels - heatmapColumnSelectionsGutter - heatmapMarginTop) / heatmapCellHeight ) - 30
+                                                var numRows =  ( (bottompixels - toppixels) / heatmapCellHeight) 
+                                                var endRow = startRow + numRows + 60
                                             }
                                             
                                             return {
@@ -1901,9 +1901,25 @@ define(
                                         }
                                         
                                         function filterCells(cols, rows) {
-                                            return scope.heatmapData.values.filter(function(d){
-                                                return (cols.indexOf(d.column) > -1 && rows.indexOf(d.row) > -1 ) ? true : false
-                                            })
+                                            
+                                            var indexes = rows.map(function(d){
+                                                return scope.heatmapData.firstRows.indexOf(d);
+                                            });
+                                            
+                                            console.log(scope.heatmapData);
+                                            
+                                            var cells = []
+                                            
+                                            indexes.map(function(index){
+                                                
+                                               var row = scope.heatmapData.values.slice(index* cols.length, cols.length*(1+index))
+                                               row.map(function(cell){
+                                                   cells.push(cell)
+                                               });
+                                            });
+                                            
+                                            return cells
+                                            
                                         };
 
                                         scope.$watch('heatmapData',function(newval, oldval) {

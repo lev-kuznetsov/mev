@@ -66,6 +66,7 @@ define(
                                         })
                                         .success(function(data, status, headers, config) {
                                             $scope.heatmapData = data;
+                                            $scope.heatmapData.firstRows = $scope.heatmapData.row.keys
                                             $('#loading').modal('hide');
                                         })
                                         .error(function(data, status, headers, config) {
