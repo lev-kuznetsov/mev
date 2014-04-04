@@ -29,21 +29,10 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><a data-toggle="modal" role="button" data-target="#limma"">LIMMA</a></li> 
-						<li><a href=""><p class="muted">t-Test</p></a></li>
+						<li><a data-toggle="modal" data-target="#tTest">t-Test</a></li>
+						<li><a data-toggle="modal" data-target="#anova">ANOVA</a></li>
 					</ul>
 				</li>
-				
-				<!--
-				<li class="dropdown">
-			
-					<a  class="dropdown-toggle" data-toggle="dropdown">
-						CLASSIFICATION
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href=""><p class="muted">Heatmap</p></a></li>
-					</ul>
-				</li>
-				-->
 				
 				<li class="dropdown">
 			
@@ -110,4 +99,12 @@
   
 <bsmodal bindid="limma" func="" header="LIMMA">
  <div class="modal-Limma"></div>
+</bsmodal> 
+
+<bsmodal bindid="anova" func="" header="Analysis of Variance">
+ <div class="modal-Anova"></div>
+</bsmodal> 
+
+<bsmodal bindid="tTest" func="" header="t-Test Analysis">
+ <div class="modal-T-Test"></div>
 </bsmodal> 

@@ -451,111 +451,220 @@ define(
                                         };
 
                                     }])
-                    .directive(
-                            'modalHierarchical',
-                            [
-                                    '$http',
-                                    '$routeParams',
-                                    'alertService',
-                                    function($http, $routeParams, alertService) {
+                    .directive('modalAnova',[ '$http', '$routeParams', 'alertService',
+                        function($http, $routeParams, alertService) { 
+                            return {
+                                restrict : 'C',
+                                templateUrl : "/container/view/elements/anovaModalBody",
+                                link : function(scope, elems, attrs) {
+                                    
+                                    scope.params = {
+                                            name: undefined
+                                    };
+                                    
+                                    scope.options = {};
+                                    
+                                    scope.anovaInit = function(){
+                                        $http({
 
-                                        return {
-                                            restrict : 'C',
-                                            templateUrl : "/container/view/elements/hierarchicalbody",
-                                            link : function(scope, elems, attrs) {
+                                            method : 'POST',
+                                            url : 'dataset/'
+                                                    + $routeParams.datasetName
+                                                    + '/analyze/hcl/'
+                                                    + scope.params.name
+                                                    + '('
+                                                    + scope.params.dimension.value
+                                                    + ','
+                                                    + scope.params.metric.value
+                                                    + ','
+                                                    + scope.params.linkage.value
+                                                    + ')'
 
-                                                scope.options = {
-                                                        metrics : [{name:"Euclidean", value:"euclidean"},
-                                                                   {name:"Manhattan", value:"manhattan"},
-                                                                   {name:"Pearson", value:"pearson"}],
-                                                        linkage : [{name:"Complete", value:'complete'},
-                                                                   {name:"Average", value:'average'},
-                                                                   {name:"Single", value:'single'}],
-                                                        dimensions : [{
-                                                                        name : 'Rows',
-                                                                        value : 'row'
-                                                                    }, {
-                                                                        name : 'Columns',
-                                                                        value : 'column'
-                                                                    }]
-                                                };
+                                        })
+                                        .success(function(data, status, headers, config) {
+                                                        
+                                                        scope.buildPreviousAnalysisList()
+                                                        var message = "ANOVA for "
+                                                            + scope.params.name + " complete!";
+
+                                                        var header = "ANOVA";
+                                                         
+                                                        alertService.success(message,header);
+                                                    
+                                                })
                                                 
-                                                scope.params = {
-                                                        metric : scope.options.metrics[0],
-                                                        dimension : scope.options.dimensions[1],
-                                                        linkage : scope.options.linkage[0],
-                                                        name : undefined
-                                                }
+                                        .error(function(data, status, headers, config) {
+                                            
+                                            var message = "Could not perform ANOVA. If "
+                                                + "problem persists, please contact us.";
+                                            var header = "Clustering Problem (Error Code: "
+                                                + status
+                                                + ")";
+                                            alertService.error(message,header);
+                                            resetSelections()
+                                            
+                                        });
+                                    };
+                                }
+                            }
+                    }])
+                    .directive('modalTTest',[ '$http', '$routeParams', 'alertService',
+                        function($http, $routeParams, alertService) { 
+                            return {
+                                restrict : 'C',
+                                templateUrl : "/container/view/elements/tTestModalBody",
+                                link : function(scope, elems, attrs) {
+                                    
+                                    scope.params = {
+                                            name: undefined
+                                    };
+                                    
+                                    scope.options = {};
+                                    
+                                    scope.testInit = function(){
+                                        $http({
+
+                                            method : 'POST',
+                                            url : 'dataset/'
+                                                    + $routeParams.datasetName
+                                                    + '/analyze/hcl/'
+                                                    + scope.params.name
+                                                    + '('
+                                                    + scope.params.dimension.value
+                                                    + ','
+                                                    + scope.params.metric.value
+                                                    + ','
+                                                    + scope.params.linkage.value
+                                                    + ')'
+
+                                        })
+                                        .success(function(data, status, headers, config) {
+                                                        
+                                                        scope.buildPreviousAnalysisList()
+                                                        var message = "t-Test analysis for "
+                                                            + scope.params.name + " complete!";
+
+                                                        var header = "t-Test Analysis";
+                                                         
+                                                        alertService.success(message,header);
+                                                    
+                                                })
                                                 
-                                                scope.params.selectedMetric = {name:"Euclidean", value:"euclidean"}
-
-                                                scope.clusterInit = function() {
-
-                                                    var message = "Started clustering analysis for "
-                                                        + scope.params.name;
-
-                                                    var header = "Hierarchical Clustering Analysis";
-                                                     
-                                                    alertService.info(message,header);
-
-                                                    $http(
-                                                            {
-
-                                                                method : 'POST',
-                                                                url : 'dataset/'
-                                                                        + $routeParams.datasetName
-                                                                        + '/analyze/hcl/'
-                                                                        + scope.params.name
-                                                                        + '('
-                                                                        + scope.params.dimension.value
-                                                                        + ','
-                                                                        + scope.params.metric.value
-                                                                        + ','
-                                                                        + scope.params.linkage.value
-                                                                        + ')'
-
-                                                            })
-                                                            .success(function(data, status, headers, config) {
-                                                                            
-                                                                            scope.buildPreviousAnalysisList()
-                                                                            var message = "Clustering analysis for "
-                                                                                + scope.params.name + " complete!";
-
-                                                                            var header = "Hierarchical Clustering Analysis";
-                                                                             
-                                                                            alertService.success(message,header);
-                                                                            resetSelections()
-                                                                        
-                                                                    })
-                                                                    
-                                                            .error(function(data, status, headers, config) {
+                                        .error(function(data, status, headers, config) {
+                                            
+                                            var message = "Could not perform t-Test. If "
+                                                + "problem persists, please contact us.";
+                                            var header = "Clustering Problem (Error Code: "
+                                                + status
+                                                + ")";
+                                            alertService.error(message,header);
+                                            resetSelections()
+                                            
+                                        });
+                                    };
+                                }
+                            }
+                    }])
+                    .directive('modalHierarchical', [ '$http', '$routeParams', 'alertService',
+                        function($http, $routeParams, alertService) {
+        
+                            return {
+                                restrict : 'C',
+                                templateUrl : "/container/view/elements/hierarchicalbody",
+                                link : function(scope, elems, attrs) {
+        
+                                    scope.options = {
+                                            metrics : [{name:"Euclidean", value:"euclidean"},
+                                                       {name:"Manhattan", value:"manhattan"},
+                                                       {name:"Pearson", value:"pearson"}],
+                                            linkage : [{name:"Complete", value:'complete'},
+                                                       {name:"Average", value:'average'},
+                                                       {name:"Single", value:'single'}],
+                                            dimensions : [{
+                                                            name : 'Rows',
+                                                            value : 'row'
+                                                        }, {
+                                                            name : 'Columns',
+                                                            value : 'column'
+                                                        }]
+                                    };
+                                    
+                                    scope.params = {
+                                            metric : scope.options.metrics[0],
+                                            dimension : scope.options.dimensions[1],
+                                            linkage : scope.options.linkage[0],
+                                            name : undefined
+                                    }
+                                    
+                                    scope.params.selectedMetric = {name:"Euclidean", value:"euclidean"}
+        
+                                    scope.clusterInit = function() {
+        
+                                        var message = "Started clustering analysis for "
+                                            + scope.params.name;
+        
+                                        var header = "Hierarchical Clustering Analysis";
+                                         
+                                        alertService.info(message,header);
+        
+                                        $http(
+                                                {
+        
+                                                    method : 'POST',
+                                                    url : 'dataset/'
+                                                            + $routeParams.datasetName
+                                                            + '/analyze/hcl/'
+                                                            + scope.params.name
+                                                            + '('
+                                                            + scope.params.dimension.value
+                                                            + ','
+                                                            + scope.params.metric.value
+                                                            + ','
+                                                            + scope.params.linkage.value
+                                                            + ')'
+        
+                                                })
+                                                .success(function(data, status, headers, config) {
                                                                 
-                                                                var message = "Could not perform clustering. If "
-                                                                    + "problem persists, please contact us.";
-                                                                var header = "Clustering Problem (Error Code: "
-                                                                    + status
-                                                                    + ")";
-                                                                alertService.error(message,header);
+                                                                scope.buildPreviousAnalysisList()
+                                                                var message = "Clustering analysis for "
+                                                                    + scope.params.name + " complete!";
+        
+                                                                var header = "Hierarchical Clustering Analysis";
+                                                                 
+                                                                alertService.success(message,header);
                                                                 resetSelections()
-                                                                
-                                                            });
-
-                                                };
-
-                                                function resetSelections() {
-                                                    scope.params = {
-                                                            metric : scope.options.metrics[0],
-                                                            dimension : scope.options.dimensions[1],
-                                                            linkage : scope.options.linkage[0],
-                                                            name : undefined
-                                                    }
-                                                }
-
-                                            }
-
-                                        };
-
-                                    }])
+                                                            
+                                                        })
+                                                        
+                                                .error(function(data, status, headers, config) {
+                                                    
+                                                    var message = "Could not perform clustering. If "
+                                                        + "problem persists, please contact us.";
+                                                    var header = "Clustering Problem (Error Code: "
+                                                        + status
+                                                        + ")";
+                                                    alertService.error(message,header);
+                                                    resetSelections()
+                                                    
+                                                });
+        
+                                    };
+        
+                                    function resetSelections() {
+                                        scope.params = {
+                                                metric : scope.options.metrics[0],
+                                                dimension : scope.options.dimensions[1],
+                                                linkage : scope.options.linkage[0],
+                                                name : undefined
+                                        }
+                                    }
+        
+                                }
+        
+                            };
+        
+                        }])
                     .directive(
                             'modalKmeans',['$routeParams', '$http', 'alertService',
                             function($routeParams, $http, alertService) {
