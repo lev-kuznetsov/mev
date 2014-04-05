@@ -34,8 +34,8 @@ public class AnovaAnalysisController {
   /* t-test for the one-sample analysis */
   @RequestMapping (value = "/analyze/anova/{name}(dimension="
                            + DIMENSION_URL_ELEMENT
-                           + ",pval={p_value}"
-                           + ",mtc={mult_test_correction})",
+                           + ",pval={pval}"
+                           + ",mtc={mtc})",
                    method = POST)
   @ResponseStatus (OK)
   public void startOneSample (final @PathVariable ("name") String name,
