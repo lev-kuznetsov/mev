@@ -1,7 +1,6 @@
 package edu.dfci.cccb.mev.anova.domain.contract;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 
 public interface AnovaBuilder extends AnalysisBuilder<AnovaBuilder, Anova> {
   

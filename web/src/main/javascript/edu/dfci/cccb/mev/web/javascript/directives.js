@@ -516,30 +516,50 @@ define(
                                 link : function(scope, elems, attrs) {
                                     
                                     scope.params = {
-                                            name: undefined
+                                            name: undefined,
+                                            sampleType: {label:"", url:""},
+                                    		pValue: 0.05,
+                                    		multitestCorrection: false,
+                                    		assumeEqualVariance: false
                                     };
                                     
-                                    scope.options = {};
-                                    
+                                    scope.options = {
+                                    		sampleTypes: [{label: "one sample", url:"one_sample_ttest"}, 
+                                    		        {label: "two sample", url:"two_sample_ttest"},
+                                    		        {label: "paired sample", url:"paired_ttest"}]
+                                    };
+                                    scope.isOneSample = function(){
+                                		return scope.params.sampleType.url=='one_sample_ttest';
+                                	};
+                                	scope.isTwoSample = function(){
+                                		return scope.params.sampleType.url=='two_sample_ttest';
+                                	};
+                                	scope.getPostData = function(){
+                                		var postRequest = {
+                                			name: scope.params.name,
+                                			pValue: scope.params.pValue,
+                                			multTestCorrection: scope.params.multitestCorrection,
+                                			experimentName: scope.params.analysisExperiment.name
+                                		};
+                                		if(scope.isOneSample()){                                			
+                                			postRequest.userMean=scope.params.userMean;
+                                		}else{
+                                			postRequest.controlName=scope.params.analysisControl.name;
+                                		}
+                                		if(scope.isTwoSample()){
+                                			postRequest.assumeEqualVariance=scope.params.assumeEqualVariance
+                                		}
+                                		console.debug(postRequest);
+                                		return postRequest;                                		
+                                	};                                	
                                     scope.testInit = function(){
                                         $http({
-
-                                            method : 'POST',
-                                            url : 'dataset/'
-                                                    + $routeParams.datasetName
-                                                    + '/analyze/hcl/'
-                                                    + scope.params.name
-                                                    + '('
-                                                    + scope.params.dimension.value
-                                                    + ','
-                                                    + scope.params.metric.value
-                                                    + ','
-                                                    + scope.params.linkage.value
-                                                    + ')'
-
+                                        	method:"POST", 
+                                            url:"/dataset/" + $routeParams.datasetName 
+                                            + '/analyze/' + scope.params.sampleType.url,
+                                            data: scope.getPostData()
                                         })
-                                        .success(function(data, status, headers, config) {
-                                                        
+                                        .success(function(data, status, headers, config) {                                                        
                                                         scope.buildPreviousAnalysisList()
                                                         var message = "t-Test analysis for "
                                                             + scope.params.name + " complete!";
@@ -1978,19 +1998,20 @@ define(
                                                     data.column,
                                                     data.row);
 
-                                            if (scope.heatmapViews.side.type == "Hierarchical Clustering") {
-                                                
-                                                var tree = scope.heatmapViews.side.root;
-                                                drawTree(dendogramLeftWindow, 
-                                                        Cluster,
-                                                        scope.heatmapViews.side.root,
-                                                        'vertical');
-                                            } else if (scope.heatmapViews.side.type == "K-means Clustering") {
-                                                
-                                                scope.heatmapData.row.keys = scope.heatmapViews.side.keys
-                                                drawCluster(scope.heatmapViews.side,  dendogramLeftWindow);
+                                            if(typeof scope.heatmapViews.side!="undefined"){
+	                                            if (scope.heatmapViews.side.type == "Hierarchical Clustering") {
+	                                                
+	                                                var tree = scope.heatmapViews.side.root;
+	                                                drawTree(dendogramLeftWindow, 
+	                                                        Cluster,
+	                                                        scope.heatmapViews.side.root,
+	                                                        'vertical');
+	                                            } else if (scope.heatmapViews.side.type == "K-means Clustering") {
+	                                                
+	                                                scope.heatmapData.row.keys = scope.heatmapViews.side.keys
+	                                                drawCluster(scope.heatmapViews.side,  dendogramLeftWindow);
+	                                            }
                                             }
-                                        
 
                                         };
 
@@ -2352,6 +2373,9 @@ define(
                                                         'heatmapViews.side',
                                                         function(newval, oldval) {
 
+                                                        	if(typeof newval == "undefined")
+                                                        		return;
+                                                        	
                                                             if (newval.type == "Hierarchical Clustering") {
                                                                 
                                                                 var tree = newval.root;
