@@ -44,6 +44,11 @@ import org.reflections.util.ConfigurationBuilder;
 public class Javascript {
 
   /**
+   * Default scan root
+   */
+  public static final String ROOT = "/META-INF/resources";
+
+  /**
    * Javascript engine
    */
   private @Getter final ScriptEngine engine = new ScriptEngineManager ().getEngineByName ("javascript");
@@ -54,7 +59,7 @@ public class Javascript {
   }
 
   /**
-   * SHorthand to statically import
+   * Shorthand to import
    */
   public static Javascript js () {
     return new Javascript ();
@@ -65,10 +70,17 @@ public class Javascript {
                    script + ".js",
                    "/" + script,
                    "/" + script + ".js",
-                   ("/META-INF/resources/javascript/" + script).replaceAll ("//", "/"),
-                   ("/META-INF/resources/javascript/" + script).replaceAll ("//", "/") + ".js");
+                   (ROOT + "/" + script).replaceAll ("//", "/"),
+                   (ROOT + "/" + script).replaceAll ("//", "/") + ".js",
+                   (ROOT + "/javascript/" + script).replaceAll ("//", "/"),
+                   (ROOT + "/javascript/" + script).replaceAll ("//", "/") + ".js");
   }
 
+  /**
+   * @param scripts
+   * @return
+   * @throws ScriptException
+   */
   public Javascript with (String... scripts) throws ScriptException {
     return with (asList (scripts));
   }
@@ -99,7 +111,7 @@ public class Javascript {
    */
   public Javascript scan (String... bases) throws ScriptException {
     if (bases.length < 1)
-      bases = new String[] { "/META-INF/resources" };
+      bases = new String[] { ROOT };
 
     ConfigurationBuilder configuration = new ConfigurationBuilder ().addScanners (new ResourcesScanner ());
     for (String base : bases)
