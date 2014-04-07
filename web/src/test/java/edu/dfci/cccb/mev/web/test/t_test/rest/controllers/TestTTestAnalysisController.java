@@ -117,7 +117,7 @@ public class TestTTestAnalysisController {
     log.debug ("jsonAnalysis: " + jsonTTest);
   }
 
-  @Test @Ignore
+  @Test 
   //input: {"name": "two-sample-test","experimentName": "experiment","controlName": "control","pValue": 0.05,"multTestCorrection": false,"assumeEqualVariance": false}
   //output: {"name":"two-sample-test","timestamp":{"timeInMillis":1396644435207,"seconds":15,"minutes":47,"hours":4,"period":"PM"},"type":"t-Test Analysis","results":[{"id":"G1","pValue":1.75605253449618E-7},{"id":"G2","pValue":0.179536967211154},{"id":"G3","pValue":0.413303424964143},{"id":"G4","pValue":7.4414407968959E-10},{"id":"G5","pValue":0.0459406821671775},{"id":"G6","pValue":0.442195333404115},{"id":"G7","pValue":0.487794989322302},{"id":"G8","pValue":0.264859768724727},{"id":"G9","pValue":0.738247666598551},{"id":"G10","pValue":0.4100565631557},{"id":"G11","pValue":0.373189671778418},{"id":"G12","pValue":0.106313946603425},{"id":"G13","pValue":0.35226478832985},{"id":"G14","pValue":0.844958079335918},{"id":"G15","pValue":0.724268919768882},{"id":"G16","pValue":0.742394744844445},{"id":"G17","pValue":9.77999636830873E-9},{"id":"G18","pValue":0.937609351431979},{"id":"G19","pValue":0.904994722568906},{"id":"G20","pValue":0.258882323811034}]}
   public void testStartTwoSample () throws Exception {
@@ -147,8 +147,7 @@ public class TestTTestAnalysisController {
     
   }
 
-  //TODO: PairedTTestBuilder is broken, needs to be fixed (Brian)
-  @Test @Ignore
+  @Test 
   public void testStartPaired () throws Exception {
     String analysesName = "paired-sample-test";
     Dataset dataset = new SimpleDatasetBuilder ().setParserFactories (asList (new SuperCsvParserFactory ()))
