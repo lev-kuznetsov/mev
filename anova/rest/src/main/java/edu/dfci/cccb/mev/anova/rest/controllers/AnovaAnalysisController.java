@@ -7,7 +7,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +28,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 public class AnovaAnalysisController {
 
   private @Getter @Setter @Inject Dataset dataset;
-  private @Getter @Setter @Inject @Named ("anova.builder") AnovaBuilder anovaBuilder;
+  private @Getter @Setter @Inject AnovaBuilder anovaBuilder;
 
   /* t-test for the one-sample analysis */
   @RequestMapping (value = "/analyze/anova/{name}(dimension="
