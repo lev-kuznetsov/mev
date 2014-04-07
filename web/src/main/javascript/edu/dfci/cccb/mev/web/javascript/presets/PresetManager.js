@@ -10,7 +10,7 @@ define(['jquery', 'angular'], function (jquery, angular){
 		                     {field:'platformName', displayName:'Platform', enableCellEdit: false, width:'45%'}
 		                     ],
 		        groups: ['diseaseName'],
-		        groupsCollapsedByDefault: false,
+		        groupsCollapsedByDefault: true,
 		        sortInfo: { fields: ['diseaseName', 'dataLevel'], directions: ['asc', 'asc'] },
 		        showFilter: true
 			};						
