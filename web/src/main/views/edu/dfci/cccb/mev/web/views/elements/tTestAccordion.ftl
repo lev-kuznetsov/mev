@@ -28,8 +28,8 @@
 					                                      <th>
 					                                      	
 					                                      	<div class="dropdown">
-					                                      		<p class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu">
-															    	 Row ID<span class="caret" ng-click="reorderTTestTable('ID')"></span>
+					                                      		<p class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu" ng-click="reorderTTestTable('ID', $event)"> 
+															    	 Row ID <span ng-class="getCaretCss(headers['ID'])"  />
 															    	 <input type="text" class="input-small" ng-model="filterParams.id" placeholder="filter row id">
 																</p>
 					                                      	</div>
@@ -37,8 +37,8 @@
 					                                      <th>
 					                                      	
 					                                      	<div class="dropdown">
-					                                      		<p class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu">
-															    	 P-Value<span class="caret" ng-click="reorderTTestTable('P-Value')"></span>
+					                                      		<p class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu" ng-click="reorderTTestTable('P-Value')">
+															    	 <span ng-class="getCaretCss(headers['P-Value'])" ></span>P-Value
 																			<input type="text" class="input-small" placeholder="filter < Threshold" ng-model="filterParams.pValueThreshold">													
 						                            			</p>
 																

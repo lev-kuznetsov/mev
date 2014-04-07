@@ -341,20 +341,20 @@ define(
                                     templateUrl : '/container/view/elements/tTestAccordion',
                                     link : function(scope) {
 
-                                        var headers = {
-                                            'ID' : "id",
-                                            'P-Value' : "pValue"
-                                        }
+                                        scope.headers = {
+                                            'ID' : {name: "id", sort: -1},
+                                            'P-Value' : {name: "pValue", sort: -1}
+                                        };
                                         
                                         scope.filterParams = {
                                                 'id' : '',
                                                 'pValueThreshold' : undefined
-                                        }
+                                        };
                                         
                                         scope.selectionParams = {
                                                 name: undefined,
                                                 color: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
-                                        }
+                                        };
                                         
                                         scope.addSelections = function(){
                                             
@@ -404,19 +404,27 @@ define(
                                                  alertService.error(message,header);
                                             });
                                             
+                                        };
+                                        
+                                        scope.getCaretCss = function(header){                                        	
+                                        	if(header.sort==1){
+                                        		return "caret-up";
+                                        	}else{
+                                        		return "caret-down";
+                                        	}
                                         }
 
                                         var ctr = -1;
-                                        scope.tTestTableOrdering = undefined;
-
-                                        scope.reorderTTestTable = function(header) {
+                                        scope.tTestTableOrdering = undefined;                                        
+                                        scope.reorderTTestTable = function(header, $event) {
 
                                             ctr = ctr * (-1);
-                                            if (ctr == 1) {
-                                                scope.tTestTableOrdering = headers[header];
+                                            scope.headers[header].sort=scope.headers[header].sort*(-1);
+                                            if (scope.headers[header].sort == 1) {
+                                                scope.tTestTableOrdering = scope.headers[header].name;
                                             } else {
                                                 scope.tTestTableOrdering = "-"
-                                                        + headers[header];
+                                                        + scope.headers[header].name;
                                             }
                                         }
                                     }

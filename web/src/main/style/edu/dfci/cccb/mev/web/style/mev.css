@@ -271,6 +271,32 @@ t-test-accordion .form{
 t-test-accordion .table{
 	margin: 0em;
 }
+t-test-accordion .caret-down{
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 2px;
+	margin-right: 2px;
+	vertical-align: middle;
+	border-top: 4px solid;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+	vertical-align: top;
+}
+t-test-accordion .caret-up{
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 2px;
+	margin-right: 2px;
+	vertical-align: middle;
+	border-top: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+	border-bottom: 4px solid ;
+	vertical-align: top;
+	
+}
 .clearfix:after { 
    content: " ";
    display: block; 
