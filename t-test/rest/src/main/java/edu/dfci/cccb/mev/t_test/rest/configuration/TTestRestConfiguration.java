@@ -5,7 +5,6 @@ import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUES
 
 import java.util.List;
 
-import javax.inject.Named;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 

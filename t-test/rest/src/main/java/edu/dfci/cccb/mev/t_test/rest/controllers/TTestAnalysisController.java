@@ -9,17 +9,24 @@ import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUES
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.t_test.domain.contract.TTestBuilder;
 
@@ -57,6 +64,28 @@ dataset.analyses ().put (oneSampleTTestBuilder.name (name)
                  .oneSampleMean (userMean)
                  .build ());
 }
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Accessors(fluent=true)
+public static class OneSampleTTestDTO{
+  @JsonProperty @Getter private String name;  
+  @JsonProperty @Getter private String selectionName;  
+  @JsonProperty @Getter private double pValue;
+  @JsonProperty @Getter private boolean multTestCorrection;  
+  @JsonProperty @Getter private double userMean;
+}
+@RequestMapping (value = "/analyze/one_sample_ttest", method = POST)
+@ResponseStatus (OK)
+public void startOneSampleJson (@RequestBody OneSampleTTestDTO dto) throws DatasetException {
+dataset.analyses ().put (oneSampleTTestBuilder.name (dto.name())
+                 .dataset (dataset)
+                 .controlSelection (dataset.dimension (Type.COLUMN).selections ().get (dto.selectionName ()))
+                 .pValue (dto.pValue())
+                 .multipleTestCorrectionFlag (dto.multTestCorrection())
+                 .oneSampleMean (dto.userMean())
+                 .build ());
+}
   
   
   /*
@@ -86,11 +115,37 @@ dataset.analyses ().put (twoSampleTTestBuilder.name (name)
                  .multipleTestCorrectionFlag (multTestCorrection)
                  .build ());
 }
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Accessors(fluent=true)
+public static class TwoSampleTTestDTO{
+  @JsonProperty @Getter private String name;  
+  @JsonProperty @Getter private String experimentName;
+  @JsonProperty @Getter private String controlName;
+  @JsonProperty @Getter private double pValue;
+  @JsonProperty @Getter private boolean multTestCorrection;
+  @JsonProperty @Getter private boolean assumeEqualVariance;  
+}
+@RequestMapping (value = "/analyze/two_sample_ttest",
+  method = POST)
+@ResponseStatus (OK)
+public void startTwoSampleJson (@RequestBody TwoSampleTTestDTO dto) throws DatasetException {
+dataset.analyses ().put (twoSampleTTestBuilder.name (dto.name ())
+                 .dataset (dataset)
+                 .experimentSelection (dataset.dimension (Type.COLUMN).selections ().get (dto.experimentName ()))
+                 .controlSelection (dataset.dimension (Type.COLUMN).selections ().get (dto.controlName ()))
+                 .pValue (dto.pValue())
+                 .equalVarianceFlag (dto.assumeEqualVariance())
+                 .multipleTestCorrectionFlag (dto.multTestCorrection())
+                 .build ());
+}
+
   
-  /*
+/*
    * t-test for the paired analysis
-   */
-  @RequestMapping (value = "/analyze/paired_ttest/{name}(dimension="
+  */
+@RequestMapping (value = "/analyze/paired_ttest/{name}(dimension="
           + DIMENSION_URL_ELEMENT 
           + ",experiment={experiment}"
           + ",control={control}"
@@ -111,7 +166,29 @@ dataset.analyses ().put (pairedTTestBuilder.name (name)
                  .multipleTestCorrectionFlag (multTestCorrection)
                  .build ());
 }
-  
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Accessors(fluent=true)
+public static class PairedSampleTTestDTO{
+  @JsonProperty @Getter private String name;  
+  @JsonProperty @Getter private String experimentName;
+  @JsonProperty @Getter private String controlName;
+  @JsonProperty @Getter private double pValue;
+  @JsonProperty @Getter private boolean multTestCorrection;
+}
+@RequestMapping (value = "/analyze/paired_ttest",
+method = POST)
+@ResponseStatus (OK)
+public void startPaired(@RequestBody PairedSampleTTestDTO dto) throws DatasetException {
+dataset.analyses ().put (pairedTTestBuilder.name (dto.name())
+               .dataset (dataset)
+               .experimentSelection (dataset.dimension (Type.COLUMN).selections ().get (dto.experimentName ()))
+               .controlSelection (dataset.dimension (Type.COLUMN).selections ().get (dto.controlName ()))
+               .pValue (dto.pValue ())
+               .multipleTestCorrectionFlag (dto.multTestCorrection())
+               .build ());
+}
   
   
 }

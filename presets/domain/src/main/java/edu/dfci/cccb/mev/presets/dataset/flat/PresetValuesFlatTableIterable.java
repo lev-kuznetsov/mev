@@ -43,7 +43,7 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
   //fields
   private final @Inject @Named("presets-jooq-context") DSLContext context;  
   @SuppressWarnings("unused") private final Dimension columns;
-  @SuppressWarnings("unused") private final Dimension rows;
+  private final Dimension rows;
   private final String tableName;
   private final List<Field<String>>fieldList;
   private final Table<Record> table;
