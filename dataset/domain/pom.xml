@@ -16,12 +16,31 @@
     <relativePath>../../prototype/domain</relativePath>
   </parent>
 
+  <properties>
+    <super-csv.version>2.1.0</super-csv.version>
+  </properties>
+
   <dependencies>
 
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
       <artifactId>mev-common-domain</artifactId>
       <version>${mev.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-common-test</artifactId>
+      <version>${mev.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- SuperCsv -->
+
+    <dependency>
+      <groupId>net.sf.supercsv</groupId>
+      <artifactId>super-csv</artifactId>
+      <version>${super-csv.version}</version>
     </dependency>
 
   </dependencies>

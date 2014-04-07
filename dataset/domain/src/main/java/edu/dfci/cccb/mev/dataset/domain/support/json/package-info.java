@@ -14,24 +14,10 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain.contract;
-
-import java.io.IOException;
-import java.io.InputStream;
-
 /**
+ * Resolution definitions
+ * 
  * @author levk
- * @since BAYLIE
+ * @since CRYSTAL
  */
-public interface Parser <K, V> {
-
-  public interface Stream <K, V> {
-    boolean next () throws IOException;
-
-    K[] keys ();
-
-    V value ();
-  }
-
-  Stream<K, V> parse (InputStream input);
-}
+package edu.dfci.cccb.mev.dataset.domain.support.json;

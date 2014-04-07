@@ -16,10 +16,19 @@
 
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
+import static java.util.Collections.unmodifiableMap;
 import static javax.xml.bind.annotation.XmlAccessType.NONE;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
 
 /**
  * Value store
@@ -32,8 +41,40 @@ import javax.xml.bind.annotation.XmlRootElement;
 public interface Values <K, V> {
 
   /**
-   * @param coordinate
-   * @return value
+   * A single value in the store
+   * 
+   * @author levk
+   * @since CRYSTAL
    */
-  V get (@SuppressWarnings ("unchecked") K... coordinate) throws InvalidCoordinateSetException;
+  @XmlRootElement
+  @XmlAccessorType (NONE)
+  @Accessors (fluent = true)
+  @ToString
+  public static class Value <K, V> {
+    /**
+     * @return coordinate set
+     */
+    private @Getter final @XmlAttribute Map<String, K> coordinates;
+
+    /**
+     * @return value
+     */
+    private @Getter final @XmlAttribute V value;
+
+    /**
+     * @param value
+     * @param coordinates
+     */
+    public Value (V value, Map<String, K> coordinates) {
+      this.value = value;
+      this.coordinates = unmodifiableMap (new HashMap<String, K> (coordinates));
+    }
+  }
+
+  /**
+   * @param coordinates
+   * @return values for the coordinates specified
+   * @throws InvalidCoordinateSetException
+   */
+  Iterable<Value<K, V>> get (Iterable<Map<String, K>> coordinates) throws InvalidCoordinateSetException;
 }

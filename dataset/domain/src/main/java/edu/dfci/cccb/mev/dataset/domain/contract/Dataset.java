@@ -16,39 +16,36 @@
 
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
-import static javax.xml.bind.annotation.XmlAccessType.NONE;
+import java.util.Map;
 
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import edu.dfci.cccb.mev.dataset.domain.contract.annotation.Workspace;
 
 /**
- * Dataset
+ * Represents a dataset
  * 
  * @author levk
  * @since BAYLIE
  */
-@XmlRootElement
-@XmlAccessorType (NONE)
+@Workspace
 public interface Dataset <K, V> {
 
   /**
    * @return name
    */
-  @XmlAttribute
   String name ();
 
   /**
    * @return dimensions
    */
-  @XmlAttribute
-  List<Dimension<K>> dimensions ();
+  Map<String, Dimension<K>> dimensions ();
+
+  /**
+   * @return analyses
+   */
+  Map<String, Analysis> analyses ();
 
   /**
    * @return value store
    */
-  @XmlAttribute
   Values<K, V> values ();
 }
