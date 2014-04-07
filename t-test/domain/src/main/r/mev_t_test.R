@@ -28,12 +28,13 @@ exp_data<-if(min(exp_data)<0){exp_data+min(exp_data)*-1}else{exp_data}
 ######### read groupings file #####################
 sample_mtx<-read.table(SAMPLE_FILE, header=F, sep="\t")
 sample_mtx<-sample_mtx[(sample_mtx[,2]!=-1),]  #parse out the samples we do NOT want to include (marked with -1)
-exp_data<-exp_data[,as.character(sample_mtx[,1])]  #retain only the samples we care about
 
 if(TEST_TYPE==ONE_SAMPLE)
 {
 	#one-sample t-test.  User supplies a mean to test against.  
 	#Could allow for two-tailed and one-tailed alternate hypotheses.
+	
+	exp_data<-exp_data[,as.character(sample_mtx[,1])]  #retain only the samples we care about
 	
 	p_vals<-apply(exp_data,1,
       function(x)
@@ -51,6 +52,8 @@ if(TEST_TYPE==ONE_SAMPLE)
 	{
 		#two-sample t-test.  Only perform two-tailed test here.
 	
+		exp_data<-exp_data[,as.character(sample_mtx[,1])]  #retain only the samples we care about
+
 		#group the samples and get the sizes:
 		group_a<-as.character(sample_mtx[(sample_mtx[,2]==0),1])
 		group_b<-as.character(sample_mtx[(sample_mtx[,2]==1),1])
