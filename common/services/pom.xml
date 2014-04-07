@@ -16,10 +16,6 @@
     <relativePath>../../prototype/services</relativePath>
   </parent>
 
-  <properties>
-    <reflections.version>0.9.9-RC1</reflections.version>
-  </properties>
-
   <dependencies>
 
     <dependency>
@@ -33,14 +29,6 @@
       <artifactId>mev-common-test</artifactId>
       <version>${mev.version}</version>
       <scope>test</scope>
-    </dependency>
-
-    <!-- Reflections for component scan -->
-
-    <dependency>
-      <groupId>org.reflections</groupId>
-      <artifactId>reflections</artifactId>
-      <version>${reflections.version}</version>
     </dependency>
 
   </dependencies>
