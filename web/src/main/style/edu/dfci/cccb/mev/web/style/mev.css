@@ -303,3 +303,7 @@ t-test-accordion .caret-up{
    height: 0; 
    clear: both;
 }
+
+button > a{
+	color: inherit;
+}
