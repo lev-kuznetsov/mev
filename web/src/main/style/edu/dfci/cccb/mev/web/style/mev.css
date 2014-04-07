@@ -246,3 +246,10 @@ padding: 2px;
   	background-color: #fff; 
  	font-weight: bold; 
 }
+
+t-test-accordion .results-header h3{
+	margin: 0 0 0 0;
+}
+t-test-accordion .results-header button{
+	margin: 0 0 0 .4em;
+}

@@ -15,6 +15,7 @@
 			
 			<kmeans-Accordion-List></kmeans-Accordion-List>
 			
+			<t-Test-Accordion-List></t-Test-Accordion-List>
 		</div>
 		
 	</div>
