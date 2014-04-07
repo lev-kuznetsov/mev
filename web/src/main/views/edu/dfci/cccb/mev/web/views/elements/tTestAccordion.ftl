@@ -1,28 +1,29 @@
-	    <accordion-group heading="{{tTest.type}} : {{tTest.name}}" is-open="isTTestOpen" ng-init="isTTestOpen=false">
-	    	<div class="col-md-12">	    	
-		            <div class="row">
-			        	<div class="tTest-table" id="tTestResultsTable" ng-hide="!tTest.results">
-			        	
-		                    <table class="table table-bordered">
-		                    				<tr><td class="results-header">
-		                    					<h3 class="pull-left analysis-results-header">Results</h3>
-	                            				<button class="btn btn-success pull-right" >
+	    <accordion-group heading="{{tTest.type}} : {{tTest.name}}" is-open="isTTestOpen" ng-init="isTTestOpen=false">	   
+	    	
+		            <div  class="results-wrapper" id="tTestResultsTable" ng-hide="!tTest.results">	
+			        	<div class="results-header clearfix">
+			        	                    				
+		                    				<h3 class="pull-left analysis-results-header">Results</h3>
+		                    				<div class="btn-toolbar pull-right" role="toolbar">
+    
+	                            				<button class="btn btn-success " >
 									                <a href="/dataset/{{datasetName}}/analysis/{{tTest.name}}?format=tsv">
 									                  <i class="icon-white icon-download"></i> Download
 									                </a> 
 									            </button>
-									            <button class="btn btn-info pull-right" >
+									            <button class="btn btn-info " >
 									                <a data-target="#selectionAdd{{tTest.name}}" data-toggle="modal">
 									                  </i> Create Selections From Results
 									                </a> 
 									            </button>
-										    </td></tr>
-		                            		<tr>
-		                            			<td>
-		                            				<table class="table table-striped table-bordered">
-		                            				<form-group>
-		                            				<form class="form-inline">
-													
+									      	</div>
+									      
+						</div>
+						<div class="results-body">							
+								<form-group>
+		                        <form class="form-inline">
+		                            				<table class="table table-striped table-bordered table-condensed">
+		                            					<thead>
 					                                    <tr>
 					                                      <th>
 					                                      	
@@ -45,9 +46,8 @@
 					                                      	
 					                                      </th>
 					                                    </tr>
-					                                </form>
-													</form-group>
-							                            <tbody>
+					                                    </thead>
+					                                    <tbody>
 							                                    <tr ng-repeat="row in tTest.results |filter:filterParams.id| filterThreshold: filterParams.pValueThreshold : 'pValue' | orderBy: tTestTableOrdering ">
 							                                            <td>
 							                                                    {{row["id"]}}
@@ -60,15 +60,11 @@
 							                                    </tr>
 							                            </tbody>
 						                            </table>
-						                            
-		                            			</td>
-		                            		</tr>
-		                            		
-
-		                    </table>
-		                </div>
-		            </div>
-			</div>
+                    			</form>
+								</form-group>
+						</div>
+					</div>	
+				
 		</accordion-group>
 		
 		<bsmodal bindid="selectionAdd{{tTest.name}}" func="" header="Add New Selection for {{tTest.name}}">
