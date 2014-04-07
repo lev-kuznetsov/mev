@@ -163,9 +163,9 @@ define(
                                                                                                 } else if (data.type == "K-means Clustering"){
                                                                                                     $scope.previousKMeansClusters.push(data);
                                                                                                 } else if (data.type == "T Test"){
-                                                                                                    $scope.previoustTest = [];
-                                                                                                } else if (data.type == "Anova") {
-                                                                                                    $scope.previousAnova = [];
+                                                                                                    $scope.previoustTest.push(data);
+                                                                                                } else if (data.type == "Anova Analysis") {
+                                                                                                    $scope.previousAnova.push(data);
                                                                                                 }
 
                                                                                             })

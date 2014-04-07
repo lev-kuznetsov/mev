@@ -15,6 +15,10 @@
 			
 			<kmeans-Accordion-List></kmeans-Accordion-List>
 			
+			<anova-Accordion-List></anova-Accordion-List>
+			
+			<t-Test-Accordion-List></t-Test-Accordion-List>
+			
 		</div>
 		
 	</div>

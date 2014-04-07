@@ -341,6 +341,62 @@ define(
                                     };
                             }])
                             .directive(
+                                'anovaAccordionList',
+                                [function() {
+                                    return {
+                                        restrict : 'E',
+                                        templateUrl : '/container/view/elements/anovaAccordionList'                                    
+                                    };
+                            }])
+                            .directive(
+                                'anovaAccordion',
+                                ['$filter', function($filter) {
+                                    return {
+                                        restrict : 'E',
+                                        templateUrl : '/container/view/elements/anovaAccordion',
+                                        link: function(scope){
+                                                scope.headers = [
+                                                    {'name':'ID', 'value':"id"},
+                                                    {'name':'P-Value', 'value':"pValue"},
+                                                ]
+                                                
+                                                scope.filterParams = {
+                                                        'id' : '',
+                                                        'logFold' : undefined,
+                                                        'pValue' : undefined
+                                                };
+                                                var ctr = -1;
+                                                scope.tableOrdering = undefined;
+                                                scope.reorderTable = function(header) {
+
+                                                    ctr = ctr * (-1);
+                                                    if (ctr == 1) {
+                                                        scope.tableOrdering = header.value;
+                                                    } else {
+                                                        scope.tableOrdering = "-"
+                                                                + header.value;
+                                                    }
+                                                }
+                                        }
+                                    };
+                            }])
+                            .directive(
+                                'tTestAccordionList',
+                                [function() {
+                                    return {
+                                        restrict : 'E',
+                                        templateUrl : '/container/view/elements/tTestAccordionList'                                    
+                                    };
+                            }])
+                            .directive(
+                                'tTestAccordion',
+                                [function() {
+                                    return {
+                                        restrict : 'E',
+                                        templateUrl : '/container/view/elements/tTestAccordion'                                    
+                                    };
+                            }])
+                            .directive(
                                 'kmeansAccordion',
                                 [function() {
                                     return {
@@ -479,8 +535,7 @@ define(
                                     };
                                     
                                     scope.addSelection = function(decked){
-                                        console.log("clid")
-                                      if (scope.params.selections.indexOf(decked.name) < 0) {
+                                      if (scope.params.selections.indexOf(decked.name) < 0 && scope.params.selections.length < 3) {
                                           scope.params.selections.push(decked.name)
                                       }
                                     };
@@ -2084,8 +2139,6 @@ define(
                                             var indexes = rows.map(function(d){
                                                 return scope.heatmapData.firstRows.indexOf(d);
                                             });
-                                            
-                                            console.log(scope.heatmapData);
                                             
                                             var cells = []
                                             
