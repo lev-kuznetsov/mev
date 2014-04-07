@@ -71,7 +71,7 @@ public class FileBackedTTest extends AbstractTTest implements AutoCloseable{
 
   private Entry parse (String line) {
     final String[] split = line.split ("\t");
-    return new SimpleEntry (Double.parseDouble (split[1]),split[0]);
+    return new SimpleEntry (Double.parseDouble (split[1]),split[0], Double.parseDouble (split[2]));
   }
 
   

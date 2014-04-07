@@ -7,6 +7,7 @@ public interface TTest extends Analysis {
   public interface Entry {
     String geneId ();
     double pValue ();
+    double logFoldChange();
   }
   Iterable<Entry> fullResults ();
 }
