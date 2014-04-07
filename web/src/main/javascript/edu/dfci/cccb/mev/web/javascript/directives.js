@@ -324,6 +324,113 @@ define(
 
                                 };
                             }])
+                            .directive('tTestAccordionList',[function() {
+                                    return {
+                                        
+                                        restrict : 'E',
+                                        templateUrl : '/container/view/elements/tTestAccordionList'
+                                        
+                                    };
+
+                            }])
+                            .directive(
+                            'tTestAccordion',
+                            ['$filter', '$routeParams', '$http', 'alertService', function($filter, $routeParams, $http, alertService) {
+                                return {
+                                    restrict : 'E',
+                                    templateUrl : '/container/view/elements/tTestAccordion',
+                                    link : function(scope) {
+
+                                        scope.headers = {
+                                            'ID' : {name: "id", sort: -1},
+                                            'P-Value' : {name: "pValue", sort: -1}
+                                        };
+                                        
+                                        scope.filterParams = {
+                                                'id' : '',
+                                                'pValueThreshold' : undefined
+                                        };
+                                        
+                                        scope.selectionParams = {
+                                                name: undefined,
+                                                color: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
+                                        };
+                                        
+                                        scope.addSelections = function(){
+                                            
+                                            var userselections = scope.tTest.results;
+                                            
+                                            var step1 = $filter('filter')(scope.tTest.results, {
+                                                id: scope.filterParams.id
+                                            });
+                                                                                        
+                                            var step2= $filter('filterThreshold')(step1, scope.filterParams.pValueThreshold, 'pValue')
+                                            var step3 = step2.map(function(d){
+                                                return d.id
+                                            })
+                                            
+                                            console.log(scope.selectionParams.color)
+                                            
+                                            $http({
+                                                method:"POST", 
+                                                url:"/dataset/" + $routeParams.datasetName + "/" 
+                                                + 'row' 
+                                                + "/selection",
+                                                data:{
+                                                    name: scope.selectionParams.name,
+                                                    properties: {
+                                                        selectionDescription: 'first mock selection',
+                                                        selectionColor:scope.selectionParams.color,                     
+                                                    },
+                                                    keys:step3
+                                                }
+                                        
+                                            })
+                                            .success(function(response){
+                                                    scope.$emit('SeletionAddedEvent', 'row');
+                                                    var message = "Added " + scope.selectionParams.name + " as new Selection!";
+                                                    var header = "Heatmap Selection Addition";
+                                                     
+                                                    alertService.success(message,header);
+                                            })
+                                            .error(function(data, status, headers, config) {
+                                                var message = "Couldn't add new selection. If "
+                                                    + "problem persists, please contact us.";
+
+                                                 var header = "Selection Addition Problem (Error Code: "
+                                                    + status
+                                                    + ")";
+                                                 
+                                                 alertService.error(message,header);
+                                            });
+                                            
+                                        };
+                                        
+                                        scope.getCaretCss = function(header){                                        	
+                                        	if(header.sort==1){
+                                        		return "caret-up";
+                                        	}else{
+                                        		return "caret-down";
+                                        	}
+                                        }
+
+                                        var ctr = -1;
+                                        scope.tTestTableOrdering = undefined;                                        
+                                        scope.reorderTTestTable = function(header, $event) {
+
+                                            ctr = ctr * (-1);
+                                            scope.headers[header].sort=scope.headers[header].sort*(-1);
+                                            if (scope.headers[header].sort == 1) {
+                                                scope.tTestTableOrdering = scope.headers[header].name;
+                                            } else {
+                                                scope.tTestTableOrdering = "-"
+                                                        + scope.headers[header].name;
+                                            }
+                                        }
+                                    }
+
+                                };
+                            }])
                             .directive(
                                 'hclAccordionList',
                                 [function() {
@@ -681,8 +788,7 @@ define(
                                             var header = "Clustering Problem (Error Code: "
                                                 + status
                                                 + ")";
-                                            alertService.error(message,header);
-                                            resetSelections()
+                                            alertService.error(message,header);                                            
                                             
                                         });
                                     };

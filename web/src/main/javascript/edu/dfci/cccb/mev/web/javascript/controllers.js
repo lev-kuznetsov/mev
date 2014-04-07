@@ -56,6 +56,7 @@ define(
                                         $scope.previousKMeansClusters = undefined;
                                         $scope.previousAnalysisList = undefined;
                                         $scope.clickSelectionMode = false;
+                                        $scope.previousTTest = undefined;
                                         
                                         $http({
                                             method : 'GET',
@@ -91,10 +92,9 @@ define(
                                             $scope.previousHCLClusters = [];
 
                                             $scope.previousLimmaAnalysis = [];
-
                                             $scope.previousKMeansClusters = [];
                                             $scope.previousAnova = [];
-                                            $scope.previoustTest = [];
+                                            $scope.previousTTest = [];
 
                                             $http(
                                                     {
@@ -162,10 +162,13 @@ define(
                                                                                                                 });
                                                                                                 } else if (data.type == "K-means Clustering"){
                                                                                                     $scope.previousKMeansClusters.push(data);
-                                                                                                } else if (data.type == "T Test"){
-                                                                                                    $scope.previoustTest.push(data);
+
                                                                                                 } else if (data.type == "Anova Analysis") {
                                                                                                     $scope.previousAnova.push(data);
+
+                                                                                                } else if (data.type == "t-Test Analysis"){                                                                                                    
+                                                                                                    $scope.previousTTest.push(data);
+
                                                                                                 }
 
                                                                                             })
