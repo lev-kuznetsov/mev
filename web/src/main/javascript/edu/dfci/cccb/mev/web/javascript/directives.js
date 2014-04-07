@@ -487,22 +487,7 @@ define(
                                         }
                                     };
                             }])
-                            .directive(
-                                'tTestAccordionList',
-                                [function() {
-                                    return {
-                                        restrict : 'E',
-                                        templateUrl : '/container/view/elements/tTestAccordionList'                                    
-                                    };
-                            }])
-                            .directive(
-                                'tTestAccordion',
-                                [function() {
-                                    return {
-                                        restrict : 'E',
-                                        templateUrl : '/container/view/elements/tTestAccordion'                                    
-                                    };
-                            }])
+                            
                             .directive(
                                 'kmeansAccordion',
                                 [function() {
