@@ -459,26 +459,76 @@ define(
                                 link : function(scope, elems, attrs) {
                                     
                                     scope.params = {
-                                            name: undefined
+                                        name: undefined,
+                                        selections: [],
+                                        dimension: undefined,
+                                        pvalue: undefined,
+                                        mtc: undefined
                                     };
                                     
-                                    scope.options = {};
+                                    scope.options = {
+                                        dimensions : [{
+                                            name : 'Rows',
+                                            value : 'row'
+                                        }, {
+                                            name : 'Columns',
+                                            value : 'column'
+                                        }],
+                                        mtc: [{'name':"True", 'value': 'true'},
+                                              {'name':"False", 'value':'false'}]
+                                    };
                                     
-                                    scope.anovaInit = function(){
+                                    scope.addSelection = function(decked){
+                                        console.log("clid")
+                                      if (scope.params.selections.indexOf(decked.name) < 0) {
+                                          scope.params.selections.push(decked.name)
+                                      }
+                                    };
+                                    
+                                    scope.$watch('params.dimension', function(newval){
+                                        if(newval){
+                                            scope.params.selections = []
+                                        }
+                                    })
+                                    
+                                    scope.testInit = function(){
+                                        
+                                        var message = "Starting ANOVA for "
+                                            + scope.params.name + " complete!";
+
+                                        var header = "ANOVA";
+                                        
+                                        if (scope.params.selections.length < 1) {
+                                            
+                                            message = "Can't start ANOVA for "
+                                                + scope.params.name + " with no selections!";
+
+                                            header = "ANOVA";
+                                            
+                                            alertService.info(message,header);
+                                            return
+                                        }
+                                        
+                                        alertService.info(message,header);
+                                        
+                                         
+                                        
+                                        
                                         $http({
 
                                             method : 'POST',
                                             url : 'dataset/'
                                                     + $routeParams.datasetName
-                                                    + '/analyze/hcl/'
+                                                    + '/analyze/anova/'
                                                     + scope.params.name
-                                                    + '('
+                                                    + '(dimension='
                                                     + scope.params.dimension.value
-                                                    + ','
-                                                    + scope.params.metric.value
-                                                    + ','
-                                                    + scope.params.linkage.value
-                                                    + ')'
+                                                    + ',pval='
+                                                    + scope.params.pvalue
+                                                    + ',mtc='
+                                                    + scope.params.mtc.value
+                                                    + ')',
+                                            data: JSON.stringify(scope.params.selections)
 
                                         })
                                         .success(function(data, status, headers, config) {
@@ -501,7 +551,6 @@ define(
                                                 + status
                                                 + ")";
                                             alertService.error(message,header);
-                                            resetSelections()
                                             
                                         });
                                     };
