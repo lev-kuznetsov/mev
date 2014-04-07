@@ -24,10 +24,8 @@ import org.jooq.Field;
 import org.junit.Test;
 
 import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 import edu.dfci.cccb.mev.common.domain.guice.MevDomainModule;
-import edu.dfci.cccb.mev.common.domain.jooq.Store;
 
 public class StoreTest {
 
@@ -40,8 +38,7 @@ public class StoreTest {
   }
 
   @Test
-  public void simple () throws Exception {
-    Injector injector = Guice.createInjector (new MevDomainModule ());
+  public void createInsertAndRetreive () throws Exception {
     try (TestStore s = new TestStore (new Field<?>[] { fieldByName (String.class, "NAME"),
                                                       fieldByName (Double.class, "FLOATER") },
                                       new String[] { "NAME" }) {
@@ -53,7 +50,7 @@ public class StoreTest {
         assertThat ((String) context ().select ().from (table ()).fetchOne (field ("NAME")), is ("HALLO"));
       }
     }) {
-      injector.injectMembers (s);
+      Guice.createInjector (new MevDomainModule ()).injectMembers (s);
       s.run ();
     }
   }
