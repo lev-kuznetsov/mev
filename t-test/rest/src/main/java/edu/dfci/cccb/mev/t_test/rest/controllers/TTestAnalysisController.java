@@ -43,34 +43,13 @@ public class TTestAnalysisController {
   /*
    * t-test for the one-sample analysis
    */
-  @RequestMapping (value = "/analyze/one_sample_ttest/{name}(dimension="
-          + DIMENSION_URL_ELEMENT 
-          + ",selection={selection}"
-          + ",pval={p_value}"
-          + ",mtc={mult_test_correction}"
-          + ",mean={user_mean})",
-  method = POST)
-@ResponseStatus (OK)
-public void startOneSample (final @PathVariable ("name") String name,
-                   final @PathVariable ("pval") double pValue,
-                   final @PathVariable ("mtc") boolean multTestCorrection,
-                   final @PathVariable ("mean") double userMean,
-                   final @PathVariable ("selection") Selection samplesToAnalyze) throws DatasetException {
-dataset.analyses ().put (oneSampleTTestBuilder.name (name)
-                 .dataset (dataset)
-                 .controlSelection (samplesToAnalyze)
-                 .pValue (pValue)
-                 .multipleTestCorrectionFlag (multTestCorrection)
-                 .oneSampleMean (userMean)
-                 .build ());
-}
-
+  
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(fluent=true)
 public static class OneSampleTTestDTO{
   @JsonProperty @Getter private String name;  
-  @JsonProperty @Getter private String selectionName;  
+  @JsonProperty @Getter private String experimentName;  
   @JsonProperty @Getter private double pValue;
   @JsonProperty @Getter private boolean multTestCorrection;  
   @JsonProperty @Getter private double userMean;
@@ -80,7 +59,7 @@ public static class OneSampleTTestDTO{
 public void startOneSampleJson (@RequestBody OneSampleTTestDTO dto) throws DatasetException {
 dataset.analyses ().put (oneSampleTTestBuilder.name (dto.name())
                  .dataset (dataset)
-                 .controlSelection (dataset.dimension (Type.COLUMN).selections ().get (dto.selectionName ()))
+                 .controlSelection (dataset.dimension (Type.COLUMN).selections ().get (dto.experimentName ()))
                  .pValue (dto.pValue())
                  .multipleTestCorrectionFlag (dto.multTestCorrection())
                  .oneSampleMean (dto.userMean())
@@ -91,31 +70,7 @@ dataset.analyses ().put (oneSampleTTestBuilder.name (dto.name())
   /*
    * t-test for the two-sample analysis
    */
-  @RequestMapping (value = "/analyze/two_sample_ttest/{name}(dimension="
-          + DIMENSION_URL_ELEMENT 
-          + ",experiment={experiment}"
-          + ",control={control}"
-          + ",pval={p_value}"
-          + ",mtc={mult_test_correction}"
-          + ",eq_var={equal_variance})",
-  method = POST)
-@ResponseStatus (OK)
-public void startTwoSample (final @PathVariable ("name") String name,
-                   final @PathVariable ("pval") double pValue,
-                   final @PathVariable ("mtc") boolean multTestCorrection,
-                   final @PathVariable ("eq_var") boolean assumeEqualVariance,
-                   final @PathVariable ("experiment") Selection experiment,
-                   final @PathVariable ("control") Selection control) throws DatasetException {
-dataset.analyses ().put (twoSampleTTestBuilder.name (name)
-                 .dataset (dataset)
-                 .experimentSelection (experiment)
-                 .controlSelection (control)
-                 .pValue (pValue)
-                 .equalVarianceFlag (assumeEqualVariance)
-                 .multipleTestCorrectionFlag (multTestCorrection)
-                 .build ());
-}
-
+  
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(fluent=true)
@@ -145,28 +100,6 @@ dataset.analyses ().put (twoSampleTTestBuilder.name (dto.name ())
 /*
    * t-test for the paired analysis
   */
-@RequestMapping (value = "/analyze/paired_ttest/{name}(dimension="
-          + DIMENSION_URL_ELEMENT 
-          + ",experiment={experiment}"
-          + ",control={control}"
-          + ",pval={p_value}"
-          + ",mtc={mult_test_correction})",
-  method = POST)
-@ResponseStatus (OK)
-public void startPaired(final @PathVariable ("name") String name,
-                   final @PathVariable ("pval") double pValue,
-                   final @PathVariable ("mtc") boolean multTestCorrection,
-                   final @PathVariable ("experiment") Selection experiment,
-                   final @PathVariable ("control") Selection control) throws DatasetException {
-dataset.analyses ().put (pairedTTestBuilder.name (name)
-                 .dataset (dataset)
-                 .experimentSelection (experiment)
-                 .controlSelection (control)
-                 .pValue (pValue)
-                 .multipleTestCorrectionFlag (multTestCorrection)
-                 .build ());
-}
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(fluent=true)

@@ -91,12 +91,12 @@ public class TestTTestAnalysisController {
   }
   
   @Test 
-  //input: {"name":"paired-sample-test","selectionName":"control","pValue":0.05,"multTestCorrection":false,"userMean":0.52}
+  //input: {"name":"paired-sample-test","experimentName":"control","pValue":0.05,"multTestCorrection":false,"userMean":0.52}
   //output: {"name":"paired-sample-test","timestamp":{"timeInMillis":1396646985032,"seconds":45,"minutes":29,"hours":5,"period":"PM"},"type":"t-Test Analysis","results":[{"id":"G1","pValue":5.64352655899961E-9},{"id":"G2","pValue":0.00102319347341973},{"id":"G3","pValue":0.0703175246574431},{"id":"G4","pValue":1.09550584010499E-7},{"id":"G5","pValue":0.120093364018105},{"id":"G6","pValue":0.0147204178348411},{"id":"G7","pValue":0.0832003043348911},{"id":"G8","pValue":0.0106814701887212},{"id":"G9","pValue":0.0195272359606195},{"id":"G10","pValue":0.00941616788627118},{"id":"G11","pValue":0.143066610845363},{"id":"G12","pValue":0.00411494473073828},{"id":"G13","pValue":0.00192150847587894},{"id":"G14","pValue":0.0568839677134631},{"id":"G15","pValue":0.0121491122782274},{"id":"G16","pValue":0.0975215931154356},{"id":"G17","pValue":2.51823462690474E-8},{"id":"G18","pValue":0.0174711428255005},{"id":"G19","pValue":0.013786441367879},{"id":"G20","pValue":0.0137764311190548}]}
   public void testStartOneSample () throws Exception {
     Selection selection = new SimpleSelection ("control", new Properties (), asList ("S1", "S2", "S3","S4", "S5", "S6"));    
     dataset.dimension (COLUMN).selections ().put (selection);
-    String analysesName = "paired-sample-test";
+    String analysesName = "one-sample-test";
     OneSampleTTestDTO dto = new OneSampleTTestDTO(analysesName, selection.name (), 0.05, false, 0.52);
     String jsonDto = jsonObjectMapper.writeValueAsString (dto);
     log.debug ("jsonDto: " + jsonDto);
@@ -117,7 +117,7 @@ public class TestTTestAnalysisController {
     log.debug ("jsonAnalysis: " + jsonTTest);
   }
 
-  @Test 
+  @Test @Ignore
   //input: {"name": "two-sample-test","experimentName": "experiment","controlName": "control","pValue": 0.05,"multTestCorrection": false,"assumeEqualVariance": false}
   //output: {"name":"two-sample-test","timestamp":{"timeInMillis":1396644435207,"seconds":15,"minutes":47,"hours":4,"period":"PM"},"type":"t-Test Analysis","results":[{"id":"G1","pValue":1.75605253449618E-7},{"id":"G2","pValue":0.179536967211154},{"id":"G3","pValue":0.413303424964143},{"id":"G4","pValue":7.4414407968959E-10},{"id":"G5","pValue":0.0459406821671775},{"id":"G6","pValue":0.442195333404115},{"id":"G7","pValue":0.487794989322302},{"id":"G8","pValue":0.264859768724727},{"id":"G9","pValue":0.738247666598551},{"id":"G10","pValue":0.4100565631557},{"id":"G11","pValue":0.373189671778418},{"id":"G12","pValue":0.106313946603425},{"id":"G13","pValue":0.35226478832985},{"id":"G14","pValue":0.844958079335918},{"id":"G15","pValue":0.724268919768882},{"id":"G16","pValue":0.742394744844445},{"id":"G17","pValue":9.77999636830873E-9},{"id":"G18","pValue":0.937609351431979},{"id":"G19","pValue":0.904994722568906},{"id":"G20","pValue":0.258882323811034}]}
   public void testStartTwoSample () throws Exception {

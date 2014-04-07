@@ -1,0 +1,3 @@
+name:paired-sample-test selectionName:control pValue:0.05 multTestCorrection:false userMean:0.52 /tmp/test.json
+{"name":"paired-sample-test","selectionName":"control","pValue":0.05,"multTestCorrection":false,"userMean":0.52} /tmp/test.json
+{"name":"paired-sample-test","selectionName":"control","pValue":0.05,"multTestCorrection":false,"userMean":0.52} /tmp/test.json
