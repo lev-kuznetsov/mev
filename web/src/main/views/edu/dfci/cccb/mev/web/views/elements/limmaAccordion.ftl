@@ -1,115 +1,90 @@
-	    <accordion-group heading="{{limma.datar.type}} : {{limma.name}}" is-open="isLimmaOpen" ng-init="isLimmaOpen=false">
-	    	<div class="col-md-12">
-	    	
-	    			<div class="row">
-		              <div class="pull-right">
-		              
-		                <button class="btn btn-success" >
-			                <a href="/dataset/{{datasetName}}/analysis/{{limma.name}}?format=tsv">
-			                  <i class="icon-white icon-download"></i> Download
-			                </a> 
-			            </button>
-		              
-			            
-		              
-		              </div>	    			
-	    			</div>
-	    			<br>
-		            
-		            <div class="row">
-			        	<div class="limma-table" id="limmaResultsTable" ng-hide="!limma.datar.results || !showLimmaTables">
-			        	
-		                    <table class="table table-bordered">
-		                            		<tr>
-		                            			<td>
-		                            				<h3>Filtering</h3>
-		                            				<hr>
-		                            				<form-group>
-		                            					<form>
-		                            						Genes: <input type="text" class="input-small" ng-model="filterParams.id">
-		                            					<form>
-													</form-group>
-													<br>
-													<br>
-													<form-group>
-														<form class="form-inline">
-															Threshold: <input type="text" class="input-small" placeholder="P-Value" ng-model="filterParams.pValueThreshold">
-															<input type="text"  class="input-small" placeholder="Log Fold" ng-model="filterParams.logFoldThreshold">
-		                            					</form>
-		                            				</form-group>
-		                            				
-										            <button class="btn btn-info pull-right" >
-										                <a data-target="#selectionAdd{{limma.name}}" data-toggle="modal">
-										                  </i> Create Selections From Results
-										                </a> 
-										            </button>
-		                            				
-		                            				<h3>Results</h3>
-		                            				<hr>
-		                            				
-		                            				<table class="table table-striped table-bordered">
-					                                    <tr>
-					                                      <th ng-repeat="tableHeader in ['ID', 'Log-Fold-Change', 'Average Expression', 'P-Value', 'Q-Value']">
-					                                      	
-					                                      	<div class="dropdown">
-					                                      		<p class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu">
-															    	 {{tableHeader}}<span class="caret" ng-click="reorderLimmaTable(tableHeader)"></span>
-																</p>
-																
-					                                      	</div>
-					                                      	
-					                                      </th>
-					                                    </tr>
-	
-							                            <tbody>
-							                                    <tr ng-repeat="row in limma.datar.results |filter:filterParams.id| filterThreshold: filterParams.pValueThreshold : 'pValue' | filterThreshold: filterParams.logFoldThreshold : 'logFoldChange' | orderBy: limmaTableOrdering ">
-							                                            <td>
-							                                                    {{row["id"]}}
-							                                            </td>
-							                                            <td>
-							                                                    {{row["logFoldChange"] | number:4}}
-							                                            </td>
-							                                            <td>
-							                                                    {{row["averageExpression"] | number:4}}
-							                                            </td>
-							                                            <td>
-							                                                    {{row["pValue"] | number:4}} 
-							                                            </td>
-							                                            <td>
-							                                                    {{row["qValue"] | number:4}}
-							                                            </td>
-							                                    </tr>
-							                            </tbody>
-						                            </table>
-						                            
-		                            			</td>
-		                            		</tr>
-		                            		
+<accordion-group heading="{{limma.datar.type}} : {{limma.name}}" is-open="isLimmaOpen" ng-init="isLimmaOpen=false">
 
-		                    </table>
-		                </div>
-		            </div>
-			</div>
-		</accordion-group>
-		
-		<bsmodal bindid="selectionAdd{{limma.name}}" func="" header="Add New Selection for {{limma.name}}">
-
-			<div class="row">
-			
-				<form-group>
-					<form>
-						Name: <input type="text" class="input-small" ng-model="selectionParams.name">
-					<form>
-				</form-group>
-			
-			</div>
-			
-			<div class="row">
-			
-	            <button class="btn btn-success pull-right" >
-	                <a ng-click="addSelections()" data-dismiss="modal" aria-hidden="true">
-	                  Create Selections From Results
+	<div  class="results-wrapper">	
+		<div class="results-header clearfix">
+		                    				
+			<h3 class="pull-left analysis-results-header">Results</h3>
+			<div class="btn-toolbar pull-right" role="toolbar">
+				<button class="btn btn-success" >
+	                <a href="/dataset/{{datasetName}}/analysis/{{limma.name}}?format=tsv">
+	                  <i class="icon-white icon-download"></i> Download
 	                </a> 
 	            </button>
-            </div>
-		</bsmodal> 
+	            
+	            <button class="btn btn-info" >
+	                <a data-target="#selectionAdd{{limma.name}}" data-toggle="modal">
+	                  </i> Create Selections From Results
+	                </a> 
+	            </button>
+	      	</div>
+					      
+		</div>
+		<div class="results-body">							
+				<form-group>
+	            <form class="form-inline">
+					<table class="table table-striped table-bordered table-condensed">
+						<thead>
+	                        <tr>
+	                          <th ng-repeat="header in headers">
+	                          	
+	                          		<p ng-click="reorderLimmaTable(header.value)">
+								    	 <span class="caret" ></span>{{header.name}}
+								    	 <div class="input-group" ng-hide="header.value == 'averageExpression' || header.value == 'qValue'">
+								    		<span class="input-group-addon" ng-hide="header.value != 'id'"><span class="glyphicon glyphicon-search"></span></span>
+								   			<span class="input-group-addon" ng-show="header.value != 'id'">&lt;=</span>
+								   			
+								   			<input type="text" class="form-control input-small" ng-model="filterParams[header.value]">
+								   		</div>	
+									</p>
+									
+	                          	
+	                          </th>
+	                        </tr>
+						</thead>
+                        <tbody>
+                                <tr ng-repeat="row in limma.datar.results |filter:filterParams.id| filterThreshold: filterParams.pValue : 'pValue' | filterThreshold: filterParams.logFoldChange : 'logFoldChange' | orderBy: tableOrdering ">
+                                        <td>
+                                                {{row["id"]}}
+                                        </td>
+                                        <td>
+                                                <p title="{{row['logFoldChange']}}">{{row["logFoldChange"] | number:4}}</p>
+                                        </td>
+                                        <td>
+                                                <p title="{{row['averageExpression']}}">{{row["averageExpression"] | number:4}}<p>
+                                        </td>
+                                        <td>
+                                                <p title="{{row['pValue']}}">{{row["pValue"] | number:4}}</p>
+                                        </td>
+                                        <td>
+                                                <p title="{{row['qValue']}}">{{row["qValue"] | number:4}}</p>
+                                        </td>
+                                </tr>
+                        </tbody>
+                    </table>
+				</form>
+				</form-group>
+		</div>
+	</div>
+</accordion-group>
+		
+<bsmodal bindid="selectionAdd{{limma.name}}" func="" header="Add New Selection for {{limma.name}}">
+
+	<div class="row">
+	
+		<form-group>
+			<form>
+				Name: <input type="text" class="input-small" ng-model="selectionParams.name">
+			<form>
+		</form-group>
+	
+	</div>
+	
+	<div class="row">
+	
+        <button class="btn btn-success pull-right" >
+            <a ng-click="addSelections()" data-dismiss="modal" aria-hidden="true">
+              Create Selections From Results
+            </a> 
+        </button>
+    </div>
+</bsmodal> 

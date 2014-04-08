@@ -237,18 +237,19 @@ define(
                                     templateUrl : '/container/view/elements/limmaAccordion',
                                     link : function(scope) {
 
-                                        var headers = {
-                                            'ID' : "id",
-                                            'Log-Fold-Change' : "logFoldChange",
-                                            'Average Expression' : "averageExpression",
-                                            'P-Value' : "pValue",
-                                            'Q-Value' : "qValue"
-                                        }
+                                        scope.headers = [
+                                                       {'name':'ID', 'value': "id"},
+                                                       {'name':'Log-Fold-Change', 'value': "logFoldChange"},
+                                                       {'name':'Average Expression', 'value': "averageExpression"},
+                                                       {'name':'P-Value', 'value': "pValue"},
+                                                       {'name':'Q-Value', 'value' : "qValue"}
+                                                       ];
                                         
                                         scope.filterParams = {
                                                 'id' : '',
-                                                'logFoldThreshold' : undefined,
-                                                'pValueThreshold' : undefined
+                                                'logFoldChange' : undefined,
+                                                'pValue' : undefined,
+                                                'qValue':undefined
                                         }
                                         
                                         scope.selectionParams = {
@@ -264,8 +265,8 @@ define(
                                                 id: scope.filterParams.id
                                             });
                                             
-                                            var step2 = $filter('filterThreshold')(step1, scope.filterParams.logFoldThreshold, 'logFoldChange')
-                                            var step3= $filter('filterThreshold')(step2, scope.filterParams.pValueThreshold, 'pValue')
+                                            var step2 = $filter('filterThreshold')(step1, scope.filterParams.logFold, 'logFoldChange')
+                                            var step3= $filter('filterThreshold')(step2, scope.filterParams.pValue, 'pValue')
                                             var step4 = step3.map(function(d){
                                                 return d.id
                                             })
@@ -314,10 +315,10 @@ define(
 
                                             ctr = ctr * (-1);
                                             if (ctr == 1) {
-                                                scope.limmaTableOrdering = headers[header];
+                                                scope.tableOrdering = header.value;
                                             } else {
-                                                scope.limmaTableOrdering = "-"
-                                                        + headers[header];
+                                                scope.tableOrdering = "-"
+                                                        + header.value;
                                             }
                                         }
                                     }
@@ -460,7 +461,7 @@ define(
                             }])
                             .directive(
                                 'anovaAccordion',
-                                ['$filter', function($filter) {
+                                ['$filter', '$routeParams', '$http', 'alertService', function($filter, $routeParams, $http, alertService) {
                                     return {
                                         restrict : 'E',
                                         templateUrl : '/container/view/elements/anovaAccordion',
@@ -472,9 +473,14 @@ define(
                                                 
                                                 scope.filterParams = {
                                                         'id' : '',
-                                                        'logFold' : undefined,
                                                         'pValue' : undefined
                                                 };
+                                                    
+                                                scope.selectionParams = {
+                                                    name: undefined,
+                                                    color: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
+                                                };
+                                                    
                                                 var ctr = -1;
                                                 scope.tableOrdering = undefined;
                                                 scope.reorderTable = function(header) {
@@ -486,6 +492,59 @@ define(
                                                         scope.tableOrdering = "-"
                                                                 + header.value;
                                                     }
+                                                }
+                                                    
+                                                scope.addSelections = function(){
+                                            
+                                                    var userselections = scope.analysis.results;
+
+                                                    var step1 = $filter('filter')(scope.analysis.results, {
+                                                        id: scope.filterParams.id
+                                                    });
+
+                                                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.pValue, 'pValue')
+                                                    
+                                                    var step3 = step2.map(function(d){
+                                                        return d.id
+                                                    })
+
+                                                    $http({
+                                                        method:"POST", 
+                                                        url:"/dataset/" + $routeParams.datasetName + "/" 
+                                                        + 'row' 
+                                                        + "/selection",
+                                                        data:{
+                                                            name: scope.selectionParams.name,
+                                                            properties: {
+                                                                selectionDescription: 'first mock selection',
+                                                                selectionColor:scope.selectionParams.color,                     
+                                                            },
+                                                            keys:step3
+                                                        }
+
+                                                    })
+                                                    .success(function(response){
+                                                            scope.$emit('SeletionAddedEvent', 'row');
+                                                            var message = "Added " + scope.selectionParams.name + " as new Selection!";
+                                                            var header = "Heatmap Selection Addition";
+                                                    
+                                                            scope.selectionParams.color = '#'+Math
+                                                                .floor(Math.random()*0xFFFFFF<<0)
+                                                                .toString(16)
+
+                                                            alertService.success(message,header);
+                                                    })
+                                                    .error(function(data, status, headers, config) {
+                                                        var message = "Couldn't add new selection. If "
+                                                            + "problem persists, please contact us.";
+
+                                                         var header = "Selection Addition Problem (Error Code: "
+                                                            + status
+                                                            + ")";
+
+                                                         alertService.error(message,header);
+                                                    });
+
                                                 }
                                         }
                                     };

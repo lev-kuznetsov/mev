@@ -3,20 +3,19 @@
 		            <div  class="results-wrapper" id="tTestResultsTable" ng-hide="!tTest.results">	
 			        	<div class="results-header clearfix">
 			        	                    				
-		                    				<h3 class="pull-left analysis-results-header">Results</h3>
-		                    				<div class="btn-toolbar pull-right" role="toolbar">
-    
-	                            				<button class="btn btn-success " >
-									                <a href="/dataset/{{datasetName}}/analysis/{{tTest.name}}?format=tsv">
-									                  <i class="icon-white icon-download"></i> Download
-									                </a> 
-									            </button>
-									            <button class="btn btn-info " >
-									                <a data-target="#selectionAdd{{tTest.name}}" data-toggle="modal">
-									                  </i> Create Selections From Results
-									                </a> 
-									            </button>
-									      	</div>
+            				<h3 class="pull-left analysis-results-header">Results</h3>
+            				<div class="btn-toolbar pull-right" role="toolbar">
+                				<button class="btn btn-success" >
+					                <a href="/dataset/{{datasetName}}/analysis/{{tTest.name}}?format=tsv">
+					                  <i class="icon-white icon-download"></i> Download
+					                </a> 
+					            </button>
+					            <button class="btn btn-info" >
+					                <a data-target="#selectionAdd{{tTest.name}}" data-toggle="modal">
+					                  </i> Create Selections From Results
+					                </a> 
+					            </button>
+					      	</div>
 									      
 						</div>
 						<div class="results-body">							
@@ -29,9 +28,10 @@
 					                                      	
 					                                      	<div>
 					                                      		<div class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu" ng-click="reorderTTestTable('ID', $event)"> 
-															    	 ID <span ng-class="getCaretCss(headers['ID'])"  />
+															    	 <span ng-class="getCaretCss(headers['ID'])"  />ID 
 															    </div>
 															    <div class="input-group">
+															    	<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
 															   		<input type="text" class="form-control input-small" ng-model="filterParams.id" placeholder="Filter">
 															   	</div>																
 					                                      	</div>
@@ -72,11 +72,11 @@
 							                                            </td>
 
 							                                            <td>
-							                                                    {{row["pValue"] | number:4}} 
+							                                                    <p title="{{row['pValue']}}">{{row["pValue"] | number:4}} </p>
 							                                            </td>
 							                                            
 							                                            <td>
-							                                                    {{row["logFoldChange"] | number:4}} 
+							                                                    <p title="{{row['logFoldChange']}}">{{row["logFoldChange"] | number:4}} </p>
 							                                            </td>
 
 							                                    </tr>
