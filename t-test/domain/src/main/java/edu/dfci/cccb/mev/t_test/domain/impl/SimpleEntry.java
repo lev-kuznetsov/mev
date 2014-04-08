@@ -15,5 +15,6 @@ public class SimpleEntry implements Entry{
   
   private @Getter final double pValue;
   private @Getter final String geneId;
+  private @Getter final double logFoldChange;
   
 }

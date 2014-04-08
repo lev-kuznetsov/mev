@@ -207,7 +207,7 @@ public class CliRTTestTest {
   ....
   */
   
-  @Test @Ignore
+  @Test
   public void paired_ttest_produces_correct_pValue () throws Exception {
     Dataset dataset = new SimpleDatasetBuilder ().setParserFactories (asList (new SuperCsvParserFactory ()))
                                                  .setValueStoreBuilder (new MapBackedValueStoreBuilder ())

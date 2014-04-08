@@ -26,6 +26,7 @@ public class EntryJsonSerializer extends JsonSerializer<Entry>{
     jgen.writeStartObject ();
     jgen.writeStringField ("id", value.geneId ());
     jgen.writeNumberField ("pValue", value.pValue ());
+    jgen.writeNumberField ("logFoldChange", value.logFoldChange ());
     jgen.writeEndObject ();
 }
 

@@ -31,7 +31,7 @@ public class TTestTsvMessageConverter extends AbstractTsvHttpMessageConverter<TT
     try (PrintStream out = new PrintStream (outputMessage.getBody ())) {
       out.println ("Gene\tp-value");
       for (edu.dfci.cccb.mev.t_test.domain.contract.TTest.Entry e : tTest.fullResults ())
-        out.println (e.geneId () + "\t" + e.pValue ());
+        out.println (e.geneId () + "\t" + e.pValue ()+"\t"+e.logFoldChange ());
     }    
   }
 
