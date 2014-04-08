@@ -21,10 +21,10 @@
           </div>
           
           <div class="form-group">
-            <label for="anovaMTC" class="control-label">MTC</label>
+            <label for="anovaMTC" class="control-label">Multitest correction:</label>
 
-            <select ng-model="params.mtc" id="anovaSelections"
-		        ng-options="selection.name for selection in options.mtc"></select>
+            <input id="anovaMTC" type="checkbox" ng-model="params.mtc.value" 
+            	ng-true-value="true" ng-false-value="false"></input>
           </div>
           
           <div class="form-group">

@@ -673,7 +673,7 @@ define(
                                         selections: [],
                                         dimension: undefined,
                                         pvalue: undefined,
-                                        mtc: undefined
+                                        mtc: false
                                     };
                                     
                                     scope.options = {
@@ -684,8 +684,7 @@ define(
                                             name : 'Columns',
                                             value : 'column'
                                         }],
-                                        mtc: [{'name':"True", 'value': 'true'},
-                                              {'name':"False", 'value':'false'}]
+                                        mtc: {value:false}
                                     };
                                     
                                     scope.addSelection = function(decked){
@@ -783,8 +782,7 @@ define(
                                     
                                     scope.options = {
                                     		sampleTypes: [{label: "one sample", url:"one_sample_ttest"}, 
-                                    		        {label: "two sample", url:"two_sample_ttest"},
-                                    		        {label: "paired sample", url:"paired_ttest"}]
+                                    		        {label: "two sample", url:"two_sample_ttest"}]
                                     };
                                     scope.isOneSample = function(){
                                 		return scope.params.sampleType.url=='one_sample_ttest';
