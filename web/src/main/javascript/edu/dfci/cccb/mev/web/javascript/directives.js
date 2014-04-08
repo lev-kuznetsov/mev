@@ -237,18 +237,19 @@ define(
                                     templateUrl : '/container/view/elements/limmaAccordion',
                                     link : function(scope) {
 
-                                        var headers = {
-                                            'ID' : "id",
-                                            'Log-Fold-Change' : "logFoldChange",
-                                            'Average Expression' : "averageExpression",
-                                            'P-Value' : "pValue",
-                                            'Q-Value' : "qValue"
-                                        }
+                                        scope.headers = [
+                                                       {'name':'ID', 'value': "id"},
+                                                       {'name':'Log-Fold-Change', 'value': "logFoldChange"},
+                                                       {'name':'Average Expression', 'value': "averageExpression"},
+                                                       {'name':'P-Value', 'value': "pValue"},
+                                                       {'name':'Q-Value', 'value' : "qValue"}
+                                                       ];
                                         
                                         scope.filterParams = {
                                                 'id' : '',
-                                                'logFoldThreshold' : undefined,
-                                                'pValueThreshold' : undefined
+                                                'logFoldChange' : undefined,
+                                                'pValue' : undefined,
+                                                'qValue':undefined
                                         }
                                         
                                         scope.selectionParams = {
@@ -264,8 +265,8 @@ define(
                                                 id: scope.filterParams.id
                                             });
                                             
-                                            var step2 = $filter('filterThreshold')(step1, scope.filterParams.logFoldThreshold, 'logFoldChange')
-                                            var step3= $filter('filterThreshold')(step2, scope.filterParams.pValueThreshold, 'pValue')
+                                            var step2 = $filter('filterThreshold')(step1, scope.filterParams.logFold, 'logFoldChange')
+                                            var step3= $filter('filterThreshold')(step2, scope.filterParams.pValue, 'pValue')
                                             var step4 = step3.map(function(d){
                                                 return d.id
                                             })
@@ -314,10 +315,10 @@ define(
 
                                             ctr = ctr * (-1);
                                             if (ctr == 1) {
-                                                scope.limmaTableOrdering = headers[header];
+                                                scope.tableOrdering = header.value;
                                             } else {
-                                                scope.limmaTableOrdering = "-"
-                                                        + headers[header];
+                                                scope.tableOrdering = "-"
+                                                        + header.value;
                                             }
                                         }
                                     }
@@ -451,6 +452,105 @@ define(
                                     };
                             }])
                             .directive(
+                                'anovaAccordionList',
+                                [function() {
+                                    return {
+                                        restrict : 'E',
+                                        templateUrl : '/container/view/elements/anovaAccordionList'                                    
+                                    };
+                            }])
+                            .directive(
+                                'anovaAccordion',
+                                ['$filter', '$routeParams', '$http', 'alertService', function($filter, $routeParams, $http, alertService) {
+                                    return {
+                                        restrict : 'E',
+                                        templateUrl : '/container/view/elements/anovaAccordion',
+                                        link: function(scope){
+                                                scope.headers = [
+                                                    {'name':'ID', 'value':"id"},
+                                                    {'name':'P-Value', 'value':"pValue"},
+                                                ]
+                                                
+                                                scope.filterParams = {
+                                                        'id' : '',
+                                                        'pValue' : undefined
+                                                };
+                                                    
+                                                scope.selectionParams = {
+                                                    name: undefined,
+                                                    color: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
+                                                };
+                                                    
+                                                var ctr = -1;
+                                                scope.tableOrdering = undefined;
+                                                scope.reorderTable = function(header) {
+
+                                                    ctr = ctr * (-1);
+                                                    if (ctr == 1) {
+                                                        scope.tableOrdering = header.value;
+                                                    } else {
+                                                        scope.tableOrdering = "-"
+                                                                + header.value;
+                                                    }
+                                                }
+                                                    
+                                                scope.addSelections = function(){
+                                            
+                                                    var userselections = scope.analysis.results;
+
+                                                    var step1 = $filter('filter')(scope.analysis.results, {
+                                                        id: scope.filterParams.id
+                                                    });
+
+                                                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.pValue, 'pValue')
+                                                    
+                                                    var step3 = step2.map(function(d){
+                                                        return d.id
+                                                    })
+
+                                                    $http({
+                                                        method:"POST", 
+                                                        url:"/dataset/" + $routeParams.datasetName + "/" 
+                                                        + 'row' 
+                                                        + "/selection",
+                                                        data:{
+                                                            name: scope.selectionParams.name,
+                                                            properties: {
+                                                                selectionDescription: 'first mock selection',
+                                                                selectionColor:scope.selectionParams.color,                     
+                                                            },
+                                                            keys:step3
+                                                        }
+
+                                                    })
+                                                    .success(function(response){
+                                                            scope.$emit('SeletionAddedEvent', 'row');
+                                                            var message = "Added " + scope.selectionParams.name + " as new Selection!";
+                                                            var header = "Heatmap Selection Addition";
+                                                    
+                                                            scope.selectionParams.color = '#'+Math
+                                                                .floor(Math.random()*0xFFFFFF<<0)
+                                                                .toString(16)
+
+                                                            alertService.success(message,header);
+                                                    })
+                                                    .error(function(data, status, headers, config) {
+                                                        var message = "Couldn't add new selection. If "
+                                                            + "problem persists, please contact us.";
+
+                                                         var header = "Selection Addition Problem (Error Code: "
+                                                            + status
+                                                            + ")";
+
+                                                         alertService.error(message,header);
+                                                    });
+
+                                                }
+                                        }
+                                    };
+                            }])
+                            
+                            .directive(
                                 'kmeansAccordion',
                                 [function() {
                                     return {
@@ -569,26 +669,75 @@ define(
                                 link : function(scope, elems, attrs) {
                                     
                                     scope.params = {
-                                            name: undefined
+                                        name: undefined,
+                                        selections: [],
+                                        dimension: undefined,
+                                        pvalue: undefined,
+                                        mtc: undefined
                                     };
                                     
-                                    scope.options = {};
+                                    scope.options = {
+                                        dimensions : [{
+                                            name : 'Rows',
+                                            value : 'row'
+                                        }, {
+                                            name : 'Columns',
+                                            value : 'column'
+                                        }],
+                                        mtc: [{'name':"True", 'value': 'true'},
+                                              {'name':"False", 'value':'false'}]
+                                    };
                                     
-                                    scope.anovaInit = function(){
+                                    scope.addSelection = function(decked){
+                                      if (scope.params.selections.indexOf(decked.name) < 0 && scope.params.selections.length < 3) {
+                                          scope.params.selections.push(decked.name)
+                                      }
+                                    };
+                                    
+                                    scope.$watch('params.dimension', function(newval){
+                                        if(newval){
+                                            scope.params.selections = []
+                                        }
+                                    })
+                                    
+                                    scope.testInit = function(){
+                                        
+                                        var message = "Starting ANOVA for "
+                                            + scope.params.name + " complete!";
+
+                                        var header = "ANOVA";
+                                        
+                                        if (scope.params.selections.length < 1) {
+                                            
+                                            message = "Can't start ANOVA for "
+                                                + scope.params.name + " with no selections!";
+
+                                            header = "ANOVA";
+                                            
+                                            alertService.info(message,header);
+                                            return
+                                        }
+                                        
+                                        alertService.info(message,header);
+                                        
+                                         
+                                        
+                                        
                                         $http({
 
                                             method : 'POST',
                                             url : 'dataset/'
                                                     + $routeParams.datasetName
-                                                    + '/analyze/hcl/'
+                                                    + '/analyze/anova/'
                                                     + scope.params.name
-                                                    + '('
+                                                    + '(dimension='
                                                     + scope.params.dimension.value
-                                                    + ','
-                                                    + scope.params.metric.value
-                                                    + ','
-                                                    + scope.params.linkage.value
-                                                    + ')'
+                                                    + ',pval='
+                                                    + scope.params.pvalue
+                                                    + ',mtc='
+                                                    + scope.params.mtc.value
+                                                    + ')',
+                                            data: JSON.stringify(scope.params.selections)
 
                                         })
                                         .success(function(data, status, headers, config) {
@@ -611,7 +760,6 @@ define(
                                                 + status
                                                 + ")";
                                             alertService.error(message,header);
-                                            resetSelections()
                                             
                                         });
                                     };
@@ -2144,8 +2292,6 @@ define(
                                             var indexes = rows.map(function(d){
                                                 return scope.heatmapData.firstRows.indexOf(d);
                                             });
-                                            
-                                            console.log(scope.heatmapData);
                                             
                                             var cells = []
                                             

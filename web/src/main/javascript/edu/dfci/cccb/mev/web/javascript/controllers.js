@@ -162,10 +162,13 @@ define(
                                                                                                                 });
                                                                                                 } else if (data.type == "K-means Clustering"){
                                                                                                     $scope.previousKMeansClusters.push(data);
+
+                                                                                                } else if (data.type == "Anova Analysis") {
+                                                                                                    $scope.previousAnova.push(data);
+
                                                                                                 } else if (data.type == "t-Test Analysis"){                                                                                                    
                                                                                                     $scope.previousTTest.push(data);
-                                                                                                } else if (data.type == "Anova") {
-                                                                                                    $scope.previousAnova = [];
+
                                                                                                 }
 
                                                                                             })
