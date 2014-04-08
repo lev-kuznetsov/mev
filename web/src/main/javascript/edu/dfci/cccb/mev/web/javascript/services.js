@@ -9,9 +9,14 @@ define (
           .value ('debugStatus', true)
           .filter('filterThreshold', [function(){
             
-        	  return function(input, threshold, on){
+        	  return function(input, threshold, on, operand){
         	    var output = input.filter( function(d){
-        	       return (d[on] <= threshold ) ? true : false
+        	       if(typeof operand != "undefined"){
+        	    	   return (eval("parseFloat(d[on].toFixed(4)) "+operand+" threshold")) ? true : false;
+        	       }else{
+        	    	   //default filter is "less than or equal"
+        	    	   return (parseFloat(d[on].toFixed(4)) <= threshold) ? true : false;
+        	       }
         	    });
         	    return (threshold == undefined || threshold == '') ? input : output;
         	    
