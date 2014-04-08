@@ -673,7 +673,7 @@ define(
                                         selections: [],
                                         dimension: undefined,
                                         pvalue: undefined,
-                                        mtc: undefined
+                                        mtc: false
                                     };
                                     
                                     scope.options = {
@@ -684,8 +684,7 @@ define(
                                             name : 'Columns',
                                             value : 'column'
                                         }],
-                                        mtc: [{'name':"True", 'value': 'true'},
-                                              {'name':"False", 'value':'false'}]
+                                        mtc: {value:false}
                                     };
                                     
                                     scope.addSelection = function(decked){
