@@ -4,6 +4,7 @@ import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
+import java.util.Iterator;
 import java.util.Properties;
 
 import javax.script.ScriptEngineManager;
@@ -62,9 +63,14 @@ public class CliRAnovaTest {
                                                 .pValue (0.05)
                                                 .multipleTestCorrectionFlag (false)
                                                 .build ();
+    
+    //check the output...
     Iterable<Entry> ie = result.fullResults ();
+    Iterator<Entry> it=ie.iterator ();
+    Entry e=it.next ();//skip the header line
+    e=it.next ();
     assertEquals (0.74,
-                  ie.iterator ().next ().pValue (),
+                  e.pValue (),
                   pValTolerance);
 
   }

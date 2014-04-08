@@ -31,7 +31,9 @@ public class AnovaJsonSerializer  extends AbstractAnalysisJsonSerializer<Anova>{
     super.serializeAnalysisContent (value, jgen, provider);
     jgen.writeArrayFieldStart ("results");
     for (Entry e : value.fullResults ())
-      provider.defaultSerializeValue (e, jgen);
+      if(e!=null){
+        provider.defaultSerializeValue (e, jgen);
+      }
     jgen.writeEndArray ();
   }
   

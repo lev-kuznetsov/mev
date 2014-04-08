@@ -38,6 +38,7 @@ public class FileBackedAnova extends AbstractAnova implements AutoCloseable{
     String headerLine=reader.readLine ();
     String[] allFields=headerLine.split ("\t"); //all the fields of the header line (gene, p value,...)
     logFoldChangePairings=Arrays.copyOfRange (allFields, 2, allFields.length); //remove the gene and p_value-- what's left is just the pairings for the log-fold-change 
+    reader.close ();
   }
 
   @Override
@@ -85,12 +86,18 @@ public class FileBackedAnova extends AbstractAnova implements AutoCloseable{
   
 
   private Entry parse (String line) {
+    try{
     final String[] split = line.split ("\t");
     Map<String, Double> map=new HashMap<String, Double>();
     for (int i=0; i<split.length-2; i++){
       map.put (logFoldChangePairings[i], Double.parseDouble (split[i+2]));
     }
     return new SimpleEntry (Double.parseDouble (split[1]),split[0],map);
+    }
+    //if it reads the header line, it will throw a NumberFormatExcpetion-- catch and return a null
+    catch(NumberFormatException e){
+      return null;
+    }
   }
 
   

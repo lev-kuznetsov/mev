@@ -36,11 +36,13 @@ public class AnovaTsvMessageConverter extends AbstractTsvHttpMessageConverter<An
       }
       out.println (headerLine);
       for (Entry e : anova.fullResults ()){
-        String s=e.geneId () + "\t" + e.pValue ();
-        for (double d:e.logFoldChanges ().values ()){
-          s+="\t"+d;
+        if(e!=null){
+          String s=e.geneId () + "\t" + e.pValue ();
+          for (double d:e.logFoldChanges ().values ()){
+            s+="\t"+d;
+          }
+          out.println (s);
         }
-        out.println (s);
       }
     }    
   }
