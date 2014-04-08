@@ -27,34 +27,48 @@
 					                                    <tr>
 					                                      <th>
 					                                      	
-					                                      	<div class="dropdown">
-					                                      		<p class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu" ng-click="reorderTTestTable('ID', $event)"> 
+					                                      	<div>
+					                                      		<div class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu" ng-click="reorderTTestTable('ID', $event)"> 
 															    	 Row ID <span ng-class="getCaretCss(headers['ID'])"  />
-															    	 <input type="text" class="input-small" ng-model="filterParams.id" placeholder="filter row id">
-																</p>
+															    </div>
+															   	<input type="text" class="input-small" ng-model="filterParams.id" placeholder="filter row id">																
 					                                      	</div>
 					                                      </th>
-					                                      <th>
-					                                      	
-					                                      	<div class="dropdown">
-					                                      		<p class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu" ng-click="reorderTTestTable('P-Value')">
+					                                      
+					                                      <th>					                                      	
+					                                      	<div>
+					                                      		<div ng-click="reorderTTestTable('P-Value')">
 															    	 <span ng-class="getCaretCss(headers['P-Value'])" ></span>P-Value
-																			<input type="text" class="input-small" placeholder="filter < Threshold" ng-model="filterParams.pValueThreshold">													
-						                            			</p>
-																
-					                                      	</div>
-					                                      	
+															    </div>
+																<input type="text" class="input-small" placeholder=" < Threshold" ng-model="filterParams.pValueThreshold">																			                            			
+					                                      	</div>					                                      	
 					                                      </th>
+					                                      
+					                                      <th>					                                      	
+					                                      	<div>
+					                                      		<div ng-click="reorderTTestTable('Log Fold Change')">
+															    	 <span ng-class="getCaretCss(headers['Log Fold Change'])" ></span>Log Fold Change
+															    </div>
+																<input type="text" class="input-small" placeholder=" < Threshold" ng-model="filterParams.logFoldChange">																			                            			
+					                                      	</div>					                                      	
+					                                      </th>
+					                                      
+					                                      
 					                                    </tr>
 					                                    </thead>
 					                                    <tbody>
-							                                    <tr ng-repeat="row in tTest.results |filter:filterParams.id| filterThreshold: filterParams.pValueThreshold : 'pValue' | orderBy: tTestTableOrdering ">
+							                                    <tr ng-repeat="row in tTest.results | filter: filterParams.id | filterThreshold: filterParams.pValueThreshold : 'pValue' | 
+							                                    filterThreshold: filterParams.logFoldChange : 'logFoldChange' : '>=' | orderBy: tTestTableOrdering ">
 							                                            <td>
 							                                                    {{row["id"]}}
 							                                            </td>
 
 							                                            <td>
 							                                                    {{row["pValue"] | number:4}} 
+							                                            </td>
+							                                            
+							                                            <td>
+							                                                    {{row["logFoldChange"] | number:4}} 
 							                                            </td>
 
 							                                    </tr>
