@@ -141,6 +141,7 @@
 									    <br>
 									    <p>See current developments and contribute to the project here.</p>
 									    
+									    <a href="https://github.com/dfci-cccb/mev/issues"><p>Have an issue or want to report a bug? Tell us about it.</p></a>
 									    
 									  </div>
 									</div>

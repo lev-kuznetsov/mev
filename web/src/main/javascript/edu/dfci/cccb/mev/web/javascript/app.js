@@ -40,7 +40,7 @@ define(['angular',
               templateUrl:'/container/view/partials/home'
           });
 		  
-		  $routeProvider.otherwise({redirectTo: '/datasets'});
+		  $routeProvider.otherwise({redirectTo: '/home'});
 		  
 		  //$locationProvider.html5Mode(true).hashPrefix('!');
 		  
