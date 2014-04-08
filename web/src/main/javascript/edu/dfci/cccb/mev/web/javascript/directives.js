@@ -782,8 +782,7 @@ define(
                                     
                                     scope.options = {
                                     		sampleTypes: [{label: "one sample", url:"one_sample_ttest"}, 
-                                    		        {label: "two sample", url:"two_sample_ttest"},
-                                    		        {label: "paired sample", url:"paired_ttest"}]
+                                    		        {label: "two sample", url:"two_sample_ttest"}]
                                     };
                                     scope.isOneSample = function(){
                                 		return scope.params.sampleType.url=='one_sample_ttest';
