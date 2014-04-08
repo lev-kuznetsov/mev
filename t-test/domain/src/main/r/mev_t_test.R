@@ -29,12 +29,20 @@ exp_data<-if(min(exp_data)<0){exp_data+min(exp_data)*-1}else{exp_data}
 sample_mtx<-read.table(SAMPLE_FILE, header=F, sep="\t")
 sample_mtx<-sample_mtx[(sample_mtx[,2]!=-1),]  #parse out the samples we do NOT want to include (marked with -1)
 
+#handle fringe case where sample names have operators in them (e.g. TCGA-01-0123)
+#when R imports the data matrix, it changes TCGA_01-0123 to TCGA.01.0123 via make.names(...) method
+#need to apply the same transformation to the config file input:
+sample_mtx[,1]<-make.names(sample_mtx[,1])
+
+
 if(TEST_TYPE==ONE_SAMPLE)
 {
 	#one-sample t-test.  User supplies a mean to test against.  
 	#Could allow for two-tailed and one-tailed alternate hypotheses.
 	
 	exp_data<-exp_data[,as.character(sample_mtx[,1])]  #retain only the samples we care about
+	
+	log_fold_change<-log(rowMeans(exp_data)/USER_MU)
 	
 	p_vals<-apply(exp_data,1,
       function(x)
@@ -64,6 +72,11 @@ if(TEST_TYPE==ONE_SAMPLE)
 		#(just makes reading this cleaner and less likely to errors introduced elsewhere)
 		exp_data<-cbind(exp_data[, group_a],exp_data[, group_b])
 	
+		#get the fold-change:
+		group_a_mean=rowMeans(exp_data[,1:size_a])
+		group_b_mean=rowMeans(exp_data[,(size_a+1):(size_a+size_b)])
+		log_fold_change=log(group_a_mean/group_b_mean)
+	
 		#a vector labeling the groups
 		labels<-c(rep(0,size_a),rep(1,size_b))
 		
@@ -87,6 +100,8 @@ if(TEST_TYPE==ONE_SAMPLE)
 			p_vals<-2*(1-pt(t_stats,dof)) #two-tailed p vals
 
 		}
+		
+		
 		
 #		#test:
 # 		p_vals_test<-apply(exp_data,1,
@@ -115,6 +130,11 @@ if(TEST_TYPE==ONE_SAMPLE)
 		#rearrange the expression matrix so the columns of paired samples are adjacent to each other.  The t-test method we call requires ordering of this nature
 		exp_data<-exp_data[,sample_orderings]
 
+		#get the log-fold change:
+		group_a_cols<-rep(c(T,F),num_pairs)
+		group_b_cols<-rep(c(F,T),num_pairs)
+		log_fold_change<-log(rowMeans((exp_data[,group_a_cols])/(exp_data[,group_b_cols])))
+
 		labels<-rep(0:1,num_pairs)
 		t_stats<-abs(mt.teststat(exp_data, labels, test="pairt"))
 		p_vals<-2*(1-pt(t_stats,num_pairs-1))
@@ -141,5 +161,5 @@ if(CORRECT_FOR_MULTIPLE_TESTING)
 	p_vals<-p.adjust(p_vals, method="fdr")
 }
 
-results=data.frame(rownames(exp_data),p_vals)
+results=data.frame(rownames(exp_data),p_vals, log_fold_change)
 write.table(results, OUTFILE, sep='\t', row.names=F, col.names=F, quote=F)

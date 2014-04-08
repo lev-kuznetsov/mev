@@ -343,12 +343,14 @@ define(
 
                                         scope.headers = {
                                             'ID' : {name: "id", sort: -1},
-                                            'P-Value' : {name: "pValue", sort: -1}
+                                            'P-Value' : {name: "pValue", sort: -1},
+                                            'Log Fold Change': {name: "logFoldChange", sort: -1}
                                         };
                                         
                                         scope.filterParams = {
                                                 'id' : '',
-                                                'pValueThreshold' : undefined
+                                                'pValueThreshold' : undefined,
+                                                'logFoldChange' : undefined
                                         };
                                         
                                         scope.selectionParams = {
@@ -364,8 +366,9 @@ define(
                                                 id: scope.filterParams.id
                                             });
                                                                                         
-                                            var step2= $filter('filterThreshold')(step1, scope.filterParams.pValueThreshold, 'pValue')
-                                            var step3 = step2.map(function(d){
+                                            var step2= $filter('filterThreshold')(step1, scope.filterParams.pValueThreshold, 'pValue');
+                                            var step3= $filter('filterThreshold')(step2, scope.filterParams.logFoldChange, 'logFoldChange');
+                                            var step4 = step3.map(function(d){
                                                 return d.id
                                             })
                                             
@@ -382,7 +385,7 @@ define(
                                                         selectionDescription: 'first mock selection',
                                                         selectionColor:scope.selectionParams.color,                     
                                                     },
-                                                    keys:step3
+                                                    keys:step4
                                                 }
                                         
                                             })
