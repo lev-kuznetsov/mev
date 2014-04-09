@@ -33,6 +33,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
+import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import freemarker.template.utility.NullArgumentException;
@@ -106,7 +107,9 @@ public class ImportPresetDatasetCommand extends Command {
           Selection rowsSelection = new SimpleSelection (newDatasetName, properties, keys);
           Dataset dataset=null;
           //File datafile = new File("/tmp/textxxx/presets/"+sourceDatasetName+"/"+sourceDatasetName+".tsv");
-          PresetDescriptor descriptor = (PresetDescriptor)request.getAttribute ("descriptor");
+          Preset preset = (Preset)request.getAttribute ("preset");
+//          PresetDescriptor descriptor = (PresetDescriptor)request.getAttribute ("descriptor");
+          PresetDescriptor descriptor = preset.descriptor ();
           try {            
             RawInput newDatasetContent = new UrlTsvInput (descriptor.dataUrl ());            
             newDatasetContent.name (newDatasetName);
