@@ -86,6 +86,9 @@ define(['jquery','angular'], function(jquery, angular){
 				$scope.$emit('ViewAnnotationsEvent', selection, dimention, annotationSource);				
 				
 			};
+			
+			$scope.selectionParams = {column:{name:undefined},
+									  row:{name:undefined}};
 
 			$scope.addMergedSelection = function(dimension){
 				
@@ -97,8 +100,7 @@ define(['jquery','angular'], function(jquery, angular){
 			 
 				if (elements.length > 1){
 					
-					var selectedSets = [],
-					randomName = Math.floor(Math.random()*0xFFFFFF<<0).toString(16);
+					var selectedSets = [];
 					
 					elements.map(function(d){
 						d.keys.map(function(j){
@@ -114,7 +116,7 @@ define(['jquery','angular'], function(jquery, angular){
 					 + dimension
 					 + "/selection/",
 					data:{
-					 	name: Math.floor(Math.random()*0xFFFFFF<<0).toString(16),
+					 	name: $scope.selectionParams[dimension].name,
 					 	properties: {
 					 		selectionDescription: '',
 					     		selectionColor: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16),                     
@@ -124,7 +126,7 @@ define(['jquery','angular'], function(jquery, angular){
 					})
 					.success(function(response){
 					         $scope.$emit('SeletionAddedEvent', dimension);
-					         var message = "Added selection with name" + randomName + ".";
+					         var message = "Added selection with name " + $scope.selectionParams[dimension].name + ".";
 					         var header = "Heatmap Selection Addition";
 					          
 					         alertService.success(message,header);
