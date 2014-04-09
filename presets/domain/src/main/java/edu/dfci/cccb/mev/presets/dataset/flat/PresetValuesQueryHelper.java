@@ -26,8 +26,10 @@ public class PresetValuesQueryHelper {
   }
 
   public ResultQuery<Record> queryAllRows(List<Field<String>> selectFields, Table<Record> table){
+    Field<String> fieldRowId = fieldByName (String.class, ID_FIELD_NAME);
     return context.select(selectFields)
             .from(table)
+            .orderBy (fieldRowId)
             .getQuery ();    
   }
   
@@ -35,6 +37,7 @@ public class PresetValuesQueryHelper {
     Field<String> fieldRowId = fieldByName (String.class, ID_FIELD_NAME); 
     return context.select(selectFields)
             .from(table).where (fieldRowId.in (rows))
+            .orderBy (fieldRowId)
             .getQuery ();    
   }
   

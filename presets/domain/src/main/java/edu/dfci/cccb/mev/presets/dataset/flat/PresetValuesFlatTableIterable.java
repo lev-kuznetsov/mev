@@ -1,8 +1,10 @@
 package edu.dfci.cccb.mev.presets.dataset.flat;
 
+import static com.google.common.cache.CacheBuilder.newBuilder;
 import static java.lang.Double.NEGATIVE_INFINITY;
 import static java.lang.Double.NaN;
 import static java.lang.Double.POSITIVE_INFINITY;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.tableByName;
 
@@ -10,14 +12,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.Synchronized;
+import lombok.experimental.Accessors;
 import lombok.extern.log4j.Log4j;
 
+import org.javatuples.Triplet;
+import org.javatuples.Tuple;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -25,9 +35,13 @@ import org.jooq.Record;
 import org.jooq.ResultQuery;
 import org.jooq.Table;
 
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Value;
+import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleValue;
 import edu.dfci.cccb.mev.presets.contract.PresetValues;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
@@ -35,6 +49,10 @@ import edu.dfci.cccb.mev.presets.util.timer.Timer;
 @Log4j
 public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Value>, AutoCloseable {
 
+  private static final TimeUnit DURATION_UNIT = SECONDS;
+  private static final long DURATION = 10;
+  private final LoadingCache<CacheKey, Double> CACHE;
+  
   //cache
   private Map<String, Object> lastMap;
   @SuppressWarnings("unused") private Record lastRecord;
@@ -52,6 +70,17 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
   private final PresetValuesQueryHelper queryHelper;
   public PresetValuesFlatTableIterable (DSLContext context, String tableName, Dimension columns, Dimension rows) {
     log.debug ("*** ValueStore Iterable ***");
+    
+    CACHE = newBuilder ().expireAfterAccess (DURATION, DURATION_UNIT)
+            .maximumSize (1000)
+            .build (
+              new CacheLoader<CacheKey, Double> () {
+                @Override
+                public Double load (CacheKey key) throws Exception {                
+                  return getInternal (key.getRow (), key.getColumn ());
+                }
+            });
+    
     this.context=context;    
     this.columns=columns;
     this.rows=rows;
@@ -187,10 +216,28 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
       close();
     }
   }
-  
+    
   @Override
-  public double get (String row, String column) throws InvalidCoordinateException {
-    try {      
+  public double get (String row, String column) throws InvalidCoordinateException{
+    
+      //not using internal cache for now
+      //instead wrapping the instance of this class into SharedCacheValue 
+      //upon creation in the PresetDatasetBuilderFlatTableDB.
+      //can switch to local cache later
+      //return this.CACHE.get(new CacheKey (row, column));
+      return getInternal (row, column);
+    
+  }
+  
+  @EqualsAndHashCode
+  @RequiredArgsConstructor
+  private static class CacheKey{
+    @Getter private final String row;
+    @Getter private final String column;    
+  }  
+  private double getInternal (String row, String column) throws InvalidCoordinateException {
+    try {
+      
       ResultQuery<?> query=null;
       if(!isSameRecord (row)){        
         try{

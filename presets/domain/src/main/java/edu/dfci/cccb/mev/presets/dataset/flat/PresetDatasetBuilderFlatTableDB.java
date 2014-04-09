@@ -18,6 +18,8 @@ import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDatasetBuilder;
+import edu.dfci.cccb.mev.dataset.domain.simple.SharedCacheValues;
+import edu.dfci.cccb.mev.dataset.domain.simple.SharedCachedValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDataset;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
@@ -64,7 +66,7 @@ public class PresetDatasetBuilderFlatTableDB extends AbstractDatasetBuilder impl
       if(log.isDebugEnabled ())
         log.debug ("rows="+rows);
       
-      Values presetValues = new PresetValuesFlatTableIterable (context, descriptor.name (), columns, rows);
+      Values presetValues = new SharedCacheValues (new PresetValuesFlatTableIterable (context, descriptor.name (), columns, rows));
       return aggregate (datasetName, presetValues, super.analyses (), columns, rows);
       
     }catch(InvalidDatasetNameException|DatasetBuilderException e){
