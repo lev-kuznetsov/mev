@@ -8,9 +8,9 @@
 					mev-selections="heatmapData.column.selections" 
 					mev-base-url="/annotations/{{heatmapId}}/annotation/column"
 					mev-demintion="column">				
-					You may define sets using <a href="" ng-click="showAnnotations(selection, 'column')">column annotations</a> or by performing a clustering analysis.				
+					You may define sets using <a href="" ng-click="showAnnotations(selection, 'column')">column annotations</a> or by performing an analysis.				
 		</selection-set-list>
-		<button class="btn btn-success btn-block" ng-click="showAnnotations(selection, 'column')" >Add New</button>
+		<button class="btn btn-success" ng-click="showAnnotations(selection, 'column')" >Add New</button>
 	</accordion-group>
 
 	<accordion-group heading="Row Sets">
@@ -18,8 +18,8 @@
 					mev-selections="heatmapData.row.selections" 
 					mev-base-url="/annotations/{{heatmapId}}/annotation/row"
 					mev-demintion="row">
-					You may define sets uploading your <a href="" ng-click="showAnnotations(selection, 'row')">row annotations</a> or by performing a clustering analysis.				
+					You may define sets using <a href="" ng-click="showAnnotations(selection, 'row')">row annotations</a> or by performing an analysis.				
 		</selection-set-list>
-		<button class="btn btn-success btn-block" ng-click="showAnnotations(selection, 'row')" >Add New</button>
+		<button class="btn btn-success" ng-click="showAnnotations(selection, 'row')" >Add New</button>
 	</accordion-group>
 </accordion>

@@ -281,7 +281,7 @@ define(
                                                 data:{
                                                     name: scope.selectionParams.name,
                                                     properties: {
-                                                        selectionDescription: 'first mock selection',
+                                                        selectionDescription: '',
                                                         selectionColor:scope.selectionParams.color,                     
                                                     },
                                                     keys:step4
@@ -383,7 +383,7 @@ define(
                                                 data:{
                                                     name: scope.selectionParams.name,
                                                     properties: {
-                                                        selectionDescription: 'first mock selection',
+                                                        selectionDescription: '',
                                                         selectionColor:scope.selectionParams.color,                     
                                                     },
                                                     keys:step4
@@ -516,7 +516,7 @@ define(
                                                         data:{
                                                             name: scope.selectionParams.name,
                                                             properties: {
-                                                                selectionDescription: 'first mock selection',
+                                                                selectionDescription: '',
                                                                 selectionColor:scope.selectionParams.color,                     
                                                             },
                                                             keys:step3
@@ -683,8 +683,7 @@ define(
                                         }, {
                                             name : 'Columns',
                                             value : 'column'
-                                        }],
-                                        mtc: {value:false}
+                                        }]
                                     };
                                     
                                     scope.addSelection = function(decked){
@@ -734,7 +733,7 @@ define(
                                                     + ',pval='
                                                     + scope.params.pvalue
                                                     + ',mtc='
-                                                    + scope.params.mtc.value
+                                                    + scope.params.mtc
                                                     + ')',
                                             data: JSON.stringify(scope.params.selections)
 
@@ -2489,7 +2488,7 @@ define(
                                                     data:{
                                                     	name: params.name,
                                                     	properties: {
-                                                    		selectionDescription: 'first mock selection',
+                                                    		selectionDescription: '',
                                                     		selectionColor: params.color,                     
                                                     	},
                                                         keys: scope.treeSelections[params.dimension.value]
