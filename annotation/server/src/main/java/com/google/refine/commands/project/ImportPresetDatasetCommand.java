@@ -3,6 +3,7 @@ package com.google.refine.commands.project;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -101,6 +102,7 @@ public class ImportPresetDatasetCommand extends Command {
 
         @Override
         public void end (Project project) {
+          Collections.sort(keys);
           Selection rowsSelection = new SimpleSelection (newDatasetName, properties, keys);
           Dataset dataset=null;
           //File datafile = new File("/tmp/textxxx/presets/"+sourceDatasetName+"/"+sourceDatasetName+".tsv");
