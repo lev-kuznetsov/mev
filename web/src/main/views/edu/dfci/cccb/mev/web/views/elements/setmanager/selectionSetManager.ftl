@@ -8,9 +8,10 @@
 					mev-selections="heatmapData.column.selections" 
 					mev-base-url="/annotations/{{heatmapId}}/annotation/column"
 					mev-demintion="column">				
-					You may define sets using <a href="" ng-click="showAnnotations(selection, 'column')">column annotations</a> or by performing an analysis.				
+					You may define sets using <a href="" ng-click="showAnnotations(selection, 'column')">column annotations</a> or by performing an analysis.
 		</selection-set-list>
 		<button class="btn btn-success" ng-click="showAnnotations(selection, 'column')" >Add New</button>
+		<button class="btn btn-success" ng-click="addMergedSelection('column')">Merge Selected</button>
 	</accordion-group>
 
 	<accordion-group heading="Row Sets">
@@ -21,5 +22,6 @@
 					You may define sets using <a href="" ng-click="showAnnotations(selection, 'row')">row annotations</a> or by performing an analysis.				
 		</selection-set-list>
 		<button class="btn btn-success" ng-click="showAnnotations(selection, 'row')" >Add New</button>
+		<button class="btn btn-success" ng-click="addMergedSelection('row')">Merge Selected</button>
 	</accordion-group>
 </accordion>

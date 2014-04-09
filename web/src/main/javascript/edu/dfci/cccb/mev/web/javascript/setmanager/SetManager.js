@@ -25,9 +25,8 @@ define(['jquery','angular'], function(jquery, angular){
 				controller: 'SelectionSetManagerCtl',
 				templateUrl : '/container/view/elements/setmanager/selectionSetList',
 				link : function (scope, iElement, iAttrs, controller){
-					scope.sayHelloDir = function(){
-						//alert("link: " + scope.heatmapId + ":" + scope.selections.length + ":" + scope.$id);
-					};					
+					
+					return		
 				}				
 			};
 		}])
@@ -59,7 +58,9 @@ define(['jquery','angular'], function(jquery, angular){
 		      link : linkFn
 		    };
 		  })
-		.controller('SelectionSetManagerCtl', ['$scope', '$element', '$attrs', function($scope, $element, $attrs){
+		.controller('SelectionSetManagerCtl', 
+	    ['$scope', '$element', '$attrs', '$routeParams', '$http', 'alertService', 
+		function($scope, $element, $attrs, $routeParams, $http, alertService){
 			
 			$scope.sayHelloCtl = function() {
 				alert($scope.heatmapId + ":" + $scope.heatmapData.column.selections.length + ":" + $scope.$id);
@@ -85,6 +86,69 @@ define(['jquery','angular'], function(jquery, angular){
 				$scope.$emit('ViewAnnotationsEvent', selection, dimention, annotationSource);				
 				
 			};
+
+			$scope.addMergedSelection = function(dimension){
+				
+				var elements = $scope.heatmapData[dimension].selections.filter(function(d){
+					
+					return (d.setSelectionChecked == "true") ? true : false
+						
+				})
+			 
+				if (elements.length > 1){
+					
+					var selectedSets = [],
+					randomName = Math.floor(Math.random()*0xFFFFFF<<0).toString(16);
+					
+					elements.map(function(d){
+						d.keys.map(function(j){
+							if (selectedSets.indexOf(j) < 0){
+								selectedSets.push(j)
+							}
+						})
+					});
+			     
+					$http({
+					     method:"POST", 
+					url:"/dataset/" + $routeParams.datasetName + "/" 
+					 + dimension
+					 + "/selection/",
+					data:{
+					 	name: Math.floor(Math.random()*0xFFFFFF<<0).toString(16),
+					 	properties: {
+					 		selectionDescription: '',
+					     		selectionColor: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16),                     
+					     	},
+					         keys: selectedSets
+					     }
+					})
+					.success(function(response){
+					         $scope.$emit('SeletionAddedEvent', dimension);
+					         var message = "Added selection with name" + randomName + ".";
+					         var header = "Heatmap Selection Addition";
+					          
+					         alertService.success(message,header);
+					})
+					.error(function(data, status, headers, config) {
+					     var message = "Couldn't add new selection. If "
+					         + "problem persists, please contact us.";
+					
+					      var header = "Heatmap Selection Problem (Error Code: "
+					         + status
+					         + ")";
+					              
+					      alertService.error(message,header);
+					});
+			         
+			     } else {
+			    	 var message = "Cannot merge a single selection set.";
+				
+				      var header = "Heatmap Selection Info";
+				              
+				      alertService.info(message,header);
+			     };
+			};		
+			
 			$scope.addItem = function(item){
 				//alert('in addItem');				
 				$scope.$apply(function(){
