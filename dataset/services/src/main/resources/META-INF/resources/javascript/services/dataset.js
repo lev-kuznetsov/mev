@@ -14,22 +14,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.test.js;
-
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
-import org.junit.Test;
-
-public class JavascriptTest {
-
-  @Test
-  public void scan () throws Exception {
-    assertThat (new Javascript ().scan ().engine ().eval ("test").toString (), is ("hello world"));
-  }
-
-  @Test
-  public void with () throws Exception {
-    assertThat (new Javascript ().with ("test.js").engine ().eval ("test").toString (), is ("hello world"));
-  }
+hello = function () {
+  $.get ("http://www.google.com").success (function () {
+    java.lang.System.err.println ("wtf");
+  });
 }

@@ -5,7 +5,7 @@
     <param name="threshold" value="debug" />
     <param name="target" value="System.out" />
     <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="[%p] : %c : %m%n" />
+      <param name="ConversionPattern" value="[%p] : %m%n" />
     </layout>
   </appender>
   <logger name="org.eclipse.jetty">
@@ -21,7 +21,7 @@
     <level value="warn"></level>
   </logger>
   <logger name="edu.dfci.cccb.mev">
-    <level value="warn"></level>
+    <level value="debug"></level>
   </logger>
   <logger name="com.mchange">
     <level value="warn" />

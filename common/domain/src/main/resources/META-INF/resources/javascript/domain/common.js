@@ -15,7 +15,7 @@
  */
 
 /**
- * Deep equals
+ * Deep object comparison
  */
 Object.deepEquals = function (x, y) {
   if (x === y) return true;
@@ -41,7 +41,7 @@ Object.deepEquals = function (x, y) {
     if (typeof (x[p]) !== "object") return false;
     // Numbers, Strings, Functions, Booleans must be strictly equal
 
-    if (!Object.equals (x[p], y[p])) return false;
+    if (!Object.deepEquals (x[p], y[p])) return false;
     // Objects and Arrays must be tested recursively
   }
 

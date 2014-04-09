@@ -8,6 +8,9 @@
       <param name="ConversionPattern" value="[%p] : %m%n" />
     </layout>
   </appender>
+  <logger name="edu.dfci.cccb.mev">
+    <level value="warn" />
+  </logger>
   <logger name="org.eclipse.jetty">
     <level value="warn" />
   </logger>

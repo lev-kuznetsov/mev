@@ -39,4 +39,17 @@
 
   </dependencies>
 
+  <build>
+
+    <plugins>
+
+      <plugin>
+        <groupId>com.github.searls</groupId>
+        <artifactId>jasmine-maven-plugin</artifactId>
+      </plugin>
+
+    </plugins>
+
+  </build>
+
 </project>

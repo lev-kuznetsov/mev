@@ -15,40 +15,4 @@
     <relativePath>../domain</relativePath>
   </parent>
 
-  <properties>
-    <jetty.version>9.1.2.v20140210</jetty.version>
-  </properties>
-
-  <dependencyManagement>
-
-    <dependencies>
-
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-server</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-servlet</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-webapp</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-annotations</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-
-    </dependencies>
-
-  </dependencyManagement>
-
 </project>
