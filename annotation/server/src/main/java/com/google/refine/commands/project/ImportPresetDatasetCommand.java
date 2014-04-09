@@ -114,7 +114,7 @@ public class ImportPresetDatasetCommand extends Command {
             RawInput newDatasetContent = new UrlTsvInput (descriptor.dataUrl ());            
             newDatasetContent.name (newDatasetName);
             logger.info (String.format ("***Import Dataset: %s *******************", descriptor.dataUrl ().toString ()));
-            dataset = ProjectManager.getSingleton ().getDatasetBuilder ().build (descriptor, newDatasetName, samplesSelection, rowsSelection);
+            dataset = ProjectManager.getSingleton ().getDatasetBuilder ().build (preset, newDatasetName, samplesSelection, rowsSelection);
             
 //          } catch (DatasetBuilderException | InvalidDatasetNameException | InvalidDimensionTypeException e) {
           } catch (PresetException e) {

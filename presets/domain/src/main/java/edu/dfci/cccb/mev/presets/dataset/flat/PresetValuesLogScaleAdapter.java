@@ -16,7 +16,7 @@ public class PresetValuesLogScaleAdapter implements Values, Iterable<Value>, Aut
   @Override
   public double get (String row, String column) throws InvalidCoordinateException {
     
-    return 0;
+    return log(values.get (row, column));
   }
 
   @Override
