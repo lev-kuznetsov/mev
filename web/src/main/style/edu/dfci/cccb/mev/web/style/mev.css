@@ -63,7 +63,10 @@ p.lead {
 .heatmap-container {
 	margin-top:40px;
 }
-
+#dataset-view-container{
+	margin-left: 15px; 
+	margin-right: 15px;
+}
 #leftPanel {
 	width: 30%;
 	float: left;

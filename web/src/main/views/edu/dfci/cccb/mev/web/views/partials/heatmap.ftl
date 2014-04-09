@@ -1,5 +1,5 @@
 
-<div class="containter-fluid">
+<div class="containter-fluid" id="dataset-view-container">
 
 	<div class="row">
 		<div heatmap-Panels></div>
