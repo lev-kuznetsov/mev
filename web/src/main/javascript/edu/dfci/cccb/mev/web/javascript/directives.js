@@ -2256,6 +2256,8 @@ define(
                                                     data.row);
 
                                             if(typeof scope.heatmapViews.side!="undefined"){
+                                                
+                                                scope.treeSelections['vertical'] = [];
 	                                            if (scope.heatmapViews.side.type == "Hierarchical Clustering") {
 	                                                
 	                                                var tree = scope.heatmapViews.side.root;
@@ -2498,6 +2500,7 @@ define(
                                                     }
                                                 })
                                                 .success(function(response){
+                                                        console.log(params)
                                                         scope.$emit('SeletionAddedEvent', params.dimension.type);
                                                         var message = "Added New Selection!";
                                                         var header = "Heatmap Selection Addition";
