@@ -43,7 +43,7 @@ public abstract class MevException extends Exception {
   /**
    * Error properties
    */
-  private @XmlAttribute (name = "exception") final Map<String, Object> properties = new HashMap<> ();
+  private final @XmlAttribute (name = "exception") Map<String, Object> properties = new HashMap<> ();
 
   {
     property (EXCEPTION_TYPE_KEY, getClass ().getName ());

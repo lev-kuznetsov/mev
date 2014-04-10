@@ -54,12 +54,12 @@ public interface Values <K, V> {
     /**
      * @return coordinate set
      */
-    private @Getter final @XmlAttribute Map<String, K> coordinates;
+    private final @Getter @XmlAttribute Map<String, K> coordinates;
 
     /**
      * @return value
      */
-    private @Getter final @XmlAttribute V value;
+    private final @Getter @XmlAttribute V value;
 
     /**
      * @param value

@@ -49,7 +49,7 @@ public abstract class Store implements AutoCloseable {
 
   private @Getter (PROTECTED) DSLContext context;
   private final boolean temporary;
-  private @Getter (PROTECTED) final Table<?> table;
+  private final @Getter (PROTECTED) Table<?> table;
   private final Field<?>[] fields;
   private final String[][] indices;
 

@@ -39,8 +39,8 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 @Accessors (fluent = true)
 public abstract class AnalysisAdapter implements Analysis {
 
-  private @Getter final String name;
-  private @Getter final String type;
+  private final @Getter String name;
+  private final @Getter String type;
 
   public static Map<String, Analysis> analyses () {
     return new AbstractMap<String, Analysis> () {
