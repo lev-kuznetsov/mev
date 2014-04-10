@@ -469,6 +469,7 @@ define(
                                                 scope.headers = [
                                                     {'name':'ID', 'value':"id"},
                                                     {'name':'P-Value', 'value':"pValue"},
+                                                    {'name':'Pairwise LFC', 'value':'pairwise_log_fold_change'}
                                                 ]
                                                 
                                                 scope.filterParams = {
@@ -701,14 +702,14 @@ define(
                                     scope.testInit = function(){
                                         
                                         var message = "Starting ANOVA for "
-                                            + scope.params.name + " complete!";
+                                            + scope.params.name + " analysis.";
 
                                         var header = "ANOVA";
                                         
-                                        if (scope.params.selections.length < 1) {
+                                        if (scope.params.selections.length < 2) {
                                             
                                             message = "Can't start ANOVA for "
-                                                + scope.params.name + " with no selections!";
+                                                + scope.params.name + " with less than two groups.";
 
                                             header = "ANOVA";
                                             
@@ -2151,11 +2152,13 @@ define(
                                         };
                                         
                                         function drawColorScale(min, max){
+                                            
+                                            
                                             var arr = d3.range(101)
                                             
-                                            var scale = d3.scale.linear().domain([0, arr.length]).range([max, min])
+                                            var scale = d3.scale.linear().domain([0, arr.length-1]).range([max, min])
                                             
-                                            var yPosition = d3.scale.linear().domain([0, arr.length])
+                                            var yPosition = d3.scale.linear().domain([0, arr.length-1])
                                                 .range([40 + legendPosition.margin.top, 
                                                         (legendPosition.margin.top + legendPosition.height) - 40 ])
                                             
@@ -2194,7 +2197,7 @@ define(
                                                         return yPosition(i) + (colorScaleCellSpacing/2);
                                                     },
                                                     stroke: function(d, i){ 
-                                                        return (i%25 == 0)? "black":"none";
+                                                        return (i%25 === 0)? "black":"none";
                                                     },
                                                     "stroke-width": 1
                                                 });
@@ -2213,9 +2216,9 @@ define(
                                                 .text(function(d, i){
                                                     var returnstring = String(scale(i)).split(".")[0]
                                                     if (returnstring.length > 1){
-                                                        returnstring = returnstring + "." + String(scale(i)).split(".")[1][3]
+                                                        returnstring = returnstring + "." + String(scale(i)).split(".")[1].slice(0,3)
                                                     }
-                                                    return (i%50 == 0)? returnstring:""
+                                                    return (i % 50 === 0)? returnstring :""
                                                 }).append("title")
                                                     .text(function(d, i){
                                                         return scale(i);
@@ -2253,6 +2256,8 @@ define(
                                                     data.row);
 
                                             if(typeof scope.heatmapViews.side!="undefined"){
+                                                
+                                                scope.treeSelections['vertical'] = [];
 	                                            if (scope.heatmapViews.side.type == "Hierarchical Clustering") {
 	                                                
 	                                                var tree = scope.heatmapViews.side.root;
@@ -2495,6 +2500,7 @@ define(
                                                     }
                                                 })
                                                 .success(function(response){
+                                                        console.log(params)
                                                         scope.$emit('SeletionAddedEvent', params.dimension.type);
                                                         var message = "Added New Selection!";
                                                         var header = "Heatmap Selection Addition";
