@@ -48,7 +48,7 @@
                     <tbody>
                             <tr ng-repeat="row in analysis.results | filter:filterParams.id | filterThreshold: filterParams.pValue : 'pValue' | orderBy: tableOrdering ">
                                     <td>
-                                            {{row["id"]}}
+                                            {{row.id}}
                                     </td>
                                     
                                     <td>

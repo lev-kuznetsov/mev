@@ -23,8 +23,7 @@
           <div class="form-group">
             <label for="anovaMTC" class="control-label">Multitest correction:</label>
 
-            <input id="anovaMTC" type="checkbox" ng-model="params.mtc.value" 
-            	ng-true-value="true" ng-false-value="false"></input>
+            <input id="anovaMTC" type="checkbox" ng-model="params.mtc"></input>
           </div>
           
           <div class="form-group">
