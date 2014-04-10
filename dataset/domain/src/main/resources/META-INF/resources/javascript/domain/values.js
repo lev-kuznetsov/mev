@@ -27,9 +27,9 @@ function Values (_dataset) {
    * Gets a single value for given coordinates
    */
   this.get = function (_coordinates) {
-    for (_value in this._dataset.values)
+    for (var _value in this._dataset.values)
       if (Object.deepEquals (_coordinates, this._dataset.values[_value].coordinates))
         return this._dataset.values[_value].value;
     throw "Bad coordinate set " + _coordinates;
-  }
+  };
 }

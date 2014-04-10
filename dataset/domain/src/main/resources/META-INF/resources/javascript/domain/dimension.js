@@ -47,12 +47,12 @@ function Dimension (_dataset, _dimension) {
    */
   this.apply = function (_filter, _function) {
     var _results = [];
-    for (_key in this.keys ())
-      if (_filter (this.keys ()[_key])) for (_value in this._dataset.values)
+    for ( var _key in this.keys ())
+      if (_filter (this.keys ()[_key])) for ( var _value in this._dataset.values)
         if (this._dataset.values[_value].coordinates[this.name ()] === this.keys ()[_key]) {
-          _result = _function (this._dataset.values[_value]);
+          var _result = _function (this._dataset.values[_value]);
           if (_result != null) _results.push (_result);
         }
     return _results;
-  }
+  };
 }

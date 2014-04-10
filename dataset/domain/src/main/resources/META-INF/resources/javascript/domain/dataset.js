@@ -35,7 +35,7 @@ function Dataset (_dataset) {
    */
   this.dimensions = function () {
     var _dimensions = [];
-    for (_dimension in this._dataset.dimensions)
+    for ( var _dimension in this._dataset.dimensions)
       _dimensions.push (new Dimension (this._dataset, _dimension));
     return _dimensions;
   };
