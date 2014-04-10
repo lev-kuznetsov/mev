@@ -45,9 +45,8 @@ Object.deepEquals = function (x, y) {
     // Objects and Arrays must be tested recursively
   }
 
-  for (p in y) {
+  for ( var p in y)
     if (y.hasOwnProperty (p) && !x.hasOwnProperty (p)) return false;
-    // allows x[ p ] to be set to undefined
-  }
+  // allows x[ p ] to be set to undefined
   return true;
-}
+};
