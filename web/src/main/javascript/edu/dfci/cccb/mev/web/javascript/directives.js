@@ -469,6 +469,7 @@ define(
                                                 scope.headers = [
                                                     {'name':'ID', 'value':"id"},
                                                     {'name':'P-Value', 'value':"pValue"},
+                                                    {'name':'Pairwise LFC', 'value':'pairwise_log_fold_change'}
                                                 ]
                                                 
                                                 scope.filterParams = {
@@ -701,14 +702,14 @@ define(
                                     scope.testInit = function(){
                                         
                                         var message = "Starting ANOVA for "
-                                            + scope.params.name + " complete!";
+                                            + scope.params.name + " analysis.";
 
                                         var header = "ANOVA";
                                         
-                                        if (scope.params.selections.length < 1) {
+                                        if (scope.params.selections.length < 2) {
                                             
                                             message = "Can't start ANOVA for "
-                                                + scope.params.name + " with no selections!";
+                                                + scope.params.name + " with less than two groups.";
 
                                             header = "ANOVA";
                                             
