@@ -1,7 +1,5 @@
 package edu.dfci.cccb.mev.anova.domain.impl;
 
-import java.util.Map;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +11,11 @@ import edu.dfci.cccb.mev.anova.domain.contract.Anova.Entry;
 @EqualsAndHashCode
 @RequiredArgsConstructor
 @Accessors (fluent = true)
-public class SimpleEntry implements Entry{
-  
-  private @Getter final double pValue;
-  private @Getter final String geneId;
-  private @Getter final Map<Pairing, Double> logFoldChanges;
-    
-}
+public class SimplePairing implements Entry.Pairing{
 
+  private @Getter final String partnerA;
+  private @Getter final String partnerB;
+
+
+
+}

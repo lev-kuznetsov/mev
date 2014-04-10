@@ -44,7 +44,8 @@ for (i in 1:(group_count-1))
 	
 	for(j in (i+1):group_count)
 	{
-		column_headers<-c(column_headers,paste(levels(groupings)[i],DELIMITER,levels(groupings)[j]))
+		column_headers<-c(column_headers,paste(levels(groupings)[i],DELIMITER,levels(groupings)[j], sep=''))
+		print(column_headers)
 	}
 }
 #make it a log-fold change:

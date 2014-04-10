@@ -26,6 +26,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
 
@@ -60,12 +61,11 @@ public class FileBackedAnovaBuilder extends AbstractAnovaBuilder {
         File configFile = new File (tempAnovaFolder, CONFIGURATION_FILENAME);
         try (PrintStream configOut = new PrintStream (new FileOutputStream (configFile))) {
 
-          int groupId = 0;
           for (String selectionName : groupSelections ()) {
             for (String key : dimension.selections ().get (selectionName).keys ()) {
-              configOut.println (key + "\t" + groupId);
+              Selection s=dimension.selections ().get (selectionName);
+              configOut.println (key + "\t" + selectionName);
             }
-            groupId++;
           }
         }
 
