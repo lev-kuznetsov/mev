@@ -126,8 +126,9 @@ public class TsvParser implements Parser<String> {
       }
     }).build ();
 
-    try (final CsvListReader reader = new CsvListReader (new InputStreamReader (input),
+    try (CsvListReader reader1 = new CsvListReader (new InputStreamReader (input),
                                                          configuration)) {
+      final CsvListReader reader = reader1; // https://github.com/cobertura/cobertura/issues/87
       final String[] header = reader.getHeader (true);
       final List<K> columnNames = new ArrayList<> ();
       columnNames.add (null);
