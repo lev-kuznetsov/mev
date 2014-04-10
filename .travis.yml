@@ -3,4 +3,4 @@ jdk:
   - oraclejdk7
   - openjdk7
 after_success:
-  - mvn cobertura:cobertura coveralls:cobertura -DskipTests
+  - mvn cobertura:cobertura coveralls:cobertura
