@@ -13,9 +13,3 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-hello = function () {
-  $.get ("http://www.google.com").success (function () {
-    java.lang.System.err.println ("wtf");
-  });
-}

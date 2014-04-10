@@ -11,3 +11,8 @@ Building requires JDK 7 and Maven 3. Checkout or download and unzip the source, 
 ```
 mvn clean install
 ```
+After that's done pop over to the webapp folder, start the application with:
+```
+mvn jetty:run
+```
+and point your browser to http://localhost:8080
