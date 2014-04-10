@@ -63,7 +63,6 @@ public class FileBackedAnovaBuilder extends AbstractAnovaBuilder {
 
           for (String selectionName : groupSelections ()) {
             for (String key : dimension.selections ().get (selectionName).keys ()) {
-              Selection s=dimension.selections ().get (selectionName);
               configOut.println (key + "\t" + selectionName);
             }
           }
