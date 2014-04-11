@@ -241,8 +241,8 @@ define(
                                                        {'name':'ID', 'value': "id"},
                                                        {'name':'Log-Fold-Change', 'value': "logFoldChange"},
                                                        {'name':'Average Expression', 'value': "averageExpression"},
-                                                       {'name':'P-Value', 'value': "pValue"},
-                                                       {'name':'Q-Value', 'value' : "qValue"}
+                                                       {'name':'p-Value', 'value': "pValue"},
+                                                       {'name':'q-Value', 'value' : "qValue"}
                                                        ];
                                         
                                         scope.filterParams = {
@@ -271,7 +271,6 @@ define(
                                                 return d.id
                                             })
                                             
-                                            console.log(scope.selectionParams.color)
                                             
                                             $http({
                                                 method:"POST", 
@@ -373,7 +372,6 @@ define(
                                                 return d.id
                                             })
                                             
-                                            console.log(scope.selectionParams.color)
                                             
                                             $http({
                                                 method:"POST", 
@@ -468,7 +466,7 @@ define(
                                         link: function(scope){
                                                 scope.headers = [
                                                     {'name':'ID', 'value':"id"},
-                                                    {'name':'P-Value', 'value':"pValue"},
+                                                    {'name':'p-Value', 'value':"pValue"},
                                                     {'name':'Pairwise LFC', 'value':'pairwise_log_fold_change'}
                                                 ]
                                                 
@@ -711,7 +709,7 @@ define(
                                             message = "Can't start ANOVA for "
                                                 + scope.params.name + " with less than two groups.";
 
-                                            header = "ANOVA";
+                                            header = "ANOVA Analysis Info";
                                             
                                             alertService.info(message,header);
                                             return
@@ -745,7 +743,7 @@ define(
                                                         var message = "ANOVA for "
                                                             + scope.params.name + " complete!";
 
-                                                        var header = "ANOVA";
+                                                        var header = "ANOVA Analysis";
                                                          
                                                         alertService.success(message,header);
                                                     
@@ -755,7 +753,7 @@ define(
                                             
                                             var message = "Could not perform ANOVA. If "
                                                 + "problem persists, please contact us.";
-                                            var header = "Clustering Problem (Error Code: "
+                                            var header = "Anova Analysis Problem (Error Code: "
                                                 + status
                                                 + ")";
                                             alertService.error(message,header);
@@ -805,7 +803,6 @@ define(
                                 		if(scope.isTwoSample()){
                                 			postRequest.assumeEqualVariance=scope.params.assumeEqualVariance
                                 		}
-                                		console.debug(postRequest);
                                 		return postRequest;                                		
                                 	};                                	
                                     scope.testInit = function(){
@@ -830,7 +827,7 @@ define(
                                             
                                             var message = "Could not perform t-Test. If "
                                                 + "problem persists, please contact us.";
-                                            var header = "Clustering Problem (Error Code: "
+                                            var header = "t-Test Analysis Problem (Error Code: "
                                                 + status
                                                 + ")";
                                             alertService.error(message,header);                                            
@@ -2452,7 +2449,7 @@ define(
                                                 'data-target': "#columnSelectionsModal",
                                                 'style':'font-size:10'
                                             })
-                                            .text("Add Column Selections");
+                                            .text("+ Col. Sels.");
                                         
                                         legend.append("text")
                                             .attr({
@@ -2464,7 +2461,7 @@ define(
                                                 'data-target': "#rowSelectionsModal",
                                                 'style':'font-size:10'
                                             })
-                                            .text("Add Row Selections");
+                                            .text("+ Row Sels.");
                                         
                                         legend.append("g").attr("class", "colorScale");
                                         var colorScale = d3.select("g.colorScale");
@@ -2500,7 +2497,6 @@ define(
                                                     }
                                                 })
                                                 .success(function(response){
-                                                        console.log(params)
                                                         scope.$emit('SeletionAddedEvent', params.dimension.type);
                                                         var message = "Added New Selection!";
                                                         var header = "Heatmap Selection Addition";

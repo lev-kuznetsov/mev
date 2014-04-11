@@ -27,12 +27,12 @@
 	                        <tr>
 	                          <th ng-repeat="header in headers">
 	                          	
-	                          		<p ng-click="reorderLimmaTable(header.value)">
+	                          		<p ng-click="reorderLimmaTable(header)">
 								    	 <span class="caret" ></span>{{header.name}}
 								    	 <div class="input-group" ng-hide="header.value == 'averageExpression' || header.value == 'qValue'">
-								    		<span class="input-group-addon" ng-hide="header.value != 'id'"><span class="glyphicon glyphicon-search"></span></span>
-								   			<span class="input-group-addon" ng-show="header.value != 'id'">&lt;=</span>
-								   			
+								    		<span class="input-group-addon" ng-show="header.value == 'id'"><span class="glyphicon glyphicon-search"></span></span>
+								   			<span class="input-group-addon" ng-show="header.value == 'pValue'">&lt;=</span>
+								   			<span class="input-group-addon" ng-show="header.value == 'logFoldChange'">&gt;=</span>
 								   			<input type="text" class="form-control input-small" ng-model="filterParams[header.value]">
 								   		</div>	
 									</p>
@@ -42,7 +42,7 @@
 	                        </tr>
 						</thead>
                         <tbody>
-                                <tr ng-repeat="row in limma.datar.results |filter:filterParams.id| filterThreshold: filterParams.pValue : 'pValue' | filterThreshold: filterParams.logFoldChange : 'logFoldChange' | orderBy: tableOrdering ">
+                                <tr ng-repeat="row in limma.datar.results |filter:filterParams.id| filterThreshold: filterParams.pValue : 'pValue' | filterThreshold: filterParams.logFoldChange : 'logFoldChange' : '>='| orderBy: tableOrdering ">
                                         <td>
                                                 {{row["id"]}}
                                         </td>
