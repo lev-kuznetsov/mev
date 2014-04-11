@@ -241,8 +241,8 @@ define(
                                                        {'name':'ID', 'value': "id"},
                                                        {'name':'Log-Fold-Change', 'value': "logFoldChange"},
                                                        {'name':'Average Expression', 'value': "averageExpression"},
-                                                       {'name':'P-Value', 'value': "pValue"},
-                                                       {'name':'Q-Value', 'value' : "qValue"}
+                                                       {'name':'p-Value', 'value': "pValue"},
+                                                       {'name':'q-Value', 'value' : "qValue"}
                                                        ];
                                         
                                         scope.filterParams = {
@@ -466,7 +466,7 @@ define(
                                         link: function(scope){
                                                 scope.headers = [
                                                     {'name':'ID', 'value':"id"},
-                                                    {'name':'P-Value', 'value':"pValue"},
+                                                    {'name':'p-Value', 'value':"pValue"},
                                                     {'name':'Pairwise LFC', 'value':'pairwise_log_fold_change'}
                                                 ]
                                                 
