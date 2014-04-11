@@ -54,7 +54,7 @@ p.lead {
 
 #partition {
 	float: left;
-	height: 100%;
+	height: 90%;
 	margin: 0px;
 	width: 30px;
 
@@ -63,7 +63,10 @@ p.lead {
 .heatmap-container {
 	margin-top:40px;
 }
-
+/* #dataset-view-container{ */
+/* 	margin-left: 15px;  */
+/* 	margin-right: 15px; */
+/* } */
 #leftPanel {
 	width: 30%;
 	float: left;
@@ -307,4 +310,21 @@ t-test-accordion .caret-up{
 
 button > a{
 	color: inherit;
+}
+
+
+#import-presets-modal div.modal-dialog {
+  width: 95%;
+  height: 95%;
+  padding: 0;
+}
+#import-presets-modal div.modal-content {
+  height: 100%;
+  border-radius: 0;
+}
+.ngRow.selected {
+background-color: ;
+}
+a[role]  {
+	cursor: pointer; 
 }
