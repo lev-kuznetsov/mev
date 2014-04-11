@@ -156,8 +156,8 @@ function initializeUI(uiState) {
 	  $("#export-set-button").hide();
 	  $("#update-set").hide();
 	  $("#update-set-button").hide();	  
-	  $("#or-proj-import-preset-list-link").show();
-	  $("#or-proj-import-preset-lit").show();
+//	  $("#or-proj-import-preset-list-link").show();
+//	  $("#or-proj-import-preset-lit").show();
 	  if($.url().param('dimension')=="column"){  
 		  $("#or-proj-import-preset-samples-link").show();
 		  $("#or-proj-import-preset-samples").show();
@@ -176,8 +176,8 @@ function initializeUI(uiState) {
 	  $("#or-proj-import-preset-samples").hide();
 	  $("#or-proj-import-preset-rows-link").hide();
 	  $("#or-proj-import-preset-rows").hide();
-	  $("#or-proj-import-preset-list-link").hide();
-	  $("#or-proj-import-preset-lit").hide();
+//	  $("#or-proj-import-preset-list-link").hide();
+//	  $("#or-proj-import-preset-lit").hide();
 	  if(theProject.metadata.customMetadata.dimension)  
 		  title = toProperCase(theProject.metadata.customMetadata.dimension);
 	  
