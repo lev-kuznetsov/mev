@@ -16,6 +16,7 @@ package edu.dfci.cccb.mev.kmeans.rest.configuration;
 
 import static java.util.Arrays.asList;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
+import static org.springframework.http.MediaType.TEXT_PLAIN;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
 import java.util.List;
@@ -35,7 +36,7 @@ import edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter;
 import edu.dfci.cccb.mev.kmeans.domain.contract.KMeansBuilder;
 import edu.dfci.cccb.mev.kmeans.domain.hadoop.HadoopKMeansBuilder;
 import edu.dfci.cccb.mev.kmeans.rest.assembly.json.KMeansJsonSerializer;
-import edu.dfci.cccb.mev.kmeans.rest.assembly.text.KMeansTextMessageConverter;
+import edu.dfci.cccb.mev.kmeans.rest.assembly.tsv.KMeansTsvMessageConverter;
 import edu.dfci.cccb.mev.kmeans.rest.resolvers.KMeansMetricPathVariableMethodArgumentResolver;
 
 /**
@@ -77,6 +78,6 @@ public class KMeansRestConfiguration extends MevRestConfigurerAdapter {
    * #addHttpMessageConverters(java.util.List) */
   @Override
   public void addHttpMessageConverters (List<HttpMessageConverter<?>> converters) {
-    converters.add (new KMeansTextMessageConverter ());
+    converters.add (new KMeansTsvMessageConverter ());
   }
 }
