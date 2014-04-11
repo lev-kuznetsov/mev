@@ -29,7 +29,7 @@
 	                          	
 	                          		<p ng-click="reorderLimmaTable(header.value)">
 								    	 <span class="caret" ></span>{{header.name}}
-								    	 <div class="input-group" ng-hide="header.icon == 'undefined'">
+								    	 <div class="input-group" ng-hide="header.icon == 'none'">
 								    		<span class="input-group-addon" ng-hide="header.icon != 'search'"><span class="glyphicon glyphicon-search"></span></span>
 								   			<span class="input-group-addon" ng-hide="header.icon == 'search'">{{header.icon}}</span>
 								   			

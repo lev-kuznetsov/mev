@@ -240,9 +240,9 @@ define(
                                         scope.headers = [
                                                        {'name':'ID', 'value': "id", 'icon': "search"},
                                                        {'name':'Log-Fold-Change', 'value': "logFoldChange", 'icon': ">="},
-                                                       {'name':'Average Expression', 'value': "averageExpression", 'icon': undefined},
+                                                       {'name':'Average Expression', 'value': "averageExpression", 'icon': "none"},
                                                        {'name':'P-Value', 'value': "pValue", 'icon': "<="},
-                                                       {'name':'q-Value', 'value' : "qValue", 'icon': undefined}
+                                                       {'name':'q-Value', 'value' : "qValue", 'icon': "none"}
                                                        ];
                                         
                                         scope.filterParams = {
