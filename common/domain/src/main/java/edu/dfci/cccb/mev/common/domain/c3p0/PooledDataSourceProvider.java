@@ -49,10 +49,12 @@ public class PooledDataSourceProvider implements Provider<DataSource> {
   public DataSource get () {
     try {
       ComboPooledDataSource dataSource = new ComboPooledDataSource ();
+
       dataSource.setDriverClass (driver);
       dataSource.setJdbcUrl (url);
       dataSource.setUser (user);
       dataSource.setPassword (password);
+
       return dataSource;
     } catch (PropertyVetoException e) {
       throw new IllegalArgumentException (e);
