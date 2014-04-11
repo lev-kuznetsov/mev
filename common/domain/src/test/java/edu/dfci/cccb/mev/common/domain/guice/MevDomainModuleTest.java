@@ -29,13 +29,19 @@ import org.junit.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Injector;
 
+import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
+
 public class MevDomainModuleTest {
 
   private Injector injector;
 
   @Before
   public void installDatasetModule () throws Exception {
-    injector = createInjector (new MevDomainModule ());
+    injector = createInjector (new MevDomainModule () {
+      public void configure (JacksonSerializerBinder binder) {
+        assertThat (binder, is (notNullValue ()));
+      }
+    });
   }
 
   @Test
