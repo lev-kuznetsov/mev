@@ -709,7 +709,7 @@ define(
                                             message = "Can't start ANOVA for "
                                                 + scope.params.name + " with less than two groups.";
 
-                                            header = "ANOVA";
+                                            header = "ANOVA Analysis Info";
                                             
                                             alertService.info(message,header);
                                             return
@@ -743,7 +743,7 @@ define(
                                                         var message = "ANOVA for "
                                                             + scope.params.name + " complete!";
 
-                                                        var header = "ANOVA";
+                                                        var header = "ANOVA Analysis";
                                                          
                                                         alertService.success(message,header);
                                                     
@@ -753,7 +753,7 @@ define(
                                             
                                             var message = "Could not perform ANOVA. If "
                                                 + "problem persists, please contact us.";
-                                            var header = "Clustering Problem (Error Code: "
+                                            var header = "Anova Analysis Problem (Error Code: "
                                                 + status
                                                 + ")";
                                             alertService.error(message,header);
@@ -827,7 +827,7 @@ define(
                                             
                                             var message = "Could not perform t-Test. If "
                                                 + "problem persists, please contact us.";
-                                            var header = "Clustering Problem (Error Code: "
+                                            var header = "t-Test Analysis Problem (Error Code: "
                                                 + status
                                                 + ")";
                                             alertService.error(message,header);                                            
