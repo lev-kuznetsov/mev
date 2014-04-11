@@ -60,6 +60,7 @@ import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.DimensionTypeJsonSeri
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDatasetJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDimensionJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleSelectionJsonSerializer;
+import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleSelectionsJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.text.SelectionsTextMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver;
@@ -122,6 +123,7 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
     serializers.addAll (asList (new DimensionTypeJsonSerializer (),
                                 new SimpleDatasetJsonSerializer (),
                                 new SimpleDimensionJsonSerializer (),
+                                new SimpleSelectionsJsonSerializer (),
                                 new SimpleSelectionJsonSerializer ()));
   }
 
