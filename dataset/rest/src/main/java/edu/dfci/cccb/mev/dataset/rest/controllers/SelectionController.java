@@ -26,6 +26,7 @@ import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUES
 
 import java.util.Collection;
 import java.util.List;
+
 import javax.inject.Inject;
 
 import lombok.Getter;
@@ -39,9 +40,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 
 /**
  * @author levk
@@ -57,8 +60,8 @@ public class SelectionController {
   private @Getter @Setter (onMethod = @_ (@Inject)) SelectionBuilder builder;
 
   @RequestMapping (value="/selections", method = GET)
-  public Collection<Selection> all () {
-    return dimension.selections ().getAll ();
+  public Selections all () {
+    return dimension.selections ();
   }
   
   @RequestMapping (value="/selection", method = GET)
