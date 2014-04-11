@@ -203,9 +203,7 @@ div.tab-content#import {
 }
 
 div.imports-container {
-
-	margin-top: 60px;
-
+	margin-top: 10px;
 }
 
 div.uploadDrag {
@@ -327,4 +325,10 @@ background-color: ;
 }
 a[role]  {
 	cursor: pointer; 
+}
+
+#userUploadsPanel{
+	height: 85vh;
+	background-color: #fff;
+	padding: 0 2em 0 2em;
 }
