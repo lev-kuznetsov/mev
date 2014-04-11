@@ -2449,7 +2449,7 @@ define(
                                                 'data-target': "#columnSelectionsModal",
                                                 'style':'font-size:10'
                                             })
-                                            .text("Add Column Selections");
+                                            .text("+ Col. Sels.");
                                         
                                         legend.append("text")
                                             .attr({
@@ -2461,7 +2461,7 @@ define(
                                                 'data-target': "#rowSelectionsModal",
                                                 'style':'font-size:10'
                                             })
-                                            .text("Add Row Selections");
+                                            .text("+ Row Sels.");
                                         
                                         legend.append("g").attr("class", "colorScale");
                                         var colorScale = d3.select("g.colorScale");
