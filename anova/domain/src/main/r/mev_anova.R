@@ -16,6 +16,8 @@ exp_data<-if(min(exp_data)<0){exp_data+min(exp_data)*-1}else{exp_data}
 ######### read groupings file #####################
 sample_mtx<-read.table(SAMPLE_FILE, header=F, sep="\t")
 sample_mtx<-sample_mtx[(sample_mtx[,2]!=-1),]  #parse out the samples we do NOT want to include (marked with -1)
+#need to apply the same transformation to the config file input:
+sample_mtx[,1]<-make.names(sample_mtx[,1])
 
 groupings<-sample_mtx[,2]  
 
