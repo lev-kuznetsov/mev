@@ -1,5 +1,6 @@
 <div class="mev-preset-list-wrapper">
-<div class="mev-filter-form-wrapper" ng-show="false">
+<!-- 
+<div class="mev-filter-form-wrapper" >
 	<form class="mev-filter-form form-inline" role="form"">
 		<div class="form-group">
 			<label class="sr-only" for="filterText">filter</label>
@@ -11,8 +12,7 @@
 	</form>
 </div>
 
-<div ng-show="showImport==false" id="presetsGrid" class="gridStyle" ng-grid="gridOptions" ></div>
-<table ng-show="false" class="mev-table-tight table table-striped" style="font-size:14px;">
+<table class="mev-table-tight table table-striped" style="font-size:14px;">
 <thead>
 <tr>
 <th><a href="" ng-click="orderByColumn='name';orderByReverse=!orderByReverse" >Dataset</a></th>
@@ -31,6 +31,14 @@
 
 
 <div ng-show="showImport" class="row-fluid" id="mev-iframe-import-presets" >
+
 <iframe  scrolling="no" frameborder="0" width="99%" height="80%" ng-src="{{importPresetUrl}}" />
+
 </div>
+ -->
+<div ng-show="showImport==false" id="presetsGrid" class="gridStyle" ng-grid="gridOptions" ></div>
 </div>
+
+<bsmodal id="import-presets-dialog" bindid="import-presets-modal" func="" header="Import Tcga Presets">
+<iframe  scrolling="no" frameborder="0" width="99%" height="80%" ng-src="{{importPresetUrl}}" /> 
+</bsmodal>

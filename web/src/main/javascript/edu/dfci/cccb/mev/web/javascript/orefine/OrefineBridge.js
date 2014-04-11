@@ -14,9 +14,14 @@ define(['jquery', 'angular'], function(jquery, angular){
 		},
 		openDataset: function(dataset){
 			console.debug('in openDataset');
-			console.debug("dataset:"+angular.toJson(dataset));			
-			var datasetUrl = "/#/dataset/"+dataset.name+"/";			
-			window.location.replace(datasetUrl);
+			console.debug("dataset:"+angular.toJson(dataset));		
+			jquery('#import-presets-modal').modal('hide');	
+			jquery('div.modal-backdrop').hide();
+//			setTimeout(function(){
+				var datasetUrl = "/#/dataset/"+dataset.name+"/";					
+				window.location.replace(datasetUrl);
+//			}, 500);
+			
 		},
 		showPresetList: function(){
 			var elm = document.querySelector('#presetMgr');			

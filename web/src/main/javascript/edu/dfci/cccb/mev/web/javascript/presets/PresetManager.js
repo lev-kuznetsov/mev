@@ -4,7 +4,7 @@ define(['jquery', 'angular'], function (jquery, angular){
 			$scope.gridOptions = { 
 				data: 'presets',
 				columnDefs: [{field: 'name', displayName: 'Dataset', enableCellEdit: false, width:'40%',
-								cellTemplate: '<div><div class="ngCellText"><a href="" ng-click="showImportPreset(row.getProperty(\'name\'))">{{row.getProperty(col.field)}}</a></div></div>'},
+								cellTemplate: '<div><div class="ngCellText"><a data-toggle="modal" role="button" data-target="#import-presets-modal" href="" ng-click="showImportPreset(row.getProperty(\'name\'))">{{row.getProperty(col.field)}}</a></div></div>'},
 				             {field:'diseaseName', displayName:'Desease Name', enableCellEdit: false, visible: false},
 				             {field:'dataLevel', displayName:'Data Level', enableCellEdit: false, width:'10%'},			                     
 		                     {field:'platformName', displayName:'Platform', enableCellEdit: false, width:'45%'}
@@ -12,7 +12,9 @@ define(['jquery', 'angular'], function (jquery, angular){
 		        groups: ['diseaseName'],
 		        groupsCollapsedByDefault: true,
 		        sortInfo: { fields: ['diseaseName', 'dataLevel'], directions: ['asc', 'asc'] },
-		        showFilter: true
+		        showFilter: true,
+		        selectWithCheckboxOnly: true ,
+		        enableRowSelection: false
 			};						
 			presetService.getPresetList().then(function(d){
 				$scope.presets=d;				
@@ -62,7 +64,8 @@ define(['jquery', 'angular'], function (jquery, angular){
 					
 					scope.showImportPreset = function(presetName){						
 						scope.importPresetUrl="/annotations/import-dataset/command/core/view-preset-sample-annotations?import-preset="+presetName+"&dimension=column";
-						scope.showImport=true;
+						//no need to activate iframe, we are using bootstrap modal now
+						//scope.showImport=true;
 					};					
 					scope.showPresetList = function(){
 						scope.importPresetUrl="about:blank";
