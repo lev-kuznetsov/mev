@@ -14,6 +14,7 @@
  */
 package edu.dfci.cccb.mev.kmeans.rest.configuration;
 
+import static java.util.Arrays.asList;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
@@ -25,6 +26,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -33,8 +35,9 @@ import edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter;
 import edu.dfci.cccb.mev.kmeans.domain.contract.KMeansBuilder;
 import edu.dfci.cccb.mev.kmeans.domain.hadoop.HadoopKMeansBuilder;
 import edu.dfci.cccb.mev.kmeans.rest.assembly.json.KMeansJsonSerializer;
+import edu.dfci.cccb.mev.kmeans.rest.assembly.text.KMeansTextMessageConverter;
 import edu.dfci.cccb.mev.kmeans.rest.resolvers.KMeansMetricPathVariableMethodArgumentResolver;
-import static java.util.Arrays.asList;
+
 /**
  * @author levk
  * 
@@ -64,8 +67,16 @@ public class KMeansRestConfiguration extends MevRestConfigurerAdapter {
    * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
    * #addArgumentResolvers(java.util.List) */
   @Override
-  public void addPreferredArgumentResolvers (List<HandlerMethodArgumentResolver> resolvers) {    
+  public void addPreferredArgumentResolvers (List<HandlerMethodArgumentResolver> resolvers) {
     resolvers.addAll (asList (new KMeansMetricPathVariableMethodArgumentResolver ()));
-  } 
-  
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter
+   * #addHttpMessageConverters(java.util.List) */
+  @Override
+  public void addHttpMessageConverters (List<HttpMessageConverter<?>> converters) {
+    converters.add (new KMeansTextMessageConverter ());
+  }
 }
