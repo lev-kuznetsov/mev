@@ -83,10 +83,10 @@ font-weight: bold;
 }
 
 table.data-header-table td.column-header{
-	width: 90px;
+	width: 120px;
 }
 table.data-header-table td.column-header div.column-header-title{
-	width: 90px;	
+	width: 120px;	
 }
 
 table.data-table td div.data-table-cell-content{
@@ -94,7 +94,7 @@ table.data-table td div.data-table-cell-content{
 	max-height: 100px;
 	overflow-y: hidden;
 	overflow-x: hidden;
-	width:90px;	
+	width:120px;	
 }
 table.data-table td div.data-table-cell-content span{
 
