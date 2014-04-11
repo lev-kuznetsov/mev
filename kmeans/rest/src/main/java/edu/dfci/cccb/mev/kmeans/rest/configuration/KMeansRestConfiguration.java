@@ -14,7 +14,6 @@
  */
 package edu.dfci.cccb.mev.kmeans.rest.configuration;
 
-import static org.springframework.http.MediaType.TEXT_PLAIN;
 import static java.util.Arrays.asList;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
@@ -29,7 +28,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 
 import com.fasterxml.jackson.databind.JsonSerializer;
 
@@ -80,10 +78,5 @@ public class KMeansRestConfiguration extends MevRestConfigurerAdapter {
   @Override
   public void addHttpMessageConverters (List<HttpMessageConverter<?>> converters) {
     converters.add (new KMeansTextMessageConverter ());
-  }
-  
-  @Override
-  public void configureContentNegotiation (ContentNegotiationConfigurer configurer) {
-    configurer.mediaType ("text", TEXT_PLAIN);
   }
 }

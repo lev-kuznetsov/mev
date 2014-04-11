@@ -21,6 +21,7 @@ import static java.lang.reflect.Proxy.newProxyInstance;
 import static java.util.Arrays.asList;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 import static org.springframework.context.annotation.ScopedProxyMode.NO;
+import static org.springframework.http.MediaType.TEXT_PLAIN;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 import static org.springframework.web.servlet.HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE;
@@ -60,6 +61,7 @@ import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDatasetJsonSeri
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDimensionJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleSelectionJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleSelectionsJsonSerializer;
+import edu.dfci.cccb.mev.dataset.rest.assembly.text.SelectionsTextMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver;
@@ -73,7 +75,7 @@ import edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgum
 @ComponentScan (basePackages = "edu.dfci.cccb.mev.dataset.rest.controllers")
 @ToString
 @Log4j
-@Import({DatasetDomainBuildersConfiguration.class})
+@Import ({ DatasetDomainBuildersConfiguration.class })
 public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
 
   // Domain conversational objects
@@ -84,7 +86,7 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
     return new ArrayListWorkspace ();
   }
 
-  @Bean 
+  @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = NO)
   public Dataset dataset (final NativeWebRequest request, final DatasetPathVariableMethodArgumentResolver resolver) throws Exception {
     return nonCloseableProxy (resolver.resolveObject (request));
@@ -113,7 +115,6 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
                                                                                         RequestAttributes.SCOPE_REQUEST)).get (ANALYSIS_MAPPING_NAME)));
   }
 
-
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.rest.prototype.MevRestConfigurerAdapter#
    * addJsonSerializers(java.util.List) */
@@ -128,12 +129,12 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.rest.prototype.MevRestConfigurerAdapter#
-   * addHttpMessageConverters(java.util.List) */  
+   * addHttpMessageConverters(java.util.List) */
   @Override
   public void addHttpMessageConverters (List<HttpMessageConverter<?>> converters) {
-    converters.add (new DatasetTsvMessageConverter ());
+    converters.addAll (asList (new DatasetTsvMessageConverter (),
+                               new SelectionsTextMessageConverter ()));
   }
-
 
   /* (non-Javadoc)
    * @see
@@ -164,7 +165,8 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
    * .ContentNegotiationConfigurer) */
   @Override
   public void configureContentNegotiation (ContentNegotiationConfigurer configurer) {
-    configurer.mediaType (TSV_EXTENSION, TSV_MEDIA_TYPE);
+    configurer.mediaType (TSV_EXTENSION, TSV_MEDIA_TYPE)
+              .mediaType ("text", TEXT_PLAIN);
   }
 
   @SuppressWarnings ("unchecked")
