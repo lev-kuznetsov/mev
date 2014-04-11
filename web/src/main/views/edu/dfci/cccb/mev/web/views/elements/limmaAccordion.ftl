@@ -27,7 +27,7 @@
 	                        <tr>
 	                          <th ng-repeat="header in headers">
 	                          	
-	                          		<p ng-click="reorderLimmaTable(header.value)">
+	                          		<p ng-click="reorderLimmaTable(header)">
 								    	 <span class="caret" ></span>{{header.name}}
 								    	 <div class="input-group" ng-hide="header.value == 'averageExpression' || header.value == 'qValue'">
 								    		<span class="input-group-addon" ng-show="header.value == 'id'"><span class="glyphicon glyphicon-search"></span></span>
