@@ -27,7 +27,7 @@
 	                        <tr>
 	                          <th ng-repeat="header in headers">
 	                          	
-	                          		<p ng-click="reorderLimmaTable(header.value)">
+	                          		<p ng-click="reorderLimmaTable(header)">
 								    	 <span class="caret" ></span>{{header.name}}
 								    	 <div class="input-group" ng-hide="header.icon == 'none'">
 								    		<span class="input-group-addon" ng-hide="header.icon != 'search'"><span class="glyphicon glyphicon-search"></span></span>
