@@ -10,6 +10,7 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
 
 import edu.dfci.cccb.mev.anova.domain.contract.Anova;
 import edu.dfci.cccb.mev.anova.domain.contract.Anova.Entry;
+import edu.dfci.cccb.mev.anova.domain.prototype.AbstractAnovaBuilder;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.prototype.AbstractTsvHttpMessageConverter;
 
 public class AnovaTsvMessageConverter extends AbstractTsvHttpMessageConverter<Anova>{
@@ -31,8 +32,8 @@ public class AnovaTsvMessageConverter extends AbstractTsvHttpMessageConverter<An
   protected void writeInternal (Anova anova, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
     try (PrintStream out = new PrintStream (outputMessage.getBody ())) {
       String headerLine="Gene\tp-value";
-      for (String pair:anova.logFoldChangePairings ()){
-        headerLine+="\t"+pair;
+      for (Entry.Pairing pair:anova.logFoldChangePairings ()){
+        headerLine+="\t"+pair.partnerA ()+AbstractAnovaBuilder.PAIRING_DELIMITER+pair.partnerB ();
       }
       out.println (headerLine);
       for (Entry e : anova.fullResults ()){

@@ -28,11 +28,10 @@ public class EntryJsonSerializer extends JsonSerializer<Entry>{
     jgen.writeStringField ("id", value.geneId ());
     jgen.writeNumberField ("pValue", value.pValue ());
     jgen.writeArrayFieldStart ("pairwise_log_fold_change");
-    for(String pairing:value.logFoldChanges ().keySet ()){
-      String[] partners=pairing.split (AbstractAnovaBuilder.PAIRING_DELIMITER);
+    for(Entry.Pairing pairing:value.logFoldChanges ().keySet ()){
       jgen.writeStartObject ();
-      jgen.writeStringField ("partnerA", partners[0]);
-      jgen.writeStringField ("partnerB", partners[1]);
+      jgen.writeStringField ("partnerA", pairing.partnerA ());
+      jgen.writeStringField ("partnerB", pairing.partnerB ());
       jgen.writeNumberField ("ratio", value.logFoldChanges ().get(pairing));
       jgen.writeEndObject ();
     }

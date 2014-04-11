@@ -34,9 +34,9 @@
 							    	<span class="caret" ></span>{{header.name}}
 							    	 
 							    	 <div class="input-group">
-									   		<span ng-show="header.value != 'id'" class="input-group-addon">&lt;=</span>
+									   		<span ng-show="header.value != 'id' && header.value != 'pairwise_log_fold_change'" class="input-group-addon">&lt;=</span>
 									   		<span ng-hide="header.value != 'id'" class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-								    	 	<input type="text" class="form-control placeholder="(ex: 0.05)" input-small" ng-model="filterParams[header.value]">
+								    	 	<input ng-hide="header.value === 'pairwise_log_fold_change'" type="text" class="form-control placeholder="(ex: 0.05)" input-small" ng-model="filterParams[header.value]">
 							    	 	
 							    	 </div>
 								</p>
@@ -48,11 +48,15 @@
                     <tbody>
                             <tr ng-repeat="row in analysis.results | filter:filterParams.id | filterThreshold: filterParams.pValue : 'pValue' | orderBy: tableOrdering ">
                                     <td>
-                                            {{row["id"]}}
+                                            {{row.id}}
                                     </td>
                                     
                                     <td>
                                             <p title="{{row['pValue']}}">{{row["pValue"] | number:4}}</p> 
+                                    </td>
+                                    
+                                    <td>
+                                    	<p ng-repeat="pair in row.pairwise_log_fold_change">{{pair.partnerA}}/{{pair.partnerB}} : {{pair.ratio}}</p>
                                     </td>
                                     
                             </tr>
