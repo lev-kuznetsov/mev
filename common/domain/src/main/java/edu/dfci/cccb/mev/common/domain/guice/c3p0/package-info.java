@@ -20,4 +20,4 @@
  * @author levk
  * @since CRYSTAL
  */
-package edu.dfci.cccb.mev.common.domain.c3p0;
+package edu.dfci.cccb.mev.common.domain.guice.c3p0;

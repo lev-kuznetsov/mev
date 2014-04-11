@@ -14,13 +14,16 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.domain.c3p0;
+package edu.dfci.cccb.mev.common.domain.guice.c3p0;
 
 import java.beans.PropertyVetoException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
+
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import com.google.inject.Provider;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -31,6 +34,8 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
  * @author levk
  * @since CRYSTAL
  */
+@ToString
+@EqualsAndHashCode
 public class PooledDataSourceProvider implements Provider<DataSource> {
 
   public static final String DRIVER_CLASS = "database.driver.class";

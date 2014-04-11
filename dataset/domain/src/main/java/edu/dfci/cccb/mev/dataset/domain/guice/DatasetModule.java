@@ -33,6 +33,7 @@ import com.google.inject.Module;
 import com.google.inject.TypeLiteral;
 
 import edu.dfci.cccb.mev.common.domain.guice.MevDomainModule;
+import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
@@ -61,56 +62,62 @@ public class DatasetModule implements Module {
       }
     });
 
-    binder.bind (new TypeLiteral<Builder<String, Double>> () {}).toInstance (new Builder<String, Double> () {
-      private @Inject DataSource dataSource;
+    binder.install (new SingletonModule () {
 
-      @SuppressWarnings ("unchecked")
       @Override
-      public Dataset<String, Double> build (String name, InputStream input) throws Exception {
-        StoreValuesAdapter values = new StoreValuesAdapter (dataSource);
-        final List<String> columns = new ArrayList<> ();
-        final List<String> rows = new ArrayList<> ();
-        new TsvParser ().parse (input,
-                                values.builder (),
-                                (Consumer<String>[]) new Consumer<?>[] { new Consumer<String> () {
+      public void configure (Binder binder) {
+        binder.bind (new TypeLiteral<Builder<String, Double>> () {}).toInstance (new Builder<String, Double> () {
+          private @Inject DataSource dataSource;
 
-                                  @Override
-                                  public void consume (String entity) throws IOException {
-                                    columns.add (entity);
-                                  }
-                                }, new Consumer<String> () {
+          @SuppressWarnings ("unchecked")
+          @Override
+          public Dataset<String, Double> build (String name, InputStream input) throws Exception {
+            StoreValuesAdapter values = new StoreValuesAdapter (dataSource);
+            final List<String> columns = new ArrayList<> ();
+            final List<String> rows = new ArrayList<> ();
+            new TsvParser ().parse (input,
+                                    values.builder (),
+                                    (Consumer<String>[]) new Consumer<?>[] { new Consumer<String> () {
 
-                                  @Override
-                                  public void consume (String entity) throws IOException {
-                                    rows.add (entity);
-                                  }
-                                } });
-        return new DatasetAdapter<String, Double> (name,
-                                                   dimensions (new DimensionAdapter<String> ("row") {
+                                      @Override
+                                      public void consume (String entity) throws IOException {
+                                        columns.add (entity);
+                                      }
+                                    }, new Consumer<String> () {
 
-                                                     @Override
-                                                     public int size () {
-                                                       return rows.size ();
-                                                     }
+                                      @Override
+                                      public void consume (String entity) throws IOException {
+                                        rows.add (entity);
+                                      }
+                                    } });
+            return new DatasetAdapter<String, Double> (name,
+                                                       dimensions (new DimensionAdapter<String> ("row") {
 
-                                                     @Override
-                                                     public String get (int index) {
-                                                       return rows.get (index);
-                                                     }
-                                                   }, new DimensionAdapter<String> ("column") {
+                                                         @Override
+                                                         public int size () {
+                                                           return rows.size ();
+                                                         }
 
-                                                     @Override
-                                                     public int size () {
-                                                       return columns.size ();
-                                                     }
+                                                         @Override
+                                                         public String get (int index) {
+                                                           return rows.get (index);
+                                                         }
+                                                       }, new DimensionAdapter<String> ("column") {
 
-                                                     @Override
-                                                     public String get (int index) {
-                                                       return columns.get (index);
-                                                     }
-                                                   }),
-                                                   analyses (),
-                                                   values) {};
+                                                         @Override
+                                                         public int size () {
+                                                           return columns.size ();
+                                                         }
+
+                                                         @Override
+                                                         public String get (int index) {
+                                                           return columns.get (index);
+                                                         }
+                                                       }),
+                                                       analyses (),
+                                                       values) {};
+          }
+        });
       }
     });
   }

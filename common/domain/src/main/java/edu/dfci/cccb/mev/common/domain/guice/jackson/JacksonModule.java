@@ -37,6 +37,8 @@ import com.google.inject.Provider;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 
+import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
+
 /**
  * Configures Jackson {@link ObjectMapper}
  * 
@@ -59,21 +61,11 @@ public class JacksonModule implements Module {
     }
   }
 
-  private static final class JacksonObjectMapperModule implements Module {
+  private static final class JacksonObjectMapperModule extends SingletonModule {
 
     @Override
     public void configure (Binder binder) {
       binder.bind (ObjectMapper.class).to (InjectedObjectMapper.class).in (Singleton.class);
-    }
-
-    @Override
-    public int hashCode () {
-      return getClass ().hashCode ();
-    }
-
-    @Override
-    public boolean equals (Object obj) {
-      return obj != null && getClass ().equals (obj.getClass ());
     }
   }
 

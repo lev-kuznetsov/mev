@@ -35,7 +35,7 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 
-import edu.dfci.cccb.mev.common.domain.c3p0.PooledDataSourceProvider;
+import edu.dfci.cccb.mev.common.domain.guice.c3p0.PooledDataSourceProvider;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonIntrospectorBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonModule;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
@@ -54,15 +54,21 @@ public class MevDomainModule implements Module {
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
   public final void configure (Binder binder) {
-    // Persistence
-    bindProperties (binder, load ("/database.properties"));
-    binder.bind (DataSource.class).toProvider (new PooledDataSourceProvider ());
+    binder.install (new SingletonModule () {
 
-    // Jackson
-    binder.install (new JacksonModule () {
       @Override
-      public void configure (JacksonIntrospectorBinder binder) {
-        binder.useInstance (new JaxbAnnotationIntrospector (defaultInstance ()));
+      public void configure (Binder binder) {
+        // Persistence
+        bindProperties (binder, load ("/database.properties"));
+        binder.bind (DataSource.class).toProvider (new PooledDataSourceProvider ());
+
+        // Jackson
+        binder.install (new JacksonModule () {
+          @Override
+          public void configure (JacksonIntrospectorBinder binder) {
+            binder.useInstance (new JaxbAnnotationIntrospector (defaultInstance ()));
+          }
+        });
       }
     });
 
