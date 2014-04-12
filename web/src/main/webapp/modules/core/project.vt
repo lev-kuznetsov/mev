@@ -55,8 +55,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <a href="./" class="button" target="_blank" id="or-proj-open-link"><span id="or-proj-open"></span></a>
         <a href="javascript:{};" class="button" id="or-proj-reset-link"><span id="or-proj-reset">Load New Annotations</span></a>
         <!--<a href="javascript:{};" class="button" id="or-proj-import-preset-list-link"><span id="or-proj-import-preset-list">Back to List</span></a>-->
-        <a href="javascript:{};" class="button button-primary" id="or-proj-import-preset-samples-link"><span id="or-proj-import-preset-samples">Import Selected Samples</span></a>
-        <a href="javascript:{};" class="button button-primary" id="or-proj-import-preset-rows-link"><span id="or-proj-import-preset-rows">Import Selected Rows</span></a>        
+        <a href="javascript:{};" class="button button-primary" id="or-proj-import-preset-samples-link"><span id="or-proj-import-preset-samples">Import Selected Samples &raquo;</span></a>
+        <a href="javascript:{};" class="button button-primary" id="or-proj-import-preset-rows-link"><span id="or-proj-import-preset-rows">Import Selected Rows &raquo;</span></a>        
         <a class="button" bind="exportButton" id="export-button" href="#export"><span class="button-menu" id="or-proj-export"></span></a>
         <a class="button" bind="exporTsvtButton" id="export-tsv-button-link" href="javascript:{Refine._exportTsv();}"><span id="export-tsv-button">Download</span></a>
         <a class="button" bind="updateSet" id="update-set" href="javascript:{};"><span id="update-set-button">Update Set</span></a>
