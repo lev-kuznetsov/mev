@@ -130,6 +130,21 @@ ExporterManager.handlers.exportRows = function(format, ext) {
   document.body.removeChild(form);
 };
 
+ExporterManager.handlers.exportRowsNoNewWindow = function(format, ext) {
+	  var form = ExporterManager.prepareExportRowsForm(format, true, ext);
+	  $('<input />')
+	  .attr("name", "contentType")
+	  .attr("value", "application/x-unknown") // force download
+	  .appendTo(form);
+	  
+	  document.body.appendChild(form);
+
+//	  window.open("about:blank", "refine-export");
+	  form.submit();
+
+	  document.body.removeChild(form);
+	};
+
 ExporterManager.prepareExportRowsForm = function(format, includeEngine, ext) {
   var name = $.trim(theProject.metadata.name.replace(/\W/g, ' ')).replace(/\s+/g, '-');
   var form = document.createElement("form");
