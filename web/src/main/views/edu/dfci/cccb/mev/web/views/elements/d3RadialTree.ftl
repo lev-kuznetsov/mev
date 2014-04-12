@@ -1,8 +1,7 @@
-<div id="vis">
+<svg opacity="1">
 <style type="text/css">
-
 .node circle {
-  fill: #fff;
+  fill: #FFFFFF;
   stroke: steelblue;
   stroke-width: 1.5px;
 }
@@ -13,18 +12,14 @@
 
 .link {
   fill: none;
-  stroke: #ccc;
+  stroke: #CCCCCC;
   stroke-width: 1.5px;
 }
 
 text {
-  fill: #000;
+  fill: #000000;
 }
-
-
 </style>
 
-
-
-</div>
+</svg>
 

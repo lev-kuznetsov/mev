@@ -1278,18 +1278,24 @@ define(
                                         // width
                                         };
 
-                                        d3
-                                                .select(elems[0])
-                                                .append("svg")
-                                                .attr(
-                                                        {
-                                                            width : dendogram.width,
-                                                            height : (dendogram.height + (padding))
-                                                        });
+//                                        d3
+//                                                .select(elems[0])
+//                                                .append("svg")
+//                                                .attr(
+//                                                        {
+//                                                        	id : attr.id,
+//                                                            width : dendogram.width,
+//                                                            height : (dendogram.height + (padding))
+//                                                        });
 
                                         var svg = d3.select(elems[0])
-                                                .select("svg")
-
+                                                .select("svg");
+                                        svg.attr(
+                                              {
+                                            	id : attr.id,
+                                                width : dendogram.width,
+                                                height : (dendogram.height + (padding))
+                                            });
                                         var Cluster = d3.layout
                                                 .cluster()
                                                 .sort(null)
@@ -1309,8 +1315,10 @@ define(
                                                         });
 
                                         var labelsGutter = 50;
-                                        svg.append("g").attr('class',
-                                                'smallDendogram');
+                                        var g = svg.append("g");
+                                        g.attr('class',
+                                        'smallDendogram');
+                                        g.attr('opacity', '1');
 
                                         var dendogramWindow = d3
                                                 .select(elems[0])
@@ -1488,9 +1496,9 @@ define(
                                                         .slice(0, -2) * .9);
                                                         
 
-                                        var heatmapMarginLeft = Math
-                                                .floor(svgWidth * .15), heatmapMarginRight = Math
-                                                .floor(svgWidth * .15), heatmapMarginTop = 200, heatmapMarginBottom = 100, heatmapColumnSelectionsGutter = 0, heatmapRowSelectionsGutter = 0;
+                                        var heatmapMarginLeft = Math.max(Math.floor(svgWidth * .15), 170);
+                                        var heatmapMarginRight = Math.floor(svgWidth * .15);
+                                        var heatmapMarginTop = 200, heatmapMarginBottom = 100, heatmapColumnSelectionsGutter = 0, heatmapRowSelectionsGutter = 0;
 
                                         var heatmapCellsWidth = svgWidth
                                                 - heatmapMarginLeft

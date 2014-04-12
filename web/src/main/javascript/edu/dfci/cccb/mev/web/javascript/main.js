@@ -27,7 +27,10 @@ require.config ({
            '/library/webjars/d3js/3.4.1/d3.min' ],
     retina : [ '/library/webjars/retinajs/0.0.2/retina' ],
     notific8 : [ 'notific8.min' ],
-    ngGrid : ['/container/javascript/ng-grid-2.0.7.min', '//cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.7/ng-grid']
+    ngGrid : ['/container/javascript/ng-grid-2.0.7.min', '//cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.7/ng-grid'],
+    blob : ['/container/javascript/canvasToBlob/Blob'],
+	canvasToBlob : ['/container/javascript/canvasToBlob/canvas-toBlob'],	
+	fileSaver : ['/container/javascript/fileSaver/FileSaver']
   },
   shim : {
     'angular' : {
@@ -63,8 +66,16 @@ require.config ({
     },
     'ngGrid' : {
     	deps : ['jquery', 'angular', 'uiBootstrapTpls']
+    },
+    canvasToBlob : {
+    	deps : ['blob'],
+    	exports : 'canvasToBlob'
+    },
+    fileSaver : {
+    	deps : ['canvasToBlob'],
+    	exports : 'fileSaver'
     }
-
+    
   },
   waitSeconds : "2"
 
@@ -74,13 +85,17 @@ require ([ 'jquery',
           'angular',
           'app',
           'orefine/OrefineBridge',
+          'blob',
+          'canvasToBlob',
+          'fileSaver',
           'bootstrap',
           'css-loader',
           'setmanager/SetManager',
           'presets/PresetManager',
           'mainpanel/MainPanel',
           'retina', 
-          'ngGrid'], function (jquery, angular, app, orb) {
+          'ngGrid'
+          ], function (jquery, angular, app, orb) {
 
   'use strict';
   var $html = angular.element (document.getElementsByTagName ('html')[0]);
