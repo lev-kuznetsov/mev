@@ -12,6 +12,12 @@
 		</selection-set-list>
 		<button class="btn btn-success" ng-click="showAnnotations(selection, 'column')" >Add New</button>
 		<button ng-show="heatmapData.column.selections.length>0" class="btn btn-primary" data-target="#selectionSetAddColumn" data-toggle="modal">Merge Selected</button>
+				<button ng-show="heatmapData.column.selections.length>0" class="btn btn-success pull-right" >
+	        <a href="/dataset/{{heatmapId}}/column/selections?format=tsv">
+	          <i class="icon-white icon-download"></i> Download
+	        </a> 
+    	</button>
+ 
 	</accordion-group>
 
 	<accordion-group heading="Row Sets">
@@ -22,7 +28,12 @@
 					You may define sets using <a href="" ng-click="showAnnotations(selection, 'row')">row annotations</a> or by performing an analysis.				
 		</selection-set-list>
 		<button class="btn btn-success" ng-click="showAnnotations(selection, 'row')" >Add New</button>
-		<button ng-show="heatmapData.row.selections.length>0" class="btn btn-primary" data-target="#selectionSetAddRow" data-toggle="modal">Merge Selected</button>
+		<button ng-show="heatmapData.row.selections.length>0" class="btn btn-primary" data-target="#selectionSetAddRow" data-toggle="modal">Merge Selected</button>		
+		<button ng-show="heatmapData.row.selections.length>0" class="btn btn-success pull-right" >
+	        <a href="/dataset/{{heatmapId}}/row/selections?format=tsv">
+	          <i class="icon-white icon-download"></i> Download
+	        </a> 
+    	</button>
 	</accordion-group>
 </accordion>
 

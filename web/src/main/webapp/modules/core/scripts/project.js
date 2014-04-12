@@ -156,6 +156,8 @@ function initializeUI(uiState) {
 	  $("#export-set-button").hide();
 	  $("#update-set").hide();
 	  $("#update-set-button").hide();	  
+	  $("#export-tsv-button-link").hide();
+	  $("#export-tsv-button").hide();	  
 //	  $("#or-proj-import-preset-list-link").show();
 //	  $("#or-proj-import-preset-lit").show();
 	  if($.url().param('dimension')=="column"){  
@@ -176,6 +178,8 @@ function initializeUI(uiState) {
 	  $("#or-proj-import-preset-samples").hide();
 	  $("#or-proj-import-preset-rows-link").hide();
 	  $("#or-proj-import-preset-rows").hide();
+	  $("#export-tsv-button-link").show();
+	  $("#export-tsv-button").show();
 //	  $("#or-proj-import-preset-list-link").hide();
 //	  $("#or-proj-import-preset-lit").hide();
 	  if(theProject.metadata.customMetadata.dimension)  
@@ -199,6 +203,7 @@ function initializeUI(uiState) {
   $("#or-proj-import-preset-rows").click(Refine._importPresetRows);
   $("#or-proj-import-preset-list").click(Refine._viewToPresetList);
   $("#or-proj-reset").click(Refine._reset);
+  $("export-tsv-button").click(Refine._exportTsv);
   $("#export-set-button").click(Refine._exportSet);
   $("#update-set-button").click(Refine._updateSet);
   $("#close-button").click(Refine._close);  
@@ -212,7 +217,10 @@ function initializeUI(uiState) {
 
   ui.extensionBar = new ExtensionBar(ui.extensionBarDiv); // construct the menu first so we can resize everything else
   ui.exporterManager = new ExporterManager($("#export-button"));
-
+  Refine._exportTsv = function(){
+		ExporterManager.handlers.exportRowsNoNewWindow("tsv", "tsv");
+	};
+	
   ui.leftPanelTabs.tabs({ selected: 0 });
   resize();
   resizeTabs();
