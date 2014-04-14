@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/lev-kuznetsov/mev.svg?branch=crystal)](https://travis-ci.org/lev-kuznetsov/mev) [![Coverage Status](https://coveralls.io/repos/lev-kuznetsov/mev/badge.png?branch=crystal)](https://coveralls.io/r/lev-kuznetsov/mev?branch=crystal)
+[![Build Status](https://travis-ci.org/lev-kuznetsov/mev.svg?branch=crystal)](https://travis-ci.org/lev-kuznetsov/mev)
 ===
 
 MultiExperiment Viewer

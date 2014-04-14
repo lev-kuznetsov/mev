@@ -24,15 +24,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet ("/test/servlet")
-public class TestServlet extends HttpServlet {
+@WebServlet ("/test/servlet555")
+public class TestServlet555 extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
-  /* (non-Javadoc)
-   * @see
-   * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
-   * javax.servlet.http.HttpServletResponse) */
-  @Override
   protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     resp.sendError (555);
   }

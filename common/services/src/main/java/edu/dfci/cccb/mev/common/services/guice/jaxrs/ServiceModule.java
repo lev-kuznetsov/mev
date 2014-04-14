@@ -23,7 +23,6 @@ import static com.google.inject.name.Names.named;
 import static java.util.Arrays.asList;
 import static java.util.Collections.enumeration;
 import static javax.servlet.http.HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE;
-import static org.apache.log4j.Level.INFO;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -456,9 +455,6 @@ public class ServiceModule implements Module {
         public void init (ServletConfig servletConfig) throws ServletException {
           super.init (servletConfig);
 
-          if (!log.isEnabledFor (INFO))
-            return;
-
           ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
           PrintStream info = new PrintStream (buffer);
           info.println ("JAX-RS");
@@ -659,7 +655,7 @@ public class ServiceModule implements Module {
 
                     @Override
                     public void remove () {
-                      iterator.remove ();
+                      throw new UnsupportedOperationException ();
                     }
                   };
                 }

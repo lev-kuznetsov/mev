@@ -16,13 +16,21 @@
 
 package edu.dfci.cccb.mev.common.test.jetty;
 
+import static org.apache.log4j.lf5.util.StreamUtils.getBytes;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
- * Jetty9 wrapper, relies on servlet 3 XML-less configuration via annotations
+ * Jetty9 wrapper
  * 
  * @author levk
  */
@@ -31,10 +39,16 @@ public class Jetty9 implements AutoCloseable {
   private Server server;
 
   public Jetty9 () throws Exception {
-    WebAppContext context = new WebAppContext ();
-    context.setConfigurations (new Configuration[] { new Servlet3Jetty9AnnotationConfiguration () });
+    this (new WebAppContext () {
+      {
+        setConfigurations (new Configuration[] { new Servlet3Jetty9AnnotationConfiguration () });
+      }
+    });
+  }
+
+  public Jetty9 (Handler handler) throws Exception {
     server = new Server (0);
-    server.setHandler (context);
+    server.setHandler (handler);
     server.start ();
   }
 
@@ -48,5 +62,17 @@ public class Jetty9 implements AutoCloseable {
   public void close () throws Exception {
     server.stop ();
     server.join ();
+  }
+
+  public HttpURLConnection connect (String uri) throws MalformedURLException, IOException {
+    return (HttpURLConnection) new URL ("http://localhost:" + port () + uri).openConnection ();
+  }
+
+  public int rc (String uri) throws MalformedURLException, IOException {
+    return connect (uri).getResponseCode ();
+  }
+
+  public String get (String uri) throws MalformedURLException, IOException {
+    return new String (getBytes (connect (uri).getInputStream ()));
   }
 }

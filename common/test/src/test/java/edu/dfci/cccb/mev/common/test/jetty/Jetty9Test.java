@@ -16,8 +16,11 @@
 
 package edu.dfci.cccb.mev.common.test.jetty;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.net.HttpURLConnection;
@@ -39,8 +42,8 @@ public class Jetty9Test {
   @Test
   public synchronized void servlet () throws Exception {
     try (Jetty9 jetty = new Jetty9 ()) {
-      assertEquals (555,
-                    ((HttpURLConnection) new URL ("http://localhost:" + jetty.port () + "/test/servlet").openConnection ()).getResponseCode ());
+      assertThat (jetty.rc ("/test/servlet555"), is (555));
+      assertThat (jetty.get ("/test/servlet200"), startsWith ("servlet200"));
     }
   }
 

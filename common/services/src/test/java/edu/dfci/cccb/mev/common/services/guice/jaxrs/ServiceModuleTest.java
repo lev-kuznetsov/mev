@@ -73,11 +73,6 @@ import com.google.inject.servlet.GuiceServletContextListener;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonIntrospectorBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonModule;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
-import edu.dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationConfigurer;
-import edu.dfci.cccb.mev.common.services.guice.jaxrs.MessageWriterBinder;
-import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
-import edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceBinder;
-import edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceModule;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceModuleTest.Pojo.Inner;
 
 public class ServiceModuleTest {
@@ -97,6 +92,12 @@ public class ServiceModuleTest {
     @GET
     public String echo (@QueryParam ("hello") String hello) {
       return hello;
+    }
+  }
+
+  public static final class SimpleProvider implements javax.inject.Provider<Simple> {
+    public Simple get () {
+      return new Simple ();
     }
   }
 
