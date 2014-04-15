@@ -372,7 +372,6 @@ define(
                                                 return d.id
                                             })
                                             
-                                            console.log(scope.selectionParams.color)
                                             
                                             $http({
                                                 method:"POST", 
@@ -804,7 +803,6 @@ define(
                                 		if(scope.isTwoSample()){
                                 			postRequest.assumeEqualVariance=scope.params.assumeEqualVariance
                                 		}
-                                		console.debug(postRequest);
                                 		return postRequest;                                		
                                 	};                                	
                                     scope.testInit = function(){
@@ -2524,7 +2522,6 @@ define(
                                                     }
                                                 })
                                                 .success(function(response){
-                                                        console.log(params)
                                                         scope.$emit('SeletionAddedEvent', params.dimension.type);
                                                         var message = "Added New Selection!";
                                                         var header = "Heatmap Selection Addition";
@@ -2759,9 +2756,7 @@ define(
                                                             function(d) {
                                                                 nodeclick(d, canvas, type)
                                                             })
-                                                    .on('mouseover', function(){
-                                                        //console.log(this)
-                                                    });
+                                                    
 
                                         };
                                         
