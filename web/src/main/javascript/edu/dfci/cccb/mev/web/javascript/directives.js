@@ -271,7 +271,6 @@ define(
                                                 return d.id
                                             })
                                             
-                                            console.log(scope.selectionParams.color)
                                             
                                             $http({
                                                 method:"POST", 
@@ -2263,7 +2262,7 @@ define(
                                                     data.column,
                                                     data.row);
 
-                                            if(typeof scope.heatmapViews.side!="undefined"){
+                                            if(typeof scope.heatmapViews.side !="undefined"){
                                                 
                                                 scope.treeSelections['vertical'] = [];
 	                                            if (scope.heatmapViews.side.type == "Hierarchical Clustering") {
@@ -2278,6 +2277,23 @@ define(
 	                                                scope.heatmapData.row.keys = scope.heatmapViews.side.keys
 	                                                drawCluster(scope.heatmapViews.side,  dendogramLeftWindow);
 	                                            }
+                                            }
+                                            
+                                            if(typeof scope.heatmapViews.top !="undefined"){
+                                                
+                                                scope.treeSelections['horizontal'] = [];
+                                                if (scope.heatmapViews.top.type == "Hierarchical Clustering") {
+                                                    
+                                                    var tree = scope.heatmapViews.top.root;
+                                                    drawTree(dendogramTopWindow, 
+                                                            Cluster,
+                                                            scope.heatmapViews.top.root,
+                                                            'horizontal');
+                                                } else if (scope.heatmapViews.top.type == "K-means Clustering") {
+                                                    
+                                                    scope.heatmapData.column.keys = scope.heatmapViews.top.keys
+                                                    drawCluster(scope.heatmapViews.top,  dendogramTopWindow);
+                                                }
                                             }
 
                                         };
