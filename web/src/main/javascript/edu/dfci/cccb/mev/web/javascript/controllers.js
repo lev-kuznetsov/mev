@@ -301,7 +301,6 @@ define(
                                              .attr("xmlns", "http://www.w3.org/2000/svg")
                                              .node().parentNode.innerHTML;
                                         	  
-                                        	 //console.log(html);
                                         	 var imgsrc = 'data:image/svg+xml;base64,'+ btoa(html);
 //                                        	 var img = '<img src="'+imgsrc+'">';
 //                                        	 d3.select("#svgdataurl").html(img);
@@ -460,8 +459,7 @@ define(
                                                         	}
                                                         }else{
                                                         	annotationsUrl += "?"+randomProjectId;
-                                                        }
-                                                        console.log("annotationsUrl:"+annotationsUrl);                                                       ;
+                                                        }                                                       ;
                                                         $scope.annotationsUrl = annotationsUrl;                                                             
                                                         var elm = document.querySelector('#annotationsTabLink');
                                                         $(elm).trigger('click');
@@ -469,8 +467,7 @@ define(
                                         
                                        
                                        $scope.$on('SeletionAddedEvent', function(event, dimensionType){
-                                    	  console.debug("selection added: "+angular.toJson(dimensionType)+"$scope.heatmapData.column.selections:"+angular.toJson($scope.heatmapData.column.selections));
-
+                                    	  
                                     	  if(dimensionType=='column'){
                                         	  MevSelectionService.getColumnSelectionQ().then(function(d){
                                         		  $scope.heatmapData.column.selections=d;
