@@ -6,7 +6,7 @@
   <artifactId>mev-common-web</artifactId>
   <packaging>jar</packaging>
 
-  <name>MeV Common Plugin Slim Client Component</name>
+  <name>MeV Common Module Slim Client Component</name>
   <url>http://github.com/dfci-cccb/mev</url>
 
   <parent>

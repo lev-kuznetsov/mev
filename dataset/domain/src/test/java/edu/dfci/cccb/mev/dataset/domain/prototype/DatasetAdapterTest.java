@@ -14,43 +14,43 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain.support.json;
+package edu.dfci.cccb.mev.dataset.domain.prototype;
 
-import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
-import static com.google.inject.Guice.createInjector;
 import static com.mycila.inject.internal.guava.collect.ImmutableMap.of;
 import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
-
-import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonIntrospectorBinder;
-import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonModule;
-import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values.Value;
 
-public class DatasetJsonSerializerTest {
+public class DatasetAdapterTest {
+
+  private DatasetAdapter<String, Double> dataset1;
+  private DatasetAdapter<String, Double> dataset2;
+  private DatasetAdapter<String, Double> dataset3;
+  private Map<String, Dataset<String, Double>> workspace;
 
   @SuppressWarnings ("unchecked")
-  @Test
-  public void serialize () throws Exception {
-    Dataset<String, Double> dataset = mock (Dataset.class);
-    when (dataset.name ()).thenReturn ("mock");
+  private DatasetAdapter<String, Double> createDataset (String name) throws Exception {
     Dimension<String> row = mock (Dimension.class);
     when (row.name ()).thenReturn ("row");
     when (row.iterator ()).thenReturn (asList ("r1", "r2", "r3").iterator ());
@@ -60,8 +60,6 @@ public class DatasetJsonSerializerTest {
     Map<String, Dimension<String>> dimensions = new LinkedHashMap<> ();
     dimensions.put ("row", row);
     dimensions.put ("column", column);
-    when (dataset.dimensions ()).thenReturn (dimensions);
-    when (dataset.analyses ()).thenReturn (new HashMap<String, Analysis> ());
     Values<String, Double> values = mock (Values.class);
     List<Value<String, Double>> vals = asList (new Value<String, Double> (.0, of ("row", "r1", "column", "c1")),
                                                new Value<String, Double> (.1, of ("row", "r1", "column", "c2")),
@@ -76,33 +74,84 @@ public class DatasetJsonSerializerTest {
                                                new Value<String, Double> (.33, of ("row", "r3", "column", "c3")),
                                                new Value<String, Double> (-.44, of ("row", "r3", "column", "c4")));
     when (values.get ((Iterable<Map<String, String>>) anyObject ())).thenReturn (vals);
-    when (dataset.values ()).thenReturn (values);
+    return new DatasetAdapter<String, Double> (name,
+                                               dimensions,
+                                               (Map<String, Analysis>) new HashMap<String, Analysis> (),
+                                               values) {};
+  }
 
-    assertEquals (createInjector (new JacksonModule () {
-      public void configure (JacksonSerializerBinder binder) {
-        binder.with (DatasetJsonSerializer.class);
-      }
+  @Before
+  public void setUpDataset () throws Exception {
+    dataset1 = createDataset ("mock");
+    dataset2 = createDataset ("mock2");
+    dataset3 = createDataset ("mock");
+    workspace = DatasetAdapter.workspace ();
+  }
 
-      public void configure (JacksonIntrospectorBinder binder) {
-        binder.useInstance (new JaxbAnnotationIntrospector (defaultInstance ()));
-      }
-    }).getInstance (ObjectMapper.class).writeValueAsString (dataset),
-                  "{\"name\":\"mock\",\"dimensions\":[{\"name\":\"row\",\"keys\":[\"r"
-                          + "1\",\"r2\",\"r3\"]},{\"name\":\"column\",\"keys\":[\"c1\",\"c2\""
-                          + ",\"c3\",\"c4\"]}],\"values\":[{\"coordinates\":{\"column\":\"c1\""
-                          + ",\"row\":\"r1\"},\"value\":0.0},{\"coordinates\":{\"column\":\"c"
-                          + "2\",\"row\":\"r1\"},\"value\":0.1},{\"coordinates\":{\"column\":"
-                          + "\"c3\",\"row\":\"r1\"},\"value\":0.2},{\"coordinates\":{\"column"
-                          + "\":\"c4\",\"row\":\"r1\"},\"value\":0.3},{\"coordinates\":{\"col"
-                          + "umn\":\"c1\",\"row\":\"r2\"},\"value\":-0.1},{\"coordinates\":{\""
-                          + "column\":\"c2\",\"row\":\"r2\"},\"value\":-0.2},{\"coordinates\""
-                          + ":{\"column\":\"c3\",\"row\":\"r2\"},\"value\":-0.3},{\"coordinat"
-                          + "es\":{\"column\":\"c4\",\"row\":\"r2\"},\"value\":-0.4},{\"coord"
-                          + "inates\":{\"column\":\"c1\",\"row\":\"r3\"},\"value\":0.11},{\"c"
-                          + "oordinates\":{\"column\":\"c2\",\"row\":\"r3\"},\"value\":-0.22}"
-                          + ",{\"coordinates\":{\"column\":\"c3\",\"row\":\"r3\"},\"value\":0"
-                          + ".33},{\"coordinates\":{\"column\":\"c4\",\"row\":\"r3\"},\"value"
-                          + "\":-0.44}],\"analyses\":[]}",
-                  false);
+  @Test
+  public void datasetName () throws Exception {
+    assertThat (dataset1.name (), equalTo ("mock"));
+  }
+
+  @Test
+  public void datasetDimensions () throws Exception {
+    assertThat (dataset1.dimensions ().containsKey ("row"), is (true));
+    assertThat (dataset1.dimensions ().containsKey ("column"), is (true));
+  }
+
+  @Test
+  public void datasetAnalyses () throws Exception {
+    assertThat (dataset1.analyses ().isEmpty (), is (true));
+  }
+
+  @Test
+  public void datasetValues () throws Exception {
+    assertThat (dataset1.values (), is (notNullValue ()));
+  }
+
+  @Test
+  public void workspaceEmpty () throws Exception {
+    assertThat (workspace.isEmpty (), is (true));
+  }
+
+  @Test
+  public void workspacePut () throws Exception {
+    assertThat (workspace.isEmpty (), is (true));
+    assertThat (workspace.put ("mock", dataset1), is (nullValue ()));
+    assertThat (workspace.size (), is (1));
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void workspacePutWithWrongName () throws Exception {
+    assertThat (workspace.isEmpty (), is (true));
+    assertThat (workspace.put ("mock4", dataset1), is (nullValue ()));
+    fail ();
+  }
+
+  @Test
+  public void workspaceDoublePutSameName () throws Exception {
+    assertThat (workspace.isEmpty (), is (true));
+    assertThat (workspace.put ("mock", dataset1), is (nullValue ()));
+    assertThat (workspace.size (), is (1));
+    assertThat (workspace.put ("mock", dataset3), is ((Dataset<String, Double>) dataset1));
+    assertThat (workspace.size (), is (1));
+  }
+
+  @Test
+  public void workspaceDoublePutDifferentName () throws Exception {
+    assertThat (workspace.isEmpty (), is (true));
+    assertThat (workspace.put ("mock", dataset1), is (nullValue ()));
+    assertThat (workspace.size (), is (1));
+    assertThat (workspace.put ("mock2", dataset2), is (nullValue ()));
+    assertThat (workspace.size (), is (2));
+  }
+
+  @Test
+  public void workspaceDelete () throws Exception {
+    assertThat (workspace.isEmpty (), is (true));
+    assertThat (workspace.put ("mock", dataset1), is (nullValue ()));
+    assertThat (workspace.size (), is (1));
+    assertThat (workspace.remove ("mock"), is (notNullValue ()));
+    assertThat (workspace.isEmpty (), is (true));
   }
 }

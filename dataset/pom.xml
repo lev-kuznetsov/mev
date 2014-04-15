@@ -5,7 +5,7 @@
   <artifactId>mev-dataset</artifactId>
   <packaging>pom</packaging>
 
-  <name>MeV Dataset Plugin</name>
+  <name>MeV Dataset Module</name>
   <url>http://github.com/dfci-cccb/mev</url>
 
   <parent>

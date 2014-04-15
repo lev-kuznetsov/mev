@@ -58,4 +58,11 @@ public class ResourceServletTest {
                                                                                           .getInputStream ())));
     }
   }
+
+  @Test
+  public void notFound () throws Exception {
+    try (Jetty9 jetty = new Jetty9 ()) {
+      assertEquals (404, jetty.rc ("/not_found"));
+    }
+  }
 }

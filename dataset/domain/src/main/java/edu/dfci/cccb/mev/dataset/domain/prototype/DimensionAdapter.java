@@ -67,6 +67,29 @@ public abstract class DimensionAdapter <K> implements Dimension<K> {
     };
   }
 
+  /* (non-Javadoc)
+   * @see java.lang.Object#hashCode() */
+  @Override
+  public int hashCode () {
+    int result = 0;
+    for (K key : this)
+      result ^= key.hashCode ();
+    return result;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#equals(java.lang.Object) */
+  @Override
+  public boolean equals (Object obj) {
+    if (obj instanceof Dimension) {
+      Iterator<?> that = ((Dimension<?>) obj).iterator ();
+      Iterator<K> current = iterator ();
+      while (that.hasNext () && current.hasNext () && (current.next ().equals (that.next ())));
+      return !that.hasNext () && !current.hasNext ();
+    }
+    return false;
+  }
+
   @SafeVarargs
   public static <K> Map<String, Dimension<K>> dimensions (final Dimension<K>... dimensions) {
     return new AbstractMap<String, Dimension<K>> () {

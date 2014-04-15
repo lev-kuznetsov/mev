@@ -14,24 +14,14 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.domain.guice;
+package edu.dfci.cccb.mev.common.web;
 
-import static edu.dfci.cccb.mev.common.domain.guice.Modules.discover;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-import org.junit.Test;
+import edu.dfci.cccb.mev.common.web.servlet.ResourceServletTest;
 
-import com.google.inject.Module;
-
-public class ModulesTest {
-
-  @Test
-  public void discovery () {
-    boolean foundMevDomainModule = false;
-    for (Module module : discover ())
-      if (module instanceof MevDomainModule)
-        foundMevDomainModule = true;
-    assertThat (foundMevDomainModule, is (true));
-  }
-}
+@RunWith (Suite.class)
+@SuiteClasses ({ ResourceServletTest.class })
+public class CommonWebTests {}

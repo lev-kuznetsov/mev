@@ -18,29 +18,38 @@ package edu.dfci.cccb.mev.common.services.guice.jaxrs;
 
 import static com.google.inject.Guice.createInjector;
 import static java.util.EnumSet.allOf;
-import static org.apache.log4j.lf5.util.StreamUtils.getBytes;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.net.URL;
-import java.util.Set;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.DispatcherType;
 import javax.servlet.ServletContextListener;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -48,46 +57,53 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
+import lombok.Setter;
+import lombok.SneakyThrows;
+
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.junit.Test;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
-import com.google.inject.Binder;
 import com.google.inject.Injector;
+import com.google.inject.Key;
 import com.google.inject.Module;
-import com.google.inject.multibindings.Multibinder;
+import com.google.inject.TypeLiteral;
 import com.google.inject.servlet.GuiceFilter;
 import com.google.inject.servlet.GuiceServletContextListener;
 
-import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonIntrospectorBinder;
-import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonModule;
-import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
-import edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceModuleTest.Pojo.Inner;
+import edu.dfci.cccb.mev.common.test.jetty.Jetty9;
 
 public class ServiceModuleTest {
 
+  private Jetty9 serve (final Module... modules) throws Exception {
+    return new Jetty9 (new ServletContextHandler () {
+      {
+        ServletContextListener context = new GuiceServletContextListener () {
+
+          @Override
+          protected Injector getInjector () {
+            return createInjector (modules);
+          }
+        };
+
+        addEventListener (context);
+        addFilter (GuiceFilter.class, "/*", allOf (DispatcherType.class));
+        addServlet (DefaultServlet.class, "/");
+      }
+    });
+  }
+
   @Test
   public void empty () throws Exception {
-    try {
-      serve (new ServiceModule ());
-    } finally {
-      stop ();
-    }
+    try (Jetty9 j = serve ()) {}
   }
 
   @Path ("/simple")
-  public static final class Simple {
+  public static final class Echo {
 
     @GET
     public String echo (@QueryParam ("hello") String hello) {
@@ -95,43 +111,63 @@ public class ServiceModuleTest {
     }
   }
 
-  public static final class SimpleProvider implements javax.inject.Provider<Simple> {
-    public Simple get () {
-      return new Simple ();
+  public static class TestServiceModule extends ServiceModule {
+    public void configure (ServiceBinder binder) {
+      binder.service ("/test/*");
     }
   }
 
   @Test
-  public void simpleEcho () throws Exception {
-    try {
-      assertThat (connect (serve (new ServiceModule () {
-        public void configure (ResourceBinder binder) {
-          binder.publish (Simple.class).in (Singleton.class);
-        }
+  public void publishClass () throws Exception {
+    try (Jetty9 j = serve (new TestServiceModule () {
+      public void configure (ResourceBinder binder) {
+        binder.publish (Echo.class).in (Singleton.class);
+      }
+    })) {
+      assertThat (j.get ("/test/simple?hello=world"), startsWith ("world"));
+    }
+  }
 
-        public void configure (ServiceBinder binder) {
-          binder.service ("/test/*");
-        }
-      }), "/test/simple?hello=world"), is ("world"));
-    } finally {
-      stop ();
+  @Test
+  public void publishTypeLiteral () throws Exception {
+    try (Jetty9 j = serve (new TestServiceModule () {
+      public void configure (ResourceBinder binder) {
+        binder.publish (new TypeLiteral<Echo> () {}).in (Singleton.class);
+      }
+    })) {
+      assertThat (j.get ("/test/simple?hello=world"), startsWith ("world"));
+    }
+  }
+
+  @Test
+  public void publishKey () throws Exception {
+    try (Jetty9 j = serve (new TestServiceModule () {
+      public void configure (ResourceBinder binder) {
+        binder.publish (Key.get (Echo.class)).in (Singleton.class);
+      }
+    })) {
+      assertThat (j.get ("/test/simple?hello=world"), startsWith ("world"));
     }
   }
 
   @XmlAccessorType (XmlAccessType.NONE)
   @XmlRootElement
   public static final class Pojo {
+    @XmlRootElement
+    @XmlAccessorType (XmlAccessType.NONE)
     public static class Inner {}
 
-    private final @JsonProperty @XmlAttribute String word;
-    private final @JsonProperty @XmlAttribute int number;
-    private final @XmlAttribute Inner inner;
+    private @Setter @JsonProperty @XmlAttribute String word;
+    private @Setter @JsonProperty @XmlAttribute int number;
+    private @Setter @XmlAttribute Inner inner;
 
     public Pojo (String word, int number) {
       this.word = word;
       this.number = number;
       this.inner = new Inner ();
     }
+
+    public Pojo () {}
   }
 
   @Path ("/pojo")
@@ -148,7 +184,12 @@ public class ServiceModuleTest {
 
   @Provider
   public static class JsonWriter implements MessageBodyWriter<Object> {
-    private @Inject ObjectMapper mapper;
+    private ObjectMapper mapper;
+
+    @Inject
+    public JsonWriter (ObjectMapper mapper) {
+      this.mapper = mapper;
+    }
 
     public boolean isWriteable (Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
       return true;
@@ -165,231 +206,565 @@ public class ServiceModuleTest {
     }
   }
 
+  public static class JsonWriterProvider implements com.google.inject.Provider<JsonWriter> {
+    private @Inject ObjectMapper mapper;
+
+    public JsonWriter get () {
+      return new JsonWriter (mapper);
+    }
+  }
+
+  public static class PojoPublishingTestServiceModule extends TestServiceModule {
+    public void configure (ResourceBinder binder) {
+      binder.publish (PojoService.class).to (PojoServiceImpl.class);
+    }
+  }
+
   @Test
-  public void jacksonPojo () throws Exception {
-    try {
-      assertThat (connect (serve (new ServiceModule () {
-        public void configure (ResourceBinder binder) {
-          binder.publish (PojoService.class).to (PojoServiceImpl.class).in (Singleton.class);
-        }
+  public void writerClass () throws Exception {
+    try (Jetty9 j = serve (new PojoPublishingTestServiceModule () {
+      public void configure (MessageWriterBinder binder) {
+        binder.use (JsonWriter.class);
+      }
+    })) {
+      assertThat (j.get ("/test/pojo?word=world&number=5"), startsWith ("{\"word\":\"world\",\"number\":5}"));
+    }
+  }
 
-        public void configure (MessageWriterBinder binder) {
-          binder.use (JsonWriter.class);
-        }
+  @Test
+  public void writerTypeLiteral () throws Exception {
+    try (Jetty9 j = serve (new PojoPublishingTestServiceModule () {
+      public void configure (MessageWriterBinder binder) {
+        binder.use (new TypeLiteral<JsonWriter> () {});
+      }
+    })) {
+      assertThat (j.get ("/test/pojo?word=world&number=5"), startsWith ("{\"word\":\"world\",\"number\":5}"));
+    }
+  }
 
-        public void configure (ServiceBinder binder) {
-          binder.service ("/test/*");
-        }
-      }, new JacksonModule () {
-        public void configure (JacksonIntrospectorBinder binder) {
-          binder.useInstance (new JacksonAnnotationIntrospector ());
-        }
-      }), "/test/pojo?word=world&number=5"),
-                  is ("{\"word\":\"world\",\"number\":5}"));
-    } finally {
-      stop ();
+  @Test
+  public void writerKey () throws Exception {
+    try (Jetty9 j = serve (new PojoPublishingTestServiceModule () {
+      public void configure (MessageWriterBinder binder) {
+        binder.use (Key.get (JsonWriter.class));
+      }
+    })) {
+      assertThat (j.get ("/test/pojo?word=world&number=5"), startsWith ("{\"word\":\"world\",\"number\":5}"));
+    }
+  }
+
+  @Test
+  public void writerProviderClass () throws Exception {
+    try (Jetty9 j = serve (new PojoPublishingTestServiceModule () {
+      public void configure (MessageWriterBinder binder) {
+        binder.useProvider (JsonWriterProvider.class);
+      }
+    })) {
+      assertThat (j.get ("/test/pojo?word=world&number=5"), startsWith ("{\"word\":\"world\",\"number\":5}"));
+    }
+  }
+
+  @Test
+  public void writerProviderTypeLiteral () throws Exception {
+    try (Jetty9 j = serve (new PojoPublishingTestServiceModule () {
+      public void configure (MessageWriterBinder binder) {
+        binder.useProvider (new TypeLiteral<JsonWriterProvider> () {});
+      }
+    })) {
+      assertThat (j.get ("/test/pojo?word=world&number=5"), startsWith ("{\"word\":\"world\",\"number\":5}"));
+    }
+  }
+
+  @Test
+  public void writerProviderKey () throws Exception {
+    try (Jetty9 j = serve (new PojoPublishingTestServiceModule () {
+      public void configure (MessageWriterBinder binder) {
+        binder.useProvider (Key.get (JsonWriterProvider.class));
+      }
+    })) {
+      assertThat (j.get ("/test/pojo?word=world&number=5"), startsWith ("{\"word\":\"world\",\"number\":5}"));
+    }
+  }
+
+  @Test
+  public void writerProviderInstance () throws Exception {
+    try (Jetty9 j = serve (new PojoPublishingTestServiceModule () {
+      public void configure (MessageWriterBinder binder) {
+        binder.useProvider (new JsonWriterProvider ());
+      }
+    })) {
+      assertThat (j.get ("/test/pojo?word=world&number=5"), startsWith ("{\"word\":\"world\",\"number\":5}"));
+    }
+  }
+
+  @Test
+  public void writerInstance () throws Exception {
+    try (Jetty9 j = serve (new PojoPublishingTestServiceModule () {
+      public void configure (MessageWriterBinder binder) {
+        binder.useInstance (new JsonWriter (new ObjectMapper ()));
+      }
+    })) {
+      assertThat (j.get ("/test/pojo?word=world&number=5"), startsWith ("{\"word\":\"world\",\"number\":5}"));
+    }
+  }
+
+  @Test
+  public void writerConstructor () throws Exception {
+    try (Jetty9 j = serve (new PojoPublishingTestServiceModule () {
+      @SneakyThrows
+      public void configure (MessageWriterBinder binder) {
+        binder.useConstructor (JsonWriter.class.getConstructor (ObjectMapper.class));
+      }
+    })) {
+      assertThat (j.get ("/test/pojo?word=world&number=5"), startsWith ("{\"word\":\"world\",\"number\":5}"));
+    }
+  }
+
+  @Test
+  public void writerContstructorTypeLiteral () throws Exception {
+    try (Jetty9 j = serve (new PojoPublishingTestServiceModule () {
+      @SneakyThrows
+      public void configure (MessageWriterBinder binder) {
+        binder.useConstructor (JsonWriter.class.getConstructor (ObjectMapper.class), new TypeLiteral<JsonWriter> () {});
+      }
+    })) {
+      assertThat (j.get ("/test/pojo?word=world&number=5"), startsWith ("{\"word\":\"world\",\"number\":5}"));
+    }
+  }
+
+  public static class RestException extends Exception {
+    private static final long serialVersionUID = 1L;
+  }
+
+  @Path ("/fail")
+  public static class ExceptionService {
+    @GET
+    public void fail () throws RestException {
+      throw new RestException ();
+    }
+  }
+
+  @Provider
+  public static class RestExceptionMapper implements ExceptionMapper<RestException> {
+    public Response toResponse (RestException exception) {
+      Response result = mock (Response.class);
+      when (result.getMetadata ()).thenReturn (new MultivaluedHashMap<String, Object> ());
+      when (result.getStatus ()).thenReturn (567);
+      return result;
+    }
+  }
+
+  public static class RestExceptionMapperProvider implements com.google.inject.Provider<RestExceptionMapper> {
+    public RestExceptionMapper get () {
+      return new RestExceptionMapper ();
+    }
+  }
+
+  public static class ExceptionTestServiceModule extends TestServiceModule {
+    public void configure (ResourceBinder binder) {
+      binder.publish (ExceptionService.class);
+    }
+  }
+
+  @Test
+  public void exceptionClass () throws Exception {
+    try (Jetty9 j = serve (new ExceptionTestServiceModule () {
+      public void configure (ExceptionBinder binder) {
+        binder.use (RestExceptionMapper.class);
+      }
+    })) {
+      assertThat (j.rc ("/test/fail"), is (567));
+    }
+  }
+
+  @Test
+  public void exceptionTypeLiteral () throws Exception {
+    try (Jetty9 j = serve (new ExceptionTestServiceModule () {
+      public void configure (ExceptionBinder binder) {
+        binder.use (new TypeLiteral<RestExceptionMapper> () {});
+      }
+    })) {
+      assertThat (j.rc ("/test/fail"), is (567));
+    }
+  }
+
+  @Test
+  public void exceptionKey () throws Exception {
+    try (Jetty9 j = serve (new ExceptionTestServiceModule () {
+      public void configure (ExceptionBinder binder) {
+        binder.use (Key.get (RestExceptionMapper.class));
+      }
+    })) {
+      assertThat (j.rc ("/test/fail"), is (567));
+    }
+  }
+
+  @Test
+  public void exceptionInstance () throws Exception {
+    try (Jetty9 j = serve (new ExceptionTestServiceModule () {
+      public void configure (ExceptionBinder binder) {
+        binder.useInstance (new RestExceptionMapper ());
+      }
+    })) {
+      assertThat (j.rc ("/test/fail"), is (567));
+    }
+  }
+
+  @Test
+  public void exceptionProviderClass () throws Exception {
+    try (Jetty9 j = serve (new ExceptionTestServiceModule () {
+      public void configure (ExceptionBinder binder) {
+        binder.useProvider (RestExceptionMapperProvider.class);
+      }
+    })) {
+      assertThat (j.rc ("/test/fail"), is (567));
+    }
+  }
+
+  @Test
+  public void exceptionProviderTypeLiteral () throws Exception {
+    try (Jetty9 j = serve (new ExceptionTestServiceModule () {
+      public void configure (ExceptionBinder binder) {
+        binder.useProvider (new TypeLiteral<RestExceptionMapperProvider> () {});
+      }
+    })) {
+      assertThat (j.rc ("/test/fail"), is (567));
+    }
+  }
+
+  @Test
+  public void exceptionProviderKey () throws Exception {
+    try (Jetty9 j = serve (new ExceptionTestServiceModule () {
+      public void configure (ExceptionBinder binder) {
+        binder.useProvider (Key.get (RestExceptionMapperProvider.class));
+      }
+    })) {
+      assertThat (j.rc ("/test/fail"), is (567));
+    }
+  }
+
+  @Test
+  public void exceptionProviderInstance () throws Exception {
+    try (Jetty9 j = serve (new ExceptionTestServiceModule () {
+      public void configure (ExceptionBinder binder) {
+        binder.useProvider (new RestExceptionMapperProvider ());
+      }
+    })) {
+      assertThat (j.rc ("/test/fail"), is (567));
+    }
+  }
+
+  @Test
+  public void exceptionConstructor () throws Exception {
+    try (Jetty9 j = serve (new ExceptionTestServiceModule () {
+      @SneakyThrows
+      public void configure (ExceptionBinder binder) {
+        binder.useConstructor (RestExceptionMapper.class.getConstructor ());
+      }
+    })) {
+      assertThat (j.rc ("/test/fail"), is (567));
+    }
+  }
+
+  @Test
+  public void exceptionConstructorTypeLiteral () throws Exception {
+    try (Jetty9 j = serve (new ExceptionTestServiceModule () {
+      @SneakyThrows
+      public void configure (ExceptionBinder binder) {
+        binder.useConstructor (RestExceptionMapper.class.getConstructor (), new TypeLiteral<RestExceptionMapper> () {});
+      }
+    })) {
+      assertThat (j.rc ("/test/fail"), is (567));
     }
   }
 
   @Provider
   @Produces (MediaType.APPLICATION_JSON)
-  public static class NegotiatedJsonWriter extends JsonWriter {}
-
-  public static class InnerSerializer extends JsonSerializer<Inner> {
-    public void serialize (Inner value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
-                                                                                        JsonProcessingException {
-      jgen.writeStartObject ();
-      jgen.writeStringField ("iNNer", "InnER");
-      jgen.writeEndObject ();
-    }
-
-    public Class<Inner> handledType () {
-      return Inner.class;
+  public static class AnnotatedJsonWriter extends JsonWriter {
+    @Inject
+    public AnnotatedJsonWriter (ObjectMapper mapper) {
+      super (mapper);
     }
   }
 
   @Provider
-  @Produces (MediaType.TEXT_PLAIN)
-  public static class NegotiatedTextWriter implements MessageBodyWriter<Object> {
+  @Produces ("application/x-custom")
+  public static class CustomWriter implements MessageBodyWriter<Pojo> {
     public boolean isWriteable (Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-      return true;
+      return Pojo.class.isAssignableFrom (type);
     }
 
-    public long getSize (Object t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
+    public long getSize (Pojo t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
       return -1;
     }
 
-    public void writeTo (Object t, Class<?> y, Type e, Annotation[] a,
-                         MediaType m, MultivaluedMap<String, Object> h,
-                         OutputStream o) throws IOException, WebApplicationException {
-      o.write (t.getClass ().getSimpleName ().getBytes ());
+    public void writeTo (Pojo t,
+                         Class<?> type,
+                         Type genericType,
+                         Annotation[] annotations,
+                         MediaType mediaType,
+                         MultivaluedMap<String, Object> httpHeaders,
+                         OutputStream entityStream) throws IOException, WebApplicationException {
+      try (PrintStream out = new PrintStream (entityStream)) {
+        out.println ("Pojo.number=" + t.number);
+      }
+    }
+  }
+
+  public static class ContentNegotiatedPojoPublishingTestServiceModule extends PojoPublishingTestServiceModule {
+    public void configure (MessageWriterBinder binder) {
+      binder.useInstance (new AnnotatedJsonWriter (new ObjectMapper () {
+        private static final long serialVersionUID = 1L;
+
+        {
+          setAnnotationIntrospector (new JaxbAnnotationIntrospector (TypeFactory.defaultInstance ()));
+        }
+      }));
+      binder.useInstance (new CustomWriter ());
     }
   }
 
   @Test
-  public void contentNegotiation () throws Exception {
-    try {
-      int port = serve (new ServiceModule () {
-        public void configure (ResourceBinder binder) {
-          binder.publish (PojoService.class).to (PojoServiceImpl.class).in (Singleton.class);
-        }
-
-        public void configure (MessageWriterBinder binder) {
-          binder.use (NegotiatedJsonWriter.class);
-          binder.use (NegotiatedTextWriter.class);
-        }
-
-        public void configure (ContentNegotiationConfigurer content) {
-          content.parameter ("format")
-                 .map ("json", MediaType.APPLICATION_JSON_TYPE)
-                 .map ("text", MediaType.TEXT_PLAIN_TYPE);
-        }
-
-        public void configure (ServiceBinder binder) {
-          binder.service ("/test/*");
-        }
-      }, new JacksonModule () {
-        public void configure (JacksonSerializerBinder binder) {
-          binder.with (InnerSerializer.class);
-        }
-
-        public void configure (JacksonIntrospectorBinder binder) {
-          binder.useInstance (new JaxbAnnotationIntrospector (TypeFactory.defaultInstance ()));
-        }
-      });
-      assertThat (connect (port, "/test/pojo?word=world&number=5&format=json"),
-                  is ("{\"word\":\"world\",\"number\":5,\"inner\":{\"iNNer\":\"InnER\"}}"));
-      assertThat (connect (port, "/test/pojo?word=world&number=5&format=text"),
-                  is ("Pojo"));
-    } finally {
-      stop ();
+  public void negotiatorParameterSingles () throws Exception {
+    try (Jetty9 j = serve (new ContentNegotiatedPojoPublishingTestServiceModule () {
+      public void configure (ContentNegotiationConfigurer content) {
+        content.parameter ("format")
+               .map ("json", MediaType.APPLICATION_JSON_TYPE)
+               .map ("custom", new MediaType ("application", "x-custom"));
+      }
+    })) {
+      assertThat (j.get ("/test/pojo?word=world&number=5&format=json"),
+                  startsWith ("{\"word\":\"world\",\"number\":5,\"inner\":{}}"));
+      assertThat (j.get ("/test/pojo?word=world&number=5&format=custom"),
+                  startsWith ("Pojo.number=5"));
     }
   }
 
-  @Path ("/top")
-  public static class Top {
-    private @Inject Set<Sub> subs;
+  @Test
+  public void negotiatorParameterMap () throws Exception {
+    try (Jetty9 j = serve (new ContentNegotiatedPojoPublishingTestServiceModule () {
+      public void configure (ContentNegotiationConfigurer content) {
+        content.parameter ("format")
+               .map (new HashMap<String, MediaType> () {
+                 static final long serialVersionUID = 1L;
 
+                 {
+                   put ("json", MediaType.APPLICATION_JSON_TYPE);
+                   put ("custom", new MediaType ("application", "x-custom"));
+                 }
+               });
+      }
+    })) {
+      assertThat (j.get ("/test/pojo?word=world&number=5&format=json"),
+                  startsWith ("{\"word\":\"world\",\"number\":5,\"inner\":{}}"));
+      assertThat (j.get ("/test/pojo?word=world&number=5&format=custom"),
+                  startsWith ("Pojo.number=5"));
+    }
+  }
+
+  @Test
+  public void negotiatorExtensionsMap () throws Exception {
+    try (Jetty9 j = serve (new ContentNegotiatedPojoPublishingTestServiceModule () {
+      public void configure (ContentNegotiationConfigurer content) {
+        content.extension ()
+               .map (new HashMap<String, MediaType> () {
+                 static final long serialVersionUID = 1L;
+
+                 {
+                   put ("json", MediaType.APPLICATION_JSON_TYPE);
+                   put ("custom", new MediaType ("application", "x-custom"));
+                 }
+               });
+      }
+    })) {
+      assertThat (j.get ("/test/pojo.json?word=world&number=5"),
+                  startsWith ("{\"word\":\"world\",\"number\":5,\"inner\":{}}"));
+      assertThat (j.get ("/test/pojo.custom?word=world&number=5"),
+                  startsWith ("Pojo.number=5"));
+    }
+  }
+
+  @Path ("/pojo2")
+  public static class Pojo2Service {
+    @POST
     @Path ("/{name}")
-    public Sub sub (@PathParam ("name") String name) {
-      for (Sub sub : subs)
-        if (sub.name ().word.equals (name))
-          return sub;
-      return null;
-    }
-
-    @GET
-    public String list () {
-      return subs.toString ();
+    public int post (@PathParam ("name") String name, Pojo pojo) {
+      return pojo.number;
     }
   }
 
-  public static class Sub {
-    private String name;
+  @Provider
+  // @Consumes (MediaType.APPLICATION_JSON)
+  public static class PojoReader implements MessageBodyReader<Pojo> {
+    private ObjectMapper mapper;
 
-    public Sub (String name) {
-      this.name = name;
+    @Inject
+    public PojoReader (ObjectMapper mapper) {
+      this.mapper = mapper;
     }
 
-    @Path ("/name")
-    @GET
-    public Blob name () {
-      return new Blob (name);
+    public boolean isReadable (Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
+      return Pojo.class.isAssignableFrom (type);
     }
 
-    @Path ("/enam")
-    @GET
-    public Blob enam () {
-      return new Blob (new StringBuffer (name).reverse ().toString ());
-    }
-
-    @GET
-    public String toString () {
-      return "Blob(" + name + ")";
+    public Pojo readFrom (Class<Pojo> type,
+                          Type genericType,
+                          Annotation[] annotations,
+                          MediaType mediaType,
+                          MultivaluedMap<String, String> httpHeaders,
+                          InputStream entityStream) throws IOException, WebApplicationException {
+      return mapper.readValue (entityStream, Pojo.class);
     }
   }
 
-  @XmlRootElement
-  @XmlAccessorType (XmlAccessType.NONE)
-  public static class Blob {
-    private @XmlAttribute String word;
+  public static class PojoReaderProvider implements com.google.inject.Provider<PojoReader> {
+    private ObjectMapper mapper;
 
-    public Blob (String word) {
-      this.word = word;
+    @Inject
+    public PojoReaderProvider (ObjectMapper mapper) {
+      this.mapper = mapper;
+    }
+
+    public PojoReader get () {
+      return new PojoReader (mapper);
+    }
+  }
+
+  public static class Pojo2PublishingTestServiceModule extends TestServiceModule {
+    public void configure (ResourceBinder binder) {
+      binder.publish (Pojo2Service.class);
     }
   }
 
   @Test
-  public void subResources () throws Exception {
-    try {
-      assertThat (connect (serve (new ServiceModule () {
-        public void configure (ResourceBinder binder) {
-          binder.publish (Top.class).in (Singleton.class);
-        }
-
-        public void configure (MessageWriterBinder binder) {
-          binder.use (NegotiatedJsonWriter.class);
-        }
-
-        public void configure (ContentNegotiationConfigurer content) {
-          content.parameter ("format")
-                 .map ("json", MediaType.APPLICATION_JSON_TYPE);
-        }
-
-        public void configure (ServiceBinder binder) {
-          binder.service ("/test/*");
-        }
-      }, new JacksonModule () {
-        public void configure (JacksonIntrospectorBinder binder) {
-          binder.useInstance (new JaxbAnnotationIntrospector (TypeFactory.defaultInstance ()));
-        }
-      }, new Module () {
-        public void configure (Binder binder) {
-          Multibinder<Sub> subs = Multibinder.newSetBinder (binder, Sub.class);
-          subs.addBinding ().toInstance (new Sub ("hello"));
-          subs.addBinding ().toInstance (new Sub ("cruel"));
-          subs.addBinding ().toInstance (new Sub ("world"));
-        }
-      }), "/test/top/hello/enam?format=json"),
-                  is ("{\"word\":\"olleh\"}"));
-    } finally {
-      stop ();
+  public void readerClass () throws Exception {
+    try (Jetty9 j = serve (new Pojo2PublishingTestServiceModule () {
+      public void configure (MessageReaderBinder binder) {
+        binder.use (PojoReader.class);
+      }
+    })) {
+      assertThat (j.post ("/test/pojo2/hello",
+                          new ByteArrayInputStream ("{\"word\":\"world\",\"number\":5}".getBytes ())),
+                  startsWith ("5"));
     }
   }
 
-  private String connect (final int port, final String uri) throws IOException {
-    return new String (getBytes (new URL ("http://localhost:" + port + uri).openStream ()));
-  }
-
-  private Server server = null;
-
-  private int serve (final ServletContextListener context) throws Exception {
-    server = new Server (0);
-    server.setHandler (new ServletContextHandler (server, "/") {
-      {
-        addEventListener (context);
-        addFilter (GuiceFilter.class, "/*", allOf (DispatcherType.class));
-        addServlet (DefaultServlet.class, "/");
+  @Test
+  public void readerTypeLiteral () throws Exception {
+    try (Jetty9 j = serve (new Pojo2PublishingTestServiceModule () {
+      public void configure (MessageReaderBinder binder) {
+        binder.use (new TypeLiteral<PojoReader> () {});
       }
-    });
-    server.start ();
-    return ((ServerConnector) server.getConnectors ()[0]).getLocalPort ();
+    })) {
+      assertThat (j.post ("/test/pojo2/hello",
+                          new ByteArrayInputStream ("{\"word\":\"world\",\"number\":5}".getBytes ())),
+                  startsWith ("5"));
+    }
   }
 
-  private int serve (final Module... modules) throws Exception {
-    return serve (new GuiceServletContextListener () {
-
-      @Override
-      protected Injector getInjector () {
-        return createInjector (modules);
+  @Test
+  public void readerKey () throws Exception {
+    try (Jetty9 j = serve (new Pojo2PublishingTestServiceModule () {
+      public void configure (MessageReaderBinder binder) {
+        binder.use (Key.get (PojoReader.class));
       }
-    });
+    })) {
+      assertThat (j.post ("/test/pojo2/hello",
+                          new ByteArrayInputStream ("{\"word\":\"world\",\"number\":5}".getBytes ())),
+                  startsWith ("5"));
+    }
   }
 
-  private void stop () throws Exception {
-    if (server != null) {
-      server.stop ();
-      server.join ();
+  @Test
+  public void readerInstance () throws Exception {
+    try (Jetty9 j = serve (new Pojo2PublishingTestServiceModule () {
+      public void configure (MessageReaderBinder binder) {
+        binder.useInstance (new PojoReader (new ObjectMapper ()));
+      }
+    })) {
+      assertThat (j.post ("/test/pojo2/hello",
+                          new ByteArrayInputStream ("{\"word\":\"world\",\"number\":5}".getBytes ())),
+                  startsWith ("5"));
+    }
+  }
+
+  @Test
+  public void readerProviderClass () throws Exception {
+    try (Jetty9 j = serve (new Pojo2PublishingTestServiceModule () {
+      public void configure (MessageReaderBinder binder) {
+        binder.useProvider (PojoReaderProvider.class);
+      }
+    })) {
+      assertThat (j.post ("/test/pojo2/hello",
+                          new ByteArrayInputStream ("{\"word\":\"world\",\"number\":5}".getBytes ())),
+                  startsWith ("5"));
+    }
+  }
+
+  @Test
+  public void readerProviderTypeLiteral () throws Exception {
+    try (Jetty9 j = serve (new Pojo2PublishingTestServiceModule () {
+      public void configure (MessageReaderBinder binder) {
+        binder.useProvider (new TypeLiteral<PojoReaderProvider> () {});
+      }
+    })) {
+      assertThat (j.post ("/test/pojo2/hello",
+                          new ByteArrayInputStream ("{\"word\":\"world\",\"number\":5}".getBytes ())),
+                  startsWith ("5"));
+    }
+  }
+
+  @Test
+  public void readerProviderKey () throws Exception {
+    try (Jetty9 j = serve (new Pojo2PublishingTestServiceModule () {
+      public void configure (MessageReaderBinder binder) {
+        binder.useProvider (Key.get (PojoReaderProvider.class));
+      }
+    })) {
+      assertThat (j.post ("/test/pojo2/hello",
+                          new ByteArrayInputStream ("{\"word\":\"world\",\"number\":5}".getBytes ())),
+                  startsWith ("5"));
+    }
+  }
+
+  @Test
+  public void readerProviderInstance () throws Exception {
+    try (Jetty9 j = serve (new Pojo2PublishingTestServiceModule () {
+      public void configure (MessageReaderBinder binder) {
+        binder.useProvider (new PojoReaderProvider (new ObjectMapper ()));
+      }
+    })) {
+      assertThat (j.post ("/test/pojo2/hello",
+                          new ByteArrayInputStream ("{\"word\":\"world\",\"number\":5}".getBytes ())),
+                  startsWith ("5"));
+    }
+  }
+
+  @Test
+  public void readerConstructor () throws Exception {
+    try (Jetty9 j = serve (new Pojo2PublishingTestServiceModule () {
+      @SneakyThrows
+      public void configure (MessageReaderBinder binder) {
+        binder.useConstructor (PojoReader.class.getConstructor (ObjectMapper.class));
+      }
+    })) {
+      assertThat (j.post ("/test/pojo2/hello",
+                          new ByteArrayInputStream ("{\"word\":\"world\",\"number\":5}".getBytes ())),
+                  startsWith ("5"));
+    }
+  }
+
+  @Test
+  public void readerConstructorTypeLiteral () throws Exception {
+    try (Jetty9 j = serve (new Pojo2PublishingTestServiceModule () {
+      @SneakyThrows
+      public void configure (MessageReaderBinder binder) {
+        binder.useConstructor (PojoReader.class.getConstructor (ObjectMapper.class), new TypeLiteral<PojoReader> () {});
+      }
+    })) {
+      assertThat (j.post ("/test/pojo2/hello",
+                          new ByteArrayInputStream ("{\"word\":\"world\",\"number\":5}".getBytes ())),
+                  startsWith ("5"));
     }
   }
 }
