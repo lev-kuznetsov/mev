@@ -6,7 +6,11 @@
                <div class="tab-content">
                
                        <div class="tab-pane active" id="heatmaptabpane">
-                               <vis-Heatmap></vis-Heatmap>
+                               <vis-Heatmap
+                               		heatmap-Cells="heatmapData"
+                               		side-Panel="heatmapViews.side",
+                                    top-Panel="heatmapViews.top",
+                                    selections=""></vis-Heatmap>
                        </div>
                            
                        <div class="tab-pane" id="annotationsTabPane">                      
