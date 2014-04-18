@@ -124,7 +124,10 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
     serializers.addAll (asList (new DimensionTypeJsonSerializer (),
                                 new SimpleDatasetJsonSerializer (),
                                 new SimpleDimensionJsonSerializer (),
-                                new SimpleSelectionsJsonSerializer (),
+//This serializer returns selections as an array. 
+//Instead we want it wrapped object for angular's $resource service to work
+//The annotated Selections class is taking care of that now.
+//                                new SimpleSelectionsJsonSerializer (),
                                 new SimpleSelectionJsonSerializer ()));
   }
 

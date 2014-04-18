@@ -1484,6 +1484,12 @@ define(
 
                                     restrict : 'E',
                                     templateUrl : "/container/view/elements/visHeatmap",
+                                    scope: {
+                                    	heatmapCells: "=heatmapCells",
+                                    	sidePanel: "=sidePanel",
+                                    	topPanel: "=topPanel",
+                                    	selections: "=selections"
+                                    },
                                     link : function(scope, elems, attr) {
 
                                         var svgWidth = Math
@@ -2110,8 +2116,8 @@ define(
                                             }
                                             
                                             return {
-                                                'columns':scope.heatmapData.column.keys, 
-                                                'rows':scope.heatmapData.row.keys.slice(startRow, endRow)
+                                                'columns':scope.heatmapCells.column.keys, 
+                                                'rows':scope.heatmapCells.row.keys.slice(startRow, endRow)
                                             }
                                             
                                             
@@ -2260,37 +2266,37 @@ define(
                                                     data.column,
                                                     data.row);
 
-                                            if(typeof scope.heatmapViews.side !="undefined"){
+                                            if(typeof scope.sidePanel !="undefined"){
                                                 
                                                 scope.treeSelections['vertical'] = [];
-	                                            if (scope.heatmapViews.side.type == "Hierarchical Clustering") {
+	                                            if (scope.sidePanel.type == "Hierarchical Clustering") {
 	                                                
-	                                                var tree = scope.heatmapViews.side.root;
+	                                                var tree = scope.sidePanel.root;
 	                                                drawTree(dendogramLeftWindow, 
 	                                                        Cluster,
-	                                                        scope.heatmapViews.side.root,
+	                                                        scope.sidePanel.root,
 	                                                        'vertical');
-	                                            } else if (scope.heatmapViews.side.type == "K-means Clustering") {
+	                                            } else if (scope.sidePanel.type == "K-means Clustering") {
 	                                                
-	                                                scope.heatmapData.row.keys = scope.heatmapViews.side.keys
-	                                                drawCluster(scope.heatmapViews.side,  dendogramLeftWindow);
+	                                                scope.heatmapCells.row.keys = scope.sidePanel.keys
+	                                                drawCluster(scope.sidePanel,  dendogramLeftWindow);
 	                                            }
                                             }
                                             
-                                            if(typeof scope.heatmapViews.top !="undefined"){
+                                            if(typeof scope.topPanel !="undefined"){
                                                 
                                                 scope.treeSelections['horizontal'] = [];
-                                                if (scope.heatmapViews.top.type == "Hierarchical Clustering") {
+                                                if (scope.topPanel.type == "Hierarchical Clustering") {
                                                     
-                                                    var tree = scope.heatmapViews.top.root;
+                                                    var tree = scope.topPanel.root;
                                                     drawTree(dendogramTopWindow, 
                                                             Cluster,
-                                                            scope.heatmapViews.top.root,
+                                                            scope.topPanel.root,
                                                             'horizontal');
-                                                } else if (scope.heatmapViews.top.type == "K-means Clustering") {
+                                                } else if (scope.topPanel.type == "K-means Clustering") {
                                                     
-                                                    scope.heatmapData.column.keys = scope.heatmapViews.top.keys
-                                                    drawCluster(scope.heatmapViews.top,  dendogramTopWindow);
+                                                    scope.heatmapCells.column.keys = scope.topPanel.keys
+                                                    drawCluster(scope.topPanel,  dendogramTopWindow);
                                                 }
                                             }
 
@@ -2314,14 +2320,14 @@ define(
                                         function filterCells(cols, rows) {
                                             
                                             var indexes = rows.map(function(d){
-                                                return scope.heatmapData.firstRows.indexOf(d);
+                                                return scope.heatmapCells.firstRows.indexOf(d);
                                             });
                                             
                                             var cells = []
                                             
                                             indexes.map(function(index){
                                                 
-                                               var row = scope.heatmapData.values.slice(index* cols.length, cols.length*(1+index))
+                                               var row = scope.heatmapCells.values.slice(index* cols.length, cols.length*(1+index))
                                                row.map(function(cell){
                                                    cells.push(cell)
                                                });
@@ -2331,18 +2337,18 @@ define(
                                             
                                         };
 
-                                        scope.$watch('heatmapData',function(newval, oldval) {
-                                                            
+                                        scope.$watch('heatmapCells',function(newval, oldval) {
+                                            
                                             if (newval) {
 
                                                 $('#loading').modal('hide');
 
                                                 if (newval.column.root) {
-                                                    scope.heatmapViews.top = newval.column;
+                                                    scope.topPanel = newval.column;
                                                 }
 
                                                 if (newval.row.root) {
-                                                    scope.heatmapViews.side = newval.row;
+                                                    scope.sidePanel = newval.row;
                                                 }
                                                 
                                                 drawHeatmap(newval);
@@ -2351,15 +2357,15 @@ define(
 
                                         });
                                         
-                                        scope.$watch('heatmapData.column.keys', function(newval, oldval){
+                                        scope.$watch('heatmapCells.column.keys', function(newval, oldval){
                                             if (newval){
-                                                updateDrawHeatmap(scope.heatmapData);
+                                                updateDrawHeatmap(scope.heatmapCells);
                                             }
                                         });
                                         
-                                        scope.$watch('heatmapData.row.keys', function(newval, oldval){
+                                        scope.$watch('heatmapCells.row.keys', function(newval, oldval){
                                             if (newval){
-                                                updateDrawHeatmap(scope.heatmapData);
+                                                updateDrawHeatmap(scope.heatmapCells);
                                             }
                                         });
 
@@ -2542,17 +2548,17 @@ define(
                                             };
                                         };
                                         
-                                        scope.$watch('heatmapData.column.selections', function(newval, oldval){
+                                        scope.$watch('heatmapCells.column.selections', function(newval, oldval){
                                             
                                             if(newval && oldval){
-                                                updateDrawHeatmap(scope.heatmapData)
+                                                updateDrawHeatmap(scope.heatmapCells)
                                             }
                                             
                                         });
                                         
-                                        scope.$watch('heatmapData.row.selections', function(newval, oldval){
+                                        scope.$watch('heatmapCells.row.selections', function(newval, oldval){
                                             if(newval && oldval){
-                                                updateDrawHeatmap(scope.heatmapData);
+                                                updateDrawHeatmap(scope.heatmapCells);
                                             }
                                             
                                         });
@@ -2627,7 +2633,7 @@ define(
                                         
                                         scope
                                                 .$watch(
-                                                        'heatmapViews.top',
+                                                        'topPanel',
                                                         function(newval, oldval) {
 
                                                         	if(typeof newval!="undefined"){
@@ -2636,12 +2642,12 @@ define(
 	                                                                drawTree(
 	                                                                        dendogramTopWindow,
 	                                                                        Cluster,
-	                                                                        scope.heatmapViews.top.root,
+	                                                                        scope.topPanel.root,
 	                                                                        'horizontal')
 	                                                                    
 	                                                            } else if (newval.type == "K-means Clustering") {
 	
-	                                                                scope.heatmapData.column.keys = newval.keys
+	                                                                scope.heatmapCells.column.keys = newval.keys
 	                                                                drawCluster(newval, dendogramTopWindow);
 	                                                            }
                                                         	}
@@ -2649,7 +2655,7 @@ define(
 
                                         scope
                                                 .$watch(
-                                                        'heatmapViews.side',
+                                                        'sidePanel',
                                                         function(newval, oldval) {
 
                                                         	if(typeof newval == "undefined")
@@ -2661,11 +2667,11 @@ define(
                                                                 drawTree(
                                                                         dendogramLeftWindow,
                                                                         Cluster,
-                                                                        scope.heatmapViews.side.root,
+                                                                        scope.sidePanel.root,
                                                                         'vertical');
                                                             } else if (newval.type == "K-means Clustering") {
                                                                 
-                                                                scope.heatmapData.row.keys = newval.keys
+                                                                scope.heatmapCells.row.keys = newval.keys
                                                                 drawCluster(newval,  dendogramLeftWindow);
                                                             }
 
@@ -2676,10 +2682,10 @@ define(
                                                         'selectedColor',
                                                         function(newval, oldval) {
 
-                                                            if (newval && oldval && scope.heatmapData) {
+                                                            if (newval && oldval && scope.heatmapCells) {
 
                                                                 redrawCells(heatmapcells);
-                                                                drawColorScale(scope.heatmapData.min, scope.heatmapData.max)
+                                                                drawColorScale(scope.heatmapCells.min, scope.heatmapCells.max)
 
                                                             }
 
