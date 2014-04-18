@@ -23,11 +23,14 @@ import java.util.List;
 import javax.inject.Inject;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 
@@ -40,10 +43,15 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 @Scope (SCOPE_REQUEST)
 public class AnalysesController {
 
-  private @Getter @Setter (onMethod = @_ (@Inject)) Dataset dataset;
+  private @Getter @Setter @Inject Dataset dataset;
+
+  @RequiredArgsConstructor
+  public static final class AnalysesHolder {
+    private final @JsonProperty List<String> names;
+  }
 
   @RequestMapping (method = GET)
-  public List<String> list () {
-    return dataset.analyses ().list ();
+  public AnalysesHolder list () {
+    return new AnalysesHolder (dataset.analyses ().list ());
   }
 }
