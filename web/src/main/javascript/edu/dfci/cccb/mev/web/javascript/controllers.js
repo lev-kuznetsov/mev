@@ -16,10 +16,10 @@ define(
                                     'logger',
                                     'alertService',
                                     'api.dataset',
-                                    'api.dataset.analysis.list',
+                                    'api.dataset.analysis',
                                     function($scope, $routeParams, $http, prsg, 
                                     		$rS, $loc, log, alertService, 
-                                    		apiDataset, apiAnalysisList) {
+                                    		apiDataset, apiAnalysis) {
 
                                         if (!$routeParams.datasetName) {
                                             
@@ -81,7 +81,7 @@ define(
                                              
                                              $('#loading').modal('hide');
                                              $loc.path('/datasets');
-                                        })
+                                        });
                                         
                                         
                                         
@@ -94,25 +94,17 @@ define(
                                             $scope.previousAnova = [];
                                             $scope.previousTTest = [];
                                             
-                                            apiAnalysisList.query(function(response){
+                                            apiAnalysis.getAll(function(response){
                                             	
-                                                    var prevList = response;
-
+                                                    var prevList = response.names;
+                                                    
                                                     $scope.previousAnalysisList = prevList;
 
                                                     prevList.map(function(name) {
 
-                                                        $http({method : 'GET',
-                                                        	url : '/dataset/'
-                                                                    + $routeParams.datasetName
-                                                                    + '/analysis/'
-                                                                    + name.join(),
-                                                            params : {
-                                                                format : 'json'
-                                                            }
-                                                        })
-                                                        .success(function(data, status, headers, config) {
+                                                        apiAnalysis.get({analysisName:name}, function(data) {
 
+                                                        	console.log(data)
                                                             var randstr = prsg(5);
                                                             var randstr2 = prsg(5);
 
@@ -154,14 +146,14 @@ define(
 
                                                             }
 
-                                                		}).error(function(data, status, headers, config) {
+                                                		}, function(error) {
                                                             var message = "Could not retrieve previous analysis"
                                                                     + name
                                                                     + ". If the"
                                                                     + "problem persists, please contact us.";
 
                                                             var header = "Heatmap Download Problem (Error Code: "
-                                                                    + status
+                                                                    + error.status
                                                                     + ")";
 
                                                             alertService.error(message, header);
@@ -226,7 +218,7 @@ define(
                                                                             message,
                                                                             header);
                                                  });
-                                        }
+                                        };
                                         
                                         $scope.updateKMeans = function(inputData){
                                             
