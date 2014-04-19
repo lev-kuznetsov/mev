@@ -5,7 +5,7 @@ define(
             return angular
                     .module('myApp.controllers', ['Mev.api'])
                     .controller(
-                            'HeatmapCtrl',
+                            'oldHeatmapCtrl',
                             [
                                     '$scope',
                                     '$routeParams',

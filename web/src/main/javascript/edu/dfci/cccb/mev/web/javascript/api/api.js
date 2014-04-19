@@ -3,11 +3,13 @@ define ([ 'angular'], function (angular) {
     angular
     .module ('Mev.api', [])
     .service ('api.dataset', ['$resource', '$routeParams', function ($resource, $routeParams) {
-    	
-    	return $resource('/dataset/'+$routeParams.datasetName+'/data',
-    			{
-    		format:'json'
-		});
+    	 return $resource('/dataset/'+$routeParams.datasetName+'/data',
+	    			{
+	    		format:'json'
+			},{
+				get: {method:'GET'}
+			});
+    	 
     	
     }])
     .service ('api.dataset.analysis', ['$resource', '$routeParams', function ($resource, $routeParams) {
@@ -21,7 +23,8 @@ define ([ 'angular'], function (angular) {
 					url: '/dataset/'
                     + $routeParams.datasetName
                     + '/analysis/:analysisName', 
-                    method:"GET"},
+                    method:"GET"
+                },
                 post: {
                 	method:'POST',
                 	url: 'dataset/'

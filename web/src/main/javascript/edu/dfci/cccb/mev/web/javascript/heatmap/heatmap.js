@@ -52,7 +52,7 @@ define(['jquery', 'angular', 'notific8', 'api/api'], function($, angular) {
         }])
 		.service('Heatmap.cellsFilter', [function(){
 			
-			return function(cells, rowLabels, colLabels, filterLabels){
+			return function(oldcells, rowLabels, colLabels, filterLabels){
 				//Used to filter cells array assuming its an array in row major order  
                     
 					//get indexes of filter labels from all labels
@@ -64,7 +64,7 @@ define(['jquery', 'angular', 'notific8', 'api/api'], function($, angular) {
                     //get rows from cells using indexes
                     indexes.map(function(index){
                        //get row by slicing using index
-                       var row = cells.slice(index* colLabels.length, colLabels.length*(1+index))
+                       var row = this.oldcells.slice(index* colLabels.length, colLabels.length*(1+index))
                        //push rows onto cells
                        row.map(function(cell){
                            cells.push(cell)
@@ -79,14 +79,13 @@ define(['jquery', 'angular', 'notific8', 'api/api'], function($, angular) {
 		'$scope', 
 		'$routeParams', 
 		'pseudoRandomStringGenerator',
-        '$rootScope',
         '$location',
         'alertService',
         'api.dataset',
         'api.dataset.analysis',
         'api.dataset.selections',
         'Heatmap.availableColors',
-        'Heatmap.cellsFilter'
+        'Heatmap.cellsFilter',
         function($scope, $routeParams, prsg,  $loc, alertService, 
         apiDataset, apiAnalysis, apiSelections, availableColors, cellsFilter) {
 			
@@ -107,11 +106,11 @@ define(['jquery', 'angular', 'notific8', 'api/api'], function($, angular) {
 					values: undefined
         		},
         		analysisList: {
-        			hierarchical: undefined,
-        			limma: undefined,
-        			kMeans: undefined,
-        			tTest: undefined,
-        			anova: undefined
+        			hierarchical: [],
+        			limma: [],
+        			kMeans: [],
+        			tTest: [],
+        			anova: []
         		},
         		selections:{
         			row: undefined,
@@ -146,19 +145,43 @@ define(['jquery', 'angular', 'notific8', 'api/api'], function($, angular) {
         		resetHeatmap: setHeatmapViewToDefault,
         		setHeatmap: setHeatmapView,
         		addSelection: addNewSelection,
-        		addAnalysis: addAnalysis,
+        		addAnalysis: addNewAnalysis,
         		addAnalysisToSidePanel: addToSidePanel,
-        		addAnalysistoTopPanel: addToTopPanel,
-        		updateHeatmapColor: changeHeatmapColor
+        		addAnalysistoTopPanel: addToTopPanel
         	};
 
         	
         	//Initialize page
         	function init(){
         		setDataset();
-        	}
+        	};
         	
         	init();
+        	
+        	function addNewAnalysis(params){
+            	//function to add new analysis to the dataset
+        			//
+            		postData = {
+        	        	name: params.name,
+        	        };
+            		
+            		//send post request for new analysis
+            		apiAnalysis.post({analysisType:params.type}, postData,
+            		function(response){
+            		//on success, reset analysis list with new analysis added
+            			setDatasetAnalysisList()
+            		}, function(error){
+            			var message = "Could not start new analysis " + params.name
+	   					     + ". If the"
+	   					     + "problem persists, please contact us.";
+	   					
+	   					var header = "Analysis start Problem (Error Code: "
+	   					         + error.status
+	   					         + ")";
+	   					
+	   					alertService.error(message, header);
+            		})
+        	};
         	
         	function addNewSelection(params){
         	//function to add new selection to the dataset
@@ -168,7 +191,7 @@ define(['jquery', 'angular', 'notific8', 'api/api'], function($, angular) {
     	        		selectionDescription: '',
     	        		selectionColor: params.color,                     
     	        	},
-    	            keys: params.keys]
+    	            keys: params.keys
     	        };
         		
         		//send post request for selections
@@ -192,11 +215,11 @@ define(['jquery', 'angular', 'notific8', 'api/api'], function($, angular) {
         	function clearAnalysisList(){
         	//function to clear analysis list to undefined state for reset
             	$scope.dataset.analysisList= {
-        			hierarchical: undefined,
-        			limma: undefined,
-        			kMeans: undefined,
-        			tTest: undefined,
-        			anova: undefined
+        			hierarchical: [],
+        			limma: [],
+        			kMeans: [],
+        			tTest: [],
+        			anova: []
         		}
         	};
         	
@@ -204,6 +227,7 @@ define(['jquery', 'angular', 'notific8', 'api/api'], function($, angular) {
         	//Pull original dataset from http and set the dataset
         		$('#loading').modal();
         		//http request data
+        		
         		apiDataset.get(function(result){
         			$('#loading').modal('hide');
 	            //set cells
