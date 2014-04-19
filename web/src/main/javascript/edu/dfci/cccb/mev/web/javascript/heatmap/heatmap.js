@@ -1,5 +1,5 @@
-define(['jquery', 'angular', 'notific8', 'api/api'], function($, angular) {
-
+define(['jquery', 'angular', 'heatmap/behaviors',
+        'notific8', 'api/api'], function($, angular, behaviors) {
 	return angular
 		.module('Mev.heatmap', ['Mev.api'])
 		.value('Heatmap.availableColors', ["Green-Black-Red",
@@ -85,9 +85,8 @@ define(['jquery', 'angular', 'notific8', 'api/api'], function($, angular) {
         'api.dataset.analysis',
         'api.dataset.selections',
         'Heatmap.availableColors',
-        'Heatmap.cellsFilter',
         function($scope, $routeParams, prsg,  $loc, alertService, 
-        apiDataset, apiAnalysis, apiSelections, availableColors, cellsFilter) {
+        apiDataset, apiAnalysis, apiSelections, availableColors) {
 			
 			//case where there's no loaded dataset
 			if (!$routeParams.datasetName) {
@@ -122,7 +121,7 @@ define(['jquery', 'angular', 'notific8', 'api/api'], function($, angular) {
         		}
         	};
         	
-        	$scope.heatmapView = {
+        	$scope.view = {
         		cells: {
         			avg: undefined,
 					max: undefined,
@@ -139,6 +138,8 @@ define(['jquery', 'angular', 'notific8', 'api/api'], function($, angular) {
         		},
         		color: $scope.availableColors[0] //setting default color
         	};
+        	
+        	Object.defineProperty($scope, behaviors)
         	
         	//Scope available behaviors
         	$scope.behaviors = {
@@ -309,12 +310,12 @@ define(['jquery', 'angular', 'notific8', 'api/api'], function($, angular) {
         	function setHeatmapView(rowlabels){
         	//sets heatmap view with given row labels
         		//filter cells on rowlabels
-        		$scope.heatmapView.cells.values = cellsFilter($scope.dataset.cells.values,
+        		$scope.view.cells.values = cellsFilter($scope.dataset.cells.values,
     					$scope.dataset.labels.row, 
     					$scope.dataset.labels.column, rowLabels);
         		
         		//set rowlabels as heatmap view row labels
-        		$scope.heatmapView.labels.row = rowLabels;
+        		$scope.view.labels.row = rowLabels;
         		
         	};
         	
@@ -419,14 +420,14 @@ define(['jquery', 'angular', 'notific8', 'api/api'], function($, angular) {
                 }
                 inputData.keys = keys;
                 
-                $scope.heatmapView.panel[panelType] = inputData;
-                $scope.heatmapView.labels[dimension] = inputData.keys;
+                $scope.view.panel[panelType] = inputData;
+                $scope.view.labels[dimension] = inputData.keys;
                 
             };
             
             function addHierarchicalToPanel(analysis, panelType){
-            	$scope.heatmapView.panel[panelType] = analysis;
-                $scope.heatmapView.labels[dimension] = analysis.keys;
+            	$scope.view.panel[panelType] = analysis;
+                $scope.view.labels[dimension] = analysis.keys;
             };
 			
 			function addToSidePanel(analysis){
