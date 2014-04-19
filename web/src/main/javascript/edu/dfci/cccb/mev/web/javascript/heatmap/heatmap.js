@@ -75,29 +75,11 @@ define(['jquery', 'angular', 'heatmap/behaviors', 'extend',
                     
 			};
 		}])
-		.controller('HeatmapCtrl', [
-		'$scope', 
-		'$routeParams', 
-		'pseudoRandomStringGenerator',
-        '$location',
-        'alertService',
-        'api.dataset',
-        'api.dataset.analysis',
-        'api.dataset.selections',
-        'Heatmap.availableColors',
-        function($scope, $routeParams, prsg,  $loc, alertService, 
-        apiDataset, apiAnalysis, apiSelections, availableColors) {
-			
-			//case where there's no loaded dataset
-			if (!$routeParams.datasetName) {
-				$('#loading').modal('hide');
-				$loc.path('/datasets'); //return back to datasets
-				return
-			};
-        	
-        	$scope.availableColors = availableColors;
-        	
-        	$scope.dataset = {
+		.factory('heatmapDataset', ['alertService',
+		    'api.dataset', 'api.dataset.analysis',
+		    'api.dataset.selections', 
+		    function(alertService, apiDataset, apiAnalysis, apiSelections){
+			var dataset =  {
         		cells: {
         			avg: undefined,
 					max: undefined,
@@ -134,40 +116,71 @@ define(['jquery', 'angular', 'heatmap/behaviors', 'extend',
             			side:undefined,
             			top:undefined
             		},
-            		color: $scope.availableColors[0] //setting default color
+            		color: undefined //setting default color
             	}
         	};
-        	
-        	extend($scope.dataset, behaviors);
+			
+			extend(dataset, behaviors);
+			Object
+				.defineProperty(dataset.view, 'datasetViewFilter', 
+						{value:behaviors.datasetViewFilter,
+						 enumerable: true,
+						 writable:false,
+						 configurable: false})
         	
         	//Add some AngularJS modules to the dataset
-        	Object.defineProperty($scope.dataset, 'apiAnalysis', 
+        	Object.defineProperty(dataset, 'apiAnalysis', 
         			{value: apiAnalysis, 
         			 enumerable: true,
         			 configurable: false,
         			 writeable: false
         			}); 
         	
-        	Object.defineProperty($scope.dataset, 'apiSelections', 
+        	Object.defineProperty(dataset, 'apiSelections', 
         			{value: apiSelections, 
         			 enumerable: true,
         			 configurable: false,
         			 writeable: false
         			});
         	
-        	Object.defineProperty($scope.dataset, 'apiDataset', 
+        	Object.defineProperty(dataset, 'apiDataset', 
         			{value: apiDataset, 
         			 enumerable: true,
         			 configurable: false,
         			 writeable: false
         			});
         	
-        	Object.defineProperty($scope.dataset, 'alertService', 
+        	Object.defineProperty(dataset, 'alertService', 
         			{value: alertService, 
         			 enumerable: true,
         			 configurable: false,
         			 writeable: false
         			}); 
+			
+			return dataset;
+			
+			
+		}])
+		.controller('HeatmapCtrl', [
+		'$scope', 
+		'$routeParams', 
+		'pseudoRandomStringGenerator',
+        '$location',
+        'heatmapDataset',
+        'Heatmap.availableColors',
+        function($scope, $routeParams, prsg,  $loc, heatmapDataset,
+        		availableColors) {
+			
+			//case where there's no datasetName
+			if (!$routeParams.datasetName) {
+				$('#loading').modal('hide');
+				$loc.path('/datasets'); //return back to datasets
+				return
+			};
+        	
+        	$scope.availableColors = availableColors;
+        	
+        	$scope.dataset = Object.create(heatmapDataset);
         	
         	//Initialize page
         	
