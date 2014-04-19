@@ -4,17 +4,19 @@ define([], function () {
 	
 	return function(filterLabels){
 		
+		var reference = this;
+		
 		var indexes = filterLabels.map(function(d){
-            return this.dataset.indexOf(d);
+            return reference.labels.row.indexOf(d);
         });
         
         var cells = [];
         //get rows from cells using indexes
         indexes.map(function(index){
            //get row by slicing using index
-           var row = this.dataset.cells.values
-               .slice(index* this.dataset.labels.column.length, 
-            		   this.dataset.labels.column.length*(1+index));
+           var row = reference.cells.values
+               .slice(index* reference.labels.column.length, 
+            		   reference.labels.column.length*(1+index));
            //push rows onto cells
            row.map(function(cell){
                cells.push(cell);

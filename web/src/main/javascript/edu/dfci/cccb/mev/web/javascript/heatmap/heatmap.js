@@ -1,5 +1,5 @@
-define(['jquery', 'angular', 'heatmap/behaviors',
-        'notific8', 'api/api'], function($, angular, behaviors) {
+define(['jquery', 'angular', 'heatmap/behaviors', 'extend',
+        'notific8', 'api/api'], function($, angular, behaviors, extend) {
 	return angular
 		.module('Mev.heatmap', ['Mev.api'])
 		.value('Heatmap.availableColors', ["Green-Black-Red",
@@ -118,298 +118,63 @@ define(['jquery', 'angular', 'heatmap/behaviors',
         		labels: {
         			row: undefined,
         			column:undefined
-        		}
+        		},
+        		view : {
+            		cells: {
+            			avg: undefined,
+    					max: undefined,
+    					min: undefined,
+    					values: undefined
+            		},
+            		labels:{
+            			row: undefined,
+            			column:undefined
+            		},
+            		panel:{
+            			side:undefined,
+            			top:undefined
+            		},
+            		color: $scope.availableColors[0] //setting default color
+            	}
         	};
         	
-        	$scope.view = {
-        		cells: {
-        			avg: undefined,
-					max: undefined,
-					min: undefined,
-					values: undefined
-        		},
-        		labels:{
-        			row: undefined,
-        			column:undefined
-        		},
-        		panel:{
-        			side:undefined,
-        			top:undefined
-        		},
-        		color: $scope.availableColors[0] //setting default color
-        	};
+        	extend($scope.dataset, behaviors);
         	
-        	Object.defineProperty($scope, behaviors)
+        	//Add some AngularJS modules to the dataset
+        	Object.defineProperty($scope.dataset, 'apiAnalysis', 
+        			{value: apiAnalysis, 
+        			 enumerable: true,
+        			 configurable: false,
+        			 writeable: false
+        			}); 
         	
-        	//Scope available behaviors
-        	$scope.behaviors = {
-        		resetHeatmap: setHeatmapViewToDefault,
-        		setHeatmap: setHeatmapView,
-        		addSelection: addNewSelection,
-        		addAnalysis: addNewAnalysis,
-        		addAnalysisToSidePanel: addToSidePanel,
-        		addAnalysistoTopPanel: addToTopPanel
-        	};
-
+        	Object.defineProperty($scope.dataset, 'apiSelections', 
+        			{value: apiSelections, 
+        			 enumerable: true,
+        			 configurable: false,
+        			 writeable: false
+        			});
+        	
+        	Object.defineProperty($scope.dataset, 'apiDataset', 
+        			{value: apiDataset, 
+        			 enumerable: true,
+        			 configurable: false,
+        			 writeable: false
+        			});
+        	
+        	Object.defineProperty($scope.dataset, 'alertService', 
+        			{value: alertService, 
+        			 enumerable: true,
+        			 configurable: false,
+        			 writeable: false
+        			}); 
         	
         	//Initialize page
-        	function init(){
-        		setDataset();
-        	};
         	
-        	init();
+        	$scope.dataset.setDataset();
+        	//$scope.dataset.setDatasetAnalysisList();
+        	//$scope.dataset.setDatasetSelections();
         	
-        	function addNewAnalysis(params){
-            	//function to add new analysis to the dataset
-        			//
-            		postData = {
-        	        	name: params.name,
-        	        };
-            		
-            		//send post request for new analysis
-            		apiAnalysis.post({analysisType:params.type}, postData,
-            		function(response){
-            		//on success, reset analysis list with new analysis added
-            			setDatasetAnalysisList()
-            		}, function(error){
-            			var message = "Could not start new analysis " + params.name
-	   					     + ". If the"
-	   					     + "problem persists, please contact us.";
-	   					
-	   					var header = "Analysis start Problem (Error Code: "
-	   					         + error.status
-	   					         + ")";
-	   					
-	   					alertService.error(message, header);
-            		})
-        	};
-        	
-        	function addNewSelection(params){
-        	//function to add new selection to the dataset
-        		postData = {
-    	        	name: params.name,
-    	        	properties: {
-    	        		selectionDescription: '',
-    	        		selectionColor: params.color,                     
-    	        	},
-    	            keys: params.keys
-    	        };
-        		
-        		//send post request for selections
-        		apiSelections.post({dimension:params.dimension}, postData,
-        		function(response){
-        		//on success, reset selections with new selection added
-        			setDatasetSelections();
-        		}, function(error){
-					var message = "Could not add new selection"
-					     + ". If the"
-					     + "problem persists, please contact us.";
-					
-					var header = "Selections Addition Problem (Error Code: "
-					         + error.status
-					         + ")";
-					
-					alertService.error(message, header);
-        		});
-        	};
-        	
-        	function clearAnalysisList(){
-        	//function to clear analysis list to undefined state for reset
-            	$scope.dataset.analysisList= {
-        			hierarchical: [],
-        			limma: [],
-        			kMeans: [],
-        			tTest: [],
-        			anova: []
-        		}
-        	};
-        	
-        	function setDataset(){
-        	//Pull original dataset from http and set the dataset
-        		$('#loading').modal();
-        		//http request data
-        		
-        		apiDataset.get(function(result){
-        			$('#loading').modal('hide');
-	            //set cells
-        			$scope.dataset.cells.avg = result.avg;
-        			$scope.dataset.cells.max = result.max;
-        			$scope.dataset.cells.min = result.min;
-        			$scope.dataset.cells.values = result.values;
-        			
-    			//set labels
-					$scope.dataset.labels.row = result.row.keys;
-					$scope.dataset.labels.column =result.column.keys;
-						
-	            }, function(error){
-	            	 var message = "Could not retrieve dataset "
-	                     + $routeParams.datasetName
-	                     + ". If the"
-	                     + "problem persists, please contact us.";
-	
-	                 var header = "Heatmap Download Problem (Error Code: "
-	                         + error.status
-	                         + ")";
-	
-	                 alertService.error(message, header);
-	                 
-	                 $('#loading').modal('hide');
-	                 $loc.path('/datasets');
-	            });
-        		
-        		//set analysis list
-        		setDatasetAnalysisList()
-        		
-        		//set selections
-				setDatasetSelections()
-        		
-        	};
-        	
-        	function setDatasetSelections(){
-        	//Sets dataset selections for both dimentions
-        		setDatasetSelectionsRow();
-        		setDatasetSelectionsColumn();
-        	};
-        	
-        	function setDatasetSelectionsRow(){
-        		apiSelections.getAll({dimension:'row'},
-				function(response){
-					$scope.dataset.selections.row = response.selections;
-				},function(error){
-					var message = "Could not retrieve dataset selections"
-	                     + ". If the"
-	                     + "problem persists, please contact us.";
-	
-	                 var header = "Selections Download Problem (Error Code: "
-	                         + error.status
-	                         + ")";
-	
-	                 alertService.error(message, header);
-				});
-        	};
-        	
-        	function setDatasetSelectionsColumn(){
-        		apiSelections.getAll({dimension:'column'},
-				function(response){
-					$scope.dataset.selections.column = response.selections;
-				},function(error){
-					var message = "Could not retrieve dataset selections"
-	                     + ". If the"
-	                     + "problem persists, please contact us.";
-	
-	                 var header = "Selections Download Problem (Error Code: "
-	                         + error.status
-	                         + ")";
-	
-	                 alertService.error(message, header);
-				});
-				
-				
-        	};	
-        	
-        	function setHeatmapView(rowlabels){
-        	//sets heatmap view with given row labels
-        		//filter cells on rowlabels
-        		$scope.view.cells.values = cellsFilter($scope.dataset.cells.values,
-    					$scope.dataset.labels.row, 
-    					$scope.dataset.labels.column, rowLabels);
-        		
-        		//set rowlabels as heatmap view row labels
-        		$scope.view.labels.row = rowLabels;
-        		
-        	};
-        	
-        	function setHeatmapViewToDefault(){
-        	//reset Heatmap View with original dataset
-        		setHeatmapView($scope.dataset.labels.row);
-        	};
-        	
-        	function addToAnalysisList(data){
-        	//Adds analysis http response to correct analysisList group
-        		var randstr = prsg(5);
-                var randstr2 = prsg(5);
-
-                if (data.type == "Hierarchical Clustering") {
-
-                    data.href = "#" + randstr;
-                    data.parentId = randstr2;
-                    data.dataParent = '#' + randstr2;
-                    data.divId = randstr;
-                    $scope.dataset.analysisList.hierarchical
-                            .push(data);
-
-                } else if (data.type == "LIMMA Differential Expression Analysis") {
-
-                    $scope.dataset.analysisList.limma
-                            .push({
-                                name : data.name,
-                                href : "#"
-                                        + randstr,
-                                parentId : randstr2,
-                                dataParent : '#'
-                                        + randstr2,
-                                divId : randstr,
-                                datar : data
-                            });
-                        
-                } else if (data.type == "K-means Clustering"){
-                	$scope.dataset.analysisList.kMeans.push(data);
-
-                } else if (data.type == "Anova Analysis") {
-                	$scope.dataset.analysisList.anova.push(data);
-
-                } else if (data.type == "t-Test Analysis"){                                                                                                    
-                	$scope.dataset.analysisList.tTest.push(data);
-
-                }
-        	};
-        		
-        	function setDatasetAnalysisList(){
-        	//reset analysis list
-        		//get analysis list
-        		apiAnalysis.getAll(function(response){
-                	
-        			
-                    var prevList = response.names; 
-                //clear stored analysis list
-                    clearAnalysisList();
-                //for each analysis
-                    prevList.map(function(analysisName){
-                    //get analysis data
-                    	apiAnalysis.get({analysisName: analysisName},
-                    	function(data){
-                    //push analysis data to stored analysis list
-                    		addToAnalysisList(data);
-                    	}, function(error){
-                    		var message = "Could not retrieve previous analysis " + analysisName
-		   	                     + ". If the problem persists, please contact us.";
-		   	
-		   	                 var header = "Analysis Download Problem (Error Code: "
-		   	                         + error.status
-		   	                         + ")";
-		   	
-		   	                 alertService.error(message, header);
-                    	});
-                    	
-                    
-                    });
-                    
-                    
-        		}, function(error){
-        			var message = "Could not retrieve previous analysis list"
-	                     + ". If the problem persists, please contact us.";
-	
-	                 var header = "Analysis List Download Problem (Error Code: "
-	                         + error.status
-	                         + ")";
-	
-	                 alertService.error(message, header);
-        		});
-        		
-        			
-			};
-			
-
 			function addKMeansToPanel (inputData, panelType){
             
                 var keys = [];
