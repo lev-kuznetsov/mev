@@ -185,47 +185,8 @@ define(['jquery', 'angular', 'heatmap/behaviors', 'extend',
         	//Initialize page
         	
         	$scope.dataset.setDataset();
-        	//$scope.dataset.setDatasetAnalysisList();
+        	$scope.dataset.setDatasetAnalysisList();
         	//$scope.dataset.setDatasetSelections();
-        	
-			function addKMeansToPanel (inputData, panelType){
-            
-                var keys = [];
-                for (var i=0; i<inputData.clusters.length; i++){
-                    for (var j=0; j<inputData.clusters[i].length; j++){
-                        keys.push(inputData.clusters[i][j])
-                    }
-                }
-                inputData.keys = keys;
-                
-                $scope.view.panel[panelType] = inputData;
-                $scope.view.labels[dimension] = inputData.keys;
-                
-            };
-            
-            function addHierarchicalToPanel(analysis, panelType){
-            	$scope.view.panel[panelType] = analysis;
-                $scope.view.labels[dimension] = analysis.keys;
-            };
-			
-			function addToSidePanel(analysis){
-			//take analysis and add to heatmap side panel
-				if (analysis.type == "Hierarchical Clustering"){
-                    addHierarchicalToPanel(analysis, "side")
-                } else if (inputData.type == "K-means Clustering") {
-                    addKMeansToPanel(analysis, "side")
-                }
-			};
-			
-			function addToTopPanel(analysis){
-			//take analysis and add to heatmap top panel
-				if (analysis.type == "Hierarchical Clustering"){
-					addHierarchicalToPanel(analysis, "top")
-                } else if (inputData.type == "K-means Clustering") {
-                	addKMeansToPanel(analysis, "top")
-                }
-			};
-			
         	
         }]);
 });

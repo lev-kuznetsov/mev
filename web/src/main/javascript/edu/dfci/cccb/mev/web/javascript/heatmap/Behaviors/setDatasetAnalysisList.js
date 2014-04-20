@@ -3,19 +3,20 @@ define([], function(){
 	return function (){
     	//reset analysis list
 		//get analysis list
+		var reference = this;
 		this.apiAnalysis.getAll(function(response){
         	
 			
             var prevList = response.names; 
         //clear stored analysis list
-            this.clearAnalysisList();
+            reference.clearAnalysisList();
         //for each analysis
             prevList.map(function(analysisName){
             //get analysis data
-            	this.apiAnalysis.get({analysisName: analysisName},
+            	reference.apiAnalysis.get({analysisName: analysisName},
             	function(data){
             //push analysis data to stored analysis list
-            		this.addToAnalysisList(data);
+            		reference.addToAnalysisList(data);
             	}, function(error){
             		var message = "Could not retrieve previous analysis " + analysisName
    	                     + ". If the problem persists, please contact us.";
@@ -24,7 +25,7 @@ define([], function(){
    	                         + error.status
    	                         + ")";
    	
-   	                 this.alertService.error(message, header);
+   	                 reference.alertService.error(message, header);
             	});
             	
             
@@ -39,7 +40,7 @@ define([], function(){
                      + error.status
                      + ")";
 
-             this.alertService.error(message, header);
+             reference.alertService.error(message, header);
 		});
 		
 			

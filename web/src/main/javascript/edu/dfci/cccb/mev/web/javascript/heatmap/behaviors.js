@@ -8,6 +8,7 @@ var dependencies = [
 	'heatmap/Behaviors/setDatasetAnalysisList',
 	'heatmap/Behaviors/setDatasetSelections',
 	'heatmap/Behaviors/addToAnalysisList',
+	'heatmap/Behaviors/addToPanel'
 	];
 
 define(dependencies, function(
@@ -19,7 +20,8 @@ define(dependencies, function(
 			setDataset,
 			setDatasetAnalysisList,
 			setDatasetSelections,
-			addToAnalysisList){
+			addToAnalysisList,
+			addToPanel){
 	
 	//The loader for heatmap dependencies
 	var behaviors = Object.create(null);
