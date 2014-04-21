@@ -8,9 +8,9 @@ ImportPresetRowsDialog.prototype._lastItem=null;
 
 
 ImportPresetRowsDialog.prototype._createDialog = function() {
-		
-	if(theProject.rowModel.filtered>1000){
-		alert("Cannot import more than 1000 rows");
+	var rowLimit=100000;
+	if(theProject.rowModel.filtered>100000,0){asadf
+		alert("Cannot import more than "+rowLimit+"rows");
 		return;
 	}
 	
