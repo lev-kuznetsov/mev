@@ -7,7 +7,7 @@
                
                        <div class="tab-pane active" id="heatmaptabpane">
                                <vis-Heatmap
-                               		heatmap-Cells="heatmapData"
+                               		heatmap-dataset="dataset"
                                		side-Panel="heatmapViews.side",
                                     top-Panel="heatmapViews.top",
                                     selections=""></vis-Heatmap>

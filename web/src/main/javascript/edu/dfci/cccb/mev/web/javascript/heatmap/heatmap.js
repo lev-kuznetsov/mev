@@ -1,7 +1,7 @@
-define(['jquery', 'angular', 'heatmap/behaviors', 'extend',
-        'notific8', 'api/api'], function($, angular, behaviors, extend) {
+define(['jquery', 'angular', 'heatmap/behaviors', 'extend', 'd3',
+        'notific8', 'api/api', 'colorbrewer/ColorBrewer'], function($, angular, behaviors, extend, d3) {
 	return angular
-		.module('Mev.heatmap', ['Mev.api'])
+		.module('Mev.heatmap', ['Mev.api', 'd3colorBrewer'])
 		.value('Heatmap.availableColors', ["Green-Black-Red",
                                            "Yellow-Black-Blue",
                                            "Red-White-Blue"])
@@ -79,88 +79,200 @@ define(['jquery', 'angular', 'heatmap/behaviors', 'extend',
 		    'api.dataset', 'api.dataset.analysis',
 		    'api.dataset.selections', 
 		    function(alertService, apiDataset, apiAnalysis, apiSelections){
-			var dataset =  {
-        		cells: {
-        			avg: undefined,
-					max: undefined,
-					min: undefined,
-					values: undefined
-        		},
-        		analysisList: {
-        			hierarchical: [],
-        			limma: [],
-        			kMeans: [],
-        			tTest: [],
-        			anova: []
-        		},
-        		selections:{
-        			row: undefined,
-        			column: undefined
-        		},
-        		labels: {
-        			row: undefined,
-        			column:undefined
-        		},
-        		view : {
-            		cells: {
-            			avg: undefined,
-    					max: undefined,
-    					min: undefined,
-    					values: undefined
-            		},
-            		labels:{
-            			row: undefined,
-            			column:undefined
-            		},
-            		panel:{
-            			side:undefined,
-            			top:undefined
-            		},
-            		color: undefined //setting default color
-            	}
-        	};
 			
-			extend(dataset, behaviors);
-			Object
-				.defineProperty(dataset.view, 'datasetViewFilter', 
-						{value:behaviors.datasetViewFilter,
-						 enumerable: true,
-						 writable:false,
-						 configurable: false})
-        	
-        	//Add some AngularJS modules to the dataset
-        	Object.defineProperty(dataset, 'apiAnalysis', 
-        			{value: apiAnalysis, 
-        			 enumerable: true,
-        			 configurable: false,
-        			 writeable: false
-        			}); 
-        	
-        	Object.defineProperty(dataset, 'apiSelections', 
-        			{value: apiSelections, 
-        			 enumerable: true,
-        			 configurable: false,
-        			 writeable: false
-        			});
-        	
-        	Object.defineProperty(dataset, 'apiDataset', 
-        			{value: apiDataset, 
-        			 enumerable: true,
-        			 configurable: false,
-        			 writeable: false
-        			});
-        	
-        	Object.defineProperty(dataset, 'alertService', 
-        			{value: alertService, 
-        			 enumerable: true,
-        			 configurable: false,
-        			 writeable: false
-        			}); 
+				var dataset = {
+				//Dataset constructor
 			
-			return dataset;
+	        		cells: {
+	        			avg: undefined,
+						max: undefined,
+						min: undefined,
+						values: undefined
+	        		}, analysisList : {
+	        			hierarchical: [],
+	        			limma: [],
+	        			kMeans: [],
+	        			tTest: [],
+	        			anova: []
+	        		}, selections : {
+	        			row: undefined,
+	        			column: undefined
+	        		}, labels : {
+	        			row: undefined,
+	        			column:undefined
+	        		}, view : {
+	            		cells : {
+	            			avg: undefined,
+	    					max: undefined,
+	    					min: undefined,
+	    					values: undefined
+	            		},
+	            		labels : {
+	            			row: undefined,
+	            			column:undefined
+	            		},
+	            		panel : {
+	            			side:undefined,
+	            			top:undefined
+	            		}
+	        		}, color : undefined //setting default color
+	        	
+				};
+			
+				extend(dataset, behaviors);
+				
+				Object
+					.defineProperty(dataset.view, 'datasetViewFilter', 
+							{value:behaviors.datasetViewFilter,
+							 enumerable: true,
+							 writable:false,
+							 configurable: false})
+	        	
+	        	//Add some AngularJS modules to the dataset
+	        	Object.defineProperty(dataset, 'apiAnalysis', 
+	        			{value: apiAnalysis, 
+	        			 enumerable: true,
+	        			 configurable: false,
+	        			 writeable: false
+	        			}); 
+	        	
+	        	Object.defineProperty(dataset, 'apiSelections', 
+	        			{value: apiSelections, 
+	        			 enumerable: true,
+	        			 configurable: false,
+	        			 writeable: false
+	        			});
+	        	
+	        	Object.defineProperty(dataset, 'apiDataset', 
+	        			{value: apiDataset, 
+	        			 enumerable: true,
+	        			 configurable: false,
+	        			 writeable: false
+	        			});
+	        	
+	        	Object.defineProperty(dataset, 'alertService', 
+	        			{value: alertService, 
+	        			 enumerable: true,
+	        			 configurable: false,
+	        			 writeable: false
+	        			}); 
+				
+				return dataset;
 			
 			
 		}])
+		.directive('visHeatmap',[ "$routeParams", "$http", "d3colors", 
+         function($routeParams, $http, d3colors) {
+
+            return {
+
+                restrict : 'E',
+                templateUrl : "/container/view/elements/visHeatmap",
+                scope: {
+                	heatmapDataset: "=heatmapDataset"
+                },
+                link : function($scope, elems, attr) {
+                	
+                	var heatmap = {
+                		expressions : {
+                			xScale : d3.scale.ordinal(),
+                			yScale : d3.scale.ordinal()
+                		}, panel : {
+                			top: {
+                				xScale : d3.scale.ordinal(),
+                    			yScale : d3.scale.ordinal().rangeRoundBands([0, 150], 0, 0),
+                			},
+                			side: {
+                				xScale : d3.scale.ordinal().rangeRoundBands([0, 150], 0, 0),
+                    			yScale : d3.scale.ordinal(),
+                			}
+                		}, selections : {
+                			top: {
+                				xScale : d3.scale.ordinal(),
+                    			yScale : d3.scale.ordinal().rangeRoundBands([180, 260], 0, 0),
+                			},
+                			side: {
+                				xScale : d3.scale.ordinal(), //.rangeRoundBands([width, width+180], 0, 0),
+                    			yScale : d3.scale.ordinal(),
+                			}
+                		}, labels : {
+                			top: {
+                				xScale : d3.scale.ordinal(),
+                    			yScale : d3.scale.ordinal().rangeRoundBands([180, 260], 0, 0),
+                			},
+                			side: {
+                				height: undefined,
+                				width: 30
+                			}
+                		}, setSize : function(rows, cols, rowselects, colselects, celldims){
+                			
+                			
+                			this.expressions.xScale.domain(cols)
+                				.rangeRoundBands([150, 150 +( cols.length * celldims.width)], 0, 0);
+                			
+                			this.expressions.yScale.domain(rows)
+            					.rangeRoundBands([260, 260 + (rows.length * celldims.height)], 0, 0);
+                			
+                			this.selections.top.xScale.domain(cols)
+            					.rangeRoundBands([180, 180 + (cols.length *celldims.width)], 0, 0);
+                			
+                			this.selections.top.yScale.domain(colselects);
+
+                			this.selections.side.xScale
+                				.domain(colselects)
+                				.rangeRoundBands([150 + ( cols.length * celldims.width),
+                				                  150 + ( cols.length * celldims.width) + 80], 0, 0);
+                			
+                			this.selections.side.yScale
+                				.domain(rows)
+                				.rangeRoundBands([260, 260 + (rows.length * celldims.height)], 0, 0);
+                			
+                			
+                		}
+                	};
+                	
+                	$scope.viewLayer = {
+                		cells: undefined,
+                		labels: {
+                			row: undefined,
+                			column: undefined
+                		}
+                	};
+                	
+                	$scope.$watch('heatmapDataset', function(newval, oldval){
+                		console.log(newval.view.labels)
+                		
+                		if (newval){
+                			
+                			heatmap.setSize(newval.view.labels.row, newval.view.labels.column,
+                					newval.selections.row, newval.selections.column,
+                					{width:15, height:15})
+                		}
+                	})
+                	
+                	$scope.$watch('heatmapDataset.view.labels.row', function(newval){
+                		console.log(newval)
+                		return
+                	});
+                	
+                	$scope.$watch('heatmapDataset.view.labels.column', function(newval){
+                		console.log(newval)
+                		return
+                	});
+                	
+                	$scope.$watch('heatmapDataset.')
+                	
+                	
+                	//when new view labels load
+                		//clear panels
+                		//clear cells
+                		//draw cells
+                		//draw labels
+                		//draw selections
+                }
+
+            }; // End return obj
+        }])
 		.controller('HeatmapCtrl', [
 		'$scope', 
 		'$routeParams', 
@@ -180,12 +292,15 @@ define(['jquery', 'angular', 'heatmap/behaviors', 'extend',
         	
         	$scope.availableColors = availableColors;
         	
-        	$scope.dataset = Object.create(heatmapDataset);
+        	$scope.dataset = {};
+        	extend($scope.dataset, heatmapDataset)
+        	
         	
         	//Initialize page
         	
         	$scope.dataset.setDataset();
-        	$scope.dataset.setDatasetAnalysisList();
+        	//$scope.dataset.setHeatmapView();
+        	//$scope.dataset.setDatasetAnalysisList();
         	//$scope.dataset.setDatasetSelections();
         	
         }]);

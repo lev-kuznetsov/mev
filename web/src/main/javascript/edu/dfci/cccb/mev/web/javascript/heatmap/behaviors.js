@@ -1,5 +1,6 @@
 var dependencies = [
 	'heatmap/Behaviors/datasetViewFilter',
+	'heatmap/Behaviors/viewFilter',
 	'heatmap/Behaviors/setHeatmapView',
 	'heatmap/Behaviors/setHeatmapViewToDefault',
 	'heatmap/Behaviors/addNewSelection',
@@ -12,7 +13,8 @@ var dependencies = [
 	];
 
 define(dependencies, function(
-			datasetViewFilter, 
+			datasetViewFilter,
+			viewFilter,
 			setHeatmapView, 
 			setHeatmapViewToDefault, 
 			addNewSelection,
