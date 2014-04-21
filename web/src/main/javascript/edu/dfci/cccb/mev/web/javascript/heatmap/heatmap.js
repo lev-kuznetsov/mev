@@ -95,8 +95,8 @@ define(['jquery', 'angular', 'heatmap/behaviors', 'extend', 'd3',
 	        			tTest: [],
 	        			anova: []
 	        		}, selections : {
-	        			row: undefined,
-	        			column: undefined
+	        			row: [],
+	        			column: []
 	        		}, labels : {
 	        			row: undefined,
 	        			column:undefined
@@ -206,7 +206,6 @@ define(['jquery', 'angular', 'heatmap/behaviors', 'extend', 'd3',
                 			}
                 		}, setSize : function(rows, cols, rowselects, colselects, celldims){
                 			
-                			
                 			this.expressions.xScale.domain(cols)
                 				.rangeRoundBands([150, 150 +( cols.length * celldims.width)], 0, 0);
                 			
@@ -239,28 +238,36 @@ define(['jquery', 'angular', 'heatmap/behaviors', 'extend', 'd3',
                 		}
                 	};
                 	
-                	$scope.$watch('heatmapDataset', function(newval, oldval){
-                		console.log(newval.view.labels)
-                		
-                		if (newval){
-                			
-                			heatmap.setSize(newval.view.labels.row, newval.view.labels.column,
-                					newval.selections.row, newval.selections.column,
-                					{width:15, height:15})
-                		}
-                	})
+                	function buildHeatmap(){
+                		return
+                	}
                 	
                 	$scope.$watch('heatmapDataset.view.labels.row', function(newval){
-                		console.log(newval)
+                		
+                		
+                		if ($scope.heatmapDataset.view.labels.column){
+                			heatmap.setSize($scope.heatmapDataset.view.labels.row, 
+                    					$scope.heatmapDataset.view.labels.column,
+                    					$scope.heatmapDataset.selections.row, $scope.heatmapDataset.selections.column,
+                    					{width:15, height:15})
+                    					
+                    		buildHeatmap();
+                		}
+                		
+                		
                 		return
                 	});
                 	
                 	$scope.$watch('heatmapDataset.view.labels.column', function(newval){
-                		console.log(newval)
-                		return
+                		if ($scope.heatmapDataset.view.labels.row){
+                			heatmap.setSize($scope.heatmapDataset.view.labels.row, 
+                    					$scope.heatmapDataset.view.labels.column,
+                    					$scope.heatmapDataset.selections.row, $scope.heatmapDataset.selections.column,
+                    					{width:15, height:15})	
+                		}
                 	});
                 	
-                	$scope.$watch('heatmapDataset.')
+                	console.log($scope.heatmapDataset)
                 	
                 	
                 	//when new view labels load
