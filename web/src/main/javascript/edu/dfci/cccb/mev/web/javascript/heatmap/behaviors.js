@@ -1,29 +1,11 @@
 var dependencies = [
-	'heatmap/Behaviors/datasetViewFilter',
-	'heatmap/Behaviors/viewFilter',
-	'heatmap/Behaviors/setHeatmapView',
-	'heatmap/Behaviors/setHeatmapViewToDefault',
-	'heatmap/Behaviors/addNewSelection',
-	'heatmap/Behaviors/clearAnalysisList',
-	'heatmap/Behaviors/setDataset',
-	'heatmap/Behaviors/setDatasetAnalysisList',
-	'heatmap/Behaviors/setDatasetSelections',
-	'heatmap/Behaviors/addToAnalysisList',
-	'heatmap/Behaviors/addToPanel'
+	'heatmap/Behaviors/cellFilter',
+	'heatmap/Behaviors/viewUpdate'
 	];
 
 define(dependencies, function(
-			datasetViewFilter,
-			viewFilter,
-			setHeatmapView, 
-			setHeatmapViewToDefault, 
-			addNewSelection,
-			clearAnalysisList,
-			setDataset,
-			setDatasetAnalysisList,
-			setDatasetSelections,
-			addToAnalysisList,
-			addToPanel){
+			cellFilter,
+			viewUpdate){
 	
 	//The loader for heatmap dependencies
 	var behaviors = Object.create(null);

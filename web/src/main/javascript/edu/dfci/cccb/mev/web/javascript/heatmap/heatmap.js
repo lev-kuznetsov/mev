@@ -50,118 +50,223 @@ define(['jquery', 'angular', 'heatmap/behaviors', 'extend', 'd3',
 	            };
         	};
         }])
-		.service('Heatmap.cellsFilter', [function(){
-			
-			return function(oldcells, rowLabels, colLabels, filterLabels){
-				//Used to filter cells array assuming its an array in row major order  
-                    
-					//get indexes of filter labels from all labels
-					var indexes = filterLabels.map(function(d){
-                        return rowLabels.indexOf(d);
-                    });
-                    
-                    var cells = []
-                    //get rows from cells using indexes
-                    indexes.map(function(index){
-                       //get row by slicing using index
-                       var row = this.oldcells.slice(index* colLabels.length, colLabels.length*(1+index))
-                       //push rows onto cells
-                       row.map(function(cell){
-                           cells.push(cell)
-                       });
-                    });
-                    
-                    return cells
-                    
-			};
-		}])
 		.factory('heatmapDataset', ['alertService',
 		    'api.dataset', 'api.dataset.analysis',
 		    'api.dataset.selections', 
 		    function(alertService, apiDataset, apiAnalysis, apiSelections){
 			
-				var dataset = {
-				//Dataset constructor
+			//Object builder for heatmapDataset
 			
-	        		cells: {
-	        			avg: undefined,
-						max: undefined,
-						min: undefined,
-						values: undefined
-	        		}, analysisList : {
-	        			hierarchical: [],
-	        			limma: [],
-	        			kMeans: [],
-	        			tTest: [],
-	        			anova: []
-	        		}, selections : {
-	        			row: [],
-	        			column: []
-	        		}, labels : {
-	        			row: undefined,
-	        			column:undefined
-	        		}, view : {
-	            		cells : {
-	            			avg: undefined,
-	    					max: undefined,
-	    					min: undefined,
-	    					values: undefined
-	            		},
-	            		labels : {
-	            			row: undefined,
-	            			column:undefined
-	            		},
-	            		panel : {
-	            			side:undefined,
-	            			top:undefined
-	            		}
-	        		}, color : undefined //setting default color
-	        	
+				return function(datasetName){
+					
+					var dataset = {
+						datasetName : datasetName,
+					};
+					
+					apiDataset.get({datasetName:datasetName},
+				    function(result){
+		            //set cells
+		    			
+		    			Object.defineProperty(dataset, 'data', {
+		    				value : {
+		    			
+		    					cells: {
+		    						avg : result.avg,
+		    						max : result.max,
+		    						min : result.min,
+		    						values : result.values,
+		    						
+		    					},
+		    					labels : {
+		    						row : result.row.keys,
+		    						column : result.column.keys
+		    					}, 
+		    					selections : {
+									row : result.row.selections,
+									column : result.column.selections
+								}
+		    				}, 
+		    				enumerable : true,
+		    				writable :true,
+		    				
+		    			});
+		    			
+		    			Object.defineProperty(dataset, 'view', {
+		    				value : {
+		    					setScales: function() {
+									
+									var reference = this;
+									
+			            			this.cells.xScale.domain(reference.labels.column.values)
+			            				.rangeRoundBands(
+			            					[reference.params.panel.side.width,
+			            					 reference.params.panel.side.width 
+			            					 	+ (reference.labels.column.values.length * reference.params.cell.width)], 0, 0);
+			            			
+			            			this.cells.yScale.domain(reference.labels.row.values)
+			        					.rangeRoundBands(
+			        						[reference.params.panel.top.height
+			        						 	+ reference.params.selections.column.height
+			        						 	+ reference.params.labels.column.height , 
+			        						 reference.params.panel.top.height
+			        						 	+ reference.params.selections.column.height
+			        						 	+ reference.params.labels.column.height + (reference.labels.row.values.length * reference.params.cell.height)], 0, 0);
+			            			
+			            			this.selections.column.xScale
+			            				.domain(reference.labels.column.values)
+			        					.rangeRoundBands(
+				            					[reference.params.panel.side.width,
+				            					 reference.params.panel.side.width
+				            					 	+(reference.labels.column.values.length * reference.params.cell.width)], 0, 0);
+			            			
+			            			this.selections.column.yScale
+				            			.domain(reference.selections.column.values.map(function(selection){
+				            				return selection.name
+				            			}))
+				            			.rangeRoundBands(
+				            					[reference.params.panel.top.height + reference.params.labels.column.height,
+				            					 reference.params.panel.top.height + reference.params.labels.column.height
+				            					 	+ reference.params.selections.column.height], 0, 0);
+			
+			            			this.selections.row.xScale
+			            				.domain(reference.selections.row.values.map(function(selection){
+			                				return selection.name
+			                			}))
+			            				.rangeRoundBands([reference.params.panel.side.width 
+			            				                  	+ ( reference.labels.column.values.length * reference.params.cell.width),
+			            				                  reference.params.panel.side.width
+			            				                  	+ ( reference.labels.column.values.length * reference.params.cell.width)
+			            				                  	+ reference.params.selections.row.width], 0, 0);
+			            			
+			            			this.selections.row.yScale
+			            				.domain(reference.labels.row.values)
+			            				.rangeRoundBands([reference.params.panel.top.height 
+			            				                  	+ reference.params.labels.column.height
+			            				                  	+ reference.params.selections.column.height,
+							            				  reference.params.panel.top.height 
+			            				                  	+ reference.params.labels.column.height
+			            				                  	+ reference.params.selections.column.height 
+			            				                  	+ (reference.labels.row.values.length * reference.params.cell.height)], 0, 0);
+			            			
+			            			
+		            			},
+		            			params : {
+		            				cell: {height:25, width:10},
+		            				panel:{
+		            					side:{
+		            						width: 150
+		            					},
+		            					top : {
+		            						height: 150
+		            					}
+		            				},
+		            				labels:{
+		            					column:{
+		            						height:30
+		            					},
+		            					row: {
+		            						width: 50
+		            					}
+		            				},
+		            				selections :{
+		            					column:{
+		            						height: 80
+		            					},
+		            					row:{
+		            						width:80
+		            					}
+		            				}
+		            			},
+		    					cells: {
+		    						avg : result.avg,
+		    						max : result.max,
+		    						min : result.min,
+		    						values : result.values,
+		    						xScale : d3.scale.ordinal(),
+		                			yScale : d3.scale.ordinal()
+		    					},
+		    					labels : {
+		    						row : {
+		    							values:result.row.keys
+		    						},
+		    						column : {
+		    							values:result.column.keys,
+		    						}
+		    					}, 
+		    					selections : {
+									row : {
+										values: result.row.selections,
+										xScale : d3.scale.ordinal(), //.rangeRoundBands([width, width+180], 0, 0),
+		                    			yScale : d3.scale.ordinal(),
+									},
+									column : {
+										values: result.column.selections,
+										xScale : d3.scale.ordinal(),
+										yScale : d3.scale.ordinal(),	
+										
+									}
+								},
+								panel: {
+									top: {
+										xScale : d3.scale.ordinal(),
+		                    			yScale : d3.scale.ordinal().rangeRoundBands([0, 150], 0, 0),
+									},
+									side: {
+										xScale : d3.scale.ordinal().rangeRoundBands([0, 150], 0, 0),
+		                    			yScale : d3.scale.ordinal(),
+									}
+								}
+		    				}, 
+		    				enumerable : true,
+		    				writable :true,
+		    				
+		    			});
+		    			
+		            }, function(error){
+		            	 var message = "Could not retrieve dataset info"
+		                     + ". If the"
+		                     + "problem persists, please contact us.";
+
+		                 var header = "Heatmap Download Problem (Error Code: "
+		                         + error.status
+		                         + ")";
+
+		                 alertService.error(message, header);
+		                 
+		            });
+					
+
+				
+					extend(dataset, behaviors);
+					
+		        	//Add some AngularJS modules to the dataset
+		        	Object.defineProperty(dataset, 'apiAnalysis', 
+		        			{value: apiAnalysis, 
+		        			 enumerable: true,
+		        			 configurable: false,
+		        			 writeable: false
+		        			}); 
+		        	
+		        	Object.defineProperty(dataset, 'apiSelections', 
+		        			{value: apiSelections, 
+		        			 enumerable: true,
+		        			 configurable: false,
+		        			 writeable: false
+		        			});
+
+		        	Object.defineProperty(dataset, 'alertService', 
+		        			{value: alertService, 
+		        			 enumerable: true,
+		        			 configurable: false,
+		        			 writeable: false
+		        			});
+		        	
+		        	return dataset;
 				};
-			
-				extend(dataset, behaviors);
-				
-				Object
-					.defineProperty(dataset.view, 'datasetViewFilter', 
-							{value:behaviors.datasetViewFilter,
-							 enumerable: true,
-							 writable:false,
-							 configurable: false})
-	        	
-	        	//Add some AngularJS modules to the dataset
-	        	Object.defineProperty(dataset, 'apiAnalysis', 
-	        			{value: apiAnalysis, 
-	        			 enumerable: true,
-	        			 configurable: false,
-	        			 writeable: false
-	        			}); 
-	        	
-	        	Object.defineProperty(dataset, 'apiSelections', 
-	        			{value: apiSelections, 
-	        			 enumerable: true,
-	        			 configurable: false,
-	        			 writeable: false
-	        			});
-	        	
-	        	Object.defineProperty(dataset, 'apiDataset', 
-	        			{value: apiDataset, 
-	        			 enumerable: true,
-	        			 configurable: false,
-	        			 writeable: false
-	        			});
-	        	
-	        	Object.defineProperty(dataset, 'alertService', 
-	        			{value: alertService, 
-	        			 enumerable: true,
-	        			 configurable: false,
-	        			 writeable: false
-	        			}); 
-				
-				return dataset;
 			
 			
 		}])
-		.directive('visHeatmap',[ "$routeParams", "$http", "d3colors", 
+		.directive('visHeatmap',[ "$routeParams", "$http", "d3colors",
          function($routeParams, $http, d3colors) {
 
             return {
@@ -173,101 +278,121 @@ define(['jquery', 'angular', 'heatmap/behaviors', 'extend', 'd3',
                 },
                 link : function($scope, elems, attr) {
                 	
-                	var heatmap = {
-                		expressions : {
-                			xScale : d3.scale.ordinal(),
-                			yScale : d3.scale.ordinal()
-                		}, panel : {
-                			top: {
-                				xScale : d3.scale.ordinal(),
-                    			yScale : d3.scale.ordinal().rangeRoundBands([0, 150], 0, 0),
-                			},
-                			side: {
-                				xScale : d3.scale.ordinal().rangeRoundBands([0, 150], 0, 0),
-                    			yScale : d3.scale.ordinal(),
-                			}
-                		}, selections : {
-                			top: {
-                				xScale : d3.scale.ordinal(),
-                    			yScale : d3.scale.ordinal().rangeRoundBands([180, 260], 0, 0),
-                			},
-                			side: {
-                				xScale : d3.scale.ordinal(), //.rangeRoundBands([width, width+180], 0, 0),
-                    			yScale : d3.scale.ordinal(),
-                			}
-                		}, labels : {
-                			top: {
-                				xScale : d3.scale.ordinal(),
-                    			yScale : d3.scale.ordinal().rangeRoundBands([180, 260], 0, 0),
-                			},
-                			side: {
-                				height: undefined,
-                				width: 30
-                			}
-                		}, setSize : function(rows, cols, rowselects, colselects, celldims){
-                			
-                			this.expressions.xScale.domain(cols)
-                				.rangeRoundBands([150, 150 +( cols.length * celldims.width)], 0, 0);
-                			
-                			this.expressions.yScale.domain(rows)
-            					.rangeRoundBands([260, 260 + (rows.length * celldims.height)], 0, 0);
-                			
-                			this.selections.top.xScale.domain(cols)
-            					.rangeRoundBands([180, 180 + (cols.length *celldims.width)], 0, 0);
-                			
-                			this.selections.top.yScale.domain(colselects);
-
-                			this.selections.side.xScale
-                				.domain(colselects)
-                				.rangeRoundBands([150 + ( cols.length * celldims.width),
-                				                  150 + ( cols.length * celldims.width) + 80], 0, 0);
-                			
-                			this.selections.side.yScale
-                				.domain(rows)
-                				.rangeRoundBands([260, 260 + (rows.length * celldims.height)], 0, 0);
-                			
-                			
-                		}
+                	var scrollable = $("div.tab-content"), delay = 50, timer = null;
+                	
+                	$scope.position = {
+                		top : scrollable.scrollTop(),
+                        height : scrollable.height(),
                 	};
                 	
-                	$scope.viewLayer = {
-                		cells: undefined,
-                		labels: {
-                			row: undefined,
-                			column: undefined
-                		}
-                	};
+                	$("div.tab-content").on("scroll", function(e){
+                        
+                		
+                        timer = setTimeout(function(){
+                        	
+                        	$scope.visualization.update();
+                        	
+                        }, delay);
+                        
+                    });
                 	
-                	function buildHeatmap(){
-                		return
+                	$scope.visualization = {
+                		cells: [],
+                		labels:{
+                			rows:[]
+                		},
+                		update: function(){
+                			//complete update function
+                		}
                 	}
                 	
-                	$scope.$watch('heatmapDataset.view.labels.row', function(newval){
-                		
-                		
-                		if ($scope.heatmapDataset.view.labels.column){
-                			heatmap.setSize($scope.heatmapDataset.view.labels.row, 
-                    					$scope.heatmapDataset.view.labels.column,
-                    					$scope.heatmapDataset.selections.row, $scope.heatmapDataset.selections.column,
-                    					{width:15, height:15})
-                    					
-                    		buildHeatmap();
+                	$scope.$watch('visualization.labels.rows', function(newval){
+                		if(newval && newval.length > 0) {
+                			drawCells
                 		}
+                	})
+                	
+                	d3.select('vis-Heatmap').append('svg').attr('id', 'svg-Window');
+                	var svg = d3.select('#svg-Window');
+                	
+                	svg.append('g').attr("id", "heatmap-Cells");
+                	var heatmapCells = d3.select('#heatmap-Cells');
+                	
+            		svg.append('g').attr("id", "side-Panel");
+            		var sidePanel = d3.select('#side-Panel');
+            		
+            		svg.append('g').attr("id", "top-Panel");
+            		var topPanel = d3.select('#top-Panel');
+            		
+            		svg.append('g').attr("id", "column-Selections")
+            		var columnSelections = d3.select('#column-Selections');
+            		
+            		svg.append('g').attr("id", "column-Labels")
+            		var columnLabels = d3.select('#column-Labels');
+            		
+            		svg.append('g').attr("id", "row-Selections")
+            		var rowSelections = d3.select('#row-Selections');
+            		
+            		svg.append('g').attr("id", "row-Labels")
+            		var rowLabels = d3.select('#row-Labels');
+                	
+                	function setSVG(){
                 		
+                		console.log($scope.heatmapDataset.view.params)
+                		svg.attr('height', 
+                				$scope.heatmapDataset.view.params.panel.top.height
+                				+ $scope.heatmapDataset.view.params.labels.column.height
+                				+ $scope.heatmapDataset.view.params.selections.column.height
+                				+($scope.heatmapDataset.view.labels.row.values.length * $scope.heatmapDataset.view.params.cell.height ) + 50 )
+                		svg.attr('width', 
+                				$scope.heatmapDataset.view.params.panel.side.width
+                				+ $scope.heatmapDataset.view.params.labels.row.width
+                				+ $scope.heatmapDataset.view.params.selections.row.width
+                				+ ($scope.heatmapDataset.view.labels.column.values.length * $scope.heatmapDataset.view.params.cell.width) + 50 )
+                				
+                		svg.append('rect').attr({
+                					x: $scope.heatmapDataset.view.params.panel.side.width,
+                					y: $scope.heatmapDataset.view.params.panel.top.height
+                    				+ $scope.heatmapDataset.view.params.labels.column.height
+                    				+ $scope.heatmapDataset.view.params.selections.column.height,
+                					width:($scope.heatmapDataset.view.labels.column.values.length * $scope.heatmapDataset.view.params.cell.width),
+                					height: ($scope.heatmapDataset.view.labels.row.values.length * $scope.heatmapDataset.view.params.cell.height ),
+                					fill: 'black'
+
+                				});
                 		
-                		return
+                	}
+
+                	$scope.$watch('heatmapDataset.view.labels.row.values', function(newval, oldval){
+                		
+                		if (newval && 
+                				newval.length > 0 && 
+                				$scope.heatmapDataset.view.labels.column.values &&
+                				$scope.heatmapDataset.view.labels.column.values.length > 0){
+                			
+                			setSVG()
+                        	
+                			$scope.heatmapDataset.view.setScales()
+                        	console.log($scope.heatmapDataset.view)
+                		}
+                			
                 	});
                 	
-                	$scope.$watch('heatmapDataset.view.labels.column', function(newval){
-                		if ($scope.heatmapDataset.view.labels.row){
-                			heatmap.setSize($scope.heatmapDataset.view.labels.row, 
-                    					$scope.heatmapDataset.view.labels.column,
-                    					$scope.heatmapDataset.selections.row, $scope.heatmapDataset.selections.column,
-                    					{width:15, height:15})	
+                	$scope.$watch('heatmapDataset.view.labels.column.values', function(newval, oldval){
+                		
+                		if (newval && 
+                				newval.length > 0 && 
+                				$scope.heatmapDataset.view.labels.row.values &&
+                				$scope.heatmapDataset.view.labels.row.values.length > 0){
+                			
+                			setSVG()
+                        	
+                			$scope.heatmapDataset.view.setScales()
+                        	console.log($scope.heatmapDataset.view)
                 		}
+                			
                 	});
                 	
-                	console.log($scope.heatmapDataset)
                 	
                 	
                 	//when new view labels load
@@ -299,16 +424,16 @@ define(['jquery', 'angular', 'heatmap/behaviors', 'extend', 'd3',
         	
         	$scope.availableColors = availableColors;
         	
-        	$scope.dataset = {};
-        	extend($scope.dataset, heatmapDataset)
+        	$scope.dataset = heatmapDataset($routeParams.datasetName);
+        	$scope.$watch('dataset.data', function(newval){
+        		
+        		if (newval){
+        			$scope.dataset.viewUpdate();
+        		}
+        	});
         	
         	
-        	//Initialize page
         	
-        	$scope.dataset.setDataset();
-        	//$scope.dataset.setHeatmapView();
-        	//$scope.dataset.setDatasetAnalysisList();
-        	//$scope.dataset.setDatasetSelections();
         	
         }]);
 });
