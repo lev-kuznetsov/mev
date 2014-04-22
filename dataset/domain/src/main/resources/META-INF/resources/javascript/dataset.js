@@ -20,37 +20,23 @@
  * @author levk
  * @since CRYSTAL
  */
-function Dataset (_dataset) {
-  this._dataset = _dataset;
+define ('dataset', [ 'mev' ], function (mev) {
 
-  /**
-   * Name of the dataset
-   */
-  this.name = function () {
-    return this._dataset.name;
+  mev.dataset = {
+    decorate : function (dataset) {
+      dataset.dimension = function (name) {
+        for (dimension in dataset.dimensions)
+          if (dataset.dimensions[dimension].name === name) return dataset.dimensions[dimension];
+        throw new Error ("No dimension " + name + " found for dataset " + dataset.name);
+      };
+
+      dataset.analysis = function (name) {
+        for (analysis in dataset.analyses)
+          if (dataset.analyses[analysis].name === name) return dataset.analyses[analysis];
+        throw new Error ("No analysis " + name + " found for dataset " + dataset.name);
+      };
+    }
   };
 
-  /**
-   * Array of dimension wrappers
-   */
-  this.dimensions = function () {
-    var _dimensions = [];
-    for ( var _dimension in this._dataset.dimensions)
-      _dimensions.push (new Dimension (this._dataset, _dimension));
-    return _dimensions;
-  };
-
-  /**
-   * Analyses
-   */
-  this.analyses = function () {
-    return this._dataset.analyses;
-  };
-
-  /**
-   * Values wrapper
-   */
-  this.values = function () {
-    return new Values (this._dataset);
-  };
-}
+  return mev.dataset;
+});

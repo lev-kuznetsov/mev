@@ -39,17 +39,20 @@
     <reflections.version>0.9.9-RC1</reflections.version>
 
     <jquery.version>2.1.0-2</jquery.version>
+    <requirejs.version>2.1.11-1</requirejs.version>
 
     <jackson.version>2.3.0</jackson.version>
     <google-collections.version>1.0</google-collections.version>
     <guava.version>16.0.1</guava.version>
-    
+
     <mockito.version>1.9.5</mockito.version>
     <jsonassert.version>1.2.3</jsonassert.version>
 
     <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
-    <jasmine-maven-plugin.version>1.3.1.4</jasmine-maven-plugin.version>
+    <jasmine-maven-plugin.version>1.3.1.5-SNAPSHOT</jasmine-maven-plugin.version>
+    <phantomjs-maven-plugin.version>0.2.1</phantomjs-maven-plugin.version>
+    <phantomjs.version>1.9.2</phantomjs.version>
   </properties>
 
   <build>

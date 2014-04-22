@@ -16,6 +16,14 @@
 
   <dependencies>
 
+    <!-- RequireJS -->
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>requirejs</artifactId>
+      <version>${requirejs.version}</version>
+    </dependency>
+
     <!-- Commons Configuration for Variable Interpolation -->
 
     <dependency>
@@ -247,31 +255,86 @@
 
   <build>
 
-    <plugins>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>${maven-source-plugin.version}</version>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-    </plugins>
-
     <pluginManagement>
       <plugins>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${maven-source-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>com.github.klieber</groupId>
+          <artifactId>phantomjs-maven-plugin</artifactId>
+          <version>${phantomjs-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>install</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <version>${phantomjs.version}</version>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <!-- Excludes the phantomjs download plugin from eclipse build -->
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>com.github.klieber</groupId>
+                    <artifactId>phantomjs-maven-plugin</artifactId>
+                    <versionRange>[${phantomjs-maven-plugin.version}]</versionRange>
+                    <goals>
+                      <goal>install</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore />
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
 
         <plugin>
           <groupId>com.github.searls</groupId>
           <artifactId>jasmine-maven-plugin</artifactId>
           <version>${jasmine-maven-plugin.version}</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.slf4j</groupId>
+              <artifactId>slf4j-api</artifactId>
+              <version>${org.slf4j.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>org.slf4j</groupId>
+              <artifactId>slf4j-nop</artifactId>
+              <version>${org.slf4j.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>org.slf4j</groupId>
+              <artifactId>jul-to-slf4j</artifactId>
+              <version>${org.slf4j.version}</version>
+            </dependency>
+          </dependencies>
           <executions>
             <execution>
               <goals>
@@ -280,6 +343,8 @@
             </execution>
           </executions>
           <configuration>
+            <debug>true</debug>
+            <specRunnerTemplate>REQUIRE_JS</specRunnerTemplate>
             <jsSrcDir>${project.basedir}/src/main/resources/META-INF/resources/javascript</jsSrcDir>
             <sourceIncludes>
               <include>**/*.js</include>
@@ -289,6 +354,17 @@
               <include>**/*.js</include>
             </specIncludes>
             <format>progress</format>
+            <preloadSources>
+              <source>webjar/require.js</source>
+            </preloadSources>
+            <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
+            <webDriverCapabilities>
+              <capability>
+                <name>phantomjs.binary.path</name>
+                <value>${phantomjs.binary}</value>
+              </capability>
+            </webDriverCapabilities>
+            <customRunnerConfiguration>${project.basedir}/src/test/resources/require.config.js</customRunnerConfiguration>
           </configuration>
         </plugin>
 
@@ -296,5 +372,20 @@
     </pluginManagement>
 
   </build>
+
+  <pluginRepositories>
+
+    <pluginRepository>
+      <id>snapshots-repo</id>
+      <url>https://github.com/lev-kuznetsov/maven/raw/master</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+
+  </pluginRepositories>
 
 </project>

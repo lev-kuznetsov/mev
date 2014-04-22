@@ -25,7 +25,6 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import lombok.ToString;
-import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
@@ -47,7 +46,6 @@ import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
  * @since CRYSTAL
  */
 @ToString
-@Log4j
 public class MevDomainModule implements Module {
 
   /* (non-Javadoc)
@@ -59,7 +57,7 @@ public class MevDomainModule implements Module {
       @Override
       public void configure (Binder binder) {
         // Persistence
-        bindProperties (binder, load ("/database.properties"));
+        bindProperties (binder, load ("/META-INF/configuration/database.properties"));
         binder.bind (DataSource.class).toProvider (new PooledDataSourceProvider ());
 
         // Jackson
@@ -108,11 +106,6 @@ public class MevDomainModule implements Module {
 
     if (toThrow != null)
       throw toThrow;
-
-    StringBuilder statement = new StringBuilder ("Properties\n");
-    for (Object property : properties.keySet ())
-      statement.append (property).append (" = ").append (properties.get (property)).append ('\n');
-    log.info (statement.toString ().trim ());
 
     return properties;
   }

@@ -13,3 +13,14 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
+
+/**
+ * MeV services singleton (pushed onto mev.server)
+ */
+define ('services', [ 'mev', 'jquery' ], function (mev, jquery) {
+  mev.server = {
+    jquery : jquery
+  };
+
+  return mev.server;
+});

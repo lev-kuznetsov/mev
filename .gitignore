@@ -6,17 +6,11 @@
 **.ear
 **.zip
 
-# Test Third-Party Javascript Libraries #
-src/**/html/**/lib/*
-src/**/html/app/data/*
 # Others #
 
 .Rhistory
-
+phantomjsdriver.log
 **.eclipse
-=======
-
-# IDE Generated Files
 .project
 .classpath
 .settings/

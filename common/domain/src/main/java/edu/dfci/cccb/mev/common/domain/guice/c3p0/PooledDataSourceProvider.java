@@ -24,6 +24,7 @@ import javax.sql.DataSource;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 
 import com.google.inject.Provider;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -36,6 +37,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
  */
 @ToString
 @EqualsAndHashCode
+@Log4j
 public class PooledDataSourceProvider implements Provider<DataSource> {
 
   public static final String DRIVER_CLASS = "database.driver.class";
@@ -59,6 +61,8 @@ public class PooledDataSourceProvider implements Provider<DataSource> {
       dataSource.setJdbcUrl (url);
       dataSource.setUser (user);
       dataSource.setPassword (password);
+
+      log.info ("Setting up DataSource using " + driver + " at " + url + " for " + user);
 
       return dataSource;
     } catch (PropertyVetoException e) {
