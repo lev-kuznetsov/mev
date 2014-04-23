@@ -7,7 +7,8 @@ define(['angular',
         'setmanager/SetManager',
         ,'uiBootstrapTpls'
         ,'ngGrid',
-        'heatmap/heatmap'
+        'heatmap/Heatmap',
+        'heatmapvisualization/HeatmapVisualization'
         ], function(angular){
 	'use strict';
 	return angular.module('myApp', [
@@ -20,7 +21,8 @@ define(['angular',
 	     'Mev.PresetManager',
 	     ,'ui.bootstrap'
 	     ,'ngGrid',
-	     'Mev.heatmap'
+	     'Mev.heatmap',
+	     'Mev.heatmapvisualization'
 	     ])
 	.config(['$routeProvider', '$locationProvider', '$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {
 		
