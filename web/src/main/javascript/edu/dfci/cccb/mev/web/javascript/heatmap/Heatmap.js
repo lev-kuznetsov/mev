@@ -1,14 +1,13 @@
 define(['jquery', 
         'angular',
-        'extend', 
-        'dataset/Dataset',
-        'heatmapview/HeatmapView',
+        'extend',
         'd3',
-        'notific8', 'api/api', 'colorbrewer/ColorBrewer'],
-    function($, angular, extend, Dataset, View, d3) {
+        'dataset/Dataset',
+        'notific8', 'api/Api', 'colorbrewer/ColorBrewer'],
+    function($, angular, extend, d3) {
 	
 	return angular
-		.module('Mev.heatmap', ['Mev.api', 'd3colorBrewer'])
+		.module('Mev.heatmap', ['Mev.Api', 'Mev.Dataset', 'd3colorBrewer'])
 		.value('Heatmap.availableColors', ["Green-Black-Red",
                                            "Yellow-Black-Blue",
                                            "Red-White-Blue"])
@@ -57,147 +56,13 @@ define(['jquery',
 	            };
         	};
         }])
-		.factory('heatmapDataset', ['alertService',
-		    'api.dataset', 'api.dataset.analysis',
-		    'api.dataset.selections', 
-		    function(alertService, apiDataset, apiAnalysis, apiSelections){
-			
-			//Object builder for heatmapDataset
-			
-				return function(datasetName){
-					
-					var dataset = {
-						datasetName : datasetName,
-					};
-					
-					apiDataset.get({datasetName:datasetName},
-				    function(result){
-		            //set cells
-		    			
-		    			Object.defineProperty(dataset, 'data', {
-		    				value : {
-		    			
-		    					cells: {
-		    						avg : result.avg,
-		    						max : result.max,
-		    						min : result.min,
-		    						values : result.values,
-		    						
-		    					},
-		    					labels : {
-		    						row : result.row.keys,
-		    						column : result.column.keys
-		    					}, 
-		    					selections : {
-									row : result.row.selections,
-									column : result.column.selections
-								}
-		    				}, 
-		    				enumerable : true,
-		    				writable :true,
-		    				
-		    			});
-		    			
-		    			Object.defineProperty(dataset, 'view', {
-		    				value : {
-		    					cells: {
-		    						avg : result.avg,
-		    						max : result.max,
-		    						min : result.min,
-		    						values : result.values,
-		    						xScale : d3.scale.ordinal(),
-		    						yScale : d3.scale.ordinal()
-		    					},
-		    					labels : {
-		    						row : {
-		    							values:result.row.keys
-		    						},
-		    						column : {
-		    							values:result.column.keys,
-		    						}
-		    					}, 
-		    					selections : {
-		    						row : {
-		    							values: result.row.selections,
-		    							xScale : d3.scale.ordinal(), //.rangeRoundBands([width, width+180], 0, 0),
-		    			    			yScale : d3.scale.ordinal(),
-		    						},
-		    						column : {
-		    							values: result.column.selections,
-		    							xScale : d3.scale.ordinal(),
-		    							yScale : d3.scale.ordinal(),	
-		    							
-		    						}
-		    					},
-		    					panel: {
-		    						top: {
-		    							xScale : d3.scale.ordinal(),
-		    			    			yScale : d3.scale.ordinal().rangeRoundBands([0, 150], 0, 0),
-		    						},
-		    						side: {
-		    							xScale : d3.scale.ordinal().rangeRoundBands([0, 150], 0, 0),
-		    			    			yScale : d3.scale.ordinal(),
-		    						}
-		    					}
-		    				}, 
-		    				enumerable : true,
-		    				writable :true,
-		    				
-		    			});
-		    			
-		    			extend(dataset.view, View);
-						extend(dataset, Dataset);
-		    			
-		            }, function(error){
-		            	 var message = "Could not retrieve dataset info"
-		                     + ". If the"
-		                     + "problem persists, please contact us.";
-
-		                 var header = "Heatmap Download Problem (Error Code: "
-		                         + error.status
-		                         + ")";
-
-		                 alertService.error(message, header);
-		                 
-		            });
-					
-					
-		        	//Add some AngularJS modules to the dataset
-		        	Object.defineProperty(dataset, 'apiAnalysis', 
-		        			{value: apiAnalysis, 
-		        			 enumerable: true,
-		        			 configurable: false,
-		        			 writeable: false
-		        			}); 
-		        	
-		        	Object.defineProperty(dataset, 'apiSelections', 
-		        			{value: apiSelections, 
-		        			 enumerable: true,
-		        			 configurable: false,
-		        			 writeable: false
-		        			});
-
-		        	Object.defineProperty(dataset, 'alertService', 
-		        			{value: alertService, 
-		        			 enumerable: true,
-		        			 configurable: false,
-		        			 writeable: false
-		        			});
-		        	
-		        	return dataset;
-				};
-			
-			
-		}])
 		.controller('HeatmapCtrl', [
 		'$scope', 
-		'$routeParams', 
-		'pseudoRandomStringGenerator',
+		'$routeParams',
         '$location',
-        'heatmapDataset',
-        'Heatmap.availableColors',
-        function($scope, $routeParams, prsg,  $loc, heatmapDataset,
-        		availableColors) {
+        'DatasetResourceService',
+        'DatasetFactory',
+        function($scope, $routeParams,  $loc,DatasetResourceService, DatasetFactory) {
 			
 			//case where there's no datasetName
 			if (!$routeParams.datasetName) {
@@ -205,19 +70,23 @@ define(['jquery',
 				$loc.path('/datasets'); //return back to datasets
 				return
 			};
-        	
-        	$scope.availableColors = availableColors;
-        	
-        	$scope.dataset = heatmapDataset($routeParams.datasetName);
-        	$scope.$watch('dataset.data', function(newval){
-        		
-        		if (newval){
-        			$scope.dataset.viewUpdate();
-        		}
-        	});
-        	
-        	
-        	
+			
+			$scope.dataset = undefined;
+			
+			DatasetResourceService.get({
+				datasetName: $routeParams.datasetName
+			}, function(response){
+				$scope.dataset = DatasetFactory.get(response)
+			});
+			
+			$scope.$watch('dataset', function(newval, oldval){
+				if(newval && !oldval){
+					$scope.dataset.addView($scope.dataset)
+				}
+				
+			})
+
+			
         	
         }]);
 });

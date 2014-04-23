@@ -1,26 +1,29 @@
-define([
-	'./lib/cellFilter',
-	'./lib/viewUpdate'
-	], function(cellFilter, viewUpdate){
+define(['angular',
+        './lib/DatasetClass', 
+        './lib/generateView',
+        './lib/generateRowFilteredView', 
+        'api/Api', 'view/View'], 
+function(angular, DatasetClass, generateView, generateRowFilteredView){
+	
+	return angular.module('Mev.Dataset', ['Mev.Api', 'Mev.View'])
+	.factory('DatasetFactory', ['AnalysisResourceService', 'SelectionResourceService',
+	                            'ViewFactory',
+	 function(AnalysisResourceService, SelectionResourceService, ViewFactory){
+		return {
+			get: function(initialData){
+				var dataset = new DatasetClass(initialData);
+				
+				dataset.analysis = AnalysisResourceService;
+				dataset.selection = SelectionResourceService;
+				dataset.view = ViewFactory;
 
-	
-	//The loader for heatmap dependencies
-	var behaviors = Object.create(null);
-	
-	Object.defineProperty(behaviors, 'cellFilter', {
-		value: cellFilter,
-		enumerable: true,
-		writable: false,
-		configurable: false
-	});
-	
-	Object.defineProperty(behaviors, 'viewUpdate', {
-		value: viewUpdate,
-		enumerable: true,
-		writable: false,
-		configurable: false
-	});
-	
-	return behaviors;
+				dataset.addView = generateView;
+				dataset.generateRowFilteredView = generateRowFilteredView;
+				
+				return dataset;
+				
+			}
+		};
+	}])
 	
 });

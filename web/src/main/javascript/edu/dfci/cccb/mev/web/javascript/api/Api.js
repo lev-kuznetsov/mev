@@ -1,8 +1,8 @@
 define ([ 'angular'], function (angular) {
 
     angular
-    .module ('Mev.api', [])
-    .service ('api.dataset', ['$resource', function ($resource) {
+    .module ('Mev.Api', [])
+    .service ('DatasetResourceService', ['$resource', function ($resource) {
     	 return $resource('/dataset/:datasetName/data',
 	    	{
 	    		format:'json'
@@ -12,7 +12,7 @@ define ([ 'angular'], function (angular) {
     	 
     	
     }])
-    .service ('api.dataset.analysis', ['$resource', '$routeParams', function ($resource, $routeParams) {
+    .service ('AnalysisResourceService', ['$resource', '$routeParams', function ($resource, $routeParams) {
     	
     	return $resource('/dataset/:datasetName/analysis',
 	    	{
@@ -32,7 +32,7 @@ define ([ 'angular'], function (angular) {
 			});
     	
     }])
-    .service ('api.dataset.selections', ['$resource', '$routeParams', function($resource, $routeParams){
+    .service ('SelectionResourceService', ['$resource', '$routeParams', function($resource, $routeParams){
     	return $resource('/dataset/:datasetName/:dimension/selection',{
     		format: 'json'
     	}, {
