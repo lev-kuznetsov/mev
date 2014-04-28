@@ -63,7 +63,7 @@ define(['angular', 'api/Api'], function(angular){
                             return d.id
                         })
 
-                        var selectionsData = data:{
+                        var selectionsData = {
                             name: scope.selectionParams.name,
                             properties: {
                                 selectionDescription: '',
