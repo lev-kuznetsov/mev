@@ -60,6 +60,8 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 	
                 	$scope.visualization = undefined;
                 	
+                	
+                	//When dataset information comes, generate new visualization.
                 	$scope.$watch('heatmapDataset', function(newval){
                 		
                 		if (newval){
@@ -71,12 +73,18 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 		
                 	});
                 	
+                	//When visualization information comes, print cells, selections,
+                	//	and clear current top and side panes
                 	$scope.$watch('visualization', function(newval){
                 		if(newval){
                 			$scope.visualization.updateCells(position);
                 		}
                 		
                 	})
+                	
+                	//When new side/top pane information comes, print it
+                	
+                	//When new selections come, print them
                 	
                 	//Selections modifier
                 	
