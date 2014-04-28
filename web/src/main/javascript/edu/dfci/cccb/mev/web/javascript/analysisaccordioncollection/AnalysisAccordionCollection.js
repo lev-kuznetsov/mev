@@ -1,11 +1,11 @@
-define(['angular', 'api/Api'], function(angular){
+define(['angular', 'alertservice/AlertService'], function(angular){
 	
 	return angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])
 	.directive('kMeansAccordion', [function() {
         return {
             restrict : 'E',
             scope : {
-            	analysis : "&analysis"
+            	analysis : "=analysis"
             },
             templateUrl : '/container/view/elements/kmeansAccordion',
         };
@@ -16,7 +16,7 @@ define(['angular', 'api/Api'], function(angular){
             restrict : 'E',
             templateUrl : '/container/view/elements/anovaAccordion',
             scope : {
-            	analysis : "&analysis",
+            	analysis : "=analysis",
             	dataset : "&heatmapDataset"
             },
             link: function(scope){
@@ -110,7 +110,7 @@ define(['angular', 'api/Api'], function(angular){
             templateUrl : '/container/view/elements/tTestAccordion',
             scope : {
             	dataset : "&heatmapDataset",
-            	analysis : "&analysis"
+            	analysis : "=analysis"
             },
             link : function(scope) {
 
@@ -210,7 +210,7 @@ define(['angular', 'api/Api'], function(angular){
             templateUrl : '/container/view/elements/limmaAccordion',
             scope : {
             	dataset : "&heatmapDataset",
-            	analysis : "&analysis"
+            	analysis : "=analysis"
             },
             link : function(scope) {
 
@@ -305,7 +305,7 @@ define(['angular', 'api/Api'], function(angular){
         return {
             restrict : 'A',
             scope : {
-                data : '=',
+                data : '=data',
                 diameter : '@'
 
             },

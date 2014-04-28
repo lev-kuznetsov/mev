@@ -25,14 +25,14 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 	$scope.availableColors = [
                 	"red", "orange", "yellow", "green", "blue", "violet",
                 	"pink", "white", "black"
-                	]
+                	];
                 	
                 	$scope.currentColors = {
                 		name: "Orange-Pink-Green",
                 		color1: 'orange',
                 		color2: 'pink',
                 		color3: 'green',
-                	}
+                	};
                 	
                 	$("div.tab-content").on("scroll", function(e){
                         
@@ -80,7 +80,7 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 			$scope.visualization.updateCells(position);
                 		}
                 		
-                	})
+                	});
                 	
                 	//When new side/top pane information comes, print it
                 	
@@ -88,29 +88,29 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 	
                 	//Selections modifier
                 	
-                	scope.selectionParams = {
+                	$scope.selectionParams = {
                 		row : {
 	                	
 	                		name : undefined,
-	                		color : '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
+	                		color : '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16),
 	                		labels : []
 	                	},
 	                	column : {
 		                	
 	                		name : undefined,
-	                		color : '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
+	                		color : '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16),
 	                		labels : []
 	                	}
                 	
-                	}
+                	};
                 	
                 	//addSelection [Selection] --> null
-                	scope.addSelection = function(selection, dimension){
+                	$scope.addSelection = function(selection, dimension){
                 		var selectionsData = {
                             name: scope.selectionParams[dimension].name,
                             properties: {
                                 selectionDescription: '',
-                                selectionColor:scope.selectionParams[dimension].color,                     
+                                selectionColor: $scope.selectionParams[dimension].color,                     
                             },
                             keys:selection[dimension].labels
                         };
@@ -122,13 +122,13 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                         }. selectionsData,
                         function(response){
                                 scope.$broadcast('SeletionAddedEvent', 'row');
-                                var message = "Added " + scope.selectionParams.name + " as new Selection!";
+                                var message = "Added " + $scope.selectionParams.name + " as new Selection!";
                                 var header = "Heatmap Selection Addition";
                         
-                                scope.selectionParams[dimension].color = '#'+Math
+                                $scope.selectionParams[dimension].color = '#'+Math
                                     .floor(Math.random()*0xFFFFFF<<0)
                                     .toString(16);
-                                scope.selectionParams[dimension].name = undefined;
+                                $scope.selectionParams[dimension].name = undefined;
 
                                 alertService.success(message,header);
                         },
@@ -142,7 +142,7 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
 
                              alertService.error(message,header);
                         });
-                	} 
+                	};
 
                 }
 

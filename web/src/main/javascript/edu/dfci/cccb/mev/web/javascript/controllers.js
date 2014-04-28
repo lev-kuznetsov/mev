@@ -1,9 +1,9 @@
 define(
-        ['jquery', 'angular', 'd3', 'notific8', 'api/Api'],
+        ['jquery', 'angular', 'd3', 'notific8', 'api/Api', 'alertservice/AlertService'],
         function($, angular, d3) {
 
             return angular
-                    .module('myApp.controllers', ['Mev.Api'])
+                    .module('myApp.controllers', ['Mev.Api', 'Mev.AlertService'])
                     .controller(
                             'oldHeatmapCtrl',
                             [

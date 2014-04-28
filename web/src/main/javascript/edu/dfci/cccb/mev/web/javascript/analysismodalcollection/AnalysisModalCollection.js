@@ -1,4 +1,4 @@
-define(['angular', 'api/Api'], function(angular){
+define(['angular', 'alertservice/AlertService'], function(angular){
 	
 	return angular.module('Mev.AnalysisModalCollection', ['Mev.AlertService'])
 	.directive('modalAnova',[ 'alertService',
@@ -6,7 +6,7 @@ define(['angular', 'api/Api'], function(angular){
             return {
                 restrict : 'C',
                 scope : {
-                	dataset = '&heatmapDataset'
+                	dataset : '=heatmapDataset'
                 },
                 templateUrl : "/container/view/elements/anovaModalBody",
                 link : function(scope, elems, attrs) {
@@ -75,7 +75,7 @@ define(['angular', 'api/Api'], function(angular){
                         
                         
                         dataset.analysis
-                        .post({analysisData, JSON.stringify(scope.params.selections),
+                        .post(analysisData, JSON.stringify(scope.params.selections),
 	                        function(data, status, headers, config) {
 	                            
                         		dataset.analyses.push(data);
@@ -106,7 +106,7 @@ define(['angular', 'api/Api'], function(angular){
             return {
                 restrict : 'C',
                 scope : {
-                	dataset : '&heatmapDataset'
+                	dataset : '=heatmapDataset'
                 },
                 templateUrl : "/container/view/elements/tTestModalBody",
                 link : function(scope, elems, attrs) {
@@ -187,7 +187,7 @@ define(['angular', 'api/Api'], function(angular){
                 restrict : 'C',
                 templateUrl : "/container/view/elements/hierarchicalbody",
                 scope : {
-                	dataset : "&heatmapDataset"
+                	dataset : "=heatmapDataset"
                 },
                 link : function(scope, elems, attrs) {
 
@@ -283,7 +283,7 @@ define(['angular', 'api/Api'], function(angular){
                 return {
                     restrict : 'C',
                     scope : {
-                    	dataset : "&heatmapDataset"
+                    	dataset : "=heatmapDataset"
                     },
                     templateUrl : "/container/view/elements/kMeansBody",
                     link: function(scope){
@@ -366,7 +366,7 @@ define(['angular', 'api/Api'], function(angular){
                     return {
                         restrict : 'C',
                         templateUrl : "/container/view/elements/limmaBody",
-                        scope : {dataset : "&heatmapDataset"},
+                        scope : {dataset : "=heatmapDataset"},
                         link : function(scope, elems, attrs) {
 
                         	
@@ -387,7 +387,7 @@ define(['angular', 'api/Api'], function(angular){
 	                            dimensions : [{
 	                                name : "Column",
 	                                value : "column"
-	                            }]; 
+	                            }]
                             }
                             
 

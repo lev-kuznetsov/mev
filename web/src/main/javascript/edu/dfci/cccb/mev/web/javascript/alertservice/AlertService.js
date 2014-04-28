@@ -1,5 +1,5 @@
-define(['notific8'], function(){
-	return angular.module('Mev.AlertService')
+define(['angular', 'notific8'], function(angular){
+	return angular.module('Mev.AlertService', [])
 	.factory ('alertServiceFactory', [ function () {
 
             return {
