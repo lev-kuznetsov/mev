@@ -43,7 +43,6 @@ define(['./cellFilter'], function(cellFilter){
 		    .attr('transform', 'rotate(-90)')
             .attr({
                 x: - (self.params.panel.top.height
-                + self.params.selections.column.height
                 + self.params.labels.column.height),
                 y: function(d){return  self.scales.cells.xScale(d) + .68*self.params.cell.width },
                 "text-anchor": "start"
