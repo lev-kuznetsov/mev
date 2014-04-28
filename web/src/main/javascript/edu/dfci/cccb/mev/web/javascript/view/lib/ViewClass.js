@@ -25,6 +25,10 @@ define([], function(){
 			side: undefined
 		};
 		
+		this.selections = {
+				column: initialData.selections.column,
+				row: initialData.selections.row
+		}
 		
 	};
 	

@@ -27,7 +27,7 @@ define ([ 'angular'], function (angular) {
                 post: {
                 	method:'POST',
                 	url: 'dataset/:datasetName'
-                        + '/analyze/:analysisType'
+                        + '/analyze/:analysisType/:analysisName(:analysisParams)'
                 }
 			});
     	

@@ -81,7 +81,7 @@ define(['jquery',
 			
 			$scope.$watch('dataset', function(newval, oldval){
 				if(newval && !oldval){
-					$scope.dataset.addView($scope.dataset)
+					$scope.dataset.addView($scope.dataset);
 				}
 				
 			})

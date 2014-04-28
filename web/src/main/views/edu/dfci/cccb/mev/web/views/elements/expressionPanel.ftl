@@ -7,10 +7,8 @@
                
                        <div class="tab-pane active" id="heatmaptabpane">
                                <vis-Heatmap
-                               		heatmap-dataset="dataset"
-                               		side-Panel="heatmapViews.side",
-                                    top-Panel="heatmapViews.top",
-                                    selections=""></vis-Heatmap>
+                               		heatmap-dataset="dataset.views[0]">
+                               	</vis-Heatmap>
                        </div>
                            
                        <div class="tab-pane" id="annotationsTabPane">                      
