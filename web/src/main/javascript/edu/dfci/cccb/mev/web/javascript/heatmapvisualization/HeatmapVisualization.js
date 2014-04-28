@@ -9,7 +9,9 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 restrict : 'E',
                 templateUrl : "/container/view/elements/visHeatmap",
                 scope: {
-                	heatmapDataset: "=heatmapDataset"
+                	heatmapDataset: "=heatmapDataset",
+                	selections : "=selections",
+                	selectionAdd : "&selectionAdd"
                 },
                 link : function($scope, elems, attr) {
                 	
@@ -75,6 +77,64 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 		}
                 		
                 	})
+                	
+                	//Selections modifier
+                	
+                	scope.selectionParams = {
+                		row : {
+	                	
+	                		name : undefined,
+	                		color : '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
+	                		labels : []
+	                	},
+	                	column : {
+		                	
+	                		name : undefined,
+	                		color : '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
+	                		labels : []
+	                	}
+                	
+                	}
+                	
+                	//addSelection [Selection] --> null
+                	scope.addSelection = function(selection, dimension){
+                		var selectionsData = {
+                            name: scope.selectionParams[dimension].name,
+                            properties: {
+                                selectionDescription: '',
+                                selectionColor:scope.selectionParams[dimension].color,                     
+                            },
+                            keys:selection[dimension].labels
+                        };
+                        
+                        selectionsAdd({
+                            datasetName : $routeParams.datasetName,
+                            dimension : dimension
+
+                        }. selectionsData,
+                        function(response){
+                                scope.$broadcast('SeletionAddedEvent', 'row');
+                                var message = "Added " + scope.selectionParams.name + " as new Selection!";
+                                var header = "Heatmap Selection Addition";
+                        
+                                scope.selectionParams[dimension].color = '#'+Math
+                                    .floor(Math.random()*0xFFFFFF<<0)
+                                    .toString(16);
+                                scope.selectionParams[dimension].name = undefined;
+
+                                alertService.success(message,header);
+                        },
+                        function(data, status, headers, config) {
+                            var message = "Couldn't add new selection. If "
+                                + "problem persists, please contact us.";
+
+                             var header = "Selection Addition Problem (Error Code: "
+                                + status
+                                + ")";
+
+                             alertService.error(message,header);
+                        });
+                	} 
 
                 }
 
