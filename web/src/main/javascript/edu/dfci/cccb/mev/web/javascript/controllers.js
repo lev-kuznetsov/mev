@@ -1,11 +1,11 @@
 define(
-        ['jquery', 'angular', 'd3', 'notific8', 'api/api'],
+        ['jquery', 'angular', 'd3', 'notific8', 'api/Api', 'alertservice/AlertService'],
         function($, angular, d3) {
 
             return angular
-                    .module('myApp.controllers', ['Mev.api'])
+                    .module('myApp.controllers', ['Mev.Api', 'Mev.AlertService'])
                     .controller(
-                            'HeatmapCtrl',
+                            'oldHeatmapCtrl',
                             [
                                     '$scope',
                                     '$routeParams',
@@ -15,8 +15,8 @@ define(
                                     '$location',
                                     'logger',
                                     'alertService',
-                                    'api.dataset',
-                                    'api.dataset.analysis',
+                                    'DatasetResourceService',
+                                    'AnalysisResourceService',
                                     function($scope, $routeParams, $http, prsg, 
                                     		$rS, $loc, log, alertService, 
                                     		apiDataset, apiAnalysis) {

@@ -5,8 +5,12 @@ define(['angular',
         'services', 
         'controllers', 
         'setmanager/SetManager',
-        ,'uiBootstrapTpls'
-        ,'ngGrid'
+        'uiBootstrapTpls',
+        'ngGrid',
+        'heatmap/Heatmap',
+        'heatmapvisualization/HeatmapVisualization',
+        'analysisaccordioncollection/AnalysisAccordionCollection',
+        'analysismodalcollection/AnalysisModalCollection',
         ], function(angular){
 	'use strict';
 	return angular.module('myApp', [
@@ -17,8 +21,12 @@ define(['angular',
 	     'myApp.controllers',
 	     'Mev.SetManager',
 	     'Mev.PresetManager',
-	     ,'ui.bootstrap'
-	     ,'ngGrid'
+	     'ui.bootstrap',
+	     'ngGrid',
+	     'Mev.heatmap',
+	     'Mev.heatmapvisualization',
+	     'Mev.AnalysisAccordionCollection',
+	     'Mev.AnalysisModalCollection'
 	     ])
 	.config(['$routeProvider', '$locationProvider', '$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {
 		

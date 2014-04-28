@@ -45,9 +45,6 @@ require.config ({
         exports : 'ngResource',
         deps: ['angular']
     },
-//    'uiBootstrap':{
-//            deps:['angular', 'bootstrap']
-//    },
     'uiBootstrapTpls':{
         deps:['angular', 'bootstrap']
     },
@@ -67,11 +64,11 @@ require.config ({
     'ngGrid' : {
     	deps : ['jquery', 'angular', 'uiBootstrapTpls']
     },
-    canvasToBlob : {
+    'canvasToBlob' : {
     	deps : ['blob'],
     	exports : 'canvasToBlob'
     },
-    fileSaver : {
+    'fileSaver' : {
     	deps : ['canvasToBlob'],
     	exports : 'fileSaver'
     }

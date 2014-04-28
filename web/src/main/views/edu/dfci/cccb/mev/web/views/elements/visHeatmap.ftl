@@ -26,3 +26,7 @@
 		
 	</form>
 </bsmodal> 
+
+<bsmodal bindid="settingsModal" header="Heatmap Visualization Settings">
+	<heatmap-Settings current-colors="currentColors" available-color-groups="availableColorGroups"></heatmap-Settings>
+</bsmodal>
