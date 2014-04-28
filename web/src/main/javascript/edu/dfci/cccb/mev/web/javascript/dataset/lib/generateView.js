@@ -1,7 +1,7 @@
-define([], function(){
+define(['./ViewClass'], function(ViewClass){
 	
 	
-	//generateView :: !view.get, !views || Object -> null
+	//generateView :: !views || Object -> null
 	//		Modifies dataset object to add a view.
 	return function(initialData){
 
@@ -9,10 +9,12 @@ define([], function(){
 		
 		var self = this;
 		
+		var view = new ViewClass(initialData);
+		
 		if (multipleViews){
-			self.views.push(self.view.get(initialData));
+			self.views.push(view);
 		} else {
-			self.views = [self.view.get(initialData)];
+			self.views = [view];
 		}
 		
 		return null;

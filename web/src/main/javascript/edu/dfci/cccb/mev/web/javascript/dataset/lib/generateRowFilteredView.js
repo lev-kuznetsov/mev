@@ -2,7 +2,9 @@ define(['./cellFilter'], function(cellFilter) {
 	
 	
 	//generateRowFilterFromView :: !views, !addView, !expression, !column || Array -> null
-	//	Used to filter datasets current rows and generate a new view from that
+	//	Used to filter datasets current rows and generate a new view from that.
+    //  Is an intermediary taking a dataset and creating a smaller dataset object that
+    //  generateView can use.
 	return function(labels){
 		
 		var self = this;
@@ -25,7 +27,7 @@ define(['./cellFilter'], function(cellFilter) {
 				};
 
 		
-		self.addView(newView)
+		self.generateView(newView)
 		
 		return null;
 	}

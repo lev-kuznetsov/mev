@@ -10,9 +10,6 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 availableColorGroups : '=availableColorGroups'
             },
             templateUrl : "/container/view/elements/heatmapSettingsModalBody",
-            link: function(scope){
-                console.log(scope.currentColors)
-            }
         }
 	}])
 	.directive('visHeatmap',[ "$routeParams", "$http", "d3colors",
@@ -50,7 +47,6 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 	
                 	$scope.$watch('currentColors.group', function(newval){
                 	    if(newval && $scope.heatmapDataset){
-                	        console.log(newval)
 
                 	            $scope.avaiblableColors = d3colors[newval][3];
                                 $scope.currentColors.group = newval;

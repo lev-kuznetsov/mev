@@ -2,28 +2,25 @@ define(['angular',
         './lib/DatasetClass', 
         './lib/generateView',
         './lib/generateRowFilteredView', 
-        'api/Api', 'view/View'], 
+        'api/Api'], 
 function(angular, DatasetClass, generateView, generateRowFilteredView){
 	
-	return angular.module('Mev.Dataset', ['Mev.Api', 'Mev.View'])
+	return angular.module('Mev.Dataset', ['Mev.Api'])
 	.factory('DatasetFactory', ['AnalysisResourceService', 'SelectionResourceService',
-	                            'ViewFactory',
-	 function(AnalysisResourceService, SelectionResourceService, ViewFactory){
-		return {
-			get: function(initialData){
+	 function(AnalysisResourceService, SelectionResourceService){
+		return function(initialData){
 				var dataset = new DatasetClass(initialData);
 				
 				dataset.analysis = AnalysisResourceService;
 				dataset.selection = SelectionResourceService;
-				dataset.view = ViewFactory;
 
-				dataset.addView = generateView;
+				dataset.generateView = generateView;
 				dataset.generateRowFilteredView = generateRowFilteredView;
 				
 				return dataset;
 				
 			}
-		};
+		
 	}])
 	
 });
