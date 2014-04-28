@@ -1,6 +1,6 @@
 define(['d3'], function(d3){
 
-    //drawSelections ![HeatmapVisualization] Array[Selection] --> null
+    //drawSelections :: ![HeatmapVisualization] Array[Selection] --> null
     //  Takes selections object and draws it on the heatmap visualization
     return function(selections, dimension){
         
@@ -26,11 +26,18 @@ define(['d3'], function(d3){
         var cells = []; 
         //build selections array from selections array
         //for each selection
-            //for each key in selection
-                //make object with selection group, label, and color and push to cells
+        selections.map(function(selection){
+          //for each key in selection
+            selection.keys.map(function(key){
+              //make object with selection group, label, and color and push to cells
+              cells.push({group: selection.name, label: key, color: selection.color})
+            })
+        })
+            
+                
         
         //bind cells to Dom
-        var selectionsCells = self.DOM.selections[dimension].selectAll('rect').data(cells)
+        var selectionsCells = self.DOM.selections[dimension].selectAll('rect').data(cells, function(d){return [d.group, d.label]})
         //draw enter selection
         selectionsCells.enter()
             .append('rect')
