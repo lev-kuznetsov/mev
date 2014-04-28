@@ -23,20 +23,39 @@ define(['./cellFilter'], function(cellFilter){
 		
 		newCells.exit().remove()
 		
-		var labels = self.DOM.labels.row.selectAll('text').data(labels, function(k){return k})
+		var rowLabels = self.DOM.labels.row.selectAll('text').data(labels, function(k){return k}),
+		colLabels = self.DOM.labels.column.selectAll('text').data(self.view.column.values, function(k){return k});
 			
-		labels.enter().append('text')
-				.attr({
-					x: self.params.panel.side.width
-	              	+ ( self.view.column.values.length * self.params.cell.width)
-	              	+ self.params.selections.row.width,
-					y: function(d){return self.scales.cells.yScale(d) + self.params.cell.height },
-					"text-anchor": "bottom"
-				})
-				.text(function(d){
-					return d
-				});
+		rowLabels.enter().append('text')
+            .attr({
+            	x: self.params.panel.side.width
+              	+ ( self.view.column.values.length * self.params.cell.width)
+              	+ self.params.selections.row.width,
+            	y: function(d){return self.scales.cells.yScale(d) + self.params.cell.height },
+            	"text-anchor": "bottom"
+            })
+            .text(function(d){
+            	return d
+            })
+            .append('title').text(function(d){ return d });
 		
-		labels.exit().remove()
+		colLabels.enter().append('text')
+		    .attr('transform', 'rotate(-90)')
+            .attr({
+                x: - (self.params.panel.top.height
+                + self.params.selections.column.height
+                + self.params.labels.column.height),
+                y: function(d){return  self.scales.cells.xScale(d) + .68*self.params.cell.width },
+                "text-anchor": "start"
+            })
+            
+            .text(function(d){
+                return d.slice(0, 13);
+            })
+            .append('title').text(function(d){ return d });
+        
+        rowLabels.exit().remove();
+		
+		colLabels.exit().remove();
 	}
 })
