@@ -30,45 +30,6 @@ define(['d3'], function(d3){
 			
 		}
 		
-		scales.selections = {
-			column : {
-				xScale : d3.scale.ordinal()
-					.domain(self.column.values)
-					.rangeRoundBands(
-							[params.panel.side.width,
-							 params.panel.side.width
-							 	+(self.column.values.length * params.cell.width)], 0, 0),
-				yScale : d3.scale.ordinal()
-					.domain(self.selections.column.values.map(function(selection){
-						return selection.name
-					}))
-					.rangeRoundBands(
-							[params.panel.top.height + params.labels.column.height,
-							 params.panel.top.height + params.labels.column.height
-							 	+ params.selections.column.height], 0, 0)
-
-			},
-			row : {
-				xScale : d3.scale.ordinal().domain(self.selections.row.values.map(function(selection){
-							return selection.name
-						}))
-						.rangeRoundBands([params.panel.side.width 
-				                  	+ ( self.column.values.length * params.cell.width),
-				                  params.panel.side.width
-				                  	+ ( self.column.values.length * params.cell.width)
-				                  	+ params.selections.row.width], 0, 0),
-				yScale : d3.scale.ordinal().domain(self.row.values)
-						.rangeRoundBands([params.panel.top.height 
-				                  	+ params.labels.column.height
-				                  	+ params.selections.column.height,
-	            				  params.panel.top.height 
-				                  	+ params.labels.column.height
-				                  	+ params.selections.column.height 
-				                  	+ (self.row.values.length * params.cell.height)], 0, 0)
-			
-			} 
-		}
-		
 		return scales;
 		
 	};
