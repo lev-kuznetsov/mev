@@ -36,6 +36,11 @@ public class Views {
   }
 
   // Elements
+  
+  @Bean (name = "elements/heatmapSettingsModalBody")
+  public FreeMarkerView elementHeatmapSettingsModalBody (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/heatmapSettingsModalBody.ftl").build ();
+  }
 
   @Bean (name = "elements/anovaModalBody")
   public FreeMarkerView elementAnovaModalBody (FreeMarkerViewBuilder builder) {

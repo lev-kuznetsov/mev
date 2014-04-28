@@ -25,7 +25,7 @@ define(['d3'], function(d3){
 					 	+ params.labels.column.height 
 					 	+ (self.row.values.length * params.cell.height)], 0, 0),
 			colorScale : d3.scale.linear().domain([self.expression.min, self.expression.avg, self.expression.max])
-					.range([params.colors.color1, params.colors.color2, params.colors.color3])
+					.range([params.colors.low, params.colors.mid, params.colors.high])
 			
 			
 		}

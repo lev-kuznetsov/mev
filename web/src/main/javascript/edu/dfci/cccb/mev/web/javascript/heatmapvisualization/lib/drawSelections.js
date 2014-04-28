@@ -51,8 +51,8 @@ define(['d3'], function(d3){
                     'color':function(d){
                         return d.color
                     },
-                    'height':
-                    'width':
+                    'height': (dimension == 'column') ?  groupScale.rangeBand() : self.scales.cell.yScale.rangeBand(),
+                    'width': (dimension == 'column') ? self.scales.cell.xScale.rangeBand() : groupScale.rangeBand()
                 })
         //remove exit selection
         selectionCells.exit().remove()

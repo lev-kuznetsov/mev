@@ -1,5 +1,5 @@
-define(['d3', './generateScales', './drawCells'], 
-function(d3, generateScales, drawCells){
+define(['d3', './generateScales', './drawCells', './drawSelections', './updateCells'], 
+function(d3, generateScales, drawCells, drawSelections, updateCells){
 	
 	//Constructor :: View, D3selection, scrollableSelection, Params
 	//	-> HeatmapVisualization
@@ -57,39 +57,9 @@ function(d3, generateScales, drawCells){
 		this.view = View;
 		
 		this.drawCells = drawCells;
+		this.drawSelections = drawSelections;
 		
-		//updateCells !params !view, Object -> null
-		//   Used to update shown cells using position object with
-		//   top and height pixel properties
-        this.updateCells = function(position) {
-                
-    		var reference = this;
-    		
-    		var totalTop = this.params.labels.column.height
-    		+ this.params.panel.top.height
-    		+ this.params.selections.column.height;
-    		
-    		var heatmapCellHeight = this.params.cell.height;
-    		
-            if (position.top < totalTop + (10 * heatmapCellHeight)) {
-                
-                var numRows = Math.floor( (position.top + position.height- totalTop ) / heatmapCellHeight ) 
-                	+ 30
-                var startRow = 0
-                var endRow = numRows
-            
-            } else {
-                var startRow = Math.floor( (position.top - totalTop) / heatmapCellHeight ) - 10
-                var numRows =  ( (position.top + position.height - totalTop) / heatmapCellHeight) 
-                var endRow = startRow + numRows + 30
-            }
-            
-            
-            var labels =  this.view.row.values.slice(startRow, endRow);
-            
-            this.drawCells(labels)
-            
-        };
+		this.updateCells = updateCells;
 
 	
 	}

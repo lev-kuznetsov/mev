@@ -1,8 +1,22 @@
-define(['angular', 'd3', './lib/HeatmapVisualizationClass', './lib/generateParams'], 
+define(['angular', 'd3', './lib/HeatmapVisualizationClass', './lib/generateParams', 'colorbrewer/ColorBrewer'], 
 function(angular, d3, HeatmapVisualizationClass, generateParams){
-	return angular.module('Mev.heatmapvisualization', [])
-	.directive('visHeatmap',[ "$routeParams", "$http",
-         function($routeParams, $http) {
+	return angular.module('Mev.heatmapvisualization', ['d3colorBrewer'])
+	.directive('heatmapSettings',[function() {
+
+        return {
+            restrict : 'E',
+            scope : {
+                currentColors : '=currentColors',
+                availableColorGroups : '=availableColorGroups'
+            },
+            templateUrl : "/container/view/elements/heatmapSettingsModalBody",
+            link: function(scope){
+                console.log(scope.currentColors)
+            }
+        }
+	}])
+	.directive('visHeatmap',[ "$routeParams", "$http", "d3colors",
+         function($routeParams, $http, d3colors) {
 
             return {
 
@@ -22,18 +36,34 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 			height:scrollable.height()
                 	};
                 	
-                	$scope.availableColors = [
-                	"red", "orange", "yellow", "green", "blue", "violet",
-                	"pink", "white", "black"
-                	];
+                	$scope.availableColorGroups = Object.getOwnPropertyNames(d3colors);
                 	
                 	$scope.currentColors = {
-                		name: "Orange-Pink-Green",
-                		color1: 'orange',
-                		color2: 'pink',
-                		color3: 'green',
+                	    group : "BuBkYl",
+                	    colors:{
+                	        low: d3colors['BuBkYl'][3][0],
+                            mid: d3colors['BuBkYl'][3][1],
+                            high: d3colors['BuBkYl'][3][2],
+                	    }
+                		
                 	};
                 	
+                	$scope.$watch('currentColors.group', function(newval){
+                	    if(newval && $scope.heatmapDataset){
+                	        console.log(newval)
+
+                	            $scope.avaiblableColors = d3colors[newval][3];
+                                $scope.currentColors.group = newval;
+                                $scope.currentColors.colors.low = d3colors[newval][3][0];
+                                $scope.currentColors.colors.mid = d3colors[newval][3][1];
+                                $scope.currentColors.colors.high = d3colors[newval][3][2];
+                                
+                                var params = new generateParams({colors:$scope.currentColors.colors});
+                                $scope.visualization = new HeatmapVisualizationClass($scope.heatmapDataset,svg, params);
+
+                	    }
+                	});
+         	
                 	$("div.tab-content").on("scroll", function(e){
                         
                 		
@@ -67,7 +97,12 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 		if (newval){
                 			var params = 
                 				new generateParams({
-                					colors:$scope.currentColors});
+                					colors:{
+                					    low:d3colors['BuBkYl'][3][0],
+                					    mid:d3colors['BuBkYl'][3][1],
+                					    high:d3colors['BuBkYl'][3][2]
+                					}
+                				});
                 			$scope.visualization = new HeatmapVisualizationClass(newval,svg, params)
                 		}
                 		
@@ -76,8 +111,12 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 	//When visualization information comes, print cells, selections,
                 	//	and clear current top and side panes
                 	$scope.$watch('visualization', function(newval){
-                		if(newval){
+                		if(newval && $scope.selections){
                 			$scope.visualization.updateCells(position);
+                			$scope.visualization.drawSelections($scope.selections.column, "column");
+                			$scope.visualization.drawSelections($scope.selections.row, "row");
+                		} else if (newval && !$scope.selections){
+                		    $scope.visualization.updateCells(position);
                 		}
                 		
                 	});
@@ -85,6 +124,17 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 	//When new side/top pane information comes, print it
                 	
                 	//When new selections come, print them
+                	$scope.$watchCollection('selections.column', function(newval){
+                	    if (newval && $scope.visualization){
+                	        $scope.visualization.drawSelections(newval, "column")
+                	    };
+                	});
+                	
+                	$scope.$watchCollection('selections.row', function(newval){
+                        if (newval && $scope.visualization){
+                            $scope.visualization.drawSelections(newval, "row")
+                        };
+                    });
                 	
                 	//Selections modifier
                 	
