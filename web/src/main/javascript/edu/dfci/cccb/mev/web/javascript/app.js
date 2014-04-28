@@ -8,7 +8,9 @@ define(['angular',
         ,'uiBootstrapTpls'
         ,'ngGrid',
         'heatmap/Heatmap',
-        'heatmapvisualization/HeatmapVisualization'
+        'heatmapvisualization/HeatmapVisualization',
+        'analysisaccordioncollection/AnalysisAccordionCollection',
+        'analysismodalcollection/AnalysisModalCollection',
         ], function(angular){
 	'use strict';
 	return angular.module('myApp', [
@@ -22,7 +24,9 @@ define(['angular',
 	     ,'ui.bootstrap'
 	     ,'ngGrid',
 	     'Mev.heatmap',
-	     'Mev.heatmapvisualization'
+	     'Mev.heatmapvisualization',
+	     'Mev.AnalysisAccordionCollection',
+	     'Mev.AnalysisModalCollection'
 	     ])
 	.config(['$routeProvider', '$locationProvider', '$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {
 		
