@@ -5,6 +5,8 @@ define(['./SelectionClass'], function(SelectionClass){
 		
 		var self = this;
 		
+		this.datasetName = initialData.datasetName;
+		
 		this.expression = {
 			values: initialData.values,
 			max: initialData.max,

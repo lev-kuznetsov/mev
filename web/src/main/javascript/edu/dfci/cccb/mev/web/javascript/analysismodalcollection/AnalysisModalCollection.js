@@ -62,7 +62,7 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                         alertService.info(message,header);
                         
                         var analysisData = {
-                        	datasetName : dataset.datasetName,
+                        	datasetName : scope.dataset.datasetName,
                         	analysisType : "anova",
                         	analysisName : scope.params.name,
                         	analysisParams : 'dimension='
@@ -74,11 +74,11 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                         }
                         
                         
-                        dataset.analysis
+                        scope.dataset.analysis
                         .post(analysisData, JSON.stringify(scope.params.selections),
 	                        function(data, status, headers, config) {
 	                            
-                        		dataset.analyses.push(data);
+                        		scope.dataset.loadAnalyses();
                         		
 	                            var message = "ANOVA for "
 	                            	+ scope.params.name + " complete!";
@@ -149,14 +149,14 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                     scope.testInit = function(){
                         
 
-                    	dataset.analysis.post({
-                        	datasetName : dataset.datasetName, 
+                    	scope.dataset.analysis.post({
+                        	datasetName : scope.dataset.datasetName, 
                             analysisType : scope.params.sampleType.url
                             
                     	}, scope.getPostData(), 
                         function(data, status, headers, config) {
                     	
-                    		dataset.analyses.push(data)
+                    		scope.dataset.loadAnalyses()
                     		var message = "t-Test analysis for "
                     			+ scope.params.name + " complete!";
 
@@ -190,7 +190,7 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                 	dataset : "=heatmapDataset"
                 },
                 link : function(scope, elems, attrs) {
-
+                    
                     scope.options = {
                             metrics : [{name:"Euclidean", value:"euclidean"},
                                        {name:"Manhattan", value:"manhattan"},
@@ -232,13 +232,13 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                         	linkage : scope.params.linkage.value
                         };
                         
-                        dataset.analysis.post({
-                            datasetName : dataset.datasetName,
+                        scope.dataset.analysis.post({
+                            datasetName : scope.dataset.datasetName,
                             analysisType : 'hcl'
                         }, analysisData,
                         function(data, status, headers, config) {
                             
-                        	dataset.analyses.push(data);
+                        	scope.dataset.loadAnalyses();
                         	
                             var message = "Clustering analysis for "
                                 + scope.params.name + " complete!";
@@ -256,7 +256,6 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                 + status
                                 + ")";
                             alertService.error(message,header);
-                            resetSelections()
                             
                         });
 
@@ -325,14 +324,14 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                             
                             dataset.analysis.post({
 
-	                            datasetName : dataset.datasetName,
+	                            datasetName : scope.dataset.datasetName,
 	                            analysisType : 'kmeans'
 	                           
                             }, 
                             
                             function(data, status, headers, config) {
                                 
-                            	dataset.analyses.push(data);
+                            	scope.dataset.loadAnalyses();
                             	
                                 var message = "K-Means analysis for "
                                     + scope.params.analysisName + " complete!";
@@ -408,13 +407,13 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                 };
                                 
                                 dataset.analysis.post({
-                                    datasetName : dataset.datasetName,
+                                    datasetName : scope.dataset.datasetName,
                                     analysisType : 'limma'
                                     
                                 }, analysisData,
                                 function(data, status, headers, config) {
                                     
-                                	dataset.analyses.push(data);
+                                	scope.dataset.loadAnalyses();
                                 	
                                     var message = "Completed limma analysis for "
                                         + scope.analysisName;

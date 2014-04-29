@@ -76,16 +76,17 @@ define(['jquery',
 			DatasetResourceService.get({
 				datasetName: $routeParams.datasetName
 			}, function(response){
+			    response.datasetName = $routeParams.datasetName
 				$scope.dataset = DatasetFactory(response)
 			});
 			
 			$scope.$watch('dataset', function(newval, oldval){
 				if(newval && !oldval){
 					$scope.dataset.generateView($scope.dataset);
+					$scope.dataset.loadAnalyses();
 				}
 				
-			})
-
+			});
 			
         	
         }]);
