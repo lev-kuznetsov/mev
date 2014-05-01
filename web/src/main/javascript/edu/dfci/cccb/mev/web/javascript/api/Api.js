@@ -18,7 +18,11 @@ define ([ 'angular'], function (angular) {
 	    	{
 	    		format:'json'
 			}, {
-				getAll: {method:"GET"},
+				getAll: {
+				    url : '/dataset/:datasetName/analysis',
+				    method:"GET",
+				    
+				},
 				get: {
 					url: '/dataset/:datasetName'
                     + '/analysis/:analysisName', 

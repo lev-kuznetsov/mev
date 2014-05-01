@@ -1,6 +1,54 @@
-define(['angular', 'alertservice/AlertService'], function(angular){
+define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angular, jq, d3){
 	
 	return angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])
+	.directive('analysisContentItem', ['$compile', function ($compile) {
+        var heirarchicalTemplate = '<hierarchical-Accordion analysis="analysis" heatmap-dataset="dataset"></hierarchical-Accordion>';
+        var kMeansTemplate = '<k-Means-Accordion analysis="analysis" heatmap-dataset="dataset"></k-Means-Accordion>';
+        var limmaTemplate = '<anova-Accordion analysis="analysis" heatmap-dataset="dataset"></anova-Accordion>';
+        var anovaTemplate = '<t-Test-Accordion analysis="analysis" heatmap-dataset="dataset"></t-Test-Accordion>';
+        var tTestTemplate = '<limma-Accordion analysis="analysis" heatmap-dataset="dataset"></limma-Accordion>';
+        
+        var getTemplate = function(analysisType) {
+            var template = '';
+    
+            switch(analysisType) {
+                case 'Hierarchical Clustering':
+                    template = heirarchicalTemplate;
+                    break;
+                case 'K-means Clustering':
+                    template = kMeansTemplate;
+                    break;
+                case 'LIMMA Differential Expression Analysis':
+                    template = limmaTemplate;
+                    break;
+                case 'Anova Analysis':
+                    template = anovaTemplate;
+                    break;
+                case 't-Test Analysis':
+                    template = tTestTemplate;
+                    break;
+            }
+    
+            return template;
+        }
+    
+        var linker = function(scope, element, attrs) {
+    
+            element.append(getTemplate(scope.analysis.type));
+    
+            $compile(element.contents())(scope);
+        }
+    
+        return {
+            restrict: "E",
+            rep1ace: true,
+            link: linker,
+            scope: {
+                analysis : '=analysis',
+                dataset : '=heatmapDataset'
+            }
+        };
+    }])
 	.directive('kMeansAccordion', [function() {
         return {
             restrict : 'E',
@@ -299,19 +347,73 @@ define(['angular', 'alertservice/AlertService'], function(angular){
 
         };
     }])
-    .directive('smallHorizontalDendogram',
+    .directive('hierarchicalAccordion',
     [function() {
 
         return {
-            restrict : 'A',
+            restrict : 'E',
             scope : {
-                data : '=data',
-                diameter : '@'
+                dataset : "&heatmapDataset",
+                analysis : "=analysis"
 
             },
-            templateUrl : '/container/view/elements/d3RadialTree',
+            templateUrl : '/container/view/elements/hierarchicalAccordion',
             link : function(scope, elems, attr) {
 
+                var padding = 20;
+                
+                var labelsGutter = 50;
+                
+                var panel = {
+                    height : 200 + padding,
+                    width : pageWidth = 700,
+                };
+
+                var Cluster = d3.layout
+                    .cluster()
+                    .sort(null)
+                    .separation(
+                            function(a, b) {
+                                return a.parent == b.parent
+                                        ? 1
+                                        : 1
+                            })
+                    .value(
+                            function(d) {
+                                return d.distance;
+                            })
+                    .children(
+                            function(d) {
+                                return d.children;
+                            });
+
+                
+
+                var xPos = d3.scale
+                        .linear()
+                        .domain([0, 1])
+                        .range([padding, panel.width - padding]);
+                
+                var yPos = d3.scale
+                        .linear()
+                        .domain([0, 1])
+                        .range([padding, panel.height - padding - labelsGutter]);
+
+                function Path(d) {
+                    // Path function builder for TOP
+                    // heatmap tree path attribute
+
+                    return "M"
+                            + (xPos(d.target.x))
+                            + ","
+                            + (yPos(d.target.y))
+                            + "V"
+                            + (yPos(d.source.y))
+                            + "H"
+                            + (xPos(d.source.x));
+
+                };
+                
                 function noder(d) {
 
                     var a = [];
@@ -329,100 +431,11 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                     return a;
                 };
 
-                var padding = 20;
-                var dendogram = {
-                    height : 200 + padding,
-                    width : pageWidth = jq(
-                            'body').width()
-                            * (2 / 5) // Nicely define
-                // width
-                };
-
-//                                        d3
-//                                                .select(elems[0])
-//                                                .append("svg")
-//                                                .attr(
-//                                                        {
-//                                                        	id : attr.id,
-//                                                            width : dendogram.width,
-//                                                            height : (dendogram.height + (padding))
-//                                                        });
-
-                var svg = d3.select(elems[0])
-                        .select("svg");
-                svg.attr(
-                      {
-                    	id : attr.id,
-                        width : dendogram.width,
-                        height : (dendogram.height + (padding))
-                    });
-                var Cluster = d3.layout
-                        .cluster()
-                        .sort(null)
-                        .separation(
-                                function(a, b) {
-                                    return a.parent == b.parent
-                                            ? 1
-                                            : 1
-                                })
-                        .value(
-                                function(d) {
-                                    return d.distance;
-                                })
-                        .children(
-                                function(d) {
-                                    return d.children;
-                                });
-
-                var labelsGutter = 50;
-                var g = svg.append("g");
-                g.attr('class',
-                'smallDendogram');
-                g.attr('opacity', '1');
-
-                var dendogramWindow = d3
-                        .select(elems[0])
-                        .select("svg")
-                        .select(
-                                "g.smallDendogram")
-
-                var xPos = d3.scale
-                        .linear()
-                        .domain([0, 1])
-                        .range(
-                                [
-                                        padding,
-                                        dendogram.width
-                                                - padding])
-                var yPos = d3.scale
-                        .linear()
-                        .domain([0, 1])
-                        .range(
-                                [
-                                        padding,
-                                        dendogram.height
-                                                - padding
-                                                - labelsGutter])
-
-                function Path(d) {
-                    // Path function builder for TOP
-                    // heatmap tree path attribute
-
-                    return "M"
-                            + (xPos(d.target.x))
-                            + ","
-                            + (yPos(d.target.y))
-                            + "V"
-                            + (yPos(d.source.y))
-                            + "H"
-                            + (xPos(d.source.x));
-
-                };
-
                 function drawAnalysisTree(canvas, cluster, tree, type) {
 
                     canvas.selectAll('*')
                             .remove();
+                    
                     var nodes = cluster
                             .nodes(tree);
                     var links = cluster
@@ -458,67 +471,66 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                             return d.name
                                         })
 
-                    }
+                    };
 
                     canvas
-                            .selectAll("path")
-                            .data(links)
-                            .enter()
-                            .append("path")
-                            .attr(
-                                    "d",
-                                    function(d) {
-                                        return Path(d)
-                                    })
-                            .attr(
-                                    "stroke",
-                                    function() {
-                                        return "grey"
-                                    }).attr(
-                                    "fill",
-                                    "none");
+                        .selectAll("path")
+                        .data(links)
+                        .enter()
+                        .append("path")
+                        .attr("d",function(d) {
+                            return Path(d)
+                        })
+                        .attr("stroke", function() {
+                            return "grey"
+                        }).attr( "fill", "none");
 
-                    canvas
-                            .selectAll(
-                                    "circle")
-                            .data(nodes)
-                            .enter()
-                            .append("circle")
-                            .attr("r", 2.5)
-                            .attr(
-                                    "cx",
-                                    function(d) {
-                                        return xPos(d.x);
-                                    })
-                            .attr(
-                                    "cy",
-                                    function(d) {
-                                        return yPos(d.y);
-                                    })
-                            .attr(
-                                    "fill",
-                                    function(d) {
-                                        return "red"
-                                    })
-                            .on(
-                                    "click",
-                                    function(d) {
-                                        //
-                                    });
+                    canvas.selectAll( "circle").data(nodes)
+                    .enter()
+                    .append("circle")
+                    .attr("r", 2.5)
+                    .attr("cx",function(d) {
+                        return xPos(d.x);
+                    })
+                    .attr("cy", function(d) {
+                        return yPos(d.y);
+                    })
+                    .attr("fill", function(d) {
+                        return "red"
+                    })
+                    .on("click", function(d) {
+                        //
+                    });
 
                 };
-                scope
-                        .$watch(
-                                'data',
-                                function(newval, oldval) {
-                                    if (newval) {
-                                        drawAnalysisTree(
-                                                dendogramWindow,
-                                                Cluster,
-                                                newval.root,
-                                                "horizontal");
-                                    }
-                                });
+                scope.$watch('analysis',  function(newval, oldval) {
+                    if (newval) {
+                        
+                        d3.select(elems[0]).select('div#svgPlace').append('svg');
+                        
+                        var svg = d3.select(elems[0]).select('div#svgPlace').select('svg')
+
+                        svg.attr({
+                            width : panel.width,
+                            height : panel.height + padding
+                        });
+                        
+                        svg.append("g");
+                        
+                        var panelWindow = d3
+                            .select(elems[0])
+                            .select("svg")
+                            .select("g");
+                        
+                        
+
+                        drawAnalysisTree(
+                                panelWindow,
+                                Cluster,
+                                newval.root,
+                                "horizontal");
+                    }
+                });
 
             } // end link
         };

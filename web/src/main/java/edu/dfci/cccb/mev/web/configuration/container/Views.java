@@ -167,9 +167,9 @@ public class Views {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/datasetSummary.ftl").build ();
   }
 
-  @Bean (name = "elements/d3RadialTree")
-  public FreeMarkerView elementD3RadialTree (FreeMarkerViewBuilder builder) {
-    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/d3RadialTree.ftl").build ();
+  @Bean (name = "elements/hierarchicalAccordion")
+  public FreeMarkerView elementHierarchicalAccordion (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/views/elements/hierarchicalAccordion.ftl").build ();
   }
 
   @Bean (name = "elements/uploadsTable")
