@@ -3,21 +3,21 @@
 
 	<div class="col-md-10 col-md-offset-1">
 		<br>
-		<div class="row"=>
+		<div class="row">
 			<selection-set-manager id="selectionSetMgr" ng-controller="SelectionSetManagerCtl" heatmap-data="heatmapData" heatmap-id="{{heatmapId}}"></selection-set-manager>
 		</div>
 
-		<div class="row"=>
+		<div class="row">
 		<hr>
-			<hcl-Accordion-List></hcl-Accordion-List>
-				
-			<limma-Accordion-List></limma-Accordion-List>
+		
+		<accordion close-others="false">
+			<div ng-repeat="analysis in dataset.analyses track by $index">
+				<analysis-Content-Item analysis="analysis" heatmap-Dataset="dataset">
+					</analysis-Content-Item>
+			</div>
+		</accordion>
 			
-			<kmeans-Accordion-List></kmeans-Accordion-List>
-			
-			<anova-Accordion-List></anova-Accordion-List>
-			
-			<t-Test-Accordion-List></t-Test-Accordion-List>
+
 
 		</div>
 		

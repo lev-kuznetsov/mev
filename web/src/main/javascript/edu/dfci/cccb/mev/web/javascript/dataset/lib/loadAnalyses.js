@@ -1,4 +1,4 @@
-define([], function(){
+define(['./AnalysisClass'], function(AnalysisClass){
 
     //loadAnalyses :: !analysis !analyses --> null
     //  Function to reload analyses list with new values 
@@ -8,9 +8,15 @@ define([], function(){
         self.analyses = []
         
         self.analysis.getAll({datasetName: self.datasetName}, function(response){
+            
             response.names.map(function(name){
-                var analysis = new AnalysisClass(self.analysis.get({datasetName: self.datasetName, analysisName: name}) )
-                self.analyses.push(analysis);
+                
+                self.analysis.get({datasetName: self.datasetName, analysisName: name},
+                function(res){
+                    var analysis = new AnalysisClass(res)
+                    self.analyses.push(analysis);
+                });
+                
             });
         });
 

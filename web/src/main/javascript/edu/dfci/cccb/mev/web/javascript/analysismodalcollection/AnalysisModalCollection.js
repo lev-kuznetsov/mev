@@ -234,8 +234,12 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                         
                         scope.dataset.analysis.post({
                             datasetName : scope.dataset.datasetName,
-                            analysisType : 'hcl'
-                        }, analysisData,
+                            analysisType : 'hcl',
+                            analysisName : analysisData.name,
+                            analysisParams : analysisData.dimension + ','
+                                + analysisData.metric + ','
+                                + analysisData.linkage
+                        }, {},
                         function(data, status, headers, config) {
                             
                         	scope.dataset.loadAnalyses();
