@@ -18,10 +18,10 @@
     <level value="warn" />
   </logger>
   <logger name="org.reflections">
-    <level value="warn"></level>
+    <level value="warn" />
   </logger>
   <logger name="edu.dfci.cccb.mev">
-    <level value="debug"></level>
+    <level value="warn" />
   </logger>
   <logger name="com.mchange">
     <level value="warn" />

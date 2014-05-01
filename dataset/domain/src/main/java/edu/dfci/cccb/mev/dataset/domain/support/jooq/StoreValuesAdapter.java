@@ -35,6 +35,7 @@ import edu.dfci.cccb.mev.dataset.domain.support.Consumer;
 
 /**
  * @author levk
+ * @since CRYSTAL
  */
 public class StoreValuesAdapter implements Values<String, Double>, AutoCloseable {
 

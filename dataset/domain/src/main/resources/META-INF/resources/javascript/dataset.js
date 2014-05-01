@@ -20,23 +20,19 @@
  * @author levk
  * @since CRYSTAL
  */
-define ('dataset', [ 'mev' ], function (mev) {
+define ('dataset', [], function () {
 
-  mev.dataset = {
-    decorate : function (dataset) {
-      dataset.dimension = function (name) {
-        for (dimension in dataset.dimensions)
-          if (dataset.dimensions[dimension].name === name) return dataset.dimensions[dimension];
-        throw new Error ("No dimension " + name + " found for dataset " + dataset.name);
-      };
+  return {
+    dimension : function (name) {
+      for (dimension in this.dimensions)
+        if (this.dimensions[dimension].name === name) return this.dimensions[dimension];
+      throw new Error ("No dimension " + name + " found for dataset " + this.name);
+    },
 
-      dataset.analysis = function (name) {
-        for (analysis in dataset.analyses)
-          if (dataset.analyses[analysis].name === name) return dataset.analyses[analysis];
-        throw new Error ("No analysis " + name + " found for dataset " + dataset.name);
-      };
+    analysis : function (name) {
+      for (analysis in this.analyses)
+        if (this.analyses[analysis].name === name) return this.analyses[analysis];
+      throw new Error ("No analysis " + name + " found for dataset " + this.name);
     }
   };
-
-  return mev.dataset;
 });

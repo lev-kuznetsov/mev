@@ -16,6 +16,8 @@
 
 package edu.dfci.cccb.mev.dataset.services.guice;
 
+import static edu.dfci.cccb.mev.dataset.domain.contract.annotation.Workspace.WORKSPACE;
+
 import java.util.Map;
 
 import javax.inject.Named;
@@ -31,7 +33,6 @@ import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
 import edu.dfci.cccb.mev.dataset.services.controllers.WorkspaceController;
-
 /**
  * @author levk
  * @since CRYSTAL
@@ -43,7 +44,7 @@ public class DatasetServiceModule implements Module {
    */
   @Provides
   @SessionScoped
-  @Named ("workspace")
+  @Named (WORKSPACE)
   public Map<String, Dataset<String, Double>> workspace () {
     return DatasetAdapter.workspace ();
   }

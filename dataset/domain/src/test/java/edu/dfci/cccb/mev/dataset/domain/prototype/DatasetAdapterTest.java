@@ -18,12 +18,12 @@ package edu.dfci.cccb.mev.dataset.domain.prototype;
 
 import static com.mycila.inject.internal.guava.collect.ImmutableMap.of;
 import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -77,7 +77,7 @@ public class DatasetAdapterTest {
     return new DatasetAdapter<String, Double> (name,
                                                dimensions,
                                                (Map<String, Analysis>) new HashMap<String, Analysis> (),
-                                               values) {};
+                                               values);
   }
 
   @Before
@@ -110,6 +110,11 @@ public class DatasetAdapterTest {
   }
 
   @Test
+  public void datasetToString () throws Exception {
+    assertThat (dataset2.toString (), containsString ("mock2"));
+  }
+
+  @Test
   public void workspaceEmpty () throws Exception {
     assertThat (workspace.isEmpty (), is (true));
   }
@@ -125,7 +130,26 @@ public class DatasetAdapterTest {
   public void workspacePutWithWrongName () throws Exception {
     assertThat (workspace.isEmpty (), is (true));
     assertThat (workspace.put ("mock4", dataset1), is (nullValue ()));
-    fail ();
+  }
+
+  @Test (expected = NullPointerException.class)
+  public void workspacePutWithNullName () throws Exception {
+    assertThat (workspace.isEmpty (), is (true));
+    assertThat (workspace.put (null, dataset1), is (nullValue ()));
+  }
+
+  @Test (expected = NullPointerException.class)
+  public void workspacePutWithNullDatasetName () throws Exception {
+    assertThat (workspace.isEmpty (), is (true));
+    @SuppressWarnings ("unchecked") Dataset<String, Double> nullName = mock (Dataset.class);
+    when (nullName.name ()).thenReturn (null);
+    workspace.put ("whatever", nullName);
+  }
+
+  @Test (expected = NullPointerException.class)
+  public void workspacePutWithNullDataset () throws Exception {
+    assertThat (workspace.isEmpty (), is (true));
+    assertThat (workspace.put ("mock", null), is (nullValue ()));
   }
 
   @Test
@@ -153,5 +177,13 @@ public class DatasetAdapterTest {
     assertThat (workspace.size (), is (1));
     assertThat (workspace.remove ("mock"), is (notNullValue ()));
     assertThat (workspace.isEmpty (), is (true));
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void workspaceSetWrongNameEntry () throws Exception {
+    assertThat (workspace.isEmpty (), is (true));
+    assertThat (workspace.put ("mock", dataset1), is (nullValue ()));
+    assertThat (workspace.size (), is (1));
+    workspace.entrySet ().iterator ().next ().setValue (dataset2);
   }
 }

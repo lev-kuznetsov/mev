@@ -1,5 +1,7 @@
 paths : {
   mev : [ '/classpath/META-INF/resources/javascript/mev' ],
+  dataset : [ '/classpath/META-INF/resources/javascript/dataset' ],
+
   underscore : [ '/webjar/underscore' ],
   angular : [ '/webjar/angular' ],
   angularResource : [ '/webjar/angular-resource' ],

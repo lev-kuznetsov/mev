@@ -49,7 +49,19 @@ public class DimensionAdapterTest {
   @Before
   public void setUp () throws Exception {
     rows1 = new DimensionAdapter<String> ("row") {
-      private final @Delegate List<String> keys = asList ("r1", "r2", "r3");
+      private final List<String> keys = asList ("r1", "r2", "r3");
+
+      public String get (int index) {
+        return keys.get (index);
+      }
+
+      public int size () {
+        return keys.size ();
+      }
+
+      public Iterator<String> iterator () {
+        return keys.iterator ();
+      }
     };
     rows2 = new DimensionAdapter<String> ("row") {
       private final @Delegate List<String> keys = asList ("r2", "r2", "r1");
@@ -129,5 +141,19 @@ public class DimensionAdapterTest {
   @Test
   public void dimensionHashCode () throws Exception {
     assertThat (rows1.hashCode (), is (rows1.hashCode ()));
+  }
+
+  @Test
+  public void dimensionIterator () throws Exception {
+    Iterator<String> actual = rows1.iterator (), expected = asList ("r1", "r2", "r3").iterator ();
+    for (; actual.hasNext () && expected.hasNext ();)
+      assertThat (actual.next (), is (expected.next ()));
+    assertThat (actual.hasNext () || expected.hasNext (), is (false));
+  }
+
+  @Test (expected = Exception.class)
+  public void dimensionIteratorRemove () throws Exception {
+    rows1.iterator ().remove ();
+    fail ();
   }
 }

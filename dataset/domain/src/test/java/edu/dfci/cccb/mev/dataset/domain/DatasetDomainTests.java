@@ -20,14 +20,17 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModuleTest;
+import edu.dfci.cccb.mev.dataset.domain.prototype.AnalysisAdapterTest;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapterTest;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DimensionAdapterTest;
 import edu.dfci.cccb.mev.dataset.domain.prototype.ValuesTest;
+import edu.dfci.cccb.mev.dataset.domain.support.CompilerTest;
 import edu.dfci.cccb.mev.dataset.domain.support.json.DatasetJsonSerializerTest;
 import edu.dfci.cccb.mev.dataset.domain.support.tsv.TsvParserTest;
 
 @RunWith (Suite.class)
 @SuiteClasses ({
                 ValuesTest.class, DatasetJsonSerializerTest.class, TsvParserTest.class, DimensionAdapterTest.class,
-                DatasetAdapterTest.class })
+                DatasetAdapterTest.class, DatasetModuleTest.class, AnalysisAdapterTest.class, CompilerTest.class })
 public class DatasetDomainTests {}

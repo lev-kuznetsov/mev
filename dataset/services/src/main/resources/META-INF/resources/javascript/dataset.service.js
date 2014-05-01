@@ -15,12 +15,33 @@
  */
 
 /**
- * MeV services singleton (pushed onto mev.server)
+ * MeV dataset services
+ * 
+ * @author levk
+ * @since CRYSTAL
  */
-define ('services', [ 'mev', 'jquery' ], function (mev, jquery) {
-  mev.server = {
-    jquery : jquery
-  };
+define ('dataset.service', [ 'mev', 'dataset', 'angular', 'angularResource' ], function (mev, dataset, angular) {
 
-  return mev.server;
+  mev.dataset = {
+    $resource : {},
+
+    get : function (name, success, error) {
+      return mev._.extend ($resource ('/dataset/:name').get ({
+        name : name,
+        format : 'json'
+      }, success, error), dataset);
+    },
+
+    query : function (success, error) {
+      return $resource ('/dataset').query ({
+        format : 'json'
+      }, success, error);
+    }
+  }
+
+  angular.module ('mev', [ 'ngResource' ]).run ([ '$resource', function ($resource) {
+    mev.dataset.$resource = $resource;
+  } ]);
+
+  return mev.dataset;
 });

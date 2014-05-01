@@ -15,9 +15,16 @@
  */
 
 /**
- * MeV domain singleton
+ * Main MeV module
+ * 
+ * @author levk
+ * @since CRYSTAL
  */
-define ('mev', [], function () {
+define ('mev', [ 'underscore' ], function (underscore) {
+
+  /**
+   * Deep check for equality
+   */
   Object.prototype.equals = function (o) {
     var deepEquals = function (x, y) {
       if (x === y) return true;
@@ -37,8 +44,9 @@ define ('mev', [], function () {
     };
 
     return deepEquals (this, o);
-  }
+  };
 
-  // Empty object, modules will push methods on here
-  return {};
+  return {
+    _ : underscore
+  };
 });

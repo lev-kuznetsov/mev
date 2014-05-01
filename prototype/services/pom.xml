@@ -22,12 +22,17 @@
   </properties>
 
   <dependencies>
-
+  
     <!-- Webjars -->
 
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>jquery</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>angularjs</artifactId>
     </dependency>
 
     <!-- Servlet Module -->
@@ -66,26 +71,5 @@
     </repository>
 
   </repositories>
-
-  <build>
-
-    <pluginManagement>
-      <plugins>
-
-        <plugin>
-          <groupId>com.github.searls</groupId>
-          <artifactId>jasmine-maven-plugin</artifactId>
-          <configuration>
-            <preloadSources>
-              <source>webjar/require.js</source>
-              <source>webjar/jquery.js</source>
-            </preloadSources>
-          </configuration>
-        </plugin>
-
-      </plugins>
-    </pluginManagement>
-
-  </build>
 
 </project>

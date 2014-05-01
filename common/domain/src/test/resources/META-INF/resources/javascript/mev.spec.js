@@ -25,5 +25,9 @@ define ([ 'mev' ], function (mev) {
     it ("should declare mev object", function () {
       expect (mev).toBeDefined ();
     });
+
+    it ("should have underscorejs utility bound", function () {
+      expect (mev._).toBeDefined ();
+    });
   });
 });

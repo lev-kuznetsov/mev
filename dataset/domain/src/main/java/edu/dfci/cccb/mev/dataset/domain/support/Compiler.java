@@ -32,7 +32,7 @@ public interface Compiler <K, V> {
 
     @Override
     public void emit (String entity, OutputStream out) throws IOException {
-      out.write (entity.getBytes ());
+      out.write (("\"" + entity + "\"").getBytes ());
     }
   };
 

@@ -43,7 +43,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 @Accessors (fluent = true)
 @EqualsAndHashCode
 @ToString
-public abstract class DatasetAdapter <K, V> implements Dataset<K, V> {
+public class DatasetAdapter <K, V> implements Dataset<K, V> {
 
   private final @Getter String name;
   private final @Getter Map<String, Dimension<K>> dimensions;

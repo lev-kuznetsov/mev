@@ -5,13 +5,22 @@
     <param name="threshold" value="debug" />
     <param name="target" value="System.out" />
     <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="[%p] : %m%n" />
+      <param name="ConversionPattern" value="[%p] : %c : %m%n" />
     </layout>
   </appender>
   <logger name="edu.dfci.cccb.mev">
     <level value="warn"></level>
   </logger>
   <logger name="org.reflections">
+    <level value="warn" />
+  </logger>
+  <logger name="com.mchange">
+    <level value="warn" />
+  </logger>
+  <logger name="org.jooq">
+    <level value="warn" />
+  </logger>
+  <logger name="org.apache.commons.configuration">
     <level value="warn" />
   </logger>
   <root>

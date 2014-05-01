@@ -34,4 +34,10 @@ import javax.inject.Scope;
 @Retention (RUNTIME)
 @Target ({ TYPE, METHOD })
 @Documented
-public @interface Workspace {}
+public @interface Workspace {
+
+  /**
+   * Used for named injection of the workspace
+   */
+  public static final String WORKSPACE = "workspace";
+}

@@ -81,13 +81,13 @@ public class DatasetModule implements Module {
 
                                       @Override
                                       public void consume (String entity) throws IOException {
-                                        columns.add (entity);
+                                        rows.add (entity);
                                       }
                                     }, new Consumer<String> () {
 
                                       @Override
                                       public void consume (String entity) throws IOException {
-                                        rows.add (entity);
+                                        columns.add (entity);
                                       }
                                     } });
             return new DatasetAdapter<String, Double> (name,
@@ -115,7 +115,7 @@ public class DatasetModule implements Module {
                                                          }
                                                        }),
                                                        analyses (),
-                                                       values) {};
+                                                       values);
           }
         });
       }
