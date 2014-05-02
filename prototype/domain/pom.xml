@@ -330,7 +330,30 @@
             <preloadSources>
               <source>webjar/require.js</source>
             </preloadSources>
+            <keepServerAlive>true</keepServerAlive>
             <customRunnerConfiguration>${project.basedir}/src/test/resources/require.config.js</customRunnerConfiguration>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>com.github.timurstrekalov</groupId>
+          <artifactId>saga-maven-plugin</artifactId>
+          <version>${saga-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>coverage</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <baseDir>http://localhost:${jasmine.serverPort}</baseDir>
+            <outputDir>${project.build.directory}/coverage</outputDir>
+            <noInstrumentPatterns>
+              <pattern>.*spec.*</pattern>
+              <pattern>.*/META\-INF/.*\.js</pattern>
+              <pattern>.*/webjars?/.*\.js</pattern>
+            </noInstrumentPatterns>
           </configuration>
         </plugin>
 

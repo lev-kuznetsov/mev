@@ -59,6 +59,11 @@
         <artifactId>jasmine-maven-plugin</artifactId>
       </plugin>
 
+      <plugin>
+        <groupId>com.github.timurstrekalov</groupId>
+        <artifactId>saga-maven-plugin</artifactId>
+      </plugin>
+
     </plugins>
 
   </build>
