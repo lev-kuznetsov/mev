@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -58,6 +59,7 @@ public class ResourceServlet extends HttpServlet {
       response.setContentType (connection.getContentType ());
       response.setContentLength (connection.getContentLength ());
       response.setStatus (SC_OK);
+      response.setContentType (new MimetypesFileTypeMap ().getContentType (url.getFile ()));
       try (InputStream source = connection.getInputStream ();
            OutputStream target = response.getOutputStream ()) {
         copy (source, target);

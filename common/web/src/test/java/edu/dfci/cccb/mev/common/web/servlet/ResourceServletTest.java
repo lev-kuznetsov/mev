@@ -65,4 +65,14 @@ public class ResourceServletTest {
       assertEquals (404, jetty.rc ("/not_found"));
     }
   }
+
+  @Test
+  public void contentType () throws Exception {
+    try (Jetty9 jetty = new Jetty9 ()) {
+      assertEquals (new URL ("http://localhost:"
+                             + jetty.port ()
+                             + "/webjars/jquery/2.1.0/webjars-requirejs.js").openConnection ().getContentType (),
+                    "application/javascript");
+    }
+  }
 }
