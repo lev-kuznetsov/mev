@@ -65,7 +65,7 @@ define(
                                         apiDataset.get(function(result){
                                         		$('#loading').modal('hide');
                                             	$scope.heatmapData = result;
-                                            	$scope.heatmapData.firstRows = $scope.heatmapData.row.keys;
+                                            	$scope.dataset.firstRows = $scope.dataset.row.keys;
                                         	
                                         }, function(error){
                                         	 var message = "Could not retrieve dataset "
@@ -195,12 +195,12 @@ define(
                                                     if (inputData.dimension == 'row') {
                                                         
                                                         $scope.heatmapViews.side = inputData;
-                                                        $scope.heatmapData.row.keys = inputData.keys;
+                                                        $scope.dataset.row.keys = inputData.keys;
                                                         
                                                     } else if (inputData.dimension == 'column') {
                                                         
                                                         $scope.heatmapViews.top = inputData;
-                                                        $scope.heatmapData.column.keys = inputData.keys;
+                                                        $scope.dataset.column.keys = inputData.keys;
                                                         
                                                     }
                                                     $scope.$broadcast('ViewVisualizeTabEvent');
@@ -232,12 +232,12 @@ define(
                                             if (inputData.dimension == 'row') {
                                                 
                                                 $scope.heatmapViews.side = inputData;
-                                                $scope.heatmapData.row.keys = inputData.keys;
+                                                $scope.dataset.row.keys = inputData.keys;
                                                 
                                             } else if (inputData.dimension == 'column') {
                                                 
                                                 $scope.heatmapViews.top = inputData;
-                                                $scope.heatmapData.column.keys = inputData.keys;
+                                                $scope.dataset.column.keys = inputData.keys;
                                                 
                                             }
                                         };
@@ -357,7 +357,7 @@ define(
                                     function(MevSelectionService, $scope, $element, $attrs , alertService) {
 
                                         $scope.baseUrl = '/annotations/'
-                                                + $scope.heatmapId
+                                                + $scope.datasetName
                                                 + '/annotation';
                                         $scope.annotationsUrl = $scope.baseUrl
                                                 + '/column/new/dataset/';
@@ -388,8 +388,10 @@ define(
 
                                         $scope.$on('ViewAnnotationsEvent',
                                                         function(event, selection, dimension, annotationSource) {
-                                                            var annotationsUrl = $scope.baseUrl
-                                                                    + "/"
+//                                                            var annotationsUrl = $scope.baseUrl;
+                                        					var annotationsUrl = '/annotations/'
+						                                            + $scope.dataset.id
+						                                            + '/annotation/'
                                                                     + dimension
                                                                     + "/";
                                                             if (typeof selection != 'undefined') {
@@ -430,11 +432,13 @@ define(
                                     	  
                                     	  if(dimensionType=='column'){
                                         	  MevSelectionService.getColumnSelectionQ().then(function(d){
-                                        		  $scope.heatmapData.column.selections=d;
+                                        		  console.debug("SeletionAddedEvent getColumnSelectionQ", d);
+                                        		  $scope.dataset.column.selections=d.selections;
                                         	  });
                                     	  }else if(dimensionType=='row'){
                                         	  MevSelectionService.getRowSelectionQ().then(function(d){
-                                                  $scope.heatmapData.row.selections=d;
+                                        		  console.debug("SeletionAddedEvent getRowSelectionQ", d);
+                                                  $scope.dataset.row.selections=d.selections;
                                               });
                                     	  } else {
                                     	      alertService.error(

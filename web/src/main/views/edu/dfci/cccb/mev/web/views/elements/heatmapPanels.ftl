@@ -5,7 +5,6 @@
 
 	    
 		<div id="leftPanel">
-		
 				<side-Navigation-Bar></side-Navigation-Bar>
 		</div>
 		

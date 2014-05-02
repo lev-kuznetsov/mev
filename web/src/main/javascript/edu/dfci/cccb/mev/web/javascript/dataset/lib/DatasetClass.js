@@ -1,11 +1,11 @@
 define(['./SelectionClass'], function(SelectionClass){
 
 	//Constructor :: Object -> $Function
-	return function(initialData){
-		
+	return function(id, initialData){
+		console.debug("new DatasetClass(id, initialData)", id, initialData);
 		var self = this;
-		
-		this.datasetName = initialData.datasetName;
+		this.id=id;
+		this.datasetName = id;
 		
 		this.expression = {
 			values: initialData.values,
@@ -14,13 +14,10 @@ define(['./SelectionClass'], function(SelectionClass){
 			avg: initialData.avg,
 		};
 		
-		this.row = {
-			values : initialData.row.keys
-		};
-		
-		this.column = {
-				values : initialData.column.keys
-			};
+		this.column = initialData.column;
+		this.column.values = initialData.column.keys;
+		this.row = initialData.row;
+		this.row.values = initialData.row.keys;
 		
 		this.selections = {
 			row: {
@@ -34,11 +31,11 @@ define(['./SelectionClass'], function(SelectionClass){
 		this.views = [];
 		
 		initialData.column.selections.map(function(returnSelection){
-			self.selections.column.push(new SelectionClass(returnSelection))
+			self.selections.column.values.push(new SelectionClass(returnSelection));
 		});
 		
 		initialData.row.selections.map(function(returnSelection){
-			self.selections.row.push(new SelectionClass(returnSelection))
+			self.selections.row.values.push(new SelectionClass(returnSelection));
 		});
 		
 	};
