@@ -1,5 +1,6 @@
 <accordion-group heading="{{analysis.type}} : {{analysis.name}}" is-open="isAccordionOpen" ng-init="isAccordionOpen=false">
 
+Hello
 	<div  class="results-wrapper">	
     	<div class="results-header clearfix">
     	                    				
@@ -46,7 +47,7 @@
 	                    </tr>
 					</thead>
                     <tbody>
-                            <tr ng-repeat="row in analysis.results | filter:filterParams.id | filterThreshold: filterParams.pValue : 'pValue' | orderBy: tableOrdering ">
+                            <tr ng-repeat="row in analysis.results | filter:filterParams.id |  filterThreshold: filterParams.pValue : 'pValue' : '<=' | orderBy: tableOrdering ">
                                     <td>
                                             {{row.id}}
                                     </td>

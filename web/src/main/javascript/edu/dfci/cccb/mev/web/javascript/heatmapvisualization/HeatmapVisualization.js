@@ -121,11 +121,8 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 	
                 	//When new selections come, print them
                 	
-                	$scope.$watch('selections', function(newval){
-                	    console.log(newval)
-                	})
                 	$scope.$watchCollection('selections.column', function(newval){
-                	    console.log(newval)
+
                 	    if (newval && $scope.visualization){
                 	        
                 	        $scope.visualization.drawSelections(newval, "column")
@@ -133,7 +130,7 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 	});
                 	
                 	$scope.$watchCollection('selections.row', function(newval){
-                        console.log(newval)
+
                 	    if (newval && $scope.visualization){
                             $scope.visualization.drawSelections(newval, "row")
                         };

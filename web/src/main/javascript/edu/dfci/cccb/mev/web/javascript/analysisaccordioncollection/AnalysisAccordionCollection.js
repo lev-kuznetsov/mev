@@ -4,9 +4,9 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
 	.directive('analysisContentItem', ['$compile', function ($compile) {
         var heirarchicalTemplate = '<hierarchical-Accordion analysis="analysis" heatmap-dataset="dataset"></hierarchical-Accordion>';
         var kMeansTemplate = '<k-Means-Accordion analysis="analysis" heatmap-dataset="dataset"></k-Means-Accordion>';
-        var limmaTemplate = '<anova-Accordion analysis="analysis" heatmap-dataset="dataset"></anova-Accordion>';
-        var anovaTemplate = '<t-Test-Accordion analysis="analysis" heatmap-dataset="dataset"></t-Test-Accordion>';
-        var tTestTemplate = '<limma-Accordion analysis="analysis" heatmap-dataset="dataset"></limma-Accordion>';
+        var anovaTemplate = '<anova-Accordion analysis="analysis" heatmap-dataset="dataset"></anova-Accordion>';
+        var tTestTemplate = '<t-Test-Accordion analysis="analysis" heatmap-dataset="dataset"></t-Test-Accordion>';
+        var limmaTemplate  = '<limma-Accordion analysis="analysis" heatmap-dataset="dataset"></limma-Accordion>';
         
         var getTemplate = function(analysisType) {
             var template = '';
@@ -32,20 +32,18 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             return template;
         }
     
-        var linker = function(scope, element, attrs) {
-    
-            element.append(getTemplate(scope.analysis.type));
-    
-            $compile(element.contents())(scope);
-        }
-    
         return {
             restrict: "E",
             rep1ace: true,
-            link: linker,
             scope: {
                 analysis : '=analysis',
                 dataset : '=heatmapDataset'
+            },
+            link: function(scope, element, attrs) {
+
+                element.append(getTemplate(scope.analysis.type));
+        
+                $compile(element.contents())(scope);
             }
         };
     }])
@@ -65,89 +63,92 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             templateUrl : '/container/view/elements/anovaAccordion',
             scope : {
             	analysis : "=analysis",
-            	dataset : "&heatmapDataset"
+            	dataset : "=heatmapDataset"
             },
             link: function(scope){
-                    scope.headers = [
-                        {'name':'ID', 'value':"id"},
-                        {'name':'P-Value', 'value':"pValue"},
-                        {'name':'Pairwise LFC', 'value':'pairwise_log_fold_change'}
-                    ]
-                    
-                    scope.filterParams = {
-                            'id' : '',
-                            'pValue' : undefined
-                    };
-                        
-                    scope.selectionParams = {
-                        name: undefined,
-                        color: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
-                    };
-                        
-                    var ctr = -1;
-                    scope.tableOrdering = undefined;
-                    scope.reorderTable = function(header) {
 
-                        ctr = ctr * (-1);
-                        if (ctr == 1) {
-                            scope.tableOrdering = header.value;
-                        } else {
-                            scope.tableOrdering = "-"
-                                    + header.value;
-                        }
-                    }
-                        
-                    scope.addSelections = function(){
+                scope.headers = [
+                    {'name':'ID', 'value':"id"},
+                    {'name':'P-Value', 'value':"pValue"},
+                    {'name':'Pairwise LFC', 'value':'pairwise_log_fold_change'}
+                ]
                 
-                        var userselections = scope.analysis.results;
+                scope.filterParams = {
+                        'id' : '',
+                        'pValue' : undefined
+                };
+                    
+                scope.selectionParams = {
+                    name: undefined,
+                    color: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16),
+                    dimension:'row'
+                };
+                    
+                var ctr = -1;
+                scope.tableOrdering = undefined;
+                scope.reorderTable = function(header) {
 
-                        var step1 = $filter('filter')(scope.analysis.results, {
-                            id: scope.filterParams.id
-                        });
-
-                        var step2 = $filter('filterThreshold')(step1, scope.filterParams.pValue, 'pValue')
-                        
-                        var step3 = step2.map(function(d){
-                            return d.id
-                        })
-
-                        var selectionsData = {
-                            name: scope.selectionParams.name,
-                            properties: {
-                                selectionDescription: '',
-                                selectionColor:scope.selectionParams.color,                     
-                            },
-                            keys:step3
-                        };
-                        
-                        dataset.selections.post({
-                            datasetName : dataset.datasetName,
-                            dimension : scope.selectionParams.dimention
-
-                        }. selectionsData,
-                        function(response){
-                                scope.$broadcast('SeletionAddedEvent', 'row');
-                                var message = "Added " + scope.selectionParams.name + " as new Selection!";
-                                var header = "Heatmap Selection Addition";
-                        
-                                scope.selectionParams.color = '#'+Math
-                                    .floor(Math.random()*0xFFFFFF<<0)
-                                    .toString(16)
-
-                                alertService.success(message,header);
-                        },
-                        function(data, status, headers, config) {
-                            var message = "Couldn't add new selection. If "
-                                + "problem persists, please contact us.";
-
-                             var header = "Selection Addition Problem (Error Code: "
-                                + status
-                                + ")";
-
-                             alertService.error(message,header);
-                        });
-
+                    ctr = ctr * (-1);
+                    if (ctr == 1) {
+                        scope.tableOrdering = header.value;
+                    } else {
+                        scope.tableOrdering = "-"
+                                + header.value;
                     }
+                }
+                    
+                scope.addSelections = function(){
+            
+                    var userselections = scope.analysis.results;
+
+                    var step1 = $filter('filter')(scope.analysis.results, {
+                        id: scope.filterParams.id
+                    });
+
+                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.pValue, 'pValue')
+                    
+                    var step3 = step2.map(function(d){
+                        return d.id
+                    })
+
+                    var selectionsData = {
+                        name: scope.selectionParams.name,
+                        properties: {
+                            selectionDescription: '',
+                            selectionColor:scope.selectionParams.color,                     
+                        },
+                        keys:step3
+                    };
+                    
+                    scope.dataset.selection.post({
+                        datasetName : scope.dataset.datasetName,
+                        dimension : scope.selectionParams.dimension
+
+                    }, selectionsData,
+                    function(response){
+                            
+                            scope.dataset.resetSelections('row')
+                            var message = "Added " + scope.selectionParams.name + " as new Selection!";
+                            var header = "Heatmap Selection Addition";
+                    
+                            scope.selectionParams.color = '#'+Math
+                                .floor(Math.random()*0xFFFFFF<<0)
+                                .toString(16)
+
+                            alertService.success(message,header);
+                    },
+                    function(data, status, headers, config) {
+                        var message = "Couldn't add new selection. If "
+                            + "problem persists, please contact us.";
+
+                         var header = "Selection Addition Problem (Error Code: "
+                            + status
+                            + ")";
+
+                         alertService.error(message,header);
+                    });
+
+                }
             }
         };
     }])
@@ -157,7 +158,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             restrict : 'E',
             templateUrl : '/container/view/elements/tTestAccordion',
             scope : {
-            	dataset : "&heatmapDataset",
+            	dataset : "=heatmapDataset",
             	analysis : "=analysis"
             },
             link : function(scope) {
@@ -202,13 +203,13 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                         keys:step4
                     };
                     
-                    dataset.selections.post({
+                    scope.dataset.selections.post({
                         datasetName : dataset.datasetName,
                         dimension : "row"
                 
                     }, selectionData, 
                     function(response){
-                            scope.$broadcast('SeletionAddedEvent', 'row');
+                            scope.dataset.resetSelections('row')
                             var message = "Added " + scope.selectionParams.name + " as new Selection!";
                             var header = "Heatmap Selection Addition";
                              
@@ -257,7 +258,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             restrict : 'E',
             templateUrl : '/container/view/elements/limmaAccordion',
             scope : {
-            	dataset : "&heatmapDataset",
+            	dataset : "=heatmapDataset",
             	analysis : "=analysis"
             },
             link : function(scope) {
@@ -282,6 +283,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     color: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
                 }
                 
+                
                 scope.addSelections = function(){
                     
                     var userselections = scope.limma.datar.results;
@@ -305,13 +307,15 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                         keys:step4
                     };
                     
-                    dataset.selection.post({
+                    
+                    
+                    scope.dataset.selection.post({
                         datasetName : dataset.datasetName,
                         dimension : "row"
                         
                     }, selectionData, 
                     function(response){
-                            scope.$broadcast('SeletionAddedEvent', 'row');
+                            scope.dataset.resetSelections('row')
                             var message = "Added " + scope.selectionParams.name + " as new Selection!";
                             var header = "Heatmap Selection Addition";
                              
@@ -353,7 +357,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
         return {
             restrict : 'E',
             scope : {
-                dataset : "&heatmapDataset",
+                dataset : "=heatmapDataset",
                 analysis : "=analysis"
 
             },

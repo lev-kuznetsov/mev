@@ -49,8 +49,7 @@ define ([ 'angular'], function (angular) {
     		},
     		'post':{
     			'method': 'POST',
-    			'url':"/dataset/:datasetName/:dimension"
-    	        + "/selection/",
+    			'url':"/dataset/:datasetName/:dimension/selection/",
     		}
     		
     	})

@@ -14,7 +14,10 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                     scope.params = {
                         name: undefined,
                         selections: [],
-                        dimension: undefined,
+                        dimension: {
+                            name : 'Columns',
+                            value : 'column'
+                        },
                         pvalue: undefined,
                         mtc: false
                     };
@@ -392,7 +395,6 @@ define(['angular', 'alertservice/AlertService'], function(angular){
 	                                value : "column"
 	                            }]
                             }
-                            
 
                             scope.testInit = function() {
                                 
@@ -405,16 +407,20 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                 alertService.info(message,header);
 
                                 var analysisData = {
-                                	name: scope.analysisName,
+                                	name: scope.params.name,
                                 	experiment : scope.params.experiment.name,
                                 	control : scope.params.control.name
                                 };
                                 
-                                dataset.analysis.post({
+                                scope.dataset.analysis.post({
                                     datasetName : scope.dataset.datasetName,
-                                    analysisType : 'limma'
+                                    analysisType : 'limma',
+                                    analysisName : analysisData.name,
+                                    analysisParams : "dimension=column" + ","
+                                        + "experiment=" + analysisData.experiment + ","
+                                        + "control=" + analysisData.control
                                     
-                                }, analysisData,
+                                }, {},
                                 function(data, status, headers, config) {
                                     
                                 	scope.dataset.loadAnalyses();
@@ -435,7 +441,7 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                         + status
                                         + ")";
                                      
-                                    alertService.success(message,header);
+                                    alertService.error(message,header);
                                 });
 
                                 resetSelections();                                                    
