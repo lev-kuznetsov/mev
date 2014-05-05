@@ -15,6 +15,10 @@ define(['./SelectionClass'], function(SelectionClass){
 		
 		this.column = initialData.column;
 		this.row = initialData.row;
+		this.selections={
+		        column: initialData.column.selections,
+		        row: initialData.row.selections
+		}
 		
 		this.analyses = [];
 		this.views = [];

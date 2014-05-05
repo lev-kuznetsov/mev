@@ -120,14 +120,21 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 	//When new side/top pane information comes, print it
                 	
                 	//When new selections come, print them
+                	
+                	$scope.$watch('selections', function(newval){
+                	    console.log(newval)
+                	})
                 	$scope.$watchCollection('selections.column', function(newval){
+                	    console.log(newval)
                 	    if (newval && $scope.visualization){
+                	        
                 	        $scope.visualization.drawSelections(newval, "column")
                 	    };
                 	});
                 	
                 	$scope.$watchCollection('selections.row', function(newval){
-                        if (newval && $scope.visualization){
+                        console.log(newval)
+                	    if (newval && $scope.visualization){
                             $scope.visualization.drawSelections(newval, "row")
                         };
                     });

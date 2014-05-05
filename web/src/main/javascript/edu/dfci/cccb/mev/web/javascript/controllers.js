@@ -436,16 +436,10 @@ define(
                                        
                                        $scope.$on('SeletionAddedEvent', function(event, dimensionType){
                                     	  
-                                    	  if(dimensionType=='column'){
-                                        	  MevSelectionService.getColumnSelectionQ().then(function(d){
-                                        		  console.debug("SeletionAddedEvent getColumnSelectionQ", d);
-                                        		  $scope.dataset.column.selections=d.selections;
-                                        	  });
-                                    	  }else if(dimensionType=='row'){
-                                        	  MevSelectionService.getRowSelectionQ().then(function(d){
-                                        		  console.debug("SeletionAddedEvent getRowSelectionQ", d);
-                                                  $scope.dataset.row.selections=d.selections;
-                                              });
+                                    	  if(dimensionType === 'column' || dimensionType === 'row'){
+
+                                    	      $scope.dataset.resetSelections(dimensionType);
+
                                     	  } else {
                                     	      alertService.error(
                                                       "Invalid dimension type:"+dimensionType,

@@ -5,9 +5,9 @@ define ([ 'angular'], function (angular) {
     .service ('DatasetResourceService', ['$resource', function ($resource) {
     	 return $resource('/dataset/:datasetName/data',
 	    	{
-	    		format:'json'
+	    		'format':'json'
 			},{
-				get: {method:'GET'}
+				'get': {method:'GET'}
 			});
     	 
     	
@@ -16,21 +16,21 @@ define ([ 'angular'], function (angular) {
     	
     	return $resource('/dataset/:datasetName/analysis',
 	    	{
-	    		format:'json'
+	    		'format':'json'
 			}, {
-				getAll: {
-				    url : '/dataset/:datasetName/analysis',
-				    method:"GET",
+				'getAll': {
+				    'url' : '/dataset/:datasetName/analysis',
+				    'method':"GET",
 				    
 				},
-				get: {
-					url: '/dataset/:datasetName'
+				'get': {
+					'url': '/dataset/:datasetName'
                     + '/analysis/:analysisName', 
-                    method:"GET"
+                    'method':"GET"
                 },
-                post: {
-                	method:'POST',
-                	url: 'dataset/:datasetName'
+                'post': {
+                	'method':'POST',
+                	'url': 'dataset/:datasetName'
                         + '/analyze/:analysisType/:analysisName(:analysisParams)'
                 }
 			});
@@ -38,16 +38,18 @@ define ([ 'angular'], function (angular) {
     }])
     .service ('SelectionResourceService', ['$resource', '$routeParams', function($resource, $routeParams){
     	return $resource('/dataset/:datasetName/:dimension/selection',{
-    		format: 'json'
+    		'format': 'json'
     	}, {
-    		getAll: {method:'GET'},
-    		get: {
-    			method: 'GET',
-    			url: '/dataset/:datasetName/:dimension/selection/:selectionName'
+    		'getAll': {
+    		    'url':'/dataset/:datasetName/:dimension/selections', 
+    		    'method':'GET'},
+    		'get': {
+    			'method': 'GET',
+    			'url': '/dataset/:datasetName/:dimension/selection/:selectionName'
     		},
-    		post:{
-    			method: 'POST',
-    			url:"/dataset/:datasetName/:dimension"
+    		'post':{
+    			'method': 'POST',
+    			'url':"/dataset/:datasetName/:dimension"
     	        + "/selection/",
     		}
     		
