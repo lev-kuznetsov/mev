@@ -76,7 +76,6 @@ define(['jquery',
 			DatasetResourceService.get({
 				datasetName: $routeParams.datasetName
 			}, function(response){
-				console.debug("resopnse", response);
 				$scope.dataset = DatasetFactory(datasetName, response);
 			});
 			

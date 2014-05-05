@@ -24,12 +24,12 @@ define(['./cellFilter'], function(cellFilter){
 		newCells.exit().remove()
 		
 		var rowLabels = self.DOM.labels.row.selectAll('text').data(labels, function(k){return k}),
-		colLabels = self.DOM.labels.column.selectAll('text').data(self.view.column.values, function(k){return k});
+		colLabels = self.DOM.labels.column.selectAll('text').data(self.view.column.keys, function(k){return k});
 			
 		rowLabels.enter().append('text')
             .attr({
             	x: self.params.panel.side.width
-              	+ ( self.view.column.values.length * self.params.cell.width)
+              	+ ( self.view.column.keys.length * self.params.cell.width)
               	+ self.params.selections.row.width,
             	y: function(d){return self.scales.cells.yScale(d) + self.params.cell.height },
             	"text-anchor": "bottom"

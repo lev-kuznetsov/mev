@@ -11,11 +11,9 @@ function(angular, DatasetClass, generateView, generateRowFilteredView, loadAnaly
 	 function(AnalysisResourceService, SelectionResourceService){
 		return function(id, initialData){
 				var dataset = new DatasetClass(id, initialData);				
-				console.debug("dataset", dataset);
-				
+		
 				dataset.analysis = AnalysisResourceService;
 				dataset.selection = SelectionResourceService;
-				console.debug("dataset.selection", dataset.selection);
 
 				dataset.generateView = generateView;
 				dataset.generateRowFilteredView = generateRowFilteredView;

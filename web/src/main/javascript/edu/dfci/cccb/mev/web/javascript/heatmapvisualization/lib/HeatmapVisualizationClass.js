@@ -17,13 +17,13 @@ function(d3, generateScales, drawCells, drawSelections, updateCells){
 				params.panel.top.height
 				+ params.labels.column.height
 				+ params.selections.column.height
-				+ (View.row.values.length * params.cell.height ) + 50 );
+				+ (View.row.keys.length * params.cell.height ) + 50 );
     	
 		svg.attr('width', 
 				params.panel.side.width
 				+ params.labels.row.width
 				+ params.selections.row.width
-				+ (View.column.values.length * params.cell.width) + 50 )
+				+ (View.column.keys.length * params.cell.width) + 50 )
 
 		this.DOM.svg.append('g').attr("id", "heatmap-Cells");
 		this.DOM.heatmapCells = d3.select('#heatmap-Cells');

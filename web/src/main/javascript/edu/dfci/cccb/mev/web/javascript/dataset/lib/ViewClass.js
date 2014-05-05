@@ -13,11 +13,11 @@ define([], function(){
 		};
 		
 		this.row = {
-			values : initialData.row.values
+			keys : initialData.row.keys
 		};
 		
 		this.column = {
-				values : initialData.column.values
+				keys : initialData.column.keys
 			};
 		
 		this.panel = {

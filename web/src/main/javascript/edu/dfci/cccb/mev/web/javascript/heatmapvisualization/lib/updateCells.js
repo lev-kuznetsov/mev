@@ -27,7 +27,7 @@ define([], function(){
         }
         
         
-        var labels =  this.view.row.values.slice(startRow, endRow);
+        var labels =  this.view.row.keys.slice(startRow, endRow);
         
         this.drawCells(labels)
         
