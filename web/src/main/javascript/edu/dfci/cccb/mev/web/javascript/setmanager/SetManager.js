@@ -50,7 +50,7 @@ define(['jquery','angular'], function(jquery, angular){
 			};		
 			
 			//alert(angular.toJson($attrs) );						
-			$scope.annotationsUrl="hello";
+			$scope.annotationsUrl="about:blank";
 			
 			$scope.setSelected = function(item){
 				$scope.selectedItem = item;

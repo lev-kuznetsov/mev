@@ -354,13 +354,19 @@ define(
                                     '$element',
                                     '$attrs',
                                     'alertService',
-                                    function(MevSelectionService, $scope, $element, $attrs , alertService) {
+                                    '$routeParams',
+                                    function(MevSelectionService, $scope, $element, $attrs , alertService, $routeParams) {
 
-                                        $scope.baseUrl = '/annotations/'
-                                                + $scope.datasetName
-                                                + '/annotation';
-                                        $scope.annotationsUrl = $scope.baseUrl
-                                                + '/column/new/dataset/';
+                                    	if($routeParams.datasetName){                                    		
+                                    		 $scope.baseUrl = '/annotations/'
+                                                 + $routeParams.datasetName
+                                                 + '/annotation';
+                                             $scope.annotationsUrl = $scope.baseUrl
+                                                 + '/column/new/dataset/';
+                                    	}else{
+                                    		$scope.annotationsUrl="about:blank";
+                                    	}
+                                    		
 
                                         $scope.tabs = {};
                                         if ($scope.tabs != undefined) {

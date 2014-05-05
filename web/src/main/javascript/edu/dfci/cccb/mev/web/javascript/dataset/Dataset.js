@@ -23,8 +23,6 @@ function(angular, DatasetClass, generateView, generateRowFilteredView, loadAnaly
 				
 				return dataset;
 				
-			}
-		
-	}])
-	
+			};
+	}]);
 });
