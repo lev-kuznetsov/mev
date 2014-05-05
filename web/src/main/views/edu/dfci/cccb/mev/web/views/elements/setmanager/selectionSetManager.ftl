@@ -1,5 +1,3 @@
-
-
 <accordion id="setmanagerAccordion" close-others="true" >
 	<accordion-group heading="Column Sets" is-open="isItOpen" ng-init="isItOpen=false">
 	
@@ -17,7 +15,7 @@
 				data-toggle="modal">Difference Selected</a></li>
 		  </ul>
 		</div>
-	
+<!-- 		<input type="button" ng-click="sayHelloCtl()" value="hi" /> -->
 		<selection-set-list 
 					mev-selections="heatmapData.column.selections" 
 					mev-base-url="/annotations/{{heatmapId}}/annotation/column"
