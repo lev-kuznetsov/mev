@@ -430,11 +430,11 @@ define(
                                     	  
                                     	  if(dimensionType=='column'){
                                         	  MevSelectionService.getColumnSelectionQ().then(function(d){
-                                        		  $scope.heatmapData.column.selections=d;
+                                        		  $scope.heatmapData.column.selections=d.selections;
                                         	  });
                                     	  }else if(dimensionType=='row'){
                                         	  MevSelectionService.getRowSelectionQ().then(function(d){
-                                                  $scope.heatmapData.row.selections=d;
+                                                  $scope.heatmapData.row.selections=d.selections;
                                               });
                                     	  } else {
                                     	      alertService.error(
