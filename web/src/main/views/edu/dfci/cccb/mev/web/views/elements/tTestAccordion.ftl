@@ -15,6 +15,13 @@
 					                  </i> Create Selections From Results
 					                </a> 
 					            </button>
+					            
+					            <button class="btn btn-success" ng-click="applyToHeatmap()" >
+					                <a>
+					                  </i> View Genes on Heatmap
+					                </a> 
+					            </button>
+					            
 					      	</div>
 									      
 						</div>

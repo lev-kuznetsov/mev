@@ -1,12 +1,11 @@
 define([], function(){
    
-  //updateCells :: ![Params] ![View], Object -> null
+  //updateCells :: !params(Params), !view(View), Object -> null
     //   Used to update shown cells using position object with
     //   top and height pixel properties
-    return function(position) {
+    return function(position, dataset) {
             
-        var reference = this;
-        
+        var self = this;
         var totalTop = this.params.labels.column.height
         + this.params.panel.top.height
         + this.params.selections.column.height;
@@ -25,11 +24,13 @@ define([], function(){
             var numRows =  ( (position.top + position.height - totalTop) / heatmapCellHeight) 
             var endRow = startRow + numRows + 30
         }
+
+        var labels = {
+                row: self.view.labels.row.keys.slice(startRow, endRow),
+                column: self.view.labels.column.keys
+        }
         
-        
-        var labels =  this.view.row.keys.slice(startRow, endRow);
-        
-        this.drawCells(labels)
+        this.drawCells(labels, dataset)
         
     };
     

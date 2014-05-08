@@ -1,28 +1,78 @@
 define(['./SelectionClass'], function(SelectionClass){
+    
+    //inverter :: [a] --> Object
+    //  Function to invert an array into an object with properties of names
+    //  and values of the original index.
+    function inversion(){
+        
+        var self = this;
+        var obj = Object.create(null);
+        
+        self.map(function(label, index){
+            obj[label] = index;
+        })
+        
+        return obj;
+    }
 
-	//Constructor :: Object -> $Function
-	return function(id, initialData){
+	//Constructor :: [String], [DatasetResponseObj] -> $Function [Dataset]
+    //  Function that constructs base dataset object without angular module
+    //  dependent behaviors.
+	return function(datasetName, datasetRespObj){
+	    
+	    if (!datasetName){
+	        throw TypeError('datasetName parameter not defined');
+	        return null
+	    }
+	    
+	    if (!datasetRespObj) {
+	        throw TypeError('datasetRespObj parameter not defined')
+	        return null
+	    }
+	    
+	    
 		var self = this;
-		this.id=id;
-		this.datasetName = id;
+		
+		this.id = datasetName;
+		
+		this.datasetName = datasetName;
 		
 		this.expression = {
-			values: initialData.values,
-			max: initialData.max,
-			min: initialData.min,
-			avg: initialData.avg,
+			values: datasetRespObj.values,
+			max: datasetRespObj.max,
+			min: datasetRespObj.min,
+			avg: datasetRespObj.avg,
+			get: function(labelPair){
+			    
+			    var r = self.rowLabels2Indexes[labelPair[0]];
+			    var c = self.columnLabels2Indexes[labelPair[1]];
+			    
+			    
+			    return this.values[(r * self.column.keys.length) + c]
+			}
 		};
 		
-		this.column = initialData.column;
-		this.row = initialData.row;
+		this.column = datasetRespObj.column;
+		this.row = datasetRespObj.row;
+		
+		this.columnLabels2Indexes = inversion.call(datasetRespObj.column.keys);
+		this.rowLabels2Indexes = inversion.call(datasetRespObj.row.keys);
+		
+		this.column.indexOf = function(label){
+		    return self.columnLabels2Indexes[label]
+		};
+		
+		this.row.indexOf = function(label){
+            return self.columnLabels2Indexes[label]
+        };
+
 		this.selections={
-		        column: initialData.column.selections,
-		        row: initialData.row.selections
+		        column: datasetRespObj.column.selections,
+		        row: datasetRespObj.row.selections
 		}
 		
 		this.analyses = [];
-		this.views = [];
-		
+
 	};
 	
 });

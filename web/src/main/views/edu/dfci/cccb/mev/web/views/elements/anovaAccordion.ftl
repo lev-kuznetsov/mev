@@ -1,6 +1,5 @@
 <accordion-group heading="{{analysis.type}} : {{analysis.name}}" is-open="isAccordionOpen" ng-init="isAccordionOpen=false">
 
-Hello
 	<div  class="results-wrapper">	
     	<div class="results-header clearfix">
     	                    				
@@ -16,6 +15,12 @@ Hello
 	            <button class="btn btn-info" >
 	                <a data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
 	                  </i> Create Selections From Results
+	                </a> 
+	            </button>
+	            
+	            <button class="btn btn-success" ng-click="applyToHeatmap()" >
+	                <a>
+	                  </i> View Genes on Heatmap
 	                </a> 
 	            </button>
 	            

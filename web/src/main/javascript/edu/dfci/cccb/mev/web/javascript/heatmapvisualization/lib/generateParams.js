@@ -19,7 +19,7 @@ define([], function(){
 		
 		this.labels = {
 			column:{
-				height:30
+				height:80
 			},
 			row: {
 				width: 50

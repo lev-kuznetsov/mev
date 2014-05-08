@@ -2,12 +2,12 @@ define(['jquery',
         'angular',
         'extend',
         'd3',
-        'dataset/Dataset',
+        'project/Project',
         'notific8', 'api/Api', 'colorbrewer/ColorBrewer'],
     function($, angular, extend, d3) {
 	
 	return angular
-		.module('Mev.heatmap', ['Mev.Api', 'Mev.Dataset', 'd3colorBrewer'])
+		.module('Mev.heatmap', ['Mev.Api', 'Mev.Project', 'd3colorBrewer'])
 		.value('Heatmap.availableColors', ["Green-Black-Red",
                                            "Yellow-Black-Blue",
                                            "Red-White-Blue"])
@@ -56,13 +56,45 @@ define(['jquery',
 	            };
         	};
         }])
+        .directive('viewManager', [function () {
+            
+            return {
+                restrict: "E",
+                rep1ace: true,
+                template:'<button class="btn btn-success" ng-click="applyToHeatmap()" ><a></i>Reset Heatmap</a></button>',
+                scope: {
+                    project : '=project',
+                },
+                link: function(scope, element, attrs) {
+                    
+                    scope.applyToHeatmap=function(){
+                        
+                        scope.project.generateView({
+                            viewType:'heatmapView', 
+                            labels:{
+                                row:{keys:scope.project.dataset.row.keys}, 
+                                column:{keys:scope.project.dataset.column.keys}
+                            },
+                            expression:{
+                                min: scope.project.dataset.expression.min,
+                                max: scope.project.dataset.expression.max,
+                                avg: scope.project.dataset.expression.avg,
+                            }
+                        });
+                    
+                    };
+                    
+                }
+            }
+            
+        }])
 		.controller('HeatmapCtrl', [
 		'$scope', 
 		'$routeParams',
         '$location',
         'DatasetResourceService',
-        'DatasetFactory',
-        function($scope, $routeParams,  $loc,DatasetResourceService, DatasetFactory) {
+        'ProjectFactory',
+        function($scope, $routeParams,  $loc,DatasetResourceService, ProjectFactory) {
 			
 			//case where there's no datasetName
 			if (!$routeParams.datasetName) {
@@ -71,23 +103,42 @@ define(['jquery',
 				return
 			};
 			
-			$scope.dataset = undefined;
-			var datasetName = $routeParams.datasetName;
+			$scope.project = undefined;
+			
+			//Build the project after getting datasetResponseObject
 			DatasetResourceService.get({
 				datasetName: $routeParams.datasetName
 			}, function(response){
-				$scope.dataset = DatasetFactory(datasetName, response);
+			    $scope.project = ProjectFactory($routeParams.datasetName, response);
 			});
 			
-			$scope.$watch('dataset', function(newval, oldval){
+			//Generate views and load analyses
+			$scope.$watch('project.dataset', function(newval, oldval){
 				if(newval && !oldval){
-					$scope.dataset.generateView($scope.dataset);
-					$scope.dataset.loadAnalyses();
+				    
+					$scope.project.generateView({
+					    viewType:'heatmapView', 
+					    labels:{
+					        row:{keys:$scope.project.dataset.row.keys}, 
+					        column:{keys:$scope.project.dataset.column.keys}
+					    },
+					    expression:{
+					        min: newval.expression.min,
+					        max: newval.expression.max,
+					        avg: newval.expression.avg,
+					    }
+					});
+					
+
+					$scope.project.dataset.loadAnalyses();
+					
 				}
 				
 			});
-
 			
+			$scope.$watch('project.view', function(newval){
+			    return
+			})
         	
         }]);
 });

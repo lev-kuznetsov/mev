@@ -2,10 +2,21 @@ define(['./cellFilter'], function(cellFilter){
 	
 	//drawCells !View, !shownCells, !scales, Array [String], -> null
 	//	draws cells on heatmapvisualization object
-	return function(labels){
+	return function(labels, ds){
 		var self = this;
 		
-		self.shownCells = cellFilter(labels, self.view);
+
+		var labelPairs = [];
+		
+		labels.row.map(function(row){
+		    return labels.column.map(function(col){
+		        labelPairs.push([row, col]);
+		    })
+		});
+		
+		self.shownCells = labelPairs.map(function(pair){ return ds.expression.get(pair)});
+		
+		
 		
 		var newCells = self.DOM.heatmapCells.selectAll('rect').data(self.shownCells, function(k){
 			return [k.row, k.column]
@@ -23,13 +34,13 @@ define(['./cellFilter'], function(cellFilter){
 		
 		newCells.exit().remove()
 		
-		var rowLabels = self.DOM.labels.row.selectAll('text').data(labels, function(k){return k}),
-		colLabels = self.DOM.labels.column.selectAll('text').data(self.view.column.keys, function(k){return k});
+		var rowLabels = self.DOM.labels.row.selectAll('text').data(labels.row, function(k){return k}),
+		colLabels = self.DOM.labels.column.selectAll('text').data(labels.column, function(k){return k});
 			
 		rowLabels.enter().append('text')
             .attr({
             	x: self.params.panel.side.width
-              	+ ( self.view.column.keys.length * self.params.cell.width)
+              	+ ( self.view.labels.column.keys.length * self.params.cell.width)
               	+ self.params.selections.row.width,
             	y: function(d){return self.scales.cells.yScale(d) + self.params.cell.height },
             	"text-anchor": "bottom"

@@ -4,21 +4,29 @@
 	<div class="col-md-10 col-md-offset-1">
 		<br>
 		<div class="row">
-			<selection-set-manager id="selectionSetMgr" ng-controller="SelectionSetManagerCtl" selections="dataset.selections" heatmap-data="dataset" heatmap-id="{{dataset.id}}"></selection-set-manager>
-		</div>
-
-		<div class="row">
-		<hr>
+		
+			<accordion close-others="false">
+				<accordion-group heading="View Manager" is-open="isOpen" ng-init="isOpen=true">
 				
-		<accordion close-others="false">
-			<div ng-repeat="analysis in dataset.analyses track by $index">
-				<analysis-Content-Item analysis="analysis" heatmap-Dataset="dataset">
-					</analysis-Content-Item>
-			</div>
-		</accordion>
+					<view-Manager project="project"></view-Manager>
+				</accordion-group>
+			</accordion>
+		
+		<hr>
 			
+		<hr>
+		
+			<selection-set-manager id="selectionSetMgr" ng-controller="SelectionSetManagerCtl" selections="project.dataset.selections" heatmap-data="project.dataset" heatmap-id="{{project.dataset.datasetName}}"></selection-set-manager>
+		<hr>
 			
-
+		<hr>
+			<accordion close-others="false">
+				<div ng-repeat="analysis in project.dataset.analyses track by $index">
+					<analysis-Content-Item analysis="analysis" project="project" generate-View="project.generateView">
+						</analysis-Content-Item>
+				</div>
+			</accordion>
+			
 		</div>
 		
 	</div>

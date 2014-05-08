@@ -20,9 +20,9 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 restrict : 'E',
                 templateUrl : "/container/view/elements/visHeatmap",
                 scope: {
+                	heatmapView: "=heatmapView",
                 	heatmapDataset: "=heatmapDataset",
-                	selections : "=selections",
-                	selectionAdd : "&selectionAdd"
+                	project : '=project'
                 },
                 link : function($scope, elems, attr) {
                 	
@@ -55,7 +55,7 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                                 $scope.currentColors.colors.high = d3colors[newval][3][2];
                                 
                                 var params = new generateParams({colors:$scope.currentColors.colors});
-                                $scope.visualization = new HeatmapVisualizationClass($scope.heatmapDataset,svg, params);
+                                $scope.visualization = new HeatmapVisualizationClass($scope.heatmapView,svg, params);
 
                 	    }
                 	});
@@ -71,7 +71,7 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                         timer = setTimeout(function(){
                         	
                         	$scope.$apply(function(){
-                        		$scope.visualization.updateCells(position);
+                        		$scope.visualization.updateCells(position, $scope.heatmapDataset);
                         	});
                         	
                         	
@@ -88,9 +88,10 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 	
                 	
                 	//When dataset information comes, generate new visualization.
-                	$scope.$watch('heatmapDataset', function(newval){
+                	$scope.$watchCollection('heatmapView', function(newval){
                 		
                 		if (newval){
+                		    
                 			var params = 
                 				new generateParams({
                 					colors:{
@@ -107,34 +108,60 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 	//When visualization information comes, print cells, selections,
                 	//	and clear current top and side panes
                 	$scope.$watch('visualization', function(newval){
-                		if(newval && $scope.selections){
-                			$scope.visualization.updateCells(position);
-                			$scope.visualization.drawSelections($scope.selections.column, "column");
-                			$scope.visualization.drawSelections($scope.selections.row, "row");
-                		} else if (newval && !$scope.selections){
-                		    $scope.visualization.updateCells(position);
+
+                		if(newval){
+                			$scope.visualization.updateCells(position, $scope.heatmapDataset);
                 		}
                 		
+                		if ($scope.selections){
+                            $scope.visualization.drawSelections($scope.selections.column, "column");
+                            $scope.visualization.drawSelections($scope.selections.row, "row");
+                		}
+                		
+                		if ($scope.visualization.view.panel && $scope.visualization.view.panel.top) {
+                		    $scope.visualization.drawTopPanel($scope.visualization.view.panel.top);
+                		}
+                		
+                		if ($scope.visualization.view.panel && $scope.visualization.view.panel.side) {
+                            $scope.visualization.drawSidePanel($scope.visualization.view.panel.side);
+                        }
+                		
                 	});
+                	
+                	
                 	
                 	//When new side/top pane information comes, print it
                 	
                 	//When new selections come, print them
                 	
-                	$scope.$watchCollection('selections.column', function(newval){
+                	$scope.$watch('heatmapDataset.selections.column', function(newval){
 
                 	    if (newval && $scope.visualization){
-                	        
                 	        $scope.visualization.drawSelections(newval, "column")
                 	    };
                 	});
                 	
-                	$scope.$watchCollection('selections.row', function(newval){
+                	$scope.$watchCollection('heatmapDataset.selections.row', function(newval){
 
                 	    if (newval && $scope.visualization){
                             $scope.visualization.drawSelections(newval, "row")
                         };
                     });
+
+                	$scope.$watch('visualization.view.panel.top', function(newval, oldval) {
+ 
+                        if(newval && $scope.visualization){
+                            $scope.visualization.drawTopPanel($scope.visualization.view.panel.top);
+                        }
+                    });
+                	
+                	$scope.$watch('visualization.view.panel.side', function(newval, oldval) {
+
+                        if(newval && $scope.visualization){
+                            $scope.visualization.drawSidePanel($scope.visualization.view.panel.side);
+                        }
+                    });
+                	
                 	
                 	//Selections modifier
                 	
@@ -165,7 +192,7 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                             keys:selection[dimension].labels
                         };
                         
-                        selectionsAdd({
+                        heatmapDataset.selection.post({
                             datasetName : $routeParams.datasetName,
                             dimension : dimension
 

@@ -2,11 +2,11 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
 	
 	return angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])
 	.directive('analysisContentItem', ['$compile', function ($compile) {
-        var heirarchicalTemplate = '<hierarchical-Accordion analysis="analysis" heatmap-dataset="dataset"></hierarchical-Accordion>';
-        var kMeansTemplate = '<k-Means-Accordion analysis="analysis" heatmap-dataset="dataset"></k-Means-Accordion>';
-        var anovaTemplate = '<anova-Accordion analysis="analysis" heatmap-dataset="dataset"></anova-Accordion>';
-        var tTestTemplate = '<t-Test-Accordion analysis="analysis" heatmap-dataset="dataset"></t-Test-Accordion>';
-        var limmaTemplate  = '<limma-Accordion analysis="analysis" heatmap-dataset="dataset"></limma-Accordion>';
+        var heirarchicalTemplate = '<hierarchical-Accordion analysis="analysis" project="project"></hierarchical-Accordion>';
+        var kMeansTemplate = '<k-Means-Accordion analysis="analysis" project="project"></k-Means-Accordion>';
+        var anovaTemplate = '<anova-Accordion analysis="analysis" project="project"></anova-Accordion>';
+        var tTestTemplate = '<t-Test-Accordion analysis="analysis" project="project"></t-Test-Accordion>';
+        var limmaTemplate  = '<limma-Accordion analysis="analysis" project="project"></limma-Accordion>';
         
         var getTemplate = function(analysisType) {
             var template = '';
@@ -37,7 +37,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             rep1ace: true,
             scope: {
                 analysis : '=analysis',
-                dataset : '=heatmapDataset'
+                project : '=project',
             },
             link: function(scope, element, attrs) {
 
@@ -51,9 +51,62 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
         return {
             restrict : 'E',
             scope : {
-            	analysis : "=analysis"
+            	analysis : "=analysis",
+            	project : "=project"
             },
             templateUrl : '/container/view/elements/kmeansAccordion',
+            link : function(scope) {
+                
+                function traverse(clusters){
+                    
+                    var labels = []
+                    
+                    for (var i = 0; i < clusters.length; i++) {
+                        labels = labels.concat(clusters[i]);
+                    };
+                    
+                    return labels
+                }
+                
+                scope.applyToHeatmap=function(){
+                    
+                    var labels = traverse(scope.analysis.clusters);
+                    
+                    if (scope.analysis.dimension == "column"){
+
+                        scope.project.generateView({
+                            viewType:'heatmapView', 
+                            labels:{
+                                row:{keys:scope.project.dataset.row.keys}, 
+                                column:{keys:labels}
+                            },
+                            expression:{
+                                min: scope.project.dataset.expression.min,
+                                max: scope.project.dataset.expression.max,
+                                avg: scope.project.dataset.expression.avg,
+                            },
+                            panel : {top: scope.analysis}
+                        });
+                        
+                    } else {
+                        scope.project.generateView({
+                            viewType:'heatmapView', 
+                            labels:{
+                                column:{keys:scope.project.dataset.column.keys}, 
+                                row:{keys:labels}
+                            },
+                            expression:{
+                                min: scope.project.dataset.expression.min,
+                                max: scope.project.dataset.expression.max,
+                                avg: scope.project.dataset.expression.avg,
+                            },
+                            panel: {side: scope.analysis}
+                        });
+                    }
+                    
+                };
+                
+            }
         };
     }])
     .directive('anovaAccordion',
@@ -63,7 +116,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             templateUrl : '/container/view/elements/anovaAccordion',
             scope : {
             	analysis : "=analysis",
-            	dataset : "=heatmapDataset"
+            	project : '=project',
             },
             link: function(scope){
 
@@ -95,7 +148,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                         scope.tableOrdering = "-"
                                 + header.value;
                     }
-                }
+                };
                     
                 scope.addSelections = function(){
             
@@ -149,6 +202,40 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     });
 
                 }
+                
+                function traverse (results) {
+                    var step1 = $filter('filter')(results, {
+                        id: scope.filterParams.id
+                    });
+
+                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.pValue, 'pValue')
+                    
+                    var step3 = step2.map(function(d){
+                        return d.id
+                    })
+                    
+                    return step3;
+                }
+                
+                scope.applyToHeatmap=function(){
+                    
+                    var labels = traverse(scope.analysis.results);
+
+                    scope.project.generateView({
+                        viewType:'heatmapView', 
+                        labels:{
+                            column:{keys:scope.project.dataset.column.keys}, 
+                            row:{keys:labels}
+                        },
+                        expression:{
+                            min: scope.project.dataset.expression.min,
+                            max: scope.project.dataset.expression.max,
+                            avg: scope.project.dataset.expression.avg,
+                        }
+                    });
+
+                    
+                };
             }
         };
     }])
@@ -158,11 +245,17 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             restrict : 'E',
             templateUrl : '/container/view/elements/tTestAccordion',
             scope : {
-            	dataset : "=heatmapDataset",
+            	project : "=project",
             	analysis : "=analysis"
             },
             link : function(scope) {
 
+                scope.$watch('analysis', function(newval){
+                    if (newval){
+                        scope.tTest = scope.analysis;
+                    }
+                });
+                
                 scope.headers = {
                     'ID' : {name: "id", sort: -1},
                     'P-Value' : {name: "pValue", sort: -1},
@@ -248,7 +341,43 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                         scope.tTestTableOrdering = "-"
                                 + scope.headers[header].name;
                     }
+                };
+                
+                function traverse (results) {
+                    var step1 = $filter('filter')(results, {
+                        id: scope.filterParams.id
+                    });
+                                                                
+                    var step2= $filter('filterThreshold')(step1, scope.filterParams.pValueThreshold, 'pValue');
+                    var step3= $filter('filterThreshold')(step2, scope.filterParams.logFoldChange, 'logFoldChange');
+                    var step4 = step3.map(function(d){
+                        return d.id
+                    })
+                    
+                    return step4;
                 }
+                
+                scope.applyToHeatmap=function(){
+                    
+                    var labels = traverse(scope.tTest.results);
+
+                    scope.project.generateView({
+                        viewType:'heatmapView', 
+                        labels:{
+                            column:{keys:scope.project.dataset.column.keys}, 
+                            row:{keys:labels}
+                        },
+                        expression:{
+                            min: scope.project.dataset.expression.min,
+                            max: scope.project.dataset.expression.max,
+                            avg: scope.project.dataset.expression.avg,
+                        }
+                    });
+
+                    
+                };
+                
+                
             }
 
         };
@@ -258,11 +387,11 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             restrict : 'E',
             templateUrl : '/container/view/elements/limmaAccordion',
             scope : {
-            	dataset : "=heatmapDataset",
+                project : '=project',
             	analysis : "=analysis"
             },
             link : function(scope) {
-
+                
                 scope.headers = [
 	               {'name':'ID', 'value': "id", 'icon': "search"},
 	               {'name':'Log-Fold-Change', 'value': "logFoldChange", 'icon': ">="},
@@ -286,9 +415,9 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 
                 scope.addSelections = function(){
                     
-                    var userselections = scope.limma.datar.results;
+                    var userselections = scope.analysis.datar.results;
                     
-                    var step1 = $filter('filter')(scope.limma.datar.results, {
+                    var step1 = $filter('filter')(scope.analysis.datar.results, {
                         id: scope.filterParams.id
                     });
                     
@@ -347,6 +476,40 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                                 + header.value;
                     }
                 }
+                
+                function traverse (results) {
+                    var step1 = $filter('filter')(results, {
+                        id: scope.filterParams.id
+                    });
+                    
+                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.logFold, 'logFoldChange')
+                    var step3= $filter('filterThreshold')(step2, scope.filterParams.pValue, 'pValue')
+                    var step4 = step3.map(function(d){
+                        return d.id
+                    })
+                    
+                    return step4;
+                }
+                
+                scope.applyToHeatmap=function(){
+                    
+                    var labels = traverse(scope.analysis.datar.results);
+
+                    scope.project.generateView({
+                        viewType:'heatmapView', 
+                        labels:{
+                            column:{keys:scope.project.dataset.column.keys}, 
+                            row:{keys:labels}
+                        },
+                        expression:{
+                            min: scope.project.dataset.expression.min,
+                            max: scope.project.dataset.expression.max,
+                            avg: scope.project.dataset.expression.avg,
+                        }
+                    });
+
+                    
+                };
             }
 
         };
@@ -357,12 +520,66 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
         return {
             restrict : 'E',
             scope : {
-                dataset : "=heatmapDataset",
-                analysis : "=analysis"
+                analysis : "=analysis",
+                project : "=project"
 
             },
             templateUrl : '/container/view/elements/hierarchicalAccordion',
             link : function(scope, elems, attr) {
+                
+                scope.applyToHeatmap=function(){
+                    
+                    var labels = traverse(scope.analysis.root);
+                    
+                    if (scope.analysis.dimension == "column"){
+
+                        scope.project.generateView({
+                            viewType:'heatmapView', 
+                            labels:{
+                                row:{keys:scope.project.dataset.row.keys}, 
+                                column:{keys:labels}
+                            },
+                            expression:{
+                                min: scope.project.dataset.expression.min,
+                                max: scope.project.dataset.expression.max,
+                                avg: scope.project.dataset.expression.avg,
+                            },
+                            panel : {top: scope.analysis}
+                        });
+                        
+                    } else {
+                        scope.project.generateView({
+                            viewType:'heatmapView', 
+                            labels:{
+                                column:{keys:scope.project.dataset.column.keys}, 
+                                row:{keys:labels}
+                            },
+                            expression:{
+                                min: scope.project.dataset.expression.min,
+                                max: scope.project.dataset.expression.max,
+                                avg: scope.project.dataset.expression.avg,
+                            },
+                            panel: {side: scope.analysis}
+                        });
+                    }
+                    
+                };
+                
+                function traverse(tree) {
+                    
+                    var leaves = {
+                        '0':[],
+                        '1':[]
+                    };
+                        
+                    if (tree.children.length > 0){
+                        for (var i = 0; i < tree.children.length; i++){
+                            leaves[i] = (!tree.children[i].children) ? [tree.children[i].name] : traverse(tree.children[i])
+                        }
+                    };
+
+                    return leaves[0].concat(leaves[1]);
+                };
 
                 var padding = 20;
                 
@@ -440,8 +657,8 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     canvas.selectAll('*')
                             .remove();
                     
-                    var nodes = cluster
-                            .nodes(tree);
+                    var nodes = cluster.nodes(tree);
+
                     var links = cluster
                             .links(nodes);
 
@@ -509,7 +726,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 };
                 scope.$watch('analysis',  function(newval, oldval) {
                     if (newval) {
-                        
+
                         d3.select(elems[0]).select('div#svgPlace').append('svg');
                         
                         var svg = d3.select(elems[0]).select('div#svgPlace').select('svg')

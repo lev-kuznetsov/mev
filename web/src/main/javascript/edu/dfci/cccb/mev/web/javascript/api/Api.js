@@ -28,10 +28,15 @@ define ([ 'angular'], function (angular) {
                     + '/analysis/:analysisName', 
                     'method':"GET"
                 },
-                'post': {
+                'postf': {
                 	'method':'POST',
                 	'url': 'dataset/:datasetName'
                         + '/analyze/:analysisType/:analysisName(:analysisParams)'
+                },
+                'post': {
+                    'method':'POST',
+                    'url': 'dataset/:datasetName'
+                        + '/analyze/:analysisType'
                 }
 			});
     	

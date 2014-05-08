@@ -90,21 +90,21 @@
 
 <!-- Modals -->
 <bsmodal bindid="hierarchical" func="" header="Hierarchical Clustering">
- <div class="modal-Hierarchical" heatmap-dataset="dataset"></div>
+ <div class="modal-Hierarchical" heatmap-dataset="project.dataset"></div>
 </bsmodal> 
   
 <bsmodal bindid="kmeansclust" func="" header="K-Means/Medians Clustering">
- <div class="modal-Kmeans" heatmap-dataset="dataset"></div>
+ <div class="modal-Kmeans" heatmap-dataset="project.dataset"></div>
 </bsmodal>
   
 <bsmodal bindid="limma" func="" header="LIMMA">
- <div class="modal-Limma" heatmap-dataset="dataset"></div>
+ <div class="modal-Limma" heatmap-dataset="project.dataset"></div>
 </bsmodal> 
 
 <bsmodal bindid="anova" func="" header="Analysis of Variance">
- <div class="modal-Anova" heatmap-dataset="dataset"></div>
+ <div class="modal-Anova" heatmap-dataset="project.dataset"></div>
 </bsmodal> 
 
 <bsmodal bindid="tTest" func="" header="t-Test Analysis">
- <div class="modal-T-Test" heatmap-dataset="dataset"></div>
+ <div class="modal-T-Test" heatmap-dataset="project.dataset"></div>
 </bsmodal> 

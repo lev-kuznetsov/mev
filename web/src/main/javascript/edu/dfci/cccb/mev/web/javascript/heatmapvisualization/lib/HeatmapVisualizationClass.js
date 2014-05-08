@@ -1,5 +1,14 @@
-define(['d3', './generateScales', './drawCells', './drawSelections', './updateCells'], 
-function(d3, generateScales, drawCells, drawSelections, updateCells){
+define(['d3', 
+        './generateScales', 
+        './drawCells', 
+        './drawSelections', 
+        './drawAnalysis', 
+        './updateCells', 
+        './drawTree', 
+        './drawCluster', 
+        './drawTopPanel', 
+        './drawSidePanel'], 
+function(d3, generateScales, drawCells, drawSelections, drawAnalysis, updateCells, drawTree, drawCluster, drawTopPanel, drawSidePanel){
 	
 	//Constructor :: View, D3selection, scrollableSelection, Params
 	//	-> HeatmapVisualization
@@ -12,18 +21,17 @@ function(d3, generateScales, drawCells, drawSelections, updateCells){
 		}
 		
 		this.DOM.svg.selectAll("*").remove();
-		
     	svg.attr('height', 
 				params.panel.top.height
 				+ params.labels.column.height
 				+ params.selections.column.height
-				+ (View.row.keys.length * params.cell.height ) + 50 );
+				+ (View.labels.row.keys.length * params.cell.height ) + 50 );
     	
 		svg.attr('width', 
 				params.panel.side.width
 				+ params.labels.row.width
 				+ params.selections.row.width
-				+ (View.column.keys.length * params.cell.width) + 50 )
+				+ (View.labels.column.keys.length * params.cell.width) + 50 )
 
 		this.DOM.svg.append('g').attr("id", "heatmap-Cells");
 		this.DOM.heatmapCells = d3.select('#heatmap-Cells');
@@ -58,6 +66,11 @@ function(d3, generateScales, drawCells, drawSelections, updateCells){
 		
 		this.drawCells = drawCells;
 		this.drawSelections = drawSelections;
+		this.drawAnalysis = drawAnalysis;
+		this.drawTree = drawTree;
+		this.drawCluster = drawCluster;
+		this.drawTopPanel = drawTopPanel;
+		this.drawSidePanel = drawSidePanel;
 		
 		this.updateCells = updateCells;
 

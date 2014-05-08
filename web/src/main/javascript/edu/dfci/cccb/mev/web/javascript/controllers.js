@@ -396,7 +396,7 @@ define(
                                                         function(event, selection, dimension, annotationSource) {
 //                                                            var annotationsUrl = $scope.baseUrl;
                                         					var annotationsUrl = '/annotations/'
-						                                            + $scope.dataset.id
+						                                            + $scope.project.dataset.datasetName
 						                                            + '/annotation/'
                                                                     + dimension
                                                                     + "/";
@@ -438,7 +438,7 @@ define(
                                     	  
                                     	  if(dimensionType === 'column' || dimensionType === 'row'){
 
-                                    	      $scope.dataset.resetSelections(dimensionType);
+                                    	      $scope.project.dataset.resetSelections(dimensionType);
 
                                     	  } else {
                                     	      alertService.error(
