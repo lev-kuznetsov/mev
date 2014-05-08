@@ -43,11 +43,12 @@ public class SharedCacheValues extends AbstractValues implements AutoCloseable {
 
   private static final TimeUnit DURATION_UNIT = SECONDS;
   private static final long DURATION = 10;
+  private static final long CACHE_SIZE = 10000000L;
   private static final LoadingCache<Triplet<Values, String, String>, Double> CACHE;
 
   static {
     CACHE = newBuilder ().expireAfterAccess (DURATION, DURATION_UNIT)
-                         .maximumSize (1000000)
+                         .maximumSize (CACHE_SIZE)
                          .build (new CacheLoader<Triplet<Values, String, String>, Double> () {
 
                            @Override
