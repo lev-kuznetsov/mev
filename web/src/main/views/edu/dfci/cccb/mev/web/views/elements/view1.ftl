@@ -1,1 +1,0 @@
-<b>HELLO CRUEL WORLD!!!</b>

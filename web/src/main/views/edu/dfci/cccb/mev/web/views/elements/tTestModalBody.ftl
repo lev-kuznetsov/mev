@@ -13,13 +13,13 @@
 
 		  <div class="form-group">		    
 		    <label for="tTestAnalysisExperiment" class="control-label">Experiment</label>
-		      <select id="tTestAnalysisExperiment" ng-options="selection.name for selection in heatmapData.column.selections" ng-model="params.analysisExperiment">
+		      <select id="tTestAnalysisExperiment" ng-options="selection.name for selection in dataset.column.selections" ng-model="params.analysisExperiment">
 		      </select>		      
 		  </div>
     
           <div class="form-group" ng-show="!isOneSample()">
 		    <label for="tTestAnalysisControl" class="control-label">Control</label>		
-		      <select id="tTestAnalysisControl"  ng-options="selection.name for selection in heatmapData.column.selections" ng-model="params.analysisControl">
+		      <select id="tTestAnalysisControl"  ng-options="selection.name for selection in dataset.column.selections" ng-model="params.analysisControl">
 		      </select>		
 		  </div>
 		  

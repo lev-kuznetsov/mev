@@ -34,7 +34,8 @@ mem.log
 mem.properties
 mem.script
 
-#Backup folder
-bkp/
 
+#Backuped files
+bkp/
+/bkp
 

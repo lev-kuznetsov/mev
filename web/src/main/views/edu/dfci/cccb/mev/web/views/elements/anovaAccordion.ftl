@@ -18,6 +18,12 @@
 	                </a> 
 	            </button>
 	            
+	            <button class="btn btn-success" ng-click="applyToHeatmap()" >
+	                <a>
+	                  </i> View Genes on Heatmap
+	                </a> 
+	            </button>
+	            
 	      	</div>
 					      
 		</div>
@@ -46,7 +52,7 @@
 	                    </tr>
 					</thead>
                     <tbody>
-                            <tr ng-repeat="row in analysis.results | filter:filterParams.id | filterThreshold: filterParams.pValue : 'pValue' | orderBy: tableOrdering ">
+                            <tr ng-repeat="row in analysis.results | filter:filterParams.id |  filterThreshold: filterParams.pValue : 'pValue' : '<=' | orderBy: tableOrdering ">
                                     <td>
                                             {{row.id}}
                                     </td>

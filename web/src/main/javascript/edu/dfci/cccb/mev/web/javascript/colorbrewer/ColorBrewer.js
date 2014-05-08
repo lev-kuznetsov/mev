@@ -3,7 +3,11 @@ define ([ 'angular', 'd3'], function (angular, d3) {
     angular
     .module ('d3colorBrewer', [])
     .factory ('d3colors', [ function () {
-        return {YlGn: {
+        return {BuBkYl:{
+            3: ["blue", "black", "yellow"]
+            },RdBkGn:{
+            3: ['red', 'black', 'green']
+            },YlGn: {
             3: ["#f7fcb9","#addd8e","#31a354"],
             4: ["#ffffcc","#c2e699","#78c679","#238443"],
             5: ["#ffffcc","#c2e699","#78c679","#31a354","#006837"],

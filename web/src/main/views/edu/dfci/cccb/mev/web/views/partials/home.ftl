@@ -1,10 +1,4 @@
-<nav class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header navbar-right">
-      <a class="navbar-brand brand" href="/">mev<img src="/container/images/favicon/favicon-32x32.png"/></a>
-    </div>
-</nav>
+<mev-main-menu></mev-main-menu>
 
 <div class="container-fluid">
 

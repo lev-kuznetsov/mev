@@ -45,9 +45,6 @@ require.config ({
         exports : 'ngResource',
         deps: ['angular']
     },
-//    'uiBootstrap':{
-//            deps:['angular', 'bootstrap']
-//    },
     'uiBootstrapTpls':{
         deps:['angular', 'bootstrap']
     },
@@ -67,16 +64,21 @@ require.config ({
     'ngGrid' : {
     	deps : ['jquery', 'angular', 'uiBootstrapTpls']
     },
-    canvasToBlob : {
+    'canvasToBlob' : {
     	deps : ['blob'],
     	exports : 'canvasToBlob'
     },
-    fileSaver : {
+    'fileSaver' : {
     	deps : ['canvasToBlob'],
     	exports : 'fileSaver'
     }
     
   },
+  packages: [{
+		name: "mainmenu",
+		location: "/container/javascript/mainmenu",
+	  	main: "MainMenu.package"
+	}],
   waitSeconds : "2"
 
 });
@@ -94,7 +96,8 @@ require ([ 'jquery',
           'presets/PresetManager',
           'mainpanel/MainPanel',
           'retina', 
-          'ngGrid'
+          'ngGrid',
+          'mainmenu'
           ], function (jquery, angular, app, orb) {
 
   'use strict';

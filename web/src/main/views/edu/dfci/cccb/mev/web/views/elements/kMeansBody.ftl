@@ -37,6 +37,6 @@
 	
 	</form>
 	
-	<button class="btn btn-success btn-block" ng-click="kMeansInit()" data-dismiss="modal" aria-hidden="true">Analyze</button>
+	<button class="btn btn-success btn-block" ng-click="testInit()" data-dismiss="modal" aria-hidden="true">Analyze</button>
 
 </div>
