@@ -129,9 +129,6 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 	});
                 	
                 	
-                	
-                	//When new side/top pane information comes, print it
-                	
                 	//When new selections come, print them
                 	
                 	$scope.$watch('heatmapDataset.selections.column', function(newval){
@@ -148,6 +145,8 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                         };
                     });
 
+                	
+                	//When panel elements come in, print them
                 	$scope.$watch('visualization.view.panel.top', function(newval, oldval) {
  
                         if(newval && $scope.visualization){
@@ -163,49 +162,33 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                     });
                 	
                 	
-                	//Selections modifier
-                	
-                	$scope.selectionParams = {
-                		row : {
-	                	
-	                		name : undefined,
-	                		color : '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16),
-	                		labels : []
-	                	},
-	                	column : {
-		                	
-	                		name : undefined,
-	                		color : '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16),
-	                		labels : []
-	                	}
-                	
-                	};
+
                 	
                 	//addSelection [Selection] --> null
                 	$scope.addSelection = function(selection, dimension){
                 		var selectionsData = {
-                            name: scope.selectionParams[dimension].name,
+                            name: $scope.view.selectionParams[dimension].name,
                             properties: {
                                 selectionDescription: '',
-                                selectionColor: $scope.selectionParams[dimension].color,                     
+                                selectionColor: $scope.view.selectionParams[dimension].color,                     
                             },
-                            keys:selection[dimension].labels
+                            keys:$scope.view.selectionParams[dimension].labels
                         };
                         
-                        heatmapDataset.selection.post({
+                        $scope.project.selection.post({
                             datasetName : $routeParams.datasetName,
                             dimension : dimension
 
-                        }. selectionsData,
+                        }, selectionsData,
                         function(response){
                                 scope.$broadcast('SeletionAddedEvent', 'row');
                                 var message = "Added " + $scope.selectionParams.name + " as new Selection!";
                                 var header = "Heatmap Selection Addition";
                         
-                                $scope.selectionParams[dimension].color = '#'+Math
+                                $scope.view.selectionParams[dimension].color = '#'+Math
                                     .floor(Math.random()*0xFFFFFF<<0)
                                     .toString(16);
-                                $scope.selectionParams[dimension].name = undefined;
+                                $scope.view.selectionParams[dimension].name = undefined;
 
                                 alertService.success(message,header);
                         },

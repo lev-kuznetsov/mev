@@ -135,10 +135,6 @@ define(['jquery',
 				}
 				
 			});
-			
-			$scope.$watch('project.view', function(newval){
-			    return
-			})
         	
         }]);
 });

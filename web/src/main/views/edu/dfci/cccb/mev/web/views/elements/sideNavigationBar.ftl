@@ -13,13 +13,11 @@
 			</accordion>
 		
 		<hr>
-			
-		<hr>
+
 		
 			<selection-set-manager id="selectionSetMgr" ng-controller="SelectionSetManagerCtl" selections="project.dataset.selections" heatmap-data="project.dataset" heatmap-id="{{project.dataset.datasetName}}"></selection-set-manager>
 		<hr>
-			
-		<hr>
+
 			<accordion close-others="false">
 				<div ng-repeat="analysis in project.dataset.analyses track by $index">
 					<analysis-Content-Item analysis="analysis" project="project" generate-View="project.generateView">

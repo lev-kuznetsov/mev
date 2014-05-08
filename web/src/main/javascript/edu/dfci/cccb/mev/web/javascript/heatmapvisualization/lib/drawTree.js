@@ -10,8 +10,9 @@ define(['d3'], function(d3){
             return d.children;
         });
     
-    function nodeclick(d, canvas, type){
+    function nodeclick(d, canvas, type, self){
         
+        var dimension = (type == 'horizontal') ? 'column' : 'row';
 
         var nColor = (type == 'horizontal')? 'blue' : 'red'; //Initial nonselected color of a node.
         var pColor = (type == 'horizontal')? 'blue' : 'red'; //Initial nonselected color of a branch.
@@ -47,15 +48,15 @@ define(['d3'], function(d3){
         };
 
         if(d.children){ //Check if the node clicked is not a leaf. If the node has children, travel down the three updating the colors to indicate selection.
-            walk(d, nColor, pColor, canvas, type);
+            walk(d, nColor, pColor, canvas, type, self);
         } else {
             if(nColor == '#00ff00'){ //Check color to see if indicated action is a select/deselect
-                if(scope.treeSelections[type].indexOf(d.name) == -1){ //Check if gene already is in the array.
-                    scope.treeSelections[type].push(d.name)
+                if(self.view.selectionParams[dimension].labels.indexOf(d.name) == -1){ //Check if gene already is in the array.
+                    self.view.selectionParams[dimension].labels.push(d.name)
                 }
             } else { //Algorithm for removing genes from the list on a deselect.
-                var index = scope.treeSelections[type].indexOf(d.name); //Get the index of the given gene in the gene array.
-                scope.treeSelections[type].splice(index, 1); //Splice that gene out of the array using its gotten index.
+                var index = self.view.selectionParams[dimension].labels.indexOf(d.name); //Get the index of the given gene in the gene array.
+                self.view.selectionParams[dimension].labels.splice(index, 1); //Splice that gene out of the array using its gotten index.
             };
         };
 
@@ -92,7 +93,9 @@ define(['d3'], function(d3){
 
     };
     
-    var walk = function(d, nColor, pColor,  canvas, type, scope){
+    var walk = function(d, nColor, pColor,  canvas, type, self){
+        
+        var dimension = (type == 'horizontal') ? 'column' : 'row';
 
         d.children.forEach(function(dc){ //Loop through each child, recursively calling walk() as necessary.
 
@@ -110,15 +113,15 @@ define(['d3'], function(d3){
                 .transition().style("stroke", pColor).duration(500);
 
             if(dc.children){ //Check if children exist, if so, recurse the previous function.
-                walk(dc, nColor, pColor, canvas, type);
+                walk(dc, nColor, pColor, canvas, type, self);
             } else {
                 if(nColor == '#00ff00'){
-                    if(scope.treeSelections[type].indexOf(dc.name) == -1){
-                        scope.treeSelections[type].push(dc.name);
+                    if(self.view.selectionParams[dimension].labels.indexOf(dc.name) == -1){
+                        self.view.selectionParams[dimension].labels.push(dc.name);
                     };
                 } else {
-                    var index = scope.treeSelections[type].indexOf(dc.name);
-                    scope.treeSelections[type].splice(index, 1);
+                    var index = self.view.selectionParams[dimension].labels.indexOf(dc.name);
+                    self.view.selectionParams[dimension].labels.splice(index, 1);
                 }
             };
         });
@@ -163,7 +166,7 @@ define(['d3'], function(d3){
             return (type == 'horizontal') ? "blue" : "red"
         })
         .on("click", function(d) {
-            nodeclick(d, canvas, type, scope)
+            nodeclick(d, canvas, type, self)
         });
     }
     

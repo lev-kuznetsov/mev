@@ -62,6 +62,7 @@ function(d3, generateScales, drawCells, drawSelections, drawAnalysis, updateCell
 		
 		this.scales = generateScales(params, View);
 		
+		
 		this.view = View;
 		
 		this.drawCells = drawCells;
