@@ -6,11 +6,11 @@
                <div class="tab-content">
                
                        <div class="tab-pane active" id="heatmaptabpane">
-                               <vis-Heatmap
-                               		heatmap-Cells="heatmapData"
-                               		side-Panel="heatmapViews.side",
-                                    top-Panel="heatmapViews.top",
-                                    selections=""></vis-Heatmap>
+                       
+                       <view-Content-Item project='project'">
+							</view-Content-Item>
+                       
+                               
                        </div>
                            
                        <div class="tab-pane" id="annotationsTabPane">                      

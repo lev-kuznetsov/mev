@@ -1,11 +1,12 @@
 <span heatmap-Navigation></span>
+		
+
 
 <div ng-controller="MainPanelController" class="container-fluid heatmap-container"> <!-- Start Column Expand Tabs -->	
 	
 
 	    
 		<div id="leftPanel">
-		
 				<side-Navigation-Bar></side-Navigation-Bar>
 		</div>
 		
@@ -25,6 +26,7 @@
 		<div id="rightPanel">
 				
 				<div id="expressionPanel" expression-Panel></div>
+				
 		</div>
 			
 

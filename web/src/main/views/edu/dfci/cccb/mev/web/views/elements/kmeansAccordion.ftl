@@ -8,7 +8,11 @@
 	
 	</div>
 	
-	<button class="btn btn-success" ng-click="updateHeatmapView(analysis)">Apply </button>
+	<button class="btn btn-success" ng-click="applyToHeatmap()" >
+        <a>
+          </i> View Genes on Heatmap
+        </a> 
+    </button>
 	<button class="btn btn-success pull-right" >
         <a href="/dataset/{{datasetName}}/analysis/{{analysis.name}}?format=tsv">
           <i class="icon-white icon-download"></i> Download
