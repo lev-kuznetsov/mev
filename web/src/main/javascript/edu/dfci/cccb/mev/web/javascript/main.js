@@ -27,7 +27,8 @@ require.config ({
            '/library/webjars/d3js/3.4.1/d3.min' ],
     retina : [ '/library/webjars/retinajs/0.0.2/retina' ],
     notific8 : [ 'notific8.min' ],
-    ngGrid : ['/container/javascript/ng-grid-2.0.7.min', '//cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.7/ng-grid']
+    ngGrid : ['/container/javascript/ng-grid-2.0.7.min', '//cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.7/ng-grid'],
+    qtip : [ '/library/webjars/qtip2/2.1.1/jquery.qtip.min' ]
   },
   shim : {
     'angular' : {
