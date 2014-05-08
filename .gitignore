@@ -33,3 +33,9 @@ target/
 mem.log
 mem.properties
 mem.script
+
+
+#Backuped files
+bkp/
+/bkp
+

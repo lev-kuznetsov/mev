@@ -1,301 +1,9 @@
 define(
-        ['jquery', 'angular', 'notific8'],
-        function($, angular) {
+        ['jquery', 'angular', 'd3', 'notific8', 'api/Api', 'alertservice/AlertService'],
+        function($, angular, d3) {
 
             return angular
-                    .module('myApp.controllers', [])
-                    .controller(
-                            'HeatmapCtrl',
-                            [
-                                    '$scope',
-                                    '$routeParams',
-                                    '$http',
-                                    'pseudoRandomStringGenerator',
-                                    '$rootScope',
-                                    '$location',
-                                    'logger',
-                                    'alertService',
-                                    function($scope, $routeParams, $http, prsg, $rS, $loc, log, alertService) {
-
-                                        if (!$routeParams.datasetName) {
-                                            
-                                            $('#loading').modal('hide');
-                                            $loc.path('/');
-                                            return
-
-                                        };
-
-                                        $scope.pageLoading = true;
-                                        $('#loading').modal();
-
-                                        $scope.heatmapId = $routeParams.datasetName;
-
-                                        $scope.colorOptions = [
-                                                "Green-Black-Red",
-                                                "Yellow-Black-Blue",
-                                                "Red-White-Blue"];
-
-                                        $scope.selectedColor = "Yellow-Black-Blue";
-
-                                        $scope.defaultColors = function() {
-                                            $scope.selectedColor = "Yellow-Black-Blue";
-                                        };
-                                        $scope.defaultColors();
-
-                                        $scope.heatmapData = undefined;
-                                        
-
-                                        $scope.heatmapViews = {
-                                                top: undefined,
-                                                side: undefined
-                                                
-                                        }
-                                        
-                                        $scope.previousHCLClusters = undefined;
-                                        $scope.previousLimmaAnalysis = undefined;
-                                        $scope.previousKMeansClusters = undefined;
-                                        $scope.previousAnalysisList = undefined;
-                                        $scope.clickSelectionMode = false;
-                                        $scope.previousTTest = undefined;
-                                        
-                                        $http({
-                                            method : 'GET',
-                                            url : '/dataset/'
-                                                    + $routeParams.datasetName
-                                                    + '/data',
-                                            params : {
-                                                format : 'json'
-                                            }
-                                        })
-                                        .success(function(data, status, headers, config) {
-                                            $scope.heatmapData = data;
-                                            $scope.heatmapData.firstRows = $scope.heatmapData.row.keys
-                                            $('#loading').modal('hide');
-                                        })
-                                        .error(function(data, status, headers, config) {
-                                              
-                                              var message = "Could not retrieve dataset "
-                                                      + $routeParams.datasetName
-                                                      + ". If the"
-                                                      + "problem persists, please contact us.";
-
-                                              var header = "Heatmap Download Problem (Error Code: "
-                                                      + status
-                                                      + ")";
-
-                                              alertService.error(message, header);
-
-                                        });
-
-                                        $scope.buildPreviousAnalysisList = function() {
-
-                                            $scope.previousHCLClusters = [];
-
-                                            $scope.previousLimmaAnalysis = [];
-                                            $scope.previousKMeansClusters = [];
-                                            $scope.previousAnova = [];
-                                            $scope.previousTTest = [];
-
-                                            $http(
-                                                    {
-                                                        method : 'GET',
-                                                        url : '/dataset/'
-                                                                + $routeParams.datasetName
-                                                                + '/analysis/',
-                                                        params : {
-                                                            format : 'json'
-                                                        }
-                                                    })
-                                                    .success(
-                                                            function(res, status, headers, config) {
-
-                                                                var prevList = res;
-
-                                                                $scope.previousAnalysisList = prevList;
-
-                                                                prevList
-                                                                        .map(function(name) {
-
-                                                                            $http(
-                                                                                    {
-                                                                                        method : 'GET',
-                                                                                        url : '/dataset/'
-                                                                                                + $routeParams.datasetName
-                                                                                                + '/analysis/'
-                                                                                                + name,
-                                                                                        params : {
-                                                                                            format : 'json'
-                                                                                        }
-                                                                                    })
-                                                                                    .success(
-                                                                                            function(data, status, headers, config) {
-
-                                                                                                var randstr = prsg(5);
-                                                                                                var randstr2 = prsg(5);
-
-                                                                                                if (data.type == "Hierarchical Clustering") {
-
-                                                                                                    data.name = name;
-                                                                                                    data.href = "#" + randstr;
-                                                                                                    data.parentId = randstr2;
-                                                                                                    data.dataParent = '#' + randstr2;
-                                                                                                    data.divId = randstr;
-                                                                                                    
-                                                                                                    
-                                     
-                                                                                                    $scope.previousHCLClusters
-                                                                                                            .push(data);
-
-                                                                                                } else
-                                                                                                    if (data.type == "LIMMA Differential Expression Analysis") {
-
-                                                                                                        $scope.previousLimmaAnalysis
-                                                                                                                .push({
-                                                                                                                    name : name,
-                                                                                                                    href : "#"
-                                                                                                                            + randstr,
-                                                                                                                    parentId : randstr2,
-                                                                                                                    dataParent : '#'
-                                                                                                                            + randstr2,
-                                                                                                                    divId : randstr,
-                                                                                                                    datar : data
-                                                                                                                });
-                                                                                                } else if (data.type == "K-means Clustering"){
-                                                                                                    $scope.previousKMeansClusters.push(data);
-
-                                                                                                } else if (data.type == "Anova Analysis") {
-                                                                                                    $scope.previousAnova.push(data);
-
-                                                                                                } else if (data.type == "t-Test Analysis"){                                                                                                    
-                                                                                                    $scope.previousTTest.push(data);
-
-                                                                                                }
-
-                                                                                            })
-                                                                                    .error(
-                                                                                            function(data, status, headers, config) {
-                                                                                                var message = "Could not retrieve previous analysis"
-                                                                                                        + name
-                                                                                                        + ". If the"
-                                                                                                        + "problem persists, please contact us.";
-
-                                                                                                var header = "Heatmap Download Problem (Error Code: "
-                                                                                                        + status
-                                                                                                        + ")";
-
-                                                                                                alertService
-                                                                                                        .error(
-                                                                                                                message,
-                                                                                                                header);
-
-                                                                                            });
-
-                                                                        });
-
-                                                            })
-                                                    .error(
-                                                            function(data, status, headers, config) {
-
-                                                                var message = "Could not download previous analysis list. If "
-                                                                        + "problem persists, please contact us.";
-
-                                                                var header = "Previous Analysis Download Problem (Error Code: "
-                                                                        + status
-                                                                        + ")";
-
-                                                                alertService
-                                                                        .error(
-                                                                                message,
-                                                                                header);
-                                                                $loc
-                                                                        .path('/');
-
-                                                            });
-
-                                        };
-                                        
-                                        $scope.updateHierarchical = function(inputData){
-                                            
-                                            $http({
-                                                method : 'POST',
-                                                url : '/dataset/'
-                                                        + $routeParams.datasetName
-                                                        + '/analysis/'
-                                                        + inputData.name,
-                                                params : {
-                                                    format : 'json'
-                                                }
-                                            })
-                                            .success(function(data, status, headers, config) {
-                                                    
-                                                    inputData.keys = data.keys
-                                                    inputData.dimension = data.type
-                                                    
-                                                    if (inputData.dimension == 'row') {
-                                                        
-                                                        $scope.heatmapViews.side = inputData;
-                                                        $scope.heatmapData.row.keys = inputData.keys;
-                                                        
-                                                    } else if (inputData.dimension == 'column') {
-                                                        
-                                                        $scope.heatmapViews.top = inputData;
-                                                        $scope.heatmapData.column.keys = inputData.keys;
-                                                        
-                                                    }
-                                                    $scope.$broadcast('ViewVisualizeTabEvent');
-                                                })
-                                                .error(function(data, status, headers, config) {
-                                                            var message = "Could not update heatmap. If "
-                                                                    + "problem persists, please contact us.";
-
-                                                            var header = "Heatmap Update Problem (Error Code: "
-                                                                    + status
-                                                                    + ")";
-
-                                                            alertService
-                                                                    .error(
-                                                                            message,
-                                                                            header);
-                                                 });
-                                        }
-                                        
-                                        $scope.updateKMeans = function(inputData){
-                                            
-                                            var keys = [];
-                                            for (var i=0; i<inputData.clusters.length; i++){
-                                                for (var j=0; j<inputData.clusters[i].length; j++){
-                                                    keys.push(inputData.clusters[i][j])
-                                                }
-                                            }
-                                            inputData.keys = keys;
-                                            if (inputData.dimension == 'row') {
-                                                
-                                                $scope.heatmapViews.side = inputData;
-                                                $scope.heatmapData.row.keys = inputData.keys;
-                                                
-                                            } else if (inputData.dimension == 'column') {
-                                                
-                                                $scope.heatmapViews.top = inputData;
-                                                $scope.heatmapData.column.keys = inputData.keys;
-                                                
-                                            }
-                                        };
-
-                                        $scope.updateHeatmapView = function(inputData) {
-
-                                            $scope.$broadcast('ViewVisualizeTabEvent');
-
-                                            if (inputData.type == "Hierarchical Clustering"){
-                                                $scope.updateHierarchical(inputData)
-                                            } else if (inputData.type == "K-means Clustering") {
-                                                $scope.updateKMeans(inputData)
-                                            }
-                           
-                                        };
-                                        
-                                        $scope.buildPreviousAnalysisList();
-
-                                    }])
+                    .module('myApp.controllers', ['Mev.Api', 'Mev.AlertService'])
                     .controller(
                             'ImportsCtrl',
                             [
@@ -347,13 +55,19 @@ define(
                                     '$element',
                                     '$attrs',
                                     'alertService',
-                                    function(MevSelectionService, $scope, $element, $attrs , alertService) {
+                                    '$routeParams',
+                                    function(MevSelectionService, $scope, $element, $attrs , alertService, $routeParams) {
 
-                                        $scope.baseUrl = '/annotations/'
-                                                + $scope.heatmapId
-                                                + '/annotation';
-                                        $scope.annotationsUrl = $scope.baseUrl
-                                                + '/column/new/dataset/';
+                                    	if($routeParams.datasetName){                                    		
+                                    		 $scope.baseUrl = '/annotations/'
+                                                 + $routeParams.datasetName
+                                                 + '/annotation';
+                                             $scope.annotationsUrl = $scope.baseUrl
+                                                 + '/column/new/dataset/';
+                                    	}else{
+                                    		$scope.annotationsUrl="about:blank";
+                                    	}
+                                    		
 
                                         $scope.tabs = {};
                                         if ($scope.tabs != undefined) {
@@ -381,8 +95,10 @@ define(
 
                                         $scope.$on('ViewAnnotationsEvent',
                                                         function(event, selection, dimension, annotationSource) {
-                                                            var annotationsUrl = $scope.baseUrl
-                                                                    + "/"
+//                                                            var annotationsUrl = $scope.baseUrl;
+                                        					var annotationsUrl = '/annotations/'
+						                                            + $scope.project.dataset.datasetName
+						                                            + '/annotation/'
                                                                     + dimension
                                                                     + "/";
                                                             if (typeof selection != 'undefined') {
@@ -412,8 +128,7 @@ define(
                                                         	}
                                                         }else{
                                                         	annotationsUrl += "?"+randomProjectId;
-                                                        }
-                                                        console.log("annotationsUrl:"+annotationsUrl);                                                       ;
+                                                        }                                                       ;
                                                         $scope.annotationsUrl = annotationsUrl;                                                             
                                                         var elm = document.querySelector('#annotationsTabLink');
                                                         $(elm).trigger('click');
@@ -421,16 +136,13 @@ define(
                                         
                                        
                                        $scope.$on('SeletionAddedEvent', function(event, dimensionType){
-                                    	  console.debug("selection added: "+angular.toJson(dimensionType)+"$scope.heatmapData.column.selections:"+angular.toJson($scope.heatmapData.column.selections));
+                                    	  
 
-                                    	  if(dimensionType=='column'){
-                                        	  MevSelectionService.getColumnSelectionQ().then(function(d){
-                                        		  $scope.heatmapData.column.selections=d;
-                                        	  });
-                                    	  }else if(dimensionType=='row'){
-                                        	  MevSelectionService.getRowSelectionQ().then(function(d){
-                                                  $scope.heatmapData.row.selections=d;
-                                              });
+                                    	  if(dimensionType === 'column' || dimensionType === 'row'){
+
+                                    	      $scope.project.dataset.resetSelections(dimensionType);
+
+
                                     	  } else {
                                     	      alertService.error(
                                                       "Invalid dimension type:"+dimensionType,

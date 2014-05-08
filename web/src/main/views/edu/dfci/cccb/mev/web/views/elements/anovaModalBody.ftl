@@ -36,7 +36,7 @@
 		    			<div class="md-col-1">
 		    				<select id="anovaSelections" 
 		    					ng-model="deckedSelection" 
-		    					ng-options="selection.name for selection in heatmapData[params.dimension.value].selections">
+		    					ng-options="selection.name for selection in dataset.selections[params.dimension.value]">
 		    				</select>
 		    				<button type="button" class="btn btn-primary btn-sm" ng-click="addSelection(deckedSelection)">Add</button>
 		    			</div>

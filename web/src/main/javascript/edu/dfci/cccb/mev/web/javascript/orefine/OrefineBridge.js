@@ -2,7 +2,7 @@ define(['jquery', 'angular'], function(jquery, angular){
 	OpenRefineBridge = {
 		addSelectionSet: function(selection){
 			console.debug('in addSelectionSet');
-			console.debug("selection:"+angular.toJson(selection));
+			console.debug("selection", selection);
 			
 			var elm = document.querySelector('#selectionSetMgr');			
 			var selectionSetMgrDOM = angular.element(elm);

@@ -10,8 +10,11 @@ define (
           .filter('filterThreshold', [function(){
             
         	  return function(input, threshold, on, operand){
+        	      
+        	    if (!input){
+        	        return
+        	    }
         	    var output = input.filter( function(d){
-                  
         	       if(typeof operand != "undefined"){
         	    	   return (eval("parseFloat(d[on]) "+operand+" threshold")) ? true : false;
         	       }else{

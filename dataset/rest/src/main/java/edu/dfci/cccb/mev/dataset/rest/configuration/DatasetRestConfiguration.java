@@ -63,6 +63,7 @@ import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleSelectionJsonSe
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleSelectionsJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.text.SelectionsTextMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter;
+import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.SelectionsTsvMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgumentResolver;
@@ -123,7 +124,10 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
     serializers.addAll (asList (new DimensionTypeJsonSerializer (),
                                 new SimpleDatasetJsonSerializer (),
                                 new SimpleDimensionJsonSerializer (),
-                                new SimpleSelectionsJsonSerializer (),
+//This serializer returns selections as an array. 
+//Instead we want it wrapped object for angular's $resource service to work
+//The annotated Selections class is taking care of that now.
+//                                new SimpleSelectionsJsonSerializer (),
                                 new SimpleSelectionJsonSerializer ()));
   }
 
@@ -133,7 +137,7 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   @Override
   public void addHttpMessageConverters (List<HttpMessageConverter<?>> converters) {
     converters.addAll (asList (new DatasetTsvMessageConverter (),
-                               new SelectionsTextMessageConverter ()));
+                               new SelectionsTsvMessageConverter ()));
   }
 
   /* (non-Javadoc)

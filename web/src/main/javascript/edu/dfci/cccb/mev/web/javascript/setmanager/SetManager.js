@@ -3,12 +3,16 @@ define(['jquery','angular'], function(jquery, angular){
 		.directive('selectionSetManager', [function (){
 			  return {				  		  
 				  scope: {
-					  heatmapId: '@heatmapId',
-					  heatmapData: '=heatmapData'
+					  heatmapId: '@',
+					  heatmapData: '=',
+					  selections: '='
 				  },
 				  controller: 'SelectionSetManagerCtl',				  
 				  restrict : 'EA',
-				  templateUrl : '/container/view/elements/setmanager/selectionSetManager'
+				  templateUrl : '/container/view/elements/setmanager/selectionSetManager',
+				  link: function(scope, elm, attr){
+				      return
+				  }
 			  };
 		}])
 		.directive('selectionSetList', [function (){
@@ -26,7 +30,6 @@ define(['jquery','angular'], function(jquery, angular){
 				templateUrl : '/container/view/elements/setmanager/selectionSetList',
 				link : function (scope, iElement, iAttrs, controller){
 					
-					return		
 				}				
 			};
 		}])
@@ -37,40 +40,17 @@ define(['jquery','angular'], function(jquery, angular){
 				require: '^selectionSetList',
 				templateUrl : '/container/view/elements/setmanager/selectionSetEditForm',				
 			};
-		}])
-		.directive('myIframe', function(){
-		    var linkFn = function(scope, element, attrs) {
-		        element.find('iframe').bind('load', function (event) {
-		          //event.target.contentWindow.scrollTo(0,400);
-		        });
-		        
-		    };
-		    return {
-		      restrict: 'EA',
-		      scope: {
-		        ngSrc:'@ngSrc',
-		        height: '@height',
-		        width: '@width',
-		        scrolling: '@scrolling',
-		        annotationsUrl: '=annotationsUrl'
-		      },
-		      template: '<iframe scrolling="no" class="frame" height="{{height}}" width="{{width}}" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="{{scrolling}}" ng-src="{{annotationsUrl}}"></iframe>',
-		      link : linkFn
-		    };
-		  })
+		}])		
 		.controller('SelectionSetManagerCtl', 
 	    ['$scope', '$element', '$attrs', '$routeParams', '$http', 'alertService', 
 		function($scope, $element, $attrs, $routeParams, $http, alertService){
 			
 			$scope.sayHelloCtl = function() {
-				alert($scope.heatmapId + ":" + $scope.heatmapData.column.selections.length + ":" + $scope.$id);
+				alert($scope.heatmapId + ":" + $scope.dataset.selections.column.values.length + ":" + $scope.$id);
 			};		
 			
-			//alert(angular.toJson($attrs) );
-						
-			$scope.selectedItem = null;
-			$scope.selectedItemTmp = null;
-			$scope.annotationsUrl="hello";
+			//alert(angular.toJson($attrs) );						
+			$scope.annotationsUrl="about:blank";
 			
 			$scope.setSelected = function(item){
 				$scope.selectedItem = item;
@@ -84,63 +64,147 @@ define(['jquery','angular'], function(jquery, angular){
 			};
 			$scope.showAnnotations = function(selection, dimention, annotationSource){
 				$scope.$emit('ViewAnnotationsEvent', selection, dimention, annotationSource);				
-				
 			};
 			
 			$scope.selectionParams = {column:{name:undefined},
-									  row:{name:undefined}};
+									  row:{name:undefined},
+									  special:undefined};
+			
+			function getSelected(dimension){
+			    return $scope.heatmapData[dimension].selections.filter(function(d){
+                    return (d.setSelectionChecked == "true") ? true : false
+                        
+                })
+			};
+			
+			function pushNewSelection(dimension, selectedSets){
+			    $http({
+                    method:"POST", 
+               url:"/dataset/" + $routeParams.datasetName + "/" 
+                + dimension
+                + "/selection/",
+               data:{
+                   name: $scope.selectionParams[dimension].name,
+                   properties: {
+                       selectionDescription: '',
+                           selectionColor: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16),                     
+                       },
+                        keys: selectedSets
+                    }
+               })
+               .success(function(response){
+                        $scope.$emit('SeletionAddedEvent', dimension);
+                        var message = "Added selection with name " + $scope.selectionParams[dimension].name + ".";
+                        var header = "Heatmap Selection Addition";
+                         
+                        alertService.success(message,header);
+               })
+               .error(function(data, status, headers, config) {
+                    var message = "Couldn't add new selection. If "
+                        + "problem persists, please contact us.";
+               
+                     var header = "Heatmap Selection Problem (Error Code: "
+                        + status
+                        + ")";
+                             
+                     alertService.error(message,header);
+               });
+			};
+			
+			$scope.addDifferenceSelection = function(dimension){
+                var selectedGroups = getSelected(dimension)
+                 
+                if (selectedGroups.length > 1){
+                    
+                    var sumOfElements = {};
+                    
+                    selectedGroups.map(function(group){
+                        group.keys.map(function(element){
+                            sumOfElements.hasOwnProperty(element)? sumOfElements[element]++ : sumOfElements[element] = 1
+                        })
+                    });
+                    
+                    var difference = Object.getOwnPropertyNames(sumOfElements).filter(function(element){
+                        return (sumOfElements[element] === 1 
+                                && $scope.selectionParams.special[dimension].keys.indexOf(element) > -1) ? true : false
+                    })
+                    
+                    if (difference.length > 0){
+                        pushNewSelection(dimension, difference)
+                        
+                    } else {
+                        var message = "Difference has no values.";
+                        
+                        var header = "Heatmap Selection Info";
+                                
+                        alertService.info(message,header);
+                    }
+                    
+                     
+                 } else {
+                     var message = "Cannot merge a single selection set.";
+                
+                      var header = "Heatmap Selection Info";
+                              
+                      alertService.info(message,header);
+                 };
+            };
+			
+			$scope.addIntersectionSelection = function(dimension){
+			    var selectedGroups = getSelected(dimension)
+	             
+                if (selectedGroups.length > 1){
+                    
+                    var sumOfElements = {};
+                    
+                    selectedGroups.map(function(group){
+                        group.keys.map(function(element){
+                            sumOfElements.hasOwnProperty(element)? sumOfElements[element]++ : sumOfElements[element] = 1
+                        })
+                    });
+                    
+                    var intersection = Object.getOwnPropertyNames(sumOfElements).filter(function(element){
+                        return (sumOfElements[element] == selectedGroups.length) ? true : false
+                    })
+                    
+                    if (intersection.length > 0){
+                        pushNewSelection(dimension, intersection)
+                    } else {
+                        var message = "Intersection has no values.";
+                        
+                        var header = "Heatmap Selection Info";
+                                
+                        alertService.info(message,header);
+                    }
+                    
+                     
+                 } else {
+                     var message = "Cannot merge a single selection set.";
+                
+                      var header = "Heatmap Selection Info";
+                              
+                      alertService.info(message,header);
+                 };
+			};
 
 			$scope.addMergedSelection = function(dimension){
 				
-				var elements = $scope.heatmapData[dimension].selections.filter(function(d){
-					
-					return (d.setSelectionChecked == "true") ? true : false
-						
-				})
+				var selectedGroups = getSelected(dimension)
 			 
-				if (elements.length > 1){
+				if (selectedGroups.length > 1){
 					
-					var selectedSets = [];
+					var newSelectionElements = [];
 					
-					elements.map(function(d){
-						d.keys.map(function(j){
-							if (selectedSets.indexOf(j) < 0){
-								selectedSets.push(j)
+					selectedGroups.map(function(group){
+						group.keys.map(function(j){
+							if (newSelectionElements.indexOf(j) < 0){
+							    newSelectionElements.push(j)
 							}
 						})
 					});
-			     
-					$http({
-					     method:"POST", 
-					url:"/dataset/" + $routeParams.datasetName + "/" 
-					 + dimension
-					 + "/selection/",
-					data:{
-					 	name: $scope.selectionParams[dimension].name,
-					 	properties: {
-					 		selectionDescription: '',
-					     		selectionColor: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16),                     
-					     	},
-					         keys: selectedSets
-					     }
-					})
-					.success(function(response){
-					         $scope.$emit('SeletionAddedEvent', dimension);
-					         var message = "Added selection with name " + $scope.selectionParams[dimension].name + ".";
-					         var header = "Heatmap Selection Addition";
-					          
-					         alertService.success(message,header);
-					})
-					.error(function(data, status, headers, config) {
-					     var message = "Couldn't add new selection. If "
-					         + "problem persists, please contact us.";
 					
-					      var header = "Heatmap Selection Problem (Error Code: "
-					         + status
-					         + ")";
-					              
-					      alertService.error(message,header);
-					});
+					pushNewSelection(dimension, newSelectionElements);
+					
 			         
 			     } else {
 			    	 var message = "Cannot merge a single selection set.";
@@ -151,19 +215,21 @@ define(['jquery','angular'], function(jquery, angular){
 			     };
 			};		
 			
-			$scope.addItem = function(item){
-				//alert('in addItem');				
+			$scope.addItem = function(item){				
 				$scope.$apply(function(){
 					
-					if(item.dimension.toLowerCase()=="column"){
+//					if(item.dimension.toLowerCase()=="column"){
 						//remove selection if already present
-						$scope.heatmapData.column.selections = jquery.grep($scope.heatmapData.column.selections, function(e, i){return e.name==item.name;}, true);
+						var dimension = item.dimension.toLowerCase();
+						$scope.dataset[dimension].selections = jquery.grep($scope.dataset[dimension].selections, function(e, i){
+								return e.name==item.name;
+							}, true);
 						//re-add the updated selection
-						$scope.heatmapData.column.selections.push(item);
-					}else{
-						$scope.heatmapData.row.selections = jquery.grep($scope.heatmapData.row.selections, function(e, i){return e.name==item.name;}, true);
-						$scope.heatmapData.row.selections.push(item);						
-					}
+						$scope.dataset[dimension].selections.push(item);
+//					}else{
+//						$scope.dataset.row.selections = jquery.grep($scope.dataset.row.selections, function(e, i){return e.name==item.name;}, true);
+//						$scope.dataset.row.selections.push(item);						
+//					}
 				});
 				$scope.$emit('SeletionAddedEvent', item.dimension.toLowerCase());
 			};

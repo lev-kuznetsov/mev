@@ -1,4 +1,4 @@
-<accordion-group heading="{{limma.datar.type}} : {{limma.name}}" is-open="isLimmaOpen" ng-init="isLimmaOpen=false">
+<accordion-group heading="{{analysis.type}} : {{analysis.name}}" is-open="isLimmaOpen" ng-init="isLimmaOpen=false">
 
 	<div  class="results-wrapper">	
 		<div class="results-header clearfix">
@@ -6,14 +6,20 @@
 			<h3 class="pull-left analysis-results-header">Results</h3>
 			<div class="btn-toolbar pull-right" role="toolbar">
 				<button class="btn btn-success" >
-	                <a href="/dataset/{{datasetName}}/analysis/{{limma.name}}?format=tsv">
+	                <a href="/dataset/{{dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
 	                  <i class="icon-white icon-download"></i> Download
 	                </a> 
 	            </button>
 	            
 	            <button class="btn btn-info" >
-	                <a data-target="#selectionAdd{{limma.name}}" data-toggle="modal">
+	                <a data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
 	                  </i> Create Selections From Results
+	                </a> 
+	            </button>
+	            
+	            <button class="btn btn-success" ng-click="applyToHeatmap()" >
+	                <a>
+	                  </i> View Genes on Heatmap
 	                </a> 
 	            </button>
 	      	</div>
@@ -42,7 +48,7 @@
 	                        </tr>
 						</thead>
                         <tbody>
-                                <tr ng-repeat="row in limma.datar.results |filter:filterParams.id| filterThreshold: filterParams.pValue : 'pValue' | filterThreshold: filterParams.logFoldChange : 'logFoldChange' : '>=' | orderBy: tableOrdering ">
+                                <tr ng-repeat="row in analysis.results |filter:filterParams.id| filterThreshold: filterParams.pValue : 'pValue' : '<='| filterThreshold: filterParams.logFoldChange : 'logFoldChange' : '>=' | orderBy: tableOrdering ">
                                         <td>
                                                 {{row["id"]}}
                                         </td>

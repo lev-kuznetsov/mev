@@ -16,19 +16,23 @@ package edu.dfci.cccb.mev.dataset.domain.contract;
 
 import java.util.Collection;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author levk
  * 
  */
 public interface Selections {
 
+  
   void put (Selection subset);
-
+  @JsonIgnore
   Selection get (String name) throws SelectionNotFoundException;
 
   void remove (String name) throws SelectionNotFoundException;
-
+  @JsonIgnore
   Collection<String> list ();
-  
+  @JsonProperty("selections")
   Collection<Selection> getAll(); 
 }
