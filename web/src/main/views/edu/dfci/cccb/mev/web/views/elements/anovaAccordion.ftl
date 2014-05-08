@@ -91,9 +91,11 @@
 	
 	<div class="row">
 	
+	
+		
         <button class="btn btn-success pull-right" >
             <a ng-click="addSelections()" data-dismiss="modal" aria-hidden="true">
-              Create Selections From Results
+              Create Selections
             </a> 
         </button>
     </div>

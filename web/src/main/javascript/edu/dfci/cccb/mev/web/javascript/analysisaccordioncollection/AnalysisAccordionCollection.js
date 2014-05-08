@@ -493,7 +493,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 
                 scope.applyToHeatmap=function(){
                     
-                    var labels = traverse(scope.analysis.datar.results);
+                    var labels = traverse(scope.analysis.results);
 
                     scope.project.generateView({
                         viewType:'heatmapView', 
