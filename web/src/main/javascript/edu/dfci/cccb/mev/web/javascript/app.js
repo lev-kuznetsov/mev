@@ -29,7 +29,7 @@ define(['angular',
 	     'Mev.heatmapvisualization',
 	     'Mev.AnalysisAccordionCollection',
 	     'Mev.AnalysisModalCollection',
-	     'Mev.ViewCollection'
+	     'Mev.ViewCollection',
 	     'Mev.MainMenuModule'
 	     ])
 	.config(['$routeProvider', '$locationProvider', '$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {
