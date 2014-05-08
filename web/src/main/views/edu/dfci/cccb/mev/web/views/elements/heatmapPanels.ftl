@@ -1,4 +1,6 @@
 <span heatmap-Navigation></span>
+		
+
 
 <div ng-controller="MainPanelController" class="container-fluid heatmap-container"> <!-- Start Column Expand Tabs -->	
 	

@@ -61,7 +61,7 @@ p.lead {
 }
 
 .heatmap-container {
-	margin-top:40px;
+	margin-top:10px;
 }
 /* #dataset-view-container{ */
 /* 	margin-left: 15px;  */
@@ -118,7 +118,7 @@ div#analysisnav {
 }
 
 body {
-	background: #E0E0E0;
+	background: #E0E0E0;	
 }
 
 span#tab-icon {
@@ -147,7 +147,11 @@ nav {
 	margin-bottom: 0px;
 }
 .navbar {
+	position: relative;
+	min-height: 45px;
+/* 	margin-bottom: 20px; */
 	margin-bottom: 0px;
+	border: 1px solid transparent;
 }
 
 nav div.container-fluid {
@@ -163,15 +167,45 @@ nav div.container-fluid {
 	font-size: 15px;
 
 }
-
+img.logo{
+	margin-left: 5px;
+}
+.navbar-brand {
+	float: left;
+	padding: 10 10 10 15;
+	font-size: 18px;
+	line-height: 20px;
+	height: 50px; 
+}
 .navbar .brand {
 	color: #A0A0A0;
-	font-size: 40px;
+	font-size: 30px;
 	text-shadow: 0 0px 0 #ffffff;
+}
+.right-menu{	
+	padding: 9 5 9 5;
+/* 	font-size: 10px;	 */
+}
+.right-menu > .github > img{
+	width: 28px;
+	height: 28px;
+	margin: 2 2 2 2;
+}
+
+.right-menu > .btn-sm, .btn-group-sm>.btn {
+padding: 5px 10px;
+font-size: 12px;
+line-height: 1.5;
+border-radius: 3px;
+/* font-weight: bold; */
+}
+
+.right-menu > .btn-sm, .btn-group-sm>.btn span{
+padding: 0 0 0 4;	
+margin-top: 2;
 }
 
 .dropdown-menu {
-
 	-webkit-border-radius: 0px;
 	border-radius: 0px;
 	padding: 0px;

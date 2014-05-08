@@ -1,13 +1,4 @@
-
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-
-	<div class="container-fluid">
-	
-		<div class="navbar-header navbar-right">
-			<a class="navbar-brand brand" href="/">mev<img src="/container/images/favicon/favicon-32x32.png"/></a>
-		</div>
-
-		<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<div mev-main-menu class="collapse navbar-collapse" id="navbar-collapse-1">
 	
 			<ul class="nav navbar-nav navbar-left">
 				
@@ -80,14 +71,8 @@
 					</ul>
 				</li>
 				
-			</ul>
-			
-		</div>
-	</div>
-</nav>
-
-<br>
-
+			</ul>			
+</div>
 <!-- Modals -->
 <bsmodal bindid="hierarchical" func="" header="Hierarchical Clustering">
  <div class="modal-Hierarchical" heatmap-dataset="project.dataset"></div>

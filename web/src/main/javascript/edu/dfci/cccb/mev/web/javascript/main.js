@@ -74,6 +74,11 @@ require.config ({
     }
     
   },
+  packages: [{
+		name: "mainmenu",
+		location: "/container/javascript/mainmenu",
+	  	main: "MainMenu.package"
+	}],
   waitSeconds : "2"
 
 });
@@ -91,7 +96,8 @@ require ([ 'jquery',
           'presets/PresetManager',
           'mainpanel/MainPanel',
           'retina', 
-          'ngGrid'
+          'ngGrid',
+          'mainmenu'
           ], function (jquery, angular, app, orb) {
 
   'use strict';
