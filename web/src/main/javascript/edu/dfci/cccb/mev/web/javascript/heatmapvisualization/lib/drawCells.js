@@ -69,38 +69,39 @@ define(['./cellFilter', 'd3', 'qtip'], function(cellFilter, d3, qtip){
 		
 		colLabels.exit().remove();
 		
+		
 		//Legend stuff
-		var rands = d3.range(self.view.expression.min, self.view.expression.max, 
-				Math.round((self.view.expression.max + Math.abs(self.view.expression.min))/100));
+		var rands = d3.range(0, 100);
 		
-		var labelXScale = d3.scale.linear().domain([0, rands.length-1])
-			.range([d3.min(self.scales.cells.xScale.range()),
-					 d3.max(self.scales.cells.xScale.range())]);
 		
-		var labelColorScale = d3.scale.linear().domain([self.view.expression.min, self.view.expression.avg, self.view.expression.max])
-			.range(self.scales.cells.colorScale.range())
+		var labelYScale = d3.scale.linear().domain([0, rands.length-1])
+			.range([80, 300]);
+		
+		var labelColorScale = d3.scale.linear().domain([0, rands.length-1])
+			.range([self.view.expression.min, self.view.expression.max])
 			
 		self.DOM.legend.selectAll("rect").remove()
 		self.DOM.legend.selectAll("rect").data(rands).enter().append("rect")
 		.attr({
-			x : function(d, i){ return labelXScale(i)},
-			y : function(d){ return self.params.legend.height *.5 },
-			height: self.params.legend.height *.5,
-			width: labelXScale(1) - labelXScale(0)+1,
-			fill: function(d){return labelColorScale (d) }
+			x : function(d, i){ return 30},
+			y : function(d){ return labelYScale(d) },
+			height: labelYScale(1) - labelYScale(0) +1,
+			width: 50,
+			fill: function(d){return self.scales.cells.colorScale(labelColorScale(d)) }
 			
 		})
 		
 		self.DOM.legend.selectAll("text").data(rands).enter()
         .append("text")
         .attr({
-            x: function(d,i){return labelXScale(i)},
-            y:self.params.legend.height *.45,
+            x: 90,
+            y:function(d,i){return labelYScale(d) + 7},
             'style':'font-size:10',
-            'text-anchor':'middle'
+            'text-anchor':'start'
         })
-        .text(function(d, i){
+        .text(function(j, i){
         	
+        	var d = labelColorScale(j);
             var returnstring = String(d).split(".")[0]
             if (returnstring.length > 1){
                 returnstring = returnstring + "." + String(d).split(".")[1].slice(0,3)
@@ -111,7 +112,7 @@ define(['./cellFilter', 'd3', 'qtip'], function(cellFilter, d3, qtip){
             return (ticks.indexOf(i)>-1)? returnstring :""
         }).append("title")
             .text(function(d, i){
-                return d;
+                return labelColorScale(d);
             })
 		
 	}
