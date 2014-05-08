@@ -96,7 +96,7 @@
 				
 		</accordion-group>
 		
-		<bsmodal bindid="selectionAdd{{tTest.name}}" func="" header="Add New Selection for {{tTest.name}}">
+		<bsmodal bindid="{{'selectionAdd' + tTest.name}}" func="" header="Add New Selection for {{tTest.name}}">
 
 			<div class="row">
 			

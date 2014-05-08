@@ -73,7 +73,7 @@
 	</div>
 </accordion-group>
 		
-<bsmodal bindid="selectionAdd{{limma.name}}" func="" header="Add New Selection for {{limma.name}}">
+<bsmodal bindid="{{'selectionAdd' + analysis.name}}" func="" header="{{'Add New Selection for' + analysis.name}}">
 
 	<div class="row">
 	

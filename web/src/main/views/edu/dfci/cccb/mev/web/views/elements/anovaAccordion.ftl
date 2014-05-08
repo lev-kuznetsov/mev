@@ -75,7 +75,9 @@
 
 </accordion-group>
 
-<bsmodal bindid="selectionAdd{{analysis.name}}" func="" header="Add New Selection for {{analysis.name}}">
+
+
+<bsmodal bindid="{{'selectionAdd' + analysis.name}}" func="" header="Add New Selection for {{analysis.name}}">
 
 	<div class="row">
 	
