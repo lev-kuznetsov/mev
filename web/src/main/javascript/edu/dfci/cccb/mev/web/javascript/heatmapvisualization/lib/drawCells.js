@@ -71,7 +71,7 @@ define(['./cellFilter', 'd3', 'qtip'], function(cellFilter, d3, qtip){
 		
 		//Legend stuff
 		var rands = d3.range(self.view.expression.min, self.view.expression.max, 
-				Math.round((self.view.expression.max + Math.abs(self.view.expression.min))/100));
+				math.round(self.params.cell.width/6));
 		
 		var labelXScale = d3.scale.linear().domain([0, rands.length-1])
 			.range([d3.min(self.scales.cells.xScale.range()),
