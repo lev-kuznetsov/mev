@@ -1,11 +1,10 @@
 define(['angular',
         './lib/DatasetClass',
-        './lib/transcribe', 
         './lib/loadAnalyses',
         './lib/setSelections',
         './lib/resetSelections',
         'api/Api'], 
-function(angular, DatasetClass, transcribe, loadAnalyses, setSelections, resetSelections){
+function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){
 	
 	return angular.module('Mev.Dataset', ['Mev.Api'])
 	.factory('DatasetFactory', ['AnalysisResourceService', 'SelectionResourceService',
@@ -21,8 +20,6 @@ function(angular, DatasetClass, transcribe, loadAnalyses, setSelections, resetSe
 		
 				dataset.analysis = AnalysisResourceService;
 				dataset.selection = SelectionResourceService;
-				
-				dataset.transcribe = transcribe;
 
 				dataset.loadAnalyses = loadAnalyses;
 				dataset.setSelections = setSelections;
