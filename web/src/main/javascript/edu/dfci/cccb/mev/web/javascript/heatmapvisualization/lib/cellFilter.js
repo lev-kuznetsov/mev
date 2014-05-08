@@ -8,7 +8,7 @@ define([], function(){
 
 		var self = view;
 		var indexes = labels.map(function(label){
-			return self.row.values.indexOf(label)
+			return self.row.keys.indexOf(label)
 		});
 		
 		//Quick filter to make sure nothing that wasn't there got through
@@ -22,8 +22,8 @@ define([], function(){
         indexes.map(function(index){
            //get row by slicing using index
            var row = self.expression.values
-               .slice(index* self.column.values.length, 
-            		   self.column.values.length*(1+index));
+               .slice(index* self.column.keys.length, 
+            		   self.column.keys.length*(1+index));
            //push rows onto cells
            row.map(function(cell){
                cells.push(cell);

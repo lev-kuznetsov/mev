@@ -2,14 +2,14 @@
 
   <div class="form-group">
     <label for="limmaAnalysisName" class="control-label">Name</label>
-        <input id="limmaAnalysisName" ng-model="analysisName" placeholder="Ex: My_Analysis_1">
+        <input id="limmaAnalysisName" ng-model="params.name" placeholder="Ex: My_Analysis_1">
   </div>
 
   <!--
   <div class="form-group">
     <label for="limmaAnalysisDimension" class="control-label">Dimension</label>
 
-      <select id="limmaAnalysisDimension" ng-model="analysisDimension" ng-options="dimension.name for dimension in dimensions">
+      <select id="limmaAnalysisDimension" ng-model="params.dimension" ng-options="dimension.name for dimension in dimensions">
       </select>
 
   </div>
@@ -18,14 +18,14 @@
   <div class="form-group">
     <label for="limmaAnalysisControl" class="control-label">Control</label>
 
-      <select id="limmaAnalysisControl" ng-model="analysisControl" ng-options="selection.name for selection in heatmapData.column.selections">
+      <select id="limmaAnalysisControl" ng-model="params.control" ng-options="selection.name for selection in dataset.column.selections">
       </select>
 
   </div>
   
   <div class="form-group">
     <label for="limmaAnalysisExperiment" class="control-label">Experiment</label>
-      <select id="limmaAnalysisExperiment" ng-model="analysisExperiment" ng-options="selection.name for selection in heatmapData.column.selections">
+      <select id="limmaAnalysisExperiment" ng-model="params.experiment" ng-options="selection.name for selection in dataset.column.selections">
       </select>
       
   </div>

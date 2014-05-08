@@ -11,6 +11,7 @@ define(['angular',
         'heatmapvisualization/HeatmapVisualization',
         'analysisaccordioncollection/AnalysisAccordionCollection',
         'analysismodalcollection/AnalysisModalCollection',
+        'viewCollection/ViewCollection',
         'mainmenu'
         ], function(angular){
 	'use strict';
@@ -28,6 +29,7 @@ define(['angular',
 	     'Mev.heatmapvisualization',
 	     'Mev.AnalysisAccordionCollection',
 	     'Mev.AnalysisModalCollection',
+	     'Mev.ViewCollection',
 	     'Mev.MainMenuModule'
 	     ])
 	.config(['$routeProvider', '$locationProvider', '$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {

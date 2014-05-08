@@ -49,7 +49,7 @@ define(
                                                 document.title = "MeV: "
                                                         + $routeParams.datasetName;
 
-                                                
+
 
                                                 var rightPanel = jq('#rightPanel'),
                                                     leftPanel = jq('#leftPanel'),

@@ -14,7 +14,10 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                     scope.params = {
                         name: undefined,
                         selections: [],
-                        dimension: undefined,
+                        dimension: {
+                            name : 'Columns',
+                            value : 'column'
+                        },
                         pvalue: undefined,
                         mtc: false
                     };
@@ -75,7 +78,7 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                         
                         
                         scope.dataset.analysis
-                        .post(analysisData, JSON.stringify(scope.params.selections),
+                        .postf(analysisData, JSON.stringify(scope.params.selections),
 	                        function(data, status, headers, config) {
 	                            
                         		scope.dataset.loadAnalyses();
@@ -232,7 +235,7 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                         	linkage : scope.params.linkage.value
                         };
                         
-                        scope.dataset.analysis.post({
+                        scope.dataset.analysis.postf({
                             datasetName : scope.dataset.datasetName,
                             analysisType : 'hcl',
                             analysisName : analysisData.name,
@@ -326,12 +329,17 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                             	convergence : scope.params.analysisConvergence
                             };
                             
-                            dataset.analysis.post({
+                            scope.dataset.analysis.postf({
 
 	                            datasetName : scope.dataset.datasetName,
-	                            analysisType : 'kmeans'
-	                           
-                            }, 
+	                            analysisType : 'kmeans',
+	                            analysisName : analysisData.name,
+	                            analysisParams : "dimension=" + analysisData.dimension.value
+	                                + ",k=" + analysisData.clusters
+	                                + ",metric=" + analysisData.metric.value
+	                                + ",iterations=" + analysisData.iterations
+	                                + ",convergence=" + analysisData.convergence
+                            }, {},
                             
                             function(data, status, headers, config) {
                                 
@@ -392,7 +400,6 @@ define(['angular', 'alertservice/AlertService'], function(angular){
 	                                value : "column"
 	                            }]
                             }
-                            
 
                             scope.testInit = function() {
                                 
@@ -405,16 +412,20 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                 alertService.info(message,header);
 
                                 var analysisData = {
-                                	name: scope.analysisName,
+                                	name: scope.params.name,
                                 	experiment : scope.params.experiment.name,
                                 	control : scope.params.control.name
                                 };
                                 
-                                dataset.analysis.post({
+                                scope.dataset.analysis.postf({
                                     datasetName : scope.dataset.datasetName,
-                                    analysisType : 'limma'
+                                    analysisType : 'limma',
+                                    analysisName : analysisData.name,
+                                    analysisParams : "dimension=column"
+                                        + ",experiment=" + analysisData.experiment 
+                                        + ",control=" + analysisData.control
                                     
-                                }, analysisData,
+                                }, {},
                                 function(data, status, headers, config) {
                                     
                                 	scope.dataset.loadAnalyses();
@@ -435,7 +446,7 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                         + status
                                         + ")";
                                      
-                                    alertService.success(message,header);
+                                    alertService.error(message,header);
                                 });
 
                                 resetSelections();                                                    

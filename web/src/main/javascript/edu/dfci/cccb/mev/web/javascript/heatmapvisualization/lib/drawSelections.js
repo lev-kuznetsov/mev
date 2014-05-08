@@ -7,19 +7,20 @@ define(['d3'], function(d3){
         var self = this; //HeatmapVisualization
         
         //clear window
-        self.DOM.selections[dimension].selectAll('*').remove()
+        self.DOM.selections[dimension].selectAll('*').remove();
         
-        var groupScale = d3.scale().ordinal().domain(selections.map(function(group){return group.name}))
+        
+        var groupScale = d3.scale.ordinal().domain(selections.map(function(group){return group.name}))
         
         if (dimension == 'column') {
             groupScale.rangeRoundBands([self.params.panel.top.height + self.params.labels.column.height,
                                         self.params.panel.top.height + self.params.labels.column.height
                                         + self.params.selections.column.height], 0, 0);
         } else {
-            groupScale.rangeRoundBands([params.panel.side.width 
-                                        + ( self.view.column.values.length * self.params.cell.width),
-                                        params.panel.side.width
-                                          + ( self.view.column.values.length * self.params.cell.width)
+            groupScale.rangeRoundBands([self.params.panel.side.width 
+                                        + ( self.view.labels.column.keys.length * self.params.cell.width),
+                                        self.params.panel.side.width
+                                          + ( self.view.labels.column.keys.length * self.params.cell.width)
                                           + self.params.selections.row.width], 0, 0);
         }
         
@@ -30,10 +31,9 @@ define(['d3'], function(d3){
           //for each key in selection
             selection.keys.map(function(key){
               //make object with selection group, label, and color and push to cells
-              cells.push({group: selection.name, label: key, color: selection.color})
+              cells.push({group: selection.name, label: key, color: selection.properties.selectionColor})
             })
         })
-            
                 
         
         //bind cells to Dom
@@ -43,19 +43,19 @@ define(['d3'], function(d3){
             .append('rect')
                 .attr({
                     'x':function(d){
-                        return (dimension == 'column') ? self.scales.cell.xScale(d.label) : groupScale(d.group)
+                        return (dimension == 'column') ? self.scales.cells.xScale(d.label) : groupScale(d.group)
                     },
                     'y':function(d){
-                        return (dimension == 'column') ? groupScale(d.group) : self.scales.cell.yScale(d.label) 
+                        return (dimension == 'column') ? groupScale(d.group) : self.scales.cells.yScale(d.label) 
                     },
-                    'color':function(d){
+                    'fill':function(d){
                         return d.color
                     },
-                    'height': (dimension == 'column') ?  groupScale.rangeBand() : self.scales.cell.yScale.rangeBand(),
-                    'width': (dimension == 'column') ? self.scales.cell.xScale.rangeBand() : groupScale.rangeBand()
+                    'height': (dimension == 'column') ?  groupScale.rangeBand() : self.scales.cells.yScale.rangeBand(),
+                    'width': (dimension == 'column') ? self.scales.cells.xScale.rangeBand() : groupScale.rangeBand()
                 })
         //remove exit selection
-        selectionCells.exit().remove()
+        selectionsCells.exit().remove()
         
         return null
     };

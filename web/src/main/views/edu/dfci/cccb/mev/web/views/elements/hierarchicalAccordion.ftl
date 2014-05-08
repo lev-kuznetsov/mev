@@ -25,7 +25,7 @@ text {
       <button class="btn btn-success pull-left" ng-click="saveImage(analysis)">
        Save Image
       </button>
-      <button class="btn btn-success pull-right">
+      <button class="btn btn-success pull-right" ng-click='applyToHeatmap()'>
        Apply to heatmap <i class='icon-chevron-right'></i>
       </button>
       </div>

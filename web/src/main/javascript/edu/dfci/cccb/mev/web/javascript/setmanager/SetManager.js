@@ -11,7 +11,7 @@ define(['jquery','angular'], function(jquery, angular){
 				  restrict : 'EA',
 				  templateUrl : '/container/view/elements/setmanager/selectionSetManager',
 				  link: function(scope, elm, attr){
-					  console.debug("heatmapId", scope.heatmapId);
+				      return
 				  }
 			  };
 		}])
