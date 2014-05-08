@@ -73,7 +73,7 @@
 	</div>
 </accordion-group>
 		
-<bsmodal bindid="selectionAdd{{limma.name}}" func="" header="Add New Selection for {{limma.name}}">
+<bsmodal bindid="{{'selectionAdd' + analysis.name}}" func="" header="{{'Add New Selection for' + analysis.name}}">
 
 	<div class="row">
 	
@@ -87,9 +87,10 @@
 	
 	<div class="row">
 	
+		
         <button class="btn btn-success pull-right" >
             <a ng-click="addSelections()" data-dismiss="modal" aria-hidden="true">
-              Create Selections From Results
+              Create Selections
             </a> 
         </button>
     </div>

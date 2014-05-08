@@ -8,7 +8,9 @@ define(['d3',
         './drawCluster', 
         './drawTopPanel', 
         './drawSidePanel'], 
-function(d3, generateScales, drawCells, drawSelections, drawAnalysis, updateCells, drawTree, drawCluster, drawTopPanel, drawSidePanel){
+function(d3, generateScales, drawCells, drawSelections, 
+		drawAnalysis, updateCells, drawTree, drawCluster, 
+		drawTopPanel, drawSidePanel){
 	
 	//Constructor :: View, D3selection, scrollableSelection, Params
 	//	-> HeatmapVisualization

@@ -162,10 +162,21 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                             $scope.visualization.drawSidePanel($scope.visualization.view.panel.side);
                         }
                     });
-                	
-                	
 
-                	
+                	$scope.clearSelections = function(dimension){
+                		
+                		$scope.visualization.view.selectionParams[dimension].labels=[];
+
+                		console.log($scope.visualization.view.selectionParams)
+                		switch (dimension){
+                		case ('row'):
+                			$scope.visualization.drawSidePanel($scope.visualization.view.panel.side)
+                			break
+                		case ("column"):
+                			$scope.visualization.drawTopPanel($scope.visualization.view.panel.top)
+                			break
+                		}
+                	};
                 	//addSelection [Selection] --> null
                 	$scope.addSelection = function(dimension){
                 		var selectionsData = {

@@ -1,4 +1,4 @@
-define(['d3'], function(d3){
+define(['d3', 'qtip'], function(d3, qtip){
   
     var cluster = d3.layout.cluster().sort(null)
         .separation( function(a, b) {
@@ -155,6 +155,7 @@ define(['d3'], function(d3){
         .data(nodes)
         .enter()
         .append("circle")
+        .attr('id', 'selectionCircle')
         .attr("r", 4)
         .attr("cx", function(d) {
             return (type == 'horizontal') ? self.scales.panel.top.xScale(d.x) : self.scales.panel.side.xScale(d.y);
@@ -165,9 +166,21 @@ define(['d3'], function(d3){
         .attr("fill", function(d) {
             return (type == 'horizontal') ? "blue" : "red"
         })
-        .on("click", function(d) {
-            nodeclick(d, canvas, type, self)
-        });
+        .on("mousedown", function(d) {
+        	switch (d3.event.button){
+        	case 0:
+        		nodeclick(d, canvas, type, self);
+        		break
+        	}
+            
+        })
+        
+        d3.select("g#"+((type == 'horizontal')? 'top' : 'side')+"-Panel").on('contextmenu', function(){
+        	d3.event.preventDefault();
+    		$('div#'+ ((type == 'horizontal')? 'column': 'row') + 'SelectionsModal').modal();
+        })
+        
+    	
     }
     
 })

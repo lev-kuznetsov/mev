@@ -1,4 +1,4 @@
-define(['./cellFilter', 'd3'], function(cellFilter, d3){
+define(['./cellFilter', 'd3', 'qtip'], function(cellFilter, d3, qtip){
 	
 	//drawCells !View, !shownCells, !scales, Array [String], -> null
 	//	draws cells on heatmapvisualization object
@@ -114,44 +114,5 @@ define(['./cellFilter', 'd3'], function(cellFilter, d3){
                 return d;
             })
 		
-		//add selections button
-		if(self.view.panel && self.view.panel.top && self.view.panel.top.viewType == 'tree'){
-			
-			self.DOM.legend.select("#column-Selections-Link").remove();
-			
-			self.DOM.legend.append('text')
-		    .attr({
-		    	id: "column-Selections-Link",
-	            x: function(d,i){return 10},
-	            y:self.params.legend.height 
-	            	+ ( self.params.panel.top.height *.45),
-	            'style':'font-size:12',
-	            'text-anchor':'start',
-	            'data-toggle': 'modal',
-                'role': 'button',
-                'data-target': "#columnSelectionsModal",
-	        })
-	        .text("Add Column Selections");
-	        
-		}
-		
-		//add selections button
-		if (self.view.panel && self.view.panel.side && self.view.panel.side.viewType == 'tree'){
-			
-			self.DOM.legend.select("#row-Selections-Link").remove();
-			self.DOM.legend.append('text')
-		    .attr({
-		    	id: "row-Selections-Link",
-	            x: function(d,i){return 10},
-	            y:self.params.legend.height 
-	            	+ ( self.params.panel.top.height *.45) +11,
-	            'style':'font-size:12',
-	            'text-anchor':'start',
-	            'data-toggle': 'modal',
-                'role': 'button',
-                'data-target': "#rowSelectionsModal",
-	        })
-	        .text("Add Row Selections");
-		}
 	}
 })

@@ -30,7 +30,7 @@ require.config ({
     blob : [ '/container/javascript/canvasToBlob/Blob' ],
     canvasToBlob : [ '/container/javascript/canvasToBlob/canvas-toBlob' ],
     fileSaver : [ '/container/javascript/fileSaver/FileSaver' ],
-    qtip : [ '/library/webjars/qtip2/2.1.1/jquery.qtip.min' ]
+    qtip : [ '/library/webjars/qtip2/2.1.1/jquery.qtip' ]
   },
   shim : {
     'angular' : {
@@ -71,6 +71,10 @@ require.config ({
     'fileSaver' : {
       deps : [ 'canvasToBlob' ],
       exports : 'fileSaver'
+    }, 
+    'qtip': {
+      deps : ['jquery', 'imagesloaded'],
+      exports : 'qtip'
     }
 
   },
@@ -97,7 +101,7 @@ require ([ 'jquery',
           'mainpanel/MainPanel',
           'retina',
           'ngGrid',
-          'mainmenu' ], function (jquery, angular, app, orb) {
+          'mainmenu'], function (jquery, angular, app, orb) {
 
   'use strict';
   var $html = angular.element (document.getElementsByTagName ('html')[0]);

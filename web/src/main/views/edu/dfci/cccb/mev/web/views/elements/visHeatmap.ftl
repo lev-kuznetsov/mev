@@ -7,7 +7,8 @@
 		        <input id="columnSelectionName" ng-model="visualization.view.selectionParams.column.name">
 		</div>
 		
-		<button class="btn btn-success btn-block" ng-click="addSelection('column')" data-dismiss="modal" aria-hidden="true">Add Selections</button>
+		<button class="btn btn-default" ng-click="clearSelections('column')">Clear Selections</button>
+		<button class="btn btn-success" ng-click="addSelection('column')" data-dismiss="modal" aria-hidden="true">Add Selections</button>
 		
 		
 	</form>
@@ -21,7 +22,9 @@
 		        <input id="rowSelectionName" ng-model="visualization.view.selectionParams.row.name">
 		</div>
 		
-		<button class="btn btn-success btn-block" ng-click="addSelection('row')" data-dismiss="modal" aria-hidden="true">Add Selections</button>
+		
+		<button class="btn btn-default" ng-click="clearSelections('row')">Clear Selections</button>
+		<button class="btn btn-success" ng-click="addSelection('row')" data-dismiss="modal" aria-hidden="true">Create Selections</button>
 		
 		
 	</form>

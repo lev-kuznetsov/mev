@@ -15,10 +15,10 @@ define(['d3'], function(d3){
 				    params.panel.side.width 
 				 	+ (view.labels.column.keys.length * params.cell.width)], 0, 0),
 			yScale : d3.scale.ordinal().domain(view.labels.row.keys)
-				.rangeRoundBands([params.legend.height + params.panel.top.height
+				.rangeRoundBands([ params.panel.top.height
 					 	+ params.selections.column.height
 					 	+ params.labels.column.height , 
-					 params.legend.height + params.panel.top.height
+					 params.panel.top.height
 					 	+ params.selections.column.height
 					 	+ params.labels.column.height 
 					 	+ (view.labels.row.keys.length * params.cell.height)], 0, 0),

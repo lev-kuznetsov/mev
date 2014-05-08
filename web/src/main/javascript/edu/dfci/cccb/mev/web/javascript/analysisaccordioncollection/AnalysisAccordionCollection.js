@@ -173,14 +173,14 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                         keys:step3
                     };
                     
-                    scope.dataset.selection.post({
-                        datasetName : scope.dataset.datasetName,
+                    scope.project.dataset.selection.post({
+                        datasetName : scope.project.dataset.datasetName,
                         dimension : scope.selectionParams.dimension
 
                     }, selectionsData,
                     function(response){
                             
-                            scope.dataset.resetSelections('row')
+                            scope.project.dataset.resetSelections('row')
                             var message = "Added " + scope.selectionParams.name + " as new Selection!";
                             var header = "Heatmap Selection Addition";
                     
@@ -296,13 +296,13 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                         keys:step4
                     };
                     
-                    scope.dataset.selections.post({
+                    scope.project.dataset.selections.post({
                         datasetName : dataset.datasetName,
                         dimension : "row"
                 
                     }, selectionData, 
                     function(response){
-                            scope.dataset.resetSelections('row')
+                            scope.project.dataset.resetSelections('row')
                             var message = "Added " + scope.selectionParams.name + " as new Selection!";
                             var header = "Heatmap Selection Addition";
                              
@@ -412,12 +412,12 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     color: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
                 }
                 
-                
+                console.log
                 scope.addSelections = function(){
                     
-                    var userselections = scope.analysis.datar.results;
+                    var userselections = scope.analysis.results;
                     
-                    var step1 = $filter('filter')(scope.analysis.datar.results, {
+                    var step1 = $filter('filter')(scope.analysis.results, {
                         id: scope.filterParams.id
                     });
                     
@@ -438,13 +438,13 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     
                     
                     
-                    scope.dataset.selection.post({
-                        datasetName : dataset.datasetName,
+                    scope.project.dataset.selection.post({
+                        datasetName : scope.project.dataset.datasetName,
                         dimension : "row"
                         
                     }, selectionData, 
                     function(response){
-                            scope.dataset.resetSelections('row')
+                            scope.project.dataset.resetSelections('row')
                             var message = "Added " + scope.selectionParams.name + " as new Selection!";
                             var header = "Heatmap Selection Addition";
                              
@@ -493,7 +493,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 
                 scope.applyToHeatmap=function(){
                     
-                    var labels = traverse(scope.analysis.datar.results);
+                    var labels = traverse(scope.analysis.results);
 
                     scope.project.generateView({
                         viewType:'heatmapView', 
