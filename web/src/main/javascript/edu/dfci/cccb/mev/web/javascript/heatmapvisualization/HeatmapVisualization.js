@@ -1,6 +1,6 @@
-define(['angular', 'd3', './lib/HeatmapVisualizationClass', './lib/generateParams', 'colorbrewer/ColorBrewer'], 
+define(['angular', 'd3', './lib/HeatmapVisualizationClass', './lib/generateParams','alertservice/AlertService', 'colorbrewer/ColorBrewer'], 
 function(angular, d3, HeatmapVisualizationClass, generateParams){
-	return angular.module('Mev.heatmapvisualization', ['d3colorBrewer'])
+	return angular.module('Mev.heatmapvisualization', ['d3colorBrewer', 'Mev.AlertService'])
 	.directive('heatmapSettings',[function() {
 
         return {
@@ -12,9 +12,9 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
             templateUrl : "/container/view/elements/heatmapSettingsModalBody",
         }
 	}])
-	.directive('visHeatmap',[ "$routeParams", "$http", "d3colors",
-         function($routeParams, $http, d3colors) {
-
+	.directive('visHeatmap',[ "$routeParams", "$http", "d3colors", "alertService",
+         function($routeParams, $http, d3colors, alertService) {
+ 
             return {
 
                 restrict : 'E',
@@ -120,6 +120,8 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 		
                 		if ($scope.visualization.view.panel && $scope.visualization.view.panel.top) {
                 		    $scope.visualization.drawTopPanel($scope.visualization.view.panel.top);
+                		    
+                		    
                 		}
                 		
                 		if ($scope.visualization.view.panel && $scope.visualization.view.panel.side) {
@@ -165,30 +167,30 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
 
                 	
                 	//addSelection [Selection] --> null
-                	$scope.addSelection = function(selection, dimension){
+                	$scope.addSelection = function(dimension){
                 		var selectionsData = {
-                            name: $scope.view.selectionParams[dimension].name,
+                            name: $scope.visualization.view.selectionParams[dimension].name,
                             properties: {
                                 selectionDescription: '',
-                                selectionColor: $scope.view.selectionParams[dimension].color,                     
+                                selectionColor: $scope.visualization.view.selectionParams[dimension].color,                     
                             },
-                            keys:$scope.view.selectionParams[dimension].labels
+                            keys:$scope.visualization.view.selectionParams[dimension].labels
                         };
                         
-                        $scope.project.selection.post({
+                        $scope.project.dataset.selection.post({
                             datasetName : $routeParams.datasetName,
                             dimension : dimension
 
                         }, selectionsData,
                         function(response){
-                                scope.$broadcast('SeletionAddedEvent', 'row');
-                                var message = "Added " + $scope.selectionParams.name + " as new Selection!";
+                                var message = "Added " + $scope.visualization.view.selectionParams[dimension].name + " as new Selection!";
                                 var header = "Heatmap Selection Addition";
                         
-                                $scope.view.selectionParams[dimension].color = '#'+Math
+                                $scope.$emit('SeletionAddedEvent', dimension);
+                                $scope.visualization.view.selectionParams[dimension].color = '#'+Math
                                     .floor(Math.random()*0xFFFFFF<<0)
                                     .toString(16);
-                                $scope.view.selectionParams[dimension].name = undefined;
+                                $scope.visualization.view.selectionParams[dimension].name = undefined;
 
                                 alertService.success(message,header);
                         },

@@ -83,7 +83,7 @@ define(['./cellFilter', 'd3'], function(cellFilter, d3){
 		self.DOM.legend.selectAll("rect").remove()
 		self.DOM.legend.selectAll("rect").data(rands).enter().append("rect")
 		.attr({
-			x : function(d, i){ return labelXScale(i) },
+			x : function(d, i){ return labelXScale(i)},
 			y : function(d){ return self.params.legend.height *.5 },
 			height: self.params.legend.height *.5,
 			width: labelXScale(1) - labelXScale(0)+1,
@@ -96,7 +96,8 @@ define(['./cellFilter', 'd3'], function(cellFilter, d3){
         .attr({
             x: function(d,i){return labelXScale(i)},
             y:self.params.legend.height *.45,
-            'style':'font-size:10'
+            'style':'font-size:10',
+            'text-anchor':'middle'
         })
         .text(function(d, i){
         	
@@ -114,13 +115,43 @@ define(['./cellFilter', 'd3'], function(cellFilter, d3){
             })
 		
 		//add selections button
-		if(self.view.panel && self.view.panel.top){
+		if(self.view.panel && self.view.panel.top && self.view.panel.top.viewType == 'tree'){
 			
+			self.DOM.legend.select("#column-Selections-Link").remove();
+			
+			self.DOM.legend.append('text')
+		    .attr({
+		    	id: "column-Selections-Link",
+	            x: function(d,i){return 10},
+	            y:self.params.legend.height 
+	            	+ ( self.params.panel.top.height *.45),
+	            'style':'font-size:12',
+	            'text-anchor':'start',
+	            'data-toggle': 'modal',
+                'role': 'button',
+                'data-target': "#columnSelectionsModal",
+	        })
+	        .text("Add Column Selections");
+	        
 		}
 		
 		//add selections button
-		if (self.view.panel && self.view.panel.side){
+		if (self.view.panel && self.view.panel.side && self.view.panel.side.viewType == 'tree'){
 			
+			self.DOM.legend.select("#row-Selections-Link").remove();
+			self.DOM.legend.append('text')
+		    .attr({
+		    	id: "row-Selections-Link",
+	            x: function(d,i){return 10},
+	            y:self.params.legend.height 
+	            	+ ( self.params.panel.top.height *.45) +11,
+	            'style':'font-size:12',
+	            'text-anchor':'start',
+	            'data-toggle': 'modal',
+                'role': 'button',
+                'data-target': "#rowSelectionsModal",
+	        })
+	        .text("Add Row Selections");
 		}
 	}
 })
