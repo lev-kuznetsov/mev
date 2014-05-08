@@ -1,10 +1,9 @@
-define(['./cellFilter'], function(cellFilter){
+define(['./cellFilter', 'd3'], function(cellFilter, d3){
 	
 	//drawCells !View, !shownCells, !scales, Array [String], -> null
 	//	draws cells on heatmapvisualization object
 	return function(labels, ds){
 		var self = this;
-		
 
 		var labelPairs = [];
 		
@@ -21,6 +20,8 @@ define(['./cellFilter'], function(cellFilter){
 		var newCells = self.DOM.heatmapCells.selectAll('rect').data(self.shownCells, function(k){
 			return [k.row, k.column]
 		})
+		
+		
 		
 		newCells.enter().append('rect')
 			.attr({
@@ -67,5 +68,90 @@ define(['./cellFilter'], function(cellFilter){
         rowLabels.exit().remove();
 		
 		colLabels.exit().remove();
+		
+		//Legend stuff
+		var rands = d3.range(self.view.expression.min, self.view.expression.max, 
+				Math.round((self.view.expression.max + Math.abs(self.view.expression.min))/100));
+		
+		var labelXScale = d3.scale.linear().domain([0, rands.length-1])
+			.range([d3.min(self.scales.cells.xScale.range()),
+					 d3.max(self.scales.cells.xScale.range())]);
+		
+		var labelColorScale = d3.scale.linear().domain([self.view.expression.min, self.view.expression.avg, self.view.expression.max])
+			.range(self.scales.cells.colorScale.range())
+			
+		self.DOM.legend.selectAll("rect").remove()
+		self.DOM.legend.selectAll("rect").data(rands).enter().append("rect")
+		.attr({
+			x : function(d, i){ return labelXScale(i)},
+			y : function(d){ return self.params.legend.height *.5 },
+			height: self.params.legend.height *.5,
+			width: labelXScale(1) - labelXScale(0)+1,
+			fill: function(d){return labelColorScale (d) }
+			
+		})
+		
+		self.DOM.legend.selectAll("text").data(rands).enter()
+        .append("text")
+        .attr({
+            x: function(d,i){return labelXScale(i)},
+            y:self.params.legend.height *.45,
+            'style':'font-size:10',
+            'text-anchor':'middle'
+        })
+        .text(function(d, i){
+        	
+            var returnstring = String(d).split(".")[0]
+            if (returnstring.length > 1){
+                returnstring = returnstring + "." + String(d).split(".")[1].slice(0,3)
+            }
+            
+            ticks = [0, Math.floor((rands.length-1)*.25), Math.floor((rands.length-1)*.5), Math.floor((rands.length-1)*.75), rands.length-1]
+            
+            return (ticks.indexOf(i)>-1)? returnstring :""
+        }).append("title")
+            .text(function(d, i){
+                return d;
+            })
+		
+		//add selections button
+		if(self.view.panel && self.view.panel.top && self.view.panel.top.viewType == 'tree'){
+			
+			self.DOM.legend.select("#column-Selections-Link").remove();
+			
+			self.DOM.legend.append('text')
+		    .attr({
+		    	id: "column-Selections-Link",
+	            x: function(d,i){return 10},
+	            y:self.params.legend.height 
+	            	+ ( self.params.panel.top.height *.45),
+	            'style':'font-size:12',
+	            'text-anchor':'start',
+	            'data-toggle': 'modal',
+                'role': 'button',
+                'data-target': "#columnSelectionsModal",
+	        })
+	        .text("Add Column Selections");
+	        
+		}
+		
+		//add selections button
+		if (self.view.panel && self.view.panel.side && self.view.panel.side.viewType == 'tree'){
+			
+			self.DOM.legend.select("#row-Selections-Link").remove();
+			self.DOM.legend.append('text')
+		    .attr({
+		    	id: "row-Selections-Link",
+	            x: function(d,i){return 10},
+	            y:self.params.legend.height 
+	            	+ ( self.params.panel.top.height *.45) +11,
+	            'style':'font-size:12',
+	            'text-anchor':'start',
+	            'data-toggle': 'modal',
+                'role': 'button',
+                'data-target': "#rowSelectionsModal",
+	        })
+	        .text("Add Row Selections");
+		}
 	}
 })

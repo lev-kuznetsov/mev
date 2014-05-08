@@ -8,6 +8,10 @@ define([], function(){
 		
 		this.cell =  {height:15, width:15, padding: 1};
 		
+		this.legend = {
+			height:50,
+		}
+		
 		this.panel = {
 			side:{
 				width: 150

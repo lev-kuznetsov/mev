@@ -4,10 +4,10 @@
 
 		<div class="form-group">
 		    <label for="columnSelectionName" class="control-label">Name:</label>
-		        <input id="columnSelectionName" ng-model="columnSelectionName">
+		        <input id="columnSelectionName" ng-model="visualization.view.selectionParams.column.name">
 		</div>
 		
-		<button class="btn btn-success btn-block" ng-click="addTreeSelection('column', 'horizontal', columnSelectionName)" data-dismiss="modal" aria-hidden="true">Add Selections</button>
+		<button class="btn btn-success btn-block" ng-click="addSelection('column')" data-dismiss="modal" aria-hidden="true">Add Selections</button>
 		
 		
 	</form>
@@ -18,10 +18,10 @@
 
 		<div class="form-group">
 		    <label for="rowSelectionName" class="control-label">Name:</label>
-		        <input id="rowSelectionName" ng-model="rowSelectionName">
+		        <input id="rowSelectionName" ng-model="visualization.view.selectionParams.row.name">
 		</div>
 		
-		<button class="btn btn-success btn-block" ng-click="addTreeSelection('row', 'vertical', rowSelectionName)" data-dismiss="modal" aria-hidden="true">Add Selections</button>
+		<button class="btn btn-success btn-block" ng-click="addSelection('row')" data-dismiss="modal" aria-hidden="true">Add Selections</button>
 		
 		
 	</form>

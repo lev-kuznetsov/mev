@@ -58,6 +58,9 @@ function(d3, generateScales, drawCells, drawSelections, drawAnalysis, updateCell
 			row : d3.select('#row-Labels')
 		};
 		
+		this.DOM.svg.append('g').attr("id", 'heatmap-Legend');
+		this.DOM.legend = d3.select("#heatmap-Legend")
+		
 		this.params = params;
 		
 		this.scales = generateScales(params, View);
