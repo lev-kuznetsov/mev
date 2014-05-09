@@ -431,7 +431,10 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 console.log
                 scope.addSelections = function(){
                     
-                    var userselections = scope.analysis.results;
+                    var userselections = scope.filteredResults.map(function(d){
+                    	return d.id;
+                    });
+                    
                                         
                     var selectionData = {
                         name: scope.selectionParams.name,
@@ -439,7 +442,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             selectionDescription: '',
                             selectionColor:scope.selectionParams.color,                     
                         },
-                        keys:scope.filteredResults
+                        keys:userselections
                     };
                     
                     
