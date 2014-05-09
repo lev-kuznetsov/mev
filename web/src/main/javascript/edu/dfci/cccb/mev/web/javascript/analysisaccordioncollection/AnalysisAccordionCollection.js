@@ -393,20 +393,36 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             link : function(scope) {
                 
                 scope.headers = [
-	               {'name':'ID', 'value': "id", 'icon': "search"},
-	               {'name':'Log-Fold-Change', 'value': "logFoldChange", 'icon': ">="},
-	               {'name':'Average Expression', 'value': "averageExpression", 'icon': "none"},
-	               {'name':'P-Value', 'value': "pValue", 'icon': "<="},
-	               {'name':'q-Value', 'value' : "qValue", 'icon': "none"}
+	               {'name':'ID', 'field': "id", 'icon': "search"},
+	               {'name':'Log-Fold-Change', 'field': "logFoldChange", 'icon': ">="},
+	               {'name':'Average Expression', 'field': "averageExpression", 'icon': "none"},
+	               {'name':'P-Value', 'field': "pValue", 'icon': "<="},
+	               {'name':'q-Value', 'field' : "qValue", 'icon': "none"}
                ];
                 
                 scope.filterParams = {
-	                'id' : '',
-	                'logFoldChange' : undefined,
-	                'pValue' : undefined,
-	                'qValue':undefined
+	                'id' : {
+	                	field: 'id',
+	                	value: undefined,
+	                	op: "="
+	                },
+	                'logFoldChange' : {
+	                	field: 'logFoldChange',
+	                	value: undefined,
+	                	op: '>='
+	                },
+	                'pValue' : {
+	                	field: 'pValue',
+	                	value: 0.05,
+	                	op: '<='
+	                },
+	                'qValue':{
+	                	field: 'qValue',
+	                	value: undefined,
+	                	op: '<='
+	                }
                 }
-                
+                scope.filteredResults=undefined;
                 scope.selectionParams = {
                     name: undefined,
                     color: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
@@ -415,25 +431,15 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 console.log
                 scope.addSelections = function(){
                     
-                    var userselections = scope.analysis.results;
-                    
-                    var step1 = $filter('filter')(scope.analysis.results, {
-                        id: scope.filterParams.id
-                    });
-                    
-                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.logFold, 'logFoldChange')
-                    var step3= $filter('filterThreshold')(step2, scope.filterParams.pValue, 'pValue')
-                    var step4 = step3.map(function(d){
-                        return d.id
-                    })
-                    
+                    var userselections = getKeys(scope.filteredResults);
+                                        
                     var selectionData = {
                         name: scope.selectionParams.name,
                         properties: {
                             selectionDescription: '',
                             selectionColor:scope.selectionParams.color,                     
                         },
-                        keys:step4
+                        keys:userselections
                     };
                     
                     
@@ -470,30 +476,44 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
 
                     ctr = ctr * (-1);
                     if (ctr == 1) {
-                        scope.tableOrdering = header.value;
+                        scope.tableOrdering = header.field;
                     } else {
                         scope.tableOrdering = "-"
-                                + header.value;
+                                + header.field;
                     }
                 }
                 
-                function traverse (results) {
-                    var step1 = $filter('filter')(results, {
-                        id: scope.filterParams.id
+                function getField (fieldName, results) {                    
+                    var fieldValues = results.map(function(d){
+                        return d[fieldName];
+                    });                    
+                    return fieldValues;
+                }
+                function getKeys(results){
+                	return getField('id', results);
+                };
+                
+                scope.applyFilter = function (results) {
+                	
+                    var filtered = $filter('filter')(results, {
+                        id: scope.filterParams.id.value
                     });
                     
-                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.logFold, 'logFoldChange')
-                    var step3= $filter('filterThreshold')(step2, scope.filterParams.pValue, 'pValue')
-                    var step4 = step3.map(function(d){
-                        return d.id
-                    })
+                    filtered = $filter('filterThreshold')(filtered, scope.filterParams.logFoldChange.value, scope.filterParams.logFoldChange.field, scope.filterParams.logFoldChange.op);
+                    filtered= $filter('filterThreshold')(filtered, scope.filterParams.pValue.value, scope.filterParams.pValue.field);
+                    filtered= $filter('filterThreshold')(filtered, scope.filterParams.pValue.value, scope.filterParams.pValue.field);
+                    filtered = $filter('orderBy')(filtered, scope.tableOrdering);
+                    scope.filteredResults = filtered;
                     
-                    return step4;
+                    console.debug("scope.filterParams", scope.filterParams);
+                    console.debug("filteredResults.length", scope.filteredResults.length);
+                    
+                    return scope.filteredResults;
                 }
                 
                 scope.applyToHeatmap=function(){
                     
-                    var labels = traverse(scope.analysis.results);
+                    var labels = getKeys(scope.filteredResults);
 
                     scope.project.generateView({
                         viewType:'heatmapView', 
