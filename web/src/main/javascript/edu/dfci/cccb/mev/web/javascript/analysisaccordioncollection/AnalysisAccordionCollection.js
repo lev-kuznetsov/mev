@@ -499,7 +499,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                         id: scope.filterParams.id.value
                     });
                     
-                    var filtered = $filter('filterThreshold')(filtered, scope.filterParams.logFoldChange.value, scope.filterParams.logFoldChange.field, scope.filterParams.logFoldChange.op);
+                    filtered = $filter('filterThreshold')(filtered, scope.filterParams.logFoldChange.value, scope.filterParams.logFoldChange.field, scope.filterParams.logFoldChange.op);
                     filtered= $filter('filterThreshold')(filtered, scope.filterParams.pValue.value, scope.filterParams.pValue.field);
                     filtered= $filter('filterThreshold')(filtered, scope.filterParams.pValue.value, scope.filterParams.pValue.field);
                     filtered = $filter('orderBy')(filtered, scope.tableOrdering);
