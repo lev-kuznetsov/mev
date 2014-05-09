@@ -1,9 +1,9 @@
 paths : {
   mev : [ '/classpath/META-INF/resources/javascript/mev' ],
-  underscore : [ '/webjar/underscore' ],
-  angular : [ '/webjar/angular' ],
-  angularResource : [ '/webjar/angular-resource' ],
-  angularRoute : [ '/webjar/angular-route' ]
+  underscore : [ '/webjars/underscore' ],
+  angular : [ '/webjars/angular' ],
+  angularResource : [ '/webjars/angular-resource' ],
+  angularRoute : [ '/webjars/angular-route' ]
 },
 shim : {
   'angular' : {

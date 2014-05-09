@@ -30,6 +30,14 @@
       <version>${underscorejs.version}</version>
     </dependency>
 
+    <!-- Typesafe Configuration -->
+
+    <dependency>
+  <groupId>com.typesafe</groupId>
+  <artifactId>config</artifactId>
+  <version>${typesafe.config.version}</version>
+</dependency>
+
     <!-- Commons Configuration for Variable Interpolation -->
 
     <dependency>
@@ -328,7 +336,7 @@
               <include>**/*.js</include>
             </specIncludes>
             <preloadSources>
-              <source>webjar/require.js</source>
+              <source>webjars/require.js</source>
             </preloadSources>
             <keepServerAlive>true</keepServerAlive>
             <customRunnerConfiguration>${project.basedir}/src/test/resources/require.config.js</customRunnerConfiguration>
@@ -339,8 +347,14 @@
           <groupId>com.github.timurstrekalov</groupId>
           <artifactId>saga-maven-plugin</artifactId>
           <version>${saga-maven-plugin.version}</version>
+          <!-- It is impossible to suppress logback-classic logging due to 
+            logback-classic directly implementing SLF4J and the saga plugin directly 
+            depending on it and maven's inability to exclude dependencies the plugin 
+            is directly depending on (http://jira.codehaus.org/browse/MNG-2163), only 
+            transistive dependencies may be excluded -->
           <executions>
             <execution>
+              <phase>verify</phase>
               <goals>
                 <goal>coverage</goal>
               </goals>
@@ -361,20 +375,5 @@
     </pluginManagement>
 
   </build>
-
-  <pluginRepositories>
-
-    <pluginRepository>
-      <id>snapshots-repo</id>
-      <url>https://github.com/lev-kuznetsov/maven/raw/master</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </pluginRepository>
-
-  </pluginRepositories>
 
 </project>

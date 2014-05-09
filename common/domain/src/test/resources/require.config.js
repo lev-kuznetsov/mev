@@ -1,3 +1,3 @@
 paths : {
-  underscore : [ '/webjar/underscore' ]
+  underscore : [ '/webjars/underscore' ]
 }

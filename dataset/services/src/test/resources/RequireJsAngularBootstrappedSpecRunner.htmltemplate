@@ -56,7 +56,7 @@
 		
     require(specs, function() {
       angular.element(document).ready(function() {
-        angular.bootstrap(document, [ 'mev' ]);
+        angular.bootstrap(document, [ 'ngDataset' ]);
       });
     
       window.reporter = new jasmine.$reporter$(); jasmine.getEnv().addReporter(reporter);
