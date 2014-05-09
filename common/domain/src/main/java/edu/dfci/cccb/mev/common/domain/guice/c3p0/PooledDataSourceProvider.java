@@ -62,7 +62,8 @@ public class PooledDataSourceProvider implements Provider<DataSource> {
       dataSource.setUser (user);
       dataSource.setPassword (password);
 
-      log.info ("Setting up DataSource using " + driver + " at " + url + " for " + user);
+      log.info ("Setting up DataSource using " + driver + " at " + url + " for "
+                + user + ":" + (log.isDebugEnabled () ? password : "<redacted>"));
 
       return dataSource;
     } catch (PropertyVetoException e) {
