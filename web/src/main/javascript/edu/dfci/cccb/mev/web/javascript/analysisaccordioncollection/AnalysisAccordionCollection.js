@@ -431,10 +431,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 console.log
                 scope.addSelections = function(){
                     
-                    var userselections = scope.filteredResults.map(function(d){
-                    	return d.id;
-                    });
-                    
+                    var userselections = getKeys(scope.filteredResults);
                                         
                     var selectionData = {
                         name: scope.selectionParams.name,
@@ -486,19 +483,15 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     }
                 }
                 
-                function traverse (results) {
-                    var step1 = $filter('filter')(results, {
-                        id: scope.filterParams.id.value
-                    });
-                    
-                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.logFoldChange.value, 'logFoldChange')
-                    var step3= $filter('filterThreshold')(step2, scope.filterParams.pValue.value, 'pValue')
-                    var step4 = step3.map(function(d){
-                        return d.id
-                    })
-                    
-                    return step4;
+                function getField (fieldName, results) {                    
+                    var fieldValues = results.map(function(d){
+                        return d[fieldName];
+                    });                    
+                    return fieldValues;
                 }
+                function getKeys(results){
+                	return getField('id', results);
+                };
                 
                 scope.applyFilter = function (results) {
                 	
@@ -520,9 +513,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 
                 scope.applyToHeatmap=function(){
                     
-                    var labels = scope.filteredResults.map(function(d){
-                    	return d.id;
-                    });
+                    var labels = getKeys(scope.filteredResults);
 
                     scope.project.generateView({
                         viewType:'heatmapView', 
