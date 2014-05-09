@@ -24,7 +24,7 @@ type=application/vnd.ms-excel                    exts=xls,xlw,xla,xlc,xlm,xlt
 type=application/vnd.ms-powerpoint               exts=ppt,pps,pot
 type=application/vnd.ms-project                  exts=mpp
 type=application/winhlp                          exts=hlp
-type=application/javascript                      exts=js
+type=application/x-javascript                    exts=js
 type=application/x-javascript;charset=UTF-8      exts=jsu
 type=application/x-java-jnlp-file                exts=jnlp
 type=application/x-aim                           exts=aim
