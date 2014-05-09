@@ -39,7 +39,7 @@
 								    		<span class="input-group-addon" ng-hide="header.icon != 'search'"><span class="glyphicon glyphicon-search"></span></span>
 								   			<span class="input-group-addon" ng-hide="header.icon == 'search'">{{header.icon}}</span>
 								   			
-								   			<input type="text" class="form-control input-small" ng-model="filterParams[header.value]">
+								   			<input type="text" class="form-control input-small" ng-model="filterParams[header.field].value">
 								   		</div>	
 									</p>
 									
@@ -48,7 +48,7 @@
 	                        </tr>
 						</thead>
                         <tbody>
-                                <tr ng-repeat="row in analysis.results |filter:filterParams.id| filterThreshold: filterParams.pValue : 'pValue' : '<='| filterThreshold: filterParams.logFoldChange : 'logFoldChange' : '>=' | orderBy: tableOrdering ">
+                                <tr ng-repeat="row in applyFilter(analysis.results)">
                                         <td>
                                                 {{row["id"]}}
                                         </td>
