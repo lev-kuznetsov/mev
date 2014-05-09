@@ -72,7 +72,7 @@ public class ResourceServletTest {
       assertEquals (new URL ("http://localhost:"
                              + jetty.port ()
                              + "/webjars/jquery/2.1.0/webjars-requirejs.js").openConnection ().getContentType (),
-                    "application/javascript");
+                    "application/x-javascript");
     }
   }
 }
