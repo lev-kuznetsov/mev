@@ -22,25 +22,27 @@
  */
 define ('dataset.service', [ 'mev', 'dataset', 'angular', 'angularResource' ], function (mev, dataset, angular) {
 
-  mev.dataset = {
-    $resource : {},
+  var resource = {
+    $ : "angular has not been bootstrapped",
+  };
 
-    get : function (name, success, error) {
-      return mev._.extend ($resource ('/dataset/:name').get ({
+  mev.dataset = {
+    get : function (name) {
+      return mev._.extend (resource.$ ('/dataset/:name').get ({
         name : name,
         format : 'json'
-      }, success, error), dataset);
+      }), dataset);
     },
 
-    query : function (success, error) {
-      return $resource ('/dataset').query ({
+    query : function () {
+      return resource.$ ('/dataset').query ([ {
         format : 'json'
-      }, success, error);
+      } ].concat (arguments));
     }
   }
 
-  angular.module ('mev', [ 'ngResource' ]).run ([ '$resource', function ($resource) {
-    mev.dataset.$resource = $resource;
+  angular.module ('ngDataset', [ 'ngResource' ]).run ([ '$resource', function ($resource) {
+    resource.$ = $resource;
   } ]);
 
   return mev.dataset;
