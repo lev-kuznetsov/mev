@@ -13,10 +13,10 @@
 	            
 
                 <a class="btn btn-info" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
-                  </i> Create Selections From Results
+                  </i> Create Selections
                 </a> 
-	            
-	            <button class="btn btn-success" ng-click="applyToHeatmap()" >
+	            <!-- disable for beta1 -->
+	            <button ng-hide="true" class="btn btn-success" ng-click="applyToHeatmap()" >
 	                <a>
 	                  </i> View Genes on Heatmap
 	                </a> 

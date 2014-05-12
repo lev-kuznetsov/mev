@@ -10,7 +10,8 @@
 				                  </i> Create Selections
 				                </a> 
 					            
-					            <button class="btn btn-success" ng-click="applyToHeatmap()" >
+					            <!-- disable for beta1 -->
+					            <button ng-hide="true" class="btn btn-success" ng-click="applyToHeatmap()" >
 					                <a>
 					                  </i> View Genes on Heatmap
 					                </a> 
