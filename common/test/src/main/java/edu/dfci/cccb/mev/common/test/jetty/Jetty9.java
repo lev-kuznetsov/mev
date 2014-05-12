@@ -16,11 +16,14 @@
 
 package edu.dfci.cccb.mev.common.test.jetty;
 
+import static java.net.CookieHandler.setDefault;
+import static java.net.CookiePolicy.ACCEPT_ALL;
 import static org.apache.log4j.lf5.util.StreamUtils.getBytes;
 import static org.h2.util.IOUtils.copy;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -37,6 +40,10 @@ import org.eclipse.jetty.webapp.WebAppContext;
  * @author levk
  */
 public class Jetty9 implements AutoCloseable {
+
+  static {
+    setDefault (new CookieManager (null, ACCEPT_ALL));
+  }
 
   private Server server;
 
