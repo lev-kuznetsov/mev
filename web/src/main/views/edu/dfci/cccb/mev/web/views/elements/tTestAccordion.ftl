@@ -2,7 +2,7 @@
 	    	
 		            <div  class="results-wrapper" id="tTestResultsTable" ng-hide="!tTest.results">		            	
 			        	<div class="results-header clearfix">
-            				<div class="btn-toolbar pull-left" role="toolbar">
+            				<div class="btn-toolbar pull-right" role="toolbar">
 				                <a class="btn btn-success" href="/dataset/{{project.dataset.datasetName}}/analysis/{{tTest.name}}?format=tsv">
 				                  <i class="icon-white icon-download"></i> Download
 				                </a> 
@@ -29,7 +29,7 @@
 					                                      	
 					                                      	<div>
 					                                      		<div class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu" ng-click="reorderTTestTable('ID', $event)"> 
-															    	 <span ng-class="getCaretCss(headers['ID'])" >ID</span>
+															    	 <span ng-class="getCaretCss(headers['ID'])" ></span>ID
 															    </div>
 															    <div class="input-group">
 															    	<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>

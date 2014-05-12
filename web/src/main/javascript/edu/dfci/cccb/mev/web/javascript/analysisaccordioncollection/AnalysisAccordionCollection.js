@@ -403,7 +403,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
 	               {'name':'Log-Fold-Change', 'field': "logFoldChange", 'icon': [">=", "<="]},
 	               {'name':'Average Expression', 'field': "averageExpression", 'icon': "none"},
 	               {'name':'P-Value', 'field': "pValue", 'icon': "<="},
-	               {'name':'q-Value', 'field' : "qValue", 'icon': "none"}
+	               {'name':'q-Value', 'field' : "qValue", 'icon': "<="}
                ];
                 
                 scope.filterParams = {
@@ -507,7 +507,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     
                     filtered = $filter('filterThreshold')(filtered, scope.filterParams.logFoldChange.value, scope.filterParams.logFoldChange.field, scope.filterParams.logFoldChange.op);
                     filtered= $filter('filterThreshold')(filtered, scope.filterParams.pValue.value, scope.filterParams.pValue.field);
-                    filtered= $filter('filterThreshold')(filtered, scope.filterParams.pValue.value, scope.filterParams.pValue.field);
+                    filtered= $filter('filterThreshold')(filtered, scope.filterParams.qValue.value, scope.filterParams.qValue.field, scope.filterParams.qValue.op);
                     filtered = $filter('orderBy')(filtered, scope.tableOrdering);
                     scope.filteredResults = filtered;
                     
