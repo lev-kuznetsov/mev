@@ -752,8 +752,9 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 };
                 scope.$watch('analysis',  function(newval, oldval) {
                     if (newval) {
-
-                        d3.select(elems[0]).select('div#svgPlace').append('svg');
+                    	//the svg is declared in the templste along with <style>
+                    	//the styles are needed to support 'Save Image' function
+//                        d3.select(elems[0]).select('div#svgPlace').append('svg');
                         
                         var svg = d3.select(elems[0]).select('div#svgPlace').select('svg')
 
