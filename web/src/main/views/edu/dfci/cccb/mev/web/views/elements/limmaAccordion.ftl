@@ -5,17 +5,14 @@
 		                    				
 			<h3 class="pull-left analysis-results-header">Results</h3>
 			<div class="btn-toolbar pull-right" role="toolbar">
-				<button class="btn btn-success" >
-	                <a href="/dataset/{{dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
-	                  <i class="icon-white icon-download"></i> Download
-	                </a> 
-	            </button>
-	            
-	            <button class="btn btn-info" >
-	                <a data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
-	                  </i> Create Selections From Results
-	                </a> 
-	            </button>
+                <a class="btn btn-success" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
+                  <i class="icon-white icon-download"></i> Download
+                </a> 
+            
+                <a class="btn btn-info" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
+                  </i> Create Selections From Results
+                </a> 
+            
 	            
 	            <button class="btn btn-success" ng-click="applyToHeatmap()" >
 	                <a>
@@ -86,12 +83,8 @@
 	</div>
 	
 	<div class="row">
-	
-		
-        <button class="btn btn-success pull-right" >
-            <a ng-click="addSelections()" data-dismiss="modal" aria-hidden="true">
+            <a ng-click="addSelections()" data-dismiss="modal" aria-hidden="true" class="btn btn-success pull-right">
               Create Selections
             </a> 
-        </button>
     </div>
 </bsmodal> 
