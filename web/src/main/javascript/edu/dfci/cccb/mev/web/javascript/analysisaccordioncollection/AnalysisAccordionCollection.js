@@ -772,6 +772,56 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                                 "horizontal");
                     }
                 });
+                
+                scope.saveImage = function(cluster) {
+               	
+                	var svg = d3.select(elems[0]).select("svg")
+                	console.debug("svg", svg);
+                	
+                	 var html = svg
+                	 .attr("version", 1.1)
+                     .attr("xmlns", "http://www.w3.org/2000/svg")
+                     .node().parentNode.innerHTML;
+                	  
+                	 var imgsrc = 'data:image/svg+xml;base64,'+ btoa(html);
+//                	 var img = '<img src="'+imgsrc+'">';
+//                	 d3.select("#svgdataurl").html(img);
+                	  
+                	  
+//                	 var canvas = document.querySelector("#canvasHclTree_"+cluster.name);                	 
+                	 var canvas = elems.find("canvas")[0];
+                	 console.debug("canvas", canvas);
+                	 var context = canvas.getContext("2d");
+                	 canvas.width=svg.attr('width');
+                	 canvas.height=svg.attr('height');
+                	 
+                	 var image = new Image;
+                	 image.src = imgsrc;
+                	 image.onload = function() {
+                		                                         		 
+                    	 canvas.style.opacity = 1;
+                    	 context.beginPath();
+                         context.rect(0, 0, canvas.width, canvas.height);                                                 
+                    	 context.fillStyle ="#FFFFFF";
+                    	 context.fill();
+                    	 
+                    	 context.drawImage(image, 0, 0);
+                    	 
+                    	 canvas.toBlob(function(blob) {
+                    		    saveAs(blob, cluster.name+".png");
+                    	 });
+//                    	 var canvasdata = canvas.toDataURL("image/png");
+//                    	  
+//                    	 var pngimg = '<img src="'+canvasdata+'">';
+//                    	 d3.select("#pngdataurl").html(pngimg);
+//                    	  
+//                    	 var a = document.createElement("a");
+//                    	 a.download = "sample.png";
+//                    	 a.href = canvasdata;
+//                    	 a.click();
+                	 };
+   
+                };
 
             } // end link
         };
