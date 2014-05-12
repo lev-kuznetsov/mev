@@ -1,6 +1,6 @@
 define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angular, jq, d3){
 	
-	return angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])
+	return angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])	
 	.directive('analysisContentItem', ['$compile', function ($compile) {
         var heirarchicalTemplate = '<hierarchical-Accordion analysis="analysis" project="project"></hierarchical-Accordion>';
         var kMeansTemplate = '<k-Means-Accordion analysis="analysis" project="project"></k-Means-Accordion>';
@@ -400,7 +400,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 
                 scope.headers = [
 	               {'name':'ID', 'field': "id", 'icon': "search"},
-	               {'name':'Log-Fold-Change', 'field': "logFoldChange", 'icon': ">="},
+	               {'name':'Log-Fold-Change', 'field': "logFoldChange", 'icon': [">=", "<="]},
 	               {'name':'Average Expression', 'field': "averageExpression", 'icon': "none"},
 	               {'name':'P-Value', 'field': "pValue", 'icon': "<="},
 	               {'name':'q-Value', 'field' : "qValue", 'icon': "none"}
@@ -415,7 +415,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
 	                'logFoldChange' : {
 	                	field: 'logFoldChange',
 	                	value: undefined,
-	                	op: '>='
+	                	op: '>='	                	
 	                },
 	                'pValue' : {
 	                	field: 'pValue',

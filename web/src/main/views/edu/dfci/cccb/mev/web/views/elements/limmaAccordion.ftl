@@ -10,7 +10,7 @@
                 </a> 
             
                 <a class="btn btn-info" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
-                  </i> Create Selections From Results
+                  </i> Create Selections
                 </a> 
             
 	            
@@ -33,9 +33,13 @@
 	                          		<p ng-click="reorderLimmaTable(header)">
 								    	 <span class="caret" ></span>{{header.name}}
 								    	 <div class="input-group" ng-hide="header.icon == 'none'">
-								    		<span class="input-group-addon" ng-hide="header.icon != 'search'"><span class="glyphicon glyphicon-search"></span></span>
-								   			<span class="input-group-addon" ng-hide="header.icon == 'search'">{{header.icon}}</span>
-								   			
+								    		<span class="input-group-addon" ng-show="header.icon == 'search'"><span class="glyphicon glyphicon-search"></span></span>
+								   			<span class="input-group-addon" ng-hide="header.icon | isArray">{{header.icon}}</span>
+								   			<span class="input-group-addon" ng-show="header.icon | isArray">
+									   			<select ng-model="filterParams[header.field].op">
+									   				<option ng-repeat="icon in header.icon">{{icon}}</option>
+									   			</select>
+								   			</span>
 								   			<input type="text" class="form-control input-small" ng-model="filterParams[header.field].value">
 								   		</div>	
 									</p>
