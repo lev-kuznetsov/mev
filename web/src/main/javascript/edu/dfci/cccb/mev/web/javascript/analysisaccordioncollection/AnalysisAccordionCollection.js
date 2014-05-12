@@ -249,10 +249,11 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             	analysis : "=analysis"
             },
             link : function(scope) {
-
+            	
                 scope.$watch('analysis', function(newval){
                     if (newval){
                         scope.tTest = scope.analysis;
+                        scope.filteredResults=scope.tTest.results;
                     }
                 });
                 
@@ -263,9 +264,32 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 };
                 
                 scope.filterParams = {
-                        'id' : '',
-                        'pValueThreshold' : undefined,
-                        'logFoldChange' : undefined
+    	                'id' : {
+    	                	field: 'id',
+    	                	value: undefined,
+    	                	op: "="
+    	                },
+    	                'logFoldChange' : {
+    	                	field: 'logFoldChange',
+    	                	value: undefined,
+    	                	op: '>='
+    	                },
+    	                'pValueThreshold' : {
+    	                	field: 'pValue',
+    	                	value: 0.05,
+    	                	op: '<='
+    	                }
+                    };
+                scope.applyFilter=function(results){
+                	var filtered = $filter('filter')(scope.tTest.results, {
+                        id: scope.filterParams.id.value
+                    });
+                	filtered= $filter('filterThreshold')(filtered, scope.filterParams.pValueThreshold.value, scope.filterParams.pValueThreshold.field);
+                	filtered= $filter('filterThreshold')(filtered, scope.filterParams.logFoldChange.value, scope.filterParams.logFoldChange.field, scope.filterParams.logFoldChange.op);
+                	filtered = $filter('orderBy')(filtered, scope.tTestTableOrdering);
+                	
+                	scope.filteredResults=filtered;
+                	return scope.filteredResults;
                 };
                 
                 scope.selectionParams = {
@@ -275,25 +299,14 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 
                 scope.addSelections = function(){
                     
-                    var userselections = scope.tTest.results;
-                    
-                    var step1 = $filter('filter')(scope.tTest.results, {
-                        id: scope.filterParams.id
-                    });
-                                                                
-                    var step2= $filter('filterThreshold')(step1, scope.filterParams.pValueThreshold, 'pValue');
-                    var step3= $filter('filterThreshold')(step2, scope.filterParams.logFoldChange, 'logFoldChange');
-                    var step4 = step3.map(function(d){
-                        return d.id
-                    })
-                    
+                    var keys = traverse(scope.filteredResults);
                     var selectionData = {
                         name: scope.selectionParams.name,
                         properties: {
                             selectionDescription: '',
                             selectionColor:scope.selectionParams.color,                     
                         },
-                        keys:step4
+                        keys:keys
                     };
                     
                     scope.project.dataset.selection.post({
@@ -343,23 +356,16 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     }
                 };
                 
-                function traverse (results) {
-                    var step1 = $filter('filter')(results, {
-                        id: scope.filterParams.id
-                    });
-                                                                
-                    var step2= $filter('filterThreshold')(step1, scope.filterParams.pValueThreshold, 'pValue');
-                    var step3= $filter('filterThreshold')(step2, scope.filterParams.logFoldChange, 'logFoldChange');
-                    var step4 = step3.map(function(d){
+                function traverse (results) {                    
+                    var ids = results.map(function(d){
                         return d.id
-                    })
-                    
-                    return step4;
+                    });                    
+                    return ids;
                 }
                 
                 scope.applyToHeatmap=function(){
                     
-                    var labels = traverse(scope.tTest.results);
+                    var labels = traverse(scope.filteredResults);
 
                     scope.project.generateView({
                         viewType:'heatmapView', 
@@ -421,7 +427,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
 	                	value: undefined,
 	                	op: '<='
 	                }
-                }
+                };
                 scope.filteredResults=undefined;
                 scope.selectionParams = {
                     name: undefined,
