@@ -296,8 +296,8 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                         keys:step4
                     };
                     
-                    scope.project.dataset.selections.post({
-                        datasetName : dataset.datasetName,
+                    scope.project.dataset.selection.post({
+                        datasetName : scope.project.dataset.datasetName,
                         dimension : "row"
                 
                     }, selectionData, 
