@@ -4,6 +4,15 @@
 	<div class="col-md-10 col-md-offset-1">
 		<br>
 		<div class="row">
+
+				<ol class="breadcrumb">
+				  <li><a href="#">Home</a></li>
+				  <li><a href="#/datasets">Datasets</a></li>
+				  <li class="active">{{project.dataset.datasetName}}</li>
+				</ol>
+
+		</div>
+		<div class="row">
 		
 			<accordion close-others="false">
 				<accordion-group heading="View Manager" is-open="isOpen" ng-init="isOpen=true">
