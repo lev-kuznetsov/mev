@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div id="{{bindid.replace('#', '')}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="{{bindid.replace('#', '')}}" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 

@@ -190,7 +190,6 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                                     / ($scope.project.dataset.expression.max - $scope.project.dataset.expression.min) )* 1000;
                             var startMax = ((newval.view.expression.max - $scope.project.dataset.expression.min) 
                                     / ($scope.project.dataset.expression.max - $scope.project.dataset.expression.min) )* 1000;
-                            console.log([startMin, startAvg, startMax])
                             
                             $scope.visualization.updateCells(position, $scope.heatmapDataset);
 //TODO: Add j-query slider
@@ -222,7 +221,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
 	    	                                
 	    	                                })
 	    	                                
-	    	                                console.log($scope.colorEdge)
+	    	              
 	    	                             }
 	    	                             return (index == 0 || ui.value > values[index - 1]) &&
 	    	                                (index == values.length - 1 || ui.value < values[index + 1]);
@@ -287,7 +286,6 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 		
                 		$scope.visualization.view.selectionParams[dimension].labels=[];
 
-                		console.log($scope.visualization.view.selectionParams)
                 		switch (dimension){
                 		case ('row'):
                 			$scope.visualization.drawSidePanel($scope.visualization.view.panel.side)

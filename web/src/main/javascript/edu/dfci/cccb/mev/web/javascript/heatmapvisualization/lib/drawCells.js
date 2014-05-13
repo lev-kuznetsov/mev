@@ -75,7 +75,7 @@ define(['./cellFilter', 'd3', 'qtip'], function(cellFilter, d3, qtip){
 		
 		
 		var labelYScale = d3.scale.linear().domain([0, rands.length-1])
-			.range([80, 300]);
+			.range([300, 80]);
 		
 		var labelColorScale = d3.scale.linear().domain([0, rands.length-1])
 			.range([self.view.expression.min, self.view.expression.max])
@@ -85,7 +85,7 @@ define(['./cellFilter', 'd3', 'qtip'], function(cellFilter, d3, qtip){
 		.attr({
 			x : function(d, i){ return 30},
 			y : function(d){ return labelYScale(d) },
-			height: labelYScale(1) - labelYScale(0) +1,
+			height: labelYScale(0) - labelYScale(1) +1,
 			width: 50,
 			fill: function(d){return self.scales.cells.colorScale(labelColorScale(d)) }
 			
