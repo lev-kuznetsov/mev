@@ -7,7 +7,9 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
             restrict : 'E',
             scope : {
                 currentColors : '=currentColors',
-                availableColorGroups : '=availableColorGroups'
+                availableColorGroups : '=availableColorGroups',
+                colorEdge : '=colorEdge',
+                applyNewRanges : '=applyNewRanges'
             },
             templateUrl : "/container/view/elements/heatmapSettingsModalBody",
         }
@@ -28,7 +30,8 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 	
                 	var scrollable = $("div.tab-content"), delay = 50, timer = null;
                 	
-                	var position = {
+                       
+                       var position = {
                 			top: scrollable.scrollTop(),
                 			height:scrollable.height()
                 	};
@@ -59,24 +62,86 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
 
                 	    }
                 	});
-         	
-                	$("div.tab-content").on("scroll", function(e){
-                        
-                		
-                		position = {
-                    			top: scrollable.scrollTop(),
-                    			height:scrollable.height()
-                    	};
-                		
+
+                    $scope.colorEdge = {
+
+                      min: undefined,
+                      max: undefined,
+                      avg: undefined
+
+                    };
+                    
+                    var colorSlider = $('#heatmapColorSlider');
+
+
+                    $scope.$watchCollection('colorEdge', function(colorEdge, oldval){
+
+                       if (colorEdge.min && colorEdge.max &&colorEdge.avg) {
+//TODO: Add j-query slider
+//                       $('#colorEdgeSlider').slider('option', 'values', [colorEdge.min, colorEdge.avg, colorEdge.max]);
+                       }
+                    });
+
+                    $scope.applyDefaultRanges = function (){
+                    	
+	                      var updatedView = Object.create($scope.heatmapView);
+	                      
+	                      updatedView.expression.min = $scope.project.dataset.expression.min;
+	                      updatedView.expression.max = $scope.project.dataset.expression.max;
+	                      updatedView.expression.avg = $scope.project.dataset.expression.avg;
+	                      $scope.heatmapView = updatedView;
+
+                    };
+                    
+                    $scope.applyNewRanges = function(){
+                    	
+                    	
+                    	var updatedView = Object.create($scope.heatmapView);
+                      	
+                          if ( 
+                    		  typeof parseFloat($scope.colorEdge.min) == 'number'
+                    		  && typeof parseFloat($scope.colorEdge.avg) == 'number'
+                    		  && typeof parseFloat($scope.colorEdge.max) == 'number'
+                    		  && parseFloat($scope.colorEdge.min) <= parseFloat($scope.colorEdge.avg)
+                    		  && parseFloat($scope.colorEdge.avg) <= parseFloat($scope.colorEdge.max)
+                    		  && parseFloat($scope.colorEdge.min) >= parseFloat($scope.project.dataset.expression.min)
+                    		  && parseFloat($scope.colorEdge.max) <= parseFloat($scope.project.dataset.expression.max) ){
+                    	  
+                    	    var updatedView = Object.create($scope.heatmapView);
+                      	
+                            updatedView.expression.min = parseFloat($scope.colorEdge.min);
+                            updatedView.expression.max = parseFloat($scope.colorEdge.max);
+                            updatedView.expression.avg = parseFloat($scope.colorEdge.avg);
+                            $scope.heatmapView = updatedView;
+                            
+                         } else {
+                    	  
+                    	    $scope.colorEdge.min = $scope.project.dataset.expression.min;
+	                        $scope.colorEdge.max = $scope.project.dataset.expression.max;
+	                        $scope.colorEdge.avg = $scope.project.dataset.expression.avg;
+	                      
+                    	    alertService.error("Ranges must be real numbers!",
+                    	    		"Range Update Error");
+                    	    $scope.applyDefaultRanges();
+                    	    
+                         }
+                      
+                    	
+                    };
+            	
+                    $("div.tab-content").on("scroll", function(e){
+                    
+                        position = {
+                          top: scrollable.scrollTop(),
+                          height:scrollable.height()
+                	    };
+            		
                         timer = setTimeout(function(){
-                        	
-                        	$scope.$apply(function(){
-                        		$scope.visualization.updateCells(position, $scope.heatmapDataset);
-                        	});
-                        	
-                        	
+	                    	$scope.$apply(function(){
+	                    		$scope.visualization.updateCells(position, $scope.heatmapDataset);
+	                    	});
                         }, delay);
-                        
+                    
                     });
                 	
                 	d3.select('vis-Heatmap').append('svg').attr('id', 'svg-Window');
@@ -89,15 +154,19 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 	
                 	//When dataset information comes, generate new visualization.
                 	$scope.$watchCollection('heatmapView', function(newval){
-                		
+
                 		if (newval){
-                		    
+                    		
+                    		console.log("View fired")
+                            $scope.colorEdge.min = newval.expression.min;
+                            $scope.colorEdge.avg = newval.expression.avg;
+                            $scope.colorEdge.max = newval.expression.max;
                 			var params = 
                 				new generateParams({
                 					colors:{
-                					    low:d3colors['BuBkYl'][3][0],
-                					    mid:d3colors['BuBkYl'][3][1],
-                					    high:d3colors['BuBkYl'][3][2]
+                					    low:d3colors[$scope.currentColors.group][3][0],
+                					    mid:d3colors[$scope.currentColors.group][3][1],
+                					    high:d3colors[$scope.currentColors.group][3][2]
                 					}
                 				});
                 			$scope.visualization = new HeatmapVisualizationClass(newval,svg, params)
@@ -110,7 +179,38 @@ function(angular, d3, HeatmapVisualizationClass, generateParams){
                 	$scope.$watch('visualization', function(newval){
 
                 		if(newval){
-                			$scope.visualization.updateCells(position, $scope.heatmapDataset);
+
+                            var startMin = ((newval.view.expression.avg - newval.view.expression.min) 
+                                 / (newval.view.expression.max - newval.view.expression.min) )* 1000
+    			
+                            $scope.visualization.updateCells(position, $scope.heatmapDataset);
+//TODO: Add j-query slider
+//                            colorSlider.slider({min: 1, max: 1000, values: [0, startMin, 1000],
+//	                            slide: function(event, ui) {
+//	                              var index = $(ui.handle).siblings('a').andSelf().index(ui.handle);
+//	                              var values = $(this).slider('values');
+//	        
+//	                              if ((index == 0 || ui.value > values[index - 1]) &&
+//	                                (index == values.length - 1 || ui.value < values[index + 1])) {
+//	            
+//	                                var dimension = null;
+//	             
+//	                                if (index == 0){
+//	                                  dimension = "min"    
+//	                                } else if (index == 1) {
+//	                                  dimension = "avg"
+//	                                } else if  (index == 2) {
+//	                                  dimension = "max"
+//	                                }
+//	            
+//	                                scope.colorEdge[dimension] = scope.params.min + ((scope.params.max - scope.params.min)*(ui.value/1000));
+//	                             }
+//	                             return (index == 0 || ui.value > values[index - 1]) &&
+//	                                (index == values.length - 1 || ui.value < values[index + 1]);
+//	    
+//	                           }
+//                           });
+
                 		}
                 		
                 		if ($scope.selections){

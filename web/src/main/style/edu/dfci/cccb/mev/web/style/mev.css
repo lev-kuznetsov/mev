@@ -344,6 +344,10 @@ button > a{
 	color: inherit;
 }
 
+a.btn {
+	margin: 2px
+}
+
 
 #import-presets-modal div.modal-dialog {
   width: 95%;
