@@ -31,5 +31,8 @@
 </bsmodal> 
 
 <bsmodal bindid="settingsModal" header="Heatmap Visualization Settings">
-	<heatmap-Settings current-colors="currentColors" available-color-groups="availableColorGroups"></heatmap-Settings>
+	<heatmap-Settings current-colors="currentColors"
+		available-color-groups="availableColorGroups"
+		color-Edge="colorEdge"
+		apply-New-Ranges="applyNewRanges"></heatmap-Settings>
 </bsmodal>
