@@ -12,13 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.contract;
-
 /**
  * @author levk
- * 
+ *
  */
-public interface Values {
-
-  double get (String row, String column) throws InvalidCoordinateException;
-}
+package edu.dfci.cccb.mev.dataset.domain.fs;

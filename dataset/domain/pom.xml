@@ -17,6 +17,14 @@
 
   <dependencies>
 
+    <!-- IO -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-io</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
     <!-- jOOQ -->
 
     <dependency>
@@ -35,7 +43,7 @@
 
     <!-- MetaModel -->
 
-	 <dependency>
+    <dependency>
       <groupId>org.eobjects.metamodel</groupId>
       <artifactId>MetaModel-core</artifactId>
       <version>3.4.8</version>
@@ -51,7 +59,7 @@
       <version>3.4.8</version>
     </dependency>
 
-      <!-- Jackson 2 -->
+    <!-- Jackson 2 -->
 
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -64,6 +72,6 @@
       <artifactId>jackson-databind</artifactId>
       <version>${jackson.version}</version>
     </dependency>
-    
+
   </dependencies>
 </project>
