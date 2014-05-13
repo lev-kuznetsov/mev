@@ -33,6 +33,7 @@
 <bsmodal bindid="settingsModal" header="Heatmap Visualization Settings">
 	<heatmap-Settings current-colors="currentColors"
 		available-color-groups="availableColorGroups"
-		color-Edge="colorEdge"
-		apply-New-Ranges="applyNewRanges"></heatmap-Settings>
+		color-Edge="colorEdge"></heatmap-Settings>
+	<button class="btn btn-primary" ng-click="applyNewRanges()" data-dismiss="modal" aria-hidden="true">Apply New Ranges</button>
+	<button class="btn btn-primary" ng-click="applyDefaultRanges()" data-dismiss="modal" aria-hidden="true" >Revert To Default</button>
 </bsmodal>
