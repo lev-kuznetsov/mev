@@ -68,7 +68,8 @@ public class PresetDatasetBuilderFlatTableDB extends AbstractDatasetBuilder impl
   }
   
   private Values buildValues(PresetDescriptor descriptor, Dimension rows, Dimension columns){
-    return new SharedCacheValues (new PresetValuesFlatTableIterable (context, descriptor.name (), columns, rows));    
+//    return new SharedCacheValues (new PresetValuesFlatTableIterable (context, descriptor.name (), columns, rows));
+    return new PresetValuesFlatTableIterable (context, descriptor.name (), columns, rows);
   }
   
   private Values buildLogValues(PresetDescriptor descriptor, Dimension rows, Dimension columns){
