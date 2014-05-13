@@ -16,6 +16,12 @@ define([], function(){
         link.rel = "stylesheet";
         link.href = '/container/style/ng-grid.css';
         document.getElementsByTagName("head")[0].appendChild(link);
+        
+        link = document.createElement("link");
+        link.type = "text/css";
+        link.rel = "stylesheet";
+        link.href = '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/ui-lightness/jquery-ui.css';
+        document.getElementsByTagName("head")[0].appendChild(link);
 
         link = document.createElement("link");
 	    link.type = "text/css";

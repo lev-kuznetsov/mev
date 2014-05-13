@@ -8,6 +8,7 @@ require.config ({
   baseUrl : "/container/javascript",
   paths : {
     jquery : [ 'http://codeorigin.jquery.com/jquery-2.1.0', '/library/webjars/jquery/2.1.0/jquery' ],
+    jqueryUi : ['https://code.jquery.com/ui/1.9.2/jquery-ui'],
     angular : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular',
                '/library/webjars/angularjs/1.2.13/angular' ],
     angularRoute : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min',
@@ -71,7 +72,10 @@ require.config ({
     'fileSaver' : {
       deps : [ 'canvasToBlob' ],
       exports : 'fileSaver'
-    }, 
+    },
+    'jqueryUi': {
+        deps : ['jquery', 'css-loader']
+    },
     'qtip': {
       deps : ['jquery', 'imagesloaded'],
       exports : 'qtip'

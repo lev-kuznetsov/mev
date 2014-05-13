@@ -29,11 +29,7 @@
         </div>
         
         <div id="heatmapColorSlider"></div>
-        
 		     
 	</form>
-	
-	<a href="__self" class="btn btn-primary pull-right" ng-click="applyNewRanges()" data-dismiss="modal" aria-hidden="true">Apply New Ranges</a>
-	
-	<a href="__self" class="btn btn-warning pull-right" ng-click="applyDefaultRanges()" data-dismiss="modal" aria-hidden="true">Revert To Default</a>
+
 </div>
