@@ -168,6 +168,17 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
     }
     )).start();
     
+//    for(final Preset preset : presets.getAll ()){
+//      (new Thread(new Runnable() {
+//      
+//        @Override
+//        public void run () {                   
+//            log.debug ("***Prefetching row keys for PRESET: "+preset.name ());
+//            builder.buildRows (preset.descriptor ());        
+//        }
+//      }
+//      )).start();      
+//    }
     
     return "done";
   }

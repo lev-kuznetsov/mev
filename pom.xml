@@ -82,6 +82,12 @@
       </properties>
     </profile>
     <profile>
+      <id>perf</id>
+      <properties>
+        <mev.spring_profiles_active>perf</mev.spring_profiles_active>
+      </properties>
+    </profile>
+    <profile>
       <id>prod</id>
       <properties>
         <mev.spring_profiles_active>prod</mev.spring_profiles_active>
@@ -187,7 +193,13 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
-
+		            
+	<dependency>
+		<groupId>org.databene</groupId>
+		<artifactId>contiperf</artifactId>
+		<version>2.2.0</version>
+	</dependency>
+	            
   </dependencies>
 
   <dependencyManagement>
