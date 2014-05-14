@@ -76,11 +76,9 @@
 		</form-group>
 	</div>
 	<div class="row">
-        <button class="btn btn-success pull-right" >
-            <a ng-click="addMergedSelection('column')" data-dismiss="modal" aria-hidden="true">
+        <a class="btn btn-success pull-right" ng-click="addMergedSelection('column')" data-dismiss="modal" aria-hidden="true">
               Create Selection
-            </a> 
-        </button>
+        </a>
     </div>
     
 </bsmodal> 
@@ -96,11 +94,9 @@
 		</form-group>
 	</div>
 	<div class="row">
-        <button class="btn btn-success pull-right" >
-            <a ng-click="addMergedSelection('row')" data-dismiss="modal" aria-hidden="true">
+        <a class="btn btn-success pull-right" ng-click="addMergedSelection('row')" data-dismiss="modal" aria-hidden="true">
               Create Selection
-            </a> 
-        </button>
+        </a>
     </div>
     
 </bsmodal> 
@@ -119,11 +115,9 @@
 	</div>
 	
 	<div class="row">
-        <button class="btn btn-success pull-right" >
-            <a ng-click="addIntersectionSelection('column')" data-dismiss="modal" aria-hidden="true">
+        <a class="btn btn-success pull-right" ng-click="addIntersectionSelection('column')" data-dismiss="modal" aria-hidden="true">
               Create Selection
-            </a> 
-        </button>
+        </a>
     </div>
     
 </bsmodal> 
@@ -139,11 +133,9 @@
 		</form-group>
 	</div>
 	<div class="row">
-        <button class="btn btn-success pull-right" >
-            <a ng-click="addIntersectionSelection('row')" data-dismiss="modal" aria-hidden="true">
+        <a class="btn btn-success pull-right" ng-click="addIntersectionSelection('row')" data-dismiss="modal" aria-hidden="true">
               Create Selection
-            </a> 
-        </button>
+        </a>
     </div>
     
 </bsmodal>
@@ -172,11 +164,9 @@
 	</div>
 	
 	<div class="row">
-        <button class="btn btn-success pull-right" >
-            <a ng-click="addDifferenceSelection('column')" data-dismiss="modal" aria-hidden="true">
+        <a class="btn btn-success pull-right" ng-click="addDifferenceSelection('column')" data-dismiss="modal" aria-hidden="true">
               Create Selection
-            </a> 
-        </button>
+        </a>
     </div>
     
 </bsmodal> 
@@ -203,11 +193,9 @@
 	</div>
 	
 	<div class="row">
-        <button class="btn btn-success pull-right" >
-            <a ng-click="addDifferenceSelection('row')" data-dismiss="modal" aria-hidden="true">
+        <a class="btn btn-success pull-right" ng-click="addDifferenceSelection('row')" data-dismiss="modal" aria-hidden="true">
               Create Selection
-            </a> 
-        </button>
+        </a> 
     </div>
     
 </bsmodal>
