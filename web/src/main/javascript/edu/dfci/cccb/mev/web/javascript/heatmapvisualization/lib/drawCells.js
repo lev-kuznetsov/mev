@@ -29,7 +29,10 @@ define(['./cellFilter', 'd3', 'qtip'], function(cellFilter, d3, qtip){
 				y : function(d){ return self.scales.cells.yScale(d.row) },
 				height: self.params.cell.height - self.params.cell.padding,
 				width: self.params.cell.width - self.params.cell.padding,
-				fill: function(d){return self.scales.cells.colorScale(d.value) }
+				fill: function(d){return self.scales.cells.colorScale(d.value) },
+				'cell-value': function(d) { return d.value },
+				'cell-column': function(d) { return d.column },
+				'cell-row': function(d) { return d.row },
 				
 			})
 		
