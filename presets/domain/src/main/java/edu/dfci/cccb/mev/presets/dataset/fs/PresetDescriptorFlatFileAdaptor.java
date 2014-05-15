@@ -26,16 +26,17 @@ public class PresetDescriptorFlatFileAdaptor extends AbstractPresetDescriptor im
   private final @Delegate PresetDescriptor wrapped;
   
   public URL binaryFolderUrl() throws MalformedURLException{
-    log.debug("dataRootUrl:"+wrapped.dataRootUrl ());
-    log.debug("relativeDataPath:"+wrapped.relativeDataPath());
+//    log.debug("dataRootUrl:"+wrapped.dataRootUrl ());
+//    log.debug("relativeDataPath:"+wrapped.relativeDataPath());
     URL url = new URL(wrapped.dataRootUrl (), "binary/"+wrapped.relativeDataPath ()+"/");
-    log.debug ("URL: "+url);
+//    log.debug ("URL: "+url);
     return url;
   }
   
   public URL binaryUrl() throws MalformedURLException{
-    
-    return new URL(binaryFolderUrl(), "datasetValues.matrix");
+    URL url = new URL(binaryFolderUrl(), "datasetValues.matrix");
+    log.debug ("URL: "+url);
+    return url;
   }
   
   public URL rowListUrl() throws MalformedURLException{

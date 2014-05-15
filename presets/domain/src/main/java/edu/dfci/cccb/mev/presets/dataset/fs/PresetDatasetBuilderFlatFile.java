@@ -65,8 +65,8 @@ public class PresetDatasetBuilderFlatFile extends AbstractDatasetBuilder impleme
       Map<String, Integer> rowKeys = flatFileDescriptor.getRowKeys ();
       Map<String, Integer> columnKeys = flatFileDescriptor.getColumnKeys ();
       
-      log.debug("rowKeys:"+rowKeys);
-      log.debug("columnKeys:"+columnKeys);
+//      log.debug("rowKeys:"+rowKeys);
+//      log.debug("columnKeys:"+columnKeys);
       
       
       Values values = new FlatFileValues (dataFile, 
@@ -74,16 +74,16 @@ public class PresetDatasetBuilderFlatFile extends AbstractDatasetBuilder impleme
                                                 columnKeys ,
                                                 rowKeys.size (),
                                                 columnKeys.size ());
-      if(log.isDebugEnabled ()){
-        String firstRow = (String)rowKeys.keySet ().toArray ()[0];
-        String firstColumn = (String)columnKeys.keySet ().toArray ()[0];
-        log.debug("TOP:LEFT: "+firstRow+":"+firstColumn);
-        log.debug("TOP:LEFT:value "+values.get (firstRow, firstColumn));
-      }
+//      if(log.isDebugEnabled ()){
+//        String firstRow = (String)rowKeys.keySet ().toArray ()[0];
+//        String firstColumn = (String)columnKeys.keySet ().toArray ()[0];
+//        log.debug("TOP:LEFT: "+firstRow+":"+firstColumn);
+//        log.debug("TOP:LEFT:value "+values.get (firstRow, firstColumn));
+//      }
             
       return aggregate (datasetName, values, super.analyses (), columns, rows);
       
-    }catch(IOException | DatasetBuilderException | InvalidDatasetNameException | URISyntaxException | InvalidCoordinateException e ){
+    }catch(IOException | DatasetBuilderException | InvalidDatasetNameException | URISyntaxException  e ){
       throw new PresetException ("Error while building dataset name="+datasetName
                                  +",descritpor"+descriptor
                                  +",columnsSelection"+columnSelection+",rowSelection"+rowSelection, e);

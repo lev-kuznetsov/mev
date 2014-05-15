@@ -1,6 +1,7 @@
 package edu.dfci.cccb.mev.web.test.presets.controller.flat.stress;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.net.MalformedURLException;
@@ -28,6 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ActiveProfiles;
@@ -43,6 +45,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
@@ -73,7 +76,7 @@ import edu.dfci.cccb.mev.web.test.presets.controller.flat.large.TestJooqCursorGB
                                PresetRestPerfConfig.class,
                                ProbeAnnotationsConfigurationMain.class,
                                })
-public class TestSerializeRandomPreset {
+public class TestPresetHCL {
 
   private @Inject Environment environment; 
   private @Inject @Named("presets-datasource") DataSource dataSource;
@@ -144,13 +147,30 @@ public class TestSerializeRandomPreset {
     log.debug("dataset.name: "+presetDataset.name ());
         
     workspace.put (presetDataset);
-    Timer timer = Timer.start ("GET-GBM-JSON-FLAT");
-    this.mockMvc.perform(get("/dataset/preset_test/data").param ("format", "json")
+    Timer timer = Timer.start ("SELECTION:POST");
+    this.mockMvc.perform(post("/dataset/preset_test/column/selection").param ("format", "json")
                                             .session (mocksession)
-                                            .accept("application/json"))            
+                                            .accept("application/json")
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .content ("{\"name\":\"sss\",\"properties\":{\"selectionDescription\":\"\",\"selectionColor\":\"#bbceb3\"},"+
+                                            "\"keys\":[\""+presetDataset.dimension (Type.COLUMN).keys ().get (0)+"\"]}")
+                                            )            
             .andExpect (status ().isOk ())
             .andReturn ();
-    timer.read ("selection");
+    log.debug(presetDataset.dimension (Type.COLUMN).selections ().getAll ());
+    timer.read ("selection posted");
+    
+    timer = Timer.start ("HCL:POST");
+    this.mockMvc.perform(post("/dataset/preset_test/analyze/hcl").param ("format", "json")
+                                            .session (mocksession)
+                                            .accept("application/json")
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .content ("{\"name\":\"test_hcl\",\"dimension\":\"column\",\"metric\":\"euclidean\",\"linkage\":\"complete\"}")
+                                            )            
+            .andExpect (status ().isOk ())
+            .andReturn ();
+    log.debug(presetDataset.dimension (Type.COLUMN).selections ().getAll ());
+    timer.read ("selection posted");
   }
 
   

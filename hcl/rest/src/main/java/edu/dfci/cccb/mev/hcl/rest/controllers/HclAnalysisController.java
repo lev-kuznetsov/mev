@@ -27,16 +27,23 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.inject.Inject;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,8 +52,12 @@ import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 import edu.dfci.cccb.mev.hcl.domain.contract.HclBuilder;
+import edu.dfci.cccb.mev.hcl.domain.contract.InvalidAlgorithmException;
+import edu.dfci.cccb.mev.hcl.domain.contract.InvalidMetricException;
 import edu.dfci.cccb.mev.hcl.domain.contract.Linkage;
 import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
 import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
@@ -91,6 +102,43 @@ public class HclAnalysisController {
       public void run () {
         try {
           dataset.analyses ().put (builder.name (name).build ());
+        } catch (DatasetException e) {
+          log.warn ("Could not cluster hierarchically", e);
+        }
+      }
+    }.run (); // .start (); TODO: async analysis
+  }
+
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Accessors(fluent=true)
+  public static class HclDto{
+    @JsonProperty @Getter private String name;
+    @JsonProperty @Getter private String dimension;  
+    @JsonProperty @Getter private String metric;  
+    @JsonProperty @Getter private String linkage;
+  }
+  @RequestMapping (value = "/analyze/hcl", method = POST)
+  @ResponseStatus (OK)
+  public void startJson (@RequestBody final HclDto dto) throws DatasetNotFoundException,
+                                                          InvalidDimensionTypeException, InvalidAlgorithmException, InvalidMetricException {
+    
+    // TODO: inject a factory instead of manual injection
+    final HclBuilder builder = new SimpleTwoDimensionalHclBuilder ().nodeBuilder (nodeBuilder)
+                                                                    .dataset (dataset)
+                                                                    .dimension (dataset.dimension (Type.from (dto.dimension())))
+                                                                    .linkage (Linkage.from (dto.linkage()))
+                                                                    .metric (Metric.from (dto.metric()));
+
+    log.debug ("Running HCL on " + dataset);
+
+    new Thread () {
+      /* (non-Javadoc)
+       * @see java.lang.Thread#run() */
+      @Override
+      public void run () {
+        try {
+          dataset.analyses ().put (builder.name (dto.name()).build ());
         } catch (DatasetException e) {
           log.warn ("Could not cluster hierarchically", e);
         }

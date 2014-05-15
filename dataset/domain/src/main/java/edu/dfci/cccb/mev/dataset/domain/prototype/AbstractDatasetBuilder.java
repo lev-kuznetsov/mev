@@ -93,17 +93,17 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
 //    List<String> columnsList = new ArrayList<String>(columns.values());
     
     Values values = valueStoreBuilder.build (parser.rowMap (), parser.columnMap ());
-    if(log.isDebugEnabled ()){      
-      String firstRow = (String)parser.rowMap ().keySet ().toArray ()[0];
-      String firstColumn = (String)parser.columnMap ().keySet ().toArray ()[0];
-      try {
-        log.debug("TOP:LEFT: "+firstRow+":"+firstColumn);
-        log.debug("TOP:LEFT:value "+values.get (firstRow, firstColumn));
-      } catch (InvalidCoordinateException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
+//    if(log.isDebugEnabled ()){      
+//      String firstRow = (String)parser.rowMap ().keySet ().toArray ()[0];
+//      String firstColumn = (String)parser.columnMap ().keySet ().toArray ()[0];
+//      try {
+//        log.debug("TOP:LEFT: "+firstRow+":"+firstColumn);
+//        log.debug("TOP:LEFT:value "+values.get (firstRow, firstColumn));
+//      } catch (InvalidCoordinateException e) {
+//        // TODO Auto-generated catch block
+//        e.printStackTrace();
+//      }
+//    }
     
     
     return aggregate (content.name (), values, analyses (),
@@ -142,17 +142,17 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
 //    List<String> rowsList = new ArrayList<String>(rows.values());
 //    List<String> columnsList = new ArrayList<String>(columns.values());
     Values values = valueStoreBuilder.build (parser.rowMap (), parser.columnMap ());
-    if(log.isDebugEnabled ()){
-      String firstRow = (String)parser.rowMap ().keySet ().toArray ()[0];
-      String firstColumn = (String)parser.columnMap ().keySet ().toArray ()[0];
-      try {
-        log.debug("TOP:LEFT: "+firstRow+":"+firstColumn);
-        log.debug("TOP:LEFT:value "+values.get (firstRow, firstColumn));        
-      } catch (InvalidCoordinateException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
+//    if(log.isDebugEnabled ()){
+//      String firstRow = (String)parser.rowMap ().keySet ().toArray ()[0];
+//      String firstColumn = (String)parser.columnMap ().keySet ().toArray ()[0];
+//      try {
+//        log.debug("TOP:LEFT: "+firstRow+":"+firstColumn);
+//        log.debug("TOP:LEFT:value "+values.get (firstRow, firstColumn));        
+//      } catch (InvalidCoordinateException e) {
+//        // TODO Auto-generated catch block
+//        e.printStackTrace();
+//      }
+//    }
     return aggregate (content.name (), values, analyses (),
                       dimension (ROW, parser.rowKeys (), selections (), annotation ()),
                       dimension (COLUMN, parser.columnKeys (), selections (), annotation ()));

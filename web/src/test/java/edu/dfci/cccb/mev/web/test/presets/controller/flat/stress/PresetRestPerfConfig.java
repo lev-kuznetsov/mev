@@ -60,10 +60,8 @@ public class PresetRestPerfConfig {
   
   @Bean @Profile("local") @Inject 
   public String prefetchPresetRowKeys(final Presets presets, 
-                                    final PresetDimensionBuilder builder,
-                                    final @Named("mev-presets-loader") PresetValuesLoader loader) throws PresetException, InterruptedException{
+                                    final PresetDimensionBuilder builder) throws PresetException, InterruptedException{
     
-    loader.loadAll (presets);   
     List<Thread> threads = new ArrayList<Thread>();
     
     for(final Preset preset : presets.getAll ()){
