@@ -23,9 +23,12 @@ import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.using;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.management.RuntimeErrorException;
 import javax.sql.DataSource;
 
 import lombok.ToString;
@@ -98,5 +101,12 @@ public class JooqBasedDatasourceValueStoreBuilder extends AbstractValueStoreBuil
   @Override
   public Values build () {
     return new JooqBasedDataSourceValues (context, table, row, column, value, isTemporary);
+  }
+
+  @Override
+  public Values build (Map<String,Integer> row, Map<String, Integer> columns) {
+    //TODO:fix - this is needed by the FlatFileValueStoreBuilder, 
+    //Here, we just do the same as the build() method - need to find a nice way of doing this 
+    return build();
   }
 }

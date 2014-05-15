@@ -11,4 +11,7 @@ public interface PresetDescriptor {
   URL dataUrl();
   URL columnUrl();  
   URL rowUrl();
+  URL dataRootUrl();
+  String relativeDataPath();
+  
 }

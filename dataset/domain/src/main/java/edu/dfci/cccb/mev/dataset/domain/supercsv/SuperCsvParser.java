@@ -80,7 +80,7 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
     @Override
     public Object execute (Object value, CsvContext context) {
       currentRowName = value.toString ();
-      rows.put (currentRowName, currentRowName);
+      rows.put (currentRowName, rows.size ());
       return null;
     }
   };
@@ -92,8 +92,8 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
   private String currentColumnName;
   private double currentValue;
   private Iterator<Entry<String, Double>> currentRow;
-  private final Map<String, String> rows = new LinkedHashMap<String, String> ();
-  private final Map<String, String> columns = new LinkedHashMap<String, String> ();  
+  private final Map<String, Integer> rows = new LinkedHashMap<String, Integer> ();
+  private final Map<String, Integer> columns = new LinkedHashMap<String, Integer> ();  
 
   protected SuperCsvParser (CsvListReader reader) throws DatasetBuilderException {
     this.reader = reader;
@@ -107,14 +107,14 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
           firstProcessedLine.put (header[index],
                                   (Double) DOUBLE_CELL_PROCESSOR.execute (firstDataLine.get (index), null));
           processors[index] = DOUBLE_CELL_PROCESSOR;
-          columns.put (header[index], header[index]);          
+          columns.put (header[index], columns.size ());          
         } catch (SuperCsvCellProcessorException e) {
           processors[index] = IGNORE_CELL_PROCESSOR;
         }                
       }         
       processors[0] = ROW_ID_PROCESSOR;
       currentRowName = firstDataLine.get (0);      
-      rows.put (currentRowName, currentRowName);
+      rows.put (currentRowName, rows.size ());
       currentRow = firstProcessedLine.entrySet ().iterator ();
     } catch (IOException e) {
       throw new InputContentStreamException (e);
@@ -178,12 +178,29 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
 
   @Override
   public List<String> columnKeys () {
-    return new ArrayList<String>(columns.values());
-    
+    List<String> keys = new ArrayList<String>(columns.size ());
+    for(String key : columns.keySet ()){
+        keys.add (key);
+    }
+    return keys;
   }
 
   @Override
   public List<String> rowKeys () { 
-    return new ArrayList<String>(rows.values());
+    List<String> keys = new ArrayList<String>(columns.size ());
+    for(String key : rows.keySet ()){
+        keys.add (key);
+    }
+    return keys;
+  }
+  
+  @Override
+  public Map<String, Integer> rowMap () { 
+    return rows;
+  }
+  
+  @Override
+  public Map<String, Integer> columnMap () { 
+    return columns;
   }
 }

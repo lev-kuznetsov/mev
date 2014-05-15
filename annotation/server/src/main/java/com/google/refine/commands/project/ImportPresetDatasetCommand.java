@@ -111,8 +111,6 @@ public class ImportPresetDatasetCommand extends Command {
 //          PresetDescriptor descriptor = (PresetDescriptor)request.getAttribute ("descriptor");
           PresetDescriptor descriptor = preset.descriptor ();
           try {            
-            RawInput newDatasetContent = new UrlTsvInput (descriptor.dataUrl ());            
-            newDatasetContent.name (newDatasetName);
             logger.info (String.format ("***Import Dataset: %s *******************", descriptor.dataUrl ().toString ()));
             dataset = ProjectManager.getSingleton ().getDatasetBuilder ().build (preset, newDatasetName, samplesSelection, rowsSelection);
             

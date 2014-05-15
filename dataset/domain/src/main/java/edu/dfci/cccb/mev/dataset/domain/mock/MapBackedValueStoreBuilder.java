@@ -18,7 +18,10 @@ import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.management.RuntimeErrorException;
 
 import lombok.EqualsAndHashCode;
 import lombok.Synchronized;
@@ -60,5 +63,12 @@ public class MapBackedValueStoreBuilder extends AbstractValueStoreBuilder {
   @Override
   public Values build () {
     return new MapBackedValues (new HashMap<> (values));
+  }
+
+  @Override
+  public Values build (Map<String,Integer> row, Map<String, Integer> columns) {
+    //TODO:fix - this is needed by the FlatFileValueStoreBuilder, 
+    //Here, we just do the same as the build() method - need to find a nice way of doing this 
+    return build();
   }
 }

@@ -15,12 +15,16 @@
 package edu.dfci.cccb.mev.dataset.domain.fs;
 
 import java.io.Closeable;
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import lombok.Synchronized;
+import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
@@ -31,15 +35,23 @@ import edu.dfci.cccb.mev.io.implementation.TemporaryFile;
  * @author levk
  * 
  */
+@Log4j
 public class FlatFileValueStoreBuilder extends AbstractValueStoreBuilder implements Closeable {
 
-  private final TemporaryFile file;
+  private final File file;
   private RandomAccessFile writer;
-  private final Map<String, Integer> rows = new HashMap<> ();
-  private final Map<String, Integer> columns = new HashMap<> ();
+  private final Map<String, Integer> rows = new LinkedHashMap<String, Integer> ();
+  private final Map<String, Integer> columns = new LinkedHashMap<String, Integer> ();
 
   public FlatFileValueStoreBuilder () throws IOException {
-    writer = new RandomAccessFile (file = new TemporaryFile (), "rw");
+    file = new TemporaryFile ();
+    log.debug ("Created TEMP FILE:" + file.getAbsolutePath ());
+    writer = new RandomAccessFile (file, "rw");
+  }
+  
+  public FlatFileValueStoreBuilder (File file) throws IOException {
+    this.file = file;
+    writer = new RandomAccessFile (file, "rw");
   }
 
   /* (non-Javadoc)
@@ -51,11 +63,11 @@ public class FlatFileValueStoreBuilder extends AbstractValueStoreBuilder impleme
     try {
       writer.writeDouble (value);
 
-      if (!rows.containsKey (row))
-        rows.put (row, rows.size ());
-
-      if (!columns.containsKey (column))
-        columns.put (column, columns.size ());
+//      if (!rows.containsKey (row))
+//        rows.put (row, rows.size ());
+//
+//      if (!columns.containsKey (column))
+//        columns.put (column, columns.size ());
 
       return this;
     } catch (IOException e) {
@@ -73,7 +85,21 @@ public class FlatFileValueStoreBuilder extends AbstractValueStoreBuilder impleme
     try {
       writer.close ();
       writer = null;
-      return new FlatFileValues (file, rows, columns, columns.size (), rows.size ());
+      return new FlatFileValues (file, rows, columns, rows.size (), columns.size ());
+    } catch (IOException e) {
+      throw new RuntimeException (e);
+    }
+  }
+  
+  @Synchronized
+  public Values build (Map<String, Integer> rows, Map<String, Integer> columns) {
+    if (writer == null)
+      throw new IllegalStateException ();
+    try {
+      writer.close ();
+      writer = null;
+      
+      return new FlatFileValues (file, rows, columns, rows.size (), columns.size ());
     } catch (IOException e) {
       throw new RuntimeException (e);
     }
@@ -88,7 +114,7 @@ public class FlatFileValueStoreBuilder extends AbstractValueStoreBuilder impleme
       try {
         writer.close ();
       } finally {
-        file.close ();
+        if (file instanceof Closeable) ((Closeable)file).close ();
       }
     }
   }

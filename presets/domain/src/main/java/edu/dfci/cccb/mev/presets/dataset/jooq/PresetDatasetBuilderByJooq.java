@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.presets.dataset;
+package edu.dfci.cccb.mev.presets.dataset.jooq;
 
 import javax.inject.Inject;
 

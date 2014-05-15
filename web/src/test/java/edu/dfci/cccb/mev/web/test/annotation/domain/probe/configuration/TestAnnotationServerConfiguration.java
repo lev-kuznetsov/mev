@@ -62,7 +62,7 @@ public class TestAnnotationServerConfiguration {
     mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext).build();
   }
   
-  @Test @Ignore
+  @Test 
   public void testGetTcgaPresets () throws Exception {
     MvcResult result = this.mockMvc.perform(get("/presets/tcga").param ("format", "json").accept("application/json"))
             .andExpect (status ().isOk ())            

@@ -8,11 +8,13 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
+import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsFilesConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetDomainBuildersConfiguration;
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetValuesLoader;
 import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
+import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 import edu.dfci.cccb.mev.presets.util.timer.Timer;
 
 @Log4j
@@ -24,8 +26,13 @@ public class PresetsLoaderApp {
   
   public static void main (String[] args) throws PresetException {
     try(final AnnotationConfigApplicationContext springContext = new AnnotationConfigApplicationContext ()){
-      springContext.register(DatasetDomainBuildersConfiguration.class);
+//      springContext.register(DatasetDomainBuildersConfiguration.class);
+//      springContext.register (DatasetRestConfiguration.class);
+//      springContext.register (PresetsRestConfiguration.class);
       springContext.register (PresetsLoaderConfiguration.class);
+      springContext.register (ProbeAnnotationsFilesConfiguration.class);
+//      springContext.register (ProbeAnnotationsConfigurationMain.class);      
+      
       springContext.refresh ();
       final PresetsLoaderApp app = springContext.getBean (PresetsLoaderApp.class);
       app.run (args);
@@ -43,7 +50,7 @@ public class PresetsLoaderApp {
     if(args.length>0)
       includeFilters=args[0].split (",");
     
-    Timer timerTotal = Timer.start("toal import time");
+    Timer timerTotal = Timer.start("total import time");
     for(Preset preset : presets.getAll ()){
       if(includeFilters.length>0 && checkInclude (includeFilters, preset)==false)
         continue;      

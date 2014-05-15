@@ -15,6 +15,7 @@
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
 import java.util.List;
+import java.util.Map;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 
@@ -32,6 +33,10 @@ public interface Parser {
   
   List<String> columnKeys();
   List<String> rowKeys();
+
+  Map<String, Integer> rowMap ();
+
+  Map<String, Integer> columnMap ();
   
   
 }

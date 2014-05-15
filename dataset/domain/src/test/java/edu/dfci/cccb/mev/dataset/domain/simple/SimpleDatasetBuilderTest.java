@@ -69,14 +69,15 @@ public class SimpleDatasetBuilderTest {
       private static final long serialVersionUID = 1L;
       {
         add("66a354fe-454e-40a6-8464-a7d97236d398_miR_gene_expression");
-        add("9635a2c4-fd8b-4b4c-9338-def32b6dd8d3_miR_gene_expression");
-        add("1e1ae4dd-1f89-42bd-8154-165f603962b9_miR_gene_expression");
-        add("b3794e62-c4bc-43b1-97ca-b6f6e01aa026_miR_gene_expression");
-        add("c986ab6f-912a-424f-9957-ff34452339c5_miR_gene_expression");
-        add("25a9fd1a-0ff1-434b-bc4b-b78834750994_miR_gene_expression");
-        add("b5a63033-f14b-4040-b2b2-8acf9c9ba6d4_miR_gene_expression");
-        add("6a8f9385-2064-4d8c-9af1-d2bed53afebb_miR_gene_expression");
-        add("e4fe4b0b-198a-46b2-adb3-2f0b140502f8_miR_gene_expression");
+        add("290f101e-ff47-4aeb-ad71-11cb6e6b9dde_miR_gene_expression");
+//        add("9635a2c4-fd8b-4b4c-9338-def32b6dd8d3_miR_gene_expression");
+//        add("1e1ae4dd-1f89-42bd-8154-165f603962b9_miR_gene_expression");
+//        add("b3794e62-c4bc-43b1-97ca-b6f6e01aa026_miR_gene_expression");
+//        add("c986ab6f-912a-424f-9957-ff34452339c5_miR_gene_expression");
+//        add("25a9fd1a-0ff1-434b-bc4b-b78834750994_miR_gene_expression");
+//        add("b5a63033-f14b-4040-b2b2-8acf9c9ba6d4_miR_gene_expression");
+//        add("6a8f9385-2064-4d8c-9af1-d2bed53afebb_miR_gene_expression");
+//        add("e4fe4b0b-198a-46b2-adb3-2f0b140502f8_miR_gene_expression");
       }
     };
     
@@ -105,12 +106,10 @@ public class SimpleDatasetBuilderTest {
     List<String> keys = new ArrayList<String> (){
       private static final long serialVersionUID = 1L;
       {
-        add("TCGA-A6-2677-01A-01R-0821-07");
-        add("TCGA-AA-3560-01A-01R-0821-07");
-        add("TCGA-AA-3529-01A-02R-0821-07");
-        add("TCGA-A6-2678-01A-01R-0821-07");
-        add("TCGA-AA-3534-01A-01R-0821-07");
-       
+        add("TCGA-A6-3810-01A-01R-1022-07");
+        add("TCGA-AA-3845-01A-01R-1022-07");
+        add("TCGA-AA-3955-01A-02R-1022-07");
+        
       }
     };
     
