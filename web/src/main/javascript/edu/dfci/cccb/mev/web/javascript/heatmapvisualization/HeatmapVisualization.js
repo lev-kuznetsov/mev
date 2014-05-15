@@ -135,32 +135,24 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                     };
             	
                     var eventQ=[];
-                    
-                    var totalCounter = 0;
-                    var eventCounter = 0;
-                    $("div.tab-content").on("scroll", function(e){                    	                        
+                    $("div.tab-content").on("scroll", function(e){
+                    	//remove unhandled scholl events from the queue
                         while(eventQ.length>0){
                         	clearTimeout(eventQ.pop());
-                        	eventCounter--;
-                        	console.debug("cleared", eventCounter, totalCounter, eventQ.length);
                         }
-                        timer = setTimeout(function(){                        	                                	
-                        	eventCounter--;
-                        	eventQ.pop();
-                        	console.debug("eventCounter", eventCounter, totalCounter, eventQ.length);
-//	                    	$scope.$apply(function(){
-	                    		position = {
-	                                    top: scrollable.scrollTop(),
-	                                    height:scrollable.height()
-	                          	    };
-	                    		$scope.visualization.updateCells(position, $scope.heatmapDataset);
-//	                    	});
+                        
+                        //create a new event handler and put it on the work queue
+                        timer = setTimeout(function(){
+                        	//we are handling the event, so remove it from the queue
+                        	eventQ.pop();                        	
+                    		position = {
+                                    top: scrollable.scrollTop(),
+                                    height:scrollable.height()
+                          	    };
+                    		$scope.visualization.updateCells(position, $scope.heatmapDataset);
 	                    	
-                        }, 100);
-                        eventQ.push(timer);
-                        totalCounter++;
-                        eventCounter++;
-	                    
+                        }, 100);                        
+                        eventQ.push(timer);	                    
                     });
                 	
                 	d3.select('vis-Heatmap').append('svg').attr('id', 'svg-Window');

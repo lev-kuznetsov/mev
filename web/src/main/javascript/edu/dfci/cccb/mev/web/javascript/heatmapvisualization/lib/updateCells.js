@@ -31,9 +31,7 @@ define([], function(){
                 row: self.view.labels.row.keys.slice(startRow, endRow),
                 column: self.view.labels.column.keys
         }
-        console.debug("before drawCells");
         this.drawCells(labels, dataset)
-        console.debug("after drawCells");
         
     };
     
