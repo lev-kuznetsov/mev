@@ -34,6 +34,7 @@ import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetDomainBuildersConfigu
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
 import edu.dfci.cccb.mev.presets.contract.Presets;
+import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
 
@@ -73,7 +74,7 @@ public class PresetsFindMinMax {
   }
   
   @Test @Ignore
-  public void test () throws SQLException {
+  public void test () throws SQLException, PresetException {
     
     for(Preset preset : presets.getAll ()){
       Dimension columns = dimensionBuilder.buildColumns (preset.descriptor ());

@@ -23,18 +23,19 @@ import org.jooq.ResultQuery;
 import org.jooq.Table;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListSelections;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
+import edu.dfci.cccb.mev.presets.prototype.AbstractPresetDimensionBuilder;
 import edu.dfci.cccb.mev.presets.util.timer.Timer;
 
 @Log4j
-public class PresetDimensionBuilderFlatTable implements PresetDimensionBuilder{
+public class PresetDimensionBuilderFlatTable extends AbstractPresetDimensionBuilder implements PresetDimensionBuilder{
 
-  private String ID_FIELD_NAME="COLUMN0";
+  String ID_FIELD_NAME="COLUMN0";
   private @Inject @Named("presets-jooq-context") DSLContext context;
   private Map<String, List<String>> rowCasche;
   public PresetDimensionBuilderFlatTable (DSLContext context) {
@@ -42,7 +43,19 @@ public class PresetDimensionBuilderFlatTable implements PresetDimensionBuilder{
     this.rowCasche=new HashMap<String, List<String>> ();
   }
 
-  @Override  
+  
+  public Dimension build (Type type, PresetDescriptor descriptor, Selection selection) {    
+    if(selection!=null){
+      if(log.isDebugEnabled ()){
+        log.debug ("selection.size(): " + selection.keys ().size ());
+      }
+      return new SimpleDimension (type, selection.keys (), new ArrayListSelections (), null);
+    }else{
+      return build (Dimension.Type.ROW, descriptor);
+    }
+  }
+
+  @Override
   public Dimension build (Type type, PresetDescriptor descriptor) {
     if(type==Dimension.Type.COLUMN)
       return new SimpleDimension (type, getColumnKeys (descriptor.name (), ID_FIELD_NAME), 
@@ -52,17 +65,7 @@ public class PresetDimensionBuilderFlatTable implements PresetDimensionBuilder{
                                   new ArrayListSelections (), null);    
   }
   
-  @Override
-  public Dimension buildColumns (PresetDescriptor descriptor) {    
-    return build(Dimension.Type.COLUMN, descriptor);
-  }
-
-  @Override
-  public Dimension buildRows (PresetDescriptor descriptor) {    
-    return build(Dimension.Type.ROW, descriptor);
-  }
-  
-  @Synchronized
+  @Synchronized 
   private List<String> getRowKeys(String tableName, String fieldRowIdName){
     if(rowCasche.containsKey (tableName)){
       return rowCasche.get (tableName);
@@ -88,6 +91,7 @@ public class PresetDimensionBuilderFlatTable implements PresetDimensionBuilder{
     }
   }
 
+  
   private List<String> getColumnKeys(String tableName, String fieldRowIdName){
     //get columns
     Table<Record> table = tableByName (tableName);    
@@ -106,15 +110,4 @@ public class PresetDimensionBuilderFlatTable implements PresetDimensionBuilder{
     }
     return columns;
   }
-
-  @Override
-  public Dimension build (Type type, PresetDescriptor descriptor, Selection selection) {
-    if(log.isDebugEnabled ()){
-      log.debug ("selection.size(): " + selection.keys ().size ());
-    }
-    return new SimpleDimension (type, selection.keys (), new ArrayListSelections (), null);
-  }
-
-
-
 }

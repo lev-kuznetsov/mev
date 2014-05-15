@@ -105,7 +105,7 @@ public class TestSerializeRandomPreset {
 
   }
   
-  @Test  
+  @Test  @Ignore
   @PerfTest(invocations=10, threads=10)
   public void test() throws Exception{    
 //    internalRun (mockMvc, "LUSC.HT_HG-U133A.Level_3.tsv", "LUSC/Level_3");    

@@ -1,7 +1,7 @@
 package edu.dfci.cccb.mev.annotation.server.configuration;
 
 
-import static edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain.MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX;
+import static edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsFilesConfiguration.MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX;
 import static java.lang.System.getProperty;
 
 import java.util.Properties;

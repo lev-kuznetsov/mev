@@ -40,6 +40,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.InputContentStreamException;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Parser;
@@ -91,7 +92,21 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
 //    List<String> rowsList = new ArrayList<String>(rows.values());
 //    List<String> columnsList = new ArrayList<String>(columns.values());
     
-    return aggregate (content.name (), valueStoreBuilder.build (), analyses (),
+    Values values = valueStoreBuilder.build (parser.rowMap (), parser.columnMap ());
+    if(log.isDebugEnabled ()){      
+      String firstRow = (String)parser.rowMap ().keySet ().toArray ()[0];
+      String firstColumn = (String)parser.columnMap ().keySet ().toArray ()[0];
+      try {
+        log.debug("TOP:LEFT: "+firstRow+":"+firstColumn);
+        log.debug("TOP:LEFT:value "+values.get (firstRow, firstColumn));
+      } catch (InvalidCoordinateException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+    
+    
+    return aggregate (content.name (), values, analyses (),
                       dimension (ROW, parser.rowKeys (), selections (), annotation ()),
                       dimension (COLUMN, parser.columnKeys (), selections (), annotation ()));
   }
@@ -100,33 +115,47 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
   public Dataset build (RawInput content, Selection columnSelection) throws DatasetBuilderException,
                                                                     InvalidDatasetNameException,
                                                                     InvalidDimensionTypeException {
-    Map<String, String> rows = new LinkedHashMap<String, String> ();
-    Map<String, String> columns = new LinkedHashMap<String, String> ();
+//    Map<String, String> rows = new LinkedHashMap<String, String> ();
+//    Map<String, String> columns = new LinkedHashMap<String, String> ();
     if(log.isDebugEnabled ())
       log.debug ("**selection: " + columnSelection.keys ());
-    for (Parser parser = parser (content); parser.next ();) {
-      if(columnSelection.keys ().contains (parser.projection (COLUMN))){
+    Parser parser;
+    for (parser = parser (content); parser.next ();) {
+      String curColumn = parser.projection (COLUMN);
+      
+      if(columnSelection.keys ().contains (curColumn)){
         
 //        if(log.isDebugEnabled ())
 //          log.debug("+++adding:"+parser.projection (COLUMN));        
         
         valueStoreBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));        
-        if (!rows.containsKey (parser.projection (ROW)))
-          rows.put (parser.projection (ROW), parser.projection (ROW));
-        if (!columns.containsKey (parser.projection (COLUMN)))
-          columns.put (parser.projection (COLUMN), parser.projection (COLUMN));
+//        if (!rows.containsKey (parser.projection (ROW)))
+//          rows.put (parser.projection (ROW), parser.projection (ROW));
+//        if (!columns.containsKey (parser.projection (COLUMN)))
+//          columns.put (parser.projection (COLUMN), parser.projection (COLUMN));
       }else{
 //        if(log.isDebugEnabled ())
 //          log.debug ("---skipping:"+parser.projection (COLUMN));
         
       }
     }
-    List<String> rowsList = new ArrayList<String>(rows.values());
-    List<String> columnsList = new ArrayList<String>(columns.values());
-    
-    return aggregate (content.name (), valueStoreBuilder.build (), analyses (),
-                      dimension (ROW, rowsList, selections (), annotation ()),
-                      dimension (COLUMN, columnsList, selections (), annotation ()));
+//    List<String> rowsList = new ArrayList<String>(rows.values());
+//    List<String> columnsList = new ArrayList<String>(columns.values());
+    Values values = valueStoreBuilder.build (parser.rowMap (), parser.columnMap ());
+    if(log.isDebugEnabled ()){
+      String firstRow = (String)parser.rowMap ().keySet ().toArray ()[0];
+      String firstColumn = (String)parser.columnMap ().keySet ().toArray ()[0];
+      try {
+        log.debug("TOP:LEFT: "+firstRow+":"+firstColumn);
+        log.debug("TOP:LEFT:value "+values.get (firstRow, firstColumn));        
+      } catch (InvalidCoordinateException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+    return aggregate (content.name (), values, analyses (),
+                      dimension (ROW, parser.rowKeys (), selections (), annotation ()),
+                      dimension (COLUMN, parser.columnKeys (), selections (), annotation ()));
   }
 
   protected Analyses analyses () {

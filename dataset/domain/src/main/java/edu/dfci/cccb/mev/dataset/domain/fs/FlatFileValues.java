@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValues;
 
@@ -34,6 +35,7 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValues;
  * @author levk
  * 
  */
+@Log4j
 public class FlatFileValues extends AbstractValues implements Closeable {
 
   private static final int MAPPING_SIZE = 1 << 30;
@@ -46,7 +48,8 @@ public class FlatFileValues extends AbstractValues implements Closeable {
   private final Map<String, Integer> columns;
   private final List<MappedByteBuffer> mappings = new ArrayList<> ();
 
-  public FlatFileValues (File file, Map<String, Integer> rows, Map<String, Integer> columns, int width, int height) throws FileNotFoundException,
+  
+  public FlatFileValues (File file, Map<String, Integer> rows, Map<String, Integer> columns, int height, int width) throws FileNotFoundException,
                                                                                                                    IOException {
     this.file = file;
     this.rows = rows;
@@ -77,7 +80,9 @@ public class FlatFileValues extends AbstractValues implements Closeable {
   @Override
   public void close () throws IOException {
     mappings.clear (); // gc will do the closing
-    if (file instanceof Closeable)
+    if (file instanceof Closeable){
+      log.debug ("Colsing file"+file.getAbsolutePath ());
       ((Closeable) file).close ();
+    }
   }
 }

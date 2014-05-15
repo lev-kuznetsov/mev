@@ -45,23 +45,15 @@ public class PresetDatasetBuilderFlatTableDB extends AbstractDatasetBuilder impl
     this.dimensionBuilder=dimensionBuilder;
   }
 
-  private Dimension buildRows(PresetDescriptor descriptor, Selection selection){
-    Dimension rows;
-    if(selection!=null)
-      rows = dimensionBuilder.build (Dimension.Type.ROW, descriptor, selection);
-    else
-      rows = dimensionBuilder.buildRows (descriptor);
+  private Dimension buildRows(PresetDescriptor descriptor, Selection selection) throws PresetException{
+    Dimension rows = dimensionBuilder.build (Dimension.Type.ROW, descriptor, selection);    
     if(log.isDebugEnabled ())
       log.debug ("rows="+rows);
     return rows;
   }
   
-  private Dimension buildColumns(PresetDescriptor descriptor, Selection selection){
-    Dimension columns;
-    if(selection!=null)
-      columns = dimensionBuilder.build (Dimension.Type.COLUMN, descriptor, selection);
-    else
-      columns = dimensionBuilder.buildColumns (descriptor);    
+  private Dimension buildColumns(PresetDescriptor descriptor, Selection selection) throws PresetException{
+    Dimension columns = dimensionBuilder.build (Dimension.Type.COLUMN, descriptor, selection);       
     if(log.isDebugEnabled ())
       log.debug ("columns="+columns);
     return columns;

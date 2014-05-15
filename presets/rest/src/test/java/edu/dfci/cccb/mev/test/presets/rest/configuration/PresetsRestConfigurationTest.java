@@ -51,6 +51,6 @@ public class PresetsRestConfigurationTest extends WebMvcConfigurerAdapter{
       populator.addScript(new ClassPathResource(scriptTestPresetValuesFlatTable));
             
       initializer.setDatabasePopulator(populator);
-      return initializer;
+       return initializer;
   }
 }

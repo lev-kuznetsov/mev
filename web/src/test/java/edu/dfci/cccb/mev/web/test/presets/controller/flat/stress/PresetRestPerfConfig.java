@@ -71,7 +71,11 @@ public class PresetRestPerfConfig {
         @Override
         public void run () {                   
             log.debug ("***Prefetching row keys for PRESET: "+preset.name ());
-            builder.buildRows (preset.descriptor ());        
+            try {
+              builder.buildRows (preset.descriptor ());
+            } catch (PresetException e) {
+              e.printStackTrace();
+            }        
         }
       });
       t.start();

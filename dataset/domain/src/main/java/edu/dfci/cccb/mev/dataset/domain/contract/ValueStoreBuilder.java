@@ -14,6 +14,9 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author levk
  * 
@@ -23,4 +26,5 @@ public interface ValueStoreBuilder {
   ValueStoreBuilder add (double value, String row, String column) throws ValueStoreException;
 
   Values build ();
+  Values build (Map<String,Integer> row, Map<String, Integer> columns);
 }

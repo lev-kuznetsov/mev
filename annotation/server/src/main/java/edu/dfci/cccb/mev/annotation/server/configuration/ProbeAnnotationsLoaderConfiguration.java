@@ -26,10 +26,10 @@ import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2ProbeAnnotationsLoader;
 
 @Log4j
 @Configuration
-@PropertySources({
-@PropertySource(value={"classpath:loader/probe_annotations.loader-defaults.properties"}),
-@PropertySource(value="classpath:loader/probe_annotations.loader-${spring_profiles_active}.properties", ignoreResourceNotFound=true)
-})
+//@PropertySources({
+//@PropertySource(value={"classpath:loader/probe_annotations.loader-defaults.properties"}),
+//@PropertySource(value="classpath:loader/probe_annotations.loader-${spring_profiles_active}.properties", ignoreResourceNotFound=true)
+//})
 @Import(ProbeAnnotationsPersistenceConfiguration.class)
 public class ProbeAnnotationsLoaderConfiguration {
   
