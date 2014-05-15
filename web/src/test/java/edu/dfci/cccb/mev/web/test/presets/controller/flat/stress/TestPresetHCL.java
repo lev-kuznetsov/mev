@@ -108,7 +108,7 @@ public class TestPresetHCL {
 
   }
   
-  @Test  
+  @Test  @Ignore
   @PerfTest(invocations=1, threads=1)
   public void test() throws Exception{    
 //    internalRun (mockMvc, "LUSC.HT_HG-U133A.Level_3.tsv", "LUSC/Level_3");    
