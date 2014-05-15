@@ -61,12 +61,17 @@ define(['jquery',
             return {
                 restrict: "E",
                 rep1ace: true,
-                template:'<button class="btn btn-success" ng-click="applyToHeatmap()" ><a></i>Reset Heatmap</a></button>',
+                template:'<button class="btn btn-success" ng-click="applyToHeatmap()" ><a></i>Reset Heatmap</a></button><button class="btn btn-success" ng-click="jummpHeatmap()" ><a></i>Jump</a></button>',
                 scope: {
                     project : '=project',
                 },
                 link: function(scope, element, attrs) {
-                    
+                    scope.jummpHeatmap=function(){
+                    	console.debug("jump", $("#heatmappanecontainer").scrollTop(), $("#heatmaptabpane").scrollTop());
+//                    	$scope.$apply(function(){
+                    	$("#heatmappanecontainer").scrollTop($("#heatmappanecontainer").scrollTop()+80000);
+//                    	});
+                    };
                     scope.applyToHeatmap=function(){
                         
                         scope.project.generateView({

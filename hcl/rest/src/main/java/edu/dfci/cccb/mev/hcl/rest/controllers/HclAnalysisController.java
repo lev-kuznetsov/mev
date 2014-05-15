@@ -77,37 +77,37 @@ public class HclAnalysisController {
   private @Getter @Setter (onMethod = @_ (@Inject)) NodeBuilder nodeBuilder;
   private @Getter @Setter (onMethod = @_ (@Inject)) Dataset dataset;
 
-  @RequestMapping (value = "/analyze/hcl/" + ANALYSIS_URL_ELEMENT + "(" + DIMENSION_URL_ELEMENT + ","
-                           + METRIC_URL_ELEMENT + "," + LINKAGE_URL_ELEMENT + ")",
-                   method = POST)
-  @ResponseStatus (OK)
-  public void start (final @PathVariable (ANALYSIS_MAPPING_NAME) String name,
-                     final @PathVariable (DIMENSION_MAPPING_NAME) Dimension dimension,
-                     final @PathVariable (METRIC_MAPPING_NAME) Metric metric,
-                     final @PathVariable (LINKAGE_MAPPING_NAME) Linkage linkage) throws DatasetNotFoundException,
-                                                                                InvalidDimensionTypeException {
-    // TODO: inject a factory instead of manual injection
-    final HclBuilder builder = new SimpleTwoDimensionalHclBuilder ().nodeBuilder (nodeBuilder)
-                                                                    .dataset (dataset)
-                                                                    .dimension (dimension)
-                                                                    .linkage (linkage)
-                                                                    .metric (metric);
-
-    log.debug ("Running HCL on " + dataset);
-
-    new Thread () {
-      /* (non-Javadoc)
-       * @see java.lang.Thread#run() */
-      @Override
-      public void run () {
-        try {
-          dataset.analyses ().put (builder.name (name).build ());
-        } catch (DatasetException e) {
-          log.warn ("Could not cluster hierarchically", e);
-        }
-      }
-    }.run (); // .start (); TODO: async analysis
-  }
+//  @RequestMapping (value = "/analyze/hcl/" + ANALYSIS_URL_ELEMENT + "(" + DIMENSION_URL_ELEMENT + ","
+//                           + METRIC_URL_ELEMENT + "," + LINKAGE_URL_ELEMENT + ")",
+//                   method = POST)
+//  @ResponseStatus (OK)
+//  public void start (final @PathVariable (ANALYSIS_MAPPING_NAME) String name,
+//                     final @PathVariable (DIMENSION_MAPPING_NAME) Dimension dimension,
+//                     final @PathVariable (METRIC_MAPPING_NAME) Metric metric,
+//                     final @PathVariable (LINKAGE_MAPPING_NAME) Linkage linkage) throws DatasetNotFoundException,
+//                                                                                InvalidDimensionTypeException {
+//    // TODO: inject a factory instead of manual injection
+//    final HclBuilder builder = new SimpleTwoDimensionalHclBuilder ().nodeBuilder (nodeBuilder)
+//                                                                    .dataset (dataset)
+//                                                                    .dimension (dimension)
+//                                                                    .linkage (linkage)
+//                                                                    .metric (metric);
+//
+//    log.debug ("Running HCL on " + dataset);
+//
+//    new Thread () {
+//      /* (non-Javadoc)
+//       * @see java.lang.Thread#run() */
+//      @Override
+//      public void run () {
+//        try {
+//          dataset.analyses ().put (builder.name (name).build ());
+//        } catch (DatasetException e) {
+//          log.warn ("Could not cluster hierarchically", e);
+//        }
+//      }
+//    }.run (); // .start (); TODO: async analysis
+//  }
 
   @NoArgsConstructor
   @AllArgsConstructor

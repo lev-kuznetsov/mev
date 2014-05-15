@@ -235,14 +235,19 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                         	linkage : scope.params.linkage.value
                         };
                         
-                        scope.dataset.analysis.postf({
-                            datasetName : scope.dataset.datasetName,
-                            analysisType : 'hcl',
-                            analysisName : analysisData.name,
-                            analysisParams : analysisData.dimension + ','
-                                + analysisData.metric + ','
-                                + analysisData.linkage
-                        }, {},
+//                        scope.dataset.analysis.postf({
+//                            datasetName : scope.dataset.datasetName,
+//                            analysisType : 'hcl',
+//                            analysisName : analysisData.name,
+//                            analysisParams : analysisData.dimension + ','
+//                                + analysisData.metric + ','
+//                                + analysisData.linkage
+//                        }, {},
+                        scope.dataset.analysis.post({
+                        	datasetName : scope.dataset.datasetName, 
+                            analysisType : 'hcl'
+                            
+                    	}, analysisData, 
                         function(data, status, headers, config) {
                             
                         	scope.dataset.loadAnalyses();

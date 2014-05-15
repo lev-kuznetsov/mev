@@ -4,25 +4,31 @@ define(['./cellFilter', 'd3', 'qtip'], function(cellFilter, d3, qtip){
 	//	draws cells on heatmapvisualization object
 	return function(labels, ds){
 		var self = this;
-
+		console.log("drawCells:start");
 		var labelPairs = [];
 		
+		console.log("start:labels.row.map()", labels.row.length);
 		labels.row.map(function(row){
 		    return labels.column.map(function(col){
 		        labelPairs.push([row, col]);
 		    })
 		});
-		
+		console.log("start:labels.pairs.map()");
 		self.shownCells = labelPairs.map(function(pair){ return ds.expression.get(pair)});
 		
 		
+		console.log("start:allCells.selectAll");
+		var allCells = self.DOM.heatmapCells.selectAll('rect');
 		
-		var newCells = self.DOM.heatmapCells.selectAll('rect').data(self.shownCells, function(k){
-			return [k.row, k.column]
-		})
+		console.log("start:newCells.selectAll", allCells.length);
+		var newCells = allCells.data(self.shownCells
+				, function(k){
+			return k.row+";"+k.column;
+		}
+		)
 		
 		
-		
+		console.log("start:newCells.enter()");
 		newCells.enter().append('rect')
 			.attr({
 				x : function(d){ return self.scales.cells.xScale(d.column) },
@@ -35,12 +41,13 @@ define(['./cellFilter', 'd3', 'qtip'], function(cellFilter, d3, qtip){
 				'cell-row': function(d) { return d.row },
 				
 			})
-		
+		console.log("start:newCells.remove()");
 		newCells.exit().remove()
-		
+		console.log("start:rowLabels.selectAll()");
 		var rowLabels = self.DOM.labels.row.selectAll('text').data(labels.row, function(k){return k}),
 		colLabels = self.DOM.labels.column.selectAll('text').data(labels.column, function(k){return k});
-			
+		
+		console.log("start:rowLabels.enter()()");
 		rowLabels.enter().append('text')
             .attr({
             	x: self.params.panel.side.width
@@ -54,6 +61,7 @@ define(['./cellFilter', 'd3', 'qtip'], function(cellFilter, d3, qtip){
             })
             .append('title').text(function(d){ return d });
 		
+		console.log("start:colLabels.enter()()");
 		colLabels.enter().append('text')
 		    .attr('transform', 'rotate(-90)')
             .attr({
@@ -66,14 +74,14 @@ define(['./cellFilter', 'd3', 'qtip'], function(cellFilter, d3, qtip){
             .text(function(d){
                 return d.slice(0, 13);
             })
-            .append('title').text(function(d){ return d });
-        
+            .append('title').text(function(d){ return d });		
         rowLabels.exit().remove();
 		
 		colLabels.exit().remove();
 		
 		
 		//Legend stuff
+		/*
 		var rands = d3.range(0, 100);
 		
 		
@@ -117,6 +125,7 @@ define(['./cellFilter', 'd3', 'qtip'], function(cellFilter, d3, qtip){
             .text(function(d, i){
                 return labelColorScale(d);
             })
+            */
 		
 	}
 })

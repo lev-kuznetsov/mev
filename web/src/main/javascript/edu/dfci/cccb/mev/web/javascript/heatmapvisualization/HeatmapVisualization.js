@@ -134,19 +134,33 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                     	
                     };
             	
-                    $("div.tab-content").on("scroll", function(e){
+                    var eventQ=[];
                     
-                        position = {
-                          top: scrollable.scrollTop(),
-                          height:scrollable.height()
-                	    };
-            		
-                        timer = setTimeout(function(){
-	                    	$scope.$apply(function(){
+                    var totalCounter = 0;
+                    var eventCounter = 0;
+                    $("div.tab-content").on("scroll", function(e){                    	                        
+                        while(eventQ.length>0){
+                        	clearTimeout(eventQ.pop());
+                        	eventCounter--;
+                        	console.debug("cleared", eventCounter, totalCounter, eventQ.length);
+                        }
+                        timer = setTimeout(function(){                        	                                	
+                        	eventCounter--;
+                        	eventQ.pop();
+                        	console.debug("eventCounter", eventCounter, totalCounter, eventQ.length);
+//	                    	$scope.$apply(function(){
+	                    		position = {
+	                                    top: scrollable.scrollTop(),
+	                                    height:scrollable.height()
+	                          	    };
 	                    		$scope.visualization.updateCells(position, $scope.heatmapDataset);
-	                    	});
-                        }, delay);
-                    
+//	                    	});
+	                    	
+                        }, 100);
+                        eventQ.push(timer);
+                        totalCounter++;
+                        eventCounter++;
+	                    
                     });
                 	
                 	d3.select('vis-Heatmap').append('svg').attr('id', 'svg-Window');

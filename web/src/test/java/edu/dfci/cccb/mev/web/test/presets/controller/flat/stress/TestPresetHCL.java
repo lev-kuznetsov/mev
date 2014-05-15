@@ -50,6 +50,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
+import edu.dfci.cccb.mev.hcl.rest.configuration.HclRestConfiguration;
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
@@ -75,6 +76,7 @@ import edu.dfci.cccb.mev.web.test.presets.controller.flat.large.TestJooqCursorGB
                                DatasetRestConfiguration.class,
                                PresetRestPerfConfig.class,
                                ProbeAnnotationsConfigurationMain.class,
+                               HclRestConfiguration.class
                                })
 public class TestPresetHCL {
 
@@ -108,8 +110,8 @@ public class TestPresetHCL {
 
   }
   
-  @Test  @Ignore
-  @PerfTest(invocations=1, threads=1)
+  @Test  
+  @PerfTest(invocations=40, threads=40)
   public void test() throws Exception{    
 //    internalRun (mockMvc, "LUSC.HT_HG-U133A.Level_3.tsv", "LUSC/Level_3");    
     Random rand = new Random();
@@ -147,25 +149,27 @@ public class TestPresetHCL {
     log.debug("dataset.name: "+presetDataset.name ());
         
     workspace.put (presetDataset);
-    Timer timer = Timer.start ("SELECTION:POST");
-    this.mockMvc.perform(post("/dataset/preset_test/column/selection").param ("format", "json")
-                                            .session (mocksession)
-                                            .accept("application/json")
-                                            .contentType(MediaType.APPLICATION_JSON)
-                                            .content ("{\"name\":\"sss\",\"properties\":{\"selectionDescription\":\"\",\"selectionColor\":\"#bbceb3\"},"+
-                                            "\"keys\":[\""+presetDataset.dimension (Type.COLUMN).keys ().get (0)+"\"]}")
-                                            )            
-            .andExpect (status ().isOk ())
-            .andReturn ();
-    log.debug(presetDataset.dimension (Type.COLUMN).selections ().getAll ());
-    timer.read ("selection posted");
+//    Timer timer = Timer.start ("SELECTION:POST");
+//    this.mockMvc.perform(post("/dataset/preset_test/column/selection").param ("format", "json")
+//                                            .session (mocksession)
+//                                            .accept("application/json")
+//                                            .contentType(MediaType.APPLICATION_JSON)
+//                                            .content ("{\"name\":\"sss\",\"properties\":{\"selectionDescription\":\"\",\"selectionColor\":\"#bbceb3\"},"+
+//                                            "\"keys\":[\""+presetDataset.dimension (Type.COLUMN).keys ().get (0)+"\"]}")
+//                                            )            
+//            .andExpect (status ().isOk ())
+//            .andReturn ();
+//    log.debug(presetDataset.dimension (Type.COLUMN).selections ().getAll ());
+//    timer.read ("selection posted");
     
-    timer = Timer.start ("HCL:POST");
+    Timer timer = Timer.start ("HCL:POST");
+    String jsonHclPayload = "{\"name\":\"test_hcl\",\"dimension\":\"column\",\"metric\":\"euclidean\",\"linkage\":\"complete\"}";
+    log.debug("jsonHclPayload:"+jsonHclPayload);
     this.mockMvc.perform(post("/dataset/preset_test/analyze/hcl").param ("format", "json")
                                             .session (mocksession)
                                             .accept("application/json")
                                             .contentType(MediaType.APPLICATION_JSON)
-                                            .content ("{\"name\":\"test_hcl\",\"dimension\":\"column\",\"metric\":\"euclidean\",\"linkage\":\"complete\"}")
+                                            .content (jsonHclPayload)
                                             )            
             .andExpect (status ().isOk ())
             .andReturn ();
