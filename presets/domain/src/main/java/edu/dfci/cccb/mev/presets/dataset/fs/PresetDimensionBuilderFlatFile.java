@@ -37,8 +37,7 @@ public class PresetDimensionBuilderFlatFile extends AbstractPresetDimensionBuild
       return rowCasche.get (descriptor.name ());
     else{
       List<String> keys = getKeys (descriptor.rowListUrl());
-      rowCasche.put(descriptor.name (), keys);
-      log.debug ("###fetched dimension for "+descriptor.name ());
+      rowCasche.put(descriptor.name (), keys);      
       return keys;
     }
   }
