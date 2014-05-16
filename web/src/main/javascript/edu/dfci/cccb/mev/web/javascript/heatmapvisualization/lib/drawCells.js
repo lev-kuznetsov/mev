@@ -10,64 +10,60 @@ define(['./cellFilter', 'd3', 'qtip'], function(cellFilter, d3, qtip){
 		labels.row.map(function(row){
 		    return labels.column.map(function(col){
 		        labelPairs.push([row, col]);
-		    })
+		    });
 		});
-		
-		self.shownCells = labelPairs.map(function(pair){ return ds.expression.get(pair)});
-		
+		self.shownCells = labelPairs.map(function(pair){ return ds.expression.get(pair);});
 		
 		
-		var newCells = self.DOM.heatmapCells.selectAll('rect').data(self.shownCells, function(k){
-			return [k.row, k.column]
-		})
-		
-		
+		var allCells = self.DOM.heatmapCells.selectAll('rect');		
+		var newCells = allCells.data(self.shownCells, function(k){
+				return k.row+";"+k.column;
+			}
+		);
 		
 		newCells.enter().append('rect')
 			.attr({
-				x : function(d){ return self.scales.cells.xScale(d.column) },
-				y : function(d){ return self.scales.cells.yScale(d.row) },
+				x : function(d){ return self.scales.cells.xScale(d.column);},
+				y : function(d){ return self.scales.cells.yScale(d.row);},
 				height: self.params.cell.height - self.params.cell.padding,
 				width: self.params.cell.width - self.params.cell.padding,
-				fill: function(d){return self.scales.cells.colorScale(d.value) },
-				'cell-value': function(d) { return d.value },
-				'cell-column': function(d) { return d.column },
-				'cell-row': function(d) { return d.row },
+				fill: function(d){return self.scales.cells.colorScale(d.value);},
+				'cell-value': function(d) { return d.value;},
+				'cell-column': function(d) { return d.column;},
+				'cell-row': function(d) { return d.row;},
 				
-			})
+			});
 		
-		newCells.exit().remove()
+		newCells.exit().remove();
+		var rowLabels = self.DOM.labels.row.selectAll('text').data(labels.row, function(k){return k;}),
+		colLabels = self.DOM.labels.column.selectAll('text').data(labels.column, function(k){return k;});
 		
-		var rowLabels = self.DOM.labels.row.selectAll('text').data(labels.row, function(k){return k}),
-		colLabels = self.DOM.labels.column.selectAll('text').data(labels.column, function(k){return k});
-			
 		rowLabels.enter().append('text')
             .attr({
             	x: self.params.panel.side.width
               	+ ( self.view.labels.column.keys.length * self.params.cell.width)
               	+ self.params.selections.row.width,
-            	y: function(d){return self.scales.cells.yScale(d) + self.params.cell.height },
+            	y: function(d){return self.scales.cells.yScale(d) + self.params.cell.height;},
             	"text-anchor": "bottom"
             })
             .text(function(d){
-            	return d
+            	return d;
             })
-            .append('title').text(function(d){ return d });
+            .append('title').text(function(d){ return d;});
 		
 		colLabels.enter().append('text')
 		    .attr('transform', 'rotate(-90)')
             .attr({
                 x: - (self.params.panel.top.height
                 + self.params.labels.column.height),
-                y: function(d){return  self.scales.cells.xScale(d) + .68*self.params.cell.width },
+                y: function(d){return  self.scales.cells.xScale(d) + .68*self.params.cell.width;},
                 "text-anchor": "start"
             })
             
             .text(function(d){
                 return d.slice(0, 13);
             })
-            .append('title').text(function(d){ return d });
-        
+            .append('title').text(function(d){ return d });		
         rowLabels.exit().remove();
 		
 		colLabels.exit().remove();
@@ -81,42 +77,43 @@ define(['./cellFilter', 'd3', 'qtip'], function(cellFilter, d3, qtip){
 			.range([300, 80]);
 		
 		var labelColorScale = d3.scale.linear().domain([0, rands.length-1])
-			.range([self.view.expression.min, self.view.expression.max])
+			.range([self.view.expression.min, self.view.expression.max]);
 			
-		self.DOM.legend.selectAll("rect").remove()
+		self.DOM.legend.selectAll("rect").remove();
 		self.DOM.legend.selectAll("rect").data(rands).enter().append("rect")
 		.attr({
-			x : function(d, i){ return 30},
-			y : function(d){ return labelYScale(d) },
+			x : function(d, i){ return 30;},
+			y : function(d){ return labelYScale(d);},
 			height: labelYScale(0) - labelYScale(1) +1,
 			width: 50,
-			fill: function(d){return self.scales.cells.colorScale(labelColorScale(d)) }
+			fill: function(d){return self.scales.cells.colorScale(labelColorScale(d));}
 			
-		})
+		});
 		
 		self.DOM.legend.selectAll("text").data(rands).enter()
         .append("text")
         .attr({
             x: 90,
-            y:function(d,i){return labelYScale(d) + 7},
+            y:function(d,i){return labelYScale(d) + 7;},
             'style':'font-size:10',
             'text-anchor':'start'
         })
         .text(function(j, i){
         	
         	var d = labelColorScale(j);
-            var returnstring = String(d).split(".")[0]
+            var returnstring = String(d).split(".")[0];
             if (returnstring.length > 1){
-                returnstring = returnstring + "." + String(d).split(".")[1].slice(0,3)
+                returnstring = returnstring + "." + String(d).split(".")[1].slice(0,3);
             }
             
-            ticks = [0, Math.floor((rands.length-1)*.25), Math.floor((rands.length-1)*.5), Math.floor((rands.length-1)*.75), rands.length-1]
+            ticks = [0, Math.floor((rands.length-1)*.25), Math.floor((rands.length-1)*.5), Math.floor((rands.length-1)*.75), rands.length-1];
             
-            return (ticks.indexOf(i)>-1)? returnstring :""
+            return (ticks.indexOf(i)>-1)? returnstring :"";
         }).append("title")
             .text(function(d, i){
                 return labelColorScale(d);
-            })
+            });
+            
 		
-	}
-})
+	};
+});

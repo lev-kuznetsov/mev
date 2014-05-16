@@ -134,19 +134,25 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                     	
                     };
             	
+                    var eventQ=[];
                     $("div.tab-content").on("scroll", function(e){
-                    
-                        position = {
-                          top: scrollable.scrollTop(),
-                          height:scrollable.height()
-                	    };
-            		
+                    	//remove unhandled scholl events from the queue
+                        while(eventQ.length>0){
+                        	clearTimeout(eventQ.pop());
+                        }
+                        
+                        //create a new event handler and put it on the work queue
                         timer = setTimeout(function(){
-	                    	$scope.$apply(function(){
-	                    		$scope.visualization.updateCells(position, $scope.heatmapDataset);
-	                    	});
-                        }, delay);
-                    
+                        	//we are handling the event, so remove it from the queue
+                        	eventQ.pop();                        	
+                    		position = {
+                                    top: scrollable.scrollTop(),
+                                    height:scrollable.height()
+                          	    };
+                    		$scope.visualization.updateCells(position, $scope.heatmapDataset);
+	                    	
+                        }, 100);                        
+                        eventQ.push(timer);	                    
                     });
                 	
                 	d3.select('vis-Heatmap').append('svg').attr('id', 'svg-Window');

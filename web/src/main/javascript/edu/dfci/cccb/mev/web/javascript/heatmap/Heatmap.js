@@ -66,7 +66,6 @@ define(['jquery',
                     project : '=project',
                 },
                 link: function(scope, element, attrs) {
-                    
                     scope.applyToHeatmap=function(){
                         
                         scope.project.generateView({
