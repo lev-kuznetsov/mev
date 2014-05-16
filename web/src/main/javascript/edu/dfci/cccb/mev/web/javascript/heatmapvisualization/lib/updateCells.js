@@ -16,15 +16,14 @@ define([], function(){
             
             var numRows = Math.floor( (position.top + position.height- totalTop ) / heatmapCellHeight ) 
                 + 30
-            var startRow = 0
-            var endRow = numRows
+            var startRow = 0;
+            var endRow = numRows;
         
         } else {
         	
             var startRow = Math.floor( (position.top - totalTop) / heatmapCellHeight ) - 10
             var numRows =  ( ( position.height) / heatmapCellHeight) 
             var endRow = startRow + numRows + 30
-            console.log(startRow, numRows, endRow)
         }
 
         var labels = {
