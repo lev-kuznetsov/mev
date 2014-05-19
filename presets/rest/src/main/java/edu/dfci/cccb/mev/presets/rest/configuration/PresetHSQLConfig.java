@@ -34,7 +34,7 @@ import lombok.extern.log4j.Log4j;
   @PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true)
 })
 @Import({PresetPersistenceConfiguration.class})
-public class PresetHSQLConfigX {
+public class PresetHSQLConfig {
   private final static String TCGA_PROPERTY_DATASET_RELOAD_FLAG="mev.presets.tcga.data.reload";
   @Inject Environment environment;
   
