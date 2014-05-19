@@ -87,7 +87,7 @@ define(['jquery','angular'], function(jquery, angular){
                    name: $scope.selectionParams[dimension].name,
                    properties: {
                        selectionDescription: '',
-                           selectionColor: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16),                     
+                           selectionColor: '#'+('00000'+(Math.random()*0xFFFFFF<<0)).toString(16).substr(-6),                     
                        },
                         keys: selectedSets
                     }
@@ -215,22 +215,23 @@ define(['jquery','angular'], function(jquery, angular){
 			     };
 			};		
 			
-			$scope.addItem = function(item){				
-				$scope.$apply(function(){
-					
-//					if(item.dimension.toLowerCase()=="column"){
-						//remove selection if already present
-						var dimension = item.dimension.toLowerCase();
-						$scope.dataset[dimension].selections = jquery.grep($scope.dataset[dimension].selections, function(e, i){
-								return e.name==item.name;
-							}, true);
-						//re-add the updated selection
-						$scope.dataset[dimension].selections.push(item);
-//					}else{
-//						$scope.dataset.row.selections = jquery.grep($scope.dataset.row.selections, function(e, i){return e.name==item.name;}, true);
-//						$scope.dataset.row.selections.push(item);						
-//					}
-				});
+			$scope.addItem = function(item){		
+//ap:no need to manually add selection to the dataset because we'll reload them from the server by emitting the 'SelectionAddedEvent'				
+//				$scope.$apply(function(){
+//					
+////					if(item.dimension.toLowerCase()=="column"){
+//						//remove selection if already present
+//						var dimension = item.dimension.toLowerCase();
+//						$scope.dataset[dimension].selections = jquery.grep($scope.dataset[dimension].selections, function(e, i){
+//								return e.name==item.name;
+//							}, true);
+//						//re-add the updated selection
+//						$scope.dataset[dimension].selections.push(item);
+////					}else{
+////						$scope.dataset.row.selections = jquery.grep($scope.dataset.row.selections, function(e, i){return e.name==item.name;}, true);
+////						$scope.dataset.row.selections.push(item);						
+////					}
+//				});
 				$scope.$emit('SeletionAddedEvent', item.dimension.toLowerCase());
 			};
 			

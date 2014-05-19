@@ -79,8 +79,8 @@ define(['jquery',
                                 max: scope.project.dataset.expression.max,
                                 avg: scope.project.dataset.expression.avg,
                             }
-                        });
-                    
+                        });                        
+                        scope.$emit('ViewVisualizeTabEvent');
                     };
                     
                 }

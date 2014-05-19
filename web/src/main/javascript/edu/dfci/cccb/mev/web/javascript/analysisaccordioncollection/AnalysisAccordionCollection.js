@@ -103,7 +103,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             panel: {side: scope.analysis}
                         });
                     }
-                    
+                    scope.$emit('ViewVisualizeTabEvent');
                 };
                 
             }
@@ -233,7 +233,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             avg: scope.project.dataset.expression.avg,
                         }
                     });
-
+                    scope.$emit('ViewVisualizeTabEvent');
                     
                 };
             }
@@ -379,7 +379,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             avg: scope.project.dataset.expression.avg,
                         }
                     });
-
+                    scope.$emit('ViewVisualizeTabEvent');
                     
                 };
                 
@@ -511,8 +511,8 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     filtered = $filter('orderBy')(filtered, scope.tableOrdering);
                     scope.filteredResults = filtered;
                     
-                    console.debug("scope.filterParams", scope.filterParams);
-                    console.debug("filteredResults.length", scope.filteredResults.length);
+//                    console.debug("scope.filterParams", scope.filterParams);
+//                    console.debug("filteredResults.length", scope.filteredResults.length);
                     
                     return scope.filteredResults;
                 }
@@ -533,7 +533,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             avg: scope.project.dataset.expression.avg,
                         }
                     });
-
+                    scope.$emit('ViewVisualizeTabEvent');
                     
                 };
             }
@@ -588,7 +588,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             panel: {side: scope.analysis}
                         });
                     }
-                    
+                    scope.$emit('ViewVisualizeTabEvent');
                 };
                 
                 function traverse(tree) {
