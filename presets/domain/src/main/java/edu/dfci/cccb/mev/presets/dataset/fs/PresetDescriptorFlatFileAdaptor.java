@@ -2,7 +2,6 @@ package edu.dfci.cccb.mev.presets.dataset.fs;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,8 +9,6 @@ import lombok.Delegate;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
-import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListSelections;
-import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.dal.TsvReader;

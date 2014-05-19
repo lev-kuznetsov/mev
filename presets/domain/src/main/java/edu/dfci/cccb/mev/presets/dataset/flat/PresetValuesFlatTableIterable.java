@@ -23,11 +23,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.Synchronized;
-import lombok.experimental.Accessors;
 import lombok.extern.log4j.Log4j;
 
-import org.javatuples.Triplet;
-import org.javatuples.Tuple;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -37,13 +34,10 @@ import org.jooq.Table;
 
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.google.common.cache.RemovalListener;
-import com.google.common.cache.RemovalNotification;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Value;
-import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleValue;
 import edu.dfci.cccb.mev.presets.contract.PresetValues;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
@@ -239,8 +233,8 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
       //return getInternal (row, column);
     try {
         if(CACHE.getIfPresent(new CacheKey (row, column))==null){
-          log.debug ("Refresh the CACHE, culprit: "+row+","+column);
-          for(Value value : this){
+          log.debug ("Refresh the CACHE, culprit: "+row+","+column);          
+          for(@SuppressWarnings("unused") Value value : this){
             //if one record is missing the most likely all are
             //refresh the whole cache
             //This is a temporary hack until we extend the Dataset api to support better prefetching

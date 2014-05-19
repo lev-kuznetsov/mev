@@ -1,6 +1,5 @@
 package edu.dfci.cccb.mev.web.test.presets.controller.flat.stress;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -16,13 +15,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
 
-import lombok.Synchronized;
 import lombok.extern.log4j.Log4j;
 
 import org.databene.contiperf.PerfTest;
 import org.databene.contiperf.junit.ContiPerfRule;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -56,15 +53,10 @@ import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
 import edu.dfci.cccb.mev.presets.contract.Presets;
-import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
-import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
 import edu.dfci.cccb.mev.presets.util.timer.Timer;
-import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
-import edu.dfci.cccb.mev.test.presets.tools.PresetsRestToolConfiguration;
 import edu.dfci.cccb.mev.web.configuration.DispatcherConfiguration;
 import edu.dfci.cccb.mev.web.configuration.PersistenceConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
-import edu.dfci.cccb.mev.web.test.presets.controller.flat.large.TestJooqCursorGBMLevel2Configuration;
 
 @Log4j
 @WebAppConfiguration
@@ -88,8 +80,8 @@ public class TestPresetHCL {
   private @Inject PresetDimensionBuilder dimensionBuilder;
   private @Inject Presets presets;
   
-  private URL dataRootUrl;
-  private URL annotationsRootUrl ;  
+  @SuppressWarnings("unused") private URL dataRootUrl;
+  @SuppressWarnings("unused") private URL annotationsRootUrl ;  
   @PostConstruct
   public void init() throws MalformedURLException, InterruptedException{
     this.dataRootUrl = new URL("file://"+environment.getProperty ("user.home")+"/mev/data/tcga/tcga_data/");    
@@ -103,7 +95,6 @@ public class TestPresetHCL {
   
   @Rule
   public ContiPerfRule i = new ContiPerfRule ();
-  private static int testCount=0;
   
   @Before
   public void setup() throws InterruptedException {

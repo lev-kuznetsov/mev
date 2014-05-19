@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import edu.dfci.cccb.mev.anova.domain.contract.Anova.Entry;
-import edu.dfci.cccb.mev.anova.domain.prototype.AbstractAnovaBuilder;
 
 
 public class EntryJsonSerializer extends JsonSerializer<Entry>{

@@ -60,8 +60,6 @@ import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.DimensionTypeJsonSeri
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDatasetJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDimensionJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleSelectionJsonSerializer;
-import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleSelectionsJsonSerializer;
-import edu.dfci.cccb.mev.dataset.rest.assembly.text.SelectionsTextMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.SelectionsTsvMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver;

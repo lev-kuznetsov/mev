@@ -16,7 +16,6 @@ import java.util.Map;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.Synchronized;
-import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.anova.domain.prototype.AbstractAnova;
 import edu.dfci.cccb.mev.anova.domain.prototype.AbstractAnovaBuilder;
 import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;

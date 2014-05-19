@@ -14,7 +14,6 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
-import java.util.List;
 import java.util.Map;
 
 /**

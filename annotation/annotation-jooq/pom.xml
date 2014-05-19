@@ -35,6 +35,12 @@
 	      <version>BAYLIE-SNAPSHOT</version>
 	    </dependency>
 		
+		<!-- MeV Annotations Server -->
+		<dependency>
+	      <groupId>edu.dfci.cccb</groupId>
+	      <artifactId>mev-annotation-server</artifactId>
+	      <version>BAYLIE-SNAPSHOT</version>
+	    </dependency>
 		
 	    <!-- jOOQ -->
 	    <dependency>

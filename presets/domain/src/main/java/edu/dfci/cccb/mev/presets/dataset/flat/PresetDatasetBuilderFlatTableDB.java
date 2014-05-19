@@ -19,13 +19,11 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SharedCacheValues;
-import edu.dfci.cccb.mev.dataset.domain.simple.SharedCachedValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDataset;
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
-import edu.dfci.cccb.mev.presets.contract.PresetValues;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 
 @Log4j

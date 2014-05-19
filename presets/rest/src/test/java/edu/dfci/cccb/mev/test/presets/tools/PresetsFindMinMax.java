@@ -1,42 +1,29 @@
 package edu.dfci.cccb.mev.test.presets.tools;
 
-import static org.junit.Assert.*;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
-
-import javassist.tools.reflect.Sample;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.Accessors;
-import lombok.extern.log4j.Log4j;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetDomainBuildersConfiguration;
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
 import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
-import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
-import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={DatasetDomainBuildersConfiguration.class, PresetsRestToolConfiguration.class, ProbeAnnotationsPersistanceConfigTool.class})

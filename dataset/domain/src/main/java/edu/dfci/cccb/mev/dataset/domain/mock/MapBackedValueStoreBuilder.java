@@ -18,10 +18,7 @@ import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import javax.management.RuntimeErrorException;
 
 import lombok.EqualsAndHashCode;
 import lombok.Synchronized;
