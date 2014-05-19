@@ -23,12 +23,10 @@ import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.using;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.management.RuntimeErrorException;
 import javax.sql.DataSource;
 
 import lombok.ToString;

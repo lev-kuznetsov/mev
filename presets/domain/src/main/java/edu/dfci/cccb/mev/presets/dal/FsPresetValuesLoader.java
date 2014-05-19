@@ -1,8 +1,6 @@
 package edu.dfci.cccb.mev.presets.dal;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.inject.Inject;
@@ -25,6 +23,8 @@ public class FsPresetValuesLoader implements PresetValuesLoader {
 
   @Setter @Inject private DatasetBuilder datasetBuilder;
   
+  //replace mulitple "/" in the URL with  a single "/"
+  @SuppressWarnings("unused")
   private String formatFilePath(String filePath){
     return filePath.replaceFirst ("[/]{2,}", "/");
  }

@@ -15,14 +15,11 @@
 package edu.dfci.cccb.mev.dataset.rest.assembly.tsv;
 
 import static ch.lambdaj.Lambda.join;
-import static org.springframework.http.MediaType.TEXT_PLAIN;
-
 import java.io.IOException;
 import java.io.PrintStream;
 
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
-import org.springframework.http.converter.AbstractHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 

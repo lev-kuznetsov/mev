@@ -10,21 +10,16 @@ import org.jooq.DSLContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 
-import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetValuesLoader;
-import edu.dfci.cccb.mev.presets.contract.Presets;
-import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.dal.HSQLPresetLoader;
 import edu.dfci.cccb.mev.presets.dataset.flat.PresetDatasetBuilderFlatTableDB;
 import edu.dfci.cccb.mev.presets.dataset.flat.PresetDimensionBuilderFlatTable;
-import edu.dfci.cccb.mev.presets.dataset.fs.PresetDimensionBuilderFlatFile;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -34,7 +29,7 @@ import lombok.extern.log4j.Log4j;
   @PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true)
 })
 @Import({PresetPersistenceConfiguration.class})
-public class PresetHSQLConfigX {
+public class PresetHSQLConfig {
   private final static String TCGA_PROPERTY_DATASET_RELOAD_FLAG="mev.presets.tcga.data.reload";
   @Inject Environment environment;
   

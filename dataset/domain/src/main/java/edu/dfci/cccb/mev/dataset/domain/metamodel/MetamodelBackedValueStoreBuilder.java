@@ -23,13 +23,11 @@ import static java.util.UUID.randomUUID;
 import static org.eobjects.metamodel.schema.ColumnType.DOUBLE;
 import static org.eobjects.metamodel.schema.ColumnType.VARCHAR;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.management.RuntimeErrorException;
 import javax.sql.DataSource;
 
 import lombok.Getter;

@@ -14,10 +14,7 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.simple;
 
-import java.util.List;
 import java.util.Map;
-
-import javax.management.RuntimeErrorException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

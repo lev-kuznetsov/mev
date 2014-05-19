@@ -23,15 +23,10 @@ import java.util.concurrent.TimeUnit;
 
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import lombok.extern.log4j.Log4j;
-
 import org.javatuples.Triplet;
 
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.google.common.cache.RemovalListener;
-import com.google.common.cache.RemovalNotification;
-
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValues;
@@ -42,7 +37,6 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValues;
  */
 @ToString
 @RequiredArgsConstructor
-@Log4j
 public class SharedCacheValues extends AbstractValues implements AutoCloseable {
 
   private static final TimeUnit DURATION_UNIT = SECONDS;

@@ -4,14 +4,10 @@ import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
-import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListSelections;
-import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 
-
-
-@Log4j
+@SuppressWarnings ("unused")
 public abstract class AbstractPresetDimensionBuilder {
 
   public AbstractPresetDimensionBuilder () {

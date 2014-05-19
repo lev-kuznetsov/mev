@@ -8,15 +8,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
-import org.springframework.util.ResourceUtils;
-
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatform;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatformFactory;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatforms;
@@ -26,9 +21,7 @@ import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationE
 import edu.dfci.cccb.mev.annotation.domain.probe.factory.DBProbeAnnotationsFactory;
 import edu.dfci.cccb.mev.annotation.domain.probe.metafile.MetafileProbeAnnotationPlatform;
 import edu.dfci.cccb.mev.annotation.domain.probe.metafile.MetafileProbeAnnotationPlatforms;
-import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
 
-@Log4j
 @Configuration
 @Import({ProbeAnnotationsFilesConfiguration.class, ProbeAnnotationsPersistenceConfiguration.class, ProbeAnnotationsLoaderConfiguration.class})
 public class ProbeAnnotationsConfigurationMain {

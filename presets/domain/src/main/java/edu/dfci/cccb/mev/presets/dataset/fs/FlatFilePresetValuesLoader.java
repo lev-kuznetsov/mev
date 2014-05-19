@@ -2,7 +2,6 @@ package edu.dfci.cccb.mev.presets.dataset.fs;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -12,9 +11,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.naming.OperationNotSupportedException;
-
-import org.apache.commons.io.FilenameUtils;
-import org.jooq.tools.StringUtils;
 
 import com.google.common.base.Joiner;
 
