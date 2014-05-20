@@ -37,7 +37,7 @@
 								   			<span class="input-group-addon" ng-hide="header.icon | isArray">{{header.icon}}</span>
 								   			<span class="input-group-addon" ng-show="header.icon | isArray">
 									   			<select ng-model="filterParams[header.field].op">
-									   				<option ng-repeat="icon in header.icon">{{icon}}</option>
+									   				<option ng-repeat="icon in header.icon track by $index">{{icon}}</option>
 									   			</select>
 								   			</span>
 								   			<input type="text" class="form-control input-small" ng-model="filterParams[header.field].value">
