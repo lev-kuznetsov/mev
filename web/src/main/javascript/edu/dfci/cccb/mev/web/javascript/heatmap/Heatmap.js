@@ -66,7 +66,6 @@ define(['jquery',
                     project : '=project',
                 },
                 link: function(scope, element, attrs) {
-                    
                     scope.applyToHeatmap=function(){
                         
                         scope.project.generateView({
@@ -80,8 +79,8 @@ define(['jquery',
                                 max: scope.project.dataset.expression.max,
                                 avg: scope.project.dataset.expression.avg,
                             }
-                        });
-                    
+                        });                        
+                        scope.$emit('ViewVisualizeTabEvent');
                     };
                     
                 }
@@ -94,22 +93,43 @@ define(['jquery',
         '$location',
         'DatasetResourceService',
         'ProjectFactory',
-        function($scope, $routeParams,  $loc,DatasetResourceService, ProjectFactory) {
+        function($scope, $routeParams,  $loc, DatasetResourceService, ProjectFactory) {
 			
-			//case where there's no datasetName
-			if (!$routeParams.datasetName) {
+			function showLoadingModal(){
+				$('#loading').modal('show');
+			};
+			
+			function hideLoadingModal(){
 				$('#loading').modal('hide');
+			};
+			
+			
+			function downloadFailure(){
+				hideLoadingModal()
 				$loc.path('/datasets'); //return back to datasets
 				return
 			};
 			
+			//case where there's no datasetName
+			if (!$routeParams.datasetName) {
+				downloadFailure();
+			};
+			
 			$scope.project = undefined;
 			
+			
+			
 			//Build the project after getting datasetResponseObject
+			
+			showLoadingModal();
+			
 			DatasetResourceService.get({
 				datasetName: $routeParams.datasetName
 			}, function(response){
 			    $scope.project = ProjectFactory($routeParams.datasetName, response);
+			    hideLoadingModal();
+			}, function(error){
+				downloadFailure();
 			});
 			
 			//Generate views and load analyses

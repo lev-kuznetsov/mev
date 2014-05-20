@@ -23,6 +23,8 @@ import static java.util.UUID.randomUUID;
 import static org.eobjects.metamodel.schema.ColumnType.DOUBLE;
 import static org.eobjects.metamodel.schema.ColumnType.VARCHAR;
 
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -95,5 +97,12 @@ public class MetamodelBackedValueStoreBuilder extends AbstractValueStoreBuilder 
   @Synchronized
   public Values build () {
     return store;
+  }
+
+  @Override
+  public Values build (Map<String,Integer> row, Map<String, Integer> columns) {
+    //TODO:fix - this is needed by the FlatFileValueStoreBuilder, 
+    //Here, we just do the same as the build() method - need to find a nice way of doing this 
+    return build();
   }
 }

@@ -17,6 +17,9 @@ package edu.dfci.cccb.mev.dataset.domain.fs;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
@@ -26,7 +29,7 @@ public class FlatFileValuesTest {
   @Test
   public void builder () throws Exception {
     try (FlatFileValueStoreBuilder builder = new FlatFileValueStoreBuilder ()) {
-
+      
       builder.add (.1, "r1", "c1");
       builder.add (.2, "r1", "c2");
       builder.add (.3, "r2", "c1");
@@ -34,7 +37,15 @@ public class FlatFileValuesTest {
       builder.add (.5, "r3", "c1");
       builder.add (.6, "r3", "c2");
 
-      Values values = builder.build ();
+      Map<String, Integer> rowKeys = new LinkedHashMap<String, Integer> (2);
+      rowKeys.put ("r1", 0);
+      rowKeys.put ("r2", 1);
+      
+      Map<String, Integer> columnKeys = new LinkedHashMap<String, Integer> (2);
+      columnKeys.put ("c1", 0);
+      columnKeys.put ("c2", 1);
+      
+      Values values = builder.build (rowKeys, columnKeys);
 
       assertThat (values.get ("r1", "c1"), is (.1));
       assertThat (values.get ("r2", "c1"), is (.3));

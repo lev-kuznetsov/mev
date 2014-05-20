@@ -5,19 +5,16 @@
 		                    				
 			<h3 class="pull-left analysis-results-header">Results</h3>
 			<div class="btn-toolbar pull-right" role="toolbar">
-				<button class="btn btn-success" >
-	                <a href="/dataset/{{dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
-	                  <i class="icon-white icon-download"></i> Download
-	                </a> 
-	            </button>
-	            
-	            <button class="btn btn-info" >
-	                <a data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
-	                  </i> Create Selections From Results
-	                </a> 
-	            </button>
-	            
-	            <button class="btn btn-success" ng-click="applyToHeatmap()" >
+                <a class="btn btn-success" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
+                  <i class="icon-white icon-download"></i> Download
+                </a> 
+            
+                <a class="btn btn-info" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
+                  </i> Create Selections
+                </a> 
+            
+	            <!-- disable for beta1 -->
+	            <button ng-hide="true" class="btn btn-success" ng-click="applyToHeatmap()" >
 	                <a>
 	                  </i> View Genes on Heatmap
 	                </a> 
@@ -36,10 +33,14 @@
 	                          		<p ng-click="reorderLimmaTable(header)">
 								    	 <span class="caret" ></span>{{header.name}}
 								    	 <div class="input-group" ng-hide="header.icon == 'none'">
-								    		<span class="input-group-addon" ng-hide="header.icon != 'search'"><span class="glyphicon glyphicon-search"></span></span>
-								   			<span class="input-group-addon" ng-hide="header.icon == 'search'">{{header.icon}}</span>
-								   			
-								   			<input type="text" class="form-control input-small" ng-model="filterParams[header.value]">
+								    		<span class="input-group-addon" ng-show="header.icon == 'search'"><span class="glyphicon glyphicon-search"></span></span>
+								   			<span class="input-group-addon" ng-hide="header.icon | isArray">{{header.icon}}</span>
+								   			<span class="input-group-addon" ng-show="header.icon | isArray">
+									   			<select ng-model="filterParams[header.field].op">
+									   				<option ng-repeat="icon in header.icon track by $index">{{icon}}</option>
+									   			</select>
+								   			</span>
+								   			<input type="text" class="form-control input-small" ng-model="filterParams[header.field].value">
 								   		</div>	
 									</p>
 									
@@ -48,7 +49,7 @@
 	                        </tr>
 						</thead>
                         <tbody>
-                                <tr ng-repeat="row in analysis.results |filter:filterParams.id| filterThreshold: filterParams.pValue : 'pValue' : '<='| filterThreshold: filterParams.logFoldChange : 'logFoldChange' : '>=' | orderBy: tableOrdering ">
+                                <tr ng-repeat="row in applyFilter(analysis.results)">
                                         <td>
                                                 {{row["id"]}}
                                         </td>
@@ -73,7 +74,7 @@
 	</div>
 </accordion-group>
 		
-<bsmodal bindid="selectionAdd{{limma.name}}" func="" header="Add New Selection for {{limma.name}}">
+<bsmodal bindid="{{'selectionAdd' + analysis.name}}" func="" header="{{'Add New Selection for' + analysis.name}}">
 
 	<div class="row">
 	
@@ -86,11 +87,8 @@
 	</div>
 	
 	<div class="row">
-	
-        <button class="btn btn-success pull-right" >
-            <a ng-click="addSelections()" data-dismiss="modal" aria-hidden="true">
-              Create Selections From Results
+            <a ng-click="addSelections()" data-dismiss="modal" aria-hidden="true" class="btn btn-success pull-right">
+              Create Selections
             </a> 
-        </button>
     </div>
 </bsmodal> 

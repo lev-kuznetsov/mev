@@ -1,22 +1,17 @@
 	    <accordion-group heading="{{tTest.type}} : {{tTest.name}}" is-open="isTTestOpen" ng-init="isTTestOpen=false">	   
 	    	
-		            <div  class="results-wrapper" id="tTestResultsTable" ng-hide="!tTest.results">	
+		            <div  class="results-wrapper" id="tTestResultsTable" ng-hide="!tTest.results">		            	
 			        	<div class="results-header clearfix">
-			        	                    				
-            				<h3 class="pull-left analysis-results-header">Results</h3>
             				<div class="btn-toolbar pull-right" role="toolbar">
-                				<button class="btn btn-success" >
-					                <a href="/dataset/{{datasetName}}/analysis/{{tTest.name}}?format=tsv">
-					                  <i class="icon-white icon-download"></i> Download
-					                </a> 
-					            </button>
-					            <button class="btn btn-info" >
-					                <a data-target="#selectionAdd{{tTest.name}}" data-toggle="modal">
-					                  </i> Create Selections From Results
-					                </a> 
-					            </button>
+				                <a class="btn btn-success" href="/dataset/{{project.dataset.datasetName}}/analysis/{{tTest.name}}?format=tsv">
+				                  <i class="icon-white icon-download"></i> Download
+				                </a> 
+				                <a class="btn btn-info" data-target="#selectionAdd{{tTest.name}}" data-toggle="modal">
+				                  </i> Create Selections
+				                </a> 
 					            
-					            <button class="btn btn-success" ng-click="applyToHeatmap()" >
+					            <!-- disable for beta1 -->
+					            <button ng-hide="true" class="btn btn-success" ng-click="applyToHeatmap()" >
 					                <a>
 					                  </i> View Genes on Heatmap
 					                </a> 
@@ -35,11 +30,11 @@
 					                                      	
 					                                      	<div>
 					                                      		<div class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu" ng-click="reorderTTestTable('ID', $event)"> 
-															    	 <span ng-class="getCaretCss(headers['ID'])"  />ID 
+															    	 <span ng-class="getCaretCss(headers['ID'])" ></span>ID
 															    </div>
 															    <div class="input-group">
 															    	<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-															   		<input type="text" class="form-control input-small" ng-model="filterParams.id" placeholder="Filter">
+															   		<input type="text" class="form-control input-small" ng-model="filterParams.id.value" placeholder="Filter">
 															   	</div>																
 					                                      	</div>
 					                                      </th>
@@ -50,8 +45,8 @@
 															    	 <span ng-class="getCaretCss(headers['P-Value'])" ></span>P-Value
 															    </div>
 															    <div class="input-group">
-																    <span class="input-group-addon">&lt;=</span>
-																	<input type="text" class="form-control input-small" placeholder="(ex: 0.05)" ng-model="filterParams.pValueThreshold">
+																    <span class="input-group-addon">{{filterParams.pValueThreshold.op}}</span>
+																	<input type="text" class="form-control input-small" placeholder="(ex: 0.05)" ng-model="filterParams.pValueThreshold.value">
 																</div>																			                            			
 					                                      	</div>					                                      	
 					                                      </th>
@@ -62,8 +57,8 @@
 															    	 <span ng-class="getCaretCss(headers['Log Fold Change'])" ></span>Log Fold Change
 															    </div>
 															    <div class="input-group">
-																    <span class="input-group-addon">&gt;=</span>
-																	<input type="text" class="form-control input-small" placeholder="(ex: 2.0)" ng-model="filterParams.logFoldChange">
+																    <span class="input-group-addon"><select ng-model="filterParams.logFoldChange.op"><option>&gt;=</option><option>&lt;=</option></select></span>
+																	<input type="text" class="form-control input-small" placeholder="(ex: 2.0)" ng-model="filterParams.logFoldChange.value">
 																</div>																			                            			
 					                                      	</div>					                                      	
 					                                      </th>
@@ -72,8 +67,9 @@
 					                                    </tr>
 					                                    </thead>
 					                                    <tbody>
-							                                    <tr ng-repeat="row in tTest.results | filter: filterParams.id | filterThreshold: filterParams.pValueThreshold : 'pValue' | 
-							                                    filterThreshold: filterParams.logFoldChange : 'logFoldChange' : '>=' | orderBy: tTestTableOrdering ">
+<!-- 							                                    <tr ng-repeat="row in tTest.results | filter: filterParams.id | filterThreshold: filterParams.pValueThreshold : 'pValue' |  -->
+<!-- 							                                    filterThreshold: filterParams.logFoldChange : 'logFoldChange' : '>=' | orderBy: tTestTableOrdering "> -->
+							                                    <tr ng-repeat="row in applyFilter(tTest.results)">
 							                                            <td>
 							                                                    {{row["id"]}}
 							                                            </td>
@@ -96,7 +92,7 @@
 				
 		</accordion-group>
 		
-		<bsmodal bindid="selectionAdd{{tTest.name}}" func="" header="Add New Selection for {{tTest.name}}">
+		<bsmodal bindid="{{'selectionAdd' + tTest.name}}" func="" header="Add New Selection for {{tTest.name}}">
 
 			<div class="row">
 			
@@ -108,12 +104,9 @@
 			
 			</div>
 			
-			<div class="row">
-			
-	            <button class="btn btn-success pull-right" >
-	                <a ng-click="addSelections()" data-dismiss="modal" aria-hidden="true">
-	                  Create Selections From Results
-	                </a> 
-	            </button>
+			<div class="row">			
+                <a class="btn btn-success pull-right" ng-click="addSelections()" data-dismiss="modal" aria-hidden="true">
+                  Create Selections
+                </a> 
             </div>
 		</bsmodal> 

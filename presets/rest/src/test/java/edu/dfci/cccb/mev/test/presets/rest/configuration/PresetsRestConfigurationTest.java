@@ -34,6 +34,7 @@ public class PresetsRestConfigurationTest extends WebMvcConfigurerAdapter{
   
   @Bean (name="tcgaPresetRoot")
   public URL tcgaPresetRoot() throws IOException{    
+    log.info ("**** TEST Prests Root Config ****");
     return (new ClassPathResource ("tcga/")).getURL ();
   }
 
@@ -51,6 +52,6 @@ public class PresetsRestConfigurationTest extends WebMvcConfigurerAdapter{
       populator.addScript(new ClassPathResource(scriptTestPresetValuesFlatTable));
             
       initializer.setDatabasePopulator(populator);
-      return initializer;
+       return initializer;
   }
 }

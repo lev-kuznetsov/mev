@@ -39,12 +39,12 @@
 		</dependency>
 
 		<!-- Annotations Domain package -->
-		<dependency>
-			<groupId>edu.dfci.cccb</groupId>
-			<artifactId>mev-annotation-jooq</artifactId>
-			<version>BAYLIE-SNAPSHOT</version>
-			<scope>test</scope>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>edu.dfci.cccb</groupId> -->
+<!-- 			<artifactId>mev-annotation-jooq</artifactId> -->
+<!-- 			<version>BAYLIE-SNAPSHOT</version> -->
+<!-- 			<scope>test</scope> -->
+<!-- 		</dependency> -->
 
 
 		<!-- Dataset package -->

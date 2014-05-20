@@ -18,12 +18,8 @@ import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import lombok.EqualsAndHashCode;
@@ -82,16 +78,9 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
     Parser parser;
     for (parser = parser (content); parser.next ();) {
       valueStoreBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));
-//      if (!rows.containsKey (parser.projection (ROW)))
-//        rows.put (parser.projection (ROW), parser.projection (ROW));
-//      if (!columns.containsKey (parser.projection (COLUMN)))
-//        columns.put (parser.projection (COLUMN), parser.projection (COLUMN));
-    }
-    
-//    List<String> rowsList = new ArrayList<String>(rows.values());
-//    List<String> columnsList = new ArrayList<String>(columns.values());
-    
-    return aggregate (content.name (), valueStoreBuilder.build (), analyses (),
+    }    
+    Values values = valueStoreBuilder.build (parser.rowMap (), parser.columnMap ());
+    return aggregate (content.name (), values, analyses (),
                       dimension (ROW, parser.rowKeys (), selections (), annotation ()),
                       dimension (COLUMN, parser.columnKeys (), selections (), annotation ()));
   }
@@ -100,33 +89,22 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
   public Dataset build (RawInput content, Selection columnSelection) throws DatasetBuilderException,
                                                                     InvalidDatasetNameException,
                                                                     InvalidDimensionTypeException {
-    Map<String, String> rows = new LinkedHashMap<String, String> ();
-    Map<String, String> columns = new LinkedHashMap<String, String> ();
     if(log.isDebugEnabled ())
       log.debug ("**selection: " + columnSelection.keys ());
-    for (Parser parser = parser (content); parser.next ();) {
-      if(columnSelection.keys ().contains (parser.projection (COLUMN))){
-        
-//        if(log.isDebugEnabled ())
-//          log.debug("+++adding:"+parser.projection (COLUMN));        
-        
+    Parser parser;
+    for (parser = parser (content); parser.next ();) {
+      String curColumn = parser.projection (COLUMN);
+      
+      if(columnSelection.keys ().contains (curColumn)){
         valueStoreBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));        
-        if (!rows.containsKey (parser.projection (ROW)))
-          rows.put (parser.projection (ROW), parser.projection (ROW));
-        if (!columns.containsKey (parser.projection (COLUMN)))
-          columns.put (parser.projection (COLUMN), parser.projection (COLUMN));
       }else{
-//        if(log.isDebugEnabled ())
-//          log.debug ("---skipping:"+parser.projection (COLUMN));
-        
+        //do nothing
       }
     }
-    List<String> rowsList = new ArrayList<String>(rows.values());
-    List<String> columnsList = new ArrayList<String>(columns.values());
-    
-    return aggregate (content.name (), valueStoreBuilder.build (), analyses (),
-                      dimension (ROW, rowsList, selections (), annotation ()),
-                      dimension (COLUMN, columnsList, selections (), annotation ()));
+    Values values = valueStoreBuilder.build (parser.rowMap (), parser.columnMap ());
+    return aggregate (content.name (), values, analyses (),
+                      dimension (ROW, parser.rowKeys (), selections (), annotation ()),
+                      dimension (COLUMN, parser.columnKeys (), selections (), annotation ()));
   }
 
   protected Analyses analyses () {

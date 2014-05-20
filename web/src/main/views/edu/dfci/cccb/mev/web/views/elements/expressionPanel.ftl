@@ -3,7 +3,7 @@
                        <li><a id="annotationsTabLink" href="#annotationsTabPane" data-toggle="tab" target="_self">Annotations</a></li>
                </ul>
        
-               <div class="tab-content">
+               <div class="tab-content" id="heatmappanecontainer">
                
                        <div class="tab-pane active" id="heatmaptabpane">
                        

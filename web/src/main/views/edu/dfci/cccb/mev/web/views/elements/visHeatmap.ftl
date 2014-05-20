@@ -7,7 +7,8 @@
 		        <input id="columnSelectionName" ng-model="visualization.view.selectionParams.column.name">
 		</div>
 		
-		<button class="btn btn-success btn-block" ng-click="addSelection('column')" data-dismiss="modal" aria-hidden="true">Add Selections</button>
+		<a class="btn btn-default" ng-click="clearSelections('column')">Clear Selections</a>
+		<a class="btn btn-success" ng-click="addSelection('column')" data-dismiss="modal" aria-hidden="true">Add Selections</a>
 		
 		
 	</form>
@@ -21,12 +22,18 @@
 		        <input id="rowSelectionName" ng-model="visualization.view.selectionParams.row.name">
 		</div>
 		
-		<button class="btn btn-success btn-block" ng-click="addSelection('row')" data-dismiss="modal" aria-hidden="true">Add Selections</button>
+		
+		<a class="btn btn-default" ng-click="clearSelections('row')">Clear Selections</a>
+		<a class="btn btn-success" ng-click="addSelection('row')" data-dismiss="modal" aria-hidden="true">Create Selections</a>
 		
 		
 	</form>
 </bsmodal> 
 
 <bsmodal bindid="settingsModal" header="Heatmap Visualization Settings">
-	<heatmap-Settings current-colors="currentColors" available-color-groups="availableColorGroups"></heatmap-Settings>
+	<heatmap-Settings current-colors="currentColors"
+		available-color-groups="availableColorGroups"
+		color-Edge="colorEdge"></heatmap-Settings>
+	<a class="btn btn-primary" ng-click="applyNewRanges()" data-dismiss="modal" aria-hidden="true">Apply New Ranges</a>
+	<a class="btn btn-primary" ng-click="applyDefaultRanges()" data-dismiss="modal" aria-hidden="true" >Revert To Default</a>
 </bsmodal>

@@ -1,6 +1,6 @@
 define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angular, jq, d3){
 	
-	return angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])
+	return angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])	
 	.directive('analysisContentItem', ['$compile', function ($compile) {
         var heirarchicalTemplate = '<hierarchical-Accordion analysis="analysis" project="project"></hierarchical-Accordion>';
         var kMeansTemplate = '<k-Means-Accordion analysis="analysis" project="project"></k-Means-Accordion>';
@@ -103,7 +103,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             panel: {side: scope.analysis}
                         });
                     }
-                    
+                    scope.$emit('ViewVisualizeTabEvent');
                 };
                 
             }
@@ -173,14 +173,14 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                         keys:step3
                     };
                     
-                    scope.dataset.selection.post({
-                        datasetName : scope.dataset.datasetName,
+                    scope.project.dataset.selection.post({
+                        datasetName : scope.project.dataset.datasetName,
                         dimension : scope.selectionParams.dimension
 
                     }, selectionsData,
                     function(response){
                             
-                            scope.dataset.resetSelections('row')
+                            scope.project.dataset.resetSelections('row')
                             var message = "Added " + scope.selectionParams.name + " as new Selection!";
                             var header = "Heatmap Selection Addition";
                     
@@ -233,7 +233,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             avg: scope.project.dataset.expression.avg,
                         }
                     });
-
+                    scope.$emit('ViewVisualizeTabEvent');
                     
                 };
             }
@@ -249,10 +249,11 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             	analysis : "=analysis"
             },
             link : function(scope) {
-
+            	
                 scope.$watch('analysis', function(newval){
                     if (newval){
                         scope.tTest = scope.analysis;
+                        scope.filteredResults=scope.tTest.results;
                     }
                 });
                 
@@ -263,9 +264,32 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 };
                 
                 scope.filterParams = {
-                        'id' : '',
-                        'pValueThreshold' : undefined,
-                        'logFoldChange' : undefined
+    	                'id' : {
+    	                	field: 'id',
+    	                	value: undefined,
+    	                	op: "="
+    	                },
+    	                'logFoldChange' : {
+    	                	field: 'logFoldChange',
+    	                	value: undefined,
+    	                	op: '>='
+    	                },
+    	                'pValueThreshold' : {
+    	                	field: 'pValue',
+    	                	value: 0.05,
+    	                	op: '<='
+    	                }
+                    };
+                scope.applyFilter=function(results){
+                	var filtered = $filter('filter')(scope.tTest.results, {
+                        id: scope.filterParams.id.value
+                    });
+                	filtered= $filter('filterThreshold')(filtered, scope.filterParams.pValueThreshold.value, scope.filterParams.pValueThreshold.field);
+                	filtered= $filter('filterThreshold')(filtered, scope.filterParams.logFoldChange.value, scope.filterParams.logFoldChange.field, scope.filterParams.logFoldChange.op);
+                	filtered = $filter('orderBy')(filtered, scope.tTestTableOrdering);
+                	
+                	scope.filteredResults=filtered;
+                	return scope.filteredResults;
                 };
                 
                 scope.selectionParams = {
@@ -275,34 +299,23 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 
                 scope.addSelections = function(){
                     
-                    var userselections = scope.tTest.results;
-                    
-                    var step1 = $filter('filter')(scope.tTest.results, {
-                        id: scope.filterParams.id
-                    });
-                                                                
-                    var step2= $filter('filterThreshold')(step1, scope.filterParams.pValueThreshold, 'pValue');
-                    var step3= $filter('filterThreshold')(step2, scope.filterParams.logFoldChange, 'logFoldChange');
-                    var step4 = step3.map(function(d){
-                        return d.id
-                    })
-                    
+                    var keys = traverse(scope.filteredResults);
                     var selectionData = {
                         name: scope.selectionParams.name,
                         properties: {
                             selectionDescription: '',
                             selectionColor:scope.selectionParams.color,                     
                         },
-                        keys:step4
+                        keys:keys
                     };
                     
-                    scope.dataset.selections.post({
-                        datasetName : dataset.datasetName,
+                    scope.project.dataset.selection.post({
+                        datasetName : scope.project.dataset.datasetName,
                         dimension : "row"
                 
                     }, selectionData, 
                     function(response){
-                            scope.dataset.resetSelections('row')
+                            scope.project.dataset.resetSelections('row')
                             var message = "Added " + scope.selectionParams.name + " as new Selection!";
                             var header = "Heatmap Selection Addition";
                              
@@ -343,23 +356,16 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     }
                 };
                 
-                function traverse (results) {
-                    var step1 = $filter('filter')(results, {
-                        id: scope.filterParams.id
-                    });
-                                                                
-                    var step2= $filter('filterThreshold')(step1, scope.filterParams.pValueThreshold, 'pValue');
-                    var step3= $filter('filterThreshold')(step2, scope.filterParams.logFoldChange, 'logFoldChange');
-                    var step4 = step3.map(function(d){
+                function traverse (results) {                    
+                    var ids = results.map(function(d){
                         return d.id
-                    })
-                    
-                    return step4;
+                    });                    
+                    return ids;
                 }
                 
                 scope.applyToHeatmap=function(){
                     
-                    var labels = traverse(scope.tTest.results);
+                    var labels = traverse(scope.filteredResults);
 
                     scope.project.generateView({
                         viewType:'heatmapView', 
@@ -373,7 +379,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             avg: scope.project.dataset.expression.avg,
                         }
                     });
-
+                    scope.$emit('ViewVisualizeTabEvent');
                     
                 };
                 
@@ -393,58 +399,64 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             link : function(scope) {
                 
                 scope.headers = [
-	               {'name':'ID', 'value': "id", 'icon': "search"},
-	               {'name':'Log-Fold-Change', 'value': "logFoldChange", 'icon': ">="},
-	               {'name':'Average Expression', 'value': "averageExpression", 'icon': "none"},
-	               {'name':'P-Value', 'value': "pValue", 'icon': "<="},
-	               {'name':'q-Value', 'value' : "qValue", 'icon': "none"}
+	               {'name':'ID', 'field': "id", 'icon': "search"},
+	               {'name':'Log-Fold-Change', 'field': "logFoldChange", 'icon': [">=", "<="]},
+	               {'name':'Average Expression', 'field': "averageExpression", 'icon': "none"},
+	               {'name':'P-Value', 'field': "pValue", 'icon': "<="},
+	               {'name':'q-Value', 'field' : "qValue", 'icon': "<="}
                ];
                 
                 scope.filterParams = {
-	                'id' : '',
-	                'logFoldChange' : undefined,
-	                'pValue' : undefined,
-	                'qValue':undefined
-                }
-                
+	                'id' : {
+	                	field: 'id',
+	                	value: undefined,
+	                	op: "="
+	                },
+	                'logFoldChange' : {
+	                	field: 'logFoldChange',
+	                	value: undefined,
+	                	op: '>='	                	
+	                },
+	                'pValue' : {
+	                	field: 'pValue',
+	                	value: 0.05,
+	                	op: '<='
+	                },
+	                'qValue':{
+	                	field: 'qValue',
+	                	value: undefined,
+	                	op: '<='
+	                }
+                };
+                scope.filteredResults=undefined;
                 scope.selectionParams = {
                     name: undefined,
                     color: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
                 }
                 
-                
+                console.log
                 scope.addSelections = function(){
                     
-                    var userselections = scope.analysis.datar.results;
-                    
-                    var step1 = $filter('filter')(scope.analysis.datar.results, {
-                        id: scope.filterParams.id
-                    });
-                    
-                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.logFold, 'logFoldChange')
-                    var step3= $filter('filterThreshold')(step2, scope.filterParams.pValue, 'pValue')
-                    var step4 = step3.map(function(d){
-                        return d.id
-                    })
-                    
+                    var userselections = getKeys(scope.filteredResults);
+                                        
                     var selectionData = {
                         name: scope.selectionParams.name,
                         properties: {
                             selectionDescription: '',
                             selectionColor:scope.selectionParams.color,                     
                         },
-                        keys:step4
+                        keys:userselections
                     };
                     
                     
                     
-                    scope.dataset.selection.post({
-                        datasetName : dataset.datasetName,
+                    scope.project.dataset.selection.post({
+                        datasetName : scope.project.dataset.datasetName,
                         dimension : "row"
                         
                     }, selectionData, 
                     function(response){
-                            scope.dataset.resetSelections('row')
+                            scope.project.dataset.resetSelections('row')
                             var message = "Added " + scope.selectionParams.name + " as new Selection!";
                             var header = "Heatmap Selection Addition";
                              
@@ -470,30 +482,44 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
 
                     ctr = ctr * (-1);
                     if (ctr == 1) {
-                        scope.tableOrdering = header.value;
+                        scope.tableOrdering = header.field;
                     } else {
                         scope.tableOrdering = "-"
-                                + header.value;
+                                + header.field;
                     }
                 }
                 
-                function traverse (results) {
-                    var step1 = $filter('filter')(results, {
-                        id: scope.filterParams.id
+                function getField (fieldName, results) {                    
+                    var fieldValues = results.map(function(d){
+                        return d[fieldName];
+                    });                    
+                    return fieldValues;
+                }
+                function getKeys(results){
+                	return getField('id', results);
+                };
+                
+                scope.applyFilter = function (results) {
+                	
+                    var filtered = $filter('filter')(results, {
+                        id: scope.filterParams.id.value
                     });
                     
-                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.logFold, 'logFoldChange')
-                    var step3= $filter('filterThreshold')(step2, scope.filterParams.pValue, 'pValue')
-                    var step4 = step3.map(function(d){
-                        return d.id
-                    })
+                    filtered = $filter('filterThreshold')(filtered, scope.filterParams.logFoldChange.value, scope.filterParams.logFoldChange.field, scope.filterParams.logFoldChange.op);
+                    filtered= $filter('filterThreshold')(filtered, scope.filterParams.pValue.value, scope.filterParams.pValue.field);
+                    filtered= $filter('filterThreshold')(filtered, scope.filterParams.qValue.value, scope.filterParams.qValue.field, scope.filterParams.qValue.op);
+                    filtered = $filter('orderBy')(filtered, scope.tableOrdering);
+                    scope.filteredResults = filtered;
                     
-                    return step4;
+//                    console.debug("scope.filterParams", scope.filterParams);
+//                    console.debug("filteredResults.length", scope.filteredResults.length);
+                    
+                    return scope.filteredResults;
                 }
                 
                 scope.applyToHeatmap=function(){
                     
-                    var labels = traverse(scope.analysis.datar.results);
+                    var labels = getKeys(scope.filteredResults);
 
                     scope.project.generateView({
                         viewType:'heatmapView', 
@@ -507,7 +533,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             avg: scope.project.dataset.expression.avg,
                         }
                     });
-
+                    scope.$emit('ViewVisualizeTabEvent');
                     
                 };
             }
@@ -562,7 +588,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             panel: {side: scope.analysis}
                         });
                     }
-                    
+                    scope.$emit('ViewVisualizeTabEvent');
                 };
                 
                 function traverse(tree) {
@@ -726,8 +752,9 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 };
                 scope.$watch('analysis',  function(newval, oldval) {
                     if (newval) {
-
-                        d3.select(elems[0]).select('div#svgPlace').append('svg');
+                    	//the svg is declared in the templste along with <style>
+                    	//the styles are needed to support 'Save Image' function
+//                        d3.select(elems[0]).select('div#svgPlace').append('svg');
                         
                         var svg = d3.select(elems[0]).select('div#svgPlace').select('svg')
 
@@ -752,6 +779,56 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                                 "horizontal");
                     }
                 });
+                
+                scope.saveImage = function(cluster) {
+               	
+                	var svg = d3.select(elems[0]).select("svg")
+                	console.debug("svg", svg);
+                	
+                	 var html = svg
+                	 .attr("version", 1.1)
+                     .attr("xmlns", "http://www.w3.org/2000/svg")
+                     .node().parentNode.innerHTML;
+                	  
+                	 var imgsrc = 'data:image/svg+xml;base64,'+ btoa(html);
+//                	 var img = '<img src="'+imgsrc+'">';
+//                	 d3.select("#svgdataurl").html(img);
+                	  
+                	  
+//                	 var canvas = document.querySelector("#canvasHclTree_"+cluster.name);                	 
+                	 var canvas = elems.find("canvas")[0];
+                	 console.debug("canvas", canvas);
+                	 var context = canvas.getContext("2d");
+                	 canvas.width=svg.attr('width');
+                	 canvas.height=svg.attr('height');
+                	 
+                	 var image = new Image;
+                	 image.src = imgsrc;
+                	 image.onload = function() {
+                		                                         		 
+                    	 canvas.style.opacity = 1;
+                    	 context.beginPath();
+                         context.rect(0, 0, canvas.width, canvas.height);                                                 
+                    	 context.fillStyle ="#FFFFFF";
+                    	 context.fill();
+                    	 
+                    	 context.drawImage(image, 0, 0);
+                    	 
+                    	 canvas.toBlob(function(blob) {
+                    		    saveAs(blob, cluster.name+".png");
+                    	 });
+//                    	 var canvasdata = canvas.toDataURL("image/png");
+//                    	  
+//                    	 var pngimg = '<img src="'+canvasdata+'">';
+//                    	 d3.select("#pngdataurl").html(pngimg);
+//                    	  
+//                    	 var a = document.createElement("a");
+//                    	 a.download = "sample.png";
+//                    	 a.href = canvasdata;
+//                    	 a.click();
+                	 };
+   
+                };
 
             } // end link
         };

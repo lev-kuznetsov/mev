@@ -23,11 +23,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.Synchronized;
-import lombok.experimental.Accessors;
 import lombok.extern.log4j.Log4j;
 
-import org.javatuples.Triplet;
-import org.javatuples.Tuple;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -41,7 +38,6 @@ import com.google.common.cache.LoadingCache;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Value;
-import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleValue;
 import edu.dfci.cccb.mev.presets.contract.PresetValues;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
@@ -50,7 +46,7 @@ import edu.dfci.cccb.mev.presets.util.timer.Timer;
 public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Value>, AutoCloseable {
 
   private static final TimeUnit DURATION_UNIT = SECONDS;
-  private static final long DURATION = 10;
+  private static final long DURATION = 100;
   private final LoadingCache<CacheKey, Double> CACHE;
   
   //cache
@@ -77,7 +73,13 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
     log.debug ("*** ValueStore Iterable ***");
     
     CACHE = newBuilder ().expireAfterAccess (DURATION, DURATION_UNIT)
-            .maximumSize (1000)
+            .maximumSize (23000*50)
+//            .removalListener (new RemovalListener<CacheKey, Double> () {
+//              @Override
+//              public void onRemoval (RemovalNotification<CacheKey, Double> notification) {
+//                log.debug ("Expunging " + notification.getKey () + " because " + notification.getCause ().name ());
+//              }
+//            })
             .build (
               new CacheLoader<CacheKey, Double> () {
                 @Override
@@ -194,8 +196,8 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
             throw new PresetException ("Cannot convert to double value:"+sValue,e);
           }
         }
-        
-        return new SimpleValue(row, column, value);
+        CACHE.put (new CacheKey (row, column), value);
+        return new SimpleValue(row, column, value);        
       }else{
         throw new PresetException ("Iterator past last value: tableName="+tableName);
       }
@@ -225,13 +227,23 @@ public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Val
   @Override
   public double get (String row, String column) throws InvalidCoordinateException{
     
-      //not using internal cache for now
-      //instead wrapping the instance of this class into SharedCacheValue 
-      //upon creation in the PresetDatasetBuilderFlatTableDB.
-      //can switch to local cache later
-      //return this.CACHE.get(new CacheKey (row, column));
-      return getInternal (row, column);
-    
+      //using internal cache, so no need to wrap the values of this class in SharedCacheValue
+      //instead wrapping the instance of this class into SharedCacheValue
+      //the cache is created and stored for each object of this class.
+      //return getInternal (row, column);
+    try {
+        if(CACHE.getIfPresent(new CacheKey (row, column))==null){
+          log.debug ("Refresh the CACHE, culprit: "+row+","+column);          
+          for(@SuppressWarnings("unused") Value value : this){
+            //if one record is missing the most likely all are
+            //refresh the whole cache
+            //This is a temporary hack until we extend the Dataset api to support better prefetching
+          }
+        }
+        return CACHE.get(new CacheKey (row, column));      
+    } catch (ExecutionException e) {
+        throw (InvalidCoordinateException) e.getCause ();
+    }
   }
   
   @EqualsAndHashCode

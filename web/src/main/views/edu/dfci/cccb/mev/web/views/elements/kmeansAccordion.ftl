@@ -13,9 +13,7 @@
           </i> View Genes on Heatmap
         </a> 
     </button>
-	<button class="btn btn-success pull-right" >
-        <a href="/dataset/{{datasetName}}/analysis/{{analysis.name}}?format=tsv">
-          <i class="icon-white icon-download"></i> Download
-        </a> 
-    </button>
+    <a class="btn btn-success pull-right" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
+      <i class="icon-white icon-download"></i> Download
+    </a> 
 </accordion-group>

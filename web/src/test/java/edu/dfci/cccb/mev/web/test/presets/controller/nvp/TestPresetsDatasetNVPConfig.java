@@ -18,7 +18,7 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetValuesStoreBuilderFactory;
-import edu.dfci.cccb.mev.presets.dataset.PresetDatasetBuilderByJooq;
+import edu.dfci.cccb.mev.presets.dataset.jooq.PresetDatasetBuilderByJooq;
 import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 
 @Log4j

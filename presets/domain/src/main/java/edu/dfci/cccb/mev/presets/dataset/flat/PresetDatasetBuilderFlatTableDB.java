@@ -19,13 +19,11 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SharedCacheValues;
-import edu.dfci.cccb.mev.dataset.domain.simple.SharedCachedValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDataset;
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
-import edu.dfci.cccb.mev.presets.contract.PresetValues;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 
 @Log4j
@@ -45,30 +43,23 @@ public class PresetDatasetBuilderFlatTableDB extends AbstractDatasetBuilder impl
     this.dimensionBuilder=dimensionBuilder;
   }
 
-  private Dimension buildRows(PresetDescriptor descriptor, Selection selection){
-    Dimension rows;
-    if(selection!=null)
-      rows = dimensionBuilder.build (Dimension.Type.ROW, descriptor, selection);
-    else
-      rows = dimensionBuilder.buildRows (descriptor);
+  private Dimension buildRows(PresetDescriptor descriptor, Selection selection) throws PresetException{
+    Dimension rows = dimensionBuilder.build (Dimension.Type.ROW, descriptor, selection);    
     if(log.isDebugEnabled ())
       log.debug ("rows="+rows);
     return rows;
   }
   
-  private Dimension buildColumns(PresetDescriptor descriptor, Selection selection){
-    Dimension columns;
-    if(selection!=null)
-      columns = dimensionBuilder.build (Dimension.Type.COLUMN, descriptor, selection);
-    else
-      columns = dimensionBuilder.buildColumns (descriptor);    
+  private Dimension buildColumns(PresetDescriptor descriptor, Selection selection) throws PresetException{
+    Dimension columns = dimensionBuilder.build (Dimension.Type.COLUMN, descriptor, selection);       
     if(log.isDebugEnabled ())
       log.debug ("columns="+columns);
     return columns;
   }
   
   private Values buildValues(PresetDescriptor descriptor, Dimension rows, Dimension columns){
-    return new SharedCacheValues (new PresetValuesFlatTableIterable (context, descriptor.name (), columns, rows));    
+//    return new SharedCacheValues (new PresetValuesFlatTableIterable (context, descriptor.name (), columns, rows));
+    return new PresetValuesFlatTableIterable (context, descriptor.name (), columns, rows);
   }
   
   private Values buildLogValues(PresetDescriptor descriptor, Dimension rows, Dimension columns){

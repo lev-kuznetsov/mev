@@ -8,6 +8,7 @@ require.config ({
   baseUrl : "/container/javascript",
   paths : {
     jquery : [ 'http://codeorigin.jquery.com/jquery-2.1.0', '/library/webjars/jquery/2.1.0/jquery' ],
+    jqueryUi : ['https://code.jquery.com/ui/1.9.2/jquery-ui'],
     angular : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular',
                '/library/webjars/angularjs/1.2.13/angular' ],
     angularRoute : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min',
@@ -30,7 +31,7 @@ require.config ({
     blob : [ '/container/javascript/canvasToBlob/Blob' ],
     canvasToBlob : [ '/container/javascript/canvasToBlob/canvas-toBlob' ],
     fileSaver : [ '/container/javascript/fileSaver/FileSaver' ],
-    qtip : [ '/library/webjars/qtip2/2.1.1/jquery.qtip.min' ]
+    qtip : [ '/library/webjars/qtip2/2.1.1/jquery.qtip' ]
   },
   shim : {
     'angular' : {
@@ -71,6 +72,13 @@ require.config ({
     'fileSaver' : {
       deps : [ 'canvasToBlob' ],
       exports : 'fileSaver'
+    },
+    'jqueryUi': {
+        deps : ['jquery', 'css-loader']
+    },
+    'qtip': {
+      deps : ['jquery', 'imagesloaded'],
+      exports : 'qtip'
     }
 
   },
@@ -97,7 +105,7 @@ require ([ 'jquery',
           'mainpanel/MainPanel',
           'retina',
           'ngGrid',
-          'mainmenu' ], function (jquery, angular, app, orb) {
+          'mainmenu'], function (jquery, angular, app, orb) {
 
   'use strict';
   var $html = angular.element (document.getElementsByTagName ('html')[0]);

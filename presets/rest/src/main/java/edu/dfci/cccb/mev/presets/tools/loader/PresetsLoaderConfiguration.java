@@ -1,22 +1,25 @@
 package edu.dfci.cccb.mev.presets.tools.loader;
 
 import static org.springframework.context.annotation.FilterType.ANNOTATION;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.sql.DataSource;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Component;
 
-import edu.dfci.cccb.mev.presets.contract.PresetValuesLoader;
-import edu.dfci.cccb.mev.presets.dal.HSQLPresetLoader;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.ParserFactory;
+import edu.dfci.cccb.mev.dataset.domain.contract.SelectionBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
+import edu.dfci.cccb.mev.dataset.domain.fs.FlatFileValueStoreBuilder;
+import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
+import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelectionBuilder;
+import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvComposerFactory;
+import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 
 @Configuration
@@ -28,9 +31,37 @@ import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 @Import(value={PresetsRestConfiguration.class})
 public class PresetsLoaderConfiguration {
   
-    
-  @Bean(name="mev-presets-loader") @Inject 
-  public PresetValuesLoader presestValuesLoader(@Named ("presets-datasource") DataSource dataSource){
-    return new HSQLPresetLoader (dataSource, false, 1000);
+  
+  @Bean
+  @Primary
+  public ValueStoreBuilder valueFactory (/* @Named ("mev-datasource") DataSource
+                                          * dataSource */) throws Exception {
+    // return new SharedCachedValueStoreBuilder (new
+    // JooqBasedDatasourceValueStoreBuilder (dataSource));
+    // return new MetamodelBackedValueStoreBuilder ();
+    return new FlatFileValueStoreBuilder ();
   }
+
+  @Bean
+  @Primary
+  public DatasetBuilder datasetBuilder () {
+    return new SimpleDatasetBuilder ();
+  }
+
+  @Bean
+  public SelectionBuilder selectionBuilder () {
+    return new SimpleSelectionBuilder ();
+  }
+  
+  @Bean
+  public SuperCsvComposerFactory superCsvComposerFactory () {
+    return new SuperCsvComposerFactory ();
+  }
+
+  @Bean
+  public ParserFactory tsvParserFactory () {
+    return new SuperCsvParserFactory ();
+  }
+  
+  
 }

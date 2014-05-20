@@ -16,7 +16,6 @@ package edu.dfci.cccb.mev.kmeans.rest.configuration;
 
 import static java.util.Arrays.asList;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
-import static org.springframework.http.MediaType.TEXT_PLAIN;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
 import java.util.List;

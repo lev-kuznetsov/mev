@@ -25,14 +25,18 @@ public class SimplePresetDescriptor extends AbstractPresetDescriptor {
   @Getter private final URL dataUrl;
   @Getter private final URL columnUrl;
   @Getter private final URL rowUrl;
+  @Getter private final URL dataRootUrl;
+  @Getter private final String relativeDataPath;
   
   public SimplePresetDescriptor(String name, URL dataRoot, String specDataUrl, String specColumnUrl, URL annotationsRoot, String specRowUrl) throws PresetException {
     
     try {
       this.name=name;
-      dataUrl = new URL(dataRoot, specDataUrl);
-      columnUrl = new URL(dataRoot, specColumnUrl);
-      rowUrl = new URL(annotationsRoot, specRowUrl);
+      dataRootUrl = dataRoot;
+      relativeDataPath=specDataUrl;
+      dataUrl = new URL(dataRootUrl, specDataUrl);
+      columnUrl = new URL(dataRootUrl, specColumnUrl);
+      rowUrl = new URL(annotationsRoot, specRowUrl);      
     } catch (MalformedURLException e) {
       throw new PresetException ("Could not create PresetDescriptor with parameters: " + dataRoot + ";" + specColumnUrl + ";"+specColumnUrl, e);
     }

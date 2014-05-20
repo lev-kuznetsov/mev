@@ -24,8 +24,13 @@ define (
         	    });
         	    return (threshold == undefined || threshold == '') ? input : output;
         	    
-        	  }
+        	  };
         	  
+          }])
+          .filter('isArray', [function(){
+        	  return function (input){
+        	  	return angular.isArray(input);
+          	  };
           }])
           .factory ('mainMenuBarOptions', [ function () {
             return [ {

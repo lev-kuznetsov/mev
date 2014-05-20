@@ -61,4 +61,11 @@ public class MapBackedValueStoreBuilder extends AbstractValueStoreBuilder {
   public Values build () {
     return new MapBackedValues (new HashMap<> (values));
   }
+
+  @Override
+  public Values build (Map<String,Integer> row, Map<String, Integer> columns) {
+    //TODO:fix - this is needed by the FlatFileValueStoreBuilder, 
+    //Here, we just do the same as the build() method - need to find a nice way of doing this 
+    return build();
+  }
 }

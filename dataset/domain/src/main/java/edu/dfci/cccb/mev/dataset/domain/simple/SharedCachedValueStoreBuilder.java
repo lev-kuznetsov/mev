@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.simple;
 
+import java.util.Map;
+
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import edu.dfci.cccb.mev.dataset.domain.contract.ValueStoreBuilder;
@@ -46,5 +48,12 @@ public class SharedCachedValueStoreBuilder extends AbstractValueStoreBuilder {
   @Override
   public Values build () {
     return new SharedCacheValues (builder.build ());
+  }
+
+  @Override
+  public Values build (Map<String,Integer> row, Map<String, Integer> columns) {
+    //TODO:fix - this is needed by the FlatFileValueStoreBuilder, 
+    //Here, we just do the same as the build() method - need to find a nice way of doing this 
+    return build();
   }
 }
