@@ -71,7 +71,14 @@ public class KMeansAnalysisController {
                      final @PathVariable (METRIC_MAPPING_NAME) Metric metric,
                      final @PathVariable ("iterations") int iterations,
                      final @PathVariable ("convergence") double convergenceDelta) throws DatasetException {
-    dataset.analyses ().put (kmeans.name (name).k (k).dimension (dimension).metric (metric).dataset (dataset).build ());
+    dataset.analyses ().put (kmeans.name (name)
+                                   .iterations (iterations)
+                                   .convergence (convergenceDelta)
+                                   .k (k)
+                                   .dimension (dimension)
+                                   .metric (metric)
+                                   .dataset (dataset)
+                                   .build ());
   }
 
   @RequestMapping (value = "/analysis/" + ANALYSIS_URL_ELEMENT + "/kmeans",

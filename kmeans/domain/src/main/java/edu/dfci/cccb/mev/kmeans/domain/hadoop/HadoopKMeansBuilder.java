@@ -218,8 +218,8 @@ public class HadoopKMeansBuilder extends AbstractKMeansBuilder {
              new Path (clusters.getAbsolutePath ()),
              new Path (output.getAbsolutePath ()),
              metric.measurer (),
-             0.001,
-             10,
+             convergence (),
+             iterations (),
              true,
              false);
 
@@ -241,7 +241,7 @@ public class HadoopKMeansBuilder extends AbstractKMeansBuilder {
           return new AbstractKMeans () {}.dataset (dataset ())
                                          .dimension (dimension ())
                                          .name (name ())
-                                         .type (type())
+                                         .type (type ())
                                          .clusters (new HashSet<> (result.values ()));
         }
       } catch (ClassNotFoundException | InterruptedException e) {

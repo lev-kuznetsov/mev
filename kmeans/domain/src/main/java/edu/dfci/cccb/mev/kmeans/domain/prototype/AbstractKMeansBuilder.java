@@ -23,6 +23,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysisBuilder;
 import edu.dfci.cccb.mev.kmeans.domain.contract.KMeans;
@@ -37,8 +38,10 @@ import edu.dfci.cccb.mev.kmeans.domain.contract.KMeansBuilder;
 @EqualsAndHashCode (callSuper = true)
 public abstract class AbstractKMeansBuilder extends AbstractAnalysisBuilder<KMeansBuilder, KMeans> implements KMeansBuilder {
 
-  private @Getter (PROTECTED) @Setter @Inject edu.dfci.cccb.mev.dataset.domain.contract.Dataset dataset;
+  private @Getter (PROTECTED) @Setter @Inject Dataset dataset;
   private @Getter (PROTECTED) @Setter @Inject Dimension dimension;
+  private @Getter @Setter int iterations = 100;
+  private @Getter @Setter double convergence = 0.001;
   private @Getter @Setter int k = -1;
 
   /**

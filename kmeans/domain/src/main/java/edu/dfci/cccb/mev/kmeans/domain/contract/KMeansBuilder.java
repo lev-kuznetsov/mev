@@ -29,4 +29,8 @@ public interface KMeansBuilder extends AnalysisBuilder<KMeansBuilder, KMeans> {
   KMeansBuilder dimension (Dimension dimension);
 
   KMeansBuilder metric (Metric metric);
+
+  KMeansBuilder iterations (int iterations);
+
+  KMeansBuilder convergence (double convergence);
 }
