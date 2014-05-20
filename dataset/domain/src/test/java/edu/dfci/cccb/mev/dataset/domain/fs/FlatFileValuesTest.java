@@ -38,6 +38,8 @@ public class FlatFileValuesTest {
       builder.add (.2, "r1", "c2");
       builder.add (.3, "r2", "c1");
       builder.add (.4, "r2", "c2");
+      builder.add (.5, "r3", "c1");
+      builder.add (.6, "r3", "c2");
 
       Map<String, Integer> rowKeys = new LinkedHashMap<String, Integer> (2);
       rowKeys.put ("r1", 0);
@@ -51,8 +53,10 @@ public class FlatFileValuesTest {
 
       assertThat (values.get ("r1", "c1"), is (.1));
       assertThat (values.get ("r2", "c1"), is (.3));
+      assertThat (values.get ("r3", "c1"), is (.5));
       assertThat (values.get ("r1", "c2"), is (.2));
       assertThat (values.get ("r2", "c2"), is (.4));
+      assertThat (values.get ("r3", "c2"), is (.6));
     }
   }
 }
