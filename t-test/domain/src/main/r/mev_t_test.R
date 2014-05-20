@@ -73,8 +73,16 @@ if(TEST_TYPE==ONE_SAMPLE)
 		exp_data<-cbind(exp_data[, group_a],exp_data[, group_b])
 	
 		#get the fold-change:
-		group_a_mean=rowMeans(exp_data[,1:size_a])
-		group_b_mean=rowMeans(exp_data[,(size_a+1):(size_a+size_b)])
+		group_a_mean=try(rowMeans(exp_data[,1:size_a]))
+		if("try-error" %in% class(group_a_mean))
+		{
+			group_a_mean<-mean(exp_data[,1:size_a])
+		}
+		group_b_mean=try(rowMeans(exp_data[,(size_a+1):(size_a+size_b)]))
+		if("try-error" %in% class(group_b_mean))
+		{
+			group_b_mean<-mean(exp_data[,(size_a+1):(size_a+size_b)])
+		}
 		log_fold_change=log(group_a_mean/group_b_mean)
 	
 		#a vector labeling the groups
