@@ -21,10 +21,6 @@ import org.junit.Test;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 
-/**
- * @author levk
- * 
- */
 public class FlatFileValuesTest {
 
   @Test
