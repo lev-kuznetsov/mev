@@ -2,15 +2,11 @@ define(['jquery',
         'angular',
         'extend',
         'd3',
-        'project/Project',
-        'notific8', 'api/Api', 'colorbrewer/ColorBrewer'],
+        'project/Project', 'api/Api', 'colorbrewer/ColorBrewer'],
     function($, angular, extend, d3) {
 	
 	return angular
 		.module('Mev.heatmap', ['Mev.Api', 'Mev.Project', 'd3colorBrewer'])
-		.value('Heatmap.availableColors', ["Green-Black-Red",
-                                           "Yellow-Black-Blue",
-                                           "Red-White-Blue"])
         .service('Heatmap.saveCluster', [function(){
         	
         	return function(cluster) {
@@ -94,7 +90,7 @@ define(['jquery',
         'DatasetResourceService',
         'ProjectFactory',
         function($scope, $routeParams,  $loc, DatasetResourceService, ProjectFactory) {
-			
+		    
 			function showLoadingModal(){
 				$('#loading').modal('show');
 			};
