@@ -33,23 +33,24 @@ define([], function(){
 			row:{
 				width:80
 			}
-		},
+		};
+		
 		this.colors = {
-			color1: "red",
-			color2: "black",
-			color3: "green"
-		}
+			high: "yellow",
+			mid: "black",
+			low: "blue",
+			group: "BuBkYl"
+		};
 		
 		if (params){
 			
-			properties = Object.getOwnPropertyNames(params)
-			
+			properties = Object.getOwnPropertyNames(params);
 			
 			properties.map(function(prop){
 				self[prop] = params[prop]
-			})
+			});
 			
-		}
+		};
 		
 		
 	};

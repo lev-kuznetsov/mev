@@ -40,27 +40,16 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 	};
                 	
                 	$scope.availableColorGroups = Object.getOwnPropertyNames(d3colors);
+                	$scope.currentColors = {group:undefined};
                 	
-                	$scope.currentColors = {
-                	    group : "BuBkYl",
-                	    colors:{
-                	        low: d3colors['BuBkYl'][3][0],
-                            mid: d3colors['BuBkYl'][3][1],
-                            high: d3colors['BuBkYl'][3][2],
-                	    }
-                		
-                	};
-                	
-                	$scope.$watch('currentColors.group', function(newval){
-                	    if(newval && $scope.heatmapDataset){
+                	$scope.$watch('currentColors.group', function(newval, oldval){
+                	    if(newval && $scope.heatmapDataset && (oldval != newval)){
 
-                	            $scope.avaiblableColors = d3colors[newval][3];
-                                $scope.currentColors.group = newval;
-                                $scope.currentColors.colors.low = d3colors[newval][3][0];
-                                $scope.currentColors.colors.mid = d3colors[newval][3][1];
-                                $scope.currentColors.colors.high = d3colors[newval][3][2];
+                                $scope.currentColors.low = d3colors[newval][3][0];
+                                $scope.currentColors.mid = d3colors[newval][3][1];
+                                $scope.currentColors.high = d3colors[newval][3][2];
                                 
-                                var params = new generateParams({colors:$scope.currentColors.colors});
+                                var params = new generateParams({colors:$scope.currentColors});
                                 $scope.visualization = new HeatmapVisualizationClass($scope.heatmapView,svg, params);
 
                 	    }
@@ -94,6 +83,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
 	                      updatedView.expression.min = $scope.project.dataset.expression.min;
 	                      updatedView.expression.max = $scope.project.dataset.expression.max;
 	                      updatedView.expression.avg = $scope.project.dataset.expression.avg;
+	                      updatedView.coloring = undefined;
 	                      $scope.heatmapView = updatedView;
 
                     };
@@ -114,6 +104,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                     	  
                     	    var updatedView = Object.create($scope.heatmapView);
                       	
+                    	    updatedView.coloring = $scope.currentColors;
                             updatedView.expression.min = parseFloat($scope.colorEdge.min);
                             updatedView.expression.max = parseFloat($scope.colorEdge.max);
                             updatedView.expression.avg = parseFloat($scope.colorEdge.avg);
@@ -164,7 +155,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 	
                 	
                 	//When dataset information comes, generate new visualization.
-                	$scope.$watchCollection('heatmapView', function(newval){
+                	$scope.$watchCollection('heatmapView', function(newval, oldval){
 
                 		if (newval){
                     		
@@ -172,13 +163,8 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                             $scope.colorEdge.avg = newval.expression.avg;
                             $scope.colorEdge.max = newval.expression.max;
                 			var params = 
-                				new generateParams({
-                					colors:{
-                					    low:d3colors[$scope.currentColors.group][3][0],
-                					    mid:d3colors[$scope.currentColors.group][3][1],
-                					    high:d3colors[$scope.currentColors.group][3][2]
-                					}
-                				});
+                				new generateParams((newval.coloring) ? {colors:newval.coloring}: undefined);
+                			$scope.currentColors = params.colors;
                 			$scope.visualization = new HeatmapVisualizationClass(newval,svg, params)
                 		}
                 		
