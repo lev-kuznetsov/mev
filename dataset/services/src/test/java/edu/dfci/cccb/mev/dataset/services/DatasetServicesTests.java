@@ -14,30 +14,16 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-/**
- * MeV dataset services
- * 
- * @author levk
- * @since CRYSTAL
- */
-define ('dataset.service', [ 'mev', 'dataset', 'angular', 'angularResource' ], function (mev, dataset, angular) {
+package edu.dfci.cccb.mev.dataset.services;
 
-  mev.dataset = {};
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-  angular.module ('ngDataset', [ 'ngResource' ]).run ([ '$resource', function ($resource) {
-    mev.dataset.get = function (name) {
-      return mev._.extend ($resource ('/dataset/:name').get ({
-        name : name,
-        format : 'json'
-      }), dataset);
-    };
+import edu.dfci.cccb.mev.dataset.services.controllers.DatasetControllerTest;
+import edu.dfci.cccb.mev.dataset.services.controllers.WorkspaceControllerTest;
+import edu.dfci.cccb.mev.dataset.services.guice.DatasetServiceModuleTest;
 
-    mev.dataset.query = function () {
-      return $resource ('/dataset').query ({
-        format : 'json'
-      });
-    }
-  } ]);
-
-  return mev.dataset;
-});
+@RunWith (Suite.class)
+@SuiteClasses ({ DatasetControllerTest.class, WorkspaceControllerTest.class, DatasetServiceModuleTest.class })
+public class DatasetServicesTests {}

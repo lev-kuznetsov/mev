@@ -16,34 +16,26 @@
 
 package edu.dfci.cccb.mev.dataset.services.guice;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static com.google.inject.name.Names.named;
+import static edu.dfci.cccb.mev.dataset.domain.contract.annotation.Workspace.WORKSPACE;
 
-import java.io.PrintStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.Map;
 
 import org.junit.Test;
 
-import edu.dfci.cccb.mev.common.test.jetty.Jetty9;
+import com.google.inject.Guice;
+import com.google.inject.Key;
+import com.google.inject.TypeLiteral;
+
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule;
 
 public class DatasetServiceModuleTest {
 
   @Test
-  public void simple () throws Exception {
-    try (Jetty9 jetty = new Jetty9 ()) {
-      HttpURLConnection connection = (HttpURLConnection) new URL ("http://localhost:"
-                                                                  + jetty.port ()
-                                                                  + "/services/dataset/hello").openConnection ();
-      connection.setRequestMethod ("PUT");
-      connection.setDoInput (true);
-      connection.setDoOutput (true);
-      try (PrintStream data = new PrintStream (connection.getOutputStream ())) {
-        data.print ("\tc1\tc2\n" +
-                    "r1\t.1\t.2\n" +
-                    "r2\t.3\t.4");
-        assertThat (connection.getResponseCode (), is (204));
-      }
-    }
+  public void workspace () throws Exception {
+    Guice.createInjector (new DatasetModule (), new DatasetServiceModule ())
+         .getBinding (Key.get (new TypeLiteral<Map<String, Dataset<String, Double>>> () {},
+                               named (WORKSPACE)));
   }
 }

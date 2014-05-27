@@ -17,33 +17,52 @@
 package edu.dfci.cccb.mev.dataset.services.controllers;
 
 import static edu.dfci.cccb.mev.dataset.domain.contract.annotation.Workspace.WORKSPACE;
+import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
+import java.io.InputStream;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-
-import com.google.inject.servlet.RequestScoped;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.MediaType;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.support.Builder;
 
 /**
  * @author levk
  * @since BAYLIE
  */
-@Path ("/dataset/")
-@RequestScoped
-public class WorkspaceController {
+@Path ("/dataset/{dataset}")
+public class DatasetController {
+
+  public static final String TAB_SEPARATED_VALUES = "text/tab-separated-values";
+  public static final MediaType TAB_SEPARATED_VALUES_TYPE = new MediaType ("text", "tab-separated-values");
 
   private @Inject @Named (WORKSPACE) Map<String, Dataset<String, Double>> workspace;
+  private @Inject Builder<String, Double> builder;
 
   /**
-   * @return list of datasets
+   * @param name of the dataset
+   * @return dataset from workspace
    */
   @GET
-  public String[] list () {
-    return workspace.keySet ().toArray (new String[0]);
+  public Dataset<String, Double> get (@PathParam ("dataset") String name) {
+    return workspace.get (name);
+  }
+
+  /**
+   * @param name of dataset to put in the workspace
+   * @param input TSV conforming to standards set by the builder
+   */
+  @PUT
+  @Consumes ({ TEXT_PLAIN, TAB_SEPARATED_VALUES })
+  public void put (@PathParam ("dataset") String name, InputStream input) throws Exception {
+    workspace.put (name, builder.build (name, input));
   }
 }

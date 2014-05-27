@@ -32,7 +32,9 @@ import edu.dfci.cccb.mev.common.services.guice.MevServiceModule;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
+import edu.dfci.cccb.mev.dataset.services.controllers.DatasetController;
 import edu.dfci.cccb.mev.dataset.services.controllers.WorkspaceController;
+
 /**
  * @author levk
  * @since CRYSTAL
@@ -57,6 +59,7 @@ public class DatasetServiceModule implements Module {
       @Override
       public void configure (ResourceBinder binder) {
         binder.publish (WorkspaceController.class).in (RequestScoped.class);
+        binder.publish (DatasetController.class).in (RequestScoped.class);
       }
     });
   }
