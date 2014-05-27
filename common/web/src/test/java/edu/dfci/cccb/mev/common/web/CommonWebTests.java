@@ -20,8 +20,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import edu.dfci.cccb.mev.common.web.servlet.RequireInjectorServletTest;
 import edu.dfci.cccb.mev.common.web.servlet.ResourceServletTest;
 
 @RunWith (Suite.class)
-@SuiteClasses ({ ResourceServletTest.class })
+@SuiteClasses ({ ResourceServletTest.class, RequireInjectorServletTest.class })
 public class CommonWebTests {}
