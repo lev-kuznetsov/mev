@@ -37,7 +37,7 @@ import edu.dfci.cccb.mev.dataset.domain.support.Consumer;
  * @author levk
  * @since CRYSTAL
  */
-public class StoreValuesAdapter implements Values<String, Double>, AutoCloseable {
+public class JooqDataSourceStoreValuesAdapter implements Values<String, Double>, AutoCloseable {
 
   private static final Field<String> ROW = fieldByName (String.class, "mev_row");
   private static final Field<String> COLUMN = fieldByName (String.class, "mev_column");
@@ -83,7 +83,7 @@ public class StoreValuesAdapter implements Values<String, Double>, AutoCloseable
   private ValueStore store;
 
   @Inject
-  public StoreValuesAdapter (DataSource dataSource) throws SQLException {
+  public JooqDataSourceStoreValuesAdapter (DataSource dataSource) throws SQLException {
     store = new ValueStore (dataSource);
   }
 

@@ -26,11 +26,13 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapterTest;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DimensionAdapterTest;
 import edu.dfci.cccb.mev.dataset.domain.prototype.ValuesTest;
 import edu.dfci.cccb.mev.dataset.domain.support.CompilerTest;
+import edu.dfci.cccb.mev.dataset.domain.support.FlatFileStoreValuesAdapterTest;
 import edu.dfci.cccb.mev.dataset.domain.support.json.DatasetJsonSerializerTest;
 import edu.dfci.cccb.mev.dataset.domain.support.tsv.TsvParserTest;
 
 @RunWith (Suite.class)
 @SuiteClasses ({
                 ValuesTest.class, DatasetJsonSerializerTest.class, TsvParserTest.class, DimensionAdapterTest.class,
-                DatasetAdapterTest.class, DatasetModuleTest.class, AnalysisAdapterTest.class, CompilerTest.class })
+                DatasetAdapterTest.class, DatasetModuleTest.class, AnalysisAdapterTest.class, CompilerTest.class,
+                FlatFileStoreValuesAdapterTest.class })
 public class DatasetDomainTests {}

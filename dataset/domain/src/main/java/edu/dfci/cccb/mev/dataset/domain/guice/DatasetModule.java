@@ -40,7 +40,7 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DimensionAdapter;
 import edu.dfci.cccb.mev.dataset.domain.support.Builder;
 import edu.dfci.cccb.mev.dataset.domain.support.Consumer;
-import edu.dfci.cccb.mev.dataset.domain.support.jooq.StoreValuesAdapter;
+import edu.dfci.cccb.mev.dataset.domain.support.jooq.JooqDataSourceStoreValuesAdapter;
 import edu.dfci.cccb.mev.dataset.domain.support.json.DatasetJsonSerializer;
 import edu.dfci.cccb.mev.dataset.domain.support.tsv.TsvParser;
 
@@ -72,7 +72,7 @@ public class DatasetModule implements Module {
           @SuppressWarnings ("unchecked")
           @Override
           public Dataset<String, Double> build (String name, InputStream input) throws Exception {
-            StoreValuesAdapter values = new StoreValuesAdapter (dataSource);
+            JooqDataSourceStoreValuesAdapter values = new JooqDataSourceStoreValuesAdapter (dataSource);
             final List<String> columns = new ArrayList<> ();
             final List<String> rows = new ArrayList<> ();
             new TsvParser ().parse (input,

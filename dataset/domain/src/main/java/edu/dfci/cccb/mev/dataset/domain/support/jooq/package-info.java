@@ -15,6 +15,9 @@
  */
 
 /**
+ * jOOQ support
+ * 
  * @author levk
+ * @since CRYSTAL
  */
 package edu.dfci.cccb.mev.dataset.domain.support.jooq;
