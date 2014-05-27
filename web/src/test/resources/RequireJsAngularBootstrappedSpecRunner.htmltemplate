@@ -29,7 +29,6 @@
     }
     
     var specs = $specsList$;
-    console.log($specsList$)
 				
     var configuration = {
       $if(customRunnerConfiguration)$

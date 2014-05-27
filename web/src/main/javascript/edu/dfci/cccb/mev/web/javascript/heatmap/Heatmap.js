@@ -7,6 +7,18 @@ define(['jquery',
 	
 	return angular
 		.module('Mev.heatmap', ['Mev.Api', 'Mev.Project', 'd3colorBrewer'])
+		.service('Heatmap.Modal', [function(){
+			return function(id){
+				return {
+					show: function(){
+						$(id).modal('show');
+					},
+					hide: function(){
+						$(id).modal('hide');
+					}
+				};
+			};
+		}])
         .service('Heatmap.saveCluster', [function(){
         	
         	return function(cluster) {
@@ -89,19 +101,13 @@ define(['jquery',
         '$location',
         'DatasetResourceService',
         'ProjectFactory',
-        function($scope, $routeParams,  $loc, DatasetResourceService, ProjectFactory) {
+        'Heatmap.Modal',
+        function($scope, $routeParams,  $loc, DatasetResourceService, ProjectFactory, modal) {
 		    
-			function showLoadingModal(){
-				$('#loading').modal('show');
-			};
-			
-			function hideLoadingModal(){
-				$('#loading').modal('hide');
-			};
-			
+			LoadingModal = modal('#loading');
 			
 			function downloadFailure(){
-				hideLoadingModal()
+				LoadingModal.hide()
 				$loc.path('/datasets'); //return back to datasets
 				return
 			};
@@ -112,18 +118,15 @@ define(['jquery',
 			};
 			
 			$scope.project = undefined;
-			
-			
-			
+
 			//Build the project after getting datasetResponseObject
-			
-			showLoadingModal();
+			LoadingModal.show();
 			
 			DatasetResourceService.get({
 				datasetName: $routeParams.datasetName
 			}, function(response){
 			    $scope.project = ProjectFactory($routeParams.datasetName, response);
-			    hideLoadingModal();
+			    LoadingModal.hide();
 			}, function(error){
 				downloadFailure();
 			});

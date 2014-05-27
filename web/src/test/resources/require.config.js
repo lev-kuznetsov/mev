@@ -24,7 +24,8 @@
     canvasToBlob : [ 'canvasToBlob/canvas-toBlob' ],
     fileSaver : [ 'fileSaver/FileSaver' ],
     qtip : [ '/webjars/qtip2/2.1.1/jquery.qtip' ],
-    'css-loader' : ['css-test'] 
+    'css-loader' : ['css-test'] ,
+    'console':['console']
       //Added an empty file to point to since there is no head and css
       //can't actually load from css/styles container
   },

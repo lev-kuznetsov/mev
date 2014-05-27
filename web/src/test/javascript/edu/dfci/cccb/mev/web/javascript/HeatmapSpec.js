@@ -1,11 +1,22 @@
-define ([ 'angular', 'angularMocks', 'heatmap/Heatmap', 'jasmineJquery'], function (angular) {
+define ([ 'angular', 'angularMocks', 'heatmap/Heatmap', 'jasmineJquery', 'api/Api'], function (angular) {
 
   describe ("Mev.heatmap", function () {
       
       beforeEach(angular.mock.module('Mev.heatmap'));
+      beforeEach(angular.mock.module('Mev.Api'));
       
       describe("HeatmapCtrl", function(){
-          var scope;
+    	  
+          var scope,
+          shower = {
+			show: function(){
+				return null
+			},
+			hide: function(){
+				return null
+			}
+          },
+          $httpBackend;
           
           beforeEach(function(){
              
@@ -66,27 +77,42 @@ define ([ 'angular', 'angularMocks', 'heatmap/Heatmap', 'jasmineJquery'], functi
                       view : undefined
                   }
               };
+              
+              //Mock Loading Modal
+              
+              spyOn(shower, 'show');
+              spyOn(shower, 'hide');
+              
+              _LoadingModal_ = function(){
+            	  return shower;
+              }
+              
                             
-              angular.mock.inject(['$rootScope', '$controller', function($rootScope, $controller){
+              angular.mock.inject(['$rootScope', '$controller', '$injector', 
+                                   function($rootScope, $controller, $injector){
                   
+            	  $httpBackend = $injector.get('$httpBackend');
+            	  //MockDatasetResourceService = $injector.get('DatasetResourceService');
+            	  
                   scope = $rootScope.$new();
                   
                   $controller('HeatmapCtrl', {
                       $scope : scope, 
                       $routeParams : _$routeParams_,
                       $location : _$location_,
-                      DatasetResourceService : _DatasetResourceService_,
-                      ProjectFactory : _ProjectFactory_
+                      DatasetResourceService : _DatasetResourceService_,//MockDatasetResourceService,
+                      ProjectFactory : _ProjectFactory_,
+                      'Heatmap.Modal': _LoadingModal_
                   });
-              }])
-          
+                  
+              }]);
           
           });
           
           
           // critical
           it('should show the loading modal on page initialization.', function(){
-              
+        	  expect(shower.show).toHaveBeenCalled();
           });
           
           it('should hide the loading modal when a successful dataset call is returned.', function(){
