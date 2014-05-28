@@ -12,7 +12,8 @@ define(['angular',
         'analysisaccordioncollection/AnalysisAccordionCollection',
         'analysismodalcollection/AnalysisModalCollection',
         'viewCollection/ViewCollection',
-        'mainmenu'
+        'mainmenu',
+        'geods'
         ], function(angular){
 	'use strict';
 	return angular.module('myApp', [
@@ -30,7 +31,8 @@ define(['angular',
 	     'Mev.AnalysisAccordionCollection',
 	     'Mev.AnalysisModalCollection',
 	     'Mev.ViewCollection',
-	     'Mev.MainMenuModule'
+	     'Mev.MainMenuModule',
+	     'Mev.GeodsModule'
 	     ])
 	.config(['$routeProvider', '$locationProvider', '$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {
 		
