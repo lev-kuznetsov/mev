@@ -2,8 +2,8 @@ define(['angular'], function(angular){
     
     return angular.module('Mev.ViewCollection', [])
     .directive('viewContentItem', ['$compile', function ($compile) {
-        var heatmapTemplate = '<vis-Heatmap heatmap-View="project.view" heatmap-Dataset="project.dataset" project="project"> </vis-Heatmap>';
-        var hiTemplate = 'Yo There';
+        var heatmapTemplate = '<vis-Heatmap heatmap-View="view" heatmap-Dataset="project.dataset" project="project"> </vis-Heatmap>';
+        var geneBoxPlotTemplate = 'Yo There';
         
         var getTemplate = function(viewType) {
             var template = '';
@@ -12,8 +12,8 @@ define(['angular'], function(angular){
                 case 'heatmapView':
                     template = heatmapTemplate;
                     break;
-                case 'hiThere':
-                    template = hiTemplate;
+                case 'geneBoxPlotView':
+                    template = geneBoxPlotTemplate;
                     break;
             }
     
@@ -25,15 +25,16 @@ define(['angular'], function(angular){
             rep1ace: true,
             scope: {
                 project : '=project',
+                view : '=view'
             },
             link: function(scope, element, attrs) {
                 
 
-                scope.$watch('project.view', function(newval){
+                scope.$watch('view', function(newval){
                     if(newval){
 
                         element.empty()
-                        element.append(getTemplate(scope.project.view.viewType));
+                        element.append(getTemplate(scope.view.viewType));
                         $compile(element.contents())(scope);
                     }
                     

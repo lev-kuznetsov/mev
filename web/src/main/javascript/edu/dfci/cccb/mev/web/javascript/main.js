@@ -9,7 +9,7 @@ require.config ({
   paths : {
     jquery : [ 'http://codeorigin.jquery.com/jquery-2.1.0', '/library/webjars/jquery/2.1.0/jquery.min' ],
     jqueryUi : ['https://code.jquery.com/ui/1.9.2/jquery-ui.min'],
-    angular : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min',
+    angular : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular',
                '/library/webjars/angularjs/1.2.13/angular.min' ],
     angularRoute : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min',
                     '/library/webjars/angularjs/1.2.13/angular-route.min' ],

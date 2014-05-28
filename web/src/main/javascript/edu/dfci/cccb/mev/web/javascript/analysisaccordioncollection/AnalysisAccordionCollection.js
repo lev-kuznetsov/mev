@@ -1,6 +1,38 @@
 define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angular, jq, d3){
 	
-	return angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])	
+	return angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])
+	.service('d3DomService', [function(){
+		return function(id,s){
+			
+			s.$apply(function(){
+				
+				d3.select(id)
+				.append('svg')
+					.attr({
+						'width':500,
+						'height':400,
+						'id':id+'-svg'
+					});
+
+			});
+			
+			d3.select(id)
+			.append('svg')
+				.attr({
+					'width':500,
+					'height':400,
+					'id':id+'-svg'
+				});
+			
+			
+			return d3.select('svg'+id+'-svg');
+		};
+	}])
+	.service('drawBoxPlots', function(){
+		return function(svg){
+			return null
+		}
+	})
 	.directive('analysisContentItem', ['$compile', function ($compile) {
         var heirarchicalTemplate = '<hierarchical-Accordion analysis="analysis" project="project"></hierarchical-Accordion>';
         var kMeansTemplate = '<k-Means-Accordion analysis="analysis" project="project"></k-Means-Accordion>';
@@ -388,7 +420,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
 
         };
     }]).directive('limmaAccordion',
-    ['$filter', 'alertService', function($filter, alertService) {
+    ['$filter', 'alertService', 'd3DomService',  function($filter, alertService, d3Dom) {
         return {
             restrict : 'E',
             templateUrl : '/container/view/elements/limmaAccordion',
@@ -434,7 +466,69 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     color: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
                 }
                 
-                console.log
+                scope.viewGenes = function(){
+                	var shownGenes = scope.applyFilter(scope.analysis.results);
+                	
+                	var groups = {
+                		control: {
+                			pairs: [],
+                			values: [],
+                			sortedValues: [],
+                			sort: scope.project.dataset.expression.sort,
+                			statistics: scope.project.dataset.expression.statistics
+                			
+                		},
+                		experiment: {
+                			pairs:[],
+                			values:[],
+                			sortedValues: [],
+                			sort: scope.project.dataset.expression.sort,
+                			statistics: scope.project.dataset.expression.statistics
+                		}
+                	};
+                	
+                	shownGenes.map(function(gene){
+                	//set up pairs
+                	});
+                	
+                	
+                	groups.control.pairs.map(function(pair, index){
+                	//Set up values for control pairs and initial state of sorted values
+                		
+                		//value push
+                		groups.control.values.push(scope.dataset.expression.get(pair));
+                		
+                		//sorted value push
+                		groups.control.sortedValues.push(index);
+                	});
+                	
+                	groups.experiment.pairs.map(function(pair, index){
+                	//Set up values for experiment pairs
+                		
+                		//value push
+                		groups.experiment.values.push(scope.dataset.expression.get(pair));
+                		
+                		//sorted value push
+                		groups.experiment.sortedValues.push(index);
+                	});
+                	
+                	//Sort!
+                	groups.control.sort();
+                	groups.experiment.sort();
+                	
+                	//Build quartile and drawing information
+                	
+                	var svg = d3Dom('div#limma-' + scope.analysis.randomId + '-svg-holder', scope)
+                	
+                };
+                
+                scope.$watch('analysis', function(newval){
+                	if(newval){
+                		scope.viewGenes()
+                	}
+                	
+                })
+                
                 scope.addSelections = function(){
                     
                     var userselections = getKeys(scope.filteredResults);
