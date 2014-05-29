@@ -14,6 +14,10 @@
  */
 package edu.dfci.cccb.mev.limma.domain.prototype;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
 import edu.dfci.cccb.mev.limma.domain.contract.Limma;
 
@@ -21,4 +25,9 @@ import edu.dfci.cccb.mev.limma.domain.contract.Limma;
  * @author levk
  * 
  */
-public abstract class AbstractLimma extends AbstractAnalysis<AbstractLimma> implements Limma {}
+@Accessors (fluent = true, chain = true)
+public abstract class AbstractLimma extends AbstractAnalysis<AbstractLimma> implements Limma {
+
+  private @Getter @Setter Selection control;
+  private @Getter @Setter Selection experiment;
+}
