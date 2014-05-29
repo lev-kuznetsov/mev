@@ -46,11 +46,13 @@ public class LimmaJsonSerializer extends AbstractAnalysisJsonSerializer<Limma> {
    * com.fasterxml.jackson.databind.SerializerProvider) */
   @Override
   protected void serializeAnalysisContent (Limma value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
-                                                                                                              JsonProcessingException {
+                                                                                                        JsonProcessingException {
     super.serializeAnalysisContent (value, jgen, provider);
     jgen.writeArrayFieldStart ("results");
     for (Entry e : value.full ())
       provider.defaultSerializeValue (e, jgen);
     jgen.writeEndArray ();
+    provider.defaultSerializeField ("control", value.control (), jgen);
+    provider.defaultSerializeField ("experiment", value.experiment (), jgen);
   }
 }

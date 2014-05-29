@@ -119,7 +119,10 @@ public class StatelessScriptEngineFileBackedLimmaBuilder extends AbstractLimmaBu
                 configFile.delete ();
               }
 
-              return new FileBackedLimma (limma).name (name ()).type (type ());
+              return new FileBackedLimma (limma).name (name ())
+                                                .type (type ())
+                                                .control (control ())
+                                                .experiment (experiment ());
             } catch (ScriptException e) {
               if (log.isDebugEnabled ())
                 try (ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
