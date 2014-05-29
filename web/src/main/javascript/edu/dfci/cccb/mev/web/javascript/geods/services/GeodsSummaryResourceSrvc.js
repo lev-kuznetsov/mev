@@ -8,12 +8,5 @@ define(["angular", "geods/Geods.module", "angularResource", "geods/domain/GeodsS
 					db: "gds",
 					retmode: "json"
 				});
-	}]).factory('GeodsSummaryFactory', ['GeodsSummaryResourceSrvc', function(GeodsSummaryResourceSrvc){
-		console.debug("GeodsSummaryFactory init");
-		return {
-			create: function(id){
-				return new GeodsSummary(GeodsSummaryResourceSrvc, id);			
-			}
-		};
 	}]);
 });

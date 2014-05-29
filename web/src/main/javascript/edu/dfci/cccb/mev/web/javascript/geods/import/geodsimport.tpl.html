@@ -1,10 +1,12 @@
 <div>
-<input type="text" id="uid" ng-model="uid"/>
-<button id="find" value="find" ng-click="vm.searchById(uid)" >find</button>
+<input type="text" id="uid" ng-model="vm.uid" />
+<button id="find" value="find" ng-click="vm.searchById()" >find</button>
+<button id="test" value="find" ng-click="vm.test()" >test</button>
+
 <div>
-	<div><a ng-click="vm.import()">{{vm.summary.getTitle()}}</a></div>
-	<div ng-repeat="sample in vm.summary.getSamples()">
-	<span>{{sample.key}} - {{sample.title}}</span>
+	<div><a href="" ng-click="vm.import()">{{vm.summary.getTitle()}}</a></div>
+	<div ng-repeat="(key, value) in vm.summary.samples">
+	<span>{{key}} - {{value}}</span>
 	</div>
 </div>
 </div>

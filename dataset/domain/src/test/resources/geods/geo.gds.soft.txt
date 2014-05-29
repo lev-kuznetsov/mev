@@ -1,0 +1,74 @@
+^DATABASE = Geo
+!Database_name = Gene Expression Omnibus (GEO)
+!Database_institute = NCBI NLM NIH
+!Database_web_link = http://www.ncbi.nlm.nih.gov/geo
+!Database_email = geo@ncbi.nlm.nih.gov
+!Database_ref = Nucleic Acids Res. 2005 Jan 1;33 Database Issue:D562-6
+^DATASET = GDS4092
+!dataset_title = Breast cancer cell lines treated with methylated or unmethylated DNA oligos
+!dataset_description = Analysis of breast cancer cell lines BT-20 and Hs578T treated with methylated or un-methylated CpG DNA oligos: CDH13 and ODN 2006. Results provide insight into molecular mechanisms triggered by methylated, but not by unmethylated DNA, that could be involved in tumour biology.
+!dataset_type = Expression profiling by array
+!dataset_pubmed_id = 22108517
+!dataset_platform = GPL570
+!dataset_platform_organism = Homo sapiens
+!dataset_platform_technology_type = in situ oligonucleotide
+!dataset_feature_count = 54675
+!dataset_sample_organism = Homo sapiens
+!dataset_sample_type = RNA
+!dataset_channel_count = 1
+!dataset_sample_count = 12
+!dataset_value_type = transformed count
+!dataset_reference_series = GSE22865
+!dataset_order = none
+!dataset_update_date = Jun 07 2012
+^SUBSET = GDS4092_1
+!subset_dataset_id = GDS4092
+!subset_description = BT-20
+!subset_sample_id = GSM564960,GSM564961,GSM564952,GSM564953,GSM564958,GSM564959
+!subset_type = cell line
+^SUBSET = GDS4092_2
+!subset_dataset_id = GDS4092
+!subset_description = Hs578T
+!subset_sample_id = GSM564956,GSM564957,GSM564950,GSM564951,GSM564954,GSM564955
+!subset_type = cell line
+^SUBSET = GDS4092_3
+!subset_dataset_id = GDS4092
+!subset_description = ODN 2006
+!subset_sample_id = GSM564960,GSM564956
+!subset_type = agent
+^SUBSET = GDS4092_4
+!subset_dataset_id = GDS4092
+!subset_description = ODN 2006 CTL
+!subset_sample_id = GSM564961,GSM564957
+!subset_type = agent
+^SUBSET = GDS4092_5
+!subset_dataset_id = GDS4092
+!subset_description = CDH13 M
+!subset_sample_id = GSM564952,GSM564958,GSM564950,GSM564954
+!subset_type = agent
+^SUBSET = GDS4092_6
+!subset_dataset_id = GDS4092
+!subset_description = CDH13 U
+!subset_sample_id = GSM564953,GSM564959,GSM564951,GSM564955
+!subset_type = agent
+^DATASET = GDS4092
+#ID_REF = Platform reference identifier
+#IDENTIFIER = identifier
+#GSM564960 = Value for GSM564960: BT-20 CDH13 ODN; src: BT-20, ODN 2006
+#GSM564961 = Value for GSM564961: BT-20 CDH13 ODN CTL; src: BT-20, ODN 2006 CTL
+#GSM564952 = Value for GSM564952: BT-20 set 1 CDH13 M; src: BT-20, methylated CDH13 sequence (CDH13 M)
+#GSM564958 = Value for GSM564958: BT-20 set 2 CDH13 M; src: BT-20, methylated CDH13 sequence (CDH13 M)
+#GSM564953 = Value for GSM564953: BT-20 set 1 CDH13 U; src: BT-20, unmethylated CDH13 sequence (CDH13 U)
+#GSM564959 = Value for GSM564959: BT-20 set 2 CDH13 U; src: BT-20, unmethylated CDH13 sequence (CDH13 U)
+#GSM564956 = Value for GSM564956: Hs578T CDH13 ODN; src: Hs578T, ODN 2006
+#GSM564957 = Value for GSM564957: Hs578T CDH13 ODN CTL; src: Hs578T, ODN 2006 CTL
+#GSM564950 = Value for GSM564950: Hs578T set 1 CDH13 M; src: Hs578T, methylated CDH13 sequence (CDH13 M)
+#GSM564954 = Value for GSM564954: Hs578T set 2 CDH13 M; src: Hs578T, methylated CDH13 sequence (CDH13 M)
+#GSM564951 = Value for GSM564951: Hs578T set 1 CDH13 U; src: Hs578T, unmethylated CDH13 sequence (CDH13 U)
+#GSM564955 = Value for GSM564955: Hs578T set 2 CDH13 U; src: Hs578T, unmethylated CDH13 sequence (CDH13 U)
+!dataset_table_begin
+ID_REF	IDENTIFIER	GSM564960	GSM564961	GSM564952	GSM564958	GSM564953	GSM564959	GSM564956	GSM564957	GSM564950	GSM564954	GSM564951	GSM564955
+1007_s_at	DDR1	10.8791	10.8112	10.8259	10.8808	10.9806	10.8163	7.35814	7.99187	7.71244	8.01565	7.41308	7.65031
+1053_at	RFC2	9.95446	9.92373	10.0399	10.0046	10.1245	10.1043	9.80986	9.86481	9.66136	9.93452	9.81757	9.97332
+117_at	HSPA6	2.51129	2.4826	2.63104	2.49851	2.56085	2.51017	2.51096	2.44356	2.53638	2.48926	2.8009	2.50322
+!dataset_table_end

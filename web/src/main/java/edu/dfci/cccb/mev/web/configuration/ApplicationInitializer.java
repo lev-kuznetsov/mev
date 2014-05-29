@@ -30,6 +30,7 @@ import edu.dfci.cccb.mev.hcl.rest.configuration.HclRestConfiguration;
 import edu.dfci.cccb.mev.kmeans.rest.configuration.KMeansRestConfiguration;
 import edu.dfci.cccb.mev.limma.rest.configuration.LimmaRestConfiguration;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
+import edu.dfci.cccb.mev.rest.configuration.GeoDatasetsRestConfiguration;
 import edu.dfci.cccb.mev.t_test.rest.configuration.TTestRestConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
 
@@ -51,6 +52,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 
     mvcContext.register (DatasetRestConfiguration.class);
     mvcContext.register (PresetsRestConfiguration.class);
+    mvcContext.register (GeoDatasetsRestConfiguration.class);
     mvcContext.register (ProbeAnnotationsConfigurationMain.class);
     mvcContext.register (AnnotationServerConfiguration.class);
     mvcContext.register (HclRestConfiguration.class);
