@@ -433,7 +433,7 @@ public class ImportingUtilities {
 
           if(dimension.annotation () instanceof AnnotationInputStream ){
             if(logger.isDebugEnabled ())
-              logger.debug ("Using ROW STREAM annotations");
+              logger.debug ("Using COLUMN STREAM annotations");
             stream = ((AnnotationInputStream)dimension.annotation ()).getInputStream () ;
           }else{
             //use the dataset keys for column annotations          
@@ -549,9 +549,13 @@ public class ImportingUtilities {
     if (localname.isEmpty () || localname.endsWith ("/")) {
       localname = localname + "temp";
     }
+//    if (heatmap != null && dimension != null)
+//      //ap:filename is used for project name, so rename the file to [dataset-name+dimension]
+//      localname = FilenameUtils.getFullPath (localname)+heatmap.name ()+dimension.type ().toString ();
+//    
     File file = allocateFile (rawDataDir, localname);
 
-    JSONUtilities.safePut (fileRecord, "fileName", file.getName ());
+    JSONUtilities.safePut (fileRecord, "fileName", heatmap.name ()+dimension.type ().toString ());
     JSONUtilities.safePut (fileRecord, "location", getRelativePath (file, rawDataDir));
 
     update.totalExpectedSize += length;
@@ -757,11 +761,11 @@ public class ImportingUtilities {
               filtered=true;
               writer.write(line);
               writer.newLine();
-              if(logger.isDebugEnabled ())
-                logger.debug ("++writing: " + key);
+//              if(logger.isDebugEnabled ())
+//                logger.debug ("++writing: " + key);
             }else{
-              if(logger.isDebugEnabled ())
-                logger.debug ("--skipping: " + key);
+//              if(logger.isDebugEnabled ())
+//                logger.debug ("--skipping: " + key);
             }
           }      
         }
