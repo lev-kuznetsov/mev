@@ -8,6 +8,7 @@ define(['jquery',
 	return angular
 		.module('Mev.heatmap', ['Mev.Api', 'Mev.Project', 'd3colorBrewer'])
 		.service('Heatmap.Modal', [function(){
+		//Uncovered code
 			return function(id){
 				return {
 					show: function(){
@@ -18,6 +19,7 @@ define(['jquery',
 					}
 				};
 			};
+			
 		}])
         .service('Heatmap.saveCluster', [function(){
         	
@@ -104,6 +106,7 @@ define(['jquery',
         'Heatmap.Modal',
         function($scope, $routeParams,  $loc, DatasetResourceService, ProjectFactory, modal) {
 		    
+			console.log(modal)
 			LoadingModal = modal('#loading');
 			
 			function downloadFailure(){
