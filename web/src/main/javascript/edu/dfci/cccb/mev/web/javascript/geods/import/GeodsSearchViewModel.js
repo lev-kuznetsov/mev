@@ -13,7 +13,7 @@ define([],function(){
 			console.debug("mv.test()");
 			var modalInstance = $modal.open(
 					{
-						template: '<div style="padding: 5em"><p> Please wait while, downloading GEO dataset ... </p><div>',
+						template: '<div class="mev-modal"><p> Please wait while, downloading GEO dataset ... </p><div>',
 						size: 'lg'
 					});
 			return modalInstance;
@@ -37,7 +37,7 @@ define([],function(){
 			});
 		};
 		
-		this.uid="4092";
+		this.uid="";
 	};
 	return GeodsSearchViewModel;
 });

@@ -35,7 +35,7 @@ public abstract class AbstractDimension implements Dimension {
 
   private @Getter final Type type;
   private @Getter @Setter (PROTECTED) Selections selections;
-  private @Getter @Setter (PROTECTED) Annotation annotation;
+  private @Getter @Setter Annotation annotation;
 
   /* (non-Javadoc)
    * @see java.lang.Object#toString() */

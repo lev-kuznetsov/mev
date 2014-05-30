@@ -4,16 +4,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import javax.inject.Inject;
 
 import lombok.extern.log4j.Log4j;
 
-import org.apache.commons.collections.map.LinkedMap;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.http.MediaType;
@@ -32,8 +29,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
-import edu.dfci.cccb.mev.rest.configuration.GeoDatasetsRestConfiguration;
-import edu.dfci.cccb.mev.rest.controllers.GeoDatasetController.GeoImportDto;
+import edu.dfci.cccb.mev.geods.rest.controllers.GeoDatasetController.GeoImportDto;
+import edu.dfci.cccb.mev.test.geods.rest.configuration.GeoDatasetsConfigurationTEST;
 import edu.dfci.cccb.mev.web.configuration.DispatcherConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
 
@@ -42,8 +39,9 @@ import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={DispatcherConfiguration.class,
                                ContainerConfigurations.class,
-                               DatasetRestConfiguration.class,
-                               GeoDatasetsRestConfiguration.class})
+                               GeoDatasetsConfigurationTEST.class,
+                               DatasetRestConfiguration.class
+                               })
 public class TestGeoDatasetControllerRest {
 
   private @Inject WebApplicationContext webApplicationContext;

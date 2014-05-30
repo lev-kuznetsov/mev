@@ -11,17 +11,17 @@
 	<name>MeV Geo Datasets - REST</name>
 
 	<dependencies>
+		<!-- GEO Datasets Domain -->
+		<dependency>
+			<groupId>edu.dfci.cccb</groupId>
+			<artifactId>mev-geods-domain</artifactId>
+			<version>BAYLIE-SNAPSHOT</version>
+		</dependency>
+		
 		<!-- Mev IO -->
 		<dependency>
 			<groupId>edu.dfci.cccb</groupId>
 			<artifactId>mev-io</artifactId>
-			<version>BAYLIE-SNAPSHOT</version>
-		</dependency>
-
-		<!-- Preset Domain -->
-		<dependency>
-			<groupId>edu.dfci.cccb</groupId>
-			<artifactId>mev-presets-domain</artifactId>
 			<version>BAYLIE-SNAPSHOT</version>
 		</dependency>
 
@@ -32,13 +32,6 @@
 			<version>BAYLIE-SNAPSHOT</version>
 		</dependency>
 
-		<!-- Mev Persistense -->
-		<dependency>
-			<groupId>edu.dfci.cccb</groupId>
-			<artifactId>mev-configuration-persistence</artifactId>
-			<version>BAYLIE-SNAPSHOT</version>
-		</dependency>
-
 		<!-- Mev Dataset -->
 		<dependency>
 			<groupId>edu.dfci.cccb</groupId>
@@ -46,72 +39,5 @@
 			<version>BAYLIE-SNAPSHOT</version>
 		</dependency>
 
-		<!-- Mev Annotations -->
-		<dependency>
-			<groupId>edu.dfci.cccb</groupId>
-			<artifactId>mev-annotation-server</artifactId>
-			<version>BAYLIE-SNAPSHOT</version>
-		</dependency>
-
-		<!-- Mev Annotations -->
-		<dependency>
-			<groupId>edu.dfci.cccb</groupId>
-			<artifactId>mev-annotation-server</artifactId>
-			<version>BAYLIE-SNAPSHOT</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-		</dependency>
-		
-		<!-- JPA -->
-
-		<dependency>
-			<groupId>org.apache.geronimo.specs</groupId>
-			<artifactId>geronimo-ejb_3.1_spec</artifactId>
-			<version>1.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.geronimo.specs</groupId>
-			<artifactId>geronimo-jpa_2.0_spec</artifactId>
-			<version>1.0</version>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- Hibernate -->
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>4.2.7.SP1</version>
-		</dependency>
-
-		<!-- Persistence Configuration -->		
-		<dependency>
-			<groupId>edu.dfci.cccb</groupId>
-			<artifactId>mev-configuration-persistence</artifactId>
-			<version>BAYLIE-SNAPSHOT</version>
-		</dependency>
-
-		<!-- DataSource -->
-
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.4</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<version>1.0.0.RELEASE</version>
-		</dependency>
 	</dependencies>
 </project>

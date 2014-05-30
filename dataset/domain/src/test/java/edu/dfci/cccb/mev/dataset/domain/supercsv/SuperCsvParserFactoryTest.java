@@ -14,8 +14,6 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.supercsv;
 
-import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
-import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -28,19 +26,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import lombok.extern.log4j.Log4j;
-
 import org.junit.Test;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Parser;
-import edu.dfci.cccb.mev.dataset.domain.gzip.GzipTsvInput;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 
 /**
  * @author levk
  * 
  */
-@Log4j
 public class SuperCsvParserFactoryTest {
 
   @Test
@@ -77,8 +71,7 @@ public class SuperCsvParserFactoryTest {
   
   @Test
   public void testGEOParser () throws Exception {
-//    String url ="ftp://ftp.ncbi.nlm.nih.gov/geo/datasets/GDS4nnn/GDS4092/soft/GDS4092.soft.gz";
-    URL url = this.getClass ().getResource ("/geods/geo.gds.soft.txt");
+    URL url = this.getClass ().getResource ("geods/geo.gds.soft.txt");
     Parser p = new SuperCsvParserFactory ().parse (new UrlTsvInput (url).input ());
     while(p.next ()) {
 //      log.debug (p.value () + ":" + p.projection (ROW)+ ":" + p.projection (COLUMN));
