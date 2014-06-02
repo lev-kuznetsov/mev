@@ -15,6 +15,7 @@
 package edu.dfci.cccb.mev.limma.domain.contract;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 
 /**
  * @author levk
@@ -35,4 +36,8 @@ public interface Limma extends Analysis {
   }
 
   Iterable<Entry> full ();
+
+  Selection control ();
+
+  Selection experiment ();
 }
