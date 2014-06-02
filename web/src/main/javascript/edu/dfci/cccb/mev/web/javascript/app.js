@@ -12,6 +12,7 @@ define(['angular',
         'analysisaccordioncollection/AnalysisAccordionCollection',
         'analysismodalcollection/AnalysisModalCollection',
         'viewCollection/ViewCollection',
+        'geneboxplotvisualization/GeneBoxPlotVisualization',
         'mainmenu'
         ], function(angular){
 	'use strict';
@@ -30,7 +31,8 @@ define(['angular',
 	     'Mev.AnalysisAccordionCollection',
 	     'Mev.AnalysisModalCollection',
 	     'Mev.ViewCollection',
-	     'Mev.MainMenuModule'
+	     'Mev.MainMenuModule',
+	     'Mev.GeneBoxPlotVisualization'
 	     ])
 	.config(['$routeProvider', '$locationProvider', '$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {
 		
