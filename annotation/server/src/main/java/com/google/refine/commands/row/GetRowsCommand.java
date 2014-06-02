@@ -98,7 +98,9 @@ public class GetRowsCommand extends Command {
             String callback = request.getParameter("callback");
             
             int start = Math.min(project.rows.size(), Math.max(0, getIntegerParameter(request, "start", 0)));
-            int limit = Math.min(project.rows.size() - start, Math.max(0, getIntegerParameter(request, "limit", 20)));
+            //ap:increase default limit to 100
+            int limit = Math.min(project.rows.size() - start, Math.max(0, getIntegerParameter(request, "limit", 100)));
+//            int limit = Math.min(project.rows.size() - start, Math.max(0, getIntegerParameter(request, "limit", 20)));
             
             Pool pool = new Pool();
             Properties options = new Properties();
