@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>jar</packaging>
+	<parent>
+		<groupId>edu.dfci.cccb</groupId>
+		<artifactId>mev-geods</artifactId>
+		<version>BAYLIE-SNAPSHOT</version>
+	</parent>
+	<artifactId>mev-geods-rest</artifactId>
+	<name>MeV Geo Datasets - REST</name>
+
+	<dependencies>
+		<!-- GEO Datasets Domain -->
+		<dependency>
+			<groupId>edu.dfci.cccb</groupId>
+			<artifactId>mev-geods-domain</artifactId>
+			<version>BAYLIE-SNAPSHOT</version>
+		</dependency>
+		
+		<!-- Mev IO -->
+		<dependency>
+			<groupId>edu.dfci.cccb</groupId>
+			<artifactId>mev-io</artifactId>
+			<version>BAYLIE-SNAPSHOT</version>
+		</dependency>
+
+		<!-- Mev Rest -->
+		<dependency>
+			<groupId>edu.dfci.cccb</groupId>
+			<artifactId>mev-configuration-rest</artifactId>
+			<version>BAYLIE-SNAPSHOT</version>
+		</dependency>
+
+		<!-- Mev Dataset -->
+		<dependency>
+			<groupId>edu.dfci.cccb</groupId>
+			<artifactId>mev-dataset-rest</artifactId>
+			<version>BAYLIE-SNAPSHOT</version>
+		</dependency>
+
+	</dependencies>
+</project>

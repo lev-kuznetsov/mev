@@ -29,6 +29,8 @@ public interface Dimension {
   Selections selections ();
 
   Annotation annotation ();
+  
+  Dimension annotation (Annotation annotation);
 
   public enum Type {
     ROW ("row", "y", "1", "gene", "probe", "height"),
