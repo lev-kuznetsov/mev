@@ -8,15 +8,16 @@ define ([ 'angular', 'angularMocks', 'heatmap/Heatmap', 'jasmineJquery', 'api/Ap
 	  beforeEach(angular.mock.module('ng'))
 	  
       describe("HeatmapCtrl", function(){          
+
+    	  var scope = undefined,
+		  MockDatasetResourceService = undefined,
+		  MockHeatmap = undefined,
+		  _$routeParams_ = undefined,
+		  _ProjectFactory_ = undefined;
+    	  
     	  //Setup
           beforeEach(function(){
-        	  
-        	  var scope = undefined,
-			  MockDatasetResourceService = undefined,
-			  MockHeatmap = undefined,
-			  _$routeParams_ = undefined,
-			  _ProjectFactory_ = undefined;
-			          	  
+ 
           	  angular.mock.inject(['$injector', '$controller', '$rootScope', '$httpBackend', '$location', '$resource',
           	                       function($injector, $controller, $rootScope, $httpBackend, $location, $resource){
 
@@ -82,14 +83,13 @@ define ([ 'angular', 'angularMocks', 'heatmap/Heatmap', 'jasmineJquery', 'api/Ap
     				    'Heatmap.Modal': MockHeatmap
     			  });
                   
-                  console.log(scope)
           		  
           	  }])
           });
           
           // critical
           it('should show the loading modal on page initialization.', function(){
-        	  expect(scope).toBeDefined();
+
           });
           
           xit('should hide the loading modal when a successful dataset call is returned.', function(){

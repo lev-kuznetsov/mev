@@ -106,7 +106,6 @@ define(['jquery',
         'Heatmap.Modal',
         function($scope, $routeParams,  $loc, DatasetResourceService, ProjectFactory, modal) {
 		    
-			console.log(modal)
 			LoadingModal = modal('#loading');
 			
 			function downloadFailure(){
