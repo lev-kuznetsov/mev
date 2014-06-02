@@ -431,7 +431,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             	analysis : "=analysis"
             },
             link : function(scope) {
-                
+            	
                 scope.headers = [
 	               {'name':'ID', 'field': "id", 'icon': "search"},
 	               {'name':'Log-Fold-Change', 'field': "logFoldChange", 'icon': [">=", "<="]},
@@ -469,103 +469,31 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 }
                 
                 scope.viewGenes = function(){
+                	
                 	var shownGenes = scope.applyFilter(scope.analysis.results);
                 	
-                	var groups = Object.create(null);
                 	
-                	
-                	shownGenes.map(function(gene){
-                		groups[gene] = {
-                        		control: {
-                        			pairs: [],
-                        			values: [],
-                        			sortedValues: [],
-                        			sort: scope.project.dataset.expression.sort,
-                        			statistics: scope.project.dataset.expression.statistics
-                        			
-                        		},
-                        		experiment: {
-                        			pairs:[],
-                        			values:[],
-                        			sortedValues: [],
-                        			sort: scope.project.dataset.expression.sort,
-                        			statistics: scope.project.dataset.expression.statistics
-                        		},
-                        		genes:shownGenes,
-                        		plot: {
-                        			control: {
-                            			max: undefined,
-                            			min: undefined,
-                            			firstq: undefined,
-                            			thirdq: undefined,
-                            			secondq: undefined
-                            		},
-                            		experiment: {
-                            			max: undefined,
-                            			min: undefined,
-                            			firstq: undefined,
-                            			thirdq: undefined,
-                            			secondq: undefined
-                            		}
-                        		
-                        		}
-                        	};
-                		
-                		//set up pairs
-                		
-                		groups[gene].control.pairs.map(function(pair, index){
-                    	//Set up values for control pairs and initial state of sorted values
-                    		
-                    		//value push
-                    		groups[gene].control.values.push(scope.dataset.expression.get(pair));
-                    		
-                    		//sorted value push
-                    		groups[gene].control.sortedValues.push(index);
-                    	});
-                		
-                		groups[gene].experiment.pairs.map(function(pair, index){
-                    	//Set up values for experiment pairs
-                    		
-                    		//value push
-                    		groups[gene].experiment.values.push(scope.dataset.expression.get(pair));
-                    		
-                    		//sorted value push
-                    		groups[gene].experiment.sortedValues.push(index);
-                    	});
-
-                		//Sort!
-                		if (groups[gene].experiment.pairs.length > 0 && groups[gene].control.pairs.length > 0){
-                			groups[gene].control.sort();
-                        	groups[gene].experiment.sort();
-                        	
-                        	//Build quartile and drawing information
-                        	groups[gene].plot.control = {
-                        			max: groups[gene].control.statistics().max(),
-                        			min: groups[gene].control.statistics().max(),
-                        			firstq: groups[gene].control.statistics().quartile(1),
-                        			thirdq: groups[gene].control.statistics().quartile(3),
-                        			median: groups[gene].control.statistics().median()
-                        	};
-                        	
-                        	groups[gene].plot.experiment = {
-                        			max: groups[gene].experiment.statistics().max(),
-                        			min: groups[gene].experiment.statistics().max(),
-                        			firstq: groups[gene].experiment.statistics().quartile(1),
-                        			thirdq: groups[gene].experiment.statistics().quartile(3),
-                        			median: groups[gene].experiment.statistics().median()
-                        	};
-                        	var svg = d3Dom('div#limma-' + scope.analysis.randomId + '-svg-holder', scope, groups)
-                        	
-                        	plot(svg, groups)
-                        	
-                		}
-                		
-                    	
-                	
-                	});
-
-                	
-                	
+                	scope.boxPlotGenes = {
+            			"data":shownGenes.map(function (gene, i) {
+                            return {
+                                'control': {
+                                    'values': scope.analysis.control.keys.map(function(label){
+                                    	return scope.project.dataset.expression.get([gene.id, label])
+                                    })
+                                },
+                                'experiment': {
+                                    	'values': scope.analysis.experiment.keys.map(function(label){
+                                    		return scope.project.dataset.expression.get([gene.id, label])
+                                    	})
+                                },
+                                'geneName': gene.id,
+                                'pValue': gene.pValue
+                            };
+                        }),
+                        'min': scope.project.dataset.expression.min,
+                        'max': scope.project.dataset.expression.max,
+                        'id' : scope.analysis.randomId
+            		};
                 	
                 };
                 
@@ -651,9 +579,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     filtered= $filter('filterThreshold')(filtered, scope.filterParams.qValue.value, scope.filterParams.qValue.field, scope.filterParams.qValue.op);
                     filtered = $filter('orderBy')(filtered, scope.tableOrdering);
                     scope.filteredResults = filtered;
-                    
-//                    console.debug("scope.filterParams", scope.filterParams);
-//                    console.debug("filteredResults.length", scope.filteredResults.length);
                     
                     return scope.filteredResults;
                 }

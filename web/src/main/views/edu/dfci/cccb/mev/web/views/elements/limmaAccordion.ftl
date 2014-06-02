@@ -9,7 +9,8 @@
 		<li>
 			<a id="heatmapTabLink" href="{{'#limma-' + analysis.randomId + '-boxPlot'}}" 
 				data-toggle="tab" 
-				target="_self">Quartiles</a>
+				target="_self"
+				ng-click="viewGenes()">Quartiles</a>
 		</li>
 	</ul>
 	
@@ -94,7 +95,11 @@
 				</div>
 		</div>
 		<div class="tab-pane" id="{{'limma-' + analysis.randomId + '-boxPlot'}}">
-			<div id="{{'limma-' + analysis.randomId + '-svg-holder'}}"></div>
+			<div id="{{'limma-' + analysis.randomId + '-svg-holder'}}">
+
+				<d3-Box-Plot-Visualization data="boxPlotGenes"></d3-Box-Plot-Visualization>
+
+			</div>
 		</div>
 	</div>
 
@@ -121,3 +126,14 @@
             </a> 
     </div>
 </bsmodal> 
+
+<style>
+line {
+    fill: #fff;
+    stroke: #000;
+    stroke-width: 1.5px;
+}
+line.int-lines {
+    stroke-dasharray: 7, 5;
+}
+</style>
