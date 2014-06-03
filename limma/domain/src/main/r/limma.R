@@ -73,7 +73,9 @@ in.mtx=data.matrix(in.mtx)
 ## Check to determine if matrix contains negative values
 ## off set the matrix to operate in positive values for limma
 ## starting with 0
-in.mtx=if(min(in.mtx)<0){in.mtx+min(in.mtx)*-1}else{in.mtx}
+min.val=min(in.mtx)
+in.mtx=if(min.val<0){in.mtx+min.val*-1}else{in.mtx}
+
 
 ## Assign group
 sample.mtx=read.table(SAMPLE_FILE, header=FALSE, sep="\t")
@@ -93,7 +95,7 @@ colnames(result)=c("ID", "Log Fold Change", "Average Expression", "t", "P-value"
 ## If the matrix contains negative values,  
 ## adjust the offset back to its original input values
 ##
-result[,"AverageExpression"]=if(min(in.mtx)<0){result[,"Average Expression"]-min(in.mtx)*-1}else{result[,"Average Expression"]}
+result[,"Average Expression"]=if(min.val<0){result[,"Average Expression"]-(min.val*-1)}else{result[,"Average Expression"]}
 
 ##
 ## write rnk file
