@@ -15,8 +15,6 @@
 package edu.dfci.cccb.mev.web.configuration.social;
 
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,8 +50,6 @@ public class GoogleConfiguration extends WebMvcConfigurerAdapter {
 
   private static final String API_KEY = "<REDACTED>";
   private static final String API_SECRET = "<REDACTED>";
-
-  private @Inject @Named ("mev-datasource") DataSource dataSource;
 
   /**
    * When a new provider is added to the app, register its
