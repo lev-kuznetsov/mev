@@ -133,6 +133,7 @@ define(['jquery',
 				downloadFailure();
 			});
 			
+			
 			//Generate views and load analyses
 			$scope.$watch('project.dataset', function(newval, oldval){
 				if(newval && !oldval){

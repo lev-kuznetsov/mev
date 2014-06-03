@@ -26,14 +26,14 @@ define(['./HeatmapViewClass'], function(HeatmapViewClass){
                     };
             }
             
-            if (params.panel && params.panel.side && self.views[0].panel && self.views[0].panel.top){
-                params.panel.top = self.views[0].panel.top;
-                params.labels.column.keys = self.views[0].labels.column.keys;
+            if (params.panel && params.panel.side && self.views.panel && self.views.panel.top){
+                params.panel.top = self.views.panel.top;
+                params.labels.column.keys = self.views.labels.column.keys;
                 
                 
-            } else if (params.panel && params.panel.top && self.views[0].panel && self.views[0].panel.side) {
-                params.panel.side = self.views[0].panel.side;
-                params.labels.row.keys = self.views[0].labels.row.keys;
+            } else if (params.panel && params.panel.top && self.views.panel && self.views.panel.side) {
+                params.panel.side = self.views.panel.side;
+                params.labels.row.keys = self.views.labels.row.keys;
                 
             }
             

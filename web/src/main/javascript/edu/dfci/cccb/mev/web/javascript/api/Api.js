@@ -12,6 +12,18 @@ define ([ 'angular', 'angularResource'], function (angular) {
     	 
     	
     }])
+    .service('GoogleDriveResourceService', ['$resource', function($resource){
+        	return $resource('/import/google',
+	    	{
+	    		'format':'json'
+			},{
+				'get': {method:'GET'},
+				'post':{
+					url:'import/google/:id/load',
+					method: 'POST'
+				}
+			});
+        }])
     .service ('AnalysisResourceService', ['$resource', '$routeParams', function ($resource, $routeParams) {
     	
     	return $resource('/dataset/:datasetName/analysis',
