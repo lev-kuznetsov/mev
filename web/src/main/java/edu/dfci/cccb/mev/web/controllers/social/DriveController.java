@@ -52,7 +52,7 @@ public class DriveController {
   @RequestMapping (method = RequestMethod.GET)
   public Drive drive () {
     if (SecurityContext.userSignedIn ()) {
-      List<String> result = new ArrayList<> ();
+      List<edu.dfci.cccb.mev.web.domain.social.Drive.DriveFile> result = new ArrayList<> ();
       List<DriveFile> files;
       String nextPageToken = "";
       do {
@@ -60,10 +60,10 @@ public class DriveController {
         files = page.getItems ();
         for (DriveFile file : files)
           if (!file.isFolder ())
-            result.add (file.getTitle ());
+            result.add (new edu.dfci.cccb.mev.web.domain.social.Drive.DriveFile (file.getTitle (), file.getId ()));
         nextPageToken = page.getNextPageToken ();
       } while (nextPageToken != null);
-      return new Drive (true, result.toArray (new String[0]));
+      return new Drive (true, result.toArray (new edu.dfci.cccb.mev.web.domain.social.Drive.DriveFile[0]));
     } else {
       return new Drive (false, null);
     }
