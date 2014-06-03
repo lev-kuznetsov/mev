@@ -20,10 +20,11 @@ import static edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMeth
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgumentResolver.SELECTION_URL_ELEMENT;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -41,30 +42,42 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
+import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 
 /**
  * @author levk
  * 
  */
 @RestController
-@RequestMapping ("/dataset/" + DATASET_URL_ELEMENT + "/" + DIMENSION_URL_ELEMENT )
+@RequestMapping ("/dataset/" + DATASET_URL_ELEMENT + "/" + DIMENSION_URL_ELEMENT)
 @Log4j
 @Scope (SCOPE_REQUEST)
 public class SelectionController {
 
-  private @Getter @Setter (onMethod = @_ (@Inject)) Dimension dimension;
-  private @Getter @Setter (onMethod = @_ (@Inject)) SelectionBuilder builder;
+  private @Getter @Setter @Inject Dimension dimension;
+  private @Getter @Setter @Inject SelectionBuilder builder;
 
-  @RequestMapping (value="/selections", method = GET)
+  private @Inject Workspace workspace;
+  private @Inject Dataset dataset;
+  private @Inject DatasetBuilder datasetBuilder;
+
+  @RequestMapping (value = "/selections", method = GET)
   public Selections all () {
     return dimension.selections ();
   }
-  
-  @RequestMapping (value="/selection", method = GET)
+
+  @RequestMapping (value = "/selection", method = GET)
   public Collection<String> list () {
     return dimension.selections ().list ();
   }
@@ -84,20 +97,29 @@ public class SelectionController {
                                  .property ("selectionDescription", description)
                                  .property ("selectionColor", color)
                                  .keys (keys)
-                                 .build ();    
-    if (log.isDebugEnabled ())
-      log.debug ("Adding selection " + selection);
-    dimension.selections ().put (selection);    
-  }
-  
-  @RequestMapping (value = "/selection", method = POST)
-  @ResponseStatus (OK)
-  public void saveSelection (@RequestBody Selection selection) {    
+                                 .build ();
     if (log.isDebugEnabled ())
       log.debug ("Adding selection " + selection);
     dimension.selections ().put (selection);
   }
-  
-  
-}
 
+  @RequestMapping (value = "/selection", method = POST)
+  @ResponseStatus (OK)
+  public void saveSelection (@RequestBody Selection selection) {
+    if (log.isDebugEnabled ())
+      log.debug ("Adding selection " + selection);
+    dimension.selections ().put (selection);
+  }
+
+  @RequestMapping (value = "/selection/" + SELECTION_URL_ELEMENT, method = POST)
+  @ResponseStatus (OK)
+  public void export (@PathVariable (SELECTION_MAPPING_NAME) Selection selection,
+                      @RequestParam ("name") String name) throws InvalidDimensionTypeException,
+                                                         SelectionNotFoundException,
+                                                         InvalidCoordinateException,
+                                                         DatasetBuilderException,
+                                                         InvalidDatasetNameException,
+                                                         IOException {
+    dataset.exportSelection (name, dimension.type (), selection.name (), workspace, datasetBuilder);
+  }
+}
