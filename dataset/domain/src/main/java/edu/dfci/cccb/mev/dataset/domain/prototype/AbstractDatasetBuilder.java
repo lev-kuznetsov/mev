@@ -72,7 +72,7 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
   @Override
   public Dataset build (RawInput content) throws DatasetBuilderException,
                                          InvalidDatasetNameException,
-                                         InvalidDimensionTypeException {
+                                         InvalidDimensionTypeException {    
     if(log.isDebugEnabled ())
       log.debug ("Building dataset..."+content.name ());
     Parser parser;

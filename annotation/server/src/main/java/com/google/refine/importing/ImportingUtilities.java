@@ -33,7 +33,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.google.refine.importing;
 
-import static com.google.refine.io.FileProjectManager.*;
+import static com.google.refine.io.FileProjectManager.REQUEST_ATTEIBUTE_DATASET;
+import static com.google.refine.io.FileProjectManager.REQUEST_ATTEIBUTE_DIMENSION;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -101,6 +102,7 @@ import com.google.refine.model.Project;
 import com.google.refine.util.JSONUtilities;
 
 import edu.dfci.cccb.mev.annotation.server.servlet.RefineServlet;
+import edu.dfci.cccb.mev.dataset.domain.contract.AnnotationInputStream;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
@@ -428,22 +430,62 @@ public class ImportingUtilities {
         }
         InputStream stream=null;
         if(dimension.type ()==Dimension.Type.COLUMN){
-          //use the dataset keys for column annotations          
-          StringBuilder builder = new StringBuilder ("Dataset Column Heading\n"+StringUtils.join (
-                                                                     dimension.keys (),
-                                                                     "\n"));
-          stream = new ByteArrayInputStream (builder.toString ().getBytes (encoding));
+
+          if(dimension.annotation () instanceof AnnotationInputStream ){
+            if(logger.isDebugEnabled ())
+              logger.debug ("Using COLUMN STREAM annotations");
+            stream = ((AnnotationInputStream)dimension.annotation ()).getInputStream () ;
+          }else{
+            //use the dataset keys for column annotations          
+            StringBuilder builder = new StringBuilder ("Dataset Column Heading\n"+StringUtils.join (
+                                                                                                    dimension.keys (),
+                                                                                                    "\n"));
+            stream = new ByteArrayInputStream (builder.toString ().getBytes (encoding));            
+          }
+            
+          
         }else{
           String rowAnnotationSource = (String) request.getAttribute ("annotationSource");
           if(rowAnnotationSource.equals ("dataset")){
-
-            if(logger.isDebugEnabled ())
-              logger.debug ("Using ROW KEYS annotations");
-            //use the dataset keys for row annotations
-            StringBuilder builder = new StringBuilder ("Dataset Row Heading\n"+StringUtils.join (
-                                                                         dimension.keys (),
-                                                                         "\n"));
-            stream = new ByteArrayInputStream (builder.toString ().getBytes (encoding));
+            if(dimension.annotation () instanceof AnnotationInputStream ){
+              if(logger.isDebugEnabled ())
+                logger.debug ("Using ROW STREAM annotations");
+              
+                URL url = ((AnnotationInputStream)dimension.annotation ()).getUrl ();
+  
+                JSONObject fileRecord = new JSONObject ();
+                JSONUtilities.safePut (fileRecord, "origin", "download");
+                JSONUtilities.safePut (fileRecord, "url", url.toString ());
+                
+                // Fallback handling for non HTTP connections (only FTP?)
+                URLConnection urlConnection = url.openConnection ();
+                urlConnection.setConnectTimeout (5000);
+                urlConnection.connect ();
+                InputStream stream2 = urlConnection.getInputStream ();
+                JSONUtilities.safePut (fileRecord, "declaredEncoding",
+                                       urlConnection.getContentEncoding ());
+                JSONUtilities.safePut (fileRecord, "declaredMimeType",
+                                       urlConnection.getContentType ());
+                try {
+                  if (saveStream (stream2, url, rawDataDir, progress,
+                                  update, fileRecord, fileRecords,
+                                  urlConnection.getContentLength (),heatmap, dimension)) {
+                    archiveCount++;
+                  }
+                  downloadCount++;
+                } finally {
+                  stream2.close ();
+                }
+              
+            }else{
+              if(logger.isDebugEnabled ())
+                logger.debug ("Using ROW KEYS annotations");
+              //use the dataset keys for row annotations
+              StringBuilder builder = new StringBuilder ("Dataset Row Heading\n"+StringUtils.join (
+                                                                           dimension.keys (),
+                                                                           "\n"));
+              stream = new ByteArrayInputStream (builder.toString ().getBytes (encoding));
+            }
 
           }else if(rowAnnotationSource.equals ("probe")){
             //do nothing - let user select the probe list to import
@@ -507,9 +549,13 @@ public class ImportingUtilities {
     if (localname.isEmpty () || localname.endsWith ("/")) {
       localname = localname + "temp";
     }
+//    if (heatmap != null && dimension != null)
+//      //ap:filename is used for project name, so rename the file to [dataset-name+dimension]
+//      localname = FilenameUtils.getFullPath (localname)+heatmap.name ()+dimension.type ().toString ();
+//    
     File file = allocateFile (rawDataDir, localname);
 
-    JSONUtilities.safePut (fileRecord, "fileName", file.getName ());
+    JSONUtilities.safePut (fileRecord, "fileName", heatmap.name ()+dimension.type ().toString ());
     JSONUtilities.safePut (fileRecord, "location", getRelativePath (file, rawDataDir));
 
     update.totalExpectedSize += length;
@@ -689,26 +735,37 @@ public class ImportingUtilities {
       Path path = Paths.get (filteredFileName);
       try (BufferedWriter writer = Files.newBufferedWriter (Paths.get (filteredFileName), Charset.defaultCharset ())){
         try (BufferedReader reader = new BufferedReader(new FileReader (file))){
-          String line = null;
-          //don't filter out the header
-          String header = reader.readLine(); 
-          if(header!=null){
-            writer.write(header);
-            writer.newLine();
-          }
+          String line = null;          
+          String header = null;
+          
           while ((line = reader.readLine()) != null) {
             //process each line in some way
             //log(line);
-            String key = StringUtils.substringBefore (line, "\t");
+            //skip commented lines
+            if(line != null && (line.startsWith ("!") || line.startsWith ("#") || line.startsWith ("^")))
+              continue;
+            
+            //read first non-comment as the header
+            //don't filter out the header
+            if(header==null){
+              header = line;
+              if(header!=null){
+                writer.write(header);
+                writer.newLine();
+              }
+            }
+            
+            //check the annotation key is in the dataset
+            String key = StringUtils.substringBefore (line, "\t");            
             if(dimension.keys ().contains (key)){
               filtered=true;
               writer.write(line);
               writer.newLine();
-              if(logger.isDebugEnabled ())
-                logger.debug ("++writing: " + key);
+//              if(logger.isDebugEnabled ())
+//                logger.debug ("++writing: " + key);
             }else{
-              if(logger.isDebugEnabled ())
-                logger.debug ("--skipping: " + key);
+//              if(logger.isDebugEnabled ())
+//                logger.debug ("--skipping: " + key);
             }
           }      
         }

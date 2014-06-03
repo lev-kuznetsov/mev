@@ -33,6 +33,7 @@
 <!-- 	        <li class="active"><a href="#current" data-toggle="tab" ng-click="loadUploads()" target="_self">Files</a></li> -->
 	        <li class="active"><a href="#tcga" data-toggle="tab" target="_self" >Import TCGA Datasets</a></li>
 	        <li><a href="#google" data-toggle="tab" target="_self">Google Drive</a></li>
+	        <li><a href="#geods" data-toggle="tab" target="_self" >Import Geo Datasets</a></li>
 	      </ul>
 	 	  
 	      <div class="tab-content" id="import">
@@ -42,6 +43,10 @@
 			  </div>
 	        </div>
 	        
+	        <div class="tab-pane active" id="geods">
+			  <div id="geodsImportMgr" mev-geods-import-directive ng-controller="MevGeodsImportCtrl">
+			  </div>
+	        </div>
 	        <div class="tab-pane" id="google">
 	        
 	 <div class="container">
