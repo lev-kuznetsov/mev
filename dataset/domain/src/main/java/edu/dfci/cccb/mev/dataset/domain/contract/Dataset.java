@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
+import java.io.IOException;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 
 /**
@@ -33,4 +35,14 @@ public interface Dataset {
   void set (Dimension dimension) throws InvalidDimensionTypeException;
 
   Analyses analyses ();
+
+  void exportSelection (String name,
+                        Type dimension,
+                        String selection,
+                        Workspace workspace,
+                        DatasetBuilder datasetBuilder) throws InvalidDimensionTypeException,
+                                                      SelectionNotFoundException,
+                                                      InvalidCoordinateException,
+                                                      IOException,
+                                                      DatasetBuilderException, InvalidDatasetNameException;
 }
