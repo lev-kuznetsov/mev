@@ -1,19 +1,17 @@
                <ul class="nav nav-tabs">
                        
-                       <li class="active"><a id="annotationsTabLink" href="#annotationsTabPane" data-toggle="tab" target="_self">Annotations</a></li>
-
-                       <li ng-repeat="view in project.views">
-                           <a id="heatmapTabLink" href="{{'#' + view.id}}" 
-                           data-toggle="tab" 
-                           target="_self">Visualize</a>
-                       </li>
+                       <li class="active"><a id="heatmapTabLink" href="#heatmaptabpane" data-toggle="tab" target="_self">Visualize</a></li>
+                       <li><a id="annotationsTabLink" href="#annotationsTabPane" data-toggle="tab" target="_self">Annotations</a></li>
+                        
                </ul>
        
                <div class="tab-content" id="heatmappanecontainer">
                
-               		<div class="tab-pane" ng-repeat='view in project.views' id="{{view.id}}">
-	                       <view-Content-Item project='project' view='view'>
-								</view-Content-Item>
+               		<div class="tab-pane active" id="heatmaptabpane">
+                         
+                         <view-Content-Item project='project' view='project.views'>
+  							</view-Content-Item>
+                            
                     </div>
                            
                     <div class="tab-pane active" id="annotationsTabPane">                      

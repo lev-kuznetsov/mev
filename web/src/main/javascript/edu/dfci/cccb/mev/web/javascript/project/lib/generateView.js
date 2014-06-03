@@ -38,12 +38,8 @@ define(['./HeatmapViewClass'], function(HeatmapViewClass){
             }
             
             
-            self.views = [new HeatmapViewClass(params) ];
+            self.views = new HeatmapViewClass(params);
             
-        } else if (params.viewType == 'geneBoxPlotView'){
-        	
-        	self.views.push( new GeneBoxPlotViewClass(params) );
-        	
         }
         
         return null;
