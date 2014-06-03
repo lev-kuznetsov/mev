@@ -14,12 +14,14 @@
  */
 package edu.dfci.cccb.mev.web.controllers.social;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.social.google.api.Google;
 import org.springframework.social.google.api.drive.DriveFile;
 import org.springframework.social.google.api.drive.DriveFilesPage;
@@ -34,6 +36,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.mock.MockTsvInput;
+import edu.dfci.cccb.mev.io.implementation.TemporaryFile;
 import edu.dfci.cccb.mev.web.domain.social.Drive;
 import edu.dfci.cccb.mev.web.domain.social.SecurityContext;
 
@@ -74,7 +77,11 @@ public class DriveController {
                                                    InvalidDatasetNameException,
                                                    InvalidDimensionTypeException,
                                                    IOException {
-    google.driveOperations ().downloadFile (id);
-    workspace.put (builder.build (new MockTsvInput (id, google.driveOperations ().downloadFile (id).getFile ())));
+    try (TemporaryFile file = new TemporaryFile ()) {
+      try (FileOutputStream copy = new FileOutputStream (file)) {
+        IOUtils.copy (google.driveOperations ().downloadFile (id).getInputStream (), copy);
+      }
+      workspace.put (builder.build (new MockTsvInput (google.driveOperations ().getFile (id).getTitle (), file)));
+    }
   }
 }
