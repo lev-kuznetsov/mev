@@ -93,7 +93,7 @@ colnames(result)=c("ID", "Log Fold Change", "Average Expression", "t", "P-value"
 ## If the matrix contains negative values,  
 ## adjust the offset back to its original input values
 ##
-result[,"AverageExpression"]=if(min(in.mtx)<0){result[,"Average Expression"]+min(in.mtx)*-1}else{result[,"Average Expression"]}
+result[,"AverageExpression"]=if(min(in.mtx)<0){result[,"Average Expression"]-min(in.mtx)*-1}else{result[,"Average Expression"]}
 
 ##
 ## write rnk file
