@@ -10,7 +10,8 @@ define(
                                     '$scope',
                                     '$http',
                                     'alertService',
-                                    function($scope, $http, alertService) {
+                                    'GoogleDriveResourceService',
+                                    function($scope, $http, alertService, DriveResource) {
                                         
                                         $('#loading').modal('hide');
 
@@ -43,8 +44,36 @@ define(
                                                                     header);
                                               });
                                         };
+                                        
+
+                                        $scope.googleDrive = undefined;
+                                        
+                                        DriveResource.get({
+                                        	
+                                        }, function(response){
+                                        	$scope.googleDrive = response;
+                                        }, function(error){
+                                        	console.log(error)
+                                        	alertService.error("Couldn't pull Google Drive information!",
+                                        			"Google Drive Error")
+                                        })
 
                                         $scope.loadUploads();
+                                        
+                                        $scope.postDriveFile = function(id){
+                                        	DriveResource.post({
+                                        		'id':id
+                                        	},{
+                                        	},function(response){
+                                        	
+                                        		$scope.loadUploads()
+                                        	}, function(error){
+
+                                            	console.log(error)
+                                        		alertService.error("Couldn't add Google Drive file!",
+                                        			"Google Drive Error")
+                                        	})
+                                        }
 
                                     }])
                     .controller(

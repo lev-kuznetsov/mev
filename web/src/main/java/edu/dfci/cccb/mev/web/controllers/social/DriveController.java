@@ -72,7 +72,7 @@ public class DriveController {
     }
   }
 
-  @RequestMapping (method = RequestMethod.POST, value = "/{id}")
+  @RequestMapping (method = RequestMethod.POST, value = "/{id}/load")
   public void load (@PathVariable ("id") String id) throws DatasetBuilderException,
                                                    InvalidDatasetNameException,
                                                    InvalidDimensionTypeException,
