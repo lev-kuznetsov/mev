@@ -47,6 +47,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 	var svg = undefined;
                 	
                 	$scope.$watch('currentColors.group', function(newval, oldval){
+
                 	    if(newval && $scope.heatmapDataset && (oldval != newval) && svg){
 
                                 $scope.currentColors.low = d3colors[newval][3][0];
@@ -54,6 +55,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                                 $scope.currentColors.high = d3colors[newval][3][2];
                                 
                                 var params = new generateParams({colors:$scope.currentColors});
+                                console.log(params)
                                 $scope.visualization = new HeatmapVisualizationClass($scope.heatmapView,svg, params);
 
                 	    }
@@ -160,14 +162,15 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
 
                 		if (newval){
                 			
+                			
                 			if (d3.select(elems[0]).selectAll('svg')){
 
                     			d3.select(elems[0]).selectAll('svg').remove()
                 			}
                 			
                 			d3.select(elems[0]).append('svg').attr('id', 'svg-Window-' + $scope.heatmapView.id);
-                        	var svg = d3.select('#svg-Window-'+$scope.heatmapView.id);
-                    		
+                        	svg = d3.select('#svg-Window-'+$scope.heatmapView.id);
+                        	
                             $scope.colorEdge.min = newval.expression.min;
                             $scope.colorEdge.avg = newval.expression.avg;
                             $scope.colorEdge.max = newval.expression.max;
