@@ -22,6 +22,9 @@
   <logger name="org.springframework">
     <level value="info"></level>
   </logger>
+  <logger name="org.apache.http">
+    <level value="info" />
+  </logger>
   <logger name="org.hibernate">
     <level value="info"></level>
   </logger>
@@ -45,10 +48,10 @@
   </logger>
   <logger name="org.apache.mahout">
     <level value="warn"></level>
-  </logger>  
+  </logger>
   <root>
     <priority value="debug"></priority>
     <appender-ref ref="stderr" />
     <appender-ref ref="stdout" />
-  </root>  
+  </root>
 </log4j:configuration>

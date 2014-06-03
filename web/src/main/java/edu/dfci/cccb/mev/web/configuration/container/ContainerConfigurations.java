@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.RequestToViewNameTranslator;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import edu.dfci.cccb.mev.dataset.client.contract.AnnotatedClassViewRegistrar;
 import edu.dfci.cccb.mev.dataset.client.contract.JavascriptInjectorRegistry;
 import edu.dfci.cccb.mev.dataset.client.prototype.MevClientConfigurerAdapter;
+import edu.dfci.cccb.mev.web.configuration.social.GoogleConfiguration;
 import edu.dfci.cccb.mev.web.domain.reflection.Reflector;
 import edu.dfci.cccb.mev.web.domain.reflection.spring.SpringReflector;
 
@@ -39,6 +41,7 @@ import edu.dfci.cccb.mev.web.domain.reflection.spring.SpringReflector;
 @ComponentScan (basePackages = "edu.dfci.cccb.mev.web",
                 excludeFilters = @Filter (type = ANNOTATION, value = Configuration.class),
                 includeFilters = @Filter (type = ANNOTATION, value = { Controller.class, ControllerAdvice.class }))
+@Import (GoogleConfiguration.class)
 public class ContainerConfigurations extends MevClientConfigurerAdapter {
 
   @Bean
@@ -80,9 +83,9 @@ public class ContainerConfigurations extends MevClientConfigurerAdapter {
     registry.addResourceHandler ("/container/images/**")
             .addResourceLocations ("classpath:/edu/dfci/cccb/mev/web/images/");
   }
-  
-  @Bean (name="viewNameTranslator")
-  public RequestToViewNameTranslator viewNameTranslator(){
+
+  @Bean (name = "viewNameTranslator")
+  public RequestToViewNameTranslator viewNameTranslator () {
     return new MevRequestToViewNameTranslator ();
   }
 }
