@@ -2,15 +2,25 @@ define(['jquery',
         'angular',
         'extend',
         'd3',
-        'project/Project',
-        'notific8', 'api/Api', 'colorbrewer/ColorBrewer'],
+        'project/Project', 'api/Api', 'colorbrewer/ColorBrewer'],
     function($, angular, extend, d3) {
 	
 	return angular
 		.module('Mev.heatmap', ['Mev.Api', 'Mev.Project', 'd3colorBrewer'])
-		.value('Heatmap.availableColors', ["Green-Black-Red",
-                                           "Yellow-Black-Blue",
-                                           "Red-White-Blue"])
+		.service('Heatmap.Modal', [function(){
+		//Uncovered code
+			return function(id){
+				return {
+					show: function(){
+						$(id).modal('show');
+					},
+					hide: function(){
+						$(id).modal('hide');
+					}
+				};
+			};
+			
+		}])
         .service('Heatmap.saveCluster', [function(){
         	
         	return function(cluster) {
@@ -93,19 +103,13 @@ define(['jquery',
         '$location',
         'DatasetResourceService',
         'ProjectFactory',
-        function($scope, $routeParams,  $loc, DatasetResourceService, ProjectFactory) {
-			
-			function showLoadingModal(){
-				$('#loading').modal('show');
-			};
-			
-			function hideLoadingModal(){
-				$('#loading').modal('hide');
-			};
-			
+        'Heatmap.Modal',
+        function($scope, $routeParams,  $loc, DatasetResourceService, ProjectFactory, modal) {
+		    
+			LoadingModal = modal('#loading');
 			
 			function downloadFailure(){
-				hideLoadingModal()
+				LoadingModal.hide()
 				$loc.path('/datasets'); //return back to datasets
 				return
 			};
@@ -116,18 +120,15 @@ define(['jquery',
 			};
 			
 			$scope.project = undefined;
-			
-			
-			
+
 			//Build the project after getting datasetResponseObject
-			
-			showLoadingModal();
+			LoadingModal.show();
 			
 			DatasetResourceService.get({
 				datasetName: $routeParams.datasetName
 			}, function(response){
 			    $scope.project = ProjectFactory($routeParams.datasetName, response);
-			    hideLoadingModal();
+			    LoadingModal.hide();
 			}, function(error){
 				downloadFailure();
 			});

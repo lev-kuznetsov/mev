@@ -12,8 +12,9 @@ define(['angular',
         'analysisaccordioncollection/AnalysisAccordionCollection',
         'analysismodalcollection/AnalysisModalCollection',
         'viewCollection/ViewCollection',
+        'geneboxplotvisualization/GeneBoxPlotVisualization',
         'mainmenu',
-        'geods'
+        'geods',
         ], function(angular){
 	'use strict';
 	return angular.module('myApp', [
@@ -32,6 +33,7 @@ define(['angular',
 	     'Mev.AnalysisModalCollection',
 	     'Mev.ViewCollection',
 	     'Mev.MainMenuModule',
+	     'Mev.GeneBoxPlotVisualization',
 	     'Mev.GeodsModule'
 	     ])
 	.config(['$routeProvider', '$locationProvider', '$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {

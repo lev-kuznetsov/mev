@@ -1,7 +1,7 @@
-define ([ 'angular'], function (angular) {
+define ([ 'angular', 'angularResource'], function (angular) {
 
-    angular
-    .module ('Mev.Api', [])
+    return angular
+    .module ('Mev.Api', ['ngResource'])
     .service ('DatasetResourceService', ['$resource', function ($resource) {
     	 return $resource('/dataset/:datasetName/data',
 	    	{

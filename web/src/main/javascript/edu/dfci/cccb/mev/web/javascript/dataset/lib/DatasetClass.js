@@ -1,4 +1,5 @@
-define(['./SelectionClass'], function(SelectionClass){
+define(['./datasetStatistics', './selectionSort'], 
+		function( datasetStatistics, selectionSort){
     
     //inverter :: [a] --> Object
     //  Function to invert an array into an object with properties of names
@@ -13,6 +14,17 @@ define(['./SelectionClass'], function(SelectionClass){
         })
         
         return obj;
+    }
+    
+    //ranger :: Number --> Array
+    //  Function to create an array of a range of numbers from 0 to Number-1 of
+    //  length Number
+    function ranger(n){
+    	var r = [];
+    	for (var i=0; i<n;i++){
+    		r.push(i)
+    	}
+    	return r;
     }
 
 	//Constructor :: [String], [DatasetResponseObj] -> $Function [Dataset]
@@ -30,13 +42,12 @@ define(['./SelectionClass'], function(SelectionClass){
 	        return null
 	    }
 	    
-	    
+	 
 		var self = this;
 		
 		this.id = datasetName;
 		
 		this.datasetName = datasetName;
-		
 		this.expression = {
 			values: datasetRespObj.values,
 			max: datasetRespObj.max,
@@ -49,9 +60,14 @@ define(['./SelectionClass'], function(SelectionClass){
 			    
 			    
 			    return this.values[(r * self.column.keys.length) + c]
-			}
+			},
+			statistics : datasetStatistics,
+			ranger : ranger
 		};
+
 		
+		this.expression.sort = selectionSort;
+
 		this.column = datasetRespObj.column;
 		this.row = datasetRespObj.row;
 		

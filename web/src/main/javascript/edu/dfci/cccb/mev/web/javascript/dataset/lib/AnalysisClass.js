@@ -10,6 +10,8 @@ define(['extend'], function(extend){
 		   "Hierarchical Clustering": "tree"
 		}
 		
+		self.randomId = Math.random().toString(36).substring(7);
+		
 		self.viewType = internalViewTypes[initialData.type]
 
 		    

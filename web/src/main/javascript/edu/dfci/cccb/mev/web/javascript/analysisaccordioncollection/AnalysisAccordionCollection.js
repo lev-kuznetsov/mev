@@ -1,6 +1,40 @@
 define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angular, jq, d3){
 	
-	return angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])	
+	return angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])
+	.service('d3DomService', [function(){
+		return function(id,s){
+			
+			s.$apply(function(){
+				
+				d3.select(id)
+				.append('svg')
+					.attr({
+						'width':500,
+						'height':400,
+						'id':id+'-svg'
+					});
+
+			});
+			
+			d3.select(id)
+			.append('svg')
+				.attr({
+					'width':500,
+					'height':400,
+					'id':id+'-svg'
+				});
+			
+			
+			return d3.select('svg#'+id+'-svg');
+		};
+	}])
+	.service('drawBoxPlots', function(){
+		return function(svg, groups){
+			
+			//svg.
+			return
+		}
+	})
 	.directive('analysisContentItem', ['$compile', function ($compile) {
         var heirarchicalTemplate = '<hierarchical-Accordion analysis="analysis" project="project"></hierarchical-Accordion>';
         var kMeansTemplate = '<k-Means-Accordion analysis="analysis" project="project"></k-Means-Accordion>';
@@ -388,7 +422,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
 
         };
     }]).directive('limmaAccordion',
-    ['$filter', 'alertService', function($filter, alertService) {
+    ['$filter', 'alertService', 'd3DomService', 'drawBoxPlots',  function($filter, alertService, d3Dom, plot) {
         return {
             restrict : 'E',
             templateUrl : '/container/view/elements/limmaAccordion',
@@ -397,7 +431,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             	analysis : "=analysis"
             },
             link : function(scope) {
-                
+            	
                 scope.headers = [
 	               {'name':'ID', 'field': "id", 'icon': "search"},
 	               {'name':'Log-Fold-Change', 'field': "logFoldChange", 'icon': [">=", "<="]},
@@ -434,7 +468,42 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     color: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16)
                 }
                 
-                console.log
+                scope.viewGenes = function(){
+                	
+                	var shownGenes = scope.applyFilter(scope.analysis.results);
+                	
+                	
+                	scope.boxPlotGenes = {
+            			"data":shownGenes.map(function (gene, i) {
+                            return {
+                                'control': {
+                                    'values': scope.analysis.control.keys.map(function(label){
+                                    	return scope.project.dataset.expression.get([gene.id, label])
+                                    })
+                                },
+                                'experiment': {
+                                    	'values': scope.analysis.experiment.keys.map(function(label){
+                                    		return scope.project.dataset.expression.get([gene.id, label])
+                                    	})
+                                },
+                                'geneName': gene.id,
+                                'pValue': gene.pValue
+                            };
+                        }),
+                        'min': scope.project.dataset.expression.min,
+                        'max': scope.project.dataset.expression.max,
+                        'id' : scope.analysis.randomId
+            		};
+                	
+                };
+                
+                scope.$watch('analysis', function(newval){
+                	if(newval){
+                		scope.viewGenes()
+                	}
+                	
+                })
+                
                 scope.addSelections = function(){
                     
                     var userselections = getKeys(scope.filteredResults);
@@ -510,9 +579,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     filtered= $filter('filterThreshold')(filtered, scope.filterParams.qValue.value, scope.filterParams.qValue.field, scope.filterParams.qValue.op);
                     filtered = $filter('orderBy')(filtered, scope.tableOrdering);
                     scope.filteredResults = filtered;
-                    
-//                    console.debug("scope.filterParams", scope.filterParams);
-//                    console.debug("filteredResults.length", scope.filteredResults.length);
                     
                     return scope.filteredResults;
                 }
