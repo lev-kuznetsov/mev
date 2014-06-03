@@ -1,0 +1,10 @@
+<div class="geo_import_container">
+<input type="text" id="uid" ng-model="vm.uid" />
+<button id="find" value="find" ng-click="vm.searchById()" >find</button>
+<div>
+	<div><a href="" ng-click="vm.import()">{{vm.summary.getTitle()}}</a></div>
+	<div ng-repeat="(key, value) in vm.summary.samples">
+	<span>{{key}} - {{value}}</span>
+	</div>
+</div>
+</div>

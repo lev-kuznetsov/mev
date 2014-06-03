@@ -42,7 +42,7 @@ public class SuperCsvParserFactory extends AbstractParserFactory {
   private Collection<Pattern> commentRegExpressions = new ArrayList<> ();
 
   {
-    commentRegExpressions ("[\t ]+#[.]+");
+    commentRegExpressions ("[\t ]+#[.]+", "[\\! ].+", "[\\^ ].+","[#].+");
   }
 
   public SuperCsvParserFactory quoteChar (char quoteChar) {

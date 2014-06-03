@@ -39,6 +39,12 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.3.3</version>
+    </dependency>
+
     <!-- Hibernate -->
 
     <dependency>
@@ -153,6 +159,14 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
+    <!-- GEO Datasets -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-geods-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
     <!-- Servlet -->
 
     <dependency>
@@ -187,6 +201,14 @@
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
       <artifactId>mev-presets-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-geods-rest</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>

@@ -15,6 +15,8 @@
 package edu.dfci.cccb.mev.dataset.domain.mock;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -31,14 +33,22 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractRawInput;
 public class MockTsvInput extends AbstractRawInput {
 
   private final String name;
-  private final String content;
+  private final String stringContent;
+  private final File fileContent;
 
   /**
    * 
    */
   public MockTsvInput (String name, String content) {
     this.name = name;
-    this.content = content;
+    this.stringContent = content;
+    fileContent = null;
+  }
+
+  public MockTsvInput (String name, File content) {
+    this.name = name;
+    fileContent = content;
+    stringContent = null;
   }
 
   /* (non-Javadoc)
@@ -59,13 +69,23 @@ public class MockTsvInput extends AbstractRawInput {
    * @see edu.dfci.cccb.mev.dataset.domain.contract.RawInput#input() */
   @Override
   public InputStream input () throws IOException {
-    return new ByteArrayInputStream (content.getBytes ());
+    if (stringContent != null)
+      return new ByteArrayInputStream (stringContent.getBytes ());
+    else if (fileContent != null)
+      return new FileInputStream (fileContent);
+    else
+      throw new IllegalStateException ();
   }
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.domain.contract.RawInput#size() */
   @Override
   public long size () {
-    return content.length ();
+    if (stringContent != null)
+      return stringContent.length ();
+    else if (fileContent != null)
+      return (int) fileContent.length ();
+    else
+      throw new IllegalStateException ();
   }
 }
