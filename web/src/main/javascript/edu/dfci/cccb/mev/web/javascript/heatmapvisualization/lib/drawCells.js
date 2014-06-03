@@ -101,9 +101,12 @@ define(['./cellFilter', 'd3', 'qtip'], function(cellFilter, d3, qtip){
         .text(function(j, i){
         	
         	var d = labelColorScale(j);
-            var returnstring = String(d).split(".")[0];
+            var returnstring = String(d).split(".");
+
             if (returnstring.length > 1){
-                returnstring = returnstring + "." + String(d).split(".")[1].slice(0,3);
+                returnstring = returnstring[0] + "." + returnstring[1].slice(0,3);
+            } else {
+            	returnstring[0]
             }
             
             ticks = [0, Math.floor((rands.length-1)*.25), Math.floor((rands.length-1)*.5), Math.floor((rands.length-1)*.75), rands.length-1];
