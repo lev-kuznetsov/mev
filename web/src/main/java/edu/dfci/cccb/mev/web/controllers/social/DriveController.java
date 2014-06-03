@@ -15,11 +15,15 @@
 package edu.dfci.cccb.mev.web.controllers.social;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import lombok.Synchronized;
+
+import org.springframework.context.annotation.Scope;
 import org.springframework.social.google.api.Google;
 import org.springframework.social.google.api.drive.DriveFile;
 import org.springframework.social.google.api.drive.DriveFilesPage;
@@ -43,27 +47,34 @@ import edu.dfci.cccb.mev.web.domain.social.SecurityContext;
  */
 @RestController
 @RequestMapping ("/import/google")
+@Scope ("session")
 public class DriveController {
 
+  private Map<String, DriveFile> files = null;
   private @Inject Google google;
   private @Inject Workspace workspace;
   private @Inject DatasetBuilder builder;
 
+  private void loadFiles () {
+    files = new HashMap<> ();
+    String nextPageToken = "";
+    do {
+      DriveFilesPage page = google.driveOperations ().getRootFiles (nextPageToken);
+      List<DriveFile> files = page.getItems ();
+      for (DriveFile file : files)
+        if (!file.isFolder ())
+          this.files.put (file.getTitle (), file);
+      nextPageToken = page.getNextPageToken ();
+    } while (nextPageToken != null);
+  }
+
   @RequestMapping (method = RequestMethod.GET)
+  @Synchronized
   public Drive drive () {
     if (SecurityContext.userSignedIn ()) {
-      List<String> result = new ArrayList<> ();
-      List<DriveFile> files;
-      String nextPageToken = "";
-      do {
-        DriveFilesPage page = google.driveOperations ().getRootFiles (nextPageToken);
-        files = page.getItems ();
-        for (DriveFile file : files)
-          if (!file.isFolder ())
-            result.add (file.getTitle ());
-        nextPageToken = page.getNextPageToken ();
-      } while (nextPageToken != null);
-      return new Drive (true, result.toArray (new String[0]));
+      if (files == null)
+        loadFiles ();
+      return new Drive (true, files.keySet ().toArray (new String[0]));
     } else {
       return new Drive (false, null);
     }
@@ -74,7 +85,8 @@ public class DriveController {
                                                    InvalidDatasetNameException,
                                                    InvalidDimensionTypeException,
                                                    IOException {
-    google.driveOperations ().downloadFile (id);
-    workspace.put (builder.build (new MockTsvInput (id, google.driveOperations ().downloadFile (id).getFile ())));
+    workspace.put (builder.build (new MockTsvInput (id, google.driveOperations ()
+                                                              .downloadFile (files.get (id))
+                                                              .getFile ())));
   }
 }
