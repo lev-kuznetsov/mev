@@ -14,7 +14,7 @@ define(['angular',
         'viewCollection/ViewCollection',
         'geneboxplotvisualization/GeneBoxPlotVisualization',
         'mainmenu',
-        'geods',
+        'geods'
         ], function(angular){
 	'use strict';
 	return angular.module('myApp', [
