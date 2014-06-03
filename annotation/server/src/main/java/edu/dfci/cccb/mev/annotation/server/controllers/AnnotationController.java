@@ -192,6 +192,22 @@ public class AnnotationController extends WebApplicationObjectSupport {
   }
 
   @RequestMapping (method = { GET, POST, PUT, DELETE }, value = { "/"
+          + DATASET_URL_ELEMENT + "/annotation/"
+          + DIMENSION_URL_ELEMENT
+          + "/get-project-id"})
+  @ResponseBody
+  public String getProjectId (@PathVariable (DATASET_MAPPING_NAME) final String heatmapId,
+                            @PathVariable (DIMENSION_MAPPING_NAME) final String dimension,
+                            HttpServletRequest request, HttpServletResponse response) throws ServletException,
+                                         IOException,
+                                         DatasetNotFoundException {
+  
+    Dataset heatmap = workspace.get (heatmapId);
+    long projectId = projectManager.getProjectID (heatmap.name () + dimension);    
+    return "{projectId: " + projectId + "}";    
+  }
+
+  @RequestMapping (method = { GET, POST, PUT, DELETE }, value = { "/"
                                                                   + DATASET_URL_ELEMENT + "/annotation/"
                                                                   + DIMENSION_URL_ELEMENT
                                                                   + "/{selectionName}/{annotationSource}/**"
@@ -235,6 +251,8 @@ public class AnnotationController extends WebApplicationObjectSupport {
             response.sendRedirect ("project?project=" + projectId+qs);
           }
         }
+      }else{
+        response.sendRedirect (request.getServletPath ()+"?project=" + projectId);
       }
     }else{
       String sProjectId = request.getParameter ("project");
