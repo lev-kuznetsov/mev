@@ -16,10 +16,15 @@ package edu.dfci.cccb.mev.web.controllers.social;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.social.google.api.Google;
@@ -46,6 +51,7 @@ import edu.dfci.cccb.mev.web.domain.social.SecurityContext;
  */
 @RestController
 @RequestMapping ("/import/google")
+@Log4j
 public class DriveController {
 
   private @Inject Google google;
@@ -53,13 +59,15 @@ public class DriveController {
   private @Inject DatasetBuilder builder;
 
   @RequestMapping (method = RequestMethod.GET)
+  @SneakyThrows(UnsupportedEncodingException.class)
   public Drive drive () {
     if (SecurityContext.userSignedIn ()) {
       List<edu.dfci.cccb.mev.web.domain.social.Drive.DriveFile> result = new ArrayList<> ();
       List<DriveFile> files;
       String nextPageToken = "";
       do {
-        DriveFilesPage page = google.driveOperations ().getRootFiles (nextPageToken);
+        log.debug ("Getting google drive page with token " + nextPageToken);
+        DriveFilesPage page = google.driveOperations ().getRootFiles (URLEncoder.encode (nextPageToken, "UTF-8"));
         files = page.getItems ();
         for (DriveFile file : files)
           if (!file.isFolder ())
