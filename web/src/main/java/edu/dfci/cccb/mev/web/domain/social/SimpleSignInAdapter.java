@@ -35,6 +35,6 @@ public class SimpleSignInAdapter implements SignInAdapter {
     log.info ("SIGNING IN " + userId);
     SecurityContext.setCurrentUser (new User (userId));
     userCookieGenerator.addCookie (userId, request.getNativeResponse (HttpServletResponse.class));
-    return "/#/datasets";
+    return "/#/datasets?tab=google";
   }
 }
