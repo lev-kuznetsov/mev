@@ -7,7 +7,7 @@ function(angular, angularModule, ClinicalSummaryListVM, ClinicalSummaryVM){
 	angularModule.service("MevClinicalSummaryViewModelFactorySrvc", ["MevClinicalSummaryFactorySrvc",
 	                                                                 function(MevClinicalSummaryFactorySrvc){
 		this.createList=function(){
-			return new ClinicalSummaryListVM(MevClinicalSummaryFactorySrvc.getAll());
+			return new ClinicalSummaryListVM(MevClinicalSummaryFactorySrvc.create().getAll());
 		};
 		this.create=function(summary){
 			return new ClinicalSummaryVM(summary);
