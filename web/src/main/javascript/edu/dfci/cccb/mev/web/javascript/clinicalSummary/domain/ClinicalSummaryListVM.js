@@ -1,4 +1,4 @@
-define(["clinical/domain/ClinicalSummaryVM"], function(ClinicalSummaryVM){
+define([], function(){
 	var ClinicalSummaryListVM = function(summaries){
 		//private members
 		var _self=this;
@@ -7,10 +7,9 @@ define(["clinical/domain/ClinicalSummaryVM"], function(ClinicalSummaryVM){
 		this.getSummaries=function(){
 			return summaries;
 		};
-		this.getSummaryVM=function(summary){
-			return new ClinicalSummaryVM(summary);
-		};
-		
+		this.getTitle=function(summary){
+			return "Accordion for "+summary.config.field;
+		}
 	};
 	return ClinicalSummaryListVM;
 });
