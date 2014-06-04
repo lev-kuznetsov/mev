@@ -1,6 +1,6 @@
 define([], function(){
-	var configs=[{
-		field: "age_at_initial	_pathologic_diagnosis",
+	var configs=[{				
+		field: "age_at_initial_pathologic_diagnosis",
 		dataType: "numeric",
 		chartType: "histogram"
 	},{
