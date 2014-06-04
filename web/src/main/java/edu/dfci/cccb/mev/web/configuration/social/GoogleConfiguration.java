@@ -14,13 +14,12 @@
  */
 package edu.dfci.cccb.mev.web.configuration.social;
 
-import javax.inject.Inject;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.core.env.Environment;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.social.connect.ConnectionFactory;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
@@ -46,10 +45,13 @@ import edu.dfci.cccb.mev.web.domain.social.UserInterceptor;
 @Configuration
 public class GoogleConfiguration extends WebMvcConfigurerAdapter {
 
-  private @Inject Environment environment;
+  private @Value ("${GOOGLE_API_KEY:902321796189-9a9lveblj6hcfpckneduons2elu2ncdf.apps.googleusercontent.com}") String key;
+  private @Value ("${GOOGLE_API_SECRET:zk5mE-MXZsJMYPs6IQPEFSKN}") String secret;
 
-  private static final String API_KEY = "902321796189-9a9lveblj6hcfpckneduons2elu2ncdf.apps.googleusercontent.com";
-  private static final String API_SECRET = "zk5mE-MXZsJMYPs6IQPEFSKN";
+  @Bean
+  public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer () {
+    return new PropertySourcesPlaceholderConfigurer ();
+  }
 
   /**
    * When a new provider is added to the app, register its
@@ -60,7 +62,7 @@ public class GoogleConfiguration extends WebMvcConfigurerAdapter {
   @Bean
   public ConnectionFactoryLocator connectionFactoryLocator () {
     ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry ();
-    registry.addConnectionFactory (new GoogleConnectionFactory (API_KEY, API_SECRET));
+    registry.addConnectionFactory (new GoogleConnectionFactory (key, secret));
     return registry;
   }
 
