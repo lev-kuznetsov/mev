@@ -48,8 +48,8 @@ public class GoogleConfiguration extends WebMvcConfigurerAdapter {
 
   private @Inject Environment environment;
 
-  private static final String API_KEY = "<REDACTED>";
-  private static final String API_SECRET = "<REDACTED>";
+  private static final String API_KEY = "902321796189-9a9lveblj6hcfpckneduons2elu2ncdf.apps.googleusercontent.com";
+  private static final String API_SECRET = "zk5mE-MXZsJMYPs6IQPEFSKN";
 
   /**
    * When a new provider is added to the app, register its
