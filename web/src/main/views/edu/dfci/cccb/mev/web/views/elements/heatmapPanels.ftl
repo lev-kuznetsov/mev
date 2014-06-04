@@ -23,7 +23,7 @@
 		</div>
 		
 		
-		<div id="rightPanel">
+		<div id="rightPanel" >
 				
 				<div id="expressionPanel" expression-Panel></div>
 				

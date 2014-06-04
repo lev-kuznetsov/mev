@@ -27,6 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +38,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationObjectSupport;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.refine.io.FileProjectManager;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatform;
@@ -191,12 +194,16 @@ public class AnnotationController extends WebApplicationObjectSupport {
     this.refineServlet.service (wrappedRequest, response);
   }
 
+  @RequiredArgsConstructor
+  private class ProjectIdDto{
+    @JsonProperty("project") private final long projectId;
+  }
   @RequestMapping (method = { GET, POST, PUT, DELETE }, value = { "/"
           + DATASET_URL_ELEMENT + "/annotation/"
           + DIMENSION_URL_ELEMENT
           + "/get-project-id"})
   @ResponseBody
-  public String getProjectId (@PathVariable (DATASET_MAPPING_NAME) final String heatmapId,
+  public ProjectIdDto getProjectId (@PathVariable (DATASET_MAPPING_NAME) final String heatmapId,
                             @PathVariable (DIMENSION_MAPPING_NAME) final String dimension,
                             HttpServletRequest request, HttpServletResponse response) throws ServletException,
                                          IOException,
@@ -204,7 +211,7 @@ public class AnnotationController extends WebApplicationObjectSupport {
   
     Dataset heatmap = workspace.get (heatmapId);
     long projectId = projectManager.getProjectID (heatmap.name () + dimension);    
-    return "{projectId: " + projectId + "}";    
+    return new ProjectIdDto (projectId);    
   }
 
   @RequestMapping (method = { GET, POST, PUT, DELETE }, value = { "/"

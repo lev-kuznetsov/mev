@@ -8,7 +8,7 @@ require.config ({
   baseUrl : "/container/javascript",
   paths : {
     jquery : [ '//codeorigin.jquery.com/jquery-2.1.0', '/library/webjars/jquery/2.1.0/jquery' ],
-    jqueryUi : ['//code.jquery.com/ui/1.9.2/jquery-ui.min', 'jquery-ui/1.9.2/jquery-ui.min.js'],
+    jqueryUi : ['//code.jquery.com/ui/1.9.2/jquery-ui.min', 'jquery-ui/1.9.2/jquery-ui.min'],
     angular : [ '//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular',
                '/library/webjars/angularjs/1.2.13/angular' ],
     angularRoute : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min',
@@ -90,8 +90,12 @@ require.config ({
 	    name : "geods",
 	    location : "/container/javascript/geods",
 	    main : "Geods.package"
-	  } ],
-  waitSeconds : "100"
+	}, {
+	    name : "clinical",
+	    location : "/container/javascript/clinicalSummary",
+	    main : "ClinicalSummary.package"
+	} ],
+  waitSeconds : "2"
 
 });
 
@@ -109,18 +113,21 @@ require ([ 'jquery',
           'mainpanel/MainPanel',
           'retina',
           'ngGrid',
-          'mainmenu'], function (jquery, angular, app, orb) {
+          'mainmenu',
+          'geods',
+          'clinical'
+          ], function (jquery, angular, app, orb) {
 
   'use strict';
   var $html = angular.element (document.getElementsByTagName ('html')[0]);
   angular.element ().ready (function () {
-//    $html.addClass ('ng-app');
-	try{
+    $html.addClass ('ng-app');
+//	try{
 		angular.bootstrap ($html, [ app['name'] ]);
-	}
-    catch (e) {
-        console.error(e.stack || e.message || e);
-    }
+//	}
+//    catch (e) {
+//        console.error(e.stack || e.message || e);
+//    }
 
   });
 
