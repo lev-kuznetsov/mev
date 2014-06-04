@@ -8,8 +8,7 @@
                <div class="tab-content" id="heatmappanecontainer">
                
                		  <div class="tab-pane" id="cohortSummaryTabPane" ng-controller="MevClinicalSummaryCtrl">
-               		  			
-                       	       <div>hello</div>                       	       
+               		  		   <div mev-clinical-summary-list ></div>                  	       
                        </div>
                        <div class="tab-pane active" id="heatmaptabpane">
                        
