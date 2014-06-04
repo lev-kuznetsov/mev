@@ -17,14 +17,15 @@ function(angular,
 					scope.viewModel=viewModel;
 				}
 			};
-		}]).directive("mevClinicalSummary", [function(){
+		}]).directive("mevClinicalSummary", ["MevClinicalSummaryViewModelFactorySrvc", function(MevClinicalSummaryViewModelFactorySrvc){
 			return {
 				scope: {
-					viewModel: "=summary"
+					summary: "="
 				},
 				restrict: "ACE",
 				templateUrl: angularModule.path+"directives/ClinicalSummary.tpl.html",
-				link: function(scope, elm, attrs, nullCtrl){			
+				link: function(scope, elm, attrs, nullCtrl){
+					scope.viewModel=MevClinicalSummaryViewModelFactorySrvc.create(scope.summary);
 				}				
 			};
 		}]);

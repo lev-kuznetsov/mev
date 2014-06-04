@@ -24,26 +24,24 @@
 	  
 	  </div>
 	
-	
 	  <div class="col-md-8">
-	  
-	  
+	  	
 	    <div class="row">
 	      <ul class="nav nav-tabs" id="importTabs">
 <!-- 	        <li class="active"><a href="#current" data-toggle="tab" ng-click="loadUploads()" target="_self">Files</a></li> -->
-	        <li class="active"><a href="#tcga" data-toggle="tab" target="_self" >Import TCGA Datasets</a></li>
-	        <li><a href="#google" data-toggle="tab" target="_self">Google Drive</a></li>
-	        <li><a href="#geods" data-toggle="tab" target="_self" >Import Geo Datasets</a></li>
+	        <li id="tcga_tab"><a href="#tcga" data-toggle="tab" target="_self" >Import TCGA Datasets</a></li>
+	        <li id="google_tab"><a href="#google" data-toggle="tab" target="_self" >Google Drive</a></li>
+	        <li id="geods_tab"><a href="#geods" data-toggle="tab" target="_self" >Import GEO Datasets</a></li>
 	      </ul>
 	 	  
 	      <div class="tab-content" id="import">
 	         
-	        <div class="tab-pane active" id="tcga">
+	        <div class="tab-pane" id="tcga">
 			  <div id="presetMgr" preset-manager ng-controller="PresetManagerController">
 			  </div>
 	        </div>
 	        
-	        <div class="tab-pane active" id="geods">
+	        <div class="tab-pane" id="geods">
 			  <div id="geodsImportMgr" mev-geods-import-directive ng-controller="MevGeodsImportCtrl">
 			  </div>
 	        </div>
