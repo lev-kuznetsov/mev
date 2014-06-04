@@ -17,6 +17,8 @@ package edu.dfci.cccb.mev.web.configuration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -62,7 +64,22 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     mvcContext.register (TTestRestConfiguration.class);
 
     DispatcherServlet dispatcher = new DispatcherServlet (mvcContext);
+
     Dynamic registration = servletContext.addServlet ("dispatcher", dispatcher);
+
+    final String sessionInterval = System.getenv ("SESSION_INTERVAL");
+    if (sessionInterval != null)
+      servletContext.addListener (new HttpSessionListener () {
+        private final int interval = Integer.parseInt (sessionInterval);
+
+        @Override
+        public void sessionDestroyed (HttpSessionEvent se) {}
+
+        @Override
+        public void sessionCreated (HttpSessionEvent se) {
+          se.getSession ().setMaxInactiveInterval (interval);
+        }
+      });
 
     registration.setLoadOnStartup (1);
     registration.addMapping ("/");
