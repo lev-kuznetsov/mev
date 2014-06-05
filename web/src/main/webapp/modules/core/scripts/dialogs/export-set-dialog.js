@@ -47,8 +47,19 @@ ExportSetDialog.prototype._createDialog = function(isNew) {
     this._elmts.exportSetAndExitButton.html("Save and Close");
     this._elmts.cancelSetButton.html($.i18n._('core-buttons')["cancel"]);
     
-    this._elmts.exportSetButton.click(function() { if(self._validate()){self._exportAjax(); self._dismiss(); }});
-    this._elmts.exportSetAndExitButton.click(function() { if(self._validate()){self._exportAjax(); self._dismiss(); Refine._close(); }});
+    this._elmts.exportSetButton.click(function() { 
+    	if(self._validate()){
+    		self._exportAjax(); 
+    		self._dismiss(); 
+    		}
+    	});
+    this._elmts.exportSetAndExitButton.click(function() { 
+    	if(self._validate()){
+    		self._exportAjax(); 
+    		self._dismiss(); 
+    		Refine._close(); 
+    		}
+    	});
     this._elmts.cancelSetButton.click(function() { self._dismiss(); });
     /*
     this._elmts.resetButton.click(function() {

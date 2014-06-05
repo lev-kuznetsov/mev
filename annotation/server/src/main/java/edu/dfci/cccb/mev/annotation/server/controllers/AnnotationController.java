@@ -259,9 +259,6 @@ public class AnnotationController extends WebApplicationObjectSupport {
           }
         }
       }
-//      else{
-//        response.sendRedirect (request.getServletPath ()+"?project=" + projectId);
-//      }
     }else{
       String sProjectId = request.getParameter ("project");
       if(sProjectId!=null && sProjectId.startsWith ("MEV-")){
