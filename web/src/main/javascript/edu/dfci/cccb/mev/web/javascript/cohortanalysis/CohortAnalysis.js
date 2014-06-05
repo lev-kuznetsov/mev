@@ -16,7 +16,7 @@ define(['d3', 'angular'], function(d3, angular){
         };
     }
 }])
-.directive('cohortDashboard', [ function () {
+.directive('cohortDashboard', ['$compile', function ($compile) {
 	
 	var pieChartTemplate = '<d3-Pie-Chart data="viewModel" height="300" width="500"></d3-Pie-Chart>';
     var histogramTemplate = '<d3-Histogram data="viewModel" height="300" width="500"></d3-Histogram>';
@@ -45,6 +45,8 @@ define(['d3', 'angular'], function(d3, angular){
             'link': function(scope, element, attrs) {
 
             		scope.$watch('viewModel', function(newval){
+
+            			console.log(scope.viewModel);
                         element.append(getTemplate(scope.viewModel));
                         
                         $compile(element.contents())(scope);
