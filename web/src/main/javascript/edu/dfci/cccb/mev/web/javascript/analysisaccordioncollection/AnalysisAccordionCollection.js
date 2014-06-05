@@ -183,28 +183,31 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                                 + header.value;
                     }
                 };
-                    
-                scope.addSelections = function(){
-            
-                    var userselections = scope.analysis.results;
-
-                    var step1 = $filter('filter')(scope.analysis.results, {
+                
+                function traverse (results) {
+                    var step1 = $filter('filter')(results, {
                         id: scope.filterParams.id
                     });
 
-                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.pValue, 'pValue')
+                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.pValue, 'pValue');
                     
                     var step3 = step2.map(function(d){
-                        return d.id
-                    })
-
+                        return d.id;
+                    });
+                    
+                    return step3;
+                }
+                
+                scope.addSelections = function(){
+            
+                    var keys = traverse(scope.analysis.results);
                     var selectionsData = {
                         name: scope.selectionParams.name,
                         properties: {
                             selectionDescription: '',
                             selectionColor:scope.selectionParams.color,                     
                         },
-                        keys:step3
+                        keys:keys
                     };
                     
                     scope.project.dataset.selection.post({
@@ -235,21 +238,48 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                          alertService.error(message,header);
                     });
 
-                }
+                };
                 
-                function traverse (results) {
-                    var step1 = $filter('filter')(results, {
-                        id: scope.filterParams.id
-                    });
+                scope.exportParams = {
+                        name: undefined,
+                        color: '#ffffff'
+                };
+                scope.exportSelection = function(){
+                    
+                    var keys = traverse(scope.analysis.results);
+                    var selectionData = {
+                        name: scope.exportParams.name,
+                        properties: {
+                            selectionDescription: '',
+                            selectionColor:scope.exportParams.color,                     
+                        },
+                        keys:keys
+                    };
+                    
+                    scope.project.dataset.selection.export({
+                        datasetName : scope.project.dataset.datasetName,
+                        dimension : "row"
+                
+                    }, selectionData, 
+                    function(response){
+                            scope.project.dataset.resetSelections('row');
+                            var message = "Added " + scope.exportParams.name + " as new Dataset!";
+                            var header = "New Dataset Export";
+                             
+                            alertService.success(message,header);
+                    }, 
+                    function(data, status, headers, config) {
+                        var message = "Couldn't export new dataset. If "
+                            + "problem persists, please contact us.";
 
-                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.pValue, 'pValue')
+                         var header = "New Dataset Export Problem (Error Code: "
+                            + status
+                            + ")";
+                         
+                         alertService.error(message,header);
+                    });
                     
-                    var step3 = step2.map(function(d){
-                        return d.id
-                    })
-                    
-                    return step3;
-                }
+                };
                 
                 scope.applyToHeatmap=function(){
                     
@@ -360,6 +390,47 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             + "problem persists, please contact us.";
 
                          var header = "Selection Addition Problem (Error Code: "
+                            + status
+                            + ")";
+                         
+                         alertService.error(message,header);
+                    });
+                    
+                };
+                
+                scope.exportParams = {
+                        name: undefined,
+                        color: '#ffffff'
+                };
+                scope.exportSelection = function(){
+                    
+                    var keys = traverse(scope.filteredResults);
+                    var selectionData = {
+                        name: scope.exportParams.name,
+                        properties: {
+                            selectionDescription: '',
+                            selectionColor:scope.exportParams.color,                     
+                        },
+                        keys:keys
+                    };
+                    
+                    scope.project.dataset.selection.export({
+                        datasetName : scope.project.dataset.datasetName,
+                        dimension : "row"
+                
+                    }, selectionData, 
+                    function(response){
+                            scope.project.dataset.resetSelections('row');
+                            var message = "Added " + scope.exportParams.name + " as new Dataset!";
+                            var header = "New Dataset Export";
+                             
+                            alertService.success(message,header);
+                    }, 
+                    function(data, status, headers, config) {
+                        var message = "Couldn't export new dataset. If "
+                            + "problem persists, please contact us.";
+
+                         var header = "New Dataset Export Problem (Error Code: "
                             + status
                             + ")";
                          
@@ -544,6 +615,47 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     
                 }
 
+                scope.exportParams = {
+                        name: undefined,
+                        color: '#ffffff'
+                };
+                scope.exportSelection = function(){
+                    
+                    var keys = getKeys(scope.filteredResults);
+                    var selectionData = {
+                        name: scope.exportParams.name,
+                        properties: {
+                            selectionDescription: '',
+                            selectionColor:scope.exportParams.color,                     
+                        },
+                        keys:keys
+                    };
+                    
+                    scope.project.dataset.selection.export({
+                        datasetName : scope.project.dataset.datasetName,
+                        dimension : "row"
+                
+                    }, selectionData, 
+                    function(response){
+                            scope.project.dataset.resetSelections('row');
+                            var message = "Added " + scope.exportParams.name + " as new Dataset!";
+                            var header = "New Dataset Export";
+                             
+                            alertService.success(message,header);
+                    }, 
+                    function(data, status, headers, config) {
+                        var message = "Couldn't export new dataset. If "
+                            + "problem persists, please contact us.";
+
+                         var header = "New Dataset Export Problem (Error Code: "
+                            + status
+                            + ")";
+                         
+                         alertService.error(message,header);
+                    });
+                    
+                };
+                
                 var ctr = -1;
                 scope.limmaTableOrdering = undefined;
 

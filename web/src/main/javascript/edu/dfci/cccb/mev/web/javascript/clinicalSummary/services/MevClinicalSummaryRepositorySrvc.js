@@ -24,8 +24,8 @@ function(angular,
 		};
 	}])
 	//call to OpenRefine to get all row data	
-	.service("MevAnnotationRowsResource", ["$resource", "$routeParams", "MevAnnotationProjectIdResource", 
-     function($resource, $routeParams, MevAnnotationProjectIdResource){
+	.service("MevAnnotationRowsResource", ["$q", "$resource", "$routeParams", "MevAnnotationProjectIdResource", 
+     function($q, $resource, $routeParams, MevAnnotationProjectIdResource){
 		console.debug("init MevAnnotationRowsResource");
 		var _self=this;
 		var url="/annotations/:datasetName/annotation/column/new/dataset/command/core/get-rows";
@@ -35,12 +35,18 @@ function(angular,
 		
 		//to get rows we first must chain a call to get-project-id
 		this.get=function(){
-			return MevAnnotationProjectIdResource.get({}).then(function(data){return _self.AnnotationRowsResource.get(data).$promise;});
+			return MevAnnotationProjectIdResource.get({}).then(function(data){
+				if(data.project<=0)
+					return $q.when({error: -1})
+				else	
+					return _self.AnnotationRowsResource.get(data).$promise;
+				
+				});
 		};		
 	}])
 	//call to OpenRefine to get header column info
-	.service("MevAnnotationColumnsResource", ["$resource", "$routeParams", "MevAnnotationProjectIdResource", 
-	 function($resource, $routeParams, MevAnnotationProjectIdResource){
+	.service("MevAnnotationColumnsResource", ["$q", "$resource", "$routeParams", "MevAnnotationProjectIdResource", 
+	 function($q, $resource, $routeParams, MevAnnotationProjectIdResource){
 		console.debug("init MevAnnotationColumnsResource");
 		var _self=this;
 		var url="/annotations/:datasetName/annotation/column/new/dataset/command/core/get-columns-info";		
@@ -53,7 +59,12 @@ function(angular,
 		//to get rows we first must chain a call to get-project-id
 		this.get=function(){
 			console.debug("MevAnnotationColumnsResource.get()");
-			return MevAnnotationProjectIdResource.get().then(function(data){return _self.AnnotationColumnsResource.get(data).$promise;});
+			return MevAnnotationProjectIdResource.get().then(function(data){
+				if(data.project<=0)
+					return $q.when({error: -1})
+				else
+					return _self.AnnotationColumnsResource.get(data).$promise;
+				});
 		};		
 	}])
 	//call to OpenRefine to find out current project id

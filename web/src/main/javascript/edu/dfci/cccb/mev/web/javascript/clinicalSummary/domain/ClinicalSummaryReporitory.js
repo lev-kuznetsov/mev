@@ -20,6 +20,9 @@ define([], function(){
 		this.getData=function(fields){			
 			return _initPromise.then(function(data){
 				var results=[];
+				if(typeof data.columns.error!="undefined" 
+					|| typeof data.rows.error!="undefined")
+					return results;
 				//loop rows
 				for(var irow=0;irow<data.rows.rows.length;irow++){
 					var curRow=data.rows.rows[irow];
@@ -27,11 +30,14 @@ define([], function(){
 					//for every row, get the requested fields
 					for(var ifield=0;ifield<fields.length;ifield++){
 						var curFieldName=fields[ifield];
-						results.push({
-							columnId: curFieldName,
-							key: rowValues[0].v,
-							value: rowValues[_fieldNameToIndexMap[curFieldName]].v
-						});
+						var curFieldIndex=_fieldNameToIndexMap[curFieldName];
+						if(typeof curFieldIndex !="undefined"){
+							results.push({
+								columnId: curFieldName,
+								key: rowValues[0].v,
+								value: rowValues[curFieldIndex].v
+							});
+						}
 					}
 				}	
 				return results;

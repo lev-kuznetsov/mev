@@ -11,6 +11,6 @@ function(angular,
 	function(MevClinicalsummaryconfigSrvc, MevClinicalSummaryRepositorySrvc){
 		this.create=function(){
 			return new ClinicalSummaryFactory(MevClinicalsummaryconfigSrvc.get(), MevClinicalSummaryRepositorySrvc.create());
-		}
+		};
 	}]);
 });
