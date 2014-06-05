@@ -15,7 +15,8 @@ define(['angular',
         'geneboxplotvisualization/GeneBoxPlotVisualization',
         'mainmenu',
         'geods',
-        'clinical'
+        'clinical',
+        'cohortanalysis/CohortAnalysis'
         ], function(angular){
 	'use strict';
 	return angular.module('myApp', [
@@ -36,7 +37,8 @@ define(['angular',
 	     'Mev.MainMenuModule',
 	     'Mev.GeneBoxPlotVisualization',
 	     'Mev.GeodsModule',
-	     'Mev.ClinicalSummary'
+	     'Mev.ClinicalSummary',
+	     'Mev.CohortAnalysis'
 	     ])
 	.config(['$routeProvider', '$locationProvider', '$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {
 		
