@@ -1,6 +1,6 @@
-define(['d3', 'angular'], function(d3, angular){
+define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
 	
-	angular.module('Mev.CohortAnalysis', [])
+	return angular.module('Mev.CohortAnalysis', ['d3colorBrewer'])
     .service('d3Service', function () {
     return d3
 })
@@ -9,11 +9,18 @@ define(['d3', 'angular'], function(d3, angular){
     //    Function to extract values for histogram processing
     return function (data) {
 
-        return {
-            'data': data,
-                'min': d3.min(data),
-                'max': d3.max(data)
-        };
+		
+		var extracted = data.filter(function(datum){
+			return (isNaN(datum.value) ) ? false : true;
+		}).map(function(datam){
+			return parseFloat(datam.value)
+		});
+
+        return (extracted.length > 1) ? {
+            'data': extracted,
+                'min': d3.min(extracted),
+                'max': d3.max(extracted)
+        } : undefined;
     }
 }])
 .directive('cohortDashboard', ['$compile', function ($compile) {
@@ -25,16 +32,23 @@ define(['d3', 'angular'], function(d3, angular){
         var template = '';
 
         switch(type) {
-            case 'Hierarchical Clustering':
+            case 'histogram':
                 template = histogramTemplate;
                 break;
-            case 'K-means Clustering':
+            case 'piechart':
                 template = pieChartTemplate;
                 break;
         }
 
         return template;
     };
+    
+    function compileView(model, type, element, compile, scope){
+		
+		element.append(getTemplate(scope.viewType));
+        compile(element.contents())(scope);
+        
+	};
 	
     return {
         'restrict': 'E',
@@ -43,20 +57,30 @@ define(['d3', 'angular'], function(d3, angular){
             	'viewType': '=type'
             },
             'link': function(scope, element, attrs) {
+            	
+            		
 
+            		scope.$watch('viewType', function(newval){
+            			if (scope.viewModel && scope.viewType){
+            				compileView(scope.viewModel, scope.viewType, element, $compile, scope)
+            			
+            			}
+            		});
+            		
             		scope.$watch('viewModel', function(newval){
 
-            			console.log(scope.viewModel);
-                        element.append(getTemplate(scope.viewModel));
+            			if (scope.viewModel && scope.viewType){
+            				compileView(scope.viewModel, scope.viewType, element, $compile, scope)
+            			}
                         
-                        $compile(element.contents())(scope);
             		});
 
             }
     };
     
 }])
-    .directive('d3Histogram', ['histogramExtractor', 'd3Service', function (histogramExtractor, d3) {
+    .directive('d3Histogram', ['histogramExtractor', 'd3Service', 'd3colors', 
+                               function (histogramExtractor, d3, d3colors) {
     return {
         'restrict': 'E',
             'scope': {
@@ -95,15 +119,31 @@ define(['d3', 'angular'], function(d3, angular){
 
                 if (newval) {
 
-                    viz.selectAll("*").remove()
+                	var histData = histogramExtractor(newval);
+                	
+                	if (histData === undefined) { 
+                		return
+                	}
+                	
+                	var data = d3.layout.histogram()
+	                    //.bins(x.ticks(20))
+	                  (histData.data);
+
+                    viz.selectAll("*").remove();
+                    
+                    console.log(newval[0].columnId)
+                	console.log(data)
+                    
+                    var maxRange = d3.max(data.map(function(datum){
+                    	return datum.dx;
+                    }));
 
                     var x = d3.scale.linear()
-                        .domain([histData.min,histData.max])
-                        .range([0, width]);
-
-                    var data = d3.layout.histogram()
-                      .bins(x.ticks(20))
-                    (histData.data);
+                        .domain([histData.min-maxRange,histData.max+maxRange])
+                        .range([0, width]) 
+                        ;
+                    
+                    
 
                     var y = d3.scale.linear()
                         .domain([0, d3.max(data, function (d) {
@@ -120,20 +160,29 @@ define(['d3', 'angular'], function(d3, angular){
                         .enter().append("g")
                         .attr("class", "bar")
                         .attr("transform", function (d) {
-                        return "translate(" + x(d.x) + "," + y(d.y) + ")";
-                    });
+                        	return "translate(" + x(d.x) + "," + y(d.y) + ")";
+                        })
+                        .attr('fill', function(d,i){
+                        	return d3colors['Set1'][9][(i%9)]
+                        });
 
                     bar.append("rect")
                         .attr("x", 1)
-                        .attr("width", x(data[0].dx) - 1)
+                        .attr("width", function(d){
+                        	return x(d.dx + d.x) - x(d.x)
+                        })
                         .attr("height", function (d) {
                         return height - y(d.y);
                     });
 
                     bar.append("text")
                         .attr("dy", ".75em")
-                        .attr("y", 6)
-                        .attr("x", x(data[0].dx) / 2)
+                        .attr("y", function(d){
+                        	 return  y(d.y) - 10
+                        })
+                        .attr("x", function(d){
+                        	return x(d.x + d.dx) + (x(d.dx) / 2);
+                        })
                         .attr("text-anchor", "middle")
                         .text(function (d) {
                         return formatCount(d.y);
@@ -160,12 +209,33 @@ define(['d3', 'angular'], function(d3, angular){
         //End of return object
     };
 }])
-.service('PieChartExtractor', [function(){
+.service('PieChartExtractor', [function () {
 	return function(data){
-		return data
-	}
+		
+		var frequencies = {}, count = 0;
+		
+		data.map(function(datum){
+			
+			count = count + 1;
+			
+			if (frequencies[datum.value]){
+				frequencies[datum.value] = frequencies[datum.value] +1
+			} else {
+				frequencies[datum.value] = 1;
+			}
+		});
+		
+		
+		return {
+			'slices': Object.keys(frequencies).map(function(prop){
+				return {'key':prop, 'value':frequencies[prop]}
+			}),
+			'total': count
+		}
+	};
 }])
-.directive('d3PieChart', ['d3Service', 'PieChartExtractor', function(d3, PCExtract){
+.directive('d3PieChart', ['d3Service', 'PieChartExtractor', 'd3colors',
+                          function(d3, PCExtract, d3colors){
     return {
         'restrict': 'E',
         'scope' : {
@@ -189,7 +259,7 @@ define(['d3', 'angular'], function(d3, angular){
             
             var pie = d3.layout.pie()
                 .sort(null)
-                .value(function(d) { return d.population; });
+                .value(function(d) { return d.value; });
             
             d3.select(elems[0]).append("svg")
                 .attr("width", width)
@@ -205,28 +275,24 @@ define(['d3', 'angular'], function(d3, angular){
             
                 if (newval){
                     
-                	  extract = PCExtract(data);
-                	  
-                      extract.forEach(function(d) {
-                        d.population = parseFloat(d.population);
-                      });
+                	  var extract = PCExtract(scope.data);
                     
                       var g = viz.selectAll(".arc")
-                          .data(pie(scope.data))
+                          .data(pie(extract.slices))
                         .enter().append("g")
                           .attr("class", "arc");
                     
                       g.append("path")
                           .attr("d", arc)
-                          .style("fill", function(d) { 
-                              return color(d[scope.on]); 
+                          .style("fill", function(d, i) { 
+                              return d3colors['Set1'][9][(i%9)];
                           });
                     
                       g.append("text")
                           .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
                           .attr("dy", ".35em")
                           .style("text-anchor", "middle")
-                          .text(function(d) { return d.data.age; });
+                          .text(function(d) { return d.key; });
                  };
               
             
