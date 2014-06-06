@@ -8,10 +8,9 @@ define(["angular", "mainmenu/MainMenu.module"], function(angular, module){
 			link: function(scope, elm, attr, nullCtrl){
 			    
 			    if ($routeParams.datasetName){
-			        scope.brandLink = "#/datasets"
+			        scope.brandLink = "#/datasets";
 			    }
 			    
-				console.debug("linking MevMainMenu");
 			}
 		};
 	}]);
