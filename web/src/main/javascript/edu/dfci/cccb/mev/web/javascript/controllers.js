@@ -81,7 +81,6 @@ define(
                                         $scope.defaultActiveTab="tcga";
                                         $scope.currentTab=$scope.defaultActiveTab;
                                         $scope.toggelTab=function(tab){
-                                        	console.debug("PREEE");
                                         	$scope.currentTab=tab;
                                         	$scope.setActiveTab(tab);
                                         };
@@ -93,10 +92,8 @@ define(
                                         };
                                         $scope.getActiveCSS=function(tab){
                                         	if($scope.isActive(tab)){
-                                        		console.debug(tab+"css is ACTIVE");
                                         		return "active";
                                         	}else{
-                                        		console.debug(tab+"css is BLANK");
                                     			return "";
                                         	}
                                         };
@@ -104,10 +101,8 @@ define(
                                         	return tab+"_tab";
                                         };
                                         $scope.setActiveTab=function(tab){
-                                        	console.debug("set active: "+tab, $("#"+$scope.getTabId(tab)));
 //                                        	$("#"+tab).tab('show');
                                         	$("#"+tab).addClass("active");
-                                        	console.debug($scope.getTabId(tab));
                                         	$("#"+$scope.getTabId(tab)).addClass("active");
                                         };
                                         if(typeof $routeParams.tab=="undefined")

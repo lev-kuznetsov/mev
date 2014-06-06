@@ -1,25 +1,26 @@
 define([], function(){
 	var ClinicalSummaryRepository = function(dataPromise){
-		//private members
-		var _data=dataPromise;
+		//private members		
 		var _fieldNameToIndexMap={};		
-		function _init(data){
-			console.debug("ClinicalSummaryRepository._init()", data);
-			_createFieldNameToIndexMap(data.columns);			
-			return data;
-		};
 		function _createFieldNameToIndexMap(columns){			
 			for(var i=0;i<columns.length;i++){				
 				_fieldNameToIndexMap[columns[i].name]=i;
 			}
 		}
-		//resolve promise - execution starts here
-		var _initPromise=_data.then(_init);
+		function _init(data){
+			_createFieldNameToIndexMap(data.columns);			
+			return data;
+		};
+		
+		//init local variables after data promise is resolved
+		var _initPromise=dataPromise.then(_init);
 		
 		//public methods
 		this.getData=function(fields){			
 			return _initPromise.then(function(data){
 				var results=[];
+				//at this point the only error is if the Annotations have not been loaded. 
+				//so just return an empty array
 				if(typeof data.columns.error!="undefined" 
 					|| typeof data.rows.error!="undefined")
 					return results;
@@ -31,6 +32,7 @@ define([], function(){
 					for(var ifield=0;ifield<fields.length;ifield++){
 						var curFieldName=fields[ifield];
 						var curFieldIndex=_fieldNameToIndexMap[curFieldName];
+						//if the requested field does not exist in the dataset, skip it
 						if(typeof curFieldIndex !="undefined"){
 							results.push({
 								columnId: curFieldName,

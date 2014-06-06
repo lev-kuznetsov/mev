@@ -6,15 +6,12 @@ define(["angular",
 function(angular, 
 			angularModule, 
 			ClinicalSummaryReporitory){
-	angular.module(angularModule.name).service("MevClinicalSummaryRepositorySrvc", ["$q", "MevAnnotationColumnsResource", "MevAnnotationRowsResource",
+	angular.module(angularModule.name).service("MevClinicalSummaryRepositorySrvc", 
+	["$q", "MevAnnotationColumnsResource", "MevAnnotationRowsResource",
 	function($q, MevAnnotationColumnsResource, MevAnnotationRowsResource){
-		console.debug("init MevClinicalSummaryRepositorySrvc");
 		this.create=function(){
-			console.debug("MevClinicalSummaryRepositorySrvc.create()");
 			var columns = MevAnnotationColumnsResource.get();
-			console.debug("MevClinicalSummaryRepositorySrvc.columns", columns);
 			var rows = MevAnnotationRowsResource.get();
-			console.debug("MevClinicalSummaryRepositorySrvc.rows", rows);
 			var dataPromise=$q.all({
 				columns:  columns,
 				rows: rows
@@ -24,9 +21,9 @@ function(angular,
 		};
 	}])
 	//call to OpenRefine to get all row data	
-	.service("MevAnnotationRowsResource", ["$q", "$resource", "$routeParams", "MevAnnotationProjectIdResource", 
-     function($q, $resource, $routeParams, MevAnnotationProjectIdResource){
-		console.debug("init MevAnnotationRowsResource");
+	.service("MevAnnotationRowsResource", 
+	["$q", "$resource", "$routeParams", "MevAnnotationProjectIdResource", 
+    function($q, $resource, $routeParams, MevAnnotationProjectIdResource){
 		var _self=this;
 		var url="/annotations/:datasetName/annotation/column/new/dataset/command/core/get-rows";
 		this.AnnotationRowsResource = $resource(url, {
@@ -37,7 +34,7 @@ function(angular,
 		this.get=function(){
 			return MevAnnotationProjectIdResource.get({}).then(function(data){
 				if(data.project<=0)
-					return $q.when({error: -1})
+					return $q.when({error: "OpenRefine - project not found"});
 				else	
 					return _self.AnnotationRowsResource.get(data).$promise;
 				
@@ -47,7 +44,6 @@ function(angular,
 	//call to OpenRefine to get header column info
 	.service("MevAnnotationColumnsResource", ["$q", "$resource", "$routeParams", "MevAnnotationProjectIdResource", 
 	 function($q, $resource, $routeParams, MevAnnotationProjectIdResource){
-		console.debug("init MevAnnotationColumnsResource");
 		var _self=this;
 		var url="/annotations/:datasetName/annotation/column/new/dataset/command/core/get-columns-info";		
 		this.AnnotationColumnsResource = $resource(
@@ -58,7 +54,6 @@ function(angular,
 		
 		//to get rows we first must chain a call to get-project-id
 		this.get=function(){
-			console.debug("MevAnnotationColumnsResource.get()");
 			return MevAnnotationProjectIdResource.get().then(function(data){
 				if(data.project<=0)
 					return $q.when({error: -1})
@@ -70,7 +65,6 @@ function(angular,
 	//call to OpenRefine to find out current project id
 	.service("MevAnnotationProjectIdResource", ["$resource", "$routeParams", 
 	 function($resource, $routeParams){
-		console.debug("int MevAnnotationProjectIdResource");
 		
 		url="/annotations/:datasetName/annotation/column/get-project-id";
 		var AnnotationProjectIdResource = $resource(
@@ -79,7 +73,6 @@ function(angular,
 				);		
 		
 		this.get=function(){
-			console.debug("==> GET PROJECT ID", $routeParams);
 			return AnnotationProjectIdResource.get({datasetName: $routeParams.datasetName}).$promise;			
 		};
 		
