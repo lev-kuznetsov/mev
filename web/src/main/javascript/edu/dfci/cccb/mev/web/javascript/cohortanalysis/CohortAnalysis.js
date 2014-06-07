@@ -121,7 +121,19 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
 
                 	var histData = histogramExtractor(newval);
                 	
+
+                	console.log(newval[0].columnId)
+                	
                 	if (histData === undefined) { 
+
+                        viz.selectAll("*").remove();
+                        viz.append("text")
+                        .attr("y", 100)
+                        .attr("x", 1)
+                        .style("text-anchor", "start")
+                        .text(function(d) { 
+                        	return "Cannot generate histogram for this cohort."
+                        });
                 		return
                 	}
                 	
@@ -129,10 +141,26 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
 	                    //.bins(x.ticks(20))
 	                  (histData.data);
 
-                    viz.selectAll("*").remove();
-                    
-                    console.log(newval[0].columnId)
-                	console.log(data)
+                	data = data.filter(function(d){
+                		return (d.length > 0)? true:false
+                	});
+                	
+                	if (data.length == 1){
+
+                		console.log(data)
+                        viz.selectAll("*").remove();
+                        viz.append("text")
+                        .attr("y", 100)
+                        .attr("x", 1)
+                        .style("text-anchor", "start")
+                        .text(function(d) { 
+                        	return "Cohort data is uniform. Value: " 
+                        	+ data[0][0] +" Count: " + data.length;
+                        })
+                        return
+                	}
+                	
+
                     
                     var maxRange = d3.max(data.map(function(datum){
                     	return datum.dx;
@@ -140,8 +168,7 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
 
                     var x = d3.scale.linear()
                         .domain([histData.min-maxRange,histData.max+maxRange])
-                        .range([0, width]) 
-                        ;
+                        .range([0, width]);
                     
                     
 
@@ -154,6 +181,10 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
                     var xAxis = d3.svg.axis()
                         .scale(x)
                         .orient("bottom");
+                    
+                    var yAxis = d3.svg.axis()
+                    .scale(y)
+                    .orient("left");
 
                     var bar = viz.selectAll(".bar")
                         .data(data)
@@ -174,24 +205,16 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
                         .attr("height", function (d) {
                         return height - y(d.y);
                     });
-
-                    bar.append("text")
-                        .attr("dy", ".75em")
-                        .attr("y", function(d){
-                        	 return  y(d.y) - 10
-                        })
-                        .attr("x", function(d){
-                        	return x(d.x + d.dx) + (x(d.dx) / 2);
-                        })
-                        .attr("text-anchor", "middle")
-                        .text(function (d) {
-                        return formatCount(d.y);
-                    });
-
+                    
                     viz.append("g")
                         .attr("class", "x axis")
                         .attr("transform", "translate(0," + height + ")")
                         .call(xAxis);
+                    
+                    viz.append("g")
+                    .attr("class", "y axis")
+                    .attr("transform", "translate(0," + 0 + ")")
+                    .call(yAxis);
 
                     //End of if statement    
                 };
@@ -281,18 +304,64 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
                           .data(pie(extract.slices))
                         .enter().append("g")
                           .attr("class", "arc");
+                      
+                      
                     
                       g.append("path")
                           .attr("d", arc)
                           .style("fill", function(d, i) { 
                               return d3colors['Set1'][9][(i%9)];
-                          });
+                          })
+                          .on('mouseover', function(d,i){
+                        	  d3.select(this).attr('style', 'fill:orange;');
+                        	  
+                        	  div.transition()        
+	                              .duration(200)      
+	                              .style("opacity", .99);      
+                        	  
+                        	  
+	                          div.select('text')
+	                          	.attr("transform", "translate(" + [arc.centroid(d)[0],arc.centroid(d)[1]+30] + ")")
+	                          	.text(d.data.key + ': ' + d.value);
+                          })
+                          .on('mouseout', function(d,i){
+                        	  d3.select(this).attr('style', 'fill:'+d3colors['Set1'][9][(i%9)]+ ";");
+                        	  
+		                      div.transition()        
+	                              .duration(500)      
+	                              .style("opacity", 0);   
+                          })
+                          
+                      
+                      viz.append("g")
+	                  	.attr("class", "tooltip")               
+	                  	.style("opacity", 0)
+	                  	.append('text').text('hello');
                     
+                      var div = viz.select('g.tooltip');
+                      
+                      
                       g.append("text")
                           .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
                           .attr("dy", ".35em")
                           .style("text-anchor", "middle")
-                          .text(function(d) { return d.key; });
+                          .text(function(d) { 
+                        	  
+                        	  var returnstring = undefined;
+                        	  
+                        	  if (d.data.key.length > 10){
+                        		  returnstring = d.data.key.slice(0,10) + '... :' 
+                            	  + (( (d.endAngle - d.startAngle)/(2*Math.PI) )*100) + "%" ;
+                        	  } else {
+                        		  returnstring = d.data.key+ ': ' 
+                        		  	+ (( (d.endAngle - d.startAngle)/(2*Math.PI) )*100) + "%" ;
+                        	  }
+                        	  
+                        	  return  returnstring;
+                        	  
+                          });
+                          
+                          
                  };
               
             
