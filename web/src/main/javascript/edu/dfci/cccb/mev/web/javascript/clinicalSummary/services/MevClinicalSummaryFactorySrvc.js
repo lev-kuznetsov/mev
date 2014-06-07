@@ -8,9 +8,9 @@ function(angular,
 		ClinicalSummaryFactory){
 	angularModule.service("MevClinicalSummaryFactorySrvc", ["MevClinicalSummaryConfigSrvc", 
 	                                                        "MevClinicalSummaryRepositorySrvc", 
-	function(MevClinicalsummaryconfigSrvc, MevClinicalSummaryRepositorySrvc){
+	function(MevClinicalSummaryConfigSrvc, MevClinicalSummaryRepositorySrvc){
 		this.create=function(){
-			return new ClinicalSummaryFactory(MevClinicalsummaryconfigSrvc.get(), MevClinicalSummaryRepositorySrvc.create());
+			return new ClinicalSummaryFactory(MevClinicalSummaryConfigSrvc.get(), MevClinicalSummaryRepositorySrvc.create());
 		};
 	}]);
 });

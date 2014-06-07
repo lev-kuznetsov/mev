@@ -1,15 +1,36 @@
-define(['angular', 'geods/Geods.module', 'geods/import/GeodsImportCtrl', 'geods/import/GeodsSearchViewModel', 'geods/services/GeodsSummaryResourceSrvc'], function(angular, angularModule, GeodsImportCtrl, GeodsSearchViewModel){
-	angularModule.directive('mevGeodsImportDirective', ['GeodsSummaryFactory', '$modal', '$location',
-	                                                    function(GeodsSummaryFactory, $modal, $location){
+define(['angular', 
+        'geods/Geods.module', 
+        'geods/import/GeodsImportCtrl', 
+        'geods/domain/GeodsSummaryViewModel', 
+        'geods/services/MevGeodsSummaryResourceSrvc',
+        'geods/services/MevGeodsSearchResourceSrvc',
+        'geods/services/MevGeodsSummaryFactory'], 
+function(angular, 
+		angularModule, 
+		GeodsImportCtrl, 
+		GeodsSummaryViewModel){
+	
+	angularModule.directive('mevGeodsImportDirective', 
+	['MevGeodsSummaryFactory', '$modal', '$location', 'MevGeodsSearchResourceSrvc',
+	function(MevGeodsSummaryFactory, $modal, $location, MevGeodsSearchResourceSrvc){
 		return {
 			scope:{},
 			restrict: 'EAC',			
 			templateUrl: angularModule.path+"import/geodsimport.tpl.html",
 			link: function(scope, elm, attr, nullCtrl){
-				console.debug("linking MevGeodsImportDirective");
-//				scope.message="mevGeodsImportDirective";
-				scope.vm = new GeodsSearchViewModel(GeodsSummaryFactory, scope, $modal, $location);				
+				scope.vm = new GeodsSummaryViewModel(MevGeodsSummaryFactory, scope, $modal, $location);
 			}
 		};
+	}])
+	.directive('mevGeodsSearchResultsDirective',
+	[function(){
+		return {
+			scope:{},
+			restrict: 'AE',
+			termplateUrl: angularModule.path+"import/GeodsSearchResults.tpl.html",
+			link: function(scope, elm, attrs, nullCtrl){
+				
+			}
+		}
 	}]);
 });
