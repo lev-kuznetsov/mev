@@ -166,7 +166,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                 	
                 	var axis = d3.svg.axis()
                 		.scale(scale)
-                		.orient('right')
+                		.orient('left')
                 		.ticks(10)
                 		
                 	axisHolder.call(axis)
