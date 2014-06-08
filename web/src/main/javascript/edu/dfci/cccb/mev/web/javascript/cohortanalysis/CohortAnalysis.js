@@ -194,7 +194,7 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
                         	return "translate(" + x(d.x) + "," + y(d.y) + ")";
                         })
                         .attr('fill', function(d,i){
-                        	return d3colors['Set1'][9][(i%9)]
+                        	return d3colors['Set2'][8][0]
                         });
 
                     bar.append("rect")
