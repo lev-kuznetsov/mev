@@ -121,9 +121,6 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
 
                 	var histData = histogramExtractor(newval);
                 	
-
-                	console.log(newval[0].columnId)
-                	
                 	if (histData === undefined) { 
 
                         viz.selectAll("*").remove();

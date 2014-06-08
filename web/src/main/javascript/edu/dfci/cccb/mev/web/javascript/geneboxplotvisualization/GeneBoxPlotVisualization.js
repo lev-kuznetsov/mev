@@ -103,9 +103,10 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
         return function (id, element) {
 
             var width = 30, //width of the box
-                padding = 10, //spacing on one side of the box
+                padding = 20, //spacing on one side of the box
                 geneSpacing = 2 * (width + (padding * 2)), //2 times the space required for a box
-                height = 400;
+                height = 400,
+                sidewidth = 30;
             return {
                 draw: function (groups) {
                     //assume groups = {
@@ -137,7 +138,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                     var quantiles = d3.select('g#quantiles' + id);
 
                     yScale = d3.scale.linear().domain([groups.min, groups.max])
-                        .range([height -20, 20]);
+                        .range([height -20, 60]);
 
                     groups.data.map(function (group, index) {
 
@@ -151,16 +152,51 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                     
                     this.drawAxis(yScale, groups, svg, groups.data.length* geneSpacing);
                     
+                    this.drawLabels(svg);
 
+                    
                 },
                 clear: function () {
                     element.selectAll('*').remove()
                 },
+                drawLabels: function(svg){
+                	svg.append('g').attr('class','legend')
+                	
+                	var legend = svg.select('g.legend')
+                	
+                	legend.selectAll('rect').data(['experiment', 'control'])
+                		.enter().append('rect')
+                		.attr({
+                			'x': 5,
+                			'y': function(d,i){
+                				return (d === 'control') ? 10 : 25
+                			},
+                			'width': 15,
+                			'height': 15
+                		})
+                		.attr('style', function(d,i){
+                        	return 'fill:'+(i === 0 ? "pink": "green")+';' 
+                    		+ 'fill-opacity:.25;stroke:black;stroke-width:1.5;'
+                        });
+                	
+                	legend.selectAll('text').data(['experiment', 'control'])
+            		.enter().append('text')
+            		.attr({
+            			'x': 23,
+            			'y': function(d,i){
+            				return (i === 0) ? 22 : 37
+            			}
+            		})
+            		.text(function(d,i){
+                    	return d
+                    });
+                },
                 drawAxis: function(scale, groups, svg, width){
                 	
                 	svg.append('g')
+                		.attr('class', 'y axis')
                 		.attr('id', 'svg-axis-'+id)
-                		.attr("transform", "translate(" + width + ",0)")
+                		.attr("transform", "translate(" + 40 + ",0)")
                 		
                 	var axisHolder = svg.select('g#svg-axis-'+id)
                 	
@@ -225,7 +261,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                 outliersControl.selectAll('circle').data(controlOutliers).enter()
                 .append('circle')
                 .attr({
-                	cx: xposition + padding + (width / 2) + 
+                	cx: xposition + padding + (width / 2) + sidewidth + 
 			                    (width + (padding * 2)),
 			       	cy:function(d){
 			       		return scale(d.value)
@@ -238,7 +274,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                 outliersExperiment.selectAll('circle').data(experimentOutliers).enter()
                 .append('circle')
                 .attr({
-                	cx: xposition + padding + (width / 2) ,
+                	cx: xposition + padding + (width / 2) + sidewidth ,
                 		//+ (width + (padding * 2)),
                 	cy:function(d){
                 		return scale(d.value)
@@ -254,7 +290,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                     .enter().append("line")
                     .attr("class", "median")
                     .attr("x1", function (d, i) {
-                    return xposition + padding + (
+                    return xposition + padding + sidewidth +(
                     i * (
                     width + (padding * 2)))
                 })
@@ -263,7 +299,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                 })
                     .attr("x2", function (d, i) {
 
-                    return xposition + padding + width + (
+                    return xposition + padding + width + sidewidth + (
                     i * (
                     (width) + (padding * 2)))
                 })
@@ -281,20 +317,20 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                     .append('rect')
                     .attr("class", "first-third")
                     .attr("x", function (d, i) {
-                    return xposition + padding + (
-                    i * (
-                    width + (padding * 2)));
-                })
+                    return xposition + padding + sidewidth + (
+	                    i * (
+	                    width + (padding * 2)));
+	                })
                     .attr("y", function (d) {
-                    return scale(d.third);
-                })
+	                    return scale(d.third);
+	                })
                     .attr("height", function (d) {
-                    return scale(d.first) - scale(d.third);
-                })
+	                    return scale(d.first) - scale(d.third);
+	                })
                     .attr("width", width)
                     .attr('value', function (d) {
-                    return d.first + "," + d.third + ":" + scale(d.first) + "," + scale(d.third);
-                })
+	                    return d.first + "," + d.third + ":" + scale(d.first) + "," + scale(d.third);
+	                })
                     .attr('style', function(d,i){
                     	return 'fill:'+(i === 0 ? "pink": "green")+';' 
                 		+ 'fill-opacity:.25;stroke:black;stroke-width:1.5;'
@@ -307,7 +343,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                     .enter().append("line")
                     .attr("class", "min-Lines")
                     .attr("x1", function (d, i) {
-                    return xposition + padding + (
+                    return xposition + padding + sidewidth + (
                     i * (
                     width + (padding * 2)));
                 })
@@ -315,7 +351,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                     return scale(d.zerothird);
                 })
                     .attr("x2", function (d, i) {
-                    return xposition + padding + width + (
+                    return xposition + padding + width + sidewidth + (
                     i * (
                     width + (padding * 2)));
                 })
@@ -333,7 +369,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                     .enter().append("line")
                     .attr("class", "max-Lines")
                     .attr("x1", function (d, i) {
-                    return xposition + padding + (
+                    return xposition + padding + sidewidth + (
                     i * (
                     width + (padding * 2)))
                 })
@@ -341,7 +377,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                     return scale(d.ninetyseventh);
                 })
                     .attr("x2", function (d, i) {
-                    return xposition + padding + width + (
+                    return xposition + padding + width + sidewidth + (
                     i * (
                     width + (padding * 2)))
                 })
@@ -359,7 +395,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                     .enter().append("line")
                     .attr("class", "int-bottom-lines")
                     .attr("x1", function (d, i) {
-                    return xposition + padding + (width / 2) + (
+                    return xposition + padding + (width / 2) + sidewidth +  (
                     i * (
                     width + (padding * 2)))
                 })
@@ -367,7 +403,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                     return scale(d.first);
                 })
                     .attr("x2", function (d, i) {
-                    return xposition + padding + (width / 2) + (
+                    return xposition + padding + (width / 2) + sidewidth + (
                     i * (
                     width + (padding * 2)))
                 })
@@ -385,7 +421,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                     .enter().append("line")
                     .attr("class", "int-top-lines")
                     .attr("x1", function (d, i) {
-                    return xposition + padding + (width / 2) + (
+                    return xposition + padding + (width / 2) + sidewidth + (
                     i * (
                     width + (padding * 2)))
                 })
@@ -393,7 +429,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                     return scale(d.third);
                 })
                     .attr("x2", function (d, i) {
-                    return xposition + padding + (width / 2) + (
+                    return xposition + padding + (width / 2) + sidewidth + (
                     i * (
                     width + (padding * 2)))
                 })
@@ -409,7 +445,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                 label.selectAll('text').data([data.name]).enter()
                 .append('text')
                 .attr({
-                	x: xposition + width + (2*padding),
+                	x: xposition + width + (2*padding) + sidewidth,
                 	y: scale(groups.min) + 18
                 })
                 .text(data.geneName)
