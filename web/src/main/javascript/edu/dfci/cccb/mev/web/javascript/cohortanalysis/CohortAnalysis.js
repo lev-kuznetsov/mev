@@ -412,7 +412,6 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
                         		  	+ percentage + "%" ;
                         	  }
                         	  
-                        	  console.log(returnstring.split('.'))
                         	  
                         	  
                         	  
