@@ -227,6 +227,9 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
                     
                     var yAxis = d3.svg.axis()
                     .scale(y)
+                    .tickFormat(d3.format('d'))
+                    .innerTickSize('0')
+                    .outerTickSize('3')
                     .orient("left");
 
                     var bar = viz.selectAll(".bar")
@@ -392,13 +395,26 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
                         	  
                         	  var returnstring = undefined;
                         	  
+                        	  var percentage = (( (d.endAngle - d.startAngle)/(2*Math.PI) )*100);
+                        	  
+                        	  if ( (Math.ceil(percentage) -percentage ) >= .5){
+
+                        		  percentage = Math.ceil(percentage)
+                        	  } else {
+                        		  percentage = Math.floor(percentage)
+                        	  }
+                        	  
                         	  if (d.data.key.length > 10){
                         		  returnstring = d.data.key.slice(0,10) + '... :' 
-                            	  + (( (d.endAngle - d.startAngle)/(2*Math.PI) )*100) + "%" ;
+                            	  + percentage + "%" ;
                         	  } else {
                         		  returnstring = d.data.key+ ': ' 
-                        		  	+ (( (d.endAngle - d.startAngle)/(2*Math.PI) )*100) + "%" ;
+                        		  	+ percentage + "%" ;
                         	  }
+                        	  
+                        	  console.log(returnstring.split('.'))
+                        	  
+                        	  
                         	  
                         	  return  returnstring;
                         	  
