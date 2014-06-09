@@ -391,3 +391,8 @@ div#geods{
 div#cohortSummaryTabPane{
 	padding: 10px;
 }
+.clinicalSummaryAccordion{
+	width:50%; 
+	float: left; 
+	padding: 0.5em;	
+}
