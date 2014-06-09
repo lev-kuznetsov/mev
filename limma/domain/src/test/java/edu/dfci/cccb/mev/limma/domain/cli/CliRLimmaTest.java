@@ -17,7 +17,8 @@ package edu.dfci.cccb.mev.limma.domain.cli;
 
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
+import static org.junit.Assert.assertThat;
 
 import java.util.Properties;
 
@@ -48,11 +49,17 @@ public class CliRLimmaTest {
 
   @Test
   public void test () throws Exception {
-    Dataset dataset = new SimpleDatasetBuilder ().setParserFactories (asList (new SuperCsvParserFactory ()))
+    Dataset dataset =
+                      new SimpleDatasetBuilder ().setParserFactories (asList (new SuperCsvParserFactory ()))
                                                  .setValueStoreBuilder (new MapBackedValueStoreBuilder ())
-                                                 .build (new MockTsvInput ("mock", "id\tsa\tsb\tsc\tsd\tse\tsf\n" +
-                                                                                   "g1\t.1\t.2\t.3\t.4\t.5\t.6\n" +
-                                                                                   "g2\t.4\t.5\t.6\t.7\t.8\t.9"));
+                                                 .build (new MockTsvInput ("mock",
+                                                                           "id\tsa\tsb\tsc\tsd\tse\tsf\n"
+                                                                                   +
+                                                                                   "g1\t9.991\t.11\t9.99111\t9.9991111\t.11111\t.111111\n"
+                                                                                   +
+                                                                                   "g3\t9.991\t.11\t9.99111\t9.9991111\t.11111\t.111\n"
+                                                                                   +
+                                                                                   "g2\t9.991\t.11\t9.99111\t9.9991111\t.11111\t.11111"));
     Selection experiment = new SimpleSelection ("experiment", new Properties (), asList ("sa", "sc", "sd"));
     Selection control = new SimpleSelection ("control", new Properties (), asList ("sb", "se", "sf"));
     dataset.dimension (COLUMN).selections ().put (experiment);
@@ -66,8 +73,6 @@ public class CliRLimmaTest {
                                                                      .build ();
     for (Entry e : result.full ())
       log.debug ("Full limma entry: " + e);
-    assertEquals (.35,
-                  result.full ().iterator ().next ().averageExpression (),
-                  .1);
+    assertThat (result.full ().iterator ().next ().pValue (), lessThanOrEqualTo (6.16863080605545E-37));
   }
 }

@@ -104,6 +104,7 @@ write.table(gsea_rnk, file=RNK_OUT, quote=FALSE, sep="\t", row.names=FALSE, col.
 
 ##
 ## write full result file
+result=result[result[,"P-value"]<0.05,]
 colnames(result)[1]=""
 write.table(result[,-c(4,7)], 
             file=RESULT_OUT, quote=FALSE, sep="\t", row.names=FALSE, col.names=FALSE)
