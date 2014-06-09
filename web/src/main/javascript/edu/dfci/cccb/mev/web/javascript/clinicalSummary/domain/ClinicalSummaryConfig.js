@@ -1,5 +1,5 @@
 define([], function(){
-	var configs=[{				
+	var configs=[{
 		field: "age_at_initial_pathologic_diagnosis",
 		dataType: "numeric",
 		chartType: "histogram"
@@ -16,6 +16,7 @@ define([], function(){
 		dataType: "numeric",
 		chartType: "histogram"
 	},{
+		title: "ICD 10",
 		field: "icd_10",
 		dataType: "text",
 		chartType: "piechart"
@@ -23,7 +24,7 @@ define([], function(){
 		field: "race",
 		dataType: "text",
 		chartType: "piechart"
-	},{
+	},{		
 		field: "history_of_neoadjuvant_treatment",
 		dataType: "text",
 		chartType: "piechart"
@@ -45,10 +46,6 @@ define([], function(){
 		chartType: "piechart"
 	},{
 		field: "vital_status",
-		dataType: "text",
-		chartType: "piechart"
-	},{
-		field: "icd_o_3_site",
 		dataType: "text",
 		chartType: "piechart"
 	},{

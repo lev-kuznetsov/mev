@@ -30,7 +30,7 @@ define([], function(){
 
 	    function SplitArrayIntoColumns(array, columns) {
 	        if (array.length <= columns) {
-	            return [array];
+	            return array;
 	        };
 
 	        var rowsNum = Math.ceil(array.length / columns);
@@ -39,7 +39,7 @@ define([], function(){
 	        for (var j = 0; j < columns; j++) {	            
 	            var rowsArray = new Array(rowsNum);
 	            for (var i = 0; i < rowsNum; i++) {    
-	                var index = j * columns + i;
+	                var index = j * rowsNum + i;
 
 	                if (index < array.length) {
 	                	rowsArray[i] = array[index];
@@ -58,7 +58,7 @@ define([], function(){
 			return _summaries;
 		};
 		this.getTitle=function(summary){
-			return summary.config.field;
+			return summary.getTitle();
 		};
 		
 	};
