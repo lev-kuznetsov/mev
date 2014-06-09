@@ -23,6 +23,18 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
         } : undefined;
     }
 }])
+.service('stringClean', function(){
+	return function(string){
+		
+		var returnstring = "";
+		var arr = string.split('_');
+		arr.map(function(word){
+			returnstring = returnstring.concat(word.charAt(0).toUpperCase() + word.slice(1) + " ")
+		})
+		
+		return returnstring;
+	}
+})
 .directive('cohortDashboard', ['$compile', function ($compile) {
 	
 	var pieChartTemplate = '<d3-Pie-Chart data="viewModel" height="300" width="500"></d3-Pie-Chart>';
@@ -79,8 +91,8 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
     };
     
 }])
-    .directive('d3Histogram', ['histogramExtractor', 'd3Service', 'd3colors', 
-                               function (histogramExtractor, d3, d3colors) {
+    .directive('d3Histogram', ['histogramExtractor', 'd3Service', 'd3colors', 'stringClean',
+                               function (histogramExtractor, d3, d3colors, clean) {
     return {
         'restrict': 'E',
             'scope': {
@@ -95,8 +107,8 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
             var margin = {
                 top: 10,
                 right: 30,
-                bottom: 30,
-                left: 30
+                bottom: 50,
+                left: 50
             },
             width = scope.width - margin.left - margin.right,
                 height = scope.height - margin.top - margin.bottom;
@@ -121,11 +133,11 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
 
                 	var histData = histogramExtractor(newval);
                 	
-                	if (histData === undefined) { 
+                	if (histData === undefined || !newval[0].columnId ) { 
 
                         viz.selectAll("*").remove();
                         viz.append("text")
-                        .attr("y", 100)
+                        .attr("y", 10)
                         .attr("x", 1)
                         .style("text-anchor", "start")
                         .text(function(d) { 
@@ -144,7 +156,6 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
                 	
                 	if (data.length == 1){
 
-                		console.log(data)
                         viz.selectAll("*").remove();
                         viz.append("text")
                         .attr("y", 100)
@@ -158,6 +169,41 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
                 	}
                 	
 
+                	var labels = [{'axis':'left', 'value':'# Of Samples'}, 
+                	              {'axis':'bottom', 'value':clean(newval[0].columnId)}];
+                	
+                	viz.append('g').attr('class', 'labels')
+                	
+                	viz.select('g.labels').selectAll('text')
+                		.data(labels).enter()
+                		.append('text')
+                		.attr({
+                			'x':function(d,i){
+                				if(d.axis === 'bottom'){
+                					return width/2 
+                				} else if (d.axis === 'left') {
+                					return -height/2
+                				};
+                			},
+                			'y':function(d,i){
+                				if (d.axis === 'bottom'){
+                					return height+margin.bottom/1.5
+                				} else if (d.axis === 'left'){
+                					return -40
+                				};
+                			},
+                		})
+                		.text(function(d){
+                			return d.value
+                		}).attr("text-anchor", function(d){
+                			if (d.axis === 'bottom'){
+                				return 'middle'
+                			} else if (d.axis === 'left'){
+                				return 'middle'
+                			}
+                		}).attr('transform', function(d){
+                			return (d.axis === "left")? 'rotate(-90)':""
+                		})
                     
                     var maxRange = d3.max(data.map(function(datum){
                     	return datum.dx;
@@ -191,13 +237,13 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
                         	return "translate(" + x(d.x) + "," + y(d.y) + ")";
                         })
                         .attr('fill', function(d,i){
-                        	return d3colors['Set2'][8][0]
+                        	return d3colors['Set3'][9][0]
                         });
 
                     bar.append("rect")
                         .attr("x", 1)
                         .attr("width", function(d){
-                        	return x(d.dx + d.x) - x(d.x)
+                        	return x(d.dx + d.x) - x(d.x) -2
                         })
                         .attr("height", function (d) {
                         return height - y(d.y);
@@ -307,7 +353,7 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
                       g.append("path")
                           .attr("d", arc)
                           .style("fill", function(d, i) { 
-                              return d3colors['Set1'][9][(i%9)];
+                              return d3colors['Set3'][9][(i%9)];
                           })
                           .on('mouseover', function(d,i){
                         	  d3.select(this).attr('style', 'fill:orange;');
@@ -322,7 +368,7 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
 	                          	.text(d.data.key + ': ' + d.value);
                           })
                           .on('mouseout', function(d,i){
-                        	  d3.select(this).attr('style', 'fill:'+d3colors['Set1'][9][(i%9)]+ ";");
+                        	  d3.select(this).attr('style', 'fill:'+d3colors['Set3'][9][(i%9)]+ ";");
                         	  
 		                      div.transition()        
 	                              .duration(500)      
