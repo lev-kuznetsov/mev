@@ -41,7 +41,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -64,15 +67,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.common.io.Files;
 import com.google.refine.ProjectManager;
 import com.google.refine.ProjectManagerFactory;
 import com.google.refine.ProjectMetadata;
 import com.google.refine.SessionWorkspaceDir;
+import com.google.refine.browsing.Engine;
+import com.google.refine.browsing.FilteredRows;
+import com.google.refine.browsing.RowVisitor;
 import com.google.refine.history.HistoryEntryManager;
+import com.google.refine.model.Column;
 import com.google.refine.model.Project;
+import com.google.refine.model.Row;
+import com.google.refine.operations.row.ImportPresetsRowRemovalOperation;
 import com.google.refine.preference.TopList;
+import com.google.refine.process.Process;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.presets.contract.Presets;
 
 @Log4j
@@ -191,7 +203,88 @@ public class FileProjectManager extends ProjectManager {
       untar (destDir, inputStream);
     }
   }
+  
+  public void copyProject (long sourceProjectId, long destProjectId, String sourceHeatmapId, Dataset destHeatmap, Dimension dimension) throws IOException {
+    String destHeatmapId = destHeatmap.name ();
+    
+    File sourceDir = this.getProjectDir (sourceProjectId);
+    log.debug ("copyProject:sourceDir:"+sourceDir.getAbsolutePath ());
+    File destDir = this.getProjectDir (destProjectId);
+    log.debug ("copyProject:destDir:"+destDir.getAbsolutePath ());
+    destDir.mkdirs ();
+    
+    
+    File sourceData = new File (sourceDir, "data.zip");
+    File destData = new File (destDir, "data.zip");    
+    Files.copy (sourceData,  destData);
+    
+    File sourceMetadata = new File (sourceDir, "metadata.json");
+    File destMetadata = new File (destDir, "metadata.json");    
+    Files.copy (sourceMetadata,  destMetadata );
+    
+    ProjectMetadata sourcepm = getProjectMetadata(sourceProjectId);
+    loadProjectMetadata(destProjectId);
+    ProjectMetadata destpm = getProjectMetadata(destProjectId);
+    if (sourcepm != null && destpm != null ) {
+      String destName = sourcepm.getName ().replace (sourceHeatmapId, destHeatmapId);
+      destpm.setName (destName);
+    }
+    
+    
+    final List<String> listHeader = dimension.keys ();
+    final Map<String, String> mapHeader = new HashMap<String, String>(listHeader.size ());
+    for(String columnName : listHeader)
+      if(!columnName.trim ().equals ("")) mapHeader.put(columnName, null);
+        
+    Project project = getProject (destProjectId);
+    
+//    final Engine engine = getEngine (request, project);
+    Engine engine = new Engine(project);
+    final List<Integer> unmatchedRowIndices = new ArrayList <Integer>();
+    
+    RowVisitor visitor = new RowVisitor () {
+      Column theIdColumn;
+      @Override
+      public void start (Project project) {
+        theIdColumn = project.columnModel.columns.get (0);
+      }
+      @Override
+      public boolean visit (Project project, int rowIndex, Row row) {
+        String cellData = row.getCell (theIdColumn.getCellIndex ()).value.toString ();
+        if (mapHeader.containsKey (cellData)) {
+//            if(logger.isDebugEnabled ())
+//              logger.debug ("++ will import"+cellData);
+        }else{
+          unmatchedRowIndices.add(rowIndex);
+//            if(logger.isDebugEnabled ())
+//              logger.debug ("-- skip import"+rowIndex);
+        }
+        return false;
+      }
 
+      @Override
+      public void end (Project project) {                        
+        try {
+          ImportPresetsRowRemovalOperation op = new ImportPresetsRowRemovalOperation(new JSONObject ("{\"facets\":[],\"mode\":\"row-based\"}"), unmatchedRowIndices);
+          Process process = op.createProcess(project, new Properties());            
+          project.processManager.queueProcess(process);         
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+
+      @Override
+      public boolean pass (Project project, int rowIndex, Row row) {                    
+        return false;
+      }
+    };
+    
+    FilteredRows filteredRows = engine.getAllFilteredRows ();
+    filteredRows.accept (project, visitor);
+    
+  }
+ 
+  
   protected void untar (File destDir, InputStream inputStream) throws IOException {
     TarInputStream tin = new TarInputStream (inputStream);
     TarEntry tarEntry = null;
