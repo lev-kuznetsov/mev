@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -61,6 +62,7 @@ import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetNotFoundException;
 import freemarker.template.TemplateModelException;
 
+@Log4j
 @Controller
 @RequestMapping ("/annotations")
 public class AnnotationController extends WebApplicationObjectSupport {
@@ -240,8 +242,7 @@ public class AnnotationController extends WebApplicationObjectSupport {
 
     Dataset heatmap = workspace.get (heatmapId);
     long projectId = projectManager.getProjectID (heatmap.name () + dimension);
-    if (projectId != -1) {      
-      
+    if (projectId != -1) {            
       if (wrappedRequest.getPathInfo ().trim ().equals ("/")) {
         if (wrappedRequest.getParameter ("reset") != null) {
           projectManager.deleteProject (projectId);
@@ -254,8 +255,11 @@ public class AnnotationController extends WebApplicationObjectSupport {
         if(sProjectId!=null){
           if(!Long.toString (projectId).equalsIgnoreCase (sProjectId)){
             String qs = request.getQueryString ();            
-            qs = qs.replace ("project="+sProjectId, "");        
-            response.sendRedirect ("project?project=" + projectId+qs);
+            qs = qs.replace ("project="+sProjectId, "");
+            if(!qs.startsWith ("&"))
+              qs="&"+qs;
+            String url = request.getServletPath () + "?project=" + projectId+qs;
+            response.sendRedirect (url);
           }
         }
       }
