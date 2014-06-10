@@ -6,6 +6,7 @@ import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethod
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_URL_ELEMENT;
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver.DIMENSION_MAPPING_NAME;
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver.DIMENSION_URL_ELEMENT;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -36,11 +37,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.support.WebApplicationObjectSupport;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.refine.io.FileProjectManager;
+import com.google.refine.model.Project;
 
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatform;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationPlatforms;
@@ -216,6 +219,32 @@ public class AnnotationController extends WebApplicationObjectSupport {
     return new ProjectIdDto (projectId);    
   }
 
+  @RequestMapping (method = { GET, POST }, value = { "/"
+          + DATASET_URL_ELEMENT + "/annotation/"
+          + DIMENSION_URL_ELEMENT
+          + "/export"})
+  @ResponseStatus (OK)
+  public void export (@PathVariable (DATASET_MAPPING_NAME) final String heatmapId,
+                            @PathVariable (DIMENSION_MAPPING_NAME) final String dimension,
+                            @RequestParam String destId,
+                            HttpServletRequest request, HttpServletResponse response) throws ServletException,
+                                         IOException,
+                                         DatasetNotFoundException, InvalidDimensionTypeException {
+  
+    Dataset sourceHeatmap = workspace.get (heatmapId);
+    Dataset destHeatmap = workspace.get (destId);
+    long sourceProjectId = projectManager.getProjectID (sourceHeatmap.name () + dimension);
+    if(sourceProjectId<=0){
+      if(log.isDebugEnabled ())
+        log.debug ("No "+dimension+"annotations to export for dataset" + heatmapId);
+      return;
+    }
+    long destProjectId = Project.generateID();
+    Dimension dim =destHeatmap.dimension (Dimension.Type.from (dimension));    
+    projectManager.copyProject (sourceProjectId, destProjectId, heatmapId, destHeatmap, dim);
+  }
+
+  
   @RequestMapping (method = { GET, POST, PUT, DELETE }, value = { "/"
                                                                   + DATASET_URL_ELEMENT + "/annotation/"
                                                                   + DIMENSION_URL_ELEMENT
