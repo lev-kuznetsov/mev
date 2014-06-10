@@ -26,10 +26,6 @@
 			                  Create Selections
 			                </a>
 			                
-			                <a class="btn btn-info" ng-click="">
-			                  View Quartiles
-			                </a>
-			                
 			                <a class="btn btn-success" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
 			                  <i class="icon-white icon-download"></i> Download
 			                </a> 

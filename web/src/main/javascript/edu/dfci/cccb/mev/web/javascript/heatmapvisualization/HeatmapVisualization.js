@@ -55,7 +55,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                                 $scope.currentColors.high = d3colors[newval][3][2];
                                 
                                 var params = new generateParams({colors:$scope.currentColors});
-                                console.log(params)
+
                                 $scope.visualization = new HeatmapVisualizationClass($scope.heatmapView,svg, params);
 
                 	    }
