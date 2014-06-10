@@ -36,6 +36,7 @@ function(angular,
 				if(data.project<=0)
 					return $q.when({error: "OpenRefine - project not found"});
 				else	
+					data.datasetName=$routeParams.datasetName;
 					return _self.AnnotationRowsResource.get(data).$promise;
 				
 				});
@@ -58,6 +59,7 @@ function(angular,
 				if(data.project<=0)
 					return $q.when({error: -1})
 				else
+					data.datasetName=$routeParams.datasetName;
 					return _self.AnnotationColumnsResource.get(data).$promise;
 				});
 		};		

@@ -187,6 +187,7 @@ public class RefineServlet extends Butterfly {
           response.sendError (405);
         }
       } else {
+        log.debug ("ERROR!!! " + request.getMethod () + " for command " + commandKey);
         response.sendError (404);
       }
     } else {
