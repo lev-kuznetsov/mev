@@ -543,26 +543,43 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 	
                 	var shownGenes = scope.applyFilter(scope.analysis.results);
                 	
+                	var max = Number.NEGATIVE_INFINITY,
+                	min = Number.POSITIVE_INFINITY;
+                	
+                	function test(d){
+                		
+                		if (d.value > max){
+                			max = d.value
+                		} else if (d.value < min) {
+                			min = d.value
+                		}
+                	};
                 	
                 	scope.boxPlotGenes = {
             			"data":shownGenes.map(function (gene, i) {
                             return {
                                 'control': {
                                     'values': scope.analysis.control.keys.map(function(label){
-                                    	return scope.project.dataset.expression.get([gene.id, label])
+                                    	
+                                    	var datapoint = scope.project.dataset.expression.get([gene.id, label]);
+                                    	test(datapoint);
+                                    	return datapoint;
                                     })
                                 },
                                 'experiment': {
                                     	'values': scope.analysis.experiment.keys.map(function(label){
-                                    		return scope.project.dataset.expression.get([gene.id, label])
+                                    		
+                                    		var datapoint = scope.project.dataset.expression.get([gene.id, label]);
+                                        	test(datapoint);
+                                        	return datapoint;
                                     	})
                                 },
                                 'geneName': gene.id,
                                 'pValue': gene.pValue
                             };
                         }),
-                        'min': scope.project.dataset.expression.min,
-                        'max': scope.project.dataset.expression.max,
+                        'min': min+ (min*.05),
+                        'max': max+ (max*.05),
                         'id' : scope.analysis.randomId
             		};
                 	

@@ -217,11 +217,12 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
 	            	
 	            	xAxis.append('line')
 	            		.attr({
-	            			'x1':32,
+	            			'x1':40,
 	            			'x2':(groups.data.length * geneWidth),
 	            			'y1':yscale.range()[0],
 	            			'y2':yscale.range()[0],
 	            		})
+	            		.attr('style', 'stroke-width:1;')
                 	
                 	
 	                	
