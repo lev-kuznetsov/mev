@@ -213,16 +213,18 @@ define(['d3', 'angular', 'colorbrewer/ColorBrewer'], function(d3, angular){
                         .domain([histData.min-maxRange,histData.max+maxRange])
                         .range([0, width]);
                     
-                    
-
                     var y = d3.scale.linear()
                         .domain([0, d3.max(data, function (d) {
                         return d.y;
                     })])
                         .range([height, margin.top]);
 
+                    console.log(data)
                     var xAxis = d3.svg.axis()
                         .scale(x)
+                        .tickValues(data.map(function(d){
+                        	return d.x + d.dx/2;
+                        }))
                         .orient("bottom");
                     
                     var yAxis = d3.svg.axis()
