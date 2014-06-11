@@ -137,7 +137,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             panel: {side: scope.analysis}
                         });
                     }
-                    scope.$emit('ViewVisualizeTabEvent');
                 };
                 
             }
@@ -297,7 +296,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             avg: scope.project.dataset.expression.avg,
                         }
                     });
-                    scope.$emit('ViewVisualizeTabEvent');
                     
                 };
             }
@@ -484,7 +482,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             avg: scope.project.dataset.expression.avg,
                         }
                     });
-                    scope.$emit('ViewVisualizeTabEvent');
                     
                 };
                 
@@ -550,9 +547,11 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 		
                 		if (d.value > max){
                 			max = d.value
-                		} else if (d.value < min) {
+                		};
+                		
+                	    if (d.value < min) {
                 			min = d.value
-                		}
+                		};
                 	};
                 	
                 	scope.boxPlotGenes = {
@@ -567,19 +566,19 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                                     })
                                 },
                                 'experiment': {
-                                    	'values': scope.analysis.experiment.keys.map(function(label){
-                                    		
-                                    		var datapoint = scope.project.dataset.expression.get([gene.id, label]);
-                                        	test(datapoint);
-                                        	return datapoint;
-                                    	})
+                                	'values': scope.analysis.experiment.keys.map(function(label){
+                                		
+                                		var datapoint = scope.project.dataset.expression.get([gene.id, label]);
+                                    	test(datapoint);
+                                    	return datapoint;
+                                	})
                                 },
                                 'geneName': gene.id,
                                 'pValue': gene.pValue
                             };
                         }),
-                        'min': min+ (min*.05),
-                        'max': max+ (max*.05),
+                        'min': min- ((max-min)*.05),
+                        'max': max+ ((max-min)*.05),
                         'id' : scope.analysis.randomId
             		};
                 	
@@ -728,7 +727,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             avg: scope.project.dataset.expression.avg,
                         }
                     });
-                    scope.$emit('ViewVisualizeTabEvent');
                     
                 };
             }
@@ -783,7 +781,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             panel: {side: scope.analysis}
                         });
                     }
-                    scope.$emit('ViewVisualizeTabEvent');
                 };
                 
                 function traverse(tree) {

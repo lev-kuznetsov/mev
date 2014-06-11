@@ -236,9 +236,11 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
 
                 		}
                 		
-                		if ($scope.selections){
-                            $scope.visualization.drawSelections($scope.selections.column, "column");
-                            $scope.visualization.drawSelections($scope.selections.row, "row");
+                		if ($scope.heatmapDataset.selections.column){
+                            $scope.visualization.drawSelections($scope.heatmapDataset.selections.column, "column");
+                		}
+                		if ($scope.heatmapDataset.selections.row){
+                            $scope.visualization.drawSelections($scope.heatmapDataset.selections.row, "row");
                 		}
                 		
                 		if ($scope.visualization.view.panel && $scope.visualization.view.panel.top) {
@@ -256,7 +258,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 	
                 	//When new selections come, print them
                 	
-                	$scope.$watch('heatmapDataset.selections.column', function(newval){
+                	$scope.$watchCollection('heatmapDataset.selections.column', function(newval){
 
                 	    if (newval && $scope.visualization){
                 	        $scope.visualization.drawSelections(newval, "column")
