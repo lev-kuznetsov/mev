@@ -84,6 +84,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
             if (errs.length > 0) {
              
                 for(i=0; i<errs.length; i++){
+                    console.log(errs[i])
                    throw new RangeError(errs[i]); 
                 }
                 

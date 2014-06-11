@@ -548,11 +548,16 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 	
                 	function test(d){
                 		
+                	    console.log("Testing " + d.value + " to " +max+ " and " + min)
                 		if (d.value > max){
                 			max = d.value
-                		} else if (d.value < min) {
+                			console.log("Max updated to: " + max)
+                		};
+                		
+                	    if (d.value < min) {
                 			min = d.value
-                		}
+                			console.log("Min updated to: " + min)
+                		};
                 	};
                 	
                 	scope.boxPlotGenes = {
@@ -567,21 +572,24 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                                     })
                                 },
                                 'experiment': {
-                                    	'values': scope.analysis.experiment.keys.map(function(label){
-                                    		
-                                    		var datapoint = scope.project.dataset.expression.get([gene.id, label]);
-                                        	test(datapoint);
-                                        	return datapoint;
-                                    	})
+                                	'values': scope.analysis.experiment.keys.map(function(label){
+                                		
+                                		var datapoint = scope.project.dataset.expression.get([gene.id, label]);
+                                    	test(datapoint);
+                                    	return datapoint;
+                                	})
                                 },
                                 'geneName': gene.id,
                                 'pValue': gene.pValue
                             };
                         }),
-                        'min': min+ (min*.05),
-                        'max': max+ (max*.05),
+                        'min': min- ((max-min)*.05),
+                        'max': max+ ((max-min)*.05),
                         'id' : scope.analysis.randomId
             		};
+                	
+                	console.log(scope.boxPlotGenes)
+                	console.log(min, max)
                 	
                 };
                 
@@ -783,7 +791,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             panel: {side: scope.analysis}
                         });
                     }
-                    scope.$emit('ViewVisualizeTabEvent');
                 };
                 
                 function traverse(tree) {
