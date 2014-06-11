@@ -137,7 +137,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             panel: {side: scope.analysis}
                         });
                     }
-                    scope.$emit('ViewVisualizeTabEvent');
                 };
                 
             }
@@ -297,7 +296,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             avg: scope.project.dataset.expression.avg,
                         }
                     });
-                    scope.$emit('ViewVisualizeTabEvent');
                     
                 };
             }
@@ -484,7 +482,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             avg: scope.project.dataset.expression.avg,
                         }
                     });
-                    scope.$emit('ViewVisualizeTabEvent');
                     
                 };
                 
@@ -548,15 +545,12 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 	
                 	function test(d){
                 		
-                	    console.log("Testing " + d.value + " to " +max+ " and " + min)
                 		if (d.value > max){
                 			max = d.value
-                			console.log("Max updated to: " + max)
                 		};
                 		
                 	    if (d.value < min) {
                 			min = d.value
-                			console.log("Min updated to: " + min)
                 		};
                 	};
                 	
@@ -587,9 +581,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                         'max': max+ ((max-min)*.05),
                         'id' : scope.analysis.randomId
             		};
-                	
-                	console.log(scope.boxPlotGenes)
-                	console.log(min, max)
                 	
                 };
                 
@@ -736,7 +727,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             avg: scope.project.dataset.expression.avg,
                         }
                     });
-                    scope.$emit('ViewVisualizeTabEvent');
                     
                 };
             }
