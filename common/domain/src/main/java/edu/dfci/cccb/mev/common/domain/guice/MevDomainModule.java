@@ -57,7 +57,7 @@ public class MevDomainModule implements Module {
       @Override
       public void configure (Binder binder) {
         // Persistence
-        bindProperties (binder, load ("/META-INF/configuration/database.properties"));
+        bindProperties (binder, load ("/META-INF/configuration/persistence.properties"));
         binder.bind (DataSource.class).toProvider (new PooledDataSourceProvider ());
 
         // Jackson
