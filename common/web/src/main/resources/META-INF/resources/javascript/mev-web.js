@@ -14,30 +14,22 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-/**
- * MeV dataset services
- * 
- * @author levk
- * @since CRYSTAL
- */
-define ('dataset.service', [ 'mev', 'dataset', 'angular', 'angularResource', 'mev-services' ], function (mev, dataset, ng) {
+define ('mev-web', [ 'mev-services', 'angular-foundation' ], function (module) {
+  module.requires.push ('mm.foundation');
 
-  mev.dataset = {};
+  module.controller ("navigation-tab-controller", function ($scope) {
+    $scope.tabs = [ {
+      title : "Dynamic Title 1",
+      content : "Dynamic content 1"
+    }, {
+      title : "Dynamic Title 2",
+      content : "Dynamic content 2"
+    } ];
 
-  ng.module ('ngDataset', [ 'ngResource' ]).run ([ '$resource', function ($resource) {
-    mev.dataset.get = function (name) {
-      return mev._.extend ($resource ('/dataset/:name').get ({
-        name : name,
-        format : 'json'
-      }), dataset);
-    };
-
-    mev.dataset.query = function () {
-      return $resource ('/dataset').query ({
-        format : 'json'
+    $scope.alertMe = function () {
+      setTimeout (function () {
+        alert ("You've selected the alert tab!");
       });
-    }
-  } ]);
-
-  return mev.dataset;
+    };
+  });
 });

@@ -1,0 +1,6 @@
+paths : {
+  'mev' : [ '/javascript/mev' ],
+  
+  // Underscore
+  'underscore' : [ '/webjars/underscorejs/1.6.0/underscore' ]
+}

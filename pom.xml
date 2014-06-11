@@ -38,8 +38,10 @@
     <lombok.version>1.12.4</lombok.version>
     <lambdaj.version>2.3.3</lambdaj.version>
     <reflections.version>0.9.9-RC1</reflections.version>
+    <google-api-services-drive.version>v2-rev126-1.18.0-rc</google-api-services-drive.version>
 
     <jquery.version>2.1.0-2</jquery.version>
+    <jquery-ui.version>1.10.4</jquery-ui.version>
     <requirejs.version>2.1.11-1</requirejs.version>
     <angularjs.version>1.2.16</angularjs.version>
     <underscorejs.version>1.6.0-1</underscorejs.version>

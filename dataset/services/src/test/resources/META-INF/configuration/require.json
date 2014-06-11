@@ -1,5 +1,6 @@
 paths : {
   mev : [ '/classpath/META-INF/resources/javascript/mev' ],
+  'mev-services' : [ '/classpath/META-INF/resources/javascript/mev-services' ],
   dataset : [ '/classpath/META-INF/resources/javascript/dataset' ],
 
   underscore : [ '/webjars/underscore' ],

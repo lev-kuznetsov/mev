@@ -1,21 +1,11 @@
 paths : {
-  mev : [ '/classpath/META-INF/resources/javascript/mev' ],
-  dataset : [ '/classpath/META-INF/resources/javascript/dataset' ],
+  'mev-web' : [ '/javascript/mev-web' ],
   
-  zopa : [ '/zopa' ],
-
-  angular : [ '/webjar/angular', 'zopec' ]
+  // Foundation
+  'angular-foundation' : [ 'http://madmimi.github.io/angular-foundation/mm-foundation-tpls-0.2.2' ]
 },
 shim : {
-  'angular' : {
-    exports : 'angular'
-  },
-  'angularRoute' : {
-    exports : 'ngRoute',
-    deps: [ 'angular' ]
-  },
-  'angularResource' : {
-    exports : 'ngResource',
-    deps: [ 'angular' ]
+  'angular-foundation' : {
+    deps : [ 'angular' ]
   }
 }

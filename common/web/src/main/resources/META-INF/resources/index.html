@@ -1,10 +1,50 @@
+<!doctype html>
 <html>
 <head>
 <title>MeV</title>
+
+<link rel="stylesheet"
+  href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.0.2/css/foundation.css">
+
 <script type="text/javascript"
-	src="/webjars/requirejs/2.1.11/require.min.js"></script>
-<script type="text/javascript" src="/require"></script>
+  src="/webjars/requirejs/2.1.11/require.js"></script>
+<script>
+  require ([ '/require-configuration' ], function (requireConfiguration) {
+    require.config (requireConfiguration);
+    require ([ 'angular', 'mev-web' ], function (ng) {
+      ng.element (document).ready (function () {
+        ng.bootstrap (document, [ 'mev' ]);
+      });
+    });
+  });
+</script>
+
 </head>
 <body>
+
+  <div class="row">
+    <div class="small-12.columns">
+      <div ng-controller="navigation-tab-controller">
+        <p>Select a tab by setting active binding to true:</p>
+        <p>
+          <button class="button small" ng-click="tabs[0].active = true">Select
+            second tab</button>
+          <button class="button small" ng-click="tabs[1].active = true">Select
+            third tab</button>
+        </p>
+        <hr />
+
+        <tabset vertical="true"> <tab heading="Static title">Static
+        content</tab> <tab ng-repeat="tab in tabs" heading="{{tab.title}}"
+          active="tab.active"> {{tab.content}} </tab> <tab
+          select="alertMe()"> <tab-heading> <i
+          class="fa fa-bell"></i> Alert! </tab-heading> I've got an HTML heading, and
+        a select callback. Pretty cool! </tab> </tabset>
+
+        <hr />
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>

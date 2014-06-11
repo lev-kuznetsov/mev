@@ -1,0 +1,4 @@
+# Do not commit code here
+!.gitignore
+!resources/log4j.xml
+!webapp/.gitignore

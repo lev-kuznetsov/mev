@@ -1,0 +1,21 @@
+paths : {
+  'mev-services' : [ '/javascript/mev-services' ],
+  
+  // AngularJS
+  'angular' : [ '/webjars/angularjs/1.2.16/angular' ],
+  'angular-resource' : [ '/webjars/angularjs/1.2.16/angular-resource' ],
+  'angular-route' : [ '/webjars/angularjs/1.2.16/angular-route' ]
+},
+shim : {
+  'angular' : {
+    exports : 'angular'
+  },
+  'angular-route' : {
+    exports : 'ngRoute',
+    deps: [ 'angular' ]
+  },
+  'angular-resource' : {
+    exports : 'ngResource',
+    deps: [ 'angular' ]
+  }
+}

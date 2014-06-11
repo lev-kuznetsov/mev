@@ -33,10 +33,10 @@
     <!-- Typesafe Configuration -->
 
     <dependency>
-  <groupId>com.typesafe</groupId>
-  <artifactId>config</artifactId>
-  <version>${typesafe.config.version}</version>
-</dependency>
+      <groupId>com.typesafe</groupId>
+      <artifactId>config</artifactId>
+      <version>${typesafe.config.version}</version>
+    </dependency>
 
     <!-- Commons Configuration for Variable Interpolation -->
 
@@ -185,6 +185,12 @@
         <groupId>org.webjars</groupId>
         <artifactId>angularjs</artifactId>
         <version>${angularjs.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.webjars</groupId>
+        <artifactId>jquery-ui</artifactId>
+        <version>${jquery-ui.version}</version>
       </dependency>
 
       <!-- Jackson -->
@@ -339,7 +345,7 @@
               <source>webjars/require.js</source>
             </preloadSources>
             <keepServerAlive>true</keepServerAlive>
-            <customRunnerConfiguration>${project.basedir}/src/test/resources/require.config.js</customRunnerConfiguration>
+            <customRunnerConfiguration>${project.basedir}/src/test/resources/META-INF/configuration/require.json</customRunnerConfiguration>
           </configuration>
         </plugin>
 

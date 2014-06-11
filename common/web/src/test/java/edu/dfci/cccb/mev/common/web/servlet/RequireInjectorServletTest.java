@@ -61,7 +61,8 @@ public class RequireInjectorServletTest {
     new RequireInjectorServlet ().doGet (null, response);
 
     ScriptEngine js = new ScriptEngineManager ().getEngineByExtension ("js");
-    js.eval (new StringReader (content.toString ()));
+    js.eval (new StringReader ("define = function (deps, action) { return action (); }"));
+    js.eval (new StringReader ("require = " + content.toString ()));
     assertThat (js.eval (new StringReader ("require.paths")), is (notNullValue ()));
   }
 }

@@ -62,9 +62,6 @@
       <plugin>
         <groupId>com.github.searls</groupId>
         <artifactId>jasmine-maven-plugin</artifactId>
-        <configuration>
-          <customRunnerTemplate>${project.basedir}/src/test/resources/RequireJsAngularBootstrappedSpecRunner.htmltemplate</customRunnerTemplate>
-        </configuration>
       </plugin>
 
       <plugin>

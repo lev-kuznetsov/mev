@@ -36,12 +36,14 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- To test resource servlet -->
-
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>jquery</artifactId>
-      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery-ui</artifactId>
     </dependency>
 
   </dependencies>

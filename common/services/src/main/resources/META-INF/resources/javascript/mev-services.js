@@ -15,29 +15,8 @@
  */
 
 /**
- * MeV dataset services
- * 
- * @author levk
- * @since CRYSTAL
+ * Common MeV services logic
  */
-define ('dataset.service', [ 'mev', 'dataset', 'angular', 'angularResource', 'mev-services' ], function (mev, dataset, ng) {
-
-  mev.dataset = {};
-
-  ng.module ('ngDataset', [ 'ngResource' ]).run ([ '$resource', function ($resource) {
-    mev.dataset.get = function (name) {
-      return mev._.extend ($resource ('/dataset/:name').get ({
-        name : name,
-        format : 'json'
-      }), dataset);
-    };
-
-    mev.dataset.query = function () {
-      return $resource ('/dataset').query ({
-        format : 'json'
-      });
-    }
-  } ]);
-
-  return mev.dataset;
+define ('mev-services', [ 'mev', 'angular' ], function (mev, ng) {
+  return mev.module = ng.module ('mev', []);
 });

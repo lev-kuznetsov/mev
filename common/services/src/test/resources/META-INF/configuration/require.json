@@ -1,6 +1,5 @@
 paths : {
   'mev' : [ '/classpath/META-INF/resources/javascript/mev' ],
-  'mev-services' : [ '/classpath/META-INF/resources/javascript/mev-services' ],
   
   // Underscore
   underscore : [ '/classpath/META-INF/resources/webjars/underscorejs/1.6.0/underscore' ],
