@@ -2,5 +2,8 @@ paths : {
   'mev' : [ '/javascript/mev' ],
   
   // Underscore
-  'underscore' : [ '/webjars/underscorejs/1.6.0/underscore' ]
+  'underscore' : [ '/webjars/underscorejs/1.6.0/underscore' ],
+  
+  // Log4Javascript
+  'log4js' : [ '/webjars/log4javascript/1.4.5/log4javascript' ]
 }

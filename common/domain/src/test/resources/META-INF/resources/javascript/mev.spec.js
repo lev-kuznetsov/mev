@@ -29,5 +29,9 @@ define ([ 'mev' ], function (mev) {
     it ("should have underscorejs utility bound", function () {
       expect (mev._).toBeDefined ();
     });
+
+    it ("should have logger bound", function () {
+      expect (mev.log).toBeDefined ();
+    });
   });
 });

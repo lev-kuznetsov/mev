@@ -20,7 +20,7 @@
  * @author levk
  * @since CRYSTAL
  */
-define ('mev', [ 'underscore' ], function (underscore) {
+define ('mev', [ 'underscore', 'log4js' ], function (underscore) {
 
   /**
    * Deep check for equality
@@ -47,6 +47,14 @@ define ('mev', [ 'underscore' ], function (underscore) {
   };
 
   return {
-    _ : underscore
+    _ : underscore,
+    log : (function () {
+      var result = log4javascript.getLogger ("mev");
+      var appender = new log4javascript.BrowserConsoleAppender ();
+      var layout = new log4javascript.SimpleLayout ();
+      appender.setLayout (layout);
+      result.addAppender (appender);
+      return result;
+    }) ()
   };
 });

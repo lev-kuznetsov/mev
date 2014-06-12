@@ -1,3 +1,4 @@
 paths : {
-  underscore : [ '/webjars/underscore' ]
+  underscore : [ '/webjars/underscore' ],
+  log4js : [ '/classpath/META-INF/resources/webjars/log4javascript/1.4.5/log4javascript' ]
 }

@@ -45,6 +45,7 @@
     <requirejs.version>2.1.11-1</requirejs.version>
     <angularjs.version>1.2.16</angularjs.version>
     <underscorejs.version>1.6.0-1</underscorejs.version>
+    <log4javascript.version>1.4.5</log4javascript.version>
 
     <jackson.version>2.3.0</jackson.version>
     <google-collections.version>1.0</google-collections.version>

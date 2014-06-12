@@ -1,6 +1,7 @@
 paths : {
   mev : [ '/classpath/META-INF/resources/javascript/mev' ],
   underscore : [ '/webjars/underscore' ],
+  log4js : [ '/classpath/META-INF/resources/webjars/log4javascript/1.4.5/log4javascript' ],
   angular : [ '/webjars/angular' ],
   angularResource : [ '/webjars/angular-resource' ],
   angularRoute : [ '/webjars/angular-route' ]
