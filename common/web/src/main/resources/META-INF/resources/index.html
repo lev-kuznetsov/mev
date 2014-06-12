@@ -34,12 +34,14 @@
         </p>
         <hr />
 
-        <tabset vertical="true"> <tab heading="Static title">Static
-        content</tab> <tab ng-repeat="tab in tabs" heading="{{tab.title}}"
-          active="tab.active"> {{tab.content}} </tab> <tab
-          select="alertMe()"> <tab-heading> <i
-          class="fa fa-bell"></i> Alert! </tab-heading> I've got an HTML heading, and
-        a select callback. Pretty cool! </tab> </tabset>
+        <tabset vertical="true">
+          <tab heading="Static title">Static content</tab>
+          <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active"> {{tab.content}} </tab>
+          <tab select="alertMe()">
+            <tab-heading> <i class="fa fa-bell"></i> Alert! </tab-heading>
+            I've got an HTML heading, and a select callback. Pretty cool!
+          </tab>
+        </tabset>
 
         <hr />
       </div>

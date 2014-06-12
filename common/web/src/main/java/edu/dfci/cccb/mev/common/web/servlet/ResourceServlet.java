@@ -63,8 +63,10 @@ public class ResourceServlet extends HttpServlet {
   @Override
   protected void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     URL url = toResourceUrl (toUri (request));
-    if (log.isDebugEnabled ())
-      log.debug ("Resolved resource request uri " + toUri (request) + " to " + url);
+    if (url == null)
+      log.warn ("Could not find a resource for request URI " + toUri (request));
+    else if (log.isDebugEnabled ())
+      log.debug ("Resolved resource request URI " + toUri (request) + " to " + url);
     if (url != null) {
       if (isDirectory (url))
         response.setStatus (SC_FORBIDDEN);
