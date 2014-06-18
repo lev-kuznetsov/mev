@@ -1,36 +1,10 @@
 define ([ 'mev' ], function (mev) {
   describe ("mev", function () {
-    describe ("deep equals", function () {
-      it ("should compare two equivalent json objects and return true", function () {
-        expect ({
-          "foo" : 1,
-          "bar" : 2
-        }.equals ({
-          "bar" : 2,
-          "foo" : 1
-        })).toBe (true);
-      })
-
-      it ("should compate two different json objects and return false", function () {
-        expect ({
-          "foo" : 1,
-          "bar" : 2
-        }.equals ({
-          "bar" : 2,
-          "foo" : 2
-        })).toBe (false);
-      })
-    });
-
     it ("should declare mev object", function () {
       expect (mev).toBeDefined ();
     });
 
-    it ("should have underscorejs utility bound", function () {
-      expect (mev._).toBeDefined ();
-    });
-
-    it ("should have logger bound", function () {
+    it ("should have a logger bound", function () {
       expect (mev.log).toBeDefined ();
     });
   });

@@ -6,4 +6,9 @@ paths : {
   
   // Log4Javascript
   'log4js' : [ '/webjars/log4javascript/1.4.5/log4javascript' ]
+},
+shim : {
+  log4js : {
+    exports : 'log4javascript'
+  }
 }
