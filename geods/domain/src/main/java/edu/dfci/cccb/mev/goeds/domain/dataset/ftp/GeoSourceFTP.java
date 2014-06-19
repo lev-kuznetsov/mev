@@ -25,9 +25,7 @@ public class GeoSourceFTP implements GeoSource {
   private String getSubfolderString(String id){
     //per ncbi instrutions
     //replace last three digits of id with "nnn"
-    if(id.length()<3)
-      return id;
-    else if(id.length ()==3)
+    if(id.length ()<=3)
       return "nnn";
     else
       return id.substring (0, id.length()-3)+"nnn";

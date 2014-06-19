@@ -54,6 +54,8 @@ import edu.dfci.cccb.mev.dataset.domain.contract.SelectionBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
+import edu.dfci.cccb.mev.dataset.domain.export.DatasetExportRawInput;
+import edu.dfci.cccb.mev.dataset.domain.mock.MockTsvInput;
 
 /**
  * @author levk
@@ -109,6 +111,15 @@ public class SelectionController {
     if (log.isDebugEnabled ())
       log.debug ("Adding selection " + selection);
     dimension.selections ().put (selection);
+  }
+  
+  @RequestMapping (value = "/selection/export", method = POST)
+  @ResponseStatus (OK)
+  public void exportSelection (@RequestBody Selection selection) throws DatasetBuilderException, InvalidDatasetNameException, InvalidDimensionTypeException {
+    if (log.isDebugEnabled ())
+      log.debug ("============>Export new dataset" + selection);
+    workspace.put (datasetBuilder.build (new DatasetExportRawInput (selection.name(), dataset, selection, dimension.type ())));
+    
   }
 
   @RequestMapping (value = "/selection/" + SELECTION_URL_ELEMENT, method = POST)

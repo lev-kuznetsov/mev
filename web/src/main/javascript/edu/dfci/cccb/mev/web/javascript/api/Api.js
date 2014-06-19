@@ -67,6 +67,10 @@ define ([ 'angular', 'angularResource'], function (angular) {
     		'post':{
     			'method': 'POST',
     			'url':"/dataset/:datasetName/:dimension/selection/",
+    		},
+    		'export':{
+    			'method': 'POST',
+    			'url':"/dataset/:datasetName/:dimension/selection/export",
     		}
     		
     	})

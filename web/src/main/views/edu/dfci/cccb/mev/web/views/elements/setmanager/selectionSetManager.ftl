@@ -7,6 +7,8 @@
 		    <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+		  	<li role="presentation"><a role="menuitem" tabindex="-1" data-target="#selectionSetExportDatasetColumn" 
+				data-toggle="modal">Export as New Dataset</a></li>			
 		    <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#selectionSetAddColumn" 
 				data-toggle="modal">Merge Selected</a></li>
 		    <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#selectionSetIntColumn" 
@@ -39,12 +41,14 @@
 		    <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+		  	<li role="presentation"><a role="menuitem" tabindex="-1" data-target="#selectionSetExportDatasetRow" 
+				data-toggle="modal">Export as New Dataset</a></li>	
 		    <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#selectionSetAddRow" 
 				data-toggle="modal">Merge Selected</a></li>
 		    <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#selectionSetIntRow" 
 				data-toggle="modal">Intersect Selected</a></li>
 		    <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#selectionSetDiffRow" 
-				data-toggle="modal">Difference Selected</a></li>
+				data-toggle="modal">Difference Selected</a></li>			
 		  </ul>
 		</div>
 		
@@ -81,6 +85,8 @@
     
 </bsmodal> 
 
+
+
 <bsmodal bindid="selectionSetAddRow" func="" header="Merge Row Selections">
 
 	<div class="row">
@@ -94,6 +100,43 @@
 	<div class="row">
         <a class="btn btn-success pull-right" ng-click="addMergedSelection('row')" data-dismiss="modal" aria-hidden="true">
               Create Selection
+        </a>
+    </div>
+    
+</bsmodal> 
+
+<bsmodal bindid="selectionSetExportDatasetColumn" func="" header="Export as New Dataset">
+
+	<div class="row">
+		<form-group>
+			<form>
+				<label for="uniColName" class="control-label">New Dataset Name:</label>
+				<input id="uniColName" type="text" class="input-small" ng-model="exportParams.column.name">
+			<form>
+		</form-group>
+	</div>
+	<div class="row">
+        <a class="btn btn-success pull-right" ng-click="exportSelection('column')" data-dismiss="modal" aria-hidden="true">
+              Export as New Dataset
+        </a>
+    </div>
+    
+</bsmodal> 
+
+
+<bsmodal bindid="selectionSetExportDatasetRow" func="" header="Export as New Dataset">
+
+	<div class="row">
+		<form-group>
+			<form>
+				<label for="uniRowName" class="control-label">New Dataset Name:</label>
+				<input id="uniRowName" type="text" class="input-small" ng-model="exportParams.row.name">
+			</form>
+		</form-group>
+	</div>
+	<div class="row">
+        <a class="btn btn-success pull-right" ng-click="exportSelection('row')" data-dismiss="modal" aria-hidden="true">
+              Export as New Dataset
         </a>
     </div>
     

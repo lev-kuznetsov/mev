@@ -13,6 +13,9 @@ define([], function(){
 		this.getChartType=function(){
 			return summary.config.chartType;
 		};
+		this.getTitle=function(){
+			return summary.config.getTitle();
+		};		
 		this.getData=function(){
 			return summary.data;
 		};

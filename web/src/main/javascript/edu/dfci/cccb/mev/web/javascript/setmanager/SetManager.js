@@ -69,6 +69,9 @@ define(['jquery','angular'], function(jquery, angular){
 			$scope.selectionParams = {column:{name:undefined},
 									  row:{name:undefined},
 									  special:undefined};
+			$scope.exportParams = {column:{name:undefined},
+					  row:{name:undefined},
+					  special:undefined};
 			
 			function getSelected(dimension){
 			    return $scope.heatmapData[dimension].selections.filter(function(d){
@@ -104,6 +107,50 @@ define(['jquery','angular'], function(jquery, angular){
                         + "problem persists, please contact us.";
                
                      var header = "Heatmap Selection Problem (Error Code: "
+                        + status
+                        + ")";
+                             
+                     alertService.error(message,header);
+               });
+			};
+			
+			function pushNewDataset(dimension, selectedSets){
+			    $http({
+                    method:"POST", 
+               url:"/dataset/" + $routeParams.datasetName + "/" 
+                + dimension
+                + "/selection/export",
+               data:{
+                   name: $scope.exportParams[dimension].name,
+                   properties: {
+                       selectionDescription: '',
+                           selectionColor: '#ffffff',                     
+                       },
+                        keys: selectedSets
+                    }
+               })
+               .success(function(response){
+                        $scope.$emit('SeletionAddedEvent', dimension);
+                        var message = "Exported new dataset with name " + $scope.exportParams[dimension].name + ".";
+                        var header = "Export New Dataset";
+                 
+                 	   $http({
+                           method:"POST", 
+                           url:"/annotations/" + $routeParams.datasetName + "/annotation/row" 
+    	                   + "/export?destId="+$scope.exportParams[dimension].name});
+                	   $http({
+                           method:"POST", 
+                           url:"/annotations/" + $routeParams.datasetName + "/annotation/column" 
+    	                   + "/export?destId="+$scope.exportParams[dimension].name});
+//                       http://localhost:8080/annotations/dummy.data.txt/annotation/row/export?destHeatmapId=bbb
+                 
+                        alertService.success(message,header);
+               })
+               .error(function(data, status, headers, config) {
+                    var message = "Couldn't export new dataset. If "
+                        + "problem persists, please contact us.";
+               
+                     var header = "Export New Dataset (Error Code: "
                         + status
                         + ")";
                              
@@ -214,6 +261,34 @@ define(['jquery','angular'], function(jquery, angular){
 				      alertService.info(message,header);
 			     };
 			};		
+			
+			$scope.exportSelection = function(dimension){
+				
+				var selectedGroups = getSelected(dimension);
+			 
+				if (selectedGroups.length > 0){
+					
+					var newSelectionElements = [];
+					
+					selectedGroups.map(function(group){
+						group.keys.map(function(j){
+							if (newSelectionElements.indexOf(j) < 0){
+							    newSelectionElements.push(j)
+							}
+						})
+					});
+					
+					pushNewDataset(dimension, newSelectionElements);
+					
+			         
+			     } else {
+			    	 var message = "Please check of at least one selection to export.";
+				
+				      var header = "Export Selection as New Dataset Info";
+				              
+				      alertService.info(message,header);
+			     };
+			};
 			
 			$scope.addItem = function(item){		
 //ap:no need to manually add selection to the dataset because we'll reload them from the server by emitting the 'SelectionAddedEvent'				

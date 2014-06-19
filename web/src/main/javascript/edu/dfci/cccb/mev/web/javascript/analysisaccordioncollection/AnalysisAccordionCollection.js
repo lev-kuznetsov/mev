@@ -137,7 +137,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             panel: {side: scope.analysis}
                         });
                     }
-                    scope.$emit('ViewVisualizeTabEvent');
                 };
                 
             }
@@ -183,28 +182,31 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                                 + header.value;
                     }
                 };
-                    
-                scope.addSelections = function(){
-            
-                    var userselections = scope.analysis.results;
-
-                    var step1 = $filter('filter')(scope.analysis.results, {
+                
+                function traverse (results) {
+                    var step1 = $filter('filter')(results, {
                         id: scope.filterParams.id
                     });
 
-                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.pValue, 'pValue')
+                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.pValue, 'pValue');
                     
                     var step3 = step2.map(function(d){
-                        return d.id
-                    })
-
+                        return d.id;
+                    });
+                    
+                    return step3;
+                }
+                
+                scope.addSelections = function(){
+            
+                    var keys = traverse(scope.analysis.results);
                     var selectionsData = {
                         name: scope.selectionParams.name,
                         properties: {
                             selectionDescription: '',
                             selectionColor:scope.selectionParams.color,                     
                         },
-                        keys:step3
+                        keys:keys
                     };
                     
                     scope.project.dataset.selection.post({
@@ -235,21 +237,48 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                          alertService.error(message,header);
                     });
 
-                }
+                };
                 
-                function traverse (results) {
-                    var step1 = $filter('filter')(results, {
-                        id: scope.filterParams.id
-                    });
+                scope.exportParams = {
+                        name: undefined,
+                        color: '#ffffff'
+                };
+                scope.exportSelection = function(){
+                    
+                    var keys = traverse(scope.analysis.results);
+                    var selectionData = {
+                        name: scope.exportParams.name,
+                        properties: {
+                            selectionDescription: '',
+                            selectionColor:scope.exportParams.color,                     
+                        },
+                        keys:keys
+                    };
+                    
+                    scope.project.dataset.selection.export({
+                        datasetName : scope.project.dataset.datasetName,
+                        dimension : "row"
+                
+                    }, selectionData, 
+                    function(response){
+                            scope.project.dataset.resetSelections('row');
+                            var message = "Added " + scope.exportParams.name + " as new Dataset!";
+                            var header = "New Dataset Export";
+                             
+                            alertService.success(message,header);
+                    }, 
+                    function(data, status, headers, config) {
+                        var message = "Couldn't export new dataset. If "
+                            + "problem persists, please contact us.";
 
-                    var step2 = $filter('filterThreshold')(step1, scope.filterParams.pValue, 'pValue')
+                         var header = "New Dataset Export Problem (Error Code: "
+                            + status
+                            + ")";
+                         
+                         alertService.error(message,header);
+                    });
                     
-                    var step3 = step2.map(function(d){
-                        return d.id
-                    })
-                    
-                    return step3;
-                }
+                };
                 
                 scope.applyToHeatmap=function(){
                     
@@ -267,7 +296,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             avg: scope.project.dataset.expression.avg,
                         }
                     });
-                    scope.$emit('ViewVisualizeTabEvent');
                     
                 };
             }
@@ -368,6 +396,47 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     
                 };
                 
+                scope.exportParams = {
+                        name: undefined,
+                        color: '#ffffff'
+                };
+                scope.exportSelection = function(){
+                    
+                    var keys = traverse(scope.filteredResults);
+                    var selectionData = {
+                        name: scope.exportParams.name,
+                        properties: {
+                            selectionDescription: '',
+                            selectionColor:scope.exportParams.color,                     
+                        },
+                        keys:keys
+                    };
+                    
+                    scope.project.dataset.selection.export({
+                        datasetName : scope.project.dataset.datasetName,
+                        dimension : "row"
+                
+                    }, selectionData, 
+                    function(response){
+                            scope.project.dataset.resetSelections('row');
+                            var message = "Added " + scope.exportParams.name + " as new Dataset!";
+                            var header = "New Dataset Export";
+                             
+                            alertService.success(message,header);
+                    }, 
+                    function(data, status, headers, config) {
+                        var message = "Couldn't export new dataset. If "
+                            + "problem persists, please contact us.";
+
+                         var header = "New Dataset Export Problem (Error Code: "
+                            + status
+                            + ")";
+                         
+                         alertService.error(message,header);
+                    });
+                    
+                };
+                
                 scope.getCaretCss = function(header){                                        	
                 	if(header.sort==1){
                 		return "caret-up";
@@ -413,7 +482,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             avg: scope.project.dataset.expression.avg,
                         }
                     });
-                    scope.$emit('ViewVisualizeTabEvent');
                     
                 };
                 
@@ -472,26 +540,45 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 	
                 	var shownGenes = scope.applyFilter(scope.analysis.results);
                 	
+                	var max = Number.NEGATIVE_INFINITY,
+                	min = Number.POSITIVE_INFINITY;
+                	
+                	function test(d){
+                		
+                		if (d.value > max){
+                			max = d.value
+                		};
+                		
+                	    if (d.value < min) {
+                			min = d.value
+                		};
+                	};
                 	
                 	scope.boxPlotGenes = {
             			"data":shownGenes.map(function (gene, i) {
                             return {
                                 'control': {
                                     'values': scope.analysis.control.keys.map(function(label){
-                                    	return scope.project.dataset.expression.get([gene.id, label])
+                                    	
+                                    	var datapoint = scope.project.dataset.expression.get([gene.id, label]);
+                                    	test(datapoint);
+                                    	return datapoint;
                                     })
                                 },
                                 'experiment': {
-                                    	'values': scope.analysis.experiment.keys.map(function(label){
-                                    		return scope.project.dataset.expression.get([gene.id, label])
-                                    	})
+                                	'values': scope.analysis.experiment.keys.map(function(label){
+                                		
+                                		var datapoint = scope.project.dataset.expression.get([gene.id, label]);
+                                    	test(datapoint);
+                                    	return datapoint;
+                                	})
                                 },
                                 'geneName': gene.id,
                                 'pValue': gene.pValue
                             };
                         }),
-                        'min': scope.project.dataset.expression.min,
-                        'max': scope.project.dataset.expression.max,
+                        'min': min- ((max-min)*.05),
+                        'max': max+ ((max-min)*.05),
                         'id' : scope.analysis.randomId
             		};
                 	
@@ -544,6 +631,47 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     
                 }
 
+                scope.exportParams = {
+                        name: undefined,
+                        color: '#ffffff'
+                };
+                scope.exportSelection = function(){
+                    
+                    var keys = getKeys(scope.filteredResults);
+                    var selectionData = {
+                        name: scope.exportParams.name,
+                        properties: {
+                            selectionDescription: '',
+                            selectionColor:scope.exportParams.color,                     
+                        },
+                        keys:keys
+                    };
+                    
+                    scope.project.dataset.selection.export({
+                        datasetName : scope.project.dataset.datasetName,
+                        dimension : "row"
+                
+                    }, selectionData, 
+                    function(response){
+                            scope.project.dataset.resetSelections('row');
+                            var message = "Added " + scope.exportParams.name + " as new Dataset!";
+                            var header = "New Dataset Export";
+                             
+                            alertService.success(message,header);
+                    }, 
+                    function(data, status, headers, config) {
+                        var message = "Couldn't export new dataset. If "
+                            + "problem persists, please contact us.";
+
+                         var header = "New Dataset Export Problem (Error Code: "
+                            + status
+                            + ")";
+                         
+                         alertService.error(message,header);
+                    });
+                    
+                };
+                
                 var ctr = -1;
                 scope.limmaTableOrdering = undefined;
 
@@ -599,7 +727,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             avg: scope.project.dataset.expression.avg,
                         }
                     });
-                    scope.$emit('ViewVisualizeTabEvent');
                     
                 };
             }
@@ -654,7 +781,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                             panel: {side: scope.analysis}
                         });
                     }
-                    scope.$emit('ViewVisualizeTabEvent');
                 };
                 
                 function traverse(tree) {

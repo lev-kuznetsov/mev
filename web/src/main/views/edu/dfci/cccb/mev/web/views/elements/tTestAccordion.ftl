@@ -9,9 +9,11 @@
 				                <a class="btn btn-info" data-target="#selectionAdd{{tTest.name}}" data-toggle="modal">
 				                  </i> Create Selections
 				                </a> 
-					            
+					            <a class="btn btn-info" data-target="#exportDataset{{tTest.name}}" data-toggle="modal">
+				                  </i> New Dataset
+				                </a> 	            
 					            <!-- disable for beta1 -->
-					            <button ng-hide="true" class="btn btn-success" ng-click="applyToHeatmap()" >
+					            <button class="btn btn-success" ng-click="applyToHeatmap()" >
 					                <a>
 					                  </i> View Genes on Heatmap
 					                </a> 
@@ -110,3 +112,22 @@
                 </a> 
             </div>
 		</bsmodal> 
+		
+		<bsmodal bindid="{{'exportDataset' + tTest.name}}" func="" header="Export New Dataset for {{tTest.name}}">
+
+			<div class="row">
+			
+				<form-group>
+					<form>
+						Name: <input type="text" class="input-small" ng-model="exportParams.name">
+					<form>
+				</form-group>
+			
+			</div>
+			
+			<div class="row">			
+                <a class="btn btn-success pull-right" ng-click="exportSelection()" data-dismiss="modal" aria-hidden="true">
+                  Export New Dataset
+                </a> 
+            </div>
+		</bsmodal>

@@ -1,5 +1,5 @@
 define(
-        ['jquery', 'angular', 'd3', 'notific8', 'api/Api', 'alertservice/AlertService'],
+        ['jquery', 'angular', 'd3', 'notific8', 'api/Api', 'alertservice/AlertService', 'angularRoute'],
         function($, angular, d3) {
 
             return angular
@@ -9,12 +9,13 @@ define(
                             [
                                     '$scope',
                                     '$http',
+                                    '$routeParams',
                                     'alertService',
                                     'GoogleDriveResourceService',
-                                    function($scope, $http, alertService, DriveResource) {
+                                    function($scope, $http, $routeParams, alertService, DriveResource) {
                                         
                                         $('#loading').modal('hide');
-
+                                        
                                         $scope.userUploads = [];
 
                                         $scope.loadUploads = function() {
@@ -66,15 +67,48 @@ define(
                                         	},{
                                         	},function(response){
                                         	
-                                        		$scope.loadUploads()
+                                        		$scope.loadUploads();
                                         	}, function(error){
 
-                                            	console.log(error)
+                                            	console.log(error);
                                         		alertService.error("Couldn't add Google Drive file!",
-                                        			"Google Drive Error")
-                                        	})
-                                        }
-
+                                        			"Google Drive Error");
+                                        	});
+                                        };
+                                        
+                                        //set active tab based on URL querystring
+                                        //TODO: move to the directive (changing DOM in controllers is a bad idea, the DOM may not be ready yet);                                        
+                                        $scope.defaultActiveTab="tcga";
+                                        $scope.currentTab=$scope.defaultActiveTab;
+                                        $scope.toggelTab=function(tab){
+                                        	$scope.currentTab=tab;
+                                        	$scope.setActiveTab(tab);
+                                        };
+                                        $scope.isActive=function(tab){
+                                        	if($scope.currentTab==tab)
+                                        		return true;
+                                        	else
+                                        		return false;
+                                        };
+                                        $scope.getActiveCSS=function(tab){
+                                        	if($scope.isActive(tab)){
+                                        		return "active";
+                                        	}else{
+                                    			return "";
+                                        	}
+                                        };
+                                        $scope.getTabId=function(tab){
+                                        	return tab+"_tab";
+                                        };
+                                        $scope.setActiveTab=function(tab){
+//                                        	$("#"+tab).tab('show');
+                                        	$("#"+tab).addClass("active");
+                                        	$("#"+$scope.getTabId(tab)).addClass("active");
+                                        };
+                                        if(typeof $routeParams.tab=="undefined")
+                                        	$scope.setActiveTab($scope.defaultActiveTab);
+                                        else	
+                                        	$scope.setActiveTab($routeParams.tab);
                                     }])
                     .controller(
                             'MainPanelController',

@@ -1,17 +1,20 @@
 define([], function(){
 	
-	var GeodsSummary = function (sourceSvc, destSvc, id){
+	var GeodsSummary = function (dataPromise, MevGeodsImportSrvc){
 		//private members
-		var self = this;		
-		var _sourceSvc=sourceSvc;		
-		var _destSvc=destSvc;
-		var _data=sourceSvc.get({id: id}, function(data){
-			_data=data;
-			self.gds=_result().gds;
-			self.gpl=_result().gpl;
-			self.gpl=_result().gpl;
+		var self = this;
+		
+		//resolve promise
+		var _data=dataPromise.then(function(data){
+			self.gds=data.gds;
+			self.gpl=data.gpl;
+			self.gpl=data.gpl;
+			self.title=data.title;
+			self.summary=data.summary;
+			self.platformtitle=data.platformtitle;
+			self.n_samples=data.n_samples;
 			self.samples=_mapSamples(data);
-			self.datasetUrlRoot=_result().ftplink;
+			self.datasetUrlRoot=data.ftplink;
 		});
 		
 		//public members
@@ -22,12 +25,12 @@ define([], function(){
 		
 		//private methods
 		function _result(){
-			return _data.$resolved ? _data.result[_data.result.uids[0]] : undefined;
+			return _data.$resolved ? _data : undefined;
 		};
 		function _mapSamples(data){
 			var samples = {};
-			for(var i=0;i<_result().samples.length; i++){
-				samples[_result().samples[i].accession]=_result().samples[i].title;
+			for(var i=0;i<data.samples.length; i++){
+				samples[data.samples[i].accession]=data.samples[i].title;
 			}
 			return samples;
 		}
@@ -39,26 +42,14 @@ define([], function(){
 				"datasetUrl": self.datasetUrlRoot
 			};
 		}
+		
 		//privileged		
-		this.id=id;
-		this.load=function(id){
-			_data = _sourceSvc.get({id: id});
-		};				
-		this.getId=function(){
-			return self.id;
-		};
-		this.getTitle=function(){
-			return _result() === undefined ? undefined : _result().title;
-		};
-		this.getPlatformTitle=function(){
-			return _result()=== undefined ? undefined : _result().platformTitle;
-		};
-		this.getSamples=function(){
-			return _samples;
+		this.getImportedDatasetPath=function(){
+			var path = "/dataset/GDS"+self.gds+".soft"; 
+			return path;
 		};
 		this.put=function(success){
-			console.debug("_getPutParams", _getPutParams());
-			_destSvc.put({id: "test"}, _getPutParams(), success);
+			MevGeodsImportSrvc.put({id: "test"}, _getPutParams(), success);
 		}
 		
 		
