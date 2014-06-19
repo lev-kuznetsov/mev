@@ -18,7 +18,7 @@
  * MeV logging module
  * 
  * @author levk
- * @since CRYSTAL
+ * @since BAYLIE
  */
 define ('mev-log', [ 'log4js' ], function (log4js) {
   var logger = log4js.getLogger ("mev");
@@ -31,7 +31,9 @@ define ('mev-log', [ 'log4js' ], function (log4js) {
       var message = this.getLayout ().format (event);
       if (!(message instanceof Array)) message = [ messasge ];
 
-      if (console.debug && log4js.Level.DEBUG.isGreaterOrEqual (event.level)) {
+      if (console.log && log4js.Level.TRACE.isGreaterOrEqual (event.level)) {
+        console.log.apply (console, message);
+      } else if (console.debug && log4js.Level.DEBUG.isGreaterOrEqual (event.level)) {
         console.debug.apply (console, message);
       } else if (console.info && log4js.Level.INFO.isGreaterOrEqual (event.level)) {
         console.info.apply (console, message);
@@ -46,7 +48,9 @@ define ('mev-log', [ 'log4js' ], function (log4js) {
 
   var appender = new AppliedBrowserConsoleAppender ();
   appender.setLayout (new log4js.NullLayout ());
+  appender.setThreshold (log4js.Level.ALL);
   logger.addAppender (appender);
+  logger.setLevel (log4js.Level.ALL);
 
   logger.info ("Initialized log");
 
