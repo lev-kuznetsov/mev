@@ -1,10 +1,10 @@
-define ([ 'mev', 'dataset' ], function (mev, dataset) {
+define ([ 'mev', 'dataset', 'underscore' ], function (mev, dataset, _) {
   describe ("dataset", function () {
     it ("should be declared", function () {
       expect (dataset).toBeDefined ();
     });
 
-    var ds = mev._.extend ({
+    var ds = _.extend ({
       "name" : "mock",
       "dimensions" : {
         "row" : {

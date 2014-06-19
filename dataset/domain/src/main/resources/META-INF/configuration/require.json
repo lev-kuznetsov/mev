@@ -1,3 +1,11 @@
 paths : {
-  'dataset' : [ '/javascript/dataset' ]
+  'dataset' : [ '/javascript/dataset' ],
+  
+  // FSO (file system object)
+  'fso' : [ '//rawgit.com/keithwhor/FSO.js/5b7e6fe86cb09a86856f3bf6b46f46d29d09eedc/fso' ]
+},
+shim : {
+  'fso' : {
+    exports : 'FSO'
+  }
 }

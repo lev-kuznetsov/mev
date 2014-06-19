@@ -1,5 +1,6 @@
 paths : {
   'mev' : [ '/classpath/META-INF/resources/javascript/mev' ],
+  'mev-log' : [ '/classpath/META-INF/resources/javascript/mev-log' ],
   
   // Log4Javascript
   log4js : [ '/classpath/META-INF/resources/webjars/log4javascript/1.4.5/log4javascript' ],
@@ -23,5 +24,8 @@ shim : {
   'angular-resource' : {
     exports : 'ngResource',
     deps: [ 'angular' ]
+  },
+  'log4js' : {
+    exports : 'log4javascript'
   }
 }

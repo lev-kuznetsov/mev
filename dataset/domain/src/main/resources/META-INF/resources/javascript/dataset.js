@@ -15,12 +15,12 @@
  */
 
 /**
- * Dataset
+ * Dataset operations
  * 
  * @author levk
  * @since CRYSTAL
  */
-define ('dataset', [], function () {
+define ('dataset', [ 'mev-log' ], function (log) {
 
   return {
     dimension : function (name) {

@@ -1,12 +1,18 @@
 paths : {
   mev : [ '/classpath/META-INF/resources/javascript/mev' ],
+  'mev-log' : [ '/classpath/META-INF/resources/javascript/mev-log' ],
   underscore : [ '/webjars/underscore' ],
   log4js : [ '/classpath/META-INF/resources/webjars/log4javascript/1.4.5/log4javascript' ],
   angular : [ '/webjars/angular' ],
   angularResource : [ '/webjars/angular-resource' ],
-  angularRoute : [ '/webjars/angular-route' ]
+  angularRoute : [ '/webjars/angular-route' ],
+  'mev-log' : [ '/classpath/META-INF/resources/javascript/mev-log' ],
+  'fso' : [ '//rawgit.com/keithwhor/FSO.js/5b7e6fe86cb09a86856f3bf6b46f46d29d09eedc/fso' ]
 },
 shim : {
+  'fso' : {
+    exports : 'FSO'
+  },
   'angular' : {
     exports : 'angular'
   },
@@ -17,5 +23,8 @@ shim : {
   'angularResource' : {
     exports : 'ngResource',
     deps: [ 'angular' ]
+  },
+  'log4js' : {
+    exports : 'log4javascript'
   }
 }

@@ -21,7 +21,7 @@
     <level value="warn"></level>
   </logger>
   <logger name="edu.dfci.cccb.mev">
-    <level value="warn"></level>
+    <level value="error"></level>
   </logger>
   <root>
     <priority value="debug"></priority>
