@@ -31,7 +31,8 @@ require.config ({
     blob : [ '/container/javascript/canvasToBlob/Blob' ],
     canvasToBlob : [ '/container/javascript/canvasToBlob/canvas-toBlob' ],
     fileSaver : [ '/container/javascript/fileSaver/FileSaver' ],
-    qtip : [ '/library/webjars/qtip2/2.1.1/jquery.qtip' ]
+    qtip : [ '/library/webjars/qtip2/2.1.1/jquery.qtip' ],
+    'log4js' : [ '/library/webjars/log4javascript/1.4.5/log4javascript' ]
   },
   shim : {
     'angular' : {
@@ -79,8 +80,10 @@ require.config ({
     'qtip': {
       deps : ['jquery', 'imagesloaded'],
       exports : 'qtip'
+    },
+    'log4js' : {
+      exports : 'log4javascript'
     }
-
   },
   packages : [ {
 	    name : "mainmenu",
@@ -115,9 +118,10 @@ require ([ 'jquery',
           'ngGrid',
           'mainmenu',
           'geods',
-          'clinical'
+          'clinical',
+          'log'
           ], function (jquery, angular, app, orb) {
-
+  
   'use strict';
   var $html = angular.element (document.getElementsByTagName ('html')[0]);
   angular.element ().ready (function () {
