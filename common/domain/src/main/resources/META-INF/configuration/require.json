@@ -10,5 +10,8 @@ paths : {
 shim : {
   log4js : {
     exports : 'log4javascript'
+  },
+  AppliedBrowserConsole : {
+    deps : [ 'log4js' ]
   }
 }

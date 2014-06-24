@@ -17,23 +17,10 @@
 
   <properties>
     <javax.mail.version>1.4.7</javax.mail.version>
-    <jersey.version>1.18</jersey.version>
     <cxf.version>3.0.0-milestone1</cxf.version>
   </properties>
 
   <dependencies>
-  
-    <!-- Webjars -->
-
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>jquery</artifactId>
-    </dependency>
-    
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>angularjs</artifactId>
-    </dependency>
 
     <!-- Servlet Module -->
 

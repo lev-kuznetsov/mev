@@ -20,8 +20,6 @@
  * @author levk
  * @since CRYSTAL
  */
-define ('mev', [ 'mev-log' ], function (log) {
-  return {
-    log : log
-  };
+define ('mev', [ 'angular' ], function (ng) {
+  return ng.module ('mev', []);
 });

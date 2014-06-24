@@ -16,7 +16,17 @@
 
   <dependencies>
 
-    <!-- RequireJS -->
+    <!-- Webjars -->
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>angularjs</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.webjars</groupId>
