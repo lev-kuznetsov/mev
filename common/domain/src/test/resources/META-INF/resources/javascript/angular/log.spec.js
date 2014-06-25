@@ -1,5 +1,5 @@
 define ([ 'angular-mocks', 'mev', 'logger', 'log' ], function (ng, mev, log) {
-  describe ("angular provided logger module", function () {
+  describe ("angular provided logger", function () {
 
     it ("should be in main mev module dependencies", function () {
       expect (mev.requires).toContain ('log');

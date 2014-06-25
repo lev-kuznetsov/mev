@@ -1,4 +1,4 @@
-define ([ 'logger', 'angular' ], function (log, ng) {
+define ([ 'logger' ], function (log) {
 
   if (typeof window.console == "undefined") window.console = {
     error : function () {},
