@@ -55,30 +55,7 @@ define ('logger', [ 'log4js', 'underscore' ], function (log4js, _) {
   logger.addAppender (appender);
   logger.setLevel (log4js.Level.ALL);
 
-  _.bindAll (logger,
-             'addAppender',
-             'addChild',
-             'assert',
-             'callAppenders',
-             'error',
-             'getAdditivity',
-             'getEffectiveAppenders',
-             'getEffectiveLevel',
-             'getLevel',
-             'group',
-             'groupEnd',
-             'info',
-             'invalidateAppenderCache',
-             'log',
-             'removeAllAppenders',
-             'removeAppender',
-             'setAdditivity',
-             'setLevel',
-             'time',
-             'timeEnd',
-             'toString',
-             'trace',
-             'warn');
+  _.bindAll.apply (_, [ logger ].concat (_.functions (logger)));
 
   return logger;
 });
