@@ -322,7 +322,7 @@
             <dependency>
               <groupId>net.sourceforge.htmlunit</groupId>
               <artifactId>htmlunit</artifactId>
-              <version>2.14</version>
+              <version>2.15</version>
             </dependency>
             <dependency>
               <groupId>org.slf4j</groupId>
@@ -369,11 +369,24 @@
           <groupId>com.github.timurstrekalov</groupId>
           <artifactId>saga-maven-plugin</artifactId>
           <version>${saga-maven-plugin.version}</version>
-          <!-- It is impossible to suppress logback-classic logging due to 
-            logback-classic directly implementing SLF4J and the saga plugin directly 
-            depending on it and maven's inability to exclude dependencies the plugin 
-            is directly depending on (http://jira.codehaus.org/browse/MNG-2163), only 
-            transistive dependencies may be excluded -->
+          <dependencies>
+            <dependency>
+              <groupId>org.slf4j</groupId>
+              <artifactId>slf4j-nop</artifactId>
+              <version>${org.slf4j.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>com.github.timurstrekalov</groupId>
+              <artifactId>saga-core</artifactId>
+              <version>${saga-maven-plugin.version}</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>ch.qos.logback</groupId>
+                  <artifactId>logback-classic</artifactId>
+                </exclusion>
+              </exclusions>
+            </dependency>
+          </dependencies>
           <executions>
             <execution>
               <phase>verify</phase>
