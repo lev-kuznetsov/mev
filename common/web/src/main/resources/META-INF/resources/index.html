@@ -24,16 +24,7 @@
 
   <div class="row">
     <div class="small-12.columns">
-      <div ng-controller="navigation-tab-controller">
-        <p>Select a tab by setting active binding to true:</p>
-        <p>
-          <button class="button small" ng-click="tabs[0].active = true">Select
-            second tab</button>
-          <button class="button small" ng-click="tabs[1].active = true">Select
-            third tab</button>
-        </p>
-        <hr />
-
+      <div ng-controller="navigation-controller">
         <tabset vertical="true">
           <tab heading="Static title">Static content</tab>
           <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active"> {{tab.content}} </tab>

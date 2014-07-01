@@ -1,31 +1,20 @@
 paths : {
-  'mev' : [ '/classpath/META-INF/resources/javascript/mev' ],
-  'mev-log' : [ '/classpath/META-INF/resources/javascript/mev-log' ],
-  
-  // Log4Javascript
+  log : [ 'modules/log' ],
+  logger : [ '/classpath/META-INF/resources/javascript/log4js/logger' ],
   log4js : [ '/classpath/META-INF/resources/webjars/log4javascript/1.4.5/log4javascript' ],
-  
-  // Underscore
   underscore : [ '/classpath/META-INF/resources/webjars/underscorejs/1.6.0/underscore' ],
-  
-  // AngularJS
-  'angular' : [ '/classpath/META-INF/resources/webjars/angularjs/1.2.16/angular' ],
-  'angular-resource' : [ '/classpath/META-INF/resources/webjars/angularjs/1.2.16/angular-resource' ],
-  'angular-route' : [ '/classpath/META-INF/resources/webjars/angularjs/1.2.16/angular-route' ]
+  angular : [ '/classpath/META-INF/resources/webjars/angularjs/1.2.16/angular' ],
+  'angular-mocks' : [ '/classpath/META-INF/resources/webjars/angularjs/1.2.16/angular-mocks' ]
 },
 shim : {
-  'angular' : {
+  angular : {
     exports : 'angular'
   },
-  'angular-route' : {
-    exports : 'ngRoute',
-    deps: [ 'angular' ]
+  'angular-mocks' : {
+    exports : 'angular.mocks',
+    deps : [ 'angular' ]
   },
-  'angular-resource' : {
-    exports : 'ngResource',
-    deps: [ 'angular' ]
-  },
-  'log4js' : {
+  log4js : {
     exports : 'log4javascript'
   }
 }

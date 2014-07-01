@@ -1,20 +1,10 @@
 paths : {
   underscore : [ '/webjars/underscore' ],
   log4js : [ '/classpath/META-INF/resources/webjars/log4javascript/1.4.5/log4javascript_uncompressed' ],
-  'angular' : [ '/classpath/META-INF/resources/webjars/angularjs/1.2.16/angular' ],
-  logger : [ '/src/log4js/logger' ],
-  'angular-mocks' : [ '/classpath/META-INF/resources/webjars/angularjs/1.2.16/angular-mocks' ],
-  log : [ '/src/angular/log' ]
+  logger : [ '/src/log4js/logger' ]
 },
 shim : {
   log4js : {
     exports : 'log4javascript'
-  },
-  'angular' : {
-    exports : 'angular'
-  },
-  'angular-mocks' : {
-    exports : 'angular.mock',
-    deps : [ 'angular' ]
   }
 }

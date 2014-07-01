@@ -14,22 +14,22 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
+/**
+ * MeV thin front end
+ * 
+ * @author levk
+ * @since CRYSTAL
+ */
 define ('mev-web', [ 'mev-services', 'angular-foundation' ], function (module) {
   module.requires.push ('mm.foundation');
 
-  module.controller ("navigation-tab-controller", function ($scope) {
+  module.controller ("navigation-controller", function ($scope) {
     $scope.tabs = [ {
-      title : "Dynamic Title 1",
-      content : "Dynamic content 1"
+      title : "<datasets>",
+      content : "<load dataset partial>"
     }, {
-      title : "Dynamic Title 2",
-      content : "Dynamic content 2"
+      title : "<current dataset>",
+      content : "<heatmap partial>"
     } ];
-
-    $scope.alertMe = function () {
-      setTimeout (function () {
-        alert ("You've selected the alert tab!");
-      });
-    };
   });
 });
