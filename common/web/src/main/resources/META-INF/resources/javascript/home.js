@@ -20,10 +20,10 @@
  * @author levk
  * @since CRYSTAL
  */
-define ('mev-web', [ 'mev-services', 'angular-foundation' ], function (module) {
-  module.requires.push ('mm.foundation');
+define ('home', [ 'mev', 'angular-foundation' ], function (mev) {
+  mev.requires.push ('mm.foundation');
 
-  module.controller ("navigation-controller", function ($scope) {
+  mev.controller ("navigation-controller", function ($scope) {
     $scope.tabs = [ {
       title : "<datasets>",
       content : "<load dataset partial>"

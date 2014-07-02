@@ -11,7 +11,7 @@
 <script>
   require ([ '/require-configuration' ], function (requireConfiguration) {
     require.config (requireConfiguration);
-    require ([ 'angular', 'mev-web' ], function (ng) {
+    require ([ 'angular', 'home', 'mev' ], function (ng) {
       ng.element (document).ready (function () {
         ng.bootstrap (document, [ 'mev' ]);
       });

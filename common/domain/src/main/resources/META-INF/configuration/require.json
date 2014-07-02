@@ -1,5 +1,5 @@
 paths : {
-  logger : [ '/src/log4js/logger' ],
+  logger : [ '/javascript/log4js/logger' ],
 
   // Underscore
   'underscore' : [ '/webjars/underscorejs/1.6.0/underscore' ],
