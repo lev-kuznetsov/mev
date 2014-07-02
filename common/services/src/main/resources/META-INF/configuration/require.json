@@ -1,6 +1,6 @@
 paths : {
   'mev' : [ '/javascript/mev' ],
-  'log' : [ '/javascript/log' ],
+  'log' : [ '/javascript/modules/log' ],
   
   // AngularJS
   'angular' : [ '/webjars/angularjs/1.2.16/angular' ]
@@ -9,4 +9,5 @@ shim : {
   'angular' : {
     exports : 'angular'
   }
-}
+},
+deps : [ 'mev', 'log' ]

@@ -1,5 +1,5 @@
 paths : {
-  'mev-web' : [ '/javascript/mev-web' ],
+  'home' : [ '/javascript/home' ],
   
   // Foundation
   'angular-foundation' : [ '//rawgit.com/madmimi/angular-foundation/58e3ca7afaeac634d369f31654eb3e65ba823348/mm-foundation-tpls-0.2.2' ]
@@ -8,4 +8,5 @@ shim : {
   'angular-foundation' : {
     deps : [ 'angular' ]
   }
-}
+},
+deps : [ 'home' ]

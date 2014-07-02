@@ -9,9 +9,9 @@
 <script type="text/javascript"
   src="/webjars/requirejs/2.1.11/require.js"></script>
 <script>
-  require ([ '/require-configuration' ], function (requireConfiguration) {
-    require.config (requireConfiguration);
-    require ([ 'angular', 'home', 'mev' ], function (ng) {
+  require ([ '/require-configuration' ], function (configuration) {
+    require.config (configuration);
+    require ([ 'angular' ].concat (configuration.deps), function (ng) {
       ng.element (document).ready (function () {
         ng.bootstrap (document, [ 'mev' ]);
       });
