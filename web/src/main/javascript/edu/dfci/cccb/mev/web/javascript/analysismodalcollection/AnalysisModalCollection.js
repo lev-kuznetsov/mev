@@ -456,9 +456,10 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                 };
                                 
                                 scope.dataset.analysis.post({
-                                	analysisType: 'limma/' + analysisData.name
+                                	analysisType: 'limma'
                                     
                                 }, {
+                                	'name' : analysisData.name
                                 	'dimension' : 'column',
                                 	'experiment' : analysisData.experiment,
                                 	'control' : analysisData.control,
