@@ -394,16 +394,46 @@ define(['angular', 'alertservice/AlertService'], function(angular){
 	                                value : "column"
 	                            }],
                         		experiment : undefined,
-                        		control : undefined
+                        		control : undefined,
+                        		species : undefined,
+                        		goType: undefined,
+                        		testType: undefined
                         	
                         	};
                         	
                             scope.available = {
                             		
-	                            dimensions : [{
+	                            'dimensions' : [{
 	                                name : "Column",
 	                                value : "column"
-	                            }]
+	                            }],
+	                            'species' : [{
+		                                name : "Human",
+		                                value : "human"
+		                            },{
+		                                name : "Rat",
+		                                value : "rat"
+		                            },{
+		                                name : "Mouse",
+		                                value : "mouse"
+	                            }],
+	                            'goType':[{
+		                                name : "BP",
+		                                value : "BP"
+		                            },{
+		                                name : "MF",
+		                                value : "MF"
+		                            },{
+		                                name : "CC",
+		                                value : "CC"
+	                            }],
+	                            'testType':[{
+	                                name : "Fisher",
+	                                value : "Fisher test"
+	                            },{
+	                                name : "KS",
+	                                value : "KS test"
+	                            }],
                             }
 
                             scope.testInit = function() {
@@ -419,18 +449,23 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                 var analysisData = {
                                 	name: scope.params.name,
                                 	experiment : scope.params.experiment.name,
-                                	control : scope.params.control.name
+                                	control : scope.params.control.name,
+                                	species : scope.params.species.value,
+                                	goType : scope.params.goType.value,
+                                	testType : scope.params.testType.value
                                 };
                                 
-                                scope.dataset.analysis.postf({
-                                    datasetName : scope.dataset.datasetName,
-                                    analysisType : 'limma',
-                                    analysisName : analysisData.name,
-                                    analysisParams : "dimension=column"
-                                        + ",experiment=" + analysisData.experiment 
-                                        + ",control=" + analysisData.control
+                                scope.dataset.analysis.post({
+                                	analysisType: '/limma/' + analysisData.name
                                     
-                                }, {},
+                                }, {
+                                	'dimension' : 'column',
+                                	'experiment' : analysisData.experiment,
+                                	'control' : analysisData.control,
+                                	'species' : analysisData.species,
+                                	'go' : analysisData.goType,
+                                	'test' : analysisData.testType
+                                },
                                 function(data, status, headers, config) {
                                     
                                 	scope.dataset.loadAnalyses();
