@@ -459,7 +459,7 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                 	analysisType: 'limma'
                                     
                                 }, {
-                                	'name' : analysisData.name
+                                	'name' : analysisData.name,
                                 	'dimension' : 'column',
                                 	'experiment' : analysisData.experiment,
                                 	'control' : analysisData.control,
