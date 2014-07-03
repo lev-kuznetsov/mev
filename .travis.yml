@@ -1,5 +1,5 @@
 before_install:
-    - sudo add-apt-repository "deb http://watson.nci.nih.gov/cran_mirror/ precise/"
+    - sudo add-apt-repository "deb http://watson.nci.nih.gov/cran_mirror/bin/linux/ubuntu/ precise/"
     - sudo apt-get update
     - sudo apt-get install r-base
     - sudo echo "source(\"http://bioconductor.org/biocLite.R\");biocLite(\"limma\")" | sudo R --no-save
