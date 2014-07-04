@@ -1,7 +1,6 @@
 before_install:
-    - sudo add-apt-repository "deb http://watson.nci.nih.gov/cran_mirror/bin/linux/ubuntu/ precise/"
     - sudo apt-get update
-    - sudo apt-get install r-base --force-yes
+    - sudo apt-get install r-base
     - sudo echo "source(\"http://bioconductor.org/biocLite.R\");biocLite(\"limma\")" | sudo R --no-save
     - sudo echo "source(\"http://bioconductor.org/biocLite.R\");biocLite(\"multtest\")" | sudo R --no-save
     - sudo echo "source(\"http://bioconductor.org/biocLite.R\");biocLite(\"topGO\");biocLite(\"org.Hs.eg.db\");biocLite(\"org.Mm.eg.db\");biocLite(\"org.Rn.eg.db\")" | sudo R --no-save
