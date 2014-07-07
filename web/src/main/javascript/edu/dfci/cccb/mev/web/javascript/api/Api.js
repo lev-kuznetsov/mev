@@ -49,7 +49,14 @@ define ([ 'angular', 'angularResource'], function (angular) {
                     'method':'POST',
                     'url': 'dataset/:datasetName'
                         + '/analyze/:analysisType'
+                },
+                'post3': {
+                	'method':'GET',
+                	'url': 'dataset/:datasetName'+
+                		'/analyze/:analysisType/:analysisName',
+                		//'headers':{'Content-Type':'application/x-www-form-urlencoded'}
                 }
+                
 			});
     	
     }])

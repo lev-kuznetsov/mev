@@ -12,6 +12,11 @@
 				target="_self"
 				ng-click="viewGenes()">Quartiles</a>
 		</li>
+		<li ng-show='analysis.topGo.length > 0'>
+			<a id="heatmapTabLink" href="{{'#limma-' + analysis.randomId + '-topGoResults'}}" 
+				data-toggle="tab" 
+				target="_self">TopGo</a>
+		</li>
 	</ul>
 	
 	<div class="tab-content" id="">
@@ -96,6 +101,46 @@
 			<div id="{{'limma-' + analysis.randomId + '-svg-holder'}}">
 
 				<d3-Box-Plot-Visualization data="boxPlotGenes"></d3-Box-Plot-Visualization>
+
+			</div>
+		</div>
+		<div class="tab-pane" id="{{'limma-' + analysis.randomId + '-topGoResults'}}">
+			<div class='top-go-results-table'>
+
+				<table class="table table-striped table-bordered table-condensed">
+					<thead>
+	                    <tr>
+	                      <th>
+	                      	<p>ID</p>
+	                      </th>
+	                      <th>
+	                      	<p>Term</p>
+	                      </th>
+	                      <th>
+	                      	<p>Annotated</p>
+	                      </th>
+	                      <th>
+	                      	<p>Significant</p>
+	                      </th>
+	                      <th>
+	                      	<p>Expected</p>
+	                      </th>
+	                      <th>
+	                      	<p>p Value</p>
+	                      </th>
+	                    </tr>
+					</thead>
+	                <tbody>
+	                	<tr ng-repeat='row in analysis.topGo'>
+	                		<td>{{row.id}}</td>
+	                		<td>{{row.term}}</td>
+	                		<td>{{row.annotated}}</td>
+	                		<td>{{row.significant}}</td>
+	                		<td>{{row.expected}}</td>
+	                		<td>{{row.pValue}}</td>
+	                	</tr>
+	                </tbody>
+			    </table>
 
 			</div>
 		</div>

@@ -17,7 +17,7 @@ package edu.dfci.cccb.mev.limma.rest.controllers;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_URL_ELEMENT;
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
 import javax.inject.Inject;
@@ -49,10 +49,10 @@ public class LimmaAnalysisController {
   private @Getter @Setter @Inject Dataset dataset;
   private @Getter @Setter @Inject LimmaBuilder limma;
 
-  @RequestMapping (value = "/analyze/limma",
-                   method = POST)
+  @RequestMapping (value = "/analyze/limma/{name}",
+                   method = GET)
   @ResponseStatus (OK)
-  public void start (final @RequestParam ("name") String name,
+  public void start (final @PathVariable ("name") String name,
                      final @RequestParam ("experiment") String experiment,
                      final @RequestParam ("control") String control,
                      final @RequestParam ("species") String species,

@@ -447,7 +447,7 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                 alertService.info(message,header);
 
                                 var analysisData = {
-                                	name: scope.params.name,
+                                	name : scope.params.name,
                                 	experiment : scope.params.experiment.name,
                                 	control : scope.params.control.name,
                                 	species : scope.params.species.value,
@@ -455,17 +455,21 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                 	testType : scope.params.testType.value
                                 };
                                 
-                                scope.dataset.analysis.post({
-                                	analysisType: 'limma'
-                                    
-                                }, {
-                                	'name' : analysisData.name,
+                                console.log(analysisData)
+                                scope.dataset.analysis.post3({
+                                	analysisType: 'limma',
+                                	datasetName: scope.dataset.datasetName,
+                                	analysisName: analysisData.name,
+                                	
                                 	'dimension' : 'column',
                                 	'experiment' : analysisData.experiment,
                                 	'control' : analysisData.control,
                                 	'species' : analysisData.species,
                                 	'go' : analysisData.goType,
                                 	'test' : analysisData.testType
+                                    
+                                }, {
+                                	
                                 },
                                 function(data, status, headers, config) {
                                     
