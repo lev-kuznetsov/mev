@@ -30,6 +30,7 @@
     <module>kmeans</module>
     <module>t-test</module>
     <module>anova</module>
+    <module>stats</module>
     <module>web</module>
 
   </modules>
