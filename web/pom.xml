@@ -167,6 +167,14 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
+    <!-- Stats -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-stats-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
     <!-- Servlet -->
 
     <dependency>
@@ -322,86 +330,86 @@
           </systemProperties>
         </configuration>
       </plugin>
-      
-      <plugin>
-          <groupId>com.github.searls</groupId>
-          <artifactId>jasmine-maven-plugin</artifactId>
-          <version>${jasmine-maven-plugin.version}</version>
-          <dependencies>
-            <dependency>
-              <groupId>net.sourceforge.htmlunit</groupId>
-              <artifactId>htmlunit</artifactId>
-              <version>2.14</version>
-            </dependency>
-            <dependency>
-              <groupId>org.slf4j</groupId>
-              <artifactId>slf4j-api</artifactId>
-              <version>${org.slf4j.version}</version>
-            </dependency>
-            <dependency>
-              <groupId>org.slf4j</groupId>
-              <artifactId>slf4j-nop</artifactId>
-              <version>${org.slf4j.version}</version>
-            </dependency>
-            <dependency>
-              <groupId>org.slf4j</groupId>
-              <artifactId>jul-to-slf4j</artifactId>
-              <version>${org.slf4j.version}</version>
-            </dependency>
-          </dependencies>
-          <executions>
-            <execution>
-              <goals>
-                <goal>test</goal>
-              </goals>
-            </execution>
-          </executions>
-          <configuration>
-            <specRunnerTemplate>REQUIRE_JS</specRunnerTemplate>
-            <jsSrcDir>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/javascript/</jsSrcDir>
-            <sourceIncludes>
-              <include>**/*.js</include>
-            </sourceIncludes>
-            <jsTestSrcDir>${project.basedir}/src/test/javascript/edu/dfci/cccb/mev/web/javascript/</jsTestSrcDir>
-            <specIncludes>
-              <include>**/*.js</include>
-            </specIncludes>
-            <preloadSources>
-              <source>webjars/require.js</source>
-            </preloadSources>
-            <keepServerAlive>true</keepServerAlive>
-            <customRunnerConfiguration>${project.basedir}/src/test/resources/require.config.js</customRunnerConfiguration>
-            <customRunnerTemplate>${project.basedir}/src/test/resources/RequireJsAngularBootstrappedSpecRunner.htmltemplate</customRunnerTemplate>
-          </configuration>
-        </plugin>
 
-        <plugin>
-          <groupId>com.github.timurstrekalov</groupId>
-          <artifactId>saga-maven-plugin</artifactId>
-          <version>${saga-maven-plugin.version}</version>
-          <!-- It is impossible to suppress logback-classic logging due to 
-            logback-classic directly implementing SLF4J and the saga plugin directly 
-            depending on it and maven's inability to exclude dependencies the plugin 
-            is directly depending on (http://jira.codehaus.org/browse/MNG-2163), only 
-            transistive dependencies may be excluded -->
-          <executions>
-            <execution>
-              <phase>verify</phase>
-              <goals>
-                <goal>coverage</goal>
-              </goals>
-            </execution>
-          </executions>
-          <configuration>
-            <baseDir>http://localhost:${jasmine.serverPort}</baseDir>
-            <outputDir>${project.build.directory}/coverage</outputDir>
-            <noInstrumentPatterns>
-              <pattern>.*spec.*</pattern>
-              <pattern>.*/META\-INF/.*\.js</pattern>
-              <pattern>.*/webjars?/.*\.js</pattern>
-            </noInstrumentPatterns>
-          </configuration>
-        </plugin>
+      <plugin>
+        <groupId>com.github.searls</groupId>
+        <artifactId>jasmine-maven-plugin</artifactId>
+        <version>${jasmine-maven-plugin.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>net.sourceforge.htmlunit</groupId>
+            <artifactId>htmlunit</artifactId>
+            <version>2.14</version>
+          </dependency>
+          <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${org.slf4j.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>${org.slf4j.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>${org.slf4j.version}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <specRunnerTemplate>REQUIRE_JS</specRunnerTemplate>
+          <jsSrcDir>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/javascript/</jsSrcDir>
+          <sourceIncludes>
+            <include>**/*.js</include>
+          </sourceIncludes>
+          <jsTestSrcDir>${project.basedir}/src/test/javascript/edu/dfci/cccb/mev/web/javascript/</jsTestSrcDir>
+          <specIncludes>
+            <include>**/*.js</include>
+          </specIncludes>
+          <preloadSources>
+            <source>webjars/require.js</source>
+          </preloadSources>
+          <keepServerAlive>true</keepServerAlive>
+          <customRunnerConfiguration>${project.basedir}/src/test/resources/require.config.js</customRunnerConfiguration>
+          <customRunnerTemplate>${project.basedir}/src/test/resources/RequireJsAngularBootstrappedSpecRunner.htmltemplate</customRunnerTemplate>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>com.github.timurstrekalov</groupId>
+        <artifactId>saga-maven-plugin</artifactId>
+        <version>${saga-maven-plugin.version}</version>
+        <!-- It is impossible to suppress logback-classic logging due to 
+          logback-classic directly implementing SLF4J and the saga plugin directly 
+          depending on it and maven's inability to exclude dependencies the plugin 
+          is directly depending on (http://jira.codehaus.org/browse/MNG-2163), only 
+          transistive dependencies may be excluded -->
+        <executions>
+          <execution>
+            <phase>verify</phase>
+            <goals>
+              <goal>coverage</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <baseDir>http://localhost:${jasmine.serverPort}</baseDir>
+          <outputDir>${project.build.directory}/coverage</outputDir>
+          <noInstrumentPatterns>
+            <pattern>.*spec.*</pattern>
+            <pattern>.*/META\-INF/.*\.js</pattern>
+            <pattern>.*/webjars?/.*\.js</pattern>
+          </noInstrumentPatterns>
+        </configuration>
+      </plugin>
 
       <!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-antrun-plugin</artifactId> 
         <version>1.7</version> <executions> <execution> <phase>validate</phase> <goals> 

@@ -140,16 +140,25 @@ myGOdata = new('topGOdata', ontology=GO_TYPE, description='topGO analysis', node
 
 ## run the enrichment test
 if (TEST_TYPE=='Fisher test')
-    topGO.stat <- new('classicCount', testStatistic=GOFisherTest, name=TEST_TYPE)
+    topGO.stat = new('classicCount', testStatistic=GOFisherTest, name=TEST_TYPE)
 if (TEST_TYPE=='KS test')
-    topGO.stat <- new('classicScore', testStatistic=GOKSTest, name=TEST_TYPE)
-topGO.result <- getSigGroups(myGOdata, topGO.stat)
+    topGO.stat = new('classicScore', testStatistic=GOKSTest, name=TEST_TYPE)
+topGO.result = getSigGroups(myGOdata, topGO.stat)
+
+## count the total significant GO groups (nodes)
+topGO.count = capture.output(topGO.result)
+totalNodes = as.numeric(unlist(strsplit(topGO.count[5],' '))[1])
 
 ## summarize the top 100 GO terms and write to the file
-topGO.table = GenTable(myGOdata, topGO.result, topNodes=40)
+if (totalNodes >= 100){
+  topGO.table = GenTable(myGOdata, topGO.result, topNodes=100)}
+if (totalNodes < 100){
+  topGO.table = GenTable(myGOdata, topGO.result, topNodes=totalNodes)}
+
 colnames(topGO.table) = c('GO ID','GO Term','Annotated Genes','Significant Genes','Expected','P-value')
 
 write.table(file=TOPGO_OUT, topGO.table, sep='\t', quote=FALSE, row.names=FALSE, col.names=FALSE)
+
 }, error=function(cond) {}, warning=function (cond) {}, finally={})
 #################################
 ## End topGO
