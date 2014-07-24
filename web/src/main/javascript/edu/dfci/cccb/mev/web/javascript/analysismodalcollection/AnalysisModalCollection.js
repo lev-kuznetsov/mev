@@ -450,12 +450,11 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                 	name : scope.params.name,
                                 	experiment : scope.params.experiment.name,
                                 	control : scope.params.control.name,
-                                	species : scope.params.species.value,
-                                	goType : scope.params.goType.value,
-                                	testType : scope.params.testType.value
+                                	species : (scope.params.species) ? scope.params.species.value : undefined,
+                                	goType : (scope.params.goType) ? scope.params.goType.value : undefined,
+                                	testType : (scope.params.testType) ? scope.params.testType.value : undefined
                                 };
                                 
-                                console.log(analysisData)
                                 scope.dataset.analysis.post3({
                                 	analysisType: 'limma',
                                 	datasetName: scope.dataset.datasetName,
