@@ -104,6 +104,134 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                 }
             }
     }])
+    .directive('modalFTest', ['alertService', function(alertService){
+    	
+    	return {
+    		restrict: 'C',
+    		scope: {
+    			dataset : '=heatmapDataset'
+    		},
+    		templateUrl : '',
+    		link : function(scope, elements, attributes){
+    			scope.params = {
+    				name: undefined,
+    				dimension: {
+                        name : 'Rows',
+                        value : 'row'
+                    },
+                    population: undefined,
+    				selection1: undefined,
+    				selection2: undefined,
+    				threshold: undefined,
+    				simulate: undefined
+    			}
+    			
+    			scope.options = {
+					dimension : [{name : 'Rows', value : 'row'}, {name : 'Columns',value : 'column'}],
+                    simulate: [{name:'True', value:true}, {name:'False', value:false}]
+    			}
+    			
+    			scope.testInit = function(){
+    				
+    				var success = function(data, status, headers, config){
+
+						scope.dataset.loadAnalyses()
+                		var message = "Fisher's Test analysis for "
+                			+ scope.params.name + " complete!"
+
+                        var header = "Fisher's Test Analysis"
+
+                        alertService.success(message,header)
+    				}
+    				
+    				var failure = function(data, status, headers, config) {
+                        var message = "Could not perform Fisher's Test analysis. If "
+                            + "problem persists, please contact us.";
+                        var header = "Fisher's Test Problem (Error Code: "
+                            + status
+                            + ")";
+                        alertService.error(message,header);  
+    				}
+    				
+    				var experiments = [];
+
+    				var groups = [];
+    				
+    				var selection_dimension = (scope.params.dimension.value == 'row') ? 'column' : 'row'
+    					
+    				if (scope.dataset.selections[selection_dimension].keys > 1 
+    						|| scope.dataset.selections[selection_dimension].keys < 1){
+    					
+    					failure({}, "Initialization Failure")
+    					return
+    				}
+    				
+    				for (selection in scope.dataset.selections[selection_dimension]) {
+    					if (scope.dataset.selections[selection_dimension][selection].name == scope.params.selection1 ){
+    						groups.push(scope.dataset.selections[selection_dimension][selection].keys)
+    					}
+    				}
+    				
+    				for (selection in scope.dataset.selections[selection_dimension]) {
+    					if (scope.dataset.selections[selection_dimension][selection].name == scope.params.selection2 ){
+    						groups.push(scope.dataset.selections[selection_dimension][selection].keys)
+    					}
+    				}
+    				
+					var experiment = {
+						dimension: scope.params.dimension,
+						groups: groups,
+						population: scope.params.populations[population],
+						threshold: scope.params.threshold
+					}
+    				
+
+					var table = undefined
+					
+					try {
+						table = scope.dataset.expression.statistics().contingency(experiments[experiment]) 
+					} catch (err) {
+						
+						failure({}, "Initialization Failure ("+err.message+")")
+						return
+					}
+    				
+					var postData = {
+    					m: table[0].above,
+    					n: table[0].below,
+    					s: table[1].above,
+    					t: table[1].below,
+    					hypothesis: '',
+    					simulate: scope.params.simulate
+    				}
+					
+					var postParams = {
+						datasetName:scope.dataset.datasetName,
+						analysisType:'fisher',
+						analysisName:scope.params.name
+					}
+    					
+					scope.dataset.analysis.post3(postParams, postData, success, failure)
+    				
+    			}
+    		}
+    	}
+    	
+    }])
+    .directive('modalWilcoxon', ['alertService', function(alertService){
+    	
+    	return {
+    		restrict: 'C',
+    		scope: {
+    			dataset : '=heatmapDataset'
+    		},
+    		templateUrl : '',
+    		link : function(scope, elements, attributes){
+    			
+    		}
+    	}
+    	
+    }])
     .directive('modalTTest',['alertService',
         function(alertService) { 
             return {
