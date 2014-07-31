@@ -1,7 +1,10 @@
 define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angular, jq, d3){
 	
-	return angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])
-	.service('d3DomService', [function(){
+	var module = angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])
+		
+	module.path = "container/javascript/analysisaccordioncollection"
+			
+	return module.service('d3DomService', [function(){
 		return function(id,s){
 			
 			s.$apply(function(){
@@ -41,6 +44,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
         var anovaTemplate = '<anova-Accordion analysis="analysis" project="project"></anova-Accordion>';
         var tTestTemplate = '<t-Test-Accordion analysis="analysis" project="project"></t-Test-Accordion>';
         var limmaTemplate  = '<limma-Accordion analysis="analysis" project="project"></limma-Accordion>';
+        var fTestTemplate = '<f-Test-Accordion analysis="analysis" project="project"></f-Test-Accordion>';
         
         var getTemplate = function(analysisType) {
             var template = '';
@@ -61,6 +65,9 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 case 't-Test Analysis':
                     template = tTestTemplate;
                     break;
+                case 'Fisher test':
+                	template = fTestTemplate;
+                	break;
             }
     
             return template;
@@ -80,6 +87,18 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                 $compile(element.contents())(scope);
             }
         };
+    }])
+    .directive('fTestAccordion', [function(){
+    	return {
+            restrict : 'E',
+            scope : {
+            	analysis : "=analysis",
+            	project : "=project"
+            },
+            templateUrl : module.path + '/templates/fTestAccordion.tpl.html',
+            link : function(scope) {
+            }	
+       }
     }])
 	.directive('kMeansAccordion', [function() {
         return {

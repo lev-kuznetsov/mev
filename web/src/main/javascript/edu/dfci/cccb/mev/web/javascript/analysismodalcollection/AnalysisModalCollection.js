@@ -1,6 +1,10 @@
 define(['angular', 'alertservice/AlertService'], function(angular){
 	
-	return angular.module('Mev.AnalysisModalCollection', ['Mev.AlertService'])
+	var module = angular.module('Mev.AnalysisModalCollection', ['Mev.AlertService'])
+	
+	module.path = "container/javascript/analysismodalcollection/"
+	
+	module.service('')
 	.directive('modalAnova',[ 'alertService',
         function(alertService) { 
             return {
@@ -111,8 +115,9 @@ define(['angular', 'alertservice/AlertService'], function(angular){
     		scope: {
     			dataset : '=heatmapDataset'
     		},
-    		templateUrl : '',
+    		templateUrl : module.path + 'templates/fTest.tpl.html',
     		link : function(scope, elements, attributes){
+    			
     			scope.params = {
     				name: undefined,
     				dimension: {
@@ -123,12 +128,14 @@ define(['angular', 'alertservice/AlertService'], function(angular){
     				selection1: undefined,
     				selection2: undefined,
     				threshold: undefined,
-    				simulate: undefined
+    				simulate: undefined,
+    				hypothesis: undefined
     			}
     			
     			scope.options = {
 					dimension : [{name : 'Rows', value : 'row'}, {name : 'Columns',value : 'column'}],
-                    simulate: [{name:'True', value:true}, {name:'False', value:false}]
+                    simulate: [{name:'True', value:true}, {name:'False', value:false}],
+                    hypothesis: [{name:'Two-sided', value:'two.sided'},{name:'Greater', value:'greater'},{name:'Less', value:'less'}]
     			}
     			
     			scope.testInit = function(){
@@ -161,57 +168,88 @@ define(['angular', 'alertservice/AlertService'], function(angular){
     					
     				if (scope.dataset.selections[selection_dimension].keys > 1 
     						|| scope.dataset.selections[selection_dimension].keys < 1){
-    					
+    					console.log("Failed T-Test Initialization")
     					failure({}, "Initialization Failure")
     					return
     				}
     				
+    				
     				for (selection in scope.dataset.selections[selection_dimension]) {
-    					if (scope.dataset.selections[selection_dimension][selection].name == scope.params.selection1 ){
+    					
+    					if (scope.dataset.selections[selection_dimension][selection].name == scope.params.selection1.name ){
     						groups.push(scope.dataset.selections[selection_dimension][selection].keys)
     					}
     				}
     				
     				for (selection in scope.dataset.selections[selection_dimension]) {
-    					if (scope.dataset.selections[selection_dimension][selection].name == scope.params.selection2 ){
+    					if (scope.dataset.selections[selection_dimension][selection].name == scope.params.selection2.name ){
     						groups.push(scope.dataset.selections[selection_dimension][selection].keys)
     					}
     				}
     				
-					var experiment = {
-						dimension: scope.params.dimension,
-						groups: groups,
-						population: scope.params.populations[population],
-						threshold: scope.params.threshold
-					}
+					var experiments = []
+					
+					console.log(scope.params.population)
+				
+					for (population in scope.params.population.keys) {
+						
+						experiments.push({
+							dimension: scope.params.dimension.value,
+							groups: groups,
+							population: scope.params.population.keys[population],
+							threshold: parseFloat(scope.params.threshold)
+    					})
+    					
+    				}
     				
 
-					var table = undefined
+					var tables = []
 					
-					try {
-						table = scope.dataset.expression.statistics().contingency(experiments[experiment]) 
-					} catch (err) {
+					for (experiment in experiments){
 						
-						failure({}, "Initialization Failure ("+err.message+")")
-						return
+						
+						try {
+							tables.push(scope.dataset.expression.statistics().contingency(experiments[experiment]) )
+						} catch (err) {
+							
+							failure({}, "Initialization Failure ("+err.message+")")
+							return
+						}
+						
 					}
-    				
-					var postData = {
-    					m: table[0].above,
-    					n: table[0].below,
-    					s: table[1].above,
-    					t: table[1].below,
-    					hypothesis: '',
-    					simulate: scope.params.simulate
-    				}
 					
-					var postParams = {
-						datasetName:scope.dataset.datasetName,
-						analysisType:'fisher',
-						analysisName:scope.params.name
+					for (table in tables){
+						
+						console.log({
+	    					m: tables[table][0].above,
+	    					n: tables[table][1].above,
+	    					s: tables[table][0].below,
+	    					t: tables[table][1].below,
+	    					hypothesis: scope.params.hypothesis.value,
+	    					simulate: scope.params.simulate.value
+	    				})
+						
+						scope.dataset.analysis.post3({
+							datasetName:scope.dataset.datasetName,
+							analysisType:'fisher',
+							analysisName:scope.params.name + "-" + scope.params.population.keys[table]
+						}, {
+	    					m: tables[table][0].above,
+	    					n: tables[table][1].above,
+	    					s: tables[table][0].below,
+	    					t: tables[table][1].below,
+	    					hypothesis: scope.params.hypothesis.value,
+	    					simulate: scope.params.simulate.value
+	    				}, success, failure)
+						
 					}
-    					
-					scope.dataset.analysis.post3(postParams, postData, success, failure)
+					
+					console.log(groups)
+					console.log(experiments)
+					
+					
+    				
+					
     				
     			}
     		}
@@ -646,6 +684,9 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                     };
 
                 }])
+                
+
+            	return module
 
 
 	

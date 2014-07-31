@@ -16,9 +16,11 @@ package edu.dfci.cccb.mev.stats.domain.cli;
 
 import static org.hamcrest.Matchers.closeTo;
 import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 import javax.script.ScriptEngineManager;
 
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 import edu.dfci.cccb.mev.stats.domain.contract.Fisher;
@@ -32,6 +34,7 @@ public class CliRFisherTest {
   @Test
   public void test () throws Exception {
     Fisher f = new CliRFisherBuilder ().setR (new ScriptEngineManager ().getEngineByName ("CliR"))
+    											.name("test")
                                                  .m (4)
                                                  .n (5)
                                                  .s (6)
@@ -39,5 +42,7 @@ public class CliRFisherTest {
                                                  .build ();
     assertThat (f.oddsRatio (), closeTo (0.9362, 0.001));
     assertThat (f.pValue (), closeTo (1.0, 0.001));
+    assertThat(f.type(), is("Fisher test"));
+    assertThat(f.name(), is("test"));
   }
 }

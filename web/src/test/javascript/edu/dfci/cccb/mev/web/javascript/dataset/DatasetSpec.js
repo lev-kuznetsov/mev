@@ -86,9 +86,6 @@
 							error = err
 						}
 
-						console.log(error)
-						console.log(resp)
-
 						expect(resp).toBeDefined()
 						expect(resp).toEqual(expected)
 						expect(error).not.toBeDefined()

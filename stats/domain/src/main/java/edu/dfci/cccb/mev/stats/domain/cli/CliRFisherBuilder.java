@@ -70,7 +70,7 @@ public class CliRFisherBuilder extends AbstractFisherBuilder {
         final double oddRatio = Double.parseDouble (reader.readLine ().split ("\t")[1]);
         final double pValue = Double.parseDouble (reader.readLine ().split ("\t")[1]);
 
-        return new PojoFisher (oddRatio, pValue);
+        return new PojoFisher (oddRatio, pValue).name(this.name()).type(type());
       }
     } catch (IOException | ScriptException e) {
       throw new DatasetException (e);
