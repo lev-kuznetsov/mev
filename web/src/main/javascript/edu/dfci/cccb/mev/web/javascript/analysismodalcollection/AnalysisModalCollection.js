@@ -1,6 +1,10 @@
 define(['angular', 'alertservice/AlertService'], function(angular){
 	
-	return angular.module('Mev.AnalysisModalCollection', ['Mev.AlertService'])
+	var module = angular.module('Mev.AnalysisModalCollection', ['Mev.AlertService'])
+	
+	module.path = "container/javascript/analysismodalcollection/"
+	
+	module.service('')
 	.directive('modalAnova',[ 'alertService',
         function(alertService) { 
             return {
@@ -103,6 +107,211 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                     };
                 }
             }
+    }])
+    .directive('modalFTest', ['alertService', function(alertService){
+    	
+    	return {
+    		restrict: 'C',
+    		scope: {
+    			dataset : '=heatmapDataset'
+    		},
+    		templateUrl : module.path + 'templates/fTest.tpl.html',
+    		link : function(scope, elements, attributes){
+    			
+    			scope.params = {
+    				name: undefined,
+    				dimension: {
+                        name : 'Rows',
+                        value : 'row'
+                    },
+                    population: undefined,
+    				selection1: undefined,
+    				selection2: undefined,
+    				threshold: undefined,
+    				simulate: undefined,
+    				hypothesis: undefined
+    			}
+    			
+    			scope.options = {
+					dimension : [{name : 'Rows', value : 'row'}, {name : 'Columns',value : 'column'}],
+                    simulate: [{name:'True', value:true}, {name:'False', value:false}],
+                    hypothesis: [{name:'Two-sided', value:'two.sided'},{name:'Greater', value:'greater'},{name:'Less', value:'less'}]
+    			}
+    			
+    			scope.testInit = function(){
+    				
+    				var success = function(data, status, headers, config){
+
+						scope.dataset.loadAnalyses()
+                		var message = "Fisher's Test analysis for "
+                			+ scope.params.name + " complete!"
+
+                        var header = "Fisher's Test Analysis"
+
+                        alertService.success(message,header)
+    				}
+    				
+    				var failure = function(data, status, headers, config) {
+                        var message = "Could not perform Fisher's Test analysis. If "
+                            + "problem persists, please contact us.";
+                        var header = "Fisher's Test Problem (Error Code: "
+                            + status
+                            + ")";
+                        alertService.error(message,header);  
+    				}
+    				
+    				var experiments = [];
+
+    				var groups = [];
+    				
+    				var selection_dimension = (scope.params.dimension.value == 'row') ? 'column' : 'row'
+    					
+    				if (scope.dataset.selections[selection_dimension].keys > 1 
+    						|| scope.dataset.selections[selection_dimension].keys < 1){
+    					console.log("Failed T-Test Initialization")
+    					failure({}, "Initialization Failure")
+    					return
+    				}
+    				
+    				
+    				for (selection in scope.dataset.selections[selection_dimension]) {
+    					
+    					if (scope.dataset.selections[selection_dimension][selection].name == scope.params.selection1.name ){
+    						groups.push(scope.dataset.selections[selection_dimension][selection].keys)
+    					}
+    				}
+    				
+    				for (selection in scope.dataset.selections[selection_dimension]) {
+    					if (scope.dataset.selections[selection_dimension][selection].name == scope.params.selection2.name ){
+    						groups.push(scope.dataset.selections[selection_dimension][selection].keys)
+    					}
+    				}
+    				
+					var experiments = []
+					
+					console.log(scope.params.population)
+				
+					for (population in scope.params.population.keys) {
+						
+						experiments.push({
+							dimension: scope.params.dimension.value,
+							groups: groups,
+							population: scope.params.population.keys[population],
+							threshold: parseFloat(scope.params.threshold)
+    					})
+    					
+    				}
+    				
+
+					var tables = []
+					
+					for (experiment in experiments){
+						
+						
+						try {
+							tables.push(scope.dataset.expression.statistics().contingency(experiments[experiment]) )
+						} catch (err) {
+							
+							failure({}, "Initialization Failure ("+err.message+")")
+							return
+						}
+						
+					}
+					
+					for (table in tables){
+						
+						console.log({
+	    					m: tables[table][0].above,
+	    					n: tables[table][1].above,
+	    					s: tables[table][0].below,
+	    					t: tables[table][1].below,
+	    					hypothesis: scope.params.hypothesis.value,
+	    					simulate: scope.params.simulate.value
+	    				})
+						
+						scope.dataset.analysis.post3({
+							datasetName:scope.dataset.datasetName,
+							analysisType:'fisher',
+							analysisName:scope.params.name + "-" + scope.params.population.keys[table]
+						}, {
+	    					m: tables[table][0].above,
+	    					n: tables[table][1].above,
+	    					s: tables[table][0].below,
+	    					t: tables[table][1].below,
+	    					hypothesis: scope.params.hypothesis.value,
+	    					simulate: scope.params.simulate.value
+	    				}, success, failure)
+						
+					}
+					
+    			}
+    		}
+    	}
+    	
+    }])
+    .directive('modalWilcoxon', ['alertService', function(alertService){
+    	
+    	return {
+    		restrict: 'C',
+    		scope: {
+    			dataset : '=heatmapDataset'
+    		},
+    		templateUrl : module.path + 'templates/wilcoxonTest.tpl.html',
+    		link : function(scope, elements, attributes){
+    			
+    			console.log(scope.dataset)
+    			
+    			scope.params = {
+    				name: undefined,
+    				selection1: undefined,
+    				selection2: undefined,
+    				pair: undefined,
+    				confidentInterval: undefined,
+    				hypothesis: undefined
+    			}
+    			
+    			scope.options = {
+    				pair: [{name:'True', value:true}, {name:'False', value:false}],
+                    confidentInterval: [{name:'True', value:true}, {name:'False', value:false}],
+                    hypothesis: [{name:'Two-sided', value:'two.sided'},{name:'Greater', value:'greater'},{name:'Less', value:'less'}]
+    			}
+    			
+    			scope.testInit = function(){
+    				
+    				var success = function(data, status, headers, config){
+
+						scope.dataset.loadAnalyses()
+                		var message = "Wilcoxon Test analysis for "
+                			+ scope.params.name + " complete!"
+
+                        var header = "Wilcoxon Test Analysis"
+
+                        alertService.success(message,header)
+    				}
+    				
+    				var failure = function(data, status, headers, config) {
+                        var message = "Could not perform Wilcoxon Test analysis. If "
+                            + "problem persists, please contact us.";
+                        var header = "Wilcoxon Test Problem (Error Code: "
+                            + status
+                            + ")";
+                        alertService.error(message,header);  
+    				}
+    				
+    				scope.dataset.analysis.post4({
+						datasetName:scope.dataset.datasetName,
+						analysisType:'wilcoxon',
+						analysisName:scope.params.name,
+						first: scope.params.selection1,
+    					second: scope.params.selection2,
+    					pair: scope.params.pair.value,
+    					confidentInterval: scope.params.confidentInterval.value,
+    					hypothesis: scope.params.hypothesis.value
+					}, success, failure)
+    			}
+    		}
+    	}
+    	
     }])
     .directive('modalTTest',['alertService',
         function(alertService) { 
@@ -518,6 +727,9 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                     };
 
                 }])
+                
+
+            	return module
 
 
 	
