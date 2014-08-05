@@ -244,13 +244,6 @@ define(['angular', 'alertservice/AlertService'], function(angular){
 						
 					}
 					
-					console.log(groups)
-					console.log(experiments)
-					
-					
-    				
-					
-    				
     			}
     		}
     	}
@@ -263,9 +256,59 @@ define(['angular', 'alertservice/AlertService'], function(angular){
     		scope: {
     			dataset : '=heatmapDataset'
     		},
-    		templateUrl : '',
+    		templateUrl : module.path + 'templates/wilcoxonTest.tpl.html',
     		link : function(scope, elements, attributes){
     			
+    			console.log(scope.dataset)
+    			
+    			scope.params = {
+    				name: undefined,
+    				selection1: undefined,
+    				selection2: undefined,
+    				pair: undefined,
+    				confidentInterval: undefined,
+    				hypothesis: undefined
+    			}
+    			
+    			scope.options = {
+    				pair: [{name:'True', value:true}, {name:'False', value:false}],
+                    confidentInterval: [{name:'True', value:true}, {name:'False', value:false}],
+                    hypothesis: [{name:'Two-sided', value:'two.sided'},{name:'Greater', value:'greater'},{name:'Less', value:'less'}]
+    			}
+    			
+    			scope.testInit = function(){
+    				
+    				var success = function(data, status, headers, config){
+
+						scope.dataset.loadAnalyses()
+                		var message = "Wilcoxon Test analysis for "
+                			+ scope.params.name + " complete!"
+
+                        var header = "Wilcoxon Test Analysis"
+
+                        alertService.success(message,header)
+    				}
+    				
+    				var failure = function(data, status, headers, config) {
+                        var message = "Could not perform Wilcoxon Test analysis. If "
+                            + "problem persists, please contact us.";
+                        var header = "Wilcoxon Test Problem (Error Code: "
+                            + status
+                            + ")";
+                        alertService.error(message,header);  
+    				}
+    				
+    				scope.dataset.analysis.post4({
+						datasetName:scope.dataset.datasetName,
+						analysisType:'wilcoxon',
+						analysisName:scope.params.name,
+						first: scope.params.selection1,
+    					second: scope.params.selection2,
+    					pair: scope.params.pair.value,
+    					confidentInterval: scope.params.confidentInterval.value,
+    					hypothesis: scope.params.hypothesis.value
+					}, success, failure)
+    			}
     		}
     	}
     	

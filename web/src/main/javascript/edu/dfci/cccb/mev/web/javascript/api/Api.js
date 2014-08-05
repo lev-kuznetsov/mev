@@ -55,6 +55,12 @@ define ([ 'angular', 'angularResource'], function (angular) {
                 	'url': 'dataset/:datasetName'+
                 		'/analyze/:analysisType/:analysisName',
                 		//'headers':{'Content-Type':'application/x-www-form-urlencoded'}
+                },
+                'post4': {
+                	'method':'GET',
+                	'url': 'dataset/:datasetName'+
+                		'/analyze/:analysisType/:analysisName',
+                		//'headers':{'Content-Type':'application/x-www-form-urlencoded'}
                 }
                 
 			});

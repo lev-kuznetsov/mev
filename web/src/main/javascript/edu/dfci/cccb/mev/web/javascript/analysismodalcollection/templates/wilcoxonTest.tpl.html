@@ -1,0 +1,43 @@
+<form role="form">
+
+     <div class="form-group">
+       <label for="wilcoxon-test-name" class="control-label">Test Name</label>
+
+       <input id="wilcoxon-test-name" ng-model="params.name" placeholder="Ex: My_Analysis_1">
+     </div>
+     
+     <div class="form-group">
+       <label for="wilcoxon-test-control" class="control-label">Control</label>
+
+       <select id="wilcoxon-test-control" ng-options="option for option in dataset.column.keys" ng-model="params.selection1"></select>
+     </div>
+     
+     <div class="form-group">
+       <label for="wilcoxon-test-treatment" class="control-label">Experiment</label>
+
+       <select id="wilcoxon-test-treatment" ng-options="option for option in dataset.column.keys" ng-model="params.selection2"></select>
+     </div>
+     
+     <div class="form-group">
+       <label for="wilcoxon-test-confident-interval" class="control-label">Confident Interval</label>
+
+       <select id="wilcoxon-test-confident-interval" ng-options="option.name for option in options.confidentInterval" ng-model="params.confidentInterval"></select>
+     </div>
+     
+     <div class="form-group">
+       <label for="wilcoxon-test-pair" class="control-label">Pair</label>
+
+       <select id="wilcoxon-test-pair" ng-options="option.name for option in options.pair" ng-model="params.pair"></select>
+     </div>
+
+     <div class="form-group">
+       <label for="wilcoxon-test-hypothesis" class="control-label">Test Hypothesis</label>
+
+       <select id="wilcoxon-test-hypothesis" ng-options="option.name for option in options.hypothesis" ng-model="params.hypothesis"></select>
+     </div>
+     
+     
+     
+</form> 
+		
+<a class="btn btn-success btn-block" ng-click="testInit()" data-dismiss="modal" aria-hidden="true">Analyze</a>

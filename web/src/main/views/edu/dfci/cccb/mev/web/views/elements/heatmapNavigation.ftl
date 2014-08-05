@@ -22,7 +22,7 @@
 						<li><a data-toggle="modal" role="button" data-target="#limma"">LIMMA</a></li> 
 						<li><a data-toggle="modal" data-target="#tTest">t-Test</a></li>
 						<li><a data-toggle="modal" data-target="#fishertest">Fisher Exact Test</a></li>
-						<!--<li><a data-toggle="modal" data-target="#wilcoxon">Wilcoxon Rank Sum</a></li>-->
+						<li><a data-toggle="modal" data-target="#wilcoxon">Wilcoxon Rank Sum</a></li>
 						<li><a data-toggle="modal" data-target="#anova">ANOVA</a></li>
 					</ul>
 				</li>

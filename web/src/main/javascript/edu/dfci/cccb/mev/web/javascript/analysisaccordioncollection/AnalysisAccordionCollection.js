@@ -45,6 +45,9 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
         var tTestTemplate = '<t-Test-Accordion analysis="analysis" project="project"></t-Test-Accordion>';
         var limmaTemplate  = '<limma-Accordion analysis="analysis" project="project"></limma-Accordion>';
         var fTestTemplate = '<f-Test-Accordion analysis="analysis" project="project"></f-Test-Accordion>';
+        var wilcoxonTestTemplate = '<wilcoxon-Test-Accordion analysis="analysis" project="project"></wilcoxon-Test-Accordion>';
+        
+        
         
         var getTemplate = function(analysisType) {
             var template = '';
@@ -67,6 +70,9 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     break;
                 case 'Fisher test':
                 	template = fTestTemplate;
+                	break;
+                case 'Wilcoxon test':
+                	template = wilcoxonTestTemplate;
                 	break;
             }
     
@@ -96,6 +102,18 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             	project : "=project"
             },
             templateUrl : module.path + '/templates/fTestAccordion.tpl.html',
+            link : function(scope) {
+            }	
+       }
+    }])
+    .directive('wilcoxonTestAccordion', [function(){
+    	return {
+            restrict : 'E',
+            scope : {
+            	analysis : "=analysis",
+            	project : "=project"
+            },
+            templateUrl : module.path + '/templates/wilcoxonTestAccordion.tpl.html',
             link : function(scope) {
             }	
        }
