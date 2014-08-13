@@ -14,7 +14,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain.support;
+package edu.dfci.cccb.mev.dataset.domain.support.binary;
 
 import static ch.lambdaj.Lambda.max;
 import static java.io.File.createTempFile;
@@ -38,6 +38,7 @@ import java.util.Map.Entry;
 import lombok.Synchronized;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateSetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
+import edu.dfci.cccb.mev.dataset.domain.support.Consumer;
 
 /**
  * Flat file based value store
