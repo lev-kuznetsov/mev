@@ -1,6 +1,6 @@
 paths : {
   'mev' : [ '/javascript/mev' ],
-  'log' : [ '/javascript/modules/log' ],
+  'ng-log' : [ '/javascript/modules/log' ],
   
   // AngularJS
   'angular' : [ '/webjars/angularjs/1.2.16/angular' ]

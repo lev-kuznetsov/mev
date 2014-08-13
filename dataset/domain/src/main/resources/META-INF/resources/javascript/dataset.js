@@ -20,7 +20,7 @@
  * @author levk
  * @since CRYSTAL
  */
-define ('dataset', [ 'mev-log' ], function (log) {
+define ('dataset', [ 'log' ], function (log) {
 
   return {
     dimension : function (name) {

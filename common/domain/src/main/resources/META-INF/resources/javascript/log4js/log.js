@@ -20,7 +20,7 @@
  * @author levk
  * @since CRYSTAL
  */
-define ('logger', [ 'log4js', 'underscore' ], function (log4js, _) {
+define ('log', [ 'log4js', 'underscore' ], function (log4js, _) {
   function AppliedBrowserConsoleAppender () {}
 
   AppliedBrowserConsoleAppender.prototype = new log4js.BrowserConsoleAppender ();

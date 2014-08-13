@@ -56,6 +56,18 @@
       <artifactId>mev-dataset-web</artifactId>
       <version>${mev.version}</version>
     </dependency>
+    
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-googleplus-domain</artifactId>
+      <version>${mev.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-googleplus-services</artifactId>
+      <version>${mev.version}</version>
+    </dependency>
 
     <!-- JUnit -->
 

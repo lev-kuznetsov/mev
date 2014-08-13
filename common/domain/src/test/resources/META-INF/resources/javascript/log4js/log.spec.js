@@ -1,4 +1,4 @@
-define ([ 'logger' ], function (log) {
+define ([ 'log' ], function (log) {
 
   if (typeof window.console == "undefined") window.console = {
     error : function () {},

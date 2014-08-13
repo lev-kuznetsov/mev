@@ -113,4 +113,12 @@ public abstract class MevException extends Exception {
               cause instanceof MevException ? cause : (cause.getClass ().getName () + ":" + cause.getMessage ()));
     return super.initCause (cause);
   }
+  
+  /* (non-Javadoc)
+   * @see java.lang.Throwable#toString()
+   */
+  @Override
+  public String toString () {
+    return super.toString () + properties;
+  }
 }

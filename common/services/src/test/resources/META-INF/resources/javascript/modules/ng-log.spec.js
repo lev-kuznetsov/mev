@@ -1,4 +1,4 @@
-define ([ 'angular-mocks', 'mev', 'logger', 'log' ], function (ng, mev, log) {
+define ([ 'angular-mocks', 'mev', 'log', 'ng-log' ], function (ng, mev, log) {
   describe ("angular provided logger", function () {
 
     it ("should be in main mev module dependencies", function () {

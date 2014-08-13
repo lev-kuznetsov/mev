@@ -20,7 +20,7 @@
  * @author levk
  * @since CRYSTAL
  */
-define ('log', [ 'angular', 'logger', 'mev' ], function (ng, logger, mev) {
+define ('ng-log', [ 'angular', 'log', 'mev' ], function (ng, logger, mev) {
   mev.requires.push ('log');
 
   return ng.module ('log', []).config ([ '$provide', function ($provide) {

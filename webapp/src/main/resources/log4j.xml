@@ -5,9 +5,12 @@
     <param name="threshold" value="debug" />
     <param name="target" value="System.out" />
     <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="[%p] : %c : %m%n" />
+      <param name="ConversionPattern" value="[%p] : %C:%L : %m%n" />
     </layout>
   </appender>
+  <logger name="org.apache.cxf">
+    <level value="info"></level>
+  </logger>
   <root>
     <priority value="debug"></priority>
     <appender-ref ref="stdout" />

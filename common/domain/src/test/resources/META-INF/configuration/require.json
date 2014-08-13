@@ -1,7 +1,8 @@
 paths : {
   underscore : [ '/webjars/underscore' ],
   log4js : [ '/classpath/META-INF/resources/webjars/log4javascript/1.4.5/log4javascript_uncompressed' ],
-  logger : [ '/src/log4js/logger' ]
+  log : [ '/src/log4js/log' ],
+  mathjs : [ '//cdnjs.cloudflare.com/ajax/libs/mathjs/0.25.0/math' ]
 },
 shim : {
   log4js : {

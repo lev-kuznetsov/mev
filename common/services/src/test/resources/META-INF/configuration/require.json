@@ -1,6 +1,6 @@
 paths : {
-  log : [ 'modules/log' ],
-  logger : [ '/classpath/META-INF/resources/javascript/log4js/logger' ],
+  'ng-log' : [ 'modules/ng-log' ],
+  log : [ '/classpath/META-INF/resources/javascript/log4js/log' ],
   log4js : [ '/classpath/META-INF/resources/webjars/log4javascript/1.4.5/log4javascript' ],
   underscore : [ '/classpath/META-INF/resources/webjars/underscorejs/1.6.0/underscore' ],
   angular : [ '/classpath/META-INF/resources/webjars/angularjs/1.2.16/angular' ],

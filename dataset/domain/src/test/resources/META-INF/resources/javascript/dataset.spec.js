@@ -1,4 +1,4 @@
-define ([ 'mev', 'dataset', 'underscore' ], function (mev, dataset, _) {
+define ([ 'dataset', 'underscore' ], function (dataset, _) {
   describe ("dataset", function () {
     it ("should be declared", function () {
       expect (dataset).toBeDefined ();
