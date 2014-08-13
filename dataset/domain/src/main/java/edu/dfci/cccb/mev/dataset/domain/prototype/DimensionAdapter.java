@@ -16,6 +16,7 @@
 
 package edu.dfci.cccb.mev.dataset.domain.prototype;
 
+import static edu.dfci.cccb.mev.dataset.domain.prototype.ValuesAdapter.all;
 import static java.util.Arrays.asList;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -82,14 +83,23 @@ public abstract class DimensionAdapter <K> implements Dimension<K> {
   @Override
   public boolean equals (Object obj) {
     if (obj instanceof Dimension) {
-      Iterator<?> that = ((Dimension<?>) obj).iterator ();
+      Dimension<?> other = (Dimension<?>) obj;
+      if (other.size () != size ())
+        return false;
+      Iterator<?> that = other.iterator ();
       Iterator<K> current = iterator ();
       while (that.hasNext () && current.hasNext () && (current.next ().equals (that.next ())));
-      return !that.hasNext () && !current.hasNext ();
-    }
-    return false;
+      return true;
+    } else
+      return false;
   }
 
+  /**
+   * Wraps a set of dimensions into a map
+   * 
+   * @param dimensions
+   * @return
+   */
   @SafeVarargs
   public static <K> Map<String, Dimension<K>> dimensions (final Dimension<K>... dimensions) {
     return new AbstractMap<String, Dimension<K>> () {
@@ -158,6 +168,42 @@ public abstract class DimensionAdapter <K> implements Dimension<K> {
           if (entry.getKey ().equals (key))
             return entry.setValue (value);
         throw new IllegalArgumentException ();
+      }
+    };
+  }
+
+  /**
+   * Iterates over all coordinates in a given projection
+   * 
+   * @param target
+   * @param space
+   * @return
+   */
+  @SafeVarargs
+  public static <K> Iterable<Map<String, K>> project (final String dimension, final K key, final Dimension<K>... space) {
+    return new Iterable<Map<String, K>> () {
+      @Override
+      public Iterator<Map<String, K>> iterator () {
+        return new Iterator<Map<String, K>> () {
+          private final Iterator<Map<String, K>> iterated = all (space).iterator ();
+
+          @Override
+          public boolean hasNext () {
+            return iterated.hasNext ();
+          }
+
+          @Override
+          public Map<String, K> next () {
+            Map<String, K> next = iterated.next ();
+            next.put (dimension, key);
+            return next;
+          }
+
+          @Override
+          public void remove () {
+            throw new UnsupportedOperationException ();
+          }
+        };
       }
     };
   }

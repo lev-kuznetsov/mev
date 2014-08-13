@@ -16,6 +16,7 @@
 
 package edu.dfci.cccb.mev.dataset.domain.prototype;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
 
 import java.util.ArrayList;
@@ -35,6 +36,15 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Values;
  * @since BAYLIE
  */
 public abstract class ValuesAdapter <K, V> implements Values<K, V> {
+
+  /**
+   * @param dimensions
+   * @return Iterable over coordinates described by all the dimensions
+   */
+  @SafeVarargs
+  public static <K> Iterable<Map<String, K>> all (Dimension<K>... dimensions) {
+    return all (asList (dimensions));
+  }
 
   /**
    * @param dimensions

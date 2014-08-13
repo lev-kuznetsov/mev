@@ -36,6 +36,8 @@ import lombok.Delegate;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.common.collect.ImmutableMap;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
 public class DimensionAdapterTest {
@@ -155,5 +157,17 @@ public class DimensionAdapterTest {
   public void dimensionIteratorRemove () throws Exception {
     rows1.iterator ().remove ();
     fail ();
+  }
+
+  @Test
+  public void projection () throws Exception {
+    Iterator<Map<String, String>> actual = DimensionAdapter.project ("row", "r1", columns).iterator ();
+    Iterator<Map<String, String>> expected =
+                                             asList ((Map<String, String>) ImmutableMap.of ("row", "r1", "column", "c1"),
+                                                     ImmutableMap.of ("row", "r1", "column", "c2"),
+                                                     ImmutableMap.of ("row", "r1", "column", "c3")).iterator ();
+    while (expected.hasNext () && actual.hasNext ())
+      assertThat (actual.next (), is (expected.next ()));
+    assertThat (actual.hasNext () || expected.hasNext (), is (false));
   }
 }

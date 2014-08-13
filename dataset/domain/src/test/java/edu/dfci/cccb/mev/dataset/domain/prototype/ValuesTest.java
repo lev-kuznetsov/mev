@@ -84,4 +84,23 @@ public class ValuesTest {
       assertThat (actual.next (), is (expected.next ()));
     assertTrue (actual.hasNext () == expected.hasNext ());
   }
+
+  @SuppressWarnings ("serial")
+  @Test
+  public void allWalkerVarArg () throws Throwable {
+    Iterator<Map<String, String>> actual = all (dimension ("row", "r1", "r2", "r3"),
+                                                dimension ("column", "c1", "c2", "c3"),
+                                                dimension ("depth", "d1", "d2", "d3")).iterator ();
+    Iterator<Map<String, String>> expected = new ArrayList<Map<String, String>> () {
+      {
+        for (int row = 1; row <= 3; row++)
+          for (int column = 1; column <= 3; column++)
+            for (int depth = 1; depth <= 3; depth++)
+              add (of ("row", "r" + row, "column", "c" + column, "depth", "d" + depth));
+      }
+    }.iterator ();
+    while (actual.hasNext () && expected.hasNext ())
+      assertThat (actual.next (), is (expected.next ()));
+    assertTrue (actual.hasNext () == expected.hasNext ());
+  }
 }
