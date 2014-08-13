@@ -17,7 +17,7 @@
 
   <properties>
     <javax.mail.version>1.4.7</javax.mail.version>
-    <cxf.version>3.0.0-milestone1</cxf.version>
+    <cxf.version>3.0.1</cxf.version>
   </properties>
 
   <dependencies>
