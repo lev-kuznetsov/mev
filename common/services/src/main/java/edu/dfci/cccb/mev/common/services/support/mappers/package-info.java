@@ -14,14 +14,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.services.guice.jaxrs;
-
-import javax.ws.rs.ext.MessageBodyReader;
-
 /**
- * Binds {@link MessageBodyReader} providers
- * 
  * @author levk
- * @since CRYSTAL
  */
-public interface MessageReaderBinder extends ProviderBinder<MessageBodyReader<?>> {}
+package edu.dfci.cccb.mev.common.services.support.mappers;

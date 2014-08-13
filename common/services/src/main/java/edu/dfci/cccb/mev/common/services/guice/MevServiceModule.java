@@ -32,6 +32,7 @@ import edu.dfci.cccb.mev.common.services.guice.jaxrs.MessageWriterBinder;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceBinder;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceModule;
+import edu.dfci.cccb.mev.common.services.support.mappers.MevExceptionMapper;
 import edu.dfci.cccb.mev.common.services.support.messages.JacksonMessageWriter;
 
 /**
@@ -41,12 +42,12 @@ import edu.dfci.cccb.mev.common.services.support.messages.JacksonMessageWriter;
  * @since CRYSTAL
  */
 public class MevServiceModule implements Module {
+  public static final String SERVICE_URI = "/services/*";
 
   public static final MediaType TEXT_TSV_TYPE = new MediaType ("text", "tab-separated-values");
   public static final String TEXT_TSV = "text/tab-separated-values";
 
   private static final String PARAMETER = "format";
-  private static final String SERVICE_URL = "/services/*";
 
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
@@ -98,7 +99,12 @@ public class MevServiceModule implements Module {
 
           @Override
           public void configure (ServiceBinder binder) {
-            binder.service (SERVICE_URL);
+            binder.service (SERVICE_URI);
+          }
+
+          @Override
+          public void configure (ExceptionBinder binder) {
+            binder.use (MevExceptionMapper.class);
           }
         });
       }

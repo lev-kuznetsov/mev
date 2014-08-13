@@ -454,7 +454,7 @@ public class ServiceModule implements Module {
         @Override
         public void init (ServletConfig servletConfig) throws ServletException {
           super.init (servletConfig);
-          
+
           ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
           PrintStream info = new PrintStream (buffer);
           info.println ("JAX-RS");
