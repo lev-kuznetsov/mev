@@ -20,7 +20,7 @@
  * @author levk
  * @since CRYSTAL
  */
-define ('dataset.service', [ 'mev', 'dataset', 'angular', 'angularResource', 'mev-services' ], function (mev, dataset, ng) {
+define ('dataset.service', [ 'mev', 'dataset', 'angular', 'angularResource' ], function (mev, dataset, ng) {
 
   mev.dataset = {};
 
