@@ -89,7 +89,7 @@ public abstract class DimensionAdapter <K> implements Dimension<K> {
       Iterator<?> that = other.iterator ();
       Iterator<K> current = iterator ();
       while (that.hasNext () && current.hasNext () && (current.next ().equals (that.next ())));
-      return true;
+      return !that.hasNext () && !current.hasNext ();
     } else
       return false;
   }
