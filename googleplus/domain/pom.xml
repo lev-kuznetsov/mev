@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>mev-googleplus-domain</artifactId>
+  <packaging>jar</packaging>
+
+  <name>MeV Google Plus Module Domain</name>
+  <url>http://github.com/dfci-cccb/mev</url>
+
+  <parent>
+    <groupId>edu.dfci.cccb</groupId>
+    <artifactId>mev-prototype-domain</artifactId>
+    <version>CRYSTAL-SNAPSHOT</version>
+    <relativePath>../../prototype/domain</relativePath>
+  </parent>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-common-domain</artifactId>
+      <version>${mev.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-drive</artifactId>
+      <version>${google-api-services-drive.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.http-client</groupId>
+      <artifactId>google-http-client-jackson</artifactId>
+      <version>1.18.0-rc</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.inject.extensions</groupId>
+      <artifactId>guice-throwingproviders</artifactId>
+      <version>${guice.version}</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+
+    </plugins>
+
+  </build>
+
+</project>
