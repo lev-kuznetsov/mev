@@ -16,34 +16,41 @@
 
 package edu.dfci.cccb.mev.googleplus.services.controllers;
 
-import static edu.dfci.cccb.mev.googleplus.domain.guice.GoogleDomainModule.REDIRECT_URI;
+import static edu.dfci.cccb.mev.googleplus.domain.support.Mixins.execute;
 
 import java.io.IOException;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Provider;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.services.plus.Plus;
+import com.google.api.services.plus.model.PeopleFeed;
+
+import edu.dfci.cccb.mev.common.domain.support.MevException;
 
 /**
  * @author levk
  * @since CRYSTAL
  */
-@Path ("/google")
-public class AuthorizationController {
+@Path ("/google/people")
+public class PeopleController {
 
-  private @Inject GoogleAuthorizationCodeFlow flow;
-  private @Inject @Named (REDIRECT_URI) String uri;
-  private @Inject Provider<GoogleCredential> credential;
+  private @Inject Provider<Plus> plus;
 
   @GET
-  @Path ("/callback")
-  public void login (@QueryParam ("code") String code) throws IOException {
-    credential.get ().setFromTokenResponse (flow.newTokenRequest (code).setRedirectUri (uri).execute ());
+  @Produces ("application/json")
+  public PeopleFeed people (@QueryParam ("size") @DefaultValue ("20") long size) throws MevException, IOException {
+    return execute (plus.get ().people ().list ("me", "visible").setMaxResults (size));
+  }
+
+  @GET
+  @Produces ("application/json")
+  public PeopleFeed people (@QueryParam ("page") String page) throws MevException, IOException {
+    return execute (plus.get ().people ().list ("me", "visible").setPageToken (page));
   }
 }

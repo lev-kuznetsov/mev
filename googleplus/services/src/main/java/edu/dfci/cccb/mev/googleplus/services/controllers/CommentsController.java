@@ -16,34 +16,43 @@
 
 package edu.dfci.cccb.mev.googleplus.services.controllers;
 
-import static edu.dfci.cccb.mev.googleplus.domain.guice.GoogleDomainModule.REDIRECT_URI;
+import static edu.dfci.cccb.mev.googleplus.domain.support.Mixins.execute;
 
 import java.io.IOException;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Provider;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.model.CommentList;
+
+import edu.dfci.cccb.mev.common.domain.support.MevException;
 
 /**
  * @author levk
  * @since CRYSTAL
  */
-@Path ("/google")
-public class AuthorizationController {
+@Path ("/google/comment")
+public class CommentsController {
 
-  private @Inject GoogleAuthorizationCodeFlow flow;
-  private @Inject @Named (REDIRECT_URI) String uri;
-  private @Inject Provider<GoogleCredential> credential;
+  private @Inject Provider<Drive> drive;
 
   @GET
-  @Path ("/callback")
-  public void login (@QueryParam ("code") String code) throws IOException {
-    credential.get ().setFromTokenResponse (flow.newTokenRequest (code).setRedirectUri (uri).execute ());
+  @Produces ("application/json")
+  public CommentList list (@QueryParam ("file") String file,
+                           @QueryParam ("size") @DefaultValue ("20") int size) throws IOException, MevException {
+    return execute (drive.get ().comments ().list (file).setMaxResults (size));
+  }
+
+  @GET
+  @Produces ("application/json")
+  public CommentList list (@QueryParam ("file") String file,
+                           @QueryParam ("page") String page) throws IOException, MevException {
+    return execute (drive.get ().comments ().list (file).setPageToken (page));
   }
 }
