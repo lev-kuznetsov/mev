@@ -9,7 +9,10 @@
     </layout>
   </appender>
   <logger name="org.apache.cxf">
-    <level value="info"></level>
+    <level value="info" />
+  </logger>
+  <logger name="org.apache.commons.configuration">
+    <level value="info" />
   </logger>
   <root>
     <priority value="debug"></priority>
