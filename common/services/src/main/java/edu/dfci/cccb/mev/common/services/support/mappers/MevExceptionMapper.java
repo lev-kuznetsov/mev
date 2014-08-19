@@ -23,27 +23,39 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.ext.ExceptionMapper;
 
+import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.common.domain.support.MevException;
 
 /**
  * @author levk
  * @since CRYSTAL
  */
-public class MevExceptionMapper implements ExceptionMapper<MevException> {
+@Log4j
+public class MevExceptionMapper <E extends MevException> implements ExceptionMapper<E> {
 
   /* (non-Javadoc)
    * @see javax.ws.rs.ext.ExceptionMapper#toResponse(java.lang.Throwable) */
   @Override
   @Produces ("application/json")
-  public Response toResponse (MevException exception) {
+  public Response toResponse (E exception) {
+    if (log.isDebugEnabled ())
+      log.debug ("Mapping exception " + exception);
     return toResponseBuilder (exception).entity (toEntity (exception)).build ();
   }
 
-  protected <T extends MevException> ResponseBuilder toResponseBuilder (T exception) {
+  /**
+   * @param exception
+   * @return response builder based on exception instance
+   */
+  protected ResponseBuilder toResponseBuilder (E exception) {
     return serverError ();
   }
 
-  protected <T extends MevException> Object toEntity (T exception) {
+  /**
+   * @param exception
+   * @return response entity
+   */
+  protected Object toEntity (E exception) {
     return exception;
   }
 }
