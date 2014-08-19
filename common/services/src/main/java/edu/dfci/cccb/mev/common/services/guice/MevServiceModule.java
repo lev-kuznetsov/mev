@@ -19,12 +19,12 @@ package edu.dfci.cccb.mev.common.services.guice;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
 
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.ext.ExceptionMapper;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
 
 import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
+import edu.dfci.cccb.mev.common.domain.support.MevException;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationConfigurer;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationMapper;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ExceptionBinder;
@@ -103,10 +103,9 @@ public class MevServiceModule implements Module {
             binder.service (SERVICE_URI);
           }
 
-          @SuppressWarnings ("unchecked")
           @Override
           public void configure (ExceptionBinder binder) {
-            binder.use ((Class<? extends ExceptionMapper<?>>) MevExceptionMapper.class);
+            binder.useInstance (new MevExceptionMapper<MevException> ());
           }
         });
       }
