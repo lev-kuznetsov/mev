@@ -44,6 +44,8 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson.JacksonFactory;
 import com.google.api.services.drive.Drive;
+import com.google.api.services.plus.Plus;
+import com.google.api.services.plusDomains.PlusDomains;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.Provides;
@@ -51,7 +53,31 @@ import com.google.inject.Scope;
 import com.google.inject.binder.ScopedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
 
-import edu.dfci.cccb.mev.googleplus.domain.utilities.Mixins;
+import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonModule;
+import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
+import edu.dfci.cccb.mev.googleplus.domain.support.Mixins;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.CircleFeedSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.CircleSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.CommentListSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.CommentReplySerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.CommentSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.CoverInfoSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.CoverPhotoSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.CoverSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.DateTimeSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.EmailsSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.FileListSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.FileSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.ImageSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.LabelsSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.OrganizationsSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.PeopleFeedSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.PeopleSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.PersonSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.PlacesLivedSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.PropertySerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.UrlsSerializer;
+import edu.dfci.cccb.mev.googleplus.domain.support.jackson.UserSerializer;
 
 /**
  * @author levk
@@ -116,6 +142,38 @@ public class GoogleDomainModule implements Module {
   public final void configure (final Binder binder) {
     bindProperties (binder, load ("/META-INF/configuration/google.properties"));
 
+    binder.install (new JacksonModule () {
+      /* (non-Javadoc)
+       * @see
+       * edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonModule#configure
+       * (edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder) */
+      @Override
+      public void configure (JacksonSerializerBinder binder) {
+        binder.with (CircleFeedSerializer.class);
+        binder.with (CircleSerializer.class);
+        binder.with (CommentListSerializer.class);
+        binder.with (CommentReplySerializer.class);
+        binder.with (CommentSerializer.class);
+        binder.with (CoverInfoSerializer.class);
+        binder.with (CoverPhotoSerializer.class);
+        binder.with (CoverSerializer.class);
+        binder.with (DateTimeSerializer.class);
+        binder.with (EmailsSerializer.class);
+        binder.with (FileListSerializer.class);
+        binder.with (FileSerializer.class);
+        binder.with (ImageSerializer.class);
+        binder.with (LabelsSerializer.class);
+        binder.with (OrganizationsSerializer.class);
+        binder.with (PeopleFeedSerializer.class);
+        binder.with (PeopleSerializer.class);
+        binder.with (PersonSerializer.class);
+        binder.with (PlacesLivedSerializer.class);
+        binder.with (PropertySerializer.class);
+        binder.with (UrlsSerializer.class);
+        binder.with (UserSerializer.class);
+      }
+    });
+
     final Multibinder<String> scopes = newSetBinder (binder, String.class, named (SCOPES));
 
     configure (new ScopeBinder () {
@@ -144,7 +202,7 @@ public class GoogleDomainModule implements Module {
           private @Inject Provider<GoogleCredential> credentialProvider;
           private @Inject HttpTransport transport;
           private @Inject JsonFactory jsonFactory;
-          private @com.google.inject.Inject (optional = true) @Named (APPLICATION_NAME) String applicationName = "MeV";
+          private @Inject @Named (APPLICATION_NAME) String applicationName;
 
           @Override
           public Drive get () {
@@ -152,6 +210,36 @@ public class GoogleDomainModule implements Module {
                                       jsonFactory,
                                       credentialProvider.get ()).setApplicationName (applicationName)
                                                                 .build ();
+          }
+        }));
+        services.add (binder.bind (Plus.class).toProvider (new com.google.inject.Provider<Plus> () {
+
+          private @Inject Provider<GoogleCredential> credentialProvider;
+          private @Inject HttpTransport transport;
+          private @Inject JsonFactory jsonFactory;
+          private @Inject @Named (APPLICATION_NAME) String applicationName;
+
+          @Override
+          public Plus get () {
+            return new Plus.Builder (transport,
+                                     jsonFactory,
+                                     credentialProvider.get ()).setApplicationName (applicationName)
+                                                               .build ();
+          }
+        }));
+        services.add (binder.bind (PlusDomains.class).toProvider (new com.google.inject.Provider<PlusDomains> () {
+
+          private @Inject Provider<GoogleCredential> credentialProvider;
+          private @Inject HttpTransport transport;
+          private @Inject JsonFactory jsonFactory;
+          private @Inject @Named (APPLICATION_NAME) String applicationName;
+
+          @Override
+          public PlusDomains get () {
+            return new PlusDomains.Builder (transport,
+                                            jsonFactory,
+                                            credentialProvider.get ()).setApplicationName (applicationName)
+                                                                      .build ();
           }
         }));
       }

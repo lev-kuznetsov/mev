@@ -16,9 +16,21 @@
 
 package edu.dfci.cccb.mev.googleplus.domain.guice;
 
+import static com.google.api.services.drive.DriveScopes.DRIVE_APPDATA;
+import static com.google.api.services.drive.DriveScopes.DRIVE_APPS_READONLY;
+import static com.google.api.services.drive.DriveScopes.DRIVE_FILE;
+import static com.google.api.services.drive.DriveScopes.DRIVE_METADATA_READONLY;
+import static com.google.api.services.drive.DriveScopes.DRIVE_SCRIPTS;
+import static com.google.api.services.plus.PlusScopes.PLUS_LOGIN;
+import static com.google.api.services.plus.PlusScopes.PLUS_ME;
+import static com.google.api.services.plus.PlusScopes.USERINFO_EMAIL;
+import static com.google.api.services.plus.PlusScopes.USERINFO_PROFILE;
+import static com.google.api.services.plusDomains.PlusDomainsScopes.PLUS_CIRCLES_READ;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
+
+import com.google.api.services.drive.DriveScopes;
 
 /**
  * Binds Google API scopes
@@ -41,9 +53,22 @@ public interface ScopeBinder {
   @RequiredArgsConstructor
   @Accessors (fluent = true)
   public static enum Scopes implements Scope {
-    PROFILE ("https://www.googleapis.com/auth/userinfo.profile"),
-    EMAIL ("https://www.googleapis.com/auth/userinfo.email"),
-    DRIVE ("https://www.googleapis.com/auth/drive.file");
+    // Plus
+    PROFILE (USERINFO_PROFILE),
+    EMAIL (USERINFO_EMAIL),
+    ME (PLUS_ME),
+    LOGIN (PLUS_LOGIN),
+
+    // Drive
+    DRIVE (DriveScopes.DRIVE),
+    CONFIGURATION (DRIVE_APPDATA),
+    SCRIPTS (DRIVE_SCRIPTS),
+    APPS (DRIVE_APPS_READONLY),
+    METADATA (DRIVE_METADATA_READONLY),
+    FILE (DRIVE_FILE),
+
+    // Domains
+    CIRCLES (PLUS_CIRCLES_READ);
 
     private @Getter final String value;
   }

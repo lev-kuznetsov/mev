@@ -15,7 +15,9 @@
  */
 
 /**
+ * Jackson support
+ * 
  * @author levk
  * @since CRYSTAL
  */
-package edu.dfci.cccb.mev.googleplus.domain.utilities;
+package edu.dfci.cccb.mev.googleplus.domain.support.jackson;

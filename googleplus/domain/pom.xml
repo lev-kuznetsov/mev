@@ -31,15 +31,33 @@
     </dependency>
 
     <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-plus</artifactId>
+      <version>${google-api-services-plus.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-plusDomains</artifactId>
+      <version>${google-api-services-plusDomains.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>com.google.http-client</groupId>
       <artifactId>google-http-client-jackson</artifactId>
-      <version>1.18.0-rc</version>
+      <version>${google-http-client-jackson.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.google.inject.extensions</groupId>
       <artifactId>guice-throwingproviders</artifactId>
       <version>${guice.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-common-test</artifactId>
+      <version>${mev.version}</version>
     </dependency>
 
   </dependencies>

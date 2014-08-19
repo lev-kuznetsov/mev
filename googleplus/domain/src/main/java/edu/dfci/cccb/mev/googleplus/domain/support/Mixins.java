@@ -14,8 +14,9 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.googleplus.domain.utilities;
+package edu.dfci.cccb.mev.googleplus.domain.support;
 
+import static com.google.api.client.http.HttpStatusCodes.STATUS_CODE_UNAUTHORIZED;
 import static edu.dfci.cccb.mev.googleplus.domain.guice.GoogleDomainModule.AUTHORIZATION_URL;
 
 import java.io.IOException;
@@ -54,10 +55,10 @@ public final class Mixins {
       return request.execute ();
     } catch (GoogleJsonResponseException e) {
       switch (e.getStatusCode ()) {
-      case 401:
+      case STATUS_CODE_UNAUTHORIZED:
         throw new UnauthorizedException (e).authorizationUrl (authorizationUrl);
       }
-      log.debug ("Unhandled GoogleJsonResponseException", e);
+      log.debug ("Unhandled google exception", e);
       throw e;
     }
   }

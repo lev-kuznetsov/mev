@@ -14,9 +14,9 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.googleplus.domain.utilities;
+package edu.dfci.cccb.mev.googleplus.domain.support;
 
-import static edu.dfci.cccb.mev.googleplus.domain.utilities.Mixins.execute;
+import static edu.dfci.cccb.mev.googleplus.domain.support.Mixins.execute;
 
 import org.junit.Test;
 
@@ -28,9 +28,6 @@ import com.google.api.services.drive.model.File;
 
 import edu.dfci.cccb.mev.googleplus.domain.contract.UnauthorizedException;
 
-/**
- * @author levk
- */
 public class MixinsTest {
 
   @Test (expected = UnauthorizedException.class)
@@ -42,5 +39,4 @@ public class MixinsTest {
                                                         .files ()
                                                         .insert (new File ()));
   }
-
 }
