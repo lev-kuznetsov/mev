@@ -52,17 +52,31 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
+import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
+import javax.ws.rs.ext.Providers;
 
 import lombok.extern.log4j.Log4j;
 
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.interceptor.Interceptor;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
+import org.apache.cxf.jaxrs.impl.HttpHeadersImpl;
+import org.apache.cxf.jaxrs.impl.ProvidersImpl;
+import org.apache.cxf.jaxrs.impl.RequestImpl;
+import org.apache.cxf.jaxrs.impl.SecurityContextImpl;
+import org.apache.cxf.jaxrs.impl.UriInfoImpl;
 import org.apache.cxf.jaxrs.lifecycle.ResourceProvider;
 import org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet;
 import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.AbstractPhaseInterceptor;
+import org.apache.cxf.phase.Phase;
 
 import ch.lambdaj.function.convert.Converter;
 
@@ -78,7 +92,10 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
+import com.google.inject.servlet.RequestScoped;
 import com.google.inject.servlet.ServletModule;
+
+import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
 
 /**
  * JAX-RS service module
@@ -89,11 +106,11 @@ import com.google.inject.servlet.ServletModule;
 @Log4j
 public class ServiceModule implements Module {
 
-  private static final String PROVIDERS = "_jaxrs.providers";
-  private static final String RESOURCES = "_jaxrs.resources";
-  private static final String PARAMETER_NAME = "_jaxrs.cn.query.param";
-  private static final String EXTENSIONS = "_jaxrs.cn.extensions";
-  private static final String PARAMETER_VALUES = "_jaxrs.cn.query.param.values";
+  private static final String PROVIDERS = "jaxrs.providers";
+  private static final String RESOURCES = "jaxrs.resources";
+  private static final String PARAMETER_NAME = "jaxrs.cn.query.param";
+  private static final String EXTENSIONS = "jaxrs.cn.extensions";
+  private static final String PARAMETER_VALUES = "jaxrs.cn.query.param.values";
 
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
@@ -348,6 +365,58 @@ public class ServiceModule implements Module {
       }
     });
 
+    final ThreadLocal<Message> message = new ThreadLocal<Message> () {
+      @Override
+      public Message get () {
+        Message result = super.get ();
+        if (result == null)
+          throw new IllegalStateException ("Attempted to bind JAXRS message outside of request scope");
+        else
+          return result;
+      }
+    };
+
+    binder.install (new SingletonModule () {
+
+      @Override
+      public void configure (Binder binder) {
+        binder.bind (UriInfo.class).toProvider (new Provider<UriInfo> () {
+          @Override
+          public UriInfo get () {
+            return new UriInfoImpl (message.get ());
+          }
+        }).in (RequestScoped.class);
+
+        binder.bind (HttpHeaders.class).toProvider (new Provider<HttpHeaders> () {
+          @Override
+          public HttpHeaders get () {
+            return new HttpHeadersImpl (message.get ());
+          }
+        }).in (RequestScoped.class);
+
+        binder.bind (Providers.class).toProvider (new Provider<Providers> () {
+          @Override
+          public Providers get () {
+            return new ProvidersImpl (message.get ());
+          }
+        }).in (RequestScoped.class);
+
+        binder.bind (SecurityContext.class).toProvider (new Provider<SecurityContext> () {
+          @Override
+          public SecurityContext get () {
+            return new SecurityContextImpl (message.get ());
+          }
+        }).in (RequestScoped.class);
+
+        binder.bind (Request.class).toProvider (new Provider<Request> () {
+          @Override
+          public Request get () {
+            return new RequestImpl (message.get ());
+          }
+        }).in (RequestScoped.class);
+      }
+    });
+
     configure (new ServiceBinder () {
 
       class InjectedCxfJaxrsServlet extends CXFNonSpringJaxrsServlet {
@@ -551,6 +620,18 @@ public class ServiceModule implements Module {
         @Override
         protected void setExtensions (JAXRSServerFactoryBean bean, ServletConfig servletConfig) {
           bean.setExtensionMappings (extensions);
+        }
+
+        @Override
+        protected void setAllInterceptors (JAXRSServerFactoryBean bean, ServletConfig servletConfig, String splitChar) throws ServletException {
+          List<Interceptor<? extends Message>> interceptors = new ArrayList<> ();
+          interceptors.add (new AbstractPhaseInterceptor<Message> (Phase.PRE_INVOKE) {
+            @Override
+            public void handleMessage (Message m) throws Fault {
+              message.set (m);
+            }
+          });
+          bean.setInInterceptors (interceptors);
         }
 
         @Override

@@ -44,14 +44,19 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
+import javax.ws.rs.ext.Providers;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -765,6 +770,35 @@ public class ServiceModuleTest {
       assertThat (j.post ("/test/pojo2/hello",
                           new ByteArrayInputStream ("{\"word\":\"world\",\"number\":5}".getBytes ())),
                   startsWith ("5"));
+    }
+  }
+
+  @Path ("/inject")
+  @SuppressWarnings ("unused")
+  public static class InjectedTestService {
+    private @Inject UriInfo i;
+    private @Inject Providers p;
+    private @Inject Request r;
+    private @Inject HttpHeaders h;
+    private @Inject SecurityContext s;
+
+    @GET
+    @Path ("/{param}")
+    public String get (@PathParam ("param") String param) {
+      return i.getPathParameters ().getFirst ("param");
+    }
+  }
+
+  public static class InjectedTestServiceModule extends TestServiceModule {
+    public void configure (ResourceBinder binder) {
+      binder.publish (InjectedTestService.class).in (Singleton.class);
+    }
+  }
+
+  @Test
+  public void injectables () throws Exception {
+    try (Jetty9 j = serve (new InjectedTestServiceModule ())) {
+      assertThat (j.get ("/test/inject/hello"), is ("hello"));
     }
   }
 }
