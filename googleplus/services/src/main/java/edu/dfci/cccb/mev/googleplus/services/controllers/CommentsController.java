@@ -17,6 +17,7 @@
 package edu.dfci.cccb.mev.googleplus.services.controllers;
 
 import static edu.dfci.cccb.mev.googleplus.domain.support.Mixins.execute;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.io.IOException;
 
@@ -43,14 +44,14 @@ public class CommentsController {
   private @Inject Provider<Drive> drive;
 
   @GET
-  @Produces ("application/json")
+  @Produces (APPLICATION_JSON)
   public CommentList list (@QueryParam ("file") String file,
                            @QueryParam ("size") @DefaultValue ("20") int size) throws IOException, MevException {
     return execute (drive.get ().comments ().list (file).setMaxResults (size));
   }
 
   @GET
-  @Produces ("application/json")
+  @Produces (APPLICATION_JSON)
   public CommentList list (@QueryParam ("file") String file,
                            @QueryParam ("page") String page) throws IOException, MevException {
     return execute (drive.get ().comments ().list (file).setPageToken (page));

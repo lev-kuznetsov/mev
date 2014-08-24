@@ -17,6 +17,7 @@
 package edu.dfci.cccb.mev.googleplus.services.controllers;
 
 import static edu.dfci.cccb.mev.googleplus.domain.support.Mixins.execute;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.io.IOException;
 
@@ -43,13 +44,13 @@ public class PeopleController {
   private @Inject Provider<Plus> plus;
 
   @GET
-  @Produces ("application/json")
+  @Produces (APPLICATION_JSON)
   public PeopleFeed people (@QueryParam ("size") @DefaultValue ("20") long size) throws MevException, IOException {
     return execute (plus.get ().people ().list ("me", "visible").setMaxResults (size));
   }
 
   @GET
-  @Produces ("application/json")
+  @Produces (APPLICATION_JSON)
   public PeopleFeed people (@QueryParam ("page") String page) throws MevException, IOException {
     return execute (plus.get ().people ().list ("me", "visible").setPageToken (page));
   }

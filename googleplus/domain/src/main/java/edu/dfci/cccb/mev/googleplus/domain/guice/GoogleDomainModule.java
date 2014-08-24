@@ -120,9 +120,9 @@ public class GoogleDomainModule implements Module {
                                                                   @Named (API_KEY) String key,
                                                                   @Named (API_SECRET) String secret,
                                                                   @Named (SCOPES) Set<String> scopes) {
-    return new Builder (httpTransport, jsonFactory, key, secret, scopes).setAccessType ("online")
-                                                                        .setApprovalPrompt ("auto")
-                                                                        .build ();
+    return new Builder (httpTransport, jsonFactory, null, scopes).setAccessType ("offline")
+                                                                 .setApprovalPrompt ("auto")
+                                                                 .build ();
   }
 
   /**
