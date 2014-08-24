@@ -38,7 +38,7 @@ import org.junit.Test;
 
 import com.google.common.collect.ImmutableMap;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.Dimension;
 
 public class DimensionAdapterTest {
 

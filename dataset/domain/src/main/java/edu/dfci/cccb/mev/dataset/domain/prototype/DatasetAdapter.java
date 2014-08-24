@@ -29,10 +29,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.dataset.domain.contract.Values;
+import edu.dfci.cccb.mev.dataset.domain.Analysis;
+import edu.dfci.cccb.mev.dataset.domain.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.Values;
 
 /**
  * Common {@link Dataset} implementation
@@ -49,6 +49,11 @@ public class DatasetAdapter <K, V> implements Dataset<K, V> {
   private final @Getter Map<String, Dimension<K>> dimensions;
   private final @Getter Map<String, Analysis> analyses;
   private final @Getter Values<K, V> values;
+
+  /**
+   * For named workspace injection
+   */
+  public static final String WORKSPACE = "workspace";
 
   public DatasetAdapter (String name,
                          Map<String, Dimension<K>> map,

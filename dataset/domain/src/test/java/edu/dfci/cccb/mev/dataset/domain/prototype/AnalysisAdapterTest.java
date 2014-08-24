@@ -24,7 +24,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
+import edu.dfci.cccb.mev.dataset.domain.Analysis;
 
 public class AnalysisAdapterTest {
 

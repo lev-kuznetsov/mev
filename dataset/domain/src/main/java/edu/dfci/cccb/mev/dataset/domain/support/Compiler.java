@@ -21,7 +21,7 @@ import static java.lang.String.valueOf;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Values;
+import edu.dfci.cccb.mev.dataset.domain.Values;
 
 /**
  * @author levk

@@ -14,7 +14,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain.contract;
+package edu.dfci.cccb.mev.dataset.domain;
 
 import edu.dfci.cccb.mev.common.domain.support.MevException;
 

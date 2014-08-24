@@ -16,10 +16,9 @@
 
 package edu.dfci.cccb.mev.dataset.services.controllers;
 
-import static edu.dfci.cccb.mev.dataset.domain.contract.annotation.Workspace.WORKSPACE;
+import static edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.WORKSPACE;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
-import java.io.InputStream;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -31,8 +30,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.support.Builder;
+import edu.dfci.cccb.mev.dataset.domain.Dataset;
 
 /**
  * @author levk
@@ -45,10 +43,8 @@ public class DatasetController {
   public static final MediaType TAB_SEPARATED_VALUES_TYPE = new MediaType ("text", "tab-separated-values");
 
   private @Inject @Named (WORKSPACE) Map<String, Dataset<String, Double>> workspace;
-  private @Inject Builder<String, Double> builder;
 
   /**
-   * @param name of the dataset
    * @return dataset from workspace
    */
   @GET
@@ -62,7 +58,7 @@ public class DatasetController {
    */
   @PUT
   @Consumes ({ TEXT_PLAIN, TAB_SEPARATED_VALUES })
-  public void put (@PathParam ("dataset") String name, InputStream input) throws Exception {
-    workspace.put (name, builder.build (name, input));
+  public void put (@PathParam ("dataset") String name, Dataset<String, Double> input) throws Exception {
+    workspace.put (name, input);
   }
 }

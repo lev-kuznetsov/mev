@@ -34,8 +34,8 @@ import com.google.inject.Guice;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.Values.Value;
+import edu.dfci.cccb.mev.dataset.domain.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.Values.Value;
 import edu.dfci.cccb.mev.dataset.domain.support.Builder;
 
 public class DatasetModuleTest {

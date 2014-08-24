@@ -14,30 +14,35 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain.contract.annotation;
+package edu.dfci.cccb.mev.dataset.domain;
 
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
-import javax.inject.Scope;
+import java.util.Map;
 
 /**
+ * Represents a dataset
+ * 
  * @author levk
- * @since CRYSTAL
+ * @since BAYLIE
  */
-@Scope
-@Retention (RUNTIME)
-@Target ({ TYPE, METHOD })
-@Documented
-public @interface Workspace {
+public interface Dataset <K, V> {
 
   /**
-   * Used for named injection of the workspace
+   * @return name
    */
-  public static final String WORKSPACE = "workspace";
+  String name ();
+
+  /**
+   * @return dimensions
+   */
+  Map<String, Dimension<K>> dimensions ();
+
+  /**
+   * @return analyses
+   */
+  Map<String, Analysis> analyses ();
+
+  /**
+   * @return value store
+   */
+  Values<K, V> values ();
 }

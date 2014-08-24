@@ -36,11 +36,11 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.dataset.domain.contract.Values;
-import edu.dfci.cccb.mev.dataset.domain.contract.Values.Value;
+import edu.dfci.cccb.mev.dataset.domain.Analysis;
+import edu.dfci.cccb.mev.dataset.domain.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.Values;
+import edu.dfci.cccb.mev.dataset.domain.Values.Value;
 
 public class DatasetAdapterTest {
 

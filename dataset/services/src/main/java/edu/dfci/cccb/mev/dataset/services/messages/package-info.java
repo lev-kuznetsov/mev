@@ -14,25 +14,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain.contract;
-
-import javax.xml.bind.annotation.XmlAttribute;
-
 /**
  * @author levk
- * @since BAYLIE
+ * @since CRYSTAL
  */
-public interface Analysis {
-
-  /**
-   * @return name of the analysis
-   */
-  @XmlAttribute
-  String name ();
-
-  /**
-   * @return type of analysis
-   */
-  @XmlAttribute
-  String type ();
-}
+package edu.dfci.cccb.mev.dataset.services.messages;

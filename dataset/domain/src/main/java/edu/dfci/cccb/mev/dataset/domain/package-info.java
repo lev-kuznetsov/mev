@@ -15,6 +15,9 @@
  */
 
 /**
+ * Dataset domain
+ *
  * @author levk
+ * @since BAYLIE
  */
-package edu.dfci.cccb.mev.dataset.domain.contract.annotation;
+package edu.dfci.cccb.mev.dataset.domain;

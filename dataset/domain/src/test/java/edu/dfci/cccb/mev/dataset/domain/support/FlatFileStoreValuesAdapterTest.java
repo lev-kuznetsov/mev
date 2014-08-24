@@ -31,7 +31,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Values.Value;
+import edu.dfci.cccb.mev.dataset.domain.Values.Value;
 import edu.dfci.cccb.mev.dataset.domain.support.binary.FlatFileStoreValuesAdapter;
 
 public class FlatFileStoreValuesAdapterTest {

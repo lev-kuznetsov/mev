@@ -35,7 +35,7 @@ import com.google.inject.TypeLiteral;
 import edu.dfci.cccb.mev.common.domain.guice.MevDomainModule;
 import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DimensionAdapter;
 import edu.dfci.cccb.mev.dataset.domain.support.Builder;

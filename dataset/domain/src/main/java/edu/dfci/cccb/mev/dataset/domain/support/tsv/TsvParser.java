@@ -36,7 +36,7 @@ import org.supercsv.prefs.CsvPreference;
 import org.supercsv.prefs.CsvPreference.Builder;
 import org.supercsv.util.CsvContext;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Values.Value;
+import edu.dfci.cccb.mev.dataset.domain.Values.Value;
 import edu.dfci.cccb.mev.dataset.domain.support.Consumer;
 import edu.dfci.cccb.mev.dataset.domain.support.Parser;
 import edu.dfci.cccb.mev.dataset.domain.support.Resolver;

@@ -29,7 +29,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.Dimension;
 
 /**
  * @author levk

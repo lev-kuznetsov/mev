@@ -38,11 +38,11 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonIntrospectorBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonModule;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
-import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.dataset.domain.contract.Values;
-import edu.dfci.cccb.mev.dataset.domain.contract.Values.Value;
+import edu.dfci.cccb.mev.dataset.domain.Analysis;
+import edu.dfci.cccb.mev.dataset.domain.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.Values;
+import edu.dfci.cccb.mev.dataset.domain.Values.Value;
 
 public class DatasetJsonSerializerTest {
 

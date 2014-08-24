@@ -29,8 +29,8 @@ import javax.sql.DataSource;
 import org.jooq.Field;
 
 import edu.dfci.cccb.mev.common.domain.jooq.Store;
-import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateSetException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Values;
+import edu.dfci.cccb.mev.dataset.domain.InvalidCoordinateSetException;
+import edu.dfci.cccb.mev.dataset.domain.Values;
 import edu.dfci.cccb.mev.dataset.domain.support.Consumer;
 
 /**

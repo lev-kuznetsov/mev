@@ -16,11 +16,12 @@
 
 package edu.dfci.cccb.mev.dataset.services.guice;
 
-import static edu.dfci.cccb.mev.dataset.domain.contract.annotation.Workspace.WORKSPACE;
+import static edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.WORKSPACE;
 
 import java.util.Map;
 
 import javax.inject.Named;
+import javax.ws.rs.core.UriInfo;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
@@ -29,11 +30,15 @@ import com.google.inject.servlet.RequestScoped;
 import com.google.inject.servlet.SessionScoped;
 
 import edu.dfci.cccb.mev.common.services.guice.MevServiceModule;
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.MessageReaderBinder;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.Analysis;
+import edu.dfci.cccb.mev.dataset.domain.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
 import edu.dfci.cccb.mev.dataset.services.controllers.DatasetController;
 import edu.dfci.cccb.mev.dataset.services.controllers.WorkspaceController;
+import edu.dfci.cccb.mev.dataset.services.messages.TsvDatasetMessageReader;
 
 /**
  * @author levk
@@ -51,6 +56,34 @@ public class DatasetServiceModule implements Module {
     return DatasetAdapter.workspace ();
   }
 
+  /**
+   * Provides the context dataset
+   */
+  @Provides
+  @RequestScoped
+  public Dataset<String, Double> dataset (@Named (WORKSPACE) Map<String, Dataset<String, Double>> workspace,
+                                          UriInfo uri) {
+    return workspace.get (uri.getPathParameters ().getFirst ("dataset"));
+  }
+
+  /**
+   * Provides the context dimension
+   */
+  @Provides
+  @RequestScoped
+  public Dimension<String> dimension (Dataset<String, Double> dataset, UriInfo uri) {
+    return dataset.dimensions ().get (uri.getPathParameters ().getFirst ("dimension"));
+  }
+
+  /**
+   * Provides the context analysis
+   */
+  @Provides
+  @RequestScoped
+  public Analysis analysis (Dataset<String, Double> dataset, UriInfo uri) {
+    return dataset.analyses ().get (uri.getPathParameters ().getFirst ("analysis"));
+  }
+
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
@@ -60,6 +93,11 @@ public class DatasetServiceModule implements Module {
       public void configure (ResourceBinder binder) {
         binder.publish (WorkspaceController.class).in (RequestScoped.class);
         binder.publish (DatasetController.class).in (RequestScoped.class);
+      }
+
+      @Override
+      public void configure (MessageReaderBinder binder) {
+        binder.useInstance (new TsvDatasetMessageReader ());
       }
     });
   }

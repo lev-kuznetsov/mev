@@ -16,7 +16,7 @@
 
 package edu.dfci.cccb.mev.dataset.services.controllers;
 
-import static edu.dfci.cccb.mev.dataset.domain.contract.annotation.Workspace.WORKSPACE;
+import static edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.WORKSPACE;
 
 import java.util.Map;
 
@@ -27,7 +27,7 @@ import javax.ws.rs.Path;
 
 import com.google.inject.servlet.RequestScoped;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.Dataset;
 
 /**
  * @author levk

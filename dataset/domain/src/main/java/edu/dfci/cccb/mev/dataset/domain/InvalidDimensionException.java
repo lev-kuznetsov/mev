@@ -14,32 +14,33 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain.contract;
-
-import java.util.Arrays;
+package edu.dfci.cccb.mev.dataset.domain;
 
 /**
+ * Exception indicating invalid dimension
+ * 
  * @author levk
+ * @since BAYLIE
  */
-public class InvalidCoordinateSetException extends DatasetException {
+public class InvalidDimensionException extends DatasetException {
   private static final long serialVersionUID = 1L;
 
   /**
    * 
    */
-  public InvalidCoordinateSetException () {}
+  public InvalidDimensionException () {}
 
   /**
    * @param message
    */
-  public InvalidCoordinateSetException (String message) {
+  public InvalidDimensionException (String message) {
     super (message);
   }
 
   /**
    * @param cause
    */
-  public InvalidCoordinateSetException (Throwable cause) {
+  public InvalidDimensionException (Throwable cause) {
     super (cause);
   }
 
@@ -47,7 +48,7 @@ public class InvalidCoordinateSetException extends DatasetException {
    * @param message
    * @param cause
    */
-  public InvalidCoordinateSetException (String message, Throwable cause) {
+  public InvalidDimensionException (String message, Throwable cause) {
     super (message, cause);
   }
 
@@ -57,14 +58,18 @@ public class InvalidCoordinateSetException extends DatasetException {
    * @param enableSuppression
    * @param writableStackTrace
    */
-  public InvalidCoordinateSetException (String message,
-                                        Throwable cause,
-                                        boolean enableSuppression,
-                                        boolean writableStackTrace) {
+  public InvalidDimensionException (String message,
+                                    Throwable cause,
+                                    boolean enableSuppression,
+                                    boolean writableStackTrace) {
     super (message, cause, enableSuppression, writableStackTrace);
   }
 
-  public InvalidCoordinateSetException coordinates (Object... projections) {
-    return property ("coordinates", Arrays.toString (projections));
+  /**
+   * @param dimension property to add
+   * @return this
+   */
+  public InvalidDimensionException dimension (String dimension) {
+    return property ("dimension", dimension);
   }
 }

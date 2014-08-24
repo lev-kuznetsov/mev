@@ -24,7 +24,7 @@ import static java.lang.Double.valueOf;
 import java.io.IOException;
 import java.io.InputStream;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Values.Value;
+import edu.dfci.cccb.mev.dataset.domain.Values.Value;
 
 /**
  * @author levk

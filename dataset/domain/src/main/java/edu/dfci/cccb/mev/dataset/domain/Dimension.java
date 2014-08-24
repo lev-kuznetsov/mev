@@ -14,10 +14,46 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
+package edu.dfci.cccb.mev.dataset.domain;
+
+import static javax.xml.bind.annotation.XmlAccessType.NONE;
+
+import java.util.Iterator;
+
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
- * Dataset interfaces
- *
+ * Dimension
+ * 
  * @author levk
  * @since BAYLIE
  */
-package edu.dfci.cccb.mev.dataset.domain.contract;
+@XmlRootElement
+@XmlAccessorType (NONE)
+public interface Dimension <K> extends Iterable<K> {
+
+  /**
+   * @return name of this dimension
+   */
+  @XmlAttribute
+  String name ();
+
+  /* (non-Javadoc)
+   * @see java.lang.Iterable#iterator() */
+  @Override
+  @XmlAttribute (name = "keys")
+  Iterator<K> iterator ();
+
+  /**
+   * @return number of keys
+   */
+  int size ();
+
+  /**
+   * @param index
+   * @return key at index specified
+   */
+  K get (int index);
+}

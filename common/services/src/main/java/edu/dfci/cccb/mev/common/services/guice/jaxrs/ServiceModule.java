@@ -367,12 +367,8 @@ public class ServiceModule implements Module {
 
     final ThreadLocal<Message> message = new ThreadLocal<Message> () {
       @Override
-      public Message get () {
-        Message result = super.get ();
-        if (result == null)
-          throw new IllegalStateException ("Attempted to bind JAXRS message outside of request scope");
-        else
-          return result;
+      protected Message initialValue () {
+        throw new IllegalStateException ("Attempted to bind JAXRS message outside of request context");
       }
     };
 

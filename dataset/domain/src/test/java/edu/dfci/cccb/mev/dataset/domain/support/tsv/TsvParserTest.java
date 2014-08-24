@@ -29,7 +29,7 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Values.Value;
+import edu.dfci.cccb.mev.dataset.domain.Values.Value;
 import edu.dfci.cccb.mev.dataset.domain.support.Consumer;
 import edu.dfci.cccb.mev.dataset.domain.support.Parser;
 

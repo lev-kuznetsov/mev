@@ -18,7 +18,7 @@ package edu.dfci.cccb.mev.dataset.domain.support;
 
 import java.io.InputStream;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.Dataset;
 
 /**
  * Defines dataset builder

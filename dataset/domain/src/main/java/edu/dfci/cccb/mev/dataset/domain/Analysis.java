@@ -14,38 +14,25 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain.contract;
+package edu.dfci.cccb.mev.dataset.domain;
 
-import java.util.Map;
-
-import edu.dfci.cccb.mev.dataset.domain.contract.annotation.Workspace;
+import javax.xml.bind.annotation.XmlAttribute;
 
 /**
- * Represents a dataset
- * 
  * @author levk
  * @since BAYLIE
  */
-@Workspace
-public interface Dataset <K, V> {
+public interface Analysis {
 
   /**
-   * @return name
+   * @return name of the analysis
    */
+  @XmlAttribute
   String name ();
 
   /**
-   * @return dimensions
+   * @return type of analysis
    */
-  Map<String, Dimension<K>> dimensions ();
-
-  /**
-   * @return analyses
-   */
-  Map<String, Analysis> analyses ();
-
-  /**
-   * @return value store
-   */
-  Values<K, V> values ();
+  @XmlAttribute
+  String type ();
 }

@@ -17,7 +17,7 @@
 package edu.dfci.cccb.mev.dataset.services.guice;
 
 import static com.google.inject.name.Names.named;
-import static edu.dfci.cccb.mev.dataset.domain.contract.annotation.Workspace.WORKSPACE;
+import static edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.WORKSPACE;
 
 import java.util.Map;
 
@@ -27,7 +27,7 @@ import com.google.inject.Guice;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule;
 
 public class DatasetServiceModuleTest {

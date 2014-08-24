@@ -36,8 +36,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import lombok.Synchronized;
-import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateSetException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Values;
+import edu.dfci.cccb.mev.dataset.domain.InvalidCoordinateSetException;
+import edu.dfci.cccb.mev.dataset.domain.Values;
 import edu.dfci.cccb.mev.dataset.domain.support.Consumer;
 
 /**
