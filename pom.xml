@@ -45,6 +45,8 @@
     <google-api-services-plus.version>v1-rev144-1.19.0</google-api-services-plus.version>
     <google-api-services-plusDomains.version>v1-rev48-1.19.0</google-api-services-plusDomains.version>
     <google-http-client-jackson.version>1.18.0-rc</google-http-client-jackson.version>
+    <htmlunit.version>2.15</htmlunit.version>
+    <selenium.version>2.42.2</selenium.version>
 
     <jquery.version>2.1.0-2</jquery.version>
     <jquery-ui.version>1.10.4</jquery-ui.version>
