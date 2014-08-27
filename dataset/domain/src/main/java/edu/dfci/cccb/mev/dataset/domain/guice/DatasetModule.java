@@ -16,33 +16,18 @@
 
 package edu.dfci.cccb.mev.dataset.domain.guice;
 
-import static edu.dfci.cccb.mev.dataset.domain.prototype.AnalysisAdapter.analyses;
-import static edu.dfci.cccb.mev.dataset.domain.prototype.DimensionAdapter.dimensions;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.sql.DataSource;
+import javax.inject.Singleton;
 
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.google.inject.Binder;
 import com.google.inject.Module;
-import com.google.inject.TypeLiteral;
 
 import edu.dfci.cccb.mev.common.domain.guice.MevDomainModule;
 import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
-import edu.dfci.cccb.mev.dataset.domain.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
-import edu.dfci.cccb.mev.dataset.domain.prototype.DimensionAdapter;
-import edu.dfci.cccb.mev.dataset.domain.support.Builder;
-import edu.dfci.cccb.mev.dataset.domain.support.Consumer;
-import edu.dfci.cccb.mev.dataset.domain.support.jooq.JooqDataSourceStoreValuesAdapter;
 import edu.dfci.cccb.mev.dataset.domain.support.json.DatasetJsonSerializer;
-import edu.dfci.cccb.mev.dataset.domain.support.tsv.TsvParser;
+import edu.dfci.cccb.mev.dataset.domain.support.tsv.DatasetTsvDeserializer;
+import edu.dfci.cccb.mev.dataset.domain.support.tsv.DatasetTsvSerializer;
 
 /**
  * @author levk
@@ -66,58 +51,8 @@ public class DatasetModule implements Module {
 
       @Override
       public void configure (Binder binder) {
-        binder.bind (new TypeLiteral<Builder<String, Double>> () {}).toInstance (new Builder<String, Double> () {
-          private @Inject DataSource dataSource;
-
-          @SuppressWarnings ("unchecked")
-          @Override
-          public Dataset<String, Double> build (String name, InputStream input) throws Exception {
-            JooqDataSourceStoreValuesAdapter values = new JooqDataSourceStoreValuesAdapter (dataSource);
-            final List<String> columns = new ArrayList<> ();
-            final List<String> rows = new ArrayList<> ();
-            new TsvParser ().parse (input,
-                                    values.builder (),
-                                    (Consumer<String>[]) new Consumer<?>[] { new Consumer<String> () {
-
-                                      @Override
-                                      public void consume (String entity) throws IOException {
-                                        rows.add (entity);
-                                      }
-                                    }, new Consumer<String> () {
-
-                                      @Override
-                                      public void consume (String entity) throws IOException {
-                                        columns.add (entity);
-                                      }
-                                    } });
-            return new DatasetAdapter<String, Double> (name,
-                                                       dimensions (new DimensionAdapter<String> ("row") {
-
-                                                         @Override
-                                                         public int size () {
-                                                           return rows.size ();
-                                                         }
-
-                                                         @Override
-                                                         public String get (int index) {
-                                                           return rows.get (index);
-                                                         }
-                                                       }, new DimensionAdapter<String> ("column") {
-
-                                                         @Override
-                                                         public int size () {
-                                                           return columns.size ();
-                                                         }
-
-                                                         @Override
-                                                         public String get (int index) {
-                                                           return columns.get (index);
-                                                         }
-                                                       }),
-                                                       analyses (),
-                                                       values);
-          }
-        });
+        binder.bind (DatasetTsvDeserializer.class).in (Singleton.class);
+        binder.bind (DatasetTsvSerializer.class).in (Singleton.class);
       }
     });
   }

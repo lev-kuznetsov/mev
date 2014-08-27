@@ -31,7 +31,6 @@ import org.jooq.Field;
 import edu.dfci.cccb.mev.common.domain.jooq.Store;
 import edu.dfci.cccb.mev.dataset.domain.InvalidCoordinateSetException;
 import edu.dfci.cccb.mev.dataset.domain.Values;
-import edu.dfci.cccb.mev.dataset.domain.support.Consumer;
 
 /**
  * @author levk
@@ -43,7 +42,7 @@ public class JooqDataSourceStoreValuesAdapter implements Values<String, Double>,
   private static final Field<String> COLUMN = fieldByName (String.class, "mev_column");
   private static final Field<Double> VALUE = fieldByName (Double.class, "mev_value");
 
-  private static class ValueStore extends Store implements Consumer<Value<String, Double>> {
+  private static class ValueStore extends Store {
 
     ValueStore (String name, DataSource dataSource) throws SQLException {
       super (dataSource,
@@ -70,7 +69,8 @@ public class JooqDataSourceStoreValuesAdapter implements Values<String, Double>,
      * @see
      * edu.dfci.cccb.mev.dataset.domain.support.Consumer#consume(java.lang.
      * Object) */
-    @Override
+    // @Override
+    @SuppressWarnings ("unused")
     public void consume (Value<String, Double> entity) throws IOException {
       context ().insertInto (table ())
                 .set (ROW, entity.coordinates ().get ("row"))
@@ -116,10 +116,6 @@ public class JooqDataSourceStoreValuesAdapter implements Values<String, Double>,
         };
       }
     };
-  }
-
-  public Consumer<Value<String, Double>> builder () {
-    return store;
   }
 
   /* (non-Javadoc)

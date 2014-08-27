@@ -16,30 +16,36 @@
 
 package edu.dfci.cccb.mev.dataset.services.messages;
 
+import static edu.dfci.cccb.mev.dataset.services.controllers.DatasetController.TAB_SEPARATED_VALUES;
+import static edu.dfci.cccb.mev.dataset.services.controllers.DatasetController.TAB_SEPARATED_VALUES_TYPE;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.MessageBodyReader;
+import javax.ws.rs.ext.Provider;
 
-import lombok.SneakyThrows;
 import edu.dfci.cccb.mev.dataset.domain.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.support.Builder;
+import edu.dfci.cccb.mev.dataset.domain.support.tsv.DatasetTsvDeserializer;
 
 /**
  * @author levk
  * @since CRYSTAL
  */
+@Provider
+@Consumes (TAB_SEPARATED_VALUES)
 public class TsvDatasetMessageReader implements MessageBodyReader<Dataset<String, Double>> {
 
-  private @Inject Builder<String, Double> builder;
+  private @Inject DatasetTsvDeserializer builder;
   private @Context UriInfo uri;
 
   /* (non-Javadoc)
@@ -48,7 +54,7 @@ public class TsvDatasetMessageReader implements MessageBodyReader<Dataset<String
    * javax.ws.rs.core.MediaType) */
   @Override
   public boolean isReadable (Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-    return type.equals (Dataset.class); // Accept only tsv?
+    return type.equals (Dataset.class) && TAB_SEPARATED_VALUES_TYPE.equals (mediaType);
   }
 
   /* (non-Javadoc)
@@ -57,13 +63,12 @@ public class TsvDatasetMessageReader implements MessageBodyReader<Dataset<String
    * javax.ws.rs.core.MediaType, javax.ws.rs.core.MultivaluedMap,
    * java.io.InputStream) */
   @Override
-  @SneakyThrows
   public Dataset<String, Double> readFrom (Class<Dataset<String, Double>> type,
                                            Type genericType,
                                            Annotation[] annotations,
                                            MediaType mediaType,
                                            MultivaluedMap<String, String> httpHeaders,
                                            InputStream entityStream) throws IOException, WebApplicationException {
-    return builder.build (uri.getPathParameters ().getFirst ("dataset"), entityStream);
+    return builder.deserialize (uri.getPathParameters ().getFirst ("dataset"), entityStream);
   }
 }

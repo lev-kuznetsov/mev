@@ -31,6 +31,7 @@ import com.google.inject.servlet.SessionScoped;
 
 import edu.dfci.cccb.mev.common.services.guice.MevServiceModule;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.MessageReaderBinder;
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.MessageWriterBinder;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
 import edu.dfci.cccb.mev.dataset.domain.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.Dataset;
@@ -39,6 +40,7 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
 import edu.dfci.cccb.mev.dataset.services.controllers.DatasetController;
 import edu.dfci.cccb.mev.dataset.services.controllers.WorkspaceController;
 import edu.dfci.cccb.mev.dataset.services.messages.TsvDatasetMessageReader;
+import edu.dfci.cccb.mev.dataset.services.messages.TsvDatasetMessageWriter;
 
 /**
  * @author levk
@@ -98,6 +100,11 @@ public class DatasetServiceModule implements Module {
       @Override
       public void configure (MessageReaderBinder binder) {
         binder.useInstance (new TsvDatasetMessageReader ());
+      }
+
+      @Override
+      public void configure (MessageWriterBinder binder) {
+        binder.useInstance (new TsvDatasetMessageWriter ());
       }
     });
   }

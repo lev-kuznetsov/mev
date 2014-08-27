@@ -56,11 +56,11 @@ public class DatasetAdapter <K, V> implements Dataset<K, V> {
   public static final String WORKSPACE = "workspace";
 
   public DatasetAdapter (String name,
-                         Map<String, Dimension<K>> map,
+                         Map<String, Dimension<K>> dimensions,
                          Map<String, Analysis> analyses,
                          Values<K, V> values) {
     this.name = name;
-    this.dimensions = map;
+    this.dimensions = dimensions;
     this.analyses = analyses;
     this.values = values;
   }
