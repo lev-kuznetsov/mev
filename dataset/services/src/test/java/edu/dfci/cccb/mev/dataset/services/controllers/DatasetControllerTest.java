@@ -24,8 +24,6 @@ import java.io.PrintStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import javax.ws.rs.core.MediaType;
-
 import org.junit.Test;
 
 import edu.dfci.cccb.mev.common.test.jetty.Jetty9;
@@ -33,13 +31,13 @@ import edu.dfci.cccb.mev.common.test.jetty.Jetty9;
 public class DatasetControllerTest {
 
   @Test
-  public void get () throws Exception {
+  public void putThenGet () throws Exception {
     try (Jetty9 jetty = new Jetty9 ()) {
       HttpURLConnection connection = (HttpURLConnection) new URL ("http://localhost:"
                                                                   + jetty.port ()
                                                                   + "/services/dataset/hello").openConnection ();
       connection.setRequestMethod ("PUT");
-      connection.setRequestProperty ("Content-Type", MediaType.TEXT_PLAIN);
+      connection.setRequestProperty ("Content-Type", DatasetController.TAB_SEPARATED_VALUES);
       connection.setDoInput (true);
       connection.setDoOutput (true);
       try (PrintStream data = new PrintStream (connection.getOutputStream ())) {
