@@ -16,6 +16,7 @@
 
 package edu.dfci.cccb.mev.dataset.services.controllers;
 
+import static edu.dfci.cccb.mev.dataset.services.controllers.DatasetController.TAB_SEPARATED_VALUES;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
@@ -23,8 +24,6 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 import java.io.PrintStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import javax.ws.rs.core.MediaType;
 
 import org.junit.Test;
 
@@ -41,7 +40,7 @@ public class WorkspaceControllerTest {
       connection.setRequestMethod ("PUT");
       connection.setDoInput (true);
       connection.setDoOutput (true);
-      connection.setRequestProperty ("Content-Type", MediaType.TEXT_PLAIN);
+      connection.setRequestProperty ("Content-Type", TAB_SEPARATED_VALUES);
       try (PrintStream data = new PrintStream (connection.getOutputStream ())) {
         data.print ("\tc1\tc2\n" +
                     "r1\t.1\t.2\n" +
@@ -60,7 +59,7 @@ public class WorkspaceControllerTest {
       connection.setRequestMethod ("PUT");
       connection.setDoInput (true);
       connection.setDoOutput (true);
-      connection.setRequestProperty ("Content-Type", MediaType.TEXT_PLAIN);
+      connection.setRequestProperty ("Content-Type", TAB_SEPARATED_VALUES);
       try (PrintStream data = new PrintStream (connection.getOutputStream ())) {
         data.print ("\tc1\tc2\n" +
                     "r1\t.1\t.2\n" +
