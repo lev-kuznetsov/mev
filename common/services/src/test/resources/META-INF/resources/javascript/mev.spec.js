@@ -8,4 +8,16 @@ define ([ 'mev', 'angular-mocks' ], function (mev, ng) {
       module ('mev');
     });
   });
+
+  beforeEach (module ('mev'));
+
+  describe ("services root uri", function () {
+    it ("should be defined", function () {
+      var su = undefined;
+      inject (function (servicesUri) {
+        su = servicesUri;
+      });
+      expect (su).toBeDefined ();
+    });
+  });
 });

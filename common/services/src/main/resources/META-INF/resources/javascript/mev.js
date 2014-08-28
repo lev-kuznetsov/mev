@@ -21,5 +21,5 @@
  * @since CRYSTAL
  */
 define ('mev', [ 'angular' ], function (ng) {
-  return ng.module ('mev', []);
+  return ng.module ('mev', []).value ('servicesUri', "/services");
 });
