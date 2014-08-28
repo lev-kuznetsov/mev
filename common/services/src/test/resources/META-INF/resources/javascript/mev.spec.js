@@ -12,12 +12,20 @@ define ([ 'mev', 'angular-mocks' ], function (mev, ng) {
   beforeEach (module ('mev'));
 
   describe ("services root uri", function () {
+    var su = undefined;
+
+    beforeEach (function () {
+      inject ([ 'services-root-uri', function (servicesRootUri) {
+        su = servicesRootUri;
+      } ])
+    });
+
     it ("should be defined", function () {
-      var su = undefined;
-      inject (function (servicesUri) {
-        su = servicesUri;
-      });
       expect (su).toBeDefined ();
+    });
+
+    it ("should be equal to /services", function () {
+      expect (su).toBe ("/services");
     });
   });
 });
