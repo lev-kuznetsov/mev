@@ -2,7 +2,7 @@ paths : {
   'home' : [ '/javascript/home' ],
   
   // Foundation
-  'angular-foundation' : [ 'http://rawgit.com/pineconellc/angular-foundation/gh-pages/mm-foundation-tpls-0.2.2.min' ]
+  'angular-foundation' : [ '//rawgit.com/pineconellc/angular-foundation/gh-pages/mm-foundation-tpls-0.2.2.min' ]
 },
 shim : {
   'angular-foundation' : {
