@@ -1,0 +1,22 @@
+<div class="panel-body" ng-app="networkPreview" ng-controller="previewController as pCtrl" ng-model="pCtrl">
+	
+	<h3>Building the index network</h3>
+	
+	<p>Choose an index network type:</p>
+
+	<a href ng-click="s.fMakeNeighborsIndex(m.network_name, m.filter.prev)" ng-class="{ 'disabled': s.attrs.ing === true || s.attrs.percentage === 100, 'btn-success': s.attrs.type === 'neighbors', 'btn-default': s.attrs.type != 'neighbors' }" class="btn btn-block">neighbors index</a>
+	<a href ng-click="s.fMakeLeavesIndex(m.network_name, m.filter.prev)" ng-class="{ 'disabled': s.attrs.ing === true || s.attrs.percentage === 100, 'btn-success': s.attrs.type === 'leaves', 'btn-default': s.attrs.type != 'leaves' }" class="btn btn-block">leaves index</a>
+
+	<div style="margin-top: 1em; margin-bottom: 1em;" ng-show="s.attrs.ing === true || s.attrs.percentage != 0">
+		<small>Progress status continuously updated...</small>
+		<div class="progress">
+			<div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="{{s.attrs.percentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{s.attrs.percentage}}%">{{s.attrs.percentage}}%</div>
+		</div>
+		<a href ng-click="fGotoViewer(m.network_name, 'index', 'whole', s.attrs.type)" ng-show="s.attrs.percentage === 100" class="btn btn-block btn-success"><u>visualize</u> the INDEX network</a>
+		<a href ng-click="fGotoViewer(m.network_name, 'index', 'navigate', s.attrs.type)" ng-show="s.attrs.percentage === 100" class="btn btn-block btn-danger"><u>navigate</u> the INDEX network</a>
+	</div>
+	
+	<p style="margin-top: 1em;">Or:</p>
+
+	<a href="#/preview/{{m.network_name}}" ng-class="{ 'disabled': s.attrs.ing === true }" class="btn btn-block btn-info">go back</a>
+</div>

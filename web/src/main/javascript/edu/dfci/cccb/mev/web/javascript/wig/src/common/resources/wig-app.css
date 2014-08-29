@@ -1,0 +1,141 @@
+html {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	padding-top: 3em;
+}
+
+.btn {
+	font-variant: small-caps;
+}
+
+/* MAIN MENU */
+
+.nav.nav-pills li {
+	font-variant: small-caps;
+}
+
+/* SETTINGS NETWORK FORM */
+
+#settings-form tr > td {
+	padding: 0.3em 0;
+}
+
+#settings-form tr > td:nth-child(1) {
+	padding-right: 1em;
+	vertical-align: top;
+}
+
+#settings-form tr > td:nth-child(3) {
+	padding-left: 1em;
+	color: #656565;
+	font-style: italic;
+}
+
+/* UPLOAD NETWORK FORM */
+
+#upload-form tr > td {
+	padding: 0.3em 0;
+}
+
+#upload-form tr > td:nth-child(1) {
+	padding-right: 1em;
+	vertical-align: top;
+}
+
+/* NETWORK SELECTION LIST */
+
+#network-select h4 {
+	display: list-item;
+
+	margin-left: 2em;
+
+	list-style-type: circle;
+	list-style-position: outside:;
+}
+
+/* VIEWER */
+
+#canvas {
+	position: fixed;
+	top: 50px;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 3;
+	background-color: #FFF;
+}
+
+#canvas-toolbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 50px;
+	z-index: 3;
+	background-color: #FFF;
+	border-bottom: 1px solid #E0E0E0;
+	line-height: 50px;
+	vertical-align: middle;
+}
+
+#canvas-toolbar .btn,
+.sub-toolbar .btn {
+	display: inline;
+	margin: 0.5em 0.5em 0 0;
+	font-variant: small-caps;
+	text-align: center;
+}
+
+.sub-toolbar {
+	position: fixed;
+	top: 50px;
+	left: 0;
+	right: 0;
+	height: 50px;
+	z-index: 4;
+	background-color: rgba(255,255,255,.75);
+	border-bottom: 1px solid #E0E0E0;
+	line-height: 50px;
+	vertical-align: middle;
+}
+
+#inspector {
+	position: fixed;
+	top: 50px;
+	right: 0;
+	bottom: 0;
+	margin: 0;
+	width: 250px;
+	z-index: 15;
+	background-color: transparent;
+	border: none;
+	border-left: 1px solid #E0E0E0;
+	border-radius: 0;
+	vertical-align: middle;
+}
+
+#inspector .panel-heading {
+	padding: 0 15px;
+	height: 50px;
+	line-height: 50px;
+	vertical-align: middle;
+}
+
+#inspector .panel-heading .glyphicon-remove {
+	float: right;
+	padding-top: 1.2em;
+}
+
+#inspector .panel-body {
+	height: 100%;
+	background-color: rgba(255,255,255,.75);
+}
+
+#inspector .panel-body ul li {
+	margin-left: -3em;
+	padding-left: 0;
+	list-style: none;
+}

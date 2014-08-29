@@ -1,0 +1,42 @@
+<div class="jumbotron" ng-app="networkView" ng-controller="viewController as vCtrl" ng-model="vCtrl">
+
+	<div id="canvas-toolbar">
+		<div class="col-md-12">
+			<a ng-click="fBacktoPreview(m.network_name)" class="backto-thr btn btn-danger"><span class="glyphicon glyphicon-backward"></span></a>
+			<a href="#/select" class="btn btn-success"><span class="glyphicon glyphicon-th-list"></span></a>
+			<a href ng-click="t.fToggleSub('format')" class="btn btn-info">format</a>
+			<a href ng-click="t.fToggleSub('layout')" class="btn btn-info">layout</a>
+			{{m.network_name}}
+		</div>
+	</div>
+
+	<div id="format-bar" class="sub-toolbar" ng-show="t.subs.format">
+		<div class="col-md-12">
+			<a ng-click="t.fHideSubs(); c.fAutoFormat('size','weight')" class="backto-sta btn btn-warning" title="Auto format"><span class="glyphicon glyphicon-star"></span></a>
+		</div>
+	</div>
+
+	<div id="layout-bar" class="sub-toolbar" ng-show="t.subs.layout">
+		<div class="col-md-12">
+			<a ng-click="t.fHideSubs(); c.fSetLayout('random')" class="backto-sta btn btn-warning" title="Random"><span class="glyphicon glyphicon-question-sign"></span></a>
+			<a ng-click="t.fHideSubs(); c.fSetLayout('grid')" class="backto-sta btn btn-warning" title="Grid"><span class="glyphicon glyphicon-th"></span></a>
+			<a ng-click="t.fHideSubs(); c.fSetLayout('circle')" class="backto-sta btn btn-warning" title="Circle"><span class="glyphicon glyphicon-record"></span></a>
+			<a ng-click="t.fHideSubs(); c.fSetLayout('breadthfirst')" class="backto-sta btn btn-warning" title="Breadthfirst"><span class="glyphicon glyphicon-tree-deciduous"></span></a>
+			<a ng-click="t.fHideSubs(); c.fViewFit()" class="backto-sta btn btn-success" title="Fit"><span class="glyphicon glyphicon-resize-full"></span></a>
+		</div>
+	</div>
+	
+	<div id="inspector" class="panel panel-default" ng-show="t.inspector">
+		<div class="panel-heading">Graph Inspector <a href ng-click="t.fToggleInspector()" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></div>
+		<div class="panel-body">
+			<ul>
+				<li ng-repeat="set in c.inspect">
+					<b>{{set[0]}}</b>: {{set[1]}}
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div id="canvas"></div>
+
+</div>

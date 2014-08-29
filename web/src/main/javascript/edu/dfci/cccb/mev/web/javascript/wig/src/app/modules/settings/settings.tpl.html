@@ -1,0 +1,32 @@
+<div class="panel-body" ng-app="wig-settings" ng-controller="settingsController as sCtrl" ng-model="sCtrl">
+	
+	<h2><i>WIG</i> settings</h2>
+
+	<br />
+
+	<form id="settings-form" ng-submit="f.apply(m.settings, 'Saved!', 3000)">
+		<table>
+			<tr>
+				<td>
+					<label for="max_nodes">max_nodes: </label>
+				</td>
+				<td>
+					<input id="max_nodes" name="max_nodes" type="number" class="form-control" style="text-align: center;" placeholder='...loading...' ng-model="m.settings.max_nodes" />
+				</td>
+				<td>
+					<p>The maximum number of nodes that can be visualized in the canvas.</p>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td align="right">
+					<input type="submit" value="save" class="btn btn-success" />
+				</td>
+				<td>
+					<span class="text-success">{{m.formMsg}}</span>
+				</td>
+			</tr>
+		</table>
+	</form>
+
+</div>

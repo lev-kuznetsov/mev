@@ -1,0 +1,70 @@
+<div class="panel-body" ng-app="networkFilter" ng-controller="filterController as fCtrl" ng-model="fCtrl">
+
+	<h3 align="center" class="text-info">Use a BLACKLIST of NAMEs</h3>
+
+	<p align="center">Use this form to pick the node names.</p>
+
+	<div class="col-sm-12" style="margin-top: 1em;">
+		<select name="name" id="" class="form-control col-sm-12" ng-disabled="s.status.fstatus == -1" ng-model="m.tmpName">
+			<option value="" selected>Select a name</option>
+			<option ng-repeat="name in s.status.v_list | filter:m.filter" value="{{name}}">{{name}}</option>
+		</select>
+	</div>
+	<div class="col-sm-12" style="padding-top: 0.5em;">
+		<div class="col-sm-11" style="padding: 0;">
+			<input type="text" class="form-control" width="100%" value="" placeholder="Search the names" ng-model="m.filter" ng-disabled="s.status.fstatus == -1" />
+		</div>
+		<div class="col-sm-1">
+			<a href ng-click="addName(m.tmpName)" class="btn btn-success btn-sm" style="float: right;"  ng-class="{ disabled: s.status.fstatus == -1 }"><span class="glyphicon glyphicon-plus"></span></a>
+		</div>
+	</div>
+
+	<div class="col-sm-12" style="margin-top: 2em;" ng-show="m.counter.length != 0">
+
+		<p>Remove nodes with the following names: (<a href ng-click="resetName()">reset</a>)</p>
+
+		<ul>
+			<li ng-repeat="i in m.counter" style="list-style: none;">
+				<a href ng-click="popName(i)" class="text-danger" ng-class="{ disabled: s.status.fstatus == -1 }"><span class="glyphicon glyphicon-remove"></span></a> {{m.names[i]}}
+			</li>
+		</ul>
+
+	</div>
+
+	<p class="{{m.response_class}}" style="text-align: center; font-weight: bold;">{{m.response_msg}}</p>
+	<p>&nbsp;</p>
+
+	<div class="col-sm-6">
+		<a href ng-click="resetTryGotoHash(m.network_name, '#/filter/'+m.network_name+'/nBL');tryNbl(m.network_name, m.names)" class="btn btn-info btn-block" ng-show="m.names.length !== 0" ng-class="{ disabled: s.status.fstatus == -1 }">try</a>
+	</div>
+	<div class="col-sm-6">
+		<a href ng-click="apply(m.network_name)" class="btn btn-success btn-block" ng-show="m.names.length !== 0" ng-class="{ disabled: s.status.fstatus == -1 }">apply</a>
+	</div>
+	<div class="col-sm-12" style="padding-top: 1em;">
+		<a href ng-click="resetName(); resetTryGotoHash(m.network_name, '#/filter/'+m.network_name)" class="btn btn-danger btn-block" ng-class="{ disabled: s.status.fstatus == -1 }">back</a>
+	</div>
+
+	<p>&nbsp;</p>
+
+	<table class="col-md-12 table">
+		<tr>
+			<th colspan="3" style="text-align: center;">{{m.network_name}} network</th>
+		</tr>
+		<tr>
+			<td></td>
+			<th># nodes</th>
+			<th># edges</th>
+		</tr>
+		<tr>
+			<th>Original</th>
+			<td>{{m.original.v_count}}</td>
+			<td>{{m.original.e_count}}</td>
+		</tr>
+		<tr ng-show="s.status.v_count != undefined && s.status.e_count != undefined">
+			<th>Filtered</th>
+			<td>{{s.status.v_count}}</td>
+			<td>{{s.status.e_count}}</td>
+		</tr>
+	</table>
+
+</div>

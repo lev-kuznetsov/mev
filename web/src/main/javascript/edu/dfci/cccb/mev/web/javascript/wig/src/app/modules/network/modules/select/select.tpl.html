@@ -1,0 +1,56 @@
+<div id="network-select" class="panel-body" ng-app="networkSelect" ng-controller="selectController as sCtrl" ng-model="sCtrl">
+	
+	<h3>
+		Select a network to visualize it:
+	</h3>
+
+	<h4 ng-repeat="network in networks.m.list" ng-switch on='network.status'>
+		<span ng-switch-when="0">
+
+			<a href="#/preprocess/{{network.name}}">{{network.name}}</a>: 
+			<small>{{network.note}}</small> | 
+			<small><code>~ to pre-process</code></small>
+
+		</span>
+		<span ng-switch-when="1">
+
+			<a href="#/preprocess/{{network.name}}">{{network.name}}</a>: 
+			<small>{{network.note}}</small> | 
+			<small><code>~ pre-processing</code></small>
+
+		</span>
+		<span ng-switch-when="2">
+
+			<a href="#/filter/{{network.name}}">{{network.name}}</a>: 
+			<small>{{network.note}}</small> | 
+			<small><code>~ to filter</code></small>
+
+		</span>
+		<span ng-switch-when="3">
+
+			<a href="#/preview/{{network.name}}">{{network.name}}</a>: 
+			<small>{{network.note}}</small> | 
+			<small><code>~ to preview</code></small>
+
+		</span>
+		<span ng-switch-when="4">
+
+			<a href="#/view/{{network.name}}">{{network.name}}</a>: 
+			<small>{{network.note}}</small> | 
+			<small><code>~ ready</code></small>
+
+		</span>
+		<span ng-switch-default>
+
+			<a href="">{{network.name}}</a>: 
+			<small>{{network.note}}</small> | 
+			<small><code>~ ERROR!</code></small>
+
+		</span>
+	</h4>
+
+	<h4 ng-show="networks.m.list.length === 0">
+		No networks available... try to <a href="#/upload">upload</a> one!
+	</h4>
+
+</div>

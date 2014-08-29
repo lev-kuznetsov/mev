@@ -1,0 +1,28 @@
+<div id="network-preprocess" class="panel-body" ng-app="networkPreprocess" ng-controller="preprocessController as ppCtrl" ng-model="ppCtrl">
+
+	<h2>Your network is being pre-processed, please wait...<br />
+		<small style="padding-left: 1em;">performed only once per network, longer times for bigger networks</small>
+	</h2>
+
+	<br />
+
+	<p>
+		During <i>network pre-processing</i> the <code>.pairs</code> file is converted into <code>.graphml</code>.
+	</p>
+
+	<br />
+
+	<small>Progress status continuously updated...</small>
+	<div class="progress">
+		<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="{{m.percentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{m.percentage}}%">{{m.percentage}}%</div>
+	</div>
+
+	<pre class="progress-text"><span style="display: block;" ng-repeat="row in m.status_label">{{row}}</span></pre>
+
+	<small>The initialization has been running for <span class="progress-time">{{m.duration}}</span> seconds.</small>
+
+	<div style="margin-top: 1em;" ng-show="100 == m.percentage">
+		<a href="#/filter/{{m.name}}" class="btn btn-block btn-success">continue</a>
+	</div>
+
+</div>
