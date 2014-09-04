@@ -7,7 +7,7 @@
 **.zip
 
 # Others #
-
+.DS_Store
 .Rhistory
 phantomjsdriver.log
 **.eclipse

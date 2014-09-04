@@ -36,7 +36,6 @@
     <typesafe.config.version>1.2.1</typesafe.config.version>
     <guice.version>3.0</guice.version>
     <mycila-guice.version>2.10.ga</mycila-guice.version>
-    <mycila-guice-jsr250.version>3.2.ga</mycila-guice-jsr250.version>
     <org.slf4j.version>1.7.6</org.slf4j.version>
     <log4j.version>1.2.17</log4j.version>
     <lombok.version>1.12.4</lombok.version>

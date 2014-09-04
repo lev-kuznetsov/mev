@@ -92,12 +92,6 @@
     </dependency>
 
     <dependency>
-      <groupId>com.mycila.guice.extensions</groupId>
-      <artifactId>mycila-guice-jsr250</artifactId>
-      <version>${mycila-guice-jsr250.version}</version>
-    </dependency>
-
-    <dependency>
       <groupId>com.google.inject.extensions</groupId>
       <artifactId>guice-multibindings</artifactId>
       <version>${guice.version}</version>
