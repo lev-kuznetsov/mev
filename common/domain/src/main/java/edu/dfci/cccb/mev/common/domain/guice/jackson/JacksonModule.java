@@ -47,33 +47,10 @@ import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
  */
 public class JacksonModule implements Module {
 
-  private static final class InjectedObjectMapper extends ObjectMapper {
-    private static final long serialVersionUID = 1L;
-
-    @Inject
-    public void withSerializers (Set<JsonSerializer<?>> serializers) {
-      setSerializerFactory (instance.withAdditionalSerializers (new SimpleSerializers (new ArrayList<> (serializers))));
-    }
-
-    @Inject (optional = true)
-    public void withIntrospector (AnnotationIntrospector introspector) {
-      setAnnotationIntrospector (introspector);
-    }
-  }
-
-  private static final class JacksonObjectMapperModule extends SingletonModule {
-
-    @Override
-    public void configure (Binder binder) {
-      binder.bind (ObjectMapper.class).to (InjectedObjectMapper.class).in (Singleton.class);
-    }
-  }
-
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
   public final void configure (final Binder binder) {
-    binder.install (new JacksonObjectMapperModule ());
 
     configure (new JacksonSerializerBinder () {
       private Multibinder<JsonSerializer<?>> serializers = newSetBinder (binder,
@@ -182,6 +159,26 @@ public class JacksonModule implements Module {
       public <S extends AnnotationIntrospector> void useConstructor (Constructor<S> constructor,
                                                                      TypeLiteral<? extends S> type) {
         binder.bind (AnnotationIntrospector.class).toConstructor (constructor, type).in (Singleton.class);
+      }
+    });
+
+    binder.install (new SingletonModule () {
+
+      @Override
+      public void configure (Binder binder) {
+        binder.bind (ObjectMapper.class).toInstance (new ObjectMapper () {
+          private static final long serialVersionUID = 1L;
+
+          @Inject
+          public void withSerializers (Set<JsonSerializer<?>> serializers) {
+            setSerializerFactory (instance.withAdditionalSerializers (new SimpleSerializers (new ArrayList<> (serializers))));
+          }
+
+          @Inject (optional = true)
+          public void withIntrospector (AnnotationIntrospector introspector) {
+            setAnnotationIntrospector (introspector);
+          }
+        });
       }
     });
   }
