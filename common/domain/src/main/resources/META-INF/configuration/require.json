@@ -2,6 +2,7 @@ paths : {
   log : [ '/javascript/log4js/log' ],
 
   // Underscore
+  '_' : [ '/webjars/underscorejs/1.6.0/underscore' ],
   underscore : [ '/webjars/underscorejs/1.6.0/underscore' ],
   
   // Log4Javascript
