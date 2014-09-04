@@ -1,1 +1,3 @@
+com.mycila.guice.ext.jsr250.Jsr250Module
+com.mycila.guice.ext.closeable.CloseableModule
 edu.dfci.cccb.mev.common.domain.guice.MevDomainModule
