@@ -53,6 +53,7 @@ import com.google.inject.Scope;
 import com.google.inject.binder.ScopedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
 
+import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonModule;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
 import edu.dfci.cccb.mev.googleplus.domain.support.Mixins;
@@ -195,15 +196,30 @@ public class GoogleDomainModule implements Module {
       private final Collection<ScopedBindingBuilder> services;
 
       {
+        abstract class ContextProvider <T> implements com.google.inject.Provider<T> {
+          protected @Inject HttpTransport transport;
+          protected @Inject JsonFactory jsonFactory;
+        }
+
+        abstract class ServiceProvider <T> extends ContextProvider<T> {
+          protected @Inject Provider<GoogleCredential> credentialProvider;
+          protected @Inject @Named (APPLICATION_NAME) String applicationName;
+        }
+
         services = new ArrayList<> ();
-        services.add (binder.bind (GoogleCredential.class));
-        services.add (binder.bind (Drive.class).toProvider (new com.google.inject.Provider<Drive> () {
+        services.add (binder.bind (GoogleCredential.class).toProvider (new ContextProvider<GoogleCredential> () {
+          private @Inject @Named (API_KEY) String key;
+          private @Inject @Named (API_SECRET) String secret;
 
-          private @Inject Provider<GoogleCredential> credentialProvider;
-          private @Inject HttpTransport transport;
-          private @Inject JsonFactory jsonFactory;
-          private @Inject @Named (APPLICATION_NAME) String applicationName;
-
+          @Override
+          public GoogleCredential get () {
+            return new GoogleCredential.Builder ().setJsonFactory (jsonFactory)
+                                                  .setTransport (transport)
+                                                  .setClientSecrets (key, secret)
+                                                  .build ();
+          }
+        }));
+        services.add (binder.bind (Drive.class).toProvider (new ServiceProvider<Drive> () {
           @Override
           public Drive get () {
             return new Drive.Builder (transport,
@@ -212,13 +228,7 @@ public class GoogleDomainModule implements Module {
                                                                 .build ();
           }
         }));
-        services.add (binder.bind (Plus.class).toProvider (new com.google.inject.Provider<Plus> () {
-
-          private @Inject Provider<GoogleCredential> credentialProvider;
-          private @Inject HttpTransport transport;
-          private @Inject JsonFactory jsonFactory;
-          private @Inject @Named (APPLICATION_NAME) String applicationName;
-
+        services.add (binder.bind (Plus.class).toProvider (new ServiceProvider<Plus> () {
           @Override
           public Plus get () {
             return new Plus.Builder (transport,
@@ -227,13 +237,7 @@ public class GoogleDomainModule implements Module {
                                                                .build ();
           }
         }));
-        services.add (binder.bind (PlusDomains.class).toProvider (new com.google.inject.Provider<PlusDomains> () {
-
-          private @Inject Provider<GoogleCredential> credentialProvider;
-          private @Inject HttpTransport transport;
-          private @Inject JsonFactory jsonFactory;
-          private @Inject @Named (APPLICATION_NAME) String applicationName;
-
+        services.add (binder.bind (PlusDomains.class).toProvider (new ServiceProvider<PlusDomains> () {
           @Override
           public PlusDomains get () {
             return new PlusDomains.Builder (transport,
@@ -263,7 +267,13 @@ public class GoogleDomainModule implements Module {
       }
     });
 
-    binder.requestStaticInjection (Mixins.class);
+    binder.install (new SingletonModule () {
+
+      @Override
+      public void configure (Binder binder) {
+        binder.requestStaticInjection (Mixins.class);
+      }
+    });
   }
 
   /**
