@@ -45,6 +45,11 @@ import edu.dfci.cccb.mev.dataset.domain.support.tsv.DatasetTsvDeserializer;
 @Consumes (TAB_SEPARATED_VALUES)
 public class TsvDatasetMessageReader implements MessageBodyReader<Dataset<String, Double>> {
 
+  /**
+   * URI template variable
+   */
+  public static final String DATASET = "dataset";
+
   private @Inject DatasetTsvDeserializer builder;
   private @Context UriInfo uri;
 
@@ -69,6 +74,6 @@ public class TsvDatasetMessageReader implements MessageBodyReader<Dataset<String
                                            MediaType mediaType,
                                            MultivaluedMap<String, String> httpHeaders,
                                            InputStream entityStream) throws IOException, WebApplicationException {
-    return builder.deserialize (uri.getPathParameters ().getFirst ("dataset"), entityStream);
+    return builder.deserialize (uri.getPathParameters ().getFirst (DATASET), entityStream);
   }
 }

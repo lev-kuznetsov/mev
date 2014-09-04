@@ -1,29 +1,34 @@
 paths : {
+  underscore : [ '/webjars/underscore' ],
+  '_' : [ '/webjars/underscorejs/1.6.0/underscore' ],
+  mathjs : [ '//cdnjs.cloudflare.com/ajax/libs/mathjs/0.25.0/math' ],
+  fso : [ '//rawgit.com/keithwhor/FSO.js/5b7e6fe86cb09a86856f3bf6b46f46d29d09eedc/fso' ],
+  'ng-dataset' : [ 'modules/ng-dataset' ],
   mev : [ '/classpath/META-INF/resources/javascript/mev' ],
-  'mev-log' : [ '/classpath/META-INF/resources/javascript/mev-log' ],
-  'mev-services' : [ '/classpath/META-INF/resources/javascript/mev-services' ],
   dataset : [ '/classpath/META-INF/resources/javascript/dataset' ],
   log : [ '/classpath/META-INF/resources/javascript/log4js/log' ],
-  
   log4js : [ '/classpath/META-INF/resources/webjars/log4javascript/1.4.5/log4javascript' ],
   underscore : [ '/webjars/underscore' ],
   angular : [ '/webjars/angular' ],
-  angularResource : [ '/webjars/angular-resource' ],
-  angularRoute : [ '/webjars/angular-route' ]
+  'angular-resource' : [ '/webjars/angular-resource' ],
+  'angular-mocks' : [ '/classpath/META-INF/resources/webjars/angularjs/1.2.16/angular-mocks' ],
+  'ng-log' : [ '/classpath/META-INF/resources/javascript/modules/ng-log' ],
+  'ng-analysis-template-uri' : [ 'modules/components/ng-analysis-template-uri' ],
+  'ng-dataset-template-uri' : [ 'modules/components/ng-dataset-template-uri' ],
+  'ng-workspace' : [ 'modules/components/ng-workspace' ]
 },
 shim : {
-  'angular' : {
+  angular : {
     exports : 'angular'
   },
-  'angularRoute' : {
-    exports : 'ngRoute',
-    deps: [ 'angular' ]
+  'angular-mocks' : {
+    exports : 'angular.mock',
+    deps : [ 'angular' ]
   },
-  'angularResource' : {
-    exports : 'ngResource',
-    deps: [ 'angular' ]
+  'angular-resource' : {
+    deps : [ 'angular' ]
   },
-  'log4js' : {
+  log4js : {
     exports : 'log4javascript'
   }
 }

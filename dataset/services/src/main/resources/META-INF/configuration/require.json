@@ -1,0 +1,14 @@
+paths : {
+  'ng-dataset' : [ '/javascript/modules/ng-dataset' ],
+  'ng-analysis-template-uri' : [ '/javascript/modules/components/ng-analysis-template-uri' ],
+  'ng-workspace' : [ '/javascript/modules/components/ng-workspace' ],
+  'ng-dataset-template-uri' : [ '/javascript/modules/components/ng-dataset-template-uri' ],
+  
+  'angular-resource' : [ '/webjars/angularjs/1.2.16/angular-resource' ]
+},
+shim : {
+  'angular-resource' : {
+    deps : [ 'angular' ]
+  }
+},
+deps : [ 'ng-dataset',  'ng-workspace' ]

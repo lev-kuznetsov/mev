@@ -58,7 +58,7 @@ public class DatasetController {
    */
   @PUT
   @Consumes ({ TEXT_PLAIN, TAB_SEPARATED_VALUES })
-  public void put (@PathParam ("dataset") String name, Dataset<String, Double> input) throws Exception {
-    workspace.put (name, input);
+  public void put (@PathParam ("dataset") String name, Dataset<String, Double> dataset) throws Exception {
+    workspace.put (name, dataset);
   }
 }

@@ -15,29 +15,14 @@
  */
 
 /**
- * MeV dataset services
+ * The analysis URI injectable factory
  * 
  * @author levk
  * @since CRYSTAL
  */
-define ('dataset.service', [ 'mev', 'dataset', 'angular', 'angularResource' ], function (mev, dataset, ng) {
+define ('ng-analysis-template-uri', [ 'ng-dataset', 'ng-dataset-template-uri' ], function (dataset) {
 
-  mev.dataset = {};
-
-  ng.module ('ngDataset', [ 'ngResource' ]).run ([ '$resource', function ($resource) {
-    mev.dataset.get = function (name) {
-      return mev._.extend ($resource ('/dataset/:name').get ({
-        name : name,
-        format : 'json'
-      }), dataset);
-    };
-
-    mev.dataset.query = function () {
-      return $resource ('/dataset').query ({
-        format : 'json'
-      });
-    }
+  return dataset.factory ('analysis-template-uri', [ 'dataset-template-uri', function (dataset) {
+    return dataset + "/analysis/:analysis";
   } ]);
-
-  return mev.dataset;
 });
