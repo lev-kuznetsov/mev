@@ -622,9 +622,9 @@ define(['angular', 'alertservice/AlertService'], function(angular){
 	                            }],
 	                            'testType':[{
 	                                name : "Fisher",
-	                                value : "Fisher test"
+	                                value : "Fisher"
 	                            },{
-	                                name : "KS",
+	                                name : "Kolmogorov-Smirnov",
 	                                value : "KS test"
 	                            }],
                             }
