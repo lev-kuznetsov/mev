@@ -1,0 +1,22 @@
+<div class="panel-body" ng-app="networkPreview" ng-controller="previewController as pCtrl" ng-model="pCtrl">
+	
+	<h3>
+		Pre-view<br />
+		<small>The last step before the <i>visualization canvas</i>.</small>
+	</h3>
+
+	<p>
+		<span ng-show="m.filter.prev != 1">The original '<b>{{m.network_name}}</b>' network has <kbd>{{m.original.v_count}}</kbd> nodes and <kbd>{{m.original.e_count}}</kbd> edges.</span><br />
+		<span ng-show="m.filter.prev === 1">The filtered '<b>{{m.network_name}}</b>' network has <kbd>{{m.filter.v_count}}</kbd> nodes and <kbd>{{m.filter.e_count}}</kbd> edges.</span>
+	</p>
+
+	<p>Now you can:</p>
+
+	<a href="#/preview/{{m.network_name}}/buildIndex" class="btn btn-block btn-primary">build an <b>index</b> network</a>
+	<a href ng-click="fGotoViewer(m.network_name, 'filtered', 'whole', null)" class="btn btn-block btn-success"><u>visualize</u> the <span ng-show="m.filter.prev === 1">filtered</span> network</a>
+	<a href ng-click="fGotoViewer(m.network_name, 'filtered', 'navigate', null)" class="btn btn-block btn-danger"><u>navigate</u> the <span ng-show="m.filter.prev === 1">filtered</span> network</a>
+
+	<p style="margin-top: 1em;">Or:</p>
+
+	<a href ng-click="s.fBackToFilters(m.network_name)" class="btn btn-block btn-info">go back to <u>filtering</u></a>
+</div>

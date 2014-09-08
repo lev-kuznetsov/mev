@@ -1,0 +1,10 @@
+<ul class="nav nav-pills" role="tablist" ng-model="aCtrl">
+	
+	<li ng-repeat="page in m.pages" ng-class="{ active: index.isLocation(page.location) }">
+		<a href="#{{page.location}}" ng-click="index.setIndex(page.id)">
+			<span ng-show="page.isClass" class="{{page.label}}"></span>
+			<span ng-show="!page.isClass">{{page.label}}</span>
+		</a>
+	</li>
+
+</ul>
