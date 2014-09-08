@@ -598,10 +598,10 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                         	scope.params = {
                         	
                         		name : undefined,
-                        		dimension : [{
+                        		dimension : {
 	                                name : "Column",
 	                                value : "column"
-	                            }],
+	                            },
                         		experiment : undefined,
                         		control : undefined,
                         		species : undefined,
@@ -646,8 +646,37 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                             }
 
                             scope.testInit = function() {
-                                
+                            	
+                            	
+                            	//Grab keys for each selection
+                            	var controlSet = scope.dataset.selections[scope.params.dimension.value]
+                            		.filter(function(group){
+                            			return group.name == scope.params.control.name
+                            		})[0].keys
+                            		
+                            	var experimentSet = scope.dataset.selections[scope.params.dimension.value]
+	                        		.filter(function(group){
+	                        			return group.name == scope.params.experiment.name
+	                        		})[0].keys
+	                        	
+	                        	//Fail if matching elements in sets
+	                        	
+	                        	for (var i = 0; i < controlSet.length; i++){
+	                        		for (var j = 0; j < experimentSet.length; j++){
+	                        			if (controlSet[i] == experimentSet[j] ){
+	                        				
+	                        				var message =  
+	                                            'Set intersection is not empty for LIMMA.';
 
+	                                        var header = "LIMMA Analysis Error";
+	                                         
+	                                        alertService.error(message,header);
+	                        				
+	                        				return
+	                        			}
+	                        		}
+	                        	}
+                  
                                 var message = "Started limma analysis for "
                                     + scope.params.name;
 
