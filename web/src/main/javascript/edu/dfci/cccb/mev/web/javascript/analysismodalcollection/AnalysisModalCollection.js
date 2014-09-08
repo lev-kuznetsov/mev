@@ -611,13 +611,13 @@ define(['angular', 'alertservice/AlertService'], function(angular){
 		                                value : "mouse"
 	                            }],
 	                            'goType':[{
-		                                name : "BP",
+		                                name : "Biological Process",
 		                                value : "BP"
 		                            },{
-		                                name : "MF",
+		                                name : "Molecular Function",
 		                                value : "MF"
 		                            },{
-		                                name : "CC",
+		                                name : "Cellular Component",
 		                                value : "CC"
 	                            }],
 	                            'testType':[{
