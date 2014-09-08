@@ -594,22 +594,6 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                         scope : {dataset : "=heatmapDataset"},
                         link : function(scope, elems, attrs) {
 
-                        	
-                        	scope.params = {
-                        	
-                        		name : undefined,
-                        		dimension : {
-	                                name : "Column",
-	                                value : "column"
-	                            },
-                        		experiment : undefined,
-                        		control : undefined,
-                        		species : undefined,
-                        		goType: undefined,
-                        		testType: undefined
-                        	
-                        	};
-                        	
                             scope.available = {
                             		
 	                            'dimensions' : [{
@@ -644,6 +628,18 @@ define(['angular', 'alertservice/AlertService'], function(angular){
 	                                value : "KS test"
 	                            }],
                             }
+                            
+                            scope.params = {
+                                	
+                        		name : undefined,
+                        		dimension : scope.available.dimensions[0],
+                        		experiment : undefined,
+                        		control : undefined,
+                        		species : scope.available.species[0],
+                        		goType: scope.available.goType[0],
+                        		testType: scope.available.testType[0]
+                        	
+                        	};
 
                             scope.testInit = function() {
                             	
