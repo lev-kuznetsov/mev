@@ -98,7 +98,7 @@ require.config ({
 	    location : "/container/javascript/clinicalSummary",
 	    main : "ClinicalSummary.package"
 	} ],
-  waitSeconds : "2"
+  waitSeconds : "600"
 
 });
 
