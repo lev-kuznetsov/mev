@@ -667,7 +667,7 @@ define(['angular', 'alertservice/AlertService'], function(angular){
 	                                        var header = "LIMMA Analysis Error";
 	                                         
 	                                        alertService.error(message,header);
-	                        				
+	                                        scope.params.name = undefined;
 	                        				return
 	                        			}
 	                        		}
@@ -715,6 +715,8 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                      
                                     alertService.success(message,header);
                                     
+                                   
+                                    
                                 },
                                 function(data, status, headers, config) {
                                     var message = "Error on limma analysis for "
@@ -725,26 +727,10 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                         + ")";
                                      
                                     alertService.error(message,header);
-                                });
-
-                                resetSelections();                                                    
+                                });                                              
                                 
-                               
+                                scope.params.name = undefined;
 
-                            };
-
-                            function resetSelections() {
-                            	scope.params = {
-                                    	
-                            		name : undefined,
-                            		dimension : [{
-    	                                name : "Column",
-    	                                value : "column"
-    	                            }],
-                            		experiment : undefined,
-                            		control : undefined
-                            	
-                            	};
                             };
 
                         }
