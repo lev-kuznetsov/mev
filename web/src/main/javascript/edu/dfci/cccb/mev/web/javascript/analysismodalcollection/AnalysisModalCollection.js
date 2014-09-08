@@ -637,7 +637,8 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                         		control : undefined,
                         		species : scope.available.species[0],
                         		goType: scope.available.goType[0],
-                        		testType: scope.available.testType[0]
+                        		testType: scope.available.testType[0],
+                        		goAnalysis: true
                         	
                         	};
 
@@ -681,27 +682,19 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                 alertService.info(message,header);
 
                                 var analysisData = {
-                                	name : scope.params.name,
+                            		analysisType: 'limma',
+                                	datasetName: scope.dataset.datasetName,
+                                	analysisName : scope.params.name,
+                                	
+                                	dimension : scope.params.dimension.value,
                                 	experiment : scope.params.experiment.name,
                                 	control : scope.params.control.name,
-                                	species : (scope.params.species) ? scope.params.species.value : undefined,
-                                	goType : (scope.params.goType) ? scope.params.goType.value : undefined,
-                                	testType : (scope.params.testType) ? scope.params.testType.value : undefined
+                                	species : (scope.params.goAnalysis) ? scope.params.species.value : undefined,
+                                	go : (scope.params.goAnalysis) ? scope.params.goType.value : undefined,
+                                	test : (scope.params.goAnalysis) ? scope.params.testType.value : undefined
                                 };
                                 
-                                scope.dataset.analysis.post3({
-                                	analysisType: 'limma',
-                                	datasetName: scope.dataset.datasetName,
-                                	analysisName: analysisData.name,
-                                	
-                                	'dimension' : 'column',
-                                	'experiment' : analysisData.experiment,
-                                	'control' : analysisData.control,
-                                	'species' : analysisData.species,
-                                	'go' : analysisData.goType,
-                                	'test' : analysisData.testType
-                                    
-                                }, {
+                                scope.dataset.analysis.post3(analysisData, {
                                 	
                                 },
                                 function(data, status, headers, config) {
@@ -709,26 +702,28 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                 	scope.dataset.loadAnalyses();
                                 	
                                     var message = "Completed limma analysis for "
-                                        + scope.analysisName;
+                                        + analysisData.analysisName;
 
                                     var header = "LIMMA Analysis Complete";
                                      
                                     alertService.success(message,header);
                                     
-                                   
                                     
                                 },
                                 function(data, status, headers, config) {
                                     var message = "Error on limma analysis for "
-                                        + scope.analysisName;
+                                        + analysisData.analysisName;
 
                                     var header = "LIMMA Analysis Problem (Error Code: "
                                         + status
                                         + ")";
                                      
                                     alertService.error(message,header);
+                                    
                                 });                                              
                                 
+
+
                                 scope.params.name = undefined;
 
                             };
