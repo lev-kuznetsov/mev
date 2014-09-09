@@ -594,22 +594,6 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                         scope : {dataset : "=heatmapDataset"},
                         link : function(scope, elems, attrs) {
 
-                        	
-                        	scope.params = {
-                        	
-                        		name : undefined,
-                        		dimension : [{
-	                                name : "Column",
-	                                value : "column"
-	                            }],
-                        		experiment : undefined,
-                        		control : undefined,
-                        		species : undefined,
-                        		goType: undefined,
-                        		testType: undefined
-                        	
-                        	};
-                        	
                             scope.available = {
                             		
 	                            'dimensions' : [{
@@ -627,27 +611,69 @@ define(['angular', 'alertservice/AlertService'], function(angular){
 		                                value : "mouse"
 	                            }],
 	                            'goType':[{
-		                                name : "BP",
+		                                name : "Biological Process",
 		                                value : "BP"
 		                            },{
-		                                name : "MF",
+		                                name : "Molecular Function",
 		                                value : "MF"
 		                            },{
-		                                name : "CC",
+		                                name : "Cellular Component",
 		                                value : "CC"
 	                            }],
 	                            'testType':[{
 	                                name : "Fisher",
-	                                value : "Fisher test"
+	                                value : "Fisher"
 	                            },{
-	                                name : "KS",
+	                                name : "Kolmogorov-Smirnov",
 	                                value : "KS test"
 	                            }],
                             }
+                            
+                            scope.params = {
+                                	
+                        		name : undefined,
+                        		dimension : scope.available.dimensions[0],
+                        		experiment : undefined,
+                        		control : undefined,
+                        		species : scope.available.species[0],
+                        		goType: scope.available.goType[0],
+                        		testType: scope.available.testType[0],
+                        		goAnalysis: true
+                        	
+                        	};
 
                             scope.testInit = function() {
-                                
+                            	
+                            	
+                            	//Grab keys for each selection
+                            	var controlSet = scope.dataset.selections[scope.params.dimension.value]
+                            		.filter(function(group){
+                            			return group.name == scope.params.control.name
+                            		})[0].keys
+                            		
+                            	var experimentSet = scope.dataset.selections[scope.params.dimension.value]
+	                        		.filter(function(group){
+	                        			return group.name == scope.params.experiment.name
+	                        		})[0].keys
+	                        	
+	                        	//Fail if matching elements in sets
+	                        	
+	                        	for (var i = 0; i < controlSet.length; i++){
+	                        		for (var j = 0; j < experimentSet.length; j++){
+	                        			if (controlSet[i] == experimentSet[j] ){
+	                        				
+	                        				var message =  
+	                                            'Set intersection is not empty for LIMMA.';
 
+	                                        var header = "LIMMA Analysis Error";
+	                                         
+	                                        alertService.error(message,header);
+	                                        scope.params.name = undefined;
+	                        				return
+	                        			}
+	                        		}
+	                        	}
+                  
                                 var message = "Started limma analysis for "
                                     + scope.params.name;
 
@@ -656,27 +682,19 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                 alertService.info(message,header);
 
                                 var analysisData = {
-                                	name : scope.params.name,
+                            		analysisType: 'limma',
+                                	datasetName: scope.dataset.datasetName,
+                                	analysisName : scope.params.name,
+                                	
+                                	dimension : scope.params.dimension.value,
                                 	experiment : scope.params.experiment.name,
                                 	control : scope.params.control.name,
-                                	species : (scope.params.species) ? scope.params.species.value : undefined,
-                                	goType : (scope.params.goType) ? scope.params.goType.value : undefined,
-                                	testType : (scope.params.testType) ? scope.params.testType.value : undefined
+                                	species : (scope.params.goAnalysis) ? scope.params.species.value : undefined,
+                                	go : (scope.params.goAnalysis) ? scope.params.goType.value : undefined,
+                                	test : (scope.params.goAnalysis) ? scope.params.testType.value : undefined
                                 };
                                 
-                                scope.dataset.analysis.post3({
-                                	analysisType: 'limma',
-                                	datasetName: scope.dataset.datasetName,
-                                	analysisName: analysisData.name,
-                                	
-                                	'dimension' : 'column',
-                                	'experiment' : analysisData.experiment,
-                                	'control' : analysisData.control,
-                                	'species' : analysisData.species,
-                                	'go' : analysisData.goType,
-                                	'test' : analysisData.testType
-                                    
-                                }, {
+                                scope.dataset.analysis.post3(analysisData, {
                                 	
                                 },
                                 function(data, status, headers, config) {
@@ -684,42 +702,30 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                 	scope.dataset.loadAnalyses();
                                 	
                                     var message = "Completed limma analysis for "
-                                        + scope.analysisName;
+                                        + analysisData.analysisName;
 
                                     var header = "LIMMA Analysis Complete";
                                      
                                     alertService.success(message,header);
                                     
+                                    
                                 },
                                 function(data, status, headers, config) {
                                     var message = "Error on limma analysis for "
-                                        + scope.analysisName;
+                                        + analysisData.analysisName;
 
                                     var header = "LIMMA Analysis Problem (Error Code: "
                                         + status
                                         + ")";
                                      
                                     alertService.error(message,header);
-                                });
-
-                                resetSelections();                                                    
+                                    
+                                });                                              
                                 
-                               
 
-                            };
 
-                            function resetSelections() {
-                            	scope.params = {
-                                    	
-                            		name : undefined,
-                            		dimension : [{
-    	                                name : "Column",
-    	                                value : "column"
-    	                            }],
-                            		experiment : undefined,
-                            		control : undefined
-                            	
-                            	};
+                                scope.params.name = undefined;
+
                             };
 
                         }
