@@ -54,7 +54,7 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
   }
 
   @Override
-  public void createIndex (String indexName) {
+  public String createIndex (String indexName) {
     //TODO: check if index with this name already exists
     
     //generate index name: indexName+UUID
@@ -62,7 +62,8 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
     //add alias: indexName
     final Alias alias = new Alias (indexName);    
     final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(internalIndexName);
-    createIndexRequestBuilder.addAlias (alias) .execute().actionGet();    
+    createIndexRequestBuilder.addAlias (alias) .execute().actionGet();
+    return internalIndexName;
   }
     
   @Override
@@ -165,21 +166,26 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
       throw new IndexAdminException (String.format ("Could not find index for alias %s, query returned: %s", alias, getAliasesResponse.getAliases ()));
   }
   
-  public void copyIndex(String sourceIndexName, String targetIndexName){
-    
+  public void copyIndexType(String sourceIndexName, String sourceDocumentType, String targetIndexName, String targetIndexType){
+    //TODO: implement
   }
+  
   
   public void numerifyField(String indexName, String documentType, String fieldName){
     //TODO: implement
     //find out the internalIndexName
     
     //get current index mappings
-    //get the numerified mapping
+    //get the numerified mapping    
     //replace current index mapping with the numerified one
     
-    //create new index with new mapping (generate index name to reflect new version) 
+    //create new index with new mapping (generate index name to reflect new version)
+    
     //copy data from internalIndexName
+    
     //remove alias from old index and add alias to new index
     
   }
+  
+  
 }

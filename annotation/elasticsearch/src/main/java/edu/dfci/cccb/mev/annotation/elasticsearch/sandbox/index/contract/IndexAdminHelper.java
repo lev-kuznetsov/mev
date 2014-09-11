@@ -16,7 +16,7 @@ import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.IndexAdmin
 public interface IndexAdminHelper {
   public boolean exists(String indexName);
   public void deleteIndex(String indexName);
-  public void createIndex(String indexName);
+  public String createIndex(String indexName);
   public CreateIndexResponse createIndex (String indexName, String documentType, XContentBuilder mappingBuilder);  
   public PutMappingResponse putMapping (String indexName, String documentType, XContentBuilder mappingBuilder);
   Map<String, Object> getMapping (String indexName, String documentType) throws IOException;
