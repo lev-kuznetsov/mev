@@ -23,6 +23,7 @@ import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingResponse;
+import org.elasticsearch.action.bulk.BulkProcessor;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.cluster.ClusterState;
 import org.elasticsearch.cluster.metadata.AliasMetaData;
@@ -33,8 +34,11 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 
 import scala.annotation.meta.field;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.BulkProcessorFactory;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.SimpleBulkProcessorFactory;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexAdminHelper;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoaderException;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.TypeCopier;
 
 @RequiredArgsConstructor
 public class IndexAdminHelperImpl implements IndexAdminHelper {
@@ -74,6 +78,14 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
   }  
   
   @Override
+  public CreateIndexResponse createIndex (String indexName, String documentType, Map<String, Object> mapping) {
+    final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
+    CreateIndexResponse response = createIndexRequestBuilder.addMapping(documentType, mapping).execute().actionGet();
+    return response;
+  }  
+  
+  
+  @Override
   public PutMappingResponse putMapping (String indexName, String documentType, XContentBuilder mappingBuilder) {
     final PutMappingRequestBuilder putMappingRequestBuilder 
     = client.admin().indices().preparePutMapping (indexName).setType (documentType).setSource (mappingBuilder);    
@@ -91,7 +103,7 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
   
   @Override
   public MappingMetaData getMappingMetaData(String indexName, String documentType) throws IOException{
-    //mind the mapping
+    //find the mapping
     ClusterState cs = client.admin().cluster().prepareState().setIndices (indexName).execute().actionGet().getState();
     MappingMetaData mdd = cs.getMetaData().index(indexName).mapping (documentType);
     return mdd;
@@ -139,6 +151,32 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
     //4. return mapping
     return mapping;
   }
+
+  @Override 
+  public Map<String, Object> numerifyField(String publicIndexName, String documentType, String fieldName, BulkProcessor bulkProcessor) throws IndexAdminException, IOException, IndexLoaderException{
+    //find out the internalIndexName
+    String curInternalName = getIndexNameForAlias (publicIndexName);   
+    
+    //get the numerified mapping    
+    Map<String, Object> newMapping = numerifyFieldMapping (curInternalName, documentType, fieldName);
+        
+    //create new index with new mapping (generate index name to reflect new version)
+    String newInternalName = publicIndexName+"_"+UUID.randomUUID ();
+    CreateIndexResponse createIndexResponse = createIndex (newInternalName, documentType, newMapping);
+    if(!createIndexResponse.isAcknowledged())
+      throw new IndexAdminException (String.format("Unable to numerifyField %s. Error creating index %s with type %s and mapping %s", 
+                                                   fieldName, newInternalName, documentType, newMapping));
+      
+    //copy data from internalIndexName
+    BulkProcessorFactory bulkFactory = new SimpleBulkProcessorFactory (client);
+    TypeCopier copier = new TypeCopierImpl (client, bulkProcessor);
+    copier.process (publicIndexName, documentType, newInternalName);
+    
+    //point alias to new internal index
+    redirectIndexAlias (publicIndexName, curInternalName, newInternalName);
+    
+    return newMapping;
+  }
   
   @Override
   public IndicesAliasesResponse putIndexAlias(String indexName, String alias){
@@ -146,6 +184,23 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
     IndicesAliasesResponse response = builder.execute ().actionGet ();
     return response;
   }
+  
+  @Override
+  public IndicesAliasesResponse removeIndexAlias(String indexName, String alias){
+    IndicesAliasesRequestBuilder builder = client.admin().indices ().prepareAliases ().removeAlias (indexName, alias);
+    IndicesAliasesResponse response = builder.execute ().actionGet ();
+    return response;
+  }
+  
+  @Override
+  public IndicesAliasesResponse redirectIndexAlias(String alias, String oldIndexName, String newIndexName){
+    IndicesAliasesRequestBuilder builder = client.admin().indices ().prepareAliases ()
+            .removeAlias (oldIndexName, alias)
+            .addAlias (newIndexName, alias);    
+    IndicesAliasesResponse response = builder.execute ().actionGet ();
+    return response;
+  }
+  
   
   @Override
   public List<AliasMetaData> getIndexAliases(String indexName){
@@ -165,27 +220,7 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
     else
       throw new IndexAdminException (String.format ("Could not find index for alias %s, query returned: %s", alias, getAliasesResponse.getAliases ()));
   }
-  
-  public void copyIndexType(String sourceIndexName, String sourceDocumentType, String targetIndexName, String targetIndexType){
-    //TODO: implement
-  }
-  
-  
-  public void numerifyField(String indexName, String documentType, String fieldName){
-    //TODO: implement
-    //find out the internalIndexName
-    
-    //get current index mappings
-    //get the numerified mapping    
-    //replace current index mapping with the numerified one
-    
-    //create new index with new mapping (generate index name to reflect new version)
-    
-    //copy data from internalIndexName
-    
-    //remove alias from old index and add alias to new index
-    
-  }
+
   
   
 }

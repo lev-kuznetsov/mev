@@ -76,6 +76,11 @@
 			<artifactId>testng</artifactId>
 			<version>6.8.8</version>
 		</dependency>
+		<dependency>
+			<groupId>net.spy</groupId>
+			<artifactId>spymemcached</artifactId>
+			<version>2.11.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>

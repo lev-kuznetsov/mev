@@ -11,6 +11,7 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.search.SearchHit;
 
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexAdminHelper;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.TypeCopier;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.TypeScroll;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.CsvIndexLoaderConfig;
 
@@ -19,7 +20,6 @@ import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.CsvIndexLoad
 public class TypeCopierImpl implements TypeCopier {
   private final Client client;
   private final BulkProcessor bulkProcessor;
-  IndexAdminHelper indexAdminHelper;
   
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.TypeCopier#process(java.lang.String, java.lang.String, java.lang.String)

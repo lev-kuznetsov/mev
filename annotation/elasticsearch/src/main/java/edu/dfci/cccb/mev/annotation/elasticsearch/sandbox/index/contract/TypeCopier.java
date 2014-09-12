@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin;
+package edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract;
 
 public interface TypeCopier {
 

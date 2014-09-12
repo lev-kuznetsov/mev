@@ -10,9 +10,13 @@ import org.elasticsearch.client.Client;
 
 @Log4j
 @RequiredArgsConstructor
-public class SimpleBulkProcessorFactory {
+public class SimpleBulkProcessorFactory implements BulkProcessorFactory {
 
   private final Client client;  
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.BulkProcessorFactory#create(int, int)
+   */
+  @Override
   public BulkProcessor create(int bulkSize, int concurrentRequests){
     return BulkProcessor.builder(client, new BulkProcessor.Listener() {
       @Override

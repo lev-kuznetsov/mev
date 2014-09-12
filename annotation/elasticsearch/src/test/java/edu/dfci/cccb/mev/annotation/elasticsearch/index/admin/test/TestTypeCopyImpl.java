@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.annotation.elasticsearch.index.csv.test;
+package edu.dfci.cccb.mev.annotation.elasticsearch.index.admin.test;
 
 import static org.junit.Assert.*;
 
@@ -12,10 +12,12 @@ import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.search.SearchHit;
 import org.junit.Test;
 
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.TypeCopier;
+import edu.dfci.cccb.mev.annotation.elasticsearch.index.csv.test.AbstractTestWithElasticSearch;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.TypeCopierImpl;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.TypeScrollImpl;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.BulkProcessorFactory;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.SimpleBulkProcessorFactory;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.TypeCopier;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.TypeScroll;
 
 @Log4j
@@ -44,7 +46,7 @@ public class TestTypeCopyImpl extends AbstractTestWithElasticSearch {
     refreshRequestBuilder.setIndices (index_name).execute ().actionGet ();
     Thread.sleep (1*1000);
     
-    final SimpleBulkProcessorFactory bulkFactory=new SimpleBulkProcessorFactory (client);
+    final BulkProcessorFactory bulkFactory=new SimpleBulkProcessorFactory (client);
     TypeCopier copier = new TypeCopierImpl (client, bulkFactory.create (2, 1));
     copier.process (index_name, type_name, index_name_copy);
     
