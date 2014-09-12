@@ -8,17 +8,20 @@ import java.util.Map;
 import java.util.Random;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 import org.elasticsearch.action.bulk.BulkProcessor;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
 
+import scala.collection.concurrent.Debug;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.IndexAdminHelperImpl;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.BulkProcessorFactory;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.SimpleBulkProcessorFactory;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexAdminHelper;
 
+@Log4j
 public class MockDataGenerator {
   
   private final Client client;
@@ -34,12 +37,13 @@ public class MockDataGenerator {
     Map<String, Object> doc = new LinkedHashMap<String, Object> ();
     Random rand = new Random (); 
     for(Integer i=0;i<numOfFields;i++){
-      doc.put (String.format("field%s", i), Integer.toString (rand.nextInt ()));
+      doc.put (String.format("field%s", i), Integer.toString (rand.nextInt (1000)));
     } 
     return doc;
   }
   
-  public void writeDataset(String indexName, String documentType, long numOfDocs, long numOfFields, BulkProcessor bulkProcessor){    
+  public void writeDataset(String indexName, String documentType, long numOfDocs, long numOfFields, BulkProcessor bulkProcessor){
+    log.debug (String.format("*** Writing data to index %s", indexName));
     for(Integer i=0;i<numOfDocs;i++){
       IndexRequestBuilder indexRequestBuilder = client.prepareIndex (indexName, documentType, i.toString ())
               .setSource (generateRandomDoc (numOfFields));
@@ -47,10 +51,21 @@ public class MockDataGenerator {
     }      
   }
   
-  public void  overwriteDataset (String indexName, String documentType, long numOfDocs, long numOfFields, BulkProcessor bulkProcessor){
+  public void  overwriteDataset (String indexName, String documentType, long numOfDocs, long numOfFields, BulkProcessor bulkProcessor){    
     if(adminHelper.exists (indexName)){
+      log.debug (String.format("*** Index %s already exists. ", indexName));
       adminHelper.deleteIndex (indexName);
-    }    
+      log.debug (String.format("*** Index %s deleted. ", indexName));
+    }
     writeDataset (indexName, documentType, numOfDocs, numOfFields, bulkProcessor);      
+  }
+  
+  public String generateIndexName(long numOfDocs, long numOfFields){
+    return String.format ("dummy_r%sc%s", numOfDocs, numOfFields);
+  }
+  
+  public void  overwriteDataset (long numOfDocs, long numOfFields, BulkProcessor bulkProcessor){    
+    String indexName = generateIndexName(numOfDocs, numOfFields);    
+    writeDataset (indexName, "dummy_type", numOfDocs, numOfFields, bulkProcessor);      
   }
 }
