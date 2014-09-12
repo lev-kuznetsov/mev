@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
 
 import org.elasticsearch.action.bulk.BulkProcessor;
@@ -44,6 +45,7 @@ public class MockDataGenerator {
   
   public void writeDataset(String indexName, String documentType, long numOfDocs, long numOfFields, BulkProcessor bulkProcessor){
     log.debug (String.format("*** Writing data to index %s", indexName));
+    adminHelper.createIndex (indexName);
     for(Integer i=0;i<numOfDocs;i++){
       IndexRequestBuilder indexRequestBuilder = client.prepareIndex (indexName, documentType, i.toString ())
               .setSource (generateRandomDoc (numOfFields));
@@ -51,6 +53,7 @@ public class MockDataGenerator {
     }      
   }
   
+  @SneakyThrows()
   public void  overwriteDataset (String indexName, String documentType, long numOfDocs, long numOfFields, BulkProcessor bulkProcessor){    
     if(adminHelper.exists (indexName)){
       log.debug (String.format("*** Index %s already exists. ", indexName));
@@ -60,12 +63,8 @@ public class MockDataGenerator {
     writeDataset (indexName, documentType, numOfDocs, numOfFields, bulkProcessor);      
   }
   
-  public String generateIndexName(long numOfDocs, long numOfFields){
-    return String.format ("dummy_r%sc%s", numOfDocs, numOfFields);
-  }
-  
   public void  overwriteDataset (long numOfDocs, long numOfFields, BulkProcessor bulkProcessor){    
-    String indexName = generateIndexName(numOfDocs, numOfFields);    
+    String indexName = adminHelper.dummyName(numOfDocs, numOfFields);    
     writeDataset (indexName, "dummy_type", numOfDocs, numOfFields, bulkProcessor);      
   }
 }

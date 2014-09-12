@@ -214,13 +214,18 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
   public String getIndexNameForAlias(String alias) throws IndexAdminException{
     GetAliasesRequestBuilder aliasesRequestBuilder = client.admin ().indices ().prepareGetAliases ().setIndices (alias);
     GetAliasesResponse getAliasesResponse = aliasesRequestBuilder.execute ().actionGet ();
-    String[] aliases = getAliasesResponse.getAliases ().keys ().toArray (String.class);    
-    if(aliases.length==1)
+    String[] aliases = getAliasesResponse.getAliases ().keys ().toArray (String.class);
+    if(aliases.length==0)
+      return alias;
+    else if(aliases.length==1)
       return aliases[0];
     else
       throw new IndexAdminException (String.format ("Could not find index for alias %s, query returned: %s", alias, getAliasesResponse.getAliases ()));
   }
 
-  
-  
+  @Override
+  public String dummyName(long numOfDocs, long numOfFields){
+    return String.format ("dummy_r%sc%s", numOfDocs, numOfFields);
+  }
+    
 }

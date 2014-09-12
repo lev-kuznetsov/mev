@@ -1,6 +1,10 @@
 package edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.configuration;
 
 import static org.springframework.context.annotation.FilterType.ANNOTATION;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 import lombok.extern.log4j.Log4j;
 
 import org.elasticsearch.client.Client;
@@ -11,6 +15,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.stereotype.Component;
+
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.IndexAdminHelperImpl;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.BulkProcessorFactory;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.SimpleBulkProcessorFactory;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexAdminHelper;
 
 @Log4j
 @Configuration
@@ -47,4 +56,14 @@ public class ElasticSearchConfiguration {
     return client;
   }
   
+  @Bean @Inject
+  public BulkProcessorFactory getBulkProcessorFactory(Client client){
+      return new SimpleBulkProcessorFactory (client);
+  }
+ 
+  @Bean @Inject
+  public IndexAdminHelper getIndexAdminHelper(Client client){
+      return new IndexAdminHelperImpl (client);
+  }
+ 
 }

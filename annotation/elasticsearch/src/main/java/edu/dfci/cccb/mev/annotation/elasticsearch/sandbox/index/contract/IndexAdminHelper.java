@@ -36,5 +36,6 @@ public interface IndexAdminHelper {
                                                                  IOException,
                                                                  IndexLoaderException;
   Map<String, Object> numerifyFieldMapping (String indexName, String documentType, String fieldName) throws IOException,
-                                                                                                    IndexLoaderException;  
+                                                                                                    IndexLoaderException;
+  String dummyName (long numOfDocs, long numOfFields);  
 }

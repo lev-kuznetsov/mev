@@ -21,12 +21,7 @@ import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.presetimport.PresetsIm
 public class MockDataApp {
 
   @Inject Client client;
-  BulkProcessorFactory bulkProcessorFactory;
- 
-  @PostConstruct
-  public void init(){
-    bulkProcessorFactory=new SimpleBulkProcessorFactory (client);
-  }
+  @Inject BulkProcessorFactory bulkProcessorFactory;
  
   public static void main(String[] args){
       try(AnnotationConfigApplicationContext  springContext = new AnnotationConfigApplicationContext ()){
@@ -41,6 +36,12 @@ public class MockDataApp {
   
   public void run(String[] args){    
     MockDataGenerator mockgen = new MockDataGenerator (client);
-    mockgen.overwriteDataset (Integer.parseInt (args[0]), Integer.parseInt (args[1]), bulkProcessorFactory.create (10, 1));    
+    
+    if(args.length==2)
+      mockgen.overwriteDataset (Integer.parseInt (args[0]), Integer.parseInt (args[1]), bulkProcessorFactory.create (10, 1));
+    else{     
+//      mockgen.overwriteDataset (100, 3000, bulkProcessorFactory.create (10, 8));
+      mockgen.overwriteDataset (1000, 3000, bulkProcessorFactory.create (100, 8));
+   }
   }
 }

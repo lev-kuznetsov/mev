@@ -66,6 +66,24 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     IndexAdminHelper helper = new IndexAdminHelperImpl (client);
     assertTrue(helper.exists (indexName));
   }
+  
+  @Test
+  public void testExistsByAliasTrue () {
+    //create index
+    final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
+    createIndexRequestBuilder.execute().actionGet();
+    
+    //create alias
+    String alias = "test_alias";
+    IndicesAliasesRequestBuilder builder = client.admin().indices ().prepareAliases ().addAlias (indexName, alias);
+    IndicesAliasesResponse response = builder.execute ().actionGet ();
+    assertTrue(response.isAcknowledged ());
+        
+    //test exists
+    IndexAdminHelper helper = new IndexAdminHelperImpl (client);
+    assertTrue(helper.exists (alias));
+  }
+
 
   @Test
   public void testDeleteIndex () {
@@ -429,6 +447,22 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     IndexAdminHelper helper = new IndexAdminHelperImpl (client);    
     String theIndexName = helper.getIndexNameForAlias(alias);
     log.debug(String.format("**** The index name: %s", theIndexName));
+    assertEquals (indexName, theIndexName);
+  }
+  
+  @Test
+  public void testGetIndexNameForAliasNONE() throws IndexAdminException{
+    
+    //Create index
+    final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
+    CreateIndexResponse createIndexResponse = createIndexRequestBuilder.execute().actionGet();
+    
+    //Use actual index name as the alias
+    String alias = indexName;
+    
+    IndexAdminHelper helper = new IndexAdminHelperImpl (client);    
+    String theIndexName = helper.getIndexNameForAlias(alias);
+    log.debug(String.format("**** The index name: %s", alias));
     assertEquals (indexName, theIndexName);
   }
   
