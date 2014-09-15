@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -43,7 +43,7 @@ public abstract class MevException extends Exception {
   /**
    * Error properties
    */
-  private final @XmlAttribute (name = "exception") Map<String, Object> properties = new HashMap<> ();
+  private final @XmlElement (name = "exception") Map<String, Object> properties = new HashMap<> ();
 
   {
     property (EXCEPTION_TYPE_KEY, getClass ().getName ());
@@ -113,10 +113,9 @@ public abstract class MevException extends Exception {
               cause instanceof MevException ? cause : (cause.getClass ().getName () + ":" + cause.getMessage ()));
     return super.initCause (cause);
   }
-  
+
   /* (non-Javadoc)
-   * @see java.lang.Throwable#toString()
-   */
+   * @see java.lang.Throwable#toString() */
   @Override
   public String toString () {
     return super.toString () + properties;
