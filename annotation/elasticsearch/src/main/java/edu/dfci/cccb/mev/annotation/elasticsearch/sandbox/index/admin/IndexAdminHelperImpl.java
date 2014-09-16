@@ -53,8 +53,10 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 
   @Override
   public void deleteIndex (String indexName) {
-    final DeleteIndexRequestBuilder delIdx = client.admin().indices().prepareDelete(indexName);
-    delIdx.execute().actionGet();    
+    if(exists(indexName)){
+      final DeleteIndexRequestBuilder delIdx = client.admin().indices().prepareDelete(indexName);
+      delIdx.execute().actionGet();
+    }
   }
 
   @Override
