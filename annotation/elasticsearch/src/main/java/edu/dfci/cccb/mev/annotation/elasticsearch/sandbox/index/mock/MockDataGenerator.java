@@ -50,7 +50,8 @@ public class MockDataGenerator {
       IndexRequestBuilder indexRequestBuilder = client.prepareIndex (indexName, documentType, i.toString ())
               .setSource (generateRandomDoc (numOfFields));
       bulkProcessor.add (indexRequestBuilder.request ());
-    }      
+    } 
+    bulkProcessor.flush ();    
   }
   
   @SneakyThrows()
