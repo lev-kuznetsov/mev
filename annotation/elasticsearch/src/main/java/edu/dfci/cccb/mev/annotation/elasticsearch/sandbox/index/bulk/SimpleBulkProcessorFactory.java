@@ -33,5 +33,19 @@ public class SimpleBulkProcessorFactory implements BulkProcessorFactory {
       }
   }).setBulkActions(bulkSize).setConcurrentRequests(concurrentRequests).build();
   }
+  
+  @Override
+  public int calculateBulkRows(long numOfCols){
+    double colSizeBytes = numOfCols*Integer.SIZE/8;
+    double minBulkSizeBytes=5e6;
+    int bulkSizeRows = (int) (minBulkSizeBytes/colSizeBytes);
+    return bulkSizeRows;
+  }
+
+  @Override
+  public BulkProcessor create (long numOfCols, int concurrentRequests) {
+    int bulkSizeRows = calculateBulkRows (numOfCols);    
+    return create(bulkSizeRows, concurrentRequests);
+  }
 
 }
