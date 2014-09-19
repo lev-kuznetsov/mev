@@ -38,6 +38,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
@@ -373,6 +374,14 @@ public class ServiceModule implements Module {
       }
     };
 
+    final ThreadLocal<HttpServletRequest> request = new ThreadLocal<HttpServletRequest> () {
+
+      @Override
+      protected HttpServletRequest initialValue () {
+        throw new IllegalStateException ("Attempted to bind HttpServetRequest outside of request context");
+      }
+    };
+
     binder.install (new SingletonModule () {
 
       @Override
@@ -409,6 +418,23 @@ public class ServiceModule implements Module {
           @Override
           public Request get () {
             return new RequestImpl (message.get ());
+          }
+        }).in (RequestScoped.class);
+
+        binder.bind (HttpServletRequest.class).toProvider (new Provider<HttpServletRequest> () {
+
+          @Override
+          public HttpServletRequest get () {
+            return request.get ();
+          }
+        }).in (RequestScoped.class);
+
+        binder.bind (Locale.class).toProvider (new Provider<Locale> () {
+          private @Inject Provider<HttpServletRequest> request;
+
+          @Override
+          public Locale get () {
+            return request.get ().getLocale ();
           }
         }).in (RequestScoped.class);
       }
@@ -550,13 +576,13 @@ public class ServiceModule implements Module {
         }
 
         @Override
-        protected void invoke (HttpServletRequest request, HttpServletResponse response) throws ServletException {
+        protected void invoke (HttpServletRequest httpRequest, HttpServletResponse response) throws ServletException {
           if (parameter != null) {
-            String key = request.getParameter (parameter);
+            String key = httpRequest.getParameter (parameter);
             if (key != null) {
               final MediaType value = parameterValues.get (key);
               if (value != null)
-                request = new HttpServletRequestWrapper (request) {
+                httpRequest = new HttpServletRequestWrapper (httpRequest) {
 
                   private static final String ACCEPT_HEADER = "Accept";
 
@@ -606,12 +632,14 @@ public class ServiceModule implements Module {
             }
           }
 
+          request.set (httpRequest);
+
           if (log.isDebugEnabled ())
             log.debug ("Serving "
-                       + request.getMethod () + " request to " + request.getRequestURI () + " with parameters "
-                       + request.getParameterMap ());
+                       + httpRequest.getMethod () + " request to " + httpRequest.getRequestURI () + " with parameters "
+                       + httpRequest.getParameterMap ());
 
-          super.invoke (request, response);
+          super.invoke (httpRequest, response);
         }
 
         @Override
