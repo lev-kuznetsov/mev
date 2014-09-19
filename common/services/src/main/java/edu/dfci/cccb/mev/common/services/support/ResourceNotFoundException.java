@@ -16,7 +16,7 @@
 
 package edu.dfci.cccb.mev.common.services.support;
 
-import edu.dfci.cccb.mev.common.domain.support.MevException;
+import edu.dfci.cccb.mev.common.domain.MevException;
 
 /**
  * Exception indicating the requested resource does not exist

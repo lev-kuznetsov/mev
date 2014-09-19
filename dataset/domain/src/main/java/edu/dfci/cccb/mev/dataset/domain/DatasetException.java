@@ -16,7 +16,7 @@
 
 package edu.dfci.cccb.mev.dataset.domain;
 
-import edu.dfci.cccb.mev.common.domain.support.MevException;
+import edu.dfci.cccb.mev.common.domain.MevException;
 
 /**
  * Superclass for all dataset exceptions

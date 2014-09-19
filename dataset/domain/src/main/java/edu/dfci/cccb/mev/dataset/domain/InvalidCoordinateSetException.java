@@ -20,6 +20,7 @@ import java.util.Arrays;
 
 /**
  * @author levk
+ * @since BAYLIE
  */
 public class InvalidCoordinateSetException extends DatasetException {
   private static final long serialVersionUID = 1L;

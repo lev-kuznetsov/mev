@@ -18,7 +18,7 @@ package edu.dfci.cccb.mev.googleplus.domain.contract;
 
 import java.net.URL;
 
-import edu.dfci.cccb.mev.common.domain.support.MevException;
+import edu.dfci.cccb.mev.common.domain.MevException;
 
 /**
  * @author levk

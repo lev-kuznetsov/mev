@@ -23,8 +23,8 @@ import javax.ws.rs.core.MediaType;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 
+import edu.dfci.cccb.mev.common.domain.MevException;
 import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
-import edu.dfci.cccb.mev.common.domain.support.MevException;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationConfigurer;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationMapper;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ExceptionBinder;
