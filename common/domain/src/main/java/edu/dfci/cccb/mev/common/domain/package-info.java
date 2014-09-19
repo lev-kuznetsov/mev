@@ -15,8 +15,6 @@
  */
 
 /**
- * Common support.
- *
  * @author levk
  */
-package edu.dfci.cccb.mev.common.domain.support;
+package edu.dfci.cccb.mev.common.domain;

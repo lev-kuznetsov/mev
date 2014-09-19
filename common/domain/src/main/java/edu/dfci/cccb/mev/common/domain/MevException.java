@@ -14,7 +14,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.domain.support;
+package edu.dfci.cccb.mev.common.domain;
 
 import static javax.xml.bind.annotation.XmlAccessType.NONE;
 

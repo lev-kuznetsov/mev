@@ -26,6 +26,8 @@ import org.junit.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 
+import edu.dfci.cccb.mev.common.domain.MevException;
+
 public class MevExceptionTest {
 
   @BeforeClass
