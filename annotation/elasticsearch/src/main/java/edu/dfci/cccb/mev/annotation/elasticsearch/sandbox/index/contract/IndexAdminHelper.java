@@ -20,7 +20,7 @@ public interface IndexAdminHelper {
   public String createIndex(String indexName);
   public CreateIndexResponse createIndex (String indexName, String documentType, XContentBuilder mappingBuilder);  
   public PutMappingResponse putMapping (String indexName, String documentType, XContentBuilder mappingBuilder);
-  Map<String, Object> getMapping (String indexName, String documentType) throws IOException;
+  Map<String, Object> getMapping (String indexName, String documentType) throws IOException, IndexAdminException;
   MappingMetaData getMappingMetaData (String indexName, String documentType) throws IOException;
   PutMappingResponse putMapping (String indexName, String documentType, Map<String, Object> mappingBuilder);
   String getIndexNameForAlias (String alias) throws IndexAdminException;  
@@ -37,5 +37,16 @@ public interface IndexAdminHelper {
                                                                  IndexLoaderException;
   Map<String, Object> numerifyFieldMapping (String indexName, String documentType, String fieldName) throws IOException,
                                                                                                     IndexLoaderException;
-  String dummyName (long numOfDocs, long numOfFields);  
+  String dummyName (long numOfDocs, long numOfFields);
+  Map<String, Object> numerifyField (String publicIndexName,
+                                     String documentType,
+                                     String fieldName,
+                                     BulkProcessor bulkProcessor,
+                                     int pageSize) throws IndexAdminException, IOException, IndexLoaderException;
+  CreateIndexResponse createInternalIndex (String indexName, String documentType, Map<String, Object> mapping);
+  Map<String, Object> numerifyField2 (String publicIndexName,
+                                      String documentType,
+                                      String fieldName,
+                                      BulkProcessor bulkProcessor,
+                                      int pageSize) throws IndexAdminException, IOException, IndexLoaderException;  
 }

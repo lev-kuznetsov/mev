@@ -6,10 +6,13 @@ import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
@@ -18,11 +21,22 @@ import au.com.bytecode.opencsv.CSVReader;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexDocumentHelper;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoaderException;
 
-@RequiredArgsConstructor
 public class CsvIndexDocumentHelper implements IndexDocumentHelper {
 
-  private final List<String> fields;
+  private final LinkedHashMap<String, Integer> fields;
+  private final List<String> fieldNames;
   private final String idField;
+  
+  public CsvIndexDocumentHelper(List<String> fields, String idField){
+    this.fields = new LinkedHashMap <String, Integer>(fields.size ());
+    int fieldIndex=0;
+    fieldNames=fields;
+    for(String field : this.fieldNames){
+      this.fields.put(field, fieldIndex);
+      fieldIndex++;
+    }
+    this.idField=idField;
+  }
   
   @Override
   public XContentBuilder process (String[] data) throws IndexLoaderException {
@@ -30,7 +44,7 @@ public class CsvIndexDocumentHelper implements IndexDocumentHelper {
       XContentBuilder jsonBuilder = XContentFactory.jsonBuilder();    
       jsonBuilder.startObject();    
       int position = 0;
-      for (String fieldName : fields) {          
+      for (String fieldName : fields.keySet ()) {          
           jsonBuilder.field(fieldName, data[position]);          
           position++;
       }    
@@ -52,7 +66,7 @@ public class CsvIndexDocumentHelper implements IndexDocumentHelper {
       .endObject ();
       
       jsonBuilder.startObject ("properties");
-      for (String fieldName : fields) {          
+      for (String fieldName : fields.keySet ()) {          
           jsonBuilder.startObject (fieldName)
           .field("type", "string")
           .field("index", "not_analyzed")
@@ -63,6 +77,26 @@ public class CsvIndexDocumentHelper implements IndexDocumentHelper {
       jsonBuilder.endObject();
       jsonBuilder.endObject ();      
       return jsonBuilder;    
+  }
+  
+  @Override
+  @SneakyThrows({NullPointerException.class})
+  public int getFieldIndex(String fieldName){
+    try{
+        return fields.get (fieldName);
+    }catch(NullPointerException e){      
+      throw new NullPointerException(String.format("Field %s not found in %s", fieldName, fields));
+    }
+  }
+  
+  @Override
+  public int getIdIndex(){
+    return fields.get (idField);            
+  }
+  
+  @Override
+  public String getFieldName(int index){
+    return fieldNames.get(index);
   }
   
 }

@@ -61,11 +61,21 @@ public class TestCsvIndexDocumentHelper {
     }, "id");
         
     XContentBuilder jsonMapping = csvHelper.createMapping ("type_name");
-    log.debug ("***jsonMapping.string()"+jsonMapping.string());
+    log.debug ("***jsonMapping.string() "+jsonMapping.string());
     assertEquals ("{\"_id\":{\"path\":\"id\"},\"properties\":{\"f1\":{\"type\":\"string\",\"index\":\"not_analyzed\",\"ignore_malformed\":true},\"f2\":{\"type\":\"string\",\"index\":\"not_analyzed\",\"ignore_malformed\":true},\"id\":{\"type\":\"string\",\"index\":\"not_analyzed\",\"ignore_malformed\":true}}}"
                   , jsonMapping.string ());
   }
   
+  @Test(expected=NullPointerException.class) 
+  public void testGetFieldIndex(){
+    IndexDocumentHelper csvHelper = new CsvIndexDocumentHelper (new ArrayList<String> (){
+      {add ("f1");add("f2");add("id");}      
+    }, "id");
+    assertEquals(0, csvHelper.getFieldIndex ("f1"));
+    assertEquals(1, csvHelper.getFieldIndex ("f2"));
+    assertEquals(2, csvHelper.getFieldIndex ("id"));
+    csvHelper.getFieldIndex ("x");
+  }
   
-
+  
 }

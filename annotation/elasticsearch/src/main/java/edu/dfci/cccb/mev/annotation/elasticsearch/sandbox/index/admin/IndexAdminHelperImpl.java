@@ -2,6 +2,7 @@ package edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin;
 
 import java.io.IOException;
 
+import org.eclipse.jetty.util.log.Log;
 import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest;
 import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequestBuilder;
 import org.elasticsearch.action.admin.indices.alias.IndicesAliasesResponse;
@@ -13,6 +14,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 import org.elasticsearch.action.admin.indices.alias.Alias;
 import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequestBuilder;
@@ -40,6 +42,7 @@ import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexAd
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoaderException;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.TypeCopier;
 
+@Log4j 
 @RequiredArgsConstructor
 public class IndexAdminHelperImpl implements IndexAdminHelper {
 
@@ -59,30 +62,49 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
     }
   }
 
+  private String createInternalIndexName(String indexName){
+    return indexName + UUID.randomUUID ();
+  }
+  
   @Override
   public String createIndex (String indexName) {
     //TODO: check if index with this name already exists
-    
-    //generate index name: indexName+UUID
-    final String internalIndexName = indexName + UUID.randomUUID ();
-    //add alias: indexName
-    final Alias alias = new Alias (indexName);    
+    String internalIndexName = createInternalIndexName(indexName);
+    //add alias: indexName    
     final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(internalIndexName);
-    createIndexRequestBuilder.addAlias (alias) .execute().actionGet();
+    createIndexRequestBuilder
+      .addAlias (new Alias(indexName)) 
+      .execute().actionGet();
     return internalIndexName;
   }
     
   @Override
   public CreateIndexResponse createIndex (String indexName, String documentType, XContentBuilder mappingBuilder) {
-    final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
-    CreateIndexResponse response = createIndexRequestBuilder.addMapping(documentType, mappingBuilder).execute().actionGet();
+    //generate index name: indexName+UUID
+    String internalIndexName = createInternalIndexName(indexName);
+    final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(internalIndexName);
+    CreateIndexResponse response = createIndexRequestBuilder
+            .addAlias (new Alias(indexName))
+            .addMapping(documentType, mappingBuilder).execute().actionGet();
     return response;
   }  
   
   @Override
   public CreateIndexResponse createIndex (String indexName, String documentType, Map<String, Object> mapping) {
-    final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
-    CreateIndexResponse response = createIndexRequestBuilder.addMapping(documentType, mapping).execute().actionGet();
+    //generate index name: indexName+UUID
+    String internalIndexName = createInternalIndexName(indexName);    
+    final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(internalIndexName);
+    CreateIndexResponse response = createIndexRequestBuilder
+            .addAlias (new Alias (indexName))
+            .addMapping(documentType, mapping).execute().actionGet();
+    return response;
+  }  
+  
+  @Override
+  public CreateIndexResponse createInternalIndex (String internalIndexName, String documentType, Map<String, Object> mapping) {
+    final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(internalIndexName);
+    CreateIndexResponse response = createIndexRequestBuilder            
+            .addMapping(documentType, mapping).execute().actionGet();
     return response;
   }  
   
@@ -113,19 +135,21 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
   
   
   @Override
-  public Map<String, Object> getMapping(String indexName, String documentType) throws IOException{
+  public Map<String, Object> getMapping(String indexName, String documentType) throws IOException, IndexAdminException{
     //mind the mapping
-    ClusterState cs = client.admin().cluster().prepareState().setIndices (indexName).execute().actionGet().getState();
-    MappingMetaData mdd = cs.getMetaData().index(indexName).mapping (documentType);
+    String internalIndexName = getIndexNameForAlias (indexName);
+    ClusterState cs = client.admin().cluster().prepareState().setIndices (internalIndexName).execute().actionGet().getState();
+    MappingMetaData mdd = cs.getMetaData().index(internalIndexName).mapping (documentType);
     return mdd.getSourceAsMap ();
   }
   
   @Override
   public Map<String, Object> numerifyFieldMapping(String indexName, String documentType, String fieldName) throws IOException, IndexLoaderException{
-    //TODO: implement
     //1.get the mapping
     MappingMetaData mappingMetaData = getMappingMetaData (indexName, documentType);
     Map<String, Object> mapping = mappingMetaData.getSourceAsMap ();
+    
+    log.debug (String.format("*** numerifyFieldMapping: original mapping %s", mapping));
     
     Map<String, Map> properties = (Map<String, Map>) mapping.get ("properties");
     Map<String, Object> fieldMapping = properties.get(fieldName);
@@ -133,11 +157,13 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
       throw new IndexLoaderException (String.format ("Field %s does not exist in %s/%s metadata: %s", 
                                                      fieldName, indexName, documentType, mappingMetaData.source ()));
     }
-    
         
     //2.check if "num" sub-field exists
     //see if any subfields are defined
     Map<String, Map> subFields = (Map<String, Map>) fieldMapping.get ("fields");
+    //make sure field is searchable
+    fieldMapping.remove ("index");
+    fieldMapping.put("index", "not_analyzed");
     if(subFields==null){      
       subFields = new LinkedHashMap<String, Map> ();
       fieldMapping.put ("fields", subFields);      
@@ -154,24 +180,27 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
     return mapping;
   }
 
+  
   @Override 
-  public Map<String, Object> numerifyField(String publicIndexName, String documentType, String fieldName, BulkProcessor bulkProcessor) throws IndexAdminException, IOException, IndexLoaderException{
-    //find out the internalIndexName
-    String curInternalName = getIndexNameForAlias (publicIndexName);   
+  public Map<String, Object> numerifyField(String publicIndexName, String documentType, String fieldName, BulkProcessor bulkProcessor, int pageSize) throws IndexAdminException, IOException, IndexLoaderException{
     
+    //find out the internalIndexName
+    String curInternalName = getIndexNameForAlias (publicIndexName);       
     //get the numerified mapping    
     Map<String, Object> newMapping = numerifyFieldMapping (curInternalName, documentType, fieldName);
         
     //create new index with new mapping (generate index name to reflect new version)
     String newInternalName = publicIndexName+"_"+UUID.randomUUID ();
-    CreateIndexResponse createIndexResponse = createIndex (newInternalName, documentType, newMapping);
+    log.debug (String.format("numerifyField: publicIndexName %s; curInternalIndexName %s; newInternalName %s"
+                             , publicIndexName, curInternalName, newInternalName));
+
+    CreateIndexResponse createIndexResponse = createInternalIndex (newInternalName, documentType, newMapping);
     if(!createIndexResponse.isAcknowledged())
       throw new IndexAdminException (String.format("Unable to numerifyField %s. Error creating index %s with type %s and mapping %s", 
                                                    fieldName, newInternalName, documentType, newMapping));
       
-    //copy data from internalIndexName
-    BulkProcessorFactory bulkFactory = new SimpleBulkProcessorFactory (client);
-    TypeCopier copier = new TypeCopierImpl (client, bulkProcessor);
+    //copy data from internalIndexName    
+    TypeCopier copier = new TypeCopierImpl (client, bulkProcessor, pageSize);
     copier.process (publicIndexName, documentType, newInternalName);
     
     //point alias to new internal index
@@ -179,6 +208,34 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
     
     return newMapping;
   }
+
+  @Override 
+  public Map<String, Object> numerifyField2(String publicIndexName, String documentType, String fieldName, BulkProcessor bulkProcessor, int pageSize) throws IndexAdminException, IOException, IndexLoaderException{
+    
+    //find out the internalIndexName
+    String curInternalName = getIndexNameForAlias (publicIndexName);       
+    //get the numerified mapping    
+    Map<String, Object> newMapping = numerifyFieldMapping (curInternalName, documentType, fieldName);    
+    putMapping (publicIndexName, documentType, newMapping);
+    //copy data from internalIndexName    
+    TypeUpdateTrigger update = new TypeUpdateTrigger (client, bulkProcessor, pageSize);
+    update.process (publicIndexName, documentType);
+        
+    return newMapping;
+  }
+
+  
+  @Override
+  public Map<String, Object> numerifyField (String publicIndexName,
+                                            String documentType,
+                                            String fieldName,
+                                            BulkProcessor bulkProcessor) throws IndexAdminException,
+                                                                        IOException,
+                                                                        IndexLoaderException {
+    return numerifyField (publicIndexName, documentType, fieldName, bulkProcessor, 100);
+  }
+
+  
   
   @Override
   public IndicesAliasesResponse putIndexAlias(String indexName, String alias){

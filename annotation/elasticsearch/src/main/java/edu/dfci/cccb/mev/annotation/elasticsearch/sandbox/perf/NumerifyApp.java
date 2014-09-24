@@ -34,7 +34,7 @@ public class NumerifyApp {
   public void run(String[] args) throws IndexAdminException, IOException, IndexLoaderException{
 //    adminHelper.numerifyField (adminHelper.dummyName (100, 10), "dummy_type", "field0", bulkProcessorFactory.create (10, 1));
     
-    adminHelper.numerifyField (adminHelper.dummyName (100, 3000), "dummy_type", "field0", 
-                               bulkProcessorFactory.create (100, 8));
+    adminHelper.numerifyField (adminHelper.dummyName (150000, 10), "dummy_type", "field0", 
+                               bulkProcessorFactory.create (1000, 8));
   }
 }

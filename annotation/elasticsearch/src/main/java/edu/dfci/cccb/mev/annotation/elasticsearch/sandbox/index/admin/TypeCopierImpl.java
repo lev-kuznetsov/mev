@@ -20,18 +20,19 @@ import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.CsvIndexLoad
 public class TypeCopierImpl implements TypeCopier {
   private final Client client;
   private final BulkProcessor bulkProcessor;
+  private final int pageSize;
   
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.TypeCopier#process(java.lang.String, java.lang.String, java.lang.String)
    */
   @Override
   public void process(String sourceIndexName, String sourceDocumentType, String targetIndexName){
-    TypeScroll scroll = new TypeScrollImpl (client, sourceIndexName, sourceDocumentType);
+    TypeScroll scroll = new TypeScrollImpl (client, sourceIndexName, sourceDocumentType, pageSize);
     for(SearchHit hit : scroll){
       IndexRequestBuilder requestBuilder = client.prepareIndex (targetIndexName, sourceDocumentType, hit.getId ());    
       requestBuilder.setSource (hit.source ());
       bulkProcessor.add (requestBuilder.request ());
     }
-    bulkProcessor.flush ();
+    bulkProcessor.flush ();    
   }
 }

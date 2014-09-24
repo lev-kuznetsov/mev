@@ -61,11 +61,6 @@ public class PresetsImportApp {
       log.debug("***** PresetsImportApp RUNING ****");
       app.run(args);
     }
-//    Settings settings = ImmutableSettings.settingsBuilder ().build ();
-//    Client client = new TransportClient ().addTransportAddress (
-//                         new InetSocketTransportAddress ("anton-masha.dfci.harvard.edu", 9300));
-//    Thread.sleep (5*1000);
-//    client.close ();
     
   }
   

@@ -47,7 +47,7 @@ public class TestTypeCopyImpl extends AbstractTestWithElasticSearch {
     Thread.sleep (1*1000);
     
     final BulkProcessorFactory bulkFactory=new SimpleBulkProcessorFactory (client);
-    TypeCopier copier = new TypeCopierImpl (client, bulkFactory.create (2, 1));
+    TypeCopier copier = new TypeCopierImpl (client, bulkFactory.create (2, 1), 10);
     copier.process (index_name, type_name, index_name_copy);
     
     refreshRequestBuilder = new RefreshRequestBuilder (client.admin ().indices ());

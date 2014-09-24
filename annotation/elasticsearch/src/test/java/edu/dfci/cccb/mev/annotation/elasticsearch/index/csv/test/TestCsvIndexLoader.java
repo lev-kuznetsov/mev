@@ -15,16 +15,12 @@ import org.junit.Test;
 
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoader;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoaderException;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.CsvIndexDocumentParserFactory;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.CsvIndexLoader;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.CsvIndexLoaderConfig;
 
 public class TestCsvIndexLoader extends AbstractTestWithElasticSearch {
 
-//  @Before
-//  public void setup () {     
-//    client = new TransportClient ().addTransportAddress (
-//             new InetSocketTransportAddress ("anton-masha.dfci.harvard.edu", 9300));
-//  }
    
   String INDEX_NAME="test_index";
   String INDEX_TYPE="test_type";
@@ -33,7 +29,7 @@ public class TestCsvIndexLoader extends AbstractTestWithElasticSearch {
     URL testFile  = TestCsvIndexDocumentParser.class.getResource ("/tcga/tcga_data/clinical/");
     CsvIndexLoaderConfig config = new CsvIndexLoaderConfig (testFile.getPath (), "*.csv", INDEX_NAME, INDEX_TYPE).bulkSize (1);
     
-    IndexLoader loader = new CsvIndexLoader (config, client);
+    IndexLoader loader = new CsvIndexLoader (config, client, new CsvIndexDocumentParserFactory ());
     
     loader.process ();
     Thread.sleep (1000);
@@ -50,7 +46,7 @@ public class TestCsvIndexLoader extends AbstractTestWithElasticSearch {
     URL testFile  = TestCsvIndexDocumentParser.class.getResource ("/tcga/tcga_data/clinical/testStream2.csv");
     CsvIndexLoaderConfig config = new CsvIndexLoaderConfig (testFile.getPath (), "*.csv", INDEX_NAME, INDEX_TYPE).bulkSize (1);
     
-    IndexLoader loader = new CsvIndexLoader (config, client);
+    IndexLoader loader = new CsvIndexLoader (config, client, new CsvIndexDocumentParserFactory ());
     Path entry = Paths.get (testFile.toURI ());
     loader.processFile (entry);
     Thread.sleep (1000);

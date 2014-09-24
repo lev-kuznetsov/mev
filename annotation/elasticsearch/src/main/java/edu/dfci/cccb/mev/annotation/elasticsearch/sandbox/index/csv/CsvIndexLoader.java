@@ -27,6 +27,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.IndexAdminHelperImpl;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexAdminHelper;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexDocumentParser;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexDocumentParserFactory;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoader;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoaderConfig;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoaderException;
@@ -41,11 +42,12 @@ public class CsvIndexLoader implements IndexLoader {
   CsvIndexLoaderConfig config;
   BulkProcessor bulkProcessor;
   IndexAdminHelper indexAdminHelper;
+  IndexDocumentParserFactory parserFactory;
   
-  public CsvIndexLoader(CsvIndexLoaderConfig config, Client client){
-    //new TransportClient ().addTransportAddress (new InetSocketTransportAddress ("anton-masha.dfci.harvard.edu", 9300));
+  public CsvIndexLoader(CsvIndexLoaderConfig config, Client client, IndexDocumentParserFactory parserFactory){
      this.client = client;
      this.config = config;
+     this.parserFactory=parserFactory;
      this.indexAdminHelper = new IndexAdminHelperImpl (client);
      this.bulkProcessor = BulkProcessor.builder(client, new BulkProcessor.Listener() {
        @Override
@@ -78,12 +80,14 @@ public class CsvIndexLoader implements IndexLoader {
   @Override
   @SneakyThrows({UnsupportedEncodingException.class})
   public void processFile(Path entry) throws IOException{
-    IndexDocumentParser parser = new CsvIndexDocumentParser (entry, this.config);
+    log.info (String.format("Processing file %s", entry));
+    IndexDocumentParser parser = parserFactory.create (entry, this.config);
     XContentBuilder mappingBuilder = parser.getMapping ();
     indexAdminHelper.createIndex (config.indexName (), config.typeName (), mappingBuilder);    
     for(XContentBuilder jsonBuilder : parser ){
       processDataLine(jsonBuilder);
     }
+    bulkProcessor.flush ();
   }
     
   private void processDataLine(XContentBuilder jsonBuilder) throws IOException{    

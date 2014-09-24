@@ -49,7 +49,7 @@ public class ElasticSearchConfiguration {
   @Bean(name="es-transport-client")
   public Client getTransportClient(){
     Client client = new TransportClient ().addTransportAddress (
-                                                                new InetSocketTransportAddress ("anton-masha.dfci.harvard.edu", 9300));
+                      new InetSocketTransportAddress ("anton-masha.dfci.harvard.edu", 9300));
     
     log.debug("****Init Transport Client: "+ client);
     

@@ -31,7 +31,7 @@ public class AbstractTestWithElasticSearch {
   }
 
   @After
-  public void tearDown () {
+  public void tearDown () throws Exception {
     client.close ();
     if(node!=null)
       node.close ();

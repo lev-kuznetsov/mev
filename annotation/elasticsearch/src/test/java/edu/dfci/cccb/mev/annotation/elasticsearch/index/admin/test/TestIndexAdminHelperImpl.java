@@ -272,10 +272,15 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
   }
   
   @Test
-  public void testGetMapping() throws IOException{
+  public void testGetMapping() throws IOException, IndexAdminException{
     //create mapping json
     XContentBuilder mapping =  XContentFactory.jsonBuilder().startObject().startObject("properties")
             .startObject("test_field")
+            .field("type", "string")
+            .field("index", "not_analyzed")
+            .field("store", "yes")
+            .endObject()
+            .startObject("test_field2")
             .field("type", "string")
             .field("index", "not_analyzed")
             .field("store", "yes")
@@ -383,7 +388,7 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
 
   
   @Test
-  public void testNumerifyFieldMapping() throws IOException, IndexLoaderException{
+  public void testNumerifyFieldMapping() throws IOException, IndexLoaderException, IndexAdminException{
     //create mapping
     testGetMapping();
         
@@ -393,9 +398,7 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     IndexAdminHelper helper = new IndexAdminHelperImpl (client);
     Map<String, Object> mapping = helper.numerifyFieldMapping (indexName, documentType, "test_field") ;
     
-////    assertEquals ("{\"test_type\":{\"properties\":{\"test_field\":{\"type\":\"string\",\"index\":\"not_analyzed\",\"store\":true}}}}"
-////                  , mmd.source ().toString ());
-//    
+    //make sure 'test_field' has a num subfield of the right type
     log.debug(String.format("**** NUMERIFIED MAPPING: %s", mapping));
     Map<String, Object> fieldMap = (Map<String, Object>) ((Map<String, Object>) mapping.get ("properties")).get ("test_field");
     assertEquals ("string", fieldMap.get ("type"));
@@ -404,6 +407,39 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     Map<String, Map> subFields = (Map<String, Map>) fieldMap.get("fields");
     Map<String, Map> subField = (Map<String, Map>) subFields.get("num");
     assertEquals ("long", subField.get ("type"));
+    
+    //make sure 'test_field2' does NOT have a num mapping yet
+    log.debug(String.format("**** NUMERIFIED MAPPING 2: %s", mapping));
+    fieldMap = (Map<String, Object>) ((Map<String, Object>) mapping.get ("properties")).get ("test_field2");
+    assertEquals ("string", fieldMap.get ("type"));
+    assertEquals ("not_analyzed", fieldMap.get ("index"));
+    assertEquals (true, fieldMap.get ("store"));
+    subFields = (Map<String, Map>) fieldMap.get("fields");
+    assertNull (subFields);
+
+    //numerify the second field 'test_field2'
+    mapping = helper.numerifyFieldMapping (indexName, documentType, "test_field2") ;
+    
+    //make sure the first field 'test_field' still has the num mapping
+    log.debug(String.format("**** NUMERIFIED MAPPING: %s", mapping));
+    fieldMap = (Map<String, Object>) ((Map<String, Object>) mapping.get ("properties")).get ("test_field");
+    assertEquals ("string", fieldMap.get ("type"));
+    assertEquals ("not_analyzed", fieldMap.get ("index"));
+    assertEquals (true, fieldMap.get ("store"));
+    subFields = (Map<String, Map>) fieldMap.get("fields");
+    subField = (Map<String, Map>) subFields.get("num");
+    assertEquals ("long", subField.get ("type"));
+    
+    //make sure the first field 'test_field2' still has the num mapping    
+    log.debug(String.format("**** NUMERIFIED MAPPING 2: %s", mapping));
+    fieldMap = (Map<String, Object>) ((Map<String, Object>) mapping.get ("properties")).get ("test_field2");
+    assertEquals ("string", fieldMap.get ("type"));
+    assertEquals ("not_analyzed", fieldMap.get ("index"));
+    assertEquals (true, fieldMap.get ("store"));
+    subFields = (Map<String, Map>) fieldMap.get("fields");
+    subField = (Map<String, Map>) subFields.get("num");
+    assertEquals ("long", subField.get ("type"));
+    
     
   }
     
@@ -557,7 +593,7 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
   }
   
   @Test
-  public void testRedirectIndexAlias(){
+  public void testRedirectIndexAlias() throws IndexAdminException{
     
     //Create index1
     CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
@@ -607,6 +643,9 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     getAliasesResponse = aliasesRequestBuilder.execute ().actionGet ();    
     aliases = getAliasesResponse.getAliases ().get (indexName);        
     assertNull (aliases);    
+    
+    String indexNameFromAlias = helper.getIndexNameForAlias (alias);
+    assertEquals (indexName2, indexNameFromAlias);
   }
   
   @Test 

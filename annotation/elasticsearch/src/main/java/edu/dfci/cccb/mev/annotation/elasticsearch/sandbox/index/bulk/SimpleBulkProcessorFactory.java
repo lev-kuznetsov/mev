@@ -7,6 +7,8 @@ import org.elasticsearch.action.bulk.BulkProcessor;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.common.unit.ByteSizeUnit;
+import org.elasticsearch.common.unit.ByteSizeValue;
 
 @Log4j
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class SimpleBulkProcessorFactory implements BulkProcessorFactory {
    * @see edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.BulkProcessorFactory#create(int, int)
    */
   @Override
-  public BulkProcessor create(int bulkSize, int concurrentRequests){
+  public BulkProcessor create(int bulkActions, int concurrentRequests){
     return BulkProcessor.builder(client, new BulkProcessor.Listener() {
       @Override
       public void beforeBulk(long executionId, BulkRequest request) {
@@ -26,26 +28,31 @@ public class SimpleBulkProcessorFactory implements BulkProcessorFactory {
       @Override
       public void afterBulk(long executionId, BulkRequest request, Throwable failure) {
         log.warn("Error executing bulk", failure);
+        
       }
       @Override
       public void afterBulk(long executionId, BulkRequest request, BulkResponse response) {
         log.info(String.format("Executed bulk composed of %d actions", request.numberOfActions()));
       }
-  }).setBulkActions(bulkSize).setConcurrentRequests(concurrentRequests).build();
+  }).setBulkActions(bulkActions).setConcurrentRequests(concurrentRequests)
+  .setBulkSize (new ByteSizeValue(1, ByteSizeUnit.MB))  
+  .build();
   }
   
   @Override
   public int calculateBulkRows(long numOfCols){
     double colSizeBytes = numOfCols*Integer.SIZE/8;
     double minBulkSizeBytes=5e6;
-    int bulkSizeRows = (int) (minBulkSizeBytes/colSizeBytes);
-    return bulkSizeRows;
+    int bulkActions = (int) (minBulkSizeBytes/colSizeBytes);
+    return bulkActions;
   }
 
   @Override
   public BulkProcessor create (long numOfCols, int concurrentRequests) {
-    int bulkSizeRows = calculateBulkRows (numOfCols);    
-    return create(bulkSizeRows, concurrentRequests);
+    int bulkActions = calculateBulkRows (numOfCols);    
+    return create(bulkActions, concurrentRequests);
   }
+  
+  
 
 }

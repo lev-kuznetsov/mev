@@ -11,6 +11,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.stereotype.Component;
 
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.configuration.ElasticSearchConfiguration;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.DynamicTemplateBuilder_AllTypes;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.DynamicTemplateBuilder_NoIndex;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.BulkProcessorFactory;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.SimpleBulkProcessorFactory;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.mock.MockDataGenerator;
@@ -35,13 +37,14 @@ public class MockDataApp {
   }
   
   public void run(String[] args){    
-    MockDataGenerator mockgen = new MockDataGenerator (client);
+    MockDataGenerator mockgen = new MockDataGenerator (client, new DynamicTemplateBuilder_AllTypes () );
     
     if(args.length==2)
       mockgen.overwriteDataset (Integer.parseInt (args[0]), Integer.parseInt (args[1]), bulkProcessorFactory.create (10, 1));
     else{     
 //      mockgen.overwriteDataset (100, 3000, bulkProcessorFactory.create (10, 8));
-      mockgen.overwriteDataset (1000, 3000, bulkProcessorFactory.create (100, 8));
+//      mockgen.overwriteDataset (150000, 10, bulkProcessorFactory.create (100, 8));
+      mockgen.overwriteDataset (6001, 1000, bulkProcessorFactory.create (100, 8));
    }
   }
 }

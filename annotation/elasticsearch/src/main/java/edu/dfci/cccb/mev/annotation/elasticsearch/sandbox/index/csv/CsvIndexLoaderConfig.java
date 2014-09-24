@@ -11,10 +11,11 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoaderConfig;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoaderException;
 
-
+@Log4j
 @Accessors(fluent=true, chain=true)
 @RequiredArgsConstructor
 public class CsvIndexLoaderConfig implements IndexLoaderConfig {
@@ -38,6 +39,7 @@ public class CsvIndexLoaderConfig implements IndexLoaderConfig {
   }
   public DirectoryStream<Path> getDirectoryStream() throws IndexLoaderException{
     try{
+      log.info (String.format("Reading directory %s files %s", this.folderPath (), this.fileFilter ()));
       DirectoryStream<Path> stream = Files.newDirectoryStream(this.folderPath(), this.fileFilter ());
       return stream;
     } catch (IOException e) {

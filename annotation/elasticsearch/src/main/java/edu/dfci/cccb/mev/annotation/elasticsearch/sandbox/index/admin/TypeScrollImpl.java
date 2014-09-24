@@ -24,7 +24,7 @@ public class TypeScrollImpl implements Iterable<SearchHit>, TypeScroll {
   private final int scrollWaitTimeMilli=60*1000;
   
   public TypeScrollImpl (Client client, String indexName, String documentType) {
-    this(client, indexName, documentType, 10);
+    this(client, indexName, documentType, 1000);
   }
 
   public TypeScrollImpl (Client client, String indexName, String documentType, int pageSize) {
