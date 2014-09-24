@@ -33,7 +33,7 @@ public class EavIndexDocumentHelper implements Closeable, AutoCloseable {
       }
     }    
     this.config = config;
-    csvHelper = new CsvIndexDocumentHelper (config.csvFields (), config.idField ());
+    csvHelper = new CsvIndexDocumentHelper (config.csvFields (), config.entityIdFields ());
     //read in the first line from the file
     data=reader.readNext ();
     curEntityId=getEntityId (data);
@@ -58,10 +58,10 @@ public class EavIndexDocumentHelper implements Closeable, AutoCloseable {
     prevEntityId=curEntityId;
     
     //read in next line
-    data=reader.readNext ();
-    curEntityId=getEntityId (data);
+    data=reader.readNext ();    
     if(data==null)
       return false;
+    curEntityId=getEntityId (data);
     
     try{
       return curEntityId.equals (prevEntityId);

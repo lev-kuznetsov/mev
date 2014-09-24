@@ -46,7 +46,7 @@ public class TestCsvIndexDocumentParser extends AbstractTestWithElasticSearch {
   public void test () throws IOException, URISyntaxException {
     
     URL testFile  = TestCsvIndexDocumentParser.class.getResource ("/tcga/tcga_data/clinical/testStream.csv");
-    CsvIndexLoaderConfig config = new CsvIndexLoaderConfig (testFile.getPath (), "*.csv", "test_index", "test_type"); 
+    CsvIndexLoaderConfig config = new CsvIndexLoaderConfig (testFile.getPath (), "*.csv", "test_index", "test_type", "id".split (",")); 
     IndexDocumentParser stream = new CsvIndexDocumentParser (Paths.get (testFile.toURI ()), config);
     
     Iterator<XContentBuilder> it=stream.iterator ();

@@ -27,7 +27,7 @@ public class TestCsvIndexLoader extends AbstractTestWithElasticSearch {
   @Test @Ignore
   public void testProcess () throws IndexLoaderException, InterruptedException {
     URL testFile  = TestCsvIndexDocumentParser.class.getResource ("/tcga/tcga_data/clinical/");
-    CsvIndexLoaderConfig config = new CsvIndexLoaderConfig (testFile.getPath (), "*.csv", INDEX_NAME, INDEX_TYPE).bulkSize (1);
+    CsvIndexLoaderConfig config = new CsvIndexLoaderConfig (testFile.getPath (), "*.csv", INDEX_NAME, INDEX_TYPE, "id".split (",")).bulkSize (1);
     
     IndexLoader loader = new CsvIndexLoader (config, client, new CsvIndexDocumentParserFactory ());
     
@@ -44,7 +44,7 @@ public class TestCsvIndexLoader extends AbstractTestWithElasticSearch {
   @Test 
   public void testProcessFile () throws IndexLoaderException, URISyntaxException, IOException, InterruptedException {
     URL testFile  = TestCsvIndexDocumentParser.class.getResource ("/tcga/tcga_data/clinical/testStream2.csv");
-    CsvIndexLoaderConfig config = new CsvIndexLoaderConfig (testFile.getPath (), "*.csv", INDEX_NAME, INDEX_TYPE).bulkSize (1);
+    CsvIndexLoaderConfig config = new CsvIndexLoaderConfig (testFile.getPath (), "*.csv", INDEX_NAME, INDEX_TYPE, "id".split (",")).bulkSize (1);
     
     IndexLoader loader = new CsvIndexLoader (config, client, new CsvIndexDocumentParserFactory ());
     Path entry = Paths.get (testFile.toURI ());

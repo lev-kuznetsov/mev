@@ -42,7 +42,7 @@ public class TestCsvIndexDocumentHelper {
   public void testProcess () throws IndexLoaderException, JsonParseException, JsonMappingException, IOException {
     IndexDocumentHelper csvHelper = new CsvIndexDocumentHelper (new ArrayList<String> (){
       {add ("f1");add("f2");add("id");}      
-    }, "id");
+    }, "id".split (","));
     
     XContentBuilder jsonBuilder = csvHelper.process (new String[] {"x", "y", "z"});      
     log.debug ("jsonBuilder.string(): "+jsonBuilder.string ());
@@ -58,7 +58,7 @@ public class TestCsvIndexDocumentHelper {
   public void testCreateMapping() throws IndexLoaderException, JsonParseException, JsonMappingException, IOException {
     IndexDocumentHelper csvHelper = new CsvIndexDocumentHelper (new ArrayList<String> (){
       {add ("f1");add("f2");add("id");}      
-    }, "id");
+    }, "id".split (","));
         
     XContentBuilder jsonMapping = csvHelper.createMapping ("type_name");
     log.debug ("***jsonMapping.string() "+jsonMapping.string());
@@ -70,7 +70,7 @@ public class TestCsvIndexDocumentHelper {
   public void testGetFieldIndex(){
     IndexDocumentHelper csvHelper = new CsvIndexDocumentHelper (new ArrayList<String> (){
       {add ("f1");add("f2");add("id");}      
-    }, "id");
+    }, "id".split (","));
     assertEquals(0, csvHelper.getFieldIndex ("f1"));
     assertEquals(1, csvHelper.getFieldIndex ("f2"));
     assertEquals(2, csvHelper.getFieldIndex ("id"));

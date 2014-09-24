@@ -28,6 +28,7 @@ import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.EavIndexDocu
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.EavLoaderConfig;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.EavParser;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.mock.MockDataGenerator;
+//field count: 1544
 
 //run 1
 //samples: 10

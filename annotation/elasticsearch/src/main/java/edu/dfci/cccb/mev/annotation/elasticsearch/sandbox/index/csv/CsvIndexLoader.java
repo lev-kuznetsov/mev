@@ -93,11 +93,11 @@ public class CsvIndexLoader implements IndexLoader {
   private void processDataLine(XContentBuilder jsonBuilder) throws IOException{    
     IndexRequestBuilder requestBuilder = client.prepareIndex (config.indexName (), config.typeName ());    
     requestBuilder.setSource (jsonBuilder);
-    bulkProcessor.add (requestBuilder.request ());    
+    bulkProcessor.add (requestBuilder.request ());
   }
   
   String getId(String[] line) {
-    int index = config.csvFields().indexOf(config.idField());
+    int index = config.csvFields().indexOf(config.entityIdFields ());
     return line[index];
   }
 }

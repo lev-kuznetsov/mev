@@ -36,7 +36,7 @@ public class CsvIndexDocumentParser implements IndexDocumentParser, Closeable, A
         config.csvFields(Arrays.asList(headerLine));
       }
     }    
-    this.csvHelper = new CsvIndexDocumentHelper (config.csvFields (), config.idField ());
+    this.csvHelper = new CsvIndexDocumentHelper (config.csvFields (), config.entityIdFields ());
     this.config = config;
   }
 

@@ -29,8 +29,8 @@ public class CsvIndexLoaderConfig implements IndexLoaderConfig {
   private @Getter char quoteCharacter='"';
   private @Getter char escapeCharacter='\\';
   private @Getter @Setter List<String> csvFields;
-  private @Getter boolean firstLineIsHeader=true;
-  private @Getter String idField="id";
+  private @Getter boolean firstLineIsHeader=true;  
+  private @Getter final String[] entityIdFields;
   private @Getter @Setter int bulkSize = 100;
   private @Getter int concurrentRequests=1;
   
@@ -45,6 +45,15 @@ public class CsvIndexLoaderConfig implements IndexLoaderConfig {
     } catch (IOException e) {
       throw new IndexLoaderException (String.format("Cannot open files for path: %s, filter: %s", this.folderPath(), this.fileFilter ()));
     }
+  }
+  
+  public boolean isEntityIdField(String fieldName){
+    //either one of the entity
+    for(String field : entityIdFields ()){
+      if(field.equals (fieldName))
+        return true;
+    }
+    return false;
   }
   
 }

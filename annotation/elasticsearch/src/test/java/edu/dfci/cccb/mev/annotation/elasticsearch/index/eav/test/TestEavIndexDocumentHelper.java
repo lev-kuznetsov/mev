@@ -54,14 +54,14 @@ public class TestEavIndexDocumentHelper {
 
     //entity 4
     entity = eavHelper.readNext ();
-    assertEquals("1004", entity.get ("case_id"));
+    assertEquals("1003", entity.get ("case_id"));
     assertEquals("0", entity.get ("visit_id"));
     assertEquals("1984-85 cohort not censored", entity.get ("MACSCODE"));    
     assertEquals("other than 2001 recruit or returning censored", entity.get ("STATUS02"));
 
     //entity 5
     entity = eavHelper.readNext ();
-    assertEquals("1005", entity.get ("case_id"));
+    assertEquals("1004", entity.get ("case_id"));
     assertEquals("0", entity.get ("visit_id"));
     assertEquals("1984-85 cohort not censored", entity.get ("MACSCODE"));        
 

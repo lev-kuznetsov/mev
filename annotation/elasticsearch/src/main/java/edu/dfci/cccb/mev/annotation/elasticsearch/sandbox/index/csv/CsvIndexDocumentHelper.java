@@ -25,9 +25,9 @@ public class CsvIndexDocumentHelper implements IndexDocumentHelper {
 
   private final LinkedHashMap<String, Integer> fields;
   private final List<String> fieldNames;
-  private final String idField;
+  private final String[] idFields;
   
-  public CsvIndexDocumentHelper(List<String> fields, String idField){
+  public CsvIndexDocumentHelper(List<String> fields, String[] idFields){
     this.fields = new LinkedHashMap <String, Integer>(fields.size ());
     int fieldIndex=0;
     fieldNames=fields;
@@ -35,7 +35,7 @@ public class CsvIndexDocumentHelper implements IndexDocumentHelper {
       this.fields.put(field, fieldIndex);
       fieldIndex++;
     }
-    this.idField=idField;
+    this.idFields=idFields;
   }
   
   @Override
@@ -58,12 +58,13 @@ public class CsvIndexDocumentHelper implements IndexDocumentHelper {
   @Override
   public XContentBuilder createMapping(String typeName) throws IOException{
     
-      XContentBuilder jsonBuilder = XContentFactory.jsonBuilder();    
+      XContentBuilder jsonBuilder = XContentFactory.jsonBuilder().startObject();    
       
-      jsonBuilder.startObject()
-      .startObject ("_id")
-      .field ("path", idField)
-      .endObject ();
+      if(idFields.length==1){        
+        jsonBuilder.startObject ("_id")
+        .field ("path", idFields[0])
+        .endObject ();
+      }
       
       jsonBuilder.startObject ("properties");
       for (String fieldName : fields.keySet ()) {          
@@ -88,12 +89,7 @@ public class CsvIndexDocumentHelper implements IndexDocumentHelper {
       throw new NullPointerException(String.format("Field %s not found in %s", fieldName, fields));
     }
   }
-  
-  @Override
-  public int getIdIndex(){
-    return fields.get (idField);            
-  }
-  
+    
   @Override
   public String getFieldName(int index){
     return fieldNames.get(index);
