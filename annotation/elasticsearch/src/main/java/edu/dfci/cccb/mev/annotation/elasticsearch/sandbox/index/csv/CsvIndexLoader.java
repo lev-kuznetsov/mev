@@ -7,6 +7,8 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
@@ -17,6 +19,7 @@ import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexRequestBuilder;
+import org.elasticsearch.action.update.UpdateRequestBuilder;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
@@ -28,6 +31,7 @@ import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.IndexAdmin
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexAdminHelper;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexDocumentParser;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexDocumentParserFactory;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexDocumentParserIterator;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoader;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoaderConfig;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoaderException;
@@ -43,12 +47,13 @@ public class CsvIndexLoader implements IndexLoader {
   BulkProcessor bulkProcessor;
   IndexAdminHelper indexAdminHelper;
   IndexDocumentParserFactory parserFactory;
-  
+  Map<String, String> existingIds;
   public CsvIndexLoader(CsvIndexLoaderConfig config, Client client, IndexDocumentParserFactory parserFactory){
      this.client = client;
      this.config = config;
      this.parserFactory=parserFactory;
      this.indexAdminHelper = new IndexAdminHelperImpl (client);
+     this.existingIds=new HashMap<String, String>();
      this.bulkProcessor = BulkProcessor.builder(client, new BulkProcessor.Listener() {
        @Override
        public void beforeBulk(long executionId, BulkRequest request) {
@@ -83,17 +88,27 @@ public class CsvIndexLoader implements IndexLoader {
     log.info (String.format("Processing file %s", entry));
     IndexDocumentParser parser = parserFactory.create (entry, this.config);
     XContentBuilder mappingBuilder = parser.getMapping ();
-    indexAdminHelper.createIndex (config.indexName (), config.typeName (), mappingBuilder);    
-    for(XContentBuilder jsonBuilder : parser ){
-      processDataLine(jsonBuilder);
-    }
+    indexAdminHelper.createIndex (config.indexName (), config.typeName (), mappingBuilder);
+    IndexDocumentParserIterator it = parser.iterator ();
+    while(it.hasNext ()){
+      XContentBuilder jsonBuilder = it.next ();
+      processDataLine(jsonBuilder, it.getId ());
+    }    
     bulkProcessor.flush ();
   }
     
-  private void processDataLine(XContentBuilder jsonBuilder) throws IOException{    
-    IndexRequestBuilder requestBuilder = client.prepareIndex (config.indexName (), config.typeName ());    
-    requestBuilder.setSource (jsonBuilder);
-    bulkProcessor.add (requestBuilder.request ());
+  private void processDataLine(XContentBuilder jsonBuilder, String id) throws IOException{    
+    
+    if(existingIds.containsKey (id)){
+      UpdateRequestBuilder requestBuilder = client.prepareUpdate (config.indexName (), config.typeName (), id);    
+      requestBuilder.setDoc (jsonBuilder);
+      bulkProcessor.add (requestBuilder.request ());
+    }else{
+      IndexRequestBuilder requestBuilder = client.prepareIndex (config.indexName (), config.typeName (), id);    
+      requestBuilder.setSource (jsonBuilder);
+      bulkProcessor.add (requestBuilder.request ());
+    }
+    
   }
   
   String getId(String[] line) {

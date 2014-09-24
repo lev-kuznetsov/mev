@@ -13,10 +13,6 @@ import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.EavLoaderCon
 @Configuration
 public class MacsImportConfiguration {
   
-  @Bean
-  public URL getMacsFileUrl(){
-    return  MacsImportConfiguration.class.getResource ("/macs/data/macs_data_dujmpTop10K.tsv");
-  }
   
   @Bean
   public URL getDataRoot() throws MalformedURLException{
@@ -36,6 +32,6 @@ public class MacsImportConfiguration {
                                 "macs_type", 
                                 entityIdField, 
                                 "variable", 
-                                "value");
+                                "num_value");
   }
 }

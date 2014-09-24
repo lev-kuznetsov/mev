@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexDocumentParser;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexDocumentParserIterator;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.CsvIndexDocumentParser;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.CsvIndexLoaderConfig;
 
@@ -49,7 +50,7 @@ public class TestCsvIndexDocumentParser extends AbstractTestWithElasticSearch {
     CsvIndexLoaderConfig config = new CsvIndexLoaderConfig (testFile.getPath (), "*.csv", "test_index", "test_type", "id".split (",")); 
     IndexDocumentParser stream = new CsvIndexDocumentParser (Paths.get (testFile.toURI ()), config);
     
-    Iterator<XContentBuilder> it=stream.iterator ();
+    IndexDocumentParserIterator it=stream.iterator ();
     
     assertTrue (it.hasNext ());
     XContentBuilder jsonBuilder = it.next ();    
@@ -61,12 +62,14 @@ public class TestCsvIndexDocumentParser extends AbstractTestWithElasticSearch {
     log.debug ("expected:"+expected);
     log.debug ("actual:"+json);
     assertThat(expected, is(json));
+    assertThat(it.getId(), is("x"));
     
     assertTrue (it.hasNext ());
     jsonBuilder = it.next ();        
     json = mapper.readValue(jsonBuilder.string (), DummyJson.class);
     expected = new DummyJson ("b", "c", "a");
     assertThat(expected, is(json));
+    assertThat(it.getId(), is("a"));
     
     assertFalse (it.hasNext ());
   }

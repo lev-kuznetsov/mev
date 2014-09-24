@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.dfci.cccb.mev.annotation.elasticsearch.index.csv.test.AbstractTestWithElasticSearch;
 import edu.dfci.cccb.mev.annotation.elasticsearch.perf.AbstractElasticsearchPerfTest;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexDocumentParserIterator;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.EavParser;
 
 @Log4j
@@ -41,7 +42,7 @@ public class TestEavParser extends AbstractTestWithElasticSearch{
   @NoArgsConstructor
   @AllArgsConstructor
   @Accessors(fluent=true)
-  private static class DummyMacsRecord{
+  private static class DummyMacsRecord{    
     @JsonProperty @Getter private String id;
     @JsonProperty @Getter private String case_id;
     @JsonProperty @Getter private String visit_id;
@@ -68,13 +69,16 @@ public class TestEavParser extends AbstractTestWithElasticSearch{
   public void testIterator () throws JsonParseException, JsonMappingException, IOException {
     int counter = 0;
     ObjectMapper mapper = new ObjectMapper ();
-    for(XContentBuilder jsonBuilder : parser){
+    IndexDocumentParserIterator it = parser.iterator ();
+    while(it.hasNext ()){
+      XContentBuilder jsonBuilder = it.next ();
       DummyMacsRecord macsRecord = mapper.readValue (jsonBuilder.string (), DummyMacsRecord.class);
       assertEquals(String.format ("100%s", counter), macsRecord.case_id ());
       assertFalse (macsRecord.case_id().equals (""));
       assertNotNull(macsRecord.case_id());
       assertFalse (macsRecord.visit_id().equals (""));
       assertNotNull(macsRecord.visit_id());
+      assertEquals(String.format("%s!!!!%s", macsRecord.case_id(), macsRecord.visit_id ()), it.getId ());
       counter++;
     }
     assertEquals(5, counter);
@@ -85,8 +89,8 @@ public class TestEavParser extends AbstractTestWithElasticSearch{
   public void testGetMapping () throws IOException {
     XContentBuilder mapping = parser.getMapping ();
     log.debug (mapping.string ());
-    assertEquals ("{\"dynamic_templates\":[{\"dont_analyze\":{\"match\":\"*\",\"mapping\":{\"type\":\"string\",\"index\":\"no\",\"ignore_malformed\":true,\"norms\":{\"enabled\":false}}}}]}", 
-                  mapping.string ());
+//    assertEquals ("{\"dynamic_templates\":[{\"dont_analyze\":{\"match\":\"*\",\"mapping\":{\"type\":\"string\",\"index\":\"no\",\"ignore_malformed\":true,\"norms\":{\"enabled\":false}}}}]}", mapping.string ());
+    assertEquals ("{\"dynamic_templates\":[{\"dont_analyze\":{\"match\":\"*\",\"mapping\":{\"type\":\"string\",\"index\":\"no\",\"ignore_malformed\":true,\"norms\":{\"enabled\":false}}}}],\"properties\":{\"case_id\":{\"type\":\"String\",\"index\":\"not_analyzed\",\"norms\":{\"enabled\":false}},\"visit_id\":{\"type\":\"String\",\"index\":\"not_analyzed\",\"norms\":{\"enabled\":false}}}}", mapping.string ());
     
     CreateIndexRequestBuilder createIndexRequestBuilder = client.admin ().indices ()
             .prepareCreate (bag.getConfig ().indexName ())

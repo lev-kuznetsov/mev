@@ -6,4 +6,5 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 
 public interface IndexDocumentParser extends Iterable<XContentBuilder>{
   public XContentBuilder getMapping() throws IOException;
+  public IndexDocumentParserIterator iterator();
 }

@@ -9,4 +9,5 @@ public interface IndexDocumentHelper {
   XContentBuilder createMapping (String typeName) throws IndexLoaderException, IOException;
   int getFieldIndex (String fieldName);    
   String getFieldName (int index);
+  String getId (String[] data);
 }

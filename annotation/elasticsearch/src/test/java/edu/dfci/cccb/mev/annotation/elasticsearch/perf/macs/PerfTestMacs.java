@@ -30,17 +30,23 @@ import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.EavParser;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.mock.MockDataGenerator;
 //field count: 1544
 
-//run 1
+//run 1 - 630K records (too many)
 //samples: 10
 //max:     30194
 //average: 26764.9
 //median:  26643
 
-//run 2
+//run 2 630K records (too many)
 //samples: 10
 //max:     29670
 //average: 25866.0
 //median:  25853
+
+//run 1 - 126678 unique patient+visits;
+//samples: 10
+//max:     3117
+//average: 2702.2
+//median:  2651
 
 @Log4j
 public class PerfTestMacs extends AbstractElasticsearchPerfTest {
@@ -104,13 +110,13 @@ public class PerfTestMacs extends AbstractElasticsearchPerfTest {
     return fields;
   }
 
-  @Test @PerfTest(invocations=1, threads=1)
+  @Test @PerfTest(invocations=10, threads=1)
   public void test () throws IOException, IndexAdminException, IndexLoaderException {
     String fieldName = fields.get (random.nextInt (fields.size ()));
     log.debug(String.format("Field: %s", fieldName));
-//    adminHelper.numerifyField (config.indexName (), config.typeName (), fieldName
-//                               , bulkProcessorFactory.create (
-//                                bulkProcessorFactory.calculateBulkRows (fields.size ()), 8));
+    adminHelper.numerifyField (config.indexName (), config.typeName (), fieldName
+                               , bulkProcessorFactory.create (
+                                bulkProcessorFactory.calculateBulkRows (fields.size ()), 8));
   }
   
   @After

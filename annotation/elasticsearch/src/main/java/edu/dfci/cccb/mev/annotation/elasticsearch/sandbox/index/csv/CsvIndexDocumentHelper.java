@@ -94,5 +94,13 @@ public class CsvIndexDocumentHelper implements IndexDocumentHelper {
   public String getFieldName(int index){
     return fieldNames.get(index);
   }
-  
+
+  @Override
+  public String getId(String data[]){
+    String id="";
+    for(String idField : idFields){
+      id+="!!!!"+data[fields.get (idField)];
+    }
+    return id.substring (4, id.length ());
+  }
 }

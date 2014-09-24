@@ -17,6 +17,7 @@ import org.elasticsearch.common.xcontent.XContentFactory;
 import au.com.bytecode.opencsv.CSVReader;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexAdminHelper;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexDocumentParser;
+import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexDocumentParserIterator;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoaderException;
 
 @Log4j
@@ -45,7 +46,7 @@ public class CsvIndexDocumentParser implements IndexDocumentParser, Closeable, A
     return this.csvHelper.createMapping (config.typeName ());
   }
   
-  private class CsvIndexDocumentInterator implements Iterator<XContentBuilder>{
+  private class CsvIndexDocumentInterator implements IndexDocumentParserIterator{
 
     private String[] nextLine;
     
@@ -69,11 +70,16 @@ public class CsvIndexDocumentParser implements IndexDocumentParser, Closeable, A
     @Override
     public void remove () {
       throw new UnsupportedOperationException(String.format("Remove operation not supported"));
+    }
+
+    @Override
+    public String getId () {
+      return csvHelper.getId (nextLine);
     }    
   }
   
   @Override
-  public Iterator<XContentBuilder> iterator () {
+  public IndexDocumentParserIterator iterator () {
     return new CsvIndexDocumentInterator ();
   }
 

@@ -41,15 +41,16 @@ public class EavIndexDocumentHelper implements Closeable, AutoCloseable {
   
   private String getEntityId(String data[]){    
     StringBuilder sb=new StringBuilder ();
-      for(String keyField : config.entityIdFields ()){
+    
+    for(String keyField : config.entityIdFields ()){
         try{
-          sb.append (data[csvHelper.getFieldIndex (keyField)]).append ("!!!");
+          sb.append ("!!!!").append (data[csvHelper.getFieldIndex (keyField)]);
         }catch(ArrayIndexOutOfBoundsException e){
           throw new ArrayIndexOutOfBoundsException (String.format("Error reading field %s index %s data: %s"
                                                                   , keyField, csvHelper.getFieldIndex (keyField), Arrays.toString(data)));
         }
-      }
-      return sb.toString ();    
+      }    
+      return sb.toString ().substring (4);    
   }
   
   private boolean isSameEntity() throws IOException{
@@ -97,7 +98,7 @@ public class EavIndexDocumentHelper implements Closeable, AutoCloseable {
       log.error(new IOException (String.format("Invalid EAV record - attribute '%s' or value '%s' is empty in entity %s from data: %s", attribute, value, entity, Arrays.toString (data))));
     else
       entity.put (attribute, value);    
-    entity.put ("uniqueKey", getEntityId (data));
+//    entity.put ("uniqueKey", getEntityId (data));
   }
   
   public Map<String, String> readNext() throws IOException{
@@ -113,6 +114,9 @@ public class EavIndexDocumentHelper implements Closeable, AutoCloseable {
     return entity;
   }
 
+  public String getId(){
+    return prevEntityId;    
+  }
   @Override
   public void close () throws IOException {
     reader.close();
