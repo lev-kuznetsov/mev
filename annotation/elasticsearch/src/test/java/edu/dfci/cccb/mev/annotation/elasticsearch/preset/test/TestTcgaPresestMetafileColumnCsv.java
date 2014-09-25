@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import lombok.extern.log4j.Log4j;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -18,8 +19,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.configuration.PresetsImportAppConfiguration;
 import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetNotFoundException;
+import edu.dfci.cccb.mev.testing.junit.groups.IntegrationTestMarker;
 
 @Log4j
+@Category({IntegrationTestMarker.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={PresetsImportAppConfiguration.class})
 public class TestTcgaPresestMetafileColumnCsv {
