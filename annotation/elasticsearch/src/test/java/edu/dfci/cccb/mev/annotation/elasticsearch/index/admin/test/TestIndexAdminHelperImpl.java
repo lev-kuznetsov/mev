@@ -134,7 +134,7 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     //create index
     String typeName="test_type";
     IndexAdminHelper helper = new IndexAdminHelperImpl (client);
-    CreateIndexResponse response = helper.createIndex (indexName, typeName, mapping);
+    CreateIndexResponse response = helper.createInternalIndex (indexName, typeName, mapping);
    
     //make sure index creation worked
     final IndicesExistsResponse resExists = client.admin().indices().prepareExists(indexName).execute().actionGet();
@@ -182,7 +182,7 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     //create index
     String typeName="test_type";
     IndexAdminHelper helper = new IndexAdminHelperImpl (client);
-    CreateIndexResponse response = helper.createIndex (indexName, typeName, mapping);
+    CreateIndexResponse response = helper.createInternalIndex (indexName, typeName, mapping);
    
     //make sure index creation worked
     final IndicesExistsResponse resExists = client.admin().indices().prepareExists(indexName).execute().actionGet();
@@ -191,7 +191,7 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     assertTrue(response.isAcknowledged ());
     
     //get the mapping
-    ClusterState cs = client.admin().cluster().prepareState().setIndices (indexName).execute().actionGet().getState();
+    ClusterState cs = client.admin().cluster().prepareState().setIndices (indexName).execute().actionGet().getState();    
     IndexMetaData imd = cs.getMetaData().index(indexName);
     MappingMetaData mdd = imd.mapping(typeName);
     log.debug("***********mappingGetResponse:"+mdd.source ());
@@ -420,15 +420,16 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     //numerify the second field 'test_field2'
     mapping = helper.numerifyFieldMapping (indexName, documentType, "test_field2") ;
     
-    //make sure the first field 'test_field' still has the num mapping
+    //make sure the first field 'test_field' does NOT have the mapping
+    //Note: this helper function retrieves the current mapping based on field name
+    //and modifies it for numeric value, but does NOT save it back to the index
     log.debug(String.format("**** NUMERIFIED MAPPING: %s", mapping));
     fieldMap = (Map<String, Object>) ((Map<String, Object>) mapping.get ("properties")).get ("test_field");
     assertEquals ("string", fieldMap.get ("type"));
     assertEquals ("not_analyzed", fieldMap.get ("index"));
     assertEquals (true, fieldMap.get ("store"));
     subFields = (Map<String, Map>) fieldMap.get("fields");
-    subField = (Map<String, Map>) subFields.get("num");
-    assertEquals ("long", subField.get ("type"));
+    assertNull(subFields);    
     
     //make sure the first field 'test_field2' still has the num mapping    
     log.debug(String.format("**** NUMERIFIED MAPPING 2: %s", mapping));
