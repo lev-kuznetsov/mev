@@ -31,6 +31,9 @@
   <logger name="org.jooq">
     <level value="info"></level>
   </logger>
+  <logger name="org.elasticsearch">
+  	<level value="info"></level>
+  </logger>
   <logger name="edu.dfci.cccb.mev.annotation.elasticsearch">
     <level value="debug"></level>
   </logger>  
