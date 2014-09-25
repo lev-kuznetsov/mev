@@ -20,7 +20,7 @@ public class TestCsvRiverPutRequest {
            "        \"poll\":\"5m\",        \n" + 
            "        \"first_line_is_header\" : \"true\",\n" + 
            "        \"field_separator\" : \"\\t\",\n" + 
-           "        \"escape_character\" : \"\",\n" + 
+           "        \"escape_character\" : \"\\\\\",\n" + 
            "        \"quote_character\" : \"'\",\n" + 
            "        \"field_id\" : \"id\",\n" + 
            "        \"field_timestamp\" : \"imported_at\",\n" + 
