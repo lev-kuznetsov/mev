@@ -30,7 +30,7 @@ public class TestTcgaPresestMetafileColumnCsv {
   public void testDescriptor () throws PresetNotFoundException, MalformedURLException {
     log.debug ("****PREEEE****"+presets.getAll ().get (0));
     assertThat (presets.get ("OV.HT_HG-U133A.Level_2.tsv").descriptor ().columnUrl (), 
-                is(new URL("file:////home/antony/mev/data/tcga/clinical/OV/clinical/OV.clinical_annotations.tsv")));
+                is(new URL(String.format("file:///%s/mev/data/tcga/clinical/OV/clinical/OV.clinical_annotations.tsv", System.getProperty ("user.home")))));
   }
   
 }
