@@ -44,6 +44,7 @@ public interface IndexAdminHelper {
                                      BulkProcessor bulkProcessor,
                                      int pageSize) throws IndexAdminException, IOException, IndexLoaderException;
   CreateIndexResponse createInternalIndex (String indexName, String documentType, Map<String, Object> mapping);
+  CreateIndexResponse createInternalIndex (String indexName, String documentType, XContentBuilder mapping);
   Map<String, Object> numerifyField2 (String publicIndexName,
                                       String documentType,
                                       String fieldName,

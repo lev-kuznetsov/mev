@@ -108,6 +108,13 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
     return response;
   }  
   
+  @Override
+  public CreateIndexResponse createInternalIndex (String internalIndexName, String documentType, XContentBuilder mapping) {
+    final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(internalIndexName);
+    CreateIndexResponse response = createIndexRequestBuilder            
+            .addMapping(documentType, mapping).execute().actionGet();
+    return response;
+  }
   
   @Override
   public PutMappingResponse putMapping (String indexName, String documentType, XContentBuilder mappingBuilder) {
@@ -179,7 +186,6 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
     //4. return mapping
     return mapping;
   }
-
   
   @Override 
   public Map<String, Object> numerifyField(String publicIndexName, String documentType, String fieldName, BulkProcessor bulkProcessor, int pageSize) throws IndexAdminException, IOException, IndexLoaderException{
@@ -286,5 +292,6 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
   public String dummyName(long numOfDocs, long numOfFields){
     return String.format ("dummy_r%sc%s", numOfDocs, numOfFields);
   }
+
     
 }
