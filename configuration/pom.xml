@@ -17,8 +17,7 @@
   <modules>
     <module>rest</module>
     <module>client</module>
-    <module>persistence</module>
-    <module>testing</module>
+    <module>persistence</module>    
   </modules>
 
   <properties>
