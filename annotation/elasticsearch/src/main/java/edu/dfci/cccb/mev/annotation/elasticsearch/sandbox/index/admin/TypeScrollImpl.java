@@ -10,8 +10,6 @@ import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
-
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.TypeScroll;
 
 @Log4j

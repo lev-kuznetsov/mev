@@ -7,24 +7,18 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.Iterator;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
-import org.eclipse.jetty.util.log.Log;
-import org.elasticsearch.client.Client;
 import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.node.Node;
 import org.junit.Test;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexDocumentParser;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexDocumentParserIterator;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.CsvIndexDocumentParser;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.CsvIndexLoaderConfig;
@@ -48,7 +42,7 @@ public class TestCsvIndexDocumentParser extends AbstractTestWithElasticSearch {
     
     URL testFile  = TestCsvIndexDocumentParser.class.getResource ("/tcga/tcga_data/clinical/testStream.csv");
     CsvIndexLoaderConfig config = new CsvIndexLoaderConfig (testFile.getPath (), "*.csv", "test_index", "test_type", "id".split (",")); 
-    IndexDocumentParser stream = new CsvIndexDocumentParser (Paths.get (testFile.toURI ()), config);
+    CsvIndexDocumentParser stream = new CsvIndexDocumentParser (Paths.get (testFile.toURI ()), config);
     
     IndexDocumentParserIterator it=stream.iterator ();
     
@@ -72,6 +66,7 @@ public class TestCsvIndexDocumentParser extends AbstractTestWithElasticSearch {
     assertThat(it.getId(), is("a"));
     
     assertFalse (it.hasNext ());
+    stream.close ();
   }
 
 }

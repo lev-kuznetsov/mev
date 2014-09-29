@@ -1,10 +1,6 @@
 package edu.dfci.cccb.mev.annotation.elasticsearch.perf.macs;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,18 +13,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.dfci.cccb.mev.annotation.elasticsearch.index.eav.test.EavTestBag;
 import edu.dfci.cccb.mev.annotation.elasticsearch.perf.AbstractElasticsearchPerfTest;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.IndexAdminException;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.IndexAdminHelperImpl;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexAdminHelper;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoaderException;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.CsvIndexLoader;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.EavIndexDocumentParserFactory;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.EavLoaderConfig;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.EavParser;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.mock.MockDataGenerator;
-//field count: 1544
 
 //run 1 - 630K records (too many)
 //samples: 10
@@ -101,6 +91,7 @@ public class PerfTestMacs extends AbstractElasticsearchPerfTest {
     IndexAdminHelper adminHelper = new IndexAdminHelperImpl (client);
     Map<String, Object> mapping = adminHelper.getMapping (config.indexName (), config.typeName ());
     
+    @SuppressWarnings ("unchecked")
     Map<String, Object> properties = (Map<String, Object>) mapping.get ("properties");
     List<String> fields = new ArrayList<String> (properties.keySet ().size ());
     for(String field : properties.keySet ()){

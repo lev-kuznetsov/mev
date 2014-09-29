@@ -2,37 +2,21 @@ package edu.dfci.cccb.mev.annotation.elasticsearch.perf.alltypes;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-
 import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j;
-
 import org.databene.contiperf.PerfTest;
-import org.databene.contiperf.junit.ContiPerfRule;
 import org.databene.contiperf.timer.ConstantTimer;
 import org.elasticsearch.action.count.CountRequestBuilder;
 import org.elasticsearch.action.count.CountResponse;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.junit.After;
-import org.junit.Rule;
 import org.junit.Test;
 
 import edu.dfci.cccb.mev.annotation.elasticsearch.perf.AbstractElasticsearchPerfTest;
-import edu.dfci.cccb.mev.annotation.elasticsearch.perf.AbstractPerfTestNumerify;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.DynamicTemplateBuilder;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.DynamicTemplateBuilder_AllTypes;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.DynamicTemplateBuilder_NoIndex;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.IndexAdminException;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.IndexAdminHelperImpl;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.BulkProcessorFactory;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.SimpleBulkProcessorFactory;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexAdminHelper;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoaderException;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.mock.MockDataGenerator;
 
-@Log4j
 public abstract class PerfTestNumerify_AllTypes_Base extends AbstractElasticsearchPerfTest  {
 
   protected DynamicTemplateBuilder templateBuilder;

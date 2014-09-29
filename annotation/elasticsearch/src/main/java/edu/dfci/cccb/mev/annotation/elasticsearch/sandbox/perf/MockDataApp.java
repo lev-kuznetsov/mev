@@ -1,22 +1,17 @@
 package edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.perf;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import lombok.extern.log4j.Log4j;
 
 import org.elasticsearch.client.Client;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.configuration.ElasticSearchConfiguration;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.DynamicTemplateBuilder_AllTypes;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.DynamicTemplateBuilder_NoIndex;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.BulkProcessorFactory;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.SimpleBulkProcessorFactory;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.mock.MockDataGenerator;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.presetimport.PresetsImportApp;
 
 @Log4j
 @Component

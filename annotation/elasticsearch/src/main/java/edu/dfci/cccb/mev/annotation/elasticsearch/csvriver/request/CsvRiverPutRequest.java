@@ -1,7 +1,6 @@
 package edu.dfci.cccb.mev.annotation.elasticsearch.csvriver.request;
 
 import edu.dfci.cccb.mev.annotation.elasticsearch.csvriver.contract.AnnotationPutRequest;
-import scala.runtime.StringFormat;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

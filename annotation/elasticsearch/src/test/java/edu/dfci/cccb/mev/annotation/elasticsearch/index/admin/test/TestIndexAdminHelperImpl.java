@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.extern.log4j.Log4j;
-import net.spy.memcached.internal.BulkFuture;
 
 import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequestBuilder;
 import org.elasticsearch.action.admin.indices.alias.IndicesAliasesResponse;
@@ -18,10 +17,7 @@ import org.elasticsearch.action.admin.indices.alias.get.GetAliasesResponse;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
-import org.elasticsearch.action.get.GetRequestBuilder;
-import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.cluster.ClusterState;
 import org.elasticsearch.cluster.metadata.AliasMetaData;
 import org.elasticsearch.cluster.metadata.IndexMetaData;
@@ -153,18 +149,6 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
 
   @Test
   public void testCreateIndexWithMappingMAP() throws IOException {
-    //create mapping json
-    XContentBuilder mappingJson =  XContentFactory.jsonBuilder().startObject()
-            .startObject ("_id")
-            .field ("path", "id")
-            .endObject ()
-            .startObject("properties")
-            .startObject("test_field")
-            .field("type", "string")
-            .field("index", "not_analyzed")
-            .field("store", "yes")
-            .endObject()
-        .endObject().endObject();
     
     Map<String, Object> mapping =  new LinkedHashMap<String, Object> ();
     Map<String, Object> _id =  new LinkedHashMap<String, Object> ();
@@ -306,6 +290,7 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
 ////    assertEquals ("{\"test_type\":{\"properties\":{\"test_field\":{\"type\":\"string\",\"index\":\"not_analyzed\",\"store\":true}}}}"
 ////                  , mmd.source ().toString ());
 //    
+    @SuppressWarnings ("unchecked")
     Map<String, Object> fieldMap = (Map<String, Object>) ((Map<String, Object>) mappingResponse.get ("properties")).get ("test_field");
     assertEquals ("string", fieldMap.get ("type"));
     assertEquals ("not_analyzed", fieldMap.get ("index"));
@@ -387,6 +372,7 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
   }
 
   
+  @SuppressWarnings ({ "rawtypes", "unchecked" })
   @Test
   public void testNumerifyFieldMapping() throws IOException, IndexLoaderException, IndexAdminException{
     //create mapping
@@ -449,6 +435,7 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     
     //Create index
     final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
+    @SuppressWarnings ("unused")
     CreateIndexResponse createIndexResponse = createIndexRequestBuilder.execute().actionGet();
     
     //Put the alias
@@ -473,6 +460,7 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     
     //Create index
     final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
+    @SuppressWarnings ("unused")
     CreateIndexResponse createIndexResponse = createIndexRequestBuilder.execute().actionGet();
     
     //Put the alias
@@ -492,6 +480,7 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     
     //Create index
     final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
+    @SuppressWarnings ("unused")
     CreateIndexResponse createIndexResponse = createIndexRequestBuilder.execute().actionGet();
     
     //Use actual index name as the alias
@@ -509,6 +498,7 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     
     //Create index
     final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
+    @SuppressWarnings ("unused")
     CreateIndexResponse createIndexResponse = createIndexRequestBuilder.execute().actionGet();
     
     //Put the alias
@@ -534,6 +524,7 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     
     //Create index
     final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
+    @SuppressWarnings ("unused")
     CreateIndexResponse createIndexResponse = createIndexRequestBuilder.execute().actionGet();
     
     //Put the alias
@@ -598,6 +589,7 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     
     //Create index1
     CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
+    @SuppressWarnings ("unused")
     CreateIndexResponse createIndexResponse = createIndexRequestBuilder.execute().actionGet();
     
     //Put the alias
@@ -649,6 +641,7 @@ public class TestIndexAdminHelperImpl extends AbstractTestWithElasticSearch {
     assertEquals (indexName2, indexNameFromAlias);
   }
   
+  @SuppressWarnings ({ "rawtypes", "unchecked" })
   @Test 
   public void testNumerifyField() throws IOException, IndexAdminException, IndexLoaderException{
     

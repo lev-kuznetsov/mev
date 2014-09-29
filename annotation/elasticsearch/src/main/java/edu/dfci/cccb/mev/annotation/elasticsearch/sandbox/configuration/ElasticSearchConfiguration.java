@@ -2,7 +2,6 @@ package edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.configuration;
 
 import static org.springframework.context.annotation.FilterType.ANNOTATION;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import lombok.extern.log4j.Log4j;

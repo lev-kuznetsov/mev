@@ -5,13 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-import lombok.Getter;
 import lombok.SneakyThrows;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -71,9 +66,6 @@ public class EavParser implements IndexDocumentParser, Closeable, AutoCloseable 
     
     private Map<String, String> nextEntity;
     private Map<String, String> prevEntity;
-    private void setNextEntity(Map<String, String> entity){
-      this.nextEntity=entity;      
-    }
     
     @SneakyThrows(IOException.class)
     public EavIterator() {

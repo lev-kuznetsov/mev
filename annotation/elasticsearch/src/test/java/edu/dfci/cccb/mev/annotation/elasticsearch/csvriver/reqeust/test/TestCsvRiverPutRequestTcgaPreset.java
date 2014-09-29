@@ -8,18 +8,10 @@ import java.net.URL;
 
 import lombok.extern.log4j.Log4j;
 
-import org.hamcrest.text.IsEqualIgnoringWhiteSpace;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import edu.dfci.cccb.mev.annotation.elasticsearch.csvriver.contract.AnnotationPutRequest;
 import edu.dfci.cccb.mev.annotation.elasticsearch.csvriver.contract.CsvRiverAnnotationPutRequest;
 import edu.dfci.cccb.mev.annotation.elasticsearch.csvriver.request.CsvRiverPutRequestTcgaPreset;
 import edu.dfci.cccb.mev.annotation.elasticsearch.preset.TcgaPresestMetafileColumnCsv;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.configuration.PresetsImportAppConfiguration;
-import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.TcgaPreset;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.tcga.TcgaPresetMetafile;

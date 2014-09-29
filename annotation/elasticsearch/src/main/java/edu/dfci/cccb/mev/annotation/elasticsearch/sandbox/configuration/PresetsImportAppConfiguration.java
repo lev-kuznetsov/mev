@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Scope;
 import edu.dfci.cccb.mev.annotation.elasticsearch.preset.TcgaPresestMetafileColumnCsv;
 import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsFilesConfiguration;
 import edu.dfci.cccb.mev.presets.contract.Preset;
-import edu.dfci.cccb.mev.presets.tcga.TcgaPresetMetafile;
 import edu.dfci.cccb.mev.presets.tools.loader.PresetsLoaderConfiguration;
 
 @Configuration

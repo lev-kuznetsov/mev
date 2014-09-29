@@ -2,8 +2,6 @@ package edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -18,8 +16,7 @@ public class EavIndexDocumentHelper implements Closeable, AutoCloseable {
   @Delegate private final CsvIndexDocumentHelper csvHelper;
   private final EavLoaderConfig config;
   
-  private String[] data=null;
-  private String[] prevData=null;
+  private String[] data=null;  
   private String prevEntityId=null;
   private String curEntityId=null;
   
@@ -54,8 +51,7 @@ public class EavIndexDocumentHelper implements Closeable, AutoCloseable {
   }
   
   private boolean isSameEntity() throws IOException{
-    //remember prev line to check for new entity
-    prevData=data;
+    //remember prev line to check for new entity    
     prevEntityId=curEntityId;
     
     //read in next line

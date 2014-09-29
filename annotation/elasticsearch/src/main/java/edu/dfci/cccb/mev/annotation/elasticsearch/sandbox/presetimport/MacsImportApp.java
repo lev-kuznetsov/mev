@@ -1,7 +1,5 @@
 package edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.presetimport;
 
-import java.net.URL;
-
 import javax.inject.Inject;
 
 import lombok.extern.log4j.Log4j;

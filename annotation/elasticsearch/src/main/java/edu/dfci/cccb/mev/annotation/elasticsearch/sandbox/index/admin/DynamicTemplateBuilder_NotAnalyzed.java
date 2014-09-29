@@ -15,9 +15,9 @@ public class DynamicTemplateBuilder_NotAnalyzed implements DynamicTemplateBuilde
    * @see edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin.DynamicTemplateBuilder#build()
    */
   @Override
-  public List<Map> build(){
+  public List<Map<String, Object>> build(){
     
-    ArrayList<Map> templates = new ArrayList<Map> ();
+    List<Map<String, Object>> templates = new ArrayList<Map<String, Object>> ();
     
     Map<String, Object> templateWrapper = new LinkedHashMap<String, Object> ();    
     templates.add(templateWrapper);

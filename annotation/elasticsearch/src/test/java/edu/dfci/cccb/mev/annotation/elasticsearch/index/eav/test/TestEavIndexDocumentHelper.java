@@ -3,21 +3,14 @@ package edu.dfci.cccb.mev.annotation.elasticsearch.index.eav.test;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
 
-import org.apache.tools.ant.filters.StringInputStream;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import au.com.bytecode.opencsv.CSVReader;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.EavIndexDocumentHelper;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.EavLoaderConfig;
 
 public class TestEavIndexDocumentHelper {
 

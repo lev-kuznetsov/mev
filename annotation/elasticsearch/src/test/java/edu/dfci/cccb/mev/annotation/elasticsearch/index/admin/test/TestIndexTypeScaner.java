@@ -3,16 +3,12 @@ package edu.dfci.cccb.mev.annotation.elasticsearch.index.admin.test;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-
 import lombok.extern.log4j.Log4j;
 
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.search.SearchHit;
-import org.h2.index.ScanIndex;
 import org.junit.Test;
 
 import edu.dfci.cccb.mev.annotation.elasticsearch.index.csv.test.AbstractTestWithElasticSearch;

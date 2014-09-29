@@ -2,14 +2,8 @@ package edu.dfci.cccb.mev.annotation.elasticsearch.perf;
 
 import javax.inject.Inject;
 
-import lombok.SneakyThrows;
-import net.spy.memcached.internal.BulkFuture;
-
 import org.databene.contiperf.junit.ContiPerfRule;
-import org.elasticsearch.action.count.CountRequestBuilder;
-import org.elasticsearch.action.count.CountResponse;
 import org.elasticsearch.client.Client;
-import org.junit.After;
 import org.junit.Rule;
 
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.configuration.ElasticSearchConfiguration;

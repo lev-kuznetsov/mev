@@ -12,8 +12,8 @@ public class DynamicTemplateBuilder_AllTypes implements DynamicTemplateBuilder {
   }
 
   @Override
-  public List<Map> build () {
-    ArrayList<Map> templates = new ArrayList<Map> ();
+  public List<Map<String, Object>> build () {
+    List<Map<String, Object>> templates = new ArrayList<Map<String, Object>> ();
     
     Map<String, Object> templateWrapper = new LinkedHashMap<String, Object> ();    
     templates.add(templateWrapper);

@@ -1,14 +1,6 @@
 package edu.dfci.cccb.mev.annotation.elasticsearch.perf.rows6K;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import edu.dfci.cccb.mev.annotation.elasticsearch.perf.AbstractPerfTestNumerify;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.configuration.ElasticSearchConfiguration;
 
 public class PerfTestNumerify_06Krows_1000cols extends AbstractPerfTestNumerify {
 

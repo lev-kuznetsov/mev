@@ -1,37 +1,24 @@
 package edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.presetimport;
 
-import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.node.Node;
-import org.elasticsearch.node.NodeBuilder;
 
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
-import lombok.Delegate;
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
-import edu.dfci.cccb.mev.annotation.elasticsearch.csvriver.contract.AnnotationPutRequest;
 import edu.dfci.cccb.mev.annotation.elasticsearch.csvriver.contract.CsvRiverAnnotationPutRequest;
-import edu.dfci.cccb.mev.annotation.elasticsearch.csvriver.request.CsvRiverPutRequest;
 import edu.dfci.cccb.mev.annotation.elasticsearch.csvriver.request.CsvRiverPutRequestTcgaPreset;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.configuration.ElasticSearchConfiguration;
 import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsFilesConfiguration;
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.contract.TcgaPreset;
-import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 import edu.dfci.cccb.mev.presets.tools.loader.PresetsLoaderConfiguration;
 
 
@@ -87,6 +74,7 @@ public class PresetsImportApp {
   
   
  
+  @SuppressWarnings ("unused")
   private void testGet(){
     //  SearchResponse response = client.prepareSearch().execute().actionGet();
     GetResponse response = client.prepareGet("tcga_clinical", "acc", "7f5ff6b6-a509-4d17-ba1d-f4852fe8aee4_miR_gene_expression")

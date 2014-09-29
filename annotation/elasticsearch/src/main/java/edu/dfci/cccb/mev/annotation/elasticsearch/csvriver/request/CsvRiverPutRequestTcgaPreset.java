@@ -6,11 +6,8 @@ import java.nio.file.Paths;
 
 import lombok.Delegate;
 import lombok.SneakyThrows;
-import edu.dfci.cccb.mev.annotation.elasticsearch.csvriver.contract.AnnotationPutRequest;
 import edu.dfci.cccb.mev.annotation.elasticsearch.csvriver.contract.CsvRiverAnnotationPutRequest;
-import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.TcgaPreset;
-import edu.dfci.cccb.mev.presets.tcga.TcgaPresetMetafile;
 
 public class CsvRiverPutRequestTcgaPreset implements CsvRiverAnnotationPutRequest {
   

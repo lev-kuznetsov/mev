@@ -5,6 +5,6 @@ import java.util.Map;
 
 public interface DynamicTemplateBuilder {
 
-  public abstract List<Map> build ();
+  public abstract List<Map<String, Object>> build ();
 
 }

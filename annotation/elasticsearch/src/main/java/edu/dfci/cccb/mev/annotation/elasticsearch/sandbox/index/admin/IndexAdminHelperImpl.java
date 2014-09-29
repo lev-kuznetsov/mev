@@ -2,12 +2,9 @@ package edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.admin;
 
 import java.io.IOException;
 
-import org.eclipse.jetty.util.log.Log;
-import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest;
 import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequestBuilder;
 import org.elasticsearch.action.admin.indices.alias.IndicesAliasesResponse;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,15 +26,9 @@ import org.elasticsearch.action.bulk.BulkProcessor;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.cluster.ClusterState;
 import org.elasticsearch.cluster.metadata.AliasMetaData;
-import org.elasticsearch.cluster.metadata.IndexMetaData;
 import org.elasticsearch.cluster.metadata.MappingMetaData;
-import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentFactory;
 
-import scala.annotation.meta.field;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.BulkProcessorFactory;
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.bulk.SimpleBulkProcessorFactory;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexAdminHelper;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoaderException;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.TypeCopier;
@@ -150,6 +141,7 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
     return mdd.getSourceAsMap ();
   }
   
+  @SuppressWarnings ({ "rawtypes", "unchecked" })
   @Override
   public Map<String, Object> numerifyFieldMapping(String indexName, String documentType, String fieldName) throws IOException, IndexLoaderException{
     //1.get the mapping

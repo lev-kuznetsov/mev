@@ -1,23 +1,15 @@
 package edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 
-import au.com.bytecode.opencsv.CSVReader;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexDocumentHelper;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract.IndexLoaderException;
 
@@ -51,7 +43,7 @@ public class CsvIndexDocumentHelper implements IndexDocumentHelper {
       jsonBuilder.endObject();
       return jsonBuilder;
     }catch(IOException e){
-      throw new IndexLoaderException (String.format("Unable to parse data %s", data), e);
+      throw new IndexLoaderException (String.format("Unable to parse data %s", Arrays.toString (data)), e);
     }
   }
   

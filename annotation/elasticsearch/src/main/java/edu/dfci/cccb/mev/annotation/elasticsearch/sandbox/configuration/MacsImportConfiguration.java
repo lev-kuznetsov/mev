@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import edu.dfci.cccb.mev.annotation.elasticsearch.perf.macs.PerfTestMacs;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.csv.EavLoaderConfig;
 
 @Configuration

@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.Map;
 
-import org.elasticsearch.index.mapper.object.DynamicTemplate;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,7 +20,7 @@ public class TestDynamicTemplateBuilder {
     ObjectMapper mapper = new ObjectMapper();
     DynamicTemplateBuilder builder = new DynamicTemplateBuilder_NoIndex ();
     
-    List<Map> tempalte = builder.build (); 
+    List<Map<String, Object>> tempalte = builder.build (); 
     String actual = mapper.writeValueAsString (tempalte);
     assertEquals ("[{\"dont_analyze\":{\"match\":\"*\",\"mapping\":{\"type\":\"string\",\"index\":\"no\",\"ignore_malformed\":true,\"norms\":{\"enabled\":false}}}}]", actual);
   }

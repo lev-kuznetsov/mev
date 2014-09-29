@@ -5,13 +5,9 @@ import static org.hamcrest.Matchers.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -41,6 +37,11 @@ public class TestCsvIndexDocumentHelper {
   @Test
   public void testProcess () throws IndexLoaderException, JsonParseException, JsonMappingException, IOException {
     IndexDocumentHelper csvHelper = new CsvIndexDocumentHelper (new ArrayList<String> (){
+      /**
+       * 
+       */
+      private static final long serialVersionUID = 1L;
+
       {add ("f1");add("f2");add("id");}      
     }, "id".split (","));
     
@@ -57,6 +58,11 @@ public class TestCsvIndexDocumentHelper {
   @Test
   public void testGetId () throws IndexLoaderException, JsonParseException, JsonMappingException, IOException {
     IndexDocumentHelper csvHelper = new CsvIndexDocumentHelper (new ArrayList<String> (){
+      /**
+       * 
+       */
+      private static final long serialVersionUID = 1L;
+
       {add ("f1");add("f2");add("id");}      
     }, "id".split (","));
     
@@ -70,6 +76,11 @@ public class TestCsvIndexDocumentHelper {
   @Test
   public void testCreateMapping() throws IndexLoaderException, JsonParseException, JsonMappingException, IOException {
     IndexDocumentHelper csvHelper = new CsvIndexDocumentHelper (new ArrayList<String> (){
+      /**
+       * 
+       */
+      private static final long serialVersionUID = 1L;
+
       {add ("f1");add("f2");add("id");}      
     }, "id".split (","));
         
@@ -82,6 +93,11 @@ public class TestCsvIndexDocumentHelper {
   @Test(expected=NullPointerException.class) 
   public void testGetFieldIndex(){
     IndexDocumentHelper csvHelper = new CsvIndexDocumentHelper (new ArrayList<String> (){
+      /**
+       * 
+       */
+      private static final long serialVersionUID = 1L;
+
       {add ("f1");add("f2");add("id");}      
     }, "id".split (","));
     assertEquals(0, csvHelper.getFieldIndex ("f1"));

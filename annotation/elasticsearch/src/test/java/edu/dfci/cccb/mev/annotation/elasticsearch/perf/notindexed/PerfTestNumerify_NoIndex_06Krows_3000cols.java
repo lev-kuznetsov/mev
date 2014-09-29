@@ -1,14 +1,5 @@
 package edu.dfci.cccb.mev.annotation.elasticsearch.perf.notindexed;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.configuration.ElasticSearchConfiguration;
-
 public class PerfTestNumerify_NoIndex_06Krows_3000cols extends PerfTestNumerify_NoIndex_Base {
 
 // run 1

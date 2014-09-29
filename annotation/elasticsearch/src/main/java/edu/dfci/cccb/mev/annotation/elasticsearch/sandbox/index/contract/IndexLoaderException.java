@@ -2,6 +2,11 @@ package edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.index.contract;
 
 public class IndexLoaderException extends Exception {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
+
   public IndexLoaderException () {
   }
 
