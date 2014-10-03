@@ -14,13 +14,14 @@
 
     <!-- Support modules -->
 
+	<module>testutil</module>
     <module>io</module>
     <module>math</module>
     <module>r</module>
 
     <!-- MeV modules -->
 
-    <module>configuration</module>
+	<module>configuration</module>
     <module>dataset</module>
     <module>annotation</module>
     <module>hcl</module>
@@ -205,7 +206,7 @@
 	
 	<dependency>
 		<groupId>edu.dfci.cccb</groupId>
-		<artifactId>mev-configuration-testing</artifactId>
+		<artifactId>mev-test-util</artifactId>
 		<version>BAYLIE-SNAPSHOT</version>
 	</dependency>
 	            
@@ -275,7 +276,7 @@
             <spring.profiles.active>test</spring.profiles.active>
             <textdb.allow_full_path>true</textdb.allow_full_path>
           </systemPropertyVariables>
-      	  <excludedGroups>edu.dfci.cccb.mev.testing.junit.groups.IntegrationTestMarker</excludedGroups>
+      	  <excludedGroups>edu.dfci.cccb.mev.testing.junit.groups.MevIntegrationTestMarker</excludedGroups>
         </configuration>
       </plugin>
 

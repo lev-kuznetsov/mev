@@ -40,15 +40,7 @@
 			<artifactId>mev-configuration-rest</artifactId>
 			<version>BAYLIE-SNAPSHOT</version>
 		</dependency>
-		
-		<!--  Mev Testing -->
-		<dependency>
-			<groupId>edu.dfci.cccb.</groupId>
-			<artifactId>mev-configuration-testing</artifactId>
-			<version>BAYLIE-SNAPSHOT</version>			
-		</dependency>
-		
-		
+			
 		<!-- Elastic Search -->
 		<dependency>
 		    <groupId>org.elasticsearch</groupId>

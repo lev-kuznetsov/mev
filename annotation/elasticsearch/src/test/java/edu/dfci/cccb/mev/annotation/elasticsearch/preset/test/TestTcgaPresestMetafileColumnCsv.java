@@ -19,10 +19,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import edu.dfci.cccb.mev.annotation.elasticsearch.sandbox.configuration.PresetsImportAppConfiguration;
 import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetNotFoundException;
-import edu.dfci.cccb.mev.testing.junit.groups.IntegrationTestMarker;
+import edu.dfci.cccb.mev.testing.junit.groups.MevIntegrationTestMarker;;
 
 @Log4j
-@Category({IntegrationTestMarker.class})
+@Category({MevIntegrationTestMarker.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={PresetsImportAppConfiguration.class})
 public class TestTcgaPresestMetafileColumnCsv {
