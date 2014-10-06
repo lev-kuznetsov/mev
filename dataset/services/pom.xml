@@ -37,13 +37,6 @@
       <scope>test</scope>
     </dependency>
 
-    <dependency>
-      <groupId>edu.dfci.cccb</groupId>
-      <artifactId>mev-dataset-test</artifactId>
-      <version>${mev.version}</version>
-      <scope>test</scope>
-    </dependency>
-
   </dependencies>
 
   <build>

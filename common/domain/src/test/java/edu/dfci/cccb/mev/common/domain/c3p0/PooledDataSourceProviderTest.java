@@ -22,12 +22,12 @@ import org.junit.Test;
 
 import com.google.inject.Guice;
 
-import edu.dfci.cccb.mev.common.domain.guice.MevDomainModule;
+import edu.dfci.cccb.mev.common.domain.guice.MevModule;
 
 public class PooledDataSourceProviderTest {
 
   @Test
   public void inject () throws Exception {
-    Guice.createInjector (new MevDomainModule ()).getInstance (DataSource.class);
+    Guice.createInjector (new MevModule ()).getInstance (DataSource.class);
   }
 }

@@ -28,6 +28,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -104,6 +108,15 @@ public abstract class DimensionAdapter <K> implements Dimension<K> {
   public static <K> Map<String, Dimension<K>> dimensions (final Dimension<K>... dimensions) {
     return new AbstractMap<String, Dimension<K>> () {
       private final List<Dimension<K>> list = new ArrayList<Dimension<K>> (asList (dimensions));
+
+      /* (non-Javadoc)
+       * @see java.util.AbstractMap#get(java.lang.Object) */
+      @Override
+      @Path ("/{" + DIMENSION + "}")
+      @GET
+      public Dimension<K> get (@PathParam (DIMENSION) Object key) {
+        return super.get (key);
+      }
 
       @Override
       public Set<Entry<String, Dimension<K>>> entrySet () {

@@ -16,23 +16,46 @@
 
 package edu.dfci.cccb.mev.dataset.domain;
 
-import javax.xml.bind.annotation.XmlAttribute;
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.PROPERTY;
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.CUSTOM;
+import static javax.xml.bind.annotation.XmlAccessType.NONE;
+
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
+
+import edu.dfci.cccb.mev.dataset.domain.jackson.AnalysisTypeResolver;
 
 /**
  * @author levk
  * @since BAYLIE
  */
+@XmlRootElement
+@XmlAccessorType (NONE)
+@JsonTypeInfo (use = CUSTOM, property = "type", include = PROPERTY)
+@JsonTypeIdResolver (AnalysisTypeResolver.class)
 public interface Analysis {
+
+  /**
+   * Identifier for injection
+   */
+  public static final String ANALYSIS = "analysis";
 
   /**
    * @return name of the analysis
    */
-  @XmlAttribute
+  @XmlElement
+  @JsonGetter
   String name ();
 
   /**
-   * @return type of analysis
+   * Runs the analysis
+   * 
+   * @throws AnalysisInvocationException
    */
-  @XmlAttribute
-  String type ();
+  void run () throws AnalysisInvocationException;
 }

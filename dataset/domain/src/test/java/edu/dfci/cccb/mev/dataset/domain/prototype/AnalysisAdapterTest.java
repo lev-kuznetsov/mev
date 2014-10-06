@@ -18,6 +18,7 @@ package edu.dfci.cccb.mev.dataset.domain.prototype;
 
 import static edu.dfci.cccb.mev.dataset.domain.prototype.AnalysisAdapter.analyses;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import java.util.Map;
@@ -28,42 +29,41 @@ import edu.dfci.cccb.mev.dataset.domain.Analysis;
 
 public class AnalysisAdapterTest {
 
-  private Analysis mock1 = new AnalysisAdapter ("mock", "MockType") {};
-  private Analysis mock2 = new AnalysisAdapter ("mock2", "MockType") {};
-  private Analysis mock3 = new AnalysisAdapter ("mock", "MockType") {};
+  private static class MockAnalysis extends AnalysisAdapter {
+    public void run () {}
+  }
+
+  private Analysis mock1 = new MockAnalysis ().name ("mock");
+  private Analysis mock2 = new MockAnalysis ().name ("mock2");
+  private Analysis mock3 = new MockAnalysis ().name ("mock");
   private Map<String, Analysis> analyses = analyses ();
 
   @Test
-  public void analysisName () throws Exception {
+  public void name () throws Exception {
     assertThat (mock1.name (), is ("mock"));
   }
 
   @Test
-  public void analysisType () throws Exception {
-    assertThat (mock1.type (), is ("MockType"));
-  }
-
-  @Test
-  public void analysesEmpty () throws Exception {
+  public void empty () throws Exception {
     assertThat (analyses.isEmpty (), is (true));
   }
 
   @Test
-  public void analysesPutAndGet () throws Exception {
+  public void putAndGet () throws Exception {
     analyses.put ("mock", mock1);
     analyses.put ("mock2", mock2);
-    assertThat (analyses.get ("mock"), is (mock1));
-    assertThat (analyses.get ("mock2"), is (mock2));
+    assertEquals (analyses.get ("mock"), mock1);
+    assertEquals (analyses.get ("mock2"), mock2);
     assertThat (analyses.size (), is (2));
   }
 
   @Test
-  public void analysesSameNamePutAndGet () throws Exception {
+  public void sameNamePutAndGet () throws Exception {
     analyses.put ("mock", mock1);
-    assertThat (analyses.get ("mock"), is (mock1));
+    assertEquals (analyses.get ("mock"), mock1);
     assertThat (analyses.size (), is (1));
     analyses.put ("mock", mock3);
-    assertThat (analyses.get ("mock"), is (mock3));
+    assertEquals (analyses.get ("mock"), mock3);
     assertThat (analyses.size (), is (1));
   }
 }

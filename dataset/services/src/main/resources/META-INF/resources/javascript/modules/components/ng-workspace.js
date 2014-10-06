@@ -26,29 +26,32 @@ define ('ng-workspace', [ 'ng-dataset', 'ng-dataset-template-uri', 'angular-reso
 
   return dataset.factory ('workspace', [ '$resource', 'dataset-template-uri', function ($resource, uri) {
     var source = $resource (uri, {
-      dataset : '@dataset',
-      headers : {
-        'Accept' : 'application/json'
+      dataset : '@dataset'
+    }, {
+      download : {
+        method : 'get',
+        headers : {
+          'Accept' : 'text/tab-separated-values'
+        }
       },
-      actions : {
-        download : {
-          method : 'get',
-          headers : {
-            'Accept' : 'text/tab-separated-values'
-          }
-        },
-        upload : {
-          method : 'put',
-          headers : {
-            'Content-Type' : 'text/tab-separated-values'
-          }
+      upload : {
+        method : 'put',
+        headers : {
+          'Content-Type' : 'text/tab-separated-values'
+        }
+      },
+      list : {
+        method : 'get',
+        isArray : true,
+        headers : {
+          'Accept' : 'application/json'
         }
       }
     });
 
     return {
       list : function (success, error) {
-        return source.query (success, error);
+        return source.list (success, error);
       },
 
       get : function (name, success, error) {

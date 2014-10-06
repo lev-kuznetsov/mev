@@ -16,7 +16,7 @@
 
 package edu.dfci.cccb.mev.dataset.domain.prototype;
 
-import static com.mycila.inject.internal.guava.collect.ImmutableMap.of;
+import static com.google.common.collect.ImmutableMap.of;
 import static edu.dfci.cccb.mev.dataset.domain.prototype.ValuesAdapter.all;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

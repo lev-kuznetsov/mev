@@ -31,7 +31,7 @@ import javax.inject.Singleton;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
@@ -76,8 +76,7 @@ public class HeadlessGoogleLoginModule implements Module {
       @Provides
       @Singleton
       public WebDriver driver (Capabilities capabilities) {
-        PhantomJSDriver driver = new PhantomJSDriver (capabilities);
-        return driver;
+        return new HtmlUnitDriver (capabilities);
       }
 
       @Provides
@@ -115,7 +114,7 @@ public class HeadlessGoogleLoginModule implements Module {
           result.setFromTokenResponse (flow.newTokenRequest (code)
                                            .setRedirectUri (redirectUri)
                                            .execute ());
-          
+
           System.out.println ("AUTHED USING CODE " + code);
 
           return result;

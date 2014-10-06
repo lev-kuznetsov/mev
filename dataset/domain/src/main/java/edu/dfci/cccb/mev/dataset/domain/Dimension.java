@@ -20,8 +20,11 @@ import static javax.xml.bind.annotation.XmlAccessType.NONE;
 
 import java.util.Iterator;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -35,15 +38,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 public interface Dimension <K> extends Iterable<K> {
 
   /**
+   * Identifier for injection
+   */
+  public static final String DIMENSION = "dimension";
+
+  /**
    * @return name of this dimension
    */
-  @XmlAttribute
+  @XmlElement
   String name ();
 
   /* (non-Javadoc)
    * @see java.lang.Iterable#iterator() */
   @Override
-  @XmlAttribute (name = "keys")
+  @XmlElement (name = "keys")
   Iterator<K> iterator ();
 
   /**
@@ -55,5 +63,7 @@ public interface Dimension <K> extends Iterable<K> {
    * @param index
    * @return key at index specified
    */
-  K get (int index);
+  @Path ("/{index}")
+  @GET
+  K get (@PathParam ("index") int index);
 }

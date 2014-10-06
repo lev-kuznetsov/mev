@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import lombok.SneakyThrows;
+import lombok.ToString;
 
 import org.junit.Test;
 
@@ -69,6 +70,7 @@ public class JacksonModuleTest {
     }
   }
 
+  @ToString
   public static final class NumberSerializer extends JsonSerializer<Number> {
     public void serialize (Number value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
                                                                                          JsonProcessingException {
@@ -191,6 +193,7 @@ public class JacksonModuleTest {
                 is ("{\"type\":\"Integer\",\"value\":\"8\"}"));
   }
 
+  @ToString
   public static final class TypedJaxbAnnotationIntrospector extends JaxbAnnotationIntrospector {
     private static final long serialVersionUID = 1L;
 
@@ -199,6 +202,7 @@ public class JacksonModuleTest {
     }
   }
 
+  @ToString
   public static final class TypedJaxbAnnotationIntrospectorProvider implements Provider<JaxbAnnotationIntrospector> {
     public JaxbAnnotationIntrospector get () {
       return new TypedJaxbAnnotationIntrospector ();

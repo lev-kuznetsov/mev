@@ -16,44 +16,174 @@
 
 package edu.dfci.cccb.mev.dataset.domain.guice;
 
+import static ch.lambdaj.Lambda.convert;
+import static com.google.inject.multibindings.Multibinder.newSetBinder;
+import static com.google.inject.name.Names.named;
+import static edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler.COLUMN;
+import static edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler.COMMENT_EXPRESSION;
+import static edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler.DELIMITER_CHARACTER;
+import static edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler.END_OF_LINE_SYMBOL;
+import static edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler.QUOTE_CHARACTER;
+import static edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler.ROW;
+import static java.lang.String.valueOf;
+import static java.util.regex.Pattern.compile;
+
+import java.util.Collection;
+import java.util.Set;
+import java.util.regex.Pattern;
+
+import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.google.inject.Binder;
-import com.google.inject.Module;
+import org.supercsv.comment.CommentMatcher;
+import org.supercsv.prefs.CsvPreference;
+import org.supercsv.prefs.CsvPreference.Builder;
 
-import edu.dfci.cccb.mev.common.domain.guice.MevDomainModule;
+import ch.lambdaj.function.convert.Converter;
+
+import com.google.inject.Binder;
+import com.google.inject.Provides;
+import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.Multibinder;
+
+import edu.dfci.cccb.mev.common.domain.guice.MevModule;
 import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
-import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
-import edu.dfci.cccb.mev.dataset.domain.support.json.DatasetJsonSerializer;
-import edu.dfci.cccb.mev.dataset.domain.support.tsv.DatasetTsvDeserializer;
-import edu.dfci.cccb.mev.dataset.domain.support.tsv.DatasetTsvSerializer;
+import edu.dfci.cccb.mev.common.domain.guice.jaxrs.JaxrsModule;
+import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageReaderBinder;
+import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageWriterBinder;
+import edu.dfci.cccb.mev.dataset.domain.Analysis;
+import edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler;
 
 /**
  * @author levk
  * @since CRYSTAL
  */
-public class DatasetModule implements Module {
+public class DatasetModule extends MevModule {
 
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
-  public final void configure (Binder binder) {
-    binder.install (new MevDomainModule () {
+  public void configure (final Binder binder) {
+    super.configure (binder);
+
+    configure (new AnalysisTypeRegistrar () {
+      Multibinder<Class<? extends Analysis>> types = newSetBinder (binder,
+                                                                   new TypeLiteral<Class<? extends Analysis>> () {});
 
       @Override
-      public void configure (JacksonSerializerBinder binder) {
-        binder.with ((Class<? extends JsonSerializer<?>>) DatasetJsonSerializer.class);
+      public void register (Class<? extends Analysis> type) {
+        if (type.getAnnotation (edu.dfci.cccb.mev.dataset.domain.annotation.Type.class) == null)
+          throw new IllegalArgumentException ("Failed registering analysis type "
+                                              + type.getSimpleName ()
+                                              + " because it is missing required Analysis annotation");
+        types.addBinding ().toInstance (type);
       }
     });
 
     binder.install (new SingletonModule () {
 
+      // Dataset construction
+
+      @Provides
+      @Singleton
+      @Named (ROW)
+      public String row () {
+        return "row";
+      }
+
+      @Provides
+      @Singleton
+      @Named (COLUMN)
+      public String column () {
+        return "column";
+      }
+
+      // CSV parser configuration
+
+      public void configureCommentExpressions (Binder binder) {
+        Multibinder<String> commentExpressions = newSetBinder (binder, String.class, named (COMMENT_EXPRESSION));
+        commentExpressions.addBinding ().toInstance ("[\t ]*#[^$]*");
+      }
+
+      public void configureEndOfLineCharacters (Binder binder) {
+        Multibinder<Character> endOfLineCharacters = newSetBinder (binder, Character.class, named (END_OF_LINE_SYMBOL));
+        endOfLineCharacters.addBinding ().toInstance ('\r');
+        endOfLineCharacters.addBinding ().toInstance ('\n');
+      }
+
+      @Provides
+      @Singleton
+      @Named (DELIMITER_CHARACTER)
+      public Character delimiterCharacter () {
+        return '\t';
+      }
+
+      @Provides
+      @Singleton
+      @Named (QUOTE_CHARACTER)
+      public Character quoteCharacter () {
+        return '"';
+      }
+
+      @Provides
+      @Singleton
+      public CsvPreference preference (@Named (COMMENT_EXPRESSION) final Set<String> commentExpressions,
+                                       @Named (END_OF_LINE_SYMBOL) Set<Character> endOfLineSymbols,
+                                       @Named (DELIMITER_CHARACTER) Character delimiterCharacter,
+                                       @Named (QUOTE_CHARACTER) Character quoteCharacter) {
+        char[] endOfLineSymbolsArray = new char[endOfLineSymbols.size ()];
+        int i = 0;
+        for (char c : endOfLineSymbols)
+          endOfLineSymbolsArray[i++] = c;
+
+        return new Builder (quoteCharacter,
+                            delimiterCharacter,
+                            valueOf (endOfLineSymbolsArray)).skipComments (new CommentMatcher () {
+          private final Collection<Pattern> comments;
+
+          {
+            comments = convert (commentExpressions, new Converter<String, Pattern> () {
+              @Override
+              public Pattern convert (String from) {
+                return compile (from);
+              }
+            });
+          }
+
+          @Override
+          public boolean isComment (String line) {
+            for (Pattern comment : comments)
+              if (comment.matcher (line).matches ())
+                return true;
+            return false;
+          }
+        }).build ();
+      }
+
       @Override
       public void configure (Binder binder) {
-        binder.bind (DatasetTsvDeserializer.class).in (Singleton.class);
-        binder.bind (DatasetTsvSerializer.class).in (Singleton.class);
+        configureCommentExpressions (binder);
+        configureEndOfLineCharacters (binder);
+
+        binder.install (new JaxrsModule () {
+          private final DatasetTsvMessageHandler handler = new DatasetTsvMessageHandler ();
+
+          @Override
+          public void configure (MessageReaderBinder binder) {
+            binder.useInstance (handler);
+          }
+
+          @Override
+          public void configure (MessageWriterBinder binder) {
+            binder.useInstance (handler);
+          }
+        });
       }
     });
   }
+
+  /**
+   * Register analysis types
+   */
+  public void configure (AnalysisTypeRegistrar registrar) {}
 }

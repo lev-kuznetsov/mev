@@ -19,7 +19,7 @@ package edu.dfci.cccb.mev.googleplus.domain.guice;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
 import static com.google.inject.name.Names.bindProperties;
 import static com.google.inject.name.Names.named;
-import static edu.dfci.cccb.mev.common.domain.guice.MevDomainModule.load;
+import static edu.dfci.cccb.mev.common.domain.guice.MevModule.load;
 import static java.util.Arrays.asList;
 
 import java.lang.annotation.Annotation;

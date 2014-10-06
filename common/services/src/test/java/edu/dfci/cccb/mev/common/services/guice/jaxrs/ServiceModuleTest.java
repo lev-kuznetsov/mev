@@ -34,6 +34,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.servlet.DispatcherType;
 import javax.servlet.ServletContextListener;
@@ -73,13 +74,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
+import com.google.inject.Binder;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Module;
+import com.google.inject.Provides;
 import com.google.inject.TypeLiteral;
 import com.google.inject.servlet.GuiceFilter;
 import com.google.inject.servlet.GuiceServletContextListener;
+import com.google.inject.servlet.RequestScoped;
 
+import edu.dfci.cccb.mev.common.domain.guice.jaxrs.ExceptionBinder;
+import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageReaderBinder;
+import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageWriterBinder;
 import edu.dfci.cccb.mev.common.test.jetty.Jetty9;
 
 public class ServiceModuleTest {
@@ -781,11 +788,15 @@ public class ServiceModuleTest {
     private @Inject Request r;
     private @Inject HttpHeaders h;
     private @Inject SecurityContext s;
+    private @Inject @Named ("param") javax.inject.Provider<String> param;
 
     @GET
     @Path ("/{param}")
     public String get (@PathParam ("param") String param) {
-      return i.getPathParameters ().getFirst ("param");
+      return i.getPathParameters ()
+              .getFirst ("param").equals (this.param.get ()) ? param
+                                                            : (this.param.get () + " != " + i.getPathParameters ()
+                                                                                             .getFirst ("param"));
     }
   }
 
@@ -797,8 +808,110 @@ public class ServiceModuleTest {
 
   @Test
   public void injectables () throws Exception {
-    try (Jetty9 j = serve (new InjectedTestServiceModule ())) {
+    try (Jetty9 j = serve (new InjectedTestServiceModule (), new Module () {
+
+      @Provides
+      @Named ("param")
+      @RequestScoped
+      public String param (UriInfo i) {
+        return i.getPathParameters ().getFirst ("param");
+      }
+
+      @Override
+      public void configure (Binder binder) {}
+    })) {
       assertThat (j.get ("/test/inject/hello"), is ("hello"));
+    }
+  }
+
+  @Path ("/top")
+  @Singleton
+  public static class TopService {
+    public interface Sub {
+      public String get ();
+
+      public void put (String value);
+    }
+
+    private HashMap<String, Sub> subs;
+
+    {
+      subs = new HashMap<> ();
+      subs.put ("hello", new Sub () {
+        private String value = "world";
+
+        @GET
+        @Path ("/value")
+        public String get () {
+          return value;
+        }
+
+        @POST
+        @Path ("/value")
+        public void put (@QueryParam ("value") String value) {
+          this.value = value;
+        }
+      });
+    }
+
+    @Path ("/{name}")
+    public Sub sub (@PathParam ("name") String name) {
+      return subs.get (name);
+    }
+  }
+
+  @Test
+  public void dynamicResolution () throws Exception {
+    try (Jetty9 j = serve (new TestServiceModule () {
+      public void configure (ResourceBinder binder) {
+        binder.publish (TopService.class);
+      }
+    })) {
+      assertThat (j.get ("/test/top/hello/value"), is ("world"));
+      j.post ("/test/top/hello/value?value=werld", new ByteArrayInputStream (new byte[0]));
+      assertThat (j.get ("/test/top/hello/value"), is ("werld"));
+    }
+  }
+
+  @Provider
+  // @Consumes (MediaType.APPLICATION_JSON)
+  public static class ContextInjectingPojoReader implements MessageBodyReader<Pojo> {
+    private @Inject @Named ("name") javax.inject.Provider<String> name;
+
+   public boolean isReadable (Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
+      return Pojo.class.isAssignableFrom (type);
+    }
+
+    public Pojo readFrom (Class<Pojo> type,
+                          Type genericType,
+                          Annotation[] annotations,
+                          MediaType mediaType,
+                          MultivaluedMap<String, String> httpHeaders,
+                          InputStream entityStream) throws IOException, WebApplicationException {
+      return new Pojo (name.get (), name.get ().length ());
+    }
+  }
+
+  @Test
+  public void readerWithContextInjection () throws Exception {
+    try (Jetty9 j = serve (new Pojo2PublishingTestServiceModule () {
+      public void configure (MessageReaderBinder binder) {
+        binder.use (ContextInjectingPojoReader.class);
+      }
+    }, new Module () {
+      @Provides
+      @RequestScoped
+      @Named ("name")
+      public String name (UriInfo i) {
+        return i.getPathParameters ().getFirst ("name");
+      }
+
+      @Override
+      public void configure (Binder binder) {}
+    })) {
+      assertThat (j.post ("/test/pojo2/hellolong",
+                          new ByteArrayInputStream ("{\"word\":\"world\",\"number\":5}".getBytes ())),
+                  startsWith ("9"));
     }
   }
 }

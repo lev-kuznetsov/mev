@@ -32,7 +32,7 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.FileList;
 import com.google.inject.Inject;
 
-import edu.dfci.cccb.mev.common.domain.support.MevException;
+import edu.dfci.cccb.mev.common.domain.MevException;
 
 /**
  * @author levk

@@ -16,6 +16,54 @@
 
   <dependencies>
 
+    <!-- Google+ -->
+
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-drive</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-plus</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-plusDomains</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.http-client</groupId>
+      <artifactId>google-http-client-jackson</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.inject.extensions</groupId>
+      <artifactId>guice-throwingproviders</artifactId>
+    </dependency>
+
+    <!-- Google Collections -->
+
+    <dependency>
+      <groupId>com.google.collections</groupId>
+      <artifactId>google-collections</artifactId>
+    </dependency>
+
+    <!-- JAXB -->
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.module</groupId>
+      <artifactId>jackson-module-jaxb-annotations</artifactId>
+    </dependency>
+
+    <!-- jOOQ -->
+
+    <dependency>
+      <groupId>org.jooq</groupId>
+      <artifactId>jooq</artifactId>
+    </dependency>
+
     <!-- Webjars -->
 
     <dependency>
@@ -26,19 +74,16 @@
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>requirejs</artifactId>
-      <version>${requirejs.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>underscorejs</artifactId>
-      <version>${underscorejs.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>log4javascript</artifactId>
-      <version>${log4javascript.version}</version>
     </dependency>
 
     <!-- Typesafe Configuration -->
@@ -46,7 +91,6 @@
     <dependency>
       <groupId>com.typesafe</groupId>
       <artifactId>config</artifactId>
-      <version>${typesafe.config.version}</version>
     </dependency>
 
     <!-- Commons Configuration for Variable Interpolation -->
@@ -54,7 +98,28 @@
     <dependency>
       <groupId>commons-configuration</groupId>
       <artifactId>commons-configuration</artifactId>
-      <version>${commons-configuration.version}</version>
+    </dependency>
+
+    <!-- JAX-RS API -->
+
+    <dependency>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- JDeferred -->
+
+    <dependency>
+      <groupId>org.jdeferred</groupId>
+      <artifactId>jdeferred-core</artifactId>
+    </dependency>
+
+    <!-- AWS -->
+
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk</artifactId>
     </dependency>
 
     <!-- Persistence -->
@@ -62,13 +127,11 @@
     <dependency>
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
-      <version>${c3p0.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
-      <version>${h2.version}</version>
     </dependency>
 
     <!-- Dependency Injection -->
@@ -76,25 +139,16 @@
     <dependency>
       <groupId>javax.inject</groupId>
       <artifactId>javax.inject</artifactId>
-      <version>1</version>
     </dependency>
 
     <dependency>
       <groupId>com.google.inject</groupId>
       <artifactId>guice</artifactId>
-      <version>${guice.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.mycila</groupId>
-      <artifactId>mycila-guice</artifactId>
-      <version>${mycila-guice.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.google.inject.extensions</groupId>
       <artifactId>guice-multibindings</artifactId>
-      <version>${guice.version}</version>
     </dependency>
 
     <!-- Logging -->
@@ -102,32 +156,27 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jul-to-slf4j</artifactId>
-      <version>${org.slf4j.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>${org.slf4j.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jcl-over-slf4j</artifactId>
-      <version>${org.slf4j.version}</version>
       <scope>runtime</scope>
     </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      <version>${org.slf4j.version}</version>
     </dependency>
 
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
-      <version>${log4j.version}</version>
     </dependency>
 
     <!-- Code generation -->
@@ -135,13 +184,11 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.googlecode.lambdaj</groupId>
       <artifactId>lambdaj</artifactId>
-      <version>${lambdaj.version}</version>
     </dependency>
 
     <!-- Selenium -->
@@ -149,21 +196,18 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
-      <version>${selenium.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>xml-apis</groupId>
       <artifactId>xml-apis</artifactId>
-      <version>1.4.01</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>net.sourceforge.htmlunit</groupId>
       <artifactId>htmlunit</artifactId>
-      <version>${htmlunit.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -172,7 +216,14 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-all</artifactId>
-      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Jukito -->
+
+    <dependency>
+      <groupId>org.jukito</groupId>
+      <artifactId>jukito</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -181,7 +232,6 @@
     <dependency>
       <groupId>org.skyscreamer</groupId>
       <artifactId>jsonassert</artifactId>
-      <version>${jsonassert.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -190,310 +240,15 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit-dep</artifactId>
-      <version>4.11</version>
       <scope>test</scope>
     </dependency>
 
   </dependencies>
-
-  <dependencyManagement>
-
-    <dependencies>
-
-      <!-- Webjars -->
-
-      <dependency>
-        <groupId>org.webjars</groupId>
-        <artifactId>jquery</artifactId>
-        <version>${jquery.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.webjars</groupId>
-        <artifactId>angularjs</artifactId>
-        <version>${angularjs.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.webjars</groupId>
-        <artifactId>jquery-ui</artifactId>
-        <version>${jquery-ui.version}</version>
-      </dependency>
-
-      <!-- Jackson -->
-
-      <dependency>
-        <groupId>com.fasterxml.jackson.module</groupId>
-        <artifactId>jackson-module-jaxb-annotations</artifactId>
-        <version>${jackson.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>${jackson.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-annotations</artifactId>
-        <version>${jackson.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-core</artifactId>
-        <version>${jackson.version}</version>
-      </dependency>
-
-      <!-- Google collections -->
-
-      <dependency>
-        <groupId>com.google.collections</groupId>
-        <artifactId>google-collections</artifactId>
-        <version>${google-collections.version}</version>
-      </dependency>
-
-      <!-- Google Guava -->
-
-      <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava</artifactId>
-        <version>${guava.version}</version>
-      </dependency>
-
-      <!-- Google Reflections -->
-
-      <dependency>
-        <groupId>org.reflections</groupId>
-        <artifactId>reflections</artifactId>
-        <version>${reflections.version}</version>
-      </dependency>
-
-      <!-- Jetty -->
-
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-server</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-servlet</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-webapp</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-annotations</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.eclipse.jetty.websocket</groupId>
-        <artifactId>javax-websocket-server-impl</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-util</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-
-      <!-- PhantomJS -->
-
-      <dependency>
-        <groupId>com.github.detro.ghostdriver</groupId>
-        <artifactId>phantomjsdriver</artifactId>
-        <version>1.1.0</version>
-        <scope>test</scope>
-      </dependency>
-
-    </dependencies>
-
-  </dependencyManagement>
-
-  <build>
-
-    <pluginManagement>
-      <plugins>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-source-plugin</artifactId>
-          <version>${maven-source-plugin.version}</version>
-          <executions>
-            <execution>
-              <id>attach-sources</id>
-              <goals>
-                <goal>jar</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-
-        <plugin>
-          <groupId>com.github.searls</groupId>
-          <artifactId>jasmine-maven-plugin</artifactId>
-          <version>${jasmine-maven-plugin.version}</version>
-          <dependencies>
-            <dependency>
-              <groupId>net.sourceforge.htmlunit</groupId>
-              <artifactId>htmlunit</artifactId>
-              <version>${htmlunit.version}</version>
-            </dependency>
-            <dependency>
-              <groupId>org.slf4j</groupId>
-              <artifactId>slf4j-api</artifactId>
-              <version>${org.slf4j.version}</version>
-            </dependency>
-            <dependency>
-              <groupId>org.slf4j</groupId>
-              <artifactId>slf4j-nop</artifactId>
-              <version>${org.slf4j.version}</version>
-            </dependency>
-            <dependency>
-              <groupId>org.slf4j</groupId>
-              <artifactId>jul-to-slf4j</artifactId>
-              <version>${org.slf4j.version}</version>
-            </dependency>
-          </dependencies>
-          <executions>
-            <execution>
-              <goals>
-                <goal>test</goal>
-              </goals>
-            </execution>
-          </executions>
-          <configuration>
-            <specRunnerTemplate>REQUIRE_JS</specRunnerTemplate>
-            <jsSrcDir>${project.basedir}/src/main/resources/META-INF/resources/javascript</jsSrcDir>
-            <sourceIncludes>
-              <include>**/*.js</include>
-            </sourceIncludes>
-            <jsTestSrcDir>${project.basedir}/src/test/resources/META-INF/resources/javascript</jsTestSrcDir>
-            <specIncludes>
-              <include>**/*.js</include>
-            </specIncludes>
-            <preloadSources>
-              <source>webjars/require.js</source>
-            </preloadSources>
-            <keepServerAlive>true</keepServerAlive>
-            <customRunnerConfiguration>${project.basedir}/src/test/resources/META-INF/configuration/require.json</customRunnerConfiguration>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>com.github.timurstrekalov</groupId>
-          <artifactId>saga-maven-plugin</artifactId>
-          <version>${saga-maven-plugin.version}</version>
-          <dependencies>
-            <dependency>
-              <groupId>org.slf4j</groupId>
-              <artifactId>slf4j-nop</artifactId>
-              <version>${org.slf4j.version}</version>
-            </dependency>
-            <dependency>
-              <groupId>com.github.timurstrekalov</groupId>
-              <artifactId>saga-core</artifactId>
-              <version>${saga-maven-plugin.version}</version>
-              <exclusions>
-                <exclusion>
-                  <groupId>ch.qos.logback</groupId>
-                  <artifactId>logback-classic</artifactId>
-                </exclusion>
-              </exclusions>
-            </dependency>
-          </dependencies>
-          <executions>
-            <execution>
-              <phase>verify</phase>
-              <goals>
-                <goal>coverage</goal>
-              </goals>
-            </execution>
-          </executions>
-          <configuration>
-            <baseDir>http://localhost:${jasmine.serverPort}</baseDir>
-            <outputDir>${project.build.directory}/coverage</outputDir>
-            <noInstrumentPatterns>
-              <pattern>.*spec.*</pattern>
-              <pattern>.*/META\-INF/.*\.js</pattern>
-              <pattern>.*/webjars?/.*\.js</pattern>
-            </noInstrumentPatterns>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>com.github.klieber</groupId>
-          <artifactId>phantomjs-maven-plugin</artifactId>
-          <version>0.2</version>
-          <executions>
-            <execution>
-              <goals>
-                <goal>install</goal>
-              </goals>
-            </execution>
-          </executions>
-          <configuration>
-            <version>1.9.2</version>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.17</version>
-          <configuration>
-            <systemPropertyVariables>
-              <phantomjs.binary.path>${phantomjs.binary}</phantomjs.binary.path>
-            </systemPropertyVariables>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
-          <configuration>
-            <lifecycleMappingMetadata>
-              <pluginExecutions>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>com.github.klieber</groupId>
-                    <artifactId>phantomjs-maven-plugin</artifactId>
-                    <versionRange>[0.2,)</versionRange>
-                    <goals>
-                      <goal>install</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore></ignore>
-                  </action>
-                </pluginExecution>
-              </pluginExecutions>
-            </lifecycleMappingMetadata>
-          </configuration>
-        </plugin>
-
-      </plugins>
-    </pluginManagement>
-
-  </build>
 
 </project>

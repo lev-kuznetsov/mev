@@ -47,6 +47,14 @@
     <google-http-client-jackson.version>1.18.0-rc</google-http-client-jackson.version>
     <htmlunit.version>2.15</htmlunit.version>
     <selenium.version>2.42.2</selenium.version>
+    <ant.version>1.9.4</ant.version>
+    <jdeferred.version>1.2.3</jdeferred.version>
+    <aws.version>1.8.10.1</aws.version>
+    <jukito.version>1.4.1</jukito.version>
+    <javax.mail.version>1.4.7</javax.mail.version>
+    <cxf.version>3.0.1</cxf.version>
+    <rest-assured.version>2.3.3</rest-assured.version>
+    <jooq.version>3.3.1</jooq.version>
 
     <jquery.version>2.1.0-2</jquery.version>
     <jquery-ui.version>1.10.4</jquery-ui.version>
@@ -68,6 +76,384 @@
     <saga-maven-plugin.version>1.5.3</saga-maven-plugin.version>
   </properties>
 
+  <dependencyManagement>
+
+    <dependencies>
+
+      <!-- jOOQ -->
+
+      <dependency>
+        <groupId>org.jooq</groupId>
+        <artifactId>jooq</artifactId>
+        <version>${jooq.version}</version>
+      </dependency>
+
+      <!-- Google+ -->
+
+      <dependency>
+        <groupId>com.google.apis</groupId>
+        <artifactId>google-api-services-drive</artifactId>
+        <version>${google-api-services-drive.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.apis</groupId>
+        <artifactId>google-api-services-plus</artifactId>
+        <version>${google-api-services-plus.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.apis</groupId>
+        <artifactId>google-api-services-plusDomains</artifactId>
+        <version>${google-api-services-plusDomains.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.http-client</groupId>
+        <artifactId>google-http-client-jackson</artifactId>
+        <version>${google-http-client-jackson.version}</version>
+      </dependency>
+
+      <!-- Servlet API -->
+
+      <dependency>
+        <groupId>javax</groupId>
+        <artifactId>javaee-web-api</artifactId>
+        <version>6.0</version>
+      </dependency>
+
+      <!-- JAX-RS -->
+
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+        <version>${cxf.version}</version>
+      </dependency>
+
+      <!-- Webjars -->
+
+      <dependency>
+        <groupId>org.webjars</groupId>
+        <artifactId>jquery</artifactId>
+        <version>${jquery.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.webjars</groupId>
+        <artifactId>angularjs</artifactId>
+        <version>${angularjs.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.webjars</groupId>
+        <artifactId>log4javascript</artifactId>
+        <version>${log4javascript.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.webjars</groupId>
+        <artifactId>underscorejs</artifactId>
+        <version>${underscorejs.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.webjars</groupId>
+        <artifactId>requirejs</artifactId>
+        <version>${requirejs.version}</version>
+      </dependency>
+
+      <!-- Typesafe Configuration -->
+
+      <dependency>
+        <groupId>com.typesafe</groupId>
+        <artifactId>config</artifactId>
+        <version>${typesafe.config.version}</version>
+      </dependency>
+
+      <!-- Commons Configuration for Variable Interpolation -->
+
+      <dependency>
+        <groupId>commons-configuration</groupId>
+        <artifactId>commons-configuration</artifactId>
+        <version>${commons-configuration.version}</version>
+      </dependency>
+
+      <!-- Dependency Injection -->
+
+      <dependency>
+        <groupId>com.google.inject.extensions</groupId>
+        <artifactId>guice-throwingproviders</artifactId>
+        <version>${guice.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.inject</groupId>
+        <artifactId>javax.inject</artifactId>
+        <version>1</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.inject</groupId>
+        <artifactId>guice</artifactId>
+        <version>${guice.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.inject.extensions</groupId>
+        <artifactId>guice-multibindings</artifactId>
+        <version>${guice.version}</version>
+      </dependency>
+      
+      <dependency>
+        <groupId>com.google.inject.extensions</groupId>
+        <artifactId>guice-servlet</artifactId>
+        <version>${guice.version}</version>
+      </dependency>
+
+      <!-- Jackson -->
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.module</groupId>
+        <artifactId>jackson-module-jaxb-annotations</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-annotations</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <!-- Google collections -->
+
+      <dependency>
+        <groupId>com.google.collections</groupId>
+        <artifactId>google-collections</artifactId>
+        <version>${google-collections.version}</version>
+      </dependency>
+
+      <!-- Google Guava -->
+
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${guava.version}</version>
+      </dependency>
+
+      <!-- Google Reflections -->
+
+      <dependency>
+        <groupId>org.reflections</groupId>
+        <artifactId>reflections</artifactId>
+        <version>${reflections.version}</version>
+      </dependency>
+
+      <!-- JAX-RS API -->
+
+      <dependency>
+        <groupId>javax.ws.rs</groupId>
+        <artifactId>javax.ws.rs-api</artifactId>
+        <version>2.0.1</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <!-- JDeferred -->
+
+      <dependency>
+        <groupId>org.jdeferred</groupId>
+        <artifactId>jdeferred-core</artifactId>
+        <version>${jdeferred.version}</version>
+      </dependency>
+
+      <!-- AWS -->
+
+      <dependency>
+        <groupId>com.amazonaws</groupId>
+        <artifactId>aws-java-sdk</artifactId>
+        <version>${aws.version}</version>
+      </dependency>
+
+      <!-- Persistence -->
+
+      <dependency>
+        <groupId>com.mchange</groupId>
+        <artifactId>c3p0</artifactId>
+        <version>${c3p0.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>${h2.version}</version>
+      </dependency>
+
+      <!-- Jetty -->
+
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-server</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-servlet</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-webapp</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-annotations</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.jetty.websocket</groupId>
+        <artifactId>javax-websocket-server-impl</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-util</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+
+      <!-- JsonAssert -->
+
+      <dependency>
+        <groupId>org.skyscreamer</groupId>
+        <artifactId>jsonassert</artifactId>
+        <version>${jsonassert.version}</version>
+      </dependency>
+
+      <!-- Logging -->
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jul-to-slf4j</artifactId>
+        <version>${org.slf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${org.slf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jcl-over-slf4j</artifactId>
+        <version>${org.slf4j.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>${org.slf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+
+      <!-- Code generation -->
+
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.googlecode.lambdaj</groupId>
+        <artifactId>lambdaj</artifactId>
+        <version>${lambdaj.version}</version>
+      </dependency>
+
+      <!-- Selenium -->
+
+      <dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
+        <artifactId>selenium-java</artifactId>
+        <version>${selenium.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>xml-apis</groupId>
+        <artifactId>xml-apis</artifactId>
+        <version>1.4.01</version>
+      </dependency>
+
+      <dependency>
+        <groupId>net.sourceforge.htmlunit</groupId>
+        <artifactId>htmlunit</artifactId>
+        <version>${htmlunit.version}</version>
+      </dependency>
+
+      <!-- Mockito -->
+
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-all</artifactId>
+        <version>${mockito.version}</version>
+      </dependency>
+
+      <!-- Jukito -->
+
+      <dependency>
+        <groupId>org.jukito</groupId>
+        <artifactId>jukito</artifactId>
+        <version>${jukito.version}</version>
+      </dependency>
+
+      <!-- JUnit -->
+
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.11</version>
+      </dependency>
+
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit-dep</artifactId>
+        <version>4.11</version>
+      </dependency>
+
+      <!-- Rest-assured -->
+
+      <dependency>
+        <groupId>com.jayway.restassured</groupId>
+        <artifactId>rest-assured</artifactId>
+        <version>${rest-assured.version}</version>
+      </dependency>
+
+    </dependencies>
+
+  </dependencyManagement>
+
   <build>
 
     <plugins>
@@ -85,7 +471,119 @@
         </configuration>
       </plugin>
 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>${maven-source-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
+
+    <pluginManagement>
+      <plugins>
+
+        <plugin>
+          <groupId>com.github.searls</groupId>
+          <artifactId>jasmine-maven-plugin</artifactId>
+          <version>${jasmine-maven-plugin.version}</version>
+          <dependencies>
+            <dependency>
+              <groupId>net.sourceforge.htmlunit</groupId>
+              <artifactId>htmlunit</artifactId>
+              <version>${htmlunit.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>org.slf4j</groupId>
+              <artifactId>slf4j-api</artifactId>
+              <version>${org.slf4j.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>org.slf4j</groupId>
+              <artifactId>slf4j-nop</artifactId>
+              <version>${org.slf4j.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>org.slf4j</groupId>
+              <artifactId>jul-to-slf4j</artifactId>
+              <version>${org.slf4j.version}</version>
+            </dependency>
+          </dependencies>
+          <executions>
+            <execution>
+              <goals>
+                <goal>test</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <specRunnerTemplate>REQUIRE_JS</specRunnerTemplate>
+            <jsSrcDir>${project.basedir}/src/main/resources/META-INF/resources/javascript</jsSrcDir>
+            <sourceIncludes>
+              <include>**/*.js</include>
+            </sourceIncludes>
+            <jsTestSrcDir>${project.basedir}/src/test/resources/META-INF/resources/javascript</jsTestSrcDir>
+            <specIncludes>
+              <include>**/*.js</include>
+            </specIncludes>
+            <preloadSources>
+              <source>webjars/require.js</source>
+            </preloadSources>
+            <keepServerAlive>true</keepServerAlive>
+            <customRunnerConfiguration>${project.basedir}/src/test/resources/META-INF/configuration/require.json</customRunnerConfiguration>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>com.github.timurstrekalov</groupId>
+          <artifactId>saga-maven-plugin</artifactId>
+          <version>${saga-maven-plugin.version}</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.slf4j</groupId>
+              <artifactId>slf4j-nop</artifactId>
+              <version>${org.slf4j.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>com.github.timurstrekalov</groupId>
+              <artifactId>saga-core</artifactId>
+              <version>${saga-maven-plugin.version}</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>ch.qos.logback</groupId>
+                  <artifactId>logback-classic</artifactId>
+                </exclusion>
+              </exclusions>
+            </dependency>
+          </dependencies>
+          <executions>
+            <execution>
+              <phase>verify</phase>
+              <goals>
+                <goal>coverage</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <baseDir>http://localhost:${jasmine.serverPort}</baseDir>
+            <outputDir>${project.build.directory}/coverage</outputDir>
+            <noInstrumentPatterns>
+              <pattern>.*spec.*</pattern>
+              <pattern>.*/META\-INF/.*\.js</pattern>
+              <pattern>.*/webjars?/.*\.js</pattern>
+            </noInstrumentPatterns>
+          </configuration>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
 
   </build>
 

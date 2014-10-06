@@ -21,19 +21,18 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModuleTest;
+import edu.dfci.cccb.mev.dataset.domain.jackson.AnalysisTypeResolverTest;
+import edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandlerTest;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AnalysisAdapterTest;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapterTest;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DimensionAdapterTest;
 import edu.dfci.cccb.mev.dataset.domain.prototype.ValuesTest;
 import edu.dfci.cccb.mev.dataset.domain.support.FlatFileStoreValuesAdapterTest;
-import edu.dfci.cccb.mev.dataset.domain.support.json.DatasetJsonSerializerTest;
-import edu.dfci.cccb.mev.dataset.domain.support.tsv.DatasetTsvDeserializerTest;
-import edu.dfci.cccb.mev.dataset.domain.support.tsv.DatasetTsvSerializerTest;
 
 @RunWith (Suite.class)
 @SuiteClasses ({
-                ValuesTest.class, DatasetJsonSerializerTest.class, DimensionAdapterTest.class,
+                ValuesTest.class, DimensionAdapterTest.class,
                 DatasetAdapterTest.class, AnalysisAdapterTest.class, DatasetModuleTest.class,
-                FlatFileStoreValuesAdapterTest.class, DatasetTsvDeserializerTest.class,
-                DatasetTsvSerializerTest.class })
+                FlatFileStoreValuesAdapterTest.class, AnalysisTypeResolverTest.class,
+                DatasetTsvMessageHandlerTest.class })
 public class DatasetDomainTests {}

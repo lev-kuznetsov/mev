@@ -16,21 +16,21 @@
 
 package edu.dfci.cccb.mev.dataset.domain.guice;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+
+import javax.inject.Singleton;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.inject.Binder;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Module;
+import com.google.inject.Provides;
 
 import edu.dfci.cccb.mev.dataset.domain.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.support.tsv.DatasetTsvDeserializer;
-import edu.dfci.cccb.mev.dataset.domain.support.tsv.DatasetTsvSerializer;
 
 public class DatasetModuleTest {
 
@@ -38,13 +38,22 @@ public class DatasetModuleTest {
 
   @Before
   public void setUpInjector () {
-    injector = Guice.createInjector (new DatasetModule ());
+    injector = Guice.createInjector (new DatasetModule (), new Module () {
+
+      @Provides
+      @Singleton
+      @edu.dfci.cccb.mev.dataset.domain.annotation.Dataset
+      public String dataset () {
+        return "mock";
+      }
+
+      @Override
+      public void configure (Binder binder) {}
+    });
   }
 
   @Test
   public void serializers () {
     assertTrue (injector.getInstance (ObjectMapper.class).canSerialize (Dataset.class));
-    assertThat (injector.getInstance (DatasetTsvDeserializer.class), is (notNullValue (DatasetTsvDeserializer.class)));
-    assertThat (injector.getInstance (DatasetTsvSerializer.class), is (notNullValue (DatasetTsvSerializer.class)));
   }
 }

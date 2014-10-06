@@ -16,7 +16,6 @@
 
 package edu.dfci.cccb.mev.common.domain.guice.jackson;
 
-import static com.fasterxml.jackson.databind.ser.BeanSerializerFactory.instance;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
 
 import java.lang.reflect.Constructor;
@@ -26,11 +25,21 @@ import java.util.Set;
 import javax.inject.Singleton;
 
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
+import com.fasterxml.jackson.databind.DeserializationConfig;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.KeyDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationConfig;
+import com.fasterxml.jackson.databind.cfg.HandlerInstantiator;
+import com.fasterxml.jackson.databind.cfg.MapperConfig;
+import com.fasterxml.jackson.databind.introspect.Annotated;
+import com.fasterxml.jackson.databind.jsontype.TypeIdResolver;
+import com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
 import com.google.inject.Binder;
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Module;
 import com.google.inject.Provider;
@@ -163,22 +172,72 @@ public class JacksonModule implements Module {
     });
 
     binder.install (new SingletonModule () {
-
       @Override
       public void configure (Binder binder) {
-        binder.bind (ObjectMapper.class).toInstance (new ObjectMapper () {
-          private static final long serialVersionUID = 1L;
+        binder.bind (ObjectMapper.class).toProvider (new Provider<ObjectMapper> () {
+          private @Inject (optional = true) Set<JsonSerializer<?>> serializers;
+          private @Inject (optional = true) AnnotationIntrospector introspector;
+          private @Inject Injector injector;
 
-          @Inject
-          public void withSerializers (Set<JsonSerializer<?>> serializers) {
-            setSerializerFactory (instance.withAdditionalSerializers (new SimpleSerializers (new ArrayList<> (serializers))));
-          }
+          @Override
+          public ObjectMapper get () {
+            ObjectMapper mapper = new ObjectMapper ();
+            if (serializers != null && !serializers.isEmpty ())
+              mapper.setSerializerFactory (mapper.getSerializerFactory ()
+                                                 .withAdditionalSerializers (new SimpleSerializers (new ArrayList<> (serializers))));
+            if (introspector != null)
+              mapper.setAnnotationIntrospector (introspector);
+            mapper.setHandlerInstantiator (new HandlerInstantiator () {
 
-          @Inject (optional = true)
-          public void withIntrospector (AnnotationIntrospector introspector) {
-            setAnnotationIntrospector (introspector);
+              private <T> T instantiateAndInject (Class<?> clazz) {
+                try {
+                  @SuppressWarnings ("unchecked") T result = (T) clazz.newInstance ();
+                  injector.injectMembers (result);
+                  return result;
+                } catch (InstantiationException | IllegalAccessException e) {
+                  throw new RuntimeException (e);
+                }
+              }
+
+              @Override
+              public TypeResolverBuilder<?> typeResolverBuilderInstance (MapperConfig<?> config,
+                                                                         Annotated annotated,
+                                                                         Class<?> builderClass) {
+                return instantiateAndInject (builderClass);
+              }
+
+              @Override
+              public TypeIdResolver typeIdResolverInstance (MapperConfig<?> config,
+                                                            Annotated annotated,
+                                                            Class<?> resolverClass) {
+                return instantiateAndInject (resolverClass);
+              }
+
+              @Override
+              public JsonSerializer<?> serializerInstance (SerializationConfig config,
+                                                           Annotated annotated,
+                                                           Class<?> serClass) {
+                return instantiateAndInject (serClass);
+              }
+
+              @Override
+              public KeyDeserializer keyDeserializerInstance (DeserializationConfig config,
+                                                              Annotated annotated,
+                                                              Class<?> keyDeserClass) {
+                return instantiateAndInject (keyDeserClass);
+              }
+
+              @Override
+              public JsonDeserializer<?> deserializerInstance (DeserializationConfig config,
+                                                               Annotated annotated,
+                                                               Class<?> deserClass) {
+                return instantiateAndInject (deserClass);
+              }
+            });
+            return mapper;
           }
-        });
+        })
+              .in (Singleton.class);
       }
     });
   }

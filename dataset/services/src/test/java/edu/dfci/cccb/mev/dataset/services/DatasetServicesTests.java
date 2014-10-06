@@ -21,9 +21,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import edu.dfci.cccb.mev.dataset.services.controllers.DatasetControllerTest;
-import edu.dfci.cccb.mev.dataset.services.controllers.WorkspaceControllerTest;
-import edu.dfci.cccb.mev.dataset.services.guice.DatasetServiceModuleTest;
 
 @RunWith (Suite.class)
-@SuiteClasses ({ DatasetControllerTest.class, WorkspaceControllerTest.class, DatasetServiceModuleTest.class })
+@SuiteClasses ({ DatasetControllerTest.class })
 public class DatasetServicesTests {}

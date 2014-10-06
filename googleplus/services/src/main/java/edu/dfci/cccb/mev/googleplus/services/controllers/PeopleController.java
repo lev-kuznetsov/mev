@@ -32,7 +32,7 @@ import javax.ws.rs.QueryParam;
 import com.google.api.services.plus.Plus;
 import com.google.api.services.plus.model.PeopleFeed;
 
-import edu.dfci.cccb.mev.common.domain.support.MevException;
+import edu.dfci.cccb.mev.common.domain.MevException;
 
 /**
  * @author levk

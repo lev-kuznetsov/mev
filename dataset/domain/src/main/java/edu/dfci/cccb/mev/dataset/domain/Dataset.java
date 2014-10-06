@@ -16,7 +16,15 @@
 
 package edu.dfci.cccb.mev.dataset.domain;
 
+import static javax.xml.bind.annotation.XmlAccessType.NONE;
+
 import java.util.Map;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Represents a dataset
@@ -24,25 +32,39 @@ import java.util.Map;
  * @author levk
  * @since BAYLIE
  */
+@XmlRootElement
+@XmlAccessorType (NONE)
 public interface Dataset <K, V> {
+
+  /**
+   * Used for identification
+   */
+  public static final String DATASET = "dataset";
 
   /**
    * @return name
    */
+  @XmlElement
   String name ();
 
   /**
    * @return dimensions
    */
+  @Path ("/dimension")
+  @GET
   Map<String, Dimension<K>> dimensions ();
 
   /**
    * @return analyses
    */
+  @Path ("/analysis")
+  @GET
   Map<String, Analysis> analyses ();
 
   /**
    * @return value store
    */
+  @Path ("/data")
+  @GET
   Values<K, V> values ();
 }

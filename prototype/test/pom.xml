@@ -15,4 +15,41 @@
     <relativePath>../domain</relativePath>
   </parent>
 
+  <dependencies>
+
+    <!-- Rest-assured -->
+
+    <dependency>
+      <groupId>com.jayway.restassured</groupId>
+      <artifactId>rest-assured</artifactId>
+    </dependency>
+
+    <!-- Servlet Module -->
+
+    <dependency>
+      <groupId>com.google.inject.extensions</groupId>
+      <artifactId>guice-servlet</artifactId>
+    </dependency>
+
+    <!-- Jukito -->
+
+    <dependency>
+      <groupId>org.jukito</groupId>
+      <artifactId>jukito</artifactId>
+    </dependency>
+
+    <!-- JUnit -->
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit-dep</artifactId>
+    </dependency>
+
+  </dependencies>
+
 </project>

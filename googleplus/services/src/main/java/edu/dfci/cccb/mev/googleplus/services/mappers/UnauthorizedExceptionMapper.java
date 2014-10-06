@@ -20,14 +20,14 @@ import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 
 import javax.ws.rs.core.Response.ResponseBuilder;
 
-import edu.dfci.cccb.mev.common.services.support.mappers.MevExceptionMapper;
+import edu.dfci.cccb.mev.common.domain.mappers.MevExceptionMapperAdapter;
 import edu.dfci.cccb.mev.googleplus.domain.contract.UnauthorizedException;
 
 /**
  * @author levk
  * @since CRYSTAL
  */
-public class UnauthorizedExceptionMapper extends MevExceptionMapper<UnauthorizedException> {
+public class UnauthorizedExceptionMapper extends MevExceptionMapperAdapter<UnauthorizedException> {
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.common.services.support.mappers.MevExceptionMapper#

@@ -18,7 +18,7 @@ package edu.dfci.cccb.mev.common.services.context;
 
 import static com.google.inject.Guice.createInjector;
 import static com.google.inject.name.Names.bindProperties;
-import static edu.dfci.cccb.mev.common.domain.guice.MevDomainModule.load;
+import static edu.dfci.cccb.mev.common.domain.guice.MevModule.load;
 import static edu.dfci.cccb.mev.common.domain.guice.Modules.discover;
 
 import java.util.Iterator;

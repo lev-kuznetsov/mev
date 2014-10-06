@@ -16,7 +16,7 @@
 
 package edu.dfci.cccb.mev.common.domain.jooq;
 
-import static com.mycila.inject.internal.guava.collect.ObjectArrays.concat;
+import static com.google.common.collect.ObjectArrays.concat;
 import static java.util.UUID.randomUUID;
 import static lombok.AccessLevel.PROTECTED;
 import static org.jooq.impl.DSL.tableByName;

@@ -18,16 +18,19 @@ package edu.dfci.cccb.mev.common.services.guice.jaxrs;
 
 import static ch.lambdaj.Lambda.convert;
 import static ch.lambdaj.Lambda.join;
+import static com.google.inject.Key.get;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
 import static com.google.inject.name.Names.named;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static java.util.Arrays.asList;
 import static java.util.Collections.enumeration;
 import static javax.servlet.http.HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE;
+import static org.apache.cxf.message.Message.ACCEPT_CONTENT_TYPE;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
+import java.lang.annotation.Retention;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.AbstractMap;
@@ -36,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -45,6 +49,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import javax.inject.Named;
+import javax.inject.Qualifier;
 import javax.inject.Singleton;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -58,15 +63,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.MessageBodyReader;
-import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Providers;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.interceptor.Interceptor;
+import org.apache.cxf.jaxrs.JAXRSInvoker;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxrs.impl.HttpHeadersImpl;
 import org.apache.cxf.jaxrs.impl.ProvidersImpl;
@@ -75,20 +79,18 @@ import org.apache.cxf.jaxrs.impl.SecurityContextImpl;
 import org.apache.cxf.jaxrs.impl.UriInfoImpl;
 import org.apache.cxf.jaxrs.lifecycle.ResourceProvider;
 import org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet;
-import org.apache.cxf.message.Message;
+import org.apache.cxf.message.Exchange;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
 import org.apache.cxf.phase.Phase;
 
 import ch.lambdaj.function.convert.Converter;
 
 import com.google.inject.Binder;
-import com.google.inject.Binding;
-import com.google.inject.ConfigurationException;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Key;
-import com.google.inject.Module;
 import com.google.inject.Provider;
+import com.google.inject.Provides;
 import com.google.inject.TypeLiteral;
 import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.binder.LinkedBindingBuilder;
@@ -97,6 +99,7 @@ import com.google.inject.servlet.RequestScoped;
 import com.google.inject.servlet.ServletModule;
 
 import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
+import edu.dfci.cccb.mev.common.domain.guice.jaxrs.JaxrsModule;
 
 /**
  * JAX-RS service module
@@ -105,203 +108,46 @@ import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
  * @since CRYSTAL
  */
 @Log4j
-public class ServiceModule implements Module {
+public class ServiceModule extends JaxrsModule {
 
-  private static final String PROVIDERS = "jaxrs.providers";
-  private static final String RESOURCES = "jaxrs.resources";
   private static final String PARAMETER_NAME = "jaxrs.cn.query.param";
   private static final String EXTENSIONS = "jaxrs.cn.extensions";
   private static final String PARAMETER_VALUES = "jaxrs.cn.query.param.values";
 
+  @Retention (RUNTIME)
+  @Qualifier
+  private @interface Message {}
+
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
-  public final void configure (final Binder binder) {
-    final Multibinder<Object> providers = newSetBinder (binder,
-                                                        new TypeLiteral<Object> () {},
-                                                        named (PROVIDERS));
+  public void configure (final Binder binder) {
+    super.configure (binder);
 
-    configure (new ExceptionBinder () {
+    @RequiredArgsConstructor
+    class KeyHolder {
+      final Key<?> key;
+    }
 
-      @Override
-      public void useProvider (Key<? extends javax.inject.Provider<? extends ExceptionMapper<?>>> providerKey) {
-        providers.addBinding ().toProvider (providerKey).in (Singleton.class);
-      }
-
-      @Override
-      public void useProvider (TypeLiteral<? extends javax.inject.Provider<? extends ExceptionMapper<?>>> providerType) {
-        providers.addBinding ().toProvider (providerType).in (Singleton.class);
-      }
-
-      @Override
-      public void useProvider (Class<? extends javax.inject.Provider<? extends ExceptionMapper<?>>> providerType) {
-        providers.addBinding ().toProvider (providerType).in (Singleton.class);
-      }
-
-      @Override
-      public void useProvider (Provider<? extends ExceptionMapper<?>> provider) {
-        providers.addBinding ().toProvider (provider).in (Singleton.class);
-      }
-
-      @Override
-      public void useInstance (ExceptionMapper<?> instance) {
-        providers.addBinding ().toInstance (instance);
-      }
-
-      @Override
-      public <S extends ExceptionMapper<?>> void useConstructor (Constructor<S> constructor,
-                                                                 TypeLiteral<? extends S> type) {
-        providers.addBinding ().toConstructor (constructor, type).in (Singleton.class);
-      }
-
-      @Override
-      public <S extends ExceptionMapper<?>> void useConstructor (Constructor<S> constructor) {
-        providers.addBinding ().toConstructor (constructor).in (Singleton.class);
-      }
-
-      @Override
-      public void use (Key<? extends ExceptionMapper<?>> targetKey) {
-        providers.addBinding ().to (targetKey).in (Singleton.class);
-      }
-
-      @Override
-      public void use (TypeLiteral<? extends ExceptionMapper<?>> implementation) {
-        providers.addBinding ().to (implementation).in (Singleton.class);
-      }
-
-      @Override
-      public void use (Class<? extends ExceptionMapper<?>> implementation) {
-        providers.addBinding ().to (implementation).in (Singleton.class);
-      }
-    });
-
-    configure (new MessageReaderBinder () {
-
-      @Override
-      public void useProvider (Key<? extends javax.inject.Provider<? extends MessageBodyReader<?>>> providerKey) {
-        providers.addBinding ().toProvider (providerKey).in (Singleton.class);
-      }
-
-      @Override
-      public void useProvider (TypeLiteral<? extends javax.inject.Provider<? extends MessageBodyReader<?>>> providerType) {
-        providers.addBinding ().toProvider (providerType).in (Singleton.class);
-      }
-
-      @Override
-      public void useProvider (Class<? extends javax.inject.Provider<? extends MessageBodyReader<?>>> providerType) {
-        providers.addBinding ().toProvider (providerType).in (Singleton.class);
-      }
-
-      @Override
-      public void useProvider (Provider<? extends MessageBodyReader<?>> provider) {
-        providers.addBinding ().toProvider (provider).in (Singleton.class);
-      }
-
-      @Override
-      public void useInstance (MessageBodyReader<?> instance) {
-        providers.addBinding ().toInstance (instance);
-      }
-
-      @Override
-      public <S extends MessageBodyReader<?>> void useConstructor (Constructor<S> constructor,
-                                                                   TypeLiteral<? extends S> type) {
-        providers.addBinding ().toConstructor (constructor, type).in (Singleton.class);
-      }
-
-      @Override
-      public <S extends MessageBodyReader<?>> void useConstructor (Constructor<S> constructor) {
-        providers.addBinding ().toConstructor (constructor).in (Singleton.class);
-      }
-
-      @Override
-      public void use (Key<? extends MessageBodyReader<?>> targetKey) {
-        providers.addBinding ().to (targetKey).in (Singleton.class);
-      }
-
-      @Override
-      public void use (TypeLiteral<? extends MessageBodyReader<?>> implementation) {
-        providers.addBinding ().to (implementation).in (Singleton.class);
-      }
-
-      @Override
-      public void use (Class<? extends MessageBodyReader<?>> implementation) {
-        providers.addBinding ().to (implementation).in (Singleton.class);
-      }
-    });
-
-    configure (new MessageWriterBinder () {
-
-      @Override
-      public void useProvider (Key<? extends javax.inject.Provider<? extends MessageBodyWriter<?>>> providerKey) {
-        providers.addBinding ().toProvider (providerKey).in (Singleton.class);
-      }
-
-      @Override
-      public void useProvider (TypeLiteral<? extends javax.inject.Provider<? extends MessageBodyWriter<?>>> providerType) {
-        providers.addBinding ().toProvider (providerType).in (Singleton.class);
-      }
-
-      @Override
-      public void useProvider (Class<? extends javax.inject.Provider<? extends MessageBodyWriter<?>>> providerType) {
-        providers.addBinding ().toProvider (providerType).in (Singleton.class);
-      }
-
-      @Override
-      public void useProvider (Provider<? extends MessageBodyWriter<?>> provider) {
-        providers.addBinding ().toProvider (provider).in (Singleton.class);
-      }
-
-      @Override
-      public void useInstance (MessageBodyWriter<?> instance) {
-        providers.addBinding ().toInstance (instance);
-      }
-
-      @Override
-      public <S extends MessageBodyWriter<?>> void useConstructor (Constructor<S> constructor,
-                                                                   TypeLiteral<? extends S> type) {
-        providers.addBinding ().toConstructor (constructor, type).in (Singleton.class);
-      }
-
-      @Override
-      public <S extends MessageBodyWriter<?>> void useConstructor (Constructor<S> constructor) {
-        providers.addBinding ().toConstructor (constructor).in (Singleton.class);
-      }
-
-      @Override
-      public void use (Key<? extends MessageBodyWriter<?>> targetKey) {
-        providers.addBinding ().to (targetKey).in (Singleton.class);
-      }
-
-      @Override
-      public void use (TypeLiteral<? extends MessageBodyWriter<?>> implementation) {
-        providers.addBinding ().to (implementation).in (Singleton.class);
-      }
-
-      @Override
-      public void use (Class<? extends MessageBodyWriter<?>> implementation) {
-        providers.addBinding ().to (implementation).in (Singleton.class);
-      }
-    });
-
-    final Multibinder<Class<?>> resources = newSetBinder (binder, new TypeLiteral<Class<?>> () {}, named (RESOURCES));
+    final Multibinder<KeyHolder> resources = newSetBinder (binder, KeyHolder.class);
 
     configure (new ResourceBinder () {
 
       @Override
       public <T> AnnotatedBindingBuilder<T> publish (Class<T> type) {
-        resources.addBinding ().toInstance (type);
+        resources.addBinding ().toInstance (new KeyHolder (get (type)));
         return binder.bind (type);
       }
 
       @Override
-      public <T> AnnotatedBindingBuilder<T> publish (TypeLiteral<T> type) {
-        resources.addBinding ().toInstance (type.getRawType ());
+      public <T> AnnotatedBindingBuilder<T> publish (final TypeLiteral<T> type) {
+        resources.addBinding ().toInstance (new KeyHolder (get (type)));
         return binder.bind (type);
       }
 
       @Override
       public <T> LinkedBindingBuilder<T> publish (Key<T> key) {
-        resources.addBinding ().toInstance (key.getTypeLiteral ().getRawType ());
+        resources.addBinding ().toInstance (new KeyHolder (key));
         return binder.bind (key);
       }
     });
@@ -366,77 +212,48 @@ public class ServiceModule implements Module {
       }
     });
 
-    final ThreadLocal<Message> message = new ThreadLocal<Message> () {
-
-      @Override
-      protected Message initialValue () {
-        throw new IllegalStateException ("Attempted to bind JAXRS message outside of request context");
-      }
-    };
-
-    final ThreadLocal<HttpServletRequest> request = new ThreadLocal<HttpServletRequest> () {
-
-      @Override
-      protected HttpServletRequest initialValue () {
-        throw new IllegalStateException ("Attempted to bind HttpServetRequest outside of request context");
-      }
-    };
-
     binder.install (new SingletonModule () {
+      @Provides
+      @Singleton
+      @Message
+      private ThreadLocal<org.apache.cxf.message.Message> message () {
+        return new ThreadLocal<> ();
+      }
 
-      @Override
-      public void configure (Binder binder) {
-        binder.bind (UriInfo.class).toProvider (new Provider<UriInfo> () {
-          @Override
-          public UriInfo get () {
-            return new UriInfoImpl (message.get ());
-          }
-        }).in (RequestScoped.class);
+      @Provides
+      @RequestScoped
+      public UriInfo uri (@Message ThreadLocal<org.apache.cxf.message.Message> message) {
+        return new UriInfoImpl (message.get ());
+      }
 
-        binder.bind (HttpHeaders.class).toProvider (new Provider<HttpHeaders> () {
-          @Override
-          public HttpHeaders get () {
-            return new HttpHeadersImpl (message.get ());
-          }
-        }).in (RequestScoped.class);
+      @Provides
+      @RequestScoped
+      public HttpHeaders header (@Message ThreadLocal<org.apache.cxf.message.Message> message) {
+        return new HttpHeadersImpl (message.get ());
+      }
 
-        binder.bind (Providers.class).toProvider (new Provider<Providers> () {
-          @Override
-          public Providers get () {
-            return new ProvidersImpl (message.get ());
-          }
-        }).in (RequestScoped.class);
+      @Provides
+      @RequestScoped
+      public Providers providers (@Message ThreadLocal<org.apache.cxf.message.Message> message) {
+        return new ProvidersImpl (message.get ());
+      }
 
-        binder.bind (SecurityContext.class).toProvider (new Provider<SecurityContext> () {
-          @Override
-          public SecurityContext get () {
-            return new SecurityContextImpl (message.get ());
-          }
-        }).in (RequestScoped.class);
+      @Provides
+      @RequestScoped
+      public SecurityContext securityContext (@Message ThreadLocal<org.apache.cxf.message.Message> message) {
+        return new SecurityContextImpl (message.get ());
+      }
 
-        binder.bind (Request.class).toProvider (new Provider<Request> () {
-          @Override
-          public Request get () {
-            return new RequestImpl (message.get ());
-          }
-        }).in (RequestScoped.class);
+      @Provides
+      @RequestScoped
+      public Request request (@Message ThreadLocal<org.apache.cxf.message.Message> message) {
+        return new RequestImpl (message.get ());
+      }
 
-        binder.bind (HttpServletRequest.class).toProvider (new Provider<HttpServletRequest> () {
-
-          @Override
-          public HttpServletRequest get () {
-            return request.get ();
-          }
-        }).in (RequestScoped.class);
-
-        binder.bind (Locale.class).toProvider (new Provider<Locale> () {
-          private @Inject Provider<HttpServletRequest> request;
-
-          @Override
-          public Locale get () {
-            return request.get ().getLocale ();
-          }
-        }).in (RequestScoped.class);
+      @Provides
+      @RequestScoped
+      public Locale locale (HttpServletRequest request) {
+        return request.getLocale ();
       }
     });
 
@@ -445,9 +262,10 @@ public class ServiceModule implements Module {
       class InjectedCxfJaxrsServlet extends CXFNonSpringJaxrsServlet {
         private static final long serialVersionUID = 1L;
 
+        private @Inject @Message ThreadLocal<org.apache.cxf.message.Message> message;
         private @Inject Injector injector;
         private @Inject @Named (PROVIDERS) Set<Object> providers;
-        private @Inject @Named (RESOURCES) Set<Class<?>> resources;
+        private @Inject Set<KeyHolder> resources;
         private @Inject (optional = true) @Named (PARAMETER_NAME) String parameter;
         private Map<String, MediaType> parameterValues;
         private Map<Object, Object> extensions;
@@ -550,7 +368,8 @@ public class ServiceModule implements Module {
           ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
           PrintStream info = new PrintStream (buffer);
           info.println ("JAX-RS");
-          for (Class<?> r : resources) {
+          for (KeyHolder k : resources) {
+            Class<?> r = k.key.getTypeLiteral ().getRawType ();
             Path p = r.getAnnotation (Path.class);
             if (p != null)
               dumpEndpoints (info, serviceUrl + "/" + p.value (), r);
@@ -584,11 +403,9 @@ public class ServiceModule implements Module {
               if (value != null)
                 httpRequest = new HttpServletRequestWrapper (httpRequest) {
 
-                  private static final String ACCEPT_HEADER = "Accept";
-
                   @Override
                   public String getHeader (String name) {
-                    return ACCEPT_HEADER.equalsIgnoreCase (name) ? value.toString () : super.getHeader (name);
+                    return ACCEPT_CONTENT_TYPE.equalsIgnoreCase (name) ? value.toString () : super.getHeader (name);
                   }
 
                   @Override
@@ -606,12 +423,12 @@ public class ServiceModule implements Module {
                       public String nextElement () {
                         if (wrapped.hasMoreElements ()) {
                           String result = wrapped.nextElement ();
-                          if (ACCEPT_HEADER.equalsIgnoreCase (result))
+                          if (ACCEPT_CONTENT_TYPE.equalsIgnoreCase (result))
                             listedAcceptHeader = true;
                           return result;
                         } else if (!listedAcceptHeader) {
                           listedAcceptHeader = true;
-                          return ACCEPT_HEADER;
+                          return ACCEPT_CONTENT_TYPE;
                         } else
                           throw new NoSuchElementException ();
                       }
@@ -620,9 +437,9 @@ public class ServiceModule implements Module {
 
                   @Override
                   public Enumeration<String> getHeaders (String name) {
-                    return ACCEPT_HEADER.equalsIgnoreCase (name)
-                                                                ? enumeration (asList (value.toString ()))
-                                                                : super.getHeaders (name);
+                    return ACCEPT_CONTENT_TYPE.equalsIgnoreCase (name)
+                                                                      ? enumeration (asList (value.toString ()))
+                                                                      : super.getHeaders (name);
                   }
                 };
               else {
@@ -631,8 +448,6 @@ public class ServiceModule implements Module {
               }
             }
           }
-
-          request.set (httpRequest);
 
           if (log.isDebugEnabled ())
             log.debug ("Serving "
@@ -649,10 +464,10 @@ public class ServiceModule implements Module {
 
         @Override
         protected void setAllInterceptors (JAXRSServerFactoryBean bean, ServletConfig servletConfig, String splitChar) throws ServletException {
-          List<Interceptor<? extends Message>> interceptors = new ArrayList<> ();
-          interceptors.add (new AbstractPhaseInterceptor<Message> (Phase.PRE_INVOKE) {
+          List<Interceptor<? extends org.apache.cxf.message.Message>> interceptors = new ArrayList<> ();
+          interceptors.add (new AbstractPhaseInterceptor<org.apache.cxf.message.Message> (Phase.RECEIVE) {
             @Override
-            public void handleMessage (Message m) throws Fault {
+            public void handleMessage (org.apache.cxf.message.Message m) throws Fault {
               message.set (m);
             }
           });
@@ -671,7 +486,12 @@ public class ServiceModule implements Module {
           return new AbstractMap<Class<?>, Map<String, List<String>>> () {
             @Override
             public Set<Class<?>> keySet () {
-              return resources;
+              return new HashSet<Class<?>> (convert (resources, new Converter<KeyHolder, Class<?>> () {
+                @Override
+                public Class<?> convert (KeyHolder from) {
+                  return from.key.getTypeLiteral ().getRawType ();
+                }
+              }));
             }
 
             @Override
@@ -685,42 +505,18 @@ public class ServiceModule implements Module {
         protected Map<Class<?>, ResourceProvider> getResourceProviders (ServletConfig servletConfig,
                                                                         Map<Class<?>, Map<String, List<String>>> resourceClasses) throws ServletException {
           return new AbstractMap<Class<?>, ResourceProvider> () {
-            private final Map<Key<?>, Binding<?>> map = injector.getAllBindings ();
+            private final Map<Key<?>, Provider<?>> map;
 
-            abstract class GuiceResourceProviderAdapter implements ResourceProvider {
-              public boolean isSingleton () {
-                return false;
-              }
-
-              public void releaseInstance (Message m, Object o) {}
-            }
-
-            @Override
-            public ResourceProvider get (final Object key) {
-              try {
-                return key instanceof Class<?> ? new GuiceResourceProviderAdapter () {
-                  private final Class<?> type = (Class<?>) key;
-                  private final Provider<?> provider = injector.getProvider (type);
-
-                  @Override
-                  public Class<?> getResourceClass () {
-                    return type;
-                  }
-
-                  @Override
-                  public Object getInstance (Message m) {
-                    return provider.get ();
-                  }
-                } : null;
-              } catch (ConfigurationException e) {
-                return null;
-              }
+            {
+              map = new HashMap<> ();
+              for (KeyHolder key : resources)
+                map.put (key.key, injector.getProvider (key.key));
             }
 
             @Override
             public Set<Entry<Class<?>, ResourceProvider>> entrySet () {
               return new AbstractSet<Entry<Class<?>, ResourceProvider>> () {
-                private final Set<Entry<Key<?>, Binding<?>>> set = map.entrySet ();
+                private final Set<Entry<Key<?>, Provider<?>>> set = map.entrySet ();
 
                 @Override
                 public int size () {
@@ -730,7 +526,7 @@ public class ServiceModule implements Module {
                 @Override
                 public Iterator<Entry<Class<?>, ResourceProvider>> iterator () {
                   return new Iterator<Entry<Class<?>, ResourceProvider>> () {
-                    private final Iterator<Entry<Key<?>, Binding<?>>> iterator = set.iterator ();
+                    private final Iterator<Entry<Key<?>, Provider<?>>> iterator = set.iterator ();
 
                     @Override
                     public boolean hasNext () {
@@ -740,7 +536,7 @@ public class ServiceModule implements Module {
                     @Override
                     public Entry<Class<?>, ResourceProvider> next () {
                       return new Entry<Class<?>, ResourceProvider> () {
-                        private final Entry<Key<?>, Binding<?>> entry = iterator.next ();
+                        private final Entry<Key<?>, Provider<?>> entry = iterator.next ();
 
                         @Override
                         public ResourceProvider setValue (ResourceProvider value) {
@@ -749,7 +545,26 @@ public class ServiceModule implements Module {
 
                         @Override
                         public ResourceProvider getValue () {
-                          return get (getKey ());
+                          return new ResourceProvider () {
+
+                            @Override
+                            public Object getInstance (org.apache.cxf.message.Message m) {
+                              return entry.getValue ().get ();
+                            }
+
+                            @Override
+                            public Class<?> getResourceClass () {
+                              return entry.getKey ().getTypeLiteral ().getRawType ();
+                            }
+
+                            @Override
+                            public boolean isSingleton () {
+                              return false;
+                            }
+
+                            @Override
+                            public void releaseInstance (org.apache.cxf.message.Message m, Object o) {}
+                          };
                         }
 
                         @Override
@@ -768,6 +583,22 @@ public class ServiceModule implements Module {
               };
             }
           };
+        }
+
+        @Override
+        protected boolean getStaticSubResolutionValue (ServletConfig servletConfig) {
+          return false;
+        }
+
+        @Override
+        protected void setInvoker (JAXRSServerFactoryBean bean, ServletConfig servletConfig) throws ServletException {
+          bean.setInvoker (new JAXRSInvoker () {
+            @Override
+            protected Object performInvocation (Exchange exchange, Object serviceObject, Method m, Object[] paramArray) throws Exception {
+              m.setAccessible (true);
+              return super.performInvocation (exchange, serviceObject, m, paramArray);
+            }
+          });
         }
       }
 
@@ -792,21 +623,6 @@ public class ServiceModule implements Module {
       }
     });
   }
-
-  /**
-   * Binds {@link ExceptionMapper} providers
-   */
-  public void configure (ExceptionBinder binder) {}
-
-  /**
-   * Binds {@link MessageBodyReader} providers
-   */
-  public void configure (MessageReaderBinder binder) {}
-
-  /**
-   * Binds {@link MessageBodyWriter} providers
-   */
-  public void configure (MessageWriterBinder binder) {}
 
   /**
    * Binds resources

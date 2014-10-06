@@ -5,7 +5,7 @@
     <param name="threshold" value="debug" />
     <param name="target" value="System.out" />
     <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="[%p] : %m%n" />
+      <param name="ConversionPattern" value="[%p] : %c : %m%n" />
     </layout>
   </appender>
   <logger name="edu.dfci.cccb.mev">
@@ -16,6 +16,12 @@
   </logger>
   <logger name="org.reflections">
     <level value="warn" />
+  </logger>
+  <logger name="org.apache.http">
+    <level value="info" />
+  </logger>
+  <logger name="com.jayway.restassured">
+    <level value="error" />
   </logger>
   <root>
     <priority value="debug"></priority>

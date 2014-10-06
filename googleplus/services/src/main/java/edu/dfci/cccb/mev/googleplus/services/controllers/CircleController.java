@@ -32,7 +32,7 @@ import javax.ws.rs.QueryParam;
 import com.google.api.services.plusDomains.PlusDomains;
 import com.google.api.services.plusDomains.model.CircleFeed;
 
-import edu.dfci.cccb.mev.common.domain.support.MevException;
+import edu.dfci.cccb.mev.common.domain.MevException;
 
 /**
  * @author levk

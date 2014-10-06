@@ -30,7 +30,7 @@ import lombok.extern.log4j.Log4j;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 
-import edu.dfci.cccb.mev.common.domain.support.MevException;
+import edu.dfci.cccb.mev.common.domain.MevException;
 import edu.dfci.cccb.mev.googleplus.domain.contract.UnauthorizedException;
 
 /**

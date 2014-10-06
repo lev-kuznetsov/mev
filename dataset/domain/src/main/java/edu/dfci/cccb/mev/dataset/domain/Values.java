@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import lombok.Getter;
@@ -54,12 +54,12 @@ public interface Values <K, V> {
     /**
      * @return coordinate set
      */
-    private final @Getter @XmlAttribute Map<String, K> coordinates;
+    private final @Getter @XmlElement Map<String, K> coordinates;
 
     /**
      * @return value
      */
-    private final @Getter @XmlAttribute V value;
+    private final @Getter @XmlElement V value;
 
     /**
      * @param value

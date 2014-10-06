@@ -16,35 +16,59 @@
 
 package edu.dfci.cccb.mev.dataset.domain.prototype;
 
-import static lombok.AccessLevel.PROTECTED;
-
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
+
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import edu.dfci.cccb.mev.dataset.domain.Analysis;
 
 /**
  * @author levk
+ * @since BAYLIE
  */
-@RequiredArgsConstructor (access = PROTECTED)
 @Accessors (fluent = true)
 public abstract class AnalysisAdapter implements Analysis {
 
-  private final @Getter String name;
-  private final @Getter String type;
+  private @Getter @Setter @JsonProperty String name;
 
   public static Map<String, Analysis> analyses () {
     return new AbstractMap<String, Analysis> () {
       private final List<Analysis> list = new ArrayList<> ();
+
+      /* (non-Javadoc)
+       * @see java.util.AbstractMap#values() */
+      @GET
+      @Override
+      public Collection<Analysis> values () {
+        return super.values ();
+      }
+
+      /* (non-Javadoc)
+       * @see java.util.AbstractMap#get(java.lang.Object) */
+      @Path ("/{" + ANALYSIS + "}")
+      @GET
+      @Override
+      public Analysis get (@PathParam (ANALYSIS) Object key) {
+        return super.get (key);
+      }
 
       @Override
       public Set<Entry<String, Analysis>> entrySet () {
@@ -101,17 +125,25 @@ public abstract class AnalysisAdapter implements Analysis {
         };
       }
 
+      @Path ("/{" + ANALYSIS + "}")
+      @PUT
       @Override
-      public Analysis put (String key, Analysis value) {
-        if (key == null || value == null || value.name () == null)
+      public Analysis put (@PathParam (ANALYSIS) String name, Analysis analysis) {
+        if (name == null || analysis == null || analysis.name () == null)
           throw new NullPointerException ();
         for (Entry<String, Analysis> entry : entrySet ())
-          if (entry.getKey ().equals (key))
-            return entry.setValue (value);
-        if (!key.equals (value.name ()))
+          if (entry.getKey ().equals (name))
+            return entry.setValue (analysis);
+        if (!name.equals (analysis.name ()))
           throw new IllegalArgumentException ();
-        list.add (0, value);
+        list.add (0, analysis);
         return null;
+      }
+
+      @Path ("/{analysis}")
+      @PUT
+      public Analysis put (@PathParam (ANALYSIS) String name, @QueryParam ("type") String type) {
+        return put (name, (Analysis) null);
       }
     };
   }

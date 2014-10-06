@@ -18,23 +18,15 @@ package edu.dfci.cccb.mev.common.services.guice;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
 
-import javax.ws.rs.core.MediaType;
-
 import com.google.inject.Binder;
-import com.google.inject.Module;
 
-import edu.dfci.cccb.mev.common.domain.MevException;
+import edu.dfci.cccb.mev.common.domain.guice.MevModule;
 import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationConfigurer;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationMapper;
-import edu.dfci.cccb.mev.common.services.guice.jaxrs.ExceptionBinder;
-import edu.dfci.cccb.mev.common.services.guice.jaxrs.MessageReaderBinder;
-import edu.dfci.cccb.mev.common.services.guice.jaxrs.MessageWriterBinder;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceBinder;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceModule;
-import edu.dfci.cccb.mev.common.services.support.mappers.MevExceptionMapper;
-import edu.dfci.cccb.mev.common.services.support.messages.JacksonMessageWriter;
 
 /**
  * Enables the MeV RESTful services
@@ -42,37 +34,20 @@ import edu.dfci.cccb.mev.common.services.support.messages.JacksonMessageWriter;
  * @author levk
  * @since CRYSTAL
  */
-public class MevServiceModule implements Module {
+public class MevServiceModule extends MevModule {
   public static final String SERVICE_URI = "/services/*";
-
-  public static final MediaType TEXT_TSV_TYPE = new MediaType ("text", "tab-separated-values");
-  public static final String TEXT_TSV = "text/tab-separated-values";
 
   private static final String PARAMETER = "format";
 
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
-  public final void configure (Binder binder) {
+  public void configure (Binder binder) {
+    super.configure (binder);
     binder.install (new ServiceModule () {
       @Override
       public void configure (ContentNegotiationConfigurer content) {
         MevServiceModule.this.configure (content.parameter (PARAMETER));
-      }
-
-      @Override
-      public void configure (ExceptionBinder binder) {
-        MevServiceModule.this.configure (binder);
-      }
-
-      @Override
-      public void configure (MessageReaderBinder binder) {
-        MevServiceModule.this.configure (binder);
-      }
-
-      @Override
-      public void configure (MessageWriterBinder binder) {
-        MevServiceModule.this.configure (binder);
       }
 
       @Override
@@ -89,43 +64,17 @@ public class MevServiceModule implements Module {
           @Override
           public void configure (ContentNegotiationConfigurer content) {
             content.parameter (PARAMETER)
-                   .map ("json", APPLICATION_JSON_TYPE)
-                   .map ("tsv", TEXT_TSV_TYPE);
-          }
-
-          @Override
-          public void configure (MessageWriterBinder binder) {
-            binder.use (JacksonMessageWriter.class);
+                   .map ("json", APPLICATION_JSON_TYPE);
           }
 
           @Override
           public void configure (ServiceBinder binder) {
             binder.service (SERVICE_URI);
           }
-
-          @Override
-          public void configure (ExceptionBinder binder) {
-            binder.useInstance (new MevExceptionMapper<MevException> ());
-          }
         });
       }
     });
   }
-
-  /**
-   * @see ServiceModule#configure(ExceptionBinder)
-   */
-  public void configure (ExceptionBinder binder) {}
-
-  /**
-   * @see ServiceModule#configure(MessageReaderBinder)
-   */
-  public void configure (MessageReaderBinder binder) {}
-
-  /**
-   * @see ServiceModule#configure(MessageWriterBinder)
-   */
-  public void configure (MessageWriterBinder binder) {}
 
   /**
    * @see ServiceModule#configure(ResourceBinder)

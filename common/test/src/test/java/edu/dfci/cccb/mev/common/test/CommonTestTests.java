@@ -21,10 +21,11 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import edu.dfci.cccb.mev.common.test.jetty.Jetty9Test;
+import edu.dfci.cccb.mev.common.test.jetty.runner.JettykoRunnerTest;
 
 /**
  * @author levk
  */
 @RunWith (Suite.class)
-@SuiteClasses ({ Jetty9Test.class })
+@SuiteClasses ({ Jetty9Test.class, JettykoRunnerTest.class })
 public class CommonTestTests {}

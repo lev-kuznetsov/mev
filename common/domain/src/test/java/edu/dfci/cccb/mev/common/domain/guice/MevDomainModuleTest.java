@@ -37,7 +37,7 @@ public class MevDomainModuleTest {
 
   @Before
   public void installDatasetModule () throws Exception {
-    injector = createInjector (new MevDomainModule () {
+    injector = createInjector (new MevModule () {
       public void configure (JacksonSerializerBinder binder) {
         assertThat (binder, is (notNullValue ()));
       }

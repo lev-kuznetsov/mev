@@ -16,46 +16,170 @@
 
 package edu.dfci.cccb.mev.dataset.services.controllers;
 
+import static edu.dfci.cccb.mev.dataset.domain.Dataset.DATASET;
+import static edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler.COLUMN;
+import static edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler.ROW;
+import static java.util.regex.Pattern.compile;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
-import java.io.PrintStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.regex.Pattern;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
+
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
+import org.supercsv.comment.CommentMatcher;
+import org.supercsv.prefs.CsvPreference;
+import org.supercsv.prefs.CsvPreference.Builder;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
+import com.google.inject.Provider;
+import com.google.inject.Provides;
+import com.google.inject.TypeLiteral;
+import com.google.inject.servlet.RequestScoped;
+import com.google.inject.servlet.SessionScoped;
+
+import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageReaderBinder;
+import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageWriterBinder;
+import edu.dfci.cccb.mev.common.domain.messages.JacksonMessageWriter;
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationConfigurer;
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceBinder;
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceModule;
 import edu.dfci.cccb.mev.common.test.jetty.Jetty9;
+import edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler;
+import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
+import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.Workspace;
 
 public class DatasetControllerTest {
 
   @Test
-  public void putThenGet () throws Exception {
-    try (Jetty9 jetty = new Jetty9 ()) {
-      HttpURLConnection connection = (HttpURLConnection) new URL ("http://localhost:"
-                                                                  + jetty.port ()
-                                                                  + "/services/dataset/hello").openConnection ();
-      connection.setRequestMethod ("PUT");
-      connection.setRequestProperty ("Content-Type", DatasetController.TAB_SEPARATED_VALUES);
-      connection.setDoInput (true);
-      connection.setDoOutput (true);
-      try (PrintStream data = new PrintStream (connection.getOutputStream ())) {
-        data.print ("\tc1\tc2\n" +
-                    "r1\t.1\t.2\n" +
-                    "r2\t.3\t.4");
-        assertThat (connection.getResponseCode (), is (204));
-
-        assertEquals ("{name:hello,"
-                      + "dimensions:[{name:row,keys:[r1,r2]},{name:column,keys:[c1,c2]}],"
-                      + "values:[{coordinates:{column:c1,row:r1},value:0.1},"
-                      + "{coordinates:{column:c2,row:r1},value:0.2},"
-                      + "{coordinates:{column:c1,row:r2},value:0.3},"
-                      + "{coordinates:{column:c2,row:r2},value:0.4}],"
-                      + "analyses:[]}",
-                      jetty.get ("/services/dataset/hello?format=json"),
-                      false);
-      }
+  public void integratedPutThenGet () throws Exception {
+    try (Jetty9 j = new Jetty9 ()) {
+      test ("/services", j);
     }
+  }
+
+  @Test
+  public void putThenGet () throws Exception {
+    try (Jetty9 j = new Jetty9 (new ServiceModule () {
+      @Provides
+      @Named (ROW)
+      @Singleton
+      public String row () {
+        return "row";
+      }
+
+      @Provides
+      @Named (COLUMN)
+      @Singleton
+      public String column () {
+        return "column";
+      }
+
+      @Provides
+      @edu.dfci.cccb.mev.dataset.domain.annotation.Dataset
+      @RequestScoped
+      public String dataset (UriInfo uri) {
+        return uri.getPathParameters ().getFirst (DATASET);
+      }
+
+      @Provides
+      @Singleton
+      public CsvPreference preference () {
+        return new Builder ('"', '\t', "\r\n").skipComments (new CommentMatcher () {
+          private final Pattern[] comments = { compile ("^#[^$]$") };
+
+          public boolean isComment (String line) {
+            for (Pattern comment : comments)
+              if (comment.matcher (line).matches ())
+                return true;
+            return false;
+          }
+        }).build ();
+      }
+
+      public void configure (MessageReaderBinder binder) {
+        binder.use (DatasetTsvMessageHandler.class);
+      }
+
+      public void configure (MessageWriterBinder binder) {
+        binder.use (JacksonMessageWriter.class);
+      }
+
+      public void configure (ResourceBinder binder) {
+        binder.publish (new TypeLiteral<Workspace<String, Double>> () {})
+              .toProvider (new Provider<Workspace<String, Double>> () {
+                public Workspace<String, Double> get () {
+                  return DatasetAdapter.workspace ();
+                }
+              }).in (SessionScoped.class);
+      }
+
+      public void configure (ContentNegotiationConfigurer content) {
+        content.parameter ("format").map ("tsv", DatasetTsvMessageHandler.TEXT_TSV_TYPE);
+      }
+
+      public void configure (ServiceBinder binder) {
+        binder.service ("/test/*");
+      }
+
+      @Provides
+      @Singleton
+      public ObjectMapper mapper () {
+        ObjectMapper mapper = new ObjectMapper ();
+        mapper.setAnnotationIntrospector (new JaxbAnnotationIntrospector (mapper.getTypeFactory ()));
+        return mapper;
+      }
+    })) {
+      test ("/test", j);
+    }
+  }
+
+  private void test (String svc, Jetty9 j) throws Exception {
+    HttpURLConnection c = j.connect (svc + "/dataset/hello");
+    c.setRequestProperty ("Accept", MediaType.APPLICATION_JSON);
+    c.setRequestMethod ("PUT");
+    c.setRequestProperty ("Content-Type", DatasetTsvMessageHandler.TEXT_TSV);
+    c.setDoInput (true);
+    c.setDoOutput (true);
+    IOUtils.copy (new ByteArrayInputStream (("\tc1\tc2\n" +
+                                             "r1\t.1\t.2\n" +
+                                             "r2\t.3\t.4").getBytes ()), c.getOutputStream ());
+    assertThat (c.getResponseCode (), is (204));
+
+    c = j.connect (svc + "/dataset/hello2");
+    c.setRequestProperty ("Accept", MediaType.APPLICATION_JSON);
+    c.setRequestMethod ("PUT");
+    c.setRequestProperty ("Content-Type", DatasetTsvMessageHandler.TEXT_TSV);
+    c.setDoInput (true);
+    c.setDoOutput (true);
+    IOUtils.copy (new ByteArrayInputStream (("\tc1\tc2\n" +
+                                             "r1\t.1\t.2\n" +
+                                             "r2\t.3\t.4").getBytes ()), c.getOutputStream ());
+    assertThat (c.getResponseCode (), is (204));
+
+    c = j.connect (svc + "/dataset");
+    c.setRequestMethod ("GET");
+    c.setRequestProperty ("Accept", MediaType.APPLICATION_JSON);
+    ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
+    IOUtils.copy (c.getInputStream (), buffer);
+    assertEquals ("[{name:hello2},{name:hello}]", buffer.toString (), true);
+
+    c = j.connect (svc + "/dataset/hello");
+    c.setRequestMethod ("GET");
+    c.setRequestProperty ("Accept", MediaType.APPLICATION_JSON);
+    buffer = new ByteArrayOutputStream ();
+    IOUtils.copy (c.getInputStream (), buffer);
+    assertEquals ("{name:hello}", buffer.toString (), true);
   }
 }

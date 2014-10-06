@@ -16,8 +16,11 @@
 
 package edu.dfci.cccb.mev.common.test.jetty;
 
+import static com.google.inject.Guice.createInjector;
 import static java.net.CookieHandler.setDefault;
 import static java.net.CookiePolicy.ACCEPT_ALL;
+import static java.util.Arrays.asList;
+import static java.util.EnumSet.allOf;
 import static org.apache.log4j.lf5.util.StreamUtils.getBytes;
 import static org.h2.util.IOUtils.copy;
 
@@ -28,11 +31,22 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.servlet.DispatcherType;
+import javax.servlet.ServletContextListener;
+
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.session.SessionHandler;
+import org.eclipse.jetty.servlet.DefaultServlet;
+import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
+
+import com.google.inject.Injector;
+import com.google.inject.Module;
+import com.google.inject.servlet.GuiceFilter;
+import com.google.inject.servlet.GuiceServletContextListener;
 
 /**
  * Jetty9 wrapper
@@ -59,6 +73,29 @@ public class Jetty9 implements AutoCloseable {
     server = new Server (0);
     server.setHandler (handler);
     server.start ();
+  }
+
+  public Jetty9 (Module... modules) throws Exception {
+    this (asList (modules));
+  }
+
+  public Jetty9 (final Iterable<Module> modules) throws Exception {
+    this (new ServletContextHandler () {
+      {
+        ServletContextListener context = new GuiceServletContextListener () {
+
+          @Override
+          protected Injector getInjector () {
+            return createInjector (modules);
+          }
+        };
+
+        addEventListener (context);
+        addFilter (GuiceFilter.class, "/*", allOf (DispatcherType.class));
+        addServlet (DefaultServlet.class, "/");
+        setSessionHandler (new SessionHandler ());
+      }
+    });
   }
 
   public int port () {
@@ -88,6 +125,14 @@ public class Jetty9 implements AutoCloseable {
   public String post (String uri, InputStream data) throws MalformedURLException, IOException {
     HttpURLConnection connection = connect (uri);
     connection.setRequestMethod ("POST");
+    connection.setDoOutput (true);
+    copy (data, connection.getOutputStream ());
+    return new String (getBytes (connection.getInputStream ()));
+  }
+
+  public String put (String uri, InputStream data) throws MalformedURLException, IOException {
+    HttpURLConnection connection = connect (uri);
+    connection.setRequestMethod ("PUT");
     connection.setDoOutput (true);
     copy (data, connection.getOutputStream ());
     return new String (getBytes (connection.getInputStream ()));

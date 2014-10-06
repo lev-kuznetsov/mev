@@ -10,39 +10,24 @@
 
   <parent>
     <groupId>edu.dfci.cccb</groupId>
-    <artifactId>mev-prototype-domain</artifactId>
+    <artifactId>mev-prototype</artifactId>
     <version>CRYSTAL-SNAPSHOT</version>
-    <relativePath>../domain</relativePath>
   </parent>
-
-  <properties>
-    <javax.mail.version>1.4.7</javax.mail.version>
-    <cxf.version>3.0.1</cxf.version>
-  </properties>
 
   <dependencies>
 
-    <!-- Webjars -->
+    <!-- JAXB -->
 
     <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>angularjs</artifactId>
+      <groupId>com.fasterxml.jackson.module</groupId>
+      <artifactId>jackson-module-jaxb-annotations</artifactId>
     </dependency>
 
-    <!-- Servlet Module -->
-
-    <dependency>
-      <groupId>com.google.inject.extensions</groupId>
-      <artifactId>guice-servlet</artifactId>
-      <version>${guice.version}</version>
-    </dependency>
-
-    <!-- JAX-RS -->
+    <!-- JAX-RS Services -->
 
     <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-      <version>${cxf.version}</version>
     </dependency>
 
     <!-- JavaEE API -->
@@ -50,8 +35,187 @@
     <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-web-api</artifactId>
-      <version>6.0</version>
       <scope>provided</scope>
+    </dependency>
+
+    <!-- Webjars -->
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>requirejs</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>underscorejs</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>log4javascript</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>angularjs</artifactId>
+    </dependency>
+
+    <!-- Commons Configuration for Variable Interpolation -->
+
+    <dependency>
+      <groupId>commons-configuration</groupId>
+      <artifactId>commons-configuration</artifactId>
+    </dependency>
+
+    <!-- JDeferred -->
+
+    <dependency>
+      <groupId>org.jdeferred</groupId>
+      <artifactId>jdeferred-core</artifactId>
+    </dependency>
+
+    <!-- AWS -->
+
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk</artifactId>
+    </dependency>
+
+    <!-- Persistence -->
+
+    <dependency>
+      <groupId>com.mchange</groupId>
+      <artifactId>c3p0</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+    </dependency>
+
+    <!-- Dependency Injection -->
+
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.inject.extensions</groupId>
+      <artifactId>guice-multibindings</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.inject.extensions</groupId>
+      <artifactId>guice-servlet</artifactId>
+    </dependency>
+
+    <!-- Logging -->
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+    </dependency>
+
+    <!-- Code generation -->
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.googlecode.lambdaj</groupId>
+      <artifactId>lambdaj</artifactId>
+    </dependency>
+
+    <!-- Selenium -->
+
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>xml-apis</groupId>
+      <artifactId>xml-apis</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>net.sourceforge.htmlunit</groupId>
+      <artifactId>htmlunit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Mockito -->
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Jukito -->
+
+    <dependency>
+      <groupId>org.jukito</groupId>
+      <artifactId>jukito</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- JsonAssert -->
+
+    <dependency>
+      <groupId>org.skyscreamer</groupId>
+      <artifactId>jsonassert</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- JUnit -->
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit-dep</artifactId>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>

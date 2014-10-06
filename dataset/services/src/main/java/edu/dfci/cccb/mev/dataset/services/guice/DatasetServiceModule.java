@@ -16,46 +16,45 @@
 
 package edu.dfci.cccb.mev.dataset.services.guice;
 
-import static edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.WORKSPACE;
+import static edu.dfci.cccb.mev.dataset.domain.Analysis.ANALYSIS;
+import static edu.dfci.cccb.mev.dataset.domain.Dataset.DATASET;
+import static edu.dfci.cccb.mev.dataset.domain.Dimension.DIMENSION;
+import static edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler.TEXT_TSV_TYPE;
 
-import java.util.Map;
-
-import javax.inject.Named;
 import javax.ws.rs.core.UriInfo;
 
 import com.google.inject.Binder;
-import com.google.inject.Module;
+import com.google.inject.Key;
+import com.google.inject.Provider;
 import com.google.inject.Provides;
+import com.google.inject.TypeLiteral;
 import com.google.inject.servlet.RequestScoped;
 import com.google.inject.servlet.SessionScoped;
 
 import edu.dfci.cccb.mev.common.services.guice.MevServiceModule;
-import edu.dfci.cccb.mev.common.services.guice.jaxrs.MessageReaderBinder;
-import edu.dfci.cccb.mev.common.services.guice.jaxrs.MessageWriterBinder;
+import edu.dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationMapper;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
 import edu.dfci.cccb.mev.dataset.domain.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
-import edu.dfci.cccb.mev.dataset.services.controllers.DatasetController;
-import edu.dfci.cccb.mev.dataset.services.controllers.WorkspaceController;
-import edu.dfci.cccb.mev.dataset.services.messages.TsvDatasetMessageReader;
-import edu.dfci.cccb.mev.dataset.services.messages.TsvDatasetMessageWriter;
+import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.Workspace;
 
 /**
  * @author levk
  * @since CRYSTAL
  */
-public class DatasetServiceModule implements Module {
+public class DatasetServiceModule extends MevServiceModule {
 
   /**
-   * Provides a workspace for holding datasets
+   * Provides the context dataset name
    */
   @Provides
-  @SessionScoped
-  @Named (WORKSPACE)
-  public Map<String, Dataset<String, Double>> workspace () {
-    return DatasetAdapter.workspace ();
+  @edu.dfci.cccb.mev.dataset.domain.annotation.Dataset
+  @RequestScoped
+  public String dataset (UriInfo uri) {
+    return uri.getPathParameters ().getFirst (DATASET);
   }
 
   /**
@@ -63,18 +62,19 @@ public class DatasetServiceModule implements Module {
    */
   @Provides
   @RequestScoped
-  public Dataset<String, Double> dataset (@Named (WORKSPACE) Map<String, Dataset<String, Double>> workspace,
-                                          UriInfo uri) {
-    return workspace.get (uri.getPathParameters ().getFirst ("dataset"));
+  public Dataset<String, Double> dataset (Workspace<String, Double> workspace,
+                                          @edu.dfci.cccb.mev.dataset.domain.annotation.Dataset String name) {
+    return workspace.get (name);
   }
 
   /**
-   * Provides the context dimension
+   * Provides the context analysis name
    */
   @Provides
   @RequestScoped
-  public Dimension<String> dimension (Dataset<String, Double> dataset, UriInfo uri) {
-    return dataset.dimensions ().get (uri.getPathParameters ().getFirst ("dimension"));
+  @edu.dfci.cccb.mev.dataset.domain.annotation.Analysis
+  public String analysis (UriInfo uri) {
+    return uri.getPathParameters ().getFirst (ANALYSIS);
   }
 
   /**
@@ -82,30 +82,58 @@ public class DatasetServiceModule implements Module {
    */
   @Provides
   @RequestScoped
-  public Analysis analysis (Dataset<String, Double> dataset, UriInfo uri) {
-    return dataset.analyses ().get (uri.getPathParameters ().getFirst ("analysis"));
+  public Analysis analysis (Dataset<String, Double> dataset,
+                            @edu.dfci.cccb.mev.dataset.domain.annotation.Analysis String name) {
+    return dataset.analyses ().get (name);
+  }
+
+  @Provides
+  @RequestScoped
+  @edu.dfci.cccb.mev.dataset.domain.annotation.Dimension
+  public String dimension (UriInfo uri) {
+    return uri.getPathParameters ().getFirst (DIMENSION);
+  }
+
+  /**
+   * Provides the context dimension
+   */
+  @Provides
+  @RequestScoped
+  public Dimension<String> dimension (Dataset<String, Double> dataset,
+                                      @edu.dfci.cccb.mev.dataset.domain.annotation.Dimension String name) {
+    return dataset.dimensions ().get (name);
   }
 
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
   public void configure (Binder binder) {
-    binder.install (new MevServiceModule () {
-      @Override
-      public void configure (ResourceBinder binder) {
-        binder.publish (WorkspaceController.class).in (RequestScoped.class);
-        binder.publish (DatasetController.class).in (RequestScoped.class);
-      }
+    super.configure (binder);
 
-      @Override
-      public void configure (MessageReaderBinder binder) {
-        binder.useInstance (new TsvDatasetMessageReader ());
-      }
+    binder.install (new DatasetModule ());
+  }
 
-      @Override
-      public void configure (MessageWriterBinder binder) {
-        binder.useInstance (new TsvDatasetMessageWriter ());
-      }
-    });
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceModule#configure(
+   * edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder) */
+  @Override
+  public void configure (ResourceBinder binder) {
+    binder.publish (Key.get (new TypeLiteral<Workspace<String, Double>> () {}))
+          .toProvider (new Provider<Workspace<String, Double>> () {
+            @Override
+            public Workspace<String, Double> get () {
+              return DatasetAdapter.workspace ();
+            }
+          }).in (SessionScoped.class);
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.common.services.guice.MevServiceModule#configure(edu
+   * .dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationMapper) */
+  @Override
+  public void configure (ContentNegotiationMapper content) {
+    content.map ("tsv", TEXT_TSV_TYPE);
   }
 }

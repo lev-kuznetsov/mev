@@ -28,8 +28,8 @@ import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.servlet.SessionScoped;
 
+import edu.dfci.cccb.mev.common.domain.guice.jaxrs.ExceptionBinder;
 import edu.dfci.cccb.mev.common.services.guice.MevServiceModule;
-import edu.dfci.cccb.mev.common.services.guice.jaxrs.ExceptionBinder;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
 import edu.dfci.cccb.mev.googleplus.domain.guice.GoogleDomainModule;
 import edu.dfci.cccb.mev.googleplus.domain.guice.ScopeBinder;

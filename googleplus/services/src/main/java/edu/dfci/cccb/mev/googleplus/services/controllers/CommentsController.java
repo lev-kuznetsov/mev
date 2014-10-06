@@ -32,7 +32,7 @@ import javax.ws.rs.QueryParam;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.CommentList;
 
-import edu.dfci.cccb.mev.common.domain.support.MevException;
+import edu.dfci.cccb.mev.common.domain.MevException;
 
 /**
  * @author levk

@@ -19,11 +19,18 @@ package edu.dfci.cccb.mev.dataset.domain.prototype;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -50,11 +57,6 @@ public class DatasetAdapter <K, V> implements Dataset<K, V> {
   private final @Getter Map<String, Analysis> analyses;
   private final @Getter Values<K, V> values;
 
-  /**
-   * For named workspace injection
-   */
-  public static final String WORKSPACE = "workspace";
-
   public DatasetAdapter (String name,
                          Map<String, Dimension<K>> dimensions,
                          Map<String, Analysis> analyses,
@@ -65,11 +67,39 @@ public class DatasetAdapter <K, V> implements Dataset<K, V> {
     this.values = values;
   }
 
+  @Path ("/dataset")
+  public static abstract class Workspace <K, V> extends AbstractMap<String, Dataset<K, V>> {
+    @GET
+    @Override
+    public Collection<Dataset<K, V>> values () {
+      return super.values ();
+    }
+
+    @Path ("/{" + DATASET + "}")
+    @GET
+    public Dataset<K, V> get (@PathParam (DATASET) String key) {
+      return super.get (key);
+    }
+
+    @Path ("/{" + DATASET + "}")
+    @PUT
+    @Override
+    public Dataset<K, V> put (@PathParam (DATASET) String name, Dataset<K, V> value) {
+      return super.put (name, value);
+    }
+
+    @Path ("/{" + DATASET + "}")
+    @DELETE
+    public Dataset<K, V> remove (@PathParam (DATASET) String key) {
+      return super.remove (key);
+    }
+  }
+
   /**
    * @return A workspace for holding datasets
    */
-  public static <K, V> Map<String, Dataset<K, V>> workspace () {
-    return new AbstractMap<String, Dataset<K, V>> () {
+  public static <K, V> Workspace<K, V> workspace () {
+    return new Workspace<K, V> () {
       private final List<Dataset<K, V>> list = new ArrayList<> ();
 
       @Override
@@ -128,13 +158,13 @@ public class DatasetAdapter <K, V> implements Dataset<K, V> {
       }
 
       @Override
-      public Dataset<K, V> put (String key, Dataset<K, V> value) {
-        if (key == null || value == null || value.name () == null)
+      public Dataset<K, V> put (String name, Dataset<K, V> value) {
+        if (name == null || value == null || value.name () == null)
           throw new NullPointerException ();
         for (Entry<String, Dataset<K, V>> entry : entrySet ())
-          if (entry.getKey ().equals (key))
+          if (entry.getKey ().equals (name))
             return entry.setValue (value);
-        if (!key.equals (value.name ()))
+        if (!name.equals (value.name ()))
           throw new IllegalArgumentException ();
         list.add (0, value);
         return null;

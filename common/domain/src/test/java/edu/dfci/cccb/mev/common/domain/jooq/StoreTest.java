@@ -25,7 +25,7 @@ import org.junit.Test;
 
 import com.google.inject.Guice;
 
-import edu.dfci.cccb.mev.common.domain.guice.MevDomainModule;
+import edu.dfci.cccb.mev.common.domain.guice.MevModule;
 
 public class StoreTest {
 
@@ -50,7 +50,7 @@ public class StoreTest {
         assertThat ((String) context ().select ().from (table ()).fetchOne (field ("NAME")), is ("HALLO"));
       }
     }) {
-      Guice.createInjector (new MevDomainModule ()).injectMembers (s);
+      Guice.createInjector (new MevModule ()).injectMembers (s);
       s.run ();
     }
   }

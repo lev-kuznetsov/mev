@@ -16,6 +16,7 @@
 
 package edu.dfci.cccb.mev.common.domain.guice;
 
+import com.google.inject.Binder;
 import com.google.inject.Module;
 
 /**
@@ -37,4 +38,9 @@ public abstract class SingletonModule implements Module {
   public boolean equals (Object obj) {
     return obj instanceof SingletonModule && getClass ().equals (obj.getClass ());
   }
+
+  /* (non-Javadoc)
+   * @see com.google.inject.Module#configure(com.google.inject.Binder) */
+  @Override
+  public void configure (Binder binder) {}
 }

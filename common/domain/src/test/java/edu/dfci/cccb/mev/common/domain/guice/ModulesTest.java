@@ -30,7 +30,7 @@ public class ModulesTest {
   public void discovery () {
     boolean foundMevDomainModule = false;
     for (Module module : discover ())
-      if (module instanceof MevDomainModule)
+      if (module instanceof MevModule)
         foundMevDomainModule = true;
     assertThat (foundMevDomainModule, is (true));
   }
