@@ -36,11 +36,21 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.databind.BeanProperty;
+import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.InjectableValues;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.KeyDeserializer;
+import com.fasterxml.jackson.databind.SerializationConfig;
+import com.fasterxml.jackson.databind.cfg.HandlerInstantiator;
+import com.fasterxml.jackson.databind.cfg.MapperConfig;
+import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.databind.introspect.NopAnnotationIntrospector;
+import com.fasterxml.jackson.databind.jsontype.TypeIdResolver;
+import com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import com.google.inject.Binder;
 import com.google.inject.Inject;
@@ -49,6 +59,7 @@ import com.google.inject.Key;
 import com.google.inject.Module;
 
 import edu.dfci.cccb.mev.common.domain.guice.c3p0.PooledDataSourceProvider;
+import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonHandlerInstantiatorBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonInjectableValuesBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonIntrospectorBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonModule;
@@ -114,6 +125,48 @@ public class MevModule implements Module {
                                                  BeanProperty forProperty,
                                                  Object beanInstance) {
                 return injector.getInstance ((Key<?>) valueId);
+              }
+            });
+          }
+
+          @Override
+          public void configure (JacksonHandlerInstantiatorBinder binder) {
+            binder.useInstance (new HandlerInstantiator () {
+              private @Inject Injector injector;
+
+              @Override
+              public TypeResolverBuilder<?> typeResolverBuilderInstance (MapperConfig<?> config,
+                                                                         Annotated annotated,
+                                                                         Class<?> builderClass) {
+                return (TypeResolverBuilder<?>) injector.getInstance (builderClass);
+              }
+
+              @Override
+              public TypeIdResolver typeIdResolverInstance (MapperConfig<?> config,
+                                                            Annotated annotated,
+                                                            Class<?> resolverClass) {
+                return (TypeIdResolver) injector.getInstance (resolverClass);
+              }
+
+              @Override
+              public JsonSerializer<?> serializerInstance (SerializationConfig config,
+                                                           Annotated annotated,
+                                                           Class<?> serClass) {
+                return (JsonSerializer<?>) injector.getInstance (serClass);
+              }
+
+              @Override
+              public KeyDeserializer keyDeserializerInstance (DeserializationConfig config,
+                                                              Annotated annotated,
+                                                              Class<?> keyDeserClass) {
+                return (KeyDeserializer) injector.getInstance (keyDeserClass);
+              }
+
+              @Override
+              public JsonDeserializer<?> deserializerInstance (DeserializationConfig config,
+                                                               Annotated annotated,
+                                                               Class<?> deserClass) {
+                return (JsonDeserializer<?>) injector.getInstance (deserClass);
               }
             });
           }
