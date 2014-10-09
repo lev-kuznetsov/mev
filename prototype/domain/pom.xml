@@ -50,11 +50,16 @@
       <artifactId>google-collections</artifactId>
     </dependency>
 
-    <!-- JAXB -->
+    <!-- Jackson -->
 
     <dependency>
       <groupId>com.fasterxml.jackson.module</groupId>
       <artifactId>jackson-module-jaxb-annotations</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-csv</artifactId>
     </dependency>
 
     <!-- jOOQ -->

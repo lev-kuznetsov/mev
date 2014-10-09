@@ -48,6 +48,7 @@ import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.inject.Named;
 import javax.inject.Qualifier;
 import javax.inject.Singleton;
@@ -121,6 +122,7 @@ public class ServiceModule extends JaxrsModule {
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
+  @OverridingMethodsMustInvokeSuper
   public void configure (final Binder binder) {
     super.configure (binder);
 

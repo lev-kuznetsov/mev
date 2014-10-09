@@ -21,6 +21,7 @@ import static com.google.inject.name.Names.named;
 
 import java.lang.reflect.Constructor;
 
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.inject.Singleton;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.MessageBodyReader;
@@ -44,6 +45,7 @@ public class JaxrsModule implements Module {
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
+  @OverridingMethodsMustInvokeSuper
   public void configure (Binder binder) {
     final Multibinder<Object> providers = newSetBinder (binder,
                                                         new TypeLiteral<Object> () {},

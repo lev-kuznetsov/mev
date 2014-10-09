@@ -203,7 +203,7 @@
         <artifactId>guice-multibindings</artifactId>
         <version>${guice.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>com.google.inject.extensions</groupId>
         <artifactId>guice-servlet</artifactId>
@@ -211,6 +211,12 @@
       </dependency>
 
       <!-- Jackson -->
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.dataformat</groupId>
+        <artifactId>jackson-dataformat-csv</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>com.fasterxml.jackson.module</groupId>

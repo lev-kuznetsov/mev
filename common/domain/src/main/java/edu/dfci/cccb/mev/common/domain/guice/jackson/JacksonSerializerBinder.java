@@ -16,12 +16,7 @@
 
 package edu.dfci.cccb.mev.common.domain.guice.jackson;
 
-import java.lang.reflect.Constructor;
-
 import com.fasterxml.jackson.databind.JsonSerializer;
-import com.google.inject.Key;
-import com.google.inject.Provider;
-import com.google.inject.TypeLiteral;
 
 /**
  * Binds Jackson serializers
@@ -29,59 +24,4 @@ import com.google.inject.TypeLiteral;
  * @author levk
  * @since CRYSTAL
  */
-public interface JacksonSerializerBinder {
-
-  /**
-   * See the EDSL examples at {@link com.google.inject.Binder}.
-   */
-  void with (Class<? extends JsonSerializer<?>> implementation);
-
-  /**
-   * See the EDSL examples at {@link com.google.inject.Binder}.
-   */
-  void with (TypeLiteral<? extends JsonSerializer<?>> implementation);
-
-  /**
-   * See the EDSL examples at {@link com.google.inject.Binder}.
-   */
-  void with (Key<? extends JsonSerializer<?>> targetKey);
-
-  /**
-   * See the EDSL examples at {@link com.google.inject.Binder}.
-   * 
-   * @see com.google.inject.Injector#injectMembers
-   */
-  void withInstance (JsonSerializer<?> instance);
-
-  /**
-   * See the EDSL examples at {@link com.google.inject.Binder}.
-   * 
-   * @see com.google.inject.Injector#injectMembers
-   */
-  void withProvider (Provider<? extends JsonSerializer<?>> provider);
-
-  /**
-   * See the EDSL examples at {@link com.google.inject.Binder}.
-   */
-  void withProvider (Class<? extends javax.inject.Provider<? extends JsonSerializer<?>>> providerType);
-
-  /**
-   * See the EDSL examples at {@link com.google.inject.Binder}.
-   */
-  void withProvider (TypeLiteral<? extends javax.inject.Provider<? extends JsonSerializer<?>>> providerType);
-
-  /**
-   * See the EDSL examples at {@link com.google.inject.Binder}.
-   */
-  void withProvider (Key<? extends javax.inject.Provider<? extends JsonSerializer<?>>> providerKey);
-
-  /**
-   * See the EDSL examples at {@link com.google.inject.Binder}.
-   */
-  <S extends JsonSerializer<?>> void withConstructor (Constructor<S> constructor);
-
-  /**
-   * See the EDSL examples at {@link com.google.inject.Binder}.
-   */
-  <S extends JsonSerializer<?>> void withConstructor (Constructor<S> constructor, TypeLiteral<? extends S> type);
-}
+public interface JacksonSerializerBinder extends JacksonProviderSetBinder<JsonSerializer<?>> {}

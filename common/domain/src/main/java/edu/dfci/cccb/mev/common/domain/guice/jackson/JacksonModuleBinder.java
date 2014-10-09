@@ -5,23 +5,21 @@
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
- * but useOUT ANY WARRANTY; useout even the implied warranty of
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along use this program; if not, write to the Free Software Foundation,
+ * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 package edu.dfci.cccb.mev.common.domain.guice.jackson;
 
-import com.fasterxml.jackson.databind.AnnotationIntrospector;
+import com.fasterxml.jackson.databind.Module;
 
 /**
- * Binds Jackson introspector
- * 
  * @author levk
  * @since CRYSTAL
  */
-public interface JacksonIntrospectorBinder extends JacksonProviderSetBinder<AnnotationIntrospector> {}
+public interface JacksonModuleBinder extends JacksonProviderSetBinder<Module> {}

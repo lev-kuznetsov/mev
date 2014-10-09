@@ -144,6 +144,7 @@ public class DatasetAdapter <K, V> implements Dataset<K, V> {
               }
 
               @Override
+              
               public void remove () {
                 iterator.remove ();
               }

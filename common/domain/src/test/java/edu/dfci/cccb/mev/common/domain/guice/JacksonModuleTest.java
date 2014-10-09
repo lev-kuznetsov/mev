@@ -18,14 +18,18 @@ package edu.dfci.cccb.mev.common.domain.guice;
 
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
 import static com.google.inject.Guice.createInjector;
+import static com.google.inject.name.Names.named;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import lombok.SneakyThrows;
@@ -39,7 +43,9 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
+import com.google.inject.Binder;
 import com.google.inject.Key;
+import com.google.inject.Module;
 import com.google.inject.Provider;
 import com.google.inject.TypeLiteral;
 
@@ -213,7 +219,7 @@ public class JacksonModuleTest {
   public void useInstance () throws Exception {
     assertThat (createInjector (new JacksonModule () {
       public void configure (JacksonIntrospectorBinder binder) {
-        binder.useInstance (new TypedJaxbAnnotationIntrospector ());
+        binder.withInstance (new TypedJaxbAnnotationIntrospector ());
       }
     }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
@@ -223,7 +229,7 @@ public class JacksonModuleTest {
   public void useClass () throws Exception {
     assertThat (createInjector (new JacksonModule () {
       public void configure (JacksonIntrospectorBinder binder) {
-        binder.use (TypedJaxbAnnotationIntrospector.class);
+        binder.with (TypedJaxbAnnotationIntrospector.class);
       }
     }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
@@ -233,7 +239,7 @@ public class JacksonModuleTest {
   public void useTypeLiteral () throws Exception {
     assertThat (createInjector (new JacksonModule () {
       public void configure (JacksonIntrospectorBinder binder) {
-        binder.use (new TypeLiteral<TypedJaxbAnnotationIntrospector> () {});
+        binder.with (new TypeLiteral<TypedJaxbAnnotationIntrospector> () {});
       }
     }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
@@ -243,7 +249,7 @@ public class JacksonModuleTest {
   public void useKey () throws Exception {
     assertThat (createInjector (new JacksonModule () {
       public void configure (JacksonIntrospectorBinder binder) {
-        binder.use (Key.get (TypedJaxbAnnotationIntrospector.class));
+        binder.with (Key.get (TypedJaxbAnnotationIntrospector.class));
       }
     }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
@@ -253,7 +259,7 @@ public class JacksonModuleTest {
   public void useProviderClass () throws Exception {
     assertThat (createInjector (new JacksonModule () {
       public void configure (JacksonIntrospectorBinder binder) {
-        binder.useProvider (TypedJaxbAnnotationIntrospectorProvider.class);
+        binder.withProvider (TypedJaxbAnnotationIntrospectorProvider.class);
       }
     }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
@@ -263,7 +269,7 @@ public class JacksonModuleTest {
   public void useProviderTypeLiteral () throws Exception {
     assertThat (createInjector (new JacksonModule () {
       public void configure (JacksonIntrospectorBinder binder) {
-        binder.useProvider (new TypeLiteral<TypedJaxbAnnotationIntrospectorProvider> () {});
+        binder.withProvider (new TypeLiteral<TypedJaxbAnnotationIntrospectorProvider> () {});
       }
     }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
@@ -273,7 +279,7 @@ public class JacksonModuleTest {
   public void useProviderKey () throws Exception {
     assertThat (createInjector (new JacksonModule () {
       public void configure (JacksonIntrospectorBinder binder) {
-        binder.useProvider (Key.get (TypedJaxbAnnotationIntrospectorProvider.class));
+        binder.withProvider (Key.get (TypedJaxbAnnotationIntrospectorProvider.class));
       }
     }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
@@ -283,7 +289,7 @@ public class JacksonModuleTest {
   public void useProviderInstance () throws Exception {
     assertThat (createInjector (new JacksonModule () {
       public void configure (JacksonIntrospectorBinder binder) {
-        binder.useProvider (new TypedJaxbAnnotationIntrospectorProvider ());
+        binder.withProvider (new TypedJaxbAnnotationIntrospectorProvider ());
       }
     }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
@@ -294,7 +300,7 @@ public class JacksonModuleTest {
     assertThat (createInjector (new JacksonModule () {
       @SneakyThrows
       public void configure (JacksonIntrospectorBinder binder) {
-        binder.useConstructor (TypedJaxbAnnotationIntrospector.class.getConstructor ());
+        binder.withConstructor (TypedJaxbAnnotationIntrospector.class.getConstructor ());
       }
     }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
@@ -305,10 +311,34 @@ public class JacksonModuleTest {
     assertThat (createInjector (new JacksonModule () {
       @SneakyThrows
       public void configure (JacksonIntrospectorBinder binder) {
-        binder.useConstructor (TypedJaxbAnnotationIntrospector.class.getConstructor (),
+        binder.withConstructor (TypedJaxbAnnotationIntrospector.class.getConstructor (),
                                new TypeLiteral<TypedJaxbAnnotationIntrospector> () {});
       }
     }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
+  }
+
+  @XmlRootElement
+  @XmlAccessorType (XmlAccessType.NONE)
+  public static final class Bean {
+    private @Inject @Named ("one") int one;
+    private @Inject @Named ("two") int two;
+    private @XmlElement int three;
+
+    private void verify () throws Exception {
+      assertThat (one, is (1));
+      assertThat (two, is (2));
+      assertThat (three, is (3));
+    }
+  }
+
+  @Test
+  public void injectedValues () throws Exception {
+    createInjector (new MevModule (), new Module () {
+      public void configure (Binder binder) {
+        binder.bindConstant ().annotatedWith (named ("one")).to (1);
+        binder.bindConstant ().annotatedWith (named ("two")).to (2);
+      }
+    }).getInstance (ObjectMapper.class).readValue ("{\"three\":3}", Bean.class).verify ();
   }
 }

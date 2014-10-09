@@ -17,11 +17,15 @@
 package edu.dfci.cccb.mev.common.domain.guice;
 
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
+import static com.google.inject.Key.get;
+import static com.google.inject.internal.Annotations.isBindingAnnotation;
 import static com.google.inject.name.Names.bindProperties;
 
+import java.lang.annotation.Annotation;
 import java.util.Iterator;
 import java.util.Properties;
 
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.sql.DataSource;
 
 import lombok.ToString;
@@ -30,13 +34,22 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import com.fasterxml.jackson.databind.introspect.AnnotationIntrospectorPair;
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.databind.BeanProperty;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.InjectableValues;
+import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import com.fasterxml.jackson.databind.introspect.NopAnnotationIntrospector;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import com.google.inject.Binder;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Key;
 import com.google.inject.Module;
 
 import edu.dfci.cccb.mev.common.domain.guice.c3p0.PooledDataSourceProvider;
+import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonInjectableValuesBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonIntrospectorBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonModule;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
@@ -60,6 +73,7 @@ public class MevModule implements Module {
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
+  @OverridingMethodsMustInvokeSuper
   public void configure (Binder binder) {
     binder.install (new SingletonModule () {
 
@@ -90,25 +104,55 @@ public class MevModule implements Module {
         // Jackson
         binder.install (new JacksonModule () {
           @Override
+          public void configure (JacksonInjectableValuesBinder binder) {
+            binder.useInstance (new InjectableValues () {
+              private @Inject Injector injector;
+
+              @Override
+              public Object findInjectableValue (Object valueId,
+                                                 DeserializationContext ctxt,
+                                                 BeanProperty forProperty,
+                                                 Object beanInstance) {
+                return injector.getInstance ((Key<?>) valueId);
+              }
+            });
+          }
+
+          @Override
           public void configure (JacksonIntrospectorBinder binder) {
-            binder.useInstance (new AnnotationIntrospectorPair (new JacksonAnnotationIntrospector (),
-                                                                new JaxbAnnotationIntrospector (defaultInstance ())));
+            binder.withInstance (new NopAnnotationIntrospector () {
+              private static final long serialVersionUID = 1L;
+
+              @Override
+              public Object findInjectableValueId (AnnotatedMember m) {
+                if (m.getAnnotation (javax.inject.Inject.class) != null
+                    || m.getAnnotation (Inject.class) != null || m.getAnnotation (JacksonInject.class) != null) {
+                  for (Annotation annotation : m.annotations ())
+                    if (isBindingAnnotation (annotation.annotationType ()))
+                      return get (m.getGenericType (), annotation);
+                  return get (m.getGenericType ());
+                } else
+                  return null;
+              }
+            });
+            binder.withInstance (new JacksonAnnotationIntrospector ());
+            binder.withInstance (new JaxbAnnotationIntrospector (defaultInstance ()));
           }
         });
       }
     });
-    
+
     binder.install (new JaxrsModule () {
       @Override
       public void configure (ExceptionBinder binder) {
         MevModule.this.configure (binder);
       }
-      
+
       @Override
       public void configure (MessageReaderBinder binder) {
         MevModule.this.configure (binder);
       }
-      
+
       @Override
       public void configure (MessageWriterBinder binder) {
         MevModule.this.configure (binder);

@@ -30,14 +30,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import edu.dfci.cccb.mev.dataset.domain.Analysis;
 
 /**
@@ -47,7 +43,7 @@ import edu.dfci.cccb.mev.dataset.domain.Analysis;
 @Accessors (fluent = true)
 public abstract class AnalysisAdapter implements Analysis {
 
-  private @Getter @Setter @JsonProperty String name;
+  private @Getter @Setter String name;
 
   public static Map<String, Analysis> analyses () {
     return new AbstractMap<String, Analysis> () {
@@ -65,8 +61,7 @@ public abstract class AnalysisAdapter implements Analysis {
        * @see java.util.AbstractMap#get(java.lang.Object) */
       @Path ("/{" + ANALYSIS + "}")
       @GET
-      @Override
-      public Analysis get (@PathParam (ANALYSIS) Object key) {
+      public Analysis get (@PathParam (ANALYSIS) String key) {
         return super.get (key);
       }
 
@@ -138,12 +133,6 @@ public abstract class AnalysisAdapter implements Analysis {
           throw new IllegalArgumentException ();
         list.add (0, analysis);
         return null;
-      }
-
-      @Path ("/{analysis}")
-      @PUT
-      public Analysis put (@PathParam (ANALYSIS) String name, @QueryParam ("type") String type) {
-        return put (name, (Analysis) null);
       }
     };
   }

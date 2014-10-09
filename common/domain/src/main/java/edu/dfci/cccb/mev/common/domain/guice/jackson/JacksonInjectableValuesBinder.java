@@ -16,11 +16,10 @@
 
 package edu.dfci.cccb.mev.common.domain.guice.jackson;
 
+import com.fasterxml.jackson.databind.InjectableValues;
+
 /**
  * @author levk
  * @since CRYSTAL
  */
-public interface JacksonInheritedMixinAnnotationConfigurer {
-
-  void inherit (Class<?>... classes);
-}
+public interface JacksonInjectableValuesBinder extends JacksonProviderBinder<InjectableValues> {}
