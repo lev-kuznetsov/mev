@@ -48,9 +48,10 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.servlet.RequestScoped;
 import com.google.inject.servlet.SessionScoped;
 
+import edu.dfci.cccb.mev.common.domain.guice.jackson.annotation.Handling;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageReaderBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageWriterBinder;
-import edu.dfci.cccb.mev.common.domain.messages.JacksonMessageWriter;
+import edu.dfci.cccb.mev.common.domain.messages.JacksonMessageHandler;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationConfigurer;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceBinder;
@@ -113,7 +114,7 @@ public class DatasetControllerTest {
       }
 
       public void configure (MessageWriterBinder binder) {
-        binder.use (JacksonMessageWriter.class);
+        binder.use (JacksonMessageHandler.class);
       }
 
       public void configure (ResourceBinder binder) {
@@ -135,6 +136,7 @@ public class DatasetControllerTest {
 
       @Provides
       @Singleton
+      @Handling (MediaType.APPLICATION_JSON)
       public ObjectMapper mapper () {
         ObjectMapper mapper = new ObjectMapper ();
         mapper.setAnnotationIntrospector (new JaxbAnnotationIntrospector (mapper.getTypeFactory ()));

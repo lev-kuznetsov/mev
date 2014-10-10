@@ -16,6 +16,7 @@
 
 package edu.dfci.cccb.mev.common.domain.guice;
 
+import static edu.dfci.cccb.mev.common.domain.guice.jackson.annotation.Handling.Factory.APPLICATION_JSON;
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
 import static com.google.inject.Guice.createInjector;
 import static com.google.inject.name.Names.named;
@@ -54,6 +55,8 @@ import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonModule;
 import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
 
 public class JacksonModuleTest {
+  
+  private final Key<ObjectMapper> json = Key.get (ObjectMapper.class, APPLICATION_JSON);
 
   @Test
   public void empty () {
@@ -103,7 +106,7 @@ public class JacksonModuleTest {
       public void configure (JacksonSerializerBinder binder) {
         binder.withInstance (new NumberSerializer ());
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new Integer (8)),
+    }).getInstance (json).writeValueAsString (new Integer (8)),
                 is ("{\"type\":\"Integer\",\"value\":\"8\"}"));
   }
 
@@ -113,7 +116,7 @@ public class JacksonModuleTest {
       public void configure (JacksonSerializerBinder binder) {
         binder.with (NumberSerializer.class);
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new Integer (8)),
+    }).getInstance (json).writeValueAsString (new Integer (8)),
                 is ("{\"type\":\"Integer\",\"value\":\"8\"}"));
   }
 
@@ -123,7 +126,7 @@ public class JacksonModuleTest {
       public void configure (JacksonSerializerBinder binder) {
         binder.with (new TypeLiteral<NumberSerializer> () {});
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new Integer (8)),
+    }).getInstance (json).writeValueAsString (new Integer (8)),
                 is ("{\"type\":\"Integer\",\"value\":\"8\"}"));
   }
 
@@ -133,7 +136,7 @@ public class JacksonModuleTest {
       public void configure (JacksonSerializerBinder binder) {
         binder.with (Key.get (NumberSerializer.class));
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new Integer (8)),
+    }).getInstance (json).writeValueAsString (new Integer (8)),
                 is ("{\"type\":\"Integer\",\"value\":\"8\"}"));
   }
 
@@ -143,7 +146,7 @@ public class JacksonModuleTest {
       public void configure (JacksonSerializerBinder binder) {
         binder.withProvider (NumberSerializerProvider.class);
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new Integer (8)),
+    }).getInstance (json).writeValueAsString (new Integer (8)),
                 is ("{\"type\":\"Integer\",\"value\":\"8\"}"));
   }
 
@@ -153,7 +156,7 @@ public class JacksonModuleTest {
       public void configure (JacksonSerializerBinder binder) {
         binder.withProvider (new TypeLiteral<NumberSerializerProvider> () {});
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new Integer (8)),
+    }).getInstance (json).writeValueAsString (new Integer (8)),
                 is ("{\"type\":\"Integer\",\"value\":\"8\"}"));
   }
 
@@ -163,7 +166,7 @@ public class JacksonModuleTest {
       public void configure (JacksonSerializerBinder binder) {
         binder.withProvider (Key.get (NumberSerializerProvider.class));
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new Integer (8)),
+    }).getInstance (json).writeValueAsString (new Integer (8)),
                 is ("{\"type\":\"Integer\",\"value\":\"8\"}"));
   }
 
@@ -173,7 +176,7 @@ public class JacksonModuleTest {
       public void configure (JacksonSerializerBinder binder) {
         binder.withProvider (new NumberSerializerProvider ());
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new Integer (8)),
+    }).getInstance (json).writeValueAsString (new Integer (8)),
                 is ("{\"type\":\"Integer\",\"value\":\"8\"}"));
   }
 
@@ -184,7 +187,7 @@ public class JacksonModuleTest {
       public void configure (JacksonSerializerBinder binder) {
         binder.withConstructor (NumberSerializer.class.getConstructor ());
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new Integer (8)),
+    }).getInstance (json).writeValueAsString (new Integer (8)),
                 is ("{\"type\":\"Integer\",\"value\":\"8\"}"));
   }
 
@@ -195,7 +198,7 @@ public class JacksonModuleTest {
       public void configure (JacksonSerializerBinder binder) {
         binder.withConstructor (NumberSerializer.class.getConstructor (), new TypeLiteral<NumberSerializer> () {});
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new Integer (8)),
+    }).getInstance (json).writeValueAsString (new Integer (8)),
                 is ("{\"type\":\"Integer\",\"value\":\"8\"}"));
   }
 
@@ -221,7 +224,7 @@ public class JacksonModuleTest {
       public void configure (JacksonIntrospectorBinder binder) {
         binder.withInstance (new TypedJaxbAnnotationIntrospector ());
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
+    }).getInstance (json).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
   }
 
@@ -231,7 +234,7 @@ public class JacksonModuleTest {
       public void configure (JacksonIntrospectorBinder binder) {
         binder.with (TypedJaxbAnnotationIntrospector.class);
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
+    }).getInstance (json).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
   }
 
@@ -241,7 +244,7 @@ public class JacksonModuleTest {
       public void configure (JacksonIntrospectorBinder binder) {
         binder.with (new TypeLiteral<TypedJaxbAnnotationIntrospector> () {});
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
+    }).getInstance (json).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
   }
 
@@ -251,7 +254,7 @@ public class JacksonModuleTest {
       public void configure (JacksonIntrospectorBinder binder) {
         binder.with (Key.get (TypedJaxbAnnotationIntrospector.class));
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
+    }).getInstance (json).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
   }
 
@@ -261,7 +264,7 @@ public class JacksonModuleTest {
       public void configure (JacksonIntrospectorBinder binder) {
         binder.withProvider (TypedJaxbAnnotationIntrospectorProvider.class);
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
+    }).getInstance (json).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
   }
 
@@ -271,7 +274,7 @@ public class JacksonModuleTest {
       public void configure (JacksonIntrospectorBinder binder) {
         binder.withProvider (new TypeLiteral<TypedJaxbAnnotationIntrospectorProvider> () {});
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
+    }).getInstance (json).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
   }
 
@@ -281,7 +284,7 @@ public class JacksonModuleTest {
       public void configure (JacksonIntrospectorBinder binder) {
         binder.withProvider (Key.get (TypedJaxbAnnotationIntrospectorProvider.class));
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
+    }).getInstance (json).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
   }
 
@@ -291,7 +294,7 @@ public class JacksonModuleTest {
       public void configure (JacksonIntrospectorBinder binder) {
         binder.withProvider (new TypedJaxbAnnotationIntrospectorProvider ());
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
+    }).getInstance (json).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
   }
 
@@ -302,7 +305,7 @@ public class JacksonModuleTest {
       public void configure (JacksonIntrospectorBinder binder) {
         binder.withConstructor (TypedJaxbAnnotationIntrospector.class.getConstructor ());
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
+    }).getInstance (json).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
   }
 
@@ -314,7 +317,7 @@ public class JacksonModuleTest {
         binder.withConstructor (TypedJaxbAnnotationIntrospector.class.getConstructor (),
                                new TypeLiteral<TypedJaxbAnnotationIntrospector> () {});
       }
-    }).getInstance (ObjectMapper.class).writeValueAsString (new JaxbAnnotated ("bar")),
+    }).getInstance (json).writeValueAsString (new JaxbAnnotated ("bar")),
                 is ("{\"foo\":\"bar\"}"));
   }
 
@@ -339,6 +342,6 @@ public class JacksonModuleTest {
         binder.bindConstant ().annotatedWith (named ("one")).to (1);
         binder.bindConstant ().annotatedWith (named ("two")).to (2);
       }
-    }).getInstance (ObjectMapper.class).readValue ("{\"three\":3}", Bean.class).verify ();
+    }).getInstance (json).readValue ("{\"three\":3}", Bean.class).verify ();
   }
 }

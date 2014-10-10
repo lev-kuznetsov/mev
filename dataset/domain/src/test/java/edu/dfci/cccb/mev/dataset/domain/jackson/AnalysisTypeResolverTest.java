@@ -37,9 +37,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Binder;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Key;
 import com.google.inject.Module;
 import com.google.inject.Provides;
 
+import edu.dfci.cccb.mev.common.domain.guice.jackson.annotation.Handling;
 import edu.dfci.cccb.mev.dataset.domain.AnalysisInvocationException;
 import edu.dfci.cccb.mev.dataset.domain.annotation.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.annotation.Type;
@@ -93,7 +95,7 @@ public class AnalysisTypeResolverTest {
   @Test
   public void deserialize () throws Exception {
     edu.dfci.cccb.mev.dataset.domain.Analysis actual;
-    actual = injector.getInstance (ObjectMapper.class)
+    actual = injector.getInstance (Key.get (ObjectMapper.class, Handling.Factory.APPLICATION_JSON))
                      .readValue ("{\"type\":\"mockType\",\"name\":\"mock\",\"hello\":\"world\"}",
                                  edu.dfci.cccb.mev.dataset.domain.Analysis.class);
     assertThat (actual, is ((edu.dfci.cccb.mev.dataset.domain.Analysis) new MockAnalysys ().name ("mock")));

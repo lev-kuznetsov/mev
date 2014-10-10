@@ -16,6 +16,7 @@
 
 package edu.dfci.cccb.mev.dataset.domain.jackson;
 
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
 import java.io.ByteArrayInputStream;
@@ -32,6 +33,7 @@ import org.junit.runner.RunWith;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Provides;
 
+import edu.dfci.cccb.mev.common.domain.guice.jackson.annotation.Handling;
 import edu.dfci.cccb.mev.dataset.domain.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule;
 import edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler;
@@ -60,7 +62,7 @@ public class IntegratedDatasetSerializationTest {
     }
   }
 
-  private @Inject ObjectMapper mapper;
+  private @Inject @Handling (APPLICATION_JSON) ObjectMapper mapper;
   private @Inject Dataset<String, Double> dataset;
 
   @Test

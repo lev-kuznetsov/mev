@@ -16,9 +16,10 @@
 
 package edu.dfci.cccb.mev.common.domain.guice.jaxrs;
 
+import static com.google.inject.internal.UniqueAnnotations.create;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
-import static com.google.inject.name.Names.named;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -40,7 +41,7 @@ import com.google.inject.multibindings.Multibinder;
  */
 public class JaxrsModule implements Module {
 
-  protected static final String PROVIDERS = "jaxrs.providers";
+  protected static final Annotation PROVIDERS = create ();
 
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
@@ -48,8 +49,8 @@ public class JaxrsModule implements Module {
   @OverridingMethodsMustInvokeSuper
   public void configure (Binder binder) {
     final Multibinder<Object> providers = newSetBinder (binder,
-                                                        new TypeLiteral<Object> () {},
-                                                        named (PROVIDERS)).permitDuplicates ();
+                                                        Object.class,
+                                                        PROVIDERS).permitDuplicates ();
 
     configure (new ExceptionBinder () {
 

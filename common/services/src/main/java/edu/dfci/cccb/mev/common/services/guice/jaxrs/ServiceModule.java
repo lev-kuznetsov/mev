@@ -19,18 +19,17 @@ package edu.dfci.cccb.mev.common.services.guice.jaxrs;
 import static ch.lambdaj.Lambda.convert;
 import static ch.lambdaj.Lambda.join;
 import static com.google.inject.Key.get;
+import static com.google.inject.internal.UniqueAnnotations.create;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
-import static com.google.inject.name.Names.named;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static java.util.Arrays.asList;
 import static java.util.Collections.enumeration;
 import static javax.servlet.http.HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE;
 import static org.apache.cxf.message.Message.ACCEPT_CONTENT_TYPE;
+import static org.apache.cxf.phase.Phase.RECEIVE;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.annotation.Annotation;
-import java.lang.annotation.Retention;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.AbstractMap;
@@ -49,8 +48,6 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-import javax.inject.Named;
-import javax.inject.Qualifier;
 import javax.inject.Singleton;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -81,12 +78,13 @@ import org.apache.cxf.jaxrs.impl.UriInfoImpl;
 import org.apache.cxf.jaxrs.lifecycle.ResourceProvider;
 import org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet;
 import org.apache.cxf.message.Exchange;
+import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
-import org.apache.cxf.phase.Phase;
 
 import ch.lambdaj.function.convert.Converter;
 
 import com.google.inject.Binder;
+import com.google.inject.Binding;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -111,13 +109,10 @@ import edu.dfci.cccb.mev.common.domain.guice.jaxrs.JaxrsModule;
 @Log4j
 public class ServiceModule extends JaxrsModule {
 
-  private static final String PARAMETER_NAME = "jaxrs.cn.query.param";
-  private static final String EXTENSIONS = "jaxrs.cn.extensions";
-  private static final String PARAMETER_VALUES = "jaxrs.cn.query.param.values";
-
-  @Retention (RUNTIME)
-  @Qualifier
-  private @interface Message {}
+  protected static final Annotation MESSAGE = create ();
+  protected static final Annotation PARAMETER_NAME = create ();
+  protected static final Annotation EXTENSIONS = create ();
+  protected static final Annotation PARAMETER_VALUES = create ();
 
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
@@ -157,11 +152,11 @@ public class ServiceModule extends JaxrsModule {
     final Multibinder<Entry<String, MediaType>> parameterValues =
                                                                   newSetBinder (binder,
                                                                                 new TypeLiteral<Entry<String, MediaType>> () {},
-                                                                                named (PARAMETER_VALUES));
+                                                                                PARAMETER_VALUES);
     final Multibinder<Entry<String, MediaType>> extensions =
                                                              newSetBinder (binder,
                                                                            new TypeLiteral<Entry<String, MediaType>> () {},
-                                                                           named (EXTENSIONS));
+                                                                           EXTENSIONS);
 
     configure (new ContentNegotiationConfigurer () {
 
@@ -204,7 +199,7 @@ public class ServiceModule extends JaxrsModule {
 
       @Override
       public ContentNegotiationMapper parameter (String name) {
-        binder.bindConstant ().annotatedWith (named (PARAMETER_NAME)).to (name);
+        binder.bindConstant ().annotatedWith (PARAMETER_NAME).to (name);
         return new ContentMapperBinder (parameterValues);
       }
 
@@ -217,39 +212,43 @@ public class ServiceModule extends JaxrsModule {
     binder.install (new SingletonModule () {
       @Provides
       @Singleton
-      @Message
-      private ThreadLocal<org.apache.cxf.message.Message> message () {
+      private ThreadLocal<Message> message () {
         return new ThreadLocal<> ();
       }
 
       @Provides
-      @RequestScoped
-      public UriInfo uri (@Message ThreadLocal<org.apache.cxf.message.Message> message) {
-        return new UriInfoImpl (message.get ());
+      public Message message (ThreadLocal<Message> message) {
+        return message.get ();
       }
 
       @Provides
       @RequestScoped
-      public HttpHeaders header (@Message ThreadLocal<org.apache.cxf.message.Message> message) {
-        return new HttpHeadersImpl (message.get ());
+      public UriInfo uri (Message message) {
+        return new UriInfoImpl (message);
       }
 
       @Provides
       @RequestScoped
-      public Providers providers (@Message ThreadLocal<org.apache.cxf.message.Message> message) {
-        return new ProvidersImpl (message.get ());
+      public HttpHeaders header (Message message) {
+        return new HttpHeadersImpl (message);
       }
 
       @Provides
       @RequestScoped
-      public SecurityContext securityContext (@Message ThreadLocal<org.apache.cxf.message.Message> message) {
-        return new SecurityContextImpl (message.get ());
+      public Providers providers (Message message) {
+        return new ProvidersImpl (message);
       }
 
       @Provides
       @RequestScoped
-      public Request request (@Message ThreadLocal<org.apache.cxf.message.Message> message) {
-        return new RequestImpl (message.get ());
+      public SecurityContext securityContext (Message message) {
+        return new SecurityContextImpl (message);
+      }
+
+      @Provides
+      @RequestScoped
+      public Request request (Message message) {
+        return new RequestImpl (message);
       }
 
       @Provides
@@ -264,11 +263,11 @@ public class ServiceModule extends JaxrsModule {
       class InjectedCxfJaxrsServlet extends CXFNonSpringJaxrsServlet {
         private static final long serialVersionUID = 1L;
 
-        private @Inject @Message ThreadLocal<org.apache.cxf.message.Message> message;
-        private @Inject Injector injector;
-        private @Inject @Named (PROVIDERS) Set<Object> providers;
+        private @Inject ThreadLocal<Message> message;
+        private Injector injector;
+        private Set<Object> providers;
         private @Inject Set<KeyHolder> resources;
-        private @Inject (optional = true) @Named (PARAMETER_NAME) String parameter;
+        private String parameter;
         private Map<String, MediaType> parameterValues;
         private Map<Object, Object> extensions;
 
@@ -278,23 +277,40 @@ public class ServiceModule extends JaxrsModule {
           this.serviceUrl = serviceUrl;
         }
 
-        @Inject
-        public void setParameterValues (final @Named (PARAMETER_VALUES) Set<Entry<String, MediaType>> vals) {
-          parameterValues = new HashMap<> (new AbstractMap<String, MediaType> () {
-            @Override
-            public Set<Entry<String, MediaType>> entrySet () {
-              return vals;
-            }
-          });
+        private <T> T getOptional (Injector injector, Key<T> key) {
+          Binding<T> binding = injector.getExistingBinding (key);
+          return binding == null ? null : binding.getProvider ().get ();
         }
 
-        @SuppressWarnings ({ "unchecked", "rawtypes" })
         @Inject
-        public void setExtensions (final @Named (EXTENSIONS) Set<Entry<String, MediaType>> vals) {
-          extensions = new HashMap<> (new AbstractMap () {
+        private void configure (final Injector injector) {
+          this.injector = injector;
+
+          providers = getOptional (injector, Key.get (new TypeLiteral<Set<Object>> () {}, PROVIDERS));
+
+          parameter = getOptional (injector, Key.get (String.class, PARAMETER_NAME));
+
+          extensions = new HashMap<Object, Object> (new AbstractMap<String, MediaType> () {
+            private final Set<Entry<String, MediaType>> set =
+                                                              getOptional (injector,
+                                                                           Key.get (new TypeLiteral<Set<Entry<String, MediaType>>> () {},
+                                                                                    EXTENSIONS));
+
             @Override
             public Set<Entry<String, MediaType>> entrySet () {
-              return vals;
+              return set;
+            }
+          });
+
+          parameterValues = new HashMap<> (new AbstractMap<String, MediaType> () {
+            private final Set<Entry<String, MediaType>> set =
+                                                              getOptional (injector,
+                                                                           Key.get (new TypeLiteral<Set<Entry<String, MediaType>>> () {},
+                                                                                    PARAMETER_VALUES));
+
+            @Override
+            public Set<Entry<String, MediaType>> entrySet () {
+              return set;
             }
           });
         }
@@ -466,10 +482,10 @@ public class ServiceModule extends JaxrsModule {
 
         @Override
         protected void setAllInterceptors (JAXRSServerFactoryBean bean, ServletConfig servletConfig, String splitChar) throws ServletException {
-          List<Interceptor<? extends org.apache.cxf.message.Message>> interceptors = new ArrayList<> ();
-          interceptors.add (new AbstractPhaseInterceptor<org.apache.cxf.message.Message> (Phase.RECEIVE) {
+          List<Interceptor<? extends Message>> interceptors = new ArrayList<> ();
+          interceptors.add (new AbstractPhaseInterceptor<Message> (RECEIVE) {
             @Override
-            public void handleMessage (org.apache.cxf.message.Message m) throws Fault {
+            public void handleMessage (Message m) throws Fault {
               message.set (m);
             }
           });
@@ -550,7 +566,7 @@ public class ServiceModule extends JaxrsModule {
                           return new ResourceProvider () {
 
                             @Override
-                            public Object getInstance (org.apache.cxf.message.Message m) {
+                            public Object getInstance (Message m) {
                               return entry.getValue ().get ();
                             }
 
@@ -565,7 +581,7 @@ public class ServiceModule extends JaxrsModule {
                             }
 
                             @Override
-                            public void releaseInstance (org.apache.cxf.message.Message m, Object o) {}
+                            public void releaseInstance (Message m, Object o) {}
                           };
                         }
 

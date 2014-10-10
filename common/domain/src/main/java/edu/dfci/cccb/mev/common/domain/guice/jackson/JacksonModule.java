@@ -18,6 +18,8 @@ package edu.dfci.cccb.mev.common.domain.guice.jackson;
 
 import static com.fasterxml.jackson.databind.AnnotationIntrospector.pair;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
+import static edu.dfci.cccb.mev.common.domain.guice.jackson.annotation.Handling.Factory.APPLICATION_JSON;
+import static edu.dfci.cccb.mev.common.domain.guice.jackson.annotation.Handling.Factory.TEXT_TSV;
 import static java.util.Collections.sort;
 
 import java.lang.reflect.Constructor;
@@ -34,6 +36,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.cfg.HandlerInstantiator;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.google.inject.Binder;
 import com.google.inject.Inject;
 import com.google.inject.Key;
@@ -337,7 +340,7 @@ public class JacksonModule implements Module {
 
       @Override
       public void configure (Binder binder) {
-        binder.bind (ObjectMapper.class).toProvider (new Provider<ObjectMapper> () {
+        abstract class ObjectMapperProviderAdapter implements Provider<ObjectMapper> {
           private @Inject (optional = true) Set<JsonSerializer<?>> serializers;
           private @Inject (optional = true) Set<AnnotationIntrospector> introspectors;
           private @Inject (optional = true) Comparator<AnnotationIntrospector> introspectorComparator;
@@ -345,13 +348,13 @@ public class JacksonModule implements Module {
           private @Inject (optional = true) InjectableValues injectables;
           private @Inject (optional = true) HandlerInstantiator instantiator;
 
-          private void configureSerializers (ObjectMapper mapper) {
+          protected void configureSerializers (ObjectMapper mapper) {
             if (serializers != null && !serializers.isEmpty ())
               mapper.setSerializerFactory (mapper.getSerializerFactory ()
                                                  .withAdditionalSerializers (new SimpleSerializers (new ArrayList<> (serializers))));
           }
 
-          private void configureIntrospectors (ObjectMapper mapper) {
+          protected void configureIntrospectors (ObjectMapper mapper) {
             if (introspectors != null && !introspectors.isEmpty ()) {
               ArrayList<AnnotationIntrospector> introspectors = new ArrayList<> (this.introspectors);
               if (introspectorComparator != null)
@@ -365,38 +368,54 @@ public class JacksonModule implements Module {
             }
           }
 
-          private void configureModules (ObjectMapper mapper) {
+          protected void configureModules (ObjectMapper mapper) {
             if (modules != null && !modules.isEmpty ())
               mapper.registerModules (modules);
           }
 
-          private void configureInjectables (ObjectMapper mapper) {
+          protected void configureInjectables (ObjectMapper mapper) {
             if (injectables != null)
               mapper.setInjectableValues (injectables);
           }
 
-          private void configureHandlerInstantiator (ObjectMapper mapper) {
+          protected void configureHandlerInstantiator (ObjectMapper mapper) {
             mapper.setHandlerInstantiator (instantiator);
           }
+        }
 
-          @Override
-          public ObjectMapper get () {
-            ObjectMapper mapper = new ObjectMapper ();
+        binder.bind (ObjectMapper.class)
+              .annotatedWith (APPLICATION_JSON)
+              .toProvider (new ObjectMapperProviderAdapter () {
+                @Override
+                public ObjectMapper get () {
+                  ObjectMapper mapper = new ObjectMapper ();
 
-            configureSerializers (mapper);
+                  configureSerializers (mapper);
+                  configureIntrospectors (mapper);
+                  configureModules (mapper);
+                  configureInjectables (mapper);
+                  configureHandlerInstantiator (mapper);
 
-            configureIntrospectors (mapper);
-
-            configureModules (mapper);
-
-            configureInjectables (mapper);
-
-            configureHandlerInstantiator (mapper);
-
-            return mapper;
-          }
-        })
+                  return mapper;
+                }
+              })
               .in (Singleton.class);
+
+        binder.bind (ObjectMapper.class)
+              .annotatedWith (TEXT_TSV)
+              .toProvider (new ObjectMapperProviderAdapter () {
+                @Override
+                public ObjectMapper get () {
+                  ObjectMapper mapper = new CsvMapper ();
+
+                  configureIntrospectors (mapper);
+                  configureModules (mapper);
+                  configureInjectables (mapper);
+                  configureHandlerInstantiator (mapper);
+
+                  return mapper;
+                }
+              }).in (Singleton.class);
       }
     });
   }

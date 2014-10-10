@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -52,6 +53,8 @@ import edu.dfci.cccb.mev.common.domain.guice.jaxrs.JaxrsModule;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageReaderBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageWriterBinder;
 import edu.dfci.cccb.mev.dataset.domain.Analysis;
+import edu.dfci.cccb.mev.dataset.domain.annotation.Type;
+import edu.dfci.cccb.mev.dataset.domain.jackson.AnalysisTypeResolver.RegisteredAnalyses;
 import edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler;
 
 /**
@@ -63,19 +66,22 @@ public class DatasetModule extends MevModule {
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
+  @OverridingMethodsMustInvokeSuper
   public void configure (final Binder binder) {
     super.configure (binder);
 
     configure (new AnalysisTypeRegistrar () {
       Multibinder<Class<? extends Analysis>> types = newSetBinder (binder,
-                                                                   new TypeLiteral<Class<? extends Analysis>> () {});
+                                                                   new TypeLiteral<Class<? extends Analysis>> () {},
+                                                                   RegisteredAnalyses.class);
 
       @Override
       public void register (Class<? extends Analysis> type) {
-        if (type.getAnnotation (edu.dfci.cccb.mev.dataset.domain.annotation.Type.class) == null)
+        if (type.getAnnotation (Type.class) == null)
           throw new IllegalArgumentException ("Failed registering analysis type "
                                               + type.getSimpleName ()
-                                              + " because it is missing required Analysis annotation");
+                                              + " because it is missing required " + Type.class.getSimpleName ()
+                                              + " annotation");
         types.addBinding ().toInstance (type);
       }
     });

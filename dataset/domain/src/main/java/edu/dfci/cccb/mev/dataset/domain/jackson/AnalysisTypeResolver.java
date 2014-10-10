@@ -17,13 +17,22 @@
 package edu.dfci.cccb.mev.dataset.domain.jackson;
 
 import static com.fasterxml.jackson.databind.type.SimpleType.construct;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
+import javax.inject.Qualifier;
+
+import lombok.extern.log4j.Log4j;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
@@ -40,18 +49,26 @@ import edu.dfci.cccb.mev.dataset.domain.annotation.Type;
  * @author levk
  * @since CRYSTAL
  */
+@Log4j
 public class AnalysisTypeResolver extends TypeIdResolverBase {
 
   private static final JavaType ANALYSIS_BASE_TYPE = construct (Analysis.class);
 
+  @Retention (RUNTIME)
+  @Target ({ PARAMETER, METHOD, FIELD })
+  @Qualifier
+  public static @interface RegisteredAnalyses {}
+
   private Map<String, Class<? extends Analysis>> map = new HashMap<> ();
 
   @Inject
-  private void analysisTypes (Provider<Set<Class<? extends Analysis>>> analysisTypesProvider) {
+  private void analysisTypes (@RegisteredAnalyses Provider<Set<Class<? extends Analysis>>> analysisTypesProvider) {
     Set<Class<? extends Analysis>> analysisTypes = analysisTypesProvider.get ();
     if (analysisTypes != null)
       for (Class<? extends Analysis> type : analysisTypes)
         map.put (idFromValueAndType (null, type), type);
+
+    log.info ("Registered analysis types: " + map);
   }
 
   /* (non-Javadoc)

@@ -69,8 +69,7 @@ import edu.dfci.cccb.mev.common.domain.guice.jaxrs.JaxrsModule;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageReaderBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageWriterBinder;
 import edu.dfci.cccb.mev.common.domain.mappers.MevExceptionMapper;
-import edu.dfci.cccb.mev.common.domain.messages.JacksonMessageReader;
-import edu.dfci.cccb.mev.common.domain.messages.JacksonMessageWriter;
+import edu.dfci.cccb.mev.common.domain.messages.JacksonMessageHandler;
 
 /**
  * MeV domain configuration module
@@ -96,14 +95,16 @@ public class MevModule implements Module {
 
         // JAX-RS
         binder.install (new JaxrsModule () {
+          private final JacksonMessageHandler handler = new JacksonMessageHandler ();
+
           @Override
           public void configure (MessageReaderBinder binder) {
-            binder.use (JacksonMessageReader.class);
+            binder.useInstance (handler);
           }
 
           @Override
           public void configure (MessageWriterBinder binder) {
-            binder.use (JacksonMessageWriter.class);
+            binder.useInstance (handler);
           }
 
           @Override
@@ -114,6 +115,7 @@ public class MevModule implements Module {
 
         // Jackson
         binder.install (new JacksonModule () {
+
           @Override
           public void configure (JacksonInjectableValuesBinder binder) {
             binder.useInstance (new InjectableValues () {
