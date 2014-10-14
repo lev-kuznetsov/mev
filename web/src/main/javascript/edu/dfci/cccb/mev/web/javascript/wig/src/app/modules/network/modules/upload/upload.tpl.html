@@ -1,0 +1,50 @@
+<div class="panel-body" ng-app="networkUpload" ng-controller="uploadController as uCtrl" ng-model="uCtrl">
+
+	<form id="upload-form" enctype="multipart/form-data" ng-submit="f.submit()">
+		
+		<h3>Upload your network</h3>
+
+		<table>
+			<tr>
+				<td>
+					<label for="name">Name:</label>
+				</td>
+				<td>
+					<input name="name" class="form-control" type="text" placeholder="network name" ng-model="m.name" ng-disabled="m.sending" required />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="network">Network:</label>
+				</td>
+				<td>
+					<input name="network" type="file" ng-file-model="m.network" ng-disabled="m.sending" required />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="note">Note:</label>
+				</td>
+				<td>
+					<textarea name="note" cols="30" rows="10" class="form-control" placeholder="(optional comments)" ng-model="m.note" ng-disabled="m.sending"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td align="right">
+					<input class="btn btn-success" ng-class="{ disabled: m.sending }" type="submit" value="upload" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<h4 align="center"><span>{{m.msg}}</span><span ng-show="m.sending"><img src="/ng_wig/static/wig-app/src/assets/ajax-loader.gif" alt="loading_icon" /> uploading...</span></h4>
+				</td>
+			</tr>
+		</table>
+
+		<h3>Preview</h3>
+		<p><b>Name: </b>{{m.name}}</p>
+		<p><b>File: </b>{{m.network[0]['name']}}</p>
+		<p><b>Notes: </b>{{m.note}}</p>
+	</form>
+</div>

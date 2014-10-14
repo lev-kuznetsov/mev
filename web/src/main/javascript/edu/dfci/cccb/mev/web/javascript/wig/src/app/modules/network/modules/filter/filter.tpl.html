@@ -1,0 +1,26 @@
+<div class="panel-body" ng-app="networkFilter" ng-controller="filterController as fCtrl" ng-model="fCtrl">
+
+	<h3>Network filtering</h3>
+
+	<p>
+		The original '<b>{{m.network_name}}</b>' network has <kbd>{{m.original.v_count}}</kbd> nodes and <kbd>{{m.original.e_count}}</kbd> edges.<br />
+		<span ng-show="s.status.prev === 1">
+			The filtered '<b>{{m.network_name}}</b>' network has <kbd>{{s.status.v_count}}</kbd> nodes and <kbd>{{s.status.e_count}}</kbd> edges.
+			(<a href ng-click="reset(m.network_name)">reset</a>)
+		</span>
+	</p>
+
+	<p>You can apply different filters to focus only on what you are looking for:</p>
+
+	<a href="#/filter/{{m.network_name}}/ewThr" class="btn btn-primary btn-block">apply a THRESHOLD to the EDGE WEIGHT</a>
+	<a href="#/filter/{{m.network_name}}/ndThr" class="btn btn-danger btn-block">apply a THRESHOLD to the NODE DEGREE</a>
+	<a href="#/filter/{{m.network_name}}/nWL" class="btn btn-warning btn-block">use a WHITELIST of nodes</a>
+	<a href="#/filter/{{m.network_name}}/nBL" class="btn btn-info btn-block">use a BLACKLIST of nodes</a>
+	<a href="#/filter/{{m.network_name}}/goWL" class="btn btn-success btn-block">use a WHITELIST of GOs</a>
+	<a href="#/filter/{{m.network_name}}/goBL" class="btn btn-danger btn-block">use a BLACKLIST of GOs</a>
+
+	<p style="margin-top: 1em;">When you are ready, please click the following button:</p>
+
+	<a href ng-click="continue(m.network_name)" class="btn btn-success btn-block">continue</a>
+
+</div>

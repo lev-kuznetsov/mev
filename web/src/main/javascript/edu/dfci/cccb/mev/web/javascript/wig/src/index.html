@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Web Interface for Graphs</title>
+
+	<link rel="shortcut icon" href="/ng_wig/static/wig-app/src/assets/favicon.ico" type="image/x-icon">
+
+	<link rel="stylesheet" href="/ng_wig/static/wig-app/vendor/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/ng_wig/static/wig-app/src/common/resources/wig-app.css">
+</head>
+<body class="bg-info">
+	
+	<div class="col-md-8 col-md-offset-2">
+
+		<div class="panel panel-default" ng-show="m.goResponse.goga&&m.goResponse.gago">
+			
+			<div class="panel-heading">
+
+				<main-menu></main-menu>
+				
+			</div>
+			
+			<div class="panel-body"  ng-view></div>
+			
+		</div>
+
+		<div class="panel panel-default" ng-show="!m.goResponse.goga||!m.goResponse.gago">
+
+			<div class="panel-body">
+				<h4 align="center"><img src="/ng_wig/static/wig-app/src/assets/ajax-loader.gif" alt="loading_icon" /> Loading...</h4>
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- script at the end -->
+    <script data-main="/ng_wig/static/wig-app/src/main.js"  src="/ng_wig/static/wig-app/vendor/js/require.js"></script>
+
+</body>
+</html>

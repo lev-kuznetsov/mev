@@ -49,10 +49,10 @@ public class LimmaAnalysisController {
   private @Getter @Setter @Inject Dataset dataset;
   private @Getter @Setter @Inject LimmaBuilder limma;
 
-  @RequestMapping (value = "/analyze/limma",
+  @RequestMapping (value = "/analyze/limma/{name}",
                    method = POST)
   @ResponseStatus (OK)
-  public void start (final @RequestParam ("name") String name,
+  public void start (final @PathVariable ("name") String name,
                      final @RequestParam ("experiment") String experiment,
                      final @RequestParam ("control") String control,
                      final @RequestParam ("species") String species,

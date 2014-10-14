@@ -1,0 +1,49 @@
+<form role="form">
+
+     <div class="form-group">
+       <label for="f-test-name" class="control-label">Test Name</label>
+
+       <input id="f-test-name" ng-model="params.name" placeholder="Ex: My_Analysis_1">
+     </div>
+     
+     <div class="form-group">
+       <label for="f-test-control" class="control-label">Control</label>
+
+       <select id="f-test-control" ng-options="option.name for option in dataset.selections.column" ng-model="params.selection1"></select>
+     </div>
+     
+     <div class="form-group">
+       <label for="f-test-treatment" class="control-label">Experiment</label>
+
+       <select id="f-test-treatment" ng-options="option.name for option in dataset.selections.column" ng-model="params.selection2"></select>
+     </div>
+     
+     <div class="form-group">
+       <label for="f-test-population" class="control-label">Populations</label>
+
+       <select id="f-test-population" ng-options="option.name for option in dataset.selections.row" ng-model="params.population"></select>
+     </div>
+     
+     <div class="form-group">
+       <label for="f-test-threshold" class="control-label">Expression Threshold</label>
+
+       <input id="f-test-threshold" ng-model="params.threshold" placeholder="Ex: My_Analysis_1">
+     </div>
+     
+     <div class="form-group">
+       <label for="f-test-simulated" class="control-label">Simulation</label>
+
+       <select id="f-test-simulated" ng-options="option.name for option in options.simulate" ng-model="params.simulate"></select>
+     </div>
+
+     <div class="form-group">
+       <label for="f-test-hypothesis" class="control-label">Test Hypothesis</label>
+
+       <select id="f-test-hypothesis" ng-options="option.name for option in options.hypothesis" ng-model="params.hypothesis"></select>
+     </div>
+     
+     
+     
+</form> 
+		
+<a class="btn btn-success btn-block" ng-click="testInit()" data-dismiss="modal" aria-hidden="true">Analyze</a>

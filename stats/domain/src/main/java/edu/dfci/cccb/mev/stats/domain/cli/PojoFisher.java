@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.stats.domain.cli;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -32,4 +34,5 @@ public class PojoFisher extends AbstractAnalysis<PojoFisher> implements Fisher {
 
   private final @Getter double oddsRatio;
   private final @Getter double pValue;
+  
 }

@@ -1,0 +1,20 @@
+<div class="panel-body" ng-app="networkPreview" ng-controller="previewController as pCtrl" ng-model="pCtrl">
+
+	<h3 style="margin-bottom: 1em;">Choose your <i>starting node</i> to start navigating</h3>
+
+	<p>Starting node: {{s.startingNode}} <i ng-show="s.startingNode === ''">*none*</i></p>
+
+	<select name="" id="" class="form-control" style="margin-bottom: 1em;" ng-model="s.startingNode">
+		<option value="" selected>Select a node</option>
+		<option ng-repeat="name in s.vlist | filter:m.filterList" value="{{name}}">{{name}}</option>
+	</select>
+
+	<input type="text" class="form-control" placeholder="Search the nodes" style="margin-bottom: 1em;" ng-model="m.filterList" />
+
+	<a href ng-click="fGotoViewer(m.network_name, s.status.what, s.status.how, s.status.type)" class="btn btn-success btn-block" ng-class="{ disabled: s.startingNode === '' }">start</a>
+
+	<a href="#/preview/{{m.network_name}}" class="btn btn-danger btn-block">back</a>
+
+	{{m.filterList}}
+
+</div>

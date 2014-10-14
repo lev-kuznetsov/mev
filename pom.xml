@@ -14,13 +14,14 @@
 
     <!-- Support modules -->
 
+	<module>testutil</module>
     <module>io</module>
     <module>math</module>
     <module>r</module>
 
     <!-- MeV modules -->
 
-    <module>configuration</module>
+	<module>configuration</module>
     <module>dataset</module>
     <module>annotation</module>
     <module>hcl</module>
@@ -50,6 +51,7 @@
     <lambdaj.version>2.3.3</lambdaj.version>
     <spring.version>4.0.0.RELEASE</spring.version>
     <jackson.version>2.2.2</jackson.version>
+    <junit.version>4.11</junit.version>
 
     <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
@@ -187,14 +189,14 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit-dep</artifactId>
-      <version>4.11</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
 		            
@@ -202,6 +204,12 @@
 		<groupId>org.databene</groupId>
 		<artifactId>contiperf</artifactId>
 		<version>2.2.0</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>edu.dfci.cccb</groupId>
+		<artifactId>mev-test-util</artifactId>
+		<version>BAYLIE-SNAPSHOT</version>
 	</dependency>
 	            
   </dependencies>
@@ -256,6 +264,13 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.16</version>
+        <dependencies>
+		 <dependency>
+		  <groupId>org.apache.maven.surefire</groupId>
+		  <artifactId>surefire-junit47</artifactId>
+		  <version>2.12</version>
+		 </dependency>
+		</dependencies>
         <configuration>
           <systemPropertyVariables>
             <edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>${mev.Rscript}</edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>
@@ -263,6 +278,7 @@
             <spring.profiles.active>test</spring.profiles.active>
             <textdb.allow_full_path>true</textdb.allow_full_path>
           </systemPropertyVariables>
+      	  <excludedGroups>edu.dfci.cccb.mev.testing.junit.groups.MevIntegrationTestMarker</excludedGroups>
         </configuration>
       </plugin>
 

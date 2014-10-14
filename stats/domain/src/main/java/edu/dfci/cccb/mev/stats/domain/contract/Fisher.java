@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.stats.domain.contract;
 
+import java.util.Calendar;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
@@ -28,4 +30,13 @@ public interface Fisher extends Analysis {
 
   @JsonProperty
   double pValue ();
+  
+  @JsonProperty
+  String type ();
+
+  @JsonProperty
+  String name ();
+  
+  @JsonProperty
+  Calendar timestamp ();
 }

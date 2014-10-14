@@ -21,6 +21,8 @@
 					<ul class="dropdown-menu">
 						<li><a data-toggle="modal" role="button" data-target="#limma"">LIMMA</a></li> 
 						<li><a data-toggle="modal" data-target="#tTest">t-Test</a></li>
+						<li><a data-toggle="modal" data-target="#fishertest">Fisher Exact Test</a></li>
+						<li><a data-toggle="modal" data-target="#wilcoxon">Wilcoxon Rank Sum</a></li>
 						<li><a data-toggle="modal" data-target="#anova">ANOVA</a></li>
 					</ul>
 				</li>
@@ -86,6 +88,14 @@
   
 <bsmodal bindid="limma" func="" header="LIMMA">
  <div class="modal-Limma" heatmap-dataset="project.dataset"></div>
+</bsmodal> 
+
+<bsmodal bindid="fishertest" func="" header="Fisher's Exact Test">
+ <div class="modal-FTest" heatmap-dataset="project.dataset"></div>
+</bsmodal> 
+
+<bsmodal bindid="wilcoxon" func="" header="Wilcoxon Rank Sum Test">
+ <div class="modal-Wilcoxon" heatmap-dataset="project.dataset"></div>
 </bsmodal> 
 
 <bsmodal bindid="anova" func="" header="Analysis of Variance">

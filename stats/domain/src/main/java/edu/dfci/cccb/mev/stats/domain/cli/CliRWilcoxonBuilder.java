@@ -104,7 +104,7 @@ public class CliRWilcoxonBuilder extends AbstractWilcoxonBuilder {
         final double wStat = Double.parseDouble (reader.readLine ().split ("\t")[1]);
         final double pValue = Double.parseDouble (reader.readLine ().split ("\t")[1]);
 
-        return new PojoWilcoxon (wStat, pValue);
+        return new PojoWilcoxon (wStat, pValue).name(this.name()).type(type());
       }
     } catch (IOException | ScriptException e) {
       throw new DatasetException (e);
