@@ -70,7 +70,7 @@
     <dependency>
       <groupId>org.springframework.social</groupId>
       <artifactId>spring-social-google</artifactId>
-      <version>1.0.0.M3</version>
+      <version>1.0.0.RC1</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework.social</groupId>
