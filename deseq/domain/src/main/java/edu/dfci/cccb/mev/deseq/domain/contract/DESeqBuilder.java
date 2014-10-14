@@ -12,25 +12,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.deseq.domain.prototype;
+package edu.dfci.cccb.mev.deseq.domain.contract;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
-import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
-import edu.dfci.cccb.mev.deseq.domain.contract.Limma;
+import edu.dfci.cccb.mev.deseq.domain.contract.DESeq.Species;
 
 /**
  * @author levk
  * 
  */
-@Accessors (fluent = true, chain = true)
-public abstract class AbstractLimma extends AbstractAnalysis<AbstractLimma> implements Limma {
+public interface DESeqBuilder extends AnalysisBuilder<DESeqBuilder, DESeq> {
 
-  private @Getter @Setter Selection control;
-  private @Getter @Setter Selection experiment;
-  private @Getter @Setter Species species;
-  private @Getter @Setter String go;
-  private @Getter @Setter String test;
+  DESeqBuilder control (Selection selection);
+
+  DESeqBuilder experiment (Selection selection);
 }

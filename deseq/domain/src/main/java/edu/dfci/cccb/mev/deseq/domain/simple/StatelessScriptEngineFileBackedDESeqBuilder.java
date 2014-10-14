@@ -39,9 +39,9 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
-import edu.dfci.cccb.mev.deseq.domain.contract.InvalidLimmaConfigurationException;
-import edu.dfci.cccb.mev.deseq.domain.contract.Limma;
-import edu.dfci.cccb.mev.deseq.domain.prototype.AbstractLimmaBuilder;
+import edu.dfci.cccb.mev.deseq.domain.contract.InvalidDESeqConfigurationException;
+import edu.dfci.cccb.mev.deseq.domain.contract.DESeq;
+import edu.dfci.cccb.mev.deseq.domain.prototype.AbstractDESeqBuilder;
 import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
 
 /**
@@ -49,19 +49,15 @@ import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
  * 
  */
 @Log4j
-public class StatelessScriptEngineFileBackedLimmaBuilder extends AbstractLimmaBuilder {
+public class StatelessScriptEngineFileBackedDESeqBuilder extends AbstractDESeqBuilder {
 
-  public static final String DATASET_FILENAME = "dataset.tsv";
-  public static final String CONFIGURATION_FILENAME = "config.tsv";
-
-  public static final String FULL_FILENAME = "output.tsv";
-  public static final String RNK_FILENAME = "rnk.out";
-  public static final String TOPGO_FILENAME = "topgo.tsv";
-
+  public static String OUTPUT_FILENAME;
+  public static String NORMALIZED_COUNTS_FILENAME;
+  
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder#build() */
   @Override
-  public Limma build () throws DatasetException {
+  public DESeq build () throws DatasetException {
     Dimension dimension = null;
     for (Type of : values ())
       try {
@@ -70,52 +66,53 @@ public class StatelessScriptEngineFileBackedLimmaBuilder extends AbstractLimmaBu
         dimension = dataset ().dimension (of);
       } catch (InvalidDimensionTypeException | SelectionNotFoundException e) {}
     if (dimension == null)
-      throw new InvalidLimmaConfigurationException ();
+      throw new InvalidDESeqConfigurationException ();
 
     try {
-      TemporaryFolder limma = new TemporaryFolder ();
+      TemporaryFolder tempDESeqFolder = new TemporaryFolder ();
 
-      log.debug ("Using " + limma.getAbsolutePath () + " for limma analysis");
+      log.debug ("Using " + tempDESeqFolder.getAbsolutePath () + " for DESeq analysis");
 
       try {
-        File datasetFile = new File (limma, DATASET_FILENAME);
+        File datasetFile = new File (tempDESeqFolder, DATASET_FILENAME);
         try (OutputStream datasetOut = new FileOutputStream (datasetFile)) {
           composerFactory ().compose (dataset ()).write (datasetOut);
         }
 
-        File configFile = new File (limma, CONFIGURATION_FILENAME);
-        try (PrintStream configOut = new PrintStream (new FileOutputStream (configFile))) {
+        File annotationFile = new File (tempDESeqFolder, ANNOTATION_FILENAME);
+        try (PrintStream configOut = new PrintStream (new FileOutputStream (annotationFile))) {
           for (int index = 0; index < dimension.keys ().size (); index++)
             if (control ().keys ().contains (dimension.keys ().get (index))
                 && experiment ().keys ().contains (dimension.keys ().get (index)))
-              throw new InvalidLimmaConfigurationException ();
+              throw new InvalidDESeqConfigurationException ();
             else if (experiment ().keys ().contains (dimension.keys ().get (index)))
-              configOut.println (dimension.keys ().get (index) + "\t1");
+              configOut.println (dimension.keys ().get (index) + "\t"+experiment ().name ());
             else if (control ().keys ().contains (dimension.keys ().get (index)))
-              configOut.println (dimension.keys ().get (index) + "\t0");
+              configOut.println (dimension.keys ().get (index) + "\t"+control ().name ());
             else
-              configOut.println (dimension.keys ().get (index) + "\t-1");
+              //shouldn't reach here without exception..but is this the right exception to throw?
+              throw new InvalidDESeqConfigurationException ();
         }
 
-        File fullOutputFile = new File (limma, FULL_FILENAME);
-        File rnkOutputFile = new File (limma, RNK_FILENAME);
-        File topGoOutputFile = new File (limma, TOPGO_FILENAME);
-        topGoOutputFile.createNewFile ();
+        String contrastPrefix = experiment().name()+CONTRAST_FLAG+control().name()
+        OUTPUT_FILENAME = contrastPrefix+".csv";
+        NORMALIZED_COUNTS_FILENAME = contrastPrefix + "."+NORMALIZED_COUNT_FILE_TAG + ".csv";
 
+        File fullOutputFile = new File (tempDESeqFolder, OUTPUT_FILENAME);
+        File normCountFile = new File (tempDESeqFolder, NORMALIZED_COUNTS_FILENAME);
+
+        //write lines with paths, etc. to the appropriate file locations INTO the R file
         try (ByteArrayOutputStream script = new ByteArrayOutputStream ();
              PrintStream printScript = new PrintStream (script)) {
-          printScript.println ("INFILE=\"" + datasetFile.getAbsolutePath () + "\"");
-          printScript.println ("SAMPLE_FILE=\"" + configFile.getAbsolutePath () + "\"");
-          printScript.println ("RESULT_OUT=\"" + fullOutputFile.getAbsolutePath () + "\"");
-          printScript.println ("RNK_OUT=\"" + rnkOutputFile.getAbsolutePath () + "\"");
-          printScript.println ("SPECIES=\"" + species ().toString () + "\"");
-          printScript.println ("GO_TYPE=\"" + go () + "\"");
-          printScript.println ("THRES=0.05");
-          printScript.println ("TEST_TYPE=\"" + test () + "\"");
-          printScript.println ("TOPGO_OUT=\"" + topGoOutputFile.getAbsolutePath () + "\"");
-
-          try (InputStream limmaScript = getClass ().getResourceAsStream ("/limma.R")) {
-            for (int c; (c = limmaScript.read ()) >= 0; printScript.write (c));
+          printScript.println ("COUNT_MTX_FILE=\"" + datasetFile.getAbsolutePath () + "\"");
+          printScript.println ("SAMPLE_FILE=\"" + annotationFile.getAbsolutePath () + "\"");
+          printScript.println ("CONDITION_A=\"" + control().name() + "\"");
+          printScript.println ("CONDITION_B=\"" + experiment().name() + "\"");
+          printScript.println ("OUTPUT_FILE=\"" + fullOutputFile.getAbsolutePath () + "\"");
+          printScript.println ("NORMALIZED_COUNTS_FILE=\"" + normCountFile.getAbsolutePath () + "\"");
+          
+          try (InputStream deseqScript = getClass ().getResourceAsStream ("/deseq_basic.R")) {
+            for (int c; (c = deseqScript.read ()) >= 0; printScript.write (c));
             printScript.flush ();
 
             try (Reader injectedScript = new InputStreamReader (new ByteArrayInputStream (script.toByteArray ()))) {
@@ -124,10 +121,10 @@ public class StatelessScriptEngineFileBackedLimmaBuilder extends AbstractLimmaBu
 
               if (!log.isDebugEnabled ()) {
                 datasetFile.delete ();
-                configFile.delete ();
+                annotationFile.delete ();
               }
 
-              return new FileBackedLimma (limma).name (name ())
+              return new FileBackedDESeq (tempDESeqFolder).name (name ())
                                                 .type (type ())
                                                 .control (control ())
                                                 .experiment (experiment ());
@@ -136,8 +133,8 @@ public class StatelessScriptEngineFileBackedLimmaBuilder extends AbstractLimmaBu
                 try (ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
                      Writer debug = new BufferedWriter (new OutputStreamWriter (buffer));
                      Reader datasetReader = new FileReader (datasetFile);
-                     Reader configReader = new FileReader (configFile)) {
-                  debug.write ("LIMMA script failed\nInput dataset:\n");
+                     Reader configReader = new FileReader (annotationFile)) {
+                  debug.write ("DESeq script failed\nInput dataset:\n");
                   for (int c; (c = datasetReader.read ()) >= 0; debug.write (c));
                   debug.write ("\nConfiguration:\n");
                   for (int c; (c = configReader.read ()) >= 0; debug.write (c));
@@ -148,10 +145,10 @@ public class StatelessScriptEngineFileBackedLimmaBuilder extends AbstractLimmaBu
             }
           }
         }
-      } catch (IOException | InvalidLimmaConfigurationException | RuntimeException | ScriptException e) {
+      } catch (IOException | InvalidDESeqConfigurationException | RuntimeException | ScriptException e) {
         try {
           if (!log.isDebugEnabled ())
-            limma.close ();
+            tempDESeqFolder.close ();
         } catch (IOException e2) {
           e.addSuppressed (e2);
         }
