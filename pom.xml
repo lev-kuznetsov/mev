@@ -32,6 +32,8 @@
     <module>t-test</module>
     <module>anova</module>
     <module>stats</module>
+    <module>deseq</module>
+    
     <module>web</module>
 
   </modules>
