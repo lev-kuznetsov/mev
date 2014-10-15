@@ -17,20 +17,13 @@
 package edu.dfci.cccb.mev.dataset.domain.jackson;
 
 import static com.fasterxml.jackson.databind.type.SimpleType.construct;
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
-import javax.inject.Qualifier;
 
 import lombok.extern.log4j.Log4j;
 
@@ -41,7 +34,6 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
 
 import edu.dfci.cccb.mev.dataset.domain.Analysis;
-import edu.dfci.cccb.mev.dataset.domain.annotation.Type;
 
 /**
  * Analysis sub-type resolver
@@ -54,15 +46,10 @@ public class AnalysisTypeResolver extends TypeIdResolverBase {
 
   private static final JavaType ANALYSIS_BASE_TYPE = construct (Analysis.class);
 
-  @Retention (RUNTIME)
-  @Target ({ PARAMETER, METHOD, FIELD })
-  @Qualifier
-  public static @interface RegisteredAnalyses {}
-
   private Map<String, Class<? extends Analysis>> map = new HashMap<> ();
 
   @Inject
-  private void analysisTypes (@RegisteredAnalyses Provider<Set<Class<? extends Analysis>>> analysisTypesProvider) {
+  private void analysisTypes (Provider<Set<Class<? extends Analysis>>> analysisTypesProvider) {
     Set<Class<? extends Analysis>> analysisTypes = analysisTypesProvider.get ();
     if (analysisTypes != null)
       for (Class<? extends Analysis> type : analysisTypes)
@@ -86,7 +73,7 @@ public class AnalysisTypeResolver extends TypeIdResolverBase {
    * (java.lang.Object, java.lang.Class) */
   @Override
   public String idFromValueAndType (Object value, Class<?> suggestedType) {
-    return (value == null ? suggestedType : value.getClass ()).getAnnotation (Type.class)
+    return (value == null ? suggestedType : value.getClass ()).getAnnotation (edu.dfci.cccb.mev.dataset.domain.annotation.Analysis.class)
                                                               .value ();
   }
 

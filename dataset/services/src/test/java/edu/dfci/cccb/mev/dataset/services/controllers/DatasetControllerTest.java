@@ -57,6 +57,8 @@ import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceBinder;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ServiceModule;
 import edu.dfci.cccb.mev.common.test.jetty.Jetty9;
+import edu.dfci.cccb.mev.dataset.domain.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.annotation.NameOf;
 import edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.Workspace;
@@ -88,7 +90,7 @@ public class DatasetControllerTest {
       }
 
       @Provides
-      @edu.dfci.cccb.mev.dataset.domain.annotation.Dataset
+      @NameOf (Dataset.class)
       @RequestScoped
       public String dataset (UriInfo uri) {
         return uri.getPathParameters ().getFirst (DATASET);

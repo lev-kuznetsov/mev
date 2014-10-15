@@ -41,7 +41,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
@@ -249,12 +248,6 @@ public class ServiceModule extends JaxrsModule {
       @RequestScoped
       public Request request (Message message) {
         return new RequestImpl (message);
-      }
-
-      @Provides
-      @RequestScoped
-      public Locale locale (HttpServletRequest request) {
-        return request.getLocale ();
       }
     });
 

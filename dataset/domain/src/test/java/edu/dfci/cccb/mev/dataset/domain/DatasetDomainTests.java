@@ -22,6 +22,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModuleTest;
 import edu.dfci.cccb.mev.dataset.domain.jackson.AnalysisTypeResolverTest;
+import edu.dfci.cccb.mev.dataset.domain.jackson.IntegratedDatasetSerializationTest;
 import edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandlerTest;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AnalysisAdapterTest;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapterTest;
@@ -34,5 +35,5 @@ import edu.dfci.cccb.mev.dataset.domain.support.FlatFileStoreValuesAdapterTest;
                 ValuesTest.class, DimensionAdapterTest.class,
                 DatasetAdapterTest.class, AnalysisAdapterTest.class, DatasetModuleTest.class,
                 FlatFileStoreValuesAdapterTest.class, AnalysisTypeResolverTest.class,
-                DatasetTsvMessageHandlerTest.class })
+                DatasetTsvMessageHandlerTest.class, IntegratedDatasetSerializationTest.class })
 public class DatasetDomainTests {}

@@ -31,12 +31,14 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.servlet.RequestScoped;
 import com.google.inject.servlet.SessionScoped;
 
+import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
 import edu.dfci.cccb.mev.common.services.guice.MevServiceModule;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ContentNegotiationMapper;
 import edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder;
 import edu.dfci.cccb.mev.dataset.domain.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.annotation.NameOf;
 import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.Workspace;
@@ -47,63 +49,6 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.Workspace;
  */
 public class DatasetServiceModule extends MevServiceModule {
 
-  /**
-   * Provides the context dataset name
-   */
-  @Provides
-  @edu.dfci.cccb.mev.dataset.domain.annotation.Dataset
-  @RequestScoped
-  public String dataset (UriInfo uri) {
-    return uri.getPathParameters ().getFirst (DATASET);
-  }
-
-  /**
-   * Provides the context dataset
-   */
-  @Provides
-  @RequestScoped
-  public Dataset<String, Double> dataset (Workspace<String, Double> workspace,
-                                          @edu.dfci.cccb.mev.dataset.domain.annotation.Dataset String name) {
-    return workspace.get (name);
-  }
-
-  /**
-   * Provides the context analysis name
-   */
-  @Provides
-  @RequestScoped
-  @edu.dfci.cccb.mev.dataset.domain.annotation.Analysis
-  public String analysis (UriInfo uri) {
-    return uri.getPathParameters ().getFirst (ANALYSIS);
-  }
-
-  /**
-   * Provides the context analysis
-   */
-  @Provides
-  @RequestScoped
-  public Analysis analysis (Dataset<String, Double> dataset,
-                            @edu.dfci.cccb.mev.dataset.domain.annotation.Analysis String name) {
-    return dataset.analyses ().get (name);
-  }
-
-  @Provides
-  @RequestScoped
-  @edu.dfci.cccb.mev.dataset.domain.annotation.Dimension
-  public String dimension (UriInfo uri) {
-    return uri.getPathParameters ().getFirst (DIMENSION);
-  }
-
-  /**
-   * Provides the context dimension
-   */
-  @Provides
-  @RequestScoped
-  public Dimension<String> dimension (Dataset<String, Double> dataset,
-                                      @edu.dfci.cccb.mev.dataset.domain.annotation.Dimension String name) {
-    return dataset.dimensions ().get (name);
-  }
-
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
@@ -111,6 +56,36 @@ public class DatasetServiceModule extends MevServiceModule {
     super.configure (binder);
 
     binder.install (new DatasetModule ());
+
+    binder.install (new SingletonModule () {
+
+      /**
+       * Provides the context dataset name
+       */
+      @Provides
+      @NameOf (Dataset.class)
+      @RequestScoped
+      public String dataset (UriInfo uri) {
+        return uri.getPathParameters ().getFirst (DATASET);
+      }
+
+      /**
+       * Provides the context analysis name
+       */
+      @Provides
+      @RequestScoped
+      @NameOf (Analysis.class)
+      public String analysis (UriInfo uri) {
+        return uri.getPathParameters ().getFirst (ANALYSIS);
+      }
+
+      @Provides
+      @RequestScoped
+      @NameOf (Dimension.class)
+      public String dimension (UriInfo uri) {
+        return uri.getPathParameters ().getFirst (DIMENSION);
+      }
+    });
   }
 
   /* (non-Javadoc)

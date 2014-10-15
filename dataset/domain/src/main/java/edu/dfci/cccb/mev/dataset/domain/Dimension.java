@@ -35,18 +35,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @XmlAccessorType (NONE)
-public interface Dimension <K> extends Iterable<K> {
+public interface Dimension <K> extends Iterable<K>, Named {
 
   /**
    * Identifier for injection
    */
   public static final String DIMENSION = "dimension";
-
-  /**
-   * @return name of this dimension
-   */
-  @XmlElement
-  String name ();
 
   /* (non-Javadoc)
    * @see java.lang.Iterable#iterator() */

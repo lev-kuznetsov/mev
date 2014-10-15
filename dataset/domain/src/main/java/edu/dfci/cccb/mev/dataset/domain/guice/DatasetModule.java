@@ -53,9 +53,11 @@ import edu.dfci.cccb.mev.common.domain.guice.jaxrs.JaxrsModule;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageReaderBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageWriterBinder;
 import edu.dfci.cccb.mev.dataset.domain.Analysis;
-import edu.dfci.cccb.mev.dataset.domain.annotation.Type;
-import edu.dfci.cccb.mev.dataset.domain.jackson.AnalysisTypeResolver.RegisteredAnalyses;
+import edu.dfci.cccb.mev.dataset.domain.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.annotation.NameOf;
 import edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler;
+import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.Workspace;
 
 /**
  * @author levk
@@ -72,21 +74,47 @@ public class DatasetModule extends MevModule {
 
     configure (new AnalysisTypeRegistrar () {
       Multibinder<Class<? extends Analysis>> types = newSetBinder (binder,
-                                                                   new TypeLiteral<Class<? extends Analysis>> () {},
-                                                                   RegisteredAnalyses.class);
+                                                                   new TypeLiteral<Class<? extends Analysis>> () {});
 
       @Override
       public void register (Class<? extends Analysis> type) {
-        if (type.getAnnotation (Type.class) == null)
+        if (type.getAnnotation (edu.dfci.cccb.mev.dataset.domain.annotation.Analysis.class) == null)
           throw new IllegalArgumentException ("Failed registering analysis type "
                                               + type.getSimpleName ()
-                                              + " because it is missing required " + Type.class.getSimpleName ()
+                                              + " because it is missing required " + Analysis.class.getSimpleName ()
                                               + " annotation");
         types.addBinding ().toInstance (type);
       }
     });
 
     binder.install (new SingletonModule () {
+
+      /**
+       * Provides the context dataset
+       */
+      @Provides
+      public Dataset<String, Double> dataset (Workspace<String, Double> workspace,
+                                              @NameOf (Dataset.class) String name) {
+        return workspace.get (name);
+      }
+
+      /**
+       * Provides the context analysis
+       */
+      @Provides
+      public Analysis analysis (Dataset<String, Double> dataset,
+                                @NameOf (Analysis.class) String name) {
+        return dataset.analyses ().get (name);
+      }
+
+      /**
+       * Provides the context dimension
+       */
+      @Provides
+      public Dimension<String> dimension (Dataset<String, Double> dataset,
+                                          @NameOf (Dimension.class) String name) {
+        return dataset.dimensions ().get (name);
+      }
 
       // Dataset construction
 

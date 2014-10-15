@@ -18,7 +18,13 @@ package edu.dfci.cccb.mev.common.services.guice;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
 
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.google.inject.Binder;
+import com.google.inject.Provides;
+import com.google.inject.servlet.RequestScoped;
 
 import edu.dfci.cccb.mev.common.domain.guice.MevModule;
 import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
@@ -57,6 +63,12 @@ public class MevServiceModule extends MevModule {
     });
 
     binder.install (new SingletonModule () {
+
+      @Provides
+      @RequestScoped
+      public Locale locale (HttpServletRequest request) {
+        return request.getLocale ();
+      }
 
       @Override
       public void configure (Binder binder) {

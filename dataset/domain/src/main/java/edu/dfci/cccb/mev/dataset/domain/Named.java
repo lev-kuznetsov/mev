@@ -14,27 +14,24 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain.annotation;
+package edu.dfci.cccb.mev.dataset.domain;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static javax.xml.bind.annotation.XmlAccessType.NONE;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
-import javax.inject.Qualifier;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Binding annotation for dimension related injectables
+ * Common interface for all denominated instances
  * 
  * @author levk
  * @since CRYSTAL
  */
-@Retention (RUNTIME)
-@Target ({ METHOD, FIELD, PARAMETER })
-@Documented
-@Qualifier
-public @interface Dimension {}
+@XmlRootElement
+@XmlAccessorType (NONE)
+public interface Named {
+
+  @XmlElement
+  String name ();
+}

@@ -20,7 +20,6 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -35,6 +34,7 @@ import com.google.inject.Provides;
 
 import edu.dfci.cccb.mev.common.domain.guice.jackson.annotation.Handling;
 import edu.dfci.cccb.mev.dataset.domain.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.annotation.NameOf;
 import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule;
 import edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler;
 
@@ -43,18 +43,10 @@ public class IntegratedDatasetSerializationTest {
 
   public static class IntegratedDatasetSerializationTestModule extends JukitoModule {
     @Provides
-    @edu.dfci.cccb.mev.dataset.domain.annotation.Dataset
+    @NameOf (Dataset.class)
     @Singleton
     public String dataset () {
       return "mock";
-    }
-
-    @Provides
-    @Singleton
-    public Dataset<String, Double> dataset (DatasetTsvMessageHandler handler) throws IOException {
-      return handler.readFrom (null, null, null, null, null, new ByteArrayInputStream (("  \tc1\tc2\tc3\n" +
-                                                                                        "r1\t.1\t.2\t.4\n" +
-                                                                                        "r2\t.4\t.5\t.6").getBytes ()));
     }
 
     protected void configureTest () {
@@ -63,10 +55,19 @@ public class IntegratedDatasetSerializationTest {
   }
 
   private @Inject @Handling (APPLICATION_JSON) ObjectMapper mapper;
-  private @Inject Dataset<String, Double> dataset;
+  private @Inject DatasetTsvMessageHandler handler;
 
   @Test
   public void serialize () throws Exception {
-    assertEquals ("{name:mock}", mapper.writeValueAsString (dataset), true);
+    assertEquals ("{name:mock}",
+                  mapper.writeValueAsString (handler.readFrom (null,
+                                                               null,
+                                                               null,
+                                                               null,
+                                                               null,
+                                                               new ByteArrayInputStream (("  \tc1\tc2\tc3\n" +
+                                                                                          "r1\t.1\t.2\t.4\n" +
+                                                                                          "r2\t.4\t.5\t.6").getBytes ()))),
+                  true);
   }
 }

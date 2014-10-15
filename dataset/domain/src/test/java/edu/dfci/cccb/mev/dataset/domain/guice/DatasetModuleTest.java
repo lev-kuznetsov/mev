@@ -30,7 +30,12 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Provides;
 
+import edu.dfci.cccb.mev.dataset.domain.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.annotation.NameOf;
+import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
+import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.Workspace;
 
 public class DatasetModuleTest {
 
@@ -42,9 +47,29 @@ public class DatasetModuleTest {
 
       @Provides
       @Singleton
-      @edu.dfci.cccb.mev.dataset.domain.annotation.Dataset
+      @NameOf (Dataset.class)
       public String dataset () {
         return "mock";
+      }
+      
+      @Provides
+      @Singleton
+      @NameOf (Analysis.class)
+      public String analysis () {
+        return "mock";
+      }
+      
+      @Provides
+      @Singleton
+      @NameOf (Dimension.class)
+      public String dimension () {
+        return "mock";
+      }
+
+      @Provides
+      @Singleton
+      public Workspace<String, Double> workspace () {
+        return DatasetAdapter.workspace ();
       }
 
       @Override

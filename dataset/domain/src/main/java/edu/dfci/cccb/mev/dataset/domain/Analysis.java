@@ -38,19 +38,19 @@ import edu.dfci.cccb.mev.dataset.domain.jackson.AnalysisTypeResolver;
 @XmlAccessorType (NONE)
 @JsonTypeInfo (use = CUSTOM, property = "type", include = PROPERTY)
 @JsonTypeIdResolver (AnalysisTypeResolver.class)
-public interface Analysis {
+public interface Analysis extends Named {
 
   /**
    * Identifier for injection
    */
   public static final String ANALYSIS = "analysis";
 
-  /**
-   * @return name of the analysis
-   */
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.dataset.domain.Named#name() */
   @XmlElement
   @JsonGetter
-  String name ();
+  @Override
+  public String name ();
 
   /**
    * Runs the analysis

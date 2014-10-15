@@ -70,6 +70,7 @@ import org.supercsv.util.CsvContext;
 import edu.dfci.cccb.mev.dataset.domain.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.InvalidCoordinateSetException;
+import edu.dfci.cccb.mev.dataset.domain.annotation.NameOf;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DimensionAdapter;
 import edu.dfci.cccb.mev.dataset.domain.support.binary.FlatFileStoreValuesAdapter;
@@ -95,7 +96,7 @@ public class DatasetTsvMessageHandler implements MessageBodyReader<Dataset<Strin
   public static final String QUOTE_CHARACTER = "mev.dataset.parser.quote-character";
 
   private @Inject CsvPreference preference;
-  private @Inject @edu.dfci.cccb.mev.dataset.domain.annotation.Dataset Provider<String> datasetName;
+  private @Inject @NameOf (Dataset.class) Provider<String> datasetName;
   private @Inject @Named (ROW) String row;
   private @Inject @Named (COLUMN) String column;
 

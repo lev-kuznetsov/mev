@@ -14,16 +14,33 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain;
+package edu.dfci.cccb.mev.dataset.domain.annotation;
+
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import javax.inject.Qualifier;
+
+import edu.dfci.cccb.mev.dataset.domain.Named;
 
 /**
+ * Qualifier annotation for injection of the name of implementation of a
+ * {@link Named}
+ * 
  * @author levk
  * @since CRYSTAL
  */
-public @interface AnalysisType {
+@Retention (RUNTIME)
+@Target ({ METHOD, PARAMETER, FIELD })
+@Qualifier
+@Documented
+public @interface NameOf {
 
-  /**
-   * Name of the type
-   */
-  String value ();
+  Class<? extends Named> value ();
 }

@@ -23,7 +23,6 @@ import java.util.Map;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -34,18 +33,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @XmlAccessorType (NONE)
-public interface Dataset <K, V> {
+public interface Dataset <K, V> extends Named {
 
   /**
    * Used for identification
    */
   public static final String DATASET = "dataset";
-
-  /**
-   * @return name
-   */
-  @XmlElement
-  String name ();
 
   /**
    * @return dimensions

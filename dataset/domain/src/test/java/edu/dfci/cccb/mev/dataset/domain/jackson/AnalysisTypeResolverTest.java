@@ -43,11 +43,15 @@ import com.google.inject.Provides;
 
 import edu.dfci.cccb.mev.common.domain.guice.jackson.annotation.Handling;
 import edu.dfci.cccb.mev.dataset.domain.AnalysisInvocationException;
-import edu.dfci.cccb.mev.dataset.domain.annotation.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.annotation.Type;
+import edu.dfci.cccb.mev.dataset.domain.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.annotation.Analysis;
+import edu.dfci.cccb.mev.dataset.domain.annotation.NameOf;
 import edu.dfci.cccb.mev.dataset.domain.guice.AnalysisTypeRegistrar;
 import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AnalysisAdapter;
+import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
+import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.Workspace;
 
 /**
  * @author levk
@@ -56,7 +60,7 @@ public class AnalysisTypeResolverTest {
 
   private Injector injector;
 
-  @Type ("mockType")
+  @Analysis ("mockType")
   @XmlRootElement
   @ToString
   @Accessors (fluent = true)
@@ -76,9 +80,29 @@ public class AnalysisTypeResolverTest {
     }, new Module () {
       @Provides
       @Singleton
-      @Dataset
+      @NameOf (Dataset.class)
       public String dataset () {
         return "mock";
+      }
+
+      @Provides
+      @Singleton
+      @NameOf (edu.dfci.cccb.mev.dataset.domain.Analysis.class)
+      public String analysis () {
+        return "mock";
+      }
+      
+      @Provides
+      @Singleton
+      @NameOf (Dimension.class)
+      public String dimension () {
+        return "mock";
+      }
+
+      @Provides
+      @Singleton
+      public Workspace<String, Double> wokrspace () {
+        return DatasetAdapter.workspace ();
       }
 
       public void configure (Binder binder) {}

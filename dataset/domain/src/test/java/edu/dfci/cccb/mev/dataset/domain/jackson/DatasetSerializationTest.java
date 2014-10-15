@@ -41,6 +41,7 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import com.google.inject.Provides;
 
 import edu.dfci.cccb.mev.dataset.domain.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.annotation.NameOf;
 import edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler;
 
 @RunWith (JukitoRunner.class)
@@ -48,8 +49,8 @@ public class DatasetSerializationTest {
 
   public static class SerializationTestModule extends JukitoModule {
     @Provides
-    @edu.dfci.cccb.mev.dataset.domain.annotation.Dataset
     @Singleton
+    @NameOf (Dataset.class)
     public String dataset () {
       return "mock";
     }

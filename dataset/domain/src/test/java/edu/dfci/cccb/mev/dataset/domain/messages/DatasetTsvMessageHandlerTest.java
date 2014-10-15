@@ -49,6 +49,7 @@ import edu.dfci.cccb.mev.dataset.domain.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.Values;
 import edu.dfci.cccb.mev.dataset.domain.Values.Value;
+import edu.dfci.cccb.mev.dataset.domain.annotation.NameOf;
 import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule;
 
 @RunWith (JukitoRunner.class)
@@ -60,7 +61,7 @@ public class DatasetTsvMessageHandlerTest {
 
   public static class DatasetTsvHandlerTestingModule extends JukitoModule {
     @Provides
-    @edu.dfci.cccb.mev.dataset.domain.annotation.Dataset
+    @NameOf (Dataset.class)
     @Singleton
     public String datasetName () {
       return "mock";
