@@ -26,15 +26,15 @@ public interface DESeq extends Analysis {
   public interface Entry {
     String id ();
 
-    double logFoldChange ();
+    Double logFoldChange ();
 
-    double meanExpressionControl ();
+    Double meanExpressionControl ();
     
-    double meanExpressionExperimental ();
+    Double meanExpressionExperimental ();
 
-    double pValue ();
+    Double pValue ();
 
-    double qValue ();
+    Double qValue ();
   }
 
   Iterable<Entry> full ();

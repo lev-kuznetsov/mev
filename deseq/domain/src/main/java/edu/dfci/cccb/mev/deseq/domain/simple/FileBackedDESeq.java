@@ -43,7 +43,7 @@ public class FileBackedDESeq extends AbstractDESeq implements AutoCloseable {
 
   public FileBackedDESeq (TemporaryFolder tempFolder) {
     this.tempFolder = tempFolder;
-    this.full = new File (this.tempFolder, FULL_FILENAME);
+    this.full = new File (this.tempFolder, OUTPUT_FILENAME);
   }
 
   /* (non-Javadoc)
@@ -95,19 +95,27 @@ public class FileBackedDESeq extends AbstractDESeq implements AutoCloseable {
   private Entry parse (String line) {
     final String[] split = line.split ("\t");
     return new SimpleEntry (string (0, split),
-                            number (1, split),
+                            number (5, split),
                             number (2, split),
                             number (3, split),
-                            number (4, split));
+                            number (6, split),
+                            number (7, split)
+                            );
   }
 
   private String string (int index, String[] split) {
     return split[index];
   }
 
-  private double number (int index, String[] split) {
-    return parseDouble (string (index, split));
-  }
+  private Double number (int index, String[] split) {
+    try{
+      return parseDouble (string (index, split));
+    }
+    catch (NumberFormatException e) {
+      return null;
+    }
+ }
+  
 
   /* (non-Javadoc)
    * @see java.lang.Object#finalize() */

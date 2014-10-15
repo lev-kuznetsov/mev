@@ -1,0 +1,1935 @@
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for edu.dfci.cccb:mev-presets-rest:jar:BAYLIE-SNAPSHOT
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: edu.dfci.cccb:mev-configuration-persistence:jar -> duplicate declaration of version BAYLIE-SNAPSHOT @ line 89, column 15
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] MultiExperiment Viewer
+[INFO] MeV IO Utilities
+[INFO] MeV Math Utilities
+[INFO] MeV R Integration
+[INFO] MultiExperiment Viewer Configuration
+[INFO] MeV Configuration of REST Components
+[INFO] MeV Configuration of Client Components
+[INFO] MeV Configuration of REST Components
+[INFO] MeV Dataset Plugin
+[INFO] MeV Dataset Plugin Domain Component
+[INFO] MeV Dataset Plugin REST Component
+[INFO] MeV Dataset Plugin Client Component
+[INFO] MeV Annotation Plugin
+[INFO] MeV Annotation Domain API
+[INFO] MeV Annotation JOOQ Data Access
+[INFO] MeV PREloaded DataSETS
+[INFO] MeV PREloaded DataSETS - Domain
+[INFO] MeV Annotation Server API
+[INFO] MeV Hierarchical Clustering
+[INFO] MeV Hierarchical Clustering Plugin Domain Component
+[INFO] MeV Hierarchical Clustering Plugin REST Component
+[INFO] MeV LIMMA Plugin
+[INFO] MeV LIMMA Plugin Domain Component
+[INFO] MeV LIMMA Plugin REST Component
+[INFO] MeV PREloaded DataSETS - REST
+[INFO] MeV K-Means Clustering
+[INFO] MeV K-Means Clustering Plugin Domain Component
+[INFO] MeV K-Means Clustering Plugin REST Component
+[INFO] MeV t-Test Plugin
+[INFO] MeV t-Test Plugin Domain Component
+[INFO] MeV t-Test Plugin REST Component
+[INFO] MeV Anova Plugin
+[INFO] MeV Anova Plugin Domain Component
+[INFO] MeV Anova Plugin REST Component
+[INFO] MeV Web Application Server
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MultiExperiment Viewer BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev ---
+[INFO] Deleting file set: /home/brian/workspace/mev/target (included: [**], excluded: [])
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev ---
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/target/mev-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev ---
+[INFO] Installing /home/brian/workspace/mev/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev/BAYLIE-SNAPSHOT/mev-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/target/mev-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev/BAYLIE-SNAPSHOT/mev-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV IO Utilities BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-io ---
+[INFO] Deleting file set: /home/brian/workspace/mev/io/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-io ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/io/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-io ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 5 source files to /home/brian/workspace/mev/io/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-io ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-io ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 3 source files to /home/brian/workspace/mev/io/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-io ---
+[INFO] Surefire report directory: /home/brian/workspace/mev/io/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running edu.dfci.cccb.mev.io.implementation.TemporaryFileTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.101 sec - in edu.dfci.cccb.mev.io.implementation.TemporaryFileTest
+Running edu.dfci.cccb.mev.io.implementation.TemporaryFolderTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.04 sec - in edu.dfci.cccb.mev.io.implementation.TemporaryFolderTest
+Running edu.dfci.cccb.mev.test.io.utils.TestCCCPHelpers_FileUtils
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.034 sec - in edu.dfci.cccb.mev.test.io.utils.TestCCCPHelpers_FileUtils
+
+Results :
+
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-io ---
+[INFO] Building jar: /home/brian/workspace/mev/io/target/mev-io-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-io >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-io <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-io ---
+[INFO] Building jar: /home/brian/workspace/mev/io/target/mev-io-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-io ---
+[INFO] Building jar: /home/brian/workspace/mev/io/target/mev-io-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-io ---
+[INFO] Installing /home/brian/workspace/mev/io/target/mev-io-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-io/BAYLIE-SNAPSHOT/mev-io-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/io/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-io/BAYLIE-SNAPSHOT/mev-io-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/io/target/mev-io-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-io/BAYLIE-SNAPSHOT/mev-io-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/io/target/mev-io-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-io/BAYLIE-SNAPSHOT/mev-io-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV Math Utilities BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-math ---
+[INFO] Deleting file set: /home/brian/workspace/mev/math/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-math ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/math/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-math ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 7 source files to /home/brian/workspace/mev/math/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-math ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/math/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-math ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-math ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-math ---
+[INFO] Building jar: /home/brian/workspace/mev/math/target/mev-math-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-math >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-math <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-math ---
+[INFO] Building jar: /home/brian/workspace/mev/math/target/mev-math-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-math ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/math/target/mev-math-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-math ---
+[INFO] Installing /home/brian/workspace/mev/math/target/mev-math-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-math/BAYLIE-SNAPSHOT/mev-math-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/math/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-math/BAYLIE-SNAPSHOT/mev-math-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/math/target/mev-math-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-math/BAYLIE-SNAPSHOT/mev-math-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/math/target/mev-math-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-math/BAYLIE-SNAPSHOT/mev-math-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV R Integration BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-r ---
+[INFO] Deleting file set: /home/brian/workspace/mev/r/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-r ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 16 resources
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-r ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 6 source files to /home/brian/workspace/mev/r/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-r ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-r ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /home/brian/workspace/mev/r/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-r ---
+[INFO] Surefire report directory: /home/brian/workspace/mev/r/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngineTest
+[DEBUG] : Launching R script /tmp/mev-r-1918358428461376290.R using Rscript /tmp/mev-r-1918358428461376290.R
+[DEBUG] : R process /tmp/mev-r-1918358428461376290.R exited with code 0
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.329 sec - in edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngineTest
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-r ---
+[INFO] Building jar: /home/brian/workspace/mev/r/target/mev-r-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-r >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-r <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-r ---
+[INFO] Building jar: /home/brian/workspace/mev/r/target/mev-r-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-r ---
+[INFO] Building jar: /home/brian/workspace/mev/r/target/mev-r-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-r ---
+[INFO] Installing /home/brian/workspace/mev/r/target/mev-r-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-r/BAYLIE-SNAPSHOT/mev-r-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/r/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-r/BAYLIE-SNAPSHOT/mev-r-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/r/target/mev-r-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-r/BAYLIE-SNAPSHOT/mev-r-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/r/target/mev-r-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-r/BAYLIE-SNAPSHOT/mev-r-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MultiExperiment Viewer Configuration BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-configuration ---
+[INFO] Deleting file set: /home/brian/workspace/mev/configuration/target (included: [**], excluded: [])
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-configuration >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-configuration <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-configuration ---
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-configuration ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/configuration/target/mev-configuration-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-configuration ---
+[INFO] Installing /home/brian/workspace/mev/configuration/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-configuration/BAYLIE-SNAPSHOT/mev-configuration-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/configuration/target/mev-configuration-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-configuration/BAYLIE-SNAPSHOT/mev-configuration-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV Configuration of REST Components BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-configuration-rest ---
+[INFO] Deleting file set: /home/brian/workspace/mev/configuration/rest/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-configuration-rest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/configuration/rest/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-configuration-rest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 7 source files to /home/brian/workspace/mev/configuration/rest/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-configuration-rest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/configuration/rest/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-configuration-rest ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-configuration-rest ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-configuration-rest ---
+[INFO] Building jar: /home/brian/workspace/mev/configuration/rest/target/mev-configuration-rest-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-configuration-rest >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-configuration-rest <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-configuration-rest ---
+[INFO] Building jar: /home/brian/workspace/mev/configuration/rest/target/mev-configuration-rest-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-configuration-rest ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/configuration/rest/target/mev-configuration-rest-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-configuration-rest ---
+[INFO] Installing /home/brian/workspace/mev/configuration/rest/target/mev-configuration-rest-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-configuration-rest/BAYLIE-SNAPSHOT/mev-configuration-rest-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/configuration/rest/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-configuration-rest/BAYLIE-SNAPSHOT/mev-configuration-rest-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/configuration/rest/target/mev-configuration-rest-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-configuration-rest/BAYLIE-SNAPSHOT/mev-configuration-rest-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/configuration/rest/target/mev-configuration-rest-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-configuration-rest/BAYLIE-SNAPSHOT/mev-configuration-rest-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV Configuration of Client Components BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-configuration-client ---
+[INFO] Deleting file set: /home/brian/workspace/mev/configuration/client/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-configuration-client ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/configuration/client/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-configuration-client ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/brian/workspace/mev/configuration/client/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-configuration-client ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/configuration/client/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-configuration-client ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-configuration-client ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-configuration-client ---
+[INFO] Building jar: /home/brian/workspace/mev/configuration/client/target/mev-configuration-client-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-configuration-client >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-configuration-client <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-configuration-client ---
+[INFO] Building jar: /home/brian/workspace/mev/configuration/client/target/mev-configuration-client-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-configuration-client ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/configuration/client/target/mev-configuration-client-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-configuration-client ---
+[INFO] Installing /home/brian/workspace/mev/configuration/client/target/mev-configuration-client-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-configuration-client/BAYLIE-SNAPSHOT/mev-configuration-client-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/configuration/client/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-configuration-client/BAYLIE-SNAPSHOT/mev-configuration-client-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/configuration/client/target/mev-configuration-client-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-configuration-client/BAYLIE-SNAPSHOT/mev-configuration-client-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/configuration/client/target/mev-configuration-client-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-configuration-client/BAYLIE-SNAPSHOT/mev-configuration-client-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV Configuration of REST Components BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-configuration-persistence ---
+[INFO] Deleting file set: /home/brian/workspace/mev/configuration/persistence/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-configuration-persistence ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/configuration/persistence/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-configuration-persistence ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 3 source files to /home/brian/workspace/mev/configuration/persistence/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-configuration-persistence ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/configuration/persistence/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-configuration-persistence ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-configuration-persistence ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-configuration-persistence ---
+[INFO] Building jar: /home/brian/workspace/mev/configuration/persistence/target/mev-configuration-persistence-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-configuration-persistence >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-configuration-persistence <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-configuration-persistence ---
+[INFO] Building jar: /home/brian/workspace/mev/configuration/persistence/target/mev-configuration-persistence-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-configuration-persistence ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/configuration/persistence/target/mev-configuration-persistence-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-configuration-persistence ---
+[INFO] Installing /home/brian/workspace/mev/configuration/persistence/target/mev-configuration-persistence-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-configuration-persistence/BAYLIE-SNAPSHOT/mev-configuration-persistence-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/configuration/persistence/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-configuration-persistence/BAYLIE-SNAPSHOT/mev-configuration-persistence-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/configuration/persistence/target/mev-configuration-persistence-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-configuration-persistence/BAYLIE-SNAPSHOT/mev-configuration-persistence-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/configuration/persistence/target/mev-configuration-persistence-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-configuration-persistence/BAYLIE-SNAPSHOT/mev-configuration-persistence-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV Dataset Plugin BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-dataset ---
+[INFO] Deleting file set: /home/brian/workspace/mev/dataset/target (included: [**], excluded: [])
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-dataset >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-dataset <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-dataset ---
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-dataset ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/dataset/target/mev-dataset-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-dataset ---
+[INFO] Installing /home/brian/workspace/mev/dataset/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-dataset/BAYLIE-SNAPSHOT/mev-dataset-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/dataset/target/mev-dataset-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-dataset/BAYLIE-SNAPSHOT/mev-dataset-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV Dataset Plugin Domain Component BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-dataset-domain ---
+[INFO] Deleting file set: /home/brian/workspace/mev/dataset/domain/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-dataset-domain ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/dataset/domain/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-dataset-domain ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 89 source files to /home/brian/workspace/mev/dataset/domain/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-dataset-domain ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-dataset-domain ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/brian/workspace/mev/dataset/domain/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-dataset-domain ---
+[INFO] Surefire report directory: /home/brian/workspace/mev/dataset/domain/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactoryTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.067 sec - in edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactoryTest
+Running edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilderTest
+[DEBUG] : **selection: [TCGA-A6-2677-01A-01R-0821-07, TCGA-AA-3560-01A-01R-0821-07, TCGA-AA-3529-01A-02R-0821-07, TCGA-A6-2678-01A-01R-0821-07, TCGA-AA-3534-01A-01R-0821-07]
+[DEBUG] : Type=row
+[DEBUG] : Type=column
+[DEBUG] : Building dataset...COAD.AgilentG4502A_07_3.Level_2.cols5
+[DEBUG] : Type=row
+[DEBUG] : Type=column
+[DEBUG] : **selection: [66a354fe-454e-40a6-8464-a7d97236d398_miR_gene_expression, 9635a2c4-fd8b-4b4c-9338-def32b6dd8d3_miR_gene_expression, 1e1ae4dd-1f89-42bd-8154-165f603962b9_miR_gene_expression, b3794e62-c4bc-43b1-97ca-b6f6e01aa026_miR_gene_expression, c986ab6f-912a-424f-9957-ff34452339c5_miR_gene_expression, 25a9fd1a-0ff1-434b-bc4b-b78834750994_miR_gene_expression, b5a63033-f14b-4040-b2b2-8acf9c9ba6d4_miR_gene_expression, 6a8f9385-2064-4d8c-9af1-d2bed53afebb_miR_gene_expression, e4fe4b0b-198a-46b2-adb3-2f0b140502f8_miR_gene_expression]
+[DEBUG] : Type=row
+[DEBUG] : Type=column
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 2.002 sec - in edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilderTest
+
+Results :
+
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 1
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-dataset-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/dataset/domain/target/mev-dataset-domain-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-dataset-domain >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-dataset-domain <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-dataset-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/dataset/domain/target/mev-dataset-domain-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-dataset-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/dataset/domain/target/mev-dataset-domain-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-dataset-domain ---
+[INFO] Installing /home/brian/workspace/mev/dataset/domain/target/mev-dataset-domain-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-dataset-domain/BAYLIE-SNAPSHOT/mev-dataset-domain-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/dataset/domain/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-dataset-domain/BAYLIE-SNAPSHOT/mev-dataset-domain-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/dataset/domain/target/mev-dataset-domain-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-dataset-domain/BAYLIE-SNAPSHOT/mev-dataset-domain-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/dataset/domain/target/mev-dataset-domain-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-dataset-domain/BAYLIE-SNAPSHOT/mev-dataset-domain-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV Dataset Plugin REST Component BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-dataset-rest ---
+[INFO] Deleting file set: /home/brian/workspace/mev/dataset/rest/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-dataset-rest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-dataset-rest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 32 source files to /home/brian/workspace/mev/dataset/rest/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-dataset-rest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-dataset-rest ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-dataset-rest ---
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-dataset-rest ---
+[INFO] Building jar: /home/brian/workspace/mev/dataset/rest/target/mev-dataset-rest-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-dataset-rest >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-dataset-rest <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-dataset-rest ---
+[INFO] Building jar: /home/brian/workspace/mev/dataset/rest/target/mev-dataset-rest-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-dataset-rest ---
+[INFO] Building jar: /home/brian/workspace/mev/dataset/rest/target/mev-dataset-rest-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-dataset-rest ---
+[INFO] Installing /home/brian/workspace/mev/dataset/rest/target/mev-dataset-rest-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-dataset-rest/BAYLIE-SNAPSHOT/mev-dataset-rest-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/dataset/rest/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-dataset-rest/BAYLIE-SNAPSHOT/mev-dataset-rest-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/dataset/rest/target/mev-dataset-rest-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-dataset-rest/BAYLIE-SNAPSHOT/mev-dataset-rest-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/dataset/rest/target/mev-dataset-rest-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-dataset-rest/BAYLIE-SNAPSHOT/mev-dataset-rest-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV Dataset Plugin Client Component BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-dataset-client ---
+[INFO] Deleting file set: /home/brian/workspace/mev/dataset/client/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-dataset-client ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/dataset/client/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-dataset-client ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 17 source files to /home/brian/workspace/mev/dataset/client/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-dataset-client ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/dataset/client/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-dataset-client ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-dataset-client ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-dataset-client ---
+[INFO] Building jar: /home/brian/workspace/mev/dataset/client/target/mev-dataset-client-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-dataset-client >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-dataset-client <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-dataset-client ---
+[INFO] Building jar: /home/brian/workspace/mev/dataset/client/target/mev-dataset-client-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-dataset-client ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/dataset/client/target/mev-dataset-client-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-dataset-client ---
+[INFO] Installing /home/brian/workspace/mev/dataset/client/target/mev-dataset-client-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-dataset-client/BAYLIE-SNAPSHOT/mev-dataset-client-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/dataset/client/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-dataset-client/BAYLIE-SNAPSHOT/mev-dataset-client-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/dataset/client/target/mev-dataset-client-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-dataset-client/BAYLIE-SNAPSHOT/mev-dataset-client-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/dataset/client/target/mev-dataset-client-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-dataset-client/BAYLIE-SNAPSHOT/mev-dataset-client-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV Annotation Plugin BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-annotation ---
+[INFO] Deleting file set: /home/brian/workspace/mev/annotation/target (included: [**], excluded: [])
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-annotation >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-annotation <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-annotation ---
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-annotation ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/annotation/target/mev-annotation-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-annotation ---
+[INFO] Installing /home/brian/workspace/mev/annotation/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-annotation/BAYLIE-SNAPSHOT/mev-annotation-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/annotation/target/mev-annotation-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-annotation/BAYLIE-SNAPSHOT/mev-annotation-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV Annotation Domain API BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-annotation-domain ---
+[INFO] Deleting file set: /home/brian/workspace/mev/annotation/domain/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-annotation-domain ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/annotation/domain/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-annotation-domain ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 24 source files to /home/brian/workspace/mev/annotation/domain/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-annotation-domain ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/annotation/domain/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-annotation-domain ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-annotation-domain ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-annotation-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/annotation/domain/target/mev-annotation-domain-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-annotation-domain >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-annotation-domain <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-annotation-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/annotation/domain/target/mev-annotation-domain-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-annotation-domain ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/annotation/domain/target/mev-annotation-domain-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-annotation-domain ---
+[INFO] Installing /home/brian/workspace/mev/annotation/domain/target/mev-annotation-domain-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-annotation-domain/BAYLIE-SNAPSHOT/mev-annotation-domain-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/annotation/domain/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-annotation-domain/BAYLIE-SNAPSHOT/mev-annotation-domain-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/annotation/domain/target/mev-annotation-domain-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-annotation-domain/BAYLIE-SNAPSHOT/mev-annotation-domain-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/annotation/domain/target/mev-annotation-domain-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-annotation-domain/BAYLIE-SNAPSHOT/mev-annotation-domain-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV Annotation JOOQ Data Access BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-annotation-jooq ---
+[INFO] Deleting file set: /home/brian/workspace/mev/annotation/annotation-jooq/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- sql-maven-plugin:1.5:execute (create-database-h2) @ mev-annotation-jooq ---
+[INFO] Executing file: /tmp/create-probe-annotaions-schema.74407553sql
+[INFO] 2 of 2 SQL statements executed successfully
+[INFO] 
+[INFO] --- jooq-codegen-maven:3.2.3:generate (generate-h2) @ mev-annotation-jooq ---
+[INFO] Using this configuration:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.2.0.xsd">
+    <jdbc>
+        <driver>org.h2.Driver</driver>
+        <url>jdbc:h2:file:/home/brian/workspace/mev/annotation/annotation-jooq/target/mev-probe-annotations-codegen</url>
+        <user>sa</user>
+    </jdbc>
+    <generator>
+        <name>org.jooq.util.DefaultGenerator</name>
+        <database>
+            <name>org.jooq.util.h2.H2Database</name>
+            <includes>.*</includes>
+            <excludes></excludes>
+            <includeExcludeColumns>false</includeExcludeColumns>
+            <recordVersionFields></recordVersionFields>
+            <recordTimestampFields></recordTimestampFields>
+            <dateAsTimestamp>false</dateAsTimestamp>
+            <unsignedTypes>true</unsignedTypes>
+            <inputSchema>PUBLIC</inputSchema>
+        </database>
+        <generate>
+            <relations>true</relations>
+            <deprecated>true</deprecated>
+            <instanceFields>true</instanceFields>
+            <generatedAnnotation>true</generatedAnnotation>
+            <records>true</records>
+            <pojos>false</pojos>
+            <immutablePojos>false</immutablePojos>
+            <interfaces>false</interfaces>
+            <daos>false</daos>
+            <jpaAnnotations>false</jpaAnnotations>
+            <validationAnnotations>false</validationAnnotations>
+            <globalObjectReferences>true</globalObjectReferences>
+            <fluentSetters>false</fluentSetters>
+        </generate>
+        <target>
+            <packageName>edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq</packageName>
+            <directory>/home/brian/workspace/mev/annotation/annotation-jooq/src/main/java</directory>
+        </target>
+    </generator>
+</configuration>
+
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-annotation-jooq ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-annotation-jooq ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 7 source files to /home/brian/workspace/mev/annotation/annotation-jooq/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-annotation-jooq ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/annotation/annotation-jooq/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-annotation-jooq ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-annotation-jooq ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-annotation-jooq ---
+[INFO] Building jar: /home/brian/workspace/mev/annotation/annotation-jooq/target/mev-annotation-jooq-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-annotation-jooq >>>
+[INFO] 
+[INFO] --- sql-maven-plugin:1.5:execute (create-database-h2) @ mev-annotation-jooq ---
+[INFO] Executing file: /tmp/create-probe-annotaions-schema.1033825622sql
+[INFO] 2 of 2 SQL statements executed successfully
+[INFO] 
+[INFO] --- jooq-codegen-maven:3.2.3:generate (generate-h2) @ mev-annotation-jooq ---
+[INFO] Using this configuration:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.2.0.xsd">
+    <jdbc>
+        <driver>org.h2.Driver</driver>
+        <url>jdbc:h2:file:/home/brian/workspace/mev/annotation/annotation-jooq/target/mev-probe-annotations-codegen</url>
+        <user>sa</user>
+    </jdbc>
+    <generator>
+        <name>org.jooq.util.DefaultGenerator</name>
+        <database>
+            <name>org.jooq.util.h2.H2Database</name>
+            <includes>.*</includes>
+            <excludes></excludes>
+            <includeExcludeColumns>false</includeExcludeColumns>
+            <recordVersionFields></recordVersionFields>
+            <recordTimestampFields></recordTimestampFields>
+            <dateAsTimestamp>false</dateAsTimestamp>
+            <unsignedTypes>true</unsignedTypes>
+            <inputSchema>PUBLIC</inputSchema>
+        </database>
+        <generate>
+            <relations>true</relations>
+            <deprecated>true</deprecated>
+            <instanceFields>true</instanceFields>
+            <generatedAnnotation>true</generatedAnnotation>
+            <records>true</records>
+            <pojos>false</pojos>
+            <immutablePojos>false</immutablePojos>
+            <interfaces>false</interfaces>
+            <daos>false</daos>
+            <jpaAnnotations>false</jpaAnnotations>
+            <validationAnnotations>false</validationAnnotations>
+            <globalObjectReferences>true</globalObjectReferences>
+            <fluentSetters>false</fluentSetters>
+        </generate>
+        <target>
+            <packageName>edu.dfci.cccb.mev.annotation.domain.probe.dal.jooq</packageName>
+            <directory>/home/brian/workspace/mev/annotation/annotation-jooq/src/main/java</directory>
+        </target>
+    </generator>
+</configuration>
+
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-annotation-jooq <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-annotation-jooq ---
+[INFO] Building jar: /home/brian/workspace/mev/annotation/annotation-jooq/target/mev-annotation-jooq-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-annotation-jooq ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/annotation/annotation-jooq/target/mev-annotation-jooq-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-annotation-jooq ---
+[INFO] Installing /home/brian/workspace/mev/annotation/annotation-jooq/target/mev-annotation-jooq-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-annotation-jooq/BAYLIE-SNAPSHOT/mev-annotation-jooq-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/annotation/annotation-jooq/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-annotation-jooq/BAYLIE-SNAPSHOT/mev-annotation-jooq-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/annotation/annotation-jooq/target/mev-annotation-jooq-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-annotation-jooq/BAYLIE-SNAPSHOT/mev-annotation-jooq-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/annotation/annotation-jooq/target/mev-annotation-jooq-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-annotation-jooq/BAYLIE-SNAPSHOT/mev-annotation-jooq-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV PREloaded DataSETS BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-presets ---
+[INFO] Deleting file set: /home/brian/workspace/mev/presets/target (included: [**], excluded: [])
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-presets >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-presets <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-presets ---
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-presets ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/presets/target/mev-presets-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-presets ---
+[INFO] Installing /home/brian/workspace/mev/presets/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-presets/BAYLIE-SNAPSHOT/mev-presets-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/presets/target/mev-presets-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-presets/BAYLIE-SNAPSHOT/mev-presets-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV PREloaded DataSETS - Domain BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-presets-domain ---
+[INFO] Deleting file set: /home/brian/workspace/mev/presets/domain/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-presets-domain ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/presets/domain/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-presets-domain ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 38 source files to /home/brian/workspace/mev/presets/domain/target/classes
+[WARNING] /home/brian/workspace/mev/presets/domain/src/main/java/edu/dfci/cccb/mev/presets/simple/SimplePresetDescriptor.java:[20] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add '@EqualsAndHashCode(callSuper=false)' to your type.
+[WARNING] /home/brian/workspace/mev/presets/domain/src/main/java/edu/dfci/cccb/mev/presets/tcga/TcgaPresetMetafile.java:[24] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add '@EqualsAndHashCode(callSuper=false)' to your type.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-presets-domain ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 4 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-presets-domain ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /home/brian/workspace/mev/presets/domain/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-presets-domain ---
+[INFO] Surefire report directory: /home/brian/workspace/mev/presets/domain/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running edu.dfci.cccb.mev.test.presets.dal.TestTsvReaderMetaModel
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.117 sec - in edu.dfci.cccb.mev.test.presets.dal.TestTsvReaderMetaModel
+
+Results :
+
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-presets-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/presets/domain/target/mev-presets-domain-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-presets-domain >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-presets-domain <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-presets-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/presets/domain/target/mev-presets-domain-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-presets-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/presets/domain/target/mev-presets-domain-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-presets-domain ---
+[INFO] Installing /home/brian/workspace/mev/presets/domain/target/mev-presets-domain-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-presets-domain/BAYLIE-SNAPSHOT/mev-presets-domain-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/presets/domain/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-presets-domain/BAYLIE-SNAPSHOT/mev-presets-domain-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/presets/domain/target/mev-presets-domain-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-presets-domain/BAYLIE-SNAPSHOT/mev-presets-domain-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/presets/domain/target/mev-presets-domain-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-presets-domain/BAYLIE-SNAPSHOT/mev-presets-domain-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV Annotation Server API BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-annotation-server ---
+[INFO] Deleting file set: /home/brian/workspace/mev/annotation/server/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-annotation-server ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 12 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-annotation-server ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 458 source files to /home/brian/workspace/mev/annotation/server/target/classes
+[WARNING] /home/brian/.m2/repository/org/springframework/spring-context/4.0.0.RELEASE/spring-context-4.0.0.RELEASE.jar(org/springframework/context/annotation/PropertySource.class): warning: Cannot find annotation method 'value()' in type 'Repeatable': class file for java.lang.annotation.Repeatable not found
+/home/brian/.m2/repository/org/springframework/spring-context/4.0.0.RELEASE/spring-context-4.0.0.RELEASE.jar(org/springframework/context/annotation/PropertySource.class): warning: Cannot find annotation method 'value()' in type 'Repeatable': class file for java.lang.annotation.Repeatable not found
+/home/brian/.m2/repository/org/springframework/spring-context/4.0.0.RELEASE/spring-context-4.0.0.RELEASE.jar(org/springframework/context/annotation/PropertySource.class): warning: Cannot find annotation method 'value()' in type 'Repeatable': class file for java.lang.annotation.Repeatable not found
+/home/brian/.m2/repository/org/springframework/spring-context/4.0.0.RELEASE/spring-context-4.0.0.RELEASE.jar(org/springframework/context/annotation/PropertySource.class): warning: Cannot find annotation method 'value()' in type 'Repeatable': class file for java.lang.annotation.Repeatable not found
+/home/brian/workspace/mev/annotation/server/src/main/java/com/google/refine/importers/XmlImporter.java:[288,22] [deprecation] getFieldValue() in TreeReader has been deprecated
+[WARNING] /home/brian/workspace/mev/annotation/server/src/main/java/com/google/refine/importers/JsonImporter.java:[282,18] [deprecation] getFieldValue() in TreeReader has been deprecated
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-annotation-server ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 13 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-annotation-server ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 9 source files to /home/brian/workspace/mev/annotation/server/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-annotation-server ---
+[INFO] Surefire report directory: /home/brian/workspace/mev/annotation/server/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running edu.dfci.cccb.mev.test.TestMyBean
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.808 sec - in edu.dfci.cccb.mev.test.TestMyBean
+Running edu.dfci.cccb.mev.test.annotation.server.support.jooq.TestJooqUtil
+[DEBUG] : Logging Provider: org.jboss.logging.Log4jLoggerProvider
+[DEBUG] : Trying to safely close au.com.bytecode.opencsv.CSVReader@166ef2a
+[DEBUG] : Using LEVEL2 Annotatinos
+[DEBUG] : Using LEVEL3 Annotatinos
+[DEBUG] : Trying to safely close java.io.BufferedReader@1b95cf5
+[DEBUG] : Trying to safely close java.io.BufferedReader@1b95cf5
+[DEBUG] : ****Loading Annotations file: HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv_PK" ON PUBLIC."PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv"(PROBESET_ID);
+[DEBUG] : ****Loading Annotations file: geneSymbol_goAnnotations.top3.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv_PK" ON PUBLIC."GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv"(Symbol);
+[DEBUG] : table: "tblDimension"
+[DEBUG] : Executing query          : select "tblDimension"."c1" from (select "v"."c1" from ((select null "c1" from dual where 1 = 0) union all (select * from (((select cast(? as varchar) from dual) union all (select cast(? as varchar) from dual)) union all (select cast(? as varchar) from dual)) "v")) "v") "tblDimension"
+[DEBUG] : -> with bind values      : select "tblDimension"."c1" from (select "v"."c1" from ((select null "c1" from dual where 1 = 0) union all (select * from (((select 'probe1' from dual) union all (select 'probe2' from dual)) union all (select 'probe3' from dual)) "v")) "v") "tblDimension"
+[DEBUG] : Query executed           : Total: 54.526ms
+[DEBUG] : Fetched result           : +------+
+[DEBUG] :                          : |c1    |
+[DEBUG] :                          : +------+
+[DEBUG] :                          : |probe1|
+[DEBUG] :                          : |probe2|
+[DEBUG] :                          : |probe3|
+[DEBUG] :                          : +------+
+[DEBUG] : Finishing                : Total: 75.642ms, +21.115ms
+[DEBUG] : Executing query          : select "tblDimension"."c1" from (select "v"."c1" from ((select null "c1" from dual where 1 = 0) union all (select * from (((select cast(? as varchar) from dual) union all (select cast(? as varchar) from dual)) union all (select cast(? as varchar) from dual)) "v")) "v") "tblDimension"
+[DEBUG] : -> with bind values      : select "tblDimension"."c1" from (select "v"."c1" from ((select null "c1" from dual where 1 = 0) union all (select * from (((select 'probe1' from dual) union all (select 'probe2' from dual)) union all (select 'probe3' from dual)) "v")) "v") "tblDimension"
+[DEBUG] : Query executed           : Total: 1.626ms
+[DEBUG] : Fetched result           : +------+
+[DEBUG] :                          : |c1    |
+[DEBUG] :                          : +------+
+[DEBUG] :                          : |probe1|
+[DEBUG] :                          : |probe2|
+[DEBUG] :                          : |probe3|
+[DEBUG] :                          : +------+
+[DEBUG] : Finishing                : Total: 2.559ms, +0.932ms
+[DEBUG] : record: +------+
+|c1    |
++------+
+|probe1|
+|probe2|
+|probe3|
++------+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.854 sec - in edu.dfci.cccb.mev.test.annotation.server.support.jooq.TestJooqUtil
+Running edu.dfci.cccb.mev.test.annotation.domain.probe.dal.h2.TestH2ProbeAnnotations
+[DEBUG] : ****Loading Annotations file: HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv_PK" ON PUBLIC."PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv"(PROBESET_ID);
+[DEBUG] : ****Loading Annotations file: geneSymbol_goAnnotations.top3.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv_PK" ON PUBLIC."GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv"(Symbol);
+[DEBUG] : Type=row
+[DEBUG] : Select Probe Annotations:select * from table(PROBESET_ID VARCHAR=?) t left outer join PUBLIC."PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv" annotations on t.PROBESET_ID=annotations.PROBESET_ID
+[DEBUG] : dimension.keys().toArray(): [Ljava.lang.Object;@191bfbf
+[DEBUG] : Probes: "PROBESET_ID"	"CHIP_VENDOR"	"CHIP_TYPE"	"CREATE_DATE"	"GENOME_SPECIES"	"GENOME_VERSION"	"NETAFFX_ANNOTATION_NETAFFX_BUILD"	"PROBESET_ID"	"GENE_SYMBOL"	"GENE_DESC"	"CHR_LOCATION"	"STRAND"	"REFSEQ_ACCN"
+"1007_s_at"	"Affymetrix"	"HT_HG-U133A"	"2012-10-29 GMT-08:00 19:23:30"	"Homo sapiens"	"hg19"	"33"	"1007_s_at"	"DDR1|MIR4640"	"discoidin domain receptor tyrosine kinase 1|microRNA 4640"	"chr6p21.3"	"-"	"NP_001189450|NP_001189451|NP_001189452|NP_001945|NP_054699|NP_054700"
+"1053_at"	"Affymetrix"	"HT_HG-U133A"	"2012-10-29 GMT-08:00 19:23:30"	"Homo sapiens"	"hg19"	"33"	"1053_at"	"RFC2"	"replication factor C (activator 1) 2, 40kDa"	"chr7q11.23"	"-"	"NP_002905|NP_852136"
+"13029_at"												
+
+[DEBUG] : ****Loading Annotations file: HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv_PK" ON PUBLIC."PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv"(PROBESET_ID);
+[DEBUG] : ****Loading Annotations file: geneSymbol_goAnnotations.top3.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv_PK" ON PUBLIC."GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv"(Symbol);
+[DEBUG] : Type=row
+[DEBUG] : Select Probe Annotations:select annotations.* from table(GENE_SYMBOL VARCHAR=?) t left outer join PUBLIC."GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv" annotations on t.GENE_SYMBOL=annotations.Symbol
+[DEBUG] : dimension.keys().toArray(): [Ljava.lang.Object;@c0a65f
+[DEBUG] : Probes: "SYMBOL"	"NAME"	"GO_BIOLOGICAL_PROCESS"	"GO_CELLULAR_COMPONENT"	"GO_MOLECULAR_FUNCTION"
+				
+				
+				
+
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.039 sec - in edu.dfci.cccb.mev.test.annotation.domain.probe.dal.h2.TestH2ProbeAnnotations
+Running edu.dfci.cccb.mev.test.annotation.domain.probe.dal.h2.TestH2ProbeAnnotationsLoader
+[DEBUG] : Trying to safely close au.com.bytecode.opencsv.CSVReader@17c1b71
+[DEBUG] : Using LEVEL2 Annotatinos
+[DEBUG] : Using LEVEL3 Annotatinos
+[DEBUG] : Trying to safely close java.io.BufferedReader@eda7dd
+[DEBUG] : Trying to safely close java.io.BufferedReader@eda7dd
+[DEBUG] : ****Loading Annotations file: HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv_PK" ON PUBLIC."PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv"(PROBESET_ID);
+[DEBUG] : ****Loading Annotations file: geneSymbol_goAnnotations.top3.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv_PK" ON PUBLIC."GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv"(Symbol);
+[DEBUG] : ****Loading Annotations file: HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : ****Loading Annotations file: HT_HG-U133A.na33.top3.annot.out.tsv
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.233 sec - in edu.dfci.cccb.mev.test.annotation.domain.probe.dal.h2.TestH2ProbeAnnotationsLoader
+Running edu.dfci.cccb.mev.test.annotation.domain.probe.dal.jooq.TestJooqProbeAnnotationsLoader
+[DEBUG] : Reload flag not set.... will not load probe annotations
+[DEBUG] : reload count:0
+[DEBUG] : Importing Probe Annotations filefile:/home/brian/workspace/mev/annotation/server/target/test-classes/edu/dfci/cccb/mev/test/annotation/server/configuration/array_annotations/from_affymetrix/annotation_files/HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : Executing query          : insert into "PUBLIC"."MEV_PROBE_ANNOTATIONS" ("CHIP_VENDOR", "CHIP_TYPE", "CREATE_DATE", "GENOME_SPECIES", "GENOME_VERSION", "NETAFFX_ANNOTATION_NETAFFX_BUILD", "PROBESET_ID", "GENE_SYMBOL", "GENE_DESC", "CHR_LOCATION", "STRAND", "REFSEQ_ACCN") values (cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)))
+[DEBUG] : -> with bind values      : insert into "PUBLIC"."MEV_PROBE_ANNOTATIONS" ("CHIP_VENDOR", "CHIP_TYPE", "CREATE_DATE", "GENOME_SPECIES", "GENOME_VERSION", "NETAFFX_ANNOTATION_NETAFFX_BUILD", "PROBESET_ID", "GENE_SYMBOL", "GENE_DESC", "CHR_LOCATION", "STRAND", "REFSEQ_ACCN") values ('Affymetrix', 'HT_HG-U133A', '2012-10-29 GMT-08:00 19:23:30', 'Homo sapiens', 'hg19', '33', '1007_s_at', 'DDR1|MIR4640', 'discoidin domain receptor tyrosine kinase 1|microRNA 4640', 'chr6p21.3', '-', 'NP_001189450|NP_001189451|NP_001189452|NP_001945|NP_054699|NP_054700')
+[DEBUG] : Affected row(s)          : 1
+[DEBUG] : Query executed           : Total: 4.977ms
+[DEBUG] : Finishing                : Total: 5.11ms, +0.133ms
+[DEBUG] : Executing query          : insert into "PUBLIC"."MEV_PROBE_ANNOTATIONS" ("CHIP_VENDOR", "CHIP_TYPE", "CREATE_DATE", "GENOME_SPECIES", "GENOME_VERSION", "NETAFFX_ANNOTATION_NETAFFX_BUILD", "PROBESET_ID", "GENE_SYMBOL", "GENE_DESC", "CHR_LOCATION", "STRAND", "REFSEQ_ACCN") values (cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)))
+[DEBUG] : -> with bind values      : insert into "PUBLIC"."MEV_PROBE_ANNOTATIONS" ("CHIP_VENDOR", "CHIP_TYPE", "CREATE_DATE", "GENOME_SPECIES", "GENOME_VERSION", "NETAFFX_ANNOTATION_NETAFFX_BUILD", "PROBESET_ID", "GENE_SYMBOL", "GENE_DESC", "CHR_LOCATION", "STRAND", "REFSEQ_ACCN") values ('Affymetrix', 'HT_HG-U133A', '2012-10-29 GMT-08:00 19:23:30', 'Homo sapiens', 'hg19', '33', '1053_at', 'RFC2', 'replication factor C (activator 1) 2, 40kDa', 'chr7q11.23', '-', 'NP_002905|NP_852136')
+[DEBUG] : Affected row(s)          : 1
+[DEBUG] : Query executed           : Total: 2.778ms
+[DEBUG] : Finishing                : Total: 2.902ms, +0.124ms
+[DEBUG] : Executing query          : insert into "PUBLIC"."MEV_PROBE_ANNOTATIONS" ("CHIP_VENDOR", "CHIP_TYPE", "CREATE_DATE", "GENOME_SPECIES", "GENOME_VERSION", "NETAFFX_ANNOTATION_NETAFFX_BUILD", "PROBESET_ID", "GENE_SYMBOL", "GENE_DESC", "CHR_LOCATION", "STRAND", "REFSEQ_ACCN") values (cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)))
+[DEBUG] : -> with bind values      : insert into "PUBLIC"."MEV_PROBE_ANNOTATIONS" ("CHIP_VENDOR", "CHIP_TYPE", "CREATE_DATE", "GENOME_SPECIES", "GENOME_VERSION", "NETAFFX_ANNOTATION_NETAFFX_BUILD", "PROBESET_ID", "GENE_SYMBOL", "GENE_DESC", "CHR_LOCATION", "STRAND", "REFSEQ_ACCN") values ('Affymetrix', 'HT_HG-U133A', '2012-10-29 GMT-08:00 19:23:30', 'Homo sapiens', 'hg19', '33', '117_at', 'HSPA6', 'heat shock 70kDa protein 6 (HSP70B'')', 'chr1q23', '-', 'NP_002146')
+[DEBUG] : Affected row(s)          : 1
+[DEBUG] : Query executed           : Total: 1.375ms
+[DEBUG] : Finishing                : Total: 1.492ms, +0.116ms
+[DEBUG] : ************FILE-URL:file:/home/brian/workspace/mev/annotation/server/target/test-classes/edu/dfci/cccb/mev/test/annotation/server/configuration/array_annotations/from_affymetrix_force/annotation_files/HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : Reloading Probe Annotations from folder /home/brian/workspace/mev/annotation/server/target/test-classes/edu/dfci/cccb/mev/test/annotation/server/configuration/array_annotations/from_affymetrix_force/annotation_files
+[DEBUG] : Executing query          : truncate table "PUBLIC"."MEV_PROBE_ANNOTATIONS"
+[DEBUG] : Affected row(s)          : 0
+[DEBUG] : Query executed           : Total: 0.904ms
+[DEBUG] : Finishing                : Total: 1.031ms, +0.127ms
+[DEBUG] : Importing Probe Annotations filefile:/home/brian/workspace/mev/annotation/server/target/test-classes/edu/dfci/cccb/mev/test/annotation/server/configuration/array_annotations/from_affymetrix_force/annotation_files/HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : Executing query          : insert into "PUBLIC"."MEV_PROBE_ANNOTATIONS" ("CHIP_VENDOR", "CHIP_TYPE", "CREATE_DATE", "GENOME_SPECIES", "GENOME_VERSION", "NETAFFX_ANNOTATION_NETAFFX_BUILD", "PROBESET_ID", "GENE_SYMBOL", "GENE_DESC", "CHR_LOCATION", "STRAND", "REFSEQ_ACCN") values (cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)))
+[DEBUG] : -> with bind values      : insert into "PUBLIC"."MEV_PROBE_ANNOTATIONS" ("CHIP_VENDOR", "CHIP_TYPE", "CREATE_DATE", "GENOME_SPECIES", "GENOME_VERSION", "NETAFFX_ANNOTATION_NETAFFX_BUILD", "PROBESET_ID", "GENE_SYMBOL", "GENE_DESC", "CHR_LOCATION", "STRAND", "REFSEQ_ACCN") values ('Affymetrix', 'HT_HG-U133A', '2012-10-29 GMT-08:00 19:23:30', 'Homo sapiens', 'hg19', '33', '1007_s_at', 'DDR1|MIR4640', 'discoidin domain receptor tyrosine kinase 1|microRNA 4640', 'chr6p21.3', '-', 'NP_001189450|NP_001189451|NP_001189452|NP_001945|NP_054699|NP_054700')
+[DEBUG] : Affected row(s)          : 1
+[DEBUG] : Query executed           : Total: 2.132ms
+[DEBUG] : Finishing                : Total: 2.259ms, +0.127ms
+[DEBUG] : Executing query          : insert into "PUBLIC"."MEV_PROBE_ANNOTATIONS" ("CHIP_VENDOR", "CHIP_TYPE", "CREATE_DATE", "GENOME_SPECIES", "GENOME_VERSION", "NETAFFX_ANNOTATION_NETAFFX_BUILD", "PROBESET_ID", "GENE_SYMBOL", "GENE_DESC", "CHR_LOCATION", "STRAND", "REFSEQ_ACCN") values (cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)))
+[DEBUG] : -> with bind values      : insert into "PUBLIC"."MEV_PROBE_ANNOTATIONS" ("CHIP_VENDOR", "CHIP_TYPE", "CREATE_DATE", "GENOME_SPECIES", "GENOME_VERSION", "NETAFFX_ANNOTATION_NETAFFX_BUILD", "PROBESET_ID", "GENE_SYMBOL", "GENE_DESC", "CHR_LOCATION", "STRAND", "REFSEQ_ACCN") values ('Affymetrix', 'HT_HG-U133A', '2012-10-29 GMT-08:00 19:23:30', 'Homo sapiens', 'hg19', '33', '1053_at', 'RFC2', 'replication factor C (activator 1) 2, 40kDa', 'chr7q11.23', '-', 'NP_002905|NP_852136')
+[DEBUG] : Affected row(s)          : 1
+[DEBUG] : Query executed           : Total: 5.825ms
+[DEBUG] : Finishing                : Total: 5.966ms, +0.14ms
+[DEBUG] : Executing query          : insert into "PUBLIC"."MEV_PROBE_ANNOTATIONS" ("CHIP_VENDOR", "CHIP_TYPE", "CREATE_DATE", "GENOME_SPECIES", "GENOME_VERSION", "NETAFFX_ANNOTATION_NETAFFX_BUILD", "PROBESET_ID", "GENE_SYMBOL", "GENE_DESC", "CHR_LOCATION", "STRAND", "REFSEQ_ACCN") values (cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)), cast(? as varchar(2147483647)))
+[DEBUG] : -> with bind values      : insert into "PUBLIC"."MEV_PROBE_ANNOTATIONS" ("CHIP_VENDOR", "CHIP_TYPE", "CREATE_DATE", "GENOME_SPECIES", "GENOME_VERSION", "NETAFFX_ANNOTATION_NETAFFX_BUILD", "PROBESET_ID", "GENE_SYMBOL", "GENE_DESC", "CHR_LOCATION", "STRAND", "REFSEQ_ACCN") values ('Affymetrix', 'HT_HG-U133A', '2012-10-29 GMT-08:00 19:23:30', 'Homo sapiens', 'hg19', '33', '117_at', 'HSPA6', 'heat shock 70kDa protein 6 (HSP70B'')', 'chr1q23', '-', 'NP_002146')
+[DEBUG] : Affected row(s)          : 1
+[DEBUG] : Query executed           : Total: 1.442ms
+[DEBUG] : Finishing                : Total: 1.559ms, +0.117ms
+[DEBUG] : ************RELOAD-COUNT:1
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.073 sec - in edu.dfci.cccb.mev.test.annotation.domain.probe.dal.jooq.TestJooqProbeAnnotationsLoader
+Running edu.dfci.cccb.mev.test.annotation.domain.probe.dal.jooq.TestJooqProbeAnnotations
+[DEBUG] : ****Loading Annotations file: HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : Type=row
+[DEBUG] : select * from "PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv" where "PROBESET_ID" in ('11986_at', '12025_at', '13029_at')
+[DEBUG] : Executing query          : select * from "PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv" where "PROBESET_ID" in (cast(? as varchar), cast(? as varchar), cast(? as varchar))
+[DEBUG] : -> with bind values      : select * from "PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv" where "PROBESET_ID" in ('11986_at', '12025_at', '13029_at')
+[DEBUG] : Query executed           : Total: 2.189ms
+[DEBUG] : Fetched result           : +-----------+---------+-----------+--------------+--------------+--------------------------------+-----------+-----------+---------+------------+------+-----------+
+[DEBUG] :                          : |CHIP_VENDOR|CHIP_TYPE|CREATE_DATE|GENOME_SPECIES|GENOME_VERSION|NETAFFX_ANNOTATION_NETAFFX_BUILD|PROBESET_ID|GENE_SYMBOL|GENE_DESC|CHR_LOCATION|STRAND|REFSEQ_ACCN|
+[DEBUG] :                          : +-----------+---------+-----------+--------------+--------------+--------------------------------+-----------+-----------+---------+------------+------+-----------+
+[DEBUG] : Finishing                : Total: 8.284ms, +6.094ms
+[DEBUG] : Probes: CHIP_VENDOR	CHIP_TYPE	CREATE_DATE	GENOME_SPECIES	GENOME_VERSION	NETAFFX_ANNOTATION_NETAFFX_BUILD	PROBESET_ID	GENE_SYMBOL	GENE_DESC	CHR_LOCATION	STRAND	REFSEQ_ACCN
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.038 sec - in edu.dfci.cccb.mev.test.annotation.domain.probe.dal.jooq.TestJooqProbeAnnotations
+Running edu.dfci.cccb.mev.test.annotation.domain.probe.configuration.TestProbeAnnotationsConfiguration
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.01 sec - in edu.dfci.cccb.mev.test.annotation.domain.probe.configuration.TestProbeAnnotationsConfiguration
+
+Results :
+
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 1
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-annotation-server ---
+[INFO] Building jar: /home/brian/workspace/mev/annotation/server/target/mev-annotation-server-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-annotation-server >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-annotation-server <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-annotation-server ---
+[INFO] Building jar: /home/brian/workspace/mev/annotation/server/target/mev-annotation-server-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-annotation-server ---
+[INFO] Building jar: /home/brian/workspace/mev/annotation/server/target/mev-annotation-server-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-annotation-server ---
+[INFO] Installing /home/brian/workspace/mev/annotation/server/target/mev-annotation-server-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-annotation-server/BAYLIE-SNAPSHOT/mev-annotation-server-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/annotation/server/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-annotation-server/BAYLIE-SNAPSHOT/mev-annotation-server-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/annotation/server/target/mev-annotation-server-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-annotation-server/BAYLIE-SNAPSHOT/mev-annotation-server-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/annotation/server/target/mev-annotation-server-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-annotation-server/BAYLIE-SNAPSHOT/mev-annotation-server-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV Hierarchical Clustering BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-hcl ---
+[INFO] Deleting file set: /home/brian/workspace/mev/hcl/target (included: [**], excluded: [])
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-hcl >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-hcl <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-hcl ---
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-hcl ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/hcl/target/mev-hcl-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-hcl ---
+[INFO] Installing /home/brian/workspace/mev/hcl/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-hcl/BAYLIE-SNAPSHOT/mev-hcl-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/hcl/target/mev-hcl-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-hcl/BAYLIE-SNAPSHOT/mev-hcl-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV Hierarchical Clustering Plugin Domain Component BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-hcl-domain ---
+[INFO] Deleting file set: /home/brian/workspace/mev/hcl/domain/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-hcl-domain ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/hcl/domain/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-hcl-domain ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 23 source files to /home/brian/workspace/mev/hcl/domain/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-hcl-domain ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/hcl/domain/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-hcl-domain ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-hcl-domain ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-hcl-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/hcl/domain/target/mev-hcl-domain-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-hcl-domain >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-hcl-domain <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-hcl-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/hcl/domain/target/mev-hcl-domain-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-hcl-domain ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/hcl/domain/target/mev-hcl-domain-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-hcl-domain ---
+[INFO] Installing /home/brian/workspace/mev/hcl/domain/target/mev-hcl-domain-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-hcl-domain/BAYLIE-SNAPSHOT/mev-hcl-domain-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/hcl/domain/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-hcl-domain/BAYLIE-SNAPSHOT/mev-hcl-domain-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/hcl/domain/target/mev-hcl-domain-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-hcl-domain/BAYLIE-SNAPSHOT/mev-hcl-domain-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/hcl/domain/target/mev-hcl-domain-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-hcl-domain/BAYLIE-SNAPSHOT/mev-hcl-domain-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV Hierarchical Clustering Plugin REST Component BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-hcl-rest ---
+[INFO] Deleting file set: /home/brian/workspace/mev/hcl/rest/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-hcl-rest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/hcl/rest/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-hcl-rest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 15 source files to /home/brian/workspace/mev/hcl/rest/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-hcl-rest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/hcl/rest/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-hcl-rest ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-hcl-rest ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-hcl-rest ---
+[INFO] Building jar: /home/brian/workspace/mev/hcl/rest/target/mev-hcl-rest-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-hcl-rest >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-hcl-rest <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-hcl-rest ---
+[INFO] Building jar: /home/brian/workspace/mev/hcl/rest/target/mev-hcl-rest-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-hcl-rest ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/hcl/rest/target/mev-hcl-rest-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-hcl-rest ---
+[INFO] Installing /home/brian/workspace/mev/hcl/rest/target/mev-hcl-rest-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-hcl-rest/BAYLIE-SNAPSHOT/mev-hcl-rest-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/hcl/rest/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-hcl-rest/BAYLIE-SNAPSHOT/mev-hcl-rest-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/hcl/rest/target/mev-hcl-rest-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-hcl-rest/BAYLIE-SNAPSHOT/mev-hcl-rest-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/hcl/rest/target/mev-hcl-rest-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-hcl-rest/BAYLIE-SNAPSHOT/mev-hcl-rest-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV LIMMA Plugin BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-limma ---
+[INFO] Deleting file set: /home/brian/workspace/mev/limma/target (included: [**], excluded: [])
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-limma >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-limma <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-limma ---
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-limma ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/limma/target/mev-limma-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-limma ---
+[INFO] Installing /home/brian/workspace/mev/limma/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-limma/BAYLIE-SNAPSHOT/mev-limma-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/limma/target/mev-limma-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-limma/BAYLIE-SNAPSHOT/mev-limma-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV LIMMA Plugin Domain Component BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-limma-domain ---
+[INFO] Deleting file set: /home/brian/workspace/mev/limma/domain/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-limma-domain ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-limma-domain ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 11 source files to /home/brian/workspace/mev/limma/domain/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-limma-domain ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-limma-domain ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /home/brian/workspace/mev/limma/domain/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-limma-domain ---
+[INFO] Surefire report directory: /home/brian/workspace/mev/limma/domain/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running edu.dfci.cccb.mev.limma.domain.cli.CliRLimmaTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.048 sec - in edu.dfci.cccb.mev.limma.domain.cli.CliRLimmaTest
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 1
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-limma-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/limma/domain/target/mev-limma-domain-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-limma-domain >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-limma-domain <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-limma-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/limma/domain/target/mev-limma-domain-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-limma-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/limma/domain/target/mev-limma-domain-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-limma-domain ---
+[INFO] Installing /home/brian/workspace/mev/limma/domain/target/mev-limma-domain-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-limma-domain/BAYLIE-SNAPSHOT/mev-limma-domain-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/limma/domain/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-limma-domain/BAYLIE-SNAPSHOT/mev-limma-domain-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/limma/domain/target/mev-limma-domain-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-limma-domain/BAYLIE-SNAPSHOT/mev-limma-domain-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/limma/domain/target/mev-limma-domain-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-limma-domain/BAYLIE-SNAPSHOT/mev-limma-domain-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV LIMMA Plugin REST Component BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-limma-rest ---
+[INFO] Deleting file set: /home/brian/workspace/mev/limma/rest/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-limma-rest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/limma/rest/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-limma-rest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 9 source files to /home/brian/workspace/mev/limma/rest/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-limma-rest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/limma/rest/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-limma-rest ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-limma-rest ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-limma-rest ---
+[INFO] Building jar: /home/brian/workspace/mev/limma/rest/target/mev-limma-rest-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-limma-rest >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-limma-rest <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-limma-rest ---
+[INFO] Building jar: /home/brian/workspace/mev/limma/rest/target/mev-limma-rest-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-limma-rest ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/limma/rest/target/mev-limma-rest-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-limma-rest ---
+[INFO] Installing /home/brian/workspace/mev/limma/rest/target/mev-limma-rest-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-limma-rest/BAYLIE-SNAPSHOT/mev-limma-rest-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/limma/rest/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-limma-rest/BAYLIE-SNAPSHOT/mev-limma-rest-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/limma/rest/target/mev-limma-rest-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-limma-rest/BAYLIE-SNAPSHOT/mev-limma-rest-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/limma/rest/target/mev-limma-rest-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-limma-rest/BAYLIE-SNAPSHOT/mev-limma-rest-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV PREloaded DataSETS - REST BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-presets-rest ---
+[INFO] Deleting file set: /home/brian/workspace/mev/presets/rest/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-presets-rest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 12 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-presets-rest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 5 source files to /home/brian/workspace/mev/presets/rest/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-presets-rest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 10 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-presets-rest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 20 source files to /home/brian/workspace/mev/presets/rest/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-presets-rest ---
+[INFO] Surefire report directory: /home/brian/workspace/mev/presets/rest/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running edu.dfci.cccb.mev.test.presets.rest.TestPresetRest
+[DEBUG] : Logging Provider: org.jboss.logging.Log4jLoggerProvider
+[DEBUG] : ***PresetDIMENSIONBuilder: FLATTABLE-DB
+[DEBUG] : ***PresetDataSetBuilder: FLATTABLE-DB
+[DEBUG] : Using LEVEL2 Annotatinos
+[DEBUG] : Using LEVEL3 Annotatinos
+[DEBUG] : ****Loading Annotations file: HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv_PK" ON PUBLIC."PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv"(PROBESET_ID);
+[DEBUG] : ****Loading Annotations file: geneSymbol_goAnnotations.top3.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv_PK" ON PUBLIC."GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv"(Symbol);
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.544 sec - in edu.dfci.cccb.mev.test.presets.rest.TestPresetRest
+Running edu.dfci.cccb.mev.test.presets.domain.dal.TestHSQLPresetLoader
+[DEBUG] : CREATE TEXT TABLE PUBLIC."PRESET-ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv.text" ("COLUMN0" VARCHAR(255) NOT NULL PRIMARY KEY,"290f101e-ff47-4aeb-ad71-11cb6e6b9dde_miR_gene_expression" VARCHAR(255),"89ffedc0-67eb-4f69-943e-1562f59c4951_miR_gene_expression" VARCHAR(255),"8df42e9b-192b-4348-af21-24fa631adc98_miR_gene_expression" VARCHAR(255),"25a9fd1a-0ff1-434b-bc4b-b78834750994_miR_gene_expression" VARCHAR(255),"94216633-5cf1-4640-a284-56bec53850aa_miR_gene_expression" VARCHAR(255),"56ac4bcc-479a-4560-b605-d4906e0768e5_miR_gene_expression" VARCHAR(255),"afef1098-9b00-4aa2-b141-23c0a6643e88_miR_gene_expression" VARCHAR(255),"7f5ff6b6-a509-4d17-ba1d-f4852fe8aee4_miR_gene_expression" VARCHAR(255),"b81decf4-add7-431c-957b-22c4dbd91901_miR_gene_expression" VARCHAR(255),"34520288-5a8e-441a-9e46-d8dcd44d777f_miR_gene_expression" VARCHAR(255),"66a354fe-454e-40a6-8464-a7d97236d398_miR_gene_expression" VARCHAR(255),"e1c7b750-a19e-4d93-9d1f-259fe446d87d_miR_gene_expression" VARCHAR(255),"7036891e-20e6-44ad-ad5f-41a8b1abe747_miR_gene_expression" VARCHAR(255),"fb2f8a06-1842-4a18-8938-79d54370ce01_miR_gene_expression" VARCHAR(255),"817f3909-75b0-4479-9ae2-797192483ff4_miR_gene_expression" VARCHAR(255),"832c14fd-3856-4de0-ae3b-d1489bea83c1_miR_gene_expression" VARCHAR(255),"6329209a-cd8e-42ef-bddf-fa06e85331d1_miR_gene_expression" VARCHAR(255),"4c661ac0-c043-4f57-8d95-03b46b43ef21_miR_gene_expression" VARCHAR(255),"ccc7b691-8f4f-46e5-85a4-a02e7f8351c1_miR_gene_expression" VARCHAR(255),"a9da33f2-d770-48ed-ab88-a32d3af87122_miR_gene_expression" VARCHAR(255),"ba6341a4-b64c-4944-9031-1d2a38f39492_miR_gene_expression" VARCHAR(255),"3d7b8e16-b5b6-4168-9c9c-c3e0384d837d_miR_gene_expression" VARCHAR(255),"981ec7dd-d76b-49f0-9e74-b923fa7ebe1f_miR_gene_expression" VARCHAR(255),"c472a9f1-ce1c-4650-b73a-7cbcedddeb4f_miR_gene_expression" VARCHAR(255),"9d1619f3-e482-4090-a645-dcfbe420580e_miR_gene_expression" VARCHAR(255),"d1dac84f-3362-4f7d-85ff-445c1fc55aaa_miR_gene_expression" VARCHAR(255),"54eb7022-b75b-4989-b701-329b2926814a_miR_gene_expression" VARCHAR(255),"440608f5-5a2f-4cf6-bc06-0c8e1c2ec100_miR_gene_expression" VARCHAR(255),"e6247159-01e1-40d2-a2bb-804b7d8f8ca9_miR_gene_expression" VARCHAR(255),"8ca595dc-e9c9-4931-a697-9e781086f7a8_miR_gene_expression" VARCHAR(255),"e7ce147a-90f6-49f5-a389-42557a595412_miR_gene_expression" VARCHAR(255),"0c10d522-46a0-487f-a35c-9c1afd2a7c96_miR_gene_expression" VARCHAR(255),"7f50d25e-d637-4e3d-9d65-a7b24d55e8fb_miR_gene_expression" VARCHAR(255),"a33692d5-e688-498c-bb3f-8c22cf38d7a0_miR_gene_expression" VARCHAR(255),"7d1dcf1f-34a7-4cbf-b766-9d01715ffe70_miR_gene_expression" VARCHAR(255),"9d5a8484-3865-4738-adbb-1a99b0ddb086_miR_gene_expression" VARCHAR(255),"f97acdec-621e-43e5-9536-39b2657c70c8_miR_gene_expression" VARCHAR(255),"172062d1-53dd-48d1-95a6-353d2079c244_miR_gene_expression" VARCHAR(255),"47130771-6e2d-49b9-959e-9d62de1acd53_miR_gene_expression" VARCHAR(255),"e4fe4b0b-198a-46b2-adb3-2f0b140502f8_miR_gene_expression" VARCHAR(255),"3db46049-e447-40a2-8e2a-f8befda0961f_miR_gene_expression" VARCHAR(255),"6a8f9385-2064-4d8c-9af1-d2bed53afebb_miR_gene_expression" VARCHAR(255),"9635a2c4-fd8b-4b4c-9338-def32b6dd8d3_miR_gene_expression" VARCHAR(255),"c0d609c0-049d-4d1a-b991-a212208cff71_miR_gene_expression" VARCHAR(255),"a66c34f7-2b5a-472b-92d8-f8aeba1a1f2f_miR_gene_expression" VARCHAR(255),"b5a63033-f14b-4040-b2b2-8acf9c9ba6d4_miR_gene_expression" VARCHAR(255),"cb87c1b0-e6c8-44fe-963a-31773ace6181_miR_gene_expression" VARCHAR(255),"c8945d4b-96a0-4ea3-9e70-1d128735b13e_miR_gene_expression" VARCHAR(255),"1b949b4b-bb02-48b9-a010-ecc1ff95cebb_miR_gene_expression" VARCHAR(255),"2c3bef15-669a-4fb0-9c07-b3ef5d7b57fc_miR_gene_expression" VARCHAR(255),"e52fbca3-b617-4b11-ae63-bc22bbd91c64_miR_gene_expression" VARCHAR(255),"23bf15e8-5062-4323-9015-55d7bca67746_miR_gene_expression" VARCHAR(255),"c7af4731-45fe-4988-90c0-6dab28d1b1b9_miR_gene_expression" VARCHAR(255),"0d211146-47bf-4662-b817-a1d8090d0425_miR_gene_expression" VARCHAR(255),"b3794e62-c4bc-43b1-97ca-b6f6e01aa026_miR_gene_expression" VARCHAR(255),"c986ab6f-912a-424f-9957-ff34452339c5_miR_gene_expression" VARCHAR(255),"5f63ecf2-3931-4e84-bef2-412c050a4174_miR_gene_expression" VARCHAR(255),"6486c23b-eebc-4f1d-9864-15b0fc409e3f_miR_gene_expression" VARCHAR(255),"2bcf51e8-f8f1-4e39-b5b3-a3b5a31fbb51_miR_gene_expression" VARCHAR(255),"c4dcc3f2-65f2-47fd-9a92-9ac0b07cfb1e_miR_gene_expression" VARCHAR(255),"4fde6436-41e9-4bd0-bd7c-bf0b63e310fa_miR_gene_expression" VARCHAR(255),"fbaac44c-1483-40ba-bfdb-26a73c9cbe36_miR_gene_expression" VARCHAR(255),"d8fa5d94-672c-4ed6-9c9d-3700ea2c1397_miR_gene_expression" VARCHAR(255),"d3b6ab10-20aa-41ed-af74-fbe5f1beedc4_miR_gene_expression" VARCHAR(255),"30996bd8-68c5-4527-99cd-e635057c4574_miR_gene_expression" VARCHAR(255),"16da7452-fed2-4010-8548-58e70acd6c5a_miR_gene_expression" VARCHAR(255),"ce867cae-e385-40f0-9861-c70e4ab04b98_miR_gene_expression" VARCHAR(255),"3962cb8c-0e7f-4f9b-93f0-623fa0496b54_miR_gene_expression" VARCHAR(255),"88271ae2-c8e5-489d-a0de-1966c7a68703_miR_gene_expression" VARCHAR(255),"9dfdfd8c-4902-4ada-9908-162f301218d0_miR_gene_expression" VARCHAR(255),"2409f255-8f3e-4376-8ebf-cbbbefbb2361_miR_gene_expression" VARCHAR(255),"7bf3993e-37c1-4cae-a05c-9a637bb74189_miR_gene_expression" VARCHAR(255),"0aab0660-f928-4ee0-86fb-583e0f3f42d2_miR_gene_expression" VARCHAR(255),"4f810a7e-ec11-4def-9ffe-b8fd8b195943_miR_gene_expression" VARCHAR(255),"aa8ea41f-9e25-41d1-afe0-cb9024718957_miR_gene_expression" VARCHAR(255),"1e1ae4dd-1f89-42bd-8154-165f603962b9_miR_gene_expression" VARCHAR(255),"aef89c64-e3e7-46ee-978c-e069e3f9234d_miR_gene_expression" VARCHAR(255),"677a063a-1c28-4515-b197-783367317f1e_miR_gene_expression" VARCHAR(255),"acf45482-bab9-4eb8-b1fe-3a3c2a4b2572_miR_gene_expression" VARCHAR(255),"b7d7e6c6-257e-4933-b840-5638078556ce_miR_gene_expression" VARCHAR(255))
+[DEBUG] : CREATE CACHED TABLE PUBLIC."PRESET-ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv" ("COLUMN0" VARCHAR(255) NOT NULL PRIMARY KEY,"290f101e-ff47-4aeb-ad71-11cb6e6b9dde_miR_gene_expression" VARCHAR(255),"89ffedc0-67eb-4f69-943e-1562f59c4951_miR_gene_expression" VARCHAR(255),"8df42e9b-192b-4348-af21-24fa631adc98_miR_gene_expression" VARCHAR(255),"25a9fd1a-0ff1-434b-bc4b-b78834750994_miR_gene_expression" VARCHAR(255),"94216633-5cf1-4640-a284-56bec53850aa_miR_gene_expression" VARCHAR(255),"56ac4bcc-479a-4560-b605-d4906e0768e5_miR_gene_expression" VARCHAR(255),"afef1098-9b00-4aa2-b141-23c0a6643e88_miR_gene_expression" VARCHAR(255),"7f5ff6b6-a509-4d17-ba1d-f4852fe8aee4_miR_gene_expression" VARCHAR(255),"b81decf4-add7-431c-957b-22c4dbd91901_miR_gene_expression" VARCHAR(255),"34520288-5a8e-441a-9e46-d8dcd44d777f_miR_gene_expression" VARCHAR(255),"66a354fe-454e-40a6-8464-a7d97236d398_miR_gene_expression" VARCHAR(255),"e1c7b750-a19e-4d93-9d1f-259fe446d87d_miR_gene_expression" VARCHAR(255),"7036891e-20e6-44ad-ad5f-41a8b1abe747_miR_gene_expression" VARCHAR(255),"fb2f8a06-1842-4a18-8938-79d54370ce01_miR_gene_expression" VARCHAR(255),"817f3909-75b0-4479-9ae2-797192483ff4_miR_gene_expression" VARCHAR(255),"832c14fd-3856-4de0-ae3b-d1489bea83c1_miR_gene_expression" VARCHAR(255),"6329209a-cd8e-42ef-bddf-fa06e85331d1_miR_gene_expression" VARCHAR(255),"4c661ac0-c043-4f57-8d95-03b46b43ef21_miR_gene_expression" VARCHAR(255),"ccc7b691-8f4f-46e5-85a4-a02e7f8351c1_miR_gene_expression" VARCHAR(255),"a9da33f2-d770-48ed-ab88-a32d3af87122_miR_gene_expression" VARCHAR(255),"ba6341a4-b64c-4944-9031-1d2a38f39492_miR_gene_expression" VARCHAR(255),"3d7b8e16-b5b6-4168-9c9c-c3e0384d837d_miR_gene_expression" VARCHAR(255),"981ec7dd-d76b-49f0-9e74-b923fa7ebe1f_miR_gene_expression" VARCHAR(255),"c472a9f1-ce1c-4650-b73a-7cbcedddeb4f_miR_gene_expression" VARCHAR(255),"9d1619f3-e482-4090-a645-dcfbe420580e_miR_gene_expression" VARCHAR(255),"d1dac84f-3362-4f7d-85ff-445c1fc55aaa_miR_gene_expression" VARCHAR(255),"54eb7022-b75b-4989-b701-329b2926814a_miR_gene_expression" VARCHAR(255),"440608f5-5a2f-4cf6-bc06-0c8e1c2ec100_miR_gene_expression" VARCHAR(255),"e6247159-01e1-40d2-a2bb-804b7d8f8ca9_miR_gene_expression" VARCHAR(255),"8ca595dc-e9c9-4931-a697-9e781086f7a8_miR_gene_expression" VARCHAR(255),"e7ce147a-90f6-49f5-a389-42557a595412_miR_gene_expression" VARCHAR(255),"0c10d522-46a0-487f-a35c-9c1afd2a7c96_miR_gene_expression" VARCHAR(255),"7f50d25e-d637-4e3d-9d65-a7b24d55e8fb_miR_gene_expression" VARCHAR(255),"a33692d5-e688-498c-bb3f-8c22cf38d7a0_miR_gene_expression" VARCHAR(255),"7d1dcf1f-34a7-4cbf-b766-9d01715ffe70_miR_gene_expression" VARCHAR(255),"9d5a8484-3865-4738-adbb-1a99b0ddb086_miR_gene_expression" VARCHAR(255),"f97acdec-621e-43e5-9536-39b2657c70c8_miR_gene_expression" VARCHAR(255),"172062d1-53dd-48d1-95a6-353d2079c244_miR_gene_expression" VARCHAR(255),"47130771-6e2d-49b9-959e-9d62de1acd53_miR_gene_expression" VARCHAR(255),"e4fe4b0b-198a-46b2-adb3-2f0b140502f8_miR_gene_expression" VARCHAR(255),"3db46049-e447-40a2-8e2a-f8befda0961f_miR_gene_expression" VARCHAR(255),"6a8f9385-2064-4d8c-9af1-d2bed53afebb_miR_gene_expression" VARCHAR(255),"9635a2c4-fd8b-4b4c-9338-def32b6dd8d3_miR_gene_expression" VARCHAR(255),"c0d609c0-049d-4d1a-b991-a212208cff71_miR_gene_expression" VARCHAR(255),"a66c34f7-2b5a-472b-92d8-f8aeba1a1f2f_miR_gene_expression" VARCHAR(255),"b5a63033-f14b-4040-b2b2-8acf9c9ba6d4_miR_gene_expression" VARCHAR(255),"cb87c1b0-e6c8-44fe-963a-31773ace6181_miR_gene_expression" VARCHAR(255),"c8945d4b-96a0-4ea3-9e70-1d128735b13e_miR_gene_expression" VARCHAR(255),"1b949b4b-bb02-48b9-a010-ecc1ff95cebb_miR_gene_expression" VARCHAR(255),"2c3bef15-669a-4fb0-9c07-b3ef5d7b57fc_miR_gene_expression" VARCHAR(255),"e52fbca3-b617-4b11-ae63-bc22bbd91c64_miR_gene_expression" VARCHAR(255),"23bf15e8-5062-4323-9015-55d7bca67746_miR_gene_expression" VARCHAR(255),"c7af4731-45fe-4988-90c0-6dab28d1b1b9_miR_gene_expression" VARCHAR(255),"0d211146-47bf-4662-b817-a1d8090d0425_miR_gene_expression" VARCHAR(255),"b3794e62-c4bc-43b1-97ca-b6f6e01aa026_miR_gene_expression" VARCHAR(255),"c986ab6f-912a-424f-9957-ff34452339c5_miR_gene_expression" VARCHAR(255),"5f63ecf2-3931-4e84-bef2-412c050a4174_miR_gene_expression" VARCHAR(255),"6486c23b-eebc-4f1d-9864-15b0fc409e3f_miR_gene_expression" VARCHAR(255),"2bcf51e8-f8f1-4e39-b5b3-a3b5a31fbb51_miR_gene_expression" VARCHAR(255),"c4dcc3f2-65f2-47fd-9a92-9ac0b07cfb1e_miR_gene_expression" VARCHAR(255),"4fde6436-41e9-4bd0-bd7c-bf0b63e310fa_miR_gene_expression" VARCHAR(255),"fbaac44c-1483-40ba-bfdb-26a73c9cbe36_miR_gene_expression" VARCHAR(255),"d8fa5d94-672c-4ed6-9c9d-3700ea2c1397_miR_gene_expression" VARCHAR(255),"d3b6ab10-20aa-41ed-af74-fbe5f1beedc4_miR_gene_expression" VARCHAR(255),"30996bd8-68c5-4527-99cd-e635057c4574_miR_gene_expression" VARCHAR(255),"16da7452-fed2-4010-8548-58e70acd6c5a_miR_gene_expression" VARCHAR(255),"ce867cae-e385-40f0-9861-c70e4ab04b98_miR_gene_expression" VARCHAR(255),"3962cb8c-0e7f-4f9b-93f0-623fa0496b54_miR_gene_expression" VARCHAR(255),"88271ae2-c8e5-489d-a0de-1966c7a68703_miR_gene_expression" VARCHAR(255),"9dfdfd8c-4902-4ada-9908-162f301218d0_miR_gene_expression" VARCHAR(255),"2409f255-8f3e-4376-8ebf-cbbbefbb2361_miR_gene_expression" VARCHAR(255),"7bf3993e-37c1-4cae-a05c-9a637bb74189_miR_gene_expression" VARCHAR(255),"0aab0660-f928-4ee0-86fb-583e0f3f42d2_miR_gene_expression" VARCHAR(255),"4f810a7e-ec11-4def-9ffe-b8fd8b195943_miR_gene_expression" VARCHAR(255),"aa8ea41f-9e25-41d1-afe0-cb9024718957_miR_gene_expression" VARCHAR(255),"1e1ae4dd-1f89-42bd-8154-165f603962b9_miR_gene_expression" VARCHAR(255),"aef89c64-e3e7-46ee-978c-e069e3f9234d_miR_gene_expression" VARCHAR(255),"677a063a-1c28-4515-b197-783367317f1e_miR_gene_expression" VARCHAR(255),"acf45482-bab9-4eb8-b1fe-3a3c2a4b2572_miR_gene_expression" VARCHAR(255),"b7d7e6c6-257e-4933-b840-5638078556ce_miR_gene_expression" VARCHAR(255))
+[DEBUG] : SET TABLE PUBLIC."PRESET-ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv.text" SOURCE "/home/brian/workspace/mev/presets/rest/target/test-classes/tcga/tcga_data/ACC/Level_3/ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv;fs=\t;ignore_first=true;cache_rows=1000;cache_size=100"
+[DEBUG] : INSERT INTO "PRESET-ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv" (SELECT * FROM "PRESET-ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv.text")
+[DEBUG] : SET TABLE "PRESET-ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv.text" SOURCE OFF
+[DEBUG] : DROP TABLE "PRESET-ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv.text"
+[DEBUG] : CREATE UNIQUE INDEX "PRESET-ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv" ON "PRESET-ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv"(COLUMN0)
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.366 sec - in edu.dfci.cccb.mev.test.presets.domain.dal.TestHSQLPresetLoader
+Running edu.dfci.cccb.mev.test.presets.domain.TestPresetsSimpleEmpty
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 sec - in edu.dfci.cccb.mev.test.presets.domain.TestPresetsSimpleEmpty
+Running edu.dfci.cccb.mev.test.presets.domain.builder.dimension.TestDimensionBuilderFlatTable
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 4, Time elapsed: 0.004 sec - in edu.dfci.cccb.mev.test.presets.domain.builder.dimension.TestDimensionBuilderFlatTable
+Running edu.dfci.cccb.mev.test.presets.domain.TestTcgaPresetMetafile
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 sec - in edu.dfci.cccb.mev.test.presets.domain.TestTcgaPresetMetafile
+Running edu.dfci.cccb.mev.test.presets.domain.TestPresetsValuesLoader
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.002 sec - in edu.dfci.cccb.mev.test.presets.domain.TestPresetsValuesLoader
+Running edu.dfci.cccb.mev.test.presets.domain.TestPresetValuesFlatTable
+[DEBUG] : PresetValuesFlatTable sql:select * from "TEST_PRESET_VALUES_FLAT_TABLE" where "COLUMN0" = cast(? as varchar(32672))
+[DEBUG] : PresetValuesFlatTable sql:select * from "TEST_PRESET_VALUES_FLAT_TABLE" where "COLUMN0" = cast(? as varchar(32672))
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.134 sec - in edu.dfci.cccb.mev.test.presets.domain.TestPresetValuesFlatTable
+Running edu.dfci.cccb.mev.test.presets.domain.TestTcgaPresets
+[DEBUG] : ***PresetDIMENSIONBuilder: FLATTABLE-DB
+[DEBUG] : ***PresetDataSetBuilder: FLATTABLE-DB
+[DEBUG] : Using LEVEL2 Annotatinos
+[DEBUG] : Using LEVEL3 Annotatinos
+[DEBUG] : ****Loading Annotations file: HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv_PK" ON PUBLIC."PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv"(PROBESET_ID);
+[DEBUG] : ****Loading Annotations file: geneSymbol_goAnnotations.top3.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv_PK" ON PUBLIC."GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv"(Symbol);
+[DEBUG] : ***PresetDIMENSIONBuilder: FLATTABLE-DB
+[DEBUG] : ***PresetDataSetBuilder: FLATTABLE-DB
+[DEBUG] : Using LEVEL2 Annotatinos
+[DEBUG] : Using LEVEL3 Annotatinos
+[DEBUG] : ****Loading Annotations file: HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv_PK" ON PUBLIC."PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv"(PROBESET_ID);
+[DEBUG] : ****Loading Annotations file: geneSymbol_goAnnotations.top3.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv_PK" ON PUBLIC."GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv"(Symbol);
+[DEBUG] : ***PresetDIMENSIONBuilder: FLATTABLE-DB
+[DEBUG] : ***PresetDataSetBuilder: FLATTABLE-DB
+[DEBUG] : Using LEVEL2 Annotatinos
+[DEBUG] : Using LEVEL3 Annotatinos
+[DEBUG] : ****Loading Annotations file: HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv_PK" ON PUBLIC."PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv"(PROBESET_ID);
+[DEBUG] : ****Loading Annotations file: geneSymbol_goAnnotations.top3.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv_PK" ON PUBLIC."GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv"(Symbol);
+[DEBUG] : ***PresetDIMENSIONBuilder: FLATTABLE-DB
+[DEBUG] : ***PresetDataSetBuilder: FLATTABLE-DB
+[DEBUG] : Using LEVEL2 Annotatinos
+[DEBUG] : Using LEVEL3 Annotatinos
+[DEBUG] : ****Loading Annotations file: HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv_PK" ON PUBLIC."PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv"(PROBESET_ID);
+[DEBUG] : ****Loading Annotations file: geneSymbol_goAnnotations.top3.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv_PK" ON PUBLIC."GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv"(Symbol);
+[DEBUG] : ***PresetDIMENSIONBuilder: FLATTABLE-DB
+[DEBUG] : ***PresetDataSetBuilder: FLATTABLE-DB
+[DEBUG] : Using LEVEL2 Annotatinos
+[DEBUG] : Using LEVEL3 Annotatinos
+[DEBUG] : ****Loading Annotations file: HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv_PK" ON PUBLIC."PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv"(PROBESET_ID);
+[DEBUG] : ****Loading Annotations file: geneSymbol_goAnnotations.top3.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv_PK" ON PUBLIC."GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv"(Symbol);
+[DEBUG] : ***PresetDIMENSIONBuilder: FLATTABLE-DB
+[DEBUG] : ***PresetDataSetBuilder: FLATTABLE-DB
+[DEBUG] : Using LEVEL2 Annotatinos
+[DEBUG] : Using LEVEL3 Annotatinos
+[DEBUG] : ****Loading Annotations file: HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv_PK" ON PUBLIC."PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv"(PROBESET_ID);
+[DEBUG] : ****Loading Annotations file: geneSymbol_goAnnotations.top3.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv_PK" ON PUBLIC."GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv"(Symbol);
+[DEBUG] : ***PresetDIMENSIONBuilder: FLATTABLE-DB
+[DEBUG] : ***PresetDataSetBuilder: FLATTABLE-DB
+[DEBUG] : Using LEVEL2 Annotatinos
+[DEBUG] : Using LEVEL3 Annotatinos
+[DEBUG] : ****Loading Annotations file: HT_HG-U133A.na33.top3.annot.out.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv_PK" ON PUBLIC."PROBE_ANNOT_HT_HG-U133A.na33.top3.annot.out.tsv"(PROBESET_ID);
+[DEBUG] : ****Loading Annotations file: geneSymbol_goAnnotations.top3.tsv
+[DEBUG] : ****Creating table: CREATE UNIQUE INDEX IF NOT EXISTS "GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv_PK" ON PUBLIC."GENE_ANNOT_geneSymbol_goAnnotations.top3.tsv"(Symbol);
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.883 sec - in edu.dfci.cccb.mev.test.presets.domain.TestTcgaPresets
+Running edu.dfci.cccb.mev.test.presets.domain.dataset.flat.large.TestJooqCursorGBMLevel2
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 5, Time elapsed: 0.006 sec - in edu.dfci.cccb.mev.test.presets.domain.dataset.flat.large.TestJooqCursorGBMLevel2
+Running edu.dfci.cccb.mev.test.presets.domain.dataset.flat.TestPresetDatasetFlatTable
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 8, Time elapsed: 0.009 sec - in edu.dfci.cccb.mev.test.presets.domain.dataset.flat.TestPresetDatasetFlatTable
+Running edu.dfci.cccb.mev.test.presets.domain.dataset.flat.med.TestJooqCursorLUSCLevel2
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 5, Time elapsed: 0.006 sec - in edu.dfci.cccb.mev.test.presets.domain.dataset.flat.med.TestJooqCursorLUSCLevel2
+Running edu.dfci.cccb.mev.test.presets.domain.dataset.flat.small.TestJooqCursorLGGLevel2
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 7, Time elapsed: 0.005 sec - in edu.dfci.cccb.mev.test.presets.domain.dataset.flat.small.TestJooqCursorLGGLevel2
+Running edu.dfci.cccb.mev.test.presets.domain.dataset.nvp.TestPresetDatasetNVP
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 2, Time elapsed: 0.001 sec - in edu.dfci.cccb.mev.test.presets.domain.dataset.nvp.TestPresetDatasetNVP
+
+Results :
+
+Tests run: 52, Failures: 0, Errors: 0, Skipped: 32
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-presets-rest ---
+[INFO] Building jar: /home/brian/workspace/mev/presets/rest/target/mev-presets-rest-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-presets-rest >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-presets-rest <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-presets-rest ---
+[INFO] Building jar: /home/brian/workspace/mev/presets/rest/target/mev-presets-rest-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-presets-rest ---
+[INFO] Building jar: /home/brian/workspace/mev/presets/rest/target/mev-presets-rest-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-presets-rest ---
+[INFO] Installing /home/brian/workspace/mev/presets/rest/target/mev-presets-rest-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-presets-rest/BAYLIE-SNAPSHOT/mev-presets-rest-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/presets/rest/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-presets-rest/BAYLIE-SNAPSHOT/mev-presets-rest-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/presets/rest/target/mev-presets-rest-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-presets-rest/BAYLIE-SNAPSHOT/mev-presets-rest-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/presets/rest/target/mev-presets-rest-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-presets-rest/BAYLIE-SNAPSHOT/mev-presets-rest-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV K-Means Clustering BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-kmeans ---
+[INFO] Deleting file set: /home/brian/workspace/mev/kmeans/target (included: [**], excluded: [])
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-kmeans >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-kmeans <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-kmeans ---
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-kmeans ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/kmeans/target/mev-kmeans-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-kmeans ---
+[INFO] Installing /home/brian/workspace/mev/kmeans/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-kmeans/BAYLIE-SNAPSHOT/mev-kmeans-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/kmeans/target/mev-kmeans-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-kmeans/BAYLIE-SNAPSHOT/mev-kmeans-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV K-Means Clustering Plugin Domain Component BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-kmeans-domain ---
+[INFO] Deleting file set: /home/brian/workspace/mev/kmeans/domain/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-kmeans-domain ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/kmeans/domain/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-kmeans-domain ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 11 source files to /home/brian/workspace/mev/kmeans/domain/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-kmeans-domain ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-kmeans-domain ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /home/brian/workspace/mev/kmeans/domain/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-kmeans-domain ---
+[INFO] Surefire report directory: /home/brian/workspace/mev/kmeans/domain/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running edu.dfci.cccb.mev.kmeans.domain.hadoop.HadoopKMeansBuilderTest
+[DEBUG] : Building dataset...mock
+[DEBUG] : Type=row
+[DEBUG] : Type=column
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.318 sec - in edu.dfci.cccb.mev.kmeans.domain.hadoop.HadoopKMeansBuilderTest
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-kmeans-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/kmeans/domain/target/mev-kmeans-domain-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-kmeans-domain >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-kmeans-domain <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-kmeans-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/kmeans/domain/target/mev-kmeans-domain-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-kmeans-domain ---
+[INFO] Building jar: /home/brian/workspace/mev/kmeans/domain/target/mev-kmeans-domain-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-kmeans-domain ---
+[INFO] Installing /home/brian/workspace/mev/kmeans/domain/target/mev-kmeans-domain-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-kmeans-domain/BAYLIE-SNAPSHOT/mev-kmeans-domain-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/kmeans/domain/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-kmeans-domain/BAYLIE-SNAPSHOT/mev-kmeans-domain-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/kmeans/domain/target/mev-kmeans-domain-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-kmeans-domain/BAYLIE-SNAPSHOT/mev-kmeans-domain-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/kmeans/domain/target/mev-kmeans-domain-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-kmeans-domain/BAYLIE-SNAPSHOT/mev-kmeans-domain-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV K-Means Clustering Plugin REST Component BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-kmeans-rest ---
+[INFO] Deleting file set: /home/brian/workspace/mev/kmeans/rest/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-kmeans-rest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/kmeans/rest/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-kmeans-rest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 8 source files to /home/brian/workspace/mev/kmeans/rest/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-kmeans-rest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/brian/workspace/mev/kmeans/rest/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-kmeans-rest ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-kmeans-rest ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ mev-kmeans-rest ---
+[INFO] Building jar: /home/brian/workspace/mev/kmeans/rest/target/mev-kmeans-rest-BAYLIE-SNAPSHOT.jar
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-kmeans-rest >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-kmeans-rest <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-kmeans-rest ---
+[INFO] Building jar: /home/brian/workspace/mev/kmeans/rest/target/mev-kmeans-rest-BAYLIE-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-kmeans-rest ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/kmeans/rest/target/mev-kmeans-rest-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-kmeans-rest ---
+[INFO] Installing /home/brian/workspace/mev/kmeans/rest/target/mev-kmeans-rest-BAYLIE-SNAPSHOT.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-kmeans-rest/BAYLIE-SNAPSHOT/mev-kmeans-rest-BAYLIE-SNAPSHOT.jar
+[INFO] Installing /home/brian/workspace/mev/kmeans/rest/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-kmeans-rest/BAYLIE-SNAPSHOT/mev-kmeans-rest-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/kmeans/rest/target/mev-kmeans-rest-BAYLIE-SNAPSHOT-sources.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-kmeans-rest/BAYLIE-SNAPSHOT/mev-kmeans-rest-BAYLIE-SNAPSHOT-sources.jar
+[INFO] Installing /home/brian/workspace/mev/kmeans/rest/target/mev-kmeans-rest-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-kmeans-rest/BAYLIE-SNAPSHOT/mev-kmeans-rest-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV t-Test Plugin BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-t-test ---
+[INFO] Deleting file set: /home/brian/workspace/mev/t-test/target (included: [**], excluded: [])
+[INFO] 
+[INFO] >>> maven-source-plugin:2.2.1:jar (attach-sources) @ mev-t-test >>>
+[INFO] 
+[INFO] <<< maven-source-plugin:2.2.1:jar (attach-sources) @ mev-t-test <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.2.1:jar (attach-sources) @ mev-t-test ---
+[INFO] 
+[INFO] --- maven-jar-plugin:2.2:test-jar (default) @ mev-t-test ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/brian/workspace/mev/t-test/target/mev-t-test-BAYLIE-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install (default-install) @ mev-t-test ---
+[INFO] Installing /home/brian/workspace/mev/t-test/pom.xml to /home/brian/.m2/repository/edu/dfci/cccb/mev-t-test/BAYLIE-SNAPSHOT/mev-t-test-BAYLIE-SNAPSHOT.pom
+[INFO] Installing /home/brian/workspace/mev/t-test/target/mev-t-test-BAYLIE-SNAPSHOT-tests.jar to /home/brian/.m2/repository/edu/dfci/cccb/mev-t-test/BAYLIE-SNAPSHOT/mev-t-test-BAYLIE-SNAPSHOT-tests.jar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MeV t-Test Plugin Domain Component BAYLIE-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.3:clean (default-clean) @ mev-t-test-domain ---
+[INFO] Deleting file set: /home/brian/workspace/mev/t-test/domain/target (included: [**], excluded: [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ mev-t-test-domain ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ mev-t-test-domain ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 15 source files to /home/brian/workspace/mev/t-test/domain/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ mev-t-test-domain ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ mev-t-test-domain ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/brian/workspace/mev/t-test/domain/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ mev-t-test-domain ---
+[INFO] Surefire report directory: /home/brian/workspace/mev/t-test/domain/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running edu.dfci.cccb.mev.t_test.domain.cli.CliRTTestTest
+[DEBUG] : Building dataset...mock
+[DEBUG] : Type=row
+[DEBUG] : Type=column
+[DEBUG] : Setting dataset to SimpleDataset(super=AbstractDataset(name=mock), values=MapBackedValues(values={MapBackedValues.Coordinate(row=G19, column=S4)=1.7730883948379668, MapBackedValues.Coordinate(row=G19, column=S3)=1.2856260531703587, MapBackedValues.Coordinate(row=G19, column=S2)=0.43470792145917514, MapBackedValues.Coordinate(row=G19, column=S1)=0.8294625023542447, MapBackedValues.Coordinate(row=G19, column=S8)=2.1101523266689792, MapBackedValues.Coordinate(row=G19, column=S7)=0.570545025798449, MapBackedValues.Coordinate(row=G19, column=S6)=0.55228234077136, MapBackedValues.Coordinate(row=G19, column=S5)=1.1840144877867902, MapBackedValues.Coordinate(row=G19, column=S9)=1.3250594835332186, MapBackedValues.Coordinate(row=G18, column=S1)=1.5817398956451907, MapBackedValues.Coordinate(row=G18, column=S3)=1.2770276951887642, MapBackedValues.Coordinate(row=G18, column=S2)=0.20546584037726556, MapBackedValues.Coordinate(row=G18, column=S5)=1.4756073478095015, MapBackedValues.Coordinate(row=G18, column=S4)=1.4609424825097648, MapBackedValues.Coordinate(row=G18, column=S7)=0.3462212302333083, MapBackedValues.Coordinate(row=G18, column=S6)=0.4862547500778641, MapBackedValues.Coordinate(row=G18, column=S9)=1.447215677951656, MapBackedValues.Coordinate(row=G18, column=S8)=1.1817040731943185, MapBackedValues.Coordinate(row=G19, column=S10)=0.2663088059378119, MapBackedValues.Coordinate(row=G18, column=S10)=1.2393328643731656, MapBackedValues.Coordinate(row=G1, column=S10)=0.17997238806740556, MapBackedValues.Coordinate(row=G8, column=S6)=1.2441995800181955, MapBackedValues.Coordinate(row=G8, column=S5)=1.1858254258546241, MapBackedValues.Coordinate(row=G8, column=S4)=0.6143236099481832, MapBackedValues.Coordinate(row=G8, column=S3)=1.349261064626204, MapBackedValues.Coordinate(row=G17, column=S10)=0.8110532346285517, MapBackedValues.Coordinate(row=G8, column=S9)=0.6854264339399868, MapBackedValues.Coordinate(row=G8, column=S8)=-0.03717669448902239, MapBackedValues.Coordinate(row=G8, column=S7)=1.8536904756426758, MapBackedValues.Coordinate(row=G8, column=S1)=0.8485257423886341, MapBackedValues.Coordinate(row=G8, column=S2)=2.4654610941594655, MapBackedValues.Coordinate(row=G20, column=S1)=0.7120160033627074, MapBackedValues.Coordinate(row=G20, column=S2)=0.9123263397371228, MapBackedValues.Coordinate(row=G20, column=S3)=1.4315531310767087, MapBackedValues.Coordinate(row=G20, column=S4)=1.724438313837745, MapBackedValues.Coordinate(row=G20, column=S5)=1.3275247526205933, MapBackedValues.Coordinate(row=G20, column=S6)=0.258523332858304, MapBackedValues.Coordinate(row=G20, column=S9)=0.7215323977152154, MapBackedValues.Coordinate(row=G20, column=S8)=0.8222344601683478, MapBackedValues.Coordinate(row=G20, column=S7)=0.915647763730766, MapBackedValues.Coordinate(row=G9, column=S5)=1.209300244849931, MapBackedValues.Coordinate(row=G9, column=S4)=1.2079991042854887, MapBackedValues.Coordinate(row=G9, column=S7)=1.9747491013748986, MapBackedValues.Coordinate(row=G9, column=S6)=0.023795903135111707, MapBackedValues.Coordinate(row=G9, column=S9)=0.0615109151442206, MapBackedValues.Coordinate(row=G9, column=S8)=1.070609451318704, MapBackedValues.Coordinate(row=G16, column=S10)=1.3204696641015785, MapBackedValues.Coordinate(row=G9, column=S1)=1.4038745157331807, MapBackedValues.Coordinate(row=G9, column=S2)=2.140084051686685, MapBackedValues.Coordinate(row=G9, column=S3)=1.143839053529577, MapBackedValues.Coordinate(row=G15, column=S10)=0.15632174320081726, MapBackedValues.Coordinate(row=G6, column=S9)=1.0009636367664936, MapBackedValues.Coordinate(row=G6, column=S8)=1.1039003034799486, MapBackedValues.Coordinate(row=G6, column=S7)=-0.16208375391667115, MapBackedValues.Coordinate(row=G6, column=S6)=0.7179278333133177, MapBackedValues.Coordinate(row=G6, column=S5)=0.7066180780581628, MapBackedValues.Coordinate(row=G6, column=S4)=0.5829633567125455, MapBackedValues.Coordinate(row=G6, column=S3)=1.0596673076872514, MapBackedValues.Coordinate(row=G6, column=S2)=2.0337379540427163, MapBackedValues.Coordinate(row=G6, column=S1)=1.6239049023178809, MapBackedValues.Coordinate(row=G14, column=S10)=0.04268871754146941, MapBackedValues.Coordinate(row=G7, column=S7)=1.487086356403075, MapBackedValues.Coordinate(row=G7, column=S6)=-0.06584953162406615, MapBackedValues.Coordinate(row=G7, column=S9)=0.990266569748926, MapBackedValues.Coordinate(row=G7, column=S8)=0.7289110071229999, MapBackedValues.Coordinate(row=G7, column=S3)=1.5263084007421324, MapBackedValues.Coordinate(row=G7, column=S2)=0.5027904142354412, MapBackedValues.Coordinate(row=G7, column=S5)=0.5334721895871849, MapBackedValues.Coordinate(row=G7, column=S4)=0.7910323975010495, MapBackedValues.Coordinate(row=G7, column=S1)=1.0893479082253128, MapBackedValues.Coordinate(row=G11, column=S2)=0.3426242846092957, MapBackedValues.Coordinate(row=G11, column=S1)=0.33347310859087276, MapBackedValues.Coordinate(row=G11, column=S4)=0.43025532947558676, MapBackedValues.Coordinate(row=G11, column=S3)=0.049370208714469524, MapBackedValues.Coordinate(row=G7, column=S10)=0.5816465061333875, MapBackedValues.Coordinate(row=G11, column=S6)=1.0701226118746205, MapBackedValues.Coordinate(row=G11, column=S5)=1.15392010741171, MapBackedValues.Coordinate(row=G11, column=S8)=1.9522704743323678, MapBackedValues.Coordinate(row=G11, column=S7)=1.9089261081205755, MapBackedValues.Coordinate(row=G10, column=S8)=0.08093542982306978, MapBackedValues.Coordinate(row=G10, column=S9)=1.0950355898708684, MapBackedValues.Coordinate(row=G4, column=S1)=12.6258151884929, MapBackedValues.Coordinate(row=G4, column=S2)=10.976434083738543, MapBackedValues.Coordinate(row=G4, column=S3)=12.487337335425911, MapBackedValues.Coordinate(row=G4, column=S4)=11.833592449278811, MapBackedValues.Coordinate(row=G4, column=S5)=12.427543691055012, MapBackedValues.Coordinate(row=G4, column=S6)=11.540628106628843, MapBackedValues.Coordinate(row=G4, column=S7)=1.4021617533829231, MapBackedValues.Coordinate(row=G4, column=S8)=1.1107238167168494, MapBackedValues.Coordinate(row=G4, column=S9)=0.5519559139121002, MapBackedValues.Coordinate(row=G12, column=S10)=0.9990896938741014, MapBackedValues.Coordinate(row=G10, column=S3)=0.9363406180457896, MapBackedValues.Coordinate(row=G10, column=S2)=1.9993912281790247, MapBackedValues.Coordinate(row=G10, column=S1)=0.7899488648703186, MapBackedValues.Coordinate(row=G10, column=S7)=0.968945230360959, MapBackedValues.Coordinate(row=G10, column=S6)=0.69468258580897, MapBackedValues.Coordinate(row=G6, column=S10)=1.2247007403962618, MapBackedValues.Coordinate(row=G10, column=S5)=0.9989733067095831, MapBackedValues.Coordinate(row=G10, column=S4)=0.8661591803373676, MapBackedValues.Coordinate(row=G5, column=S2)=1.2370892222722452, MapBackedValues.Coordinate(row=G5, column=S3)=0.394213433140325, MapBackedValues.Coordinate(row=G5, column=S1)=0.4212630682277811, MapBackedValues.Coordinate(row=G5, column=S6)=-0.017998501796496535, MapBackedValues.Coordinate(row=G5, column=S7)=0.5900194955064835, MapBackedValues.Coordinate(row=G5, column=S4)=0.6571736269682573, MapBackedValues.Coordinate(row=G5, column=S5)=0.7107561591312392, MapBackedValues.Coordinate(row=G5, column=S8)=1.8660216892102317, MapBackedValues.Coordinate(row=G5, column=S9)=1.7279509896739151, MapBackedValues.Coordinate(row=G13, column=S10)=0.6238961028115959, MapBackedValues.Coordinate(row=G13, column=S2)=0.7040364121034963, MapBackedValues.Coordinate(row=G13, column=S1)=1.3256337143765444, MapBackedValues.Coordinate(row=G20, column=S10)=0.6489097589989401, MapBackedValues.Coordinate(row=G13, column=S8)=1.0731551805318387, MapBackedValues.Coordinate(row=G13, column=S7)=1.6724596294615457, MapBackedValues.Coordinate(row=G13, column=S9)=1.411681767952686, MapBackedValues.Coordinate(row=G13, column=S4)=2.2847199935489817, MapBackedValues.Coordinate(row=G13, column=S3)=1.589435388962163, MapBackedValues.Coordinate(row=G9, column=S10)=0.9736475782769394, MapBackedValues.Coordinate(row=G13, column=S6)=1.4124913079311152, MapBackedValues.Coordinate(row=G13, column=S5)=1.7027343622242481, MapBackedValues.Coordinate(row=G2, column=S1)=1.8852382976711122, MapBackedValues.Coordinate(row=G2, column=S2)=1.3365888648839233, MapBackedValues.Coordinate(row=G2, column=S3)=0.8726933138377111, MapBackedValues.Coordinate(row=G2, column=S4)=1.000704965530544, MapBackedValues.Coordinate(row=G2, column=S9)=0.7208001799521423, MapBackedValues.Coordinate(row=G2, column=S5)=1.2171502222166573, MapBackedValues.Coordinate(row=G2, column=S6)=1.6657339533323643, MapBackedValues.Coordinate(row=G2, column=S7)=0.991046144631506, MapBackedValues.Coordinate(row=G10, column=S10)=0.9723302437465745, MapBackedValues.Coordinate(row=G2, column=S8)=0.8893733573944052, MapBackedValues.Coordinate(row=G12, column=S1)=1.3924065097368363, MapBackedValues.Coordinate(row=G12, column=S9)=0.3930179936499352, MapBackedValues.Coordinate(row=G12, column=S8)=0.6427143424737081, MapBackedValues.Coordinate(row=G12, column=S7)=1.0228859043126182, MapBackedValues.Coordinate(row=G12, column=S6)=1.065669702544273, MapBackedValues.Coordinate(row=G12, column=S5)=1.9303015898491482, MapBackedValues.Coordinate(row=G8, column=S10)=0.13838301323265945, MapBackedValues.Coordinate(row=G12, column=S4)=0.9577725746500535, MapBackedValues.Coordinate(row=G12, column=S3)=0.5404078368283642, MapBackedValues.Coordinate(row=G12, column=S2)=1.3728707793847006, MapBackedValues.Coordinate(row=G3, column=S4)=0.6321050648189079, MapBackedValues.Coordinate(row=G3, column=S5)=2.288129746374324, MapBackedValues.Coordinate(row=G3, column=S2)=0.022480974484516136, MapBackedValues.Coordinate(row=G3, column=S3)=0.4585539956464407, MapBackedValues.Coordinate(row=G3, column=S1)=1.1883888547753927, MapBackedValues.Coordinate(row=G11, column=S9)=0.07019370450079994, MapBackedValues.Coordinate(row=G3, column=S8)=1.1586762712250915, MapBackedValues.Coordinate(row=G11, column=S10)=0.4295688624516629, MapBackedValues.Coordinate(row=G3, column=S9)=0.4483649242829605, MapBackedValues.Coordinate(row=G3, column=S6)=1.4505233209359485, MapBackedValues.Coordinate(row=G3, column=S7)=0.08743715686250737, MapBackedValues.Coordinate(row=G15, column=S5)=0.1603389007795869, MapBackedValues.Coordinate(row=G15, column=S6)=1.0136081971934217, MapBackedValues.Coordinate(row=G15, column=S7)=1.11975508917579, MapBackedValues.Coordinate(row=G15, column=S8)=0.8846284618247359, MapBackedValues.Coordinate(row=G15, column=S9)=1.0323901304792773, MapBackedValues.Coordinate(row=G3, column=S10)=0.922016435761176, MapBackedValues.Coordinate(row=G15, column=S1)=1.3223271572671929, MapBackedValues.Coordinate(row=G15, column=S2)=1.0306683142642368, MapBackedValues.Coordinate(row=G15, column=S3)=1.1719732131519474, MapBackedValues.Coordinate(row=G15, column=S4)=0.7051026378379774, MapBackedValues.Coordinate(row=G14, column=S6)=1.4168787511681349, MapBackedValues.Coordinate(row=G14, column=S7)=0.9433454890035535, MapBackedValues.Coordinate(row=G14, column=S4)=0.4699036879893047, MapBackedValues.Coordinate(row=G14, column=S5)=0.3876866425390313, MapBackedValues.Coordinate(row=G14, column=S8)=1.4139062774100744, MapBackedValues.Coordinate(row=G14, column=S9)=0.4778216530655553, MapBackedValues.Coordinate(row=G2, column=S10)=1.4268278014812505, MapBackedValues.Coordinate(row=G14, column=S2)=0.10285756910343513, MapBackedValues.Coordinate(row=G14, column=S3)=1.1026640868115576, MapBackedValues.Coordinate(row=G14, column=S1)=1.2889508035662423, MapBackedValues.Coordinate(row=G1, column=S7)=0.8279956752711143, MapBackedValues.Coordinate(row=G1, column=S6)=12.633586788027579, MapBackedValues.Coordinate(row=G1, column=S5)=12.360314347436626, MapBackedValues.Coordinate(row=G1, column=S4)=11.638984906340333, MapBackedValues.Coordinate(row=G1, column=S9)=1.0379944491699198, MapBackedValues.Coordinate(row=G1, column=S8)=1.370350032209602, MapBackedValues.Coordinate(row=G1, column=S3)=12.340814128882009, MapBackedValues.Coordinate(row=G1, column=S2)=12.04140233660781, MapBackedValues.Coordinate(row=G1, column=S1)=11.885147124634047, MapBackedValues.Coordinate(row=G5, column=S10)=1.6732387608704316, MapBackedValues.Coordinate(row=G17, column=S7)=0.9861790550751071, MapBackedValues.Coordinate(row=G17, column=S8)=1.005304796569498, MapBackedValues.Coordinate(row=G17, column=S9)=0.9890599521756782, MapBackedValues.Coordinate(row=G17, column=S3)=12.330115707570311, MapBackedValues.Coordinate(row=G17, column=S4)=12.457970725493256, MapBackedValues.Coordinate(row=G17, column=S5)=11.4439763675177, MapBackedValues.Coordinate(row=G17, column=S6)=12.64147576903922, MapBackedValues.Coordinate(row=G17, column=S1)=12.777998574361488, MapBackedValues.Coordinate(row=G17, column=S2)=12.75249893990934, MapBackedValues.Coordinate(row=G4, column=S10)=1.1910733306912078, MapBackedValues.Coordinate(row=G16, column=S8)=0.5718455067192516, MapBackedValues.Coordinate(row=G16, column=S9)=1.22300732825381, MapBackedValues.Coordinate(row=G16, column=S6)=-0.2719273644194431, MapBackedValues.Coordinate(row=G16, column=S7)=1.2281571985678426, MapBackedValues.Coordinate(row=G16, column=S4)=1.2507906292208797, MapBackedValues.Coordinate(row=G16, column=S5)=1.760626870246532, MapBackedValues.Coordinate(row=G16, column=S2)=1.391620831679649, MapBackedValues.Coordinate(row=G16, column=S3)=1.543638392839115, MapBackedValues.Coordinate(row=G16, column=S1)=0.04594649795375105}), analyses=ArrayListAnalyses(analyses=[]), dimensions=[SimpleDimension(type=row, selections=ArrayListSelections(selections=[]), keys=<20 keys>), SimpleDimension(type=column, selections=ArrayListSelections(selections=[SimpleSelection(name=experiment, properties={}, keys=[S7, S8, S9, S10]), SimpleSelection(name=control, properties={}, keys=[S1, S2, S3, S4, S5, S6])]), keys=[S1, S2, S3, S4, S5, S6, S7, S8, S9, S10])])
+[DEBUG] : Using /tmp/806ea357-0977-4d4f-ab71-729ef7e17f0a for two-sample t-test analysis
+[DEBUG] : Launching R script /tmp/mev-r-5552312559831011662.R using Rscript /tmp/mev-r-5552312559831011662.R
+[DEBUG] : R process /tmp/mev-r-5552312559831011662.R exited with code 0
+[DEBUG] : Building dataset...mock
+[DEBUG] : Type=row
+[DEBUG] : Type=column
+[DEBUG] : Setting dataset to SimpleDataset(super=AbstractDataset(name=mock), values=MapBackedValues(values={MapBackedValues.Coordinate(row=G19, column=S4)=1.7730883948379668, MapBackedValues.Coordinate(row=G19, column=S3)=1.2856260531703587, MapBackedValues.Coordinate(row=G19, column=S2)=0.43470792145917514, MapBackedValues.Coordinate(row=G19, column=S1)=0.8294625023542447, MapBackedValues.Coordinate(row=G19, column=S8)=2.1101523266689792, MapBackedValues.Coordinate(row=G19, column=S7)=0.570545025798449, MapBackedValues.Coordinate(row=G19, column=S6)=0.55228234077136, MapBackedValues.Coordinate(row=G19, column=S5)=1.1840144877867902, MapBackedValues.Coordinate(row=G19, column=S9)=1.3250594835332186, MapBackedValues.Coordinate(row=G18, column=S1)=1.5817398956451907, MapBackedValues.Coordinate(row=G18, column=S3)=1.2770276951887642, MapBackedValues.Coordinate(row=G18, column=S2)=0.20546584037726556, MapBackedValues.Coordinate(row=G18, column=S5)=1.4756073478095015, MapBackedValues.Coordinate(row=G18, column=S4)=1.4609424825097648, MapBackedValues.Coordinate(row=G18, column=S7)=0.3462212302333083, MapBackedValues.Coordinate(row=G18, column=S6)=0.4862547500778641, MapBackedValues.Coordinate(row=G18, column=S9)=1.447215677951656, MapBackedValues.Coordinate(row=G18, column=S8)=1.1817040731943185, MapBackedValues.Coordinate(row=G19, column=S10)=0.2663088059378119, MapBackedValues.Coordinate(row=G18, column=S10)=1.2393328643731656, MapBackedValues.Coordinate(row=G1, column=S10)=0.17997238806740556, MapBackedValues.Coordinate(row=G8, column=S6)=1.2441995800181955, MapBackedValues.Coordinate(row=G8, column=S5)=1.1858254258546241, MapBackedValues.Coordinate(row=G8, column=S4)=0.6143236099481832, MapBackedValues.Coordinate(row=G8, column=S3)=1.349261064626204, MapBackedValues.Coordinate(row=G17, column=S10)=0.8110532346285517, MapBackedValues.Coordinate(row=G8, column=S9)=0.6854264339399868, MapBackedValues.Coordinate(row=G8, column=S8)=-0.03717669448902239, MapBackedValues.Coordinate(row=G8, column=S7)=1.8536904756426758, MapBackedValues.Coordinate(row=G8, column=S1)=0.8485257423886341, MapBackedValues.Coordinate(row=G8, column=S2)=2.4654610941594655, MapBackedValues.Coordinate(row=G20, column=S1)=0.7120160033627074, MapBackedValues.Coordinate(row=G20, column=S2)=0.9123263397371228, MapBackedValues.Coordinate(row=G20, column=S3)=1.4315531310767087, MapBackedValues.Coordinate(row=G20, column=S4)=1.724438313837745, MapBackedValues.Coordinate(row=G20, column=S5)=1.3275247526205933, MapBackedValues.Coordinate(row=G20, column=S6)=0.258523332858304, MapBackedValues.Coordinate(row=G20, column=S9)=0.7215323977152154, MapBackedValues.Coordinate(row=G20, column=S8)=0.8222344601683478, MapBackedValues.Coordinate(row=G20, column=S7)=0.915647763730766, MapBackedValues.Coordinate(row=G9, column=S5)=1.209300244849931, MapBackedValues.Coordinate(row=G9, column=S4)=1.2079991042854887, MapBackedValues.Coordinate(row=G9, column=S7)=1.9747491013748986, MapBackedValues.Coordinate(row=G9, column=S6)=0.023795903135111707, MapBackedValues.Coordinate(row=G9, column=S9)=0.0615109151442206, MapBackedValues.Coordinate(row=G9, column=S8)=1.070609451318704, MapBackedValues.Coordinate(row=G16, column=S10)=1.3204696641015785, MapBackedValues.Coordinate(row=G9, column=S1)=1.4038745157331807, MapBackedValues.Coordinate(row=G9, column=S2)=2.140084051686685, MapBackedValues.Coordinate(row=G9, column=S3)=1.143839053529577, MapBackedValues.Coordinate(row=G15, column=S10)=0.15632174320081726, MapBackedValues.Coordinate(row=G6, column=S9)=1.0009636367664936, MapBackedValues.Coordinate(row=G6, column=S8)=1.1039003034799486, MapBackedValues.Coordinate(row=G6, column=S7)=-0.16208375391667115, MapBackedValues.Coordinate(row=G6, column=S6)=0.7179278333133177, MapBackedValues.Coordinate(row=G6, column=S5)=0.7066180780581628, MapBackedValues.Coordinate(row=G6, column=S4)=0.5829633567125455, MapBackedValues.Coordinate(row=G6, column=S3)=1.0596673076872514, MapBackedValues.Coordinate(row=G6, column=S2)=2.0337379540427163, MapBackedValues.Coordinate(row=G6, column=S1)=1.6239049023178809, MapBackedValues.Coordinate(row=G14, column=S10)=0.04268871754146941, MapBackedValues.Coordinate(row=G7, column=S7)=1.487086356403075, MapBackedValues.Coordinate(row=G7, column=S6)=-0.06584953162406615, MapBackedValues.Coordinate(row=G7, column=S9)=0.990266569748926, MapBackedValues.Coordinate(row=G7, column=S8)=0.7289110071229999, MapBackedValues.Coordinate(row=G7, column=S3)=1.5263084007421324, MapBackedValues.Coordinate(row=G7, column=S2)=0.5027904142354412, MapBackedValues.Coordinate(row=G7, column=S5)=0.5334721895871849, MapBackedValues.Coordinate(row=G7, column=S4)=0.7910323975010495, MapBackedValues.Coordinate(row=G7, column=S1)=1.0893479082253128, MapBackedValues.Coordinate(row=G11, column=S2)=0.3426242846092957, MapBackedValues.Coordinate(row=G11, column=S1)=0.33347310859087276, MapBackedValues.Coordinate(row=G11, column=S4)=0.43025532947558676, MapBackedValues.Coordinate(row=G11, column=S3)=0.049370208714469524, MapBackedValues.Coordinate(row=G7, column=S10)=0.5816465061333875, MapBackedValues.Coordinate(row=G11, column=S6)=1.0701226118746205, MapBackedValues.Coordinate(row=G11, column=S5)=1.15392010741171, MapBackedValues.Coordinate(row=G11, column=S8)=1.9522704743323678, MapBackedValues.Coordinate(row=G11, column=S7)=1.9089261081205755, MapBackedValues.Coordinate(row=G10, column=S8)=0.08093542982306978, MapBackedValues.Coordinate(row=G10, column=S9)=1.0950355898708684, MapBackedValues.Coordinate(row=G4, column=S1)=12.6258151884929, MapBackedValues.Coordinate(row=G4, column=S2)=10.976434083738543, MapBackedValues.Coordinate(row=G4, column=S3)=12.487337335425911, MapBackedValues.Coordinate(row=G4, column=S4)=11.833592449278811, MapBackedValues.Coordinate(row=G4, column=S5)=12.427543691055012, MapBackedValues.Coordinate(row=G4, column=S6)=11.540628106628843, MapBackedValues.Coordinate(row=G4, column=S7)=1.4021617533829231, MapBackedValues.Coordinate(row=G4, column=S8)=1.1107238167168494, MapBackedValues.Coordinate(row=G4, column=S9)=0.5519559139121002, MapBackedValues.Coordinate(row=G12, column=S10)=0.9990896938741014, MapBackedValues.Coordinate(row=G10, column=S3)=0.9363406180457896, MapBackedValues.Coordinate(row=G10, column=S2)=1.9993912281790247, MapBackedValues.Coordinate(row=G10, column=S1)=0.7899488648703186, MapBackedValues.Coordinate(row=G10, column=S7)=0.968945230360959, MapBackedValues.Coordinate(row=G10, column=S6)=0.69468258580897, MapBackedValues.Coordinate(row=G6, column=S10)=1.2247007403962618, MapBackedValues.Coordinate(row=G10, column=S5)=0.9989733067095831, MapBackedValues.Coordinate(row=G10, column=S4)=0.8661591803373676, MapBackedValues.Coordinate(row=G5, column=S2)=1.2370892222722452, MapBackedValues.Coordinate(row=G5, column=S3)=0.394213433140325, MapBackedValues.Coordinate(row=G5, column=S1)=0.4212630682277811, MapBackedValues.Coordinate(row=G5, column=S6)=-0.017998501796496535, MapBackedValues.Coordinate(row=G5, column=S7)=0.5900194955064835, MapBackedValues.Coordinate(row=G5, column=S4)=0.6571736269682573, MapBackedValues.Coordinate(row=G5, column=S5)=0.7107561591312392, MapBackedValues.Coordinate(row=G5, column=S8)=1.8660216892102317, MapBackedValues.Coordinate(row=G5, column=S9)=1.7279509896739151, MapBackedValues.Coordinate(row=G13, column=S10)=0.6238961028115959, MapBackedValues.Coordinate(row=G13, column=S2)=0.7040364121034963, MapBackedValues.Coordinate(row=G13, column=S1)=1.3256337143765444, MapBackedValues.Coordinate(row=G20, column=S10)=0.6489097589989401, MapBackedValues.Coordinate(row=G13, column=S8)=1.0731551805318387, MapBackedValues.Coordinate(row=G13, column=S7)=1.6724596294615457, MapBackedValues.Coordinate(row=G13, column=S9)=1.411681767952686, MapBackedValues.Coordinate(row=G13, column=S4)=2.2847199935489817, MapBackedValues.Coordinate(row=G13, column=S3)=1.589435388962163, MapBackedValues.Coordinate(row=G9, column=S10)=0.9736475782769394, MapBackedValues.Coordinate(row=G13, column=S6)=1.4124913079311152, MapBackedValues.Coordinate(row=G13, column=S5)=1.7027343622242481, MapBackedValues.Coordinate(row=G2, column=S1)=1.8852382976711122, MapBackedValues.Coordinate(row=G2, column=S2)=1.3365888648839233, MapBackedValues.Coordinate(row=G2, column=S3)=0.8726933138377111, MapBackedValues.Coordinate(row=G2, column=S4)=1.000704965530544, MapBackedValues.Coordinate(row=G2, column=S9)=0.7208001799521423, MapBackedValues.Coordinate(row=G2, column=S5)=1.2171502222166573, MapBackedValues.Coordinate(row=G2, column=S6)=1.6657339533323643, MapBackedValues.Coordinate(row=G2, column=S7)=0.991046144631506, MapBackedValues.Coordinate(row=G10, column=S10)=0.9723302437465745, MapBackedValues.Coordinate(row=G2, column=S8)=0.8893733573944052, MapBackedValues.Coordinate(row=G12, column=S1)=1.3924065097368363, MapBackedValues.Coordinate(row=G12, column=S9)=0.3930179936499352, MapBackedValues.Coordinate(row=G12, column=S8)=0.6427143424737081, MapBackedValues.Coordinate(row=G12, column=S7)=1.0228859043126182, MapBackedValues.Coordinate(row=G12, column=S6)=1.065669702544273, MapBackedValues.Coordinate(row=G12, column=S5)=1.9303015898491482, MapBackedValues.Coordinate(row=G8, column=S10)=0.13838301323265945, MapBackedValues.Coordinate(row=G12, column=S4)=0.9577725746500535, MapBackedValues.Coordinate(row=G12, column=S3)=0.5404078368283642, MapBackedValues.Coordinate(row=G12, column=S2)=1.3728707793847006, MapBackedValues.Coordinate(row=G3, column=S4)=0.6321050648189079, MapBackedValues.Coordinate(row=G3, column=S5)=2.288129746374324, MapBackedValues.Coordinate(row=G3, column=S2)=0.022480974484516136, MapBackedValues.Coordinate(row=G3, column=S3)=0.4585539956464407, MapBackedValues.Coordinate(row=G3, column=S1)=1.1883888547753927, MapBackedValues.Coordinate(row=G11, column=S9)=0.07019370450079994, MapBackedValues.Coordinate(row=G3, column=S8)=1.1586762712250915, MapBackedValues.Coordinate(row=G11, column=S10)=0.4295688624516629, MapBackedValues.Coordinate(row=G3, column=S9)=0.4483649242829605, MapBackedValues.Coordinate(row=G3, column=S6)=1.4505233209359485, MapBackedValues.Coordinate(row=G3, column=S7)=0.08743715686250737, MapBackedValues.Coordinate(row=G15, column=S5)=0.1603389007795869, MapBackedValues.Coordinate(row=G15, column=S6)=1.0136081971934217, MapBackedValues.Coordinate(row=G15, column=S7)=1.11975508917579, MapBackedValues.Coordinate(row=G15, column=S8)=0.8846284618247359, MapBackedValues.Coordinate(row=G15, column=S9)=1.0323901304792773, MapBackedValues.Coordinate(row=G3, column=S10)=0.922016435761176, MapBackedValues.Coordinate(row=G15, column=S1)=1.3223271572671929, MapBackedValues.Coordinate(row=G15, column=S2)=1.0306683142642368, MapBackedValues.Coordinate(row=G15, column=S3)=1.1719732131519474, MapBackedValues.Coordinate(row=G15, column=S4)=0.7051026378379774, MapBackedValues.Coordinate(row=G14, column=S6)=1.4168787511681349, MapBackedValues.Coordinate(row=G14, column=S7)=0.9433454890035535, MapBackedValues.Coordinate(row=G14, column=S4)=0.4699036879893047, MapBackedValues.Coordinate(row=G14, column=S5)=0.3876866425390313, MapBackedValues.Coordinate(row=G14, column=S8)=1.4139062774100744, MapBackedValues.Coordinate(row=G14, column=S9)=0.4778216530655553, MapBackedValues.Coordinate(row=G2, column=S10)=1.4268278014812505, MapBackedValues.Coordinate(row=G14, column=S2)=0.10285756910343513, MapBackedValues.Coordinate(row=G14, column=S3)=1.1026640868115576, MapBackedValues.Coordinate(row=G14, column=S1)=1.2889508035662423, MapBackedValues.Coordinate(row=G1, column=S7)=0.8279956752711143, MapBackedValues.Coordinate(row=G1, column=S6)=12.633586788027579, MapBackedValues.Coordinate(row=G1, column=S5)=12.360314347436626, MapBackedValues.Coordinate(row=G1, column=S4)=11.638984906340333, MapBackedValues.Coordinate(row=G1, column=S9)=1.0379944491699198, MapBackedValues.Coordinate(row=G1, column=S8)=1.370350032209602, MapBackedValues.Coordinate(row=G1, column=S3)=12.340814128882009, MapBackedValues.Coordinate(row=G1, column=S2)=12.04140233660781, MapBackedValues.Coordinate(row=G1, column=S1)=11.885147124634047, MapBackedValues.Coordinate(row=G5, column=S10)=1.6732387608704316, MapBackedValues.Coordinate(row=G17, column=S7)=0.9861790550751071, MapBackedValues.Coordinate(row=G17, column=S8)=1.005304796569498, MapBackedValues.Coordinate(row=G17, column=S9)=0.9890599521756782, MapBackedValues.Coordinate(row=G17, column=S3)=12.330115707570311, MapBackedValues.Coordinate(row=G17, column=S4)=12.457970725493256, MapBackedValues.Coordinate(row=G17, column=S5)=11.4439763675177, MapBackedValues.Coordinate(row=G17, column=S6)=12.64147576903922, MapBackedValues.Coordinate(row=G17, column=S1)=12.777998574361488, MapBackedValues.Coordinate(row=G17, column=S2)=12.75249893990934, MapBackedValues.Coordinate(row=G4, column=S10)=1.1910733306912078, MapBackedValues.Coordinate(row=G16, column=S8)=0.5718455067192516, MapBackedValues.Coordinate(row=G16, column=S9)=1.22300732825381, MapBackedValues.Coordinate(row=G16, column=S6)=-0.2719273644194431, MapBackedValues.Coordinate(row=G16, column=S7)=1.2281571985678426, MapBackedValues.Coordinate(row=G16, column=S4)=1.2507906292208797, MapBackedValues.Coordinate(row=G16, column=S5)=1.760626870246532, MapBackedValues.Coordinate(row=G16, column=S2)=1.391620831679649, MapBackedValues.Coordinate(row=G16, column=S3)=1.543638392839115, MapBackedValues.Coordinate(row=G16, column=S1)=0.04594649795375105}), analyses=ArrayListAnalyses(analyses=[]), dimensions=[SimpleDimension(type=row, selections=ArrayListSelections(selections=[]), keys=<20 keys>), SimpleDimension(type=column, selections=ArrayListSelections(selections=[SimpleSelection(name=experiment, properties={}, keys=[S7, S8, S9, S10]), SimpleSelection(name=control, properties={}, keys=[S1, S2, S3, S4, S5, S6])]), keys=[S1, S2, S3, S4, S5, S6, S7, S8, S9, S10])])
+[DEBUG] : Using /tmp/b78e6310-d59f-4a3f-935f-1424725bcd68 for two-sample t-test analysis
+[DEBUG] : Launching R script /tmp/mev-r-3900377619228801231.R using Rscript /tmp/mev-r-3900377619228801231.R
+[DEBUG] : R process /tmp/mev-r-3900377619228801231.R exited with code 0
+[DEBUG] : SimpleEntry(pValue=0.199806249248958, geneId=G2)
+[DEBUG] : SimpleEntry(pValue=0.407115042831057, geneId=G10)
+[DEBUG] : Building dataset...mock
+[DEBUG] : Type=row
+[DEBUG] : Type=column
+[DEBUG] : Setting dataset to SimpleDataset(super=AbstractDataset(name=mock), values=MapBackedValues(values={MapBackedValues.Coordinate(row=g1, column=sc)=0.3, MapBackedValues.Coordinate(row=g1, column=sb)=0.2, MapBackedValues.Coordinate(row=g1, column=sa)=0.1, MapBackedValues.Coordinate(row=g2, column=sb)=0.5, MapBackedValues.Coordinate(row=g2, column=sa)=0.4, MapBackedValues.Coordinate(row=g2, column=sd)=0.7, MapBackedValues.Coordinate(row=g2, column=sc)=0.6, MapBackedValues.Coordinate(row=g2, column=sf)=0.9, MapBackedValues.Coordinate(row=g2, column=se)=0.8, MapBackedValues.Coordinate(row=g1, column=sf)=0.6, MapBackedValues.Coordinate(row=g1, column=se)=0.5, MapBackedValues.Coordinate(row=g1, column=sd)=0.4}), analyses=ArrayListAnalyses(analyses=[]), dimensions=[SimpleDimension(type=row, selections=ArrayListSelections(selections=[]), keys=[g1, g2]), SimpleDimension(type=column, selections=ArrayListSelections(selections=[SimpleSelection(name=control, properties={}, keys=[sa, sc, sd, sb, se, sf])]), keys=[sa, sb, sc, sd, se, sf])])
+[DEBUG] : Using /tmp/144504d3-a273-4a68-8d6e-7029a29d61a6 for one-sample t-test analysis
+[DEBUG] : Launching R script /tmp/mev-r-8177131663659291260.R using Rscript /tmp/mev-r-8177131663659291260.R
+[DEBUG] : R process /tmp/mev-r-8177131663659291260.R exited with code 0
+[DEBUG] : Building dataset...mock
+[DEBUG] : Type=row
+[DEBUG] : Type=column
+[DEBUG] : Setting dataset to SimpleDataset(super=AbstractDataset(name=mock), values=MapBackedValues(values={MapBackedValues.Coordinate(row=G7, column=S10)=0.08095219518818875, MapBackedValues.Coordinate(row=G10, column=S8)=0.22372774102116555, MapBackedValues.Coordinate(row=G10, column=S9)=1.2343195860390155, MapBackedValues.Coordinate(row=G4, column=S1)=1.9055613600165997, MapBackedValues.Coordinate(row=G4, column=S2)=0.09356241886510197, MapBackedValues.Coordinate(row=G4, column=S3)=0.2380285018347455, MapBackedValues.Coordinate(row=G4, column=S4)=3.84740746318419, MapBackedValues.Coordinate(row=G4, column=S5)=2.356291503584247, MapBackedValues.Coordinate(row=G4, column=S6)=2.7945099307946974, MapBackedValues.Coordinate(row=G4, column=S7)=0.6741638547114861, MapBackedValues.Coordinate(row=G4, column=S8)=1.724432926869718, MapBackedValues.Coordinate(row=G4, column=S9)=1.1959987200632622, MapBackedValues.Coordinate(row=G10, column=S3)=0.7013115941652059, MapBackedValues.Coordinate(row=G10, column=S2)=0.829889498625954, MapBackedValues.Coordinate(row=G10, column=S1)=1.3386373953873634, MapBackedValues.Coordinate(row=G10, column=S7)=1.7310751655381715, MapBackedValues.Coordinate(row=G10, column=S6)=1.6108273430489, MapBackedValues.Coordinate(row=G10, column=S5)=0.5163333275847467, MapBackedValues.Coordinate(row=G6, column=S10)=0.8482968148400671, MapBackedValues.Coordinate(row=G10, column=S4)=0.8935077793136789, MapBackedValues.Coordinate(row=G5, column=S2)=0.34948461450507196, MapBackedValues.Coordinate(row=G5, column=S3)=1.1676676307900755, MapBackedValues.Coordinate(row=G5, column=S1)=1.7193374095781333, MapBackedValues.Coordinate(row=G5, column=S6)=0.6800108190568048, MapBackedValues.Coordinate(row=G5, column=S7)=0.725324822750355, MapBackedValues.Coordinate(row=G5, column=S4)=0.47822302606851075, MapBackedValues.Coordinate(row=G5, column=S5)=0.43991423652215633, MapBackedValues.Coordinate(row=G5, column=S8)=0.7806689816392596, MapBackedValues.Coordinate(row=G5, column=S9)=0.6925188107811194, MapBackedValues.Coordinate(row=G9, column=S10)=0.518110868873396, MapBackedValues.Coordinate(row=G2, column=S1)=1.1502445106687447, MapBackedValues.Coordinate(row=G2, column=S2)=1.3880799751625719, MapBackedValues.Coordinate(row=G2, column=S3)=1.3410883738218409, MapBackedValues.Coordinate(row=G2, column=S4)=3.084720816624258, MapBackedValues.Coordinate(row=G2, column=S9)=0.4617892882371386, MapBackedValues.Coordinate(row=G2, column=S5)=2.5818450802212416, MapBackedValues.Coordinate(row=G2, column=S6)=2.367430922421943, MapBackedValues.Coordinate(row=G10, column=S10)=0.2412611683717999, MapBackedValues.Coordinate(row=G2, column=S7)=1.0323621828407936, MapBackedValues.Coordinate(row=G2, column=S8)=3.1177875444537237, MapBackedValues.Coordinate(row=G8, column=S10)=1.3036489536316505, MapBackedValues.Coordinate(row=G3, column=S4)=0.9725989889844148, MapBackedValues.Coordinate(row=G3, column=S5)=1.2482840091059657, MapBackedValues.Coordinate(row=G3, column=S2)=1.382298236091139, MapBackedValues.Coordinate(row=G3, column=S3)=0.5729514752270052, MapBackedValues.Coordinate(row=G1, column=S10)=0.9864857446509974, MapBackedValues.Coordinate(row=G3, column=S1)=0.4391889940305381, MapBackedValues.Coordinate(row=G3, column=S8)=1.5402983526465595, MapBackedValues.Coordinate(row=G3, column=S9)=1.1331274150019597, MapBackedValues.Coordinate(row=G3, column=S6)=0.892657809676699, MapBackedValues.Coordinate(row=G3, column=S7)=1.3197541543823776, MapBackedValues.Coordinate(row=G3, column=S10)=1.6761624129921446, MapBackedValues.Coordinate(row=G8, column=S6)=2.1310451956640084, MapBackedValues.Coordinate(row=G8, column=S5)=1.1777472499323156, MapBackedValues.Coordinate(row=G8, column=S4)=0.6786898563519169, MapBackedValues.Coordinate(row=G8, column=S3)=0.23023679219644602, MapBackedValues.Coordinate(row=G8, column=S9)=0.7665894136772822, MapBackedValues.Coordinate(row=G8, column=S8)=0.7395105287783704, MapBackedValues.Coordinate(row=G8, column=S7)=0.7875240265935568, MapBackedValues.Coordinate(row=G8, column=S1)=1.243952955865607, MapBackedValues.Coordinate(row=G8, column=S2)=1.440989147751387, MapBackedValues.Coordinate(row=G9, column=S5)=1.0092061769720981, MapBackedValues.Coordinate(row=G9, column=S4)=0.3329769660881695, MapBackedValues.Coordinate(row=G9, column=S7)=1.7152733437371928, MapBackedValues.Coordinate(row=G9, column=S6)=0.2588110927523207, MapBackedValues.Coordinate(row=G2, column=S10)=1.6028270330759116, MapBackedValues.Coordinate(row=G9, column=S9)=1.2101544458522782, MapBackedValues.Coordinate(row=G9, column=S8)=0.7197384843776439, MapBackedValues.Coordinate(row=G1, column=S7)=0.6182690292679595, MapBackedValues.Coordinate(row=G1, column=S6)=0.5575493844636111, MapBackedValues.Coordinate(row=G1, column=S5)=1.1679787918031146, MapBackedValues.Coordinate(row=G1, column=S4)=0.2842920356539057, MapBackedValues.Coordinate(row=G9, column=S1)=0.5958003825885131, MapBackedValues.Coordinate(row=G9, column=S2)=1.7092788822579812, MapBackedValues.Coordinate(row=G1, column=S9)=1.6258117878488028, MapBackedValues.Coordinate(row=G9, column=S3)=0.6575371327833991, MapBackedValues.Coordinate(row=G1, column=S8)=1.0642346281221293, MapBackedValues.Coordinate(row=G1, column=S3)=0.6802546076106781, MapBackedValues.Coordinate(row=G1, column=S2)=0.3916231968392997, MapBackedValues.Coordinate(row=G1, column=S1)=1.3958642506081673, MapBackedValues.Coordinate(row=G5, column=S10)=0.03442408758869031, MapBackedValues.Coordinate(row=G6, column=S9)=0.45751131643185566, MapBackedValues.Coordinate(row=G6, column=S8)=0.4094669660443885, MapBackedValues.Coordinate(row=G6, column=S7)=2.137179543584942, MapBackedValues.Coordinate(row=G6, column=S6)=0.24859897545201803, MapBackedValues.Coordinate(row=G6, column=S5)=1.297314694459755, MapBackedValues.Coordinate(row=G6, column=S4)=0.731299797880927, MapBackedValues.Coordinate(row=G6, column=S3)=1.1245562736722203, MapBackedValues.Coordinate(row=G6, column=S2)=0.9752049715130082, MapBackedValues.Coordinate(row=G6, column=S1)=1.4366217443732174, MapBackedValues.Coordinate(row=G4, column=S10)=1.7452336714089403, MapBackedValues.Coordinate(row=G7, column=S7)=0.7388802606792712, MapBackedValues.Coordinate(row=G7, column=S6)=0.37794604167237944, MapBackedValues.Coordinate(row=G7, column=S9)=1.243557217256899, MapBackedValues.Coordinate(row=G7, column=S8)=0.9796859959757529, MapBackedValues.Coordinate(row=G7, column=S3)=1.1699182709635378, MapBackedValues.Coordinate(row=G7, column=S2)=0.6180182417077844, MapBackedValues.Coordinate(row=G7, column=S5)=1.308055771196736, MapBackedValues.Coordinate(row=G7, column=S4)=0.2862357749855996, MapBackedValues.Coordinate(row=G7, column=S1)=0.8715438551197592}), analyses=ArrayListAnalyses(analyses=[]), dimensions=[SimpleDimension(type=row, selections=ArrayListSelections(selections=[]), keys=[G1, G2, G3, G4, G5, G6, G7, G8, G9, G10]), SimpleDimension(type=column, selections=ArrayListSelections(selections=[SimpleSelection(name=experiment, properties={}, keys=[S4, S5, S6, S8]), SimpleSelection(name=control, properties={}, keys=[S1, S2, S3, S7])]), keys=[S1, S2, S3, S4, S5, S6, S7, S8, S9, S10])])
+[DEBUG] : Using /tmp/ce7c88ed-6a4c-4281-986f-ed4a0dac4e9b for paired t-test analysis
+[DEBUG] : Launching R script /tmp/mev-r-7450436027764930301.R using Rscript /tmp/mev-r-7450436027764930301.R
+[DEBUG] : R process /tmp/mev-r-7450436027764930301.R exited with code 1
+Original script:
+ONE_SAMPLE="one_sample"
+TWO_SAMPLE="two_sample"
+PAIRED="paired"
+INFILE="/tmp/ce7c88ed-6a4c-4281-986f-ed4a0dac4e9b/dataset.tsv"
+SAMPLE_FILE="/tmp/ce7c88ed-6a4c-4281-986f-ed4a0dac4e9b/config.tsv"
+OUTFILE="/tmp/ce7c88ed-6a4c-4281-986f-ed4a0dac4e9b/output.tsv"
+TEST_TYPE="paired"
+CORRECT_FOR_MULTIPLE_TESTING=FALSE
+
+############### helper method ##############################
+#method for calculating the variance in each ROW of the matrix X
+#assumes that X does not have missing rows (matrix has already been "cleaned" prior)
+#assumes each row has the same number of cols (not a jagged matrix)
+rowVars<-function(X)
+{
+	n<-ncol(X)
+	dX<-X-rowMeans(X)
+	s2<-rowSums(dX*dX)
+	return(s2/(n-1))
+}
+
+##############################################################
+
+######### read in expression data matrix #####################
+exp_data<-read.table(INFILE, header=T, sep="\t")
+
+rownames(exp_data)<-exp_data[,1]  #name the rows by the genes, which occupy the first column
+exp_data<-na.omit(exp_data[,-1]) #remove the first column containing the gene names, skipping any incomplete rows
+exp_data<-data.matrix(exp_data)  #cast as a numeric matrix
+
+## Check to determine if matrix contains negative values
+## off set the matrix to operate in positive values
+## starting with 0
+exp_data<-if(min(exp_data)<0){exp_data+min(exp_data)*-1}else{exp_data}
+
+######### read groupings file #####################
+sample_mtx<-read.table(SAMPLE_FILE, header=F, sep="\t")
+sample_mtx<-sample_mtx[(sample_mtx[,2]!=-1),]  #parse out the samples we do NOT want to include (marked with -1)
+exp_data<-exp_data[,as.character(sample_mtx[,1])]  #retain only the samples we care about
+
+if(TEST_TYPE==ONE_SAMPLE)
+{
+	#one-sample t-test.  User supplies a mean to test against.  
+	#Could allow for two-tailed and one-tailed alternate hypotheses.
+	
+	p_vals<-apply(exp_data,1,
+      function(x)
+      {
+        #t.test(x, mu=USER_MU, alternative=HYPOTHESIS_STYLE) #if different alternative hypotheses desired.
+        t.test(x, mu=USER_MU)$p.value
+      }
+     )
+	
+} else {
+	#only import the library if doing a two-sample or paired test
+	suppressMessages(library(multtest))
+	
+	if (TEST_TYPE==TWO_SAMPLE)
+	{
+		#two-sample t-test.  Only perform two-tailed test here.
+	
+		#group the samples and get the sizes:
+		group_a<-as.character(sample_mtx[(sample_mtx[,2]==0),1])
+		group_b<-as.character(sample_mtx[(sample_mtx[,2]==1),1])
+		size_a<-length(group_a)
+		size_b<-length(group_b)
+
+		#arrange the matrix so one group is on 'the left' and the other is on 'the right' of the matrix
+		#(just makes reading this cleaner and less likely to errors introduced elsewhere)
+		exp_data<-cbind(exp_data[, group_a],exp_data[, group_b])
+	
+		#a vector labeling the groups
+		labels<-c(rep(0,size_a),rep(1,size_b))
+		
+		#using mt.teststat gets the t-statistics very quickly (much quicker than apply(...))
+		if(EQUAL_VARIANCE)
+		{
+			t_stats<-abs(mt.teststat(exp_data, labels, test="t.equalvar"))
+			
+			#now calculate the p-vals (not yet adjusted for multiple testing)
+			p_vals<-2*(1-pt(t_stats,size_a+size_b-2)) 
+
+		} else  #Welch's t-test (unequal variance)
+		{
+			t_stats<-abs(mt.teststat(exp_data, labels, test="t")) #take absolute value for calculating p-value later
+			#since this is Welch's t-test, have to estimate the degrees of freedom by the Welch–Satterthwaite equation:
+			sa_sqd<-rowVars(exp_data[,1:size_a])  #calculate the sample variance for each row/gene in group A
+			sb_sqd<-rowVars(exp_data[,(size_a+1):(size_a+size_b)]) #calculate the sample variance for each row/gene in group B
+			nu_1<-size_a-1
+			nu_2<-size_b-1
+			dof<-((sa_sqd/size_a+sb_sqd/size_b)^2)/(((sa_sqd^2)/(size_a^2*nu_1))+((sb_sqd^2)/(size_b^2*nu_2))) #Welch–Satterthwaite equation
+			p_vals<-2*(1-pt(t_stats,dof)) #two-tailed p vals
+
+		}
+		
+#		#test:
+# 		p_vals_test<-apply(exp_data,1,
+# 		  function(x)
+#		  {
+# 			t.test(x[1:size_a],x[(size_a+1):(size_a+size_b)],var.equal=F)$p.value
+# 		  }
+#		 )
+# 		 print(p_vals_test)
+# 		 print(p_vals)
+	
+	} else if (TEST_TYPE==PAIRED)
+	{
+	
+		sample_mtx<-sample_mtx[(sample_mtx[,2]==0),]  #the file is potentially "symmetric" so only need to keep the lines that have a group identifier of zero.
+		sample_mtx<-na.omit(sample_mtx)	#ensure the samples are properly matched to another sample- remove any samples "paired" with a NA
+		num_pairs<-dim(sample_mtx)[1]
+
+		#create a vector of the sample pairings in order (the eventual column-order of the expression matrix)
+		sample_orderings<-c()
+		for (i in seq(1:num_pairs))
+		{
+			sample_orderings<-c(sample_orderings,as.character(sample_mtx[i,1]), as.character(sample_mtx[i,3]))
+		}
+
+		#rearrange the expression matrix so the columns of paired samples are adjacent to each other.  The t-test method we call requires ordering of this nature
+		exp_data<-exp_data[,sample_orderings]
+
+		labels<-rep(0:1,num_pairs)
+		t_stats<-abs(mt.teststat(exp_data, labels, test="pairt"))
+		p_vals<-2*(1-pt(t_stats,num_pairs-1))
+		
+#		#test
+#		evens=seq(2,2*num_pairs,2)
+#		odds=seq(1,2*num_pairs,2)
+#		p_vals_test<-apply(exp_data,1,function(x){
+#		t.test(x[evens],x[odds],paired=T)$p.value
+#		})
+#		print(p_vals_test)
+#		print(p_vals)
+	} else
+	{
+		#error!  did not specify the test type
+	}
+}
+
+
+
+#adjust the p-vals for multiple testing, if desired:
+if(CORRECT_FOR_MULTIPLE_TESTING)
+{
+	p_vals<-p.adjust(p_vals, method="fdr")
+}
+
+results=data.frame(rownames(exp_data),p_vals)
+write.table(results, OUTFILE, sep='\t', row.names=F, col.names=F, quote=F)
+
+Standard output:
+
+Standard error:
+Error in exp_data[, sample_orderings] : subscript out of bounds
+Execution halted
+
+[DEBUG] : Two-sample t-test script failed
+Input dataset:
+id	S1	S2	S3	S4	S5	S6	S7	S8	S9	S10
+G1	1.3958642506081673	0.3916231968392997	0.6802546076106781	0.2842920356539057	1.1679787918031146	0.5575493844636111	0.6182690292679595	1.0642346281221293	1.6258117878488028	0.9864857446509974
+G2	1.1502445106687447	1.3880799751625719	1.3410883738218409	3.084720816624258	2.5818450802212416	2.367430922421943	1.0323621828407936	3.1177875444537237	0.4617892882371386	1.6028270330759116
+G3	0.4391889940305381	1.382298236091139	0.5729514752270052	0.9725989889844148	1.2482840091059657	0.892657809676699	1.3197541543823776	1.5402983526465595	1.1331274150019597	1.6761624129921446
+G4	1.9055613600165997	0.09356241886510197	0.2380285018347455	3.84740746318419	2.356291503584247	2.7945099307946974	0.6741638547114861	1.724432926869718	1.1959987200632622	1.7452336714089403
+G5	1.7193374095781333	0.34948461450507196	1.1676676307900755	0.47822302606851075	0.43991423652215633	0.6800108190568048	0.725324822750355	0.7806689816392596	0.6925188107811194	0.03442408758869031
+G6	1.4366217443732174	0.9752049715130082	1.1245562736722203	0.731299797880927	1.297314694459755	0.24859897545201803	2.137179543584942	0.4094669660443885	0.45751131643185566	0.8482968148400671
+G7	0.8715438551197592	0.6180182417077844	1.1699182709635378	0.2862357749855996	1.308055771196736	0.37794604167237944	0.7388802606792712	0.9796859959757529	1.243557217256899	0.08095219518818875
+G8	1.243952955865607	1.440989147751387	0.23023679219644602	0.6786898563519169	1.1777472499323156	2.1310451956640084	0.7875240265935568	0.7395105287783704	0.7665894136772822	1.3036489536316505
+G9	0.5958003825885131	1.7092788822579812	0.6575371327833991	0.3329769660881695	1.0092061769720981	0.2588110927523207	1.7152733437371928	0.7197384843776439	1.2101544458522782	0.518110868873396
+G10	1.3386373953873634	0.829889498625954	0.7013115941652059	0.8935077793136789	0.5163333275847467	1.6108273430489	1.7310751655381715	0.22372774102116555	1.2343195860390155	0.2412611683717999
+
+Configuration:
+S4	0	S1
+S5	0	S2
+S6	0	S3
+S8	0	S7
+S9	-1	NA
+S10	-1	NA
+
+javax.script.ScriptException: java.lang.RuntimeException: Exited with abnormal return code 1
+	at edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.eval(CliRScriptEngine.java:143)
+	at javax.script.AbstractScriptEngine.eval(AbstractScriptEngine.java:249)
+	at edu.dfci.cccb.mev.t_test.domain.impl.PairedTTestBuilder.build(PairedTTestBuilder.java:119)
+	at edu.dfci.cccb.mev.t_test.domain.impl.PairedTTestBuilder.build(PairedTTestBuilder.java:34)
+	at edu.dfci.cccb.mev.t_test.domain.cli.CliRTTestTest.paired_ttest_produces_correct_pValue(CliRTTestTest.java:221)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:264)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:153)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:124)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.RuntimeException: Exited with abnormal return code 1
+	at edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.eval(CliRScriptEngine.java:137)
+	... 27 more
+Tests run: 4, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 4.82 sec <<< FAILURE! - in edu.dfci.cccb.mev.t_test.domain.cli.CliRTTestTest
+paired_ttest_produces_correct_pValue(edu.dfci.cccb.mev.t_test.domain.cli.CliRTTestTest)  Time elapsed: 1.207 sec  <<< ERROR!
+edu.dfci.cccb.mev.dataset.domain.contract.DatasetException: javax.script.ScriptException: java.lang.RuntimeException: Exited with abnormal return code 1
+	at edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.eval(CliRScriptEngine.java:137)
+	at javax.script.AbstractScriptEngine.eval(AbstractScriptEngine.java:249)
+	at edu.dfci.cccb.mev.t_test.domain.impl.PairedTTestBuilder.build(PairedTTestBuilder.java:119)
+	at edu.dfci.cccb.mev.t_test.domain.impl.PairedTTestBuilder.build(PairedTTestBuilder.java:34)
+	at edu.dfci.cccb.mev.t_test.domain.cli.CliRTTestTest.paired_ttest_produces_correct_pValue(CliRTTestTest.java:221)
+
+
+Results :
+
+Tests in error: 
+  CliRTTestTest.paired_ttest_produces_correct_pValue:221 » Dataset javax.script....
+
+Tests run: 4, Failures: 0, Errors: 1, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] MultiExperiment Viewer ............................ SUCCESS [1.049s]
+[INFO] MeV IO Utilities .................................. SUCCESS [2.604s]
+[INFO] MeV Math Utilities ................................ SUCCESS [0.650s]
+[INFO] MeV R Integration ................................. SUCCESS [2.349s]
+[INFO] MultiExperiment Viewer Configuration .............. SUCCESS [0.040s]
+[INFO] MeV Configuration of REST Components .............. SUCCESS [0.720s]
+[INFO] MeV Configuration of Client Components ............ SUCCESS [0.665s]
+[INFO] MeV Configuration of REST Components .............. SUCCESS [0.773s]
+[INFO] MeV Dataset Plugin ................................ SUCCESS [0.018s]
+[INFO] MeV Dataset Plugin Domain Component ............... SUCCESS [5.649s]
+[INFO] MeV Dataset Plugin REST Component ................. SUCCESS [1.365s]
+[INFO] MeV Dataset Plugin Client Component ............... SUCCESS [1.087s]
+[INFO] MeV Annotation Plugin ............................. SUCCESS [0.015s]
+[INFO] MeV Annotation Domain API ......................... SUCCESS [1.171s]
+[INFO] MeV Annotation JOOQ Data Access ................... SUCCESS [4.665s]
+[INFO] MeV PREloaded DataSETS ............................ SUCCESS [0.066s]
+[INFO] MeV PREloaded DataSETS - Domain ................... SUCCESS [2.556s]
+[INFO] MeV Annotation Server API ......................... SUCCESS [13.783s]
+[INFO] MeV Hierarchical Clustering ....................... SUCCESS [0.076s]
+[INFO] MeV Hierarchical Clustering Plugin Domain Component  SUCCESS [1.031s]
+[INFO] MeV Hierarchical Clustering Plugin REST Component . SUCCESS [1.051s]
+[INFO] MeV LIMMA Plugin .................................. SUCCESS [0.020s]
+[INFO] MeV LIMMA Plugin Domain Component ................. SUCCESS [1.799s]
+[INFO] MeV LIMMA Plugin REST Component ................... SUCCESS [0.909s]
+[INFO] MeV PREloaded DataSETS - REST ..................... SUCCESS [21.298s]
+[INFO] MeV K-Means Clustering ............................ SUCCESS [0.015s]
+[INFO] MeV K-Means Clustering Plugin Domain Component .... SUCCESS [8.196s]
+[INFO] MeV K-Means Clustering Plugin REST Component ...... SUCCESS [0.992s]
+[INFO] MeV t-Test Plugin ................................. SUCCESS [0.044s]
+[INFO] MeV t-Test Plugin Domain Component ................ FAILURE [6.664s]
+[INFO] MeV t-Test Plugin REST Component .................. SKIPPED
+[INFO] MeV Anova Plugin .................................. SKIPPED
+[INFO] MeV Anova Plugin Domain Component ................. SKIPPED
+[INFO] MeV Anova Plugin REST Component ................... SKIPPED
+[INFO] MeV Web Application Server ........................ SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1:21.920s
+[INFO] Finished at: Mon Apr 07 12:25:18 EDT 2014
+[INFO] Final Memory: 20M/273M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.16:test (default-test) on project mev-t-test-domain: There are test failures.
+[ERROR] 
+[ERROR] Please refer to /home/brian/workspace/mev/t-test/domain/target/surefire-reports for the individual test results.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <goals> -rf :mev-t-test-domain

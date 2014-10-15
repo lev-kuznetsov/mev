@@ -1,3 +1,4 @@
+
 if(!require("DESeq", character.only=T)) stop("Please install the DESeq package first.")
 
 # input parameters will be added to this script by the R script-loading mechanism
@@ -20,6 +21,7 @@ count_data<-count_data[-1]
 
 # read the sample to group mappings:
 sample_groups_tuple <- read.table(SAMPLE_FILE, sep="\t")
+sample_groups_tuple[,1] <- make.names(sample_groups_tuple[,1]) #in case the names contain characters like '-'.  Makes invalid variable/sample names into valid ones
 
 # get ALL the conditions from the sample file:
 all_conditions <- factor(sample_groups_tuple[,2])
@@ -49,7 +51,7 @@ res=nbinomTest(cds, CONDITION_A, CONDITION_B)
 
 #write out the normalized counts:
 nc<-counts( cds, normalized=TRUE )
-write.csv(as.data.frame(nc), file=NORMALIZED_COUNTS_FILE, row.names=TRUE, col.names=F)
+write.table(as.data.frame(nc), file=NORMALIZED_COUNTS_FILE, row.names=TRUE, col.names=F, quote=F)
 
 #write the differential expression results to a file:
-write.csv(as.data.frame(res), file=OUTPUT_FILE, row.names=FALSE, col.names=F)
+write.table(as.data.frame(res), file=OUTPUT_FILE, row.names=FALSE, col.names=F, quote=F)

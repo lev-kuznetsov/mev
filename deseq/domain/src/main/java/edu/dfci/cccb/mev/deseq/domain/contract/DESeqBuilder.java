@@ -16,7 +16,6 @@ package edu.dfci.cccb.mev.deseq.domain.contract;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
-import edu.dfci.cccb.mev.deseq.domain.contract.DESeq.Species;
 
 /**
  * @author levk

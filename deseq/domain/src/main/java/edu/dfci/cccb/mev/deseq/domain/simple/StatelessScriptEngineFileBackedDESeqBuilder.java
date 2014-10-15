@@ -94,7 +94,7 @@ public class StatelessScriptEngineFileBackedDESeqBuilder extends AbstractDESeqBu
               throw new InvalidDESeqConfigurationException ();
         }
 
-        String contrastPrefix = experiment().name()+CONTRAST_FLAG+control().name()
+        String contrastPrefix = experiment().name()+CONTRAST_FLAG+control().name();
         OUTPUT_FILENAME = contrastPrefix+".csv";
         NORMALIZED_COUNTS_FILENAME = contrastPrefix + "."+NORMALIZED_COUNT_FILE_TAG + ".csv";
 
