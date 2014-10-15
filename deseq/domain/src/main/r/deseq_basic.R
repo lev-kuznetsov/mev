@@ -51,7 +51,7 @@ res=nbinomTest(cds, CONDITION_A, CONDITION_B)
 
 #write out the normalized counts:
 nc<-counts( cds, normalized=TRUE )
-write.table(as.data.frame(nc), file=NORMALIZED_COUNTS_FILE, row.names=TRUE, col.names=F, quote=F)
+write.table(as.data.frame(nc), file=NORMALIZED_COUNTS_FILE, row.names=TRUE, col.names=F, quote=F, sep="\t")
 
 #write the differential expression results to a file:
-write.table(as.data.frame(res), file=OUTPUT_FILE, row.names=FALSE, col.names=F, quote=F)
+write.table(as.data.frame(res), file=OUTPUT_FILE, row.names=FALSE, col.names=F, quote=F, sep="\t")
