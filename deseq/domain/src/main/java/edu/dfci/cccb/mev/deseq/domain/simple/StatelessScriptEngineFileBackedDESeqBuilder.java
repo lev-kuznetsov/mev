@@ -82,6 +82,7 @@ public class StatelessScriptEngineFileBackedDESeqBuilder extends AbstractDESeqBu
         File annotationFile = new File (tempDESeqFolder, ANNOTATION_FILENAME);
         try (PrintStream configOut = new PrintStream (new FileOutputStream (annotationFile))) {
           for (int index = 0; index < dimension.keys ().size (); index++)
+            //if the key (sample ID) shows up in both of the contrasted groups, then we have an invalid configuration
             if (control ().keys ().contains (dimension.keys ().get (index))
                 && experiment ().keys ().contains (dimension.keys ().get (index)))
               throw new InvalidDESeqConfigurationException ();
@@ -89,9 +90,8 @@ public class StatelessScriptEngineFileBackedDESeqBuilder extends AbstractDESeqBu
               configOut.println (dimension.keys ().get (index) + "\t"+experiment ().name ());
             else if (control ().keys ().contains (dimension.keys ().get (index)))
               configOut.println (dimension.keys ().get (index) + "\t"+control ().name ());
-            else
-              //shouldn't reach here without exception..but is this the right exception to throw?
-              throw new InvalidDESeqConfigurationException ();
+          //if this particular sample ID does not show up in either the control or experimental groups, then just skip it-- it is 
+           //possible that we only are analyzing a portion of a larger dataset
         }
 
         String contrastPrefix = experiment().name()+CONTRAST_FLAG+control().name();
