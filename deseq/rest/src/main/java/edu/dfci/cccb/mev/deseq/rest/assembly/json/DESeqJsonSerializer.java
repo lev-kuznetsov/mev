@@ -21,21 +21,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.AbstractAnalysisJsonSerializer;
-import edu.dfci.cccb.mev.deseq.domain.contract.Limma;
-import edu.dfci.cccb.mev.deseq.domain.contract.Limma.Entry;
+import edu.dfci.cccb.mev.deseq.domain.contract.DESeq;
+import edu.dfci.cccb.mev.deseq.domain.contract.DESeq.Entry;
 
 /**
  * @author levk
  * 
  */
-public class LimmaJsonSerializer extends AbstractAnalysisJsonSerializer<Limma> {
+public class DESeqJsonSerializer extends AbstractAnalysisJsonSerializer<DESeq> {
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.rest.assembly.json.prototype.
    * AbstractAnalysisJsonSerializer#handledType() */
   @Override
-  public Class<Limma> handledType () {
-    return Limma.class;
+  public Class<DESeq> handledType () {
+    return DESeq.class;
   }
 
   /* (non-Javadoc)
@@ -45,14 +45,13 @@ public class LimmaJsonSerializer extends AbstractAnalysisJsonSerializer<Limma> {
    * .domain.contract.Analysis, com.fasterxml.jackson.core.JsonGenerator,
    * com.fasterxml.jackson.databind.SerializerProvider) */
   @Override
-  protected void serializeAnalysisContent (Limma value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
+  protected void serializeAnalysisContent (DESeq value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
                                                                                                         JsonProcessingException {
     super.serializeAnalysisContent (value, jgen, provider);
     jgen.writeArrayFieldStart ("results");
     for (Entry e : value.full ())
       provider.defaultSerializeValue (e, jgen);
     jgen.writeEndArray ();
-    provider.defaultSerializeField ("topGo", value.topGo (), jgen);
     provider.defaultSerializeField ("control", value.control (), jgen);
     provider.defaultSerializeField ("experiment", value.experiment (), jgen);
   }

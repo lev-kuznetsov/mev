@@ -21,55 +21,26 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
  * @author levk
  * 
  */
-public interface Limma extends Analysis {
+public interface DESeq extends Analysis {
 
   public interface Entry {
     String id ();
 
-    double logFoldChange ();
+    Double logFoldChange ();
 
-    double averageExpression ();
+    Double meanExpressionControl ();
+    
+    Double meanExpressionExperimental ();
 
-    double pValue ();
+    Double pValue ();
 
-    double qValue ();
-  }
-
-  public enum Species {
-    HUMAN,
-    MOUSE,
-    RAT;
-
-    public String toString () {
-      return super.toString ().toLowerCase ();
-    }
-  }
-
-  public interface GoEntry {
-    String id ();
-
-    String term ();
-
-    String annotated ();
-
-    String significant ();
-
-    String expected ();
-
-    double pValue ();
+    Double qValue ();
   }
 
   Iterable<Entry> full ();
-
-  Iterable<GoEntry> topGo ();
 
   Selection control ();
 
   Selection experiment ();
 
-  Species species ();
-
-  String go ();
-
-  String test ();
 }

@@ -19,7 +19,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import edu.dfci.cccb.mev.deseq.domain.contract.Limma.Entry;
+import edu.dfci.cccb.mev.deseq.domain.contract.DESeq.Entry;
 
 /**
  * @author levk
@@ -32,8 +32,9 @@ import edu.dfci.cccb.mev.deseq.domain.contract.Limma.Entry;
 public class SimpleEntry implements Entry {
 
   private @Getter final String id;
-  private @Getter final double logFoldChange;
-  private @Getter final double averageExpression;
-  private @Getter final double pValue;
-  private @Getter final double qValue;
+  private @Getter final Double logFoldChange;
+  private @Getter final Double meanExpressionControl;
+  private @Getter final Double meanExpressionExperimental;
+  private @Getter final Double pValue;
+  private @Getter final Double qValue;
 }

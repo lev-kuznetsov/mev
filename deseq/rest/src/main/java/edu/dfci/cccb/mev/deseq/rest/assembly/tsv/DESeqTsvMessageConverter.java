@@ -25,15 +25,15 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.prototype.AbstractTsvHttpMessageConverter;
-import edu.dfci.cccb.mev.deseq.domain.contract.Limma;
-import edu.dfci.cccb.mev.deseq.domain.contract.Limma.Entry;
+import edu.dfci.cccb.mev.deseq.domain.contract.DESeq;
+import edu.dfci.cccb.mev.deseq.domain.contract.DESeq.Entry;
 
 /**
  * @author levk
  * 
  */
 @ToString
-public class LimmaTsvMessageConverter extends AbstractTsvHttpMessageConverter<Limma> {
+public class DESeqTsvMessageConverter extends AbstractTsvHttpMessageConverter<DESeq> {
 
   /* (non-Javadoc)
    * @see
@@ -41,7 +41,7 @@ public class LimmaTsvMessageConverter extends AbstractTsvHttpMessageConverter<Li
    * (java.lang.Class) */
   @Override
   protected boolean supports (Class<?> clazz) {
-    return Limma.class.isAssignableFrom (clazz);
+    return DESeq.class.isAssignableFrom (clazz);
   }
 
   /* (non-Javadoc)
@@ -49,7 +49,7 @@ public class LimmaTsvMessageConverter extends AbstractTsvHttpMessageConverter<Li
    * org.springframework.http.converter.AbstractHttpMessageConverter#readInternal
    * (java.lang.Class, org.springframework.http.HttpInputMessage) */
   @Override
-  protected Limma readInternal (Class<? extends Limma> clazz, HttpInputMessage inputMessage) throws IOException,
+  protected DESeq readInternal (Class<? extends DESeq> clazz, HttpInputMessage inputMessage) throws IOException,
                                                                                             HttpMessageNotReadableException {
     throw new UnsupportedOperationException ("nyi");
   }
@@ -59,14 +59,15 @@ public class LimmaTsvMessageConverter extends AbstractTsvHttpMessageConverter<Li
    * org.springframework.http.converter.AbstractHttpMessageConverter#writeInternal
    * (java.lang.Object, org.springframework.http.HttpOutputMessage) */
   @Override
-  protected void writeInternal (Limma t, HttpOutputMessage outputMessage) throws IOException,
+  protected void writeInternal (DESeq t, HttpOutputMessage outputMessage) throws IOException,
                                                                          HttpMessageNotWritableException {
     try (PrintStream out = new PrintStream (outputMessage.getBody ())) {
-      out.println ("ID\tLog Fold Change\tAverage Expression\tP Value\tQ Value");
+      out.println ("ID\tLog Fold Change\tAverage Expression Control\tAverage Expression Experimental\tP Value\tQ Value");
       for (Entry e : t.full ())
         out.println (e.id () + "\t" +
                      e.logFoldChange () + "\t" +
-                     e.averageExpression () + "\t" +
+                     e.meanExpressionControl () + "\t" +
+                     e.meanExpressionExperimental () + "\t" +
                      e.pValue () + "\t" +
                      e.qValue ());
     }

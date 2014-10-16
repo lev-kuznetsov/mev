@@ -20,29 +20,29 @@ import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
  * @author levk
  * 
  */
-public class InvalidLimmaConfigurationException extends DatasetException {
+public class InvalidDESeqConfigurationException extends DatasetException {
   private static final long serialVersionUID = 1L;
 
   {
-    code ("invalid.limma.configuration");
+    code ("invalid.deseq.configuration");
   }
 
   /**
    * 
    */
-  public InvalidLimmaConfigurationException () {}
+  public InvalidDESeqConfigurationException () {}
 
   /**
    * @param message
    */
-  public InvalidLimmaConfigurationException (String message) {
+  public InvalidDESeqConfigurationException (String message) {
     super (message);
   }
 
   /**
    * @param cause
    */
-  public InvalidLimmaConfigurationException (Throwable cause) {
+  public InvalidDESeqConfigurationException (Throwable cause) {
     super (cause);
   }
 
@@ -50,7 +50,7 @@ public class InvalidLimmaConfigurationException extends DatasetException {
    * @param message
    * @param cause
    */
-  public InvalidLimmaConfigurationException (String message, Throwable cause) {
+  public InvalidDESeqConfigurationException (String message, Throwable cause) {
     super (message, cause);
   }
 
@@ -60,7 +60,7 @@ public class InvalidLimmaConfigurationException extends DatasetException {
    * @param enableSuppression
    * @param writableStackTrace
    */
-  public InvalidLimmaConfigurationException (String message,
+  public InvalidDESeqConfigurationException (String message,
                                              Throwable cause,
                                              boolean enableSuppression,
                                              boolean writableStackTrace) {

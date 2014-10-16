@@ -40,49 +40,43 @@ import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvComposerFactory;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
-import edu.dfci.cccb.mev.deseq.domain.contract.Limma;
-import edu.dfci.cccb.mev.deseq.domain.contract.Limma.Entry;
-import edu.dfci.cccb.mev.deseq.domain.contract.Limma.GoEntry;
-import edu.dfci.cccb.mev.deseq.domain.contract.Limma.Species;
-import edu.dfci.cccb.mev.deseq.domain.simple.StatelessScriptEngineFileBackedLimmaBuilder;
+import edu.dfci.cccb.mev.deseq.domain.contract.DESeq;
+import edu.dfci.cccb.mev.deseq.domain.contract.DESeq.Entry;
+import edu.dfci.cccb.mev.deseq.domain.simple.StatelessScriptEngineFileBackedDESeqBuilder;
 
 /**
  * @author levk
  * 
  */
 @Log4j
-public class CliRLimmaTest {
+public class CliRDESeqTest {
 
   @Test
   public void test () throws Exception {
-    try (InputStream inp = getClass ().getResourceAsStream ("/mouse_test_data.tsv");
+    try (InputStream inp = getClass ().getResourceAsStream ("/test_data.tsv");
          ByteArrayOutputStream copy = new ByteArrayOutputStream ()) {
       IOUtils.copy (inp, copy);
       Dataset dataset = new SimpleDatasetBuilder ().setParserFactories (asList (new SuperCsvParserFactory ()))
                                                    .setValueStoreBuilder (new MapBackedValueStoreBuilder ())
                                                    .build (new MockTsvInput ("mock",
                                                                              copy.toString ()));
-      Selection experiment = new SimpleSelection ("experiment", new Properties (), asList ("A", "B", "C"));
-      Selection control = new SimpleSelection ("control", new Properties (), asList ("D", "E", "F"));
+      Selection experiment = new SimpleSelection ("experiment", new Properties (), asList ("SA1_06_25_14",
+                                                                                           "SA2_06_25_14",
+                                                                                           "SA3_06_25_14",
+                                                                                           "SA4_006_25_14","SA5_06_25_14"
+));
+      Selection control = new SimpleSelection ("control", new Properties (), asList ("SA10-06-25-14", "SA11_06_25_14", "SA12_06_25_14"));
       dataset.dimension (COLUMN).selections ().put (experiment);
       dataset.dimension (COLUMN).selections ().put (control);
-      Limma result =
-                     new StatelessScriptEngineFileBackedLimmaBuilder ().r (new ScriptEngineManager ().getEngineByName ("CliR"))
+      DESeq result =
+                     new StatelessScriptEngineFileBackedDESeqBuilder ().r (new ScriptEngineManager ().getEngineByName ("CliR"))
                                                                        .composerFactory (new SuperCsvComposerFactory ())
                                                                        .dataset (dataset)
                                                                        .control (control)
                                                                        .experiment (experiment)
-                                                                       .species (Species.MOUSE)
-                                                                       .go ("BP")
-                                                                       .test ("Fisher test")
                                                                        .build ();
       for (Entry e : result.full ())
-        log.debug ("Full limma entry: " + e);
-      for (GoEntry e : result.topGo ())
-        log.debug ("topGo entry: " + e);
-
-      assertThat (result.full ().iterator ().next ().averageExpression (), closeTo (12.985, 0.001));
-      assertThat (result.topGo ().iterator ().next ().pValue (), any (Double.class));
+        log.debug ("Full DESeq entry: " + e);
     }
   }
 }

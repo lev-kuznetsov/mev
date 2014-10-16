@@ -34,13 +34,12 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 
 import edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver;
-import edu.dfci.cccb.mev.deseq.domain.contract.Limma;
-import edu.dfci.cccb.mev.deseq.domain.contract.LimmaBuilder;
-import edu.dfci.cccb.mev.deseq.domain.simple.StatelessScriptEngineFileBackedLimmaBuilder;
+import edu.dfci.cccb.mev.deseq.domain.contract.DESeq;
+import edu.dfci.cccb.mev.deseq.domain.contract.DESeqBuilder;
+import edu.dfci.cccb.mev.deseq.domain.simple.StatelessScriptEngineFileBackedDESeqBuilder;
 import edu.dfci.cccb.mev.deseq.rest.assembly.json.EntryJsonSerializer;
-import edu.dfci.cccb.mev.deseq.rest.assembly.json.GoEntryJsonSerializer;
-import edu.dfci.cccb.mev.deseq.rest.assembly.json.LimmaJsonSerializer;
-import edu.dfci.cccb.mev.deseq.rest.assembly.tsv.LimmaTsvMessageConverter;
+import edu.dfci.cccb.mev.deseq.rest.assembly.json.DESeqJsonSerializer;
+import edu.dfci.cccb.mev.deseq.rest.assembly.tsv.DESeqTsvMessageConverter;
 
 /**
  * @author levk
@@ -48,13 +47,13 @@ import edu.dfci.cccb.mev.deseq.rest.assembly.tsv.LimmaTsvMessageConverter;
  */
 @ToString
 @Configuration
-@ComponentScan ("edu.dfci.cccb.mev.limma.rest.controllers")
-public class LimmaRestConfiguration extends MevRestConfigurerAdapter {
+@ComponentScan ("edu.dfci.cccb.mev.deseq.rest.controllers")
+public class DESeqRestConfiguration extends MevRestConfigurerAdapter {
 
   @Bean
   @Scope (SCOPE_REQUEST)
-  public LimmaBuilder limmaBuilder () {
-    return new StatelessScriptEngineFileBackedLimmaBuilder ();
+  public DESeqBuilder deseqBuilder () {
+    return new StatelessScriptEngineFileBackedDESeqBuilder ();
   }
 
   @Bean (name = "R")
@@ -63,8 +62,8 @@ public class LimmaRestConfiguration extends MevRestConfigurerAdapter {
   }
 
   @Bean
-  public AnalysisPathVariableMethodArgumentResolver<Limma> limmaPathVariableMethodArgumentResolver () {
-    return new AnalysisPathVariableMethodArgumentResolver<> (Limma.class);
+  public AnalysisPathVariableMethodArgumentResolver<DESeq> deseqPathVariableMethodArgumentResolver () {
+    return new AnalysisPathVariableMethodArgumentResolver<> (DESeq.class);
   }
 
   /* (non-Javadoc)
@@ -73,7 +72,7 @@ public class LimmaRestConfiguration extends MevRestConfigurerAdapter {
    * #addJsonSerializers(java.util.List) */
   @Override
   public void addJsonSerializers (List<JsonSerializer<?>> serializers) {
-    serializers.addAll (asList (new EntryJsonSerializer (), new LimmaJsonSerializer (), new GoEntryJsonSerializer ()));
+    serializers.addAll (asList (new EntryJsonSerializer (), new DESeqJsonSerializer ()));
   }
 
   /* (non-Javadoc)
@@ -82,6 +81,6 @@ public class LimmaRestConfiguration extends MevRestConfigurerAdapter {
    * #addHttpMessageConverters(java.util.List) */
   @Override
   public void addHttpMessageConverters (List<HttpMessageConverter<?>> converters) {
-    converters.add (new LimmaTsvMessageConverter ());
+    converters.add (new DESeqTsvMessageConverter ());
   }
 }

@@ -14,40 +14,21 @@
  */
 package edu.dfci.cccb.mev.deseq.domain.prototype;
 
-import javax.annotation.Resource;
-import javax.inject.Inject;
-import javax.script.ScriptEngine;
-
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.Accessors;
-import edu.dfci.cccb.mev.dataset.domain.contract.ComposerFactory;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
-import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysisBuilder;
-import edu.dfci.cccb.mev.deseq.domain.contract.Limma;
-import edu.dfci.cccb.mev.deseq.domain.contract.LimmaBuilder;
-import edu.dfci.cccb.mev.deseq.domain.contract.Limma.Species;
+import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
+import edu.dfci.cccb.mev.deseq.domain.contract.DESeq;
 
 /**
  * @author levk
  * 
  */
-@ToString
 @Accessors (fluent = true, chain = true)
-public abstract class AbstractLimmaBuilder extends AbstractAnalysisBuilder<LimmaBuilder, Limma> implements LimmaBuilder {
+public abstract class AbstractDESeq extends AbstractAnalysis<AbstractDESeq> implements DESeq {
 
   private @Getter @Setter Selection control;
   private @Getter @Setter Selection experiment;
-  private @Getter @Setter @Resource (name = "R") ScriptEngine r;
-  private @Getter @Setter @Inject ComposerFactory composerFactory;
-  private @Getter @Setter Species species;
-  private @Getter @Setter String go;
-  private @Getter @Setter String test;
 
-  /**
-   */
-  public AbstractLimmaBuilder () {
-    super ("LIMMA Differential Expression Analysis");
-  }
 }

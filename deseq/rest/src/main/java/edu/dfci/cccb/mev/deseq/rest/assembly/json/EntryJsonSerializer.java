@@ -21,7 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import edu.dfci.cccb.mev.deseq.domain.contract.Limma.Entry;
+import edu.dfci.cccb.mev.deseq.domain.contract.DESeq.Entry;
 
 /**
  * @author levk
@@ -47,7 +47,8 @@ public class EntryJsonSerializer extends JsonSerializer<Entry> {
     jgen.writeStartObject ();
     jgen.writeStringField ("id", value.id ());
     jgen.writeNumberField ("logFoldChange", value.logFoldChange ());
-    jgen.writeNumberField ("averageExpression", value.averageExpression ());
+    jgen.writeNumberField ("meanExpressionControl", value.meanExpressionControl ());
+    jgen.writeNumberField ("meanExpressionExperimental", value.meanExpressionExperimental ());
     jgen.writeNumberField ("pValue", value.pValue ());
     jgen.writeNumberField ("qValue", value.qValue ());
     jgen.writeEndObject ();
