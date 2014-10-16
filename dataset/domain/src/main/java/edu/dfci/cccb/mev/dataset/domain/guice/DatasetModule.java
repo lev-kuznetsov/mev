@@ -29,6 +29,7 @@ import static java.lang.String.valueOf;
 import static java.util.regex.Pattern.compile;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -57,7 +58,6 @@ import edu.dfci.cccb.mev.dataset.domain.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.annotation.NameOf;
 import edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler;
-import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.Workspace;
 
 /**
  * @author levk
@@ -93,7 +93,7 @@ public class DatasetModule extends MevModule {
        * Provides the context dataset
        */
       @Provides
-      public Dataset<String, Double> dataset (Workspace<String, Double> workspace,
+      public Dataset<String, Double> dataset (Map<String, Dataset<String, Double>> workspace,
                                               @NameOf (Dataset.class) String name) {
         return workspace.get (name);
       }

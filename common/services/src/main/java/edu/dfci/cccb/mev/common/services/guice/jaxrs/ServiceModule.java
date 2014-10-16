@@ -16,8 +16,6 @@
 
 package edu.dfci.cccb.mev.common.services.guice.jaxrs;
 
-import static ch.lambdaj.Lambda.convert;
-import static ch.lambdaj.Lambda.join;
 import static com.google.inject.Key.get;
 import static com.google.inject.internal.UniqueAnnotations.create;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
@@ -25,21 +23,14 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.enumeration;
 import static javax.servlet.http.HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE;
 import static org.apache.cxf.message.Message.ACCEPT_CONTENT_TYPE;
-import static org.apache.cxf.phase.Phase.RECEIVE;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.AbstractMap;
-import java.util.AbstractSet;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -53,8 +44,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.HttpMethod;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
@@ -62,11 +53,10 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Providers;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 import lombok.extern.log4j.Log4j;
 
-import org.apache.cxf.interceptor.Fault;
-import org.apache.cxf.interceptor.Interceptor;
 import org.apache.cxf.jaxrs.JAXRSInvoker;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxrs.impl.HttpHeadersImpl;
@@ -78,9 +68,6 @@ import org.apache.cxf.jaxrs.lifecycle.ResourceProvider;
 import org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet;
 import org.apache.cxf.message.Exchange;
 import org.apache.cxf.message.Message;
-import org.apache.cxf.phase.AbstractPhaseInterceptor;
-
-import ch.lambdaj.function.convert.Converter;
 
 import com.google.inject.Binder;
 import com.google.inject.Binding;
@@ -98,6 +85,7 @@ import com.google.inject.servlet.ServletModule;
 
 import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.JaxrsModule;
+import edu.dfci.cccb.mev.common.services.support.ResourceNotFoundException;
 
 /**
  * JAX-RS service module
@@ -108,10 +96,23 @@ import edu.dfci.cccb.mev.common.domain.guice.jaxrs.JaxrsModule;
 @Log4j
 public class ServiceModule extends JaxrsModule {
 
-  protected static final Annotation MESSAGE = create ();
-  protected static final Annotation PARAMETER_NAME = create ();
-  protected static final Annotation EXTENSIONS = create ();
-  protected static final Annotation PARAMETER_VALUES = create ();
+  protected static final Annotation MESSAGE_QUALIFIER = create ();
+  protected static final Annotation PARAMETER_NAME_QUALIFIFER = create ();
+  protected static final Annotation EXTENSIONS_QUALIFIER = create ();
+  protected static final Annotation PARAMETER_VALUES_QUALIFIER = create ();
+  protected static final Annotation RESOURCES_QUALIFIER = create ();
+
+  protected static final Key<Message> MESSAGE = get (Message.class, MESSAGE_QUALIFIER);
+  protected static final Key<String> PARAMETER_NAME = get (String.class, PARAMETER_NAME_QUALIFIFER);
+  protected static final Key<Set<Entry<String, MediaType>>> EXTENSIONS =
+                                                                         get (new TypeLiteral<Set<Entry<String, MediaType>>> () {},
+                                                                              EXTENSIONS_QUALIFIER);
+  protected static final Key<Set<Entry<String, MediaType>>> PARAMETER_VALUES =
+                                                                               get (new TypeLiteral<Set<Entry<String, MediaType>>> () {},
+                                                                                    PARAMETER_VALUES_QUALIFIER);
+  protected static final Key<Set<Entry<String, Provider<?>>>> RESOURCES =
+                                                                          get (new TypeLiteral<Set<Entry<String, Provider<?>>>> () {},
+                                                                               RESOURCES_QUALIFIER);
 
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
@@ -120,30 +121,79 @@ public class ServiceModule extends JaxrsModule {
   public void configure (final Binder binder) {
     super.configure (binder);
 
-    @RequiredArgsConstructor
-    class KeyHolder {
-      final Key<?> key;
+    @Path ("/")
+    @Accessors (fluent = true)
+    class Root {
+      private @Inject Provider<ResourceNotFoundException> notFound;
+      private Map<String, Provider<?>> dispatch;
+
+      @Inject
+      private void configure (final Injector injector) {
+        dispatch = new HashMap<String, Provider<?>> (new AbstractMap<String, Provider<?>> () {
+          private final @Getter Set<Entry<String, Provider<?>>> entrySet = injector.getInstance (RESOURCES);
+        }) {
+          private static final long serialVersionUID = 1L;
+
+          @Override
+          public Provider<?> put (String key, Provider<?> value) {
+            if (value == null)
+              throw new NullPointerException ("Resource provider cannot be null");
+            else if (super.put (key, value) != null)
+              throw new IllegalArgumentException ("Multiple rest bindings to /" + key);
+            else
+              return null;
+          }
+        };
+      }
+
+      @Path ("{path}")
+      public Object dispatch (@PathParam ("path") String path) throws ResourceNotFoundException {
+        Provider<?> provider = dispatch.get (path);
+        if (provider == null)
+          throw notFound.get ();
+        else
+          return provider.get ();
+      }
+
+      @Override
+      public String toString () {
+        return "Root dispatch serving " + dispatch;
+      }
     }
 
-    final Multibinder<KeyHolder> resources = newSetBinder (binder, KeyHolder.class);
-
     configure (new ResourceBinder () {
+      final Multibinder<Entry<String, Provider<?>>> resources =
+                                                                newSetBinder (binder,
+                                                                              new TypeLiteral<Entry<String, Provider<?>>> () {},
+                                                                              RESOURCES_QUALIFIER);
+
+      private Entry<String, Provider<?>> entry (final String dispatch, final Key<?> bind) {
+        return new Entry<String, Provider<?>> () {
+          private @Getter final String key = dispatch;
+          private @Getter final Provider<?> value = binder.getProvider (bind);
+
+          @Override
+          public Provider<?> setValue (Provider<?> value) {
+            throw new UnsupportedOperationException ();
+          }
+        };
+      }
 
       @Override
-      public <T> AnnotatedBindingBuilder<T> publish (Class<T> type) {
-        resources.addBinding ().toInstance (new KeyHolder (get (type)));
+      public <T> AnnotatedBindingBuilder<T> publish (String dispatch, Class<T> type) {
+        resources.addBinding ().toInstance (entry (dispatch, get (type)));
         return binder.bind (type);
       }
 
       @Override
-      public <T> AnnotatedBindingBuilder<T> publish (final TypeLiteral<T> type) {
-        resources.addBinding ().toInstance (new KeyHolder (get (type)));
+      public <T> AnnotatedBindingBuilder<T> publish (String dispatch, final TypeLiteral<T> type) {
+        resources.addBinding ().toInstance (entry (dispatch, get (type)));
         return binder.bind (type);
       }
 
       @Override
-      public <T> LinkedBindingBuilder<T> publish (Key<T> key) {
-        resources.addBinding ().toInstance (new KeyHolder (key));
+      public <T> LinkedBindingBuilder<T> publish (String dispatch, Key<T> key) {
+        resources.addBinding ().toInstance (entry (dispatch, key));
         return binder.bind (key);
       }
     });
@@ -151,11 +201,11 @@ public class ServiceModule extends JaxrsModule {
     final Multibinder<Entry<String, MediaType>> parameterValues =
                                                                   newSetBinder (binder,
                                                                                 new TypeLiteral<Entry<String, MediaType>> () {},
-                                                                                PARAMETER_VALUES);
+                                                                                PARAMETER_VALUES_QUALIFIER);
     final Multibinder<Entry<String, MediaType>> extensions =
                                                              newSetBinder (binder,
                                                                            new TypeLiteral<Entry<String, MediaType>> () {},
-                                                                           EXTENSIONS);
+                                                                           EXTENSIONS_QUALIFIER);
 
     configure (new ContentNegotiationConfigurer () {
 
@@ -198,7 +248,7 @@ public class ServiceModule extends JaxrsModule {
 
       @Override
       public ContentNegotiationMapper parameter (String name) {
-        binder.bindConstant ().annotatedWith (PARAMETER_NAME).to (name);
+        binder.bindConstant ().annotatedWith (PARAMETER_NAME_QUALIFIFER).to (name);
         return new ContentMapperBinder (parameterValues);
       }
 
@@ -227,25 +277,21 @@ public class ServiceModule extends JaxrsModule {
       }
 
       @Provides
-      @RequestScoped
       public HttpHeaders header (Message message) {
         return new HttpHeadersImpl (message);
       }
 
       @Provides
-      @RequestScoped
       public Providers providers (Message message) {
         return new ProvidersImpl (message);
       }
 
       @Provides
-      @RequestScoped
       public SecurityContext securityContext (Message message) {
         return new SecurityContextImpl (message);
       }
 
       @Provides
-      @RequestScoped
       public Request request (Message message) {
         return new RequestImpl (message);
       }
@@ -257,18 +303,11 @@ public class ServiceModule extends JaxrsModule {
         private static final long serialVersionUID = 1L;
 
         private @Inject ThreadLocal<Message> message;
-        private Injector injector;
         private Set<Object> providers;
-        private @Inject Set<KeyHolder> resources;
         private String parameter;
         private Map<String, MediaType> parameterValues;
         private Map<Object, Object> extensions;
-
-        private final String serviceUrl;
-
-        public InjectedCxfJaxrsServlet (String serviceUrl) {
-          this.serviceUrl = serviceUrl;
-        }
+        private Root root = new Root ();
 
         private <T> T getOptional (Injector injector, Key<T> key) {
           Binding<T> binding = injector.getExistingBinding (key);
@@ -277,17 +316,15 @@ public class ServiceModule extends JaxrsModule {
 
         @Inject
         private void configure (final Injector injector) {
-          this.injector = injector;
+          injector.injectMembers (root);
 
           providers = getOptional (injector, Key.get (new TypeLiteral<Set<Object>> () {}, PROVIDERS));
 
-          parameter = getOptional (injector, Key.get (String.class, PARAMETER_NAME));
+          parameter = getOptional (injector, Key.get (String.class, PARAMETER_NAME_QUALIFIFER));
 
           extensions = new HashMap<Object, Object> (new AbstractMap<String, MediaType> () {
-            private final Set<Entry<String, MediaType>> set =
-                                                              getOptional (injector,
-                                                                           Key.get (new TypeLiteral<Set<Entry<String, MediaType>>> () {},
-                                                                                    EXTENSIONS));
+            private final Set<Entry<String, MediaType>> set = getOptional (injector,
+                                                                           EXTENSIONS);
 
             @Override
             public Set<Entry<String, MediaType>> entrySet () {
@@ -299,110 +336,13 @@ public class ServiceModule extends JaxrsModule {
             private final Set<Entry<String, MediaType>> set =
                                                               getOptional (injector,
                                                                            Key.get (new TypeLiteral<Set<Entry<String, MediaType>>> () {},
-                                                                                    PARAMETER_VALUES));
+                                                                                    PARAMETER_VALUES_QUALIFIER));
 
             @Override
             public Set<Entry<String, MediaType>> entrySet () {
               return set;
             }
           });
-        }
-
-        private String dump (Object o) {
-          if (o == null)
-            return "null";
-          else if (o instanceof Object[])
-            return Arrays.toString ((Object[]) o);
-          else
-            return o.toString ();
-        }
-
-        private String param (Class<?> t, Annotation... as) {
-          StringBuilder s = new StringBuilder ();
-          for (Annotation a : as) {
-            s.append ("@")
-             .append (a.annotationType ().getSimpleName ());
-            try {
-              s.append ("(" + dump (a.annotationType ().getMethod ("value").invoke (a)) + ") ");
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-              s.append (" ");
-            }
-          }
-          return s.append (t.getSimpleName ()).toString ().trim ();
-        }
-
-        private void dumpEndpoints (PrintStream o, String uri, Class<?> r) {
-          for (Method m : r.getMethods ()) {
-            List<HttpMethod> requestMethods = new ArrayList<> ();
-            Path path = m.getAnnotation (Path.class);
-            for (Annotation a : m.getAnnotations ()) {
-              HttpMethod request = a.annotationType ().getAnnotation (HttpMethod.class);
-              if (request != null)
-                requestMethods.add (request);
-            }
-
-            final String format = "%-35s %6s %-10s %30s %-25s %15s\n";
-            if (!requestMethods.isEmpty ()) { // endpoint
-              o.printf (format,
-                        (path != null ? uri + path.value () : uri).replaceAll ("/[/]+", "/").trim (),
-                        requestMethods.get (0).value ().trim (),
-                        m.getReturnType ().getSimpleName (),
-                        r.getSimpleName () + "." + m.getName (),
-                        m.getParameterTypes ().length > 0
-                                                         ? param (m.getParameterTypes ()[0],
-                                                                  m.getParameterAnnotations ()[0])
-                                                         : "",
-                        m.getExceptionTypes ().length > 0 ? m.getExceptionTypes ()[0].getSimpleName () : "");
-              for (int i = 1;; i++) {
-                String req = (requestMethods.size () > i ? requestMethods.get (i).value () : "").trim ();
-                String par = (m.getParameterTypes ().length > i ? param (m.getParameterTypes ()[i],
-                                                                         m.getParameterAnnotations ()[i])
-                                                               : "").trim ();
-                String exc = (m.getExceptionTypes ().length > i ? m.getExceptionTypes ()[i].getSimpleName ()
-                                                               : "").trim ();
-                String line = String.format (format,
-                                             "", req, "", "", par, exc);
-                if (line.trim ().equals (""))
-                  break;
-                else
-                  o.print (line);
-              }
-            } else if (path != null) // subresource
-              dumpEndpoints (o, uri + "/" + path.value () + "/", m.getReturnType ());
-          }
-        }
-
-        @Override
-        public void init (ServletConfig servletConfig) throws ServletException {
-          super.init (servletConfig);
-
-          ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
-          PrintStream info = new PrintStream (buffer);
-          info.println ("JAX-RS");
-          for (KeyHolder k : resources) {
-            Class<?> r = k.key.getTypeLiteral ().getRawType ();
-            Path p = r.getAnnotation (Path.class);
-            if (p != null)
-              dumpEndpoints (info, serviceUrl + "/" + p.value (), r);
-          }
-
-          info.print ("Using ");
-          info.print (join (convert (providers, new Converter<Object, String> () {
-            @Override
-            public String convert (Object from) {
-              Class<?> clazz = from.getClass ();
-              StringBuilder s = new StringBuilder (param (clazz, clazz.getAnnotations ()));
-              List<String> interfaces = new ArrayList<> ();
-              for (Class<?> c = clazz; c != null; c = c.getSuperclass ())
-                for (Class<?> i : c.getInterfaces ())
-                  interfaces.add (i.getSimpleName ());
-              if (!interfaces.isEmpty ()) {
-                s.append (" implements ").append (join (interfaces));
-              }
-              return s.toString ();
-            }
-          }), "\n      "));
-          log.info (buffer.toString ());
         }
 
         @Override
@@ -474,18 +414,6 @@ public class ServiceModule extends JaxrsModule {
         }
 
         @Override
-        protected void setAllInterceptors (JAXRSServerFactoryBean bean, ServletConfig servletConfig, String splitChar) throws ServletException {
-          List<Interceptor<? extends Message>> interceptors = new ArrayList<> ();
-          interceptors.add (new AbstractPhaseInterceptor<Message> (RECEIVE) {
-            @Override
-            public void handleMessage (Message m) throws Fault {
-              message.set (m);
-            }
-          });
-          bean.setInInterceptors (interceptors);
-        }
-
-        @Override
         protected List<?> getProviders (ServletConfig servletConfig, String splitChar) throws ServletException {
           return new ArrayList<> (providers);
         }
@@ -494,106 +422,31 @@ public class ServiceModule extends JaxrsModule {
         protected Map<Class<?>, Map<String, List<String>>> getServiceClasses (ServletConfig servletConfig,
                                                                               boolean modelAvailable,
                                                                               String splitChar) throws ServletException {
-          return new AbstractMap<Class<?>, Map<String, List<String>>> () {
-            @Override
-            public Set<Class<?>> keySet () {
-              return new HashSet<Class<?>> (convert (resources, new Converter<KeyHolder, Class<?>> () {
-                @Override
-                public Class<?> convert (KeyHolder from) {
-                  return from.key.getTypeLiteral ().getRawType ();
-                }
-              }));
-            }
-
-            @Override
-            public Set<Entry<Class<?>, Map<String, List<String>>>> entrySet () {
-              throw new UnsupportedOperationException ();
-            }
-          };
+          return Collections.<Class<?>, Map<String, List<String>>>singletonMap (Root.class, null);
         }
 
         @Override
         protected Map<Class<?>, ResourceProvider> getResourceProviders (ServletConfig servletConfig,
                                                                         Map<Class<?>, Map<String, List<String>>> resourceClasses) throws ServletException {
-          return new AbstractMap<Class<?>, ResourceProvider> () {
-            private final Map<Key<?>, Provider<?>> map;
+          return Collections.<Class<?>, ResourceProvider>singletonMap (Root.class, new ResourceProvider () {
+            @Override
+            public void releaseInstance (Message m, Object o) {}
 
-            {
-              map = new HashMap<> ();
-              for (KeyHolder key : resources)
-                map.put (key.key, injector.getProvider (key.key));
+            @Override
+            public boolean isSingleton () {
+              return true;
             }
 
             @Override
-            public Set<Entry<Class<?>, ResourceProvider>> entrySet () {
-              return new AbstractSet<Entry<Class<?>, ResourceProvider>> () {
-                private final Set<Entry<Key<?>, Provider<?>>> set = map.entrySet ();
-
-                @Override
-                public int size () {
-                  return set.size ();
-                }
-
-                @Override
-                public Iterator<Entry<Class<?>, ResourceProvider>> iterator () {
-                  return new Iterator<Entry<Class<?>, ResourceProvider>> () {
-                    private final Iterator<Entry<Key<?>, Provider<?>>> iterator = set.iterator ();
-
-                    @Override
-                    public boolean hasNext () {
-                      return iterator.hasNext ();
-                    }
-
-                    @Override
-                    public Entry<Class<?>, ResourceProvider> next () {
-                      return new Entry<Class<?>, ResourceProvider> () {
-                        private final Entry<Key<?>, Provider<?>> entry = iterator.next ();
-
-                        @Override
-                        public ResourceProvider setValue (ResourceProvider value) {
-                          throw new UnsupportedOperationException ();
-                        }
-
-                        @Override
-                        public ResourceProvider getValue () {
-                          return new ResourceProvider () {
-
-                            @Override
-                            public Object getInstance (Message m) {
-                              return entry.getValue ().get ();
-                            }
-
-                            @Override
-                            public Class<?> getResourceClass () {
-                              return entry.getKey ().getTypeLiteral ().getRawType ();
-                            }
-
-                            @Override
-                            public boolean isSingleton () {
-                              return false;
-                            }
-
-                            @Override
-                            public void releaseInstance (Message m, Object o) {}
-                          };
-                        }
-
-                        @Override
-                        public Class<?> getKey () {
-                          return entry.getKey ().getTypeLiteral ().getRawType ();
-                        }
-                      };
-                    }
-
-                    @Override
-                    public void remove () {
-                      throw new UnsupportedOperationException ();
-                    }
-                  };
-                }
-              };
+            public Class<?> getResourceClass () {
+              return Root.class;
             }
-          };
+
+            @Override
+            public Object getInstance (Message m) {
+              return root;
+            }
+          });
         }
 
         @Override
@@ -606,6 +459,7 @@ public class ServiceModule extends JaxrsModule {
           bean.setInvoker (new JAXRSInvoker () {
             @Override
             protected Object performInvocation (Exchange exchange, Object serviceObject, Method m, Object[] paramArray) throws Exception {
+              message.set (exchange.getInMessage ());
               m.setAccessible (true);
               return super.performInvocation (exchange, serviceObject, m, paramArray);
             }
@@ -618,7 +472,7 @@ public class ServiceModule extends JaxrsModule {
         binder.install (new ServletModule () {
           @Override
           protected void configureServlets () {
-            serveRegex (regex).with (new InjectedCxfJaxrsServlet ("<" + regex + ">"));
+            serveRegex (regex).with (new InjectedCxfJaxrsServlet ());
           }
         });
       }
@@ -628,7 +482,7 @@ public class ServiceModule extends JaxrsModule {
         binder.install (new ServletModule () {
           @Override
           protected void configureServlets () {
-            serve (url).with (new InjectedCxfJaxrsServlet (url.replaceAll ("\\*+", "")));
+            serve (url).with (new InjectedCxfJaxrsServlet ());
           }
         });
       }

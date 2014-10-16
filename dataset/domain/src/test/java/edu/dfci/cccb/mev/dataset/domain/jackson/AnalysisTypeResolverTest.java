@@ -20,6 +20,8 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
+import java.util.Map;
+
 import javax.inject.Singleton;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -51,7 +53,6 @@ import edu.dfci.cccb.mev.dataset.domain.guice.AnalysisTypeRegistrar;
 import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AnalysisAdapter;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
-import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.Workspace;
 
 /**
  * @author levk
@@ -91,7 +92,7 @@ public class AnalysisTypeResolverTest {
       public String analysis () {
         return "mock";
       }
-      
+
       @Provides
       @Singleton
       @NameOf (Dimension.class)
@@ -101,7 +102,7 @@ public class AnalysisTypeResolverTest {
 
       @Provides
       @Singleton
-      public Workspace<String, Double> wokrspace () {
+      public Map<String, Dataset<String, Double>> wokrspace () {
         return DatasetAdapter.workspace ();
       }
 

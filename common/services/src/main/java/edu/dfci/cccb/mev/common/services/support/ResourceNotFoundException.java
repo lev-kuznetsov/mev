@@ -16,6 +16,9 @@
 
 package edu.dfci.cccb.mev.common.services.support;
 
+import javax.inject.Inject;
+import javax.ws.rs.core.UriInfo;
+
 import edu.dfci.cccb.mev.common.domain.MevException;
 
 /**
@@ -67,7 +70,24 @@ public class ResourceNotFoundException extends MevException {
     super (message, cause, enableSuppression, writableStackTrace);
   }
 
+  /**
+   * Sets the requested URI
+   * 
+   * @param uri
+   * @return this
+   */
   public ResourceNotFoundException uri (String uri) {
     return property ("uri", uri);
+  }
+
+  /**
+   * Sets the requested URI
+   * 
+   * @param uri
+   * @return this
+   */
+  @Inject
+  public ResourceNotFoundException uri (UriInfo uri) {
+    return uri (uri.getPath ());
   }
 }

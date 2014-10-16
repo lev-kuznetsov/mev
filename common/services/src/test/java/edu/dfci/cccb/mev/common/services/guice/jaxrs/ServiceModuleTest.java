@@ -133,7 +133,7 @@ public class ServiceModuleTest {
   public void publishClass () throws Exception {
     try (Jetty9 j = serve (new TestServiceModule () {
       public void configure (ResourceBinder binder) {
-        binder.publish (Echo.class).in (Singleton.class);
+        binder.publish ("simple", Echo.class).in (Singleton.class);
       }
     })) {
       assertThat (j.get ("/test/simple?hello=world"), startsWith ("world"));
@@ -144,7 +144,7 @@ public class ServiceModuleTest {
   public void publishTypeLiteral () throws Exception {
     try (Jetty9 j = serve (new TestServiceModule () {
       public void configure (ResourceBinder binder) {
-        binder.publish (new TypeLiteral<Echo> () {}).in (Singleton.class);
+        binder.publish ("simple", new TypeLiteral<Echo> () {}).in (Singleton.class);
       }
     })) {
       assertThat (j.get ("/test/simple?hello=world"), startsWith ("world"));
@@ -155,7 +155,7 @@ public class ServiceModuleTest {
   public void publishKey () throws Exception {
     try (Jetty9 j = serve (new TestServiceModule () {
       public void configure (ResourceBinder binder) {
-        binder.publish (Key.get (Echo.class)).in (Singleton.class);
+        binder.publish ("simple", Key.get (Echo.class)).in (Singleton.class);
       }
     })) {
       assertThat (j.get ("/test/simple?hello=world"), startsWith ("world"));
@@ -228,7 +228,7 @@ public class ServiceModuleTest {
 
   public static class PojoPublishingTestServiceModule extends TestServiceModule {
     public void configure (ResourceBinder binder) {
-      binder.publish (PojoService.class).to (PojoServiceImpl.class);
+      binder.publish ("pojo", PojoService.class).to (PojoServiceImpl.class);
     }
   }
 
@@ -374,7 +374,7 @@ public class ServiceModuleTest {
 
   public static class ExceptionTestServiceModule extends TestServiceModule {
     public void configure (ResourceBinder binder) {
-      binder.publish (ExceptionService.class);
+      binder.publish ("fail", ExceptionService.class);
     }
   }
 
@@ -644,7 +644,7 @@ public class ServiceModuleTest {
 
   public static class Pojo2PublishingTestServiceModule extends TestServiceModule {
     public void configure (ResourceBinder binder) {
-      binder.publish (Pojo2Service.class);
+      binder.publish ("pojo2", Pojo2Service.class);
     }
   }
 
@@ -783,7 +783,7 @@ public class ServiceModuleTest {
   @Path ("/inject")
   @SuppressWarnings ("unused")
   public static class InjectedTestService {
-    private @Inject UriInfo i;
+    private @Inject javax.inject.Provider<UriInfo> i;
     private @Inject Providers p;
     private @Inject Request r;
     private @Inject HttpHeaders h;
@@ -793,16 +793,17 @@ public class ServiceModuleTest {
     @GET
     @Path ("/{param}")
     public String get (@PathParam ("param") String param) {
-      return i.getPathParameters ()
+      return i.get ().getPathParameters ()
               .getFirst ("param").equals (this.param.get ()) ? param
-                                                            : (this.param.get () + " != " + i.getPathParameters ()
+                                                            : (this.param.get () + " != " + i.get ()
+                                                                                             .getPathParameters ()
                                                                                              .getFirst ("param"));
     }
   }
 
   public static class InjectedTestServiceModule extends TestServiceModule {
     public void configure (ResourceBinder binder) {
-      binder.publish (InjectedTestService.class).in (Singleton.class);
+      binder.publish ("inject", InjectedTestService.class).in (Singleton.class);
     }
   }
 
@@ -864,7 +865,7 @@ public class ServiceModuleTest {
   public void dynamicResolution () throws Exception {
     try (Jetty9 j = serve (new TestServiceModule () {
       public void configure (ResourceBinder binder) {
-        binder.publish (TopService.class);
+        binder.publish ("top", TopService.class);
       }
     })) {
       assertThat (j.get ("/test/top/hello/value"), is ("world"));
@@ -878,7 +879,7 @@ public class ServiceModuleTest {
   public static class ContextInjectingPojoReader implements MessageBodyReader<Pojo> {
     private @Inject @Named ("name") javax.inject.Provider<String> name;
 
-   public boolean isReadable (Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
+    public boolean isReadable (Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
       return Pojo.class.isAssignableFrom (type);
     }
 

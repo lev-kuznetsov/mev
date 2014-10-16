@@ -27,6 +27,7 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.net.HttpURLConnection;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.inject.Named;
@@ -61,7 +62,6 @@ import edu.dfci.cccb.mev.dataset.domain.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.annotation.NameOf;
 import edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
-import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.Workspace;
 
 public class DatasetControllerTest {
 
@@ -120,9 +120,9 @@ public class DatasetControllerTest {
       }
 
       public void configure (ResourceBinder binder) {
-        binder.publish (new TypeLiteral<Workspace<String, Double>> () {})
-              .toProvider (new Provider<Workspace<String, Double>> () {
-                public Workspace<String, Double> get () {
+        binder.publish ("dataset", new TypeLiteral<Map<String, Dataset<String, Double>>> () {})
+              .toProvider (new Provider<Map<String, Dataset<String, Double>>> () {
+                public Map<String, Dataset<String, Double>> get () {
                   return DatasetAdapter.workspace ();
                 }
               }).in (SessionScoped.class);

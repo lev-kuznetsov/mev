@@ -52,7 +52,7 @@ public class TestMevServiceModule extends MevServiceModule {
       return new Pojo (foo);
     }
   }
-
+  
   @Path ("/echo")
   public interface Echo {
     @GET
@@ -67,7 +67,7 @@ public class TestMevServiceModule extends MevServiceModule {
 
   @Override
   public void configure (ResourceBinder binder) {
-    binder.publish (Simple.class).to (SimpleImpl.class).in (RequestScoped.class);
-    binder.publish (Echo.class).to (EchoImpl.class).in (Singleton.class);
+    binder.publish ("simple", Simple.class).to (SimpleImpl.class).in (RequestScoped.class);
+    binder.publish ("echo", Echo.class).to (EchoImpl.class).in (Singleton.class);
   }
 }

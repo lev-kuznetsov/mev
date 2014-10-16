@@ -33,15 +33,15 @@ public interface ResourceBinder {
   /**
    * See the EDSL examples at {@link Binder}.
    */
-  <T> LinkedBindingBuilder<T> publish (Key<T> key);
+  <T> LinkedBindingBuilder<T> publish (String dispatch, Key<T> key);
 
   /**
    * See the EDSL examples at {@link Binder}.
    */
-  <T> AnnotatedBindingBuilder<T> publish (TypeLiteral<T> typeLiteral);
+  <T> AnnotatedBindingBuilder<T> publish (String dispatch, TypeLiteral<T> typeLiteral);
 
   /**
    * See the EDSL examples at {@link Binder}.
    */
-  <T> AnnotatedBindingBuilder<T> publish (Class<T> type);
+  <T> AnnotatedBindingBuilder<T> publish (String dispatch, Class<T> type);
 }

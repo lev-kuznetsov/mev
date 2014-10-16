@@ -35,10 +35,6 @@ import edu.dfci.cccb.mev.googleplus.domain.guice.GoogleDomainModule;
 import edu.dfci.cccb.mev.googleplus.domain.guice.ScopeBinder;
 import edu.dfci.cccb.mev.googleplus.domain.guice.ServicesScopeBindingBuilder;
 import edu.dfci.cccb.mev.googleplus.services.controllers.AuthorizationController;
-import edu.dfci.cccb.mev.googleplus.services.controllers.CircleController;
-import edu.dfci.cccb.mev.googleplus.services.controllers.CommentsController;
-import edu.dfci.cccb.mev.googleplus.services.controllers.FilesController;
-import edu.dfci.cccb.mev.googleplus.services.controllers.PeopleController;
 import edu.dfci.cccb.mev.googleplus.services.mappers.UnauthorizedExceptionMapper;
 
 /**
@@ -67,11 +63,7 @@ public class MevGoogleServiceModule implements Module {
     binder.install (new MevServiceModule () {
       @Override
       public void configure (ResourceBinder binder) {
-        binder.publish (AuthorizationController.class);
-        binder.publish (FilesController.class);
-        binder.publish (CommentsController.class);
-        binder.publish (CircleController.class);
-        binder.publish (PeopleController.class);
+        binder.publish ("google", AuthorizationController.class);
       }
 
       @Override

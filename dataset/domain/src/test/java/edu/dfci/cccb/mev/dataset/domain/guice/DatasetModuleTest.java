@@ -18,6 +18,8 @@ package edu.dfci.cccb.mev.dataset.domain.guice;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Map;
+
 import javax.inject.Singleton;
 
 import org.junit.Before;
@@ -35,7 +37,6 @@ import edu.dfci.cccb.mev.dataset.domain.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.annotation.NameOf;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
-import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.Workspace;
 
 public class DatasetModuleTest {
 
@@ -51,14 +52,14 @@ public class DatasetModuleTest {
       public String dataset () {
         return "mock";
       }
-      
+
       @Provides
       @Singleton
       @NameOf (Analysis.class)
       public String analysis () {
         return "mock";
       }
-      
+
       @Provides
       @Singleton
       @NameOf (Dimension.class)
@@ -68,7 +69,7 @@ public class DatasetModuleTest {
 
       @Provides
       @Singleton
-      public Workspace<String, Double> workspace () {
+      public Map<String, Dataset<String, Double>> workspace () {
         return DatasetAdapter.workspace ();
       }
 

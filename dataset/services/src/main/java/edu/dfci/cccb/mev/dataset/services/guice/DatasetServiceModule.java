@@ -21,6 +21,8 @@ import static edu.dfci.cccb.mev.dataset.domain.Dataset.DATASET;
 import static edu.dfci.cccb.mev.dataset.domain.Dimension.DIMENSION;
 import static edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler.TEXT_TSV_TYPE;
 
+import java.util.Map;
+
 import javax.ws.rs.core.UriInfo;
 
 import com.google.inject.Binder;
@@ -41,7 +43,6 @@ import edu.dfci.cccb.mev.dataset.domain.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.annotation.NameOf;
 import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule;
 import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter;
-import edu.dfci.cccb.mev.dataset.domain.prototype.DatasetAdapter.Workspace;
 
 /**
  * @author levk
@@ -94,10 +95,10 @@ public class DatasetServiceModule extends MevServiceModule {
    * edu.dfci.cccb.mev.common.services.guice.jaxrs.ResourceBinder) */
   @Override
   public void configure (ResourceBinder binder) {
-    binder.publish (Key.get (new TypeLiteral<Workspace<String, Double>> () {}))
-          .toProvider (new Provider<Workspace<String, Double>> () {
+    binder.publish ("dataset", Key.get (new TypeLiteral<Map<String, Dataset<String, Double>>> () {}))
+          .toProvider (new Provider<Map<String, Dataset<String, Double>>> () {
             @Override
-            public Workspace<String, Double> get () {
+            public Map<String, Dataset<String, Double>> get () {
               return DatasetAdapter.workspace ();
             }
           }).in (SessionScoped.class);

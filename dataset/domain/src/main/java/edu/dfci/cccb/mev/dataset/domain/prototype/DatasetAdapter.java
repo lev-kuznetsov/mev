@@ -67,39 +67,11 @@ public class DatasetAdapter <K, V> implements Dataset<K, V> {
     this.values = values;
   }
 
-  @Path ("/dataset")
-  public static abstract class Workspace <K, V> extends AbstractMap<String, Dataset<K, V>> {
-    @GET
-    @Override
-    public Collection<Dataset<K, V>> values () {
-      return super.values ();
-    }
-
-    @Path ("/{" + DATASET + "}")
-    @GET
-    public Dataset<K, V> get (@PathParam (DATASET) String key) {
-      return super.get (key);
-    }
-
-    @Path ("/{" + DATASET + "}")
-    @PUT
-    @Override
-    public Dataset<K, V> put (@PathParam (DATASET) String name, Dataset<K, V> value) {
-      return super.put (name, value);
-    }
-
-    @Path ("/{" + DATASET + "}")
-    @DELETE
-    public Dataset<K, V> remove (@PathParam (DATASET) String key) {
-      return super.remove (key);
-    }
-  }
-
   /**
    * @return A workspace for holding datasets
    */
-  public static <K, V> Workspace<K, V> workspace () {
-    return new Workspace<K, V> () {
+  public static <K, V> Map<String, Dataset<K, V>> workspace () {
+    return new AbstractMap<String, Dataset<K, V>> () {
       private final List<Dataset<K, V>> list = new ArrayList<> ();
 
       @Override
@@ -144,7 +116,6 @@ public class DatasetAdapter <K, V> implements Dataset<K, V> {
               }
 
               @Override
-              
               public void remove () {
                 iterator.remove ();
               }
@@ -159,7 +130,9 @@ public class DatasetAdapter <K, V> implements Dataset<K, V> {
       }
 
       @Override
-      public Dataset<K, V> put (String name, Dataset<K, V> value) {
+      @Path ("/{" + DATASET + "}")
+      @PUT
+      public Dataset<K, V> put (@PathParam (DATASET) String name, Dataset<K, V> value) {
         if (name == null || value == null || value.name () == null)
           throw new NullPointerException ();
         for (Entry<String, Dataset<K, V>> entry : entrySet ())
@@ -169,6 +142,24 @@ public class DatasetAdapter <K, V> implements Dataset<K, V> {
           throw new IllegalArgumentException ();
         list.add (0, value);
         return null;
+      }
+
+      @GET
+      @Override
+      public Collection<Dataset<K, V>> values () {
+        return super.values ();
+      }
+
+      @Path ("/{" + DATASET + "}")
+      @GET
+      public Dataset<K, V> get (@PathParam (DATASET) String key) {
+        return super.get (key);
+      }
+
+      @Path ("/{" + DATASET + "}")
+      @DELETE
+      public Dataset<K, V> remove (@PathParam (DATASET) String key) {
+        return super.remove (key);
       }
     };
   }
