@@ -1,5 +1,5 @@
 before_install:
-    - sudo apt-get install gcc
+    - sudo apt-get install fort77
     - pushd /tmp; wget http://cran.r-project.org/src/base/R-2/R-2.15.3.tar.gz; tar xvzf R-2.15.3.tar.gz; cd R-2.15.3; ./configure --with-x=no; make && sudo make install; popd
     - sudo echo "install.packages('DBI', repos='http://cran.rstudio.com/')" | sudo R --no-save
     - sudo echo "source(\"http://bioconductor.org/biocLite.R\");biocLite(\"limma\")" | sudo R --no-save
