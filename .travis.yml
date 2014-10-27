@@ -1,7 +1,7 @@
 before_install:
     - sudo apt-get update
-    - sudo apt-get install r-base r-cran-dbi
-    - pushd /tmp; wget http://cran.r-project.org/src/contrib/Archive/RSQLite/RSQLite_0.11.4.tar.gz; install.packages('/tmp/RSQLite_0.11.4.tar.gz', repos = NULL, type="source"); popd
+    - sudo apt-get install r-base r-cran-dbi libxml2-dev
+    - pushd /tmp; wget http://cran.r-project.org/src/contrib/Archive/RSQLite/RSQLite_0.11.4.tar.gz; echo "install.packages('/tmp/RSQLite_0.11.4.tar.gz', repos = NULL, type='source')" | sudo R --no-save; popd
     - sudo echo "source(\"http://bioconductor.org/biocLite.R\");biocLite(\"limma\")" | sudo R --no-save
     - sudo echo "source(\"http://bioconductor.org/biocLite.R\");biocLite(\"multtest\")" | sudo R --no-save
     - sudo echo "source(\"http://bioconductor.org/biocLite.R\");biocLite(\"DESeq\")" | sudo R --no-save
