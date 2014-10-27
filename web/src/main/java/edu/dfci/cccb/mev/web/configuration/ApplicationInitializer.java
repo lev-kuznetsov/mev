@@ -28,6 +28,7 @@ import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfigu
 import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain;
 import edu.dfci.cccb.mev.anova.rest.configuration.AnovaRestConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
+import edu.dfci.cccb.mev.deseq.rest.configuration.DESeqRestConfiguration;
 import edu.dfci.cccb.mev.geods.rest.configuration.GeoDatasetsConfigurationMain;
 import edu.dfci.cccb.mev.hcl.rest.configuration.HclRestConfiguration;
 import edu.dfci.cccb.mev.kmeans.rest.configuration.KMeansRestConfiguration;
@@ -64,6 +65,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     mvcContext.register (AnovaRestConfiguration.class);
     mvcContext.register (TTestRestConfiguration.class);
     mvcContext.register (StatsRestConfiguration.class);
+    mvcContext.register (DESeqRestConfiguration.class);
 
     DispatcherServlet dispatcher = new DispatcherServlet (mvcContext);
 
