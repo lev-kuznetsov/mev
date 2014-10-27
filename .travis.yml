@@ -1,6 +1,7 @@
 before_install:
     - sudo apt-get update
-    - sudo apt-get install r-base r-cran-dbi
+    - sudo apt-get install r-base
+    - sudo echo "install.packages('DBI')" | sudo R --no-save
     - sudo echo "source(\"http://bioconductor.org/biocLite.R\");biocLite(\"limma\")" | sudo R --no-save
     - sudo echo "source(\"http://bioconductor.org/biocLite.R\");biocLite(\"multtest\")" | sudo R --no-save
     - sudo echo "source(\"http://bioconductor.org/biocLite.R\");biocLite(\"DESeq\")" | sudo R --no-save
