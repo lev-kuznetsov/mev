@@ -58,7 +58,7 @@ public class CliRScriptEngine extends AbstractScriptEngine {
   private @Getter @Setter String rScriptLaunchingOptions = getProperty (CliRScriptEngine.class.getName ()
                                                                         + ".rScriptLaunchingOptions", "");
   private @Getter @Setter int rMaximumRuntime = parseInt (getProperty (CliRScriptEngine.class.getName ()
-                                                                       + ".rMaximumRuntime", "30"));
+                                                                       + ".rMaximumRuntime", "600"));
   private @Getter @Setter TimeUnit rMaximumRuntimeUnit = valueOf (getProperty (CliRScriptEngine.class.getName ()
                                                                                + ".rMaximumRuntimeUnit", "SECONDS"));
 

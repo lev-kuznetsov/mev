@@ -28,6 +28,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.Synchronized;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.deseq.domain.prototype.AbstractDESeq;
 import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
 
@@ -36,6 +37,7 @@ import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
  * 
  */
 @ToString
+@Log4j
 public class FileBackedDESeq extends AbstractDESeq implements AutoCloseable {
 
   private @Getter final File full;
@@ -108,12 +110,11 @@ public class FileBackedDESeq extends AbstractDESeq implements AutoCloseable {
   }
 
   private Double number (int index, String[] split) {
-    try{
-      return parseDouble (string (index, split));
-    }
-    catch (NumberFormatException e) {
-      return null;
-    }
+    String value = string (index, split);
+    if ("Inf".equals (value)) return Double.POSITIVE_INFINITY;
+    else if ("-Inf".equals (value)) return Double.NEGATIVE_INFINITY;
+    else if ("NA".equals (value)) return Double.NaN;
+    else return parseDouble (value);
  }
   
 

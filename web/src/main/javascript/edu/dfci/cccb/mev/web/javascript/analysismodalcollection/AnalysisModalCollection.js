@@ -108,6 +108,61 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                 }
             }
     }])
+    .directive('modalDESeq', ['alertService', function(alertService){
+    	
+    	return {
+    		restrict: 'C',
+    		scope: {
+    			dataset : '=heatmapDataset'
+    		},
+    		templateUrl : module.path + 'templates/deseq.tpl.html',
+    		link : function(scope, elements, attributes){
+    			
+    			scope.params = {
+    				name: undefined,
+    				experiment: undefined,
+    				control: undefined
+    			};
+    			
+    			
+    			
+    			var success = function(data, status, headers, config){
+					scope.dataset.loadAnalyses()
+            		var message = "DESeq analysis for "
+            			+ scope.params.name + " complete!";
+
+                    var header = "DESeq Analysis";
+
+                    alertService.success(message,header);
+				}
+    			
+				var failure = function(data, status, headers, config) {
+                    var message = "Could not perform DESeq Analysis. If "
+                        + "problem persists, please contact us.";
+                    var header = "DESeq Analysis Problem (Error Code: "
+                        + status
+                        + ")";
+                    alertService.error(message,header);  
+				}
+				
+				scope.testInit = function(){
+    				
+    				scope.dataset.analysis.post3({
+    					datasetName:scope.dataset.datasetName,
+    					analysisType:'deseq',
+    					analysisName:scope.params.name,
+    					experiment: scope.params.experiment.name,
+    					control: scope.params.control.name
+    				},{}, success, failure)
+    				
+    			}
+
+    			
+    			
+    		}
+    	}
+    	
+    }])
     .directive('modalFTest', ['alertService', function(alertService){
     	
     	return {

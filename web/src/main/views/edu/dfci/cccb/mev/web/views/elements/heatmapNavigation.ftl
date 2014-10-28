@@ -24,6 +24,7 @@
 						<li><a data-toggle="modal" data-target="#fishertest">Fisher Exact Test</a></li>
 						<li><a data-toggle="modal" data-target="#wilcoxon">Wilcoxon Rank Sum</a></li>
 						<li><a data-toggle="modal" data-target="#anova">ANOVA</a></li>
+						<li><a data-toggle="modal" data-target="#deseq">DESeq</a></li>
 					</ul>
 				</li>
 				
@@ -104,4 +105,8 @@
 
 <bsmodal bindid="tTest" func="" header="t-Test Analysis">
  <div class="modal-T-Test" heatmap-dataset="project.dataset"></div>
+</bsmodal> 
+
+<bsmodal bindid="deseq" func="" header="DESeq Analysis">
+ <div class="modal-D-E-Seq" heatmap-dataset="project.dataset"></div>
 </bsmodal> 
