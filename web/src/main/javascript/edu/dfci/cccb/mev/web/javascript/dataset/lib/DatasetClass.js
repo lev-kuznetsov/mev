@@ -1,5 +1,5 @@
-define(['./datasetStatistics', './selectionSort'], 
-		function( datasetStatistics, selectionSort){
+define(['./datasetStatistics', './selectionSort', './selectionHelpers'], 
+		function( datasetStatistics, selectionSort, selectionHelpers){
     
     //inverter :: [a] --> Object
     //  Function to invert an array into an object with properties of names
@@ -83,8 +83,11 @@ define(['./datasetStatistics', './selectionSort'],
         };
 
 		this.selections={
-		        column: datasetRespObj.column.selections,
-		        row: datasetRespObj.row.selections
+	        column: datasetRespObj.column.selections,
+	        row: datasetRespObj.row.selections,
+	        intersection: function(params){
+	        	return selectionHelpers.selectionIntersect.call(self, params)
+	        }
 		}
 		
 		this.analyses = [];

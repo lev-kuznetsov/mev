@@ -124,7 +124,52 @@ define(['angular', 'alertservice/AlertService'], function(angular){
     				control: undefined
     			};
     			
+    			var selectionWarning = function(){
+    				alertService.error("Cannot start DESeq with intersecting selection parameters", "DESeq Parameters problem")
+    				scope.badSelection = true;
+    			}
     			
+    			scope.$watch('params.experiment', function(newval){
+    				if (newval && scope.params.control && scope.dataset){
+    					
+    					if ( mutuallyExclusive(scope.params.control.name, scope.params.experiment.name) ){
+    						scope.badSelection = false
+    						return
+    						
+    					} else {
+    						selectionWarning()
+    					}
+    				}
+    			})
+    			
+    			scope.$watch('params.control', function(newval){
+    				if (newval && scope.params.experiment && scope.dataset){
+    						
+    					if ( mutuallyExclusive(scope.params.control.name, scope.params.experiment.name) ){
+    						scope.badSelection = false
+    						return
+    					} else {
+    						selectionWarning()
+    					}
+    				}
+    			})
+    			
+    			var parametersOK = function(){
+    				
+    				var intersecting = !mutuallyExclusive(scope.params.control.name, scope.params.experiment.name)
+    				
+    				var failing = (!scope.params.name || !scope.params.control || !scope.params.experiment || intersecting)
+
+    				return !failing
+    			}
+    			var mutuallyExclusive = function(set1, set2){
+    				
+    				var intersection = scope
+    					.dataset.selections
+    					.intersection({'selection1':set1, 'selection2':set2, 'dimension':'column'})
+					
+    				return (intersection.length == 0)
+    			}
     			
     			var success = function(data, status, headers, config){
 					scope.dataset.loadAnalyses()
@@ -146,6 +191,11 @@ define(['angular', 'alertservice/AlertService'], function(angular){
 				}
 				
 				scope.testInit = function(){
+					
+					if (!parametersOK()){
+						alertService.error("Bad analysis parameters selection", "DESeq Analysis Start Error")
+						return
+					}
     				
     				scope.dataset.analysis.post3({
     					datasetName:scope.dataset.datasetName,
@@ -314,7 +364,6 @@ define(['angular', 'alertservice/AlertService'], function(angular){
     		templateUrl : module.path + 'templates/wilcoxonTest.tpl.html',
     		link : function(scope, elements, attributes){
     			
-    			console.log(scope.dataset)
     			
     			scope.params = {
     				name: undefined,
