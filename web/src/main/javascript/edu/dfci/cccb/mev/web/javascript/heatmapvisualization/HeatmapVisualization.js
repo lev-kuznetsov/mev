@@ -311,6 +311,15 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                             },
                             keys:$scope.visualization.view.selectionParams[dimension].labels
                         };
+                		
+                		if (selectionsData.keys.length == 0){
+                			var message = "Cannot add empty selection. Plese try again.";
+
+                            var header = "Selection Addition Problem (Error Code: 0)";
+
+                            alertService.error(message,header);
+                			return
+                		}
                         
                         $scope.project.dataset.selection.post({
                             datasetName : $routeParams.datasetName,

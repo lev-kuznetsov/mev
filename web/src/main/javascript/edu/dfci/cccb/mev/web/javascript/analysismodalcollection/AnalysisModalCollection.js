@@ -124,7 +124,52 @@ define(['angular', 'alertservice/AlertService'], function(angular){
     				control: undefined
     			};
     			
+    			var selectionWarning = function(){
+    				alertService.error("Cannot start DESeq with intersecting selection parameters", "DESeq Parameters problem")
+    				scope.badSelection = true;
+    			}
     			
+    			scope.$watch('params.experiment', function(newval){
+    				if (newval && scope.params.control && scope.dataset){
+    					
+    					if ( mutuallyExclusive(scope.params.control.name, scope.params.experiment.name) ){
+    						scope.badSelection = false
+    						return
+    						
+    					} else {
+    						selectionWarning()
+    					}
+    				}
+    			})
+    			
+    			scope.$watch('params.control', function(newval){
+    				if (newval && scope.params.experiment && scope.dataset){
+    						
+    					if ( mutuallyExclusive(scope.params.control.name, scope.params.experiment.name) ){
+    						scope.badSelection = false
+    						return
+    					} else {
+    						selectionWarning()
+    					}
+    				}
+    			})
+    			
+    			var parametersOK = function(){
+    				
+    				var intersecting = !mutuallyExclusive(scope.params.control.name, scope.params.experiment.name)
+    				
+    				var failing = (!scope.params.name || !scope.params.control || !scope.params.experiment || intersecting)
+
+    				return !failing
+    			}
+    			var mutuallyExclusive = function(set1, set2){
+    				
+    				var intersection = scope
+    					.dataset.selections
+    					.intersection({'selection1':set1, 'selection2':set2, 'dimension':'column'})
+					
+    				return (intersection.length == 0)
+    			}
     			
     			var success = function(data, status, headers, config){
 					scope.dataset.loadAnalyses()
@@ -146,6 +191,18 @@ define(['angular', 'alertservice/AlertService'], function(angular){
 				}
 				
 				scope.testInit = function(){
+					
+					if (!parametersOK()){
+						alertService.error("Bad analysis parameters selection", "DESeq Analysis Start Error")
+						return
+					}
+					
+					var message = "Starting DESeq "
+                        + scope.params.name + " analysis.";
+
+                    var header = "DESeq Analysis Start";
+                    
+                    alertService.info(message, header)
     				
     				scope.dataset.analysis.post3({
     					datasetName:scope.dataset.datasetName,
@@ -314,7 +371,6 @@ define(['angular', 'alertservice/AlertService'], function(angular){
     		templateUrl : module.path + 'templates/wilcoxonTest.tpl.html',
     		link : function(scope, elements, attributes){
     			
-    			console.log(scope.dataset)
     			
     			scope.params = {
     				name: undefined,
@@ -696,38 +752,61 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                         		goAnalysis: true
                         	
                         	};
+                            
+                            var selectionWarning = function(){
+                				alertService.error("Cannot start LIMMA with intersecting selection parameters", "LIMMA Parameters problem")
+                				scope.badSelection = true;
+                			}
+                			
+                			scope.$watch('params.experiment', function(newval){
+                				
+                				if (newval && scope.params.control && scope.dataset){
+                					
+                					if ( mutuallyExclusive(scope.params.control.name, scope.params.experiment.name) ){
+                						scope.badSelection = false
+                						return
+                						
+                					} else {
+                						selectionWarning()
+                					}
+                				}
+                			})
+                			
+                			scope.$watch('params.control', function(newval){
+                				if (newval && scope.params.experiment && scope.dataset){
+                						
+                					if ( mutuallyExclusive(scope.params.control.name, scope.params.experiment.name) ){
+                						scope.badSelection = false
+                						return
+                					} else {
+                						selectionWarning()
+                					}
+                				}
+                			})
+                			
+                			var parametersOK = function(){
+                				
+                				var intersecting = !mutuallyExclusive(scope.params.control.name, scope.params.experiment.name)
+                				
+                				var failing = (!scope.params.name || !scope.params.control || !scope.params.experiment || intersecting)
+
+                				return !failing
+                			}
+                			var mutuallyExclusive = function(set1, set2){
+                				
+                				var intersection = scope
+                					.dataset.selections
+                					.intersection({'selection1':set1, 'selection2':set2, 'dimension':'column'})
+            					
+                				return (intersection.length == 0)
+                			}
 
                             scope.testInit = function() {
                             	
-                            	
-                            	//Grab keys for each selection
-                            	var controlSet = scope.dataset.selections[scope.params.dimension.value]
-                            		.filter(function(group){
-                            			return group.name == scope.params.control.name
-                            		})[0].keys
-                            		
-                            	var experimentSet = scope.dataset.selections[scope.params.dimension.value]
-	                        		.filter(function(group){
-	                        			return group.name == scope.params.experiment.name
-	                        		})[0].keys
-	                        	
-	                        	//Fail if matching elements in sets
-	                        	
-	                        	for (var i = 0; i < controlSet.length; i++){
-	                        		for (var j = 0; j < experimentSet.length; j++){
-	                        			if (controlSet[i] == experimentSet[j] ){
-	                        				
-	                        				var message =  
-	                                            'Set intersection is not empty for LIMMA.';
-
-	                                        var header = "LIMMA Analysis Error";
-	                                         
-	                                        alertService.error(message,header);
-	                                        scope.params.name = undefined;
-	                        				return
-	                        			}
-	                        		}
-	                        	}
+                            	if (!parametersOK()){
+            						alertService.error("Bad analysis parameters selection", "LIMMA Analysis Start Error")
+            						return
+            					}
                   
                                 var message = "Started limma analysis for "
                                     + scope.params.name;
