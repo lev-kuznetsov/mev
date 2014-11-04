@@ -196,6 +196,13 @@ define(['angular', 'alertservice/AlertService'], function(angular){
 						alertService.error("Bad analysis parameters selection", "DESeq Analysis Start Error")
 						return
 					}
+					
+					var message = "Starting DESeq "
+                        + scope.params.name + " analysis.";
+
+                    var header = "DESeq Analysis Start";
+                    
+                    alertService.info(message, header)
     				
     				scope.dataset.analysis.post3({
     					datasetName:scope.dataset.datasetName,
