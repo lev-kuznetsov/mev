@@ -130,8 +130,10 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             	analysis : "=analysis",
             	project : "=project"
             },
-            templateUrl : '/container/view/elements/kmeansAccordion',
+            templateUrl : module.path + '/templates/kmeansAccordion.tpl.html',
             link : function(scope) {
+            	
+            	console.log(scope.analysis)
                 
                 function traverse(clusters){
                     
