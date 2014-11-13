@@ -1,12 +1,30 @@
 <accordion-group heading="K-Means Clustering: {{analysis.name}}">
-
-	Clusters: {{analysis.clusters.length}}
 	
-	<div ng-repeat="cluster in analysis.clusters">
-		Cluster: {{cluster.id}}
-		Length: {{cluster.length}}
+	<table class="table table-striped table-bordered table-condensed">
 	
-	</div>
+		<thead>
+			<tr>
+				<th>Cluster Size</th>
+			</tr>
+		
+		</thead>
+		
+		<tbody>
+		
+			<tr ng-repeat="cluster in analysis.clusters">
+				<td>
+					Size: {{cluster.length}}<a class="btn btn-info btn-small pull-right" ng-click="loadSelections(cluster)" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
+						<span class="glyphicon glyphicon-plus" style="color:white"></span> Add Selection
+				    </a>
+				</td>
+				
+			</tr>
+		
+		
+		</tbody>
+	
+	</table>
+	
 	
 	<button class="btn btn-success" ng-click="applyToHeatmap()" >
         <a>
@@ -17,3 +35,25 @@
       <i class="icon-white icon-download"></i> Download
     </a> 
 </accordion-group>
+
+<bsmodal bindid="{{'selectionAdd' + analysis.name}}" func="" header="Add New Selection for {{analysis.name}}">
+
+	<div class="row">
+	
+		<form-group>
+			<form>
+				Name: <input type="text" class="input-small" ng-model="selectionParams.name">
+			<form>
+		</form-group>
+	
+	</div>
+	
+	<div class="row">
+	
+	
+		
+            <a class="btn btn-success pull-right" ng-click="addSelections()" data-dismiss="modal" aria-hidden="true">
+              Create Selections
+            </a>         
+    </div>
+</bsmodal> 
