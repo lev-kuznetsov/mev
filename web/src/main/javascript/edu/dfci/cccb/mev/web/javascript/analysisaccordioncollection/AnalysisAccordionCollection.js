@@ -91,7 +91,6 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             },
             link: function(scope, element, attrs) {
             	
-            	console.log(scope.analysis)
 
                 element.append(getTemplate(scope.analysis.type));
         
@@ -123,18 +122,31 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             }	
        }
     }])
-	.directive('kMeansAccordion', [function() {
+	.directive('kMeansAccordion', ['alertService', function(alertService) {
         return {
             restrict : 'E',
             scope : {
             	analysis : "=analysis",
             	project : "=project"
             },
-            templateUrl : '/container/view/elements/kmeansAccordion',
+            templateUrl : module.path + '/templates/kmeansAccordion.tpl.html',
             link : function(scope) {
+            	
+            	scope.selectionParams = {
+                    name: undefined,
+                    color: '#'+Math.floor(Math.random()*0xFFFFFF<<0).toString(16),
+                    dimension:undefined,
+                    keys: undefined
+                };
+            	
+            	scope.$watch('analysis', function(newval){
+            		if (newval){
+            			scope.selectionParams.dimension = newval.dimension
+            		}
+            	})
                 
                 function traverse(clusters){
-                    
+            		
                     var labels = []
                     
                     for (var i = 0; i < clusters.length; i++) {
@@ -143,6 +155,49 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
                     
                     return labels
                 }
+            	
+            	scope.loadSelections = function(clusters){
+            		scope.selectionParams.keys = clusters
+            	}
+            	
+            	scope.addSelections = function(){
+            		var selectionsData = {
+                            name: scope.selectionParams.name,
+                            properties: {
+                                selectionDescription: '',
+                                selectionColor:scope.selectionParams.color,                     
+                            },
+                            keys:traverse(scope.selectionParams.keys)
+                        };
+                        
+                        scope.project.dataset.selection.post({
+                            datasetName : scope.project.dataset.datasetName,
+                            dimension : scope.selectionParams.dimension
+
+                        }, selectionsData,
+                        function(response){
+                                
+                                scope.project.dataset.resetSelections(scope.selectionParams.dimension)
+                                var message = "Added " + scope.selectionParams.name + " as new Selection!";
+                                var header = "Heatmap Selection Addition";
+                        
+                                scope.selectionParams.color = '#'+Math
+                                    .floor(Math.random()*0xFFFFFF<<0)
+                                    .toString(16)
+
+                                alertService.success(message,header);
+                        },
+                        function(data, status, headers, config) {
+                            var message = "Couldn't add new selection. If "
+                                + "problem persists, please contact us.";
+
+                             var header = "Selection Addition Problem (Error Code: "
+                                + status
+                                + ")";
+
+                             alertService.error(message,header);
+                        });
+            	}
                 
                 scope.applyToHeatmap=function(){
                     

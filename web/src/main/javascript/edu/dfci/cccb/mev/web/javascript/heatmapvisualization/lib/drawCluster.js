@@ -1,4 +1,4 @@
-define(['d3','./colorBrewer'], function(d3, d3colors){
+define(['d3','./colorBrewer', 'jquery'], function(d3, d3colors){
     
     return function (cluster, canvas){
         
@@ -38,6 +38,15 @@ define(['d3','./colorBrewer'], function(d3, d3colors){
                             return colors(index)
                         }
                     })
+                    .on("mousedown", function(d) {
+			        	switch (d3.event.button){
+			        	case 0:
+			        		self.view.selectionParams[cluster.dimension].labels = group
+			        		$('div#'+ (cluster.dimension) + 'SelectionsModal').modal();
+			        		break
+			        	}
+			            
+			        })
             });
             
         } else if (cluster.dimension == "row") {
@@ -65,6 +74,15 @@ define(['d3','./colorBrewer'], function(d3, d3colors){
                             return colors(index)
                         }
                     })
+                    .on("mousedown", function(d) {
+			        	switch (d3.event.button){
+			        	case 0:
+			        		self.view.selectionParams[cluster.dimension].labels = group
+			        		$('div#'+ (cluster.dimension) + 'SelectionsModal').modal();
+			        		break
+			        	}
+			            
+			        })
             });
             
         }
