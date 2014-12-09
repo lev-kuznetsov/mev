@@ -1,0 +1,1 @@
+project ('mev-common', 'CRYSTAL-SNAPSHOT', modules ('domain'));

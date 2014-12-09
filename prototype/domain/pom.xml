@@ -16,6 +16,13 @@
 
   <dependencies>
 
+    <!-- Rserve -->
+
+    <dependency>
+      <groupId>net.rforge</groupId>
+      <artifactId>Rserve</artifactId>
+    </dependency>
+
     <!-- Google+ -->
 
     <dependency>

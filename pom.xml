@@ -55,6 +55,7 @@
     <cxf.version>3.0.1</cxf.version>
     <rest-assured.version>2.3.3</rest-assured.version>
     <jooq.version>3.3.1</jooq.version>
+    <Rserve.version>0.6-8.1</Rserve.version>
 
     <jquery.version>2.1.0-2</jquery.version>
     <jquery-ui.version>1.10.4</jquery-ui.version>
@@ -79,6 +80,14 @@
   <dependencyManagement>
 
     <dependencies>
+
+      <!-- Rserve -->
+
+      <dependency>
+        <groupId>net.rforge</groupId>
+        <artifactId>Rserve</artifactId>
+        <version>${Rserve.version}</version>
+      </dependency>
 
       <!-- jOOQ -->
 

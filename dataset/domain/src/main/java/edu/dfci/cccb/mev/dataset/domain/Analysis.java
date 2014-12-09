@@ -20,6 +20,8 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.PROPERTY;
 import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.CUSTOM;
 import static javax.xml.bind.annotation.XmlAccessType.NONE;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -50,6 +52,8 @@ public interface Analysis extends Named {
   @XmlElement
   @JsonGetter
   @Override
+  @GET
+  @Path ("/name")
   public String name ();
 
   /**

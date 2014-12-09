@@ -16,23 +16,32 @@
 
 package edu.dfci.cccb.mev.common.domain.guice;
 
+import static ch.lambdaj.Lambda.convert;
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
 import static com.google.inject.Key.get;
 import static com.google.inject.internal.Annotations.isBindingAnnotation;
 import static com.google.inject.name.Names.bindProperties;
+import static java.lang.Short.valueOf;
+import static java.lang.System.getenv;
+import static java.net.InetSocketAddress.createUnresolved;
 
 import java.lang.annotation.Annotation;
+import java.net.InetSocketAddress;
 import java.util.Iterator;
 import java.util.Properties;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.sql.DataSource;
 
 import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+
+import ch.lambdaj.function.convert.Converter;
 
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.databind.BeanProperty;
@@ -53,7 +62,6 @@ import com.fasterxml.jackson.databind.jsontype.TypeIdResolver;
 import com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import com.google.inject.Binder;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Module;
@@ -68,6 +76,8 @@ import edu.dfci.cccb.mev.common.domain.guice.jaxrs.ExceptionBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.JaxrsModule;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageReaderBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageWriterBinder;
+import edu.dfci.cccb.mev.common.domain.guice.rserve.RserveHostConfigurer;
+import edu.dfci.cccb.mev.common.domain.guice.rserve.RserveModule;
 import edu.dfci.cccb.mev.common.domain.mappers.MevExceptionMapper;
 import edu.dfci.cccb.mev.common.domain.messages.JacksonMessageHandler;
 
@@ -78,12 +88,18 @@ import edu.dfci.cccb.mev.common.domain.messages.JacksonMessageHandler;
  * @since CRYSTAL
  */
 @ToString
+@Log4j
 public class MevModule implements Module {
+  /**
+   * Environment variable listing Rserve hosts; hosts are delimited by a semi
+   * (;) each host constisting of hostname or IP separated and port separated by
+   * colon (:)
+   */
+  public static final String RSERVE_HOSTS = "RSERVE_HOSTS";
 
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
-  @OverridingMethodsMustInvokeSuper
   public void configure (Binder binder) {
     binder.install (new SingletonModule () {
 
@@ -91,7 +107,34 @@ public class MevModule implements Module {
       public void configure (Binder binder) {
         // Persistence
         bindProperties (binder, load ("/META-INF/configuration/persistence.properties"));
-        binder.bind (DataSource.class).toProvider (new PooledDataSourceProvider ());
+        binder.bind (DataSource.class).toProvider (new PooledDataSourceProvider ()).in (Singleton.class);
+
+        // Rserve
+        binder.install (new RserveModule () {
+
+          @Override
+          public void configure (RserveHostConfigurer configurer) {
+            String envHosts = null;
+            try {
+              envHosts = getenv (RSERVE_HOSTS);
+            } catch (SecurityException e) {
+              log.warn ("Unable to retreive " + RSERVE_HOSTS + " environment variable due to security"
+                        + " manager constraints, falling back to default configuration");
+            }
+            if (envHosts == null)
+              super.configure (configurer);
+            else
+              for (InetSocketAddress address : convert (envHosts.split (";"),
+                                                        new Converter<String, InetSocketAddress> () {
+                                                          @Override
+                                                          public InetSocketAddress convert (String from) {
+                                                            String[] split = from.split (":");
+                                                            return createUnresolved (split[0], (int) valueOf (split[1]));
+                                                          }
+                                                        }))
+                configurer.add (address);
+          }
+        });
 
         // JAX-RS
         binder.install (new JaxrsModule () {

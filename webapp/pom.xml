@@ -85,6 +85,12 @@
       </plugin>
 
       <plugin>
+        <groupId>edu.dfci.cccb</groupId>
+        <artifactId>rserve-maven-plugin</artifactId>
+        <version>0.0.3</version>
+      </plugin>
+
+      <plugin>
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
         <version>8.1.15.v20140411</version>
@@ -106,4 +112,12 @@
     </plugins>
 
   </build>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>cccb</id>
+      <name>CCCB Maven Repository</name>
+      <url>https://raw.github.com/dfci-cccb/maven-repo/master/releases/</url>
+    </pluginRepository>
+  </pluginRepositories>
 </project>
