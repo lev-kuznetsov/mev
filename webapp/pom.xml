@@ -87,7 +87,10 @@
       <plugin>
         <groupId>edu.dfci.cccb</groupId>
         <artifactId>rserve-maven-plugin</artifactId>
-        <version>0.0.3</version>
+        <version>0.0.4</version>
+        <configuration>
+          <onRequest>assign (".basedir", "${basedir}")</onRequest>
+        </configuration>
       </plugin>
 
       <plugin>

@@ -165,16 +165,16 @@ public class RserveModule implements Module {
                 public void inject (Object function) throws Exception {
 
                   // Call in the form of:
-                  // v <- binder (callback = function (binder) {
-                  // define ('param', function () value, b = binder);
-                  // ...
-                  // inject (function, binder);
-                  // });
+                  // v <- try (binder (callback = function (binder) {
+                  // // define ('param', function () value, b = binder);
+                  // // # ...
+                  // // inject (function, binder);
+                  // }), silent = TRUE);
 
                   UUID uuid = randomUUID ();
                   String v = "v" + uuid.getMostSignificantBits () + "." + uuid.getLeastSignificantBits ();
                   final StringBuilder command = new StringBuilder ();
-                  command.append (v + " <- binder (callback = function (binder) { ");
+                  command.append (v + " <- try (binder (callback = function (binder) { ");
                   for (Class<?> clazz = function.getClass (); clazz != null; clazz = clazz.getSuperclass ())
                     for (Field field : clazz.getFields ()) {
                       Parameter annotation = field.getAnnotation (Parameter.class);
@@ -184,7 +184,8 @@ public class RserveModule implements Module {
                                         + key + "', function () " + toR (function, field) + ", b = binder); ");
                       }
                     }
-                  command.append ("inject (" + function.getClass ().getAnnotation (R.class).value () + ", binder); });");
+                  command.append ("inject (" + function.getClass ().getAnnotation (R.class).value ()
+                                  + ", binder); }), silent = TRUE);");
 
                   RSession session = connection.get ().voidEvalDetach (command.toString ());
                   RConnection connection = session.attach (); // Blocks until
