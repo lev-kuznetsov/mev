@@ -1,0 +1,2 @@
+http://pir.georgetown.edu/iproclass/description.html
+http://pir.georgetown.edu/cgi-bin/ipcSF?id=[*TAG*]

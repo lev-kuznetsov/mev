@@ -1,0 +1,20 @@
+Sample	Type
+GSM74875	Benign prostate tissue
+GSM74876	Benign prostate tissue
+GSM74877	Benign prostate tissue
+GSM74878	Benign prostate tissue
+GSM74879	Benign prostate tissue
+GSM74880	Benign prostate tissue
+GSM74881	Clinically localized primary prostate cancer
+GSM74882	Clinically localized primary prostate cancer
+GSM74883	Clinically localized primary prostate cancer
+GSM74884	Clinically localized primary prostate cancer
+GSM74885	Clinically localized primary prostate cancer
+GSM74886	Clinically localized primary prostate cancer tissue pool
+GSM74887	Clinically localized primary prostate cancer tissue pool
+GSM74888	Metastatic prostate cancer
+GSM74889	Metastatic prostate cancer
+GSM74890	Metastatic prostate cancer
+GSM74891	Metastatic prostate cancer
+GSM74892	Metastatic prostate cancer tissue pool
+GSM74893	Metastatic prostate cancer tissue pool

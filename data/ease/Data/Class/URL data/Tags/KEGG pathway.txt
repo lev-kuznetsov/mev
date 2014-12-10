@@ -1,0 +1,423 @@
+Biotin metabolism - Homo sapiens	hsa00780
+Synthesis and degradation of ketonebodies  - Homo sapiens	hsa00072
+Apoptosis  - Mus musculus	mmu04210
+Aminoacyl-tRNAbiosynthesis  - Rattus norvegicus	rno00970
+Galactose metabolism - Mus musculus	mmu00052
+N-Glycandegradation  - Mus musculus	mmu00511
+Cell Growth and Death - Mus musculus	mmu01420
+Ubiquitinmediated proteolysis  - Homo sapiens	hsa04120
+Nucleotide sugars metabolism - Mus musculus	mmu00520
+Blood group glycolipidbiosynthesis-lact series  - Mus musculus	mmu00601
+Proteinexport  - Homo sapiens	hsa03060
+Androgen and estrogen metabolism - Rattus norvegicus	rno00150
+Nucleotide Metabolism - Rattus norvegicus	rno01140
+Cell Communication - Homo sapiens	hsa01430
+Phenylalanine metabolism - Homo sapiens	hsa00360
+2,4-Dichlorobenzoatedegradation  - Mus musculus	mmu00623
+Tyrosine metabolism - Rattus norvegicus	rno00350
+Inositol phosphatemetabolism  - Rattus norvegicus	rno00562
+Glycerolipid metabolism - Mus musculus	mmu00561
+Glyoxylate and dicarboxylatemetabolism  - Homo sapiens	hsa00630
+Styrene degradation - Rattus norvegicus	rno00643
+Starch and sucrosemetabolism  - Rattus norvegicus	rno00500
+Pentose phosphate pathway - Mus musculus	mmu00030
+Huntington's disease - Homo sapiens	hsa05040
+Carbohydrate Metabolism - Rattus norvegicus	rno01110
+Proteasome - Homo sapiens	hsa03050
+Nicotinate andnicotinamide metabolism  - Rattus norvegicus	rno00760
+Replication and Repair - Rattus norvegicus	rno01240
+Urea cycle and metabolism ofamino groups  - Homo sapiens	hsa00220
+RNA polymerase - Homo sapiens	hsa03020
+Pentose and glucuronateinterconversions  - Rattus norvegicus	rno00040
+Retinol metabolism - Mus musculus	mmu00830
+Ethylbenzene degradation - Rattus norvegicus	rno00642
+Aminosugarsmetabolism  - Mus musculus	mmu00530
+Sphingoglycolipidmetabolism  - Homo sapiens	hsa00600
+Oxidative phosphorylation - Rattus norvegicus	rno00190
+Keratan sulfatebiosynthesis  - Mus musculus	mmu00533
+Ribosome - Rattus norvegicus	rno03010
+Neurodegenerative Disorders - Rattus norvegicus	rno01510
+Streptomycinbiosynthesis  - Mus musculus	mmu00521
+Circadian rhythm  - Homo sapiens	hsa04710
+Carbon fixation  - Homo sapiens	hsa00710
+Glutamate metabolism - Rattus norvegicus	rno00251
+Inositol phosphatemetabolism  - Homo sapiens	hsa00562
+Tyrosine metabolism - Homo sapiens	hsa00350
+Ascorbate and aldaratemetabolism  - Rattus norvegicus	rno00053
+Behavior - Rattus norvegicus	rno01450
+Tryptophan metabolism - Mus musculus	mmu00380
+Fatty acid metabolism  - Rattus norvegicus	rno00071
+Terpenoidbiosynthesis  - Rattus norvegicus	rno00900
+Globoside metabolism - Mus musculus	mmu00603
+Tetrachloroethenedegradation  - Rattus norvegicus	rno00625
+Pyrimidine metabolism - Rattus norvegicus	rno00240
+Taurine and hypotaurinemetabolism  - Mus musculus	mmu00430
+Arginine and proline metabolism - Mus musculus	mmu00330
+Nitrobenzene degradation - Rattus norvegicus	rno00626
+Cysteine metabolism - Homo sapiens	hsa00272
+Replication and Repair - Mus musculus	mmu01240
+Vitamin B6metabolism  - Mus musculus	mmu00750
+Cyanoamino acidmetabolism  - Mus musculus	mmu00460
+Ethylbenzene degradation - Homo sapiens	hsa00642
+Bile acid biosynthesis  - Homo sapiens	hsa00120
+Nucleotide Metabolism - Mus musculus	mmu01140
+1,1,1-Trichloro-2,2-bis(4-chlorophenyl)ethane (DDT) degradation - Homo sapiens	hsa00351
+Prostaglandin andleukotriene metabolism  - Rattus norvegicus	rno00590
+Sphingophospholipidbiosynthesis  - Mus musculus	mmu00570
+Neurodegenerative Disorders - Mus musculus	mmu01510
+Biosynthesis of Secondary Metabolites - Rattus norvegicus	rno01195
+O-Glycansbiosynthesis  - Homo sapiens	hsa00512
+Phosphatidylinositol signaling system  - Homo sapiens	hsa04070
+Integrin-mediated celladhesion  - Homo sapiens	hsa04510
+Inositol metabolism - Homo sapiens	hsa00031
+Synthesis and degradation of ketonebodies  - Rattus norvegicus	rno00072
+Amino Acid Metabolism - Homo sapiens	hsa01150
+Erythromycinbiosynthesis  - Mus musculus	mmu00522
+Benzoate degradation viahydroxylation  - Rattus norvegicus	rno00362
+Sterol biosynthesis  - Homo sapiens	hsa00100
+Signal Transduction - Mus musculus	mmu01320
+gamma-Hexachlorocyclohexane degradation  - Homo sapiens	hsa00361
+Fatty acid biosynthesis (path 2) - Mus musculus	mmu00062
+Chondroitin /Heparan sulfate biosynthesis  - Homo sapiens	hsa00532
+Caprolactam degradation - Rattus norvegicus	rno00930
+Biotin metabolism - Mus musculus	mmu00780
+Synthesis and degradation of ketonebodies  - Mus musculus	mmu00072
+Ganglioside biosynthesis - Homo sapiens	hsa00604
+beta-Alanine metabolism - Homo sapiens	hsa00410
+Phenylalanine, tyrosine andtryptophan biosynthesis  - Rattus norvegicus	rno00400
+Parkinson's disease - Rattus norvegicus	rno05020
+Selenoamino acidmetabolism  - Homo sapiens	hsa00450
+Alkaloidbiosynthesis I  - Rattus norvegicus	rno00950
+Fatty acid biosynthesis (path 1) - Rattus norvegicus	rno00061
+Fluorene degradation - Homo sapiens	hsa00628
+Glycolysis / Gluconeogenesis - Rattus norvegicus	rno00010
+Proteinexport  - Mus musculus	mmu03060
+Basal transcriptionfactors  - Homo sapiens	hsa03022
+Carbazole degradation - Homo sapiens	hsa00629
+Fructose and mannose metabolism - Homo sapiens	hsa00051
+Phenylalanine metabolism - Mus musculus	mmu00360
+Nitrogen metabolism  - Rattus norvegicus	rno00910
+Androgen and estrogen metabolism - Homo sapiens	hsa00150
+Glyoxylate and dicarboxylatemetabolism  - Mus musculus	mmu00630
+Starch and sucrosemetabolism  - Homo sapiens	hsa00500
+Alkaloidbiosynthesis I  - Homo sapiens	hsa00950
+Globoside metabolism - Rattus norvegicus	rno00603
+Parkinson's disease - Homo sapiens	hsa05020
+Circadian rhythm  - Rattus norvegicus	rno04710
+Sulfur metabolism  - Rattus norvegicus	rno00920
+Huntington's disease - Mus musculus	mmu05040
+Proteasome - Mus musculus	mmu03050
+Propanoate metabolism - Homo sapiens	hsa00640
+Metabolism of Other Amino Acids - Homo sapiens	hsa01160
+Nicotinate andnicotinamide metabolism  - Homo sapiens	hsa00760
+Urea cycle and metabolism ofamino groups  - Mus musculus	mmu00220
+RNA polymerase - Mus musculus	mmu03020
+Pyruvate metabolism - Rattus norvegicus	rno00620
+Sphingoglycolipidmetabolism  - Mus musculus	mmu00600
+One carbon pool byfolate  - Rattus norvegicus	rno00670
+Propanoate metabolism - Rattus norvegicus	rno00640
+Signal Transduction - Rattus norvegicus	rno01320
+Valine, leucine and isoleucinedegradation  - Homo sapiens	hsa00280
+Nucleotide sugars metabolism - Rattus norvegicus	rno00520
+RNA polymerase - Rattus norvegicus	rno03020
+Circadian rhythm  - Mus musculus	mmu04710
+Carbon fixation  - Mus musculus	mmu00710
+Sphingoglycolipidmetabolism  - Rattus norvegicus	rno00600
+Oxidative phosphorylation - Homo sapiens	hsa00190
+Sterol biosynthesis  - Rattus norvegicus	rno00100
+Inositol phosphatemetabolism  - Mus musculus	mmu00562
+Tyrosine metabolism - Mus musculus	mmu00350
+C21-Steroid hormone metabolism - Homo sapiens	hsa00140
+Vitamin B6metabolism  - Rattus norvegicus	rno00750
+Keratan sulfatebiosynthesis  - Rattus norvegicus	rno00533
+Pentose phosphate pathway - Rattus norvegicus	rno00030
+Folatebiosynthesis  - Homo sapiens	hsa00790
+Dentatorubropallidoluysian atrophy (DRPLA)  - Rattus norvegicus	rno05050
+Blood group glycolipidbiosynthesis-neolact series  - Homo sapiens	hsa00602
+Phospholipid degradation - Rattus norvegicus	rno00580
+Huntington's disease - Rattus norvegicus	rno05040
+Alkaloidbiosynthesis II  - Homo sapiens	hsa00960
+Folatebiosynthesis  - Rattus norvegicus	rno00790
+Proteinexport  - Rattus norvegicus	rno03060
+Pentose and glucuronateinterconversions  - Homo sapiens	hsa00040
+Bile acid biosynthesis  - Rattus norvegicus	rno00120
+Sulfur metabolism  - Homo sapiens	hsa00920
+Carbon fixation  - Rattus norvegicus	rno00710
+N-Glycandegradation  - Rattus norvegicus	rno00511
+Cysteine metabolism - Mus musculus	mmu00272
+Fatty acid metabolism  - Homo sapiens	hsa00071
+Ethylbenzene degradation - Mus musculus	mmu00642
+Bile acid biosynthesis  - Mus musculus	mmu00120
+ATP synthesis  - Homo sapiens	hsa00193
+Translation - Rattus norvegicus	rno01220
+1,1,1-Trichloro-2,2-bis(4-chlorophenyl)ethane (DDT) degradation - Mus musculus	mmu00351
+Valine, leucine and isoleucinebiosynthesis  - Homo sapiens	hsa00290
+Glycosaminoglycandegradation  - Homo sapiens	hsa00531
+Pantothenate andCoA biosynthesis  - Rattus norvegicus	rno00770
+Lysine biosynthesis - Rattus norvegicus	rno00300
+Glycosylphosphatidylinositol(GPI)-anchor biosynthesis - Homo sapiens	hsa00563
+Glycosaminoglycandegradation  - Rattus norvegicus	rno00531
+O-Glycansbiosynthesis  - Mus musculus	mmu00512
+Phosphatidylinositol signaling system  - Mus musculus	mmu04070
+Butanoate metabolism - Homo sapiens	hsa00650
+Inositol metabolism - Mus musculus	mmu00031
+Ubiquinonebiosynthesis  - Homo sapiens	hsa00130
+Phenylalanine metabolism - Rattus norvegicus	rno00360
+Amino Acid Metabolism - Mus musculus	mmu01150
+Ganglioside biosynthesis - Rattus norvegicus	rno00604
+Sterol biosynthesis  - Mus musculus	mmu00100
+gamma-Hexachlorocyclohexane degradation  - Mus musculus	mmu00361
+Riboflavinmetabolism  - Rattus norvegicus	rno00740
+Chondroitin /Heparan sulfate biosynthesis  - Mus musculus	mmu00532
+Caprolactam degradation - Homo sapiens	hsa00930
+Cell cycle - Homo sapiens	hsa04110
+Glyoxylate and dicarboxylatemetabolism  - Rattus norvegicus	rno00630
+beta-Alanine metabolism - Mus musculus	mmu00410
+Dentatorubropallidoluysian atrophy (DRPLA)  - Homo sapiens	hsa05050
+Ganglioside biosynthesis - Mus musculus	mmu00604
+Selenoamino acidmetabolism  - Mus musculus	mmu00450
+Aminophosphonatemetabolism  - Rattus norvegicus	rno00440
+Phenylalanine, tyrosine andtryptophan biosynthesis  - Homo sapiens	hsa00400
+Sorting and Degradation - Homo sapiens	hsa01230
+Fluorene degradation - Mus musculus	mmu00628
+DNApolymerase  - Rattus norvegicus	rno03030
+C5-Branched dibasic acidmetabolism  - Homo sapiens	hsa00660
+Prion disease - Homo sapiens	hsa05060
+Carbazole degradation - Mus musculus	mmu00629
+Fructose and mannose metabolism - Mus musculus	mmu00051
+Basal transcriptionfactors  - Mus musculus	mmu03022
+Ribosome - Homo sapiens	hsa03010
+Benzoate degradation viaCoA ligation  - Homo sapiens	hsa00632
+Androgen and estrogen metabolism - Mus musculus	mmu00150
+C21-Steroid hormone metabolism - Rattus norvegicus	rno00140
+Alkaloidbiosynthesis I  - Mus musculus	mmu00950
+Starch and sucrosemetabolism  - Mus musculus	mmu00500
+Energy Metabolism - Homo sapiens	hsa01120
+Parkinson's disease - Mus musculus	mmu05020
+Fatty acid biosynthesis (path 1) - Homo sapiens	hsa00061
+Tetrachloroethenedegradation  - Homo sapiens	hsa00625
+Cyanoamino acidmetabolism  - Rattus norvegicus	rno00460
+Metabolism of Other Amino Acids - Mus musculus	mmu01160
+Propanoate metabolism - Mus musculus	mmu00640
+Nicotinate andnicotinamide metabolism  - Mus musculus	mmu00760
+N-Glycansbiosynthesis  - Homo sapiens	hsa00510
+Lysine degradation - Homo sapiens	hsa00310
+Flavonoids,stilbene and lignin biosynthesis  - Rattus norvegicus	rno00940
+Methionine metabolism - Homo sapiens	hsa00271
+Valine, leucine and isoleucinebiosynthesis  - Rattus norvegicus	rno00290
+Alzheimer's disease - Homo sapiens	hsa05010
+Valine, leucine and isoleucinedegradation  - Mus musculus	mmu00280
+Blood group glycolipidbiosynthesis-neolact series  - Rattus norvegicus	rno00602
+Flavonoids,stilbene and lignin biosynthesis  - Homo sapiens	hsa00940
+Benzoate degradation viahydroxylation  - Homo sapiens	hsa00362
+Reductive carboxylate cycle (CO2fixation)  - Rattus norvegicus	rno00720
+Butanoate metabolism - Rattus norvegicus	rno00650
+One carbon pool byfolate  - Homo sapiens	hsa00670
+Translation - Homo sapiens	hsa01220
+Proteasome - Rattus norvegicus	rno03050
+Oxidative phosphorylation - Mus musculus	mmu00190
+Arginine and proline metabolism - Rattus norvegicus	rno00330
+C21-Steroid hormone metabolism - Mus musculus	mmu00140
+Blood group glycolipidbiosynthesis-neolact series  - Mus musculus	mmu00602
+Folatebiosynthesis  - Mus musculus	mmu00790
+Urea cycle and metabolism ofamino groups  - Rattus norvegicus	rno00220
+Metabolism of Complex Lipids - Homo sapiens	hsa01180
+Alkaloidbiosynthesis II  - Mus musculus	mmu00960
+1,4-Dichlorobenzenedegradation  - Homo sapiens	hsa00627
+Terpenoidbiosynthesis  - Homo sapiens	hsa00900
+Selenoamino acidmetabolism  - Rattus norvegicus	rno00450
+Amyotrophic lateralsclerosis (ALS)  - Homo sapiens	hsa05030
+Nitrobenzene degradation - Homo sapiens	hsa00626
+O-Glycansbiosynthesis  - Rattus norvegicus	rno00512
+Pentose and glucuronateinterconversions  - Mus musculus	mmu00040
+Histidine metabolism - Homo sapiens	hsa00340
+Sulfur metabolism  - Mus musculus	mmu00920
+1,2-Dichloroethanedegradation  - Homo sapiens	hsa00631
+Metabolism of Complex Carbohydrates - Homo sapiens	hsa01170
+Fatty acid metabolism  - Mus musculus	mmu00071
+ATP synthesis  - Mus musculus	mmu00193
+Behavior - Homo sapiens	hsa01450
+Alzheimer's disease - Rattus norvegicus	rno05010
+Valine, leucine and isoleucinebiosynthesis  - Mus musculus	mmu00290
+Glycosaminoglycandegradation  - Mus musculus	mmu00531
+Riboflavinmetabolism  - Homo sapiens	hsa00740
+Aminoacyl-tRNAbiosynthesis  - Homo sapiens	hsa00970
+Thiaminemetabolism  - Homo sapiens	hsa00730
+Citrate cycle (TCA cycle) - Rattus norvegicus	rno00020
+Butanoate metabolism - Mus musculus	mmu00650
+Ubiquinonebiosynthesis  - Mus musculus	mmu00130
+Phospholipid degradation - Homo sapiens	hsa00580
+Glycolysis / Gluconeogenesis - Homo sapiens	hsa00010
+Caprolactam degradation - Mus musculus	mmu00930
+Dentatorubropallidoluysian atrophy (DRPLA)  - Mus musculus	mmu05050
+Lysine biosynthesis - Homo sapiens	hsa00300
+beta-Alanine metabolism - Rattus norvegicus	rno00410
+Aminophosphonatemetabolism  - Homo sapiens	hsa00440
+Basal transcriptionfactors  - Rattus norvegicus	rno03022
+Benzoate degradation viaCoA ligation  - Rattus norvegicus	rno00632
+Glutathione metabolism - Homo sapiens	hsa00480
+Sorting and Degradation - Mus musculus	mmu01230
+Phenylalanine, tyrosine andtryptophan biosynthesis  - Mus musculus	mmu00400
+Lipid Metabolism - Homo sapiens	hsa01130
+Energy Metabolism - Rattus norvegicus	rno01120
+Alanine and aspartate metabolism - Homo sapiens	hsa00252
+Valine, leucine and isoleucinedegradation  - Rattus norvegicus	rno00280
+gamma-Hexachlorocyclohexane degradation  - Rattus norvegicus	rno00361
+Prion disease - Mus musculus	mmu05060
+Prion disease - Rattus norvegicus	rno05060
+Metabolism of Cofactors and Vitamins - Homo sapiens	hsa01190
+Histidine metabolism - Rattus norvegicus	rno00340
+Type IIsecretion system  - Homo sapiens	hsa03090
+Ribosome - Mus musculus	mmu03010
+Benzoate degradation viaCoA ligation  - Mus musculus	mmu00632
+N-Glycansbiosynthesis  - Rattus norvegicus	rno00510
+Styrene degradation - Homo sapiens	hsa00643
+Energy Metabolism - Mus musculus	mmu01120
+DNApolymerase  - Homo sapiens	hsa03030
+Ascorbate and aldaratemetabolism  - Homo sapiens	hsa00053
+Metabolism of Complex Lipids - Rattus norvegicus	rno01180
+Blood group glycolipidbiosynthesis-lact series  - Rattus norvegicus	rno00601
+Fatty acid biosynthesis (path 1) - Mus musculus	mmu00061
+Glutamate metabolism - Homo sapiens	hsa00251
+Citrate cycle (TCA cycle) - Homo sapiens	hsa00020
+Tetrachloroethenedegradation  - Mus musculus	mmu00625
+Erythromycinbiosynthesis  - Rattus norvegicus	rno00522
+Carbohydrate Metabolism - Homo sapiens	hsa01110
+Transcription - Homo sapiens	hsa01210
+Retinol metabolism - Rattus norvegicus	rno00830
+N-Glycansbiosynthesis  - Mus musculus	mmu00510
+Lysine degradation - Mus musculus	mmu00310
+Glycerolipid metabolism - Rattus norvegicus	rno00561
+Indole and ipecacalkaloid biosynthesis  - Homo sapiens	hsa00901
+Phosphatidylinositol signaling system  - Rattus norvegicus	rno04070
+Tryptophan metabolism - Rattus norvegicus	rno00380
+Inositol metabolism - Rattus norvegicus	rno00031
+Porphyrin andchlorophyll metabolism  - Homo sapiens	hsa00860
+Methionine metabolism - Mus musculus	mmu00271
+Alzheimer's disease - Mus musculus	mmu05010
+Pyruvate metabolism - Homo sapiens	hsa00620
+Amino Acid Metabolism - Rattus norvegicus	rno01150
+Biodegradation of Xenobiotics - Rattus norvegicus	rno01196
+Reductive carboxylate cycle (CO2fixation)  - Homo sapiens	hsa00720
+Benzoate degradation viahydroxylation  - Mus musculus	mmu00362
+Flavonoids,stilbene and lignin biosynthesis  - Mus musculus	mmu00940
+Metabolism of Cofactors and Vitamins - Rattus norvegicus	rno01190
+Fatty acid biosynthesis (path 2) - Rattus norvegicus	rno00062
+One carbon pool byfolate  - Mus musculus	mmu00670
+Translation - Mus musculus	mmu01220
+Sorting and Degradation - Rattus norvegicus	rno01230
+Transcription - Rattus norvegicus	rno01210
+Metabolism of Complex Lipids - Mus musculus	mmu01180
+D-Glutamine andD-glutamate metabolism  - Homo sapiens	hsa00471
+1,4-Dichlorobenzenedegradation  - Mus musculus	mmu00627
+Terpenoidbiosynthesis  - Mus musculus	mmu00900
+Tetracyclinebiosynthesis  - Rattus norvegicus	rno00253
+D-Arginine andD-ornithine metabolism  - Homo sapiens	hsa00472
+Amyotrophic lateralsclerosis (ALS)  - Mus musculus	mmu05030
+MAPKsignaling pathway  - Homo sapiens	hsa04010
+Nitrobenzene degradation - Mus musculus	mmu00626
+Indole and ipecacalkaloid biosynthesis  - Rattus norvegicus	rno00901
+Histidine metabolism - Mus musculus	mmu00340
+Biodegradation of Xenobiotics - Homo sapiens	hsa01196
+Glycine, serine and threoninemetabolism  - Homo sapiens	hsa00260
+1,2-Dichloroethanedegradation  - Mus musculus	mmu00631
+Glutathione metabolism - Rattus norvegicus	rno00480
+Metabolism of Complex Carbohydrates - Mus musculus	mmu01170
+Pantothenate andCoA biosynthesis  - Homo sapiens	hsa00770
+Behavior - Mus musculus	mmu01450
+Biosynthesis of Secondary Metabolites - Homo sapiens	hsa01195
+Fluorene degradation - Rattus norvegicus	rno00628
+Cysteine metabolism - Rattus norvegicus	rno00272
+Purine metabolism  - Homo sapiens	hsa00230
+Lysine degradation - Rattus norvegicus	rno00310
+Riboflavinmetabolism  - Mus musculus	mmu00740
+Peptidoglycanbiosynthesis  - Homo sapiens	hsa00550
+ATP synthesis  - Rattus norvegicus	rno00193
+Nitrogen metabolism  - Homo sapiens	hsa00910
+Aminoacyl-tRNAbiosynthesis  - Mus musculus	mmu00970
+Thiaminemetabolism  - Mus musculus	mmu00730
+Methionine metabolism - Rattus norvegicus	rno00271
+Prostaglandin andleukotriene metabolism  - Homo sapiens	hsa00590
+Methane metabolism  - Homo sapiens	hsa00680
+Pyrimidine metabolism - Homo sapiens	hsa00240
+Phospholipid degradation - Mus musculus	mmu00580
+Glycine, serine and threoninemetabolism  - Rattus norvegicus	rno00260
+Apoptosis  - Homo sapiens	hsa04210
+Streptomycinbiosynthesis  - Rattus norvegicus	rno00521
+Glycolysis / Gluconeogenesis - Mus musculus	mmu00010
+Galactose metabolism - Homo sapiens	hsa00052
+N-Glycandegradation  - Homo sapiens	hsa00511
+Lysine biosynthesis - Mus musculus	mmu00300
+Aminophosphonatemetabolism  - Mus musculus	mmu00440
+Cell Growth and Death - Homo sapiens	hsa01420
+Alkaloidbiosynthesis II  - Rattus norvegicus	rno00960
+Blood group glycolipidbiosynthesis-lact series  - Homo sapiens	hsa00601
+Nucleotide sugars metabolism - Homo sapiens	hsa00520
+1,2-Dichloroethanedegradation  - Rattus norvegicus	rno00631
+Glutathione metabolism - Mus musculus	mmu00480
+Peptidoglycanbiosynthesis  - Rattus norvegicus	rno00550
+2,4-Dichlorobenzoatedegradation  - Homo sapiens	hsa00623
+Glycerolipid metabolism - Homo sapiens	hsa00561
+Lipid Metabolism - Mus musculus	mmu01130
+Alanine and aspartate metabolism - Mus musculus	mmu00252
+Pentose phosphate pathway - Homo sapiens	hsa00030
+Metabolism of Cofactors and Vitamins - Mus musculus	mmu01190
+Styrene degradation - Mus musculus	mmu00643
+DNApolymerase  - Mus musculus	mmu03030
+Tetracyclinebiosynthesis  - Homo sapiens	hsa00253
+Taurine and hypotaurinemetabolism  - Rattus norvegicus	rno00430
+Ascorbate and aldaratemetabolism  - Mus musculus	mmu00053
+Glutamate metabolism - Mus musculus	mmu00251
+Retinol metabolism - Homo sapiens	hsa00830
+Citrate cycle (TCA cycle) - Mus musculus	mmu00020
+Metabolism of Complex Carbohydrates - Rattus norvegicus	rno01170
+Aminosugarsmetabolism  - Homo sapiens	hsa00530
+Transcription - Mus musculus	mmu01210
+Keratan sulfatebiosynthesis  - Homo sapiens	hsa00533
+Ubiquinonebiosynthesis  - Rattus norvegicus	rno00130
+Carbohydrate Metabolism - Mus musculus	mmu01110
+Indole and ipecacalkaloid biosynthesis  - Mus musculus	mmu00901
+Porphyrin andchlorophyll metabolism  - Mus musculus	mmu00860
+Streptomycinbiosynthesis  - Homo sapiens	hsa00521
+Galactose metabolism - Rattus norvegicus	rno00052
+Pyruvate metabolism - Mus musculus	mmu00620
+Reductive carboxylate cycle (CO2fixation)  - Mus musculus	mmu00720
+Methane metabolism  - Rattus norvegicus	rno00680
+Fructose and mannose metabolism - Rattus norvegicus	rno00051
+Porphyrin andchlorophyll metabolism  - Rattus norvegicus	rno00860
+Chondroitin /Heparan sulfate biosynthesis  - Rattus norvegicus	rno00532
+Tryptophan metabolism - Homo sapiens	hsa00380
+Purine metabolism  - Rattus norvegicus	rno00230
+2,4-Dichlorobenzoatedegradation  - Rattus norvegicus	rno00623
+Aminosugarsmetabolism  - Rattus norvegicus	rno00530
+Globoside metabolism - Homo sapiens	hsa00603
+Arginine and proline metabolism - Homo sapiens	hsa00330
+D-Glutamine andD-glutamate metabolism  - Rattus norvegicus	rno00471
+Taurine and hypotaurinemetabolism  - Homo sapiens	hsa00430
+D-Glutamine andD-glutamate metabolism  - Mus musculus	mmu00471
+Metabolism of Other Amino Acids - Rattus norvegicus	rno01160
+D-Arginine andD-ornithine metabolism  - Rattus norvegicus	rno00472
+D-Arginine andD-ornithine metabolism  - Mus musculus	mmu00472
+Replication and Repair - Homo sapiens	hsa01240
+Vitamin B6metabolism  - Homo sapiens	hsa00750
+Cyanoamino acidmetabolism  - Homo sapiens	hsa00460
+Biodegradation of Xenobiotics - Mus musculus	mmu01196
+Nucleotide Metabolism - Homo sapiens	hsa01140
+Sphingophospholipidbiosynthesis  - Homo sapiens	hsa00570
+Lipid Metabolism - Rattus norvegicus	rno01130
+Glycine, serine and threoninemetabolism  - Mus musculus	mmu00260
+Amyotrophic lateralsclerosis (ALS)  - Rattus norvegicus	rno05030
+Neurodegenerative Disorders - Homo sapiens	hsa01510
+Pantothenate andCoA biosynthesis  - Mus musculus	mmu00770
+Biosynthesis of Secondary Metabolites - Mus musculus	mmu01195
+Purine metabolism  - Mus musculus	mmu00230
+Peptidoglycanbiosynthesis  - Mus musculus	mmu00550
+Nitrogen metabolism  - Mus musculus	mmu00910
+Erythromycinbiosynthesis  - Homo sapiens	hsa00522
+Signal Transduction - Homo sapiens	hsa01320
+Fatty acid biosynthesis (path 2) - Homo sapiens	hsa00062
+Prostaglandin andleukotriene metabolism  - Mus musculus	mmu00590
+Methane metabolism  - Mus musculus	mmu00680
+Pyrimidine metabolism - Mus musculus	mmu00240
+Sphingophospholipidbiosynthesis  - Rattus norvegicus	rno00570
+Alanine and aspartate metabolism - Rattus norvegicus	rno00252

@@ -1,0 +1,604 @@
+Methyl-accepting chemotaxis-like domains (chemotaxis sensory transducer). Thought to undergo reversible methylation in response to attractants or repellants during bacterial chemotaxis	SM00283
+Laminin-type epidermal growth factor-like domai	SM00180
+Ran (Ras-related nuclear proteins) /TC4 subfamily of small GTPases	SM00176
+Integrin beta subunits (N-terminal portion of extracellular region)	SM00187
+eukaryotic translation initiation factor 1A	SM00652
+Band 4.1 homologues	SM00295
+Ricin-type beta-trefoil	SM00458
+Possible plasma membrane-binding motif in junctophilins, PIP-5-kinases and protein kinases	SM00698
+Kelch domain	SM00612
+RNA recognition motif	SM00360
+prohibitin homologues	SM00244
+Possible membrane-associated motif in LPS-induced tumor necrosis factor alpha factor (LITAF), also known as PIG7, and other animal proteins	SM00714
+Ku70 and Ku80 are 70kDa and 80kDa subunits of the Lupus Ku autoantigen	SM00559
+Interferon alpha, beta and delta. Interferons produce antiviral and antiproliferative responses in cells. They are classified into five groups, all of them related but gamma-interferon	SM00076
+PAS domain	SM00091
+Sigma factor PP2C-like phosphatases	SM00331
+DNA-directed RNA-polymerase II subunit	SM00657
+Short calmodulin-binding motif containing conserved Ile and Gln residues. Calmodulin-binding motif	SM00015
+Staphylococcal nuclease homologues	SM00318
+Serine/threonine phosphatases, family 2C, catalytic domain	SM00332
+leucine rich region	SM00431
+ARF-like small GTPases	SM00177
+Connexin homologues	SM00037
+Phosphoinositide 3-kinase, region postulated to contain C2 domain	SM00142
+Zinc-binding domain, present in Dystrophin, CREB-binding protein. Putative zinc-binding domain present in dystrophin-like proteins, and CREB-binding protein/p300 homologues. The ZZ in dystrophin appears to bind calmodulin. A missense mutation of one of th	SM00291
+ADAM Cysteine-Rich Domain	SM00608
+A domain found in a protein subunit of human RNase MRP and RNase P ribonucleoprotein complexes and archaeal proteins	SM00538
+Domain B in dwarfin family proteins	SM00524
+Repeats in fly CG4713, worm Y37H9A.3 and human FLJ20241	SM00685
+Helical region found in SNAREs	SM00397
+5'-3' exonuclease	SM00475
+Osteopontin	SM00017
+Four repeated domains in the Fasciclin I family of proteins, present in many other contexts	SM00554
+Intercrine alpha family (small cytokine C-X-C) (chemokine CXC).	SM00199
+BCL (B-Cell lymphoma)	SM00337
+domain in protein kinases, N-glycanases and other nuclear proteins	SM00580
+DNA/RNA-binding repeats in PUR-alpha/beta/gamma and in hypothetical proteins from spirochetes and the Bacteroides-Cytophaga-Flexibacter bacteria	SM00712
+calpain_III domain	SM00720
+Protein phosphatase 2A homologues, catalytic domain	SM00156
+Chitin-binding domain type 2	SM00494
+DEAD-like helicases superfamily	SM00487
+Thyroglobulin type I repeats	SM00211
+Four-disulfide core domains	SM00217
+Histidine kinase-like ATPases	SM00387
+tob/btg1 family	SM00099
+basic region leucin zipper	SM00338
+Parathyroid hormone	SM00087
+Pentraxin / C-reactive protein / pentaxin family	SM00159
+Spectrin repeats	SM00150
+Glucagon like hormones	SM00070
+Low-density lipoprotein-receptor YWTD domain	SM00135
+K homology RNA-binding domain	SM00322
+present in yeast cell wall integrity and stress response component proteins	SM00321
+Serum amyloid A proteins	SM00197
+Colipase	SM00023
+Actin depolymerisation factor/cofilin -like domains	SM00102
+Domain associated with PX domains	SM00313
+Domain first found in C1r, C1s, uEGF, and bone morphogenetic protein	SM00042
+domain found in Plexins, Semaphorins and Integrins	SM00423
+Galectin	SM00276
+Filamin-type immunoglobulin domains	SM00557
+Helix-hairpin-helix class 2 (Pol1 family) motifs	SM00279
+C-type lectin (CTL) or carbohydrate-recognition domain (CRD)	SM00034
+UAS domain	SM00594
+Ras association (RalGDS/AF-6) domain	SM00314
+in nuclear membrane-associated proteins	SM00540
+B-Box-type zinc finger	SM00336
+uanine nucleotide exchange factor for Ras-like GTPases	SM00229
+Epsin N-terminal homology (ENTH) domain	SM00273
+Cold shock protein domain	SM00357
+gastrin / cholecystokinin / caerulein family	SM00029
+putative band 4.1 homologues' binding motif	SM00294
+Zinc finger in DBF-like proteins	SM00586
+Ubiquitin associated domain	SM00165
+Wiskott Aldrich syndrome homology region 2	SM00246
+Cytochrome b-561 / ferric reductase transmembrane domain. Cytochrome b-561 recycles ascorbate for the generation of norepinephrine by dopamine-beta-hydroxylase in the chromaffin vesicles of the adrenal gland. It is a transmembrane heme protein with the t	SM00665
+Domain present in phytochromes and cGMP-specific phosphodiesterases. Mutations within these domains in PDE6B result in autosomal recessive inheritance of retinitis pigmentosa	SM00065
+Phosphotyrosine-binding domain, phosphotyrosine-interaction (PI) domain	SM00462
+PB1 domain	SM00666
+Sec7 domain	SM00222
+Transcription initiation factor IIE	SM00531
+krueppel associated box	SM00349
+LCCL domain	SM00603
+DNA polymerase type-B family	SM00486
+Ribosomal protein L11/L12	SM00649
+WD40 repeats	SM00320
+domain present in translation initiation factor eIF2B and eIF5	SM00653
+Sterile alpha motif	SM00454
+Thyroglobulin type I repeats.	SM00211
+BPTI/Kunitz family of serine protease inhibitors	SM00131
+Chromo Shadow Domain	SM00300
+membrane-attack complex / perforin	SM00457
+GTPase-activator protein for Ras-like GTPases	SM00323
+Beta/gamma crystallins	SM00247
+Acidic and basic fibroblast growth factor family. Mitogens that stimulate growth or differentiation of cells of mesodermal or neuroectodermal origin. The family play essential roles in patterning and differentiation during vertebrate embryogenesis, and ha	SM00442
+Glycoprotein hormone alpha chain homologues. Also called gonadotropins. Glycoprotein hormones consist of two glycosylated chains (alpha and beta) of similar topology	SM00067
+Repeat in Drosophila CG10860, human KIAA0680 and C. elegans F26H9.2	SM00707
+Acid phosphatase homologues	SM00014
+associated with SPRY domains	SM00589
+ARID (A/T-rich interaction domain) domain	SM00501
+Intercrine alpha family (small cytokine C-X-C) (chemokine CXC)	SM00199
+Zinc finger domain in CG10631, C. elegans LIN-15B and human P52rIPK	SM00692
+HAT (Half-A-TPR) repeats	SM00386
+serum albumin	SM00103
+domain in chromatin remodeling S1 domain containing proteins and zinc fingers	SM00578
+E-Z type HEAT repeats	SM00567
+HNH nucleases	SM00507
+Saposins-like type B	SM00118
+Domain A in dwarfin family proteins	SM00523
+Domain in the Doublecortin (DCX) gene product	SM00537
+Animal peptidoglycan recognition proteins homologous to Bacteriophage T3 lysozyme. The bacteriophage molecule, but not its moth homologue, has been shown to have N-acetylmuramoyl-L-alanine amidase activity. One member of this family, Tag7, is a cytokine	SM00701
+Eukaryotic homologues of bacterial periplasmic substrate binding proteins. Prokaryotic homologues are represented by a separate alignment: PBPb	SM00079
+Calponin homology domain	SM00033
+Interleukins 4 and 13	SM00190
+PhoX homologous domain, present in p47phox and p40phox	SM00312
+Beta propeller repeats in Physarum polycephalum tectonins, Limulus lectin L-6 and animal hypothetical proteins	SM00706
+Doublesex DNA-binding motif	SM00301
+Galanin	SM00071
+Putative single-stranded nucleic acids-binding domain	SM00393
+Histone 2A	SM00414
+Myelin proteolipid protein (PLP or lipophilin)	SM00002
+Frizzled	SM00063
+Present in Drosophila Scm, l(3)mbt, and vertebrate SCML2	SM00561
+Cytoplasmic phospholipase A2, catalytic subunit	SM00022
+DNA/RNA non-specific endonuclease	SM00477
+Domain found in Notch and Lin-12	SM00004
+SANT SWI3, ADA2, N-CoR and TFIIIB'' DNA-binding domains	SM00717
+Protein kinase C conserved region 1 (C1) domains (Cysteine-rich domains)	SM00109
+Guanylate kinase homologues. Active enzymes catalyze ATP-dependent phosphorylation of GMP to GDP. Structure resembles that of adenylate kinase. So-called membrane-associated guanylate kinase homologues (MAGUKs) do not possess guanylate kinase activities	SM00072
+TRAM, LAG1 and CLN8 homology domains. Protein domain with at least 5 transmembrane alpha-helices. Lag1p and Lac1p are essential for acyl-CoA-dependent ceramide synthesis, TRAM is a subunit of the translocon and the CLN8 gene is mutated in Northern epileps	SM00724
+3'-5' exonuclease	SM00474
+Large family of predicted nucleotide-binding domains	SM00670
+Dysferlin domain, N-terminal region. Domain of unknown function present in yeast peroxisomal proteins, dysferlin, myoferlin and hypothetical proteins. Due to an insertion of a dysferlin domain within a second dysferlin domain we have chosen to predict th	SM00693
+Fibrillar collagens C-terminal domain	SM00038
+Kinesin motor, catalytic domain. ATPase	SM00129
+Found in Pit-Oct-Unc transcription factors	SM00352
+Ribosomal RNA adenine dimethylases	SM00650
+Protein kinase C conserved region 2 (CalB)	SM00239
+Domain in Deltex and TRIP12 homologues. Possibly involved in regulation of ubiquitin-mediated proteolysis	SM00678
+Domain in DAP-5, eIF4G, MA-3 and other proteins	SM00544
+G-protein-coupled receptor proteolytic site domain	SM00303
+Tumour necrosis factor family	SM00207
+BAG domains, present in regulator of Hsp70 proteins	SM00264
+Juvenile hormone binding protein domains in insects	SM00700
+Ribosomal protein S1-like RNA-binding domain	SM00316
+Helical motif in the GIT family of ADP-ribosylation factor GTPase-activating proteins	SM00555
+Clathrin heavy chain repeat homology	SM00299
+Interleukin-7 and interleukin-9 family. IL-7 is a cytokine that acts as a growth factor for early lymphoid cells of both B- and T-cell lineages. IL-9 is a multifunctional cytokine that, although originally described as a T-cell growth factor, its functio	SM00127
+Hint (Hedgehog/Intein) domain N-terminal region	SM00306
+In Between Ring fingers	SM00647
+zinc finger	SM00356
+Dynamin GTPase effector domain	SM00302
+Platelet-derived and vascular endothelial growth factors (PDGF, VEGF) family	SM00141
+Interleukin-6 homologues	SM00126
+"FY-rich" domain, N-terminal region	SM00541
+Integrin alpha (beta-propellor repeats). Integrins are cell adhesion molecules that mediate cell-extracellular matrix and cell-cell interactions. They contain both alpha and beta subunits. Alpha integrins are proposed to contain a domain containing a 7-f	SM00191
+A domain family that is part of the cupin metalloenzyme superfamily. Probable enzymes, but of unknown functions, that regulate chromatin reorganisation processes	SM00558
+Follistatin-N-terminal domain-like	SM00274
+Zinc-dependent metalloprotease	SM00235
+JAB/MPN domain	SM00232
+Armadillo/beta-catenin-like repeats	SM00185
+Guanylate kinase homologues	SM00072
+Fibrinogen-related domains (FReDs)	SM00186
+14-3-3 homologues	SM00101
+Orange domain	SM00511
+Hemopexin-like repeats. Hemopexin is a heme-binding protein that transports heme to the liver. Hemopexin-like repeats occur in vitronectin and some matrix metalloproteinases family (matrixins). The HX repeats of some matrixins bind tissue inhibitor of met	SM00120
+Short conserved domain in transcriptional regulators	SM00719
+Appr-1"-p processing enzyme	SM00506
+SERine Proteinase INhibitors	SM00093
+Prolyl 4-hydroxylase alpha subunit homologues. Mammalian enzymes catalyse hydroxylation of collagen, for example. Prokaryotic enzymes might catalyse hydroxylation of antibiotic peptides. These are 2-oxoglutarate-dependent dioxygenases, requiring 2-oxoglu	SM00702
+Complement component C1q domain. Globular domain found in many collagens and eponymously in complement C1q. When part of full length proteins these domains form a 'bouquet' due to the multimerization of heterotrimers. The C1q fold is similar to that of t	SM00110
+WAP domain	SM00217
+Wnt-inhibitory factor-1 like domain	SM00469
+Thyroglobulin type I repeats. The N-terminal region of human thyroglobulin contains 11 type-1 repeats TY repeats are proposed to be inhibitors of cysteine proteases and binding partners of heparin	SM00211
+Domain abundant in complement control proteins	SM00032
+Bacterial periplasmic substrate-binding proteins	SM00062
+Xeroderma pigmentosum G N-region	SM00485
+minichromosome maintenance proteins	SM00350
+Lipoxygenase homology 2 (beta barrel) domain	SM00308
+Guanine nucleotide exchange factor for Rho/Rac/Cdc42-like GTPases	SM00325
+Caspase recruitment domain	SM00114
+Domains in Na-Ca exchangers and integrin-beta4	SM00237
+DNA-binding domain of DNA mismatch repair MUTS family	SM00533
+Formin Homology 2 Domain	SM00498
+Plectin repeat	SM00250
+Thymosin beta actin-binding motif	SM00152
+Tandem repeat in fly CG14066 (La related protein), human KIAA0731 and worm R144.7. Unknown function	SM00684
+calcitonin	SM00113
+Ligase N family	SM00532
+BAR domain	SM00721
+breast cancer carboxy-terminal domain	SM00292
+Zona pellucida (ZP) domain	SM00241
+RNA polymerase I subunit A N-terminus	SM00663
+APPLE domain	SM00223
+Hint (Hedgehog/Intein) domain C-terminal region	SM00305
+TEA domain	SM00426
+Hemopexin-like repeats	SM00120
+"FY-rich" domain, C-terminal region	SM00542
+heat shock factor	SM00415
+Putative RNA-binding Domain in PseudoUridine synthase and Archaeosine transglycosylase	SM00359
+erine/Threonine protein kinases, catalytic domain	SM00220
+Ubiquitin-conjugating enzyme E2, catalytic domain homologues	SM00212
+tail specific protease	SM00245
+Domain in the N-terminus of transcription elongation factor S-II (and elsewhere)	SM00509
+BPTI/Kunitz family of serine protease inhibitors. Serine protease inhibitors. One member of the family is encoded by an alternatively-spliced form of Alzheimer's amyloid beta-protein	SM00131
+domain present in cyclins, TFIIB and Retinoblastoma	SM00385
+Domain in Myosin and Kinesin Tails	SM00139
+Calpain-like thiol protease family	SM00230
+Transthyretin	SM00095
+C2C2 Zinc finger	SM00440
+Middle domain of eukaryotic initiation factor 4G (eIF4G)	SM00543
+Pleiotrophin / midkine family	SM00193
+MADS domain	SM00432
+domain in glucosyltransferases, myotubularins and other putative membrane-associated proteins	SM00568
+domain in neuralized proteins	SM00588
+Immunoreceptor tyrosine-based activation motif	SM00077
+Tumor necrosis factor receptor / nerve growth factor receptor repeats. Repeats in growth factor receptors that are involved in growth factor binding. TNF/TNFR	SM00208
+Domain in meprin, A5, receptor protein tyrosine phosphatase mu (and others)	SM00137
+Domain in SOG (short gastrulation protein) and chordin	SM00566
+Juvenile hormone binding protein domains in insects. The juvenile hormone exerts pleiotropic functions during insect life cycles and its binding proteins regulate these functions	SM00700
+Domain present in VPS9	SM00167
+Sel1-like repeats	SM00671
+Possible catecholamine-binding domain present in a variety of eukaryotic proteins. A predominantly beta-sheet domain present as a regulatory N-terminal domain in dopamine beta-hydroxylase, mono-oxygenase X and SDR2. Its function remains unknown at present	SM00664
+Domain in cystathionine beta-synthase and other proteins. Domain present in all 3 forms of cellular life. Present in two copies in inosine monophosphate dehydrogenase, of which one is disordered in the crystal structure. A number of disease states are as	SM00116
+Contains two conserved F residues	SM00441
+domain in high mobilty group proteins HMG14 and HMG 17	SM00527
+factor I membrane attack complex	SM00057
+Extension to Ser/Thr-type protein kinases	SM00133
+TopoisomeraseII	SM00433
+Insulin / insulin-like growth factor / relaxin family.	SM00078
+Alpha-lactalbumin / lysozyme C	SM00263
+Glycoprotein hormone beta chain homologues	SM00068
+Zinc-binding domain, present in Dystrophin, CREB-binding protein. Putative zinc-binding domain present in dystrophin-like proteins, and CREB-binding protein/p300 homologues. The ZZ in dystrophin appears to bind calmodulin. A missense mutation of one of t	SM00291
+CDGSH-type zinc finger. Function unknown	SM00704
+Phosphotyrosine-binding domain (IRS1-like)	SM00310
+Cyclic nucleotide-monophosphate binding domain	SM00100
+Domain with 2 conserved Trp (W) residues	SM00456
+Domain in ryanodine and inositol trisphosphate receptors and protein O-mannosyltransferases	SM00472
+Protein tyrosine phosphatase, catalytic domain	SM00194
+Actin	SM00268
+WASP homology region 1	SM00461
+RNA polymerase subunit CX	SM00659
+TAF homology	SM00549
+zinc finger in transposases and transcription factors	SM00597
+Broad-Complex, Tramtrack and Bric a brac	SM00225
+Prolyl 4-hydroxylase alpha subunit homologues. Mammalian enzymes catalyse hydroxylation of collagen, for example. Prokaryotic enzymes might catalyse hydroxylation of antibiotic peptides. These are 2-oxoglutarate-dependent dioxygenases, requiring 2-oxoglut	SM00702
+Domain first found in C1r, C1s, uEGF, and bone morphogenetic protein. This domain is found mostly among developmentally-regulated proteins. Spermadhesins contain only this domain	SM00042
+Domain that may be involved in binding ubiquitin-conjugating enzymes (UBCs)	SM00546
+RIO-like kinase	SM00090
+Cytochrome b-561 / ferric reductase transmembrane domain. Cytochrome b-561 recycles ascorbate for the generation of norepinephrine by dopamine-beta-hydroxylase in the chromaffin vesicles of the adrenal gland. It is a transmembrane heme protein with the tw	SM00665
+Profilin	SM00392
+Bromo adjacent homology domain	SM00439
+N-terminal to some SET domains	SM00468
+Ran-binding domain	SM00160
+Domain in SPla and the RYanodine Receptor.	SM00449
+Calpain-like thiol protease family.	SM00230
+exonuclease domain in DNA-polymerase alpha and epsilon chain, ribonuclease T and other exonucleases	SM00479
+Domain in cystathionine beta-synthase and other proteins. Domain present in all 3 forms of cellular life. Present in two copies in inosine monophosphate dehydrogenase, of which one is disordered in the crystal structure. A number of disease states are ass	SM00116
+Sar1p-like members of the Ras-family  of small GTPases	SM00178
+C-terminal tandem repeated domain in type 4 procollagens	SM00111
+Acidic and basic fibroblast growth factor family. Mitogens that stimulate growth or differentiation of cells of mesodermal or neuroectodermal origin. The family play essential roles in patterning and differentiation during vertebrate embryogenesis, and h	SM00442
+Fibronectin type 3 domain	SM00060
+leukemia inhibitory factor	SM00080
+Saposin/surfactant protein-B A-type DOMAIN	SM00162
+Tudor domain	SM00333
+Small MutS-related domain	SM00463
+Phospholipase D. Active site motifs	SM00155
+Ependymins	SM00026
+Rho (Ras homology) subfamily of Ras-like small GTPases	SM00174
+Calpain-like thiol protease family. Calpain-like thiol protease family (peptidase family C2). Calcium activated neutral protease (large subunit)	SM00230
+Domain in Tre-2, BUB2p, and Cdc16p. Probable Rab-GAPs	SM00164
+Interleukin-2 family	SM00189
+Eps15 homology domain	SM00027
+von Willebrand factor (vWF) type D domain	SM00216
+Laminin B domain	SM00281
+EF-hand, calcium binding motif	SM00054
+Domain present in VPS-27, Hrs and STAM	SM00288
+ShK toxin domain	SM00254
+domain in splicing factors	SM00311
+Thrombospondin N-terminal -like domains. Heparin-binding and cell adhesion domain of thrombospondin	SM00210
+Tumour necrosis factor family. Family of cytokines that form homotrimeric or heterotrimeric complexes. TNF mediates mature T-cell receptor-induced apoptosis through the p75 TNF receptor	SM00207
+Prolyl 4-hydroxylase alpha subunit homologues	SM00702
+Vault protein Inter-alpha-Trypsin domain	SM00609
+Protein tyrosine phosphatase, catalytic domain motif	SM00404
+Cytochrome b-561 / ferric reductase transmembrane domain	SM00665
+BPI/LBP/CETP N-terminal domain	SM00328
+PhoX homologous domain, present in p47phox and p40phox. Eukaryotic domain of unknown function present in phox proteins, PLD isoforms, a PI3K isoform	SM00312
+Dysferlin domain, C-terminal region. Domain of unknown function present in yeast peroxisomal proteins, dysferlin, myoferlin and hypothetical proteins. Due to an insertion of a dysferlin domain within a second dysferlin domain we have chosen to predict th	SM00694
+I/LWEQ domain	SM00307
+Domain in the central regions of transcription elongation factor S-II (and elsewhere)	SM00510
+Lipoprotein N-terminal Domain	SM00638
+Ligand binding domain of hormone receptors	SM00430
+high mobility group	SM00398
+Domain present in ubiquitin-regulatory proteins	SM00166
+Pancreatic hormones / neuropeptide F / peptide YY family	SM00309
+Tumor necrosis factor receptor / nerve growth factor receptor repeats	SM00208
+Insulin / insulin-like growth factor / relaxin family. Family of proteins including insulin, relaxin, and IGFs. Insulin decreases blood glucose concentration	SM00078
+Immunoglobulin	SM00409
+Hemopexin-like repeats. Hemopexin is a heme-binding protein that transports heme to the liver. Hemopexin-like repeats occur in vitronectin and some matrix metalloproteinases family (matrixins). The HX repeats of some matrixins bind tissue inhibitor of me	SM00120
+Bromodomain transcription factors and PHD domain containing proteins	SM00576
+PI3-kinase family, p85-binding domain	SM00143
+found in Wnt-1	SM00097
+Possible catecholamine-binding domain present in a variety of eukaryotic proteins. A predominantly beta-sheet domain present as a regulatory N-terminal domain in dopamine beta-hydroxylase, mono-oxygenase X and SDR2. Its function remains unknown at presen	SM00664
+Nerve growth factor (NGF or beta-NGF)	SM00140
+helix loop helix domain	SM00353
+Gelsolin homology domain	SM00262
+Uteroglobin	SM00096
+RNA polymerases D	SM00662
+Natriuretic peptide	SM00183
+motif in proteasome subunits, Int-6, Nip-1 and TRIP-15	SM00088
+Protein kinase C-related kinase homology region 1 homologues	SM00074
+Metal dependent phosphohydrolases with conserved 'HD' motif	SM00471
+Domain of unknown function present in FAF1 (Fas-associated factor 1)	SM00553
+Complement component C1q domain. Globular domain found in many collagens and eponymously in complement C1q. When part of full length proteins these domains form a 'bouquet' due to the multimerization of heterotrimers. The C1q fold is similar to that of tu	SM00110
+DNA polymerase X family	SM00483
+Domain found in NIK1-like kinases, mouse citron and yeast ROM1, ROM2	SM00036
+c4 zinc finger in nuclear hormone receptors	SM00399
+Annexin repeats	SM00335
+Repeated motif present between transmembrane helices in cystinosin, yeast ERS1p, mannose-P-dolichol utilization defect 1, and other hypothetical proteins. Function unknown, but likely to be associated with the glycosylation machinery	SM00679
+Cysteine-rich motif following a subset of SET domains	SM00508
+Pleckstrin homology domain. Domain commonly found in eukaryotic signalling proteins. The domain family possesses multiple functions including the abilities to bind inositol phosphates, and various proteins. PH domains have been found to possess inserted d	SM00233
+glycine rich nucleic binding domain	SM00443
+Cadherin repeats. Cadherins are glycoproteins involved in Ca2+-mediated cell-cell adhesion. Cadherin domains occur as repeats in the extracellular regions which are thought to mediate cell-cell contact when bound to calcium	SM00112
+C-terminal to LisH motif.	SM00668
+Alkaline phosphatase homologues	SM00098
+Coagulation factor 5/8 C-terminal domain, discoidin domain	SM00231
+U1-like zinc finger	SM00451
+Dysferlin domain, N-terminal region. Domain of unknown function present in yeast peroxisomal proteins, dysferlin, myoferlin and hypothetical proteins. Due to an insertion of a dysferlin domain within a second dysferlin domain we have chosen to predict the	SM00693
+deoxyribonuclease I	SM00476
+GS motif	SM00467
+BPI/LBP/CETP C-terminal domain	SM00329
+Netrin C-terminal Domain	SM00643
+translation initiation factor 6	SM00654
+Dynamin, GTPase	SM00053
+Fibronectin type 2 domain	SM00059
+helicase superfamily c-terminal domain	SM00490
+Glycoprotein hormone beta chain homologues. Also called gonadotropins. Glycoprotein hormones consist of two glycosylated chains (alpha and beta) of similar topology	SM00068
+Low-density lipoprotein receptor domain class A	SM00192
+Src homology 2 domains	SM00252
+endonuclease III	SM00478
+Raf-like Ras-binding domain	SM00455
+SCP / Tpx-1 / Ag5 / PR-1 / Sc7 family of extracellular domains. Human glioma pathogenesis-related protein GliPR and the plant pathogenesis-related protein represent functional links between plant defense systems and human immune system. This family has no	SM00198
+Ribonuclease III family	SM00535
+Short calmodulin-binding motif containing conserved Ile and Gln residues	SM00015
+Guanine nucleotide exchange factor for Ras-like small GTPases	SM00147
+von Willebrand factor (vWF) type C domain	SM00214
+Zinc finger domain	SM00547
+FORKHEAD	SM00339
+Sel1-like repeats. These represent a subfamily of TPR (tetratricopeptide repeat) sequences	SM00671
+Ubiquitin Carboxyl-terminal Hydrolase-like zinc finger	SM00290
+Ring finger	SM00184
+Homeodomain	SM00389
+Tissue inhibitor of metalloproteinase family. Form complexes with metalloproteinases, such as collagenases, and irreversibly inactivate them	SM00206
+Double-stranded RNA binding motif	SM00358
+Chromatin organization modifier domain	SM00298
+Anaphylatoxin homologous domain	SM00104
+Zinc-binding domain, present in Dystrophin, CREB-binding protein	SM00291
+domain in helicases and associated with SANT domains	SM00573
+Domain first found in the mice T locus (Brachyury) protein	SM00425
+domain in RING finger and WD repeat containing proteins and DEXDc-like helicases subfamily related to the UBCc domain	SM00591
+SET (Su(var)3-9, Enhancer-of-zeste, Trithorax) domain	SM00317
+Zn_pept domain	SM00631
+Phospholipase D. Active site motifs. Phosphatidylcholine-hydrolyzing phospholipase D (PLD) isoforms are activated by ADP-ribosylation factors (ARFs). PLD produces phosphatidic acid from phosphatidylcholine, which may be essential for the formation of cert	SM00155
+Lissencephaly type-1-like homology motif	SM00667
+Sorbin homologous domain	SM00459
+P21-Rho-binding domain	SM00285
+Major prion protein	SM00157
+Papain family cysteine protease	SM00645
+Sar1p-like members of the Ras-family of small GTPases	SM00178
+Scavenger receptor Cys-rich	SM00202
+Adhesion-associated domain present in MUC4 and other proteins	SM00723
+Ami_2 domain	SM00644
+Sterile alpha motif. Widespread domain in signalling and nuclear proteins. In EPH-related tyrosine kinases, appears to mediate cell-cell initiated signal transduction via the binding of SH2-containing proteins to a conserved tyrosine that is phosphorylate	SM00454
+Epidermal growth factor-like domain	SM00181
+Ras subfamily of RAS small GTPases	SM00173
+Rab subfamily of small GTPases	SM00175
+Transforming growth factor-beta (TGF-beta) family	SM00204
+Cullin	SM00182
+A20-like zinc fingers	SM00259
+Lysin motif	SM00257
+PHD zinc finger	SM00249
+Cadherin repeats	SM00112
+delta serrate ligand	SM00051
+S4 RNA-binding domain	SM00363
+Diacylglycerol kinase accessory domain (presumed)	SM00045
+Helix-turn-helix XRE-family like proteins	SM00530
+Domain present in hormone receptors	SM00008
+G protein alpha subunit	SM00275
+Protein phosphatase 2A homologues, catalytic domain. Large family of serine/threonine phosphatases, that includes PP1, PP2A and PP2B (calcineurin) family members	SM00156
+Granulin	SM00277
+Bruton's tyrosine kinase Cys-rich motif	SM00107
+Kinesin motor, catalytic domain. ATPase. Microtubule-dependent molecular motors that play important roles in intracellular transport of organelles and in cell division	SM00129
+DNA Topoisomerase IV	SM00434
+Repeats found in several Drosophila proteins	SM00697
+RRM_1 domain	SM00361
+Paired Box domain	SM00351
+Zinc-binding domain present in Lin-11, Isl-1, Mec-3. Zinc-binding domain family. Some LIM domains bind protein partners via tyrosine-containing motifs. LIM domains are found in many key regulators of developmental pathways	SM00132
+Zinc-binding domain present in Lin-11, Isl-1, Mec-3	SM00132
+domain in receptor targeting proteins Lin-2 and Lin-7	SM00569
+Fes/CIP4 homology domain	SM00055
+Domain of unknown function in Sec63p, Brr2p and other proteins	SM00611
+Fibronectin type 1 domain	SM00058
+Leucine-rich repeats, typical (most populated) subfamily	SM00369
+Domain present in PSD-95, Dlg, and ZO-1/2. Also called DHR (Dlg homologous region) or GLGF (relatively well conserved tetrapeptide in these domains). Some PDZs have been shown to bind C-terminal polypeptides	SM00228
+RNA polymerase subunit 8	SM00658
+RNA polymerase subunit 9	SM00661
+Thrombospondin type 1 repeats	SM00209
+Myosin. Large ATPases. ATPase	SM00242
+Putative DNA-binding domain in centromere protein B, mouse jerky and transposases	SM00674
+BH4 Bcl-2 homology region 4	SM00265
+Histone H2B	SM00427
+Dysferlin domain, C-terminal region. Domain of unknown function present in yeast peroxisomal proteins, dysferlin, myoferlin and hypothetical proteins. Due to an insertion of a dysferlin domain within a second dysferlin domain we have chosen to predict the	SM00694
+Motif C-terminal to PAS motifs (likely to contribute to PAS structural domain)	SM00086
+Glyco_18 domain	SM00636
+Villin headpiece domain	SM00153
+Phospholipase C, catalytic domain (part)	SM00148
+Src homology 3 domains	SM00326
+N-terminal domain in C. elegans NRF-6 (Nose Resistant to Fluoxetine-4) and NDG-4 (resistant to nordihydroguaiaretic acid-4). Also present in several other worm and fly proteins	SM00703
+Trypsin-like serine protease	SM00020
+occurring C-terminal to leucine-rich repeats	SM00446
+Phosphoinositide 3-kinase, catalytic domain	SM00146
+Syntaxin N-terminal domain	SM00503
+domain in Ataxins and HMG containing proteins	SM00536
+Putative DNA-binding (bihelical) motif predicted to be involved in chromosomal organisation	SM00513
+iron-sulpphur binding domain in DNA-(apurinic or apyrimidinic site) lyase (subfamily of ENDO3)	SM00525
+ZnF_C4 abd HLH domain containing kinases domain	SM00587
+Domain in CAPs (cyclase-associated proteins) and X-linked retinitis pigmentosa 2 gene product	SM00673
+Furin-like repeats	SM00261
+Repeats in polycystic kidney disease 1 (PKD1) and other proteins	SM00089
+Domain present in PSD-95, Dlg, and ZO-1/2	SM00228
+beta-propeller repeat	SM00564
+P or trefoil or TFF domain	SM00018
+Ubiquitin homologues	SM00213
+Intercrine alpha family (small cytokine C-X-C) (chemokine CXC). Family of cytokines involved in cell-specific chemotaxis, mediation of cell growth, and the inflammatory response	SM00199
+in StAR and phosphatidylcholine transfer protein	SM00234
+Integrin alpha (beta-propellor repeats)	SM00191
+Serine/Threonine protein kinases, catalytic domain	SM00220
+Phosphate acyltransferases	SM00563
+SET and RING finger associated domain. Domain of unknown function in SET domain containing proteins and in Deinococcus radiodurans DRA1533	SM00466
+Domain in homologues of a S. cerevisiae phosphatidylinositol transfer protein (Sec14p)	SM00516
+These are enzymes that catalyze nonsubstrate specific conversions of nucleoside diphosphates to nucleoside triphosphates. These enzymes play important roles in bacterial growth, signal transduction and pathogenicity	SM00562
+Domain in ubiquitin-specific proteases	SM00695
+Dysferlin domain, N-terminal region	SM00693
+Domain containing Gla (gamma-carboxyglutamate) residues	SM00069
+interferon regulatory factor	SM00348
+Thrombospondin N-terminal -like domains	SM00210
+Diacylglycerol kinase catalytic domain (presumed)	SM00046
+ATPases associated with a variety of cellular activities	SM00382
+Endothelin	SM00272
+Guanine nucleotide exchange factor for Ras-like GTPases	SM00229
+domain in DSRM or ZnF_C2H2 domain containing proteins	SM00572
+ankyrin repeats	SM00248
+associated with SET domains	SM00570
+Defensin/corticostatin family	SM00048
+Myosin. Large ATPases	SM00242
+G2 nidogen domain and fibulin	SM00682
+SET and RING finger associated domain. Domain of unknown function in SET domain containing proteins and in Deinococcus radiodurans DRA1533. Domain in SET domain containing proteins and in Deinococcus radiodurans DRA1533	SM00466
+A domain family that is part of the cupin metalloenzyme superfamily	SM00558
+Small domain found in the jumonji family of transcription factors	SM00545
+Olfactomedin-like domains	SM00284
+RIIalpha, Regulatory subunit portion of type II PKA R-subunit	SM00394
+proline-rich domain in spliceosome associated proteins	SM00581
+Repeats in sea squirt COS41.4, worm R01H10.6, fly CG1126 etc	SM00683
+GTPase-activator protein for Rho-like GTPases	SM00324
+Animal peptidoglycan recognition proteins homologous to Bacteriophage T3 lysozyme	SM00701
+Domain in histone families 1 and 5	SM00526
+tRNA-specific and double-stranded RNA adenosine deaminase (RNA-specific editase)	SM00552
+ATPase domain of DNA mismatch repair MUTS family	SM00534
+Duplicated domain in the epidermal growth factor- and elongation factor-1alpha-binding protein Zpr1. Also present in archaeal proteins	SM00709
+CLUSTERIN alpha chain	SM00035
+Insulin growth factor-binding protein homologues	SM00121
+Pulmonary surfactant proteins	SM00019
+Acidic and basic fibroblast growth factor family	SM00442
+Dysferlin domain, C-terminal region	SM00694
+Ly-6 antigen / uPA receptor -like domain	SM00134
+C-terminal domain of Poly(A)-binding protein. Present also in Drosophila hyperplastics discs protein. Involved in homodimerisation (either directly or indirectly)	SM00517
+Pancreatic ribonuclease	SM00092
+Leucine rich repeat, ribonuclease inhibitor type	SM00368
+Alpha-amylase domain	SM00642
+SAND domain	SM00258
+von Willebrand factor (vWF) type A domain	SM00327
+Leucine rich repeat N-terminal domain	SM00013
+Z-DNA-binding domain in adenosine deaminases. Helix-turn-helix-containing domain. Also known as Zab	SM00550
+Adenylyl- / guanylyl cyclase, catalytic domain	SM00044
+Ephrin receptor ligand binding domain	SM00615
+Sterile alpha motif. Widespread domain in signalling and nuclear proteins. In EPH-related tyrosine kinases, appears to mediate cell-cell initiated signal transduction via the binding of SH2-containing proteins to a conserved tyrosine that is phosphorylat	SM00454
+Suppressor-of-White-APricot splicing regulator	SM00648
+Baculoviral inhibition of apoptosis protein repeat	SM00238
+The Nebulin repeat is present also in Las1. Tandem arrays of these repeats are known to bind actin	SM00227
+Calcium-binding EGF-like domain	SM00179
+Low molecular weight phosphatase family	SM00226
+Tetratricopeptide repeats	SM00028
+Metal dependent phosphohydrolases with conserved 'HD' motif. Includes eukaryotic cyclic nucleotide phosphodiesterases (PDEc). This profile/HMM does not detect HD homologues in bacterial glycine aminoacyl-tRNA synthetases (beta subunit)	SM00471
+Domain present in phytochromes and cGMP-specific phosphodiesterases	SM00065
+DNA polymerase A domain	SM00482
+snRNP Sm proteins	SM00651
+amyloid A4	SM00006
+Phosphoinositide 3-kinase family, accessory domain (PIK domain)	SM00145
+Protein present in Fab1, YOTB, Vac1, and EEA1	SM00064
+Modified RING finger domain	SM00504
+Immunoglobulin C-Type	SM00407
+Domain present in ZO-1 and Unc5-like netrin receptors	SM00218
+Domain found in Dishevelled, Egl-10, and Pleckstrin	SM00049
+G protein gamma subunit-like motifs	SM00224
+Domain present in Dishevelled and axin	SM00021
+Phosphatidylinositol phosphate kinases	SM00330
+Death effector domain	SM00031
+TAZ zinc finger, present in p300 and CBP	SM00551
+Possible catecholamine-binding domain present in a variety of eukaryotic proteins	SM00664
+Immunoglobulin V-Type	SM00406
+divergent subfamily of APPLE domains	SM00473
+C-terminal domain of Poly(A)-binding protein. Present also in Drosophila hyperplastics discs protein	SM00517
+Xeroderma pigmentosum G I-region	SM00484
+Interleukin-10 family	SM00188
+Putative zinc finger in N-recognin, a recognition component of the N-end rule pathway	SM00396
+Kazal type serine protease inhibitors	SM00280
+Laminin N-terminal domain (domain VI)	SM00136
+Domain Homologous to E6-AP Carboxyl Terminus with	SM00119
+domain present in PNGases and other hypothetical proteins	SM00613
+CCAAT-Binding transcription Factor	SM00521
+AN1-like Zinc finger	SM00154
+Laminin G domain	SM00282
+Domain at the C-termini of GCD6, eIF-2B epsilon, eIF-4 gamma and eIF-5	SM00515
+Interleukin-1 homologues	SM00125
+DEATH domain, found in proteins involved in cell death (apoptosis)	SM00005
+erythroblast transformation specific domain	SM00413
+DNA Topoisomerase I (eukaryota)	SM00435
+Leucine rich repeat C-terminal domain	SM00082
+Pumilio-like repeats	SM00025
+ig-like, plexins, transcription factors	SM00429
+suppressors of cytokine signalling	SM00253
+semaphorin domain	SM00630
+Immunoglobulin C-2 Type	SM00408
+domain with conserved PWWP motif	SM00293
+TRAM, LAG1 and CLN8 homology domains. Protein domain with at least 5 transmembrane alpha-helices. Lag1p and Lac1p are essential for acyl-CoA-dependent ceramide synthesis, TRAM is a subunit of the translocon and the CLN8 gene is mutated in Northern epilep	SM00724
+catalytic domain of ctd-like phosphatases	SM00577
+Dual specificity phosphatase, catalytic domain	SM00195
+Kringle domain	SM00130
+Extracellular domain of unknown function in nidogen (entactin) and hypothetical proteins	SM00539
+Complement component C1q domain	SM00110
+Tyrosine kinase, catalytic domain	SM00219
+SAM / Pointed domain	SM00251
+Link (Hyaluronan-binding)	SM00445
+Glycoprotein hormone beta chain homologues.	SM00068
+Histone H3	SM00428
+domain in transcription and CHROMO domain helicases	SM00592
+DnaJ molecular chaperone homology domain	SM00271
+Regulator of G protein signalling domain	SM00315
+Histone H4	SM00417
+domain present in proteins, which are involved in regulation of nuclear pre-mRNA	SM00582
+Methyl-CpG binding domain	SM00391
+Domains in hypothetical proteins in Drosophila, C. elegans and mammals. Occurs singly in some nucleoside diphosphate kinases	SM00676
+Putative lipopolysaccharide-modifying enzyme	SM00672
+Thrombospondin N-terminal -like domains.	SM00210
+Methyl-accepting chemotaxis-like domains (chemotaxis sensory transducer)	SM00283
+Domains present in proteins implicated in post-mortem DNA fragmentation	SM00266
+Domain found in sea urchin sperm protein, enterokinase, agrin	SM00200
+DEATH domain, found in proteins involved in cell death (apoptosis). Alpha-helical domain present in a variety of proteins with apoptotic functions. Some (but not all) of these domains form homotypic and heterotypic dimers	SM00005
+Domain in the RNA-binding Lupus La protein	SM00715
+Eukaryotic homologues of bacterial periplasmic substrate binding proteins	SM00079
+Forkhead associated domain	SM00240
+LGN motif, putative GEFs specific for G-alpha GTPases	SM00390
+BED zinc finger	SM00614
+Putative GTP-ase activating proteins for the small GTPase, ARF	SM00105
+Inositol polyphosphate phosphatase, catalytic domain homologues	SM00128
+Domain containing Gla (gamma-carboxyglutamate) residues. A hyaluronan-binding domain found in proteins associated with the extracellular matrix, cell adhesion and cell migration	SM00069
+Domain in Tre-2, BUB2p, and Cdc16p. Probable Rab-GAPs. Widespread domain present in Gyp6 and Gyp7, thereby giving rise to the notion that it performs a GTP-activator activity on Rab-like GTPases	SM00164
+CLUSTERIN Beta chain	SM00030
+Phospholipase A2	SM00085
+SCP / Tpx-1 / Ag5 / PR-1 / Sc7 family of extracellular domains. Human glioma pathogenesis-related protein GliPR and the plant pathogenesis-related protein represent functional links between plant defense systems and human immune system. This family has n	SM00198
+Aamy_C domain	SM00632
+PI3-kinase family, Ras-binding domain	SM00144
+corticotropin-releasing factor	SM00039
+Integrin alpha (beta-propellor repeats). Integrins are cell adhesion molecules that mediate cell-extracellular matrix and cell-cell interactions. They contain both alpha and beta subunits. Alpha integrins are proposed to contain a domain containing a 7-fo	SM00191
+Domain in DAP-5, eIF4G, MA-3 and other proteins. Highly alpha-helical. May contain repeats and/or regions similar to MIF4G domains	SM00544
+Interferon alpha, beta and delta	SM00076
+Splicing Factor Motif, present in Prp18 and Pr04	SM00500
+Pleckstrin homology domain. Domain commonly found in eukaryotic signalling proteins. The domain family possesses multiple functions including the abilities to bind inositol phosphates, and various proteins. PH domains have been found to possess inserted	SM00233
+Helicase and RNase D C-terminal	SM00341
+zinc finger binding to DNA consensus sequence [AT]GATA[AG]	SM00401
+LamG-like jellyroll fold domain	SM00560
+domain involved in Ras-like GTPase signaling	SM00593
+meprin and TRAF homology	SM00061
+Caspase, interleukin-1 beta converting enzyme (ICE) homologues	SM00115
+ParB-like nuclease domain	SM00470
+Found in Skp1 protein family	SM00512
+domain in TBC and LysM domain containing proteins	SM00584
+bromo domain	SM00297
+A Receptor for Ubiquitination Targets	SM00256
+Contains conserved Gly-Tyr-Phe residues	SM00444
+Homologues of snake disintegrins	SM00050
+domain in different transcription and chromosome remodeling factors	SM00571
+VPS10 domain	SM00602
+C-terminal cystine knot-like domain (CTCK)	SM00041
+Transferrin	SM00094
+Cystatin-like domain	SM00043
+SCP / Tpx-1 / Ag5 / PR-1 / Sc7 family of extracellular domains	SM00198
+Somatomedin B -like domains	SM00201
+Rhodanese Homology Domain	SM00450
+B-Box C-terminal domain	SM00502
+Transglutaminase/protease-like homologues	SM00460
+Basic domain in HLH proteins of MYOD family	SM00520
+Leucine-rich repeat - CC (cysteine-containing) subfamily	SM00367
+Toll - interleukin 1 - resistance	SM00255

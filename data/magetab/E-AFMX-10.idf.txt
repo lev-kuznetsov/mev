@@ -1,0 +1,38 @@
+Investigation Title	Gene expression profiling in rat heart biopsies
+Experimental Design	injury_design	injury_design	injury_design	injury_design	injury_design	injury_design
+Experimental Factor Name	biopsy number	Individual	Protocol	OrganismPart
+Experimental Factor Type	biopsy_number	individual	protocol	organism_part
+Experimental Factor Term Source REF
+Person Last Name	Schroen	van Haaften
+Person First Name	Blanche	Rachel
+Person Address
+Person Affiliation	Experimental and Molecular Cardiology CARIM, University of Maastricht, Maastricht, the Netherlands	BiGCaT Bioinformatics, Technical University Eindhoven and University of Maastricht, the Netherlands
+Person Roles	submitter	submitter
+Person Roles Term Source REF		
+Quality Control Type
+Quality Control Term Source REF
+Replicate Type
+Replicate Term Source REF
+Normalization Type
+Normalization Term Source REF
+Date of Experiment
+Public Release Date	2006-04-21
+PubMed ID	16608515
+Publication DOI	16608515
+Publication Author List	Rachel IM van Haaften, Blanche Schroen, Ben JA Janssen, Arie van Erk, Jacques JM Debets, Hubert JM Smeets, Jos FM Smits, Arthur van den Wijngaard, Yigal M Pinto, Chris TA Evelo
+Publication Title	Biologically relevant effects of mRNA amplification on gene expression profiles
+Publication Status	journal_article
+Publication Status Term Source REF	The MGED Ontology
+Experiment Description
+Protocol Name	P-AFFY-1	P-AFMX-5	P-AFFY-2	Affymetrix:Protocol:Hybridization-EukGE-WS2v4	Affymetrix:Protocol:Percentile	Affymetrix:Protocol:ExpressionStat
+Protocol Type	nucleic_acid_extraction	labeling	labeling	hybridization	feature_extraction	bioassay_data_transformation
+Protocol Description						
+Protocol Parameters			Quantity of starting RNA (ug)	Number of Wash A2 Cycles;Wash A1 Recovery Mixes;Mixes per Wash A1 Cycle;Number of Wash A3 Cycles;Wash B Recovery Mixes;Mixes per Wash A3 Cycle;Stain Temperature (C);Wash A3 Recovery Mixes;Wash A1 Temperature (C);Holding Temperature (C);Second Stain Time (seconds);Wash B Temperature (C);Wash A2 Temperature (C);Mixes per Wash B Cycle;Wash A3 Temperature (C);Third Stain Time (seconds);Wash A2 Recovery Mixes;Mixes per Wash A2 Cycle;Number of Wash B Cycles;Number of Wash A1 Cycles;First Stain Time (seconds)	Outlier high;Algorithm name;Outlier low	Algorithm version;Perturbation;Gamma1H;Baseline file;Target Signal value;Gamma2L;Tau;Alpha1;Gamma2H;Scale factor;ProbeMask;Mask file;ScaleMask;Alpha2;Epsilon;Normalization strategy;Background smoothing factor;Gamma1L;Scaling strategy;Normalization factor
+Protocol Hardware
+Protocol Software				MicroArraySuite 5.0	MicroArraySuite 5.0	MicroArraySuite 5.0
+Protocol Contact
+Protocol Term Source REF		The MGED Ontology				MGED Ontology
+SDRF File	E-AFMX-10-test.sdrf.txt
+Term Source Name	The MGED Ontology	The NCI Thesaurus		ArrayExpress
+Term Source File	http://mged.sourceforge.net/ontologies/MGEDontology.php	http://ncimeta.nci.nih.gov/		http://www.ebi.ac.uk/arrayexpress/
+Term Source Version	1.1.3			

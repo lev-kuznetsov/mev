@@ -1,0 +1,146 @@
+Hs_Acetylcholine Synthesis	Human/GenMAPP.org_MAPPs/Metabolic_MAPPs/Hs_Acetylcholine_Synthesis.htm
+Hs_Alanine-Aspartate Metabolism	Human/KEGG_Pathway_MAPPs/Hs_Alanine-Aspartate_Metabolism.htm
+Hs_Androgen and Estrogen Metabolism	Human/KEGG_Pathway_MAPPs/Hs_Androgen_and_Estrogen_Metabolism.htm
+Hs_Apoptosis	Human/GenMAPP.org_MAPPs/Other_MAPPs/Hs_Apoptosis.htm
+Hs_Blood Clotting Cascade	Human/GenMAPP.org_MAPPs/Other_MAPPs/Hs_Blood_Clotting_Cascade.htm
+Hs_C-21 Steroid Hormone Metabolism	Human/KEGG_Pathway_MAPPs/Hs_C-21_Steroid_Hormone_Metabolism.htm
+Hs_Calcium Channels	Human/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Hs_Calcium_Channels.htm
+Hs_Catacholamine Biosynthesis	Human/GenMAPP.org_MAPPs/Metabolic_MAPPs/Hs_Catacholamine_Biosynthesis.htm
+Hs_Cell cycle	Human/KEGG_Pathway_MAPPs/Hs_Cell_Cycle.htm
+Hs_Cholesterol Biosynthesis	Human/GenMAPP.org_MAPPs/Metabolic_MAPPs/Hs_Cholesterol_Biosynthesis.htm
+Hs_Complement Activation, Classical	Human/GenMAPP.org_MAPPs/Other_MAPPs/Hs_Complement_Activation_Classical.htm
+Hs_Cysteine Metabolism	Human/KEGG_Pathway_MAPPs/Hs_Cysteine_Metabolism.htm
+Hs_Eicosanoid Synthesis	Human/GenMAPP.org_MAPPs/Metabolic_MAPPs/Hs_Eicosanoid_Synthesis.htm
+Hs_Electron Transport Chain	Human/GenMAPP.org_MAPPs/Metabolic_MAPPs/Hs_Electron_Transport_Chain.htm
+Hs_Fatty Acid Degradation	Human/GenMAPP.org_MAPPs/Metabolic_MAPPs/Hs_Fatty_Acid_Degradation.htm
+Hs_Fatty Acid Synthesis	Human/GenMAPP.org_MAPPs/Metabolic_MAPPs/Hs_Fatty_Acid_Synthesis.htm
+Hs_G Protein Signaling	Human/GenMAPP.org_MAPPs/Signaling_MAPPs/Hs_G_Protein_Signaling.htm
+Hs_G13 Signaling Pathway	Human/GenMAPP.org_MAPPs/Signaling_MAPPs/Hs_G13_Signaling_Pathway.htm
+Hs_GPCRs, Class A Rhodopsin-like	Human/GPCRDB_MAPPs/Hs_GPCRs_Class_A_Rhodopsin-like.htm
+Hs_GPCRs, Class A Rhodopsin-like 2	Human/GPCRDB_MAPPs/Hs_GPCRs_Class_A_Rhodopsin-like_2.htm
+Hs_GPCRs, Class B Secretin-like	Human/GPCRDB_MAPPs/Hs_GPCRs_Class_B_Secretin-like.htm
+Hs_GPCRs, Class C Metabotropic glutamate, pheromone	Human/GPCRDB_MAPPs/Hs_GPCRs_Class_C_Metabotropic_glutamate_pheromone.htm
+Hs_GPCRs, Other	Human/GPCRDB_MAPPs/Hs_GPCRs_Other.htm
+Hs_Gap Junction Proteins-Connexins	Human/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Hs_Gap_Junction_Proteins-Connexins.htm
+Hs_Glutamate Metabolism	Human/KEGG_Pathway_MAPPs/Hs_Glutamate_Metabolism.htm
+Hs_Glycogen Metabolism	Human/GenMAPP.org_MAPPs/Metabolic_MAPPs/Hs_Glycogen_Metabolism.htm
+Hs_Glycolysis and Gluconeogenesis	Human/GenMAPP.org_MAPPs/Metabolic_MAPPs/Hs_Glycolysis_and_Gluconeogenesis.htm
+Hs_Heme Biosynthesis	Human/GenMAPP.org_MAPPs/Metabolic_MAPPs/Hs_Heme_Biosynthesis.htm
+Hs_Inflammatory Response Pathway	Human/GenMAPP.org_MAPPs/Other_MAPPs/Hs_Inflammatory_Response_Pathway.htm
+Hs_Krebs-TCA Cycle	Human/GenMAPP.org_MAPPs/Metabolic_MAPPs/Hs_Krebs-TCA_Cycle.htm
+Hs_MAPK Cascade	Human/GenMAPP.org_MAPPs/Signaling_MAPPs/Hs_MAPK_Cascade.htm
+Hs_Matrix Metalloproteinases	Human/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Hs_Matrix_Metalloproteinases.htm
+Hs_Methionine Metabolism	Human/KEGG_Pathway_MAPPs/Hs_Methionine_Metabolism.htm
+Hs_Monoamine GPCRs	Human/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Hs_Monoamine_GPCRs.htm
+Hs_Nuclear Receptors	Human/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Hs_Nuclear_Receptors.htm
+Hs_Nucleotide GPCRs	Human/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Hs_Nucleotide_GPCRs.htm
+Hs_Nucleotide Metabolism	Human/GenMAPP.org_MAPPs/Metabolic_MAPPs/Hs_Nucleotide_Metabolism.htm
+Hs_Orphan GPCRs	Human/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Hs_Orphan_GPCRs.htm
+Hs_Ovarian Infertility Genes	Human/GenMAPP.org_MAPPs/Other_MAPPs/Hs_Ovarian_Infertility_Genes.htm
+Hs_Pentose Phosphate Pathway	Human/GenMAPP.org_MAPPs/Metabolic_MAPPs/Hs_Pentose_Phosphate_Pathway.htm
+Hs_Peptide GPCRs	Human/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Hs_Peptide_GPCRs.htm
+Hs_Proteasome Degradation	Human/GenMAPP.org_MAPPs/Other_MAPPs/Hs_Proteasome_Degradation.htm
+Hs_S1P Signaling	Human/GenMAPP.org_MAPPs/Signaling_MAPPs/Hs_S1P_Signaling.htm
+Hs_Steroid Biosynthesis	Human/GenMAPP.org_MAPPs/Metabolic_MAPPs/Hs_Steroid_Biosynthesis.htm
+Hs_Synthesis and Degradation of Ketone Bodies	Human/KEGG_Pathway_MAPPs/Hs_Synthesis_and_Degradation_of_Ketone_Bodies.htm
+Hs_TGF Beta Signaling Pathway	Human/GenMAPP.org_MAPPs/Signaling_MAPPs/Hs_TGF_Beta_Signaling_Pathway.htm
+Hs_Translation Factors	Human/GenMAPP.org_MAPPs/Other_MAPPs/Hs_Translation_Factors.htm
+Hs_Wnt signaling	Human/GenMAPP.org_MAPPs/Signaling_MAPPs/Hs_Wnt_signaling.htm
+Hs_tRNA Synthetases	Human/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Hs_tRNA_Synthetases.htm
+Mm_Acetylcholine Synthesis	Mouse/GenMAPP.org_MAPPs/Metabolic_MAPPs/Mm_Acetylcholine_Synthesis.htm
+Mm_Alanine-Aspartate Metabolism	Mouse/KEGG_Pathway_MAPPs/Mm_Alanine-Aspartate_Metabolism.htm
+Mm_Androgen and Estrogen Metabolism	Mouse/KEGG_Pathway_MAPPs/Mm_Androgen_and_Estrogen_Metabolism.htm
+Mm_Apoptosis	Mouse/GenMAPP.org_MAPPs/Other_MAPPs/Mm_Apoptosis.htm
+Mm_Blood Clotting Cascade	Mouse/GenMAPP.org_MAPPs/Other_MAPPs/Mm_Blood_Clotting_Cascade.htm
+Mm_C-21 Steroid Hormone Metabolism	Mouse/KEGG_Pathway_MAPPs/Mm_C-21_Steroid_Hormone_Metabolism.htm
+Mm_Calcium Channels	Mouse/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Mm_Calcium_Channels.htm
+Mm_Catacholamine Biosynthesis	Mouse/GenMAPP.org_MAPPs/Metabolic_MAPPs/Mm_Catacholamine_Biosynthesis.htm
+Mm_Cell Cycle	Mouse/KEGG_Pathway_MAPPs/Mm_Cell_Cycle.htm
+Mm_Cholesterol Biosynthesis	Mouse/GenMAPP.org_MAPPs/Metabolic_MAPPs/Mm_Cholesterol_Biosynthesis.htm
+Mm_Complement Activation, Classical	Mouse/GenMAPP.org_MAPPs/Other_MAPPs/Mm_Complement_Activation_Classical.htm
+Mm_Cysteine Metabolism	Mouse/KEGG_Pathway_MAPPs/Mm_Cysteine_Metabolism.htm
+Mm_Eicosanoid Synthesis	Mouse/GenMAPP.org_MAPPs/Metabolic_MAPPs/Mm_Eicosanoid_Synthesis.htm
+Mm_Electron Transport Chain	Mouse/GenMAPP.org_MAPPs/Metabolic_MAPPs/Mm_Electron_Transport_Chain.htm
+Mm_Fatty Acid Degradation	Mouse/GenMAPP.org_MAPPs/Metabolic_MAPPs/Mm_Fatty_Acid_Degradation.htm
+Mm_Fatty Acid Synthesis	Mouse/GenMAPP.org_MAPPs/Metabolic_MAPPs/Mm_Fatty_Acid_Synthesis.htm
+Mm_G Protein Signaling	Mouse/GenMAPP.org_MAPPs/Signaling_MAPPs/Mm_G_Protein_Signaling.htm
+Mm_G13 Signaling Pathway	Mouse/GenMAPP.org_MAPPs/Signaling_MAPPs/Mm_G13_Signaling_Pathway.htm
+Mm_GPCRs, Class A Rhodopsin-like	Mouse/GPCRDB_MAPPs/Mm_GPCRs_Class_A_Rhodopsin-like.htm
+Mm_GPCRs, Class C Metabotropic glutamate, pheromone	Mouse/GPCRDB_MAPPs/Mm_GPCRs_Class_C_Metabotropic_glutamate_pheromone.htm
+Mm_GPCRs, Other	Mouse/GPCRDB_MAPPs/Mm_GPCRs_Other.htm
+Mm_Gap Junction Proteins-Connexins	Mouse/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Mm_Gap_Junction_Proteins-Connexins.htm
+Mm_Glutamate Metabolism	Mouse/KEGG_Pathway_MAPPs/Mm_Glutamate_Metabolism.htm
+Mm_Glycogen Metabolism	Mouse/GenMAPP.org_MAPPs/Metabolic_MAPPs/Mm_Glycogen_Metabolism.htm
+Mm_Glycolysis and Gluconeogenesis	Mouse/GenMAPP.org_MAPPs/Metabolic_MAPPs/Mm_Glycolysis_and_Gluconeogenesis.htm
+Mm_Heme Biosynthesis	Mouse/GenMAPP.org_MAPPs/Metabolic_MAPPs/Mm_Heme_Biosynthesis.htm
+Mm_Inflammatory Response Pathway	Mouse/GenMAPP.org_MAPPs/Other_MAPPs/Mm_Inflammatory_Response_Pathway.htm
+Mm_Krebs-TCA Cycle	Mouse/GenMAPP.org_MAPPs/Metabolic_MAPPs/Mm_Krebs-TCA_Cycle.htm
+Mm_MAPK Cascade	Mouse/GenMAPP.org_MAPPs/Signaling_MAPPs/Mm_MAPK_Cascade.htm
+Mm_Matrix Metalloproteinases	Mouse/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Mm_Matrix_Metalloproteinases.htm
+Mm_Methionine Metabolism	Mouse/KEGG_Pathway_MAPPs/Mm_Methionine_Metabolism.htm
+Mm_Mitochondiral fatty acid betaoxidation	Mouse/GenMAPP.org_MAPPs/Metabolic_MAPPs/Mm_Mitochondiral_fatty_acid_betaoxidation.htm
+Mm_Monoamine GPCRs	Mouse/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Mm_Monoamine_GPCRs.htm
+Mm_Nuclear Receptors	Mouse/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Mm_Nuclear_Receptors.htm
+Mm_Nucleotide GPCRs	Mouse/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Mm_Nucleotide_GPCRs.htm
+Mm_Nucleotide Metabolism	Mouse/GenMAPP.org_MAPPs/Metabolic_MAPPs/Mm_Nucleotide_Metabolism.htm
+Mm_Orphan GPCRs	Mouse/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Mm_Orphan_GPCRs.htm
+Mm_Ovarian Infertility Genes	Mouse/GenMAPP.org_MAPPs/Other_MAPPs/Mm_Ovarian_Infertility_Genes.htm
+Mm_Pentose Phosphate Pathway	Mouse/GenMAPP.org_MAPPs/Metabolic_MAPPs/Mm_Pentose_Phosphate_Pathway.htm
+Mm_Peptide GPCRs	Mouse/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Mm_Peptide_GPCRs.htm
+Mm_Proteasome Degradation	Mouse/GenMAPP.org_MAPPs/Other_MAPPs/Mm_Proteasome_Degradation.htm
+Mm_Ribosomal Proteins	Mouse/GenMAPP.org_MAPPs/Other_MAPPs/Mm_Ribosomal_Proteins.htm
+Mm_S1P Signaling	Mouse/GenMAPP.org_MAPPs/Signaling_MAPPs/Mm_S1P_Signaling.htm
+Mm_Small ligand GPCRs	Mouse/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Mm_Small_ligand_GPCRs.htm
+Mm_Steroid Biosynthesis	Mouse/GenMAPP.org_MAPPs/Metabolic_MAPPs/Mm_Steroid_Biosynthesis.htm
+Mm_TGF Beta Signaling Pathway	Mouse/GenMAPP.org_MAPPs/Signaling_MAPPs/Mm_TGF_Beta_Signaling_Pathway.htm
+Mm_Translation Factors	Mouse/GenMAPP.org_MAPPs/Other_MAPPs/Mm_Translation_Factors.htm
+Mm_Wnt Signaling	Mouse/GenMAPP.org_MAPPs/Signaling_MAPPs/Mm_Wnt_Signaling.htm
+Mm_tRNA Synthetases	Mouse/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Mm_tRNA_Synthetases.htm
+Rn_Acetylcholine Synthesis	Rat/GenMAPP.org_MAPPs/Metabolic_MAPPs/Rn_Acetylcholine_Synthesis.htm
+Rn_Alanine-Aspartate Metabolism	Rat/KEGG_Pathway_MAPPs/Rn_Alanine-Aspartate_Metabolism.htm
+Rn_Androgen and Estrogen Metabolism	Rat/KEGG_Pathway_MAPPs/Rn_Androgen_and_Estrogen_Metabolism.htm
+Rn_Apoptosis	Rat/GenMAPP.org_MAPPs/Other_MAPPs/Rn_Apoptosis.htm
+Rn_Blood Clotting Cascade	Rat/GenMAPP.org_MAPPs/Other_MAPPs/Rn_Blood_Clotting_Cascade.htm
+Rn_C-21 Steroid Hormone Metabolism	Rat/KEGG_Pathway_MAPPs/Rn_C-21_Steroid_Hormone_Metabolism.htm
+Rn_Calcium Channels	Rat/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Rn_Calcium_Channels.htm
+Rn_Catacholamine Biosynthesis	Rat/GenMAPP.org_MAPPs/Metabolic_MAPPs/Rn_Catacholamine_Biosynthesis.htm
+Rn_Cell cycle	Rat/KEGG_Pathway_MAPPs/Rn_Cell_cycle.htm
+Rn_Cholesterol biosynthesis	Rat/KEGG_Pathway_MAPPs/Rn_Cholesterol_biosynthesis.htm
+Rn_Complement Activation, Classical	Rat/GenMAPP.org_MAPPs/Other_MAPPs/Rn_Complement_Activation_Classical.htm
+Rn_Cysteine Metabolism	Rat/KEGG_Pathway_MAPPs/Rn_Cysteine_Metabolism.htm
+Rn_Eicosanoid Synthesis	Rat/GenMAPP.org_MAPPs/Metabolic_MAPPs/Rn_Eicosanoid_Synthesis.htm
+Rn_Electron Transport Chain	Rat/GenMAPP.org_MAPPs/Metabolic_MAPPs/Rn_Electron_Transport_Chain.htm
+Rn_Fatty Acid Degradation	Rat/GenMAPP.org_MAPPs/Metabolic_MAPPs/Rn_Fatty_Acid_Degradation.htm
+Rn_Fatty acid synthesis	Rat/GenMAPP.org_MAPPs/Metabolic_MAPPs/Rn_Fatty_acid_synthesis.htm
+Rn_G Protein Signaling	Rat/GenMAPP.org_MAPPs/Signaling_MAPPs/Rn_G_Protein_Signaling.htm
+Rn_GPCRs, Class A Rhodopsin-like	Rat/GPCRDB_MAPPs/Rn_GPCRs_Class_A_Rhodopsin-like.htm
+Rn_GPCRs, Class B Secretin-like	Rat/GPCRDB_MAPPs/Rn_GPCRs_Class_B_Secretin-like.htm
+Rn_GPCRs, Class C Metabotropic glutamate, pheromone	Rat/GPCRDB_MAPPs/Rn_GPCRs_Class_C_Metabotropic_glutamate_pheromone.htm
+Rn_GPCRs, Other	Rat/GPCRDB_MAPPs/Rn_GPCRs_Other.htm
+Rn_Gap Junction Proteins-Connexins	Rat/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Rn_Gap_Junction_Proteins-Connexins.htm
+Rn_Glutamate Metabolism	Rat/KEGG_Pathway_MAPPs/Rn_Glutamate_Metabolism.htm
+Rn_Glycogen Metabolism	Rat/GenMAPP.org_MAPPs/Metabolic_MAPPs/Rn_Glycogen_Metabolism.htm
+Rn_Glycolysis and Gluconeogenesis	Rat/GenMAPP.org_MAPPs/Metabolic_MAPPs/Rn_Glycolysis_and_Gluconeogenesis.htm
+Rn_Heme Biosynthesis	Rat/GenMAPP.org_MAPPs/Metabolic_MAPPs/Rn_Heme_Biosynthesis.htm
+Rn_Inflammatory Response Pathway	Rat/GenMAPP.org_MAPPs/Other_MAPPs/Rn_Inflammatory_Response_Pathway.htm
+Rn_Krebs-TCA Cycle	Rat/GenMAPP.org_MAPPs/Metabolic_MAPPs/Rn_Krebs-TCA_Cycle.htm
+Rn_MAPK Cascade	Rat/GenMAPP.org_MAPPs/Signaling_MAPPs/Rn_MAPK_Cascade.htm
+Rn_Matrix Metalloproteinases	Rat/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Rn_Matrix_Metalloproteinases.htm
+Rn_Methionine Metabolism	Rat/KEGG_Pathway_MAPPs/Rn_Methionine_Metabolism.htm
+Rn_Mitochondrial fatty acid betaoxidation	Rat/GenMAPP.org_MAPPs/Metabolic_MAPPs/Rn_Mitochondrial_fatty_acid_betaoxidation.htm
+Rn_Monoamine GPCRs	Rat/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Rn_Monoamine_GPCRs.htm
+Rn_Nuclear Receptors	Rat/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Rn_Nuclear_Receptors.htm
+Rn_Nucleotide GPCRs	Rat/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Rn_Nucleotide_GPCRs.htm
+Rn_Orphan GPCRs	Rat/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Rn_Orphan_GPCRs.htm
+Rn_Pentose Phosphate Pathway	Rat/GenMAPP.org_MAPPs/Metabolic_MAPPs/Rn_Pentose_Phosphate_Pathway.htm
+Rn_Peptide GPCRs	Rat/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Rn_Peptide_GPCRs.htm
+Rn_Proteasome Degradation	Rat/GenMAPP.org_MAPPs/Other_MAPPs/Rn_Proteasome_Degradation.htm
+Rn_Ribosomal Proteins	Rat/GenMAPP.org_MAPPs/Other_MAPPs/Rn_Ribosomal_Proteins.htm
+Rn_S1P Signaling	Rat/GenMAPP.org_MAPPs/Signaling_MAPPs/Rn_S1P_Signaling.htm
+Rn_Small ligand GPCRs	Rat/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Rn_Small_ligand_GPCRs.htm
+Rn_Steroid Biosynthesis	Rat/GenMAPP.org_MAPPs/Metabolic_MAPPs/Rn_Steroid_Biosynthesis.htm
+Rn_Synthesis and Degradation of Ketone Bodies	Rat/KEGG_Pathway_MAPPs/Rn_Synthesis_and_Degradation_of_Ketone_Bodies.htm
+Rn_TGF Beta Signaling Pathway	Rat/GenMAPP.org_MAPPs/Signaling_MAPPs/Rn_TGF_Beta_Signaling_Pathway.htm
+Rn_Translation Factors	Rat/GenMAPP.org_MAPPs/Other_MAPPs/Rn_Translation_Factors.htm
+Rn_Wnt Signaling	Rat/GenMAPP.org_MAPPs/Signaling_MAPPs/Rn_Wnt_Signaling.htm
+Rn_tRNA Synthetases	Rat/GenMAPP.org_MAPPs/Gene_Family_MAPPs/Rn_tRNA_Synthetases.htm

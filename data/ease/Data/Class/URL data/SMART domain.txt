@@ -1,0 +1,2 @@
+http://smart.embl-heidelberg.de/
+http://smart.embl-heidelberg.de/smart/do_annotation.pl?BLAST=DUMMY&ACC=[*TAG*]

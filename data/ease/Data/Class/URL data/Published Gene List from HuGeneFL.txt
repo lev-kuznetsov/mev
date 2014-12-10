@@ -1,0 +1,3 @@
+http://david.niaid.nih.gov/david/ease/PublishedGeneLists.htm
+http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&list_uids=[*TAG*]&dopt=Abstract
+

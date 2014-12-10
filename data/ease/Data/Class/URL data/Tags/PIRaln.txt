@@ -1,0 +1,1123 @@
+(S)-2-hydroxy-acid oxidase  superfamily	SA1627
+(S)-2-hydroxy-acid oxidase homology	DA1114
+1-phosphatidylinositol-4,5-bisphosphate phosphodiesterase domain X homology	DA1570
+1-phosphatidylinositol-4,5-bisphosphate phosphodiesterase domain Y homology	DA1571
+11beta-hydroxysteroid dehydrogenase	FA2130
+14-3-3 protein	FA2001
+2',3'-cyclic-nucleotide 3'-phosphodiesterase	FA1239
+3',5'-cyclic-GMP phosphodiesterase alpha chain	FA1643
+3',5'-cyclic-GMP phosphodiesterase gamma chain	FA1667
+3',5'-cyclic-nucleotide phosphodiesterase 1B, calmodulin-dependent	FA4337
+3',5'-cyclic-nucleotide phosphodiesterase homology	DA4333
+3-hydroxyacyl-CoA dehydrogenase	FA2931
+3-hydroxyacyl-CoA dehydrogenase  superfamily	SA2635
+3-hydroxyacyl-CoA dehydrogenase homology	DA1094
+3-hydroxyisobutyrate dehydrogenase homology	DA1170
+3-oxoacyl-[acyl-carrier-protein] synthase I homology	DA1354
+3beta-hydroxy-Delta5-steroid dehydrogenase	FA0518
+3beta-hydroxy-Delta5-steroid dehydrogenase  superfamily	SA3134
+5'-nucleotidase	FA3493
+5'-nucleotidase  superfamily	SA3495
+5'-nucleotidase homology	DA3494
+5-aminolevulinate synthase	FA0382
+5-aminolevulinate synthase  superfamily	SA2297
+6-phosphofructo-2-kinase / fructose-2,6-bisphosphate 2-phosphatase	FA1679
+ADP,ATP carrier protein	FA1645
+ADP,ATP carrier protein repeat homology	DA1183
+AIDS vif protein	FA0025
+AMP deaminase	FA1822
+AMP-activated protein kinase  superfamily	SA3518
+ATPase inhibitor, mitochondrial  superfamily	SA2702
+ATPase nucleotide-binding domain homology	DA3424
+ATPase transduction domain homology	DA3420
+Alzheimer's disease amyloid beta protein	FA1665
+B-cell surface glycoprotein blast-1	FA1436
+BKBP-type peptidylprolyl isomerase	FA3778
+BKBP-type peptidylprolyl isomerase homology	DA2220
+C-reactive protein	FA2504
+C-type lectin homology	DA1172
+C1-tetrahydrofolate synthase	FA2782
+C1r/C1s repeat homology	DA1025
+C4b-binding protein alpha chain	FA1687
+CBS homology	DA4085
+CD9 antigen	FA2591
+CDC24 homology	DA2498
+CDC25-type guanine nucleotide exchange activator homology	DA1190
+CTP synthase  superfamily	SA0555
+Ca2+/calmodulin-dependent protein kinase	FA1156
+Ca2+/calmodulin-dependent protein kinase II	FA3198
+D-amino-acid oxidase	FA1705
+DNA excision repair cross-complementing protein ERCC3	FA4346
+DNA excision repair protein XPAC  superfamily	SA1989
+DNA nucleotidylexotransferase	FA1630
+DNA-directed DNA polymerase II  superfamily	SA3713
+DNA-directed RNA polymerase II chain RPB9  superfamily	SA2968
+DNA-directed RNA polymerase chain RPO26	FA1704
+DNA-directed RNA polymerase chain RPO26  superfamily	SA3271
+EGF homology - Type A	DA0704
+EGF homology - Type B	DA0705
+Escherichia coli ribosomal protein L3  superfamily	SA3179
+Escherichia coli ribosomal protein L5	FA2563
+Escherichia coli ribosomal protein S10	FA2649
+Escherichia coli ribosomal protein S11	FA0334
+Escherichia coli ribosomal protein S12	FA2658
+Escherichia coli ribosomal protein S13	FA2266
+Escherichia coli ribosomal protein S14	FA2645
+Escherichia coli ribosomal protein S17	FA2548
+Escherichia coli ribosomal protein S19	FA0858
+Escherichia coli ribosomal protein S5	FA2657
+Escherichia coli ribosomal protein S7	FA2654
+Escherichia coli ribosomal protein S8	FA2662
+Escherichia coli ribosomal protein S9	FA0325
+FtsH/SEC18/CDC48-type ATP-binding domain homology	DA1625
+GATA-type zinc finger homology	DA2296
+GLGF domain homology	DA2144
+GPI-anchor biosynthesis protein PIG-A  superfamily	SA3434
+GTP cyclohydrolase I  superfamily	SA1493
+GTP-binding protein DRG	FA3786
+GTP-binding regulatory protein Gs alpha chain	FA1265
+GTP-binding regulatory protein Gs alpha chain  superfamily	SA0608
+GTP-binding regulatory protein beta chain	FA2727
+GTP-binding regulatory protein beta chain  superfamily	SA0609
+GTP-binding regulatory protein gamma chain	FA2666
+GTP-binding regulatory protein gamma chain  superfamily	SA0610
+Gla domain homology	DA2143
+H+-transporting ATP synthase alpha chain	FA0835
+H+-transporting ATP synthase epsilon chain	FA2951
+H+-transporting ATP synthase gamma chain	FA2952
+H+-transporting ATP synthase protein 6	FA2955
+H+-transporting ATP synthase protein 8	FA0298
+HMG box homology	DA1047
+HSF DNA-binding domain homology	DA1206
+IMP dehydrogenase	FA1634
+IMP dehydrogenase  superfamily	SA1661
+IMP dehydrogenase amino-terminal homology	DA4321
+IMP dehydrogenase catalytic homology	DA4320
+IgE receptor II	FA1717
+IgE-dependent histamine-releasing factor	FA2350
+IgE-dependent histamine-releasing factor  superfamily	SA1609
+J chain	FA1680
+Kazal proteinase inhibitor homology	DA1051
+L-iduronidase	FA1636
+L-lactate dehydrogenase	FA0974
+L-selectin	FA1362
+LDL receptor	FA1691
+LDL receptor YWTD-containing repeat homology	DA1085
+LDL receptor ligand-binding repeat homology	DA1054
+LIM metal-binding repeat homology	DA1120
+LIM protein kinase	FA3250
+Ly-6 antigen	FA1365
+Ly-6 antigen  superfamily	SA2796
+Ly-6 homology	DA2298
+MAM homology	DA1472
+MAP2/tau repeat homology	DA1056
+MCM homology	DA4338
+N-methyl-D-aspartate receptor 2A	FA1789
+N-methyl-D-aspartate receptor 2D	FA2497
+NAD(P)+ transhydrogenase (B-specific) alpha chain homology	DA1554
+NAD(P)+ transhydrogenase (B-specific) beta chain homology	DA1513
+NAD+ ADP-ribosyltransferase	FA2779
+NAD+ ADP-ribosyltransferase  superfamily	SA1756
+NADH dehydrogenase (ubiquinone) I chain E homology	DA4301
+NADH dehydrogenase (ubiquinone) I chain F homology	DA4297
+NADH dehydrogenase (ubiquinone) chain 1	FA0313
+NADH dehydrogenase (ubiquinone) chain 2	FA2018
+NADH dehydrogenase (ubiquinone) chain 3	FA0315
+NADH dehydrogenase (ubiquinone) chain 4	FA0085
+NADH dehydrogenase (ubiquinone) chain 4L	FA0316
+NADH dehydrogenase (ubiquinone) chain 5	FA0086
+NADH dehydrogenase (ubiquinone) chain 6	FA0078
+NADH dehydrogenase (ubiquinone) chain F	FA4298
+NADPH--ferrihemoprotein reductase	FA1631
+NADPH--ferrihemoprotein reductase  superfamily	SA3181
+NADPH--ferrihemoprotein reductase homology	DA3139
+NGF receptor repeat homology	DA0933
+Na+/K+-transporting ATPase alpha chain	FA2953
+Na+/K+-transporting ATPase beta chain	FA0301
+POU domain homology	DA1062
+POZ domain homology	DA1212
+RING finger homology	DA3739
+RNA-binding protein EWS  superfamily	SA2139
+S-100 protein	FA2484
+S-100 protein  superfamily	SA1618
+SAM homology	DA3740
+SH2 homology	DA1069
+SH3 homology	DA1070
+SH3 homology - set 2	DA1574
+T-box homology	DA2153
+T-cell surface glycoprotein CD2	FA1809
+T-cell surface glycoprotein CD28	FA1807
+T-cell surface glycoprotein CD3 delta chain	FA0574
+T-cell surface glycoprotein CD4	FA1007
+T-cell surface glycoprotein CD8 beta chain	FA1364
+TEA DNA-binding domain homology	DA1215
+UDPglucose--hexose-1-phosphate uridylyltransferase	FA1826
+UTP--glucose-1-phosphate uridylyltransferase  superfamily	SA3300
+VH1-type dual specificity phosphoprotein phosphatase homology	DA1151
+WD repeat homology	DA3289
+WW repeat homology	DA3294
+Y box-binding protein 1	FA3437
+Y box-binding protein 1  superfamily	SA3438
+ZP domain homology	DA1506
+[acyl-carrier-protein] S-malonyltransferase homology	DA1298
+acetyl-CoA acetyltransferase	FA2163
+acetylcholine receptor	FA2476
+acid sphingomyelinase	FA1747
+acrosin	FA1367
+actin	FA0722
+actin-capping protein beta chain	FA2140
+actin-capping protein beta chain  superfamily	SA1368
+activin receptor II	FA1729
+acyl carrier protein homology	DA1299
+acyl-CoA dehydrogenase	FA1780
+acyl-CoA dehydrogenase  superfamily	SA3200
+acyl-CoA oxidase	FA1980
+acylaminoacyl-peptidase	FA1041
+acylphosphatase	FA0307
+adenine phosphoribosyltransferase  superfamily	SA1811
+adenosine deaminase  superfamily	SA1781
+adenosylhomocysteinase	FA1464
+adenylate kinase	FA2384
+adenylosuccinate synthase	FA1758
+adipokinetic hormone  superfamily	SA0718
+aggrecan	FA2692
+alcohol dehydrogenase	FA1988
+alcohol dehydrogenase  superfamily	SA2176
+alcohol oxidase  superfamily	SA2947
+aldehyde dehydrogenase	FA2588
+aldehyde dehydrogenase (NAD+)  superfamily	SA2590
+aldehyde dehydrogenase homology	DA2689
+aldehyde reductase	FA1771
+aldehyde reductase  superfamily	SA3412
+alkaline phosphatase  superfamily	SA1559
+alkyl hydroperoxidase c22 protein homology	DA1234
+alpha-1,3-mannosyl-glycoprotein beta-1,2-N-acetylglucosaminyltransferase	FA1828
+alpha-2-HS-glycoprotein	FA2687
+alpha-2-macroglobulin	FA1860
+alpha-L-fucosidase  superfamily	SA2866
+alpha-actinin	FA1327
+alpha-actinin  superfamily	SA1294
+alpha-actinin actin-binding domain homology	DA1134
+alpha-crystallin	FA2527
+alpha-galactosidase	FA2415
+alpha-galactosidase  superfamily	SA3142
+alpha-s2-casein	FA1795
+alpha-s2-casein  superfamily	SA3092
+amino acid--tRNA ligase repeat homology	DA1219
+amphiregulin	FA1792
+amyloid protein	FA0502
+animal Kunitz-type proteinase inhibitor homology	DA1053
+animal histidine decarboxylase homology	DA4304
+animal sulfatase	FA2398
+animal sulfatase  superfamily	SA1721
+ankyrin	FA2680
+ankyrin repeat homology	DA1466
+annexin I	FA1309
+annexin I  superfamily	SA0571
+annexin VI	FA1764
+annexin repeat homology	DA0711
+antileukoproteinase  superfamily	SA1740
+antileukoproteinase repeat homology	DA1022
+antithrombin III	FA2267
+apolipoprotein A-I	FA2613
+apolipoprotein H	FA0995
+arachidonate 5-lipoxygenase	FA2734
+arachidonate 5-lipoxygenase  superfamily	SA2677
+arginine--tRNA ligase  superfamily	SA1821
+argininosuccinate lyase	FA0688
+argininosuccinate synthase	FA2173
+argininosuccinate synthase  superfamily	SA0512
+aromatic-L-amino-acid decarboxylase	FA0517
+asparagine synthase	FA0017
+asparagine synthase (glutamine-hydrolyzing)  superfamily	SA3120
+aspartate aminotransferase	FA0499
+aspartate/ornithine carbamoyltransferase homology	DA1124
+astacin homology	DA1087
+band 3 anion transport protein	FA2486
+basic fibroblast growth factor receptor 1	FA1349
+bcl transforming protein	FA0409
+beta-adaptin	FA1377
+beta-adrenergic-receptor kinase	FA3205
+beta-casein	FA2182
+beta-crystallin	FA0065
+beta-galactoside alpha-2,3-sialyltransferase	FA3815
+beta-galactoside-binding lectin	FA0968
+beta-hexosaminidase	FA1855
+beta-thromboglobulin	FA2682
+biotin carboxylase homology	DA3124
+black beetle virus coat protein	FA0434
+bromodomain homology	DA1209
+brush border myosin heavy chain I	FA2455
+cAMP receptor protein cyclic nucleotide-binding domain homology	DA1096
+cAMP response element-binding protein 1	FA1378
+cAMP-dependent protein kinase inhibitor	FA1974
+cAMP-dependent protein kinase regulatory chain	FA1315
+cGMP-dependent protein kinase  superfamily	SA2873
+cadherin	FA2593
+cadherin  superfamily	SA3690
+cadherin repeat homology - 5 proteins	DA1651
+calcineurin catalytic chain	FA3699
+calcitonin	FA0385
+calcium channel alpha-2 chain	FA2502
+caldesmon	FA1335
+calmodulin	FA0727
+calmodulin repeat homology	DA0703
+calmodulin repeat homology - selected molecules with X-ray structure	DA1606
+calmodulins	FA0567
+calpain catalytic domain homology	DA1026
+calpain large chain	FA2785
+calpain large chain  superfamily	SA1498
+calpain small chain	FA0056
+calponin	FA1612
+calponin repeat homology	DA1589
+calreticulin  superfamily	SA1491
+calretinin	FA0193
+calsequestrin	FA4332
+carbamoyl-phosphate synthase (ammonia) homology	DA1507
+carbamoyl-phosphate synthase (glutamine-hydrolyzing) large chain homology	DA1104
+carbamoyl-phosphate synthase (glutamine-hydrolyzing) small chain homology	DA1544
+carbonate dehydratase	FA0059
+carbonate dehydratase  superfamily	SA1510
+carbonic anhydrase homology	DA2135
+carboxypeptidase	FA2791
+carboxypeptidase  superfamily	SA1865
+carcinoembryonic antigen precursor amino-terminal homology	DA1515
+catalase	FA0060
+cdc25-type protein-tyrosine-phosphatase homology	DA2752
+cecropin	FA0728
+cell division control protein CKS1  superfamily	SA3102
+cell surface glycoprotein CD11b	FA2669
+cellular retinaldehyde-binding protein  superfamily	SA1137
+cellular retinaldehyde-binding protein homology	DA1157
+cellular tumor antigen p53	FA2330
+cellular tumor antigen p53  superfamily	SA2300
+chaperonin groEL	FA0774
+choline-phosphate cytidylyltransferase  superfamily	SA3608
+cholinesterase	FA2175
+cholinesterase  superfamily	SA3118
+cholinesterase homology	DA1028
+chorion protein S16	FA1386
+chromobox homology	DA1203
+chromogranin A	FA1833
+chromogranin B precursor	FA1863
+ciliary neurotrophic factor	FA0589
+ciliary neurotrophic factor receptor	FA1846
+ciliary neurotrophic factor receptor  superfamily	SA3523
+class I histocompatibility antigen	FA0776
+class II histocompatibility antigen	FA0148
+clathrin heavy chain	FA2615
+clathrin light chain	FA2614
+clusterin	FA1765
+coagulation factor VIII	FA2857
+coagulation factor X	FA1941
+coagulation factor XI	FA0797
+coagulation factor XII	FA2940
+coagulation factor XII  superfamily	SA3093
+cofilin	FA1223
+cold shock domain homology	DA1090
+colipase	FA0498
+collagen alpha 1(I) chain	FA1607
+collagen alpha 1(IV) chain	FA0972
+collagen alpha 1(IV) chain  superfamily	SA1743
+collagen alpha 1(V) chain	FA1748
+collagen alpha 1(VI) chain	FA2499
+collagen alpha 1(VI) chain  superfamily	SA1752
+collagen alpha 1(VIII) chain  superfamily	SA1754
+collagen alpha 2(I) chain	FA2500
+collagen alpha 2(I) chain  superfamily	SA1561
+complement C1q carboxyl-terminal homology	DA1560
+complement C2	FA2196
+complement C2  superfamily	SA3447
+complement C3d/Epstein-Barr virus receptor	FA2630
+complement C9  superfamily	SA2705
+complement c6  superfamily	SA2982
+complement factor H	FA2621
+complement factor H repeat homology	DA1030
+complement subcomponent C1q chain A  superfamily	SA3446
+complement subcomponent C1r  superfamily	SA1543
+conserved hypothetical protein YGL087c	FA3868
+coproporphyrinogen oxidase  superfamily	SA2437
+corticoliberin-endorpholiberin	FA0378
+corticotropin-lipotropin	FA0062
+coupling factor 6	FA2600
+creatine kinase	FA0189
+creatine kinase  superfamily	SA3151
+creatine kinase repeat homology	DA2198
+crk transforming protein	FA2068
+cut repeat homology	DA1484
+cuticle protein LCP1  superfamily	SA3522
+cyclic nucleotide-gated channel	FA1387
+cyclophilin homology	DA4314
+cystathionine beta-synthase	FA4101
+cystatin	FA0424
+cystatin  superfamily	SA2247
+cystatin homology	DA0932
+cystic fibrosis transmembrane conductance regulator	FA1225
+cytochrome P450 homology	DA4293
+cytochrome b	FA0040
+cytochrome b  superfamily	SA1161
+cytochrome b5	FA0042
+cytochrome b5 core homology	DA1032
+cytochrome b6 homology	DA1034
+cytochrome c	FA2814
+cytochrome c  superfamily	SA2325
+cytochrome c homology	DA1115
+cytochrome c1 heme protein  superfamily	SA2277
+cytochrome c1 heme protein homology	DA1188
+cytochrome-b5 reductase	FA1528
+cytochrome-b5 reductase homology	DA0702
+cytochrome-c oxidase chain I	FA0275
+cytochrome-c oxidase chain II	FA0273
+cytochrome-c oxidase chain III	FA0278
+cytochrome-c oxidase chain IV	FA1975
+cytochrome-c oxidase chain VIII	FA1388
+cytochrome-c oxidase chain VIII  superfamily	SA3103
+cytochrome-c oxidase chain VIc	FA1973
+cytokine receptor homology	DA1035
+cytoskeletal keratin	FA2640
+cytosol aminopeptidase	FA2195
+cytosol aminopeptidase  superfamily	SA1856
+dTMP kinase  superfamily	SA3095
+decorin	FA1548
+deoxyribonuclease I	FA1957
+dihydrolipoamide dehydrogenase	FA2178
+dihydrolipoamide dehydrogenase  superfamily	SA2028
+dihydrolipoamide dehydrogenase homology	DA2193
+dihydroorotate oxidase  superfamily	SA1036
+dimethylaniline monooxygenase	FA0961
+discoidin I amino-terminal homology	DA1162
+disintegrin homology	DA3135
+diuretic hormone homology	DA2251
+dnaJ amino-terminal homology - includes atypical sequences	DA1140
+double-stranded RNA-binding repeat homology	DA3333
+dual specificity phosphoprotein phosphatase 1  superfamily	SA2138
+dual specificity phosphoprotein phosphatase DUSP3  superfamily	SA2190
+dynein heavy chain, cytosolic	FA2461
+dystrop	FA1762
+eclosion hormone	FA1391
+elastin	FA2510
+electron transfer flavoprotein alpha chain  superfamily	SA2294
+electron transfer flavoprotein beta chain  superfamily	SA2285
+endopeptidase Clp chain P  superfamily	SA3130
+endothelin	FA1272
+endothelin  superfamily	SA3651
+endozepine	FA0270
+endozepine  superfamily	SA3182
+endozepine homology	DA1591
+enolase	FA0263
+enoyl-CoA hydratase homology	DA2303
+enoyl-CoA hydratase/3-hydroxyacyl-CoA dehydrogenase	FA2425
+enoyl-CoA hydratase/3-hydroxyacyl-CoA dehydrogenase  superfamily	SA3116
+enteropeptidase	FA2802
+eosinophil major basic protein precursor  superfamily	SA3693
+epidermal growth factor precursor	FA2203
+epithelial glycoprotein antigen GA733  superfamily	SA1458
+epoxide hydrolase	FA2123
+epoxide hydrolase  superfamily	SA3066
+erbA transforming protein homology	DA1038
+erythropoietin	FA2125
+erythropoietin receptor	FA1463
+estrogen receptor	FA1261
+ets DNA-binding domain homology	DA1039
+ets RII regulatory region homology	DA2946
+eubacterial ribosomal protein S15 homology	DA1164
+eukaryotic adenosylmethionine decarboxylase	FA0591
+eukaryotic adenosylmethionine decarboxylase  superfamily	SA3078
+eukaryotic type I DNA topoisomerase	FA2928
+eukaryotic type I DNA topoisomerase  superfamily	SA0618
+excision repair protein	FA1394
+ezrin	FA1227
+farnesyl-pyrophosphate synthetase	FA0959
+farnesyl-pyrophosphate synthetase  superfamily	SA3114
+ferredoxin [2Fe-2S]	FA1857
+ferredoxin [2Fe-2S] homology	DA1509
+ferritin	FA0114
+ferroxidase repeat homology	DA1166
+fibrillar collagen carboxyl-terminal homology	DA1608
+fibrinogen alpha chain	FA2514
+fibrinogen beta/gamma homology	DA1167
+fibrinogen disulfide ring homology	DA2150
+fibrinogen gamma chain	FA0107
+fibrinogen gamma chain  superfamily	SA3452
+fibroblast growth factor	FA1897
+fibronectin	FA2515
+fibronectin type I repeat homology	DA0706
+fibronectin type II repeat homology	DA1042
+fibronectin type III repeat homology	DA0708
+flavodoxin homology	DA1043
+folate-binding protein	FA2490
+folate-binding protein  superfamily	SA3442
+fork head DNA-binding domain homology	DA1216
+formate--tetrahydrofolate ligase homology	DA1482
+fos transforming protein	FA0403
+fos/jun DNA-binding domain homology	DA1295
+fructose-bisphosphate aldolase	FA2313
+fructose-bisphosphate aldolase  superfamily	SA0268
+fruit fly white protein  superfamily	SA3455
+fumarate hydratase	FA2189
+fumarate hydratase  superfamily	SA0652
+fumarate reductase flavoprotein	FA2938
+fumarate reductase flavoprotein  superfamily	SA1540
+galanin	FA0881
+gamma-glutamyltransferase	FA1884
+gamma-glutamyltransferase  superfamily	SA3136
+gap junction protein	FA2465
+gap junction protein  superfamily	SA1160
+gastric intrinsic factor  superfamily	SA3736
+gastrin	FA0772
+gelatinase A	FA2777
+gelatinase A  superfamily	SA2776
+gelsolin	FA2511
+gelsolin repeat homology	DA1044
+glia maturation factor beta	FA1923
+globin	FA0813
+globin homology	DA3143
+glucagon	FA1351
+glucocorticoid receptor	FA0312
+glucokinase regulator	FA1903
+glucose-6-phosphatase catalytic domain homology	DA4401
+glucose-6-phosphate dehydrogenase	FA2834
+glucose-6-phosphate dehydrogenase  superfamily	SA1873
+glucose-6-phosphate isomerase	FA0521
+glutamate dehydrogenase (NAD(P)+)	FA1467
+glutamate dehydrogenase (NAD(P)+)  superfamily	SA1469
+glutamate receptor homology	DA1197
+glutamate--ammonia ligase	FA0014
+glutamine--fructose-6-phosphate aminotransferase (isomerizing)  superfamily	SA2192
+glutamine--tRNA ligase homology	DA3280
+glutaredoxin  superfamily	SA2633
+glutaredoxin homology	DA3421
+glutathione transferase	FA2115
+glyceraldehyde-3-phosphate dehydrogenase	FA0733
+glycine C-acetyltransferase homology	DA4331
+glycine cleavage system protein H	FA2180
+glycine hydroxymethyltransferase	FA2120
+glycophorin	FA3233
+glycophorin  superfamily	SA3457
+glycoprotein hormone receptor	FA2133
+glycoprotein hormone receptor  superfamily	SA2142
+glycoprotein hormones alpha chain	FA0115
+granulocyte-macrophage colony-stimulating factor	FA0765
+guanylate cyclase catalytic domain homology	DA1045
+guanylate kinase homology	DA1110
+guanylin	FA1529
+haptoglobin	FA0161
+heat shock protein 70	FA0147
+heat shock protein 90	FA0146
+heat shock protein 90  superfamily	SA2757
+heavy-metal-associated homology	DA3896
+helix-destabilizing protein  superfamily	SA3555
+heme oxygenase	FA2367
+heme oxygenase (decyclizing)  superfamily	SA2439
+hemopexin	FA2629
+hemopexin repeat homology	DA1046
+heparin-binding EGF-like growth factor	FA1530
+hepatic lectin	FA0208
+hepatocyte growth factor	FA3242
+hepatocyte growth factor  superfamily	SA3240
+hepatocyte growth factor receptor  superfamily	SA3243
+herpesvirus ribonucleoside-diphosphate reductase large chain	FA0584
+hexokinase homology	DA1593
+histidine--tRNA ligase homology	DA1098
+histone H1	FA0168
+histone H2A	FA0782
+histone H2B	FA0166
+histone H3	FA0165
+histone H4	FA0163
+homeobox homology - Antp, Abd-B, lab, eve, and cad types	DA3316
+homeobox homology - POU-type	DA3331
+homeobox homology - diverse types	DA1048
+homeobox homology - prd-type	DA3332
+homeotic protein CDP	FA3211
+homeotic protein Hox A5	FA0938
+homeotic protein Hox A5  superfamily	SA2988
+homeotic protein Hox A7  superfamily	SA2922
+homeotic protein Hox B1	FA2745
+homeotic protein Hox B3	FA2980
+homeotic protein Hox B3  superfamily	SA2979
+homeotic protein Hox D4	FA2975
+homeotic protein Hox D4  superfamily	SA2978
+homeotic protein lim-1	FA3153
+homeotic protein lim-3	FA3248
+homeotic protein sal	FA1396
+hormone-sensitive lipase	FA2945
+human 6-phosphofructokinase	FA1247
+human 6-phosphofructokinase  superfamily	SA2181
+human FK506-binding protein FKBP51	FA3795
+human copper-transporting ATPase  superfamily	SA3408
+human cytochrome P450 CYP11B1	FA1961
+human cytochrome P450 CYP19	FA1965
+human cytochrome P450 CYP2D6	FA1968
+human cytochrome P450 CYP4B1	FA1966
+human cytochrome P450 CYP7A1	FA2934
+human diacylglycerol kinase  superfamily	SA3269
+human dynamin II	FA4303
+human ferredoxin--NADP+ reductase	FA2790
+human glutamate decarboxylase	FA1460
+human hexokinase I	FA1397
+human long-chain-fatty-acid--CoA ligase	FA2937
+human long-chain-fatty-acid--CoA ligase  superfamily	SA3415
+human methionyl aminopeptidase	FA2846
+human protein-tyrosine kinase abl	FA1671
+human protein-tyrosine-phosphatase cdc25A  superfamily	SA3069
+human protein-tyrosine-phosphatase cdc25C  superfamily	SA3067
+human transcription factor 3	FA1502
+human transcription factor 3  superfamily	SA1500
+hydroxymethylglutaryl-CoA lyase  superfamily	SA3622
+hydroxymethylglutaryl-CoA reductase	FA2027
+hypothetical protein HI0719  superfamily	SA3400
+hypoxanthine phosphoribosyltransferase	FA0365
+immunoglobulin C region	FA0230
+immunoglobulin V region	FA0906
+immunoglobulin homology - C2 type	DA1564
+inhibin	FA1733
+inositol-trisphosphate receptor	FA2478
+insulin	FA1270
+insulin receptor	FA2254
+insulin-like growth factor binding protein 1	FA1917
+insulysin  superfamily	SA2891
+int-1 transforming protein	FA0413
+integrin beta chain	FA2594
+intercellular adhesion molecule	FA2691
+intercellular adhesion molecule  superfamily	SA3343
+interferon alpha	FA0795
+interferon gamma	FA1735
+interferon gamma  superfamily	SA3459
+interleukin-1	FA1913
+interleukin-2	FA0786
+interleukin-2 receptor alpha chain	FA2080
+interleukin-3	FA2353
+interleukin-3  superfamily	SA2306
+interleukin-3 receptor beta chain	FA0960
+interleukin-4	FA2453
+interleukin-4  superfamily	SA1915
+interleukin-4 receptor	FA1849
+interleukin-5	FA1834
+interleukin-6	FA1920
+interleukin-7	FA1402
+interleukin-7 receptor	FA2755
+interphotoreceptor retinoid-binding protein	FA2667
+interstitial collagenase	FA0621
+interstitial collagenase  superfamily	SA2355
+involucrin	FA2452
+jun transforming protein	FA2580
+kappa-casein  superfamily	SA3463
+kexin	FA0624
+kinase interaction domain homology	DA1566
+kinase-related protein ros	FA2234
+kinase-related transforming protein	FA0419
+kinase-related transforming protein  superfamily	SA3255
+kinesin heavy chain	FA1228
+kinesin motor domain homology	DA1175
+kinesin-related protein KIF2  superfamily	SA2984
+kinesin-related protein KLPA  superfamily	SA2703
+kinesin-related protein unc-104	FA2601
+kininogen	FA0183
+kringle homology - selected coagulation factors	DA1052
+laminin G repeat homology	DA3817
+laminin beta-1 chain	FA0236
+laminin beta-1 chain  superfamily	SA3160
+laminin-type EGF-like homology	DA3816
+lens fiber membrane major intrinsic protein	FA2618
+leptin	FA1594
+leucine-rich alpha-2-glycoprotein repeat homology - set 	DA3840
+leucine-rich alpha-2-glycoprotein repeat homology - set 1	DA3840
+leucine-rich alpha-2-glycoprotein repeat homology - set 2	DA2772
+leucine-rich alpha-2-glycoprotein repeat homology - set 3	DA2773
+leucine-rich alpha-2-glycoprotein repeat homology - set 4	DA3841
+leukemia inhibitory factor	FA1410
+leukocyte common antigen cytosolic domain homology	DA1105
+leukotriene-A4 hydrolase	FA1411
+link protein repeat homology	DA3326
+lipocalin	FA2606
+lipocalin homology	DA1095
+lipopolysaccharide-binding protein	FA1412
+lipoyl/biotin-binding homology	DA1596
+lipoyl/biotin-binding homology - biotin subset	DA3013
+lipoyl/biotin-binding homology - lipoyl subset	DA2944
+long-chain alcohol dehydrogenase homology	DA1520
+lysine--tRNA ligase	FA0550
+lysosomal integral membrane protein II  superfamily	SA2197
+lysosome-associated membrane protein	FA2485
+lysosome-associated membrane protein  superfamily	SA1797
+lysozyme c	FA0535
+macrophage colony-stimulating factor	FA1457
+macrophage colony-stimulating factor 1 receptor	FA2074
+macrophage inflammatory protein  superfamily	SA1416
+maf homology	DA1512
+major prion protein	FA2685
+malate dehydrogenase	FA2136
+malate dehydrogenase (oxaloacetate-decarboxylating)  superfamily	SA2128
+mammalian acid phosphatase  superfamily	SA1417
+mammalian alpha-amylase	FA0020
+mammalian cytochrome-c oxidase chain VIIa	FA2260
+mammalian cytochrome-c oxidase chain VIa  superfamily	SA1525
+mammalian cytochrome-c oxidase chain VIb  superfamily	SA1526
+mammalian cytochrome-c oxidase chain Va  superfamily	SA1523
+mammalian cytochrome-c oxidase chain Vb  superfamily	SA1524
+mammalian defensin  superfamily	SA3623
+mammalian peptidyl-dipeptidase A	FA2217
+mammalian stearoyl-CoA desaturase	FA2249
+mannose 6-phosphate receptor, cation-dependent	FA1418
+mannose 6-phosphate receptor, cation-independent	FA2454
+mannose-binding lectin	FA0534
+mas transforming protein	FA2070
+matrix metalloproteinase homology	DA3692
+membrane dipeptidase  superfamily	SA2309
+membrane glycoprotein 2 homology	DA1901
+membrane-bound guanylate cyclase	FA2732
+membrane-bound guanylate cyclase  superfamily	SA0824
+meprin A	FA2410
+meprin A  superfamily	SA3085
+metalloproteinase inhibitor	FA2233
+metalloproteinase inhibitor  superfamily	SA2231
+metallothionein	FA0374
+methionine adenosyltransferase	FA2057
+methylated-DNA--protein-cysteine S-methyltransferase	FA0949
+methylated-DNA--protein-cysteine S-methyltransferase  superfamily	SA2915
+methylated-DNA--protein-cysteine S-methyltransferase homology	DA2165
+methylenetetrahydrofolate dehydrogenase	FA2841
+methylenetetrahydrofolate dehydrogenase (NAD+)  superfamily	SA2833
+methylenetetrahydrofolate dehydrogenase (NAD+) homology	DA1488
+mevalonate kinase  superfamily	SA2761
+microtubule-associated protein MAP2b	FA2641
+microtubule-associated protein tau	FA0852
+milk fat globule protein	FA2460
+mitochondrial processing peptidase alpha chain	FA1275
+mitochondrial processing peptidase alpha chain  superfamily	SA2322
+monophenol monooxygenase	FA2121
+monophenol monooxygenase  superfamily	SA2122
+motilin	FA1953
+mouse gene T protein	FA3774
+multicatalytic endopeptidase complex chain C9	FA2045
+multidrug resistance protein	FA0089
+mutT domain homology	DA1211
+myb DNA-binding repeat homology	DA1057
+myb transforming protein	FA3125
+myc transforming protein	FA0404
+myc transforming protein homology	DA1176
+myelin P0 protein	FA2599
+myelin P2 protein	FA2668
+myelin P2 protein  superfamily	SA2258
+myelin basic protein	FA0218
+myelin proteolipid protein	FA0250
+myeloperoxidase	FA1978
+myeloperoxidase homology	DA4420
+myosin MYO2	FA2673
+myosin heavy chain	FA2471
+myosin heavy chain 95F	FA2467
+myosin motor domain homology	DA1177
+natriuretic peptide A precursor	FA2481
+natriuretic peptide C precursor	FA2482
+natriuretic peptide-binding domain homology	DA1503
+neprilysin	FA0615
+neprilysin  superfamily	SA3086
+nerve growth factor beta chain	FA0816
+nerve growth factor receptor	FA1902
+nerve growth factor receptor, high affinity	FA2158
+nerve growth factor receptor, high affinity  superfamily	SA2157
+neural cell adhesion molecule	FA0789
+neural cell adhesion molecule L1	FA2464
+neural cell adhesion molecule L1  superfamily	SA1426
+neuroendocrine protein 7B2	FA2003
+neurofilament triplet H protein	FA2638
+neurokinin B precursor	FA2577
+neurotrophic receptor ror	FA3247
+nidogen	FA2620
+nitric-oxide synthase	FA2798
+nitric-oxide synthase  superfamily	SA2797
+nonhistone chromosomal protein HMG-17	FA2623
+nonhistone chromosomal protein HMG-2	FA2624
+nonhistone chromosomal protein HMG-I  superfamily	SA1427
+nucleolin	FA2508
+nucleophosmin	FA2506
+nucleotide pyrophosphatase  superfamily	SA2326
+oleoyl-[acyl-carrier-protein] hydrolase  superfamily	SA1339
+oleoyl-[acyl-carrier-protein] hydrolase homology	DA1479
+oligo(A) synthetase	FA0901
+ornithine carbamoyltransferase	FA1621
+ornithine carbamoyltransferase  superfamily	SA0822
+ornithine decarboxylase	FA2726
+ornithine decarboxylase  superfamily	SA0594
+ornithine--oxo-acid aminotransferase	FA0586
+orotate phosphoribosyltransferase homology	DA1123
+osteocalcin	FA0124
+osteonectin	FA0770
+osteonectin  superfamily	SA3456
+osteonectin homology	DA1125
+osteopontin	FA2335
+osteopontin  superfamily	SA1145
+oxytocin-neurophysin	FA0815
+paired box homology	DA1198
+paired box transcription factor Pax-6  superfamily	SA3737
+pancreatic hormone	FA0289
+pancreatic ribonuclease	FA1959
+pancreatic secretory trypsin inhibitor	FA0388
+pancreatic secretory trypsin inhibitor  superfamily	SA2723
+papain	FA0799
+parathyroid hormone homology	DA1100
+parathyroid hormone-related protein	FA2002
+parvalbumin	FA1614
+parvalbumin  superfamily	SA1617
+pepsin	FA0880
+pepsin  superfamily	SA3174
+peptidylglycine monooxygenase I homology	DA1192
+peptidylglycine monooxygenase II	FA0633
+peptidylprolyl isomerase	FA2204
+peptidylprolyl isomerase  superfamily	SA0540
+phenylalanine 4-monooxygenase	FA0487
+phenylalanine 4-monooxygenase  superfamily	SA3290
+phenylethanolamine N-methyltransferase	FA1433
+phosducin	FA1146
+phosphatidylcholine--sterol acyltransferase	FA1040
+phosphatidylinositol 3-kinase  superfamily	SA3409
+phosphoenolpyruvate carboxykinase	FA0639
+phosphoesterase core homology	DA3772
+phosphoglucomutase	FA1155
+phosphogluconate dehydrogenase (decarboxylating)  superfamily	SA2129
+phosphoglycerate kinase	FA0801
+phosphoglycerate mutase	FA0539
+phosphoglycerate mutase homology	DA3761
+phospholamban	FA1226
+phospholipase A2	FA0296
+phospholipase A2 receptor  superfamily	SA3440
+phosphoprotein phosphatase	FA0827
+phosphoprotein phosphatase  superfamily	SA3702
+phosphoprotein phosphatase homology	DA1599
+phosphoribosylamine--glycine ligase homology	DA0710
+phosphoribosylformylglycinamidine cyclo-ligase homology	DA1184
+phosphoribosylglycinamide formyltransferase homology	DA1185
+phosphorylase  superfamily	SA3042
+pituitary glycoprotein hormone beta chain	FA0923
+plasma protein S	FA1994
+plasmin	FA2317
+plasminogen-related protein precursor homology	DA1573
+plastin	FA1224
+plastin  superfamily	SA3346
+plastoquinol--plastocyanin reductase 17K protein homology	DA1033
+platelet glycoprotein Ib beta chain  superfamily	SA3468
+platelet-derived growth factor	FA0415
+platelet-derived growth factor  superfamily	SA3254
+pleckstrin repeat homology	DA1061
+pleiotrophin	FA0967
+poliovirus receptor	FA2670
+poliovirus receptor  superfamily	SA3510
+polyubiquitin 3	FA2875
+polyubiquitin 4	FA2898
+porin  superfamily	SA2709
+porphobilinogen synthase	FA2533
+potassium channel protein drk1	FA2503
+probable hormone receptor N10, nuclear	FA2643
+procollagen-proline,2-oxoglutarate 4-dioxygenase alpha chain	FA0731
+proenkephalin	FA0092
+proenkephalin  superfamily	SA3137
+profilin	FA1240
+progesterone receptor	FA2642
+prolactin	FA0375
+proliferating cell nuclear antigen	FA0940
+proline-rich protein	FA2262
+protein 4.1 membrane-binding domain homology	DA1111
+protein HC  superfamily	SA3144
+protein disulfide-isomerase	FA1334
+protein kinase A-raf	FA0920
+protein kinase C C2 region homology	DA1059
+protein kinase C alpha	FA0190
+protein kinase C delta	FA0588
+protein kinase C delta  superfamily	SA3246
+protein kinase C zeta	FA1926
+protein kinase C zinc-binding repeat homology	DA1180
+protein kinase TIK	FA3311
+protein kinase akt	FA1843
+protein kinase homology	DA0934
+protein phosphatase inhibitor 1	FA2542
+protein-glutamine gamma-glutamyltransferase	FA1885
+protein-lysine 6-oxidase  superfamily	SA3469
+protein-tyrosine kinase ZAP-70	FA2795
+protein-tyrosine kinase axl	FA2282
+protein-tyrosine kinase axl  superfamily	SA2283
+protein-tyrosine kinase fps  superfamily	SA3194
+protein-tyrosine kinase ret	FA2075
+protein-tyrosine kinase src	FA0414
+protein-tyrosine kinase tec	FA1931
+protein-tyrosine kinase, receptor type tie	FA3285
+protein-tyrosine kinase, receptor type tie  superfamily	SA3286
+protein-tyrosine-phosphatase homology	DA1147
+protein-tyrosine-phosphatase string  superfamily	SA2981
+protein-tyrosine-phosphatase, low molecular weight	FA2183
+protein-tyrosine-phosphatase, low molecular weight  superfamily	SA2184
+protein-tyrosine-phosphatase, nonreceptor type 1	FA1348
+protein-tyrosine-phosphatase, nonreceptor type 12	FA1921
+protein-tyrosine-phosphatase, nonreceptor type 14	FA2395
+protein-tyrosine-phosphatase, nonreceptor type 3	FA1845
+protein-tyrosine-phosphatase, nonreceptor type 5  superfamily	SA2983
+protein-tyrosine-phosphatase, nonreceptor type 6	FA1244
+protein-tyrosine-phosphatase, nonreceptor type 9  superfamily	SA2149
+protein-tyrosine-phosphatase, receptor type N	FA2168
+protein-tyrosine-phosphatase, receptor type PTPBR7	FA2169
+protein-tyrosine-phosphatase, receptor type alpha	FA2172
+protein-tyrosine-phosphatase, receptor type gamma	FA2141
+protein-tyrosine-phosphatase, receptor type mu	FA2145
+proteoglycan 10K core protein	FA2525
+proteoglycan amino-terminal homology - includes atypical sequences	DA1567
+proteoglycan carboxyl-terminal homology	DA1568
+proteoglycan link protein	FA0808
+prothymosin alpha	FA1319
+protozoan myosin heavy chain IB  superfamily	SA2704
+pulmonary surfactant protein B	FA2607
+pulmonary surfactant protein C	FA2608
+pulmonary surfactant protein D	FA2468
+purH bifunctional enzyme	FA2849
+purine-nucleoside phosphorylase  superfamily	SA1986
+pyruvate carboxylase	FA2020
+pyruvate dehydrogenase (lipoamide) alpha chain	FA2305
+pyruvate dehydrogenase (lipoamide) alpha chain  superfamily	SA0599
+pyruvate dehydrogenase (lipoamide) beta chain	FA2044
+pyruvate kinase	FA0188
+ras transforming protein	FA2318
+ras-specific GAP catalytic domain homology	DA1205
+rat acidic ribosomal protein P0	FA0333
+rat acidic ribosomal protein P1	FA0336
+rat ribosomal protein L12	FA2665
+rat ribosomal protein L17	FA2560
+rat ribosomal protein L18	FA0873
+rat ribosomal protein L18a	FA2564
+rat ribosomal protein L19	FA2565
+rat ribosomal protein L21	FA2566
+rat ribosomal protein L24	FA1804
+rat ribosomal protein L26	FA2567
+rat ribosomal protein L26  superfamily	SA3484
+rat ribosomal protein L27	FA2568
+rat ribosomal protein L27a	FA0348
+rat ribosomal protein L29	FA1805
+rat ribosomal protein L3	FA2573
+rat ribosomal protein L30	FA0877
+rat ribosomal protein L30  superfamily	SA3486
+rat ribosomal protein L31	FA0864
+rat ribosomal protein L31  superfamily	SA3482
+rat ribosomal protein L32	FA0340
+rat ribosomal protein L34	FA2569
+rat ribosomal protein L35a	FA0871
+rat ribosomal protein L35a  superfamily	SA3483
+rat ribosomal protein L36a	FA0878
+rat ribosomal protein L37	FA2663
+rat ribosomal protein L37a	FA2571
+rat ribosomal protein L38	FA2572
+rat ribosomal protein L39	FA2664
+rat ribosomal protein L39  superfamily	SA3487
+rat ribosomal protein L4	FA0874
+rat ribosomal protein L5	FA2574
+rat ribosomal protein L7	FA0867
+rat ribosomal protein L7a	FA0335
+rat ribosomal protein S10	FA2647
+rat ribosomal protein S12	FA0857
+rat ribosomal protein S12  superfamily	SA2223
+rat ribosomal protein S13	FA2224
+rat ribosomal protein S13  superfamily	SA2225
+rat ribosomal protein S17	FA0331
+rat ribosomal protein S19  superfamily	SA3108
+rat ribosomal protein S21	FA2650
+rat ribosomal protein S24	FA0329
+rat ribosomal protein S25	FA2651
+rat ribosomal protein S26	FA0856
+rat ribosomal protein S3	FA0859
+rat ribosomal protein S4	FA0862
+rat ribosomal protein S6	FA0318
+rat ribosomal protein S8	FA2656
+rat ribosomal protein S9	FA1002
+recQ helicase homology	DA4308
+rel homology	DA1097
+rel transforming protein	FA0443
+replication licensing factor MCM2	FA4339
+replication licensing factor MCM5	FA4342
+replication protein A1  superfamily	SA1738
+retinal degeneration slow protein	FA0957
+retinoic acid receptor alpha	FA1496
+retinoic acid receptor alpha  superfamily	SA2288
+retroviral proteinase	FA2000
+rfp transforming protein  superfamily	SA3288
+rhodopsin kinase	FA3234
+rhodopsin kinase  superfamily	SA3262
+ribitol dehydrogenase	FA2965
+ribonuclease inhibitor	FA1438
+ribonucleoprotein La	FA1148
+ribonucleoprotein repeat homology	DA1067
+ribose-phosphate pyrophosphokinase catalytic chain	FA2729
+ribose-phosphate pyrophosphokinase catalytic chain  superfamily	SA0622
+ribosomal protein CEP52 homology	DA1579
+ribosomal protein S10 homology	DA3435
+ribosomal protein S27a homology	DA1605
+ribosomal protein S6 kinase	FA2078
+ribosomal protein S6 kinase II	FA1439
+ryanodine receptor	FA1808
+salivary glue protein  superfamily	SA3458
+saposin	FA2289
+saposin repeat homology - includes atypical sequences	DA1477
+scavenger receptor cysteine-rich domain homology - includes atypical sequences	DA1214
+secretory component	FA2694
+secretory component  superfamily	SA3107
+serine carboxypeptidase  superfamily	SA1830
+serine proteinase easter  superfamily	SA3221
+serine--pyruvate aminotransferase	FA2109
+serine--pyruvate aminotransferase  superfamily	SA3299
+serum albumin	FA0958
+serum albumin  superfamily	SA1552
+serum albumin repeat homology	DA1068
+serum response factor DNA-binding domain homology	DA1478
+severin	FA2463
+severin  superfamily	SA3068
+sex hormone-binding globulin homology	DA2304
+sex steroid-binding protein	FA2495
+short-chain alcohol dehydrogenase homology	DA1473
+single-stranded DNA-binding protein homology	DA2199
+ski transforming protein	FA2069
+small nuclear ribonucleoprotein U1A	FA1737
+small nuclear ribonucleoprotein U1A  superfamily	SA2236
+smooth muscle protein SM22	FA2352
+smooth muscle protein SM22  superfamily	SA1613
+smooth muscle protein SM22 homology	DA1603
+sodium channel protein	FA2501
+soluble guanylate cyclase	FA1981
+soluble guanylate cyclase  superfamily	SA0823
+somatomedin B homology	DA1213
+somatostatin	FA2034
+spasmolytic protein	FA2265
+spasmolytic protein  superfamily	SA3512
+spectrin alpha chain	FA2679
+spectrin beta-G chain	FA1553
+spectrin/dystrophin repeat homology	DA1149
+sperm histone	FA2532
+sperm-binding glycoprotein ZP2	FA2474
+sperm-binding glycoprotein ZP3	FA1446
+sperm-binding glycoprotein ZP3  superfamily	SA3065
+spermatid transition protein 1	FA2491
+spermatid transition protein 2	FA2492
+stage III sporulation protein homology	DA3767
+statherin/histatin signal sequence homology	DA2758
+stathmin	FA1448
+stearoyl-CoA desaturase homology	DA2248
+steroid hormone receptor Ad4BP	FA2291
+submandibular gland 14K protein  superfamily	SA3053
+substance P precursor	FA1347
+subtilisin homology	DA0936
+subtilisin-like proteinase PACE4	FA2789
+subtilisin-like proteinase PACE4  superfamily	SA1551
+succinate--CoA ligase (ADP-forming) alpha chain	FA0554
+sucrase/isomaltase homology	DA1601
+sulfite oxidase	FA2784
+superoxide dismutase	FA2847
+synaptotagmin	FA2493
+system b(0,+) amino acid transporter-involved protein	FA1585
+tartrate-resistant acid phosphatase	FA1794
+tenascin	FA1450
+tetranectin  superfamily	SA1576
+thiamin pyrophosphate-binding domain homology	DA1200
+thimet oligopeptidase	FA1731
+thimet oligopeptidase  superfamily	SA3087
+thioredoxin	FA1220
+thioredoxin  superfamily	SA1577
+thioredoxin homology	DA1079
+thiosulfate sulfurtransferase	FA2039
+threonine dehydratase  superfamily	SA0519
+threonine--tRNA ligase  superfamily	SA0649
+thrombin	FA2059
+thrombomodulin	FA2578
+thrombospondin 1	FA1555
+thrombospondin 3	FA2470
+thrombospondin type 1 repeat homology	DA1201
+thrombospondin type 1 repeat homology - 6 repeat proteins	DA1556
+thymidine kinase	FA0191
+thymidylate synthase homology	DA1604
+thymosin beta	FA2063
+thyroglobulin type I repeat homology	DA1619
+thyroid hormone receptor	FA0408
+thyroid peroxidase	FA1977
+thyroliberin precursor	FA2032
+thyroliberin precursor  superfamily	SA3261
+tissue factor	FA0991
+tissue factor pathway inhibitor	FA2062
+tissue plasminogen activator	FA2081
+transcription factor AP-2	FA4294
+transcription factor Brn-5	FA3339
+transcription factor ER81	FA3002
+transcription factor GATA-1  superfamily	SA3345
+transcription factor HNF-1	FA2759
+transcription factor HNF-1  superfamily	SA3115
+transcription factor HNF-3  superfamily	SA1673
+transcription factor Oct-1	FA1474
+transcription factor Oct-3  superfamily	SA3341
+transcription factor Pit-1	FA3330
+transcription factor elg  superfamily	SA3270
+transcription factor erg	FA2072
+transcription factor ets	FA0411
+transcription factor isl-1	FA3249
+transcription factor isl-1  superfamily	SA3146
+transcription initiation factor IIB	FA2286
+transcription initiation factor IIB  superfamily	SA2287
+transcription initiation factor IIB homology	DA4307
+transferrin	FA0907
+transferrin receptor	FA2603
+transferrin repeat homology	DA3413
+transforming growth factor alpha precursor	FA2094
+transforming growth factor beta receptor type III	FA2598
+transitional endoplasmic reticulum ATPase	FA2084
+translation elongation factor 2	FA1768
+translation elongation factor Tu	FA0753
+translation elongation factor eEF-1 beta chain  superfamily	SA1393
+translation elongation factor eEF-1 gamma chain	FA2148
+translation initiation factor eIF-2 alpha chain	FA1399
+translation initiation factor eIF-2 gamma chain	FA4335
+translation initiation factor eIF-4A  superfamily	SA0762
+translation initiation factor eIF-4E	FA1400
+translation initiation factor eIF-5A	FA0761
+translation releasing factor eRF-1	FA1769
+transthyretin	FA0433
+trefoil homology	DA1080
+triacylglycerol lipase	FA1945
+triacylglycerol lipase, lingual	FA1946
+trichohyalin	FA2469
+triose-phosphate isomerase	FA0175
+troponin I	FA0400
+troponin T	FA0911
+trpG homology	DA1578
+trypsin	FA2064
+trypsin  superfamily	SA2887
+trypsin homology	DA1082
+tubulin	FA0922
+tumor necrosis factor	FA2015
+tumor necrosis factor receptor type 1	FA1242
+tumor necrosis factor receptor type 2	FA1453
+type I dihydrofolate reductase	FA0353
+type I dihydrofolate reductase homology	DA1590
+ubiquinol--cytochrome-c reductase 11K protein  superfamily	SA2275
+ubiquinol--cytochrome-c reductase 11K protein homology	DA1196
+ubiquinol--cytochrome-c reductase 14K protein  superfamily	SA2276
+ubiquitin	FA2894
+ubiquitin / rat ribosomal protein S27a	FA0427
+ubiquitin homology	DA1217
+ubiquitin--protein ligase homology	DA4408
+ubiquitin-activating enzyme E1	FA1454
+ubiquitin/ribosomal protein CEP52	FA0426
+unassigned collagens	FA3714
+uracil-DNA glycosylase  superfamily	SA1877
+urate oxidase	FA2338
+urate oxidase  superfamily	SA1150
+urokinase-type plasminogen activator	FA0425
+urokinase-type plasminogen activator  superfamily	SA3524
+uromodulin	FA2457
+uteroglobin  superfamily	SA2449
+vacuolar H+-transporting ATPase 16K chain	FA2009
+vacuolar H+-transporting ATPase 69K chain	FA2957
+versican	FA3336
+vertebrate rhodopsin	FA2690
+villin headpiece homology	DA1152
+vinculin amino-terminal homology	DA1517
+vinculin carboxyl-terminal homology	DA1516
+von Willebrand factor	FA2686
+von Willebrand factor type A repeat homology	DA2160
+von Willebrand factor type C repeat homology	DA1620
+xanthine dehydrogenase	FA2637
+xanthine dehydrogenase  superfamily	SA2695
+xylulokinase  superfamily	SA3185
+yeast coatomer complex alpha chain  superfamily	SA3451
+yeast isocitrate dehydrogenase	FA1870
+zinc transporter ZnT-2  superfamily	SA3398

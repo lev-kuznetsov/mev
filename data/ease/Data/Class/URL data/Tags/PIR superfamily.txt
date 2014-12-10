@@ -1,0 +1,2244 @@
+(S)-2-hydroxy-acid oxidase	SF000138
+1,4-alpha-glucan branching enzyme	SF000463
+1-phosphatidylinositol-4,5-bisphosphate phosphodiesterase I	SF000956
+1-phosphatidylinositol-4,5-bisphosphate phosphodiesterase II	SF000952
+1-phosphatidylinositol-4,5-bisphosphate phosphodiesterase delta-1	SF000950
+1-phosphatidylinositol-4-phosphate 5-kinase	SF000679
+11beta-hydroxysteroid dehydrogenase	SF000126
+14-3-3 protein	SF000868
+2',3'-cyclic-nucleotide 3'-phosphodiesterase	SF000970
+3',5'-cyclic-GMP phosphodiesterase 5A	SF000967
+3',5'-cyclic-GMP phosphodiesterase alpha chain	SF000968
+3',5'-cyclic-GMP phosphodiesterase gamma chain	SF000969
+3',5'-cyclic-nucleotide phosphodiesterase 1B, calmodulin-dependent	SF000960
+3',5'-cyclic-nucleotide phosphodiesterase 8A, high affinity cAMP-specific	SF000963
+3',5'-cyclic-nucleotide phosphodiesterase, cGMP-stimulated	SF000961
+3-demethylubiquinone-9 3-O-methyltransferase	SF000393
+3-hydroxyacyl-CoA dehydrogenase	SF000105
+3-hydroxyisobutyrate dehydrogenase	SF000103
+3-isopropylmalate dehydrogenase	SF000115
+3beta-hydroxy-Delta5-steroid dehydrogenase	SF000123
+4-aminobutyrate transaminase	SF000521
+4-chlorobenzoate-CoA dehalogenase 30K chain	SF001331
+5'-methylthioadenosine phosphorylase	SF006370
+5'-nucleotidase	SF000902
+5-aminolevulinate synthase	SF000444
+6-phosphofructo-2-kinase / fructose-2,6-bisphosphate 2-phosphatase	SF000709
+ADP,ATP carrier protein	SF002458
+ADP-ribosyl cyclase CD38	SF005736
+ADP-ribosylation factor	SF001711
+AIDS trans-regulatory splicing protein	SF003865
+AIDS vif protein	SF003853
+AMP deaminase	SF001251
+AMP-activated protein kinase	SF000590
+ATP receptor P2u	SF005445
+ATP-dependent 26S proteinase	SF001171
+ATP-dependent RNA helicase DBP1	SF001321
+ATP-dependent RNA helicase DHH1	SF001323
+ATP-dependent serine proteinase La	SF001174
+ATP-gated ion channel P2X4 receptor	SF005713
+ATPase inhibitor, mitochondrial	SF001663
+AU-specific RNA-binding protein AUH	SF001407
+Agrobacterium beta-glucosidase	SF001079
+Alzheimer's disease amyloid beta protein	SF002381
+Arabidopsis glycine-rich protein 3	SF002682
+Arabidopsis thaliana beta-tubulin cofactor-like protein	SF016991
+Arabidopsis thaliana hypothetical protein F14P22.170	SF017044
+Arabidopsis thaliana hypothetical protein F24G16.220	SF016995
+Archaeoglobus fulgidus probable erpK protein	SF004811
+Archaeoglobus probable dCMP deaminase	SF006019
+B-cell CLL/lymphoma 5 protein	SF029249
+B-cell activation protein BL34	SF005770
+B-cell surface antigen CD20	SF001995
+B-cell surface glycoprotein blast-1	SF001973
+B-lymphocyte restricted antigen B7	SF005741
+B7-2 antigen	SF001967
+BKBP-type peptidylprolyl isomerase	SF001468
+BRcore-Z protein	SF029264
+Bloom's syndrome helicase	SF001324
+C-reactive protein	SF002473
+C1-tetrahydrofolate synthase	SF001576
+C4b-binding protein alpha chain	SF002485
+CARS cyclophilin	SF005103
+CAT3 protein	SF003324
+CCAAT/enhancer-binding protein alpha	SF005879
+CD27 antigen	SF001966
+CD40 receptor-associated protein CAP-1	SF015614
+CD9 antigen	SF002419
+CDPdiacylglycerol-inositol 3-phosphatidyltransferase	SF000848
+CHD-1 protein	SF001326
+COX10 protein	SF001773
+CTP synthase	SF001575
+Ca2+/calmodulin-dependent protein kinase	SF000595
+Ca2+/calmodulin-dependent protein kinase I	SF000593
+Ca2+/calmodulin-dependent protein kinase II	SF000594
+Caenorhabditis elegans 26S proteasome regulatory complex chain p44.5	SF006840
+Caenorhabditis elegans F54F2.8 protein	SF016541
+Caenorhabditis elegans K06H7.4 protein	SF005519
+Caenorhabditis elegans ZK686.3 protein	SF005990
+Caenorhabditis elegans ZK688.6 protein	SF016539
+Caenorhabditis elegans hypothetical protein B0547.1	SF016373
+Caenorhabditis elegans hypothetical protein C01G8.2	SF015974
+Caenorhabditis elegans hypothetical protein C05D9.1	SF028863
+Caenorhabditis elegans hypothetical protein C18E9.2	SF016415
+Caenorhabditis elegans hypothetical protein C33A11.2	SF028899
+Caenorhabditis elegans hypothetical protein C33H5.9	SF017418
+Caenorhabditis elegans hypothetical protein C44B7.2	SF028911
+Caenorhabditis elegans hypothetical protein C54H2.5	SF015972
+Caenorhabditis elegans hypothetical protein D2089.5	SF016410
+Caenorhabditis elegans hypothetical protein F08B4.6	SF015800
+Caenorhabditis elegans hypothetical protein F08C6.3	SF008032
+Caenorhabditis elegans hypothetical protein F13G3.4	SF015816
+Caenorhabditis elegans hypothetical protein F14E5.2	SF016409
+Caenorhabditis elegans hypothetical protein F21D5.1	SF016408
+Caenorhabditis elegans hypothetical protein F23C8.4	SF017426
+Caenorhabditis elegans hypothetical protein F30A10.3	SF028895
+Caenorhabditis elegans hypothetical protein F54D5.11	SF016401
+Caenorhabditis elegans hypothetical protein K01G5.6	SF028888
+Caenorhabditis elegans hypothetical protein K08F4.3	SF016400
+Caenorhabditis elegans hypothetical protein K11D12.2	SF016361
+Caenorhabditis elegans hypothetical protein T01G9.2b	SF015809
+Caenorhabditis elegans hypothetical protein T13F2.2	SF015990
+Caenorhabditis elegans hypothetical protein T19H12.2	SF017414
+Caenorhabditis elegans hypothetical protein T21C9.4	SF016393
+Caenorhabditis elegans hypothetical protein T22D1.4	SF016360
+Caenorhabditis elegans hypothetical protein T22D1.9	SF015965
+Caenorhabditis elegans hypothetical protein T27F2.1	SF015989
+Caenorhabditis elegans hypothetical protein W08F4.8	SF017420
+Caenorhabditis elegans hypothetical protein Y116A8C.20	SF015790
+Caenorhabditis elegans hypothetical protein Y17G7B.2b	SF016387
+Caenorhabditis elegans hypothetical protein Y37A1B.5	SF015987
+Caenorhabditis elegans hypothetical protein Y69E1A.5	SF015699
+Caenorhabditis elegans hypothetical protein ZC395.10	SF015986
+Caenorhabditis elegans hypothetical protein ZK1251.3	SF015596
+Caenorhabditis elegans hypothetical protein ZK550.6	SF016380
+Caenorhabditis elegans hypothetical protein ZK892.2	SF016378
+Caenorhabditis transposon Tc1 hypothetical 32K protein	SF004623
+D-amino-acid oxidase	SF000189
+DNA excision repair cross-complementing protein ERCC3	SF003332
+DNA excision repair protein XPAC	SF003331
+DNA mismatch repair protein	SF005574
+DNA mismatch repair protein MSH2	SF005813
+DNA mismatch repair protein mutS	SF005814
+DNA nucleotidylexotransferase	SF000817
+DNA primase 50K chain	SF005538
+DNA-directed DNA polymerase II	SF000798
+DNA-directed DNA polymerase beta	SF000790
+DNA-directed DNA polymerase gamma chain	SF005721
+DNA-directed DNA polymerase, mitochondrial	SF000797
+DNA-directed RNA polymerase 132K polypeptide	SF000765
+DNA-directed RNA polymerase II chain RPB3	SF000749
+DNA-directed RNA polymerase II chain RPB9	SF000780
+DNA-directed RNA polymerase chain ABC10 alpha	SF006829
+DNA-directed RNA polymerase chain L	SF005592
+DNA-directed RNA polymerase chain RPB5	SF000747
+DNA-directed RNA polymerase chain RPB8	SF000779
+DNA-directed RNA polymerase chain RPO26	SF000778
+DPR1 protein	SF003209
+Drosophila 32K boundary element-associated factor	SF011842
+Drosophila 576K microtubule-associated protein homolog	SF010336
+Drosophila 85K protein l(1)zw10	SF011123
+Drosophila G1 progression negative regulator Rux	SF011843
+Drosophila ORD protein	SF011848
+Drosophila Su(var)3-9 protein	SF009343
+Drosophila adenylate cyclase	SF001446
+Drosophila cornichon protein	SF009420
+Drosophila developmental protein sina	SF028730
+Drosophila follicle cell protein 3C-1	SF010281
+Drosophila giant lens protein	SF009392
+Drosophila grainy-head protein	SF003041
+Drosophila heat shock transcription factor HSF	SF002598
+Drosophila histidine decarboxylase	SF001344
+Drosophila hypothetical 19.8K protein (hay region)	SF010307
+Drosophila hypothetical 30K protein (DmRP140 5' region)	SF010306
+Drosophila hypothetical protein 63B12.11	SF011124
+Drosophila hypothetical protein 63B12.13	SF010013
+Drosophila hypothetical protein EG_22E5.6	SF014261
+Drosophila hypothetical protein EG_22E5.7	SF014262
+Drosophila hypothetical protein EG_30B8.7	SF008678
+Drosophila hypothetical protein EG_34F3.5	SF014263
+Drosophila hypothetical protein EG_8D8.1	SF014264
+Drosophila inscuteable protein	SF011846
+Drosophila male-specific lethal-3 protein	SF003042
+Drosophila maternal effect protein oskar	SF011847
+Drosophila melanogaster hypothetical protein 115C2.8	SF029266
+Drosophila melanogaster hypothetical protein 171D11.5	SF029267
+Drosophila melanogaster hypothetical protein 80H7.11	SF029268
+Drosophila melanogaster hypothetical protein 80H7.2	SF029269
+Drosophila melanogaster protein Cs	SF015154
+Drosophila membrane protein patched	SF004632
+Drosophila multifunctional amino acid-tRNA ligase	SF001539
+Drosophila myofibrillar protein flightin	SF009428
+Drosophila neurotrophic receptor ror	SF000625
+Drosophila ovarian tumor protein	SF004630
+Drosophila protein oaf	SF010074
+Drosophila protein-tyrosine kinase abl	SF000635
+Drosophila purine synthesis multifunctional protein	SF001584
+Drosophila receptor-type guanylate cyclase	SF001453
+Drosophila secreted polypeptide spatzle	SF011849
+Drosophila suppressor protein of zeste	SF005434
+Drosophila swallow protein	SF011845
+Drosophila terminus protein	SF011851
+Drosophila transcription factor Adf-1	SF011852
+Drosophila transcription factor Cf1a	SF002641
+Drosophila transcription factor nubbin	SF002639
+Drosophila transcription factor pdm2	SF002640
+Drosophila transcription initiation factor IID	SF003045
+Drosophila transposon 17.6 51K protein	SF004629
+Drosophila tube protein	SF011853
+Enterobacter ribonuclease	SF001016
+Escherichia coli UDPglucose 4-epimerase	SF001459
+Escherichia coli probable UDPglucose 4-epimerase	SF004948
+Escherichia coli protein-L-isoaspartate(D-aspartate) O-methyltransferase type II	SF006610
+Escherichia coli ribosomal protein L1	SF002155
+Escherichia coli ribosomal protein L13	SF002181
+Escherichia coli ribosomal protein L14	SF002182
+Escherichia coli ribosomal protein L2	SF002158
+Escherichia coli ribosomal protein L3	SF002157
+Escherichia coli ribosomal protein L5	SF002161
+Escherichia coli ribosomal protein L6	SF002162
+Escherichia coli ribosomal protein S10	SF002128
+Escherichia coli ribosomal protein S11	SF002131
+Escherichia coli ribosomal protein S12	SF002133
+Escherichia coli ribosomal protein S13	SF002134
+Escherichia coli ribosomal protein S14	SF002137
+Escherichia coli ribosomal protein S17	SF002141
+Escherichia coli ribosomal protein S19	SF002144
+Escherichia coli ribosomal protein S5	SF002120
+Escherichia coli ribosomal protein S7	SF002122
+Escherichia coli ribosomal protein S8	SF002126
+Escherichia coli ribosomal protein S9	SF002127
+Escherichia coli ybhL protein	SF004889
+F-spondin	SF029248
+Fc gamma receptor I	SF001981
+Fc gamma receptor III	SF001980
+G protein-activated potassium channel protein	SF005465
+G protein-coupled receptor 4	SF005853
+G protein-coupled receptor 43	SF006358
+G protein-coupled receptor edg-1	SF005435
+GMP reductase	SF000235
+GPI-anchor biosynthesis protein PIG-A	SF002416
+GTP cyclohydrolase I	SF001256
+GTP-binding membrane protein lepA	SF003064
+GTP-binding protein DRG	SF002402
+GTP-binding regulatory protein Gs alpha chain	SF002400
+GTP-binding regulatory protein beta chain	SF002399
+GTP-binding regulatory protein gamma chain	SF002398
+H+-transporting ATP synthase alpha chain	SF001274
+H+-transporting ATP synthase chain d	SF005514
+H+-transporting ATP synthase delta chain	SF001276
+H+-transporting ATP synthase epsilon chain	SF001278
+H+-transporting ATP synthase gamma chain	SF001280
+H+-transporting ATP synthase lipid-binding protein	SF001282
+H+-transporting ATP synthase protein 6	SF001283
+H+-transporting ATP synthase protein 8	SF001285
+H+-transporting ATPase chain E	SF005595
+HIV-EP2 enhancer-binding protein	SF003876
+Haemophilus influenzae ribose-5-phosphate isomerase	SF006575
+HsC2 phosphatidylinositol 3-kinase	SF000588
+IMP dehydrogenase	SF000130
+IgE receptor II	SF002426
+IgE-dependent histamine-releasing factor	SF001898
+J chain	SF001971
+KDEL receptor	SF002409
+L-gulonolactone oxidase	SF000136
+L-iduronidase	SF001096
+L-lactate dehydrogenase	SF000102
+L-selectin	SF002421
+L71-10 protein	SF005605
+LAR-interacting protein	SF022556
+LDL receptor	SF001961
+LIM protein kinase	SF000600
+LR11 protein	SF025891
+Ly-6 antigen	SF002021
+MRC OX-2 antigen	SF001982
+MSI1 protein	SF003348
+Methanococcus jannaschii conserved hypothetical protein MJ0025	SF006559
+Methanococcus jannaschii conserved hypothetical protein MJ0443	SF006515
+Mus musculus GPI-linked receptor	SF015163
+Mus musculus cytokine IGIF	SF015162
+Mycobacterium tuberculosis probable fadD6 protein	SF006838
+N-acetylgalactosaminyltransferase	SF000474
+N-methyl-D-aspartate receptor 2A	SF002440
+N-methyl-D-aspartate receptor 2C	SF002441
+N-methyl-D-aspartate receptor 2D	SF002442
+N4-(beta-N-acetylglucosaminyl)-L-asparaginase	SF001229
+NAD(P)+ transhydrogenase (B-specific)	SF000205
+NAD(P)+-arginine ADP-ribosyltransferase	SF005506
+NAD(P)H dehydrogenase (quinone) 2	SF000221
+NAD+ ADP-ribosyltransferase	SF000489
+NADH dehydrogenase (ubiquinone) 49K protein	SF000230
+NADH dehydrogenase (ubiquinone) CI-B8 chain	SF005822
+NADH dehydrogenase (ubiquinone) I chain E	SF000216
+NADH dehydrogenase (ubiquinone) chain 1	SF000215
+NADH dehydrogenase (ubiquinone) chain 11	SF000224
+NADH dehydrogenase (ubiquinone) chain 2	SF000222
+NADH dehydrogenase (ubiquinone) chain 3	SF000225
+NADH dehydrogenase (ubiquinone) chain 4	SF000227
+NADH dehydrogenase (ubiquinone) chain 4L	SF000226
+NADH dehydrogenase (ubiquinone) chain 5	SF000228
+NADH dehydrogenase (ubiquinone) chain 6	SF000229
+NADH dehydrogenase (ubiquinone) chain F	SF000217
+NADPH-ferrihemoprotein reductase	SF000208
+Na+/K+-exchanging ATPase beta-3 chain	SF005757
+Na+/K+-transporting ATPase alpha chain	SF001297
+Na+/K+-transporting ATPase beta chain	SF001298
+Neurospora cytosolic leucine-tRNA ligase	SF001521
+O-methyltransferase	SF005739
+O-succinylhomoserine (thiol)-lyase	SF001434
+OX40 ligand	SF009367
+P-selectin	SF036331
+Passover protein	SF005844
+Phaseolus glycine-rich protein 1.0	SF002681
+Pyrococcus abyssi hypothetical protein PAB0429	SF015728
+Pyrococcus horikoshii hypothetical protein PH1060	SF015730
+RAD50 protein	SF003342
+RING finger protein MAT1	SF003338
+RNA-binding protein EWS	SF002101
+RPD3 protein	SF003305
+Ras interactor RIN1	SF001735
+S-100 protein	SF002353
+SEC23 protein	SF003206
+SF015161	SF015161
+SF015618	SF015618
+SF015624	SF015624
+SF015661	SF015661
+SF015663	SF015663
+SF015682	SF015682
+SF015712	SF015712
+SF015719	SF015719
+SF015720	SF015720
+SF015722	SF015722
+SF015743	SF015743
+SF015744	SF015744
+SF015745	SF015745
+SF015749	SF015749
+SF015752	SF015752
+SF015758	SF015758
+SF015759	SF015759
+SF015819	SF015819
+SF015835	SF015835
+SF015839	SF015839
+SF015844	SF015844
+SF015846	SF015846
+SF015847	SF015847
+SF015849	SF015849
+SF015850	SF015850
+SF015851	SF015851
+SF015854	SF015854
+SF015859	SF015859
+SF015860	SF015860
+SF015893	SF015893
+SF015898	SF015898
+SF015901	SF015901
+SF015922	SF015922
+SF015943	SF015943
+SF015945	SF015945
+SF015947	SF015947
+SF015954	SF015954
+SF016005	SF016005
+SF016017	SF016017
+SF016032	SF016032
+SF016041	SF016041
+SF016044	SF016044
+SF016046	SF016046
+SF016048	SF016048
+SF016053	SF016053
+SF016057	SF016057
+SF016063	SF016063
+SF016067	SF016067
+SF016072	SF016072
+SF016081	SF016081
+SF016102	SF016102
+SF016104	SF016104
+SF016105	SF016105
+SF016238	SF016238
+SF016305	SF016305
+SF016308	SF016308
+SF016312	SF016312
+SF016313	SF016313
+SF016322	SF016322
+SF016325	SF016325
+SF016327	SF016327
+SF016369	SF016369
+SF016435	SF016435
+SF016439	SF016439
+SF016440	SF016440
+SF016441	SF016441
+SF016444	SF016444
+SF016463	SF016463
+SF016464	SF016464
+SF016502	SF016502
+SF016503	SF016503
+SF016515	SF016515
+SF016520	SF016520
+SF016521	SF016521
+SF016522	SF016522
+SF016525	SF016525
+SF016527	SF016527
+SF016529	SF016529
+SF016530	SF016530
+SF016533	SF016533
+SF016535	SF016535
+SF016542	SF016542
+SF016544	SF016544
+SF016545	SF016545
+SF016549	SF016549
+SF016550	SF016550
+SF016553	SF016553
+SF016562	SF016562
+SF016564	SF016564
+SF016567	SF016567
+SF016569	SF016569
+SF016570	SF016570
+SF016571	SF016571
+SF016574	SF016574
+SF016577	SF016577
+SF016581	SF016581
+SF016588	SF016588
+SF016591	SF016591
+SF016594	SF016594
+SF016598	SF016598
+SF016606	SF016606
+SF016607	SF016607
+SF016608	SF016608
+SF016610	SF016610
+SF016613	SF016613
+SF016614	SF016614
+SF016616	SF016616
+SF016617	SF016617
+SF016620	SF016620
+SF016621	SF016621
+SF016623	SF016623
+SF016627	SF016627
+SF016629	SF016629
+SF016634	SF016634
+SF016635	SF016635
+SF016767	SF016767
+SF016768	SF016768
+SF016939	SF016939
+SF016952	SF016952
+SF016953	SF016953
+SF016954	SF016954
+SF016955	SF016955
+SF017021	SF017021
+SF017026	SF017026
+SF017029	SF017029
+SF017155	SF017155
+SF017198	SF017198
+SF017234	SF017234
+SF017244	SF017244
+SF017268	SF017268
+SF017277	SF017277
+SF017299	SF017299
+SF017434	SF017434
+SF017449	SF017449
+SF017458	SF017458
+SF017562	SF017562
+SF017607	SF017607
+SF017609	SF017609
+SF017611	SF017611
+SF017612	SF017612
+SF017632	SF017632
+SF017635	SF017635
+SF017675	SF017675
+SF017681	SF017681
+SF017682	SF017682
+SF017692	SF017692
+SF017700	SF017700
+SF017706	SF017706
+SF017708	SF017708
+SF017716	SF017716
+SF017721	SF017721
+SF017739	SF017739
+SF017742	SF017742
+SF017743	SF017743
+SF017744	SF017744
+SF017745	SF017745
+SF017760	SF017760
+SF017765	SF017765
+SF017766	SF017766
+SF017773	SF017773
+SF017788	SF017788
+SF017831	SF017831
+SF017834	SF017834
+SF017835	SF017835
+SF017858	SF017858
+SF017947	SF017947
+SF017954	SF017954
+SF017964	SF017964
+SF017965	SF017965
+SF017967	SF017967
+SF018001	SF018001
+SF018090	SF018090
+SF018113	SF018113
+SF018114	SF018114
+SF018116	SF018116
+SF018121	SF018121
+SF018126	SF018126
+SF018128	SF018128
+SF018166	SF018166
+SF018169	SF018169
+SF018175	SF018175
+SF018180	SF018180
+SF018185	SF018185
+SF018203	SF018203
+SF018204	SF018204
+SF018205	SF018205
+SF018206	SF018206
+SF018208	SF018208
+SF018216	SF018216
+SF018236	SF018236
+SF018237	SF018237
+SF018242	SF018242
+SF018259	SF018259
+SF018271	SF018271
+SF018286	SF018286
+SF018288	SF018288
+SF018290	SF018290
+SF018291	SF018291
+SF018300	SF018300
+SF018312	SF018312
+SF018314	SF018314
+SF018322	SF018322
+SF018363	SF018363
+SF018365	SF018365
+SF018373	SF018373
+SF018374	SF018374
+SF018375	SF018375
+SF018376	SF018376
+SF018377	SF018377
+SF018378	SF018378
+SF018380	SF018380
+SF018387	SF018387
+SF018396	SF018396
+SF018405	SF018405
+SF018417	SF018417
+SF018419	SF018419
+SF018420	SF018420
+SF018435	SF018435
+SF018443	SF018443
+SF018444	SF018444
+SF018449	SF018449
+SF018466	SF018466
+SF018475	SF018475
+SF018497	SF018497
+SF018501	SF018501
+SF018512	SF018512
+SF018514	SF018514
+SF018515	SF018515
+SF018517	SF018517
+SF018518	SF018518
+SF018520	SF018520
+SF018524	SF018524
+SF018525	SF018525
+SF018526	SF018526
+SF018529	SF018529
+SF018531	SF018531
+SF018533	SF018533
+SF018534	SF018534
+SF018536	SF018536
+SF018540	SF018540
+SF018547	SF018547
+SF018548	SF018548
+SF018549	SF018549
+SF018550	SF018550
+SF018552	SF018552
+SF018553	SF018553
+SF018554	SF018554
+SF018555	SF018555
+SF018556	SF018556
+SF018557	SF018557
+SF018558	SF018558
+SF018561	SF018561
+SF018562	SF018562
+SF018563	SF018563
+SF018583	SF018583
+SF018584	SF018584
+SF018585	SF018585
+SF019028	SF019028
+SF019029	SF019029
+SF019030	SF019030
+SF019480	SF019480
+SF019532	SF019532
+SF019533	SF019533
+SF019537	SF019537
+SF019545	SF019545
+SF019548	SF019548
+SF019558	SF019558
+SF019560	SF019560
+SF019561	SF019561
+SF019594	SF019594
+SF019596	SF019596
+SF019598	SF019598
+SF019599	SF019599
+SF019600	SF019600
+SF019602	SF019602
+SF019604	SF019604
+SF019608	SF019608
+SF019614	SF019614
+SF019621	SF019621
+SF019622	SF019622
+SF019623	SF019623
+SF019626	SF019626
+SF019635	SF019635
+SF019672	SF019672
+SF019693	SF019693
+SF019782	SF019782
+SF019921	SF019921
+SF023882	SF023882
+SF023883	SF023883
+SF023884	SF023884
+SF023885	SF023885
+SF023887	SF023887
+SF023888	SF023888
+SF023889	SF023889
+SF023890	SF023890
+SF023896	SF023896
+SF023897	SF023897
+SF023898	SF023898
+SF023899	SF023899
+SF023900	SF023900
+SF023901	SF023901
+SF023916	SF023916
+SF023917	SF023917
+SF023919	SF023919
+SF023920	SF023920
+SF023921	SF023921
+SF023922	SF023922
+SF023923	SF023923
+SF023924	SF023924
+SF023925	SF023925
+SF023926	SF023926
+SF023927	SF023927
+SF023932	SF023932
+SF023933	SF023933
+SF023934	SF023934
+SF023935	SF023935
+SF023936	SF023936
+SF023937	SF023937
+SF023939	SF023939
+SF023940	SF023940
+SF023941	SF023941
+SF023942	SF023942
+SF023943	SF023943
+SF023944	SF023944
+SF023946	SF023946
+SF023948	SF023948
+SF023949	SF023949
+SF023951	SF023951
+SF023952	SF023952
+SF023953	SF023953
+SF023955	SF023955
+SF023956	SF023956
+SF023957	SF023957
+SF023966	SF023966
+SF023967	SF023967
+SF023969	SF023969
+SF023970	SF023970
+SF023972	SF023972
+SF023973	SF023973
+SF023974	SF023974
+SF023976	SF023976
+SF023977	SF023977
+SF023978	SF023978
+SF025005	SF025005
+SF025022	SF025022
+SF025373	SF025373
+SF025378	SF025378
+SF025454	SF025454
+SF025938	SF025938
+SF027338	SF027338
+SF027340	SF027340
+SF027351	SF027351
+SF027352	SF027352
+SF027803	SF027803
+SF027808	SF027808
+SF027809	SF027809
+SF027810	SF027810
+SF027812	SF027812
+SF027813	SF027813
+SF027814	SF027814
+SF027815	SF027815
+SF027817	SF027817
+SF027818	SF027818
+SF027819	SF027819
+SF027820	SF027820
+SF027821	SF027821
+SF027822	SF027822
+SF027824	SF027824
+SF027825	SF027825
+SF027826	SF027826
+SF027828	SF027828
+SF027831	SF027831
+SF027832	SF027832
+SF027833	SF027833
+SF027834	SF027834
+SF027835	SF027835
+SF027836	SF027836
+SF027837	SF027837
+SF027985	SF027985
+SF028043	SF028043
+SF028738	SF028738
+SF028739	SF028739
+SF028749	SF028749
+SF028758	SF028758
+SF028804	SF028804
+SF028821	SF028821
+SF028841	SF028841
+SF028843	SF028843
+SF028915	SF028915
+SF028921	SF028921
+SF028926	SF028926
+SF028927	SF028927
+SF028988	SF028988
+SF028989	SF028989
+SF029013	SF029013
+SF029021	SF029021
+SF029026	SF029026
+SF029027	SF029027
+SF029771	SF029771
+SF029846	SF029846
+SF029847	SF029847
+SF030202	SF030202
+SF031081	SF031081
+SF033001	SF033001
+SF033089	SF033089
+SF033090	SF033090
+SF033910	SF033910
+SF034247	SF034247
+SF034248	SF034248
+SF034443	SF034443
+SF035054	SF035054
+SF036290	SF036290
+SF036292	SF036292
+Saccharomyces alpha-mannosidase	SF009348
+Saccharomyces cerevisiae DNA-directed RNA polymerase 40K chain	SF000750
+Saccharomyces cerevisiae cell division control protein CDC10	SF006698
+Saccharomyces cerevisiae probable membrane protein YNR048w	SF015840
+Saccharomyces hypothetical protein YKL189w	SF009316
+Saccharomyces probable membrane protein YCR034w	SF009300
+Saccharomyces probable membrane protein YMR292w	SF009824
+Schizosaccharomyces pombe 42K protein	SF005553
+Schizosaccharomyces pombe hypothetical protein SPAC577.03c	SF017219
+Schizosaccharomyces pombe hypothetical protein SPBC31F10.11c	SF028835
+Schizosaccharomyces pombe hypothetical protein SPBC3E7.13c	SF017226
+Schizosaccharomyces pombe negative regulator of mitosis skb1	SF015894
+Schizosaccharomyces pombe probable transcription factor SPCC645.08c	SF017179
+Schizosaccharomyces pombe single-stranded DNA binding protein 30K chain	SF015944
+Schizosaccharomyces probable vacuolar protein sorting-associated protein	SF009375
+Shb protein	SF023954
+Streptococcus agalactiae capsular polysaccharide biosynthesis protein cpsN	SF015583
+Streptomyces chitinase chi40	SF001061
+Synechocystis hypothetical protein sll1147	SF016035
+T-cell surface glycoprotein CD2	SF001984
+T-cell surface glycoprotein CD28	SF002019
+T-cell surface glycoprotein CD3 delta chain	SF001993
+T-cell surface glycoprotein CD4	SF001977
+T-cell surface glycoprotein CD5	SF001985
+T-cell surface glycoprotein CD8 beta chain	SF002020
+T-cell surface glycoprotein MAL	SF006355
+TGF-beta receptor interacting protein	SF005593
+TRPC3 protein	SF005528
+Ty transcription activator TEC1	SF002601
+UDP-N-acetylglucosamine acyltransferase	SF000456
+UDP-N-acetylglucosamine-dolichyl-phosphate N-acetylglucosaminephosphotransferase	SF006375
+UDP-galactose transporter	SF005799
+UDPglucose-hexose-1-phosphate uridylyltransferase	SF000808
+UMP synthase	SF000483
+UTP-glucose-1-phosphate uridylyltransferase	SF000806
+UV-damaged DNA-binding protein	SF002088
+X box-binding protein 1	SF001720
+X-linked lymphocyte-regulated protein	SF005466
+Y box-binding protein 1	SF002600
+acetate-CoA ligase	SF001550
+acetyl-CoA acetyltransferase	SF000429
+acetylcholine receptor	SF002443
+acid sphingomyelinase	SF000948
+acrosin	SF001141
+actin	SF002337
+actin bundling protein	SF005682
+actin-capping protein alpha chain	SF005982
+actin-capping protein beta chain	SF002336
+activin receptor II	SF000627
+acyl-CoA dehydrogenase	SF000182
+acyl-CoA oxidase	SF000168
+acyl-CoA thiolesterase II	SF004843
+acylaminoacyl-peptidase	SF001131
+acyloxyacyl hydrolase	SF000878
+acylphosphatase	SF001266
+adenine phosphoribosyltransferase	SF000479
+adenomatous polyposis coli protein	SF002396
+adenosine deaminase	SF001249
+adenosine kinase	SF005991
+adenosine receptor A1	SF005692
+adenosylhomocysteinase	SF001109
+adenylate kinase	SF000734
+adenylosuccinate synthase	SF001578
+adenylyl cyclase-associated protein MCH1	SF005505
+adipokinetic hormone	SF001834
+advanced glycosylation end products receptor	SF002509
+aggrecan	SF002270
+agouti protein ASIP	SF018587
+alanine transaminase	SF000516
+alanine-tRNA ligase	SF001526
+alcohol dehydrogenase	SF000091
+alcohol oxidase	SF000137
+alcohol sulfotransferase	SF000856
+aldehyde dehydrogenase (NAD+)	SF000147
+aldehyde reductase	SF000097
+alkaline phosphatase	SF000891
+alkyl hydroperoxide reductase C22 protein	SF000239
+allantoinase	SF001239
+allergen Der p II	SF005796
+allograft inflammatory factor-1	SF036323
+alpha-1,3-mannosyl-glycoprotein beta-1,2-N-acetylglucosaminyltransferase	SF000475
+alpha-2,3-sialyltransferase STZ	SF005557
+alpha-2-HS-glycoprotein	SF002476
+alpha-2-macroglobulin	SF001635
+alpha-2-macroglobulin receptor	SF001963
+alpha-L-fucosidase	SF001092
+alpha-N-acetylneuraminate alpha-2,8-sialyltransferase	SF005554
+alpha-actinin	SF002301
+alpha-catenin	SF002294
+alpha-crystallin	SF002280
+alpha-fetoprotein enhancer-binding protein	SF002624
+alpha-galactosidase	SF001080
+alpha-glucosidase	SF001076
+alpha-latrotoxin receptor, calcium-independent	SF010401
+alpha-s1-casein	SF002370
+alpha-s2-casein	SF002371
+alpha-soluble NSF attachment protein	SF009269
+amelogenin	SF002573
+amidophosphoribosyltransferase	SF000485
+amiloride-binding protein	SF005701
+aminomethyltransferase	SF006487
+amphiphysin	SF002386
+amphiregulin	SF001777
+amyloid protein	SF002472
+animal 3'-phosphoadenosine-5'-phosphosulfate synthetase	SF001612
+animal sulfatase	SF000971
+ankyrin	SF002298
+annexin I	SF002359
+annexin VI	SF002361
+annexin VII	SF002360
+antileukoproteinase	SF001624
+antithrombin III	SF001630
+apolipoprotein A-I	SF002367
+apolipoprotein B	SF002366
+apolipoprotein B mRNA editing enzyme, catalytic chain 1	SF015861
+apolipoprotein H	SF002488
+apolipoprotein(a)	SF001153
+apoptosis inhibitor IAP homolog	SF005724
+apoptotic cell death regulator DAD1	SF005588
+arachidonate 5-lipoxygenase	SF000316
+arginase	SF001246
+arginine permease	SF002742
+arginine-tRNA ligase	SF001543
+argininosuccinate lyase	SF001440
+argininosuccinate synthase	SF001579
+aromatic-L-amino-acid decarboxylase	SF001346
+arrest-defective protein 1	SF001742
+arrestin	SF005693
+arylamine acetyltransferase	SF000426
+arylphorin	SF005266
+asparagine synthase (glutamine-hydrolyzing)	SF001589
+aspartate aminotransferase	SF000515
+aspartate transaminase	SF005725
+ataxia telangiectasia-associated protein	SF000720
+axon guidance signal protein	SF005772
+band 3 anion transport protein	SF002468
+basic fibroblast growth factor receptor 1	SF000628
+bcl transforming protein	SF001714
+bcr protein	SF002581
+beta-adaptin	SF002291
+beta-adrenergic-receptor kinase	SF000585
+beta-casein	SF002372
+beta-crystallin	SF002281
+beta-galactosidase bga	SF006336
+beta-galactoside alpha-2,3-sialyltransferase	SF005555
+beta-galactoside alpha-2,6-sialyltransferase	SF005556
+beta-galactoside-binding lectin	SF002691
+beta-glucuronidase	SF001086
+beta-hexosaminidase	SF001093
+beta-secretase	SF001188
+beta-thromboglobulin	SF002522
+biliary glycoprotein	SF002013
+bimE protein	SF003360
+black beetle virus coat protein	SF004036
+black beetle virus hypothetical 8K protein	SF004039
+bone sialoprotein	SF002579
+bood POZ containing protein	SF036330
+bovine H+-transporting ATP synthase epsilon chain	SF001277
+bovine brain-specific protein, 25K	SF008146
+bovine glycosylation-inhibiting factor	SF015591
+bovine polyA binding protein II	SF005206
+bovine uroplakin III	SF011874
+box A-binding factor	SF003030
+brain finger protein	SF018511
+brain neuron cytoplasmic protein 1	SF002383
+brain neuron cytoplasmic protein 2	SF002384
+branched-chain alpha-keto acid dehydrogenase kinase	SF000718
+branched-chain-amino-acid transaminase BAT1	SF006468
+breast cancer tumor suppressor BRCA2	SF002397
+breast/ovarian cancer susceptibility protein BRCA1	SF001734
+brush border myosin heavy chain I	SF002334
+cAMP response element-binding protein 1	SF003153
+cAMP-dependent protein kinase inhibitor	SF001667
+cAMP-dependent protein kinase regulatory chain	SF000548
+cAMP-responsive element-binding transcription activator	SF019616
+cGMP-dependent protein kinase	SF000559
+cadherin	SF002504
+caffeoyl-CoA 3-O-methyltransferase	SF005841
+calcineurin catalytic chain	SF000911
+calcitonin	SF001830
+calcium channel alpha-2 chain	SF002446
+calcium-dependent actin-binding protein	SF017528
+calcium-dependent protein kinase	SF000592
+caldesmon	SF002339
+calmodulin	SF002350
+calnexin	SF002357
+calpain inhibitor	SF002354
+calpain large chain	SF001184
+calpain small chain	SF001186
+calponin	SF002344
+calreticulin	SF002356
+calretinin	SF015393
+calsequestrin	SF002349
+carbamoyl-phosphate synthase (ammonia)	SF001377
+carbonate dehydratase	SF001392
+carboxypeptidase	SF001128
+carcinoembryonic antigen	SF002014
+carcinoembryonic antigen-related protein rnCGM1	SF002015
+carnitine O-acetyltransferase	SF000430
+catalase	SF000296
+catechol oxidase A2	SF005672
+cathelin	SF001637
+caveolin	SF009396
+cecropin	SF001893
+cell division control protein CDC23	SF001751
+cell division control protein CDC43	SF001766
+cell division control protein CKS1	SF000659
+cell division protein MJ0174	SF005920
+cell surface antigen 4F2 heavy chain	SF002024
+cell surface glycoprotein CD11b	SF002497
+cell surface glycoprotein HT7	SF001983
+cellular nucleic acid-binding protein	SF005228
+cellular retinaldehyde-binding protein	SF002515
+cellular tumor antigen p53	SF002089
+centromere protein E	SF002320
+chaoptin	SF002492
+chaperonin groEL	SF003112
+chaperonin groES	SF003110
+choline-phosphate cytidylyltransferase	SF000809
+cholinesterase	SF000871
+chordin	SF002496
+chorion protein S16	SF002660
+chromatin remodelling complex ATPase chain ISWI	SF036348
+chromogranin A	SF001811
+chromogranin B precursor	SF001812
+chromosome segregation protein SMC1	SF005251
+ciliary neurotrophic factor	SF001799
+ciliary neurotrophic factor receptor	SF001958
+class I histocompatibility antigen	SF001990
+class II histocompatibility antigen	SF001991
+class II histocompatibility antigen-associated gamma chain	SF001992
+clathrin coat assembly protein AP50	SF005992
+clathrin heavy chain	SF002290
+clathrin light chain	SF002289
+clusterin	SF002368
+coagulation factor V	SF000354
+coagulation factor VIII	SF000353
+coagulation factor X	SF001143
+coagulation factor XI	SF001142
+coagulation factor XII	SF001146
+coagulation factor XIII chain b	SF002487
+coatomer complex beta chain	SF005727
+coatomer complex beta' chain	SF005567
+cobalamin-dependent methionine synthase	SF000381
+cofilin	SF002343
+colipase	SF002415
+collagen alpha 1(I) chain	SF002255
+collagen alpha 1(IV) chain	SF002258
+collagen alpha 1(V) chain	SF002257
+collagen alpha 1(VI) chain	SF002259
+collagen alpha 1(VIII) chain	SF002261
+collagen alpha 1(XIV) chain	SF002263
+collagen alpha 2(I) chain	SF002256
+collagen alpha 3(VI) chain	SF002260
+common salivary protein 1	SF005786
+complement C2	SF001154
+complement C3d/Epstein-Barr virus receptor	SF002484
+complement C9	SF002481
+complement c6	SF002480
+complement factor H	SF002482
+complement subcomponent C1q chain A	SF002477
+complement subcomponent C1r	SF001155
+conserved hypothetical protein HI1013	SF006241
+conserved hypothetical protein MJ1034	SF006433
+conserved hypothetical protein YDR190c	SF006343
+conserved hypothetical protein YDR397c	SF005405
+conserved hypothetical protein YGL087c	SF006344
+conserved hypothetical protein YHR110w	SF005359
+conserved hypothetical protein YJL068c	SF006104
+conserved hypothetical protein YKL113c	SF005415
+conserved probable membrane protein YIL003w	SF005364
+contactin	SF005452
+coproporphyrinogen oxidase	SF000166
+corticoliberin-binding protein	SF009279
+corticoliberin-endorpholiberin	SF001792
+corticotropin-lipotropin	SF001816
+coupling factor 6	SF002455
+creatine kinase	SF000730
+crk transforming protein	SF001740
+cuticle protein LCP1	SF002653
+cyclic nucleotide-gated channel	SF002403
+cyclic-nucleotide phosphodiesterase, cGMP-inhibited	SF006072
+cyclin	SF001771
+cyclin-dependent kinase inhibitor p19	SF036346
+cystathionine beta-synthase	SF001414
+cystatin	SF001638
+cysteine string protein	SF025374
+cysteine-rich intestinal protein	SF002561
+cysteine-rich secretory protein 1	SF005865
+cystic fibrosis transmembrane conductance regulator	SF002777
+cytidine deaminase	SF001250
+cytochrome b	SF000030
+cytochrome b5	SF000038
+cytochrome c	SF000001
+cytochrome c1 heme protein	SF000010
+cytochrome-b5 reductase	SF000206
+cytochrome-c oxidase chain I	SF000265
+cytochrome-c oxidase chain II	SF000269
+cytochrome-c oxidase chain III	SF000271
+cytochrome-c oxidase chain IV	SF000272
+cytochrome-c oxidase chain VIII	SF000286
+cytochrome-c oxidase chain VIIb	SF000284
+cytochrome-c oxidase chain VIIc	SF000285
+cytochrome-c oxidase chain VIc	SF000279
+cytokine-inducible protein CIS	SF006354
+cytoskeletal keratin	SF002282
+cytosol aminopeptidase	SF001116
+cytosolic phospholipase A2	SF000867
+dTMP kinase	SF000737
+dbl transforming protein	SF001717
+decay-accelerating factor	SF002489
+decorin	SF002490
+delta-4 protein	SF036324
+dematin	SF002340
+deoxyribodipyrimidine photo-lyase	SF001387
+deoxyribonuclease I	SF000988
+dihydrolipoamide acetyltransferase	SF000432
+dihydrolipoamide dehydrogenase	SF000210
+dihydroorotate oxidase	SF000164
+dihydropteridine reductase	SF000240
+dimethylaniline monooxygenase (N-oxide-forming)	SF000332
+dipeptidyl-peptidase IV	SF001125
+discs-large tumor suppressor	SF001741
+dolichyl-phosphate-mannose-protein mannosyltransferase	SF005582
+dorsal protein	SF001716
+dorsal-ventral patterning protein tolloid	SF001200
+double-stranded RNA-specific adenosine deaminase	SF001248
+drosocin precursor	SF001895
+dual specificity phosphoprotein phosphatase 1	SF000939
+dual specificity phosphoprotein phosphatase DUSP3	SF000940
+dynamin-related protein VPS1	SF005108
+dynein heavy chain, ciliary	SF002308
+dynein heavy chain, cytosolic	SF002307
+dynein light chain	SF005695
+dystrophin	SF002341
+eclosion hormone	SF001859
+ecotropic retrovirus receptor protein	SF006060
+elastin	SF002266
+electron transfer flavoprotein alpha chain	SF000089
+electron transfer flavoprotein beta chain	SF000090
+elk-1 transforming protein	SF001704
+elongin C	SF005495
+emopamil-binding protein	SF005454
+endopeptidase Clp chain P	SF001169
+endothelial monocyte-activating protein II	SF005381
+endothelin	SF001632
+endothelin receptor B	SF001842
+endozepine	SF002411
+endozepine-related protein	SF002412
+engrailed homeotic protein	SF002618
+enolase	SF001400
+enoyl-CoA hydratase/3-hydroxyacyl-CoA dehydrogenase	SF001408
+enteropeptidase	SF001138
+eosinophil major basic protein precursor	SF002423
+ependymin	SF005441
+epidermal growth factor precursor	SF001778
+epidermal growth factor receptor	SF000619
+epidermal growth factor receptor kinase substrate	SF018298
+epithelial glycoprotein antigen GA733	SF002018
+epoxide hydrolase	SF001112
+erythrocyte band 7 integral membrane protein	SF005651
+erythropoietin	SF001951
+erythropoietin receptor	SF001959
+estradiol 17beta-dehydrogenase	SF000095
+estrogen receptor	SF002527
+eukaryotic adenosylmethionine decarboxylase	SF001355
+eukaryotic type I DNA topoisomerase	SF001509
+eukaryotic type II DNA topoisomerase	SF001510
+excision repair protein	SF003329
+exodeoxyribonuclease III	SF000978
+ezrin	SF002305
+farnesyl-diphosphate farnesyltransferase	SF000506
+farnesyl-pyrophosphate synthetase	SF000496
+ferredoxin [2Fe-2S]	SF000066
+ferritin	SF002559
+ferrochelatase	SF001457
+fibrillin 1	SF036312
+fibrinogen alpha chain	SF002375
+fibrinogen beta chain	SF002377
+fibrinogen gamma chain	SF002378
+fibroblast growth factor	SF001783
+fibromodulin	SF005438
+fibronectin	SF002499
+fibulin-1	SF036313
+fibulin-2	SF036311
+fission yeast pyridoxine 4-dehydrogenase	SF005748
+folate-binding protein	SF002413
+follistatin	SF002278
+fos transforming protein	SF001719
+fragile X mental retardation syndrome protein	SF002108
+fringe protein	SF010385
+fructose-bisphosphatase	SF000904
+fructose-bisphosphate aldolase	SF001358
+fruit fly DHR39-short protein	SF002532
+fruit fly Rot(57) protein	SF008123
+fruit fly T48 protein	SF008113
+fruit fly boule protein	SF002029
+fruit fly calcium-activated potassium channel slo	SF015660
+fruit fly diacylglycerol kinase	SF000716
+fruit fly env polyprotein	SF003841
+fruit fly frizzled protein	SF006696
+fruit fly gag polyprotein	SF003833
+fruit fly homeotic protein goosecoid	SF002620
+fruit fly hypothetical protein	SF008114
+fruit fly hypothetical protein 63B12.9	SF008115
+fruit fly hypothetical protein EG_115C2.5	SF008117
+fruit fly hypothetical protein EG_171D11.6	SF008118
+fruit fly hypothetical protein EG_34F3.4	SF008119
+fruit fly hypothetical protein EG_95B7.8	SF008120
+fruit fly hypothetical protein EG_95B7.9	SF008121
+fruit fly hypothetical protein EG_EG0003.5	SF008122
+fruit fly inger protein neuralized	SF016554
+fruit fly neuronal phospholipase C	SF000957
+fruit fly protein TU-36B	SF000234
+fruit fly rough deal protein	SF008124
+fruit fly serendipity (sry) locus alpha protein	SF008125
+fruit fly slit protein	SF036317
+fruit fly testis-specific protein	SF002545
+fruit fly tipE protein	SF008127
+fruit fly white protein	SF002789
+fumarate hydratase	SF001395
+fumarate reductase flavoprotein	SF000171
+fumarate reductase iron-sulfur protein	SF000176
+fushi tarazu segmentation protein	SF002617
+galactokinase	SF000529
+galactoside 3(4)-L-fucosyltransferase	SF005726
+galanin	SF001850
+gamma-aminobutyric acid transporter	SF002444
+gamma-casein	SF002373
+gamma-glutamyltransferase	SF000457
+gap junction protein	SF002292
+garden pea SAR DNA-binding protein	SF006694
+gastric intrinsic factor	SF002414
+gastrin	SF001848
+gastrin-releasing peptide	SF001844
+gelatinase A	SF001193
+gelsolin	SF002346
+giantin	SF002434
+gli transforming protein	SF003032
+glia maturation factor beta	SF001788
+globin	SF002025
+glucagon	SF001838
+glucagon receptor	SF005503
+glucocorticoid receptor	SF002529
+glucokinase regulator	SF001668
+glucose transport protein	SF005322
+glucose-6-phosphatase	SF000905
+glucose-6-phosphate dehydrogenase	SF000110
+glucose-6-phosphate isomerase	SF001482
+glucosylceramidase	SF001089
+glucuronosyltransferase	SF005678
+glutamate dehydrogenase (NAD(P)+)	SF000185
+glutamate receptor	SF002438
+glutamate-ammonia ligase	SF001556
+glutamate/aspartate transport protein	SF005475
+glutamine-fructose-6-phosphate aminotransferase (isomerizing)	SF000520
+glutaredoxin	SF000078
+glutathione peroxidase	SF000303
+glutathione synthase	SF001558
+glutathione transferase	SF000503
+glyceraldehyde-3-phosphate dehydrogenase	SF000149
+glycerol facilitator protein	SF003201
+glycerol-3-phosphate dehydrogenase	SF000114
+glycine N-methyltransferase	SF000385
+glycine cleavage system protein H	SF002454
+glycine hydroxymethyltransferase	SF000412
+glycine-rich RNA-binding protein	SF002080
+glycine-rich cell wall structural protein 1	SF002679
+glycogenin	SF000465
+glycolate oxidase chain glcD	SF006165
+glycophorin	SF002466
+glycoprotein hormone receptor	SF002408
+glycoprotein hormones alpha chain	SF001823
+glyoxalase	SF005457
+glypican	SF009280
+gonadoliberin	SF001794
+granulin	SF002562
+granulocyte-macrophage colony-stimulating factor	SF001947
+growth arrest-specific protein	SF005809
+guanine nucleotide-binding protein 1	SF005552
+guanylate kinase	SF000736
+guanylin	SF001849
+haptoglobin	SF001137
+heat shock protein 70	SF002582
+heat shock protein 90	SF002583
+heat shock protein dnaJ	SF002585
+helix-destabilizing protein	SF002072
+heme oxygenase (decyclizing)	SF000343
+hemolysin III yplQ	SF006313
+hemopexin	SF002551
+heparin-binding EGF-like growth factor	SF001780
+hepatic lectin	SF002424
+hepatocyte growth factor	SF001152
+hepatocyte growth factor receptor	SF000617
+hepsin	SF001139
+herpesvirus DNA-directed DNA polymerase	SF000789
+herpesvirus complement control protein	SF002486
+herpesvirus ribonucleoside-diphosphate reductase large chain	SF000356
+herpesvirus ribonucleoside-diphosphate reductase small chain	SF000355
+hexokinase	SF000526
+histatin precursor	SF002566
+histidine ammonia-lyase	SF001436
+histidine triad protein FHIT	SF000714
+histidine-rich glycoprotein	SF002475
+histidine-tRNA ligase	SF001549
+histo-blood group 1 transferase	SF005985
+histone H1	SF002048
+histone H2A	SF002049
+histone H2B	SF002050
+histone H3	SF002051
+histone H4	SF002052
+homeotic protein AREC3	SF002648
+homeotic protein CDP	SF002616
+homeotic protein Hox A5	SF002612
+homeotic protein Hox A7	SF002606
+homeotic protein Hox B1	SF002608
+homeotic protein Hox B2	SF002610
+homeotic protein Hox B3	SF002611
+homeotic protein Hox C6	SF002607
+homeotic protein Hox D4	SF002609
+homeotic protein apterous	SF002646
+homeotic protein bicoid	SF002614
+homeotic protein cut	SF002615
+homeotic protein goosecoid	SF002619
+homeotic protein lim-1	SF002643
+homeotic protein lim-3	SF002644
+homeotic protein sal	SF002649
+hormone-sensitive lipase	SF000864
+human 12.8K DNA-binding protein	SF008888
+human 26S proteasome regulatory complex chain p31	SF010382
+human 26S proteasome regulatory complex chain p55	SF006839
+human 32.9K leucine-rich protein (chromosome 21)	SF010076
+human 36.3K zipper-containing protein	SF011129
+human 4-hydroxyphenylpyruvate dioxygenase	SF009283
+human 5-formyltetrahydrofolate cyclo-ligase	SF006806
+human 6-phosphofructokinase	SF000533
+human ALR protein	SF010337
+human B-cell antigen CD19	SF016630
+human B-cell maturation factor	SF011859
+human CAGR1 protein	SF008887
+human DAZ protein	SF002028
+human DNA alkylation damage repair protien ABH	SF003062
+human DNA binding protein RFX2	SF016219
+human DNA helicase RECQL	SF005196
+human DNA repair protein RAD52	SF009417
+human DNA-damage-inducible protein gadd45	SF010369
+human DNA-directed DNA polymerase delta regulatory chain	SF000791
+human DNA-directed RNA polymerase II largest chain	SF000756
+human E1B 19K/Bcl-2-interacting protein Nip3	SF010075
+human EGF-like protein CR1 protein	SF036301
+human ErbB kinase activator alpha, brain and thymus	SF036337
+human FK506-binding protein FKBP51	SF001472
+human GDP dissociation inhibitor XAP-4	SF019647
+human Max-interacting protein 1	SF015841
+human NADH dehydrogenase (ubiquinone) CI-B14 chain	SF006643
+human NADH dehydrogenase (ubiquinone) chain NDUFB8	SF009288
+human Na+/Ca2+-exchanging protein	SF015579
+human Nijmegen breakage syndrome protein NBS1	SF011869
+human PML protein	SF018276
+human PML protein, splice form 1	SF018277
+human PML-1 protein	SF015640
+human RET oncogene fusion partner RFG	SF008140
+human RNA-binding protein type 1	SF002085
+human RP protein	SF011871
+human S-phase kinase-associated protein 1A	SF028729
+human SA protein	SF006605
+human SH3 binding glutamate-rich protein	SF008142
+human SIL protein	SF008143
+human SNF2alpha protein	SF036309
+human SOX3 protein	SF005204
+human SURF1 protein	SF016320
+human T-cluster binding protein	SF002079
+human T-complex protein 10A	SF019662
+human TAR DNA-binding protein-43	SF002103
+human TCTA protein	SF009935
+human UDPglucose-glycogen glucosyltransferase	SF015715
+human acetyl-CoA carboxylase	SF001591
+human adenylate cyclase	SF001445
+human alpha,alpha-trehalase	SF006837
+human alpha-N-acetylglucosaminidase	SF001091
+human amiloride-sensitive sodium channel protein	SF006832
+human anterior gradient-2	SF010393
+human autoantigen Ge-1	SF015158
+human autocrine motility factor receptor	SF011858
+human biotinidase	SF011861
+human brain and reproductive organ-expressed protein	SF007150
+human brain-specific membrane anchor protein	SF019781
+human carboxypeptidase H	SF009270
+human casein kinase II beta chain	SF009385
+human cell adhesion protein CD44	SF015569
+human chloride channel ClC-ka	SF015889
+human conserved hypothetical protein DKFZp566E144.1	SF010370
+human copper-transporting ATPase	SF001299
+human cysteine dioxygenase type I	SF009384
+human cytochrome P450 CYP11B1	SF000046
+human cytochrome P450 CYP19	SF000049
+human cytochrome P450 CYP2D6	SF000045
+human cytochrome P450 CYP3A5	SF000051
+human cytochrome P450 CYP4B1	SF000050
+human cytochrome P450 CYP51	SF000048
+human cytochrome P450 CYP7A1	SF000047
+human deoxycytidine kinase	SF000704
+human diacylglycerol kinase	SF000715
+human dynamin II	SF005109
+human early endosome antigen 1	SF002464
+human erythrocyte membrane protein RhD	SF017968
+human extended splice form fibrinogen alpha chain	SF029223
+human fas-activated serine/threonine kinase	SF011862
+human ferredoxin-NADP+ reductase	SF000362
+human fibrillarin	SF006540
+human gene 2.19 protein	SF008131
+human giant larvae tumor suppressor homolog	SF009275
+human giant protein p619	SF010341
+human glioma protein RIG	SF008141
+human glutamate decarboxylase	SF001333
+human glutamate-cysteine ligase heavy chain	SF009267
+human glutamate-cysteine ligase regulatory light chain	SF009268
+human glutamine-tRNA ligase	SF001542
+human glutaminyl-peptide cyclotransferase	SF009389
+human glycine-tRNA ligase	SF001533
+human glycoprotein 6-alpha-L-fucosyltransferase	SF000472
+human guanidinoacetate N-methyltransferase	SF009285
+human heregulin	SF036335
+human hexokinase I	SF000527
+human histidine decarboxylase	SF001343
+human histidine-tRNA ligase	SF025370
+human hydroxymethylglutaryl-CoA reductase (NADPH2)	SF036360
+human hypothetical 13K protein A	SF008633
+human hypothetical 21.5K G protein-coupled receptor	SF008889
+human hypothetical protein DBCCR1	SF008132
+human hypothetical protein DKFZp434A073.1	SF008133
+human hypothetical protein DKFZp434A1727.1	SF011261
+human hypothetical protein DKFZp434B0335.1	SF014267
+human hypothetical protein DKFZp434H052.1	SF011262
+human hypothetical protein DKFZp434H2215.1	SF011303
+human hypothetical protein DKFZp434I0118.1	SF011195
+human hypothetical protein DKFZp434J212.1	SF011197
+human hypothetical protein DKFZp434K0423.1	SF011196
+human hypothetical protein DKFZp434K1210.1	SF011192
+human hypothetical protein DKFZp564A0723.1	SF014268
+human hypothetical protein DKFZp564B147.1	SF014269
+human hypothetical protein DKFZp564D166.1	SF008135
+human hypothetical protein DKFZp566C243.1	SF010015
+human hypothetical protein DKFZp586A011.1	SF014270
+human hypothetical protein DKFZp586B0519.1	SF008136
+human hypothetical protein DKFZp586L0724.1	SF014271
+human hypothetical protein DKFZp761K1423.1	SF015527
+human hypothetical protein DKFZp761K1824.1	SF011191
+human hypothetical protein DKFZp762L137.1	SF015385
+human hypothetical protein KIAA057	SF014272
+human hypothetical protein KIAA0615	SF007153
+human hypothetical protein f25965_2	SF008137
+human inositol-polyphosphate 5-phosphatase	SF009412
+human insulin activator factor	SF011863
+human ionizing radiation resistance conferring protein	SF008138
+human long-chain-fatty-acid-CoA ligase	SF001551
+human lymphocyte phosphatase-associated phosphoprotein	SF009325
+human mannosyl-oligosaccharide 1,2-alpha-mannosidase	SF017531
+human melanoma antigen MART-1	SF011867
+human melanoma antigen p15	SF008139
+human melanoma-derived growth regulatory protein MIA	SF011868
+human membrane-associated protein HEM-1	SF009317
+human methionyl aminopeptidase	SF001122
+human methylmalonyl-CoA mutase	SF001497
+human microfibril-associated glycoprotein MFAP2	SF009406
+human modifier protein 1	SF009341
+human multicatalytic endopeptidase complex beta chain C7	SF006673
+human multidrug resistance protein cMOAT2	SF002775
+human multidrug resistance protein, short type	SF002776
+human multifunctional amino acid-tRNA ligase	SF001538
+human myogenin	SF019551
+human nuclear cap-binding protein	SF009413
+human nuclear factor I	SF018476
+human p53-binding protein mdm2	SF006748
+human peptidylprolyl isomerase A	SF001475
+human peptidylprolyl isomerase FKPB3	SF001474
+human phosphatidylinositol transfer protein	SF015479
+human phosphodiesterase I / nucleotide pyrophosphatase 4	SF001353
+human phosphoinositide-specific phospholipase C	SF000949
+human phosphoprotein phosphatase 1A	SF018231
+human polycystic kidney disease protein 1	SF010345
+human potassium channel-activating protein	SF009444
+human procollagen-lysine 5-dioxygenase	SF000321
+human properdin precursor	SF029232
+human prostaglandin-endoperoxide synthase	SF000342
+human protein kinase clk1	SF000572
+human protein p84	SF011870
+human protein-tyrosine kinase abl	SF000633
+human protein-tyrosine-phosphatase cdc25A	SF000918
+human protein-tyrosine-phosphatase cdc25C	SF000917
+human replication licensing factor MCM3	SF001755
+human retinoblastoma binding protein 1	SF002393
+human retinoblastoma binding protein 2	SF002394
+human rho GDP dissociation inhibitor	SF015597
+human ryudocan	SF015644
+human semaphorin F	SF029252
+human serine/threonine-specific protein kinase STK2	SF000578
+human signal sequence receptor alpha chain	SF009276
+human signal transducer and transcription activator STAT5A	SF015568
+human skeletal muscle nebulin	SF010333
+human splicing factor SF3a 120K chain	SF005099
+human testicular protein TEGT	SF010374
+human transcription elongation factor IIS	SF006704
+human transcription factor 3	SF001708
+human transcription factor BACH1	SF017833
+human transcription factor IIIC2 beta chain	SF011872
+human transcription factor NF-kappa-B2	SF036310
+human transcription factor SL1	SF015160
+human transcription factor TFC11	SF016631
+human transcription initiation factor IIA gamma chain	SF009415
+human transcription initiation factor IID	SF003044
+human transcription regulator MAD-4	SF009338
+human translation initiation factor eIF-2 beta chain	SF006552
+human translation initiation factor eIF-4B	SF003576
+human tyrosine kinase A6	SF010380
+human ubiquitin thiolesterase	SF009387
+human ubiquitin-protein ligase E2	SF001567
+human vacuolar protein-sorting protein VPS29 homolog	SF000886
+human voltage-dependent calcium channel beta chain	SF015600
+hydroxymethylglutaryl-CoA lyase	SF001367
+hydroxymethylglutaryl-CoA synthase	SF001368
+hydroxyproline-rich glycoprotein	SF005224
+hypothetical protein DKFZp434E1335.1	SF002299
+hypothetical protein DKFZp586G0522.1	SF010400
+hypothetical protein HI0432	SF004680
+hypothetical protein HI0719	SF004689
+hypothetical protein YBL078c	SF005455
+hypothetical protein YHR162w	SF005414
+hypothetical protein YJL074c	SF005719
+hypothetical protein YKL215c	SF004940
+hypothetical protein b2690	SF004758
+hypoxanthine phosphoribosyltransferase	SF000480
+immunoglobulin C region	SF001988
+immunoglobulin V region	SF001974
+indoleamine 2,3-dioxygenase	SF006399
+inhibin	SF001787
+inosamine-phosphate amidinotransferase	SF000417
+inositol-trisphosphate receptor	SF002433
+insect vitellogenin	SF002656
+insulin	SF001847
+insulin receptor	SF000620
+insulin receptor substrate IRS-1	SF001737
+insulin-like growth factor binding protein 1	SF001969
+insulysin	SF001211
+int-1 transforming protein	SF001784
+integrin alpha-2b chain	SF005666
+integrin alpha-4 chain	SF005614
+integrin beta chain	SF002512
+integrin beta-4 chain	SF002513
+inter-alpha-trypsin inhibitor complex component II	SF002517
+intercellular adhesion molecule	SF002510
+interferon alpha	SF001934
+interferon gamma	SF001936
+interferon gamma receptor	SF001953
+interferon-induced 56K protein	SF005680
+interferon-induced double-stranded RNA-activated protein kinase inhibitor	SF029258
+interleukin-1	SF001937
+interleukin-1 receptor type I	SF005698
+interleukin-10	SF003542
+interleukin-10 receptor IL10R	SF018551
+interleukin-11	SF001944
+interleukin-13	SF001945
+interleukin-15	SF001946
+interleukin-2	SF001938
+interleukin-2 receptor alpha chain	SF001954
+interleukin-2 receptor beta chain	SF016940
+interleukin-2 receptor gamma chain	SF001955
+interleukin-3	SF001939
+interleukin-3 receptor beta chain	SF001956
+interleukin-4	SF001941
+interleukin-4 receptor	SF001957
+interleukin-5	SF001940
+interleukin-6	SF001935
+interleukin-7	SF001942
+interleukin-7 receptor	SF001960
+interleukin-9	SF001943
+interphotoreceptor retinoid-binding protein	SF002391
+interstitial collagenase	SF001191
+intrinsic factor-B12 receptor cubilin	SF036316
+involucrin	SF002252
+iron-responsive element-binding protein	SF001417
+isoleucine-tRNA ligase	SF001524
+jun transforming protein	SF001718
+kappa-casein	SF002374
+keratin high-sulfur matrix protein IIIA	SF002248
+kexin	SF001179
+kinase-related protein ros	SF000638
+kinase-related transforming protein	SF000564
+kinesin heavy chain	SF002309
+kinesin-associated protein KAP3	SF002325
+kinesin-related protein Eg5	SF002311
+kinesin-related protein KIF1B	SF002322
+kinesin-related protein KIF2	SF002323
+kinesin-related protein KIF3	SF002317
+kinesin-related protein KLP61F	SF002316
+kinesin-related protein KLPA	SF002324
+kinesin-related protein nodA	SF002318
+kinesin-related protein unc-104	SF002321
+kininogen	SF002474
+lactose-binding lectin L-36	SF006349
+laminin alpha-1 chain	SF002272
+laminin alpha-4 chain	SF002273
+laminin beta-1 chain	SF002271
+lens fiber membrane major intrinsic protein	SF002276
+leptin	SF001837
+leukemia inhibitory factor	SF001952
+leukocyte antigen-related protein	SF002002
+leukocyte common antigen	SF002004
+leukosialin	SF001994
+leukotriene-A4 hydrolase	SF001113
+lipocalin	SF002514
+lipopolysaccharide-binding protein	SF002417
+long-chain-fatty-acid beta-oxidation multienzyme complex beta chain	SF006271
+loricrin	SF002253
+low density lipoprotein receptor-related protein	SF036314
+lyl-1 protein	SF005458
+lymphoid-restricted membrane protein Jaw1	SF018564
+lymphoid-specific interferon regulatory factor	SF005710
+lymphotactin	SF002469
+lysine-tRNA ligase	SF001525
+lysosomal alpha-glucosidase	SF001077
+lysosomal integral membrane protein II	SF002463
+lysosome-associated membrane protein	SF002462
+lysozyme c	SF001064
+macrophage colony-stimulating factor	SF001948
+macrophage colony-stimulating factor 1 receptor	SF000615
+macrophage inflammatory protein	SF001950
+macrophage scavenger receptor	SF001986
+maf transforming protein	SF001670
+major prion protein	SF002380
+malate dehydrogenase (oxaloacetate-decarboxylating)	SF000106
+male accessory gland secretory protein 26Aa	SF002543
+male accessory gland secretory protein 26Ab	SF002544
+mammalian acid phosphatase	SF000896
+mammalian alpha-amylase	SF001019
+mammalian cytochrome-c oxidase chain VIIa	SF000281
+mammalian cytochrome-c oxidase chain VIa	SF000277
+mammalian cytochrome-c oxidase chain VIb	SF000278
+mammalian cytochrome-c oxidase chain Va	SF000275
+mammalian cytochrome-c oxidase chain Vb	SF000276
+mammalian defensin	SF001875
+mammalian peptidyl-dipeptidase A	SF001126
+mammalian retrovirus gag polyprotein I	SF003827
+mammalian stearoyl-CoA desaturase	SF000344
+mammalian tryptophan-tRNA ligase	SF001519
+mammalian tyrosine aminotransferase	SF000517
+mannose 6-phosphate receptor, cation-dependent	SF002436
+mannose 6-phosphate receptor, cation-independent	SF002437
+mannose-binding lectin	SF002428
+mas transforming protein	SF001712
+maternal effect protein	SF002087
+matrilysin	SF001192
+matrix glycoprotein SC1	SF002574
+melanin-concentrating hormone	SF001817
+melanocortin receptor	SF005524
+membrane alanyl aminopeptidase	SF005502
+membrane dipeptidase	SF001124
+membrane glycoprotein 2	SF002557
+membrane-bound guanylate cyclase	SF001451
+meprin A	SF001196
+meta-vinculin	SF002293
+metabotropic glutamate receptor 4	SF005608
+metalloproteinase inhibitor	SF001636
+metallothionein	SF002564
+methionine adenosyltransferase	SF000497
+methylated-DNA-protein-cysteine S-methyltransferase	SF000407
+methylenetetrahydrofolate dehydrogenase (NAD+)	SF000200
+mevalonate kinase	SF000546
+microtubule-associated protein MAP1B	SF002288
+microtubule-associated protein MAP2b	SF002286
+microtubule-associated protein tau	SF002287
+milk fat globule protein	SF002506
+mismatch repair protein MLH1	SF006464
+mitochondrial import protein, 27K	SF003350
+mitochondrial inner membrane protein TIM17	SF006830
+mitochondrial processing peptidase alpha chain	SF001210
+mitotic feedback control protein	SF005984
+mixed-lineage protein kinase 2	SF000556
+mixed-lineage protein kinase 3	SF000557
+molecular chaperone t-complex-type	SF002584
+monocarbosylate transporter MCT2	SF006350
+monocyte surface glycoprotein CD14	SF002017
+monophenol monooxygenase	SF000341
+motilin	SF001846
+mouse 1-acylglycerol-3-phosphate O-acyltransferase	SF015813
+mouse 8-oxoguanine DNA-glycosylase	SF016239
+mouse Acl protein	SF008149
+mouse DNA primase 54K chain	SF009449
+mouse GTP-binding protein IRG-47	SF005691
+mouse Id-associated protein 1	SF029257
+mouse LIM kinase tLimk2	SF000655
+mouse Shyc protein	SF008153
+mouse TSC-22 protein	SF009379
+mouse adhalin	SF016103
+mouse androgen-regulated protein, renal	SF008150
+mouse circadian protein mp41	SF015164
+mouse clathrin-associated protein 19	SF015588
+mouse conserved helix-loop-helix ubiquitous kinase	SF000581
+mouse gene E161 protein	SF008419
+mouse gene I54 protein	SF009681
+mouse gene RXRbeta1 protein	SF002536
+mouse gene T protein	SF002056
+mouse herc2 protein	SF015565
+mouse hypothetical cell surface protein 19.5	SF014675
+mouse hypothetical protein H19-3'	SF008890
+mouse hypothetical protein, 16K	SF005152
+mouse mast cell growth factor	SF015599
+mouse meltrin alpha	SF006749
+mouse modifier protein 3	SF009342
+mouse muscle LIM protein MLP	SF017937
+mouse neuregulin-3	SF036336
+mouse non-selective cation channel	SF011130
+mouse protein kinase 1 testis-specific	SF000656
+mouse protein kinase ULK1	SF000580
+mouse regulatory protein rpt-1	SF005433
+mouse retinoic acid-regulated protein pH 34	SF008152
+mouse ror-related receptor	SF015476
+mouse testosterone-regulated RP2 protein	SF009450
+mouse transcription factor PU.1	SF019667
+mouse transcription factor tbx2	SF002061
+mov-34 protein	SF002650
+multicatalytic endopeptidase complex chain C5	SF001214
+multicatalytic endopeptidase complex chain C9	SF001212
+multicatalytic endopeptidase complex chain N3	SF001213
+multidrug resistance protein	SF002773
+myb transforming protein	SF001671
+myc transforming protein	SF001705
+myelin P0 protein	SF002389
+myelin P2 protein	SF002390
+myelin basic protein	SF002388
+myelin proteolipid protein	SF002387
+myelin-associated glycoprotein	SF001978
+myeloperoxidase	SF000299
+myosin MYO2	SF002330
+myosin heavy chain	SF002328
+myosin heavy chain 95F	SF002331
+naphthoate synthase	SF001406
+natriuretic peptide A precursor	SF001803
+natriuretic peptide C precursor	SF001804
+natriuretic peptide receptor C	SF001970
+natural killer cell receptor P1	SF005558
+natural resistance-associated macrophage protein 1	SF005717
+neprilysin	SF001194
+nerve growth factor beta chain	SF001789
+nerve growth factor receptor	SF001964
+nerve growth factor receptor, high affinity	SF000623
+neural cell adhesion molecule	SF002507
+neural cell adhesion molecule L1	SF002508
+neurexin III-alpha	SF036344
+neuroendocrine protein 7B2	SF001813
+neurofilament triplet H protein	SF002283
+neurogenic protein delta	SF036332
+neurokinin 1 receptor	SF001840
+neurokinin B precursor	SF001843
+neurotensin	SF001800
+neurotrophic receptor ror	SF000624
+neutrophil cytosol factor 1	SF001631
+nicotinate-nucleotide pyrophosphorylase (carboxylating)	SF006250
+nidogen	SF002274
+ninaC protein	SF002335
+nitric-oxide synthase	SF000333
+nonhistone chromosomal protein HMG-17	SF002053
+nonhistone chromosomal protein HMG-2	SF002054
+nonhistone chromosomal protein HMG-I	SF002062
+nonspecific cross-reacting antigen	SF002012
+notch protein	SF002279
+nuclear respiratory factor-2 beta-1 chain	SF036345
+nuclear steroid/thyroid hormone receptor beta protein FTZ-F1beta	SF002531
+nucleolin	SF002100
+nucleolus-cytoplasm shuttle phosphoprotein	SF005568
+nucleophosmin	SF002110
+nucleoporin Nup358	SF005104
+nucleoside triphosphatase chromatin-associated	SF005696
+nucleoside-diphosphate kinase	SF000735
+nucleotide pyrophosphatase	SF001268
+occludin	SF005993
+octopamine receptor type I	SF005474
+oleoyl-[acyl-carrier-protein] hydrolase	SF000881
+olfactory marker protein	SF009402
+olfactory receptor OR14	SF003152
+oligo(A) synthetase	SF001607
+optic lobe development omb protein	SF002057
+ornithine carbamoyltransferase	SF000416
+ornithine decarboxylase	SF001335
+ornithine-oxo-acid aminotransferase	SF000519
+orphan receptor TR2	SF002526
+osteocalcin	SF002577
+osteoinductive factor precursor	SF005436
+osteonectin	SF002576
+osteopontin	SF002578
+oxoglutarate dehydrogenase (lipoamide)	SF000157
+oxysterol-binding protein	SF036315
+oxytocin receptor	SF001841
+oxytocin-neurophysin	SF001815
+paired box segmentation protein prd	SF001731
+paired box transcription factor BSH9	SF001727
+paired box transcription factor Pax-3	SF001725
+paired box transcription factor Pax-4	SF001729
+paired box transcription factor Pax-6	SF001728
+paired box transcription factor Pax-8	SF001730
+pancreatic hormone	SF001845
+pancreatic ribonuclease	SF001015
+pancreatic secretory trypsin inhibitor	SF001626
+papain	SF001182
+paranodin	SF036358
+parathyroid hormone	SF001832
+parathyroid hormone-related protein	SF001833
+parotid secretory protein	SF002570
+parvalbumin	SF002352
+pendulin	SF005673
+pepsin	SF001187
+peptide transport protein PEPT1	SF005467
+peptide-aspartate beta-dioxygenase	SF000324
+peptidylglycine monooxygenase II	SF000339
+peptidylprolyl isomerase	SF001467
+peptidylprolyl isomerase CyP-40	SF005398
+peptidylprolyl isomerase CyP-60	SF005106
+period clock protein	SF002605
+peripheral-type benzodiazepine receptor	SF005859
+peroxisome assembly factor-1	SF009391
+phage T4 DNA polymerase accessory protein 44	SF004274
+phenylalanine 4-monooxygenase	SF000336
+phenylethanolamine N-methyltransferase	SF000384
+pheromone receptor VN3t	SF005744
+pheromone response pathway component SRM1	SF003351
+phosducin	SF002405
+phosphatidyl-N-methylethanolamine N-methyltransferase	SF005444
+phosphatidylcholine-sterol acyltransferase	SF000449
+phosphatidylcholine-transfer protein	SF002453
+phosphatidylinositol 3-kinase	SF000586
+phosphoenolpyruvate carboxykinase (GTP)	SF001348
+phosphoglucomutase	SF001493
+phosphogluconate dehydrogenase (decarboxylating)	SF000109
+phosphoglycerate kinase	SF000724
+phosphoglycerate mutase	SF001490
+phospholamban	SF001665
+phospholipase A2	SF000866
+phospholipase A2 receptor	SF002427
+phosphoprotein phosphatase	SF000908
+phosphoprotein phosphatase 65K regulatory chain	SF005602
+phosphoprotein phosphatase rdgC	SF000912
+phosphoribosylformylglycinamidine synthase	SF001588
+phosphorylase	SF000460
+phytoene dehydrogenase	SF005674
+pituitary glycoprotein hormone beta chain	SF001824
+plasma hyaluronan-binding protein	SF001148
+plasma protein S	SF001776
+plasmin	SF001150
+plasminogen-related protein	SF002483
+plastin	SF002302
+platelet glycoprotein Ib alpha chain	SF002493
+platelet glycoprotein Ib beta chain	SF002494
+platelet-derived growth factor	SF001774
+pleckstrin	SF001736
+plectin	SF002662
+pleiotrophin	SF001949
+pointed protein, splice form 1	SF001701
+pointed protein, splice form 2	SF001702
+pol polyprotein	SF003836
+poliovirus receptor	SF002016
+polyadenylate-binding protein	SF002074
+polycomb protein	SF001325
+polymorphic epithelial mucin	SF002580
+polypeptide N-acetylgalactosaminyltransferase	SF005670
+polyubiquitin 10	SF002037
+polyubiquitin 3	SF002042
+polyubiquitin 4	SF002038
+polyubiquitin 9	SF002043
+porin	SF002839
+porphobilinogen synthase	SF001415
+posterior-group protein tudor	SF005248
+potassium channel protein drk1	SF002449
+pre-B cell enhancing factor	SF005943
+pre-B cell omega light chain	SF001989
+pre-T-cell receptor alpha chain	SF001975
+preadipocyte factor 1	SF036318
+presenilin	SF005702
+probable hormone receptor N10, nuclear	SF002524
+probable human DNA repair protein XRCC9	SF015159
+probable membrane receptor protein pHS1-2	SF005212
+procollagen C-endopeptidase	SF001199
+procollagen-proline,2-oxoglutarate 4-dioxygenase alpha chain	SF000320
+proenkephalin	SF001819
+profilin	SF002342
+progesterone receptor	SF002528
+prolactin	SF001825
+proliferating cell nuclear antigen	SF002090
+proline carrier protein	SF002803
+proline-rich peptide P-B	SF002569
+proline-rich protein	SF002568
+proline-tRNA ligase proS	SF006101
+prolyl oligopeptidase	SF001133
+propionyl-CoA carboxylase alpha chain	SF001592
+propionyl-CoA carboxylase beta chain	SF001593
+prostacyclin-stimulating factor	SF018239
+prostaglandin E receptor EP1	SF001962
+prostasin	SF001136
+proteasome activator PA28 alpha chain	SF005469
+protein HC	SF001622
+protein disulfide-isomerase	SF001487
+protein kinase A-raf	SF000555
+protein kinase C alpha	SF000550
+protein kinase C delta	SF000551
+protein kinase C mu	SF000552
+protein kinase C zeta	SF000554
+protein kinase TIK	SF000591
+protein kinase akt	SF000613
+protein phosphatase inhibitor 1	SF001666
+protein translocation complex Sec61 beta chain	SF006398
+protein-arginine deiminase	SF001247
+protein-glutamine gamma-glutamyltransferase	SF000459
+protein-lysine 6-oxidase	SF000191
+protein-tyrosine kinase ZAP-70	SF000604
+protein-tyrosine kinase axl	SF000629
+protein-tyrosine kinase fps	SF000632
+protein-tyrosine kinase ret	SF000631
+protein-tyrosine kinase src	SF000601
+protein-tyrosine kinase tec	SF000602
+protein-tyrosine kinase tyk2	SF000636
+protein-tyrosine kinase, receptor type eph	SF000666
+protein-tyrosine kinase, receptor type tie	SF000630
+protein-tyrosine-phosphatase string	SF000919
+protein-tyrosine-phosphatase, low molecular weight	SF000916
+protein-tyrosine-phosphatase, nonreceptor type 1	SF000926
+protein-tyrosine-phosphatase, nonreceptor type 12	SF000932
+protein-tyrosine-phosphatase, nonreceptor type 13	SF000933
+protein-tyrosine-phosphatase, nonreceptor type 14	SF000934
+protein-tyrosine-phosphatase, nonreceptor type 3	SF000927
+protein-tyrosine-phosphatase, nonreceptor type 5	SF000928
+protein-tyrosine-phosphatase, nonreceptor type 6	SF000929
+protein-tyrosine-phosphatase, nonreceptor type 8	SF000930
+protein-tyrosine-phosphatase, nonreceptor type 9	SF000931
+protein-tyrosine-phosphatase, nonreceptor type PTP61F	SF000935
+protein-tyrosine-phosphatase, receptor type 99A	SF002001
+protein-tyrosine-phosphatase, receptor type H	SF001998
+protein-tyrosine-phosphatase, receptor type J	SF001999
+protein-tyrosine-phosphatase, receptor type N	SF001996
+protein-tyrosine-phosphatase, receptor type O	SF002009
+protein-tyrosine-phosphatase, receptor type PTP69D	SF002003
+protein-tyrosine-phosphatase, receptor type PTPBR7	SF001997
+protein-tyrosine-phosphatase, receptor type alpha	SF002006
+protein-tyrosine-phosphatase, receptor type beta	SF002007
+protein-tyrosine-phosphatase, receptor type gamma	SF002011
+protein-tyrosine-phosphatase, receptor type mu	SF002008
+protein-tyrosine-phosphatase, receptor type zeta	SF002010
+proteoglycan 10K core protein	SF002267
+proteoglycan link protein	SF002268
+prothymosin alpha	SF001827
+protozoan myosin heavy chain IB	SF002333
+pulmonary surfactant protein B	SF002430
+pulmonary surfactant protein C	SF002432
+pulmonary surfactant protein D	SF002429
+purH bifunctional enzyme	SF000414
+purine synthesis multifunctional protein	SF001583
+purine-nucleoside phosphorylase	SF000477
+pyrimidine nucleoside transport protein nupC	SF006153
+pyrroline-5-carboxylate reductase	SF000193
+pyruvate carboxylase	SF001594
+pyruvate dehydrogenase (lipoamide) alpha chain	SF000152
+pyruvate dehydrogenase (lipoamide) beta chain	SF000155
+pyruvate kinase	SF000678
+ras transforming protein	SF001710
+rat HMG-box containing protein 1	SF002621
+rat LIM protein	SF018094
+rat MEGF1 protein	SF010351
+rat Munc13-3 protein	SF017828
+rat Sertoli cell leucine-rich protein 1	SF008155
+rat acidic ribosomal protein P0	SF002168
+rat acidic ribosomal protein P1	SF002170
+rat androgen-withdrawal apoptosis protein RVP1	SF011877
+rat bumetanide-sensitive Na+/K+/Cl-cotransport protein	SF015575
+rat cca1 protein	SF011878
+rat cytosolic adenylate cyclase	SF011131
+rat fatty-acid synthase	SF000453
+rat glycerol-3-phosphate dehydrogenase	SF036297
+rat growth factor arg3.1	SF011879
+rat latexin	SF011132
+rat myosin heavy chain	SF031656
+rat neuritin	SF008892
+rat nuclear pore protein gp210	SF008156
+rat phospholipase D	SF009376
+rat prolactin-induced T cell protein c15	SF002076
+rat protein kinase raf	SF000558
+rat ribosomal protein L10	SF005590
+rat ribosomal protein L12	SF002180
+rat ribosomal protein L13	SF002221
+rat ribosomal protein L14	SF015757
+rat ribosomal protein L15	SF002222
+rat ribosomal protein L17	SF002196
+rat ribosomal protein L18	SF002183
+rat ribosomal protein L18a	SF002190
+rat ribosomal protein L19	SF002192
+rat ribosomal protein L21	SF002194
+rat ribosomal protein L22	SF002223
+rat ribosomal protein L24	SF002175
+rat ribosomal protein L26	SF002204
+rat ribosomal protein L27	SF002205
+rat ribosomal protein L27a	SF002174
+rat ribosomal protein L28	SF002208
+rat ribosomal protein L29	SF002240
+rat ribosomal protein L3	SF002160
+rat ribosomal protein L30	SF002218
+rat ribosomal protein L31	SF002212
+rat ribosomal protein L32	SF002217
+rat ribosomal protein L34	SF002233
+rat ribosomal protein L35	SF002235
+rat ribosomal protein L35a	SF002219
+rat ribosomal protein L36	SF002220
+rat ribosomal protein L36a	SF002173
+rat ribosomal protein L37	SF002171
+rat ribosomal protein L37a	SF002238
+rat ribosomal protein L38	SF002239
+rat ribosomal protein L39	SF002172
+rat ribosomal protein L4	SF002156
+rat ribosomal protein L41	SF002244
+rat ribosomal protein L5	SF002169
+rat ribosomal protein L7	SF002166
+rat ribosomal protein L7a	SF002165
+rat ribosomal protein S10	SF002130
+rat ribosomal protein S12	SF002132
+rat ribosomal protein S13	SF002136
+rat ribosomal protein S17	SF002177
+rat ribosomal protein S19	SF002143
+rat ribosomal protein S21	SF002148
+rat ribosomal protein S24	SF002145
+rat ribosomal protein S25	SF002150
+rat ribosomal protein S26	SF002153
+rat ribosomal protein S27	SF002154
+rat ribosomal protein S3	SF002112
+rat ribosomal protein S3a	SF002224
+rat ribosomal protein S4	SF002116
+rat ribosomal protein S6	SF002129
+rat ribosomal protein S7	SF002123
+rat ribosomal protein S8	SF002125
+rat ribosomal protein S9	SF002118
+rat synaptonemal complex protein SC56	SF011883
+rat ubiquitin-protein ligase	SF001569
+receptor-induced toxicity mediator MORT1	SF018586
+rel transforming protein	SF001715
+replication licensing factor MCM2	SF001754
+replication licensing factor MCM4	SF001757
+replication licensing factor MCM5	SF001758
+replication licensing factor MCM7	SF001760
+replication protein A1	SF002091
+restrictin	SF002501
+reticulocalbin	SF036326
+retinal degeneration slow protein	SF002418
+retinoblastoma-associated protein	SF002392
+retinoic acid receptor alpha	SF002534
+retinol dehydrogenase	SF006067
+retroviral proteinase	SF001219
+retrovirus-related polyprotein	SF003834
+rfp transforming protein	SF001733
+rhodopsin kinase	SF000584
+ribitol dehydrogenase	SF000092
+ribokinase	SF000536
+ribonuclease L inhibitor	SF005143
+ribonuclease inhibitor	SF001661
+ribonucleoprotein La	SF002105
+ribose-phosphate pyrophosphokinase catalytic chain	SF000738
+ribosomal protein S6 kinase	SF000605
+ribosomal protein S6 kinase II	SF000606
+rudimentary enzyme	SF001379
+ryanodine receptor	SF002435
+saimiri herpesvirus immediate-early protein 2	SF003430
+salivary glue protein	SF002655
+sapecin precursor	SF001874
+saposin	SF002431
+sarcosine oxidase	SF006010
+secretogranin II	SF005255
+secretory component	SF001976
+secretory protein xP1	SF001853
+selenoprotein P	SF002516
+semaphorin	SF005526
+semenogelin	SF002539
+seminal plasma protein	SF002542
+seminal vesicle secretory protein	SF002540
+senescence marker protein-30	SF004716
+serine C-palmitoyltransferase chain LCB2	SF005835
+serine carboxypeptidase	SF001127
+serine proteinase easter	SF001157
+serine proteinase snake	SF001156
+serine proteinease stubble-stubbloid	SF001140
+serine-pyruvate aminotransferase	SF000524
+serine-tRNA ligase	SF001529
+serum albumin	SF002520
+sevenless	SF000637
+severin	SF002348
+sex steroid-binding protein	SF002538
+sigma cross-reacting protein 27A	SF006320
+signal peptidase SEC11	SF001209
+signal recognition particle 54K protein	SF002107
+signal transduction protein DJ-1	SF004828
+signaling mediator	SF028772
+single-stranded DNA-binding protein	SF002070
+skelemin	SF005534
+ski transforming protein	SF001709
+small nuclear ribonucleoprotein SPAC2C4.03c	SF015770
+small nuclear ribonucleoprotein U1A	SF002084
+smooth muscle protein SM22	SF002345
+sodium channel protein	SF002448
+sodium/sulfate cotransporter	SF005833
+sol protein	SF002523
+soluble guanylate cyclase	SF001450
+somatostatin	SF001814
+sonic hedgehog protein	SF009400
+sorcin	SF036325
+spasmolytic protein	SF001852
+spectrin alpha chain	SF002295
+spectrin beta chain	SF002296
+spectrin beta-G chain	SF002297
+sperm histone	SF002067
+sperm-binding glycoprotein ZP2	SF002555
+sperm-binding glycoprotein ZP3	SF002553
+sperm-binding glycoprotein ZP3-alpha	SF002554
+spermadhesin	SF005533
+spermatid transition protein 1	SF002065
+spermatid transition protein 2	SF002066
+spermidine synthase	SF000502
+sphingosine-1-phosphate lyase	SF006745
+statherin precursor	SF002565
+stathmin	SF002285
+steroid hormone receptor Ad4BP	SF002530
+sterol O-acyltransferase	SF000439
+sterol regulatory element binding protein	SF005456
+submandibular gland 14K protein	SF002572
+submandibular gland 16.5K protein	SF002571
+substance P precursor	SF001839
+subtilisin-like proteinase PACE4	SF001181
+succinate-CoA ligase (ADP-forming) alpha chain	SF001553
+succinate-CoA ligase (ADP-forming) beta chain	SF001554
+succinyl-diaminopimelate desuccinylase	SF006038
+sucrase/isomaltase	SF001090
+sulfate transport protein	SF005448
+sulfite oxidase	SF000257
+superoxide dismutase (Cu-Zn)	SF000348
+superoxide dismutase (Mn)	SF000349
+suppressor 2 protein	SF003011
+suppressor protein suhB	SF004949
+synaptic vesicle amine transporter	SF005339
+synaptic vesicle protein SV2	SF002806
+synaptobrevin	SF005409
+synaptophysin	SF005523
+synaptotagmin	SF002385
+syntaxin	SF005486
+system b(0,+) amino acid transporter-involved protein	SF001027
+tartrate-resistant acid phosphatase	SF000898
+tau-protein kinase II 23K chain	SF009324
+tenascin	SF002502
+tenascin-X	SF002500
+tetranectin	SF002422
+thimet oligopeptidase	SF001195
+thioredoxin	SF000077
+thiosulfate sulfurtransferase	SF000855
+threonine dehydratase	SF001405
+threonine-tRNA ligase	SF001520
+thrombin	SF001149
+thrombomodulin	SF001775
+thrombospondin 1	SF002478
+thrombospondin 3	SF002479
+thymidine kinase	SF000540
+thymidylate synthase	SF000387
+thymosin beta	SF001828
+thyroglobulin	SF001831
+thyroid autoantigen	SF003033
+thyroid hormone receptor	SF002533
+thyroid peroxidase	SF000300
+thyroliberin precursor	SF001795
+tissue factor	SF002498
+tissue factor pathway inhibitor	SF001620
+tissue plasminogen activator	SF001145
+titin	SF000597
+tomato heat shock transcription factor HSF8	SF002591
+transcription coactivator CREB-binding protein	SF036333
+transcription enhancer factor TEF1	SF002603
+transcription factor AP-2	SF005097
+transcription factor Brn-1	SF002629
+transcription factor Brn-5	SF002630
+transcription factor CBF alpha 2	SF009374
+transcription factor DP	SF009404
+transcription factor ER81	SF001700
+transcription factor GATA-1	SF003026
+transcription factor GATA-2	SF003027
+transcription factor GATA-4	SF003028
+transcription factor GCN5	SF003049
+transcription factor HAP3	SF003040
+transcription factor HNF-1	SF001724
+transcription factor HNF-3	SF001732
+transcription factor IIIA	SF003034
+transcription factor Krueppel	SF003039
+transcription factor Oct-1	SF002625
+transcription factor Oct-2	SF002627
+transcription factor Oct-3	SF002628
+transcription factor Pit-1	SF002637
+transcription factor dGATAc	SF003029
+transcription factor elg	SF001703
+transcription factor erg	SF001699
+transcription factor ets	SF001698
+transcription factor inhibitor ECI-6	SF036322
+transcription factor isl-1	SF002642
+transcription initiation factor IIB	SF003050
+transcription initiation factor IID	SF003046
+transcription initiation factor IID 250K chain	SF003047
+transcription initiation factor IID beta chain	SF005769
+transcription initiation factor IIIB 90K chain	SF003053
+transcription repressor Id-2	SF005808
+transferrin	SF002549
+transferrin receptor	SF002548
+transformation upregulated nuclear protein HNRPK	SF016073
+transformer-2 sex-determining protein	SF002092
+transforming growth factor alpha precursor	SF001779
+transforming growth factor beta receptor type III	SF002558
+transitional endoplasmic reticulum ATPase	SF001172
+transketolase	SF000418
+translation elongation factor 2	SF003018
+translation elongation factor EF-Ts	SF003014
+translation elongation factor G	SF003013
+translation elongation factor Tu	SF003007
+translation elongation factor eEF-1 beta chain	SF003015
+translation elongation factor eEF-1 gamma chain	SF003016
+translation initiation factor IF-2	SF003012
+translation initiation factor SUI	SF004499
+translation initiation factor eIF-2 alpha chain	SF003020
+translation initiation factor eIF-2 gamma chain	SF003021
+translation initiation factor eIF-2B	SF005737
+translation initiation factor eIF-4A	SF003023
+translation initiation factor eIF-4E	SF003024
+translation initiation factor eIF-5A	SF003025
+translation regulator GCD2	SF003327
+translation releasing factor eRF-1	SF003055
+translocating chain-associating membrane protein	SF005449
+transthyretin	SF002519
+triacylglycerol lipase	SF000865
+triacylglycerol lipase, lingual	SF000862
+trichohyalin	SF002254
+triose-phosphate isomerase	SF001477
+tropinesterase	SF000873
+tropomodulin	SF002326
+tropomyosin	SF002327
+troponin I	SF002364
+troponin T	SF002363
+trypsin	SF001135
+tubulin	SF002306
+tumor associated protein MAGE	SF005491
+tumor necrosis factor	SF001873
+tumor necrosis factor receptor type 1	SF001965
+tumor necrosis factor receptor type 2	SF001968
+type I dihydrofolate reductase	SF000194
+ubiquinol-cytochrome-c reductase 11K protein	SF000019
+ubiquinol-cytochrome-c reductase 14K protein	SF000022
+ubiquitin	SF002034
+ubiquitin / rat ribosomal protein S27a	SF002046
+ubiquitin-activating enzyme E1	SF001564
+ubiquitin/ribosomal protein CEP52	SF002044
+ultra-high-sulfur keratin	SF005569
+unassigned ATP-binding cassette proteins	SF015210
+unassigned EGF-related proteins	SF015217
+unassigned HMG box proteins	SF015221
+unassigned Ser/Thr or Tyr-specific protein kinases	SF015229
+unassigned WD repeat proteins	SF005190
+unassigned ankyrin repeat proteins	SF015209
+unassigned bromodomain proteins	SF015211
+unassigned calmodulin-related proteins	SF015212
+unassigned collagens	SF015213
+unassigned disintegrins	SF015216
+unassigned erbA-related proteins	SF015218
+unassigned ferredoxin 2[4Fe-4S]-related proteins	SF006762
+unassigned fork head proteins	SF015219
+unassigned homeobox proteins	SF015223
+unassigned kinesin-related proteins	SF015224
+unassigned mutT domain proteins	SF005192
+unassigned myb DNA-binding repeat proteins	SF005193
+unassigned ribonucleoprotein repeat-containing proteins	SF015228
+unassigned tetratricopeptide repeat proteins	SF015230
+unassigned ubiquitin-related proteins	SF015231
+uracil-DNA glycosylase	SF001108
+urate oxidase	SF000241
+urokinase-type plasminogen activator	SF001144
+urokinase-type plasminogen activator receptor	SF002022
+uromodulin	SF002556
+uroplakin	SF005764
+uroporphyrinogen decarboxylase	SF001349
+uteroglobin	SF002537
+vaccinia virus B15R protein	SF003786
+vacuolar ATP synthase 95K chain	SF001293
+vacuolar H+-transporting ATPase 16K chain	SF001292
+vacuolar H+-transporting ATPase 69K chain	SF001291
+vacuolar protein sorting protein VPS45	SF005715
+valine-tRNA ligase	SF001527
+vav transforming protein	SF001739
+versican	SF002269
+vertebrate rhodopsin	SF002406
+vigilin	SF005247
+villin	SF002347
+voltage-dependent calcium channel protein alpha-1 chain	SF005657
+von Willebrand factor	SF002495
+xanthine dehydrogenase	SF000127
+xanthine permease pbuX	SF005349
+xylulokinase	SF000538
+yeast CAT5 protein	SF005314
+yeast DNA repair protein RAD51	SF005856
+yeast ERV1 protein	SF005793
+yeast ESS1 protein	SF005805
+yeast SMT3 protein	SF005358
+yeast SNP2 protein	SF006609
+yeast TOR2 protein	SF000721
+yeast coatomer complex alpha chain	SF003354
+yeast cytosolic phenylalanine-tRNA ligase beta chain	SF001548
+yeast deoxyhypusine synthase	SF006637
+yeast glycylpeptide N-tetradecanoyltransferase	SF015892
+yeast isocitrate dehydrogenase (NADP+)	SF000108
+yeast lanosterol synthase	SF005504
+yeast mannose-6-phosphate isomerase	SF005583
+yeast myo-inositol-1-phosphate synthase	SF015578
+yeast nuclear transport factor NTF2	SF005429
+yeast peptidylprolyl isomerase FPR3	SF001473
+yeast polydeoxyribonucleotide synthase (ATP)	SF001599
+yeast probable SKI2 protein YJL050w	SF005198
+yeast probable purine nucleotide-binding protein YBR025c	SF006641
+yeast replication licensing factor MCM6	SF001759
+yeast ribosomal protein S1.e	SF002225
+yeast ubiquitin-protein ligase UBC1	SF001566
+yellowjacket venom allergen antigen 5	SF010371
+yes-associated protein	SF018559
+zebra fish transciption factor POU-C	SF002631
+zebra fish transcription factor POU-2	SF002635
+zinc finger protein KF-1 precursor	SF018522
+zinc finger protein ZFP-36	SF005559
+zinc transporter ZnT-2	SF004685
+zip protein	SF002452

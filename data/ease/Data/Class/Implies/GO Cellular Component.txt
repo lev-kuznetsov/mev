@@ -1,0 +1,1547 @@
+1-phosphatidylinositol 3-kinase complex	cytosol
+1-phosphatidylinositol-4-phosphate kinase\, class IA complex	unlocalized
+1-phosphatidylinositol-4-phosphate kinase\, class IB complex	unlocalized
+1\,3-beta-glucan synthase complex	plasma membrane
+2-acetyl-1-alkylglycerophosphocholine esterase complex	unlocalized
+2-micrometer circle DNA	extrachromosomal circular DNA
+3-isopropylmalate dehydratase complex	unlocalized
+3-methyl-2-oxobutanoate dehydrogenase (lipoamide) complex	mitochondrial matrix
+3-phenylpropionate dioxygenase complex	unlocalized
+6-phosphofructokinase complex	cytosol
+90S preribosome	nucleolar preribosome
+ACF complex	chromatin assembly complex
+AP-1 adaptor complex	clathrin adaptor complex
+AP-1 adaptor complex	clathrin coat of trans-Golgi network vesicle
+AP-1 adaptor complex	membrane coat adaptor complex
+AP-2 adaptor complex	clathrin adaptor complex
+AP-2 adaptor complex	clathrin coat of coated pit
+AP-2 adaptor complex	clathrin coat of endocytic vesicle
+AP-2 adaptor complex	membrane coat adaptor complex
+AP-3 adaptor complex	membrane coat adaptor complex
+AP-4 adaptor complex	membrane coat adaptor complex
+ATP-sensitive potassium channel complex	integral to plasma membrane
+Ada2/Gcn5/Ada3 transcription activator complex	histone acetyltransferase complex
+Arp2/3 protein complex	actin cytoskeleton
+B-cell receptor complex	plasma membrane
+B800-820 antenna complex	light-harvesting complex\, peripheral complex
+B800-850 antenna complex	light-harvesting complex\, peripheral complex
+B875 antenna complex	light-harvesting complex\, core complex
+Barr body	X chromosome
+Barr body	sex chromatin
+CAAX-protein geranylgeranyltransferase complex	unlocalized
+CCAAT-binding factor complex	transcription factor complex
+CCR4-NOT complex	transcription factor complex
+CCR4-NOT core complex	CCR4-NOT complex
+COMPASS complex	chromatin remodeling complex
+COPI coated vesicle membrane	COPI-coated vesicle
+COPI coated vesicle membrane	coated vesicle membrane
+COPI vesicle coat	COPI-coated vesicle
+COPI vesicle coat	vesicle coat
+COPI-coated vesicle	coated vesicle
+COPII coated vesicle membrane	COPII-coated vesicle
+COPII coated vesicle membrane	coated vesicle membrane
+COPII vesicle coat	COPII-coated vesicle
+COPII vesicle coat	vesicle coat
+COPII-coated vesicle	coated vesicle
+Cajal body	nuclear body
+Cdc73/Paf1 complex	mediator complex
+D-amino acid dehydrogenase complex	unlocalized
+DASH complex	condensed nuclear chromosome kinetochore
+DASH complex	kinetochore microtubule
+DASH complex	microtubule associated complex
+DNA polymerase III complex	DNA polymerase complex
+DNA polymerase V complex	DNA polymerase complex
+DNA polymerase complex	cytoplasm
+DNA replication factor A complex	replication fork
+DNA replication factor C complex	replication fork
+DNA topoisomerase IV complex	cytoplasm
+DNA topoisomerase complex (ATP-hydrolyzing)	unlocalized
+DNA viral genome	viral genome
+DNA-dependent protein kinase complex	unlocalized
+DNA-directed RNA polymerase I complex	nucleolus
+DNA-directed RNA polymerase III complex	nucleoplasm
+DNA-directed RNA polymerase II\, core complex	DNA-directed RNA polymerase II\, holoenzyme
+DNA-directed RNA polymerase II\, holoenzyme	nucleoplasm
+ER-Golgi intermediate compartment	cytoplasm
+ER-Golgi transport vesicle	COPII-coated vesicle
+ER-Golgi transport vesicle	Golgi vesicle
+ER-Golgi transport vesicle	transport vesicle
+ER-Golgi transport vesicle membrane	COPII coated vesicle membrane
+ER-Golgi transport vesicle membrane	ER-Golgi transport vesicle
+ER-Golgi transport vesicle membrane	Golgi vesicle membrane
+ER-Golgi transport vesicle membrane	transport vesicle membrane
+F-actin capping protein complex	actin cytoskeleton
+GARP complex	Golgi apparatus
+GARP complex	cytoplasmic vesicle
+GINS complex	nuclear chromosome
+GPI-anchor transamidase complex	endoplasmic reticulum membrane
+Golgi apparatus	cytoplasm
+Golgi cis cisterna	Golgi stack
+Golgi cis-face	Golgi apparatus
+Golgi lumen	Golgi apparatus
+Golgi medial cisterna	Golgi stack
+Golgi membrane	Golgi apparatus
+Golgi membrane	endomembrane system
+Golgi stack	Golgi apparatus
+Golgi trans cisterna	Golgi stack
+Golgi trans face	Golgi apparatus
+Golgi transport complex	Golgi apparatus
+Golgi vesicle	Golgi apparatus
+Golgi vesicle	cytoplasmic vesicle
+Golgi vesicle membrane	Golgi vesicle
+Golgi vesicle membrane	cytoplasmic vesicle membrane
+Golgi-ER transport vesicle	COPI-coated vesicle
+Golgi-ER transport vesicle	Golgi vesicle
+Golgi-ER transport vesicle	transport vesicle
+Golgi-ER transport vesicle membrane	COPI coated vesicle membrane
+Golgi-ER transport vesicle membrane	Golgi vesicle membrane
+Golgi-ER transport vesicle membrane	Golgi-ER transport vesicle
+Golgi-ER transport vesicle membrane	transport vesicle membrane
+Holliday junction helicase complex	unlocalized
+HslUV protease complex	unlocalized
+ISWI1 complex	nucleosome remodeling complex
+ISWI2 complex	nucleosome remodeling complex
+IkappaB kinase complex	cytosol
+Lands	nuclear body
+Lid2 complex	chromatin remodeling complex
+MCM complex	replication fork
+MHC class I peptide loading complex	endoplasmic reticulum
+MHC class I protein complex	MHC protein complex
+MHC class II protein complex	MHC protein complex
+MHC protein complex	plasma membrane
+Maurer's cleft	host cell cytoplasm
+N-methyl-D-aspartate selective glutamate receptor complex	integral to plasma membrane
+NAD(P)+ transhydrogenase complex (AB-specific)	unlocalized
+NADH dehydrogenase complex (ubiquinone)	respiratory chain complex I
+NADH dehydrogenase complex (ubiquinone) (sensu Bacteria)	NADH dehydrogenase complex (ubiquinone)
+NADH dehydrogenase complex (ubiquinone) (sensu Bacteria)	respiratory chain complex I (sensu Bacteria)
+NADH\:plastoquinone reductase complex	unlocalized
+NLS-dependent protein nuclear import complex	nuclear pore
+NURF complex	nucleosome remodeling complex
+Nebenkern	mitochondrion
+Noc complex	nucleus
+Noc1p-Noc2p complex	90S preribosome
+Noc1p-Noc2p complex	Noc complex
+Noc1p-Noc2p complex	nucleolar preribosome\, large subunit precursor
+Noc2p-Noc3p complex	Noc complex
+Noc2p-Noc3p complex	nucleolar preribosome\, large subunit precursor
+Noc2p-Noc3p complex	nucleoplasm
+Noc4p-Nop14p complex	90S preribosome
+Noc4p-Nop14p complex	Noc complex
+Noc4p-Nop14p complex	nucleolar preribosome\, small subunit precursor
+NuRD complex	histone deacetylase complex
+P1 peroxisome	peroxisome
+P2 peroxisome	peroxisome
+P3 peroxisome	peroxisome
+P4 peroxisome	peroxisome
+P5 peroxisome	peroxisome
+P6 peroxisome	peroxisome
+PCAF complex	histone acetyltransferase complex
+PML body	nuclear body
+PSI associated light-harvesting complex I	light-harvesting complex (sensu Viridiplantae)
+PSI associated light-harvesting complex I\, LHCIa subcomplex	PSI associated light-harvesting complex I
+PSI associated light-harvesting complex I\, LHCIb subcomplex	PSI associated light-harvesting complex I
+PSII associated light-harvesting complex II	light-harvesting complex (sensu Viridiplantae)
+PSII associated light-harvesting complex II\, core complex	PSII associated light-harvesting complex II
+PSII associated light-harvesting complex II\, core complex\, LHCIIa subcomplex	PSII associated light-harvesting complex II\, core complex
+PSII associated light-harvesting complex II\, core complex\, LHCIIc subcomplex	PSII associated light-harvesting complex II\, core complex
+PSII associated light-harvesting complex II\, core complex\, LHCIId subcomplex	PSII associated light-harvesting complex II\, core complex
+PSII associated light-harvesting complex II\, peripheral complex	PSII associated light-harvesting complex II
+PSII associated light-harvesting complex II\, peripheral complex\, LHCIIb subcomplex	PSII associated light-harvesting complex II\, peripheral complex
+RNA nuclear export complex	nuclear pore
+RNA polymerase I transcription factor complex	nucleolus
+RNA polymerase I transcription factor complex	transcription factor complex
+RNA polymerase I upstream activating factor complex	RNA polymerase I transcription factor complex
+RNA viral genome	viral genome
+RNA-induced silencing complex	unlocalized
+RSC complex	chromatin remodeling complex
+Rab-protein geranylgeranyltransferase complex	unlocalized
+S-layer	glycocalyx
+SAGA complex	histone acetyltransferase complex
+SCF ubiquitin ligase complex	cytoplasmic ubiquitin ligase complex
+SLIK (SAGA-like) complex	histone acetyltransferase complex
+SWI/SNF complex	chromatin remodeling complex
+Sin3 complex	histone deacetylase complex
+Srb-mediator complex	mediator complex
+T-cell receptor complex	plasma membrane
+T-tubule	plasma membrane
+TAP complex	MHC class I peptide loading complex
+TCA cycle enzyme complex	cytoplasm
+TCA cycle enzyme complex (sensu Bacteria)	TCA cycle enzyme complex
+TCA cycle enzyme complex (sensu Eukarya)	TCA cycle enzyme complex
+TCA cycle enzyme complex (sensu Eukarya)	mitochondrial matrix
+THO complex	transcription export complex
+TRAPP	Golgi cis-face
+U4/U6 x U5 tri-snRNP complex	small nuclear ribonucleoprotein complex
+UDP-N-acetylglucosamine-peptide N-acetylglucosaminyltransferase complex	intracellular
+W chromosome	sex chromosome
+X chromosome	sex chromosome
+XY body	sex chromatin
+Y chromosome	sex chromosome
+Z chromosome	sex chromosome
+Z disc	sarcomere
+acetate CoA-transferase complex	acetyl-CoA carboxylase complex
+acetolactate synthase complex	unlocalized
+acetyl-CoA carboxylase complex	cytoplasm
+acidocalcisome	cytoplasm
+acrosome	lysosome
+actin cable (sensu Fungi)	actin cytoskeleton
+actin cable (sensu Saccharomyces)	actin cable (sensu Fungi)
+actin cap (sensu Fungi)	actin cytoskeleton
+actin cap (sensu Fungi)	cell cortex
+actin cap (sensu Saccharomyces)	actin cap (sensu Fungi)
+actin capping protein of dynactin complex	F-actin capping protein complex
+actin capping protein of dynactin complex	dynactin complex
+actin cortical patch (sensu Fungi)	actin cytoskeleton
+actin cortical patch (sensu Fungi)	cell cortex
+actin cortical patch (sensu Saccharomyces)	actin cortical patch (sensu Fungi)
+actin cytoskeleton	cytoskeleton
+actin filament	actin cytoskeleton
+activator ecdysone receptor holocomplex	ecdysone receptor holocomplex
+activin A complex	activin complex
+activin AB complex	activin complex
+activin B complex	activin complex
+activin complex	extracellular space
+activin receptor complex	integral to plasma membrane
+actomyosin	actin cytoskeleton
+actomyosin\, actin component	actin filament
+actomyosin\, actin component	actomyosin
+actomyosin\, myosin component	actomyosin
+actomyosin\, myosin component	myosin
+adherens junction	cell junction
+adventitious septum	septum
+aggresome	inclusion body
+alkyl hydroperoxide reductase complex	unlocalized
+alpha DNA polymerase\:primase complex	replication fork
+alpha-beta T-cell receptor complex	T-cell receptor complex
+alpha-glucosidase complex	unlocalized
+alpha-heterochromatin	centric heterochromatin
+alpha-ketoglutarate dehydrogenase complex	TCA cycle enzyme complex
+alpha-ketoglutarate dehydrogenase complex (sensu Bacteria)	TCA cycle enzyme complex (sensu Bacteria)
+alpha-ketoglutarate dehydrogenase complex (sensu Bacteria)	alpha-ketoglutarate dehydrogenase complex
+alpha-ketoglutarate dehydrogenase complex (sensu Eukarya)	TCA cycle enzyme complex (sensu Eukarya)
+alpha-ketoglutarate dehydrogenase complex (sensu Eukarya)	alpha-ketoglutarate dehydrogenase complex
+alpha\, alpha-trehalose-phosphate synthase complex (UDP-forming)	unlocalized
+ambisense viral genome	ssRNA viral genome
+aminoacyl-tRNA synthetase multienzyme complex	unlocalized
+aminoadipate-semialdehyde dehydrogenase complex	unlocalized
+amyloplast	plastid
+amyloplast starch grain	amyloplast
+anaphase-promoting complex	nuclear ubiquitin ligase complex
+annulate lamellae	nuclear membrane
+anthranilate synthase complex	unlocalized
+apical complex	apical part of cell
+apical cortex	apical part of cell
+apical cortex	cell cortex
+apical hemi-adherens junction	cell-substrate adherens junction
+apical part of cell	intracellular
+apical plasma membrane	plasma membrane
+apicolateral plasma membrane	plasma membrane
+apicoplast	plastid
+apoplast	extracellular
+ascus lipid droplet	lipid particle
+aspartate carbamoyltransferase complex	unlocalized
+assemblon	nucleus
+aster	spindle
+astral microtubule	aster
+astral microtubule	spindle microtubule
+autophagic vacuole	vacuole
+auxin efflux carrier complex	plasma membrane
+axolemma	axon
+axolemma	membrane
+axon	cell
+axonemal dynein complex	actin cytoskeleton
+axonemal dynein complex	axonemal microtubule
+axonemal dynein complex	dynein complex
+axonemal microtubule	axoneme
+axonemal microtubule	microtubule
+axoneme	cilium
+azurophil granule	primary lysosome
+azurophil granule	secretory granule
+barrier septum	septum
+basal body	cilium
+basal body	microtubule organizing center
+basal cortex	basal part of cell
+basal cortex	cell cortex
+basal lamina	basement membrane
+basal part of cell	intracellular
+basal plasma membrane	basolateral plasma membrane
+basal ring of apical complex	apical complex
+base of shmoo tip	shmoo tip
+basement membrane	extracellular matrix
+basolateral plasma membrane	plasma membrane
+beta-galactosidase complex	unlocalized
+beta-heterochromatin	centric heterochromatin
+biotin carboxylase complex	acetyl-CoA carboxylase complex
+bipartite viral genome	segmented viral genome
+brush border	plasma membrane
+bud	cell
+bud neck	bud
+bud neck	site of polarized growth (sensu Saccharomyces)
+bud scar	cell wall (sensu Fungi)
+bud tip	bud
+bud tip	site of polarized growth (sensu Saccharomyces)
+cAMP-dependent protein kinase complex	unlocalized
+calcineurin complex	protein serine/threonine phosphatase complex
+calcium/calmodulin-dependent protein kinase complex	unlocalized
+capsomere	viral capsid
+capsule	external encapsulating structure
+capsule (sensu Bacteria)	capsule
+capsule (sensu Bacteria)	glycocalyx
+capsule (sensu Fungi)	capsule
+carbamoyl-phosphate synthase complex	unlocalized
+caspase complex	unlocalized
+catenin complex	extrinsic to plasma membrane
+caveola	plasma membrane
+caveolar membrane	caveola
+cell cortex	intracellular
+cell envelope	external encapsulating structure
+cell fraction	cell
+cell junction	plasma membrane
+cell plate	cytoplasm
+cell surface	cell
+cell surface (sensu Magnoliophyta)	cell surface
+cell wall	external encapsulating structure
+cell wall (sensu Bacteria)	cell wall
+cell wall (sensu Fungi)	cell wall
+cell wall (sensu Gram-negative Bacteria)	cell envelope
+cell wall (sensu Gram-negative Bacteria)	cell wall (sensu Bacteria)
+cell wall (sensu Gram-positive Bacteria)	cell wall (sensu Bacteria)
+cell wall (sensu Magnoliophyta)	cell wall
+cell-cell adherens junction	adherens junction
+cell-cell adherens junction	intercellular junction
+cell-matrix junction	apicolateral plasma membrane
+cell-matrix junction	cell junction
+cell-substrate adherens junction	adherens junction
+cell-substrate adherens junction	cell-matrix junction
+cellulose microfibril	primary cell wall
+cellulose microfibril	secondary cell wall
+central element	synaptonemal complex
+central plaque of spindle pole body	spindle pole body
+central vacuole	vacuole (sensu Streptophyta)
+centric heterochromatin	nuclear heterochromatin
+centriole	centrosome
+centrosome	microtubule organizing center
+centrosome	spindle pole
+chaperonin ATPase complex	cytosol
+chaperonin-containing T-complex	cytosol
+chiasma	condensed nuclear chromosome
+chitosan layer of spore wall	spore wall (sensu Fungi)
+chitosome	cytoplasmic vesicle
+chitosome membrane	chitosome
+chitosome membrane	cytoplasmic vesicle membrane
+chloroplast	plastid
+chloroplast ATP synthase complex	thylakoid (sensu Viridiplantae)
+chloroplast chromosome	chloroplast nucleoid
+chloroplast chromosome	plastid chromosome
+chloroplast envelope	chloroplast
+chloroplast inner membrane	chloroplast envelope
+chloroplast inner membrane	plastid inner membrane
+chloroplast nucleoid	chloroplast stroma
+chloroplast nucleoid	plastid nucleoid
+chloroplast outer membrane	chloroplast envelope
+chloroplast outer membrane	plastid outer membrane
+chloroplast starch grain	chloroplast
+chloroplast stroma	chloroplast
+chloroplast stroma	plastid stroma
+chloroplast stromal thylakoid	chloroplast stroma
+chloroplast stromal thylakoid	thylakoid (sensu Viridiplantae)
+chloroplastic endopeptidase Clp complex	chloroplast stroma
+chloroplastic endopeptidase Clp complex	endopeptidase Clp complex
+chlorosome	intracellular
+chorion	external encapsulating structure
+chromaffin granule	secretory granule
+chromaffin granule membrane	chromaffin granule
+chromaffin granule membrane	secretory granule membrane
+chromatin	chromosome
+chromatin accessibility complex	chromatin remodeling complex
+chromatin assembly complex	chromatin remodeling complex
+chromatin remodeling complex	nucleoplasm
+chromatin silencing complex	chromatin remodeling complex
+chromatophore	cytoplasmic vesicle
+chromatophore membrane	chromatophore
+chromatophore membrane	cytoplasmic vesicle membrane
+chromoplast	plastid
+chromoplast membrane	chromoplast
+chromoplast stroma	chromoplast
+chromoplast stroma	plastid stroma
+chromosome	intracellular
+chromosome\, pericentric region	chromosome
+chromosome\, telomeric region	chromosome
+chylomicron	extracellular space
+cilium	intracellular
+citrate lyase complex	cytoplasm
+classical-complement pathway C3/C5 convertase complex	extracellular space
+clathrin adaptor complex	clathrin coat
+clathrin coat	membrane coat
+clathrin coat of coated pit	clathrin coat
+clathrin coat of coated pit	coated pit
+clathrin coat of endocytic vesicle	clathrin vesicle coat
+clathrin coat of endocytic vesicle	clathrin-coated endocytic vesicle
+clathrin coat of synaptic vesicle	clathrin vesicle coat
+clathrin coat of synaptic vesicle	synaptic vesicle
+clathrin coat of trans-Golgi network vesicle	clathrin vesicle coat
+clathrin coat of trans-Golgi network vesicle	trans-Golgi network transport vesicle
+clathrin coated vesicle membrane	clathrin-coated vesicle
+clathrin coated vesicle membrane	coated vesicle membrane
+clathrin vesicle coat	clathrin coat
+clathrin vesicle coat	clathrin-coated vesicle
+clathrin vesicle coat	vesicle coat
+clathrin-coated endocytic vesicle	clathrin-coated vesicle
+clathrin-coated endocytic vesicle	endocytic vesicle
+clathrin-coated endocytic vesicle membrane	clathrin coated vesicle membrane
+clathrin-coated endocytic vesicle membrane	clathrin-coated endocytic vesicle
+clathrin-coated endocytic vesicle membrane	endocytic vesicle membrane
+clathrin-coated phagocytic vesicle	clathrin-coated endocytic vesicle
+clathrin-coated phagocytic vesicle	phagocytic vesicle
+clathrin-coated phagocytic vesicle membrane	clathrin-coated endocytic vesicle membrane
+clathrin-coated phagocytic vesicle membrane	clathrin-coated phagocytic vesicle
+clathrin-coated phagocytic vesicle membrane	phagocytic vesicle membrane
+clathrin-coated vesicle	coated vesicle
+cnidocyst	cell cortex
+coated pit	plasma membrane
+coated vesicle	cytoplasmic vesicle
+coated vesicle membrane	coated vesicle
+coated vesicle membrane	cytoplasmic vesicle membrane
+cohesin complex	condensed chromosome
+cohesin core heterodimer	cohesin complex
+collagen	extracellular matrix
+collagen type I	fibrillar collagen
+collagen type II	fibrillar collagen
+collagen type III	fibrillar collagen
+collagen type IV	basement membrane
+collagen type IV	collagen
+collagen type IX	facit collagen
+collagen type V	fibrillar collagen
+collagen type VI	collagen
+collagen type VII	collagen
+collagen type VIII	short-chain collagen
+collagen type X	short-chain collagen
+collagen type XI	fibrillar collagen
+collagen type XII	facit collagen
+collagen type XIII	collagen
+collagen type XIV	facit collagen
+collagen type XV	collagen
+collagen type XVI	facit collagen
+commitment complex	spliceosome complex
+complement component C1q complex	extracellular space
+complement component C2 complex	extracellular space
+condensed chromosome	chromosome
+condensed chromosome kinetochore	condensed chromosome\, pericentric region
+condensed chromosome kinetochore	kinetochore
+condensed chromosome\, pericentric region	chromosome\, pericentric region
+condensed chromosome\, pericentric region	condensed chromosome
+condensed nuclear chromosome	condensed chromosome
+condensed nuclear chromosome	nuclear chromosome
+condensed nuclear chromosome kinetochore	condensed chromosome kinetochore
+condensed nuclear chromosome kinetochore	condensed nuclear chromosome\, pericentric region
+condensed nuclear chromosome\, pericentric region	condensed chromosome\, pericentric region
+condensed nuclear chromosome\, pericentric region	condensed nuclear chromosome
+condensin complex	condensed chromosome
+condensin core heterodimer	condensin complex
+connecting hemi-adherens junction	cell-substrate adherens junction
+connexon complex	gap junction
+conoid	basal ring of apical complex
+conoid	microtubule
+conoid	polar ring of apical complex
+contractile ring	cell cortex
+contractile ring (sensu Fungi)	actin cytoskeleton
+contractile ring (sensu Fungi)	contractile ring
+contractile ring (sensu Saccharomyces)	bud neck
+contractile ring (sensu Saccharomyces)	contractile ring (sensu Fungi)
+contractile vacuole	vacuole
+core-binding factor complex	transcription factor complex
+cornified envelope	cytoskeleton
+cortical microtubule (sensu Viridiplantae)	microtubule
+cyanelle	plastid
+cyanelle ribonuclease P complex	cyanelle
+cyanelle ribonuclease P complex	ribonuclease P complex
+cyclin-dependent protein kinase 5 activator complex	nucleus
+cyclin-dependent protein kinase activating kinase holoenzyme complex	nucleus
+cyclin-dependent protein kinase holoenzyme complex	intracellular
+cysteine synthase complex	unlocalized
+cytochrome b6f complex	photosynthetic electron transport chain
+cytochrome o ubiquinol oxidase complex	unlocalized
+cytoplasm	intracellular
+cytoplasmic chromatin	chromatin
+cytoplasmic chromatin	cytoplasmic chromosome
+cytoplasmic chromosome	chromosome
+cytoplasmic chromosome	cytoplasm
+cytoplasmic cyclin-dependent protein kinase holoenzyme complex	cyclin-dependent protein kinase holoenzyme complex
+cytoplasmic cyclin-dependent protein kinase holoenzyme complex	cytoplasm
+cytoplasmic dynein complex	actin cytoskeleton
+cytoplasmic dynein complex	cytoplasmic microtubule
+cytoplasmic dynein complex	dynein complex
+cytoplasmic exosome (RNase complex)	cytoplasm
+cytoplasmic exosome (RNase complex)	exosome (RNase complex)
+cytoplasmic mRNA processing body	cytoplasm
+cytoplasmic microtubule	microtubule
+cytoplasmic nucleosome	cytoplasmic chromatin
+cytoplasmic nucleosome	nucleosome
+cytoplasmic origin of replication recognition complex	cytoplasmic chromosome
+cytoplasmic origin of replication recognition complex	origin of replication recognition complex
+cytoplasmic ubiquitin ligase complex	cytoplasm
+cytoplasmic ubiquitin ligase complex	ubiquitin ligase complex
+cytoplasmic vesicle	cytoplasm
+cytoplasmic vesicle membrane	cytoplasmic vesicle
+cytoplasmic vesicle membrane	vesicle membrane
+cytoskeleton	cytoplasm
+cytosol	cytoplasm
+cytosolic DNA-directed RNA polymerase (sensu Bacteria)	cytosol
+cytosolic large ribosomal subunit (sensu Bacteria)	cytosolic ribosome (sensu Bacteria)
+cytosolic large ribosomal subunit (sensu Bacteria)	large ribosomal subunit
+cytosolic large ribosomal subunit (sensu Eukarya)	cytosolic ribosome (sensu Eukarya)
+cytosolic large ribosomal subunit (sensu Eukarya)	large ribosomal subunit
+cytosolic ribosome (sensu Bacteria)	cytosol
+cytosolic ribosome (sensu Bacteria)	ribosome
+cytosolic ribosome (sensu Eukarya)	cytosol
+cytosolic ribosome (sensu Eukarya)	ribosome
+cytosolic small ribosomal subunit (sensu Bacteria)	cytosolic ribosome (sensu Bacteria)
+cytosolic small ribosomal subunit (sensu Bacteria)	small ribosomal subunit
+cytosolic small ribosomal subunit (sensu Eukarya)	cytosolic ribosome (sensu Eukarya)
+cytosolic small ribosomal subunit (sensu Eukarya)	eukaryotic 43S pre-initiation complex
+cytosolic small ribosomal subunit (sensu Eukarya)	eukaryotic 48S initiation complex
+cytosolic small ribosomal subunit (sensu Eukarya)	small ribosomal subunit
+delta DNA polymerase complex	DNA polymerase complex
+delta DNA polymerase complex	replication fork
+delta-DNA polymerase cofactor complex	delta DNA polymerase complex
+dendrite	cell
+dense fibrillar component	nucleolus
+dense granule (sensu Apicomplexa)	cytoplasmic vesicle
+dense granule membrane (sensu Apicomplexa)	cytoplasmic vesicle membrane
+dense granule membrane (sensu Apicomplexa)	dense granule (sensu Apicomplexa)
+dense nuclear body	nucleus
+desmosome	intercellular junction
+desmotubule central rod	plasmodesmatal desmotubule
+digestive vacuole	lysosome
+dihydrolipoamide S-acyltransferase complex	unlocalized
+dihydrolipoamide S-succinyltransferase complex	unlocalized
+dihydrolipoamide dehydrogenase complex	unlocalized
+dimethyl sulfoxide reductase complex	unlocalized
+dityrosine layer of spore wall	spore wall (sensu Fungi)
+dolipore septum	porous septum
+dosage compensation complex	nucleus
+dosage compensation complex (sensu Drosophila)	dosage compensation complex
+dsRNA viral genome	RNA viral genome
+dynactin complex	actin cytoskeleton
+dynactin complex	microtubule cytoskeleton
+dynein complex	microtubule associated complex
+dystrobrevin complex	dystrophin-associated glycoprotein complex
+dystroglycan complex	dystrophin-associated glycoprotein complex
+dystrophin-associated glycoprotein complex	basal lamina
+dystrophin-associated glycoprotein complex	cytoplasm
+dystrophin-associated glycoprotein complex	plasma membrane
+early endosome	endosome
+early recombination nodule	recombination nodule
+ecdysone receptor holocomplex	transcription factor complex
+elaioplast	plastid
+elaioplast stroma	elaioplast
+elaioplast stroma	plastid stroma
+electron transfer flavoprotein complex	intracellular
+electron transfer flavoprotein complex (sensu Bacteria)	cytoplasm
+electron transfer flavoprotein complex (sensu Bacteria)	electron transfer flavoprotein complex
+electron transfer flavoprotein complex (sensu Eukarya)	electron transfer flavoprotein complex
+electron transfer flavoprotein complex (sensu Eukarya)	mitochondrial matrix
+endocytic vesicle	cytoplasmic vesicle
+endocytic vesicle membrane	cytoplasmic vesicle membrane
+endomembrane system	membrane
+endopeptidase Clp complex	intracellular
+endoplasmic reticulum	cytoplasm
+endoplasmic reticulum cisterna	endoplasmic reticulum
+endoplasmic reticulum lumen	endoplasmic reticulum
+endoplasmic reticulum membrane	endoplasmic reticulum
+endoplasmic reticulum membrane	nuclear envelope-endoplasmic reticulum network
+endosome	cytoplasm
+endosome membrane	endosome
+endosome membrane	membrane
+enterobactin synthetase complex	intracellular
+epsilon DNA polymerase complex	DNA polymerase complex
+epsilon DNA polymerase complex	nucleotide excision repair complex
+epsilon DNA polymerase complex	replication fork
+equatorial mitotic organizing center	microtubule organizing center
+ethanolamine ammonia-lyase complex	unlocalized
+etioplast	plastid
+etioplast prolamellar body	etioplast
+etioplast stroma	etioplast
+etioplast stroma	plastid stroma
+euchromatin	chromatin
+eukaryotic 43S pre-initiation complex	cytoplasm
+eukaryotic 48S initiation complex	cytoplasm
+eukaryotic translation elongation factor 1 complex	cytoplasm
+eukaryotic translation initiation factor 2 complex	eukaryotic 43S pre-initiation complex
+eukaryotic translation initiation factor 2B complex	cytoplasm
+eukaryotic translation initiation factor 3 complex	eukaryotic 43S pre-initiation complex
+eukaryotic translation initiation factor 4F complex	cytoplasm
+excinuclease ABC complex	unlocalized
+exocyst	cell cortex
+exodeoxyribonuclease V complex	unlocalized
+exodeoxyribonuclease VII complex	unlocalized
+exosome (RNase complex)	intracellular
+external encapsulating structure	cell
+external outer membrane (sensu Gram-negative Bacteria)	cell envelope
+external outer membrane (sensu Gram-negative Bacteria)	membrane
+external side of endosome membrane	endosome membrane
+external side of plasma membrane	cell surface
+external side of plasma membrane	plasma membrane
+extracellular matrix	extracellular
+extracellular space	extracellular
+extrachromosomal DNA	intracellular
+extrachromosomal circular DNA	extrachromosomal DNA
+extrachromosomal rDNA circle	extrachromosomal circular DNA
+extrinsic to endoplasmic reticulum membrane	endoplasmic reticulum membrane
+extrinsic to endoplasmic reticulum membrane	extrinsic to membrane
+extrinsic to membrane	membrane
+extrinsic to plasma membrane	extrinsic to membrane
+extrinsic to plasma membrane	plasma membrane
+extrinsic to plasma membrane\, GPI-anchored	extrinsic to plasma membrane
+extrinsic to vacuolar membrane	extrinsic to membrane
+extrinsic to vacuolar membrane	vacuolar membrane
+facit collagen	collagen
+farnesyl-diphosphate farnesyl transferase complex	unlocalized
+fascia adherens	cell-cell adherens junction
+fatty acid beta-oxidation multienzyme complex	mitochondrial matrix
+fatty acid elongase complex	fatty-acid synthase complex
+fatty-acid synthase complex	cytosol
+fatty-acyl-CoA synthase complex	cytosol
+female germ-cell nucleus	nucleus
+ferredoxin\:thioredoxin reductase complex	chloroplast
+ferritin complex	unlocalized
+fibrillar center	nucleolus
+fibrillar collagen	collagen
+fibrinogen complex	extracellular space
+filopodium	plasma membrane
+fimbria	intracellular
+fimbrial shaft	fimbria
+fimbrial tip	fimbria
+fimbrin	fimbria
+flagellar basal body (sensu Bacteria)	flagellum (sensu Bacteria)
+flagellar basal body\, C ring (sensu Bacteria)	flagellar basal body (sensu Bacteria)
+flagellar basal body\, MS ring (sensu Bacteria)	flagellar basal body (sensu Bacteria)
+flagellar basal body\, distal rod (sensu Bacteria)	flagellar basal body\, rod (sensu Bacteria)
+flagellar basal body\, distal rod\, L ring (sensu Bacteria)	flagellar basal body\, distal rod (sensu Bacteria)
+flagellar basal body\, distal rod\, P ring (sensu Bacteria)	flagellar basal body\, distal rod (sensu Bacteria)
+flagellar basal body\, proximal rod (sensu Bacteria)	flagellar basal body\, rod (sensu Bacteria)
+flagellar basal body\, rod (sensu Bacteria)	flagellar basal body (sensu Bacteria)
+flagellar filament (sensu Bacteria)	flagellum (sensu Bacteria)
+flagellar filament cap (sensu Bacteria)	flagellar filament (sensu Bacteria)
+flagellar hook (sensu Bacteria)	flagellum (sensu Bacteria)
+flagellar hook-filament junction (sensu Bacteria)	flagellum (sensu Bacteria)
+flagellar membrane	flagellum (sensu Eukarya)
+flagellar membrane	plasma membrane
+flagellar pocket	flagellum (sensu Eukarya)
+flagellar pocket membrane	flagellar membrane
+flagellar pocket membrane	flagellar pocket
+flagellum	cell
+flagellum (sensu Bacteria)	flagellum
+flagellum (sensu Eukarya)	flagellum
+flagellum (sensu Eukarya)	intracellular
+flotillin complex	caveolar membrane
+focal adhesion	cell-substrate adherens junction
+follicle-stimulating hormone complex	unlocalized
+food vacuole (sensu Apicomplexa)	lysosome
+forespore	immature spore
+formate dehydrogenase complex	unlocalized
+fumarate reductase complex	respiratory chain complex II
+fumarate reductase complex (sensu Bacteria)	fumarate reductase complex
+fumarate reductase complex (sensu Bacteria)	respiratory chain complex II (sensu Bacteria)
+fusome	cytoplasm
+gamma DNA polymerase complex	mitochondrial matrix
+gamma-delta T-cell receptor complex	T-cell receptor complex
+gamma-tubulin complex	microtubule organizing center
+gamma-tubulin complex (sensu Saccharomyces)	gamma-tubulin small complex
+gamma-tubulin complex (sensu Saccharomyces)	spindle pole body
+gamma-tubulin large complex	gamma-tubulin complex
+gamma-tubulin large complex (sensu Animalia)	gamma-tubulin large complex
+gamma-tubulin large complex (sensu Animalia)	gamma-tubulin ring complex\, centrosomal (sensu Animalia)
+gamma-tubulin large complex (sensu Schizosaccharomyces)	equatorial mitotic organizing center
+gamma-tubulin large complex (sensu Schizosaccharomyces)	gamma-tubulin large complex
+gamma-tubulin large complex (sensu Schizosaccharomyces)	spindle pole body
+gamma-tubulin ring complex	gamma-tubulin complex
+gamma-tubulin ring complex	pericentriolar material
+gamma-tubulin ring complex\, centrosomal	gamma-tubulin ring complex
+gamma-tubulin ring complex\, centrosomal (sensu Animalia)	gamma-tubulin ring complex\, centrosomal
+gamma-tubulin small complex	gamma-tubulin complex
+gamma-tubulin small complex (sensu Animalia)	gamma-tubulin ring complex\, centrosomal (sensu Animalia)
+gamma-tubulin small complex (sensu Animalia)	gamma-tubulin small complex
+gap junction	intercellular junction
+germinal vesicle	female germ-cell nucleus
+giant axon	axon
+glutamate synthase complex (NADPH)	unlocalized
+glutamate-cysteine ligase complex	unlocalized
+glutamate-tRNA ligase complex	unlocalized
+glycerol-3-phosphate dehydrogenase complex	unlocalized
+glycine cleavage complex	cytoplasm
+glycine dehydrogenase complex (decarboxylating)	glycine cleavage complex
+glycine reductase complex	cytoplasm
+glycine-gated chloride channel complex	integral to plasma membrane
+glycine-tRNA ligase complex	cytoplasm
+glycocalyx	external encapsulating structure
+glycogen granule	cytoplasm
+glycolate oxidase complex	unlocalized
+glycosome	cytoplasm
+glycosome membrane	glycosome
+glyoxysomal membrane	glyoxysome
+glyoxysome	microbody
+granal stacked thylakoid	granum
+granal stacked thylakoid	thylakoid (sensu Viridiplantae)
+granular component	nucleolus
+granulocyte macrophage colony-stimulating factor receptor complex	integral to plasma membrane
+granum	chloroplast
+growth cone	site of polarized growth
+guanylate cyclase complex\, soluble	unlocalized
+half bridge of spindle pole body	spindle pole body
+helical viral capsid	viral capsid
+hemidesmosome	cell-matrix junction
+hemoglobin complex	cytosol
+heterochromatin	chromatin
+heterogeneous nuclear ribonucleoprotein complex	nucleus
+heterogeneous nuclear ribonucleoprotein complex	ribonucleoprotein complex
+heterotrimeric G-protein complex	extrinsic to plasma membrane
+histamine-gated chloride channel complex	integral to plasma membrane
+histone acetyltransferase complex	transcription factor complex
+histone deacetylase complex	transcription factor complex
+holo-[acyl-carrier protein] synthase complex	unlocalized
+host	extracellular
+host cell cytoplasm	host
+host cell nucleus	host
+host cell plasma membrane	host
+hydrogen-translocating F-type ATPase complex	proton-transporting two-sector ATPase complex
+hydrogen-translocating F-type ATPase complex (sensu Bacteria)	hydrogen-translocating F-type ATPase complex
+hydrogen-translocating F-type ATPase complex (sensu Bacteria)	plasma membrane
+hydrogen-translocating F-type ATPase complex (sensu Viridiplantae)	hydrogen-translocating F-type ATPase complex
+hydrogen-translocating F-type ATPase complex (sensu Viridiplantae)	thylakoid membrane (sensu Viridiplantae)
+hydrogen-translocating V-type ATPase complex	vacuolar membrane
+hydrogen-transporting ATPase V0 domain	hydrogen-translocating V-type ATPase complex
+hydrogen-transporting ATPase V1 domain	hydrogen-translocating V-type ATPase complex
+hydrogen/potassium-exchanging ATPase complex	integral to plasma membrane
+hydrogenase complex	unlocalized
+hydrogenosomal membrane	hydrogenosome
+hydrogenosome	cytoplasm
+hyphal cell wall	cell wall (sensu Fungi)
+icosahedral viral capsid	viral capsid
+imidazoleglycerol-phosphate synthase complex	unlocalized
+immature spore	cell
+immunoglobulin complex\, circulating	extracellular space
+immunoglobulin complex\, circulating	immunoglobulin complex
+immunoglobulin complex\, membrane bound	immunoglobulin complex
+immunoglobulin complex\, membrane bound	plasma membrane
+importin alpha-subunit nuclear export complex	nuclear pore
+inaD signaling complex	extrinsic to plasma membrane
+inaD signaling complex	rhabdomere
+incipient bud site	intracellular
+inclusion body	intracellular
+infected host cell surface knob	host cell cytoplasm
+inner kinetochore of condensed chromosome	condensed chromosome kinetochore
+inner kinetochore of condensed nuclear chromosome	condensed nuclear chromosome kinetochore
+inner kinetochore of condensed nuclear chromosome	inner kinetochore of condensed chromosome
+inner layer of spore wall	spore wall (sensu Fungi)
+inner membrane	membrane
+inner plaque of spindle pole body	spindle pole body
+insoluble fraction	cell fraction
+insulin control element activator complex	transcription factor complex
+insulin receptor complex	integral to plasma membrane
+insulin-like growth factor binary complex	insulin-like growth factor binding protein complex
+insulin-like growth factor binding protein complex	extracellular space
+insulin-like growth factor ternary complex	insulin-like growth factor binding protein complex
+integral membrane protein of membrane fraction	membrane fraction
+integral peroxisomal membrane	peroxisomal membrane
+integral to Golgi membrane	Golgi membrane
+integral to Golgi membrane	integral to membrane
+integral to endoplasmic reticulum membrane	endoplasmic reticulum membrane
+integral to endoplasmic reticulum membrane	integral to membrane
+integral to external outer membrane (sensu Gram-negative Bacteria)	external outer membrane (sensu Gram-negative Bacteria)
+integral to external outer membrane (sensu Gram-negative Bacteria)	integral to membrane
+integral to membrane	membrane
+integral to nuclear inner membrane	integral to membrane
+integral to nuclear inner membrane	nuclear inner membrane
+integral to plasma membrane	integral to membrane
+integral to plasma membrane	plasma membrane
+integral to synaptic vesicle membrane	integral to membrane
+integral to synaptic vesicle membrane	synaptic vesicle membrane
+integrin complex	integral to plasma membrane
+inter-Golgi transport vesicle	COPI-coated vesicle
+inter-Golgi transport vesicle	Golgi vesicle
+inter-Golgi transport vesicle	transport vesicle
+inter-Golgi transport vesicle membrane	COPI coated vesicle membrane
+inter-Golgi transport vesicle membrane	Golgi vesicle membrane
+inter-Golgi transport vesicle membrane	inter-Golgi transport vesicle
+inter-Golgi transport vesicle membrane	transport vesicle membrane
+intercalary heterochromatin	nuclear heterochromatin
+intercellular bridge	extracellular
+intercellular canaliculus	intercellular junction
+intercellular junction	apicolateral plasma membrane
+intercellular junction	cell junction
+interleukin-1 receptor complex	integral to plasma membrane
+interleukin-12 receptor complex	integral to plasma membrane
+interleukin-13 receptor complex	integral to plasma membrane
+interleukin-18 receptor complex	integral to plasma membrane
+interleukin-2 receptor complex	integral to plasma membrane
+interleukin-3 receptor complex	integral to plasma membrane
+interleukin-4 receptor complex	integral to plasma membrane
+interleukin-5 receptor complex	integral to plasma membrane
+interleukin-6 receptor complex	integral to plasma membrane
+interleukin-9 receptor complex	integral to plasma membrane
+intermediate filament	intermediate filament cytoskeleton
+intermediate filament cytoskeleton	cytoskeleton
+intermediate layer of spindle pole body	spindle pole body
+internal side of plasma membrane	plasma membrane
+interstitial matrix	extracellular
+intra-peroxisomal peripheral membrane	peroxisomal membrane
+intracellular	cell
+intracellular canaliculus	apical plasma membrane
+intracellular cyclic nucleotide activated cation channel complex	integral to membrane
+ionotropic glutamate receptor complex	integral to plasma membrane
+iron-iron nitrogenase complex	nitrogenase complex
+isocitrate dehydrogenase complex (NAD+)	TCA cycle enzyme complex
+isocitrate dehydrogenase complex (NAD+) (sensu Bacteria)	TCA cycle enzyme complex (sensu Bacteria)
+isocitrate dehydrogenase complex (NAD+) (sensu Bacteria)	isocitrate dehydrogenase complex (NAD+)
+isocitrate dehydrogenase complex (NAD+) (sensu Eukarya)	TCA cycle enzyme complex (sensu Eukarya)
+isocitrate dehydrogenase complex (NAD+) (sensu Eukarya)	isocitrate dehydrogenase complex (NAD+)
+junctional membrane complex	sarcoplasm
+katanin	centrosome
+keratin filament	intermediate filament
+kinesin I complex	kinesin complex
+kinesin II complex	kinesin complex
+kinesin complex	microtubule associated complex
+kinetochore	chromosome\, pericentric region
+kinetochore microtubule	spindle microtubule
+kinetoplast	mitochondrion
+lamellar body	secretory granule
+lamellipodium	plasma membrane
+lamin filament	intermediate filament
+lamin filament	nuclear inner membrane
+lamin filament	nuclear lamina
+lamina densa	basal lamina
+lamina lucida	basal lamina
+lamina reticularis	basal lamina
+laminin-1	basal lamina
+laminin-2	dystroglycan complex
+laminin-3	basal lamina
+laminin-4	basal lamina
+laminin-5	basal lamina
+laminin-6	basal lamina
+laminin-7	basal lamina
+large ribosomal subunit	ribosome
+larval serum protein complex	extracellular space
+late endosome	endosome
+late recombination nodule	recombination nodule
+lateral element	synaptonemal complex
+lateral plasma membrane	plasma membrane
+leucoplast	plastid
+leucoplast stroma	leucoplast
+leucoplast stroma	plastid stroma
+light-activated voltage-gated calcium channel complex	voltage-gated calcium channel complex
+light-harvesting complex	thylakoid
+light-harvesting complex (sensu Proteobacteria)	light-harvesting complex
+light-harvesting complex (sensu Viridiplantae)	light-harvesting complex
+light-harvesting complex (sensu Viridiplantae)	thylakoid membrane (sensu Viridiplantae)
+light-harvesting complex\, core complex	light-harvesting complex (sensu Proteobacteria)
+light-harvesting complex\, core complex	thylakoid (sensu Proteobacteria)
+light-harvesting complex\, peripheral complex	light-harvesting complex (sensu Proteobacteria)
+light-harvesting complex\, peripheral complex	thylakoid (sensu Proteobacteria)
+lipid bilayer	plasma membrane
+lipid particle	cytoplasm
+lipid raft	plasma membrane
+lipid storage body (sensu Viridiplantae)	lipid particle
+lipopolysaccharide receptor complex	integral to membrane
+longitudinal side of cell surface (sensu Magnoliophyta)	cell surface (sensu Magnoliophyta)
+lysosomal hydrogen-translocating V-type ATPase complex	hydrogen-translocating V-type ATPase complex
+lysosomal hydrogen-translocating V-type ATPase complex	lysosomal membrane
+lysosomal hydrogen-translocating V-type ATPase complex	proton-transporting two-sector ATPase complex
+lysosomal hydrogen-transporting ATPase V0 domain	hydrogen-transporting ATPase V0 domain
+lysosomal hydrogen-transporting ATPase V0 domain	lysosomal hydrogen-translocating V-type ATPase complex
+lysosomal hydrogen-transporting ATPase V1 domain	hydrogen-transporting ATPase V1 domain
+lysosomal hydrogen-transporting ATPase V1 domain	lysosomal hydrogen-translocating V-type ATPase complex
+lysosomal membrane	lysosome
+lysosomal membrane	membrane
+lysosome	lytic vacuole
+lytic vacuole	vacuole
+lytic vacuole within protein storage vacuole	lytic vacuole
+lytic vacuole within protein storage vacuole	protein storage vacuole
+m-AAA complex	mitochondrial inner membrane
+mRNA cap complex	cytoplasm
+mRNA cleavage and polyadenylation specificity factor complex	nucleoplasm
+mRNA cleavage factor complex	nucleoplasm
+mRNA cleavage stimulating factor complex	nucleoplasm
+mRNA editing complex	mitochondrion
+mRNA editing complex	plastid
+magnesium chelatase complex	chloroplast
+magnesium-dependent protein serine/threonine phosphatase complex	unlocalized
+major (U2-dependent) spliceosome	spliceosome complex
+major mitochondrial derivative	mitochondrial derivative
+male germ-cell nucleus	nucleus
+mannosome	peroxisome
+mannosyltransferase complex	Golgi cis cisterna
+mast cell granule	lysosome
+mediator complex	DNA-directed RNA polymerase II\, holoenzyme
+melanosome	cytoplasm
+membrane	cell
+membrane attack complex	extracellular matrix
+membrane coat	cytoplasm
+membrane coat adaptor complex	membrane coat
+membrane fraction	cell fraction
+meprin A complex	integral to membrane
+mesosome	plasma membrane
+methane monooxygenase complex	unlocalized
+methionyl glutamyl tRNA synthetase complex	unlocalized
+microbody	cytoplasm
+microfibril	extracellular matrix
+microneme	apical complex
+microsome	vesicular fraction
+microtubule	microtubule cytoskeleton
+microtubule associated complex	microtubule cytoskeleton
+microtubule cytoskeleton	cytoskeleton
+microtubule organizing center	cytoplasm
+microvillus	plasma membrane
+midbody	cell
+middle lamella	extracellular space
+minor (U12-dependent) spliceosome complex	spliceosome complex
+minor mitochondrial derivative	mitochondrial derivative
+minus-end kinesin complex	kinesin complex
+mitochondrial chromosome	chromosome
+mitochondrial chromosome	mitochondrial nucleoid
+mitochondrial crista	mitochondrial inner membrane
+mitochondrial degradosome	mitochondrion
+mitochondrial derivative	mitochondrion
+mitochondrial electron transport chain	mitochondrial inner membrane
+mitochondrial endopeptidase Clp complex	endopeptidase Clp complex
+mitochondrial endopeptidase Clp complex	mitochondrial matrix
+mitochondrial inner membrane	inner membrane
+mitochondrial inner membrane	mitochondrial membrane
+mitochondrial inner membrane peptidase complex	mitochondrial inner membrane
+mitochondrial inner membrane pre-sequence translocase complex	mitochondrial inner membrane
+mitochondrial inner membrane protein insertion complex	mitochondrial inner membrane
+mitochondrial intermembrane space	mitochondrion
+mitochondrial intermembrane space protein transporter complex	mitochondrial intermembrane space
+mitochondrial large ribosomal subunit	mitochondrial ribosome
+mitochondrial large ribosomal subunit	organellar large ribosomal subunit
+mitochondrial matrix	mitochondrion
+mitochondrial membrane	membrane
+mitochondrial membrane	mitochondrion
+mitochondrial nucleoid	mitochondrial matrix
+mitochondrial nucleoid	nucleoid
+mitochondrial outer membrane	mitochondrial membrane
+mitochondrial outer membrane	outer membrane
+mitochondrial outer membrane translocase complex	mitochondrial outer membrane
+mitochondrial permeability transition pore	mitochondrion
+mitochondrial processing peptidase complex	mitochondrial matrix
+mitochondrial ribonuclease P complex	mitochondrion
+mitochondrial ribonuclease P complex	ribonuclease P complex
+mitochondrial ribosome	mitochondrial matrix
+mitochondrial ribosome	organellar ribosome
+mitochondrial small ribosomal subunit	mitochondrial ribosome
+mitochondrial small ribosomal subunit	organellar small ribosomal subunit
+mitochondrion	cytoplasm
+molybdenum-iron nitrogenase complex	nitrogenase complex
+molybdopterin converting factor	molybdopterin synthase complex
+molybdopterin synthase complex	unlocalized
+multipartite viral genome	segmented viral genome
+multivesicular body	lysosome
+muscle fiber	cytoplasm
+muscle myosin	muscle fiber
+muscle myosin	myosin II
+muscle tendon junction	cell-substrate adherens junction
+muscle thin filament tropomyosin	striated muscle thin filament
+myofibril	muscle fiber
+myosin	actin cytoskeleton
+myosin I	unconventional myosin
+myosin II	myosin
+myosin III	unconventional myosin
+myosin phosphatase complex	protein serine/threonine phosphatase complex
+nascent polypeptide-associated complex	cytoplasm
+negative cofactor 2 complex	transcriptional repressor complex
+negative sense viral genome	ssRNA viral genome
+nephrocyte junction	cell-cell adherens junction
+neurofilament	intermediate filament
+nexin	axoneme
+nicotinic acetylcholine-gated receptor-channel complex	integral to plasma membrane
+nitrate reductase complex	unlocalized
+nitrite reductase complex (NAD(P)H)	unlocalized
+nitrogenase complex	intracellular
+non-muscle myosin	myosin II
+non-segmented viral genome	viral genome
+nuclear RNA export factor complex	nucleoplasm
+nuclear body	nucleoplasm
+nuclear chromatin	chromatin
+nuclear chromatin	nuclear chromosome
+nuclear chromosome	chromosome
+nuclear chromosome	nucleus
+nuclear chromosome\, telomeric region	chromosome\, telomeric region
+nuclear chromosome\, telomeric region	nuclear chromosome
+nuclear cohesin complex	cohesin complex
+nuclear cohesin complex	condensed nuclear chromosome
+nuclear condensin complex	condensed nuclear chromosome
+nuclear condensin complex	condensin complex
+nuclear cyclin-dependent protein kinase holoenzyme complex	cyclin-dependent protein kinase holoenzyme complex
+nuclear cyclin-dependent protein kinase holoenzyme complex	nucleus
+nuclear envelope-endoplasmic reticulum network	endomembrane system
+nuclear euchromatin	euchromatin
+nuclear euchromatin	nuclear chromatin
+nuclear exosome (RNase complex)	exosome (RNase complex)
+nuclear exosome (RNase complex)	nucleus
+nuclear heterochromatin	heterochromatin
+nuclear heterochromatin	nuclear chromatin
+nuclear inclusion body	inclusion body
+nuclear inclusion body	nucleus
+nuclear inner membrane	nuclear membrane
+nuclear lamina	nuclear membrane
+nuclear matrix	nucleus
+nuclear membrane	endomembrane system
+nuclear membrane	nucleus
+nuclear membrane lumen	nuclear membrane
+nuclear microtubule	microtubule
+nuclear nucleosome	nuclear chromatin
+nuclear nucleosome	nucleosome
+nuclear origin of replication recognition complex	nuclear chromosome
+nuclear origin of replication recognition complex	origin of replication recognition complex
+nuclear origin of replication recognition complex	replication fork
+nuclear outer membrane	nuclear envelope-endoplasmic reticulum network
+nuclear pore	nuclear membrane
+nuclear pore	pore complex
+nuclear speck	nuclear body
+nuclear telomere cap complex	nuclear chromosome\, telomeric region
+nuclear telomere cap complex	telomere cap complex
+nuclear telomeric heterochromatin	nuclear chromosome\, telomeric region
+nuclear telomeric heterochromatin	nuclear heterochromatin
+nuclear ubiquitin ligase complex	nucleus
+nuclear ubiquitin ligase complex	ubiquitin ligase complex
+nucleoid	intracellular
+nucleolar preribosome	nucleolus
+nucleolar preribosome	preribosome
+nucleolar preribosome\, large subunit precursor	nucleolar preribosome
+nucleolar preribosome\, small subunit precursor	nucleolar preribosome
+nucleolar ribonuclease P complex	nucleolus
+nucleolar ribonuclease P complex	ribonuclease P complex
+nucleolus	nucleus
+nucleolus organizer complex	nucleolus
+nucleoplasm	nucleus
+nucleosome	chromatin
+nucleosome remodeling complex	nucleoplasm
+nucleotide excision repair complex	nucleus
+nucleotide excision repair factor 1 complex	nucleotide excision repair complex
+nucleotide excision repair factor 2 complex	nucleotide excision repair complex
+nucleotide excision repair factor 3 complex	nucleotide excision repair complex
+nucleotide excision repair factor 4 complex	nucleotide excision repair complex
+nucleus	intracellular
+oligosaccharyl transferase complex	endoplasmic reticulum membrane
+oncostatin-M receptor complex	integral to plasma membrane
+organellar large ribosomal subunit	large ribosomal subunit
+organellar large ribosomal subunit	organellar ribosome
+organellar ribosome	ribosome
+organellar small ribosomal subunit	organellar ribosome
+organellar small ribosomal subunit	small ribosomal subunit
+origin of replication recognition complex	chromosome
+ornithine carbamoyltransferase complex	unlocalized
+outer dense fiber	axoneme
+outer kinetochore of condensed chromosome	condensed chromosome kinetochore
+outer kinetochore of condensed nuclear chromosome	condensed nuclear chromosome kinetochore
+outer kinetochore of condensed nuclear chromosome	outer kinetochore of condensed chromosome
+outer membrane	membrane
+outer plaque of spindle pole body	spindle pole body
+oxoglutarate dehydrogenase complex	intracellular
+oxoglutarate dehydrogenase complex (sensu Bacteria)	cytoplasm
+oxoglutarate dehydrogenase complex (sensu Bacteria)	oxoglutarate dehydrogenase complex
+oxoglutarate dehydrogenase complex (sensu Eukarya)	mitochondrial matrix
+oxoglutarate dehydrogenase complex (sensu Eukarya)	oxoglutarate dehydrogenase complex
+oxygen evolving complex	photosystem II
+p-aminobenzoate synthetase complex	unlocalized
+parasitophorous vacuolar membrane	parasitophorous vacuole
+parasitophorous vacuolar membrane	vacuolar membrane
+parasitophorous vacuolar membrane network	parasitophorous vacuolar membrane
+parasitophorous vacuolar space	parasitophorous vacuole
+parasitophorous vacuole	host
+parasitophorous vacuole	vacuole
+paraspeckles	nuclear body
+pellicle	cytoskeleton
+pericentriolar material	centrosome
+perichromatin fibrils	nuclear chromatin
+perinuclear space	nucleus
+peripheral membrane protein of membrane fraction	membrane fraction
+periplasmic space	cell
+periplasmic space (sensu Fungi)	periplasmic space
+periplasmic space (sensu Gram-negative Bacteria)	cell envelope
+periplasmic space (sensu Gram-negative Bacteria)	periplasmic space
+peroxisomal matrix	peroxisome
+peroxisomal membrane	membrane
+peroxisomal membrane	peroxisome
+peroxisome	microbody
+peroxisome targeting signal receptor complex	peroxisome
+peroxisome vesicle	cytoplasm
+phagocytic vesicle	endocytic vesicle
+phagocytic vesicle membrane	endocytic vesicle membrane
+phagocytic vesicle membrane	phagocytic vesicle
+phenylalanine-tRNA ligase complex	unlocalized
+phosphoenolpyruvate-dependent sugar phosphotransferase complex	cytoplasm
+phosphopyruvate hydratase complex	cytosol
+phosphoribosylaminoimidazole carboxylase complex	unlocalized
+phosphorylase kinase complex	unlocalized
+photoreceptor cyclic-nucleotide phosphodiesterase complex	unlocalized
+photoreceptor outer segment	cilium
+photoreceptor outer segment membrane	membrane
+photoreceptor outer segment membrane	photoreceptor outer segment
+photosynthetic electron transport chain	thylakoid
+photosystem	thylakoid
+photosystem I	photosystem
+photosystem I (sensu Cyanobacteria)	photosystem I
+photosystem I (sensu Cyanobacteria)	thylakoid (sensu Cyanobacteria)
+photosystem I (sensu Cyanobacteria)	thylakoid (sensu Glaucocystophyceae)
+photosystem I (sensu Viridiplantae)	photosystem I
+photosystem I (sensu Viridiplantae)	thylakoid membrane (sensu Viridiplantae)
+photosystem I antenna complex	photosystem I
+photosystem I reaction center	photosystem I
+photosystem II	photosystem
+photosystem II (sensu Cyanobacteria)	photosystem II
+photosystem II (sensu Cyanobacteria)	thylakoid (sensu Cyanobacteria)
+photosystem II (sensu Cyanobacteria)	thylakoid (sensu Glaucocystophyceae)
+photosystem II (sensu Viridiplantae)	photosystem II
+photosystem II (sensu Viridiplantae)	thylakoid membrane (sensu Viridiplantae)
+photosystem II antenna complex	photosystem II
+photosystem II reaction center	photosystem II
+phragmoplast	cytoplasm
+phragmosome	cytoplasm
+phycobilisome	light-harvesting complex
+phycobilisome	thylakoid (sensu Cyanobacteria)
+phycobilisome	thylakoid (sensu Glaucocystophyceae)
+plasma membrane	membrane
+plasma membrane hydrogen-transporting ATPase V0 domain	integral to plasma membrane
+plasma membrane hydrogen-transporting ATPase V1 domain	integral to plasma membrane
+plasmodesma	intercellular junction
+plasmodesmatal cytoplasmic sleeve	plasmodesma
+plasmodesmatal desmotubule	plasmodesma
+plasmodesmatal endoplasmic reticulum	endoplasmic reticulum
+plasmodesmatal endoplasmic reticulum	plasmodesmatal desmotubule
+plasmodesmatal plasma membrane	plasmodesma
+plastid	cytoplasm
+plastid chromosome	chromosome
+plastid chromosome	plastid nucleoid
+plastid envelope	plastid
+plastid inner membrane	inner membrane
+plastid inner membrane	plastid membrane
+plastid intermembrane space	plastid envelope
+plastid large ribosomal subunit	organellar large ribosomal subunit
+plastid large ribosomal subunit	plastid ribosome
+plastid membrane	plastid envelope
+plastid nucleoid	nucleoid
+plastid nucleoid	plastid stroma
+plastid outer membrane	outer membrane
+plastid outer membrane	plastid membrane
+plastid ribosome	organellar ribosome
+plastid ribosome	plastid stroma
+plastid small ribosomal subunit	organellar small ribosomal subunit
+plastid small ribosomal subunit	plastid ribosome
+plastid stroma	plastid
+plastid-encoded plastid RNA polymerase complex A	plastid
+plastid-encoded plastid RNA polymerase complex B	plastid
+platelet dense granule	secretory granule
+pleated septate junction	septate junction
+plus-end kinesin complex	kinesin complex
+polar granule	pole plasm
+polar microtubule	spindle microtubule
+polar microtubule	spindle pole
+polar ring of apical complex	apical complex
+polarisome	bud neck
+polarisome	bud tip
+polarisome	cell cortex
+pole plasm	cytoplasm
+polyphosphate kinase complex	unlocalized
+polysomal ribosome	polysome
+polysomal ribosome	ribosome
+polysome	ribonucleoprotein complex
+polytene chromosome	chromosome
+polytene chromosome band	polytene chromosome
+polytene chromosome chromocenter	polytene chromosome
+polytene chromosome ectopic fiber	polytene chromosome
+polytene chromosome interband	polytene chromosome
+polytene chromosome puff	polytene chromosome
+polytene chromosome weak point	polytene chromosome
+pore complex	integral to membrane
+porous septum	septum
+positive sense viral genome	ssRNA viral genome
+postsynaptic membrane	membrane
+postsynaptic membrane	synaptic junction
+pre-replicative complex	nucleoplasm
+prefoldin complex	cytosol
+prepilin peptidase complex	unlocalized
+preprophase band	cytoplasm
+preribosome	cytoplasm
+preribosome	ribonucleoprotein complex
+presynaptic membrane	membrane
+presynaptic membrane	synaptic junction
+primary cell wall	cell wall (sensu Magnoliophyta)
+primary lysosome	lysosome
+primary plasmodesma	plasmodesma
+primary septum	septum
+procollagen-proline\, 2-oxoglutarate-4-dioxygenase complex	unlocalized
+pronucleus	nucleus
+proplastid	plastid
+proplastid nucleoid	plastid nucleoid
+proplastid nucleoid	proplastid stroma
+proplastid stroma	plastid stroma
+proplastid stroma	proplastid
+prospore	immature spore
+prospore membrane	membrane
+prospore membrane	prospore
+proteasome activator complex	cytosol
+proteasome complex (sensu Eukarya)	cytosol
+proteasome complex (sensu Eukarya)	endoplasmic reticulum
+proteasome complex (sensu Eukarya)	nucleus
+proteasome core complex (sensu Bacteria)	cytosol
+proteasome core complex (sensu Eukarya)	proteasome complex (sensu Eukarya)
+proteasome core complex\, alpha-subunit complex (sensu Eukarya)	proteasome core complex (sensu Eukarya)
+proteasome core complex\, beta-subunit complex (sensu Eukarya)	proteasome core complex (sensu Eukarya)
+proteasome regulatory particle (sensu Bacteria)	cytosol
+proteasome regulatory particle (sensu Eukarya)	proteasome complex (sensu Eukarya)
+proteasome regulatory particle\, base subcomplex (sensu Eukarya)	proteasome regulatory particle (sensu Eukarya)
+proteasome regulatory particle\, lid subcomplex (sensu Eukarya)	proteasome regulatory particle (sensu Eukarya)
+protein body	cytoplasm
+protein farnesyltransferase complex	unlocalized
+protein histidine kinase complex	unlocalized
+protein kinase CK2 complex	unlocalized
+protein phosphatase 4 complex	protein serine/threonine phosphatase complex
+protein phosphatase type 1 complex	protein serine/threonine phosphatase complex
+protein phosphatase type 2A complex	protein serine/threonine phosphatase complex
+protein serine/threonine phosphatase complex	unlocalized
+protein storage vacuole	storage vacuole
+protein storage vacuole	vacuole (sensu Streptophyta)
+protein-N(PI)-phosphohistidine-sugar phosphotransferase complex	unlocalized
+prothylakoid	etioplast
+prothylakoid	thylakoid
+prothylakoid membrane	prothylakoid
+prothylakoid membrane	thylakoid membrane
+proton-transporting ATP synthase complex	intracellular
+proton-transporting ATP synthase complex (sensu Bacteria)	plasma membrane
+proton-transporting ATP synthase complex (sensu Bacteria)	proton-transporting ATP synthase complex
+proton-transporting ATP synthase complex (sensu Eukarya)	hydrogen-translocating F-type ATPase complex
+proton-transporting ATP synthase complex (sensu Eukarya)	mitochondrial inner membrane
+proton-transporting ATP synthase complex (sensu Eukarya)	proton-transporting ATP synthase complex
+proton-transporting ATP synthase complex\, catalytic core F(1)	proton-transporting ATP synthase complex
+proton-transporting ATP synthase complex\, catalytic core F(1) (sensu Bacteria)	proton-transporting ATP synthase complex (sensu Bacteria)
+proton-transporting ATP synthase complex\, catalytic core F(1) (sensu Bacteria)	proton-transporting ATP synthase complex\, catalytic core F(1)
+proton-transporting ATP synthase complex\, catalytic core F(1) (sensu Eukarya)	proton-transporting ATP synthase complex (sensu Eukarya)
+proton-transporting ATP synthase complex\, catalytic core F(1) (sensu Eukarya)	proton-transporting ATP synthase complex\, catalytic core F(1)
+proton-transporting ATP synthase complex\, coupling factor F(o)	proton-transporting ATP synthase complex
+proton-transporting ATP synthase complex\, coupling factor F(o) (sensu Bacteria)	proton-transporting ATP synthase complex (sensu Bacteria)
+proton-transporting ATP synthase complex\, coupling factor F(o) (sensu Bacteria)	proton-transporting ATP synthase complex\, coupling factor F(o)
+proton-transporting ATP synthase complex\, coupling factor F(o) (sensu Eukarya)	proton-transporting ATP synthase complex (sensu Eukarya)
+proton-transporting ATP synthase complex\, coupling factor F(o) (sensu Eukarya)	proton-transporting ATP synthase complex\, coupling factor F(o)
+proton-transporting ATP synthase\, catalytic core	proton-transporting ATP synthase complex\, catalytic core F(1)
+proton-transporting ATP synthase\, catalytic core (sensu Bacteria)	proton-transporting ATP synthase complex\, catalytic core F(1) (sensu Bacteria)
+proton-transporting ATP synthase\, catalytic core (sensu Bacteria)	proton-transporting ATP synthase\, catalytic core
+proton-transporting ATP synthase\, catalytic core (sensu Eukarya)	proton-transporting ATP synthase complex\, catalytic core F(1) (sensu Eukarya)
+proton-transporting ATP synthase\, catalytic core (sensu Eukarya)	proton-transporting ATP synthase\, catalytic core
+proton-transporting ATP synthase\, central stalk	proton-transporting ATP synthase complex\, catalytic core F(1)
+proton-transporting ATP synthase\, central stalk (sensu Bacteria)	proton-transporting ATP synthase complex\, catalytic core F(1) (sensu Bacteria)
+proton-transporting ATP synthase\, central stalk (sensu Bacteria)	proton-transporting ATP synthase\, central stalk
+proton-transporting ATP synthase\, central stalk (sensu Eukarya)	proton-transporting ATP synthase complex\, catalytic core F(1) (sensu Eukarya)
+proton-transporting ATP synthase\, central stalk (sensu Eukarya)	proton-transporting ATP synthase\, central stalk
+proton-transporting ATP synthase\, stator stalk	proton-transporting ATP synthase complex\, coupling factor F(o)
+proton-transporting ATP synthase\, stator stalk (sensu Bacteria)	proton-transporting ATP synthase complex\, coupling factor F(o) (sensu Bacteria)
+proton-transporting ATP synthase\, stator stalk (sensu Bacteria)	proton-transporting ATP synthase\, stator stalk
+proton-transporting ATP synthase\, stator stalk (sensu Eukarya)	proton-transporting ATP synthase complex\, coupling factor F(o) (sensu Eukarya)
+proton-transporting ATP synthase\, stator stalk (sensu Eukarya)	proton-transporting ATP synthase\, stator stalk
+proton-transporting two-sector ATPase complex	integral to membrane
+provirus	chromosome
+provirus	viral genome
+pyruvate dehydrogenase (lipoamide) phosphatase (sensu Bacteria)	cytoplasm
+pyruvate dehydrogenase (lipoamide) phosphatase (sensu Bacteria)	pyruvate dehydrogenase (lipoamide) phosphatase complex
+pyruvate dehydrogenase (lipoamide) phosphatase (sensu Eukarya)	mitochondrial matrix
+pyruvate dehydrogenase (lipoamide) phosphatase (sensu Eukarya)	pyruvate dehydrogenase (lipoamide) phosphatase complex
+pyruvate dehydrogenase (lipoamide) phosphatase complex	intracellular
+pyruvate dehydrogenase complex	intracellular
+pyruvate dehydrogenase complex (sensu Bacteria)	cytoplasm
+pyruvate dehydrogenase complex (sensu Bacteria)	pyruvate dehydrogenase complex
+pyruvate dehydrogenase complex (sensu Eukarya)	mitochondrial matrix
+pyruvate dehydrogenase complex (sensu Eukarya)	pyruvate dehydrogenase complex
+quinolinate synthetase complex	unlocalized
+radial spoke	axoneme
+radial spoke stalk	radial spoke
+radial spokehead	radial spoke
+reaction center (sensu Proteobacteria)	photosystem
+reaction center (sensu Proteobacteria)	thylakoid (sensu Proteobacteria)
+recombination nodule	condensed nuclear chromosome
+repairosome	nucleotide excision repair complex
+replication compartment	nucleus
+replication fork	nucleoplasm
+repressor ecdysone receptor holocomplex	ecdysone receptor holocomplex
+respiratory chain complex I	intracellular
+respiratory chain complex I (sensu Bacteria)	plasma membrane
+respiratory chain complex I (sensu Bacteria)	respiratory chain complex I
+respiratory chain complex I (sensu Eukarya)	NADH dehydrogenase complex (ubiquinone)
+respiratory chain complex I (sensu Eukarya)	mitochondrial electron transport chain
+respiratory chain complex I (sensu Eukarya)	respiratory chain complex I
+respiratory chain complex II	intracellular
+respiratory chain complex II (sensu Bacteria)	plasma membrane
+respiratory chain complex II (sensu Bacteria)	respiratory chain complex II
+respiratory chain complex II (sensu Eukarya)	fumarate reductase complex
+respiratory chain complex II (sensu Eukarya)	mitochondrial electron transport chain
+respiratory chain complex II (sensu Eukarya)	respiratory chain complex II
+respiratory chain complex II (sensu Eukarya)	succinate dehydrogenase complex
+respiratory chain complex II (sensu Eukarya)	succinate dehydrogenase complex (ubiquinone)
+respiratory chain complex III	intracellular
+respiratory chain complex III (sensu Bacteria)	plasma membrane
+respiratory chain complex III (sensu Bacteria)	respiratory chain complex III
+respiratory chain complex III (sensu Eukarya)	mitochondrial electron transport chain
+respiratory chain complex III (sensu Eukarya)	respiratory chain complex III
+respiratory chain complex IV	intracellular
+respiratory chain complex IV (sensu Bacteria)	plasma membrane
+respiratory chain complex IV (sensu Bacteria)	respiratory chain complex IV
+respiratory chain complex IV (sensu Eukarya)	mitochondrial electron transport chain
+respiratory chain complex IV (sensu Eukarya)	respiratory chain complex IV
+respiratory chain complex I\, membrane segment (sensu Eukarya)	respiratory chain complex I (sensu Eukarya)
+respiratory chain complex I\, peripheral segment (sensu Eukarya)	respiratory chain complex I (sensu Eukarya)
+retrotransposon nucleocapsid	nucleus
+rhabdomere	plasma membrane
+rhoptry	apical complex
+riboflavin synthase complex	unlocalized
+ribonuclease MRP complex	nucleolus
+ribonuclease MRP complex	ribonucleoprotein complex
+ribonuclease P complex	ribonucleoprotein complex
+ribonuclease P complex (sensu Archaea)	ribonuclease P complex
+ribonuclease P complex (sensu Bacteria)	ribonuclease P complex
+ribonucleoprotein complex	intracellular
+ribonucleoside-diphosphate reductase complex	unlocalized
+ribosomal-protein-alanine N-acetyltransferase complex	unlocalized
+ribosome	cytoplasm
+ribosome	ribonucleoprotein complex
+ribulose bisphosphate carboxylase complex	chloroplast stroma
+ring canal (sensu Drosophila)	intercellular bridge
+rough endoplasmic reticulum	endoplasmic reticulum
+rough microsome	microsome
+ruffles	plasma membrane
+sarcoglycan complex	dystroglycan complex
+sarcolemma	plasma membrane
+sarcomere	myofibril
+sarcoplasm	cytoplasm
+sarcoplasmic reticulum	endoplasmic reticulum
+sarcoplasmic reticulum	sarcoplasm
+secondary cell wall	cell wall (sensu Magnoliophyta)
+secondary lysosome	lysosome
+secondary plasmodesma	plasmodesma
+secretory granule	cytoplasmic vesicle
+secretory granule membrane	cytoplasmic vesicle membrane
+secretory granule membrane	secretory granule
+segmented viral genome	viral genome
+selectivity factor SL1 complex	transcription factor complex
+septate junction	cell-cell adherens junction
+septin ring	cell cortex
+septin ring (sensu Fungi)	contractile ring (sensu Fungi)
+septin ring (sensu Fungi)	septin ring
+septin ring (sensu Saccharomyces)	contractile ring (sensu Saccharomyces)
+septin ring (sensu Saccharomyces)	septin ring (sensu Fungi)
+septum	cell
+serine C-palmitoyltransferase complex	endoplasmic reticulum membrane
+serine-pyruvate aminotransferase\, type 1 complex	unlocalized
+serine-pyruvate aminotransferase\, type 2B complex	unlocalized
+sex chromatin	nuclear heterochromatin
+sex chromatin	sex chromosome
+sex chromosome	chromosome
+shmoo tip	site of polarized growth (sensu Saccharomyces)
+short-chain collagen	collagen
+signal peptidase complex	endoplasmic reticulum
+signal recognition particle	endoplasmic reticulum
+signal recognition particle receptor complex	rough endoplasmic reticulum
+signal sequence receptor complex	cytoplasm
+signalosome complex	nucleus
+single-stranded DNA dependent ATP dependent DNA helicase complex	nucleus
+site of polarized growth	cell
+site of polarized growth (sensu Fungi)	site of polarized growth
+site of polarized growth (sensu Saccharomyces)	site of polarized growth (sensu Fungi)
+slime layer	glycocalyx
+small cytoplasmic ribonucleoprotein complex	cytoplasm
+small cytoplasmic ribonucleoprotein complex	ribonucleoprotein complex
+small nuclear ribonucleoprotein complex	nucleus
+small nuclear ribonucleoprotein complex	ribonucleoprotein complex
+small nucleolar ribonucleoprotein complex	nucleolus
+small nucleolar ribonucleoprotein complex	ribonucleoprotein complex
+small ribosomal subunit	ribosome
+smooth endoplasmic reticulum	endoplasmic reticulum
+smooth microsome	microsome
+smooth muscle dense body	smooth muscle fiber
+smooth muscle fiber	muscle fiber
+smooth septate junction	septate junction
+snRNA cap binding complex	cytoplasm
+snRNA-activating protein complex	transcription factor complex
+snRNP U1	major (U2-dependent) spliceosome
+snRNP U1	small nuclear ribonucleoprotein complex
+snRNP U11	minor (U12-dependent) spliceosome complex
+snRNP U11	small nuclear ribonucleoprotein complex
+snRNP U12	minor (U12-dependent) spliceosome complex
+snRNP U12	small nuclear ribonucleoprotein complex
+snRNP U2	major (U2-dependent) spliceosome
+snRNP U2	small nuclear ribonucleoprotein complex
+snRNP U4	major (U2-dependent) spliceosome
+snRNP U4	small nuclear ribonucleoprotein complex
+snRNP U4atac	minor (U12-dependent) spliceosome complex
+snRNP U4atac	small nuclear ribonucleoprotein complex
+snRNP U5	major (U2-dependent) spliceosome
+snRNP U5	minor (U12-dependent) spliceosome complex
+snRNP U5	small nuclear ribonucleoprotein complex
+snRNP U6	major (U2-dependent) spliceosome
+snRNP U6	small nuclear ribonucleoprotein complex
+snRNP U6atac	minor (U12-dependent) spliceosome complex
+snRNP U6atac	small nuclear ribonucleoprotein complex
+snRNP U7	small nuclear ribonucleoprotein complex
+snRNP U7	spliceosome complex
+sodium-translocating F-type ATPase complex	sodium-transporting two-sector ATPase complex
+sodium-translocating V-type ATPase complex	sodium-transporting two-sector ATPase complex
+sodium-transporting two-sector ATPase complex	integral to membrane
+sodium/potassium-exchanging ATPase complex	integral to plasma membrane
+soluble fraction	cell fraction
+specific granule	secretory granule
+spectrin	actin cytoskeleton
+spectrin	cell cortex
+spectrosome	cytoplasm
+spindle	microtubule cytoskeleton
+spindle microtubule	microtubule
+spindle microtubule	spindle
+spindle pole	spindle
+spindle pole body	microtubule organizing center
+spindle pole body	spindle pole
+spliceosome complex	nucleus
+spliceosome complex	ribonucleoprotein complex
+spore wall (sensu Fungi)	cell wall (sensu Fungi)
+spot adherens junction	cell-cell adherens junction
+ssRNA viral genome	RNA viral genome
+steroid hormone aporeceptor complex	cytosol
+storage vacuole	vacuole
+stress fibers	actin cytoskeleton
+striated muscle thick filament	sarcomere
+striated muscle thin filament	actin cytoskeleton
+striated muscle thin filament	sarcomere
+subpellicular microtubule	apical complex
+subpellicular microtubule	microtubule
+subpellicular network	pellicle
+subrhabdomeral cisterna	rhabdomere
+succinate dehydrogenase complex	respiratory chain complex II
+succinate dehydrogenase complex (sensu Bacteria)	respiratory chain complex II (sensu Bacteria)
+succinate dehydrogenase complex (sensu Bacteria)	succinate dehydrogenase complex
+succinate dehydrogenase complex (ubiquinone)	intracellular
+succinate dehydrogenase complex (ubiquinone) (sensu Bacteria)	plasma membrane
+succinate dehydrogenase complex (ubiquinone) (sensu Bacteria)	succinate dehydrogenase complex (ubiquinone)
+succinate-CoA ligase complex	TCA cycle enzyme complex
+succinate-CoA ligase complex (ADP-forming)	succinate-CoA ligase complex
+succinate-CoA ligase complex (GDP-forming)	TCA cycle enzyme complex (sensu Eukarya)
+succinate-CoA ligase complex (GDP-forming)	succinate-CoA ligase complex
+sulfate adenylyltransferase complex (ATP)	unlocalized
+sulfite reductase complex (NADPH)	unlocalized
+synaptic junction	extracellular matrix
+synaptic vesicle	clathrin-coated vesicle
+synaptic vesicle membrane	synaptic vesicle
+synaptic vesicle membrane	vesicle membrane
+synaptonemal complex	condensed nuclear chromosome
+synaptosome	membrane fraction
+syntrophin complex	dystrophin-associated glycoprotein complex
+tRNA-intron endonuclease complex	nucleus
+telomerase catalytic core complex	telomerase holoenzyme complex
+telomerase holoenzyme complex	nucleus
+telomerase holoenzyme complex	ribonucleoprotein complex
+telomere cap complex	chromosome\, telomeric region
+thylakoid	intracellular
+thylakoid (sensu Cyanobacteria)	plasma membrane
+thylakoid (sensu Cyanobacteria)	thylakoid
+thylakoid (sensu Glaucocystophyceae)	cyanelle
+thylakoid (sensu Glaucocystophyceae)	thylakoid
+thylakoid (sensu Proteobacteria)	plasma membrane
+thylakoid (sensu Proteobacteria)	thylakoid
+thylakoid (sensu Viridiplantae)	chloroplast
+thylakoid (sensu Viridiplantae)	thylakoid
+thylakoid lumen (sensu Viridiplantae)	thylakoid (sensu Viridiplantae)
+thylakoid membrane	membrane
+thylakoid membrane	thylakoid
+thylakoid membrane (sensu Viridiplantae)	thylakoid (sensu Viridiplantae)
+thylakoid membrane (sensu Viridiplantae)	thylakoid membrane
+tight junction	intercellular junction
+toc complex	chloroplast outer membrane
+trans-Golgi network transport vesicle	Golgi vesicle
+trans-Golgi network transport vesicle	clathrin-coated vesicle
+trans-Golgi network transport vesicle	transport vesicle
+trans-Golgi network transport vesicle membrane	Golgi vesicle membrane
+trans-Golgi network transport vesicle membrane	clathrin coated vesicle membrane
+trans-Golgi network transport vesicle membrane	trans-Golgi network transport vesicle
+trans-Golgi network transport vesicle membrane	transport vesicle membrane
+transcription elongation factor complex	nucleoplasm
+transcription elongation factor complex b	transcription elongation factor complex
+transcription export complex	nucleus
+transcription factor TFIIA complex	DNA-directed RNA polymerase II\, holoenzyme
+transcription factor TFIIA complex	transcription factor complex
+transcription factor TFIID complex	DNA-directed RNA polymerase II\, holoenzyme
+transcription factor TFIID complex	histone acetyltransferase complex
+transcription factor TFIIE complex	DNA-directed RNA polymerase II\, holoenzyme
+transcription factor TFIIE complex	transcription factor complex
+transcription factor TFIIF complex	DNA-directed RNA polymerase II\, holoenzyme
+transcription factor TFIIF complex	transcription factor complex
+transcription factor TFIIH complex	DNA-directed RNA polymerase II\, holoenzyme
+transcription factor TFIIH complex	transcription factor complex
+transcription factor TFIIIB complex	transcription factor complex
+transcription factor TFIIIC complex	histone acetyltransferase complex
+transcription factor complex	nucleoplasm
+transcriptional repressor complex	nucleoplasm
+translation release factor complex	cytoplasm
+translocon	rough endoplasmic reticulum
+transport vesicle	cytoplasmic vesicle
+transport vesicle membrane	cytoplasmic vesicle membrane
+transport vesicle membrane	transport vesicle
+transverse filament	synaptonemal complex
+trimethylamine-N-oxide reductase complex	unlocalized
+tripartite viral genome	segmented viral genome
+troponin complex	striated muscle thin filament
+tubulin	microtubule
+type I protein secretion system complex	plasma membrane
+type I site-specific deoxyribonuclease complex	unlocalized
+type II protein secretion system complex	plasma membrane
+type II site-specific deoxyribonuclease complex	unlocalized
+type III intermediate filament	intermediate filament
+type III protein secretion system complex	plasma membrane
+type III site-specific deoxyribonuclease complex	intracellular
+ubiquinol-cytochrome c reductase complex	respiratory chain complex III
+ubiquinol-cytochrome c reductase complex (sensu Bacteria)	respiratory chain complex III (sensu Bacteria)
+ubiquinol-cytochrome c reductase complex (sensu Bacteria)	ubiquinol-cytochrome c reductase complex
+ubiquinol-cytochrome c reductase complex (sensu Eukarya)	respiratory chain complex III (sensu Eukarya)
+ubiquinol-cytochrome c reductase complex (sensu Eukarya)	ubiquinol-cytochrome c reductase complex
+ubiquitin ligase complex	intracellular
+unconventional myosin	myosin
+vacuolar lumen	vacuole
+vacuolar lumen (sensu Fungi)	vacuolar lumen
+vacuolar lumen (sensu Fungi)	vacuole (sensu Fungi)
+vacuolar lumen (sensu Streptophyta)	vacuolar lumen
+vacuolar lumen (sensu Streptophyta)	vacuole (sensu Streptophyta)
+vacuolar membrane	membrane
+vacuolar membrane	vacuole
+vacuolar membrane (sensu Fungi)	vacuolar membrane
+vacuolar membrane (sensu Fungi)	vacuole (sensu Fungi)
+vacuolar membrane (sensu Streptophyta)	vacuolar membrane
+vacuolar membrane (sensu Streptophyta)	vacuole (sensu Streptophyta)
+vacuole	cytoplasm
+vacuole (sensu Fungi)	lytic vacuole
+vacuole (sensu Fungi)	storage vacuole
+vacuole (sensu Streptophyta)	vacuole
+vanadium-iron nitrogenase complex	nitrogenase complex
+vesicle coat	coated vesicle
+vesicle coat	membrane coat
+vesicle membrane	endomembrane system
+vesicular fraction	membrane fraction
+viral assembly intermediate	cytoplasm
+viral capsid	virion
+viral capsid (sensu Retroviridae)	viral capsid
+viral envelope	virion
+viral genome	virion
+viral integration complex	nucleus
+viral nucleocapsid	viral capsid (sensu Retroviridae)
+viral portal complex	viral capsid
+viral procapsid	virion
+viral replication complex	nucleus
+viral scaffold	viral capsid
+viral tegument	virion
+viral transcriptional complex	nucleus
+virion transport vesicle	intracellular
+voltage-gated calcium channel complex	integral to plasma membrane
+voltage-gated potassium channel complex	integral to plasma membrane
+voltage-gated sodium channel complex	integral to plasma membrane
+yeast-form cell wall	cell wall (sensu Fungi)
+yolk granule	cytoplasm
+zeta DNA polymerase complex	DNA polymerase complex
+zeta DNA polymerase complex	nucleoplasm
+zonula adherens	cell-cell adherens junction
+zymogen granule	secretory granule
+zymogen granule membrane	secretory granule membrane
+zymogen granule membrane	zymogen granule

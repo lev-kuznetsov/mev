@@ -1,0 +1,2 @@
+http://pfam.wustl.edu/
+http://pfam.wustl.edu/cgi-bin/getdesc?acc=[*TAG*]

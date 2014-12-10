@@ -1,0 +1,2 @@
+http://www.genome.ad.jp/kegg/kegg.html
+http://www.genome.ad.jp/dbget-bin/show_pathway?[*TAG*]

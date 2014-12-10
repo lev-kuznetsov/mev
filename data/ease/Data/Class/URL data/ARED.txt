@@ -1,0 +1,1 @@
+http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&list_uids=12520039&dopt=Abstract
