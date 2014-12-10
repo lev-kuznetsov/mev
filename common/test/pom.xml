@@ -17,6 +17,11 @@
   </parent>
 
   <dependencies>
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-common-domain</artifactId>
+      <version>${mev.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
