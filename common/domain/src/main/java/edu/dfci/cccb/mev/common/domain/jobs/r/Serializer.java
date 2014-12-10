@@ -14,24 +14,17 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.domain.jobs.annotation;
-
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+package edu.dfci.cccb.mev.common.domain.jobs.r;
 
 /**
- * Annotation denoting the field to be set or a {@link Callback} annotated
- * method to be called on error
- * 
  * @author levk
  * @since CRYSTAL
  */
-@Target ({ FIELD, METHOD })
-@Retention (RUNTIME)
-@Documented
-public @interface Error {}
+public interface Serializer <T> {
+
+  /**
+   * @param object
+   * @return R parsable string representing the object
+   */
+  String serialize (T object);
+}

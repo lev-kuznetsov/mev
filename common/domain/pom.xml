@@ -39,4 +39,19 @@
 
   </build>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.renjin</groupId>
+      <artifactId>renjin-core</artifactId>
+      <version>0.7.0-RC2</version>
+    </dependency>
+  </dependencies>
+  <repositories>
+    <repository>
+      <id>bedatadriven</id>
+      <name>bedatadriven public repo</name>
+      <url>http://nexus.bedatadriven.com/content/groups/public/</url>
+    </repository>
+  </repositories>
+
 </project>

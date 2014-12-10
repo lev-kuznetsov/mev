@@ -25,9 +25,11 @@ import java.lang.annotation.Target;
 
 /**
  * Denotes a method to be called back on job completion; annotated methods may
- * either take one argument annotated with either {@link Result} or
- * {@link Error} and will be called on success or failure respectfully or take
- * no arguments and will be called regardless of termination status
+ * be also annotated with {@link Result} or {@link Error} to be called on
+ * success or error respectively. If the callback annotated method is missing
+ * either annotation it will be called regardless. Callback methods are called
+ * after field injection, any declared parameters will be injected via the
+ * standard injection mechanisms
  * 
  * @author levk
  * @since CRYSTAL

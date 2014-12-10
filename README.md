@@ -7,13 +7,13 @@ MeV is a microarray and sequencing data management and analysis application. The
 
 ===
 
-Building requires JDK 7 and Maven 3. Checkout or download and unzip the source, fire up a terminal and build:
+Building requires JDK 7, Maven 3, R 3.1.2 with the toolkit for building R packages from source and the raven R package. Checkout or download and unzip the source, fire up a terminal and build:
 ```
-mvn clean install
+mvn clean install && echo "raven::raven()" | R
 ```
-After that's done pop over to the webapp folder, start the application with:
+To launch move over to the webapp folder, start the application with:
 ```
 cd webapp
-mvn jetty:run
+R=/usr/bin/R mvn rserve:start jetty:run rserve:stop
 ```
 and point your browser to http://localhost:8080

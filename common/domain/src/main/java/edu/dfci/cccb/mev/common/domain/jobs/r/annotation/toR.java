@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import ch.lambdaj.function.convert.Converter;
-import edu.dfci.cccb.mev.common.domain.jobs.r.Adapter;
+import edu.dfci.cccb.mev.common.domain.jobs.r.Serializer;
 
 /**
  * @author levk
@@ -48,13 +48,13 @@ public @interface toR {
   /**
    * Type capable of serializing
    */
-  Class<? extends Adapter<?>> value ();
+  Class<? extends Serializer<?>> value ();
 
   /**
-   * Default {@link Adapter} implementation responsible for serializing
+   * Default {@link Serializer} implementation responsible for serializing
    * primitives
    */
-  public static class Primitives implements Adapter<Object> {
+  public static class Primitives implements Serializer<Object> {
     @SuppressWarnings ("unchecked")
     @Override
     public String serialize (Object o) {

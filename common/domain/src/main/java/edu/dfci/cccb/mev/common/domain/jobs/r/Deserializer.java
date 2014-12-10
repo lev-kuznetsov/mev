@@ -16,15 +16,12 @@
 
 package edu.dfci.cccb.mev.common.domain.jobs.r;
 
+
 /**
  * @author levk
  * @since CRYSTAL
  */
-public interface Adapter <T> {
+public interface Deserializer <T> {
 
-  /**
-   * @param object
-   * @return R parsable string representing the object
-   */
-  String serialize (T object);
+  T deserialize (Object r);
 }

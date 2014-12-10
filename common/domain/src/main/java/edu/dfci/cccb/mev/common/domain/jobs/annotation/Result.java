@@ -17,7 +17,7 @@
 package edu.dfci.cccb.mev.common.domain.jobs.annotation;
 
 import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Documented;
@@ -26,12 +26,12 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation denoting the field to be set to or a {@link Callback} annotated
- * method to be injected with the result of a job on successful completion
+ * method to be called on a successful job completion
  * 
  * @author levk
  * @since CRYSTAL
  */
-@Target ({ FIELD, PARAMETER })
+@Target ({ FIELD, METHOD })
 @Retention (RUNTIME)
 @Documented
 public @interface Result {}
