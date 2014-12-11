@@ -17,11 +17,6 @@
   </parent>
 
   <dependencies>
-    <dependency>
-      <groupId>edu.dfci.cccb</groupId>
-      <artifactId>mev-common-domain</artifactId>
-      <version>${mev.version}</version>
-    </dependency>
 
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
@@ -62,6 +57,31 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <excludedGroups combine.self="override"></excludedGroups>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>integration-test</id>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <groups combine.self="override"></groups>
+        </configuration>
       </plugin>
 
     </plugins>
