@@ -1,4 +1,14 @@
 language: java
 jdk:
-  - oraclejdk7
   - openjdk7
+
+env:
+# Java build, the VM image is setup for java out of the box
+  - SETUP="" BUILD="mvn install -DskipTests" TEST="mvn verify"
+# R build, install R, get raven
+  - SETUP="sudo apt-get update && sudo apt-get install r-base && wget https://github.com/dfci-cccb/maven-repo/raw/master/raven/raven/0.0.0.9001/raven_0.0.0.9001.tar.gz" BUILD="echo raven::raven (inspect (), fetch (), install ()) | R" TEST="echo raven::raven () | R"
+
+before_install:
+  - echo SETUP=$SETUP
+  - echo BUILD=$BUILD
+  - echo TEST=$TEST
