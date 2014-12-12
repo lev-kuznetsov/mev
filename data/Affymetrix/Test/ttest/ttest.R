@@ -1,14 +1,14 @@
 ####
 # INPUT VARIABLES
-# INFILE
-# SAMPLE_FILE
-# ONE_SAMPLE
-# TWO_SAMPLE
+# "../../../../data/Affymetrix/affy_U133plus2_dataset.txt"
+# "../../../../data/Affymetrix/affy_U133plus2_dataset.annotate_mtx.txt"
+# 1
+# 2
 # USER_MU
-# TEST_TYPE
-# EQUAL_VARIANCE
-# PAIRED
-# CORRECT_FOR_MULTIPLE_TESTING
+# 2
+# 1
+# 1
+# 1
 
 
 
@@ -27,7 +27,7 @@ rowVars<-function(X)
 ##############################################################
 
 ######### read in expression data matrix #####################
-exp_data<-read.table(INFILE, header=T, sep="\t")
+exp_data<-read.table("../../../../data/Affymetrix/affy_U133plus2_dataset.txt", header=T, sep="\t")
 
 rownames(exp_data)<-exp_data[,1]  #name the rows by the genes, which occupy the first column
 exp_data<-na.omit(exp_data[,-1]) #remove the first column containing the gene names, skipping any incomplete rows
@@ -39,7 +39,7 @@ exp_data<-data.matrix(exp_data)  #cast as a numeric matrix
 exp_data<-if(min(exp_data)<0){exp_data+min(exp_data)*-1}else{exp_data}
 
 ######### read groupings file #####################
-sample_mtx<-read.table(SAMPLE_FILE, header=F, sep="\t")
+sample_mtx<-read.table("../../../../data/Affymetrix/affy_U133plus2_dataset.annotate_mtx.txt", header=F, sep="\t")
 sample_mtx<-sample_mtx[(sample_mtx[,2]!=-1),]  #parse out the samples we do NOT want to include (marked with -1)
 
 #handle fringe case where sample names have operators in them (e.g. TCGA-01-0123)
@@ -48,7 +48,7 @@ sample_mtx<-sample_mtx[(sample_mtx[,2]!=-1),]  #parse out the samples we do NOT 
 sample_mtx[,1]<-make.names(sample_mtx[,1])
 
 
-if(TEST_TYPE==ONE_SAMPLE)
+if(2==1)
 {
 	#one-sample t-test.  User supplies a mean to test against.  
 	#Could allow for two-tailed and one-tailed alternate hypotheses.
@@ -69,7 +69,7 @@ if(TEST_TYPE==ONE_SAMPLE)
 	#only import the library if doing a two-sample or paired test
 	suppressMessages(library(multtest))
 	
-	if (TEST_TYPE==TWO_SAMPLE)
+	if (2==2)
 	{
 		#two-sample t-test.  Only perform two-tailed test here.
 	
@@ -102,7 +102,7 @@ if(TEST_TYPE==ONE_SAMPLE)
 		labels<-c(rep(0,size_a),rep(1,size_b))
 		
 		#using mt.teststat gets the t-statistics very quickly (much quicker than apply(...))
-		if(EQUAL_VARIANCE)
+		if(1)
 		{
 			t_stats<-abs(mt.teststat(exp_data, labels, test="t.equalvar"))
 			
@@ -134,7 +134,7 @@ if(TEST_TYPE==ONE_SAMPLE)
 # 		 print(p_vals_test)
 # 		 print(p_vals)
 	
-	} else if (TEST_TYPE==PAIRED)
+	} else if (2==1)
 	{
 	
 		sample_mtx<-sample_mtx[(sample_mtx[,2]==0),]  #the file is potentially "symmetric" so only need to keep the lines that have a group identifier of zero.
@@ -177,10 +177,10 @@ if(TEST_TYPE==ONE_SAMPLE)
 
 
 #adjust the p-vals for multiple testing, if desired:
-if(CORRECT_FOR_MULTIPLE_TESTING)
+if(1)
 {
 	p_vals<-p.adjust(p_vals, method="fdr")
 }
 
 results=data.frame(rownames(exp_data),p_vals, log_fold_change)
-write.table(results, OUTFILE, sep='\t', row.names=F, col.names=F, quote=F)
+write.table(results, "../../../../data/Affymetrix/Test/ttest/result_out.txt", sep='\t', row.names=F, col.names=F, quote=F)
