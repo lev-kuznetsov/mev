@@ -9,7 +9,9 @@ env:
   - UPDATE="sudo apt-get update" SETUP="sudo apt-get install r-base" PREPARE="curl https://raw.githubusercontent.com/dfci-cccb/raven/ee2fe1b06fa1c7285dd2e97deb956812fadd837e/R/raven.R > /tmp/raven.R" INSTALL="echo source ('/tmp/raven.R'); raven (inspect (), fetch (), import (environment (NULL)), install ()) | R --no-save" SCRIPT="echo source ('/tmp/raven.R'); raven () | R --no-save"
 
 before_install:
-  - $UPDATE $SETUP $PREPARE
+  - $UPDATE
+  - $SETUP
+  - $PREPARE
 install:
   - $INSTALL
 script:
