@@ -1,3 +1,2 @@
-project ('mev-webapp', 'CRYSTAL-SNAPSHOT', script (sources = file.path ('src', 'main', 'r'),
-                                                   tests = file.path ('src', 'main', 'r')));
+project ('mev-webapp', 'CRYSTAL-SNAPSHOT', script (sources = NULL, tests = NULL));
 dependency ('mev-common-domain', 'CRYSTAL-SNAPSHOT');

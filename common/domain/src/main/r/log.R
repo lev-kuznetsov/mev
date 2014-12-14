@@ -12,19 +12,19 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 
-binder (callback = function (local) {
-  shim ('logging', binder = local);
+# Basic logging facilities 
+#
+# author: levk
+# since CRYSTAL
+shim ('logging', callback = function (basicConfig, loglevels, logdebug, loginfo, logwarn, logerror) {
+  basicConfig (loglevels[[ 'DEBUG' ]]);
 
-  inject (function (getLogger, writeToConsole, addHandler, logdebug, loginfo, logwarn, logerror) {
-
-    logger = getLogger ('');
-    addHandler (writeToConsole, logger = logger);
-
-    define ('debug', function () function (message) logdebug (message, logger = logger));
-    define ('info', function () function (message) loginfo (message, logger = logger));
-    define ('warn', function () function (message) logwarn (message, logger = logger));
-    define ('error', function () function (message) logerror (message, logger = logger));
-
-    'ok';
-  }, local);
-});
+  define ('debug', function (module = '')
+                     function (message) logdebug (message, logger = module));
+  define ('info', function (module = '')
+                    function (message) loginfo (message, logger = module));
+  define ('warn', function (module = '')
+                    function (message) logwarn (message, logger = module));
+  define ('error', function (module = '')
+                     function (message) logerror (message, logger = module));
+}, binder = binder ());

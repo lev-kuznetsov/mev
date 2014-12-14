@@ -1,0 +1,1 @@
+inject (function (debug) is.function (debug));
