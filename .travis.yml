@@ -6,7 +6,7 @@ env:
 # Java build, the VM image is setup for java out of the box
   - BEFORE_INSTALL="" INSTALL="mvn install -DskipTests" SCRIPT="mvn verify"
 # R build, install R, get raven, launch raven
-  - BEFORE_INSTALL="sudo apt-get update && sudo apt-get install r-base && curl https://raw.githubusercontent.com/dfci-cccb/raven/ee2fe1b06fa1c7285dd2e97deb956812fadd837e/R/raven.R > /tmp/raven.R" INSTALL="echo source ('/tmp/raven.R'); raven (inspect (), fetch (), import (environment (NULL)), install ()) | R --no-save" SCRIPT="echo source ('/tmp/raven.R'); raven () | R --no-save"
+  - BEFORE_INSTALL="sudo apt-get update; sudo apt-get install r-base; curl https://raw.githubusercontent.com/dfci-cccb/raven/ee2fe1b06fa1c7285dd2e97deb956812fadd837e/R/raven.R > /tmp/raven.R" INSTALL="echo source ('/tmp/raven.R'); raven (inspect (), fetch (), import (environment (NULL)), install ()) | R --no-save" SCRIPT="echo source ('/tmp/raven.R'); raven () | R --no-save"
 
 before_install:
   - $BEFORE_INSTALL
