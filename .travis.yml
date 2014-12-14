@@ -7,27 +7,10 @@ env:
   - GOAL=Java
 
 before_install:
-  - if [ "$GOAL" -eq "R" ]
-    then
-      sudo apt-get update
-      sudo apt-get install r-base
-      curl https://raw.githubusercontent.com/dfci-cccb/raven/ee2fe1b06fa1c7285dd2e97deb956812fadd837e/R/raven.R -o /tmp/raven.R
-    fi
+  - if [[ '$GOAL" == 'R' ]]; then sudo apt-get update; sudo apt-get install r-base; curl https://raw.githubusercontent.com/dfci-cccb/raven/ee2fe1b06fa1c7285dd2e97deb956812fadd837e/R/raven.R -o /tmp/raven.R; fi
 
 install:
-  - if [ "$GOAL" -eq "R" ]
-    then
-      echo -e "source ('/tmp/raven.R'); raven (inspect (), fetch (), import (environment (NULL)), install ())" | R --no-save
-    elif [ "$GOAL" -eq "Java" ]
-    then
-      mvn install -DskipTests
-    fi
+  - if [[ '$GOAL" == 'R' ]]; then echo -e "source ('/tmp/raven.R'); raven (inspect (), fetch (), import (environment (NULL)), install ())" | R --no-save; elif [[ '$GOAL' == 'Java' ]; then mvn install -DskipTests; fi
 
 script:
-  - if [ "$GOAL" -eq "R" ]
-    then
-      echo -e "source ('/tmp/raven.R'); raven ()" | R --no-save
-    elif [ "$GOAL" -eq "Java" ]
-    then
-      mvn test
-    fi
+  - if [[ '$GOAL' == 'R' ]]; then echo -e "source ('/tmp/raven.R'); raven ()" | R --no-save; elif [[ '$GOAL' == 'Java' ]]; then mvn test; fi
