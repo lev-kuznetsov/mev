@@ -7,7 +7,7 @@ env:
   - BUILD=java
 
 before_install:
-  - if [[ $BUILD == 'R' ]]; then sudo add-apt-repository ppa:marutter/rrutter -y; sudo apt-get update; sudo apt-get install r-base; curl https://raw.githubusercontent.com/dfci-cccb/raven/ee2fe1b06fa1c7285dd2e97deb956812fadd837e/R/raven.R -o /tmp/raven.R; fi
+  - if [[ $BUILD == 'R' ]]; then sudo add-apt-repository ppa:marutter/rrutter -y; sudo apt-get update; sudo apt-get install r-base; curl https://raw.githubusercontent.com/dfci-cccb/raven/87c155b23e8aff572102f31aa68ecf3849acc09d/R/raven.R -o /tmp/raven.R; fi
 
 install:
   - if [[ $BUILD == 'R' ]]; then echo "source ('/tmp/raven.R'); raven (inspect (), fetch (), import (environment (NULL)), install ())" | R --no-save; fi
