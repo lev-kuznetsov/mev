@@ -14,14 +14,14 @@
 
     <!-- Support modules -->
 
-	<module>testutil</module>
+    <module>testutil</module>
     <module>io</module>
     <module>math</module>
     <module>r</module>
 
     <!-- MeV modules -->
 
-	<module>configuration</module>
+    <module>configuration</module>
     <module>dataset</module>
     <module>annotation</module>
     <module>hcl</module>
@@ -33,7 +33,7 @@
     <module>anova</module>
     <module>stats</module>
     <module>deseq</module>
-    
+
     <module>web</module>
 
   </modules>
@@ -98,7 +98,8 @@
       <properties>
         <mev.spring_profiles_active>prod</mev.spring_profiles_active>
         <mev.java.io.tmpdir>/common/projects/mev/work</mev.java.io.tmpdir>
-        <mev.Rscript>nice -20 /common/projects/mev/lib/R/default/bin/Rscript</mev.Rscript>
+        <mev.Rscript>nice -20
+          /common/projects/mev/lib/R/default/bin/Rscript</mev.Rscript>
       </properties>
     </profile>
   </profiles>
@@ -199,19 +200,19 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
-		            
-	<dependency>
-		<groupId>org.databene</groupId>
-		<artifactId>contiperf</artifactId>
-		<version>2.2.0</version>
-	</dependency>
-	
-	<dependency>
-		<groupId>edu.dfci.cccb</groupId>
-		<artifactId>mev-test-util</artifactId>
-		<version>BAYLIE-SNAPSHOT</version>
-	</dependency>
-	            
+
+    <dependency>
+      <groupId>org.databene</groupId>
+      <artifactId>contiperf</artifactId>
+      <version>2.2.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-test-util</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
   </dependencies>
 
   <dependencyManagement>
@@ -265,12 +266,12 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.16</version>
         <dependencies>
-		 <dependency>
-		  <groupId>org.apache.maven.surefire</groupId>
-		  <artifactId>surefire-junit47</artifactId>
-		  <version>2.12</version>
-		 </dependency>
-		</dependencies>
+          <dependency>
+            <groupId>org.apache.maven.surefire</groupId>
+            <artifactId>surefire-junit47</artifactId>
+            <version>2.12</version>
+          </dependency>
+        </dependencies>
         <configuration>
           <systemPropertyVariables>
             <edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>${mev.Rscript}</edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>
@@ -278,7 +279,7 @@
             <spring.profiles.active>test</spring.profiles.active>
             <textdb.allow_full_path>true</textdb.allow_full_path>
           </systemPropertyVariables>
-      	  <excludedGroups>edu.dfci.cccb.mev.testing.junit.groups.MevIntegrationTestMarker</excludedGroups>
+          <excludedGroups>edu.dfci.cccb.mev.testing.junit.groups.MevIntegrationTestMarker</excludedGroups>
         </configuration>
       </plugin>
 
