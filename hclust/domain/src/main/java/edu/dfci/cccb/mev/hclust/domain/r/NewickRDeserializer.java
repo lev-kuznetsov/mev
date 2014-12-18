@@ -14,13 +14,23 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.domain.jobs.r;
+package edu.dfci.cccb.mev.hclust.domain.r;
+
+import edu.dfci.cccb.mev.common.domain.jobs.r.Deserializer;
+import edu.dfci.cccb.mev.hclust.domain.Node.Leaf;
 
 /**
  * @author levk
  * @since CRYSTAL
  */
-public interface Deserializer {
+public class NewickRDeserializer implements Deserializer {
 
-  Object deserialize (Object r);
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.common.domain.jobs.r.Deserializer#deserialize(java.lang
+   * .Object) */
+  @Override
+  public Object deserialize (Object r) {
+    return new Leaf<Object> (null);
+  }
 }

@@ -61,8 +61,8 @@ import edu.dfci.cccb.mev.common.domain.jobs.annotation.Callback;
 import edu.dfci.cccb.mev.common.domain.jobs.annotation.Error;
 import edu.dfci.cccb.mev.common.domain.jobs.annotation.Parameter;
 import edu.dfci.cccb.mev.common.domain.jobs.annotation.Result;
-import edu.dfci.cccb.mev.common.domain.jobs.r.Serializer;
 import edu.dfci.cccb.mev.common.domain.jobs.r.Deserializer;
+import edu.dfci.cccb.mev.common.domain.jobs.r.Serializer;
 import edu.dfci.cccb.mev.common.domain.jobs.r.annotation.R;
 import edu.dfci.cccb.mev.common.domain.jobs.r.annotation.toR;
 import edu.dfci.cccb.mev.common.domain.jobs.r.annotation.toR.Primitives;
@@ -173,7 +173,6 @@ public class RserveModule implements Module {
                   return ((Serializer<Object>) injector.getInstance (type)).serialize (value);
                 }
 
-                @SuppressWarnings ("unchecked")
                 @SneakyThrows (IllegalAccessException.class)
                 private void toJava (REXP r, Object function, Field target) {
                   target.setAccessible (true);
@@ -182,11 +181,11 @@ public class RserveModule implements Module {
                   if (annotation == null)
                     annotation = target.getType ()
                                        .getAnnotation (edu.dfci.cccb.mev.common.domain.jobs.r.annotation.toJava.class);
-                  Class<? extends Deserializer<?>> type =
-                                                          annotation == null
-                                                                            ? edu.dfci.cccb.mev.common.domain.jobs.r.annotation.toJava.Primitives.class
-                                                                            : annotation.value ();
-                  target.set (function, ((Deserializer<Object>) injector.getInstance (type)).deserialize (r));
+                  Class<? extends Deserializer> type =
+                                                       annotation == null
+                                                                         ? edu.dfci.cccb.mev.common.domain.jobs.r.annotation.toJava.Primitives.class
+                                                                         : annotation.value ();
+                  target.set (function, ((Deserializer) injector.getInstance (type)).deserialize (r));
                 }
 
                 @SneakyThrows ({ InvocationTargetException.class, IllegalAccessException.class })

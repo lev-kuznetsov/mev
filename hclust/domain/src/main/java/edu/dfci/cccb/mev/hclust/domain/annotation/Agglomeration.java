@@ -14,13 +14,25 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.domain.jobs.r;
+package edu.dfci.cccb.mev.hclust.domain.annotation;
+
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
 /**
  * @author levk
  * @since CRYSTAL
  */
-public interface Deserializer {
+@Retention (RUNTIME)
+@Target (TYPE)
+@Documented
+@Inherited
+public @interface Agglomeration {
 
-  Object deserialize (Object r);
+  String value ();
 }

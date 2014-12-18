@@ -38,9 +38,9 @@ import edu.dfci.cccb.mev.common.domain.jobs.r.Deserializer;
  */
 public @interface toJava {
 
-  Class<? extends Deserializer<?>> value ();
+  Class<? extends Deserializer> value ();
 
-  public static class Primitives implements Deserializer<Object> {
+  public static class Primitives implements Deserializer {
 
     @Override
     @SneakyThrows (REXPMismatchException.class)

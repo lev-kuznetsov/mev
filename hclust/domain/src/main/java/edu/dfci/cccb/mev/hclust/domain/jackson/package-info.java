@@ -14,13 +14,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.domain.jobs.r;
-
 /**
  * @author levk
  * @since CRYSTAL
  */
-public interface Deserializer {
-
-  Object deserialize (Object r);
-}
+package edu.dfci.cccb.mev.hclust.domain.jackson;

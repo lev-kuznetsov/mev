@@ -69,6 +69,12 @@
       <version>${mev.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -91,17 +97,20 @@
         <configuration>
           <onInitialize>
             if (!requireNamespace ("raven")) tryCatch ({
-              assign ('save', .libPaths ());
-              .libPaths (file.path ("${project.build.directory}", "R", "library"));
-              download.file ("https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/raven/0.0.0.9001/raven_0.0.0.9001.tar.gz", "raven.pkg", "curl");
-              install.packages ("raven.pkg", type = "source", repo = NULL);
+            assign ('save', .libPaths ());
+            .libPaths (file.path ("${project.build.directory}", "R", "library"));
+            download.file
+            ("https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/raven/0.0.0.9001/raven_0.0.0.9001.tar.gz",
+            "raven.pkg", "curl");
+            install.packages ("raven.pkg", type = "source", repo = NULL);
             }, finally = {
-              .libPaths (save);
-              unlink ("raven.pkg");
+            .libPaths (save);
+            unlink ("raven.pkg");
             });
           </onInitialize>
           <onRequest>
-            .libPaths (file.path ("${project.build.directory}", "R", "library");
+            .libPaths (file.path ("${project.build.directory}",
+            "R", "library");
             raven::raven (base = "${basedir}");
           </onRequest>
         </configuration>

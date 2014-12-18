@@ -14,13 +14,18 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.domain.jobs.r;
+package edu.dfci.cccb.mev.hclust.domain.r;
+
+import edu.dfci.cccb.mev.common.domain.jobs.r.ByAnnotationValue;
+import edu.dfci.cccb.mev.hclust.domain.annotation.Agglomeration;
 
 /**
  * @author levk
  * @since CRYSTAL
  */
-public interface Deserializer {
+public class AgglomerationRSerializer extends ByAnnotationValue {
 
-  Object deserialize (Object r);
+  public AgglomerationRSerializer () {
+    super (Agglomeration.class);
+  }
 }

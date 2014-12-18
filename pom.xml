@@ -17,6 +17,7 @@
     <module>googleplus</module>
 
     <module>dataset</module>
+    <module>hclust</module>
 
     <module>webapp</module>
   </modules>
@@ -57,6 +58,7 @@
     <rest-assured.version>2.3.3</rest-assured.version>
     <jooq.version>3.3.1</jooq.version>
     <Rserve.version>0.6-8.1</Rserve.version>
+    <junit.version>4.12</junit.version>
 
     <jquery.version>2.1.0-2</jquery.version>
     <jquery-ui.version>1.10.4</jquery-ui.version>
@@ -451,13 +453,7 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.11</version>
-      </dependency>
-
-      <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit-dep</artifactId>
-        <version>4.11</version>
+        <version>${junit.version}</version>
       </dependency>
 
       <!-- Rest-assured -->

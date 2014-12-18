@@ -17,6 +17,7 @@
 package edu.dfci.cccb.mev.dataset.domain.r;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import edu.dfci.cccb.mev.common.domain.jobs.r.R;
 import edu.dfci.cccb.mev.dataset.domain.AnalysisInvocationException;
@@ -30,13 +31,13 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AnalysisAdapter;
  */
 public abstract class RAnalysisAdapter extends AnalysisAdapter {
 
-  private @Inject R injector;
+  private @Inject Provider<R> provider;
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.domain.Analysis#run() */
   @Override
   public final void run () throws AnalysisInvocationException {
-    try {
+    try (R injector = provider.get ()) {
       injector.inject (this);
     } catch (RuntimeException e) {
       throw e;

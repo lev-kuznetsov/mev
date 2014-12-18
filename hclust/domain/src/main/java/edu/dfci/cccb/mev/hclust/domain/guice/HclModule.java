@@ -14,13 +14,24 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.common.domain.jobs.r;
+package edu.dfci.cccb.mev.hclust.domain.guice;
+
+import edu.dfci.cccb.mev.dataset.domain.guice.AnalysisTypeRegistrar;
+import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule;
+import edu.dfci.cccb.mev.hclust.domain.HierarchicalClustering;
 
 /**
  * @author levk
  * @since CRYSTAL
  */
-public interface Deserializer {
+public class HclModule extends DatasetModule {
 
-  Object deserialize (Object r);
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule#configure(edu.dfci
+   * .cccb.mev.dataset.domain.guice.AnalysisTypeRegistrar) */
+  @Override
+  public void configure (AnalysisTypeRegistrar registrar) {
+    registrar.register (HierarchicalClustering.class);
+  }
 }
