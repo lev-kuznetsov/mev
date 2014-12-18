@@ -396,3 +396,10 @@ div#cohortSummaryTabPane{
 	float: left; 
 	padding: 0.5em;	
 }
+
+button#ds-drive-signin{
+	margin-top:25px;
+	margin-left:auto;
+	margin-right:auto;
+	width:90%;
+}

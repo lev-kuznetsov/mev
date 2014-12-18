@@ -47,26 +47,35 @@
 	        </div>
 	        <div class="tab-pane" id="google">
 	        
-				 <div class="container" ng-hide="googleDrive.signedIn">
-				 
-					<div class="row">
-						<div class="span14 columns offset2">
-							<form action="signin/google" method="POST">
-							    <button type="submit" class="btn btn-large btn-primary">Sign in with Google</button>
-							    <input type="hidden" name="scope" value="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo#email https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/latitude.all.best" />
-							    <input type="hidden" name="request_visible_actions" value="http://schemas.google.com/AddActivity http://schemas.google.com/BuyActivity http://schemas.google.com/CheckInActivity http://schemas.google.com/CommentActivity http://schemas.google.com/CreateActivity http://schemas.google.com/DiscoverActivity http://schemas.google.com/ListenActivity http://schemas.google.com/ReserveActivity http://schemas.google.com/ReviewActivity http://schemas.google.com/WantActivity"/>
-							    <input type="hidden" name="access_type" value="offline"/>
-							</form>
-						</div>
+				 <div ng-hide="googleDrive.signedIn">
+					<div class="row-fluid">
+						<form action="signin/google" method="POST">
+						    <button id="ds-drive-signin" type="submit" class="btn btn-primary btn-block">Sign in with Google</button>
+						    <input type="hidden" name="scope" value="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo#email https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/latitude.all.best" />
+						    <input type="hidden" name="request_visible_actions" value="http://schemas.google.com/AddActivity http://schemas.google.com/BuyActivity http://schemas.google.com/CheckInActivity http://schemas.google.com/CommentActivity http://schemas.google.com/CreateActivity http://schemas.google.com/DiscoverActivity http://schemas.google.com/ListenActivity http://schemas.google.com/ReserveActivity http://schemas.google.com/ReviewActivity http://schemas.google.com/WantActivity"/>
+						    <input type="hidden" name="access_type" value="offline"/>
+						</form>
 					</div>
 				</div>
 				
-				<div class="container" ng-show="googleDrive.signedIn">
-					<div class="row" ng-repeat="file in googleDrive.files">
+				<div class="geo_import_container" ng-show="googleDrive.signedIn">
+					<table class="mev-table-tight table table-striped" style="font-size:14px;">
+						<thead>
+							<tr>
+								<th>File Name</th>
+								<th>Import</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="file in googleDrive.files">
+								<td>{{file.name}}</td>
+								<td>
+									<a class="btn btn-small btn-success" href="" ng-click="postDriveFile(file.id)">Import</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 					
-						<a ng-click="postDriveFile(file.id)">{{file.name}}</a>
-
-					</div>
 				</div>
 				
 	        </div>
