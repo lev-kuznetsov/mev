@@ -18,7 +18,10 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+
 import javax.inject.Inject;
 
 import lombok.Getter;
@@ -26,7 +29,10 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
+import org.apache.commons.io.IOUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,7 +44,10 @@ import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
+import edu.dfci.cccb.mev.dataset.domain.mock.MockTsvInput;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.MultipartTsvInput;
+import edu.dfci.cccb.mev.dataset.rest.google.GoogleWorkspace;
+import edu.dfci.cccb.mev.io.implementation.TemporaryFile;
 
 /**
  * @author levk
@@ -48,7 +57,6 @@ import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.MultipartTsvInput;
 @Log4j
 @ToString (exclude = { "workspace", "builder" })
 public class WorkspaceController {
-
 
   private @Getter @Setter @Inject Workspace workspace;
   private @Getter @Setter @Inject DatasetBuilder builder;
@@ -69,5 +77,13 @@ public class WorkspaceController {
       log.debug ("Uploaded " + dataset);
     workspace.put (dataset);
   }
-  
+
+  @RequestMapping (method = RequestMethod.POST, value = "/import/google/{id}/load")
+  public void load (@PathVariable ("id") String id) throws DatasetBuilderException,
+                                                   InvalidDatasetNameException,
+                                                   InvalidDimensionTypeException,
+                                                   IOException {
+    if (workspace instanceof GoogleWorkspace)
+      ((GoogleWorkspace) workspace).load (id);
+  }
 }

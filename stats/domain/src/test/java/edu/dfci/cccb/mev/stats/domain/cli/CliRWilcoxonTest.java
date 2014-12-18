@@ -20,6 +20,7 @@ import static org.junit.Assert.assertThat;
 
 import javax.script.ScriptEngineManager;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.dfci.cccb.mev.dataset.domain.mock.MapBackedValueStoreBuilder;
@@ -34,6 +35,7 @@ import edu.dfci.cccb.mev.stats.domain.contract.Wilcoxon;
  */
 public class CliRWilcoxonTest {
 
+  @Ignore
   @Test
   public void two () throws Exception {
     Wilcoxon w =

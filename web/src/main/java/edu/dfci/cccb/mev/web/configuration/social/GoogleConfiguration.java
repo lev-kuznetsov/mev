@@ -33,7 +33,7 @@ import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import edu.dfci.cccb.mev.web.domain.social.SecurityContext;
+import edu.dfci.cccb.mev.dataset.rest.google.SecurityContext;
 import edu.dfci.cccb.mev.web.domain.social.SimpleConnectionSignUp;
 import edu.dfci.cccb.mev.web.domain.social.SimpleSignInAdapter;
 import edu.dfci.cccb.mev.web.domain.social.UserInterceptor;
@@ -45,8 +45,8 @@ import edu.dfci.cccb.mev.web.domain.social.UserInterceptor;
 @Configuration
 public class GoogleConfiguration extends WebMvcConfigurerAdapter {
 
-  private @Value ("${GOOGLE_API_KEY:902321796189-9a9lveblj6hcfpckneduons2elu2ncdf.apps.googleusercontent.com}") String key;
-  private @Value ("${GOOGLE_API_SECRET:zk5mE-MXZsJMYPs6IQPEFSKN}") String secret;
+  private @Value ("${GOOGLE_API_KEY:902321796189-et9joehlsn9agecgt6ooct5ean864g40.apps.googleusercontent.com}") String key;
+  private @Value ("${GOOGLE_API_SECRET:MJdI8KFgLCd3FG-M5hLb5yd5}") String secret;
 
   @Bean
   public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer () {
@@ -62,7 +62,21 @@ public class GoogleConfiguration extends WebMvcConfigurerAdapter {
   @Bean
   public ConnectionFactoryLocator connectionFactoryLocator () {
     ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry ();
-    registry.addConnectionFactory (new GoogleConnectionFactory (key, secret));
+    registry.addConnectionFactory (new GoogleConnectionFactory (key, secret) {
+      {
+        setScope ("https://www.googleapis.com/auth/userinfo.profile" +
+                  ";https://www.googleapis.com/auth/userinfo.email" +
+                  ";https://www.googleapis.com/auth/plus.me" +
+                  ";https://www.googleapis.com/auth/plus.login" +
+                  ";https://www.googleapis.com/auth/drive" +
+                  ";https://www.googleapis.com/auth/drive.appdata" +
+                  ";https://www.googleapis.com/auth/drive.scripts" +
+                  ";https://www.googleapis.com/auth/drive.apps.readonly" +
+                  ";https://www.googleapis.com/auth/drive.metadata.readonly" +
+                  ";https://www.googleapis.com/auth/drive.file" +
+                  ";https://www.googleapis.com/auth/plus.circles.read");
+      }
+    });
     return registry;
   }
 

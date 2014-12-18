@@ -17,7 +17,6 @@
 
   <properties>
     <spring-security.version>3.2.0.RELEASE</spring-security.version>
-    <spring-social.version>1.1.0.M4</spring-social.version>
 
     <freemarker.version>2.3.20</freemarker.version>
     <velocity.version>1.7</velocity.version>
@@ -39,68 +38,6 @@
       <groupId>org.apache.velocity</groupId>
       <artifactId>velocity</artifactId>
       <version>${velocity.version}</version>
-    </dependency>
-
-    <!-- Spring Social -->
-
-    <dependency>
-      <groupId>org.springframework.social</groupId>
-      <artifactId>spring-social-core</artifactId>
-      <version>${spring-social.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.social</groupId>
-      <artifactId>spring-social-web</artifactId>
-      <version>${spring-social.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.social</groupId>
-      <artifactId>spring-social-config</artifactId>
-      <version>${spring-social.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.social</groupId>
-      <artifactId>spring-social-security</artifactId>
-      <version>${spring-social.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.social</groupId>
-      <artifactId>spring-social-google</artifactId>
-      <version>1.0.0.RELEASE</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework.social</groupId>
-          <artifactId>spring-social-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework.social</groupId>
-          <artifactId>spring-social-web</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework.social</groupId>
-          <artifactId>spring-social-config</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework.social</groupId>
-          <artifactId>spring-social-security</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-asm</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework.security</groupId>
-          <artifactId>spring-security-crypto</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <!-- Spring Security -->
