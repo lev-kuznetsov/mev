@@ -2,15 +2,24 @@ package edu.dfci.cccb.mev.t_test.domain.impl;
 
 import static edu.dfci.cccb.mev.t_test.domain.prototype.AbstractTTestBuilder.FULL_FILENAME;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Iterator;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.Synchronized;
+
+import org.apache.commons.io.IOUtils;
+
 import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
 import edu.dfci.cccb.mev.t_test.domain.prototype.AbstractTTest;
 
@@ -23,6 +32,24 @@ public class FileBackedTTest extends AbstractTTest implements AutoCloseable{
   public FileBackedTTest (TemporaryFolder tempFolder) {
     this.tempFolder = tempFolder;
     this.full = new File (this.tempFolder, FULL_FILENAME);
+  }
+  
+  @SneakyThrows
+  public static FileBackedTTest from (InputStream results) {
+    FileBackedTTest result = new FileBackedTTest (new TemporaryFolder ());
+    try (OutputStream full = new BufferedOutputStream (new FileOutputStream (result.full));
+         BufferedInputStream in = new BufferedInputStream (results)) {
+      IOUtils.copy (in, full);
+    }
+    return result;
+  }
+
+  @SneakyThrows
+  public void to (OutputStream out) {
+    try (InputStream full = new BufferedInputStream (new FileInputStream (this.full));
+         OutputStream o = new BufferedOutputStream (out)) {
+      IOUtils.copy (full, o);
+    }
   }
   
   @Override

@@ -15,13 +15,18 @@
 package edu.dfci.cccb.mev.deseq.domain.simple;
 
 import static edu.dfci.cccb.mev.deseq.domain.simple.StatelessScriptEngineFileBackedDESeqBuilder.OUTPUT_FILENAME;
-import static edu.dfci.cccb.mev.deseq.domain.simple.StatelessScriptEngineFileBackedDESeqBuilder.NORMALIZED_COUNTS_FILENAME;
 import static java.lang.Double.parseDouble;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Iterator;
 
 import lombok.Getter;
@@ -29,6 +34,9 @@ import lombok.SneakyThrows;
 import lombok.Synchronized;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
+
+import org.apache.commons.io.IOUtils;
+
 import edu.dfci.cccb.mev.deseq.domain.prototype.AbstractDESeq;
 import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
 
@@ -48,13 +56,30 @@ public class FileBackedDESeq extends AbstractDESeq implements AutoCloseable {
     this.full = new File (this.tempFolder, OUTPUT_FILENAME);
   }
 
+  @SneakyThrows
+  public static FileBackedDESeq from (InputStream results) {
+    FileBackedDESeq result = new FileBackedDESeq (new TemporaryFolder ());
+    try (OutputStream full = new BufferedOutputStream (new FileOutputStream (result.full));
+         BufferedInputStream in = new BufferedInputStream (results)) {
+      IOUtils.copy (in, full);
+    }
+    return result;
+  }
+
+  @SneakyThrows
+  public void to (OutputStream out) {
+    try (InputStream full = new BufferedInputStream (new FileInputStream (this.full));
+         OutputStream o = new BufferedOutputStream (out)) {
+      IOUtils.copy (full, o);
+    }
+  }
+
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.deseq.domain.contract.DESeqResult#full() */
   @Override
   public Iterable<Entry> full () {
     return iterateEntries (full);
   }
-
 
   private Iterable<Entry> iterateEntries (final File file) {
     return new Iterable<Entry> () {
@@ -101,8 +126,7 @@ public class FileBackedDESeq extends AbstractDESeq implements AutoCloseable {
                             number (2, split),
                             number (3, split),
                             number (6, split),
-                            number (7, split)
-                            );
+                            number (7, split));
   }
 
   private String string (int index, String[] split) {
@@ -111,12 +135,15 @@ public class FileBackedDESeq extends AbstractDESeq implements AutoCloseable {
 
   private Double number (int index, String[] split) {
     String value = string (index, split);
-    if ("Inf".equals (value)) return Double.POSITIVE_INFINITY;
-    else if ("-Inf".equals (value)) return Double.NEGATIVE_INFINITY;
-    else if ("NA".equals (value)) return Double.NaN;
-    else return parseDouble (value);
- }
-  
+    if ("Inf".equals (value))
+      return Double.POSITIVE_INFINITY;
+    else if ("-Inf".equals (value))
+      return Double.NEGATIVE_INFINITY;
+    else if ("NA".equals (value))
+      return Double.NaN;
+    else
+      return parseDouble (value);
+  }
 
   /* (non-Javadoc)
    * @see java.lang.Object#finalize() */

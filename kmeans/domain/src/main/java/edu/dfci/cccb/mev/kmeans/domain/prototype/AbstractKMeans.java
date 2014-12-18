@@ -16,11 +16,16 @@ package edu.dfci.cccb.mev.kmeans.domain.prototype;
 
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
@@ -41,6 +46,7 @@ public abstract class AbstractKMeans extends AbstractAnalysis<AbstractKMeans> im
   private @Getter @Setter Set<Set<String>> clusters;
   private @Setter Dimension dimension;
   private @Getter @Setter Dataset dataset;
+  private @Inject ObjectMapper mapper;
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.kmeans.contract.KMeans#apply() */

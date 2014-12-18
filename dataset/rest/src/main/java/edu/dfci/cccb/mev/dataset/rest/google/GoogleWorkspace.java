@@ -48,9 +48,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analyses;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisNotFoundException;
+import edu.dfci.cccb.mev.dataset.domain.contract.ComposerFactory;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetComposingException;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
@@ -68,11 +71,13 @@ import edu.dfci.cccb.mev.io.implementation.TemporaryFile;
  * 
  */
 @Log4j
-public class GoogleWorkspace extends ArrayListWorkspace {
+public class GoogleWorkspace implements Workspace {
+  private final Workspace workspaceDelegate = new ArrayListWorkspace ();
 
   public static final String MEV = ".mev.baylee";
 
   private @Inject DatasetBuilder builder;
+  private @Inject ComposerFactory composer;
 
   private Google google;
 
@@ -129,8 +134,12 @@ public class GoogleWorkspace extends ArrayListWorkspace {
     try (TemporaryFile file = new TemporaryFile ()) {
       try (FileOutputStream copy = new FileOutputStream (file)) {
         IOUtils.copy (google.driveOperations ().downloadFile (id).getInputStream (), copy);
+      } catch (Exception e) {
+        if (session.remove (id) != null)
+          push ();
+        return;
       }
-      put (new Dataset () {
+      workspaceDelegate.put (new Dataset () {
         private final Dataset delegate;
         private final Analyses analyses;
 
@@ -233,5 +242,51 @@ public class GoogleWorkspace extends ArrayListWorkspace {
         }
       });
     }
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.dataset.domain.contract.Workspace#put(edu.dfci.cccb.
+   * mev.dataset.domain.contract.Dataset) */
+  @Override
+  @SneakyThrows ({ IOException.class, DatasetComposingException.class })
+  public void put (Dataset dataset) {
+    try (TemporaryFile ds = new TemporaryFile ()) {
+      try (OutputStream out = new BufferedOutputStream (new FileOutputStream (ds))) {
+        composer.compose (dataset).write (out);
+      }
+      session.put (google.driveOperations ()
+                         .upload (new FileSystemResource (ds),
+                                  DriveFile.builder ().setTitle (dataset.name ()).build (),
+                                  new UploadParameters ())
+                         .getId (),
+                   new HashMap<String, Class<? extends Analysis>> ());
+      push ();
+    }
+    workspaceDelegate.put (dataset);
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.dataset.domain.contract.Workspace#get(java.lang.String) */
+  @Override
+  public Dataset get (String name) throws DatasetNotFoundException {
+    return workspaceDelegate.get (name);
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.dataset.domain.contract.Workspace#remove(java.lang.String
+   * ) */
+  @Override
+  public void remove (String name) throws DatasetNotFoundException {
+    workspaceDelegate.remove (name);
+  }
+
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.dataset.domain.contract.Workspace#list() */
+  @Override
+  public List<String> list () {
+    return workspaceDelegate.list ();
   }
 }
