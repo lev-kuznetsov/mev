@@ -62,6 +62,8 @@ import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDimensionJsonSe
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleSelectionJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.SelectionsTsvMessageConverter;
+import edu.dfci.cccb.mev.dataset.rest.google.GoogleWorkspace;
+import edu.dfci.cccb.mev.dataset.rest.google.SecurityContext;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgumentResolver;
@@ -82,7 +84,11 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   @Bean
   @Scope (value = SCOPE_SESSION, proxyMode = INTERFACES)
   public Workspace workspace () {
-    return new ArrayListWorkspace ();
+    log.debug ("Supplying " + (SecurityContext.userSignedIn () ? "Google" : "regular") + " workspace");
+    if (SecurityContext.userSignedIn ())
+      return new GoogleWorkspace ();
+    else
+      return new ArrayListWorkspace ();
   }
 
   @Bean
@@ -122,10 +128,13 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
     serializers.addAll (asList (new DimensionTypeJsonSerializer (),
                                 new SimpleDatasetJsonSerializer (),
                                 new SimpleDimensionJsonSerializer (),
-//This serializer returns selections as an array. 
-//Instead we want it wrapped object for angular's $resource service to work
-//The annotated Selections class is taking care of that now.
-//                                new SimpleSelectionsJsonSerializer (),
+                                // This serializer returns selections as an
+                                // array.
+                                // Instead we want it wrapped object for
+                                // angular's $resource service to work
+                                // The annotated Selections class is taking care
+                                // of that now.
+                                // new SimpleSelectionsJsonSerializer (),
                                 new SimpleSelectionJsonSerializer ()));
   }
 

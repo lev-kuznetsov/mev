@@ -44,7 +44,7 @@ import edu.dfci.cccb.mev.io.implementation.TemporaryFile;
  */
 @EqualsAndHashCode
 @ToString
-@Accessors (fluent = true)
+@Accessors (fluent = true, chain = true)
 public abstract class AbstractDataset implements Dataset, AutoCloseable {
 
   private static final Pattern VALID_DATASET_NAME_PATTERN = compile (VALID_DATASET_NAME_REGEX);

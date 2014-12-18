@@ -18,16 +18,25 @@ import static edu.dfci.cccb.mev.limma.domain.simple.StatelessScriptEngineFileBac
 import static edu.dfci.cccb.mev.limma.domain.simple.StatelessScriptEngineFileBackedLimmaBuilder.TOPGO_FILENAME;
 import static java.lang.Double.parseDouble;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Iterator;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.Synchronized;
 import lombok.ToString;
+
+import org.apache.commons.io.IOUtils;
+
 import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
 import edu.dfci.cccb.mev.limma.domain.prototype.AbstractLimma;
 
@@ -46,6 +55,24 @@ public class FileBackedLimma extends AbstractLimma implements AutoCloseable {
     this.limma = limma;
     this.full = new File (limma, FULL_FILENAME);
     this.topGo = new File (limma, TOPGO_FILENAME);
+  }
+
+  @SneakyThrows
+  public static FileBackedLimma from (InputStream results) {
+    FileBackedLimma result = new FileBackedLimma (new TemporaryFolder ());
+    try (OutputStream full = new BufferedOutputStream (new FileOutputStream (result.full));
+         BufferedInputStream in = new BufferedInputStream (results)) {
+      IOUtils.copy (in, full);
+    }
+    return result;
+  }
+
+  @SneakyThrows
+  public void to (OutputStream out) {
+    try (InputStream full = new BufferedInputStream (new FileInputStream (this.full));
+         OutputStream o = new BufferedOutputStream (out)) {
+      IOUtils.copy (full, o);
+    }
   }
 
   /* (non-Javadoc)

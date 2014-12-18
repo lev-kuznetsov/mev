@@ -12,7 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.web.domain.social;
+package edu.dfci.cccb.mev.dataset.rest.google;
+
 
 /**
  * @author levk

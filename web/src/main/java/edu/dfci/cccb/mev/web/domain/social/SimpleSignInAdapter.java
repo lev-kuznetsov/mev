@@ -22,6 +22,9 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.web.context.request.NativeWebRequest;
 
+import edu.dfci.cccb.mev.dataset.rest.google.SecurityContext;
+import edu.dfci.cccb.mev.dataset.rest.google.User;
+
 /**
  * @author levk
  * 

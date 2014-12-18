@@ -21,6 +21,9 @@ import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.google.api.Google;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import edu.dfci.cccb.mev.dataset.rest.google.SecurityContext;
+import edu.dfci.cccb.mev.dataset.rest.google.User;
+
 /**
  * @author levk
  * 
