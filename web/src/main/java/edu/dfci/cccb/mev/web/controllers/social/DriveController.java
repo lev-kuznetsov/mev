@@ -61,7 +61,7 @@ public class DriveController {
         DriveFilesPage page = google.driveOperations ().getRootFiles (URLEncoder.encode (nextPageToken, "UTF-8"));
         files = page.getItems ();
         for (DriveFile file : files)
-          if (!file.isFolder ())
+          if (!file.isFolder () && !file.isHidden ())
             result.add (new edu.dfci.cccb.mev.web.domain.social.Drive.DriveFile (file.getTitle (), file.getId ()));
         nextPageToken = page.getNextPageToken ();
       } while (nextPageToken != null);

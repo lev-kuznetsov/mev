@@ -25,7 +25,6 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -42,15 +41,15 @@ import org.springframework.social.google.api.drive.DriveFile;
 import org.springframework.social.google.api.drive.DriveFilesPage;
 import org.springframework.social.google.api.drive.UploadParameters;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import edu.dfci.cccb.mev.dataset.domain.contract.Analyses;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisNotFoundException;
+import edu.dfci.cccb.mev.dataset.domain.contract.ComposerFactory;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetComposingException;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
@@ -68,17 +67,23 @@ import edu.dfci.cccb.mev.io.implementation.TemporaryFile;
  * 
  */
 @Log4j
-public class GoogleWorkspace extends ArrayListWorkspace {
+public class GoogleWorkspace implements Workspace {
+  private final Workspace workspaceDelegate = new ArrayListWorkspace ();
+
+  private static HashMap<String, HashMap<String, HashMap<String, Class<? extends Analysis>>>> SESSIONS =
+                                                                                                         new HashMap<> ();
 
   public static final String MEV = ".mev.baylee";
 
   private @Inject DatasetBuilder builder;
+  private @Inject ComposerFactory composer;
 
   private Google google;
 
   @Inject
-  private void setUp (Provider<Google> google) {
+  private void setUp (Provider<Google> google) throws IOException {
     this.google = google.get ();
+    pull ();
   }
 
   @SneakyThrows (UnsupportedEncodingException.class)
@@ -102,22 +107,12 @@ public class GoogleWorkspace extends ArrayListWorkspace {
 
   private HashMap<String, HashMap<String, Class<? extends Analysis>>> session;
 
-  private @Inject ObjectMapper mapper;
-
-  private void push () throws IOException {
-    File tmp = File.createTempFile ("mev-session-", ".json");
-    try {
-      mapper.writeValue (tmp, session);
-      google.driveOperations ().upload (new FileSystemResource (tmp), getSessionDescriptor (), new UploadParameters ());
-    } finally {
-      tmp.delete ();
-    }
-  }
-
   @SneakyThrows ({ DatasetBuilderException.class, InvalidDatasetNameException.class })
   private void pull () throws IOException {
-    session = mapper.readValue (google.driveOperations ().downloadFile (getSessionDescriptor ()).getInputStream (),
-                                new TypeReference<HashMap<String, HashSet<String>>> () {});
+    String email = google.plusOperations ().getGoogleProfile ().getAccountEmail ();
+    session = SESSIONS.get (email);
+    if (session == null)
+      SESSIONS.put (email, session = new HashMap<> ());
     for (String id : session.keySet ())
       load (id);
   }
@@ -129,8 +124,11 @@ public class GoogleWorkspace extends ArrayListWorkspace {
     try (TemporaryFile file = new TemporaryFile ()) {
       try (FileOutputStream copy = new FileOutputStream (file)) {
         IOUtils.copy (google.driveOperations ().downloadFile (id).getInputStream (), copy);
+      } catch (Exception e) {
+        log.warn ("Failure downloading file", e);
+        return;
       }
-      put (new Dataset () {
+      workspaceDelegate.put (new Dataset () {
         private final Dataset delegate;
         private final Analyses analyses;
 
@@ -141,7 +139,6 @@ public class GoogleWorkspace extends ArrayListWorkspace {
           final Analyses analysesDelegate = this.delegate.analyses ();
           if (!session.containsKey (id)) {
             session.put (id, new HashMap<String, Class<? extends Analysis>> ());
-            push ();
           } else {
             for (Map.Entry<String, Class<? extends Analysis>> analysisId : session.get (id).entrySet ())
               analysesDelegate.put ((Analysis) analysisId.getValue ()
@@ -233,5 +230,50 @@ public class GoogleWorkspace extends ArrayListWorkspace {
         }
       });
     }
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.dataset.domain.contract.Workspace#put(edu.dfci.cccb.
+   * mev.dataset.domain.contract.Dataset) */
+  @Override
+  @SneakyThrows ({ IOException.class, DatasetComposingException.class })
+  public void put (Dataset dataset) {
+    try (TemporaryFile ds = new TemporaryFile ()) {
+      try (OutputStream out = new BufferedOutputStream (new FileOutputStream (ds))) {
+        composer.compose (dataset).write (out);
+      }
+      session.put (google.driveOperations ()
+                         .upload (new FileSystemResource (ds),
+                                  DriveFile.builder ().setTitle (dataset.name ()).build (),
+                                  new UploadParameters ())
+                         .getId (),
+                   new HashMap<String, Class<? extends Analysis>> ());
+    }
+    workspaceDelegate.put (dataset);
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.dataset.domain.contract.Workspace#get(java.lang.String) */
+  @Override
+  public Dataset get (String name) throws DatasetNotFoundException {
+    return workspaceDelegate.get (name);
+  }
+
+  /* (non-Javadoc)
+   * @see
+   * edu.dfci.cccb.mev.dataset.domain.contract.Workspace#remove(java.lang.String
+   * ) */
+  @Override
+  public void remove (String name) throws DatasetNotFoundException {
+    workspaceDelegate.remove (name);
+  }
+
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.dataset.domain.contract.Workspace#list() */
+  @Override
+  public List<String> list () {
+    return workspaceDelegate.list ();
   }
 }

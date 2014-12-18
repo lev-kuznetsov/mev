@@ -18,8 +18,8 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -29,7 +29,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
-import org.apache.commons.io.IOUtils;
+import org.springframework.aop.scope.ScopedObject;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,10 +44,8 @@ import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
-import edu.dfci.cccb.mev.dataset.domain.mock.MockTsvInput;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.MultipartTsvInput;
 import edu.dfci.cccb.mev.dataset.rest.google.GoogleWorkspace;
-import edu.dfci.cccb.mev.io.implementation.TemporaryFile;
 
 /**
  * @author levk
@@ -83,6 +81,13 @@ public class WorkspaceController {
                                                    InvalidDatasetNameException,
                                                    InvalidDimensionTypeException,
                                                    IOException {
+    log.debug ("Loading id "
+               + id + " into workspace " + workspace.getClass () + " implementing "
+               + Arrays.asList (workspace.getClass ().getInterfaces ()));
+    Workspace workspace =
+                          this.workspace instanceof ScopedObject
+                                                                ? (Workspace) ((ScopedObject) this.workspace).getTargetObject ()
+                                                                : this.workspace;
     if (workspace instanceof GoogleWorkspace)
       ((GoogleWorkspace) workspace).load (id);
   }
