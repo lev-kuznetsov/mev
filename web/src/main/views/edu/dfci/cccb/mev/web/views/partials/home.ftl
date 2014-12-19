@@ -10,7 +10,7 @@
 
 		  		<div class="container-fluid">
 
-		  			<div class="row">
+		  			<div class="row-fluid">
 		  			
 		  				<div class="col-md-12">
 		  				
@@ -42,21 +42,6 @@
 								<p>MeV is still open-source. You can download the entire stable version and run locally on your own computer, or right on your browser.</p>
 							</div>
 							
-							<div class="row">
-								<br>
-								<form action="signin/google" method="POST">
-								    <button type="submit" class="btn btn-large btn-primary">Sign in with Google</button>
-								    <input type="hidden" name="scope" value="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo#email https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/latitude.all.best" />
-								    <input type="hidden" name="request_visible_actions" value="http://schemas.google.com/AddActivity http://schemas.google.com/BuyActivity http://schemas.google.com/CheckInActivity http://schemas.google.com/CommentActivity http://schemas.google.com/CreateActivity http://schemas.google.com/DiscoverActivity http://schemas.google.com/ListenActivity http://schemas.google.com/ReserveActivity http://schemas.google.com/ReviewActivity http://schemas.google.com/WantActivity"/>
-								    <input type="hidden" name="access_type" value="offline"/>
-								</form>
-			  					<a class="btn btn-primary btn-large pull-right" href="#/datasets">
-		  										Get Started  <span class="glyphicon glyphicon-forward"></span>
-		  						</a>
-				  			</div>
-		  				
-		  					
-		  				
 		  				</div>
 		  			
 		  			</div>
@@ -74,7 +59,26 @@
 
 			  		<div class="container-fluid">
 			  		
-			  			
+			  		
+			  			<div class="row">
+							
+							<div class="panel panel-default">
+							  <div class="panel-body">
+							  
+							  	<form action="signin/google" method="POST">
+								    <button type="submit" class="btn btn-large btn-primary btn-block hp-signin">Sign In With Google</button>
+								    <input type="hidden" name="scope" value="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo#email https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/latitude.all.best" />
+								    <input type="hidden" name="request_visible_actions" value="http://schemas.google.com/AddActivity http://schemas.google.com/BuyActivity http://schemas.google.com/CheckInActivity http://schemas.google.com/CommentActivity http://schemas.google.com/CreateActivity http://schemas.google.com/DiscoverActivity http://schemas.google.com/ListenActivity http://schemas.google.com/ReserveActivity http://schemas.google.com/ReviewActivity http://schemas.google.com/WantActivity"/>
+								    <input type="hidden" name="access_type" value="offline"/>
+								</form>
+								
+			  					<button class="btn btn-primary btn-large btn-block hp-signin"><a href="#/datasets">Get Started</a></button>
+									
+							  </div>
+							</div>
+							
+						</div>
+			  		
 			  		
 						<div class="row">
 							
