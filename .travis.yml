@@ -7,12 +7,12 @@ env:
   - BUILD=java
 
 before_install:
-  - if [[ $BUILD == 'R' ]]; then sudo add-apt-repository ppa:marutter/rrutter -y; sudo apt-get update; sudo apt-get install r-base; curl https://raw.githubusercontent.com/dfci-cccb/raven/590a50ad76374c70f7f8da12cb8c5aee43f7dbc4/R/raven.R -o /tmp/raven.R; fi
+  - if [[ $BUILD == 'R' ]]; then sudo add-apt-repository ppa:marutter/rrutter -y && sudo apt-get update && sudo apt-get install r-base && R CMD INSTALL devtools && R -e "devtools::install_github ('dfci-cccb/raven', ref = '12342d03a31225ca3afb1fe6391dab072cb90170')"; fi
 
 install:
-  - if [[ $BUILD == 'R' ]]; then echo "source ('/tmp/raven.R'); raven (inspect (), fetch (), import (environment (NULL)), install ())" | R --no-save; fi
+  - if [[ $BUILD == 'R' ]]; then R -e "raven::raven (inspect (), fetch (), import (environment (NULL)), install ())"; fi
   - if [[ $BUILD == 'java' ]]; then mvn install -DskipTests; fi
 
 script:
-  - if [[ $BUILD == 'R' ]]; then echo "source ('/tmp/raven.R'); raven ()" | R --no-save; fi
+  - if [[ $BUILD == 'R' ]]; then R -e "raven::raven ()"; fi
   - if [[ $BUILD == 'java' ]]; then mvn test; fi
