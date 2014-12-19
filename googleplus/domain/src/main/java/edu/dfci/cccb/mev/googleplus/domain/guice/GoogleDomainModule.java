@@ -194,18 +194,18 @@ public class GoogleDomainModule implements Module {
     configure (new ServicesScopeBindingBuilder () {
 
       private final Collection<ScopedBindingBuilder> services;
+      
+      abstract class ContextProvider <T> implements com.google.inject.Provider<T> {
+        protected @Inject HttpTransport transport;
+        protected @Inject JsonFactory jsonFactory;
+      }
+
+      abstract class ServiceProvider <T> extends ContextProvider<T> {
+        protected @Inject Provider<GoogleCredential> credentialProvider;
+        protected @Inject @Named (APPLICATION_NAME) String applicationName;
+      }
 
       {
-        abstract class ContextProvider <T> implements com.google.inject.Provider<T> {
-          protected @Inject HttpTransport transport;
-          protected @Inject JsonFactory jsonFactory;
-        }
-
-        abstract class ServiceProvider <T> extends ContextProvider<T> {
-          protected @Inject Provider<GoogleCredential> credentialProvider;
-          protected @Inject @Named (APPLICATION_NAME) String applicationName;
-        }
-
         services = new ArrayList<> ();
         services.add (binder.bind (GoogleCredential.class).toProvider (new ContextProvider<GoogleCredential> () {
           private @Inject @Named (API_KEY) String key;
