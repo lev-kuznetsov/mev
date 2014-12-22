@@ -21,9 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +36,6 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.social.google.api.Google;
 import org.springframework.social.google.api.drive.DriveFile;
-import org.springframework.social.google.api.drive.DriveFilesPage;
 import org.springframework.social.google.api.drive.UploadParameters;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Analyses;
@@ -73,8 +70,6 @@ public class GoogleWorkspace implements Workspace {
   private static HashMap<String, HashMap<String, HashMap<String, Class<? extends Analysis>>>> SESSIONS =
                                                                                                          new HashMap<> ();
 
-  public static final String MEV = ".mev.baylee";
-
   private @Inject DatasetBuilder builder;
   private @Inject ComposerFactory composer;
 
@@ -84,25 +79,6 @@ public class GoogleWorkspace implements Workspace {
   private void setUp (Provider<Google> google) throws IOException {
     this.google = google.get ();
     pull ();
-  }
-
-  @SneakyThrows (UnsupportedEncodingException.class)
-  private DriveFile getSessionDescriptor () {
-    List<DriveFile> files;
-    String nextPageToken = "";
-    do {
-      DriveFilesPage page = google.driveOperations ().getRootFiles (URLEncoder.encode (nextPageToken, "UTF-8"));
-      files = page.getItems ();
-      for (DriveFile file : files)
-        if (!file.isFolder () && file.isHidden () && MEV.equals (file.getTitle ()))
-          return file;
-      nextPageToken = page.getNextPageToken ();
-    } while (nextPageToken != null);
-    return google.driveOperations ().createFileMetadata (DriveFile.builder ()
-                                                                  .setHidden (true)
-                                                                  .setTitle (MEV)
-                                                                  .setParents ()
-                                                                  .build ());
   }
 
   private HashMap<String, HashMap<String, Class<? extends Analysis>>> session;
@@ -237,20 +213,23 @@ public class GoogleWorkspace implements Workspace {
    * edu.dfci.cccb.mev.dataset.domain.contract.Workspace#put(edu.dfci.cccb.
    * mev.dataset.domain.contract.Dataset) */
   @Override
-  @SneakyThrows ({ IOException.class, DatasetComposingException.class })
+  @SneakyThrows ({
+                  IOException.class, DatasetComposingException.class, DatasetBuilderException.class,
+                  InvalidDatasetNameException.class })
   public void put (Dataset dataset) {
     try (TemporaryFile ds = new TemporaryFile ()) {
       try (OutputStream out = new BufferedOutputStream (new FileOutputStream (ds))) {
         composer.compose (dataset).write (out);
       }
-      session.put (google.driveOperations ()
-                         .upload (new FileSystemResource (ds),
-                                  DriveFile.builder ().setTitle (dataset.name ()).build (),
-                                  new UploadParameters ())
-                         .getId (),
+      String id = google.driveOperations ()
+                        .upload (new FileSystemResource (ds),
+                                 DriveFile.builder ().setTitle (dataset.name ()).build (),
+                                 new UploadParameters ())
+                        .getId ();
+      session.put (id,
                    new HashMap<String, Class<? extends Analysis>> ());
+      load (id);
     }
-    workspaceDelegate.put (dataset);
   }
 
   /* (non-Javadoc)
