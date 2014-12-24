@@ -17,7 +17,7 @@
     <module>googleplus</module>
 
     <module>dataset</module>
-    <module>hclust</module>
+    <module>cluster</module>
 
     <module>webapp</module>
   </modules>

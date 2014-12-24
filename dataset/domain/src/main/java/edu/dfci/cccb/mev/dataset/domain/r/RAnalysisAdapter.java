@@ -19,8 +19,10 @@ package edu.dfci.cccb.mev.dataset.domain.r;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import edu.dfci.cccb.mev.common.domain.jobs.annotation.Parameter;
 import edu.dfci.cccb.mev.common.domain.jobs.r.R;
 import edu.dfci.cccb.mev.dataset.domain.AnalysisInvocationException;
+import edu.dfci.cccb.mev.dataset.domain.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AnalysisAdapter;
 
 /**
@@ -29,9 +31,11 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AnalysisAdapter;
  * @author levk
  * @since CRYSTAL
  */
-public abstract class RAnalysisAdapter extends AnalysisAdapter {
+public abstract class RAnalysisAdapter <K, V> extends AnalysisAdapter {
 
   private @Inject Provider<R> provider;
+
+  private @Inject @Parameter Dataset<K, V> dataset;
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.domain.Analysis#run() */

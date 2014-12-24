@@ -33,7 +33,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -68,7 +67,6 @@ public class DatasetModule extends MevModule {
   /* (non-Javadoc)
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
-  @OverridingMethodsMustInvokeSuper
   public void configure (final Binder binder) {
     super.configure (binder);
 
@@ -79,8 +77,7 @@ public class DatasetModule extends MevModule {
       @Override
       public void register (Class<? extends Analysis> type) {
         if (type.getAnnotation (edu.dfci.cccb.mev.dataset.domain.annotation.Analysis.class) == null)
-          throw new IllegalArgumentException ("Failed registering analysis type "
-                                              + type.getSimpleName ()
+          throw new IllegalArgumentException ("Failed registering analysis type " + type.getSimpleName ()
                                               + " because it is missing required " + Analysis.class.getSimpleName ()
                                               + " annotation");
         types.addBinding ().toInstance (type);
