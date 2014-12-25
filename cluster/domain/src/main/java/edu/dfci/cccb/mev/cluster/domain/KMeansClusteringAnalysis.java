@@ -39,7 +39,7 @@ import edu.dfci.cccb.mev.dataset.domain.annotation.Analysis;
 @Analysis ("kmeans")
 @XmlRootElement
 @XmlAccessorType (NONE)
-@R ("function (kmeans) kmeans (dataset, distance, k)")
+@R ("function (kmeans, dataset, distance, k) kmeans (dataset, distance, k)")
 public class KMeansClusteringAnalysis <K, V> extends ClusteringAnalysisAdapter<K, V> {
 
   private @Parameter int k;

@@ -33,6 +33,7 @@ import edu.dfci.cccb.mev.cluster.domain.jackson.LinkageTypeResolver;
 
 /**
  * @author levk
+ * @since CRYSTAL
  */
 @XmlRootElement
 @XmlAccessorType (NONE)

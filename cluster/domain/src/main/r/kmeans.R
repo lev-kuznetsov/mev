@@ -14,7 +14,8 @@
 
 # K means clustering API
 #
-# 
+# Defines a 'kmeans' which injects a function accepting a dataframe, the
+# distance metric and the number of desired clusters
 #
 # author: levk
 shim ('cluster', callback = function (pam)
