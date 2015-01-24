@@ -1,0 +1,14 @@
+{
+  "name": "mev",
+  "version": "0.0.1-CRYSTAL",
+  "description": "Multi-experiment Viewer",
+  "author": "CCCB <cccb.at.dfci@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dfci-cccb/mev.git"
+  },
+  "devDependencies": {
+    "bower": "^1.3.12",
+    "gulp": "^3.8.10"
+  }
+}

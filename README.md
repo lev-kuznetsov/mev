@@ -7,13 +7,28 @@ MeV is a microarray and sequencing data management and analysis application. The
 
 ===
 
-Building requires JDK 7, Maven 3, R 3.1.2 with the toolkit for building R packages from source. Checkout or download and unzip the source, fire up a terminal and build:
+Application server build requires JDK7 and Maven 3. This terminal directive launched from the cloned source root directory will build and test the application server
 ```
 mvn clean install
 ```
-To launch move over to the webapp folder, start the application with:
+R utilities build requires R version 3.1.2 and with the raven package installed, the following directive will install the raven package from the R prompt
+```
+install.packages ('devtools');
+devtools::install_github ('dfci-cccb/raven');
+```
+After the raven package has been installed launch raven at R prompt from the cloned source root directory to build and test the R utilities
+```
+raven::raven ();
+```
+Web client build requires npm with gulp and bower installed globally. The following directive at the terminal prompt from the cloned source directory will build and test the web client
+```
+gulp build test
+```
+After completing all of the previous steps the application is ready to launch; move over to the webapp folder and start the application
 ```
 cd webapp
-R=/usr/bin/R mvn rserve:start jetty:run rserve:stop
+mvn rserve:start jetty:run rserve:stop
 ```
-and point your browser to http://localhost:8080
+You may now point your browser to http://localhost:8080
+
+You can specify path to R executable with the "R" environment variable
