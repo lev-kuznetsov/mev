@@ -9,7 +9,7 @@ env:
 
 before_install:
   - if [[ $BUILD == 'R' ]]; then sudo add-apt-repository ppa:marutter/rrutter -y && sudo apt-get update && sudo apt-get install r-base && sudo R -e "install.packages ('devtools', repos='http://cran.rstudio.com/'); devtools::install_github ('dfci-cccb/raven', ref = '12342d03a31225ca3afb1fe6391dab072cb90170')"; fi
-  - if [[ $BUILD == 'web' ]]; then sudo apt-add-repository ppa:chris-lea/node.js && sudo apt-get update && sudo apt-get install npm && sudo npm install -g bower gulp; fi
+  - if [[ $BUILD == 'web' ]]; then sudo apt-add-repository ppa:chris-lea/node.js -y && sudo apt-get update && sudo apt-get install npm && sudo npm install -g bower gulp; fi
 
 install:
   - if [[ $BUILD == 'R' ]]; then R -e "if (require ('raven')) raven (inspect (), fetch (), import (environment (NULL)), install ())"; fi
