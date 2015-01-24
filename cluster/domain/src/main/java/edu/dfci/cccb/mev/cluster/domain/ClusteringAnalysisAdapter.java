@@ -16,6 +16,7 @@
 
 package edu.dfci.cccb.mev.cluster.domain;
 
+import static edu.dfci.cccb.mev.cluster.domain.Distance.DEFAULT;
 import static javax.xml.bind.annotation.XmlAccessType.NONE;
 
 import javax.ws.rs.GET;
@@ -41,11 +42,11 @@ public class ClusteringAnalysisAdapter <K, V> extends RAnalysisAdapter<K, V> {
   /**
    * Distance metric
    */
-  private @Parameter Distance distance;
+  private @Parameter Distance distance = DEFAULT;
 
   @Path ("/distance")
   @PUT
-  @XmlElement (name = "distance")
+  @XmlElement (name = "distance", required = false)
   public void set (Distance distance) {
     this.distance = distance;
   }

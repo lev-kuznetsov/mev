@@ -33,7 +33,7 @@ import edu.dfci.cccb.mev.common.domain.jobs.annotation.Job;
 @Target (TYPE)
 @Retention (RUNTIME)
 @Documented
-@Job
+@Job (edu.dfci.cccb.mev.common.domain.jobs.r.R.class)
 @Inherited
 public @interface R {
 

@@ -16,6 +16,7 @@
 
 package edu.dfci.cccb.mev.cluster.domain;
 
+import static edu.dfci.cccb.mev.cluster.domain.Linkage.DEFAULT;
 import static javax.xml.bind.annotation.XmlAccessType.NONE;
 
 import javax.ws.rs.GET;
@@ -43,14 +44,14 @@ public class HierarchicalClusteringAnalysis <K, V> extends ClusteringAnalysisAda
   /**
    * Linkage criteria
    */
-  private @Parameter Linkage linkage;
+  private @Parameter Linkage linkage = DEFAULT;
 
   // TODO: define nodes
-  private @Result Object root;
+  private @Result Object root = null;
 
   @PUT
   @Path ("/linkage")
-  @XmlElement (name = "linkage")
+  @XmlElement (name = "linkage", required = false)
   public void set (Linkage linkage) {
     this.linkage = linkage;
   }

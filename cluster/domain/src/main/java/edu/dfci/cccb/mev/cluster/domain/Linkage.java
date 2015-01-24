@@ -65,4 +65,6 @@ public interface Linkage {
   @ToString
   @edu.dfci.cccb.mev.cluster.domain.annotation.Linkage ("ward")
   public static class Ward implements Linkage {}
+
+  public static final Linkage DEFAULT = new Average ();
 }

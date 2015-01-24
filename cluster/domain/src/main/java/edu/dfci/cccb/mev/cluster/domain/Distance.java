@@ -66,4 +66,6 @@ public interface Distance {
   @ToString
   @edu.dfci.cccb.mev.cluster.domain.annotation.Distance ("maximum")
   public static class Maximum implements Distance {}
+
+  public static final Distance DEFAULT = new Euclidean ();
 }

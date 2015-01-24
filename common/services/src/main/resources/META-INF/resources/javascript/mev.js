@@ -20,6 +20,51 @@
  * @author levk
  * @since CRYSTAL
  */
-define ('mev', [ 'angular' ], function (ng) {
-  return ng.module ('mev', []).value ('services-root-uri', "/services");
+define ('mev', [ 'angular', 'log', 'debug', 'info', 'warn', 'error' ], function (ng, log, debug, info, warn, error) {
+  var mev = ng.module ('mev', []);
+
+  mev.value ('services-root-uri', '/services');
+
+  mev.config ([ '$provide', function ($provide) {
+    $provide.decorator ('$log', [ function () {
+      return {
+        log : log,
+        debug : debug,
+        info : info,
+        warn : warn,
+        error : error
+      };
+    } ]);
+  } ]);
+
+//  mev.$component = function (name, inject, component, requires, binder) {
+//    component.$name = name;
+//    component.$inject = inject ? inject : [];
+//    component.$binder = binder ? binder : function (module) { return module.factory };
+//    component.$requires = requires ? requires : [];
+//    return component;
+//  }
+
+  mev.$module = function (name) {
+    mev.requires.push (name);
+    
+    var components = arguments.splice (1);
+    var module = ng.module (name, components.map (function (component) { return component.$requires }));
+
+    module.$component = function (name, inject, component, requires, binder) {
+      component.$name = name;
+      component.$inject = inject ? inject : [];
+      component.$binder = binder ? binder : function () { return module.factory };
+      component.$requires = requires ? requires : [];
+      return component;
+    };
+
+    components.forEach (function (component) {
+      component.$binder () (component.$name, component);
+    });
+
+    return module;
+  };
+
+  return mev;
 });

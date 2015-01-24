@@ -93,7 +93,7 @@
       <plugin>
         <groupId>edu.dfci.cccb</groupId>
         <artifactId>rserve-maven-plugin</artifactId>
-        <version>0.0.6</version>
+        <version>0.0.7</version>
         <configuration>
           <onInitialize>
             if (!requireNamespace ("devtools"))
@@ -104,14 +104,12 @@
 
             if (require ("raven"))
               raven (inspect (), fetch (), import (environment (NULL)), install (),
-                     base = file.path ("${basedir}", ".."), log = "debug",
-                     local = file.path ("${project.build.directory}", "raven"));
+                     base = file.path ("${basedir}", ".."), log = "info");
           </onInitialize>
           <onRequest>
             if (require ("raven"))
-              raven (base = file.path ("${basedir}", ".."),
-                     local = file.path ("${project.build.directory}", "raven"),
-                     log = "error");
+              raven (inspect(), fetch (), import (environment (NULL)),
+                     base = file.path ("${basedir}", ".."), log = "error");
           </onRequest>
         </configuration>
       </plugin>

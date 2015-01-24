@@ -43,13 +43,6 @@
       <version>${super-csv.version}</version>
     </dependency>
 
-    <!-- Google collections -->
-
-    <dependency>
-      <groupId>com.google.collections</groupId>
-      <artifactId>google-collections</artifactId>
-    </dependency>
-
   </dependencies>
 
   <build>
@@ -59,16 +52,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>com.github.searls</groupId>
-        <artifactId>jasmine-maven-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>com.github.timurstrekalov</groupId>
-        <artifactId>saga-maven-plugin</artifactId>
       </plugin>
 
     </plugins>

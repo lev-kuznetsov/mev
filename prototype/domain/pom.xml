@@ -19,8 +19,13 @@
     <!-- Rserve -->
 
     <dependency>
-      <groupId>net.rforge</groupId>
+      <groupId>org.nuiton.thirdparty</groupId>
       <artifactId>Rserve</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.nuiton.thirdparty</groupId>
+      <artifactId>REngine</artifactId>
     </dependency>
 
     <!-- Google+ -->
@@ -48,13 +53,6 @@
     <dependency>
       <groupId>com.google.inject.extensions</groupId>
       <artifactId>guice-throwingproviders</artifactId>
-    </dependency>
-
-    <!-- Google Collections -->
-
-    <dependency>
-      <groupId>com.google.collections</groupId>
-      <artifactId>google-collections</artifactId>
     </dependency>
 
     <!-- Jackson -->
@@ -143,6 +141,11 @@
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
     </dependency>
 
     <!-- Dependency Injection -->

@@ -15,47 +15,13 @@
  */
 
 /**
- * log4javascript logger
- * 
+ * Trace logging
+ *
  * @author levk
  * @since CRYSTAL
  */
-define ('log', [ 'log4js', 'underscore' ], function (log4js, _) {
-  function AppliedBrowserConsoleAppender () {}
-
-  AppliedBrowserConsoleAppender.prototype = new log4js.BrowserConsoleAppender ();
-  AppliedBrowserConsoleAppender.prototype.append = function (event) {
-    if (typeof console != "undefined") {
-      var message = this.getLayout ().format (event);
-      if (!(message instanceof Array)) message = [ messasge ];
-
-      try {
-        if (console.log && log4js.Level.TRACE.isGreaterOrEqual (event.level)) {
-          console.log.apply (console, message);
-        } else if (console.debug && log4js.Level.DEBUG.isGreaterOrEqual (event.level)) {
-          console.debug.apply (console, message);
-        } else if (console.info && log4js.Level.INFO.isGreaterOrEqual (event.level)) {
-          console.info.apply (console, message);
-        } else if (console.warn && log4js.Level.WARN.isGreaterOrEqual (event.level)) {
-          console.warn.apply (console, message);
-        } else if (console.error && log4js.Level.ERROR.isGreaterOrEqual (event.level)) {
-          console.error.apply (console, message);
-        } else if (console.log) console.log.apply (console, message);
-      } catch (error) {
-        alert ("Unable to log");
-      }
-    }
-  };
-  log4js.AppliedBrowserConsoleAppender = AppliedBrowserConsoleAppender;
-  var appender = new AppliedBrowserConsoleAppender ();
-  appender.setLayout (new log4js.NullLayout ());
-  appender.setThreshold (log4js.Level.ALL);
-
-  var logger = log4js.getLogger ("mev");
-  logger.addAppender (appender);
-  logger.setLevel (log4js.Level.ALL);
-
-  _.bindAll.apply (_, [ logger ].concat (_.functions (logger)));
-
-  return logger;
+define ('log', [ 'logger' ], function (logger) {
+  return function () {
+    logger.log.apply (logger.log, arguments);
+  }
 });

@@ -24,6 +24,8 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import edu.dfci.cccb.mev.common.domain.jobs.Dispatcher;
+
 /**
  * Job type meta annotation
  * 
@@ -34,4 +36,10 @@ import java.lang.annotation.Target;
 @Retention (RUNTIME)
 @Documented
 @Inherited
-public @interface Job {}
+public @interface Job {
+
+  /**
+   * Responsible for dispatching jobs of annotated type
+   */
+  Class<? extends Dispatcher> value ();
+}

@@ -17,7 +17,6 @@
 package edu.dfci.cccb.mev.dataset.domain.r;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 
 import edu.dfci.cccb.mev.common.domain.jobs.annotation.Parameter;
 import edu.dfci.cccb.mev.common.domain.jobs.r.R;
@@ -26,27 +25,19 @@ import edu.dfci.cccb.mev.dataset.domain.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AnalysisAdapter;
 
 /**
- * Common adapter for all R based analyses
- * 
  * @author levk
  * @since CRYSTAL
  */
-public abstract class RAnalysisAdapter <K, V> extends AnalysisAdapter {
+public class RAnalysisAdapter <K, V> extends AnalysisAdapter {
 
-  private @Inject Provider<R> provider;
+  private @Inject R dispatcher;
 
   private @Inject @Parameter Dataset<K, V> dataset;
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.domain.Analysis#run() */
   @Override
-  public final void run () throws AnalysisInvocationException {
-    try (R injector = provider.get ()) {
-      injector.inject (this);
-    } catch (RuntimeException e) {
-      throw e;
-    } catch (Exception e) {
-      throw new AnalysisInvocationException (e);
-    }
+  public void run () throws AnalysisInvocationException {
+    dispatcher.dispatch (this);
   }
 }
