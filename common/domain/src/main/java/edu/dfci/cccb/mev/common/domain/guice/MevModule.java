@@ -16,29 +16,16 @@
 
 package edu.dfci.cccb.mev.common.domain.guice;
 
-import static ch.lambdaj.Lambda.convert;
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
 import static com.google.inject.Key.get;
 import static com.google.inject.internal.Annotations.isBindingAnnotation;
-import static com.google.inject.name.Names.named;
-import static edu.dfci.cccb.mev.common.domain.guice.c3p0.PooledDataSourceProvider.DRIVER;
-import static edu.dfci.cccb.mev.common.domain.guice.c3p0.PooledDataSourceProvider.PASSWORD;
-import static edu.dfci.cccb.mev.common.domain.guice.c3p0.PooledDataSourceProvider.URL;
-import static edu.dfci.cccb.mev.common.domain.guice.c3p0.PooledDataSourceProvider.USER;
-import static java.util.Arrays.asList;
-import static java.util.concurrent.TimeUnit.MINUTES;
 
 import java.lang.annotation.Annotation;
-import java.net.InetSocketAddress;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Random;
-import java.util.concurrent.Executor;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.sql.DataSource;
 
@@ -49,8 +36,6 @@ import lombok.experimental.Accessors;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-
-import ch.lambdaj.function.convert.Converter;
 
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.databind.BeanProperty;
@@ -86,8 +71,8 @@ import edu.dfci.cccb.mev.common.domain.guice.jaxrs.ExceptionBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.JaxrsModule;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageReaderBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageWriterBinder;
+import edu.dfci.cccb.mev.common.domain.guice.rserve.RserveModule;
 import edu.dfci.cccb.mev.common.domain.guice.rserve.annotation.Rserve;
-import edu.dfci.cccb.mev.common.domain.jobs.r.R;
 import edu.dfci.cccb.mev.common.domain.mappers.MevExceptionMapper;
 import edu.dfci.cccb.mev.common.domain.messages.JacksonMessageHandler;
 
@@ -126,78 +111,13 @@ public class MevModule implements Module {
         binder.bind (Configuration.class)
               .annotatedWith (Persistence.class)
               .toInstance (new PropertiesConfiguration (MevModule.class.getResource (PERSISTENCE)));
-        class PersistenceConfigurationElementProvider implements Provider<String> {
-          private @Inject @Persistence Configuration configuration;
-          private final String key;
-
-          public PersistenceConfigurationElementProvider (String key) {
-            this.key = key;
-          }
-
-          @Override
-          public String get () {
-            return configuration.getString (key);
-          }
-        }
-        binder.bind (String.class)
-              .annotatedWith (named (DRIVER))
-              .toProvider (new PersistenceConfigurationElementProvider (DRIVER));
-        binder.bind (String.class)
-              .annotatedWith (named (URL))
-              .toProvider (new PersistenceConfigurationElementProvider (URL));
-        binder.bind (String.class)
-              .annotatedWith (named (USER))
-              .toProvider (new PersistenceConfigurationElementProvider (USER));
-        binder.bind (String.class)
-              .annotatedWith (named (PASSWORD))
-              .toProvider (new PersistenceConfigurationElementProvider (PASSWORD));
         binder.bind (DataSource.class).toProvider (new PooledDataSourceProvider ()).in (Singleton.class);
 
         // Rserve
         binder.bind (Configuration.class)
               .annotatedWith (Rserve.class)
               .toInstance (new PropertiesConfiguration (MevModule.class.getResource (RSERVE)));
-        binder.bind (InetSocketAddress.class)
-              .annotatedWith (Rserve.class)
-              .toProvider (new Provider<InetSocketAddress> () {
-                private InetSocketAddress[] hosts;
-                private @Inject Random random;
-
-                @Inject
-                private void configure (@Rserve Configuration configuration) {
-                  hosts = convert (configuration.getList ("rserve.host", asList ("localhost:6311")),
-                                   new Converter<String, InetSocketAddress> () {
-                                     @Override
-                                     public InetSocketAddress convert (String from) {
-                                       String[] split = from.split (":");
-                                       if (split.length > 2)
-                                         throw new IllegalArgumentException ("Bad syntax for rserve host "
-                                                                             + from);
-                                       int port = split.length < 2 ? 6311 : Integer.valueOf (split[1]);
-                                       return new InetSocketAddress (split[0], port);
-                                     }
-                                   }).toArray (new InetSocketAddress[0]);
-                }
-
-                @Override
-                public InetSocketAddress get () {
-                  return hosts[random.nextInt (hosts.length)];
-                }
-              });
-        binder.bind (Executor.class).annotatedWith (Rserve.class).toProvider (new Provider<Executor> () {
-          private @Inject @Rserve Configuration configuration;
-
-          @Override
-          public Executor get () {
-            int max = configuration.getInt ("rserve.maximum.concurrent.jobs",
-                                            configuration.getList ("rserve.host", asList ("localhost:6311"))
-                                                         .size () + 1);
-            return new ThreadPoolExecutor (0, max,
-                                           5, MINUTES,
-                                           new LinkedBlockingQueue<Runnable> ());
-          }
-        }).in (Singleton.class);
-        binder.bind (R.class).in (Singleton.class);
+        binder.install (new RserveModule ());
 
         // JAX-RS
         binder.install (new JaxrsModule () {
