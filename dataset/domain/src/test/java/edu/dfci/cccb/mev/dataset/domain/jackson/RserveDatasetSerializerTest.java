@@ -119,8 +119,6 @@ public class RserveDatasetSerializerTest {
     new RserveDatasetSerializer<String, Double> ().serialize (dataset,
                                                               mapper.getFactory ().createGenerator (buffer),
                                                               mapper.getSerializerProvider ());
-    System.out.println (buffer);
-
     assertEquals ("[{c1:1.0,c2:2.0,c3:3.0,c4:4.0,c5:5.0,c6:6.0,_row:'r1'},"
                   + "{c1:2.0,c2:4.0,c3:6.0,c4:8.0,c5:10.0,c6:12.0,_row:'r2'}"
                   + ",{c1:3.0,c2:6.0,c3:9.0,c4:12.0,c5:15.0,c6:18.0,_row:'r3'}"

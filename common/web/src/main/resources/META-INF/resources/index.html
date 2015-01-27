@@ -3,11 +3,15 @@
 <head>
 <title>MeV</title>
 
-<link rel="stylesheet"
-  href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.0.2/css/foundation.css">
+<link
+  rel="stylesheet"
+  href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.0.2/css/foundation.css"
+>
 
-<script type="text/javascript"
-  src="/webjars/requirejs/2.1.11/require.js"></script>
+<script
+  type="text/javascript"
+  src="/webjars/requirejs/2.1.11/require.js"
+></script>
 <script>
   require ([ '/require-configuration' ], function (configuration) {
     require.config (configuration);
@@ -25,14 +29,14 @@
   <div class="row">
     <div class="small-12.columns">
       <div ng-controller="navigation-controller">
-        <tabset vertical="true">
-          <tab heading="Static title">Static content</tab>
-          <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active"> {{tab.content}} </tab>
-          <tab select="alertMe()">
-            <tab-heading> <i class="fa fa-bell"></i> Alert! </tab-heading>
-            I've got an HTML heading, and a select callback. Pretty cool!
-          </tab>
-        </tabset>
+        <tabset vertical="true"> <tab heading="Static title">Static
+        content</tab> <tab
+          ng-repeat="tab in tabs"
+          heading="{{tab.title}}"
+          active="tab.active"
+        > {{tab.content}} </tab> <tab select="alertMe()"> <tab-heading>
+        <i class="fa fa-bell"></i> Alert! </tab-heading> I've got an HTML heading, and
+        a select callback. Pretty cool! </tab> </tabset>
 
         <hr />
       </div>
