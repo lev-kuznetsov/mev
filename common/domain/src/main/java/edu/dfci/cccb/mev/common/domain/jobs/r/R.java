@@ -22,6 +22,7 @@ import static java.lang.Math.abs;
 import static java.util.UUID.randomUUID;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -29,6 +30,7 @@ import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.SocketTimeoutException;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Executor;
@@ -46,6 +48,7 @@ import org.rosuda.REngine.Rserve.RSession;
 import org.rosuda.REngine.Rserve.RserveException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -70,6 +73,7 @@ public class R implements Dispatcher {
   private @Inject @Rserve Provider<InetSocketAddress> host;
   private @Inject @Rserve Executor executor;
   private @Inject ObjectMapper mapper;
+  private @Inject @Rserve Set<JsonSerializer<?>> serializers;
   private @Inject Injector injector;
 
   /* (non-Javadoc)
@@ -86,14 +90,30 @@ public class R implements Dispatcher {
     });
   }
 
-  @SneakyThrows (JsonProcessingException.class)
+  @SuppressWarnings ("unchecked")
+  @SneakyThrows ({ JsonProcessingException.class, IOException.class })
   private StringBuffer define (String key, Object value, Set<String> parameterNames, Object job) {
     if (!parameterNames.add (key))
       throw new IllegalArgumentException ("Duplicate parameter key " + key);
+    JsonSerializer<Object> custom = null;
+    if (value != null && serializers != null)
+      for (Iterator<JsonSerializer<?>> serializers = this.serializers.iterator (); serializers.hasNext ();) {
+        JsonSerializer<?> serializer = serializers.next ();
+        if (serializer.handledType ().isAssignableFrom (value.getClass ())) {
+          custom = (JsonSerializer<Object>) serializer;
+          break;
+        }
+      }
+    StringWriter buffer = new StringWriter ();
+    if (custom != null)
+      custom.serialize (value,
+                        mapper.getFactory ().createGenerator (buffer),
+                        mapper.getSerializerProvider ());
+    String json = (custom == null ? mapper.writeValueAsString (value) : buffer.toString ()).replaceAll ("\"", "\\\\\"");
     return new StringBuffer ("define ('").append (key)
                                          .append ("', function (fromJson) { ")
                                          .append ("fromJson (\"")
-                                         .append (mapper.writeValueAsString (value))
+                                         .append (json)
                                          .append ("\")")
                                          .append (" }, scope = singleton, binder = binder); ");
   }
@@ -164,6 +184,7 @@ public class R implements Dispatcher {
             connection = session.attach ();
             break;
           } catch (RserveException e) {
+            log.error (e);
             if (!(e.getCause () instanceof SocketTimeoutException))
               throw e;
           }
@@ -246,7 +267,7 @@ public class R implements Dispatcher {
           }
         else
           log.error (new UnsupportedOperationException ("Unacceptable response class, response must inherit from result-json "
-                                                        + "or try-error actual REXP "
+                                                        + "or try-error, actual REXP "
                                                         + result.getClass ().getName () + ":" + result.toDebugString ()));
       }
     } catch (RserveException | InvocationTargetException e) {

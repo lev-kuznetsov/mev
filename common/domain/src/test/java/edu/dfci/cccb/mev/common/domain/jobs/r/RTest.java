@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -36,8 +37,11 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
+import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.Multibinder;
 
 import edu.dfci.cccb.mev.common.domain.guice.rserve.annotation.Rserve;
 import edu.dfci.cccb.mev.common.domain.jobs.Dispatcher;
@@ -55,6 +59,7 @@ public class RTest {
       bind (Job.class);
       bind (InetSocketAddress.class).annotatedWith (Rserve.class)
                                     .toInstance (new InetSocketAddress ("localhost", 6311));
+      Multibinder.newSetBinder (binder (), new TypeLiteral<JsonSerializer<?>> () {}, Rserve.class);
       ObjectMapper m = new ObjectMapper ();
       m.setAnnotationIntrospector (new JaxbAnnotationIntrospector (m.getTypeFactory ()));
       bind (ObjectMapper.class).toInstance (m);
@@ -77,6 +82,7 @@ public class RTest {
     @Parameter private int param = 1;
     @Result private Res result;
     private Map<String, Double> result2;
+    private final CountDownLatch c = new CountDownLatch (1);
 
     @Parameter
     private int param2 () {
@@ -86,12 +92,14 @@ public class RTest {
     @Callback
     private void callback (@Result Map<String, Double> result) {
       result2 = result;
+      c.countDown ();
     }
   }
 
   @Test
-  public void test (Job job, R r) {
+  public void test (Job job, R r) throws Exception {
     r.dispatch (job);
+    job.c.await ();
     assertEquals (job.result.one, 4, .00001);
     assertEquals (job.result.two, 3, .00001);
     assertEquals (job.result2.get ("one"), 4, .00001);

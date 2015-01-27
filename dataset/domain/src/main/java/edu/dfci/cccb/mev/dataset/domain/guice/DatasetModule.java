@@ -42,6 +42,7 @@ import org.supercsv.prefs.CsvPreference.Builder;
 
 import ch.lambdaj.function.convert.Converter;
 
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.google.inject.Binder;
 import com.google.inject.Provides;
 import com.google.inject.TypeLiteral;
@@ -52,10 +53,12 @@ import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.JaxrsModule;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageReaderBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageWriterBinder;
+import edu.dfci.cccb.mev.common.domain.guice.rserve.annotation.Rserve;
 import edu.dfci.cccb.mev.dataset.domain.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.annotation.NameOf;
+import edu.dfci.cccb.mev.dataset.domain.jackson.RserveDatasetSerializer;
 import edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler;
 
 /**
@@ -193,6 +196,9 @@ public class DatasetModule extends MevModule {
 
       @Override
       public void configure (Binder binder) {
+        newSetBinder (binder, new TypeLiteral<JsonSerializer<?>> () {}, Rserve.class).addBinding ()
+                                                                                     .toInstance (new RserveDatasetSerializer<> ());
+
         configureCommentExpressions (binder);
         configureEndOfLineCharacters (binder);
 
