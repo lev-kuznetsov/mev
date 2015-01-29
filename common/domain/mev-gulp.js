@@ -115,9 +115,12 @@ var requireTestConfigBuilder = function (gulp) {
         gutil.log("Creating require test.")
         fs.readFile('./target/require.shims', function (err, data) {
             if (!err) {
-            
+
                 gutil.log("No error in reading require shims.")
-                var buffer = new Buffer(head + data.toString() + footer)
+
+                var bowerJson = require('./bower.json')
+                var bowerShims = "shim:" + JSON.stringify(bowerJson.shim) + ","
+                var buffer = new Buffer(head + data.toString() + bowerShims + footer)
                 mkdirp('./target', {}, function () {
                     gutil.log("Writing test main.")
                     fs.writeFile('./target/require.test.main.js',buffer,function(){
@@ -288,7 +291,7 @@ function recursePkgMain(package) {
                 
             } else {
                 localMain = {
-                    main: key + '/' + 'js/' + currentMeta.name + '.js',
+                    main: key + '/' + 'js/' + currentMeta.name,
                     package: key,
                     shim: undefined
                 }

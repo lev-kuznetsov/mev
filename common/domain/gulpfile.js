@@ -75,7 +75,7 @@ gulp.task('bdd',['prepare'], function (done) {
     var karma = require('karma').server;
     
     karma.start({
-        configFile: __dirname + '/src/test/js/karma.conf.js',
+        configFile: __dirname + '/target/karma.conf.js',
         singleRun: false
     }, done);
     
