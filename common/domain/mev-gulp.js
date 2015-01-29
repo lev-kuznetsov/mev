@@ -271,15 +271,27 @@ function recursePkgMain(package) {
                 .push(localMain)
         } else {
 
-            var main = package.dependencies[key].pkgMeta.main
-
-            var cleanMain = (main.indexOf('./') >= 0) ?
-                main.split('./')[1] : main
-
-            var localMain = {
-                main: key + '/' + cleanMain.split('.js')[0],
-                package: key,
-                shim: undefined
+            var currentMeta = package.dependencies[key].pkgMeta
+            
+            var localMain = {}
+            
+            if (typeof currentMeta['main'] != 'undefined'){
+                
+                var cleanMain = (currentMeta.main.indexOf('./') >= 0) ?
+                    currentMeta.main.split('./')[1] : currentMeta.main
+                
+                localMain = {
+                    main: key + '/' + cleanMain.split('.js')[0],
+                    package: key,
+                    shim: undefined
+                }
+                
+            } else {
+                localMain = {
+                    main: key + '/' + 'js/' + currentMeta.name + '.js',
+                    package: key,
+                    shim: undefined
+                }
             }
             localMains
                 .push(localMain)
