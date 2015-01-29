@@ -20,7 +20,7 @@
  * @author levk
  * @since CRYSTAL
  */
-define ('warn', [ './appender' ], function (log) {
+define ([ './appender' ], function (log) {
   return function () {
     log.warn.apply (log.warn, arguments);
   }

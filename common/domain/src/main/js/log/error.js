@@ -20,7 +20,7 @@
  * @author levk
  * @since CRYSTAL
  */
-define ('error', [ './appender' ], function (log) {
+define ([ './appender' ], function (log) {
   return function () {
     log.error.apply (log.error, arguments);
   }

@@ -1,15 +1,17 @@
 define ([ './appender' ], function (log) {
   describe ('Browser console log4js appender', function () {
-    if (typeof window.console == "undefined") window.console = {
-      error : function () {},
-      warn : function () {},
-      info : function () {},
-      debug : function () {},
-      log : function () {}
-    };
+    if (typeof window.console == "undefined") {
+        console = {
+          error : function () {},
+          warn : function () {},
+          info : function () {},
+          debug : function () {},
+          log : function () {}
+        };
+    }
 
     it ("Should log to error", function () {
-      spyOn (console, 'error');
+      spyOn (window.console, 'error');
       log.error ("error");
       expect (console.error).toHaveBeenCalled ();
       expect (console.error).toHaveBeenCalledWith ("error");
