@@ -133,6 +133,13 @@ gulp.task('build', [], function(done){
     }
     
     var build = function(err){
+
+        if(err){
+            gutil.log("Error in project shim building.")
+            throw err
+            return
+        }
+
         async.each(projects['modules'], addToShims, function(err){
             if (!err){
                 
