@@ -29,13 +29,13 @@
     "log4javascript": "~1.4.9"
   },
   "shim": {
-    "log4js": {
+    "log4javascript": {
       "exports": "log4javascript"
     },
     "ng": {
       "exports": "angular"
     },
-    "_": {
+    "underscore": {
       "exports": "_"
     }
   }
