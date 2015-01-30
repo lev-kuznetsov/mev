@@ -235,7 +235,7 @@ function karmaConfig() {
 
         preprocessors: {},
 
-        reporters: ['dots'],
+        reporters: ['mocha'],
 
         // web server port
         port: 3000,
