@@ -178,7 +178,7 @@ gulp.task('loadSubs', function(done){
 
       gutil.log("Beginning loading for " + project.project)
 
-      execute('npm install', {cwd: cwd},
+      execute('npm install --force', {cwd: cwd},
       function(err, stdout, stderr){
           gutil.log(stdout.toString('ascii'))
 
