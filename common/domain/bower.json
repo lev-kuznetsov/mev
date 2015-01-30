@@ -19,23 +19,23 @@
     "src/main/resources",
     "src/test",
     "pom.xml",
-    "raven.R"
+    "raven.R",
     "node_modules",
     "bower_components"
   ],
   "dependencies": {
     "requirejs": "~2.1.15",
-    "log4javascript": "~1.4.9",
-    "underscore": "~1.7.0"
+    "underscore": "~1.7.0",
+    "log4javascript": "~1.4.9"
   },
   "shim": {
-    "log4js": {
+    "log4javascript": {
       "exports": "log4javascript"
-    }
+    },
     "ng": {
       "exports": "angular"
-    }
-    "_": {
+    },
+    "underscore": {
       "exports": "_"
     }
   }

@@ -1,0 +1,3 @@
+{
+  "modules":[{"project":"mev-common-domain", "directory":"./common/domain"}]
+}

@@ -20,7 +20,7 @@
  * @author levk
  * @since CRYSTAL
  */
-define ('debug', [ './appender' ], function (log) {
+define ([ './appender' ], function (log) {
   return function () {
     log.debug.apply (log.debug, arguments);
   }

@@ -20,7 +20,7 @@
  * @author levk
  * @since CRYSTAL
  */
-define ('info', [ './appender' ], function (log) {
+define ([ './appender' ], function (log) {
   return function () {
     log.info.apply (log.info, arguments);
   }
