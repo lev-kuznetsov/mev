@@ -20,7 +20,7 @@
  * @author levk
  * @since CRYSTAL
  */
-define ('mev', [ 'ng', './log/log', './log/debug', './log/info', './log/warn', './log/error' ], function (ng, t, d, i, w, e) {
+define ('mev', [ 'angular', './log/log', './log/debug', './log/info', './log/warn', './log/error' ], function (ng, t, d, i, w, e) {
   return ng.module ('mev', []).config ([ '$provide', function ($provide) {
     $provide.decorator ('$log', [ function () {
       return {

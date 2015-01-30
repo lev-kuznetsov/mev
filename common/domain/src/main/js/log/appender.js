@@ -20,34 +20,34 @@
  * @author levk
  * @since CRYSTAL
  */
-define ([ 'log4javascript', 'underscore' ], function (log4js, _) {
+define ([ 'log4javascript', 'underscore' ], function (l4js, _) {
   function AppliedBrowserConsoleAppender () {}
 
-  AppliedBrowserConsoleAppender.prototype = new log4js.BrowserConsoleAppender ();
+  AppliedBrowserConsoleAppender.prototype = new l4js.BrowserConsoleAppender ();
   AppliedBrowserConsoleAppender.prototype.append = function (event) {
     if (typeof console != "undefined") {
       var message = this.getLayout ().format (event);
       if (!(message instanceof Array)) message = [ messasge ];
 
       try {
-        if (console.log && log4js.Level.TRACE.isGreaterOrEqual (event.level)) console.log.apply (console, message);
-        else if (console.debug && log4js.Level.DEBUG.isGreaterOrEqual (event.level)) console.debug.apply (console, message);
-        else if (console.info && log4js.Level.INFO.isGreaterOrEqual (event.level)) console.info.apply (console, message);
-        else if (console.warn && log4js.Level.WARN.isGreaterOrEqual (event.level)) console.warn.apply (console, message);
-        else if (console.error && log4js.Level.ERROR.isGreaterOrEqual (event.level)) console.error.apply (console, message);
+        if (l4js.Level.TRACE.isGreaterOrEqual (event.level)) console.log.apply (console, message);
+        else if (l4js.Level.DEBUG.isGreaterOrEqual (event.level)) console.debug.apply (console, message);
+        else if (l4js.Level.INFO.isGreaterOrEqual (event.level)) console.info.apply (console, message);
+        else if (l4js.Level.WARN.isGreaterOrEqual (event.level)) console.warn.apply (console, message);
+        else if (l4js.Level.ERROR.isGreaterOrEqual (event.level)) console.error.apply (console, message);
       } catch (error) {
         alert ("Unable to log");
       }
     }
   };
-  log4js.AppliedBrowserConsoleAppender = AppliedBrowserConsoleAppender;
+  l4js.AppliedBrowserConsoleAppender = AppliedBrowserConsoleAppender;
   var appender = new AppliedBrowserConsoleAppender ();
-  appender.setLayout (new log4js.NullLayout ());
-  appender.setThreshold (log4js.Level.ALL);
+  appender.setLayout (new l4js.NullLayout ());
+  appender.setThreshold (l4js.Level.ALL);
 
-  var logger = log4js.getLogger ("mev");
+  var logger = l4js.getLogger ("mev");
   logger.addAppender (appender);
-  logger.setLevel (log4js.Level.ALL);
+  logger.setLevel (l4js.Level.ALL);
 
   _.bindAll.apply (_, [ logger ].concat (_.functions (logger)));
 
