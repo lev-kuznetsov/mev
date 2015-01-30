@@ -9,6 +9,9 @@
 # OUTDIR/pca_result.txt
 # OUTDIR/pca_sdev.txt
 #
+## Output format
+# allow user to select 2 to 3 PC# to plot on scatter plot
+# Differentiate different sample groups by color
 
 
 
