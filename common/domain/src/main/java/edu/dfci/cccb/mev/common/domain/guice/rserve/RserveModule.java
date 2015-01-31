@@ -18,12 +18,13 @@ package edu.dfci.cccb.mev.common.domain.guice.rserve;
 
 import static ch.lambdaj.Lambda.convert;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
+import static java.lang.Integer.valueOf;
 import static java.util.Arrays.asList;
 import static java.util.concurrent.TimeUnit.MINUTES;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.net.InetSocketAddress;
-import java.util.Random;
+import java.util.Iterator;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
@@ -39,6 +40,7 @@ import org.apache.commons.configuration.Configuration;
 
 import ch.lambdaj.function.convert.Converter;
 
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.google.inject.Binder;
 import com.google.inject.Module;
@@ -46,6 +48,8 @@ import com.google.inject.TypeLiteral;
 
 import edu.dfci.cccb.mev.common.domain.guice.rserve.annotation.Rserve;
 import edu.dfci.cccb.mev.common.domain.jobs.r.R;
+import edu.dfci.cccb.mev.common.domain.jobs.r.RserveDoubleDeserializer;
+import edu.dfci.cccb.mev.common.domain.jobs.r.RserveDoubleSerializer;
 
 /**
  * @author levk
@@ -62,33 +66,56 @@ public class RserveModule implements Module {
    * @see com.google.inject.Module#configure(com.google.inject.Binder) */
   @Override
   public void configure (Binder binder) {
-    newSetBinder (binder, new TypeLiteral<JsonSerializer<?>> () {}, Rserve.class);
+    newSetBinder (binder, new TypeLiteral<JsonSerializer<?>> () {}, Rserve.class).addBinding ()
+                                                                                 .toInstance (new RserveDoubleSerializer ());
+
+    newSetBinder (binder, new TypeLiteral<JsonDeserializer<?>> () {}, Rserve.class).addBinding ()
+                                                                                   .toInstance (new RserveDoubleDeserializer ());
 
     binder.bind (InetSocketAddress.class)
           .annotatedWith (Rserve.class)
           .toProvider (new Provider<InetSocketAddress> () {
-            private InetSocketAddress[] hosts;
-            private @Inject Random random;
+            private Iterator<InetSocketAddress> hosts;
 
             @Inject
-            private void configure (@Rserve Configuration configuration) {
-              hosts = convert (configuration.getList (HOSTS, asList ("localhost:6311")),
-                               new Converter<String, InetSocketAddress> () {
-                                 @Override
-                                 public InetSocketAddress convert (String from) {
-                                   String[] split = from.split (":");
-                                   if (split.length > 2)
-                                     throw new IllegalArgumentException ("Bad syntax for rserve host "
-                                                                         + from);
-                                   int port = split.length < 2 ? 6311 : Integer.valueOf (split[1]);
-                                   return new InetSocketAddress (split[0], port);
-                                 }
-                               }).toArray (new InetSocketAddress[0]);
+            private void configure (final @Rserve Configuration configuration) {
+              hosts = new Iterator<InetSocketAddress> () {
+                private final InetSocketAddress[] hosts = convert (configuration.getList (HOSTS,
+                                                                                          asList ("localhost:6311")),
+                                                                   new Converter<String, InetSocketAddress> () {
+                                                                     @Override
+                                                                     public InetSocketAddress convert (String from) {
+                                                                       String[] split = from.split (":");
+                                                                       if (split.length > 2)
+                                                                         throw new IllegalArgumentException ("Bad syntax for rserve host "
+                                                                                                             + from);
+                                                                       int port = split.length < 2 ? 6311
+                                                                                                  : valueOf (split[1]);
+                                                                       return new InetSocketAddress (split[0], port);
+                                                                     }
+                                                                   }).toArray (new InetSocketAddress[0]);
+                private int index = 0;
+
+                @Override
+                public boolean hasNext () {
+                  return true;
+                }
+
+                @Override
+                public InetSocketAddress next () {
+                  if (index >= hosts.length)
+                    index = 0;
+                  return hosts[index++];
+                }
+
+                @Override
+                public void remove () {}
+              };
             }
 
             @Override
             public InetSocketAddress get () {
-              return hosts[random.nextInt (hosts.length)];
+              return hosts.next ();
             }
           });
 

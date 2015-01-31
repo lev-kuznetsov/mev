@@ -16,13 +16,14 @@
 
 package edu.dfci.cccb.mev.common.domain.jobs.r;
 
+import static com.fasterxml.jackson.databind.AnnotationIntrospector.nopInstance;
+import static com.fasterxml.jackson.databind.AnnotationIntrospector.pair;
 import static com.google.inject.Key.get;
 import static com.google.inject.internal.Annotations.findBindingAnnotation;
 import static java.lang.Math.abs;
 import static java.util.UUID.randomUUID;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -30,7 +31,6 @@ import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.SocketTimeoutException;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Executor;
@@ -48,8 +48,11 @@ import org.rosuda.REngine.Rserve.RSession;
 import org.rosuda.REngine.Rserve.RserveException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.AnnotationIntrospector;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.internal.Errors;
@@ -72,9 +75,36 @@ public class R implements Dispatcher {
 
   private @Inject @Rserve Provider<InetSocketAddress> host;
   private @Inject @Rserve Executor executor;
-  private @Inject ObjectMapper mapper;
-  private @Inject @Rserve Set<JsonSerializer<?>> serializers;
+  private ObjectMapper mapper;
   private @Inject Injector injector;
+
+  // FIXME: remove annotation introspector from manual injection once
+  // https://github.com/FasterXML/jackson-databind/issues/692 is fixed
+  @Inject
+  private void configureTranslationMapper (ObjectMapper mapper,
+                                           final Set<AnnotationIntrospector> introspectors,
+                                           final @Rserve Set<JsonSerializer<?>> serializers,
+                                           final @Rserve Set<JsonDeserializer<?>> deserializers) {
+    AnnotationIntrospector aggregate = nopInstance ();
+    for (AnnotationIntrospector current : introspectors)
+      aggregate = pair (aggregate, current);
+
+    this.mapper = mapper.copy ().registerModule (new SimpleModule () {
+      private static final long serialVersionUID = 1L;
+
+      {
+        for (JsonSerializer<?> serializer : serializers)
+          addSerializer (serializer);
+        for (JsonDeserializer<?> deserializer : deserializers)
+          addDeserializer (deserializer);
+      }
+
+      @SuppressWarnings ("unchecked")
+      private <T> void addDeserializer (JsonDeserializer<T> deserializer) {
+        addDeserializer ((Class<T>) deserializer.handledType (), deserializer);
+      }
+    }).setAnnotationIntrospector (aggregate);
+  }
 
   /* (non-Javadoc)
    * @see
@@ -90,30 +120,14 @@ public class R implements Dispatcher {
     });
   }
 
-  @SuppressWarnings ("unchecked")
-  @SneakyThrows ({ JsonProcessingException.class, IOException.class })
+  @SneakyThrows (JsonProcessingException.class)
   private StringBuffer define (String key, Object value, Set<String> parameterNames, Object job) {
     if (!parameterNames.add (key))
       throw new IllegalArgumentException ("Duplicate parameter key " + key);
-    JsonSerializer<Object> custom = null;
-    if (value != null && serializers != null)
-      for (Iterator<JsonSerializer<?>> serializers = this.serializers.iterator (); serializers.hasNext ();) {
-        JsonSerializer<?> serializer = serializers.next ();
-        if (serializer.handledType ().isAssignableFrom (value.getClass ())) {
-          custom = (JsonSerializer<Object>) serializer;
-          break;
-        }
-      }
-    StringWriter buffer = new StringWriter ();
-    if (custom != null)
-      custom.serialize (value,
-                        mapper.getFactory ().createGenerator (buffer),
-                        mapper.getSerializerProvider ());
-    String json = (custom == null ? mapper.writeValueAsString (value) : buffer.toString ()).replaceAll ("\"", "\\\\\"");
     return new StringBuffer ("define ('").append (key)
                                          .append ("', function (fromJson) { ")
                                          .append ("fromJson (\"")
-                                         .append (json)
+                                         .append (mapper.writeValueAsString (value).replaceAll ("\"", "\\\\\""))
                                          .append ("\")")
                                          .append (" }, scope = singleton, binder = binder); ");
   }

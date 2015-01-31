@@ -19,7 +19,7 @@ package edu.dfci.cccb.mev.dataset.domain.jackson;
 import static edu.dfci.cccb.mev.dataset.domain.prototype.AnalysisAdapter.analyses;
 import static edu.dfci.cccb.mev.dataset.domain.prototype.DimensionAdapter.dimensions;
 import static java.lang.Double.valueOf;
-import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Iterator;
@@ -56,7 +56,7 @@ public class IntegratedRserveDatasetSerializerTest {
     }
   }
 
-  @R ("function (dataset) dataset[2,2]")
+  @R ("function (dataset) class (dataset)")
   public static class Ds {
     private @Parameter Dataset<String, Double> dataset;
     private final CountDownLatch c = new CountDownLatch (1);
@@ -101,8 +101,7 @@ public class IntegratedRserveDatasetSerializerTest {
                                             @Override
                                             public Iterator<Value<String, Double>> iterator () {
                                               return new Iterator<Value<String, Double>> () {
-                                                private final Iterator<Map<String, String>> coords =
-                                                                                                     coordinates.iterator ();
+                                                private Iterator<Map<String, String>> coords = coordinates.iterator ();
 
                                                 @Override
                                                 public boolean hasNext () {
@@ -123,7 +122,7 @@ public class IntegratedRserveDatasetSerializerTest {
                                       });
     }
 
-    private @Result double result;
+    private @Result String result;
 
     @Callback
     public void release () {
@@ -135,6 +134,6 @@ public class IntegratedRserveDatasetSerializerTest {
   public void test (edu.dfci.cccb.mev.common.domain.jobs.r.R r, Ds ds) throws Exception {
     r.dispatch (ds);
     ds.c.await ();
-    assertThat (ds.result, closeTo (4, .0001));
+    assertThat (ds.result, is ("data.frame"));
   }
 }

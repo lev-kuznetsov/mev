@@ -68,7 +68,7 @@
     <underscorejs.version>1.6.0-1</underscorejs.version>
     <log4javascript.version>1.4.5</log4javascript.version>
 
-    <jackson.version>2.3.0</jackson.version>
+    <jackson.version>2.5.0</jackson.version>
     <guava.version>16.0.1</guava.version>
 
     <mockito.version>1.9.5</mockito.version>

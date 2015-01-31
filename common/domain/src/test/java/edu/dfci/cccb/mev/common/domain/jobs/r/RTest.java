@@ -16,13 +16,12 @@
 
 package edu.dfci.cccb.mev.common.domain.jobs.r;
 
-import static org.junit.Assert.assertEquals;
+import static java.lang.Double.NaN;
+import static java.lang.Double.*;
+import static org.junit.Assert.*;
 
-import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -37,13 +36,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
-import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.Multibinder;
-
-import edu.dfci.cccb.mev.common.domain.guice.rserve.annotation.Rserve;
+import edu.dfci.cccb.mev.common.domain.guice.MevModule;
 import edu.dfci.cccb.mev.common.domain.jobs.Dispatcher;
 import edu.dfci.cccb.mev.common.domain.jobs.annotation.Callback;
 import edu.dfci.cccb.mev.common.domain.jobs.annotation.Parameter;
@@ -57,14 +50,8 @@ public class RTest {
     @Override
     protected void configureTest () {
       bind (Job.class);
-      bind (InetSocketAddress.class).annotatedWith (Rserve.class)
-                                    .toInstance (new InetSocketAddress ("localhost", 6311));
-      Multibinder.newSetBinder (binder (), new TypeLiteral<JsonSerializer<?>> () {}, Rserve.class);
-      ObjectMapper m = new ObjectMapper ();
-      m.setAnnotationIntrospector (new JaxbAnnotationIntrospector (m.getTypeFactory ()));
-      bind (ObjectMapper.class).toInstance (m);
-      bind (Executor.class).annotatedWith (Rserve.class).toInstance (Executors.newSingleThreadExecutor ());
-      bind (R.class);
+      bind (J2.class);
+      install (new MevModule ());
     }
   }
 
@@ -97,12 +84,33 @@ public class RTest {
   }
 
   @Test
-  public void test (Job job, R r) throws Exception {
+  public void standardValues (Job job, R r) throws Exception {
     r.dispatch (job);
     job.c.await ();
     assertEquals (job.result.one, 4, .00001);
     assertEquals (job.result.two, 3, .00001);
     assertEquals (job.result2.get ("one"), 4, .00001);
     assertEquals (job.result2.get ("two"), 3, .00001);
+  }
+
+  @edu.dfci.cccb.mev.common.domain.jobs.r.annotation.R ("function (l) list (i=l[1],o=l[2],n=l[3])")
+  public static class J2 {
+    private final CountDownLatch c = new CountDownLatch (1);
+    private @Parameter Double[] l = new Double[] { POSITIVE_INFINITY, null, NaN };
+    private @Result Map<String, Double> r;
+
+    @Callback
+    private void cb () {
+      c.countDown ();
+    }
+  }
+
+  @Test
+  public void specialValues (J2 j2, R r) throws Exception {
+    r.dispatch (j2);
+    j2.c.await ();
+    assertTrue (isInfinite (j2.r.get ("i")));
+    assertTrue (j2.r.get ("o") == null && j2.r.containsKey ("o"));
+    assertTrue (isNaN (j2.r.get ("n")));
   }
 }
