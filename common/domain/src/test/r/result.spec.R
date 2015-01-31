@@ -17,12 +17,6 @@ suite ('Result transimssion facilities', function () {
       suite ('Deserialization', function () {
         it ('Should have injectable fromJson function', function ()
           expect (is.function (fromJson)));
-
-        it ('Should construct unnamed list', function ()
-          expect (list (1, 'a') == toJson ("[1,\"a\"]")));
-
-        it ('Should construct named list', function ()
-          expect (list (q = 1, w = 'a') == toJson ("{\"q\":1,\"w\":\"a\"}")));
       });
     }));
   suite ('Result classification', function ()
