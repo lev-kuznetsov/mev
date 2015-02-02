@@ -16,8 +16,9 @@
 
 package edu.dfci.cccb.mev.cluster.domain;
 
-import static edu.dfci.cccb.mev.cluster.domain.Distance.DEFAULT;
 import static javax.xml.bind.annotation.XmlAccessType.NONE;
+
+import java.util.Collection;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -27,33 +28,40 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import edu.dfci.cccb.mev.common.domain.jobs.annotation.Parameter;
-import edu.dfci.cccb.mev.dataset.domain.r.RAnalysisAdapter;
+import edu.dfci.cccb.mev.common.domain.jobs.annotation.Result;
+import edu.dfci.cccb.mev.common.domain.jobs.r.annotation.R;
+import edu.dfci.cccb.mev.dataset.domain.annotation.Analysis;
 
 /**
- * Common clustering API
- * 
  * @author levk
  * @since CRYSTAL
  */
+@Analysis ("kmeans")
 @XmlRootElement
 @XmlAccessorType (NONE)
-public abstract class ClusteringAnalysisAdapter <K, V> extends RAnalysisAdapter<K, V> {
+@R ("function (kmeans, dataset, distance, k) kmeans (dataset, distance, k)")
+public class KMeans <K, V> extends ClusteringAnalysisAdapter<K, V> {
 
-  /**
-   * Distance metric
-   */
-  private @Parameter Distance distance = DEFAULT;
+  private @Parameter int k;
 
-  @Path ("/distance")
+  private @Result Collection<K[]> clusters;
+
   @PUT
-  @XmlElement (name = "distance", required = false)
-  public void set (Distance distance) {
-    this.distance = distance;
+  @Path ("/k")
+  @XmlElement (name = "k")
+  public void set (int k) {
+    this.k = k;
   }
 
-  @Path ("/distance")
   @GET
-  public Distance distance () {
-    return distance;
+  @Path ("/k")
+  public int k () {
+    return k;
+  }
+
+  @GET
+  @Path ("/clusters")
+  public Collection<K[]> clusters () {
+    return clusters;
   }
 }

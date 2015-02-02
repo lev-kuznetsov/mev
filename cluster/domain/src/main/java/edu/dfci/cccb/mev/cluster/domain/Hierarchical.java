@@ -39,7 +39,7 @@ import edu.dfci.cccb.mev.dataset.domain.annotation.Analysis;
 @XmlRootElement
 @XmlAccessorType (NONE)
 @R ("function (hclust, dataset, distance, linkage) hclust (dataset, distance, linkage)")
-public class HierarchicalClusteringAnalysis <K, V> extends ClusteringAnalysisAdapter<K, V> {
+public class Hierarchical <K, V> extends ClusteringAnalysisAdapter<K, V> {
 
   /**
    * Linkage criteria

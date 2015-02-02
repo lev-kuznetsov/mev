@@ -14,26 +14,28 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.cluster.domain.guice;
+package edu.dfci.cccb.mev.limma.domain.annotation;
 
-import edu.dfci.cccb.mev.cluster.domain.Hierarchical;
-import edu.dfci.cccb.mev.cluster.domain.KMeans;
-import edu.dfci.cccb.mev.dataset.domain.guice.AnalysisTypeRegistrar;
-import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
 /**
  * @author levk
  * @since CRYSTAL
  */
-public class ClusteringModule extends DatasetModule {
+@Retention (RUNTIME)
+@Target (TYPE)
+@Documented
+@Inherited
+public @interface Species {
 
-  /* (non-Javadoc)
-   * @see
-   * edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule#configure(edu.dfci
-   * .cccb.mev.dataset.domain.guice.AnalysisTypeRegistrar) */
-  @Override
-  public void configure (AnalysisTypeRegistrar registrar) {
-    registrar.register (Hierarchical.class);
-    registrar.register (KMeans.class);
-  }
+  /**
+   * Species name
+   */
+  String value ();
 }

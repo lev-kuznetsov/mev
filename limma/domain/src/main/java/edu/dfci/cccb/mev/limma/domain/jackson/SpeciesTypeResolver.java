@@ -14,7 +14,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.cluster.domain.jackson;
+package edu.dfci.cccb.mev.limma.domain.jackson;
 
 import static com.fasterxml.jackson.databind.type.SimpleType.construct;
 
@@ -31,32 +31,31 @@ import com.fasterxml.jackson.databind.DatabindContext;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
 
-import edu.dfci.cccb.mev.cluster.domain.Distance;
+import edu.dfci.cccb.mev.limma.domain.Species;
 
 /**
  * @author levk
- * @since CRYSTAL
  */
-public class DistanceTypeResolver extends TypeIdResolverBase {
+public class SpeciesTypeResolver extends TypeIdResolverBase {
 
-  private static final JavaType TYPE = construct (Distance.class);
+  private static final JavaType TYPE = construct (Species.class);
 
-  private Map<String, Class<? extends Distance>> map = new HashMap<> ();
+  private Map<String, Class<? extends Species>> map = new HashMap<> ();
 
   {
-    Set<Class<? extends Distance>> types = new HashSet<> ();
-    for (Class<?> inner : Distance.class.getClasses ())
-      if (Distance.class.isAssignableFrom (inner)) {
-        @SuppressWarnings ("unchecked") Class<? extends Distance> type = (Class<? extends Distance>) inner;
+    Set<Class<? extends Species>> types = new HashSet<> ();
+    for (Class<?> candidate : Species.class.getDeclaredClasses ()) {
+      if (Species.class.isAssignableFrom (candidate)) {
+        @SuppressWarnings ("unchecked") Class<? extends Species> type = (Class<? extends Species>) candidate;
         types.add (type);
       }
-    addDistanceTypes (types);
+    }
   }
 
   @Inject
-  private void addDistanceTypes (Set<Class<? extends Distance>> types) {
-    for (Class<? extends Distance> type : types)
-      map.put (type.getAnnotation (edu.dfci.cccb.mev.cluster.domain.annotation.Distance.class).value (), type);
+  private void addSpeciesTypes (Set<Class<? extends Species>> types) {
+    for (Class<? extends Species> type : types)
+      map.put (type.getAnnotation (edu.dfci.cccb.mev.limma.domain.annotation.Species.class).value (), type);
   }
 
   /* (non-Javadoc)
@@ -74,7 +73,7 @@ public class DistanceTypeResolver extends TypeIdResolverBase {
    * (java.lang.Object, java.lang.Class) */
   @Override
   public String idFromValueAndType (Object value, Class<?> suggestedType) {
-    return (value == null ? suggestedType : value.getClass ()).getAnnotation (edu.dfci.cccb.mev.cluster.domain.annotation.Distance.class)
+    return (value == null ? suggestedType : value.getClass ()).getAnnotation (edu.dfci.cccb.mev.limma.domain.annotation.Species.class)
                                                               .value ();
   }
 
@@ -82,7 +81,7 @@ public class DistanceTypeResolver extends TypeIdResolverBase {
    * @see com.fasterxml.jackson.databind.jsontype.TypeIdResolver#getMechanism() */
   @Override
   public Id getMechanism () {
-    return Distance.class.getAnnotation (JsonTypeInfo.class).use ();
+    return Species.class.getAnnotation (JsonTypeInfo.class).use ();
   }
 
   /* (non-Javadoc)
@@ -92,9 +91,9 @@ public class DistanceTypeResolver extends TypeIdResolverBase {
   @Override
   @Deprecated
   public JavaType typeFromId (String id) {
-    Class<? extends Distance> type = map.get (id);
+    Class<? extends Species> type = map.get (id);
     if (type == null)
-      throw new IllegalArgumentException ("Unrecognized distance type id " + id);
+      throw new IllegalArgumentException ("Unrecognized species type id: " + id);
     return construct (type);
   }
 
@@ -104,9 +103,9 @@ public class DistanceTypeResolver extends TypeIdResolverBase {
    * (com.fasterxml.jackson.databind.DatabindContext, java.lang.String) */
   @Override
   public JavaType typeFromId (DatabindContext context, String id) {
-    Class<? extends Distance> type = map.get (id);
+    Class<? extends Species> type = map.get (id);
     if (type == null)
-      throw new IllegalArgumentException ("Unrecognized distance type id " + id);
+      throw new IllegalArgumentException ("Unrecognized species type id " + id);
     return context.constructSpecializedType (TYPE, type);
   }
 }

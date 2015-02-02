@@ -14,10 +14,11 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.cluster.domain;
+package edu.dfci.cccb.mev.limma.domain;
 
-import static edu.dfci.cccb.mev.cluster.domain.Distance.DEFAULT;
 import static javax.xml.bind.annotation.XmlAccessType.NONE;
+
+import java.util.Map;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -26,34 +27,51 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import edu.dfci.cccb.mev.common.domain.jobs.annotation.Parameter;
+import edu.dfci.cccb.mev.common.domain.jobs.annotation.Result;
+import edu.dfci.cccb.mev.common.domain.jobs.r.annotation.R;
+import edu.dfci.cccb.mev.dataset.domain.annotation.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.r.RAnalysisAdapter;
 
 /**
- * Common clustering API
- * 
  * @author levk
  * @since CRYSTAL
  */
+@Analysis ("topGo")
 @XmlRootElement
 @XmlAccessorType (NONE)
-public abstract class ClusteringAnalysisAdapter <K, V> extends RAnalysisAdapter<K, V> {
+@R ("function (topGo, species) 1")
+public class TopGo <K, V> extends RAnalysisAdapter<K, V> {
 
-  /**
-   * Distance metric
-   */
-  private @Parameter Distance distance = DEFAULT;
+  private @Parameter Species species;
 
-  @Path ("/distance")
-  @PUT
-  @XmlElement (name = "distance", required = false)
-  public void set (Distance distance) {
-    this.distance = distance;
+  @XmlRootElement
+  @XmlAccessorType (NONE)
+  @ToString
+  @EqualsAndHashCode
+  public static final class Entry {
+
+    private @XmlElement String term;
+    private @XmlElement String annotated;
+    private @XmlElement String significant;
+    private @XmlElement String expected;
+    private @XmlElement Double pValue;
   }
 
-  @Path ("/distance")
+  private @Result Map<K, Entry> topGo;
+
+  @PUT
+  @Path ("/species")
+  @XmlElement (name = "species")
+  public void set (Species species) {
+    this.species = species;
+  }
+
   @GET
-  public Distance distance () {
-    return distance;
+  @Path ("/topGo")
+  public Map<K, Entry> table () {
+    return topGo;
   }
 }

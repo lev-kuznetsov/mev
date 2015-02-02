@@ -14,26 +14,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.cluster.domain.guice;
-
-import edu.dfci.cccb.mev.cluster.domain.Hierarchical;
-import edu.dfci.cccb.mev.cluster.domain.KMeans;
-import edu.dfci.cccb.mev.dataset.domain.guice.AnalysisTypeRegistrar;
-import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule;
-
 /**
  * @author levk
  * @since CRYSTAL
  */
-public class ClusteringModule extends DatasetModule {
-
-  /* (non-Javadoc)
-   * @see
-   * edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule#configure(edu.dfci
-   * .cccb.mev.dataset.domain.guice.AnalysisTypeRegistrar) */
-  @Override
-  public void configure (AnalysisTypeRegistrar registrar) {
-    registrar.register (Hierarchical.class);
-    registrar.register (KMeans.class);
-  }
-}
+package edu.dfci.cccb.mev.limma.domain.jackson;

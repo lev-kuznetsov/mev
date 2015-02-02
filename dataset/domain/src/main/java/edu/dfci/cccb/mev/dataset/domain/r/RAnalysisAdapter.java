@@ -16,7 +16,18 @@
 
 package edu.dfci.cccb.mev.dataset.domain.r;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import javax.inject.Inject;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 import edu.dfci.cccb.mev.common.domain.jobs.annotation.Parameter;
 import edu.dfci.cccb.mev.common.domain.jobs.r.R;
@@ -39,5 +50,49 @@ public class RAnalysisAdapter <K, V> extends AnalysisAdapter {
   @Override
   public void run () throws AnalysisInvocationException {
     dispatcher.dispatch (this);
+  }
+
+  protected List<K> keys () {
+    return new AbstractList<K> () {
+      private List<K> delegate = new ArrayList<> ();
+
+      @Override
+      @GET
+      @Path ("/{index}")
+      public K get (@PathParam ("index") int index) {
+        return delegate.get (index);
+      }
+
+      @Override
+      @POST
+      public boolean addAll (Collection<? extends K> c) {
+        return delegate.addAll (c);
+      }
+
+      @Override
+      @PUT
+      @Path ("/{index}")
+      public void add (@PathParam ("index") int index, K element) {
+        delegate.add (index, element);
+      }
+
+      @Override
+      @DELETE
+      @Path ("index")
+      public K remove (@PathParam ("index") int index) {
+        return delegate.remove (index);
+      }
+
+      @Override
+      @DELETE
+      public boolean remove (Object o) {
+        return delegate.remove (o);
+      }
+
+      @Override
+      public int size () {
+        return delegate.size ();
+      }
+    };
   }
 }

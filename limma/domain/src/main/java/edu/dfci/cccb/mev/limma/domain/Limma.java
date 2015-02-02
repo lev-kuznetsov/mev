@@ -14,54 +14,79 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.cluster.domain;
+package edu.dfci.cccb.mev.limma.domain;
 
 import static javax.xml.bind.annotation.XmlAccessType.NONE;
 
 import java.util.Collection;
+import java.util.Map;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import edu.dfci.cccb.mev.common.domain.jobs.annotation.Parameter;
 import edu.dfci.cccb.mev.common.domain.jobs.annotation.Result;
 import edu.dfci.cccb.mev.common.domain.jobs.r.annotation.R;
 import edu.dfci.cccb.mev.dataset.domain.annotation.Analysis;
+import edu.dfci.cccb.mev.dataset.domain.r.RAnalysisAdapter;
 
 /**
  * @author levk
  * @since CRYSTAL
  */
-@Analysis ("kmeans")
+@Analysis ("limma")
 @XmlRootElement
 @XmlAccessorType (NONE)
-@R ("function (kmeans, dataset, distance, k) kmeans (dataset, distance, k)")
-public class KMeansClusteringAnalysis <K, V> extends ClusteringAnalysisAdapter<K, V> {
+@R ("function (limma, dataset, experiment, control) limma (dataset, experiment, control)")
+public class Limma <K, V> extends RAnalysisAdapter<K, V> {
 
-  private @Parameter int k;
+  private final @Parameter Collection<K> experiment = keys ();
+  private final @Parameter Collection<K> control = keys ();
 
-  private @Result Collection<K[]> clusters;
+  @XmlRootElement
+  @XmlAccessorType (NONE)
+  @EqualsAndHashCode
+  @ToString
+  public static final class Entry {
 
-  @PUT
-  @Path ("/k")
-  @XmlElement (name = "k")
-  public void set (int k) {
-    this.k = k;
+    private @XmlElement Double logFoldChange;
+    private @XmlElement Double averageExpression;
+    private @XmlElement Double pValue;
+    private @XmlElement Double qValue;
+  }
+
+  private @Result Map<K, Entry> limma;
+
+  @Path ("/experiment")
+  public Collection<K> experiment () {
+    return experiment;
+  }
+
+  @XmlElement
+  public void experiment (Collection<K> experiment) {
+    this.experiment.clear ();
+    this.experiment.addAll (experiment);
+  }
+
+  @Path ("/control")
+  public Collection<K> control () {
+    return experiment;
+  }
+
+  @XmlElement
+  public void control (Collection<K> control) {
+    this.control.clear ();
+    this.control.addAll (control);
   }
 
   @GET
-  @Path ("/k")
-  public int k () {
-    return k;
-  }
-
-  @GET
-  @Path ("/clusters")
-  public Collection<K[]> clusters () {
-    return clusters;
+  @Path ("/limma")
+  public Map<K, Entry> table () {
+    return limma;
   }
 }

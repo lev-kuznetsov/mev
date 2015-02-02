@@ -18,6 +18,7 @@
 
     <module>dataset</module>
     <module>cluster</module>
+    <module>limma</module>
 
     <module>webapp</module>
   </modules>
