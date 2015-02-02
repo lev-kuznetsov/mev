@@ -78,8 +78,11 @@ public class R implements Dispatcher {
   private ObjectMapper mapper;
   private @Inject Injector injector;
 
-  // FIXME: remove annotation introspector from manual injection once
-  // https://github.com/FasterXML/jackson-databind/issues/692 is fixed
+  // FIXME: It appears as though the annotation introspector is set on the
+  // mapper after the mapper is injected here and we have a race condition to
+  // copy the mapper. I'm planning on reimplementing the whole JacksonModule
+  // package anyway, I don't see mev modules installing their own annotation
+  // introspectors anyway
   @Inject
   private void configureTranslationMapper (ObjectMapper mapper,
                                            final Set<AnnotationIntrospector> introspectors,

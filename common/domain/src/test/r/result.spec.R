@@ -4,15 +4,6 @@ suite ('Result transimssion facilities', function () {
       suite ('Serialization', function () {
         it ('Should have injectable toJson function', function ()
           expect (is.function (toJson)));
-
-        it ('Should construct json array', function ()
-          expect ("[1,\"a\"]" == toJson (list (1, 'a'))));
-
-        it ('Should construct json object', function ()
-          expect ("{\"q\":1,\"w\":\"a\"}" == toJson (list (q = 1, w = 'a'))));
-
-        it ('Should construct compound json object', function ()
-          expect ("{\"q\":1,\"w\":{\"e\":1,\"r\":\"v\"}}" == toJson (list (q = 1, w = list (e = 1, r = 'v')))));
       });
       suite ('Deserialization', function () {
         it ('Should have injectable fromJson function', function ()
