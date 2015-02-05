@@ -6,7 +6,7 @@ var gulp = require('gulp'),
 
 var mev = require('./mev-gulp.js')(gulp)
 
-gulp.task('default', ['test'], function(){
+gulp.task('default', [], function(){
     return
 })
 
@@ -27,7 +27,7 @@ gulp.task('loadBower', function(done){
     });
 })
 
-gulp.task('targetBower',['loadBower'], function(done){ 
+gulp.task('targetBower',['loadBower'], function(done){
     //Loads bower files in specified local directory
 
     gulp.src(["bower_components/**/*.js"])
@@ -39,10 +39,9 @@ gulp.task('targetBower',['loadBower'], function(done){
 
 gulp.task('karmaConfig', mev.karma)
 
-gulp.task('requireTestConfig', ['targetBower', 'generateTarget', 'generateShimsPaths'], mev.require.test);
-gulp.task('requireProdConfig', ['targetBower'], mev.require.production);
+gulp.task('requireConfig', ['generateShimsPaths'], mev.require.test);
 
-gulp.task('prepare',['karmaConfig', 'requireTestConfig'], function(){ 
+gulp.task('prepare',['karmaConfig', 'requireConfig', 'targetBower', 'generateTarget'], function(){
     return
 });
 
@@ -58,7 +57,6 @@ gulp.task('generateTarget', function(done){
 
 gulp.task('test',['prepare'], function (done) {
     //Runs karma tests with single run
-    
 
     var karma = require('karma').server;
     
@@ -90,4 +88,4 @@ gulp.task('clean', function (cb) {
     ], cb);
 });
 
-gulp.task('generateShimsPaths',['loadBower'], mev.require.generateShims)
+gulp.task('generateShimsPaths',['loadBower'], mev.require.generateShimsPaths)

@@ -24,77 +24,6 @@ var karmaConfigBuilder = function (gulp) {
 
 }
 
-var requireProdConfigBuilder = function (gulp) {
-    return function (done) {
-
-        var head = 'require.config({ '
-
-        var footer = "'deps': ['angular', 'app']," +
-            "'callback': function(){" +
-            "angular.element(document).ready(function() {" +
-            "angular.bootstrap(document, ['app']);" +
-            "});" +
-            "}," +
-            "'waitSeconds': 3" +
-            "})"
-
-        //load base require
-        var rjs = {}
-        rjs.baseUrl = '/base'
-        rjs.paths = {}
-
-        //Add more paths to require rjs for local gbower deps
-
-        bower.commands.list([], {
-            paths: true,
-            json: true
-        })
-            .on('end', function (results) {
-
-                var locals = recursePkgMain(results)
-
-                for (index in locals) {
-                    rjs.paths[locals[index].package] = [locals[index].main]
-                }
-
-                for (index in locals) {
-
-                    var shims = locals[index].shim
-
-                    var packageExports = shims ? Object.keys(shims) : []
-
-                    if (packageExports.length > 0) {
-                        for (shimIndex in packageExports) {
-                            rjs.shim[packageExports[shimIndex]] = locals[index].shim[packageExports[shimIndex]]
-                        }
-                    }
-                }
-
-                var body = ""
-
-                for (keyIndex in Object.keys(rjs)) {
-                    var key = Object.keys(rjs)[keyIndex]
-                    var dep = "" + key + ": " + JSON.stringify(rjs[key]) + ", "
-                    body = body.concat(dep)
-                }
-
-
-                var buffer = new Buffer(head + body + footer)
-
-                mkdirp('./target', {}, function () {
-                    fs
-                        .writeFile(
-                            './target/require.production.main.js',
-                            buffer,
-                            done
-                    )
-                })
-
-
-            })
-    }
-}
-
 var requireTestConfigBuilder = function (gulp) {
     return function (done) {
 
@@ -110,21 +39,17 @@ var requireTestConfigBuilder = function (gulp) {
 
         var footer = "'deps': allTestFiles ,'callback': window.__karma__.start })"
 
-        //Add more paths to require rjs for local gbower deps
-
         gutil.log("Creating require test.")
         fs.readFile('./target/require.shims', function (err, data) {
             if (!err) {
 
                 gutil.log("No error in reading require shims.")
 
-                var bowerJson = require('./bower.json')
-                var bowerShims = "shim:" + JSON.stringify(bowerJson.shim) + ","
-                var buffer = new Buffer(head + data.toString() + bowerShims + footer)
+                var buffer = new Buffer(head + data.toString() + footer)
                 mkdirp('./target', {}, function () {
                     gutil.log("Writing test main.")
                     fs.writeFile('./target/require.test.main.js',buffer,function(){
-                        gutil.log("Test writing successful")
+                        gutil.log("Require test writing successful")
                         done()
                     })
                 })
@@ -139,12 +64,13 @@ var requireTestConfigBuilder = function (gulp) {
     }
 }
 
-var requireShimsBuilder = function (gulp) {
+var requireShimsPathsBuilder = function (gulp) {
     return function (done) {
         //load base require
         var rjs = {}
         rjs['baseUrl'] = '/base'
         rjs['paths'] = {}
+        rjs['shim'] = {}
 
         //Add more paths to require rjs for local gbower deps
 
@@ -154,27 +80,33 @@ var requireShimsBuilder = function (gulp) {
         })
         .on('end', function (results) {
 
-            var locals = recursePkgMain(results)
+            var components = recursePkgMain(results)
 
-            for (index in locals) {
-                rjs.paths[locals[index].package] = [locals[index].main]
-            }
+            //add info for each component
+            for (index in components) {
 
-            for (index in locals) {
+                //add path info
+                rjs.paths[components[index].name] = [components[index].main]
 
-                var shims = locals[index].shim
-
-                var packageExports = shims ? Object.keys(shims) : []
-
-                if (packageExports.length > 0) {
-                    for (shimIndex in packageExports) {
-                        rjs.shim[packageExports[shimIndex]] = locals[index].shim[packageExports[shimIndex]]
-                    }
+                //if shim info is there, add it
+                if(typeof components[index].shim != 'undefined'){
+                    rjs.shim[components[index].name] = components[index].shim
                 }
             }
 
+            //Add bower json shims for main project
+            var bowerShims = require('./bower.json').shim
+            var bowerShimsKeys = Object.keys(bowerShims)
+
+            for (index in bowerShimsKeys){
+                var component = bowerShimsKeys[index]
+                rjs.shim[component] = bowerShims[component]
+            }
+
+
             var body = ""
 
+            //push rjs keys onto body string for output
             for (keyIndex in Object.keys(rjs)) {
                 var key = Object.keys(rjs)[keyIndex]
                 var dep = '"' + key + '": ' + JSON.stringify(rjs[key]) + ", "
@@ -199,9 +131,8 @@ module.exports = function (gulp) {
     return {
         karma: karmaConfigBuilder(gulp),
         require: {
-            production: requireProdConfigBuilder(gulp),
             test: requireTestConfigBuilder(gulp),
-            generateShims: requireShimsBuilder(gulp)
+            generateShimsPaths: requireShimsPathsBuilder(gulp)
         }
     }
 }
@@ -256,66 +187,75 @@ function recursePkgMain(package) {
 
     var deps = pkgMeta.dependencies ? Object.keys(pkgMeta.dependencies) : undefined
 
+    var devDeps = pkgMeta.devDependencies ? Object.keys(pkgMeta.devDependencies) : undefined
+
     var localMains = []
 
-
+    //Add packages to local mains for each component in dependencies
     for (index in deps) {
 
-        var key = deps[index]
+        var component = deps[index]
 
-        if (pkgMeta.dependencies[key].indexOf('../') >= 0) {
+        var currentPackage = package.dependencies[component]
 
-            var localMain = {
-                main: key + '/' + package.dependencies[key].pkgMeta.main.split('.js')[0],
-                package: key,
-                shim: package.dependencies[key].pkgMeta.shim ? package.dependencies[key].pkgMeta.shim : undefined
-            }
-            localMains
-                .push(localMain)
-        } else {
+        var localMain = buildPathsData(currentPackage, component)
 
-            var currentMeta = package.dependencies[key].pkgMeta
-            
-            var localMain = {}
-            
-            if (typeof currentMeta['main'] != 'undefined'){
-                
-                var cleanMain = (currentMeta.main.indexOf('./') >= 0) ?
-                    currentMeta.main.split('./')[1] : currentMeta.main
-                
-                localMain = {
-                    main: key + '/' + cleanMain.split('.js')[0],
-                    package: key,
-                    shim: undefined
-                }
-                
-            } else {
-                localMain = {
-                    main: key + '/' + 'js/' + currentMeta.name,
-                    package: key,
-                    shim: undefined
-                }
-            }
-            localMains
-                .push(localMain)
-        }
+        localMains.push(localMain)
     }
 
+    //Add packages to local mains for each component in dev dependencies
+    for (index in devDeps) {
 
+        var component = devDeps[index]
 
-    if (localMains.length > 0) {
-        var fullMains = localMains
+        var currentPackage = package.dependencies[component]
 
-        for (index in localMains) {
+        var localMain = buildPathsData(currentPackage, component)
 
-            var subPackage = package.dependencies[localMains[index].package]
+        localMains.push(localMain)
 
-            fullmains = fullMains
-                .concat(recursePkgMain(subPackage))
-        }
-
-        return fullMains
     }
 
-    return undefined
+    return localMains
+
+}
+
+function buildPathsData(package, component){
+
+    var pathsData
+
+    if(typeof package.pkgMeta == 'undefined'){
+        gutil.log("pkgMeta not found for " + component)
+        throw new Error("Error: pkgMeta not found!")
+        return
+    }
+
+    //If package doesn't have a main property
+    if (typeof package.pkgMeta['main'] == 'undefined'){
+
+        //build paths data using package name assuming it's in a js folder
+        pathsData = {
+            main: component + '/' + 'js/' + package.pkgMeta.name,
+            name: component
+        }
+
+    } else {
+
+        //If the package main has a prepended ./, clean it
+        var cleanMain = (package.pkgMeta.main.indexOf('./') >= 0) ?
+            package.pkgMeta.main.split('./')[1] : package.pkgMeta.main
+
+        //Build the paths data using the cleaned main
+        pathsData = {
+            main: component + '/' + cleanMain.split('.js')[0],
+            name: component
+        }
+
+    }
+
+    //Add shims data to pathsData if it's defined
+    pathsData.shim = package.pkgMeta.shim
+
+    return pathsData
+
 }
