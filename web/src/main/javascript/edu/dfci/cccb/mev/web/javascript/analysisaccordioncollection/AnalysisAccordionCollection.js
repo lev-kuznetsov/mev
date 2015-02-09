@@ -1,44 +1,11 @@
 define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angular, jq, d3){
 	
-	var module = angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])
+  var module = angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])
 		
-	module.path = "container/javascript/analysisaccordioncollection"
-			
-	return module.service('d3DomService', [function(){
-		return function(id,s){
-			
-			s.$apply(function(){
-				
-				d3.select(id)
-				.append('svg')
-					.attr({
-						'width':500,
-						'height':400,
-						'id':id+'-svg'
-					});
+  module.path = "container/javascript/analysisaccordioncollection"
 
-			});
-			
-			d3.select(id)
-			.append('svg')
-				.attr({
-					'width':500,
-					'height':400,
-					'id':id+'-svg'
-				});
-			
-			
-			return d3.select('svg#'+id+'-svg');
-		};
-	}])
-	.service('drawBoxPlots', function(){
-		return function(svg, groups){
-			
-			//svg.
-			return
-		}
-	})
-	.directive('analysisContentItem', ['$compile', function ($compile) {
+  return module
+    .directive('analysisContentItem', ['$compile', function ($compile) {
         var heirarchicalTemplate = '<hierarchical-Accordion analysis="analysis" project="project"></hierarchical-Accordion>';
         var kMeansTemplate = '<k-Means-Accordion analysis="analysis" project="project"></k-Means-Accordion>';
         var anovaTemplate = '<anova-Accordion analysis="analysis" project="project"></anova-Accordion>';
@@ -122,7 +89,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
             }	
        }
     }])
-	.directive('kMeansAccordion', ['alertService', function(alertService) {
+    .directive('kMeansAccordion', ['alertService', function(alertService) {
         return {
             restrict : 'E',
             scope : {
@@ -706,7 +673,7 @@ define(['angular', 'jquery', 'd3', 'alertservice/AlertService'], function(angula
 
         };
     }]).directive('limmaAccordion',
-    ['$filter', 'alertService', 'd3DomService', 'drawBoxPlots',  function($filter, alertService, d3Dom, plot) {
+    ['$filter', 'alertService', function($filter, alertService) {
         return {
             restrict : 'E',
             templateUrl : '/container/view/elements/limmaAccordion',
