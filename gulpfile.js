@@ -5,7 +5,7 @@ var gulp = require('gulp'),
     async = require('async'),
     mkdirp = require('mkdirp')
 
-gulp.task('testSubs', ['loadSubs'], function(done){
+gulp.task('testSubs', [], function(done){
     //Tests sub projects
     
     var projects = require('./projects.json')
@@ -59,41 +59,9 @@ gulp.task('test',['testSubs'], function (done) {
    return 
 });
 
-gulp.task('build', ['loadSubs'], function(done){
+gulp.task('build', ['prepare'], function(done){
     var projects = require('./projects.json')
-    
-    var iter = function(project, cb){
-        
-        var cwd = project.directory;
 
-        gutil.log("Building shims for " + project.project)
-        execute('gulp generateShimsPaths', {cwd: cwd}, 
-        function(err, stdout, stderr) {
-
-            gutil.log(stdout.toString('ascii'))
-
-            if (err) {
-
-                var wrappedError = new Error(stderr.toString('ascii'));
-
-                var error = new gutil
-                .PluginError('build', wrappedError, {
-                 project: project,
-                 message: "Failed to generate shims for " + project.project,
-                 showStack: false
-                })
-
-                cb(error)
-
-            } else {
-                gutil.log("Shims completed for " + project.project)
-                cb(null)
-            }
-
-        });
-        
-    }
-    
     var body = {paths:{}, shims:{}}
     
     var addToShims = function(project, cb){
@@ -132,41 +100,39 @@ gulp.task('build', ['loadSubs'], function(done){
         });
     }
     
-    var build = function(err){
-        async.each(projects['modules'], addToShims, function(err){
-            if (!err){
-                
-                var head = 'require.config({ '
+    async.each(projects['modules'], addToShims, function(err){
+        if (!err){
 
-                var footer = ",'deps': ['angular', 'app']," +
-                    "'callback': function(){" +
-                    "angular.element(document).ready(function() {" +
-                    "angular.bootstrap(document, ['app']);" +
-                    "});" +
-                    "}," +
-                    "'waitSeconds': 3" +
-                    "})"
-                var bodyString = JSON.stringify(body)
-                var buffer = new Buffer(head + bodyString.substring(1,bodyString.length-1) + footer)
-                mkdirp('./target', {}, function () {
-                    fs.writeFile('./target/require.production.main.js',buffer,done)
-                })
-                
-                return
-            }
-            
-            var error = new gutil
-            .PluginError('build', err, {
-             message: "Failed during async generation ",
-             showStack: false
+            var head = 'require.config({ '
+
+            var footer = ",'deps': ['angular', 'app']," +
+                "'callback': function(){" +
+                "angular.element(document).ready(function() {" +
+                "angular.bootstrap(document, ['app']);" +
+                "});" +
+                "}," +
+                "'waitSeconds': 3" +
+                "})"
+            var bodyString = JSON.stringify(body)
+            var buffer = new Buffer(head + bodyString.substring(1,bodyString.length-1) + footer)
+            mkdirp('./target', {}, function () {
+                fs.writeFile('./target/require.production.main.js',buffer,done)
             })
-            
-            throw error
 
+            return
+        }
+
+        var error = new gutil
+        .PluginError('build', err, {
+         message: "Failed during async generation ",
+         showStack: false
         })
-    }
-    
-    async.each(projects['modules'], iter, build)
+
+        throw error
+
+    })
+
+
 })
 
 gulp.task('loadSubs', function(done){
@@ -205,6 +171,43 @@ gulp.task('loadSubs', function(done){
 
 })
 
+gulp.task('prepare',['loadSubs'], function(done){
+
+   var projects = require('./projects.json')
+
+   var iter = function(project, cb){
+
+      var cwd = project.directory;
+
+      gutil.log("Beginning prepare loading for " + project.project)
+
+      execute('gulp prepare', {cwd: cwd},
+      function(err, stdout, stderr){
+          gutil.log(stdout.toString('ascii'))
+
+          if(err){
+            gutil.log("Error in gulp prepare for " + project.project)
+            gutil.log(err.message)
+          } else {
+            gutil.log("Prepare loading complete for " + project.project)
+          }
+
+          cb(null)
+      })
+   }
+
+    async.each(projects['modules'], iter, function(err){
+
+       if(err){
+         throw err
+       }
+
+       done()
+
+    })
+
+})
+
 gulp.task('clean', function(done){
     var projects = require('./projects.json')
     
@@ -218,23 +221,25 @@ gulp.task('clean', function(done){
 
             gutil.log(stdout.toString('ascii'))
 
+            var status = null
+
             if (err) {
 
                 var wrappedError = new Error(stderr.toString('ascii'));
 
-                var error = new gutil
+                status = new gutil
                 .PluginError('clean', wrappedError, {
                  project: project,
-                 message: "Failed clean on " + project.project,
+                 message: "Failed bower clean on " + project.project,
                  showStack: false
                 })
 
-                cb(error)
 
             } else {
-                gutil.log("Clean complete for " + project.project)
-                cb(null)
+                gutil.log("Bower clean complete for " + project.project)
             }
+
+            cb(status)
 
         });
         

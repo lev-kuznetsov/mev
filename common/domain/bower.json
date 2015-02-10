@@ -9,6 +9,7 @@
   "moduleType": [
     "amd"
   ],
+  "main":"",
   "license": "MIT",
   "private": true,
   "ignore": [
@@ -30,6 +31,9 @@
     "angular": "~1.3.11",
     "ng-multibind": "*"
   },
+  "devDependencies": {
+    "angular-mocks": "~1.3.11"
+  },
   "shim": {
     "log4javascript": {
       "exports": "log4javascript"
@@ -39,9 +43,9 @@
     },
     "underscore": {
       "exports": "_"
+    },
+    "angular-mocks": {
+      "exports": "ngMock"
     }
-  },
-  "devDependencies": {
-    "angular-mocks": "~1.3.11"
   }
 }
