@@ -4,14 +4,14 @@
 
     return function(module){
 
-        module.directive('fTestAccordion', [function(){
+        module.directive('fTestAccordion', ['pathService', function(paths){
     	    return {
                 restrict : 'E',
                 scope : {
             	    analysis : "=analysis",
             	    project : "=project"
                 },
-                templateUrl : module.path + '/templates/fTestAccordion.tpl.html',
+                templateUrl : paths.module + '/templates/fTestAccordion.tpl.html',
                 link : function(scope) {
                     return
                 }	

@@ -15,7 +15,8 @@
     
     var serviceDeps = [
         './Services/tableResultsFilter',
-        './Services/projectionService'
+        './Services/projectionService',
+        './Services/pathService'
     ]
 
     define(deps.concat(contentDeps).concat(serviceDeps), function(angular, jq, d3){

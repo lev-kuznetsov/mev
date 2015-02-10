@@ -4,11 +4,11 @@
 
         return function (module) {
 
-            module.directive('deseqAccordion', ['tableResultsFilter', 'alertService', 'projectionService',
-                function (tableFilter, alertService, projection) {
+            module.directive('deseqAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService',
+                function (tableFilter, alertService, projection, paths) {
                     return {
                         restrict: 'E',
-                        templateUrl: module.path + '/templates/DESeqAccordion.tpl.html',
+                        templateUrl: paths.module + '/templates/DESeqAccordion.tpl.html',
                         scope: {
                             project: "=project",
                             analysis: "=analysis"

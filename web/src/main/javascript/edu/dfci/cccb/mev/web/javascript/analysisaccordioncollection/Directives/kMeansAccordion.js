@@ -5,15 +5,15 @@
 
         return function (module) {
 
-            module.directive('kMeansAccordion', ['alertService',
-                function (alertService) {
+            module.directive('kMeansAccordion', ['alertService', 'pathService',
+                function (alertService, paths) {
                     return {
                         restrict: 'E',
                         scope: {
                             analysis: "=analysis",
                             project: "=project"
                         },
-                        templateUrl: module.path + '/templates/kmeansAccordion.tpl.html',
+                        templateUrl: paths.module + '/templates/kmeansAccordion.tpl.html',
                         link: function (scope) {
                             scope.selectionParams = {
                                 name: undefined,
