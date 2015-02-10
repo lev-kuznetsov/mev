@@ -21,7 +21,9 @@
  * @since CRYSTAL
  */
 define ('mev', [ 'angular', './log/log', './log/debug', './log/info', './log/warn', './log/error' ], function (ng, t, d, i, w, e) {
-  return ng.module ('mev', []).config ([ '$provide', function ($provide) {
+  var mev = ng.module ('mev', []);
+  
+  mev.config ([ '$provide', function ($provide) {
     $provide.decorator ('$log', [ function () {
       return {
         log : t,
@@ -31,4 +33,21 @@ define ('mev', [ 'angular', './log/log', './log/debug', './log/info', './log/war
         error : e
       };
     } ]);
+
+  mev.module = function (name, dependencies) {
+    attach = function (parent, name, dependencies) {
+      parent.requires.push (name);
+      var module = ng.module (name, dependencies === undefined ? [] : dependencies);
+      module.module = function (name, dependencies) { attach (module, name, dependencies); };
+      return module;
+    };
+
+    return attach (mev, name, dependencies);
+  };
+
+  mev.bootstrap = function (element) {
+    ng.bootstrap (element, [ 'mev' ]);
+  };
+
+  return mev;
 });

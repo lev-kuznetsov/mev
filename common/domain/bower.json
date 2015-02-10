@@ -27,7 +27,8 @@
     "requirejs": "~2.1.15",
     "underscore": "~1.7.0",
     "log4javascript": "~1.4.9",
-    "angular": "~1.3.11"
+    "angular": "~1.3.11",
+    "ng-multibind": "*"
   },
   "shim": {
     "log4javascript": {
