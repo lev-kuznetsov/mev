@@ -4,8 +4,8 @@
 
         return function (module) {
 
-            module.directive('deseqAccordion', ['$filter', 'alertService',
-                function ($filter, alertService) {
+            module.directive('deseqAccordion', ['tableResultsFilter', 'alertService', 'projectionService',
+                function (tableFilter, alertService, projection) {
                     return {
                         restrict: 'E',
                         templateUrl: module.path + '/templates/DESeqAccordion.tpl.html',
@@ -74,17 +74,9 @@
 
                             scope.filteredResults = undefined;
 
-                            scope.applyFilter = function (results) {
+                            scope.applyFilter = function () {
 
-                                var filtered = $filter('filter')(results, {
-                                    id: scope.filterParams.id.value
-                                });
-
-                                filtered = $filter('filterThreshold')(filtered, scope.filterParams.logFoldChange.value, scope.filterParams.logFoldChange.field, scope.filterParams.logFoldChange.op);
-                                filtered = $filter('filterThreshold')(filtered, scope.filterParams.pValue.value, scope.filterParams.pValue.field);
-                                filtered = $filter('filterThreshold')(filtered, scope.filterParams.qValue.value, scope.filterParams.qValue.field, scope.filterParams.qValue.op);
-                                filtered = $filter('orderBy')(filtered, scope.tableOrdering);
-                                scope.filteredResults = filtered;
+                                scope.filteredResults = tableFilter(scope.analysis.results, scope.filterParams)
 
                                 return scope.filteredResults;
                             };
@@ -95,16 +87,9 @@
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16)
                             };
 
-                            function traverse(results) {
-                                var ids = results.map(function (d) {
-                                    return d.id
-                                });
-                                return ids;
-                            }
-
                             scope.addSelections = function () {
 
-                                var keys = traverse(scope.filteredResults);
+                                var keys = scope.filteredResults.map(projection.ids);
                                 var selectionData = {
                                     name: scope.selectionParams.name,
                                     properties: {

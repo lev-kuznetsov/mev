@@ -5,8 +5,8 @@
 
         return function (module) {
 
-            module.directive('anovaAccordion', ['$filter', 'alertService',
-                function ($filter, alertService) {
+            module.directive('anovaAccordion', ['tableResultsFilter', 'alertService', 'projectionService',
+                function (tableFilter, alertService, projection) {
                     return {
                         restrict: 'E',
                         templateUrl: '/container/view/elements/anovaAccordion',
@@ -32,8 +32,16 @@
                             ]
 
                             scope.filterParams = {
-                                'id': '',
-                                'pValue': undefined
+                                'id': {
+                                    field: 'it',
+                                    value: '',
+                                    op: '=='
+                                }, 
+                                'pValue': {
+                                    field: 'pValue',
+                                    value: 0.05,
+                                    op: '<='
+                                }
                             };
 
                             scope.selectionParams = {
@@ -55,17 +63,7 @@
                             };
 
                             function traverse(results) {
-                                var step1 = $filter('filter')(results, {
-                                    id: scope.filterParams.id
-                                });
-
-                                var step2 = $filter('filterThreshold')(step1, scope.filterParams.pValue, 'pValue');
-
-                                var step3 = step2.map(function (d) {
-                                    return d.id;
-                                });
-
-                                return step3;
+                                return tableFilter(results, scope.filterParams).map(projection.ids)
                             }
 
                             scope.addSelections = function () {
@@ -111,6 +109,7 @@
                                 name: undefined,
                                 color: '#ffffff'
                             };
+                            
                             scope.exportSelection = function () {
 
                                 var keys = traverse(scope.analysis.results);

@@ -14,14 +14,13 @@
       './Directives/hierarchicalAccordion']
     
     var serviceDeps = [
-        './Services/tableResultsFilter'
+        './Services/tableResultsFilter',
+        './Services/projectionService'
     ]
 
     define(deps.concat(contentDeps).concat(serviceDeps), function(angular, jq, d3){
 	
         var module = angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])
-		
-        module.path = "container/javascript/analysisaccordioncollection"
 
         //load each directive deps file onto the module using function arguments only
         for (index in directivesDeps){

@@ -4,8 +4,8 @@
 
         return function (module) {
 
-            module.directive('tTestAccordion', ['$filter', 'alertService',
-                function ($filter, alertService) {
+            module.directive('tTestAccordion', ['tableResultsFilter', 'alertService', 'projectService',
+                function (tableResultsFilter, alertService, projection) {
                     return {
                         restrict: 'E',
                         templateUrl: '/container/view/elements/tTestAccordion',
@@ -54,16 +54,9 @@
                                     op: '<='
                                 }
                             };
-                            scope.applyFilter = function (results) {
-                                var filtered = $filter('filter')(scope.tTest.results, {
-                                    id: scope.filterParams.id.value
-                                });
-                                filtered = $filter('filterThreshold')(filtered, scope.filterParams.pValueThreshold.value, scope.filterParams.pValueThreshold.field);
-                                filtered = $filter('filterThreshold')(filtered, scope.filterParams.logFoldChange.value, scope.filterParams.logFoldChange.field, scope.filterParams.logFoldChange.op);
-                                filtered = $filter('orderBy')(filtered, scope.tTestTableOrdering);
-
-                                scope.filteredResults = filtered;
-                                return scope.filteredResults;
+                            
+                            scope.applyFilter = function () {
+                                scope.filteredResults = tableResultsFilter(scope.analysis.results, scope.filterParams);
                             };
 
                             scope.selectionParams = {
@@ -73,7 +66,8 @@
 
                             scope.addSelections = function () {
 
-                                var keys = traverse(scope.filteredResults);
+                                var keys = scope.filteredResults.map(projection.ids);
+                                
                                 var selectionData = {
                                     name: scope.selectionParams.name,
                                     properties: {
@@ -111,7 +105,8 @@
                             };
                             scope.exportSelection = function () {
 
-                                var keys = traverse(scope.filteredResults);
+                                var keys = scope.filteredResults.map(projection.ids);
+                                
                                 var selectionData = {
                                     name: scope.exportParams.name,
                                     properties: {
@@ -163,17 +158,10 @@
                                     scope.tTestTableOrdering = "-" + scope.headers[header].name;
                                 }
                             };
-
-                            function traverse(results) {
-                                var ids = results.map(function (d) {
-                                    return d.id
-                                });
-                                return ids;
-                            }
-
+                            
                             scope.applyToHeatmap = function () {
 
-                                var labels = traverse(scope.filteredResults);
+                                var labels = scope.filteredResults.map(projection.ids);
 
                                 scope.project.generateView({
                                     viewType: 'heatmapView',

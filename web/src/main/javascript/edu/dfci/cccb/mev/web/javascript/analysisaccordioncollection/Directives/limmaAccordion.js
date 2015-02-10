@@ -3,8 +3,8 @@
     define([], function () {
         return function (module) {
 
-            module.directive('limmaAccordion', ['$filter', 'alertService',
-                function ($filter, alertService) {
+            module.directive('limmaAccordion', ['tableResultsFilter', 'alertService', 'projectionService',
+                function (tableFilter, alertService, projection) {
                     return {
                         restrict: 'E',
                         templateUrl: '/container/view/elements/limmaAccordion',
@@ -40,7 +40,7 @@
                                     'field': "qValue",
                                     'icon': "<="
                                 }
-               ];
+                            ];
 
                             scope.filterParams = {
                                 'id': {
@@ -72,7 +72,7 @@
 
                             scope.viewGenes = function () {
 
-                                var shownGenes = scope.applyFilter(scope.analysis.results);
+                                var shownGenes = tableFilter(scope.analysis.results, scope.filterParams);
 
                                 var max = Number.NEGATIVE_INFINITY,
                                     min = Number.POSITIVE_INFINITY;
@@ -127,7 +127,7 @@
 
                             scope.addSelections = function () {
 
-                                var userselections = getKeys(scope.filteredResults);
+                                var userselections = scope.filteredResults.map(projection.ids);
 
                                 var selectionData = {
                                     name: scope.selectionParams.name,
@@ -168,7 +168,7 @@
                             };
                             scope.exportSelection = function () {
 
-                                var keys = getKeys(scope.filteredResults);
+                                var keys = scope.filteredResults.map(projection.ids);
                                 var selectionData = {
                                     name: scope.exportParams.name,
                                     properties: {
@@ -213,28 +213,9 @@
                                 }
                             }
 
-                            function getField(fieldName, results) {
-                                var fieldValues = results.map(function (d) {
-                                    return d[fieldName];
-                                });
-                                return fieldValues;
-                            }
-
-                            function getKeys(results) {
-                                return getField('id', results);
-                            };
-
                             scope.applyFilter = function (results) {
 
-                                var filtered = $filter('filter')(results, {
-                                    id: scope.filterParams.id.value
-                                });
-
-                                filtered = $filter('filterThreshold')(filtered, scope.filterParams.logFoldChange.value, scope.filterParams.logFoldChange.field, scope.filterParams.logFoldChange.op);
-                                filtered = $filter('filterThreshold')(filtered, scope.filterParams.pValue.value, scope.filterParams.pValue.field);
-                                filtered = $filter('filterThreshold')(filtered, scope.filterParams.qValue.value, scope.filterParams.qValue.field, scope.filterParams.qValue.op);
-                                filtered = $filter('orderBy')(filtered, scope.tableOrdering);
-                                scope.filteredResults = filtered;
+                                scope.filteredResults = tableFilter(scope.analysis.results, scope.filterParams);
 
                                 return scope.filteredResults;
                             }
