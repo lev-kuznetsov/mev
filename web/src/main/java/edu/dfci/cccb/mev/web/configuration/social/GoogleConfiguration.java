@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactory;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
@@ -28,8 +29,11 @@ import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
 import org.springframework.social.connect.web.ProviderSignInController;
+import org.springframework.social.connect.web.ProviderSignInInterceptor;
 import org.springframework.social.google.api.Google;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -125,8 +129,21 @@ public class GoogleConfiguration extends WebMvcConfigurerAdapter {
   @Bean
   public ProviderSignInController providerSignInController (UsersConnectionRepository usersConnectionRepository,
                                                             SimpleSignInAdapter simpleSignInAdapter) {
-    return new ProviderSignInController (connectionFactoryLocator (), usersConnectionRepository,
-                                         simpleSignInAdapter);
+    ProviderSignInController controller = new ProviderSignInController (connectionFactoryLocator (),
+                                                                        usersConnectionRepository,
+                                                                        simpleSignInAdapter);
+    controller.addSignInInterceptor (new ProviderSignInInterceptor<Google> () {
+      @Override
+      public void preSignIn (ConnectionFactory<Google> connectionFactory,
+                             MultiValueMap<String, String> parameters,
+                             WebRequest request) {
+        parameters.add ("access_type", "offline");
+      }
+
+      @Override
+      public void postSignIn (Connection<Google> connection, WebRequest request) {}
+    });
+    return controller;
   }
 
   /* (non-Javadoc)
