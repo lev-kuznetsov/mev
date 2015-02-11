@@ -3,8 +3,8 @@
     define(['d3'], function (d3) {
 
         return function (module) {
-            module.directive('hierarchicalAccordion', [
-                function () {
+            module.directive('hierarchicalAccordion', ['pathService'
+                function (paths) {
 
                     return {
                         restrict: 'E',
@@ -13,7 +13,7 @@
                             project: "=project"
 
                         },
-                        templateUrl: '/container/view/elements/hierarchicalAccordion',
+                        templateUrl:paths.module + '/templates/hierarchicalAccordion.tpl.html',
                         link: function (scope, elems, attr) {
 
                             scope.applyToHeatmap = function () {

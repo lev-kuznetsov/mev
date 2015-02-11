@@ -5,11 +5,11 @@
 
         return function (module) {
 
-            module.directive('anovaAccordion', ['tableResultsFilter', 'alertService', 'projectionService',
-                function (tableFilter, alertService, projection) {
+            module.directive('anovaAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService',
+                function (tableFilter, alertService, projection, paths) {
                     return {
                         restrict: 'E',
-                        templateUrl: '/container/view/elements/anovaAccordion',
+                        templateUrl:paths.module + '/templates/anovaAccordion.tpl.html',
                         scope: {
                             analysis: "=analysis",
                             project: '=project',

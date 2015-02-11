@@ -4,11 +4,11 @@
 
         return function (module) {
 
-            module.directive('tTestAccordion', ['tableResultsFilter', 'alertService', 'projectService',
-                function (tableResultsFilter, alertService, projection) {
+            module.directive('tTestAccordion', ['tableResultsFilter', 'alertService', 'projectService', 'pathService',
+                function (tableResultsFilter, alertService, projection, paths) {
                     return {
                         restrict: 'E',
-                        templateUrl: '/container/view/elements/tTestAccordion',
+                        templateUrl: paths.module + '/templates/tTestAccordion.tpl.html',
                         scope: {
                             project: "=project",
                             analysis: "=analysis"

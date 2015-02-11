@@ -3,11 +3,11 @@
     define([], function () {
         return function (module) {
 
-            module.directive('limmaAccordion', ['tableResultsFilter', 'alertService', 'projectionService',
-                function (tableFilter, alertService, projection) {
+            module.directive('limmaAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService',
+                function (tableFilter, alertService, projection, paths) {
                     return {
                         restrict: 'E',
-                        templateUrl: '/container/view/elements/limmaAccordion',
+                        templateUrl: paths.module + '/templates/limmaAccordion.tpl.html',
                         scope: {
                             project: '=project',
                             analysis: "=analysis"
