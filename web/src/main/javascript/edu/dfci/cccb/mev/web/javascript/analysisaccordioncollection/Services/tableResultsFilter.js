@@ -2,7 +2,8 @@
     
     define([], function(){
         return function(module){
-            module.filter('tableResultsFilter', ['$filter', function(){
+        	
+            module.filter('tableResults', ['$filter', function($filter){
                 return function(array, filterOptions){
                     //function to filter array with parameters specified by filterOptions
                     //  where filterOptions is an object with properties 
@@ -44,7 +45,7 @@
     }
     
     function eql(expected){ 
-        return function(actual){ return (bound ? actual == expected : true) } 
-    } 
-    
-})()
+        return function(actual){ return (expected ? actual == expected : true) } 
+    }
+
+}())
