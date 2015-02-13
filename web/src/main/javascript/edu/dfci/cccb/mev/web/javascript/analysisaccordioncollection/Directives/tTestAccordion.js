@@ -4,8 +4,8 @@
 
         return function (module) {
 
-            module.directive('tTestAccordion', ['tableResultsFilter', 'alertService', 'projectService', 'pathService',
-                function (tableResultsFilter, alertService, projection, paths) {
+            module.directive('tTestAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService',
+                function (resultsFilter, alertService, projection, paths) {
                     return {
                         restrict: 'E',
                         templateUrl: paths.module + '/templates/tTestAccordion.tpl.html',
@@ -17,46 +17,62 @@
 
                             scope.$watch('analysis', function (newval) {
                                 if (newval) {
-                                    scope.tTest = scope.analysis;
-                                    scope.filteredResults = scope.tTest.results;
+                                	console.log(newval)
+                                	scope.viewGenes()
                                 }
                             });
+                            
+                            scope.$watch('filterParams.pValue.value', function(newval, oldval){
+                            	scope.viewGenes()
+                            })
+                            
+                            scope.$watch('filterParams.id.value', function(newval, oldval){
+                            	scope.viewGenes()
+                            })
+                            
+                            scope.$watch('filterParams.logFoldChange.value', function(newval, oldval){
+                            	scope.viewGenes()
+                            })
+                            
+                            scope.$watch('filterParams.logFoldChange.op', function(newval, oldval){
+                            	scope.viewGenes()
+                            })
 
-                            scope.headers = {
-                                'ID': {
-                                    name: "id",
-                                    sort: -1
-                                },
-                                'P-Value': {
-                                    name: "pValue",
-                                    sort: -1
-                                },
-                                'Log Fold Change': {
-                                    name: "logFoldChange",
-                                    sort: -1
-                                }
-                            };
+                            scope.headers = [{
+                                'name': 'ID',
+                                'field': "id",
+                                'icon': "search"
+                            },{
+                                'name': 'P-Value',
+                                'field': "pValue",
+                                'icon': "<="
+                            },{
+                                'name': 'Log-Fold-Change',
+                                'field': "logFoldChange",
+                                'icon': [">=", "<="]
+                            }]
 
                             scope.filterParams = {
                                 'id': {
                                     field: 'id',
                                     value: undefined,
-                                    op: "="
+                                    op: "~="
                                 },
                                 'logFoldChange': {
                                     field: 'logFoldChange',
                                     value: undefined,
                                     op: '>='
                                 },
-                                'pValueThreshold': {
+                                'pValue': {
                                     field: 'pValue',
-                                    value: 0.05,
+                                    value: undefined,
                                     op: '<='
                                 }
                             };
                             
-                            scope.applyFilter = function () {
-                                scope.filteredResults = tableResultsFilter(scope.analysis.results, scope.filterParams);
+                            scope.viewGenes = function () {
+                            	scope.tTest = scope.analysis
+                                scope.filteredResults = resultsFilter(scope.analysis.results, scope.filterParams);
                             };
 
                             scope.selectionParams = {
@@ -136,27 +152,6 @@
                                         alertService.error(message, header);
                                     });
 
-                            };
-
-                            scope.getCaretCss = function (header) {
-                                if (header.sort == 1) {
-                                    return "caret-up";
-                                } else {
-                                    return "caret-down";
-                                }
-                            }
-
-                            var ctr = -1;
-                            scope.tTestTableOrdering = undefined;
-                            scope.reorderTTestTable = function (header, $event) {
-
-                                ctr = ctr * (-1);
-                                scope.headers[header].sort = scope.headers[header].sort * (-1);
-                                if (scope.headers[header].sort == 1) {
-                                    scope.tTestTableOrdering = scope.headers[header].name;
-                                } else {
-                                    scope.tTestTableOrdering = "-" + scope.headers[header].name;
-                                }
                             };
                             
                             scope.applyToHeatmap = function () {
