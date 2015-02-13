@@ -15,31 +15,62 @@
                             project: '=project',
                         },
                         link: function (scope) {
+                        	
+                        	scope.$watch('analysis', function (newval) {
+                                if (newval) {
+                                    scope.viewGenes()
+                                }
+                            })
+                            
+                            scope.$watch('filterParams.pValue.value', function(newval, oldval){
+                            	scope.viewGenes()
+                            })
+                            
+                            scope.$watch('filterParams.id.value', function(newval, oldval){
+                            	scope.viewGenes()
+                            })
+                            
+                            scope.$watch('filterParams.pairwise_log_fold_change.value', function(newval, oldval){
+                            	scope.viewGenes()
+                            })
+                            
+                            scope.$watch('filterParams.pairwise_log_fold_change.op', function(newval, oldval){
+                            	scope.viewGenes()
+                            })
+                            
+                            scope.viewGenes = function(){
+                        		 scope.filteredResults = tableFilter(scope.analysis.results, scope.filterParams);
+                        	}
 
-                            scope.headers = [
-                                {
+                            scope.headers = [{
                                     'name': 'ID',
-                                    'value': "id"
-                                },
-                                {
+                                    'field': "id",
+                                    'icon': "search"
+                                },{
                                     'name': 'P-Value',
-                                    'value': "pValue"
-                                },
-                                {
-                                    'name': 'Pairwise LFC',
-                                    'value': 'pairwise_log_fold_change'
+                                    'field': "pValue",
+                                    'icon': "<="
+                                },{
+                                	'name': 'Pairwise LFC',
+                                	'field': 'pairwise_log_fold_change',
+                                	'icon': ["<=", ">="]
                                 }
                             ]
 
                             scope.filterParams = {
                                 'id': {
-                                    field: 'it',
-                                    value: '',
-                                    op: '=='
+                                    field: 'id',
+                                    value: undefined,
+                                    op: '~='
                                 }, 
                                 'pValue': {
                                     field: 'pValue',
-                                    value: 0.05,
+                                    value: undefined,
+                                    op: '<='
+                                },
+                                'pairwise_log_fold_change': {
+                                    field: 'pairwise_log_fold_change',
+                                    value: undefined,
                                     op: '<='
                                 }
                             };
@@ -48,18 +79,6 @@
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16),
                                 dimension: 'row'
-                            };
-
-                            var ctr = -1;
-                            scope.tableOrdering = undefined;
-                            scope.reorderTable = function (header) {
-
-                                ctr = ctr * (-1);
-                                if (ctr == 1) {
-                                    scope.tableOrdering = header.value;
-                                } else {
-                                    scope.tableOrdering = "-" + header.value;
-                                }
                             };
 
                             function traverse(results) {
