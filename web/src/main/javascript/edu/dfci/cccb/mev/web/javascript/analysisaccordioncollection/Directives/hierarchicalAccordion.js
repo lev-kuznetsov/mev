@@ -3,7 +3,7 @@
     define(['d3'], function (d3) {
 
         return function (module) {
-            module.directive('hierarchicalAccordion', ['pathService'
+            module.directive('hierarchicalAccordion', ['pathService',
                 function (paths) {
 
                     return {
