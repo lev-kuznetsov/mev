@@ -86,8 +86,6 @@
 			    	
 			    	exports.transformer = function(arg){
 			    		
-			    		console.log("Transformer set")
-			    		
 			    		var self = this
 			    		if (arguments.length > 0){
 			    			transformer = arg
