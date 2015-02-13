@@ -36,7 +36,7 @@
                                     'icon': "<="
                                 },
                                 {
-                                    'name': 'q-Value',
+                                    'name': 'Q-Value',
                                     'field': "qValue",
                                     'icon': "<="
                                 }
@@ -46,7 +46,7 @@
                                 'id': {
                                     field: 'id',
                                     value: undefined,
-                                    op: "="
+                                    op: "~="
                                 },
                                 'logFoldChange': {
                                     field: 'logFoldChange',
@@ -55,7 +55,7 @@
                                 },
                                 'pValue': {
                                     field: 'pValue',
-                                    value: 0.05,
+                                    value: undefined,
                                     op: '<='
                                 },
                                 'qValue': {
@@ -64,19 +64,49 @@
                                     op: '<='
                                 }
                             };
+                            
+                            
+                            scope.$watch('analysis', function (newval) {
+                                if (newval) {
+                                    scope.viewGenes()
+                                }
+                            })
+                            
+                            scope.$watch('filterParams.pValue.value', function(newval, oldval){
+                            	scope.viewGenes()
+                            })
+                            
+                            scope.$watch('filterParams.qValue.value', function(newval, oldval){
+                            	scope.viewGenes()
+                            })
+                            
+                            scope.$watch('filterParams.id.value', function(newval, oldval){
+                            	scope.viewGenes()
+                            })
+                            
+                            scope.$watch('filterParams.logFoldChange.value', function(newval, oldval){
+                            	scope.viewGenes()
+                            })
+                            
+                            scope.$watch('filterParams.logFoldChange.op', function(newval, oldval){
+                            	scope.viewGenes()
+                            })
+                            
                             scope.filteredResults = undefined;
+                            
                             scope.selectionParams = {
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16)
                             }
 
                             scope.viewGenes = function () {
-
-                                var shownGenes = tableFilter(scope.analysis.results, scope.filterParams);
+                            	
+                                scope.filteredResults = tableFilter(scope.analysis.results, scope.filterParams);
+                                var shownGenes = scope.filteredResults
 
                                 var max = Number.NEGATIVE_INFINITY,
                                     min = Number.POSITIVE_INFINITY;
-
+                                
                                 function test(d) {
 
                                     if (d.value > max) {
@@ -95,7 +125,7 @@
                                                 'values': scope.analysis.control.keys.map(function (label) {
 
                                                     var datapoint = scope.project.dataset.expression.get([gene.id, label]);
-                                                    test(datapoint);
+                                                    test(datapoint, max, min);
                                                     return datapoint;
                                                 })
                                             },
@@ -103,7 +133,7 @@
                                                 'values': scope.analysis.experiment.keys.map(function (label) {
 
                                                     var datapoint = scope.project.dataset.expression.get([gene.id, label]);
-                                                    test(datapoint);
+                                                    test(datapoint, max, min);
                                                     return datapoint;
                                                 })
                                             },
@@ -115,15 +145,8 @@
                                     'max': max + ((max - min) * .05),
                                     'id': scope.analysis.randomId
                                 };
-
+                                
                             };
-
-                            scope.$watch('analysis', function (newval) {
-                                if (newval) {
-                                    scope.viewGenes()
-                                }
-
-                            })
 
                             scope.addSelections = function () {
 
@@ -137,8 +160,6 @@
                                     },
                                     keys: userselections
                                 };
-
-
 
                                 scope.project.dataset.selection.post({
                                         datasetName: scope.project.dataset.datasetName,
@@ -166,6 +187,7 @@
                                 name: undefined,
                                 color: '#ffffff'
                             };
+                            
                             scope.exportSelection = function () {
 
                                 var keys = scope.filteredResults.map(projection.ids);
@@ -200,26 +222,6 @@
 
                             };
 
-                            var ctr = -1;
-                            scope.limmaTableOrdering = undefined;
-
-                            scope.reorderLimmaTable = function (header) {
-
-                                ctr = ctr * (-1);
-                                if (ctr == 1) {
-                                    scope.tableOrdering = header.field;
-                                } else {
-                                    scope.tableOrdering = "-" + header.field;
-                                }
-                            }
-
-                            scope.applyFilter = function (results) {
-
-                                scope.filteredResults = tableFilter(scope.analysis.results, scope.filterParams);
-
-                                return scope.filteredResults;
-                            }
-
                             scope.applyToHeatmap = function () {
 
                                 var labels = getKeys(scope.filteredResults);
@@ -245,6 +247,7 @@
                         }
 
                     };
+                    
             }])
 
         }

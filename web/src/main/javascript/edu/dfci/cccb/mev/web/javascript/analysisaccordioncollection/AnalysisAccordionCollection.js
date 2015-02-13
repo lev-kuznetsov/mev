@@ -11,12 +11,15 @@
       './Directives/deseqAccordion',
       './Directives/tTestAccordion',
       './Directives/limmaAccordion',
-      './Directives/hierarchicalAccordion']
+      './Directives/hierarchicalAccordion',
+      './Directives/resultsTable'
+      ]
     
     var serviceDeps = [
         './Services/tableResultsFilter',
         './Services/projectionService',
-        './Services/pathService'
+        './Services/pathService',
+        './Services/compareFactory'
     ]
 
     define(deps.concat(directiveDeps).concat(serviceDeps), function(angular, jq, d3){
