@@ -16,8 +16,12 @@
                         },
                         link: function (scope) {
                         	
+                        	//variable to remove embedded pair information
+                        	scope.cleanData = undefined;
+                        	
                         	scope.$watch('analysis', function (newval) {
                                 if (newval) {
+                                	scope.cleanData = expandEmbedded(newval.results)
                                     scope.viewGenes()
                                 }
                             })
@@ -39,7 +43,7 @@
                             })
                             
                             scope.viewGenes = function(){
-                        		 scope.filteredResults = tableFilter(scope.analysis.results, scope.filterParams);
+                        		 scope.filteredResults = tableFilter(scope.cleanData, scope.filterParams);
                         	}
 
                             scope.headers = [{
@@ -47,12 +51,20 @@
                                     'field': "id",
                                     'icon': "search"
                                 },{
+                                	'name': 'Partner A',
+                                	'field': 'partnerA',
+                                	'icon': "search"
+                                },{
+                                	'name': 'Partner B',
+                                	'field': 'partnerB',
+                                	'icon': "search"
+                                },{
                                     'name': 'P-Value',
                                     'field': "pValue",
                                     'icon': "<="
                                 },{
                                 	'name': 'Pairwise LFC',
-                                	'field': 'pairwise_log_fold_change',
+                                	'field': 'lfc',
                                 	'icon': ["<=", ">="]
                                 }
                             ]
@@ -68,10 +80,20 @@
                                     value: undefined,
                                     op: '<='
                                 },
-                                'pairwise_log_fold_change': {
-                                    field: 'pairwise_log_fold_change',
+                                'lfc': {
+                                    field: 'lfc',
                                     value: undefined,
                                     op: '<='
+                                },
+                                'partnerA':{
+                                	field:'partnerA',
+                                	value:undefined,
+                                	op:'~='
+                                },
+                                'partnerB':{
+                                	field:'partnerB',
+                                	value:undefined,
+                                	op:'~='
                                 }
                             };
 
@@ -87,7 +109,7 @@
 
                             scope.addSelections = function () {
 
-                                var keys = traverse(scope.analysis.results);
+                                var keys = traverse(scope.cleanData);
                                 var selectionsData = {
                                     name: scope.selectionParams.name,
                                     properties: {
@@ -131,7 +153,7 @@
                             
                             scope.exportSelection = function () {
 
-                                var keys = traverse(scope.analysis.results);
+                                var keys = traverse(scope.cleanData);
                                 var selectionData = {
                                     name: scope.exportParams.name,
                                     properties: {
@@ -165,7 +187,7 @@
 
                             scope.applyToHeatmap = function () {
 
-                                var labels = traverse(scope.analysis.results);
+                                var labels = traverse(scope.cleanData);
 
                                 scope.project.generateView({
                                     viewType: 'heatmapView',
@@ -185,6 +207,31 @@
                                 });
 
                             };
+                            
+                            function expandEmbedded(data){
+                            	//This function is supposed to expand the partner and ratio
+                            	// data into their own columns
+                            	
+                            	var expanded = []
+                            	
+                            	for (var gene = 0; gene < data.length; gene++){
+                            		
+                            		for (var pair = 0; pair < data[gene]['pairwise_log_fold_change'].length; pair++){
+                            			var cleanRow = {
+                            				"id": data[gene]['id'],
+                            				"pValue": data[gene]['pValue'],
+                            				"lfc": data[gene]['pairwise_log_fold_change'][pair]['ratio'],
+                            				'partnerA': data[gene]['pairwise_log_fold_change'][pair]['partnerA'],
+                            				'partnerB': data[gene]['pairwise_log_fold_change'][pair]['partnerB']
+                            			}
+                            			
+                            			expanded.push(cleanRow)
+                            		}
+                            		
+                            	}
+                            	
+                            	return expanded
+                            }
                         }
                     };
             }])
