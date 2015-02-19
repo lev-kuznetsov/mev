@@ -60,8 +60,12 @@ public class RDispatcher {
 
   private @Inject @Rserve Provider<InetSocketAddress> host;
   private @Inject @Rserve ObjectMapper mapper;
+  private Executor dispatcher;
 
-  private final Executor dispatcher = Executors.newFixedThreadPool (2);
+  @Inject
+  public void configureScheduler (@Rserve int concurrency) {
+    dispatcher = Executors.newFixedThreadPool (2);
+  }
 
   public void schedule (final Object job) {
     dispatcher.execute (new Runnable () {

@@ -19,6 +19,7 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 
 import java.io.InputStream;
 import java.net.InetSocketAddress;
+import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.commons.configuration.ConfigurationException;
@@ -27,9 +28,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.r.RDispatcher;
+import edu.dfci.cccb.mev.dataset.domain.r.RserveDatasetSerializer;
+import edu.dfci.cccb.mev.dataset.domain.r.RserveDoubleDeserializer;
+import edu.dfci.cccb.mev.dataset.domain.r.RserveDoubleSerializer;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Rserve;
 
 /**
@@ -42,8 +49,37 @@ public class RDispatcherConfiguration {
   @Bean
   @Scope (SCOPE_SINGLETON)
   @Rserve
-  public ObjectMapper mapper () {
-    return new ObjectMapper ();
+  public int concurrency () throws ConfigurationException {
+    final PropertiesConfiguration config = new PropertiesConfiguration ();
+    InputStream configurationStream = getClass ().getResourceAsStream ("/rserve.properties");
+    if (configurationStream != null)
+      config.load (configurationStream);
+    else
+      config.setProperty ("rserve.concurrency", "2");
+    return config.getInt ("rserve.concurrency");
+  }
+
+  @Bean
+  @Scope (SCOPE_SINGLETON)
+  @Rserve
+  public Module rserveDatasetSerializationModule () {
+    return new SimpleModule () {
+      private static final long serialVersionUID = 1L;
+
+      {
+        addSerializer (Dataset.class, new RserveDatasetSerializer ());
+        addSerializer (Double.class, new RserveDoubleSerializer ());
+
+        addDeserializer (Double.class, new RserveDoubleDeserializer ());
+      }
+    };
+  }
+
+  @Bean
+  @Scope (SCOPE_SINGLETON)
+  @Rserve
+  public ObjectMapper mapper (Collection<Module> modules) {
+    return new ObjectMapper ().registerModules (modules);
   }
 
   @Bean
