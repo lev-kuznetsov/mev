@@ -17,16 +17,18 @@
   <modules>
     <module>rest</module>
     <module>client</module>
-    <module>persistence</module>    
+    <module>persistence</module>
   </modules>
-
-  <properties>
-    <spring.version>4.0.0.RELEASE</spring.version>
-  </properties>
 
   <dependencies>
 
     <!-- Spring -->
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
