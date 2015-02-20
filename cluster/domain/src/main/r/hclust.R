@@ -28,10 +28,16 @@
 #
 # author: levk
 # since: CRYSTAL
-shim ('gputools', 'ctc', callback = function (gpuDistClust, hc2Newick)
-  if (missing (gpuDistClust))
-    define ('hclust', function (dist) function (data, distance, linkage)
-      hc2Newick (hclust (dist (data, method = distance), method = linkage), FALSE))
-  else
-    define ('hclust', function () function (data, distance, linkage)
-      hc2Newick (gpuDistClust (data, dist = distance, clust = linkage), FALSE)), binder = binder ());
+shim ('gputools', 'ctc', callback = function (gpuDistClust = NULL, hc2Newick) {
+  node <- function (tree)
+    if (typeof (tree) == 'character') list (type = 'leaf', name = tree)
+    else list (left = node (tree$left), right = node (tree$right), distance = tree$dist, type = 'branch');
+
+  define ('hclust', function (dist)
+    function (data, distance, linkage, dimension, subset) {
+      data <- if (dimension$name == 'column') t (data) else data;
+      data <- if (length (subset) < 1) data else data[subset,];
+      node (hc2Newick (if (is.null (gpuDistClust)) hclust (dist (data, met = distance$type), met = linkage$type)
+                       else gpuDistClust (data, dist = distance$type, clust = linkage$type), FALSE))
+  }, scope = singleton)
+}, binder = binder ());

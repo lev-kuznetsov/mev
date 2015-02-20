@@ -18,15 +18,20 @@
 # distance metric and the number of desired clusters
 #
 # author: levk
-shim ('cluster', callback = function (pam)
-  define ('kmeans', function (dist) function (data, distance, k) {
-    clustering <- pam (dist (data, method = distance), k, diss = TRUE, cluster.only = TRUE);
-
+shim ('cluster', callback = function (pam) {
+  group <- function (clustering) {
     clusters <- list ();
-    for (index in 1:k) {
+    for (index in 1:length (clustering)) {
       cluster <- NULL;
       for (entry in names (clustering)) if (clustering[[ entry ]] == index) cluster <- c (cluster, entry);
       clusters[[ index ]] <- cluster;
     }
     clusters;
-  }), binder = binder ());
+  };
+
+  define ('kmeans', function (dist) function (data, distance, k, dimension, subset) {
+    data <- if (dimension$name == 'column') t (data) else data;
+    data <- if (length (subset) < 1) data else data[subset,];
+    group (pam (dist (data, method = distance$type), k, diss = TRUE, cluster.only = TRUE))
+  });
+}, binder = binder ());

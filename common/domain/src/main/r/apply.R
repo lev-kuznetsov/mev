@@ -12,12 +12,9 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 
-# Common clustering API
-#
-# Supports the dist API
+# Alternative version of 'apply' applied with submatrices of original
+# dataframe preserving row and column names
 #
 # author: levk
-# since: CRYSTAL
-shim ('gputools', callback = function (gpuDist = dist) {
-  define ('dist', function () gpuDist)
-}, binder = binder ());
+define ('apply', function () function (df, margin, fun)
+  lapply (1:length (dimnames (df)[[ margin ]]), function (x) fun (switch (margin, `1` = df[x, ], `2` = df[x]))));

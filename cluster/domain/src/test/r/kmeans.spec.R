@@ -9,5 +9,5 @@ suite ("K means clustering API", function () {
     inject (function (kmeans)
       for (k in 1:3)
         it (paste ("Should cluster for", k, "clusters"), function ()
-          expect (k == length (kmeans (data, "eu", k))))));
+          expect (k == length (kmeans (data, list (type = "eu"), k, list (name = 'row'), c ()))))));
 });
