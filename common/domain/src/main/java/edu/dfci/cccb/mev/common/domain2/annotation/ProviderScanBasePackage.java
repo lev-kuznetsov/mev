@@ -14,32 +14,27 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain;
+package edu.dfci.cccb.mev.common.domain2.annotation;
 
-import java.util.Collection;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import javax.inject.Qualifier;
 
 /**
- * Dimension
+ * Qualifier annotation for base packa
  * 
  * @author levk
- * @since BAYLIE
+ * @since CRYSTAL
  */
-public interface Dimension <K> extends Collection<K>, Named {
-
-  /**
-   * Identifier for injection
-   */
-  public static final String DIMENSION = "dimension";
-
-  /**
-   * @param index
-   * @return key at index specified
-   */
-  @Path ("/{index}")
-  @GET
-  K get (@PathParam ("index") int index);
-}
+@Retention (RUNTIME)
+@Target ({ FIELD, METHOD, PARAMETER })
+@Inherited
+@Qualifier
+public @interface ProviderScanBasePackage {}

@@ -14,32 +14,33 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain;
+package edu.dfci.cccb.mev.common.domain2.guice;
 
-import java.util.Collection;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import com.google.inject.Binder;
+import com.google.inject.Module;
 
 /**
- * Dimension
- * 
  * @author levk
- * @since BAYLIE
+ * @since CRYSTAL
  */
-public interface Dimension <K> extends Collection<K>, Named {
+public abstract class SingletonModule implements Module {
 
-  /**
-   * Identifier for injection
-   */
-  public static final String DIMENSION = "dimension";
+  /* (non-Javadoc)
+   * @see java.lang.Object#hashCode() */
+  @Override
+  public int hashCode () {
+    return getClass ().hashCode ();
+  }
 
-  /**
-   * @param index
-   * @return key at index specified
-   */
-  @Path ("/{index}")
-  @GET
-  K get (@PathParam ("index") int index);
+  /* (non-Javadoc)
+   * @see java.lang.Object#equals(java.lang.Object) */
+  @Override
+  public boolean equals (Object obj) {
+    return obj instanceof SingletonModule && getClass ().equals (obj.getClass ());
+  }
+
+  /* (non-Javadoc)
+   * @see com.google.inject.Module#configure(com.google.inject.Binder) */
+  @Override
+  public void configure (Binder binder) {}
 }

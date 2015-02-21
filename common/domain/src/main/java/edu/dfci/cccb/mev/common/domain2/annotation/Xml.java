@@ -14,8 +14,27 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
+package edu.dfci.cccb.mev.common.domain2.annotation;
+
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import javax.inject.Qualifier;
+
 /**
+ * Qualifier for xml related exchange beans
+ * 
  * @author levk
  * @since CRYSTAL
  */
-package edu.dfci.cccb.mev.cluster.domain.guice;
+@Retention (RUNTIME)
+@Target ({ FIELD, METHOD, PARAMETER })
+@Inherited
+@Qualifier
+public @interface Xml {}

@@ -27,12 +27,14 @@ import static edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler
 import static edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler.ROW;
 import static java.lang.String.valueOf;
 import static java.util.regex.Pattern.compile;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -43,6 +45,8 @@ import org.supercsv.prefs.CsvPreference.Builder;
 import ch.lambdaj.function.convert.Converter;
 
 import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.inject.Binder;
 import com.google.inject.Provides;
 import com.google.inject.TypeLiteral;
@@ -50,6 +54,9 @@ import com.google.inject.multibindings.Multibinder;
 
 import edu.dfci.cccb.mev.common.domain.guice.MevModule;
 import edu.dfci.cccb.mev.common.domain.guice.SingletonModule;
+import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonModule;
+import edu.dfci.cccb.mev.common.domain.guice.jackson.JacksonSerializerBinder;
+import edu.dfci.cccb.mev.common.domain.guice.jackson.annotation.Handling;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.JaxrsModule;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageReaderBinder;
 import edu.dfci.cccb.mev.common.domain.guice.jaxrs.MessageWriterBinder;
@@ -58,6 +65,7 @@ import edu.dfci.cccb.mev.dataset.domain.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.annotation.NameOf;
+import edu.dfci.cccb.mev.dataset.domain.jackson.DimensionSerializer;
 import edu.dfci.cccb.mev.dataset.domain.jackson.RserveDatasetSerializer;
 import edu.dfci.cccb.mev.dataset.domain.messages.DatasetTsvMessageHandler;
 
@@ -213,6 +221,24 @@ public class DatasetModule extends MevModule {
           @Override
           public void configure (MessageWriterBinder binder) {
             binder.useInstance (handler);
+          }
+        });
+
+        binder.install (new JacksonModule () {
+          @Override
+          public void configure (JacksonSerializerBinder binder) {
+            binder.withInstance (new DimensionSerializer<String> ());
+          }
+        });
+
+        binder.requestInjection (new Object () {
+          @Inject
+          public void configure (@Handling (APPLICATION_JSON) ObjectMapper mapper) {
+            mapper.registerModule (new SimpleModule () {
+              private static final long serialVersionUID = 1L;
+
+              {}
+            });
           }
         });
       }

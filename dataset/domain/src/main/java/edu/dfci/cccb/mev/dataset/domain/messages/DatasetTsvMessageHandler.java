@@ -42,6 +42,7 @@ import java.util.AbstractList;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -234,7 +235,8 @@ public class DatasetTsvMessageHandler implements MessageBodyReader<Dataset<Strin
                        OutputStream stream) throws IOException, WebApplicationException {
     try (PrintStream out = new PrintStream (stream)) {
       out.println ("\t" + join (dataset.dimensions ().get (this.column), "\t"));
-      for (final String row : dataset.dimensions ().get (this.row))
+      for (Iterator<String> rows = dataset.dimensions ().get (this.row).iterator (); rows.hasNext ();) {
+        final String row = rows.next ();
         out.println (row + "\t" + join (forEach (dataset.values ().get (new AbstractList<Map<String, String>> () {
           private final Dimension<String> columns = dataset.dimensions ().get (COLUMN);
 
@@ -275,6 +277,7 @@ public class DatasetTsvMessageHandler implements MessageBodyReader<Dataset<Strin
             return columns.size ();
           }
         })).value (), "\t"));
+      }
     }
   }
 

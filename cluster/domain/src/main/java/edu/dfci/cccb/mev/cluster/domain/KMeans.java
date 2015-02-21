@@ -39,12 +39,18 @@ import edu.dfci.cccb.mev.dataset.domain.annotation.Analysis;
 @Analysis ("kmeans")
 @XmlRootElement
 @XmlAccessorType (NONE)
-@R ("function (kmeans, dataset, distance, k) kmeans (dataset, distance, k)")
-public class KMeans <K, V> extends ClusteringAnalysisAdapter<K, V> {
+@R ("function (kmeans, dataset, distance, k, dimension, subset) kmeans (dataset, distance, k, dimension, subset)")
+public class KMeans <K, V> extends ClusteringAdapter<K, V> {
 
+  /**
+   * Number of clusters k parameter
+   */
   private @Parameter int k;
 
-  private @Result Collection<K[]> clusters;
+  /**
+   * Collection of clusters result
+   */
+  private @Result Collection<Collection<K>> clusters;
 
   @PUT
   @Path ("/k")
@@ -61,7 +67,7 @@ public class KMeans <K, V> extends ClusteringAnalysisAdapter<K, V> {
 
   @GET
   @Path ("/clusters")
-  public Collection<K[]> clusters () {
+  public Collection<Collection<K>> clusters () {
     return clusters;
   }
 }

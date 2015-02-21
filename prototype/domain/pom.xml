@@ -19,12 +19,12 @@
     <!-- Rserve -->
 
     <dependency>
-      <groupId>org.nuiton.thirdparty</groupId>
+      <groupId>org.rosuda</groupId>
       <artifactId>Rserve</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.nuiton.thirdparty</groupId>
+      <groupId>org.rosuda</groupId>
       <artifactId>REngine</artifactId>
     </dependency>
 
@@ -94,13 +94,6 @@
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>log4javascript</artifactId>
-    </dependency>
-
-    <!-- Typesafe Configuration -->
-
-    <dependency>
-      <groupId>com.typesafe</groupId>
-      <artifactId>config</artifactId>
     </dependency>
 
     <!-- Commons Configuration for Variable Interpolation -->

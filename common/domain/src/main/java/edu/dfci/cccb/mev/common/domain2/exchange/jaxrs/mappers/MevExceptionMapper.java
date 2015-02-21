@@ -14,32 +14,20 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain;
+package edu.dfci.cccb.mev.common.domain2.exchange.jaxrs.mappers;
 
-import java.util.Collection;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.ext.Provider;
+
+import edu.dfci.cccb.mev.common.domain.MevException;
 
 /**
- * Dimension
- * 
  * @author levk
- * @since BAYLIE
+ * @since CRYSTAL
  */
-public interface Dimension <K> extends Collection<K>, Named {
-
-  /**
-   * Identifier for injection
-   */
-  public static final String DIMENSION = "dimension";
-
-  /**
-   * @param index
-   * @return key at index specified
-   */
-  @Path ("/{index}")
-  @GET
-  K get (@PathParam ("index") int index);
-}
+@Provider
+@Produces ({ APPLICATION_JSON, APPLICATION_XML })
+public class MevExceptionMapper extends MevExceptionMapperAdapter<MevException> {}

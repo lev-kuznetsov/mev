@@ -22,6 +22,7 @@ import static com.google.inject.Key.get;
 import static com.google.inject.internal.Annotations.findBindingAnnotation;
 import static java.lang.Math.abs;
 import static java.util.UUID.randomUUID;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -43,6 +44,7 @@ import lombok.extern.log4j.Log4j;
 
 import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.REXPMismatchException;
+import org.rosuda.REngine.REXPString;
 import org.rosuda.REngine.Rserve.RConnection;
 import org.rosuda.REngine.Rserve.RSession;
 import org.rosuda.REngine.Rserve.RserveException;
@@ -57,6 +59,7 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.internal.Errors;
 
+import edu.dfci.cccb.mev.common.domain.guice.jackson.annotation.Handling;
 import edu.dfci.cccb.mev.common.domain.guice.rserve.annotation.Rserve;
 import edu.dfci.cccb.mev.common.domain.jobs.Dispatcher;
 import edu.dfci.cccb.mev.common.domain.jobs.annotation.Callback;
@@ -84,7 +87,7 @@ public class R implements Dispatcher {
   // package anyway, I don't see mev modules installing their own annotation
   // introspectors anyway
   @Inject
-  private void configureTranslationMapper (ObjectMapper mapper,
+  private void configureTranslationMapper (@Handling (APPLICATION_JSON) ObjectMapper mapper,
                                            final Set<AnnotationIntrospector> introspectors,
                                            final @Rserve Set<JsonSerializer<?>> serializers,
                                            final @Rserve Set<JsonDeserializer<?>> deserializers) {
@@ -106,7 +109,7 @@ public class R implements Dispatcher {
       private <T> void addDeserializer (JsonDeserializer<T> deserializer) {
         addDeserializer ((Class<T>) deserializer.handledType (), deserializer);
       }
-    }).setAnnotationIntrospector (aggregate);
+    });//.setAnnotationIntrospector (aggregate);
   }
 
   /* (non-Javadoc)
@@ -124,15 +127,24 @@ public class R implements Dispatcher {
   }
 
   @SneakyThrows (JsonProcessingException.class)
-  private StringBuffer define (String key, Object value, Set<String> parameterNames, Object job) {
+  private RSession define (String key,
+                           Object value,
+                           Set<String> parameterNames,
+                           Object job,
+                           RSession session,
+                           StringBuffer command) throws RserveException {
     if (!parameterNames.add (key))
       throw new IllegalArgumentException ("Duplicate parameter key " + key);
-    return new StringBuffer ("define ('").append (key)
-                                         .append ("', function (fromJson) { ")
-                                         .append ("fromJson (\"")
-                                         .append (mapper.writeValueAsString (value).replaceAll ("\"", "\\\\\""))
-                                         .append ("\")")
-                                         .append (" }, scope = singleton, binder = binder); ");
+    UUID unique = randomUUID ();
+    String p = "p." + abs (unique.getMostSignificantBits ()) + "." + abs (unique.getLeastSignificantBits ());
+    RConnection c = session.attach ();
+    c.assign (p, new REXPString (mapper.writeValueAsString (value)));
+    log.debug ("Defining key '" + key + "' for value " + value);
+    command.append ("define ('").append (key)
+           .append ("', function (fromJson) { ")
+           .append ("r <- fromJson (").append (p).append ("); rm (\"").append (p).append ("\", envir = .GlobalEnv); r")
+           .append (" }, scope = singleton, binder = binder); ");
+    return c.detach ();
   }
 
   // Fields and methods are made accessible
@@ -152,51 +164,53 @@ public class R implements Dispatcher {
 
       command.append (v).append (" <- try (binder (callback = function (binder) { ");
 
-      Set<String> parameterNames = new HashSet<> ();
-      for (Class<?> clazz = job.getClass (); clazz != null; clazz = clazz.getSuperclass ()) {
-        for (Field field : clazz.getDeclaredFields ()) {
-          Parameter annotation = field.getAnnotation (Parameter.class);
-          if (annotation != null) {
-            field.setAccessible (true);
-            command.append (define ("".equals (annotation.value ()) ? field.getName () : annotation.value (),
-                                    field.get (job), parameterNames, job));
-          }
-        }
-        for (Method method : clazz.getDeclaredMethods ()) {
-          Parameter annotation = method.getAnnotation (Parameter.class);
-          if (annotation != null) {
-            method.setAccessible (true);
-            Object[] arguments = new Object[method.getParameterTypes ().length];
-            Errors errors = new Errors ();
-            for (int i = arguments.length; --i >= 0;) {
-              Annotation bindingAnnotation = findBindingAnnotation (errors,
-                                                                    method,
-                                                                    method.getParameterAnnotations ()[i]);
-              arguments[i] = injector.getInstance (bindingAnnotation == null
-                                                                            ? Key.get (method.getParameterTypes ()[i])
-                                                                            : Key.get (method.getParameterTypes ()[i],
-                                                                                       bindingAnnotation));
-            }
-            if (errors.hasErrors ())
-              throw new IllegalArgumentException ("Unable to inject parameter method", errors.toException ());
-            command.append (define ("".equals (annotation.value ()) ? method.getName () : annotation.value (),
-                                    method.invoke (job, arguments), parameterNames, job));
-          }
-        }
-      }
-
-      command.append ("inject (")
-             .append (job.getClass ()
-                         .getAnnotation (edu.dfci.cccb.mev.common.domain.jobs.r.annotation.R.class)
-                         .value ())
-             .append (", binder); }), silent = TRUE);");
-
       InetSocketAddress host = this.host.get ();
       RConnection connection = null;
       REXP result = null;
       try {
-        for (RSession session = new RConnection (host.getHostString (),
-                                                 host.getPort ()).voidEvalDetach (command.toString ());;)
+        RSession session = new RConnection (host.getHostString (), host.getPort ()).detach ();
+
+        Set<String> parameterNames = new HashSet<> ();
+        for (Class<?> clazz = job.getClass (); clazz != null; clazz = clazz.getSuperclass ()) {
+          for (Field field : clazz.getDeclaredFields ()) {
+            Parameter annotation = field.getAnnotation (Parameter.class);
+            if (annotation != null) {
+              field.setAccessible (true);
+              session = define ("".equals (annotation.value ()) ? field.getName () : annotation.value (),
+                                field.get (job), parameterNames, job, session, command);
+            }
+          }
+          for (Method method : clazz.getDeclaredMethods ()) {
+            Parameter annotation = method.getAnnotation (Parameter.class);
+            if (annotation != null) {
+              method.setAccessible (true);
+              Object[] arguments = new Object[method.getParameterTypes ().length];
+              Errors errors = new Errors ();
+              for (int i = arguments.length; --i >= 0;) {
+                Annotation bindingAnnotation = findBindingAnnotation (errors,
+                                                                      method,
+                                                                      method.getParameterAnnotations ()[i]);
+                arguments[i] =
+                               injector.getInstance (bindingAnnotation == null
+                                                                              ? Key.get (method.getParameterTypes ()[i])
+                                                                              : Key.get (method.getParameterTypes ()[i],
+                                                                                         bindingAnnotation));
+              }
+              if (errors.hasErrors ())
+                throw new IllegalArgumentException ("Unable to inject parameter method", errors.toException ());
+              session = define ("".equals (annotation.value ()) ? method.getName () : annotation.value (),
+                                method.invoke (job, arguments), parameterNames, job, session, command);
+            }
+          }
+        }
+
+        command.append ("inject (")
+               .append (job.getClass ()
+                           .getAnnotation (edu.dfci.cccb.mev.common.domain.jobs.r.annotation.R.class)
+                           .value ())
+               .append (", binder); }), silent = TRUE);");
+
+        for (session = session.attach ().voidEvalDetach (command.toString ());;)
           try {
             connection = session.attach ();
             break;

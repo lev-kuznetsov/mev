@@ -38,16 +38,18 @@ import edu.dfci.cccb.mev.dataset.domain.annotation.Analysis;
 @Analysis ("hclust")
 @XmlRootElement
 @XmlAccessorType (NONE)
-@R ("function (hclust, dataset, distance, linkage) hclust (dataset, distance, linkage)")
-public class Hierarchical <K, V> extends ClusteringAnalysisAdapter<K, V> {
+@R ("function (hclust, dataset, distance, linkage, dimension, subset) hclust (dataset, distance, linkage, dimension, subset)")
+public class Hierarchical <K, V> extends ClusteringAdapter<K, V> {
 
   /**
    * Linkage criteria
    */
   private @Parameter Linkage linkage = DEFAULT;
 
-  // TODO: define nodes
-  private @Result Object root = null;
+  /**
+   * Result root node
+   */
+  private @Result Node<K> root = null;
 
   @PUT
   @Path ("/linkage")
@@ -60,5 +62,11 @@ public class Hierarchical <K, V> extends ClusteringAnalysisAdapter<K, V> {
   @Path ("/linkage")
   public Linkage linkage () {
     return linkage;
+  }
+
+  @GET
+  @Path ("/root")
+  public Node<K> root () {
+    return root;
   }
 }

@@ -14,32 +14,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain;
-
-import java.util.Collection;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-
 /**
- * Dimension
- * 
  * @author levk
- * @since BAYLIE
+ * @since CRYSTAL
  */
-public interface Dimension <K> extends Collection<K>, Named {
-
-  /**
-   * Identifier for injection
-   */
-  public static final String DIMENSION = "dimension";
-
-  /**
-   * @param index
-   * @return key at index specified
-   */
-  @Path ("/{index}")
-  @GET
-  K get (@PathParam ("index") int index);
-}
+package edu.dfci.cccb.mev.common.domain2;

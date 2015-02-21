@@ -45,8 +45,8 @@ import edu.dfci.cccb.mev.dataset.domain.r.RAnalysisAdapter;
 @R ("function (limma, dataset, experiment, control) limma (dataset, experiment, control)")
 public class Limma <K, V> extends RAnalysisAdapter<K, V> {
 
-  private final @Parameter Collection<K> experiment = keys ();
-  private final @Parameter Collection<K> control = keys ();
+  private @Parameter Collection<K> experiment;
+  private @Parameter Collection<K> control;
 
   @XmlRootElement
   @XmlAccessorType (NONE)

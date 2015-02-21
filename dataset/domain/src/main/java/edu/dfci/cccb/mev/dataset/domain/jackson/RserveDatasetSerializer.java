@@ -95,9 +95,11 @@ public class RserveDatasetSerializer <K, V> extends JsonSerializer<Dataset<K, V>
     Iterator<Value<K, V>> values = dataset.values ().get (query).iterator ();
 
     jgen.writeStartArray ();
-    for (K row : rows) {
+    for (Iterator<K> r = rows.iterator (); r.hasNext ();) {
+      K row = r.next ();
       jgen.writeStartObject ();
-      for (K column : columns) {
+      for (Iterator<K> c = columns.iterator (); c.hasNext ();) {
+        K column = c.next ();
         Value<K, V> v = values.next ();
         jgen.writeObjectField (column.toString (), v.value ());
         // provider.defaultSerializeField (column.toString (), v.value (),

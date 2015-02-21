@@ -14,26 +14,27 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.cluster.domain.guice;
+package edu.dfci.cccb.mev.common.domain2.annotation;
 
-import edu.dfci.cccb.mev.cluster.domain.Hierarchical;
-import edu.dfci.cccb.mev.cluster.domain.KMeans;
-import edu.dfci.cccb.mev.dataset.domain.guice.AnalysisTypeRegistrar;
-import edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import javax.inject.Qualifier;
 
 /**
+ * Qualifier for csv related beans
+ * 
  * @author levk
  * @since CRYSTAL
  */
-public class ClusteringModule extends DatasetModule {
-
-  /* (non-Javadoc)
-   * @see
-   * edu.dfci.cccb.mev.dataset.domain.guice.DatasetModule#configure(edu.dfci
-   * .cccb.mev.dataset.domain.guice.AnalysisTypeRegistrar) */
-  @Override
-  public void configure (AnalysisTypeRegistrar registrar) {
-    registrar.register (Hierarchical.class);
-    registrar.register (KMeans.class);
-  }
-}
+@Retention (RUNTIME)
+@Target ({ FIELD, METHOD, PARAMETER })
+@Inherited
+@Qualifier
+public @interface Csv {}

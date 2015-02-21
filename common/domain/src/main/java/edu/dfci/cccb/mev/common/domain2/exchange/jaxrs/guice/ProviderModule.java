@@ -14,32 +14,25 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package edu.dfci.cccb.mev.dataset.domain;
+package edu.dfci.cccb.mev.common.domain2.exchange.jaxrs.guice;
 
-import java.util.Collection;
+import static com.google.inject.multibindings.Multibinder.newSetBinder;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import com.google.inject.Binder;
+import com.google.inject.Module;
+
+import edu.dfci.cccb.mev.common.domain2.exchange.jaxrs.mappers.MevExceptionMapper;
 
 /**
- * Dimension
- * 
  * @author levk
- * @since BAYLIE
+ * @since CRYSTAL
  */
-public interface Dimension <K> extends Collection<K>, Named {
+public class ProviderModule implements Module {
 
-  /**
-   * Identifier for injection
-   */
-  public static final String DIMENSION = "dimension";
-
-  /**
-   * @param index
-   * @return key at index specified
-   */
-  @Path ("/{index}")
-  @GET
-  K get (@PathParam ("index") int index);
+  /* (non-Javadoc)
+   * @see com.google.inject.Module#configure(com.google.inject.Binder) */
+  @Override
+  public void configure (Binder binder) {
+    newSetBinder (binder, Object.class).addBinding ().toInstance (new MevExceptionMapper ());
+  }
 }

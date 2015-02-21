@@ -37,21 +37,11 @@ import edu.dfci.cccb.mev.dataset.domain.Dimension;
 public class ValuesTest {
 
   private static Dimension<String> dimension (final String name, final String... keys) {
-    return new Dimension<String> () {
-
-      @Override
-      public String name () {
-        return name;
-      }
+    return new DimensionAdapter<String> (name) {
 
       @Override
       public Iterator<String> iterator () {
         return Arrays.asList (keys).iterator ();
-      }
-
-      @Override
-      public int size () {
-        return keys.length;
       }
 
       @Override
@@ -62,6 +52,11 @@ public class ValuesTest {
       @Override
       public String toString () {
         return Arrays.toString (keys);
+      }
+
+      @Override
+      public int size () {
+        return keys.length;
       }
     };
   }

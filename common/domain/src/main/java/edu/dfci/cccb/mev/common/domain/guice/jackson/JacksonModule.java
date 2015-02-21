@@ -17,6 +17,7 @@
 package edu.dfci.cccb.mev.common.domain.guice.jackson;
 
 import static com.fasterxml.jackson.databind.AnnotationIntrospector.pair;
+import static com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
 import static edu.dfci.cccb.mev.common.domain.guice.jackson.annotation.Handling.Factory.APPLICATION_JSON;
 import static edu.dfci.cccb.mev.common.domain.guice.jackson.annotation.Handling.Factory.TEXT_TSV;
@@ -389,6 +390,8 @@ public class JacksonModule implements Module {
                 @Override
                 public ObjectMapper get () {
                   ObjectMapper mapper = new ObjectMapper ();
+
+                  mapper.configure (ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 
                   configureSerializers (mapper);
                   configureIntrospectors (mapper);

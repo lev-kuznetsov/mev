@@ -20,6 +20,7 @@ import static edu.dfci.cccb.mev.dataset.domain.prototype.ValuesAdapter.all;
 import static java.util.Arrays.asList;
 import static lombok.AccessLevel.PROTECTED;
 
+import java.util.AbstractCollection;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.ArrayList;
@@ -40,11 +41,12 @@ import edu.dfci.cccb.mev.dataset.domain.Dimension;
 
 /**
  * @author levk
+ * @since CRYSTAL
  */
 @ToString
 @Accessors (fluent = true)
 @RequiredArgsConstructor (access = PROTECTED)
-public abstract class DimensionAdapter <K> implements Dimension<K> {
+public abstract class DimensionAdapter <K> extends AbstractCollection<K> implements Dimension<K> {
 
   private final @Getter String name;
 
@@ -77,8 +79,8 @@ public abstract class DimensionAdapter <K> implements Dimension<K> {
   @Override
   public int hashCode () {
     int result = 0;
-    for (K key : this)
-      result ^= key.hashCode ();
+    for (Iterator<K> keys = iterator (); keys.hasNext ();)
+      result ^= keys.next ().hashCode ();
     return result;
   }
 

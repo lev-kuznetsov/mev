@@ -20,9 +20,14 @@
  * @author levk
  * @since CRYSTAL
  */
-define ('mev', [ 'angular', './log/log', './log/debug', './log/info', './log/warn', './log/error' ], function (ng, t, d, i, w, e) {
+define ('mev', [ 'angular', './log/log', './log/debug', './log/info', './log/warn', './log/error' ], function (ng,
+                                                                                                               t,
+                                                                                                               d,
+                                                                                                               i,
+                                                                                                               w,
+                                                                                                               e) {
   var mev = ng.module ('mev', []);
-  
+
   mev.config ([ '$provide', function ($provide) {
     $provide.decorator ('$log', [ function () {
       return {
@@ -33,12 +38,15 @@ define ('mev', [ 'angular', './log/log', './log/debug', './log/info', './log/war
         error : e
       };
     } ]);
+  } ]);
 
   mev.module = function (name, dependencies) {
     attach = function (parent, name, dependencies) {
       parent.requires.push (name);
       var module = ng.module (name, dependencies === undefined ? [] : dependencies);
-      module.module = function (name, dependencies) { attach (module, name, dependencies); };
+      module.module = function (name, dependencies) {
+        attach (module, name, dependencies);
+      };
       return module;
     };
 
@@ -46,7 +54,7 @@ define ('mev', [ 'angular', './log/log', './log/debug', './log/info', './log/war
   };
 
   mev.bootstrap = function (element) {
-    ng.bootstrap (element, [ 'mev' ]);
+    ng.bootstrap (element, [ mev.name ]);
   };
 
   return mev;
