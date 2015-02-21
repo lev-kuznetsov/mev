@@ -45,7 +45,8 @@
       "exports": "_"
     },
     "angular-mocks": {
-      "exports": "ngMock"
+      "exports": "ngMock",
+      "deps": ["angular"]
     }
   }
 }
