@@ -104,7 +104,9 @@ define(['jquery',
         'DatasetResourceService',
         'ProjectFactory',
         'Heatmap.Modal',
-        function($scope, $routeParams,  $loc, DatasetResourceService, ProjectFactory, modal) {
+        'AnalysisEventBus',
+        'alertService',
+        function($scope, $routeParams,  $loc, DatasetResourceService, ProjectFactory, modal, analysisEventBus, alertService) {
 		    
 			LoadingModal = modal('#loading');
 			
@@ -158,5 +160,23 @@ define(['jquery',
 				
 			});
         	
+			analysisEventBus.onAnalysisStarted($scope, function(type, params){
+                var message = "Started "+ type +" analysis for "+params.name;
+                var header = type;                            
+            	alertService.info(message,header);
+            });			
+			analysisEventBus.onAnalysisSuccess($scope, function(type, params){                
+                var message = type+" analysis for "+params.name + " complete!";
+                var header = type;                             
+                alertService.success(message,header);
+            });
+			analysisEventBus.onAnalysisFailure($scope, function(type, params){                
+                var message = "Could not perform "+type+" analysis "+params.name+
+                    ". If problem persists, please contact us.";
+                var header = "Analysis Problem (Error Code: " +status+ ")";
+                alertService.error(message,header);
+            });
+            	  
+            
         }]);
 });

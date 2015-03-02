@@ -1,11 +1,10 @@
-define(['angular', 'alertservice/AlertService'], function(angular){
+define(['angular', 'alertservice/AlertService'], function(angular, AlertService){
 	
-	var module = angular.module('Mev.AnalysisModalCollection', ['Mev.AlertService'])
+	var module = angular.module('Mev.AnalysisModalCollection', ['Mev.AlertService']);
 	
-	module.path = "container/javascript/analysismodalcollection/"
+	module.path = "/container/javascript/analysismodalcollection/";
 	
-	module.service('')
-	.directive('modalAnova',[ 'alertService',
+	module.directive('modalAnova',[ 'alertService',
         function(alertService) { 
             return {
                 restrict : 'C',
@@ -38,15 +37,15 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                     
                     scope.addSelection = function(decked){
                       if (scope.params.selections.indexOf(decked.name) < 0 && scope.params.selections.length < 3) {
-                          scope.params.selections.push(decked.name)
+                          scope.params.selections.push(decked.name);
                       }
                     };
                     
                     scope.$watch('params.dimension', function(newval){
                         if(newval){
-                            scope.params.selections = []
+                            scope.params.selections = [];
                         }
-                    })
+                    });
                     
                     scope.testInit = function(){
                         
@@ -78,11 +77,10 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                                 + scope.params.pvalue
                                 + ',mtc='
                                 + scope.params.mtc
-                        }
+                        };
                         
                         
-                        scope.dataset.analysis
-                        .postf(analysisData, JSON.stringify(scope.params.selections),
+                        scope.dataset.analysis.postf(analysisData, JSON.stringify(scope.params.selections),
 	                        function(data, status, headers, config) {
 	                            
                         		scope.dataset.loadAnalyses();
@@ -106,7 +104,7 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                         });
                     };
                 }
-            }
+            };
     }])
     .directive('modalDESeq', ['alertService', function(alertService){
     	
@@ -503,8 +501,9 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                 }
             };
     }])
-    .directive('modalHierarchical', ['alertService',
-        function(alertService) {
+    .directive('modalHierarchical', ['alertService', '$rootScope',
+                                     
+        function(alertService, $rootScope) {
 
             return {
                 restrict : 'C',
@@ -540,57 +539,27 @@ define(['angular', 'alertservice/AlertService'], function(angular){
                     scope.params.selectedMetric = {name:"Euclidean", value:"euclidean"}
 
                     scope.testInit = function() {
-
-                        var message = "Started clustering analysis for "
-                            + scope.params.name;
-
-                        var header = "Hierarchical Clustering Analysis";
-                         
-                        alertService.info(message,header);
-
-                        var analysisData = {
+                        
+                        var postParams = {
+	                        	datasetName : scope.dataset.datasetName, 
+	                            analysisType : 'hcl'                            
+	                    };
+                        var analysisParams = {
                         	name : scope.params.name,
                         	dimension : scope.params.dimension.value,
                         	metric : scope.params.metric.value,
                         	linkage : scope.params.linkage.value
-                        };
-                        
-//                        scope.dataset.analysis.postf({
-//                            datasetName : scope.dataset.datasetName,
-//                            analysisType : 'hcl',
-//                            analysisName : analysisData.name,
-//                            analysisParams : analysisData.dimension + ','
-//                                + analysisData.metric + ','
-//                                + analysisData.linkage
-//                        }, {},
-                        scope.dataset.analysis.post({
-                        	datasetName : scope.dataset.datasetName, 
-                            analysisType : 'hcl'
-                            
-                    	}, analysisData, 
-                        function(data, status, headers, config) {
-                            
-                        	scope.dataset.loadAnalyses();
-                        	
-                            var message = "Clustering analysis for "
-                                + scope.params.name + " complete!";
-
-                            var header = "Hierarchical Clustering Analysis";
-                             
-                            alertService.success(message,header);
-                                                                
-                        },
-                        function(data, status, headers, config) {
-                            
-                            var message = "Could not perform clustering. If "
-                                + "problem persists, please contact us.";
-                            var header = "Clustering Problem (Error Code: "
-                                + status
-                                + ")";
-                            alertService.error(message,header);
-                            
-                        });
-
+                        };    
+                        scope.dataset.analysis.post(postParams, analysisParams,                    	
+	                        function(data, headers) {
+	                            console.debug("HCL success", data, headers("Content-Length"));
+//	                            scope.dataset.loadAnalyses();
+//	                        	scope.dataset.loadAnalyses().then(function(){
+//	                        		$rootScope.$broadcast("ui:projectTree:dataChanged");
+//	                        	});
+	                        	
+	                        }
+                        );
                     };
 
                     function resetSelections() {
