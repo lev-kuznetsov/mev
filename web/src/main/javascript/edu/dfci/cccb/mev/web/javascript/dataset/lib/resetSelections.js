@@ -9,37 +9,39 @@ define([], function(){
         
         if(dimension){
             
-            self.selection.getAll({
+            return self.selection.getAll({
                 'datasetName': self.datasetName, 
                 'dimension':dimension}, function(response){
 
-                    self.setSelections(dimension, response.selections)
+                    self.setSelections(dimension, response.selections);
+                    return response.selections;
                     
-            }, function(error){
-                return
             });
+            
             
         } else {
             
-            self.selection.getAll({
+            var row = self.selection.getAll({
                 'datasetName': self.datasetName, 
                 'dimension':'row'}, function(response){
 
-                    self.setSelections('row', response.selections)
+                    self.setSelections('row', response.selections);
+                    return response.selections;
                     
-            }, function(error){
-                return
             });
             
-            self.selection.getAll({
-                'datasetName': self.datasetName, 
-                'dimension':'column'}, function(response){
-
-                    self.setSelections('column', response.selections)
-                    
-            }, function(error){
-                return
+            
+            return row.$promnise.then(function(){
+            	self.selection.getAll({
+                    'datasetName': self.datasetName, 
+                    'dimension':'column'}, function(response){
+                    	
+                        self.setSelections('column', response.selections);
+                        return response.selections;
+                        
+                });
             });
+            
             
         };
         

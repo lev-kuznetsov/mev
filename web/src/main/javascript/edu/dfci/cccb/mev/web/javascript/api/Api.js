@@ -1,7 +1,8 @@
-define ([ 'angular', 'angularResource'], function (angular) {
+define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular, angularResource, AnalysisEventBus) {
 
     return angular
     .module ('Mev.Api', ['ngResource'])
+    .service('AnalysisEventBus', AnalysisEventBus)
     .service ('DatasetResourceService', ['$resource', function ($resource) {
     	 return $resource('/dataset/:datasetName/data',
 	    	{
@@ -19,21 +20,19 @@ define ([ 'angular', 'angularResource'], function (angular) {
 			},{
 				'get': {method:'GET'},
 				'post':{
-					url:'import/google/:id/load',
+					url:'/import/google/:id/load',
 					method: 'POST'
 				}
 			});
         }])
-    .service ('AnalysisResourceService', ['$resource', '$routeParams', function ($resource, $routeParams) {
-    	
-    	return $resource('/dataset/:datasetName/analysis',
-	    	{
-	    		'format':'json'
-			}, {
+    .service ('AnalysisResourceService', ['$resource', '$routeParams', 'AnalysisEventBus', function ($resource, $routeParams, analysisEventBus) {
+    	    	
+    	var resource = $resource('/dataset/:datasetName/analysis',
+	    	{	'format':'json'}, 
+			{
 				'getAll': {
 				    'url' : '/dataset/:datasetName/analysis',
 				    'method':"GET",
-				    
 				},
 				'get': {
 					'url': '/dataset/:datasetName'
@@ -42,28 +41,46 @@ define ([ 'angular', 'angularResource'], function (angular) {
                 },
                 'postf': {
                 	'method':'POST',
-                	'url': 'dataset/:datasetName'
+                	'url': '/dataset/:datasetName'
                         + '/analyze/:analysisType/:analysisName(:analysisParams)'
                 },
                 'post': {
                     'method':'POST',
-                    'url': 'dataset/:datasetName'
+                    'url': '/dataset/:datasetName'
                         + '/analyze/:analysisType'
                 },
                 'post3': {
                 	'method':'POST',
-                	'url': 'dataset/:datasetName'+
+                	'url': '/dataset/:datasetName'+
                 		'/analyze/:analysisType/:analysisName',
                 		//'headers':{'Content-Type':'application/x-www-form-urlencoded'}
                 },
                 'post4': {
                 	'method':'GET',
-                	'url': 'dataset/:datasetName'+
+                	'url': '/dataset/:datasetName'+
                 		'/analyze/:analysisType/:analysisName',
                 		//'headers':{'Content-Type':'application/x-www-form-urlencoded'}
                 }
                 
-			});
+			});    	    	
+    	var AnalysisResource = Object.create(resource);
+    	AnalysisResource.post=function(params, data, callback){
+    		
+    		var result = resource.post(params, data, callback);
+    		
+    		result.$promise.then(
+				function(response){
+					console.debug("AnalysisResource success", response);
+					analysisEventBus.analysisSucceeded(params, response);
+	    		}, function(response){
+	    			console.debug("AnalysisResource error", response);
+	    			analysisEventBus.analysisFailed(params, response);
+	    		}
+	    	);
+    		
+    		analysisEventBus.analysisStarted(params, data);
+    	};
+    	return AnalysisResource;    	
     	
     }])
     .service ('SelectionResourceService', ['$resource', '$routeParams', function($resource, $routeParams){
