@@ -6,7 +6,7 @@ define([],function(){
 		function _showPleaseWait(){
 			var modalInstance = $modal.open(
 					{
-						template: '<div class="mev-modal"><p> Please wait while, downloading GEO dataset ... </p><div>',
+						template: '<div class="mev-modal"><p> Please wait, downloading GEO dataset ... </p><div>',
 						size: 'lg'
 					});
 			return modalInstance;
