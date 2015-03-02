@@ -7,9 +7,17 @@ define(['jquery', 'angular'], function(jquery, angular){
 			var elm = document.querySelector('#selectionSetMgr');			
 			var selectionSetMgrDOM = angular.element(elm);
 			
+			var rootScope = angular.element(document).scope();
+			if(rootScope.$state){
+				
+				rootScope.$state.go("^."+selection.dimension.toLowerCase()+"Set", {setId: selection.name});
+			}
+			
 			var selectionSetManagerScope=selectionSetMgrDOM.scope();
-			console.debug("selectionSetManagerScope:"+angular.toJson(selectionSetManagerScope));			
-			selectionSetManagerScope.addItem(selection);
+			console.debug("selectionSetManagerScope:", selectionSetManagerScope);
+			if(selectionSetManagerScope){
+				selectionSetManagerScope.addItem(selection);
+			}
 			
 		},
 		openDataset: function(dataset){
