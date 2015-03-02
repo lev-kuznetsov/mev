@@ -1,6 +1,6 @@
 define(['angular', 'd3', 'jquery',
         './lib/HeatmapVisualizationClass', './lib/generateParams',
-        'alertservice/AlertService', 'colorbrewer/ColorBrewer', 'jqueryUi', 'css-loader'], 
+        'alertservice/AlertService', 'colorbrewer/ColorBrewer', 'jqueryUi'], 
 function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
 	return angular.module('Mev.heatmapvisualization', ['d3colorBrewer', 'Mev.AlertService'])
 	.directive('heatmapSettings',[function() {
