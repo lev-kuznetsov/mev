@@ -1,0 +1,31 @@
+<div class="row">
+	<div class="col-md-3">
+	
+	left side
+	
+	</div>
+	<div class="col-md-9">
+		content
+		<div gridster class="issuesContent">
+		    <ul>
+		        <li gridster-item="item" ng-repeat="item in standardItems">
+		        	visual #
+		        </li>
+		    </ul>
+		</div>
+		
+		
+		<div gridster="outerGridster.config" class="issuesContent">
+		    <ul>
+		        <li gridster-item="item" ng-repeat="item in outerGridster.items">
+		            <div gridster="innerGridster.config" class="issuesContent">
+		                <ul>
+		                    <li gridster-item="anotheritem" ng-repeat="anotheritem in innerGridster.items"></li>
+		                </ul>
+		            </div>
+		        </li>
+		    </ul>
+		</div>
+
+	</div>
+</div>

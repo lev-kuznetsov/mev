@@ -1,0 +1,7 @@
+<ul>
+<li ng-repeat="selection in dimension.selections">{{selection.name}}
+<!-- <project-data data="selection"></project-data>  -->
+	<span ng-repeat="key in selection.dataref[selection.dimension].keys">{{key}},</span>
+</li>
+</ul>
+

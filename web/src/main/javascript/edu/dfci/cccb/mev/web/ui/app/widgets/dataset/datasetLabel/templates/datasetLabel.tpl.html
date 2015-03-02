@@ -1,0 +1,19 @@
+<span ng-switch="clickable">
+<a ng-switch-when="true" ng-click="DatasetLabelVM.startNewProject(dataset)" >
+{{dataset.name}}
+</a>
+<span ng-switch-default>{{dataset.name}}</span>
+</span>
+<span ng-if="editable">(<a ng-click="DatasetLabelVM.editListItem(dataset)">rename</a>)</span>
+<div>Annotations:</div>
+<ul>
+<li>row 
+	<a ng-if="dataset.annotations && dataset.annotations[0]" ng-click="DatasetLabelVM.filterAnnotations(dataset, 0)">filter</a>
+	<a ng-if="!dataset.annotations || !dataset.annotations[0]" ng-click="DatasetLabelVM.addAnnotations(dataset, 0)">add</a>
+</li>
+<li>column 
+	<a ng-if="dataset.annotations && dataset.annotations[1]" ng-click="DatasetLabelVM.filterAnnotations(dataset, 1)">filter</a>	
+	<a ng-if="!dataset.annotations || !dataset.annotations[1]" ng-click="DatasetLabelVM.addAnnotations(dataset, 1)">add</a>
+</li>
+</ul>
+</a>

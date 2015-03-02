@@ -1,0 +1,9 @@
+<ul ng-class="isMenu ? 'dropdown-menu' : ''">
+<li ng-repeat="dataset in DatasetListVM.getDatasetList()">	
+	<dataset-label ng-if="!isMenu" clickable="true" editable="{{showEdit}}" dataset="dataset"></dataset-label>
+	<a ng-if="isMenu" ng-click="DatasetListVM.openDataset(dataset)">{{dataset.name}} </a>
+</li>
+<li ng-if="showAdd">
+<a ng-click="DatasetListVM.newDataset()" >upload new {{showadd}}</a>
+</li> 
+</ul>

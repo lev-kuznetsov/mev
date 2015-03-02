@@ -1,0 +1,7 @@
+<span ng-switch="clickable">
+<a ng-switch-when="true" ng-click="ProjectLabelVM.openProject(project)" >
+{{project.name}}
+</a>
+<span ng-switch-default>{{project.name}}</span>
+</span>
+<span ng-if="editable">(<a ng-click="ProjectLabelVM.editListItem(project)">edit</a>)</span>

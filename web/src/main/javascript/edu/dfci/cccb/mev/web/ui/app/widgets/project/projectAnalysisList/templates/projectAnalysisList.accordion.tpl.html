@@ -1,0 +1,6 @@
+<accordion>
+	<accordion-group ng-repeat="analysis in analyses">
+		<accordion-heading>{{analysis.name}}: {{analysis.type}}</accordion-heading>
+		<project-analysis analysis="analysis"></project-analysis>
+	</accordion-group> 
+</accordion>

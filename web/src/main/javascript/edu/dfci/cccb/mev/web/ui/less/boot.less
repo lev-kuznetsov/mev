@@ -1,0 +1,23 @@
+@rootUrl: "../";
+@vendorUrl: "../../vendor";
+@appUrl: "../../ui/app";
+
+@import "@{vendorUrl}/bootstrap-3.3.1/less/bootstrap.less";
+@import "@{vendorUrl}/bootstrap-3.3.1/less/variables.flatly.less";
+//@import "vendor/bootstrap-3.3.1/less/variables.sandstone2.less";
+
+@import "variables.mev.less";
+
+@icon-font-path: "/container/vendor/bootstrap-3.3.1/fonts/";
+
+//library of mixins
+@import "@{vendorUrl}/moreorless/_css3.less";
+@import "@{vendorUrl}/bootstrap-tree/style.less";
+
+//mui less
+@import "@{appUrl}/widgets/mainmenu/css/mainmenu";
+@import "@{appUrl}/widgets/common/sidemenu/css/sidemenu";
+@import "@{appUrl}/widgets/common/panel/css/panel.less";
+@import "@{appUrl}/views/root/css/root.less";
+@import "@{appUrl}/views/issues/css/issues.less";
+@import "@{appUrl}/widgets/analysis/analysisLog/less/analysisLog.less";

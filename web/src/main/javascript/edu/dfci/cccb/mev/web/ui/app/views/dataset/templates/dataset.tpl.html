@@ -1,0 +1,83 @@
+<div class="row" layout-row>
+	
+	<div layout-column="left" ng-class="{'col-0': layoutColumn.isClosed(), 'col-md-4': !layoutColumn.isClosed()}" content-id="content-wrapper" >		
+		<div class="pull-right">
+			<div class="btn btn-info btn-xs" ng-click="layoutColumn.toggle()">
+				  	<i class="fa fa-arrow-left"></i>
+			</div>
+<!-- 			<div dropdown class="column-config-menu pull-right">						 -->
+<!-- 				<div class="btn btn-info btn-xs dropdown-toggle" aria-haspopup="true" aria-expanded="false"> -->
+<!-- 			  	<i class="fa fa-cog"></i> -->
+<!-- 			  </div> -->
+<!-- 			  <ul class="dropdown-menu" role="menu">		  	 -->
+<!-- 	        <li><a ng-click="layoutColumn.hide()">Hide</a></li> -->
+<!-- 	      </ul> -->
+<!-- 			</div> -->
+		</div>
+		<h3><project-label clickable="false" editable="true" project="DatasetProjectViewVM.getProject()"></project-label></h3>	
+		<project-tree node-type='Data' project="DatasetProjectViewVM.getProject()"></project-tree>
+<!-- 		<project-nav project="DatasetProjectViewVM.getProject()"></project-nav> -->
+						
+	</div>	
+	<div layout-column="right" ng-class="{'col-md-12': layoutColumn.isClosed(), 'col-md-8': !layoutColumn.isClosed()}" id="content-wrapper">
+		<div class="pull-right">
+			<div class="btn btn-info btn-xs" ng-click="layoutColumn.toggle()">
+		  	<i ng-class="{'fa': true, 'fa-compress': layoutColumn.isClosed(), 'fa-expand': !layoutColumn.isClosed()}"></i>
+		  </div>
+<!-- 			<div dropdown class="column-config-menu pull-right"> -->
+<!-- 				<div class="btn btn-info btn-xs dropdown-toggle" aria-haspopup="true" aria-expanded="false"> -->
+<!-- 			  	<i class="fa fa-cog"></i> -->
+<!-- 			  </div> -->
+<!-- 			  <ul class="dropdown-menu" role="menu">		  	 -->
+<!-- 	        <li><a ng-click="layoutColumn.hide()">Hide</a></li> -->
+<!-- 	      </ul> -->
+<!-- 			</div> -->
+		</div>
+<!-- 		<h3> -->
+<!-- 		<span toggle-sidepanel="left" ng-click='sideMenuVM.toggle()'><i class="fa" ng-class="{'fa-arrow-circle-o-right': sideMenuVM.isCollapsed(), 'fa-arrow-circle-o-left': !sideMenuVM.isCollapsed()}"></i></span> -->
+<!-- 		{{DatasetProjectViewVM.node.nodeData.name || DatasetProjectViewVM.node.nodeName}}  -->
+<!-- 		</h3> -->
+		
+		<div gridster="gridsterOpts" class="issuesContent">
+			<div ui-view></div>
+<!-- 	    <ul> -->
+<!-- 	    		<li gridster-item row="item.position[0]" col="item.position[1]" size-x="item.size.x" size-y="item.size.y" ng-repeat="item in customItems"></li> -->
+<!-- 	        <li gridster-item="item" ng-repeat="item in standardItems"></li> -->
+<!-- 	    </ul> -->
+		</div>
+				
+	</div>
+</div>
+
+
+<bsmodal bindid="hierarchical" func="" header="Hierarchical Clustering" >
+ <div class="modal-Hierarchical" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
+</bsmodal>
+
+<bsmodal bindid="kmeansclust" func="" header="K-Means/Medians Clustering">
+ <div class="modal-Kmeans" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
+</bsmodal>
+  
+<bsmodal bindid="limma" func="" header="LIMMA">
+ <div class="modal-Limma" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
+</bsmodal> 
+
+<bsmodal bindid="fishertest" func="" header="Fisher's Exact Test">
+ <div class="modal-FTest" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
+</bsmodal> 
+
+<bsmodal bindid="wilcoxon" func="" header="Wilcoxon Rank Sum Test">
+ <div class="modal-Wilcoxon" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
+</bsmodal> 
+
+<bsmodal bindid="anova" func="" header="Analysis of Variance">
+ <div class="modal-Anova" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
+</bsmodal> 
+
+<bsmodal bindid="tTest" func="" header="t-Test Analysis">
+ <div class="modal-T-Test" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
+</bsmodal> 
+
+<bsmodal bindid="deseq" func="" header="DESeq Analysis">
+ <div class="modal-D-E-Seq" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
+</bsmodal> 

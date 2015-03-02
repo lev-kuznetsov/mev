@@ -1,0 +1,44 @@
+<h1>blah: {{bla}}</h1>
+<div class="table-responsive">
+<table class="table table-condensed">
+	<th>
+		<th>name</th>
+		<th>desription</th>
+		<th>number of samples</th>
+  </th>
+	<tr ng-repeat="ann in vm.all">
+	<td ng-click="vm.gotoDashboard(ann)">{{ann.meta.name}}<td>
+		<td>{{ann.meta.description}}</td>
+		<td>{{ann.meta.numberOfSamples}}</td>
+  </tr>
+	</table>
+	<div>annotation count: {{vm.all.length}}</div>
+</div>	
+
+<div class="table-responsive">
+<table class="table table-condensed">
+	<th>
+		<th>name</th>		
+		<th>number of facets</th>
+  </th>
+	<tr ng-repeat="dash in vm.dashs">
+	<td>{{dash.getName()}}<td>		
+	<td>{{dash.getFacets().length}}</td>
+  </tr>
+	</table>
+	<div>dash count: {{vm.dashs.length}}</div>
+</div>	
+
+<div class="table-responsive">
+<table class="table table-condensed">
+	<th>
+		<th>project name</th>				
+  </th>
+	<tr ng-repeat="item in vm.projects">
+	<td>{{item.name}}<td>		
+  </tr>
+	</table>
+	<div>project count: {{vm.projects.length}}</div>
+	<div>project selected: {{vm.selectedProject.name}}</div>
+</div>	
+

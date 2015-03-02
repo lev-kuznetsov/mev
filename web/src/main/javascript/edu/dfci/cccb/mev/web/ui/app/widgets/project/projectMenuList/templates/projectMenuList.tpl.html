@@ -1,0 +1,8 @@
+<ul>
+<li ng-repeat="project in ProjectListVM.getProjectList()">	
+<project-label clickable="true" editable="{{showEdit}}" project="project"></project-label>
+</li>
+<li ng-if="showAdd">
+<a ng-click="ProjectListVM.newProject()" >add new</a>
+</li> 
+</ul>

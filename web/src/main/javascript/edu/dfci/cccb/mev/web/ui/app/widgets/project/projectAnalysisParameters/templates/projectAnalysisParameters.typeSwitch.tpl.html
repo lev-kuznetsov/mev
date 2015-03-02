@@ -1,0 +1,5 @@
+<div ng-switch="analysisType">
+	<hcl-parameters parameters="parameters" ng-switch-when="Hierarchical Clustering"></hcl-parameters>
+	<limma-parameters parameters="parameters" ng-switch-when="LIMMA Differential Expression Analysis"></limma-parameters>
+	<default-parameters parameters="parameters" ng-switch-default></default-parameters>
+</div>

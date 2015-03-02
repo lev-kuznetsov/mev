@@ -1,0 +1,275 @@
+//@import "../../../../css/import.less";
+//@import "/ngboostrap/vendor/bootstrap-3.3.1/less/variables.flatly.less";
+//@import "../../../../vendor/bootstrap-3.3.1/less/variables.flatly.less";
+//#main-footer,
+
+
+//make root column fixed
+//top: 0;
+//bottom: 0;
+//left: 0;
+//right: 0;
+//position: relative;
+//overflow-y: hidden;
+//height: 100%;
+
+@sidemenuOn-margin-left: @sidemenu-width ;
+@sidemenuOn-margin-left-shrink: @sidemenu-width-shrink ;
+@footer-height: @navbar-padding-vertical*2+@line-height-computed;
+#main-wrapper {
+	
+	
+	@media (min-width: @screen-xs-min) {
+		padding-bottom: @footer-height;
+	}	
+	
+	.fixed-header &{
+			@media (min-width: @screen-sm-min){
+				padding-top: @sidemenu-top + @navbar-margin-bottom;
+			}		
+	}	
+	
+	.fixed-header.fixed-footer &{
+		@media (min-width: @screen-md-min){
+			position: absolute;
+			top: @sidemenu-top;
+			bottom: @footer-height;
+			left: 0;			
+			right: @grid-gutter-width / 2;			
+			overflow-y: auto;
+			margin-left: 0;
+			padding-left: 0;			
+			padding-bottom: 0;
+			padding-top: 0;
+			> div{
+				height: 100%;
+				position: relative;
+				> div.row{
+					height: 100%;
+					position: relative;								
+					> div{						
+						padding-top: @navbar-margin-bottom;
+					}
+				}				
+			}
+		
+			&.columnScroll{
+				> div{
+					> div.row{
+						> div{
+							height: 100%;
+							overflow-y: auto;		
+						}
+					}
+				}
+			}
+					
+			&.sidemenuOn{
+				left: @sidemenuOn-margin-left;
+				margin-left: 0;
+				padding-left: 0;
+				&.shrink{
+					left: @sidemenuOn-margin-left-shrink;
+					margin-left: 0;
+					padding-left: 0;
+				}			
+			}
+		}				
+	}
+	
+	&.sidemenuOn{		
+
+		@media (min-width: @screen-sm-min){
+			padding-left: @sidemenuOn-margin-left;
+		}		
+		@media (max-width: @screen-xs-max) {
+			margin-left: -(@grid-gutter-width / 2);			
+		}
+//		transition: padding .5s ease;
+		
+		&.shrink{
+			@media (min-width: @screen-sm-min){
+				padding-left: @sidemenuOn-margin-left-shrink;			
+			}			
+			@media (max-width: @screen-xs-max) {
+				margin-left: -(@grid-gutter-width / 2);
+			}
+//			transition: padding .5s ease;
+		}
+	}
+	
+//	>div.col-md-12 {
+//		overflow-y: scoll;
+//	}
+}
+
+#main-footer{
+	position: absolute;	
+	bottom: 0;
+	z-index: @zindex-mainfooter;	
+	width: 100%;	
+	
+	.fixed-footer & {
+		@media (min-width: @screen-xs-min){
+			position: fixed;
+			bottom: 0;
+		}
+	}
+	
+	nav{
+		background: @navbar-default-bg;
+		color: @navbar-default-color;
+		margin-bottom: 0;
+	}
+	
+	&.sidemenuOn{
+//		height: 52px;
+//		padding: 15px 13px 0;
+//		margin-left: @sidemenuOn-margin-left;
+//		transition: padding .5s ease;
+		
+		@media (min-width: @screen-sm-min){
+//			padding-left: @sidemenuOn-margin-left - (@grid-gutter-width / 2);
+			padding-left: @sidemenuOn-margin-left;			
+			margin-top: -@footer-height;
+		}
+		@media (max-width: @screen-xs-max){
+			.responsive();
+			width: inherit;
+		}
+//		border-top: 1px solid #CECECE;
+//		background: #2a2725;
+//		width: 100%;
+		
+		&.shrink{
+//			transition: padding .5s ease;
+			@media (min-width: @screen-sm-min){
+				padding-left: @sidemenuOn-margin-left-shrink;
+//				padding-left: @sidemenuOn-margin-left-shrink - (@grid-gutter-width / 2);
+			}
+//			padding-left: @sidemenuOn-margin-left-shrink;
+		}
+	}
+}
+
+html{
+	position: relative;
+}
+html, body{
+//	height: 100%;
+	min-height: 100%;
+	padding: 0;
+	margin: 0;	
+}
+
+.outermost-wrapper{
+	.container-fluid();
+//	min-height: 100%;
+	>div{
+		>nav{
+			z-index: @zindex-mainmenu;
+		}
+	}
+}
+
+.col-0,
+.col-lg-0,
+.col-md-0,
+.col-sm-0,
+.col-xs-0 {
+    width: 0px;
+    float: left;
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+    min-height: 1px;
+    height: 1px;
+    opacity: 0;    
+}
+.column-config-menu{
+	position: relative;
+}
+.wrapper-config-menu{
+	position: absolute; 
+	top: 0;
+	right: 0; 	
+	z-index: 1000000;
+}
+div[layout-column]{
+//	transition: width .5s ease;
+}
+
+#main-wrapper {
+	.fixed-header.fixed-footer &{		
+		
+		div[ui-layout-container],		
+		.ui-layout-container{
+//			transition: all 0.2s ease-out;
+//			transition-property: left, width; 
+			> *:first-child{
+				padding-top: @navbar-margin-bottom;
+			}
+			> *{
+				margin: 0 15px;
+				display: block;		
+			}	
+		}
+		
+		.ui-splitbar{
+//			transition: all 0.2s ease-out;
+//			transition-property: left, width;
+			background-color: @btn-info-bg;
+			a{
+				&, span{
+					margin: 15px 0;
+					color: @btn-info-color;					
+				}
+			}
+		}
+
+	}
+}
+
+.ui-layout-transition{
+//	transition: all 1.5s ease-out;
+	transition-property: left, width;
+}
+
+.ui-layout-container + .ui-layout-transition,
+.ui-layout-transition + .ui-layout-container{
+//	transition: all 1.5s ease-out;
+	transition-property: left, width;
+} 
+
+//div[ui-layout]{
+//	&.stretch{
+//		position: relative;
+//	  top: 0;
+//	  left: 0;
+//	  right: 0;
+//	  bottom: 0;
+//	}
+//	
+//	> * {
+//		display: inline-block;
+//	}
+//	
+//	div[ui-layout-container]{
+//	&.stretch{
+//		position: static;
+//		clear: none;
+//		display: inline-block;
+////		right: initial;
+////	  bottom: initial;
+//	}
+//}
+//}
+
+
+.row {
+	> div[class^="col-"]{
+		> :first-child{
+			margin-top: 0px;
+		} 
+	}
+}

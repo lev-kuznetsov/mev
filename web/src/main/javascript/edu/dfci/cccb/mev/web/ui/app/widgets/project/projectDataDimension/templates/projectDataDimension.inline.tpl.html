@@ -1,0 +1,4 @@
+<span ng-repeat="key in dimension.keys">{{key}},</span>
+<h5 ng-if="dimension.selection">selections</h5>
+<project-data-selection-list ng-if="dimension.selection" dimension="dimension.selection"></project-data-selection-list>
+

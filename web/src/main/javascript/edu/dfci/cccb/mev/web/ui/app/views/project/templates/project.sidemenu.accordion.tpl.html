@@ -1,0 +1,52 @@
+<sidemenu>
+
+<accordion>
+	<accordion-group class="panel-info" >
+		<accordion-heading ><i ng-click="open($event)" class="fa fa-bar-chart"></i> <span >Statistics</span></accordion-heading>	
+		
+		<ul class="list-group">
+	      	<li class="list-group-item"><a data-toggle="modal" role="button" data-target="#limma"">LIMMA</a></li> 
+			<li class="list-group-item"><a data-toggle="modal" data-target="#tTest">t-Test</a></li>
+			<li class="list-group-item"><a data-toggle="modal" data-target="#fishertest">Fisher Exact Test</a></li>
+			<li class="list-group-item"><a data-toggle="modal" data-target="#wilcoxon">Wilcoxon Rank Sum</a></li>
+			<li class="list-group-item"><a data-toggle="modal" data-target="#anova">ANOVA</a></li>
+			<li class="list-group-item"><a data-toggle="modal" data-target="#deseq">DESeq</a></li>
+	    </ul>
+	    
+<!-- 	    <div class="panel panel-info" panel-controlls> -->
+<!-- 		  <div class="panel-heading" > -->
+<!-- 		    <h3 class="panel-title">LIMMA</h3> -->
+<!-- 		  </div> -->
+<!-- 		  List group -->
+<!-- 		  <ul class="panel-toolbar list-group" > -->
+<!-- 		    <li class="list-group-item"> -->
+<!-- 			    <div class="btn-toolbar" role="toolbar" > -->
+<!-- 					  <div class="panel-actions btn-group" dropdown > -->
+<!-- 					  	<button type="button" class="btn "> -->
+<!-- 				        <i class=	"fa fa-plus"></i> -->
+<!-- 				      </button> -->
+<!-- 				    </div>		  	 -->
+<!-- 			  	</div> -->
+<!-- 		   	</li>		    -->
+<!-- 		  </ul> -->
+<!-- 		  <div class="panel-body" > -->
+<!-- 		    <form> -->
+		    	
+<!-- 		    </form> -->
+<!-- 		  </div> -->
+<!-- 		</div> -->
+		
+	</accordion-group> 
+	
+	<accordion-group class="panel-info">
+	<accordion-heading><i class="fa fa-sitemap"></i> <span>Clustering</span></accordion-heading>
+		<ul class="list-group">
+	      <li class="list-group-item"><a data-toggle="modal" role="button" data-target="#hierarchical">Hierarchical</a></li>      
+	      <li class="list-group-item"><a data-toggle="modal" role="button" data-target="#kmeansclust">K-Means</a></li>
+	    </ul>				
+	</accordion-group>
+	
+</accordion>
+
+</sidemenu>
+

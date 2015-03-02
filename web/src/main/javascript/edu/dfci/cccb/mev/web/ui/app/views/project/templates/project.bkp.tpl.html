@@ -1,0 +1,27 @@
+<div class="row">
+	<div class="col-md-3">
+		<h3>Project <project-label clickable="false" editable="true" project="ProjectViewVM.getProject()"></project-label></h3>
+<!--  		<div tree-view="ProjectViewVM.tree" tree-view-options="ProjectViewVM.options"></div> -->		
+<!-- 		<h4>Data</h4> -->
+		<project-tree node-type='Data' project="ProjectViewVM.getProject()"></project-tree>
+<!-- 		<h4>Analyses</h4> -->
+		<project-tree node-type='Analysis' project="ProjectViewVM.getProject()">
+<!-- 			<script type="text/ng-template"  id="Analysis.html"> -->
+<!--     		{{data.name}} -->
+<!--     		<a ng-click="add(data)" ">add</a> -->
+<!--     		<a ng-click="delete(data)" ng-show="data.nodes.length > 0">delete</a> -->
+<!--     			<ul> -->
+<!--         		<li ng-repeat="data in data.nodes" ng-include="'tree_item_renderer.html'"></li> -->
+<!--     			</ul>			 -->
+<!-- 			</script> -->
+		</project-tree>
+<!-- 		<h4>Dashboards</h4> -->
+		<project-tree node-type='Dashboard' project="ProjectViewVM.getProject()"></project-tree>
+<!-- 		<h4>History</h4> -->
+		<project-tree node-type='History' project="ProjectViewVM.getProject()"></project-tree>
+	</div>
+	<div class="col-md-9">
+		<h3>Visualizations</h3>
+	</div>
+</div>
+

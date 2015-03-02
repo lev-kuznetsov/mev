@@ -1,0 +1,9 @@
+<div>i'm a the Ann'list</div>
+<div>count: {{vm.all.length}}</div>
+<ul>
+	<li ng-repeat="meta in vm.all">
+		<div>name: {{meta.getName()}}<div>
+		<div>description: {{meta.getDescription()}}<div>
+		<div>number of samples: {{meta.getNumberOfSamples()}}<div>
+	</li>
+</ul>
