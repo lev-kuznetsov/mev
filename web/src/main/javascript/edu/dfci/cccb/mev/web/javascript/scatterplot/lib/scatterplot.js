@@ -11,7 +11,7 @@
             margin: {
                 top:10,
                 bottom: 10,
-                left: 10,
+                left: 20,
                 right: 10,
             },
             axis: {
@@ -33,10 +33,11 @@
                 
                 //Group definitions
                 var points = svg.append('g').classed('points', true)
-                var xAxisG = svg.append("g").classed('xAxis', true)
-                var yAxisG = svg.append("g").classed('yAxis', true)
+                var AxisG = svg.append('g').classed('axis', true)
+                var xAxisG = AxisG.append("g").classed('xAxis', true)
+                var yAxisG = AxisG.append("g").classed('yAxis', true)
                 var labels = svg.append('g').classed('labels', true)
-                var brushG = svg.append("g").classed("brush", true)
+                var brushG = svg.append('g').classed("brush", true)
                 
                 //axis defs
                 var axis = {
@@ -61,6 +62,9 @@
                         
                         selectedPoints = []
                         
+                        svg.selectAll('text#tooltip')
+                        .remove()
+                        
                         points.selectAll('circle').attr('fill', function(point){
                             
                             if ( (point.x <= parseFloat(xRange[1]) ) && (point.x >= parseFloat(xRange[0]) )
@@ -70,7 +74,35 @@
                             }
                             
                             return point.fill
+                        }).each(function(point){
+                        	
+                        	if ( (point.x <= parseFloat(xRange[1]) ) && (point.x >= parseFloat(xRange[0]) )
+                                    && (point.y <= parseFloat(yRange[1]) ) && (point.y >= parseFloat(yRange[0]) ) ) {
+                                     
+	                        	var pointElem = d3.select(this)
+	
+	                            var xPosition = parseFloat(pointElem.attr("cx")) + parseFloat(pointElem.attr('r'))*(Math.random()+1);
+	                            var yPosition = parseFloat(pointElem.attr("cy")) - parseFloat(pointElem.attr('r'))*(Math.random()+1);
+	
+	                            svg.append("text")
+	                                .attr("id", "tooltip")
+	                                .attr("x", xPosition)
+	                                .attr("y", yPosition)
+	                                .attr("text-anchor", "middle")
+	                                .attr("font-family", "sans-serif")
+	                                .attr("font-size", "11px")
+	                                .attr("font-weight", "bold")
+	                                .attr("fill", "black")
+	                                .attr("fill-opacity", "0%")
+	                                .text(point.id);
+                        	}
                         })
+                        
+                        svg.selectAll('text#tooltip')
+                        .transition()
+                        .duration(2000)
+                        .attr("fill-opacity", "100%")
+                        
                         
                         dispatch.brushend(brush, selectedPoints)
                         
@@ -129,7 +161,7 @@
                         .attr("font-size", "16px")
                         .attr("font-weight", "bold")
                         .attr("fill", "black")
-                        .text(data.labels.x);
+                        .text(newdata.labels.x);
                     
                     labels.append('text')
                         .attr("x",settings.margin.left)
@@ -139,7 +171,7 @@
                         .attr("font-size", "16px")
                         .attr("font-weight", "bold")
                         .attr("fill", "black")
-                        .text(data.labels.y);
+                        .text(newdata.labels.y);
                         
                 })
                 
@@ -151,8 +183,11 @@
                     updateScales(newdata, axis, scale, xAxisG, yAxisG, settings)
                     
                     //update brushing
+                    brush.clear()
+                    brushG.selectAll("*").remove()
                     brush.x(scale.x)
                     brush.y(scale.y)
+                    brushG.call(brush)
                     
                     var offpageX = settings.width + settings.margin.left + settings.axis.gutter.left + 100
                     
@@ -187,6 +222,7 @@
                     //transition entering circles
                     circles.transition()
                         .duration(2000)
+                        .attr('fill', function(point){ return point.fill})
                         .attr('cx', function(point){ return scale.x(point.x)})
                         .attr('cy', function(point){ return scale.y(point.y)})
                     
@@ -194,6 +230,13 @@
                     circles.exit().transition().duration(2000)
                         .attr('cx', offpageX)
                         .remove()
+                        
+                    //trasition exiting tooltips
+                    svg.selectAll('text#tooltip')
+                    .transition()
+                    .duration(1000)
+                    .attr("fill-opacity", "0%")
+                    .remove()
                     
                     //update labels
                     labels.selectAll("*").remove()
@@ -206,7 +249,7 @@
                         .attr("font-size", "16px")
                         .attr("font-weight", "bold")
                         .attr("fill", "black")
-                        .text(data.labels.x);
+                        .text(newdata.labels.x);
                     
                     labels.append('text')
                         .attr("x",settings.margin.left)
@@ -216,7 +259,7 @@
                         .attr("font-size", "16px")
                         .attr("font-weight", "bold")
                         .attr("fill", "black")
-                        .text(data.labels.y);
+                        .text(newdata.labels.y);
                 })
                 
             })

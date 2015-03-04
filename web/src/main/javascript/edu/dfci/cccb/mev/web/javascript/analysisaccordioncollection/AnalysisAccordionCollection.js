@@ -12,7 +12,7 @@
       './Directives/tTestAccordion',
       './Directives/limmaAccordion',
       './Directives/hierarchicalAccordion',
-      './Directives/pcaAccordion'
+      './Directives/pcaAccordion',
       './Directives/resultsTable'
       ]
     

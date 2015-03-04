@@ -13,6 +13,7 @@
 		var fTestTemplate = '<f-Test-Accordion analysis="analysis" project="project"></f-Test-Accordion>';
 		var wilcoxonTestTemplate = '<wilcoxon-Test-Accordion analysis="analysis" project="project"></wilcoxon-Test-Accordion>';
 		var DESeqTemplate = '<deseq-Accordion analysis="analysis" project="project"></deseq-Accordion>';
+		var PCATemplate = '<pca-Accordion analysis="analysis" project="project"></pca-Accordion>'
 		
 		
 		var getTemplate = function(analysisType) {
@@ -42,6 +43,9 @@
 				break;
 			case 'DESeq Differential Expression Analysis':
 				template = DESeqTemplate;
+				break
+			case 'PC Analysis':
+				template = PCATemplate;
 				break
 		    }
 	    

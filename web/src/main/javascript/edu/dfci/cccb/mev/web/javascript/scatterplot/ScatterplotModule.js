@@ -1,6 +1,6 @@
 (function(){
 
-    define(['d3', 'angular', './lib/scatterplot.js'], function(d3, angular){
+    define(['d3', 'angular', './lib/scatterplot'], function(d3, angular){
 
         var module = angular.module('Mev.ScatterPlotVisualization',[])
 
@@ -11,8 +11,8 @@
              scope:{
                data: "=",
                selected: "=",
-               width: "&",
-               height: "&"
+               width: "=",
+               height: "="
              },
              restrict: "E",
              link: function(scope, elements, attr){
@@ -26,18 +26,19 @@
                      .height(parseFloat(scope.height) - 100)
                      .on('brushend', function(brush, points){
                          scope.selected = points
+                         scope.$apply()
                      })
 
                  svg.call(scatterplot)
                  
                  initialCall = true
 
-                 scope.$watchCollection('data', function(data, oldData){
-                     if (newval && initialCall){
-                         scatterplot.dispatcher().draw(data)
+                 scope.$watchCollection('data', function(newval, oldData){
+                     if ( (typeof newval != 'undefined') && initialCall){
+                         scatterplot.dispatcher().draw(newval)
                          initialCall = false
                      } else if (newval) {
-                         scatterplot.dispatcher().update(data)
+                         scatterplot.dispatcher().update(newval)
 
                      }
                  })
