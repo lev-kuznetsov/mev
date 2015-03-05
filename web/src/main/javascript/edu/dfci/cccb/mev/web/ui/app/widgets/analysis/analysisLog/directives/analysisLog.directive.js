@@ -12,17 +12,17 @@ define(["ng"], function(ng){
 						log: ["initialized"]
 				};
 				
-				AnalysisEventBus.onAnalysisStarted(scope, function(type, params){
-					console.debug("onAnalysisStarted handler", type, params);
-					var message="Started " + type + " analysis " + params.name + " with params " + JSON.stringify(params);
+				AnalysisEventBus.onAnalysisStarted(scope, function(type, name, eventData){
+					console.debug("onAnalysisStarted handler", type, name, eventData);
+					var message="Started " + type + " analysis " + name;;
 					scope.vm.log.unshift(message);
 					if(scope.showAlerts)
 						alertService.info(message,type);
 				});
 				
-				AnalysisEventBus.onAnalysisSuccess(scope, function(type, params){
-					console.debug("onAnalysisSuccess handler", type, params);
-					var message = "Completed " + type + " analysis " + params.name;
+				AnalysisEventBus.onAnalysisSuccess(scope, function(type, name, data){
+					console.debug("onAnalysisSuccess handler", type, name, data);
+					var message = "Completed " + type + " analysis " + name;
 					scope.vm.log.unshift(message);
 					if(scope.showAlerts)
 						alertService.success(message,type);

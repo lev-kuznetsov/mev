@@ -4,51 +4,39 @@ define(["angular"], function(angular){
 	var AnalysisEventBus = function($rootScope){
 				
 		
-		var MSG_ANALYSIS_STARTED="event:analysis:start";		
-		this.analysisStarted = function(descriptor, params){
-			console.debug("broadcast AnalysisStarted");
-			$rootScope.$broadcast(MSG_ANALYSIS_STARTED, {
-				analysisType: descriptor.analysisType,
-				datasetName: descriptor.datasetName,
-				params: params
+		function formatAnalysisEventData(descriptor, params, response){
+			var eventData = {
+					analysisName: descriptor.analysisName || params.analysisName || params.name || response.name
+			};
+			angular.extend(eventData, descriptor);
+			angular.extend(eventData, params);			
+			eventData.response=response;
+			return eventData;
+		}
+		function raiseEvent(eventName, descriptor, params, response){
+			var data = formatAnalysisEventData(descriptor, params, response);			
+			$rootScope.$broadcast(eventName, data);
+			console.debug("broadcast "+eventName, data);
+		}
+		function registerHandler(eventName, $scope, handler){
+			console.debug("registered "+eventName);
+			$scope.$on(eventName, function($event, data){
+				console.debug("recieved "+eventName, $event, data);
+				handler(data.analysisType, data.analysisName, data);
 			});
-		};
+		}
 		
-		this.onAnalysisStarted = function($scope, handler){
-			console.debug("register onAnalysisStarted");
-			$scope.$on(MSG_ANALYSIS_STARTED, function($event, data){
-				console.debug("recieved onAnalysisStarted", $event, data);
-				handler(data.analysisType, data.params);
-			});
-		};
+		var MSG_ANALYSIS_STARTED="event:analysis:start";		
+		this.analysisStarted = raiseEvent.bind(this, MSG_ANALYSIS_STARTED);		
+		this.onAnalysisStarted = registerHandler.bind(this, MSG_ANALYSIS_STARTED);
 		
 		var MSG_ANALYSIS_SUCCESS="event:analysis:success";				
-		this.analysisSucceeded=function(descriptor, params){
-			$rootScope.$broadcast(MSG_ANALYSIS_SUCCESS, {
-				analysisType: descriptor.analysisType,
-				datasetName: descriptor.datasetName,
-				params: params
-			});		
-		};
-		this.onAnalysisSuccess = function($scope, handler){			
-			$scope.$on(MSG_ANALYSIS_SUCCESS, function($event, analysis){
-				handler(analysis.analysisType, analysis.params);
-			});
-		};
+		this.analysisSucceeded = raiseEvent.bind(this, MSG_ANALYSIS_SUCCESS);
+		this.onAnalysisSuccess = registerHandler.bind(this, MSG_ANALYSIS_SUCCESS);
 		
 		var MSG_ANALYSIS_FAILURE="event:analysis:failure";				
-		this.analysisFailed=function(descriptor, params){
-			$rootScope.$broadcast(MSG_ANALYSIS_FAILURE, {
-				analysisType: descriptor.analysisType,
-				datasetName: descriptor.datasetName,
-				params: params
-			});
-		};
-		this.onAnalysisFailure = function($scope, handler){			
-			$scope.$on(MSG_ANALYSIS_FAILURE, function($event, analysis){
-				handler(analysis.analysisType, analysis.params);
-			});
-		};
+		this.analysisFailed = raiseEvent.bind(this, MSG_ANALYSIS_FAILURE);
+		this.onAnalysisFailure  = registerHandler.bind(this, MSG_ANALYSIS_FAILURE);
 		
 		var MSG_ANALYSIS_LOADED_ALL="event:analysis:all";
 		this.analysisLoadedAll = function(){

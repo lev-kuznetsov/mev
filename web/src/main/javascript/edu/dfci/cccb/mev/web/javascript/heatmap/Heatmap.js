@@ -160,13 +160,13 @@ define(['jquery',
 				
 			});
         	
-			analysisEventBus.onAnalysisStarted($scope, function(type, params){
-                var message = "Started "+ type +" analysis for "+params.name;
+			analysisEventBus.onAnalysisStarted($scope, function(type, name, params){
+                var message = "Started "+ type +" analysis for "+name;
                 var header = type;                            
             	alertService.info(message,header);
             });			
-			analysisEventBus.onAnalysisSuccess($scope, function(type, params){                
-                var message = type+" analysis for "+params.name + " complete!";
+			analysisEventBus.onAnalysisSuccess($scope, function(type, name, data){                
+                var message = type+" analysis for "+ name + " complete!";
                 var header = type;                             
                 alertService.success(message,header);
             });
