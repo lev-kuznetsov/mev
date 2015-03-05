@@ -63,23 +63,29 @@ define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular
                 }
                 
 			});    	    	
+    	function postWrapper(methodName){
+    		return function(params, data, callback){
+        		
+        		var result = resource[methodName](params, data, callback);
+        		
+        		result.$promise.then(
+    				function(response){
+    					console.debug("AnalysisResource success", params, response, data);
+    					analysisEventBus.analysisSucceeded(params, data);
+    	    		}, function(response){
+    	    			console.debug("AnalysisResource error", response);
+    	    			analysisEventBus.analysisFailed(params, data);
+    	    		}
+    	    	);
+        		
+        		analysisEventBus.analysisStarted(params, data);
+    		};
+    	}
     	var AnalysisResource = Object.create(resource);
-    	AnalysisResource.post=function(params, data, callback){
-    		
-    		var result = resource.post(params, data, callback);
-    		
-    		result.$promise.then(
-				function(response){
-					console.debug("AnalysisResource success", response);
-					analysisEventBus.analysisSucceeded(params, response);
-	    		}, function(response){
-	    			console.debug("AnalysisResource error", response);
-	    			analysisEventBus.analysisFailed(params, response);
-	    		}
-	    	);
-    		
-    		analysisEventBus.analysisStarted(params, data);
-    	};
+    	AnalysisResource.post=postWrapper("post");
+    	AnalysisResource.postf=postWrapper("postf");
+    	
+    	
     	return AnalysisResource;    	
     	
     }])
