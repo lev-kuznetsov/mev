@@ -1,5 +1,5 @@
 define(["ng"], function(ng){
-	var DatasetProjectViewVM=function DatasetViewVM($scope, $stateParams, $state, dataset, project, AnalysisEventBus){
+	var DatasetProjectViewVM=function DatasetViewVM($scope, $stateParams, $state, dataset, project, AnalysisEventBus, AnalysisTypes){
 		that=this;
 		console.debug("DatasetProjectViewVM", dataset, project);
 		this.project=project;		
@@ -28,13 +28,16 @@ define(["ng"], function(ng){
 			$state.go(targetState, params);
 		});
 		
-		AnalysisEventBus.onAnalysisSuccess($scope, function(type, params){                
-			dataset.loadAnalyses();
+		AnalysisEventBus.onAnalysisSuccess($scope, function(type, name, data){
+			dataset.loadAnalyses().then(function(){
+				console.debug("DatasetProjectViewVM onAnalysisSuccess", type, name, data);				
+				$state.go("root.dataset.analysis", {analysisType: AnalysisTypes.reverseLookup[type], analysisId: name});
+			});			
         });
 		AnalysisEventBus.onAnalysisLoadedAll($scope, function(){
-			$scope.$broadcast("ui:projectTree:dataChanged");
+			$scope.$broadcast("ui:projectTree:dataChanged");			
 		});
 	};
-	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "dataset", "project", "AnalysisEventBus"];
+	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "dataset", "project", "AnalysisEventBus", "AnalysisTypes"];
 	return DatasetProjectViewVM;
 });
