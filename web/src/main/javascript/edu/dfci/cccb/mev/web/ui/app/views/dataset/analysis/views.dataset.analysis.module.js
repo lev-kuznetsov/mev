@@ -1,22 +1,25 @@
-define(["ng", "lodash"], function(ng, _){
-	var module = ng.module("mui.views.dataset.analysis", []);
-	module.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider){				
+define(["ng", "lodash", 
+        "./hcl/views.dataset.analysis.hcl.module", 
+        "./kmeans/views.dataset.analysis.kmeans.module",
+        "./ttest/views.dataset.analysis.ttest.module"], function(ng, _){
+	var module = ng.module("mui.views.dataset.analysis", ["mui.widgets.analysis", 
+	                                                      "mui.views.dataset.analysis.hcl", 
+	                                                      "mui.views.dataset.analysis.kmeans",
+	                                                      "mui.views.dataset.analysis.ttest"]);
+	module.config(["$stateProvider", "$urlRouterProvider", "AnalysisTypes", function($stateProvider, $urlRouterProvider, AnalysisTypes){				
 		$stateProvider		
 		.state("root.dataset.analysis", {			
 			url: "analysis/{analysisType}/{analysisId}/",			
 			parent: "root.dataset",			
 			templateProvider: ["$stateParams", "$http", function($stateParams, $http){
 				console.debug("root.dataset.analysis templateProvider ", $stateParams.analysisType);
-				var templateUrl="app/views/dataset/analysis/default/analysis.default.tpl.html";
+				var templateUrl="app/views/dataset/analysis/default/view.analysis.default.tpl.html";
 				
-				var mapTemplateAnalysisType = {
-						"Hierarchical Clustering": "hcl", //using the default latyout for HCL
-						"LIMMA Differential Expression Analysis": "limma"
-				};
-				var analysisType = mapTemplateAnalysisType[$stateParams.analysisType];
 				
-				if(analysisType){
-					templateUrl=templateUrl.replace("default", analysisType).replace("default", analysisType);
+				var analysisType = AnalysisTypes[$stateParams.analysisType];
+				
+				if(analysisType && analysisType.shortName){
+					templateUrl=templateUrl.replace("default", analysisType.shortName).replace("default", analysisType.shortName);
 				}
 				console.debug("analysis templateUrl:", templateUrl);
    	     		return $http.get(templateUrl).then(function(response){
@@ -24,17 +27,15 @@ define(["ng", "lodash"], function(ng, _){
    	     			return response.data;
    	     		});
 			}],
-			controller: ["$scope", "$state", "$stateParams", "project", "analysis", function($scope, $state, $stateParams, project, analysis){
-				this.analysisId=$stateParams.analysisId;
-				this.analysis=analysis;
-				this.project=project;
-				$scope.isItOpen=true;
-//				console.debug("DatasetAnalysisVM", $state, $state.is("root.dataset.analysis"));
+			controllerProvider: ["$state", "$stateParams", function($state, $stateParams){
+				console.debug("DatasetAnalysisVM", $state, $state.is("root.dataset.analysis"), AnalysisTypes[$stateParams.analysisType]);		
+				
+				return AnalysisTypes[$stateParams.analysisType].viewModel;
 //				if($state.is("root.dataset.analysis")){
 //					$state.go(".result", {resultId: analysis.result[0].name});
 				
 //				}
-				
+								
 			}],
 			controllerAs: "DatasetAnalysisVM",
 			resolve: {

@@ -11,6 +11,31 @@ function(ng, AnalyisEventBus){
 	                                                "mui.widgets.analysis.default",
 	                                                "mui.widgets.analysis.modal",
 	                                                "mui.widgets.analysis.log"
-	                                                ]);
+	                                                ])
+	.constant("AnalysisTypes", {
+			"Hierarchical Clustering": {
+				shortName: "hcl",
+				viewModel: "HclVM"
+			},
+			"LIMMA Differential Expression Analysis": {
+				shortName: "limma",
+				viewModel: "LimmaVM"
+			},
+			"K-means Clustering": {
+				shortName: "kmeans",
+				viewModel: "KMeansVM"
+			},
+			"t-Test Analysis": {
+				shortName: "ttest",
+				viewModel: "tTestVM"
+			},
+			reverseLookup: {
+				hcl: "Hierarchical Clustering",
+				limma: "LIMMA Differential Expression Analysis",
+				kmeans: "K-means Clustering",
+				one_sample_ttest: "t-Test Analysis",
+				two_sample_ttest: "t-Test Analysis"
+		} 
+	});	
 	return module;
 });
