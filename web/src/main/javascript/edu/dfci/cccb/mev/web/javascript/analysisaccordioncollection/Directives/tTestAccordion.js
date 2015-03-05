@@ -11,10 +11,11 @@
                         templateUrl: paths.module + '/templates/tTestAccordion.tpl.html',
                         scope: {
                             project: "=project",
-                            analysis: "=analysis"
+                            analysis: "=analysis",
+                            isItOpen: "@"
                         },
-                        link: function (scope) {
-
+                        link: function (scope, elem, attrs) {
+                        	scope.isTTestOpen = attrs.isItOpen || false;                        	
                             scope.$watch('analysis', function (newval) {
                                 if (newval) {
                                 	console.log(newval)

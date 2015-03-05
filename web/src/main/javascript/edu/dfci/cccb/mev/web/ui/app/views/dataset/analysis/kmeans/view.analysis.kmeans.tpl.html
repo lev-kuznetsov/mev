@@ -1,0 +1,21 @@
+<!-- <project-analysis-parameters parameters="DatasetAnalysisVM.analysis.params"></project-analysis-parameters> -->
+<div>
+<ul class="nav nav-tabs" id="importTabs">
+	<li id="clusters_tab" class="active"><a href="#clusters" data-toggle="tab" target="_self">Clusters</a></li>	
+	<li id="heatmap_tab"><a href="#heatmap" data-toggle="tab" target="_self">Heatmap</a></li>
+</ul>
+
+<div class="tab-content">
+	<div class="tab-pane active" id="clusters" >
+		<accordion close-others="false" is-open="isopen" ng-init="isopen=true">			
+			<k-Means-Accordion analysis="DatasetAnalysisVM.analysis"
+			project="DatasetAnalysisVM.project" is-it-open="isOpen"
+			ng-init="isOpen=true"></k-Means-Accordion>
+		</accordion>		
+	</div>
+	<div class="tab-pane" id="heatmap">
+		<view-Content-Item project='DatasetAnalysisVM.project' view='DatasetAnalysisVM.project.views'></view-Content-Item>
+	</div>
+
+</div>
+</div>

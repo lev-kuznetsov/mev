@@ -474,29 +474,7 @@ define(['angular', 'alertservice/AlertService'], function(angular, AlertService)
                         	datasetName : scope.dataset.datasetName, 
                             analysisType : scope.params.sampleType.url
                             
-                    	}, scope.getPostData(), 
-                        function(data, status, headers, config) {
-                    	
-                    		scope.dataset.loadAnalyses()
-                    		var message = "t-Test analysis for "
-                    			+ scope.params.name + " complete!";
-
-                            var header = "t-Test Analysis";
-                                         
-                            alertService.success(message,header);
-                                    
-                        },
-                        
-                        function(data, status, headers, config) {
-                            
-                            var message = "Could not perform t-Test. If "
-                                + "problem persists, please contact us.";
-                            var header = "Clustering Problem (Error Code: "
-                                + status
-                                + ")";
-                            alertService.error(message,header);                                            
-                            
-                        });
+                    	}, scope.getPostData());
                     };
                 }
             };
@@ -607,14 +585,7 @@ define(['angular', 'alertservice/AlertService'], function(angular, AlertService)
                         
                         scope.testInit = function(){
                             
-                            var message = "Started K-Means analysis for "
-                                + scope.params.analysisName;
-
-                            var header = "K-Means Clustering Analysis";
-                             
-                            alertService.info(message,header);
-                            
-                            var analysisData = {
+                        	var analysisData = {
                             	name : scope.params.analysisName,
                             	dimension : scope.params.analysisDimension,
                             	clusters : scope.params.analysisClusters,
@@ -633,31 +604,7 @@ define(['angular', 'alertservice/AlertService'], function(angular, AlertService)
 	                                + ",metric=" + analysisData.metric.value
 	                                + ",iterations=" + analysisData.iterations
 	                                + ",convergence=" + analysisData.convergence
-                            }, {},
-                            
-                            function(data, status, headers, config) {
-                                
-                            	scope.dataset.loadAnalyses();
-                            	
-                                var message = "K-Means analysis for "
-                                    + scope.params.analysisName + " complete!";
-
-                                var header = "K-Means Clustering Analysis";
-                                 
-                                alertService.success(message,header);
-	                            
-	                        },
-                                            
-                            function(data, status, headers, config) {
-                                        
-                                var message = "Could not perform k-means clustering. If "
-                                    + "problem persists, please contact us.";
-                                var header = "Clustering Problem (Error Code: "
-                                    + status
-                                    + ")";
-                                alertService.error(message,header);
-                                
-                            });
+                            }, {});
                         }
                     }
 
