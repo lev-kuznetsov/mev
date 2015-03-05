@@ -11,7 +11,7 @@
                         scope: {
                             analysis: "=analysis",
                             project: "=project",
-			                isItOpen: "="
+			                isItOpen: "@"
                         },
                         templateUrl:paths.module + '/templates/hierarchicalAccordion.tpl.html',
                         link: function (scope, elems, attr) {
