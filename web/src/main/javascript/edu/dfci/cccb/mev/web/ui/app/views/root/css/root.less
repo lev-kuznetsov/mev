@@ -44,18 +44,18 @@
 			> div{
 				height: 100%;
 				position: relative;
-				div.row[layout-row]{
+				> * > div.row{
 					height: 100%;
 					position: relative;								
 					> div{						
-						padding-top: @navbar-margin-bottom;
+						padding-top: @sidemenu-padding-top;
 					}
 				}				
 			}
 		
 			&.columnScroll{
 				> div{
-					div.row[layout-row]{
+					> * > div.row{
 						> div{
 							height: 100%;
 							overflow-y: auto;		
@@ -188,6 +188,10 @@ html, body{
 }
 .column-config-menu{
 	position: relative;
+	margin-right: -(@grid-gutter-width / 2) +  @sidemenu-padding-top;
+	.btn.btn-xs{
+		padding: 3px 5px;
+	}
 }
 .wrapper-config-menu{
 	position: absolute; 
@@ -196,7 +200,7 @@ html, body{
 	z-index: 1000000;
 }
 div[layout-column]{
-//	transition: width .5s ease;
+	transition: width .3s ease;
 }
 
 #main-wrapper {
@@ -207,7 +211,7 @@ div[layout-column]{
 //			transition: all 0.2s ease-out;
 //			transition-property: left, width; 
 			> *:first-child{
-				padding-top: @navbar-margin-bottom;
+				padding-top: @sidemenu-padding-top;
 			}
 			> *{
 				margin: 0 15px;
@@ -270,6 +274,7 @@ div[layout-column]{
 	> div[class^="col-"]{
 		> :first-child{
 			margin-top: 0px;
+			margin-right: -10px;
 		} 
 	}
 }

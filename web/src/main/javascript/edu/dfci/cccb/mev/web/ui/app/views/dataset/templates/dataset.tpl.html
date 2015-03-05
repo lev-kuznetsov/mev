@@ -1,7 +1,7 @@
 <div class="row" layout-row>
 	
-	<div layout-column="left" ng-class="{'col-0': layoutColumn.isClosed(), 'col-md-4': !layoutColumn.isClosed()}" content-id="content-wrapper" >		
-		<div class="pull-right">
+	<div layout-column="left" ng-class="{'col-0': layoutColumn.isClosed(), 'col-md-3': !layoutColumn.isClosed()}" content-id="content-wrapper" >		
+		<div class="pull-right column-config-menu">
 			<div class="btn btn-info btn-xs" ng-click="layoutColumn.toggle()">
 				  	<i class="fa fa-arrow-left"></i>
 			</div>
@@ -19,8 +19,8 @@
 <!-- 		<project-nav project="DatasetProjectViewVM.getProject()"></project-nav> -->
 						
 	</div>	
-	<div layout-column="right" ng-class="{'col-md-12': layoutColumn.isClosed(), 'col-md-8': !layoutColumn.isClosed()}" id="content-wrapper">
-		<div class="pull-right">
+	<div layout-column="right" ng-class="{'col-md-12': layoutColumn.isClosed(), 'col-md-9': !layoutColumn.isClosed()}" id="content-wrapper">
+		<div class="pull-right column-config-menu">
 			<div class="btn btn-info btn-xs" ng-click="layoutColumn.toggle()">
 		  	<i ng-class="{'fa': true, 'fa-compress': layoutColumn.isClosed(), 'fa-expand': !layoutColumn.isClosed()}"></i>
 		  </div>
