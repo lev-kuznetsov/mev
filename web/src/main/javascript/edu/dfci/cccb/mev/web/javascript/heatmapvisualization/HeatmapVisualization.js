@@ -30,8 +30,10 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 	project : '=project'
                 },
                 link : function($scope, elems, attr) {
+                	if(!$scope.heatmapView.scrollableContainer)
+                		$scope.heatmapView.scrollableContainer="div.tab-content";
                 	
-                	var scrollable = $("div.tab-content"), delay = 50, timer = null;
+                	var scrollable = $($scope.heatmapView.scrollableContainer), delay = 50, timer = null;
                 	
                        
                     var position = {
@@ -132,7 +134,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                     };
             	
                     var eventQ=[];
-                    $("div.tab-content").on("scroll", function(e){
+                    scrollable.on("scroll", function(e){
                     	//remove unhandled scholl events from the queue
                         while(eventQ.length>0){
                         	clearTimeout(eventQ.pop());
@@ -322,7 +324,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 		}
                         
                         $scope.project.dataset.selection.post({
-                            datasetName : $routeParams.datasetName,
+                            datasetName : $scope.heatmapDataset.datasetName,
                             dimension : dimension
 
                         }, selectionsData,
