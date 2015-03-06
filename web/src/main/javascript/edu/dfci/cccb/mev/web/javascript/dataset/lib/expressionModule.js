@@ -5,6 +5,7 @@
         return {
 
              'retrieve': function(searchValue){
+            	 
                  var self = this
 
                  if (searchValue['row'] && !(searchValue['column']) ){

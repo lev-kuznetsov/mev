@@ -20,7 +20,10 @@
         './Services/tableResultsFilter',
         './Services/projectionService',
         './Services/pathService',
-        './Services/compareFactory'
+        './Services/compareFactory',
+        './Services/pcaTransforms',
+        './Services/pcaMulti'
+ 
     ]
 
     define(deps.concat(directiveDeps).concat(serviceDeps), function(angular, jq, d3){
