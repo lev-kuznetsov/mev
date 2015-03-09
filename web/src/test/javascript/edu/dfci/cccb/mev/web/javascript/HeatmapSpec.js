@@ -1,11 +1,12 @@
-define ([ 'angular', 'angularMocks', 'heatmap/Heatmap', 'jasmineJquery', 'api/Api'], function (angular, am, h, jq,api) {
+define (['angular', 'angularMocks', 'heatmap/Heatmap', 'jasmineJquery', 'api/Api', 'services'], function (angular, am, h, jq,api, services) {
 
   describe ("Mev.heatmap", function () {
 
 	  //Required Modules
 	  beforeEach(angular.mock.module('Mev.Api'));
 	  beforeEach(angular.mock.module('Mev.heatmap'));
-	  beforeEach(angular.mock.module('ng'))
+	  beforeEach(angular.mock.module('myApp.services'));
+	  beforeEach(angular.mock.module('ng'));
 	  
       describe("HeatmapCtrl", function(){          
 
