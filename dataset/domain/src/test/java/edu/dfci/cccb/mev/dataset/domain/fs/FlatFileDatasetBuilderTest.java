@@ -12,48 +12,54 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.dataset.domain.simple;
+package edu.dfci.cccb.mev.dataset.domain.fs;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
-import edu.dfci.cccb.mev.dataset.domain.mock.MapBackedValueStoreBuilder;
+import edu.dfci.cccb.mev.dataset.domain.fs.FlatFileValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.mock.MockTsvInput;
 import edu.dfci.cccb.mev.dataset.domain.mock.MockUrlInput;
+import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
+import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
 
 /**
  * @author levk
  * 
  */
-public class SimpleDatasetBuilderTest {
+public class FlatFileDatasetBuilderTest {
 
   private SimpleDatasetBuilder builder;
 
   @Before
-  public void initializeBuilder () {
+  public void initializeBuilder () throws IOException {
     builder = new SimpleDatasetBuilder ();
     builder.setParserFactories (asList (new SuperCsvParserFactory ()));
-    builder.setValueStoreBuilder (new MapBackedValueStoreBuilder ());
+    builder.setValueStoreBuilder (new  FlatFileValueStoreBuilder());
   }
 
-  @Test @Ignore
+  @Test 
   public void simpleBuild () throws Exception {
     Dataset set = builder.build (new MockTsvInput ("mock", "id\tsa\tsb\tsc\n" +
                                                            "g1\t.1\t.2\t.3\n" +
@@ -70,14 +76,6 @@ public class SimpleDatasetBuilderTest {
       {
         add("66a354fe-454e-40a6-8464-a7d97236d398_miR_gene_expression");
         add("290f101e-ff47-4aeb-ad71-11cb6e6b9dde_miR_gene_expression");
-//        add("9635a2c4-fd8b-4b4c-9338-def32b6dd8d3_miR_gene_expression");
-//        add("1e1ae4dd-1f89-42bd-8154-165f603962b9_miR_gene_expression");
-//        add("b3794e62-c4bc-43b1-97ca-b6f6e01aa026_miR_gene_expression");
-//        add("c986ab6f-912a-424f-9957-ff34452339c5_miR_gene_expression");
-//        add("25a9fd1a-0ff1-434b-bc4b-b78834750994_miR_gene_expression");
-//        add("b5a63033-f14b-4040-b2b2-8acf9c9ba6d4_miR_gene_expression");
-//        add("6a8f9385-2064-4d8c-9af1-d2bed53afebb_miR_gene_expression");
-//        add("e4fe4b0b-198a-46b2-adb3-2f0b140502f8_miR_gene_expression");
       }
     };
     
@@ -98,6 +96,34 @@ public class SimpleDatasetBuilderTest {
     RawInput rawInput = new MockUrlInput (dataUrl);             
     builder.build (rawInput);
     
+  }
+  
+  @Test 
+  public void buildLimma() throws DatasetBuilderException, InvalidDatasetNameException, InvalidDimensionTypeException, InvalidCoordinateException, IOException{
+
+    URL dataUrl = this.getClass ().getResource ("/data/limma/mouse_test_dataset.tsv");
+    assertNotNull (dataUrl);
+    RawInput rawInput = new MockUrlInput (dataUrl);             
+    Dataset dataset = builder.build (rawInput);
+    
+    assertEquals (16.45, dataset.values ().get ("Actb", "A"), 0.0);
+    assertEquals (14.8, dataset.values ().get ("Actg1", "A"), 0.0);
+    
+    InputStream in = rawInput.input ();
+    BufferedReader reader = new BufferedReader(new InputStreamReader(in));    
+    String sHeader = reader.readLine();
+    String[] header = sHeader.split("\t");    
+    String line;    
+    while ((line = reader.readLine()) != null) {      
+      String[] data = line.split("\t");
+      String row = data[0];
+      for(int i=1; i<data.length;i++){
+        String col = header[i];  
+        double val = Double.parseDouble (data[i]);
+        assertEquals (val, dataset.values ().get (row, col), 0.0);
+      }
+    }    
+    reader.close();
   }
  
   @Test 
