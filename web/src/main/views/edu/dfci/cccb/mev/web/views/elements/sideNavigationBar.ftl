@@ -33,6 +33,7 @@
 						</analysis-Content-Item>
 				</div>
 			</accordion>
+			<pca-Test project="project"></pca-Test>
 			
 		</div>
 		

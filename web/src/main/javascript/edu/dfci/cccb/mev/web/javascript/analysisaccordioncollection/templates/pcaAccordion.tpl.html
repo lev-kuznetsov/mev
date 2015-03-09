@@ -85,11 +85,15 @@
 		</div>
 		<div class="tab-pane" id="{{'pca-' + analysis.randomId + '-visualization'}}">
 		
+		
+			<div class="row">				
+				<a class="pca-selection-btn btn btn-info pull-right" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
+		        	Create Selections
+		        </a>
+			</div>
 			<div class="row">
 				<div class="col-md-2">
 					<div class="pca-selections">
-				
-					
 						<div class="row">
 							<div class="form-group">
 				       			<label for="y-axis" class="control-label">Y-Axis</label>
@@ -102,14 +106,7 @@
 				       			<label for="x-axis" class="control-label">X-Axis</label>
 								<select ng-init="selectionParams.dimension.x = analysis.variances[1]" id="X-Axis" ng-options="option.name for option in analysis.variances" ng-model="selectionParams.dimension.x"></select>
 							</div>
-						</div>
-						
-						<a class="btn btn-info" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
-		                  Create Selections
-		                </a>
-						
-						
-					
+						</div>					
 					</div>
 				</div>
 				
@@ -153,8 +150,15 @@
 }
 
 div .pca-selections {
-	margin-top: 30px;
+	margin-top: 180px;
 	margin-left: 24px;
+}
+
+div .pca-selection-btn {
+	margin-top: 20px;
+	-ms-transform: translate(-40px);
+	-webkit-transform: translate(-40px);
+	transform: translate(-40px);
 }
 
 div .pca-view {
