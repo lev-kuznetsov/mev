@@ -18,22 +18,26 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
-import edu.dfci.cccb.mev.dataset.domain.mock.MapBackedValueStoreBuilder;
+import edu.dfci.cccb.mev.dataset.domain.fs.FlatFileValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.mock.MockTsvInput;
 import edu.dfci.cccb.mev.dataset.domain.mock.MockUrlInput;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
@@ -47,13 +51,14 @@ public class SimpleDatasetBuilderTest {
   private SimpleDatasetBuilder builder;
 
   @Before
-  public void initializeBuilder () {
+  public void initializeBuilder () throws IOException {
     builder = new SimpleDatasetBuilder ();
     builder.setParserFactories (asList (new SuperCsvParserFactory ()));
-    builder.setValueStoreBuilder (new MapBackedValueStoreBuilder ());
+//    builder.setValueStoreBuilder (new  MapBackedValueStoreBuilder ());
+    builder.setValueStoreBuilder (new  FlatFileValueStoreBuilder());
   }
 
-  @Test @Ignore
+  @Test 
   public void simpleBuild () throws Exception {
     Dataset set = builder.build (new MockTsvInput ("mock", "id\tsa\tsb\tsc\n" +
                                                            "g1\t.1\t.2\t.3\n" +
@@ -98,6 +103,34 @@ public class SimpleDatasetBuilderTest {
     RawInput rawInput = new MockUrlInput (dataUrl);             
     builder.build (rawInput);
     
+  }
+  
+  @Test 
+  public void buildLimma() throws DatasetBuilderException, InvalidDatasetNameException, InvalidDimensionTypeException, InvalidCoordinateException, IOException{
+
+    URL dataUrl = this.getClass ().getResource ("limma/mouse_test_dataset.tsv");
+    assertNotNull (dataUrl);
+    RawInput rawInput = new MockUrlInput (dataUrl);             
+    Dataset dataset = builder.build (rawInput);
+    
+    assertEquals (16.45, dataset.values ().get ("Actb", "A"), 0.0);
+    assertEquals (14.8, dataset.values ().get ("Actg1", "A"), 0.0);
+    
+    InputStream in = rawInput.input ();
+    BufferedReader reader = new BufferedReader(new InputStreamReader(in));    
+    String sHeader = reader.readLine();
+    String[] header = sHeader.split("\t");    
+    String line;    
+    while ((line = reader.readLine()) != null) {      
+      String[] data = line.split("\t");
+      String row = data[0];
+      for(int i=1; i<data.length;i++){
+        String col = header[i];  
+        double val = Double.parseDouble (data[i]);
+        assertEquals (val, dataset.values ().get (row, col), 0.0);
+      }
+    }    
+    reader.close();
   }
  
   @Test 
