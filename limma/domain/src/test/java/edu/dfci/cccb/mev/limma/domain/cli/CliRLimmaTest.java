@@ -34,7 +34,7 @@ import org.junit.Test;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
-import edu.dfci.cccb.mev.dataset.domain.mock.MapBackedValueStoreBuilder;
+import edu.dfci.cccb.mev.dataset.domain.fs.FlatFileValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.mock.MockTsvInput;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
@@ -55,11 +55,11 @@ public class CliRLimmaTest {
 
   @Test
   public void test () throws Exception {
-    try (InputStream inp = getClass ().getResourceAsStream ("/mouse_test_data.tsv");
+    try (InputStream inp = getClass ().getResourceAsStream ("/mouse_test_dataset.tsv");
          ByteArrayOutputStream copy = new ByteArrayOutputStream ()) {
       IOUtils.copy (inp, copy);
       Dataset dataset = new SimpleDatasetBuilder ().setParserFactories (asList (new SuperCsvParserFactory ()))
-                                                   .setValueStoreBuilder (new MapBackedValueStoreBuilder ())
+                                                   .setValueStoreBuilder (new FlatFileValueStoreBuilder ())
                                                    .build (new MockTsvInput ("mock",
                                                                              copy.toString ()));
       Selection experiment = new SimpleSelection ("experiment", new Properties (), asList ("A", "B", "C"));
