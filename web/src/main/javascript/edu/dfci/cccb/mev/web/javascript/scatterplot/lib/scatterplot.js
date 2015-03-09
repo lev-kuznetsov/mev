@@ -164,14 +164,15 @@
                         .text(newdata.labels.x);
                     
                     labels.append('text')
-                        .attr("x",settings.margin.left)
-                        .attr("y", settings.margin.top + (.5*settings.height) )
+                        .attr("x", -settings.height + (.5*settings.height) -5 )
+                        .attr("y", settings.margin.left)
                         .attr("text-anchor", "middle")
                         .attr("font-family", "sans-serif")
                         .attr("font-size", "16px")
                         .attr("font-weight", "bold")
                         .attr("fill", "black")
-                        .text(newdata.labels.y);
+                        .text(newdata.labels.y)
+                        .attr('transform', 'rotate(-90)');
                         
                 })
                 
@@ -252,14 +253,15 @@
                         .text(newdata.labels.x);
                     
                     labels.append('text')
-                        .attr("x",settings.margin.left)
-                        .attr("y", settings.margin.top + (.5*settings.height) )
-                        .attr("text-anchor", "middle")
-                        .attr("font-family", "sans-serif")
-                        .attr("font-size", "16px")
-                        .attr("font-weight", "bold")
-                        .attr("fill", "black")
-                        .text(newdata.labels.y);
+	                    .attr("x", -settings.height + (.5*settings.height) -5 )
+	                    .attr("y", settings.margin.left)
+	                    .attr("text-anchor", "middle")
+	                    .attr("font-family", "sans-serif")
+	                    .attr("font-size", "16px")
+	                    .attr("font-weight", "bold")
+	                    .attr("fill", "black")
+	                    .text(newdata.labels.y)
+	                    .attr('transform', 'rotate(-90)');
                 })
                 
             })
