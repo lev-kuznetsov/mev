@@ -21,7 +21,6 @@ import static java.lang.Double.POSITIVE_INFINITY;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -101,7 +100,8 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
       header = reader.getHeader (true);      
       List<String> firstDataLine = reader.read ();
       processors = new CellProcessor[header.length];
-      Map<String, Double> firstProcessedLine = new HashMap<> ();      
+      //use LinkedHashMap to preserve the order of keys
+      Map<String, Double> firstProcessedLine = new LinkedHashMap<> ();      
       for (int index = 1; index < header.length; index++){
         try {
           firstProcessedLine.put (header[index],
@@ -154,8 +154,9 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
         if (values == null)
           return false;
         Double value;
-        Map<String, Double> row = new HashMap<> ();
-        for (int index = header.length; --index >= 0;)
+        //use LinkedHashMap to preserve the order of keys
+        Map<String, Double> row = new LinkedHashMap<String, Double> ();
+        for (int index = 1; index < header.length; index++)
           if ((value = (Double) values.get (index)) != null)
             row.put (header[index], value);
         currentRow = row.entrySet ().iterator ();
