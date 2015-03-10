@@ -28,10 +28,9 @@
 		<hr>
 
 			<accordion close-others="false">
-				<div ng-repeat="analysis in project.dataset.analyses track by $index">
-					<analysis-Content-Item analysis="analysis" project="project" generate-View="project.generateView">
-						</analysis-Content-Item>
-				</div>
+				<accordion-group heading="{{analysis.type}} : {{analysis.name}}" is-open="isItOpen" ng-repeat="analysis in project.dataset.analyses track by $index">
+					<analysis-Content-Item analysis="analysis" project="project" generate-View="project.generateView"></analysis-Content-Item>
+				</accordion-group>				
 			</accordion>
 			
 		</div>
