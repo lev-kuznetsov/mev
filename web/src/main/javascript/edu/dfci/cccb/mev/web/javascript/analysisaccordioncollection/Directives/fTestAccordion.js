@@ -14,7 +14,6 @@
                 },
                 templateUrl : paths.module + '/templates/fTestAccordion.tpl.html',
                 link : function(scope, attr) {
-                	scope.isItOpen = attr.isItOpen || false;
                     return
                 }	
             }
