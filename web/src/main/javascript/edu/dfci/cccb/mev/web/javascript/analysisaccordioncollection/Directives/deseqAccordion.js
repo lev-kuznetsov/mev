@@ -12,7 +12,7 @@
                         scope: {
                             project: "=project",
                             analysis: "=analysis",
-                            isAnalysisOpen: "@"
+                            isItOpen: "@"
                         },
                         link: function (scope) {
 

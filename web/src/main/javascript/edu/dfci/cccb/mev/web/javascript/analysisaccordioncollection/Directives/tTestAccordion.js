@@ -14,8 +14,7 @@
                             analysis: "=analysis",
                             isItOpen: "@"
                         },
-                        link: function (scope, elem, attrs) {
-                        	scope.isTTestOpen = attrs.isItOpen || false;                        	
+                        link: function (scope, elem, attrs) {                        	
                             scope.$watch('analysis', function (newval) {
                                 if (newval) {
                                 	console.log(newval)
