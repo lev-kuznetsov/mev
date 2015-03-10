@@ -13,7 +13,7 @@ function(ng, _,
 	   	     	function($stateProvider, $urlRouterProvider){	     				
 	   	     		$stateProvider	   	     		
 	   	     		.state("root.dataset.columnSets", {
-	   	     			url: "/dataset/:datasetId/columnSets",
+	   	     			url: "columnSets",
 	   	     			parent: "root.dataset",
 	   	     			templateUrl: "app/views/dataset/columnSets/templates/views.dataset.columnSets.tpl.html",	   	     			
 	   	     			controller: "ColumnSetsViewVM",
@@ -21,7 +21,7 @@ function(ng, _,
 	   	     			resolve:{}
 	   	     		})
 	   	     		.state("root.dataset.columnSet", {
-	   	     			url: "/dataset/:datasetId/columnSets/{setId}",
+	   	     			url: "columnSets/{setId}",
 	   	     			params: {
 	   	     				setId: "new"
 	   	     			},
