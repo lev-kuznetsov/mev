@@ -1,30 +1,33 @@
 define(["ng", 
         "./controllers/DatasetViewVM", 
-        "./controllers/DatasetProjectViewVM", 
+        "./controllers/DatasetProjectViewVM",
+        "./controllers/DatasetHomeVM",
         "./annotations/AnnotationsViewVM",
         "./columnSets/views.dataset.columnSets.module",
         "./rowSets/views.dataset.rowSets.module",
         "./analysis/views.dataset.analysis.module"], 
 function(ng, 
 		DatasetViewVM, 
-		DatasetProjectViewVM, 
+		DatasetProjectViewVM,
+		DatasetHomeVM,
 		AnnotationsViewVM){
 	var module=ng.module("mui.views.dataset", ["mui.views.dataset.columnSets", 
 	                                           "mui.views.dataset.rowSets",
 	                                           "mui.views.dataset.analysis"]);
 	
-	module.controller("DatasetViewVM", DatasetViewVM);
-	module.controller("DatasetProjectViewVM", DatasetProjectViewVM);	
+	module.controller("DatasetViewVM", DatasetViewVM);	
+	module.controller("DatasetProjectViewVM", DatasetProjectViewVM);
+	module.controller("DatasetHomeVM", DatasetHomeVM);	
 	module.controller("AnnotationsViewVM", AnnotationsViewVM);
 	module.config(['$stateProvider', '$urlRouterProvider',
 	   	     	function($stateProvider, $urlRouterProvider){	     				
 	   	     		$stateProvider	   	     		
-	   	     		.state("root.dataset", {
-	   	     			url: "/dataset/:datasetId/",
+	   	     		.state("root.dataset", {	   	     			
 	   	     			parent: "root",
-//	   	     			"abstract": true,
+	   	     			"abstract": true,
+	   	     			url: "/dataset/:datasetId/",
 //			   	     	params: {
-//			   	     	   id: null
+//			   	     		datasetId: null
 //			   	     	},	
 	   	     			templateUrl: "app/views/dataset/templates/dataset.tpl.html",
 //	   	     			template: "<div>dataset: {{$stateParams.datasetId}}</div>",	   	     			
@@ -64,6 +67,20 @@ function(ng,
 	   	     					});	   	     					
 	   	     				}]	   	     				
 	   	     			}
+	   	     		})
+	   	     		.state("root.dataset.home", {		   	     		
+	   	     			parent: "root.dataset",
+	   	     			url: "home/",
+	//   	     			"abstract": true,
+	//		   	     	params: {
+	//		   	     	   id: null
+	//		   	     	},	
+	   	     			templateUrl: "app/views/dataset/templates/dataset.home.tpl.html",
+	//   	     			template: "<div>dataset: {{$stateParams.datasetId}}</div>",	   	     			
+	   	     			controller: "DatasetHomeVM",
+	   	     			controllerAs: "DatasetHomeVM",
+		   	     		data: {},
+	   	     			resolve:{}
 	   	     		})
 	   	     		.state("dataset.annotations", {
 	   	     			url: "annotations/:dimension",

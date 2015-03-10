@@ -15,6 +15,19 @@ define(["ng"], function(ng){
 		console.debug("***dataset", dataset, project);
 //		this.annotations=annotations;	
 		
+		project.generateView({
+            viewType:'heatmapView', 
+            labels:{
+                row:{keys:dataset.row.keys}, 
+                column:{keys:dataset.column.keys}
+            },
+            expression:{
+                min: dataset.expression.min,
+                max: dataset.expression.max,
+                avg: dataset.expression.avg,
+            }
+        });
+		
 		$scope.$on("ui:projectTree:nodeSelected", function($event, node){
 			that.node=node;			
 			
@@ -38,6 +51,11 @@ define(["ng"], function(ng){
 			console.debug("DatasetProjectViewVM onAnalysisLoadedAll");
 			$scope.$broadcast("ui:projectTree:dataChanged");			
 		});
+		
+		$scope.$on('SeletionAddedEvent', function(event, dimensionType){
+      	    dataset.resetSelections(dimensionType);      	        	  
+         });
+
 	};
 	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "dataset", "project", "AnalysisEventBus", "AnalysisTypes"];
 	return DatasetProjectViewVM;

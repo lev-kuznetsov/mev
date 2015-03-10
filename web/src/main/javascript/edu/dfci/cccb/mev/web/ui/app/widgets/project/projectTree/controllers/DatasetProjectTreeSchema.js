@@ -5,7 +5,7 @@ define([], function(){
 			"dataset": {
 				label: "Dataset", 
 				state: {
-					name: ".dataset", 
+					name: ".dataset.home", 
 					getParams: function(node){
 						return {datasetId: node.nodeData.id, node: node};
 					}
