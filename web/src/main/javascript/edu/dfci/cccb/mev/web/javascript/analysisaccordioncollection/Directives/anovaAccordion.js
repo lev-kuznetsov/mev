@@ -13,9 +13,9 @@
                         scope: {
                             analysis: "=analysis",
                             project: '=project',
+                            isItOpen: '@'
                         },
-                        link: function (scope) {
-                        	
+                        link: function (scope) {                        	
                         	//variable to remove embedded pair information
                         	scope.cleanData = undefined;
                         	
