@@ -14,7 +14,7 @@ define(["ng"], function(ng){
 		if(rowSet.properties && rowSet.properties.selectionFacetLink){			
 			this.annotationsUrl += rowSet.properties.selectionFacetLink;
 		}else if (rowSet.properties){
-			var facetUrl = "{\"facets\":[{\"c\":{\"type\":\"text\",\"name\":\"ID\",\"rowName\":\"MEVID\",\"mode\":\"regex\",\"caseSensitive\":false,\"query\":\""+
+			var facetUrl = "{\"facets\":[{\"c\":{\"type\":\"text\",\"name\":\"ID\",\"columnName\":\"MEVID\",\"mode\":\"regex\",\"caseSensitive\":false,\"query\":\""+
 			rowSet.keys.join("|")
     		+"\"}}]}";     		
     		this.annotationsUrl += "project?project=MEV-"+randomProjectId+"&ui="+window.escape(facetUrl);			
