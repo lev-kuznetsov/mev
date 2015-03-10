@@ -3,13 +3,15 @@ define(["ng", "lodash",
         "./kmeans/views.dataset.analysis.kmeans.module",
         "./ttest/views.dataset.analysis.ttest.module",
         "./fisher/views.dataset.analysis.fisher.module",
-        "./anova/views.dataset.analysis.anova.module",], function(ng, _){
+        "./anova/views.dataset.analysis.anova.module",
+        "./limma/views.dataset.analysis.limma.module"], function(ng, _){
 	var module = ng.module("mui.views.dataset.analysis", ["mui.widgets.analysis", 
 	                                                      "mui.views.dataset.analysis.hcl", 
 	                                                      "mui.views.dataset.analysis.kmeans",
 	                                                      "mui.views.dataset.analysis.ttest",
 	                                                      "mui.views.dataset.analysis.fisher",
-	                                                      "mui.views.dataset.analysis.anova"]);
+	                                                      "mui.views.dataset.analysis.anova",
+	                                                      "mui.views.dataset.analysis.limma"]);
 	module.config(["$stateProvider", "$urlRouterProvider", "AnalysisTypes", function($stateProvider, $urlRouterProvider, AnalysisTypes){				
 		$stateProvider		
 		.state("root.dataset.analysis", {			

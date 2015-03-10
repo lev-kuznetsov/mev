@@ -708,8 +708,6 @@ define(['angular', 'alertservice/AlertService'], function(angular, AlertService)
 
                                 var header = "LIMMA Analysis";
                                  
-                                alertService.info(message,header);
-
                                 var analysisData = {
                             		analysisType: 'limma',
                                 	datasetName: scope.dataset.datasetName,
@@ -725,30 +723,6 @@ define(['angular', 'alertservice/AlertService'], function(angular, AlertService)
                                 
                                 scope.dataset.analysis.post3(analysisData, {
                                 	
-                                },
-                                function(data, status, headers, config) {
-                                    
-                                	scope.dataset.loadAnalyses();
-                                	
-                                    var message = "Completed limma analysis for "
-                                        + analysisData.analysisName;
-
-                                    var header = "LIMMA Analysis Complete";
-                                     
-                                    alertService.success(message,header);
-                                    
-                                    
-                                },
-                                function(data, status, headers, config) {
-                                    var message = "Error on limma analysis for "
-                                        + analysisData.analysisName;
-
-                                    var header = "LIMMA Analysis Problem (Error Code: "
-                                        + status
-                                        + ")";
-                                     
-                                    alertService.error(message,header);
-                                    
                                 });                                              
                                 
 

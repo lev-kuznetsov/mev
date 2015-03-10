@@ -10,7 +10,8 @@
                         templateUrl: paths.module + '/templates/limmaAccordion.tpl.html',
                         scope: {
                             project: '=project',
-                            analysis: "=analysis"
+                            analysis: "=analysis",
+                            isItOpen: "@"
                         },
                         link: function (scope) {
 
