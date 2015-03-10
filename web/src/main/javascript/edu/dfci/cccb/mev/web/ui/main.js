@@ -94,7 +94,11 @@
 		    },
 		    ngGrid: {
 		    	deps: ['jquery', 'ng']
-		    }
+		    },
+		    'fileSaver' : {
+		        deps : [ 'canvasToBlob' ],
+		        exports : 'fileSaver'
+		    },
 		},
 	  packages : [ {
 		    name : "mainmenu",

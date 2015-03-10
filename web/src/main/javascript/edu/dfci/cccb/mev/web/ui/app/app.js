@@ -9,6 +9,7 @@ define(["ng",
         "app/domain/navigator/domain.navigator.module",
         
         'ngGrid',
+        'fileSaver',
         
         'directives', 
         'services', 
