@@ -34,6 +34,7 @@
 						VISUALIZATIONS
 					</a>
 					<ul class="dropdown-menu">
+						<li><a data-toggle="modal" data-target="#pcaModal">Principal Components</a></li>
 						<li><a data-target="#settingsModal"" data-toggle="modal">Heatmap Settings</a></li>
 					</ul>
 				</li>
@@ -109,4 +110,8 @@
 
 <bsmodal bindid="deseq" func="" header="DESeq Analysis">
  <div class="modal-D-E-Seq" heatmap-dataset="project.dataset"></div>
+</bsmodal> 
+
+<bsmodal bindid="pcaModal" func="" header="Principal Components Analysis">
+ <div class="modal-pca" dataset="project.dataset"></div>
 </bsmodal> 
