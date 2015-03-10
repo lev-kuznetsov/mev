@@ -33,13 +33,18 @@ function(ng, AnalyisEventBus){
 				shortName: "fisher",
 				viewModel: "FisherVM"
 			},
+			"Anova Analysis": {
+				shortName: "anova",
+				viewModel: "AnovaVM"	
+			},
 			reverseLookup: {
 				hcl: "Hierarchical Clustering",
 				limma: "LIMMA Differential Expression Analysis",
 				kmeans: "K-means Clustering",
 				one_sample_ttest: "t-Test Analysis",
 				two_sample_ttest: "t-Test Analysis",
-				fisher: "Fisher test"
+				fisher: "Fisher test",
+				anova: "Anova Analysis"
 		} 
 	});	
 	return module;

@@ -80,28 +80,7 @@ define(['angular', 'alertservice/AlertService'], function(angular, AlertService)
                         };
                         
                         
-                        scope.dataset.analysis.postf(analysisData, JSON.stringify(scope.params.selections),
-	                        function(data, status, headers, config) {
-	                            
-                        		scope.dataset.loadAnalyses();
-                        		
-	                            var message = "ANOVA for "
-	                            	+ scope.params.name + " complete!";
-	
-	                            var header = "ANOVA";
-	                                         
-	                            alertService.success(message,header);
-	                                    
-	                         }, function(data, status, headers, config) {
-	                            
-	                            var message = "Could not perform ANOVA. If "
-	                                + "problem persists, please contact us.";
-	                            var header = "Clustering Problem (Error Code: "
-	                                + status
-	                                + ")";
-	                            alertService.error(message,header);
-                            
-                        });
+                        scope.dataset.analysis.postf(analysisData, JSON.stringify(scope.params.selections));
                     };
                 }
             };
