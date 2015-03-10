@@ -305,6 +305,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 	};
                 	//addSelection [Selection] --> null
                 	$scope.addSelection = function(dimension){
+                		console.debug("HeatmaVisualization: addSelection", dimension, $scope.visualization.view.selectionParams[dimension].labels, $scope.visualization.view.selectionParams[dimension])
                 		var selectionsData = {
                             name: $scope.visualization.view.selectionParams[dimension].name,
                             properties: {
