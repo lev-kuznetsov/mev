@@ -37,6 +37,10 @@ function(ng, AnalyisEventBus){
 				shortName: "anova",
 				viewModel: "AnovaVM"	
 			},
+			"DESeq Differential Expression Analysis": {
+				shortName: "deseq",
+				viewModel: "DESeqVM"
+			},
 			reverseLookup: {
 				hcl: "Hierarchical Clustering",
 				limma: "LIMMA Differential Expression Analysis",
@@ -44,7 +48,9 @@ function(ng, AnalyisEventBus){
 				one_sample_ttest: "t-Test Analysis",
 				two_sample_ttest: "t-Test Analysis",
 				fisher: "Fisher test",
-				anova: "Anova Analysis"
+				anova: "Anova Analysis",
+				deseq: "DESeq Differential Expression Analysis"
+					
 		} 
 	});	
 	return module;

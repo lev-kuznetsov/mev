@@ -65,8 +65,6 @@ define(['angular', 'alertservice/AlertService'], function(angular, AlertService)
                             return
                         }
                         
-                        alertService.info(message,header);
-                        
                         var analysisData = {
                         	datasetName : scope.dataset.datasetName,
                         	analysisType : "anova",
@@ -178,16 +176,14 @@ define(['angular', 'alertservice/AlertService'], function(angular, AlertService)
                         + scope.params.name + " analysis.";
 
                     var header = "DESeq Analysis Start";
-                    
-                    alertService.info(message, header)
-    				
+                                        
     				scope.dataset.analysis.post3({
     					datasetName:scope.dataset.datasetName,
     					analysisType:'deseq',
     					analysisName:scope.params.name,
     					experiment: scope.params.experiment.name,
     					control: scope.params.control.name
-    				},{}, success, failure)
+    				},{})
     				
     			}
 

@@ -11,7 +11,8 @@
                         templateUrl: paths.module + '/templates/DESeqAccordion.tpl.html',
                         scope: {
                             project: "=project",
-                            analysis: "=analysis"
+                            analysis: "=analysis",
+                            isAnalysisOpen: "@"
                         },
                         link: function (scope) {
 
