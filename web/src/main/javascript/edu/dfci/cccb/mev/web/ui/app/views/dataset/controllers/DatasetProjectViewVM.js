@@ -35,6 +35,7 @@ define(["ng"], function(ng){
 			});			
         });
 		AnalysisEventBus.onAnalysisLoadedAll($scope, function(){
+			console.debug("DatasetProjectViewVM onAnalysisLoadedAll");
 			$scope.$broadcast("ui:projectTree:dataChanged");			
 		});
 	};

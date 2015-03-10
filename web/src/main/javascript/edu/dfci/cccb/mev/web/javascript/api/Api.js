@@ -84,6 +84,7 @@ define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular
     	var AnalysisResource = Object.create(resource);
     	AnalysisResource.post=postWrapper("post");
     	AnalysisResource.postf=postWrapper("postf");
+    	AnalysisResource.post3=postWrapper("post3");
     	
     	
     	return AnalysisResource;    	

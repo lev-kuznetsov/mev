@@ -40,6 +40,7 @@ function(ng, RecursiveTreeMixin) {
 			$scope.selected.id=id;
 		};
 		$scope.$on("ui:projectTree:dataChanged", function(){
+			console.debug("on ui:projectTree:dataChanged");
 			$scope.tree=ProjectTreeAdaptor($scope.project).nodes;
 		});		
 	};
