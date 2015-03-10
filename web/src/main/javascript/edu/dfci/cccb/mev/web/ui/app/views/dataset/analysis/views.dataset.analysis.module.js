@@ -1,11 +1,13 @@
 define(["ng", "lodash", 
         "./hcl/views.dataset.analysis.hcl.module", 
         "./kmeans/views.dataset.analysis.kmeans.module",
-        "./ttest/views.dataset.analysis.ttest.module"], function(ng, _){
+        "./ttest/views.dataset.analysis.ttest.module",
+        "./fisher/views.dataset.analysis.fisher.module"], function(ng, _){
 	var module = ng.module("mui.views.dataset.analysis", ["mui.widgets.analysis", 
 	                                                      "mui.views.dataset.analysis.hcl", 
 	                                                      "mui.views.dataset.analysis.kmeans",
-	                                                      "mui.views.dataset.analysis.ttest"]);
+	                                                      "mui.views.dataset.analysis.ttest",
+	                                                      "mui.views.dataset.analysis.fisher"]);
 	module.config(["$stateProvider", "$urlRouterProvider", "AnalysisTypes", function($stateProvider, $urlRouterProvider, AnalysisTypes){				
 		$stateProvider		
 		.state("root.dataset.analysis", {			

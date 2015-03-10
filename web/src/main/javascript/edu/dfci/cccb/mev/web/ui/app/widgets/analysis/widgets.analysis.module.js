@@ -29,12 +29,17 @@ function(ng, AnalyisEventBus){
 				shortName: "ttest",
 				viewModel: "tTestVM"
 			},
+			"Fisher test":{
+				shortName: "fisher",
+				viewModel: "FisherVM"
+			},
 			reverseLookup: {
 				hcl: "Hierarchical Clustering",
 				limma: "LIMMA Differential Expression Analysis",
 				kmeans: "K-means Clustering",
 				one_sample_ttest: "t-Test Analysis",
-				two_sample_ttest: "t-Test Analysis"
+				two_sample_ttest: "t-Test Analysis",
+				fisher: "Fisher test"
 		} 
 	});	
 	return module;

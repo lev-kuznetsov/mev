@@ -350,7 +350,7 @@ define(['angular', 'alertservice/AlertService'], function(angular, AlertService)
 	    					t: tables[table][1].below,
 	    					hypothesis: scope.params.hypothesis.value,
 	    					simulate: scope.params.simulate.value
-	    				}, success, failure)
+	    				});
 						
 					}
 					

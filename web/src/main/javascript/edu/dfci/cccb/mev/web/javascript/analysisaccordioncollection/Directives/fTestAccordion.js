@@ -9,10 +9,12 @@
                 restrict : 'E',
                 scope : {
             	    analysis : "=analysis",
-            	    project : "=project"
+            	    project : "=project",
+            	    isItOpen: "@"
                 },
                 templateUrl : paths.module + '/templates/fTestAccordion.tpl.html',
-                link : function(scope) {
+                link : function(scope, attr) {
+                	scope.isItOpen = attr.isItOpen || false;
                     return
                 }	
             }
