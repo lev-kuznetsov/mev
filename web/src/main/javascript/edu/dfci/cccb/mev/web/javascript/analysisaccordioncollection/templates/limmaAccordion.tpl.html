@@ -5,10 +5,16 @@
 		target="_self">Table</a>
 	</li>
 	<li>
-		<a id="heatmapTabLink" href="{{'#limma-' + analysis.randomId + '-boxPlot'}}" 
+		<a id="boxplotsTabLink" href="{{'#limma-' + analysis.randomId + '-boxPlot'}}" 
 			data-toggle="tab" 
 			target="_self"
 			ng-click="viewGenes()">Quartiles</a>
+	</li>
+	<li ng-if="isShowHeatmapTab">
+		<a id="heatmapTabLink" href="{{'#limma-' + analysis.randomId + '-heatmap'}}" 
+			data-toggle="tab" 
+			target="_self"
+			ng-click="viewGenes()">Heatmap</a>
 	</li>
 	<li ng-show='analysis.topGo.length > 0'>
 		<a id="heatmapTabLink" href="{{'#limma-' + analysis.randomId + '-topGoResults'}}" 
@@ -53,6 +59,13 @@
 		<div id="{{'limma-' + analysis.randomId + '-svg-holder'}}">
 
 			<d3-Box-Plot-Visualization data="boxPlotGenes"></d3-Box-Plot-Visualization>
+
+		</div>
+	</div>
+	<div class="tab-pane" id="{{'limma-' + analysis.randomId + '-heatmap'}}" ng-if="isShowHeatmapTab">
+		<div id="{{'limma-' + analysis.randomId + '-svg-holder'}}">
+
+			<view-Content-Item project='project' view='project.views'></view-Content-Item>			
 
 		</div>
 	</div>

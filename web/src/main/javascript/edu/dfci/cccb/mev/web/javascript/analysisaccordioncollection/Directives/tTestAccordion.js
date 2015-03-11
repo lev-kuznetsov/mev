@@ -73,6 +73,8 @@
                             scope.viewGenes = function () {
                             	scope.tTest = scope.analysis
                                 scope.filteredResults = resultsFilter(scope.analysis.results, scope.filterParams);
+                            	//also filter heatmap
+                            	scope.applyToHeatmap();
                             };
 
                             scope.selectionParams = {

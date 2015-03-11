@@ -1,6 +1,18 @@
 <!-- <project-analysis-parameters parameters="DatasetAnalysisVM.analysis.params"></project-analysis-parameters> -->
 <div>
-	<accordion close-others="false">
-		<t-Test-Accordion analysis="DatasetAnalysisVM.analysis" project="DatasetAnalysisVM.project" is-it-open="isOpen"></t-Test-Accordion>					
-	</accordion>		
+	<ul class="nav nav-tabs" id="importTabs">
+		<li id="table_tab" class="active"><a href="#table" data-toggle="tab" target="_self">Table</a></li>
+		<li id="heatmap]_tab"><a href="#heatmap" data-toggle="tab" target="_self">Heatmap</a></li>	
+	</ul>
+
+	<div class="tab-content">
+		<div class="tab-pane active" id="table" >
+			<accordion close-others="false">
+				<t-Test-Accordion analysis="DatasetAnalysisVM.analysis" project="DatasetAnalysisVM.project" is-it-open="isOpen"></t-Test-Accordion>					
+			</accordion>		
+		</div>
+		<div class="tab-pane" id="heatmap">
+			<view-Content-Item project='DatasetAnalysisVM.project' view='DatasetAnalysisVM.project.views'></view-Content-Item>
+		</div>
+	</div>
 </div>
