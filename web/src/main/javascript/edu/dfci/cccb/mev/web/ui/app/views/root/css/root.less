@@ -188,9 +188,12 @@ html, body{
 }
 .column-config-menu{
 	position: relative;
-	margin-right: -(@grid-gutter-width / 2) +  @sidemenu-padding-top;
+//	margin-right: -(@grid-gutter-width / 2) +  @sidemenu-padding-top;	
 	.btn.btn-xs{
 		padding: 3px 5px;
+	}
+	.btn.btn-sm{
+		padding: 8px 9px;
 	}
 }
 .wrapper-config-menu{
@@ -274,7 +277,8 @@ div[layout-column]{
 	> div[class^="col-"]{
 		> :first-child{
 			margin-top: 0px;
-			margin-right: -10px;
+//			margin-right: -10px;
+			
 		} 
 	}
 }
@@ -282,7 +286,45 @@ div[layout-column]{
 .results-wrapper{
 	.results-header{
 		.btn{
-			.btn-xs();
+			.btn-sm();
 		}
 	}
 }
+
+.nav{
+	&.nav-tabs{
+		border-bottom: 1px solid #18BC9C;
+		.btn-toolbar{
+			.btn{
+				.btn-sm();
+				padding: 8px 9px;
+				margin-left: 2px;
+			}
+		}
+		
+		> li {
+			&.active {
+				> a {
+					border: 1px solid #18BC9C;
+					border-bottom: 1px solid white;
+				}
+			}
+		}				
+	}
+	> li {
+		> a {
+			padding: 10px 15px;
+		}
+	}
+}
+
+.column-config-menu{
+	.btn{
+		margin-left: 2px;
+		> i{
+			padding: 3px;
+		}
+	}
+	 
+}
+
