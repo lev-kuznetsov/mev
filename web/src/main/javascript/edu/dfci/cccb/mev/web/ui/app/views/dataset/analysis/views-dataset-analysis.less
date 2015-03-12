@@ -1,0 +1,52 @@
+.views-dataset-analysis{	
+	.nav{
+		&.nav-tabs{
+			border-bottom: 1px solid @brand-success;
+			.btn-toolbar{
+				.btn{
+					.btn-sm();
+					padding: 8px 9px;
+					margin-left: 2px;
+				}
+			}
+			
+			> li {
+				&.active {
+					> a {
+						border: 1px solid @brand-success;
+						border-bottom: 1px solid white;
+					}
+				}
+			}				
+		}
+		> li {
+			> a {
+				padding: 10px 15px;
+			}
+		}
+	}	
+	
+	.results-wrapper{
+		.results-header{
+			margin-top: 2px;
+			padding-bottom: 2px;
+	//		border-bottom: 1px solid @brand-success;
+			
+			.btn-toolbar{
+				.pull-right();
+				.btn-group{
+					.btn{
+						.btn-sm();
+						padding: 8px 9px;
+						margin-left: 2px;					
+					}		
+					.btn:first-child{
+						margin-left: 0;
+					}
+				}
+			}		
+		}
+	}
+	
+}
+@import "ttest/views-dataset-analysis-ttest.less";
