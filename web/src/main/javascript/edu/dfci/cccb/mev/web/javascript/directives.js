@@ -317,26 +317,24 @@ define(
                                     templateUrl : "/container/view/elements/modal",
                                     compile: function(tElem, tAttrs){                                    	
                                     	return {
-//                                    		post: function(scope, elem, attrs, ctrl){
-//                                    			var rootElement = angular.element("body > ui-view");
-//                                    			
-//                                    			if(rootElement.length===0)
-//                                    				rootElement = angular.element("body > ng-view");
-//                                    			
-//                                    			if(rootElement.length===1){
-//                                    				var exists = rootElement.children("[bindid='"+scope.bindid+"']");                                    				
-//                                    				if(exists.length===0){
-//                                    					console.debug("BSMODAL appaned", attrs.bindid);
-//                                    					rootElement.append(elem);
-//                                    				}else{
-//                                    					console.debug("BSMODAL exists", attrs.bindid);
-//                                    					//we already have this modal, 
-//                                    					//prevent creation of a second instance
-//                                    					elem.html('');
-//                                    				}
-//                                    			}
-//                                    			
-//                                    		}
+                                    		post: function(scope, elem, attrs, ctrl){
+                                    			var rootElement = angular.element("body > ui-view");
+                                    			
+                                    			if(rootElement.length===0)
+                                    				rootElement = angular.element("body > ng-view");
+                                    			
+                                    			if(rootElement.length===1){
+                                    				var exists = rootElement.children("[bindid='"+scope.bindid+"']");                                    				
+                                    				if(exists.length>0){                                    					                                    				
+                                    					//we already have this modal, remove to avoid duplicates                                     					
+                                    					exists.html('').remove();
+                                    					console.debug("BSMODAL remove", attrs.bindid, rootElement.children("[bindid='"+scope.bindid+"']").length);
+                                    				}
+                                    				console.debug("BSMODAL appaned", attrs.bindid);
+                                					rootElement.append(elem);
+                                    			}
+                                    			
+                                    		}
                                     	};
                                     }
                                 };
