@@ -2,10 +2,11 @@
 	
 	var directiveDeps = [
 	                     './Directives/pcaModal',
+	                     './Directives/nmfModal'
 	                     ]
 	
 	var serviceDeps = [
-	                   './Services/pathModalService',
+	                   './Services/pathModalService'
 	                   ]
 	
 	var deps = ['angular', 'alertservice/AlertService']

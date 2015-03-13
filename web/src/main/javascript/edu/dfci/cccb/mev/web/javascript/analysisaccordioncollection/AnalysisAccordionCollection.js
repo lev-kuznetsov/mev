@@ -13,7 +13,8 @@
       './Directives/limmaAccordion',
       './Directives/hierarchicalAccordion',
       './Directives/pcaAccordion',
-      './Directives/resultsTable'
+      './Directives/resultsTable',
+      './Directives/nmfAccordion'
       ]
     
     var serviceDeps = [
