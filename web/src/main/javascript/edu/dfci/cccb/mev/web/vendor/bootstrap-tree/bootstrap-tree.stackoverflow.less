@@ -24,6 +24,7 @@
 		.parent_li{
 			> span.nodeWrapper {
 	 		   cursor:pointer;
+	 		   background-color: @body-bg;
 	 		   &:hover,
 	 		   &+ul li span.nodeWrapper:hover{
 				    background:#eee;
@@ -91,14 +92,14 @@
 	    right:auto;
 	}
 	li.nodeItem:before {		
-	    border-left:1px solid #999;
+	    border-left:1px solid @project-tree-border-color;
 	    bottom:50px;
 	    height:100%;
 	    top:0;
 	    width:1px;
 	}
 	li.nodeItem:after {		
-	    border-top:1px solid #999;
+	    border-top:1px solid @project-tree-border-color;
 	    height:20px;
 	    top:25px;
 	    width:25px;

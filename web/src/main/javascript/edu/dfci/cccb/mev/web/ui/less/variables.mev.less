@@ -8,9 +8,20 @@
 
 //change bootstrap default padding (makes buttons smaller)
 //note: don't override bootstrap theme defaults. Instead use the bootstrap mixin to map to own classes
-@padding-base-vertical:     6px;
-@padding-base-horizontal:   9px;
+//@padding-base-vertical:     6px;
+//@padding-base-horizontal:   9px;
 
 @nav-link-padding-ver: extract(@nav-link-padding, 1);
 @nav-link-padding-hor: extract(@nav-link-padding, 2);
 
+@project-tree-border-color: @brand-info;
+
+
+//== Tabs
+@nav-tabs-border-color:                     @brand-success;
+
+@nav-tabs-link-hover-border-color:          @gray-lighter;
+
+@nav-tabs-active-link-hover-bg:             @body-bg;
+@nav-tabs-active-link-hover-color:          @brand-primary;
+@nav-tabs-active-link-hover-border-color:   @gray-lighter;

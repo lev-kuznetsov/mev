@@ -186,6 +186,7 @@ html, body{
     min-height: 1px;
     height: 1px;
     opacity: 0;    
+    border: 0 !important;
 }
 .column-config-menu{
 	position: relative;
@@ -205,6 +206,13 @@ html, body{
 }
 div[layout-column]{
 	transition: width .3s ease;
+}
+div[layout-column='left']{
+	background-image: url('/container/images/background/dottedPattern.png');
+//	border-right: 1px solid @project-tree-border-color;
+	.column-config-menu{
+		margin-right: -(@padding-base-horizontal - 6);
+	}	
 }
 
 #main-wrapper {
