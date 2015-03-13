@@ -23,8 +23,7 @@
 		//ensure parent node gets a pointer because it's expandable
 		.parent_li{
 			> span.nodeWrapper {
-	 		   cursor:pointer;
-	 		   background-color: @body-bg;
+	 		   cursor:pointer;	 		   
 	 		   &:hover,
 	 		   &+ul li span.nodeWrapper:hover{
 				    background:#eee;
@@ -52,7 +51,8 @@
 		    padding:3px 8px;
 		    text-decoration:none;
 		    cursor:pointer;
-		    
+		    background-color: @body-bg;	 		   
+	 		   
 		    -webkit-user-select: none; /* Chrome/Safari */        
 				-moz-user-select: none; /* Firefox */
 				-ms-user-select: none; /* IE10+ */
