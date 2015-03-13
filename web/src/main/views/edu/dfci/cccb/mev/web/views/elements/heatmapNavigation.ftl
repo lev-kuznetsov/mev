@@ -25,6 +25,7 @@
 						<li><a data-toggle="modal" data-target="#wilcoxon">Wilcoxon Rank Sum</a></li>
 						<li><a data-toggle="modal" data-target="#anova">ANOVA</a></li>
 						<li><a data-toggle="modal" data-target="#deseq">DESeq</a></li>
+						<li><a data-toggle="modal" data-target="#nmfModal">Non-Negative Factorization</a></li>
 					</ul>
 				</li>
 				
@@ -114,4 +115,8 @@
 
 <bsmodal bindid="pcaModal" func="" header="Principal Components Analysis">
  <div class="modal-pca" dataset="project.dataset"></div>
+</bsmodal>
+
+<bsmodal bindid="nmfModal" func="" header="Non-Negative Matrix Factorization">
+ <div class="modal-nmf" dataset="project.dataset"></div>
 </bsmodal> 
