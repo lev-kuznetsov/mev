@@ -3,19 +3,23 @@ define([], function(){
 		return {			
 			restrict: "AE",
 			replace: true,
-			templateUrl: "app/widgets/mainmenu/directives/mainmenu.tpl.html", 
+			templateUrl: "app/widgets/mainmenu/directives/mainmenu.tpl.html",			
 			link: function(scope, elm, attrs, ctrl){
 //				console.debug("MainMenu Link: ", scope.$state, scope.$state.current.name === "root.project");
 				scope.hasSidePanel = scope.$state.current.name === "root.project";
 				scope.settings={
 					sidemenu: {
-						shrink: false
+						shrink: true
 					},
 					header: {
-						fixed: false
+						fixed: true
 					},
-					columnScroll: false
-				};
+					footer: {
+						fixed: true
+					},
+					columnScroll: true,
+					columnContentScroll: true
+				};								
 				scope.toggleFixedHeader=function(){
 					$rootScope.$broadcast("ui:toggleFixedHeader");
 				};
@@ -25,6 +29,9 @@ define([], function(){
 				scope.toggleColumnScroll=function(){
 					$rootScope.$broadcast("ui:toggleColumnScroll");					
 				};
+				scope.toggleColumnContentScroll=function(){
+					$rootScope.$broadcast("ui:toggleColumnContentScroll");					
+				}
 				scope.$watch("settings.sidemenu.shrink", SideMenuSrv.toggle);
 			}
 		};

@@ -3,59 +3,29 @@
 	<div layout-column="left" ng-class="{'col-0': layoutColumn.isClosed(), 'col-md-3': !layoutColumn.isClosed()}" content-id="content-wrapper" >		
 		<div class="pull-right column-config-menu">
 			<div class="btn btn-info btn-sm" ng-click="layoutColumn.toggle()">
-				  	<i class="fa fa-arrow-left"></i>
+			  	<i class="fa fa-arrow-left"></i>
 			</div>
-<!-- 			<div dropdown class="column-config-menu pull-right">						 -->
-<!-- 				<div class="btn btn-info btn-xs dropdown-toggle" aria-haspopup="true" aria-expanded="false"> -->
-<!-- 			  	<i class="fa fa-cog"></i> -->
-<!-- 			  </div> -->
-<!-- 			  <ul class="dropdown-menu" role="menu">		  	 -->
-<!-- 	        <li><a ng-click="layoutColumn.hide()">Hide</a></li> -->
-<!-- 	      </ul> -->
-<!-- 			</div> -->
 		</div>
 		
-<!-- 		<h3><project-label clickable="false" editable="true" project="DatasetProjectViewVM.getProject()"></project-label></h3>	 -->
-
-<!-- 		<div class="panel panel-info"> -->
-<!-- 		  <div class="panel-heading" > -->
-<!-- 		    <h3 class="panel-title">{{DatasetProjectViewVM.getProject().name}}</h3> -->
-<!-- 		  </div>		   -->
-<!-- 		  <div class="panel-body" > -->
-		    <project-tree node-type='Data' project="DatasetProjectViewVM.getProject()"></project-tree>
-<!-- 		  </div> -->
-<!-- 		</div>		 -->
-		
-<!-- 		<project-nav project="DatasetProjectViewVM.getProject()"></project-nav> -->
-						
+		<div class="row column-header">			
+			<div class="project-tree-header">{{DatasetProjectViewVM.getProject().name}}</div>
+		</div>
+		<div class="row column-body project-tree-content">	
+		   	<project-tree class="col-md-12" node-type='Data' project="DatasetProjectViewVM.getProject()"></project-tree>
+	   </div>
 	</div>	
+	
 	<div layout-column="right" ng-class="{'col-md-12': layoutColumn.isClosed(), 'col-md-9': !layoutColumn.isClosed()}" id="content-wrapper">
+		
 		<div class="pull-right column-config-menu">
 			<div class="btn btn-info btn-sm" ng-click="layoutColumn.toggle()">
-		  	<i ng-class="{'fa': true, 'fa-compress': layoutColumn.isClosed(), 'fa-expand': !layoutColumn.isClosed()}"></i>
-		  </div>
-<!-- 			<div dropdown class="column-config-menu pull-right"> -->
-<!-- 				<div class="btn btn-info btn-xs dropdown-toggle" aria-haspopup="true" aria-expanded="false"> -->
-<!-- 			  	<i class="fa fa-cog"></i> -->
-<!-- 			  </div> -->
-<!-- 			  <ul class="dropdown-menu" role="menu">		  	 -->
-<!-- 	        <li><a ng-click="layoutColumn.hide()">Hide</a></li> -->
-<!-- 	      </ul> -->
-<!-- 			</div> -->
+		  		<i ng-class="{'fa': true, 'fa-compress': layoutColumn.isClosed(), 'fa-expand': !layoutColumn.isClosed()}"></i>
+			</div>
 		</div>
-<!-- 		<h3> -->
-<!-- 		<span toggle-sidepanel="left" ng-click='sideMenuVM.toggle()'><i class="fa" ng-class="{'fa-arrow-circle-o-right': sideMenuVM.isCollapsed(), 'fa-arrow-circle-o-left': !sideMenuVM.isCollapsed()}"></i></span> -->
-<!-- 		{{DatasetProjectViewVM.node.nodeData.name || DatasetProjectViewVM.node.nodeName}}  -->
-<!-- 		</h3> -->
 		
-		<div gridster="gridsterOpts" class="issuesContent">
+		<div gridster="gridsterOpts">
 			<div ui-view class="views-dataset-analysis"></div>
-<!-- 	    <ul> -->
-<!-- 	    		<li gridster-item row="item.position[0]" col="item.position[1]" size-x="item.size.x" size-y="item.size.y" ng-repeat="item in customItems"></li> -->
-<!-- 	        <li gridster-item="item" ng-repeat="item in standardItems"></li> -->
-<!-- 	    </ul> -->
 		</div>
-				
 	</div>
 </div>
 
