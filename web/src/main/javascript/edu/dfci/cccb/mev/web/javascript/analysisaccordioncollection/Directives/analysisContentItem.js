@@ -13,8 +13,8 @@
 		var fTestTemplate = '<f-Test-Accordion analysis="analysis" project="project"></f-Test-Accordion>';
 		var wilcoxonTestTemplate = '<wilcoxon-Test-Accordion analysis="analysis" project="project"></wilcoxon-Test-Accordion>';
 		var DESeqTemplate = '<deseq-Accordion analysis="analysis" project="project"></deseq-Accordion>';
-		var PCATemplate = '<pca-Accordion analysis="analysis" project="project"></pca-Accordion>'
-		
+		var PCATemplate = '<pca-Accordion analysis="analysis" project="project"></pca-Accordion>';
+		var nmfTemplate = '<nmf-Accordion analysis="analysis" project="project"></nmf-Accordion>';
 		
 		var getTemplate = function(analysisType) {
 		    var template = '';
@@ -46,6 +46,9 @@
 				break
 			case 'PC Analysis':
 				template = PCATemplate;
+				break
+			case 'NMF Analysis':
+				template = nmfTemplate;
 				break
 		    }
 	    

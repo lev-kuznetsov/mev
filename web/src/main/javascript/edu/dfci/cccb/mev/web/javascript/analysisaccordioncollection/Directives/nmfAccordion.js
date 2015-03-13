@@ -13,7 +13,7 @@
                   	 project: "="
                    },
                    link: function(scope){
-                  	 
+                  	 scope.analysis = {name: "BLAH2", type:"Non-Negative Matrix Factorization", randomId: "JDLSFJLKJ"}
                    }
           	   }
              }])
@@ -47,24 +47,17 @@
                        
                      
                      scope.$watch('analysis', function(analysis, oldval){
-
-                         if (analysis) {
-                        	 scope.pc = {data:transformToPoints()}
-                         }
+                    	 return
 
                      })
 
                      scope.$watch('selectionParams.dimension.x', function(newval, oldval){
-                         if (newval){
-                             scope.pc = {data:transformToPoints()}
-                         }
+                         
                          return
                      }) 
                      
                      scope.$watch('selectionParams.dimension.y', function(newval, oldval){
-                         if (newval){
-                             scope.pc = {data:transformToPoints()}
-                         }
+                         
                          return
                      })
                      

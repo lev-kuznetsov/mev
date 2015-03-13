@@ -1,0 +1,90 @@
+<accordion-group heading="{{analysis.type}} : {{analysis.name}}" is-open="isAccordionOpen" ng-init="isAccordionOpen=false">
+
+	<ul class="nav nav-tabs">
+		<li class="active">
+			<a id="annotationsTabLink" href="{{'#nmf-' + analysis.randomId + '-n-heatmap'}}" 
+			data-toggle="tab" 
+			target="_self">Matrix N Heatmap</a>
+		</li>
+		<li>
+			<a id="heatmapTabLink" href="{{'#nmf-' + analysis.randomId + '-f-heatmap'}}" 
+				data-toggle="tab" 
+				target="_self">Matrix F Heatmap</a>
+		</li>
+		<li>
+			<a id="heatmapTabLink" href="{{'#nmf-' + analysis.randomId + '-n-table'}}" 
+				data-toggle="tab" 
+				target="_self">Matrix N Values</a>
+		</li>
+		<li>
+			<a id="heatmapTabLink" href="{{'#nmf-' + analysis.randomId + '-f-table'}}" 
+				data-toggle="tab" 
+				target="_self">Matrix F Values</a>
+		</li>
+	</ul>
+	
+	<div class="tab-content" id="">
+		<div class="tab-pane active" id="{{'nmf-' + analysis.randomId + '-n-heatmap'}}">                      
+			<div  class="results-wrapper">	
+				<div class="results-header clearfix">        				
+					<h3 class="pull-left analysis-results-header">N-Heatmap</h3>
+				</div>
+				<div class="results-body">
+					N-Heatmap
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane active" id="{{'nmf-' + analysis.randomId + '-f-heatmap'}}">                      
+			<div  class="results-wrapper">	
+				<div class="results-header clearfix">        				
+					<h3 class="pull-left analysis-results-header">F-Heatmap</h3>
+				</div>
+				<div class="results-body">
+					F-Heatmap
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane active" id="{{'nmf-' + analysis.randomId + '-n-table'}}">                      
+			<div  class="results-wrapper">	
+				<div class="results-header clearfix">        				
+					<h3 class="pull-left analysis-results-header">N-Table</h3>
+				</div>
+				<div class="results-body">
+					N-Table
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane active" id="{{'nmf-' + analysis.randomId + '-f-table'}}">                      
+			<div  class="results-wrapper">	
+				<div class="results-header clearfix">        				
+					<h3 class="pull-left analysis-results-header">F-Table</h3>
+				</div>
+				<div class="results-body">
+					F-Table
+				</div>
+			</div>
+		</div>
+	</div>    
+
+</accordion-group>
+
+
+
+<bsmodal bindid="{{'selectionAdd' + analysis.name}}" func="" header="Add New Selection for {{analysis.name}}">
+
+	<div class="row">
+	
+		<form-group>
+			<form>
+				Name: <input type="text" class="input-small" ng-model="selectionParams.name">
+			<form>
+		</form-group>
+	
+	</div>
+	
+	<div class="row">
+		<a class="btn btn-success pull-right" ng-click="addSelections()" data-dismiss="modal" aria-hidden="true">
+		  Create Selections
+		</a>
+    </div>
+</bsmodal>
