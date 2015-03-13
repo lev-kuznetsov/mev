@@ -1,14 +1,14 @@
 <div  class="results-wrapper" id="tTestResultsTable" ng-hide="!tTest.results">		            	
-    <div class="results-header clearfix">
-     	<div class="btn-toolbar" role="toolbar">
+    <div class="results-header clearfix">    	
+     	<div class="btn-toolbar" role="toolbar" mui-yank="ttest-action-menu">
      		<div class="btn-group">
-	             <a class="btn btn-success" href="/dataset/{{project.dataset.datasetName}}/analysis/{{tTest.name}}?format=tsv">
+	             <a class="btn" href="/dataset/{{project.dataset.datasetName}}/analysis/{{tTest.name}}?format=tsv">
 	               <i class="icon-white icon-download"></i> Download
-	             </a><a class="btn btn-info" data-target="#selectionAdd{{tTest.name}}" data-toggle="modal">
+	             </a><a class="btn" data-target="#selectionAdd{{tTest.name}}" data-toggle="modal">
 	               </i> Create Selections
-	             </a><a class="btn btn-info" data-target="#exportDataset{{tTest.name}}" data-toggle="modal">
+	             </a><a class="btn" data-target="#exportDataset{{tTest.name}}" data-toggle="modal">
 	               </i> New Dataset
-	             </a><button class="btn btn-success" ng-click="applyToHeatmap()" >
+	             </a><button class="btn" ng-click="applyToHeatmap()" >
 	                <span>
 	                  </i> View Genes on Heatmap
 	                </span> 
