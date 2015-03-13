@@ -1,8 +1,9 @@
 <ul class="nav nav-tabs">
+	<span class="analysis-results-title">{{analysis.name}}</span>
 	<li class="active">
 		<a id="annotationsTabLink" href="{{'#limma-' + analysis.randomId + '-limmaTable'}}" 
 		data-toggle="tab" 
-		target="_self">Table</a>
+		target="_self">Significant Values</a>
 	</li>
 	<li>
 		<a id="boxplotsTabLink" href="{{'#limma-' + analysis.randomId + '-boxPlot'}}" 
@@ -28,25 +29,25 @@
 		<div  class="results-wrapper">	
 				<div class="results-header clearfix">
 				                    				
-					<h3 class="pull-left analysis-results-header">Results</h3>
+					<h3 class="analysis-results-title">{{analysis.name}} Results</h3>
 					<div class="btn-toolbar pull-right" role="toolbar">
-		                
-		                <a class="btn btn-info" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
-		                  Create Selections
-		                </a>
-		                
-		                <a class="btn btn-success" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
-		                  <i class="icon-white icon-download"></i> Download
-		                </a> 
-		                <a class="btn btn-info" data-target="#exportDataset{{analysis.name}}" data-toggle="modal">
-			                  New Dataset
-			            </a> 	   
-			            <!-- disable for beta1 -->
-			            <button class="btn btn-success" ng-click="applyToHeatmap()" >
-			                <span>
-			                  View Genes on Heatmap
-			                </span> 
-			            </button>
+		                <div class="btn-group">
+			                <a class="btn" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
+			                  Create Selections
+			                </a>
+			                <a class="btn" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
+			                  <i class="icon-white icon-download"></i> Download
+			                </a> 
+			                <a class="btn" data-target="#exportDataset{{analysis.name}}" data-toggle="modal">
+				                  New Dataset
+				            </a> 	   
+				            <!-- disable for beta1 -->
+				            <button class="btn" ng-click="applyToHeatmap()" >
+				                <span>
+				                  View Genes on Heatmap
+				                </span> 
+				            </button>
+			            </div>
 			      	</div>
 							      
 				</div>

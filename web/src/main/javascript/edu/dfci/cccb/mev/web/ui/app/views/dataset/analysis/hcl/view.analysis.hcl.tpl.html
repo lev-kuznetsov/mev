@@ -9,11 +9,9 @@
 		<view-Content-Item project='DatasetAnalysisVM.project' view='DatasetAnalysisVM.project.views'></view-Content-Item>
 	</div>
 	<div class="tab-pane" id="histogram" >
-		<accordion close-others="false" is-open="isopen" ng-init="isopen=true">
-			<hierarchical-Accordion analysis="DatasetAnalysisVM.analysis"
-			project="DatasetAnalysisVM.project" is-it-open="isOpen"
-			ng-init="isOpen=true"> </hierarchical-Accordion>
-		</accordion>		
+		<hierarchical-Accordion analysis="DatasetAnalysisVM.analysis"
+		project="DatasetAnalysisVM.project" is-it-open="isOpen"
+		ng-init="isOpen=true"> </hierarchical-Accordion>				
 	</div>
 
 </div>

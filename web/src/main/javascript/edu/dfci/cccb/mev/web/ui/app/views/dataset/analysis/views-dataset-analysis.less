@@ -1,12 +1,36 @@
+@analysis-header-acction-menu-top-spacing: 2px;
+@analysis-header-acction-menu-button-margin: @analysis-header-acction-menu-top-spacing; 
+@analysis-results-title-font-size: @font-size-base;
+
 .views-dataset-analysis{	
 	.nav{
 		&.nav-tabs{
 			border-bottom: 1px solid @brand-success;
+			
+			& > span.analysis-results-title:first-child {
+//				display: none;				
+				padding-bottom: @nav-link-padding-ver - (@analysis-results-title-font-size - @font-size-base) / 2;
+				padding-top: @nav-link-padding-ver - (@analysis-results-title-font-size - @font-size-base) / 2;
+				padding-right: @nav-link-padding-hor;				
+				padding-left: 0;
+				font-size: @analysis-results-title-font-size;
+				&:after{
+					content: ": ";
+				}
+				.pull-left();
+				
+				& ~ li {
+					.pull-left();
+				}					
+			}
+			
+			
 			.btn-toolbar{
+				font-size: 0;	
 				.btn{
 					.btn-sm();
 					padding: 8px 9px;
-					margin-left: 2px;
+					margin-left: @analysis-header-acction-menu-button-margin;
 				}
 			}
 			
@@ -19,26 +43,34 @@
 				}
 			}				
 		}
-		> li {
-			> a {
-				padding: 10px 15px;
-			}
-		}
+//		> li {
+//			> a {
+//				padding: 10px 15px;
+//			}
+//		}
 	}	
 	
 	.results-wrapper{		
 		.results-header{
-			margin-top: 2px;
+			margin-top: @analysis-header-acction-menu-top-spacing;
 			padding-bottom: 2px;
+			margin-bottom: @padding-base-vertical;
 	//		border-bottom: 1px solid @brand-success;
-			
+			.analysis-results-title{
+				display: none;
+				margin-top: @padding-base-vertical + @analysis-header-acction-menu-top-spacing;
+				font-size: @analysis-results-title-font-size;
+				.pull-left();				
+			}
 			.btn-toolbar{
-				.pull-right();
+				.pull-right();				
 				.btn-group{
+					font-size: 0;
 					.btn{
 						.btn-sm();
+						.btn-success();
 						padding: 8px 9px;
-						margin-left: 2px;					
+						margin-left: @analysis-header-acction-menu-button-margin;					
 					}		
 					.btn:first-child{
 						margin-left: 0;
@@ -50,6 +82,37 @@
 		.btn{
 			.btn-sm();
 		}
+	}
+	
+	results-table{
+		table{
+			border: 0px none;
+			tr{
+				th,td{					
+					vertical-align: top;
+					white-space: nowrap;
+					&:first-child{						
+						border-left: 0px none;
+					}
+					&:last-child{
+						border-right: 0px none;										
+					}
+					p{
+						margin: 0;
+						font-size: @font-size-base;
+					}
+				}
+				th{
+					&:first-child{						
+						padding-left: 0;
+					}
+					&:last-child{
+						padding-right: 0;										
+					}
+				}
+			}
+			
+		}		
 	}
 	
 }
