@@ -8,8 +8,7 @@ define(['jquery', 'angular'], function(jquery, angular){
 			var selectionSetMgrDOM = angular.element(elm);
 			
 			var rootScope = angular.element(document).scope();
-			if(rootScope.$state){
-				
+			if(rootScope.$state){				
 				rootScope.$state.go("^."+selection.dimension.toLowerCase()+"Set", {setId: selection.name});
 			}
 			
@@ -26,8 +25,14 @@ define(['jquery', 'angular'], function(jquery, angular){
 			jquery('#import-presets-modal').modal('hide');	
 			jquery('div.modal-backdrop').hide();
 //			setTimeout(function(){
-				var datasetUrl = "/#/dataset/"+dataset.name+"/";					
-				window.location.replace(datasetUrl);
+			var rootScope = angular.element(document).scope();
+			if(rootScope.$state){				
+				rootScope.$state.go("root.dataset.home", {datasetId: dataset.name});
+				return;
+			}
+			
+			var datasetUrl = "/#/dataset/"+dataset.name+"/";					
+			window.location.replace(datasetUrl);
 //			}, 500);
 			
 		},
