@@ -1,5 +1,15 @@
 analysis-log{
 	.logline{		
-		display: block;		
+		display: block;
+		.small();		
+		&.success{
+			color: @brand-success;
+		}
+		&.error{
+			color: @brand-danger;
+		}
+		&.info{
+//			color: @brand-info;
+		}
 	}
 }
