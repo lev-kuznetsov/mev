@@ -15,7 +15,8 @@
 
 @sidemenuOn-margin-left: @sidemenu-width ;
 @sidemenuOn-margin-left-shrink: @sidemenu-width-shrink ;
-@footer-height: @navbar-padding-vertical*2+@line-height-computed;
+//@footer-height: @navbar-padding-vertical*2+@line-height-computed;
+@footer-height: @padding-base-vertical+@line-height-computed*3;
 
 #main-wrapper {
 	
@@ -124,10 +125,10 @@
 	position: absolute;	
 	bottom: 0;
 	z-index: @zindex-mainfooter;	
-	width: 100%;	
-	
+	width: 100%;		
 	.fixed-footer & {
 		@media (min-width: @screen-xs-min){
+			height: @footer-height;
 			position: fixed;
 			bottom: 0;
 		}
@@ -227,7 +228,7 @@ div[layout-column='left']{
 	background-image: url('/container/images/background/dottedPattern.png');
 //	border-right: 1px solid @project-tree-border-color;
 	.column-config-menu{
-		margin-right: -(@padding-base-horizontal - 6);
+		margin-right: -(@padding-base-horizontal);
 	}	
 }
 

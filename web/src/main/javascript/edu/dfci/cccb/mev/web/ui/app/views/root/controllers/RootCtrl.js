@@ -59,6 +59,9 @@ define([], function(){
 		this.isColumnContentScroll=function(){
 			return columnContentScroll;
 		};
+		this.curDate=function(){
+			return new Date();
+		}
 		
 	};	
 	
