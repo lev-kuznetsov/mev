@@ -58,7 +58,7 @@ public class FlatFileValues extends AbstractValues implements Closeable {
     long size = 8L * height * width;
     //Need to make RandomAccessFile writable to allow it to grow in case the dataset is larger than the initial allocated file size. 
     //Otherwise "java.io.IOException: Channel not open for writing - cannot extend file to required size" is thrown
-    try (RandomAccessFile access = new RandomAccessFile (file, "rw")) {      
+    try (RandomAccessFile access = new RandomAccessFile (file, "r")) {      
       for (long offset = 0; offset < size; offset += MAPPING_SIZE)
         mappings.add (access.getChannel ().map (READ_ONLY, offset, min (size - offset, MAPPING_SIZE)));      
     }

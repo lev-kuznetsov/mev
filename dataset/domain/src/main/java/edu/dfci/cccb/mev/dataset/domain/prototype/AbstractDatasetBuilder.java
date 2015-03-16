@@ -79,7 +79,7 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
     for (parser = parser (content); parser.next ();) {
       valueStoreBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));
     }    
-    Values values = valueStoreBuilder.build (parser.rowMap (), parser.columnMap ());
+    Values values = valueStoreBuilder.build ();
     return aggregate (content.name (), values, analyses (),
                       dimension (ROW, parser.rowKeys (), selections (), annotation ()),
                       dimension (COLUMN, parser.columnKeys (), selections (), annotation ()));
@@ -101,7 +101,7 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
         //do nothing
       }
     }
-    Values values = valueStoreBuilder.build (parser.rowMap (), parser.columnMap ());
+    Values values = valueStoreBuilder.build ();
     return aggregate (content.name (), values, analyses (),
                       dimension (ROW, parser.rowKeys (), selections (), annotation ()),
                       dimension (COLUMN, parser.columnKeys (), selections (), annotation ()));

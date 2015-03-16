@@ -61,11 +61,11 @@ public class FlatFileValueStoreBuilder extends AbstractValueStoreBuilder impleme
     try {
       writer.writeDouble (value);
 
-//      if (!rows.containsKey (row))
-//        rows.put (row, rows.size ());
-//
-//      if (!columns.containsKey (column))
-//        columns.put (column, columns.size ());
+      if (!rows.containsKey (row))
+        rows.put (row, rows.size ());
+
+      if (!columns.containsKey (column))
+        columns.put (column, columns.size ());
 
       return this;
     } catch (IOException e) {
