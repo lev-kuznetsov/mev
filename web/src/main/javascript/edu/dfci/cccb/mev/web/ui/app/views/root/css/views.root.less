@@ -138,6 +138,15 @@
 		background: @navbar-default-bg;
 		color: @navbar-default-color;
 		margin-bottom: 0;
+		li{
+			span{
+				padding: @navbar-padding-vertical @navbar-padding-vertical;
+				display: block;
+			}
+			span:first-child{
+				padding-left: 0;
+			}
+		}
 	}
 	
 	&.sidemenuOn{
