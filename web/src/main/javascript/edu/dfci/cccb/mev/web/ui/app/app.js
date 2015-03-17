@@ -59,7 +59,11 @@ define(["ng",
 	                                     ])
 	.config(['$stateProvider', '$urlRouterProvider',
 	function($stateProvider, $urlRouterProvider){
-				
+		
+		//default page is the welcome page
+		$urlRouterProvider.when("/", "/welcome");
+		$urlRouterProvider.when("", "/welcome");
+		
 		$stateProvider
 		.state("root", {
 			templateUrl: "app/views/root/templates/root.tpl.html",
