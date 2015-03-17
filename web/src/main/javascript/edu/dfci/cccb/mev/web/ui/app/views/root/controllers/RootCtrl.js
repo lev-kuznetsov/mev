@@ -63,6 +63,14 @@ define([], function(){
 			return new Date();
 		}
 		
+		this.getCss=function(){
+			var css = {
+				'fixed-header': this.isHeaderFixed(), 
+				'fixed-footer': this.isFooterFixed()
+			};
+			$state.current.name.split(".").map(function(item){css["state-"+item]=true;});
+			return css;
+		}
 	};	
 	
 	RootCtrl.$inject=["SideMenuSrv", "$state", "$scope", "$rootScope", "sidepanelSrvc"];

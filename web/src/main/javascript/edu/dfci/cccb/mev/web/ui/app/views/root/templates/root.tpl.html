@@ -1,4 +1,4 @@
-<div class="outermost-wrapper " ng-class="{'fixed-header': RootCtrl.isHeaderFixed(), 'fixed-footer': RootCtrl.isFooterFixed()}">
+<div class="outermost-wrapper " ng-class="RootCtrl.getCss()">
 
 	<main-menu></main-menu>
 	
@@ -24,7 +24,7 @@
 		<nav ng-if="!$state.current.data || ($state.current.data && !$state.current.data.footerUrl)" class="navbar navbar-default">
 			<div class="container-fluid">			
 				<ul class="nav navbar-nav">
-					<li><a>MeV - Multiple Experiment Viewer</a></li>					
+					<li><a>MeV - Multiple Experiment Viewer</a></li>
 				</ul>
 			</div>
 		</nav>
