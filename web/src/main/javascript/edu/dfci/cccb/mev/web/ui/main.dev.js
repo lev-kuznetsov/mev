@@ -12,15 +12,21 @@
 	requirejs.config({
 		baseUrl: "/container/javascript",
 		paths: {
-			jquery : ["//code.jquery.com/jquery-2.1.1.min", paths.vendor("jquery/jquery-2.1.1")],
-			bootstrap: ['//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min'],
-			ng : ["//ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min"],			
-			uibootstrap: ["//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min"],			
-			nguirouter :  ["//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min"],
-			ngresource: ["//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.27/angular-resource.min"],
+			jquery : ["//code.jquery.com/jquery-2.1.1", paths.vendor("jquery/jquery-2.1.1")],
+			bootstrap: [paths.vendor("bootstrap-3.3.1/dist/js/bootstrap")],
+			ng : [paths.vendor("angularjs/angular"), "//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular"],			
+			uibootstrap: [paths.vendor("uibootstrap/ui-bootstrap-tpls-0.12.1.min")],			
+			nguirouter :  [paths.vendor("uirouter/angular-ui-router"), "//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.12/angular-ui-router"],
+			ngresource: [paths.vendor("angularjs/angular-resource")],
 			appjs: [paths.app("app")],
-			lodash: ["//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min"],			
-			angularRoute : [ "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.27/angular-route.min" ],
+			q: [paths.vendor("q/q.hack")],
+			underscore: [paths.vendor("underscore/underscore")],
+			lodash: [paths.vendor("lodash/lodash")],
+			angularTreeView: [paths.vendor("angular-treeview/treeView")],
+			lessjs: [paths.vendor("lessjs/less.min.js")],
+			bootstrapTree: [paths.vendor("bootstrap-tree/bootstrap-tree")],
+			
+			angularRoute : [ paths.vendor('angularjs/angular-route') ],
 			jqueryUi : ['//code.jquery.com/ui/1.9.2/jquery-ui.min', 'jquery-ui/1.9.2/jquery-ui.min'],
 			d3 : [ '//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3', '/library/webjars/d3js/3.4.1/d3.min' ],
 		    retina : [ '/library/webjars/retinajs/0.0.2/retina' ],
@@ -63,6 +69,10 @@
 			nguirouter: {
 				deps: ["ng"]
 			},
+			q: {
+				deps: ["ng"],
+				exports: "q"
+			},
 			ngresource: {
 				deps: ["ng"]
 			},
@@ -71,6 +81,9 @@
 			},
 			angularData: {
 				deps: ["ng"]
+			},
+			bootstrapTree: {
+				deps: ["ng", "jquery"]
 			},
 			angularRoute: {
 				deps: ["ng", "jquery"]

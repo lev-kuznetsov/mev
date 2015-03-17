@@ -1,4 +1,4 @@
-define(["q", "./AnnotationSetMeta"], function($q, AnnotationSetMeta){
+define(["./AnnotationSetMeta"], function($q, AnnotationSetMeta){
 	function AnnotationSet(raw){
 		var self=this;
 		var _raw=raw;		
