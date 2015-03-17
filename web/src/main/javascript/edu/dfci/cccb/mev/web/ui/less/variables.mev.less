@@ -6,11 +6,6 @@
 
 @zindex-mainfooter: @zindex-sidemenu - 10;  
 
-//change bootstrap default padding (makes buttons smaller)
-//note: don't override bootstrap theme defaults. Instead use the bootstrap mixin to map to own classes
-//@padding-base-vertical:     6px;
-//@padding-base-horizontal:   9px;
-
 @nav-link-padding-ver: extract(@nav-link-padding, 1);
 @nav-link-padding-hor: extract(@nav-link-padding, 2);
 
@@ -25,3 +20,7 @@
 @nav-tabs-active-link-hover-bg:             @body-bg;
 @nav-tabs-active-link-hover-color:          @brand-primary;
 @nav-tabs-active-link-hover-border-color:   @gray-lighter;
+
+//use this variable to override the default bootstrap font path
+//or put the fonts into the /ui/fonts folder
+//@icon-font-path: "@{vendorUrl}/bootstrap-3.3.1/fonts/";
