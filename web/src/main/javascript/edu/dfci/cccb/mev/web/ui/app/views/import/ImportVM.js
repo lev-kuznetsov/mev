@@ -1,5 +1,5 @@
 define(["ng", "lodash"], function(ng, _){
-	var ImportVM = function ImportVM(DatasetRepository, dataset, Navigator){
+	var ImportVM = function ImportVM(DatasetRepository, dataset, $state){
 		var self=this;
 		this.dataset = dataset;
 		console.debug("IMPORTING >>", dataset)
@@ -7,10 +7,10 @@ define(["ng", "lodash"], function(ng, _){
 			var importedDataset = _.cloneDeep(dataset);
 			importedDataset.id=undefined;
 			DatasetRepository.put(importedDataset);
-			Navigator.goHome();
+			$state.go("root.home");
 		};
 	};
 	
-	ImportVM.$inject=["DatasetRepository", "dataset", "Navigator"]
+	ImportVM.$inject=["DatasetRepository", "dataset", "$state"]
 	return ImportVM;
 });

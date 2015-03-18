@@ -1,6 +1,6 @@
 define(["ng", "./RecursiveTreeMixin"], 
 function(ng, RecursiveTreeMixin) {
-	var ProjectTreeVM = function ProjectTreeVM(Navigator, ProjectTreeAdaptor, $modal, $scope, AnalysisEventBus) {		
+	var ProjectTreeVM = function ProjectTreeVM(ProjectTreeAdaptor, $modal, $scope, AnalysisEventBus) {		
 //		RecursiveTreeMixin.call(this);		
 		$scope["delete"] = function(data) {
 	        data.nodes = [];
@@ -45,6 +45,6 @@ function(ng, RecursiveTreeMixin) {
 		});		
 	};
 	
-	ProjectTreeVM.$inject=["Navigator", "ProjectTreeAdaptor", "$modal", "$scope", "AnalysisEventBus"];
+	ProjectTreeVM.$inject=["ProjectTreeAdaptor", "$modal", "$scope", "AnalysisEventBus"];
 	return ProjectTreeVM;
 });
