@@ -11,7 +11,8 @@
                         templateUrl: paths.module + '/templates/DESeqAccordion.tpl.html',
                         scope: {
                             project: "=project",
-                            analysis: "=analysis"
+                            analysis: "=analysis",
+                            isItOpen: "@"
                         },
                         link: function (scope) {
 
@@ -72,6 +73,32 @@
                                 }
                             };
 
+                            scope.$watch('analysis', function (newval) {
+                                if (newval) {
+                                    scope.applyToHeatmap()
+                                }
+                            })
+                            
+                            scope.$watch('filterParams.pValue.value', function(newval, oldval){
+                            	scope.applyToHeatmap()
+                            });
+                            
+                            scope.$watch('filterParams.qValue.value', function(newval, oldval){
+                            	scope.applyToHeatmap()
+                            });
+                            
+                            scope.$watch('filterParams.id.value', function(newval, oldval){
+                            	scope.applyToHeatmap()
+                            });
+                            
+                            scope.$watch('filterParams.logFoldChange.value', function(newval, oldval){
+                            	scope.applyToHeatmap()
+                            });
+                            
+                            scope.$watch('filterParams.logFoldChange.op', function(newval, oldval){
+                            	scope.applyToHeatmap()
+                            });
+                            
                             scope.filteredResults = undefined;
 
                             scope.applyFilter = function () {
@@ -81,6 +108,7 @@
                                 return scope.filteredResults;
                             };
 
+                            
 
                             scope.selectionParams = {
                                 name: undefined,
@@ -121,7 +149,30 @@
 
                             };
 
+                            scope.applyToHeatmap = function () {
 
+//                              var labels = getKeys(scope.filteredResults);
+                          	                                
+                          	var labels = scope.filteredResults.map(projection.ids);;
+
+                              scope.project.generateView({
+                                  viewType: 'heatmapView',
+                                  labels: {
+                                      column: {
+                                          keys: scope.project.dataset.column.keys
+                                      },
+                                      row: {
+                                          keys: labels
+                                      }
+                                  },
+                                  expression: {
+                                      min: scope.project.dataset.expression.min,
+                                      max: scope.project.dataset.expression.max,
+                                      avg: scope.project.dataset.expression.avg,
+                                  }
+                              });
+
+                          };
                         }
 
                     };

@@ -1,6 +1,6 @@
 define(['angular', 'd3', 'jquery',
         './lib/HeatmapVisualizationClass', './lib/generateParams',
-        'alertservice/AlertService', 'colorbrewer/ColorBrewer', 'jqueryUi', 'css-loader'], 
+        'alertservice/AlertService', 'colorbrewer/ColorBrewer', 'jqueryUi'], 
 function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
 	return angular.module('Mev.heatmapvisualization', ['d3colorBrewer', 'Mev.AlertService'])
 	.directive('heatmapSettings',[function() {
@@ -30,8 +30,10 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 	project : '=project'
                 },
                 link : function($scope, elems, attr) {
+                	if(!$scope.heatmapView.scrollableContainer)
+                		$scope.heatmapView.scrollableContainer="div.tab-content";
                 	
-                	var scrollable = $("div.tab-content"), delay = 50, timer = null;
+                	var scrollable = $($scope.heatmapView.scrollableContainer), delay = 50, timer = null;
                 	
                        
                     var position = {
@@ -132,7 +134,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                     };
             	
                     var eventQ=[];
-                    $("div.tab-content").on("scroll", function(e){
+                    scrollable.on("scroll", function(e){
                     	//remove unhandled scholl events from the queue
                         while(eventQ.length>0){
                         	clearTimeout(eventQ.pop());
@@ -303,6 +305,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 	};
                 	//addSelection [Selection] --> null
                 	$scope.addSelection = function(dimension){
+                		console.debug("HeatmaVisualization: addSelection", dimension, $scope.visualization.view.selectionParams[dimension].labels, $scope.visualization.view.selectionParams[dimension])
                 		var selectionsData = {
                             name: $scope.visualization.view.selectionParams[dimension].name,
                             properties: {
@@ -322,7 +325,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 		}
                         
                         $scope.project.dataset.selection.post({
-                            datasetName : $routeParams.datasetName,
+                            datasetName : $scope.heatmapDataset.datasetName,
                             dimension : dimension
 
                         }, selectionsData,

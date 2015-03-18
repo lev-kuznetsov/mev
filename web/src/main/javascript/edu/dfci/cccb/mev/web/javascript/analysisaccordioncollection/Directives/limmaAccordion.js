@@ -10,10 +10,11 @@
                         templateUrl: paths.module + '/templates/limmaAccordion.tpl.html',
                         scope: {
                             project: '=project',
-                            analysis: "=analysis"
+                            analysis: "=analysis",
+                            isItOpen: "@",
+                            isShowHeatmapTab: "@"
                         },
                         link: function (scope) {
-
                             scope.headers = [
                                 {
                                     'name': 'ID',
@@ -145,7 +146,9 @@
                                     'max': max + ((max - min) * .05),
                                     'id': scope.analysis.randomId
                                 };
-                                
+                             
+                                //also filter the heat map
+                                scope.applyToHeatmap()
                             };
 
                             scope.addSelections = function () {
@@ -224,7 +227,9 @@
 
                             scope.applyToHeatmap = function () {
 
-                                var labels = getKeys(scope.filteredResults);
+//                                var labels = getKeys(scope.filteredResults);
+                            	                                
+                            	var labels = scope.filteredResults.map(projection.ids);;
 
                                 scope.project.generateView({
                                     viewType: 'heatmapView',

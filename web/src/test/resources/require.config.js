@@ -26,8 +26,8 @@
   },
   shim : {
     "angular" : {
-      exports : "angular"
-
+      exports : "angular",
+      deps: ["jquery", "jasmineJquery"]
     },
     "angularRoute" : {
       exports : "ngRoute",
@@ -39,7 +39,7 @@
     },
     "angularMocks" : {
         exports : "ngMocks",
-        deps : [ "angular" ]
+        deps : [ "angular", "jquery" ]
       },
     "uiBootstrapTpls" : {
       deps : [ "angular", "bootstrap" ]

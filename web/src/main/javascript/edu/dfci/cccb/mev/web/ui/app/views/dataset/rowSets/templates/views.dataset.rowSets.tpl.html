@@ -1,0 +1,25 @@
+
+
+<!-- 
+<selection-set-manager id="selectionSetMgr" ng-controller="SelectionSetManagerCtl" selections="dataset.selections" heatmap-data="dataset" heatmap-id="{{dataset.datasetName}}"></selection-set-manager>
+-->
+	
+<!-- <selection-set-list  -->
+<!-- 			mev-selections="RowSetsViewVM.dataset.row.selections" 					 -->
+<!-- 			mev-demintion="row">				 -->
+<!-- 			You may define sets using <a href="" ng-click="showAnnotations(selection, 'row')">row annotations</a> or by performing an analysis. -->
+<!-- </selection-set-list> -->
+<h3>Row Sets</h3>
+<table class="table table-condensed">
+<tr>
+	<th>name</th>
+	<th>color</th>
+	<th>desription</th>								
+ </tr>
+<tr ng-repeat="selection in RowSetsViewVM.dataset.row.selections">
+	<td><a >{{selection.name}}</a></td>
+	<td bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>
+	<td>{{selection.properties.selectionDescription}}</td>								
+ </tr>
+</table>
+<ui-view></ui-view>

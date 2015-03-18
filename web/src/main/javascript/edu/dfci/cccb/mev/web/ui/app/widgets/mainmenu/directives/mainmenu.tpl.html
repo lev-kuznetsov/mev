@@ -1,0 +1,67 @@
+<div class="row">
+<nav class="navbar navbar-default mainmenu" role="navigation" >
+  <div class="container-fluid">  	
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" ng-click="navbarCollapsed=!navbarCollapsed">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>            
+      <a class="navbar-brand" ui-sref=".welcome">mev<span><span style="display:none">{{$state.current.name}}</span></span></a>      
+    </div>
+		
+		
+		<ul class="nav navbar-nav">	
+<!-- 			<dashboard-menu></dashboard-menu> -->			
+<!-- 			<list-menu  label="Projects"> -->
+<!-- 				<project-list is-menu="true" show-edit="false" show-add="false"></project-list> -->
+<!-- 			</list-menu>			 -->
+		</ul>
+    
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" collapse="navbarCollapsed">
+      <ul class="nav navbar-nav">        
+      </ul>  
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li class="dropdown">
+            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <i class="fa fa-gear"></i>                
+            </a>
+            <div class="dropdown-menu with-arrow panel panel-default" ng-click="$event.stopPropagation()">
+                <div class="panel-heading">
+                    Layout
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">                        	
+                    	<div class="checkbox"><label class="checkbox"><input type="checkbox" ng-model="settings.sidemenu.shrink">Shrink</label></div>
+                    	<div class="checkbox"><label class="checkbox"><input type="checkbox" ng-click="toggleFixedHeader()" ng-model="settings.header.fixed">Fixed Header</label></div>
+                    	<div class="checkbox"><label class="checkbox"><input type="checkbox" ng-click="toggleFixedFooter()" ng-model="settings.footer.fixed">Fixed Footer</label></div>
+                    	<div class="checkbox"><label class="checkbox"><input type="checkbox" ng-click="toggleColumnScroll()" ng-model="settings.columnScroll">Column Scrollbar</label></div>
+                    	<div class="checkbox"><label class="checkbox"><input type="checkbox" ng-click="toggleColumnContentScroll()" ng-model="settings.columnContentScroll">Column Content Scrollbar</label></div>
+                    	
+										</li>
+										<li class="list-group-item"><a ui-sref="{layout: undefined}">Default Layout</a></li>
+        						<li class="list-group-item"><a ui-sref="{layout: 'uilayout'}">Ui Layout</a></li>
+        						<li class="list-group-item"><a ui-sref="{layout: '3cols'}">3sols Layout</a></li>
+        						<li class="list-group-item"><a ng-click="RootCtrl.hideLeft()">Toggle Left</a></li>
+                </ul>            
+            </div>
+        </li>
+      </ul>
+      
+<!--       <form class="navbar-form navbar-right" role="search"> -->
+<!--         <div class="form-group"> -->
+<!--           <input type="text" class="form-control" placeholder="Search"> -->
+<!--         </div> -->
+<!--         <button type="submit" class="btn btn-default">Submit</button>         -->
+<!--       </form>       -->
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
+</nav>
+
+</div>

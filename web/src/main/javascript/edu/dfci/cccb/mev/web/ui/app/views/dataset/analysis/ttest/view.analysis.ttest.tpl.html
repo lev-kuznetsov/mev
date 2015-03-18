@@ -1,0 +1,36 @@
+<!-- <project-analysis-parameters parameters="DatasetAnalysisVM.analysis.params"></project-analysis-parameters> -->
+<div>
+	<ul class="nav nav-tabs column-header" id="importTabs">
+		<li id="table_tab" class="active">
+			<a href="#table" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}}</a>			
+		</li>
+		<li id="heatmap]_tab"><a href="#heatmap" class="pull-left" data-toggle="tab" target="_self">Heatmap</a></li>
+		<div class="ttest-action-menu" mui-paste="ttest-action-menu"></div>
+		<!-- 
+		<div class="btn-toolbar pull-right" role="toolbar">
+			<div class="btn-group">
+				<a class="btn btn-info" href="/dataset/{{project.dataset.datasetName}}/analysis/{{tTest.name}}?format=tsv">
+	               <i class="icon-white icon-download"></i> Download
+	             </a><a class="btn btn-info" data-target="#selectionAdd{{tTest.name}}" data-toggle="modal">
+	               </i> Create Selections
+	             </a><a class="btn btn-info" data-target="#exportDataset{{tTest.name}}" data-toggle="modal">
+	               </i> New Dataset
+	             </a><button class="btn btn-info" ng-click="applyToHeatmap()" >
+	                <span>
+	                  </i> View Genes on Heatmap
+	                </span> 
+	            </button>
+			</div>
+      	</div>
+      	 -->	
+	</ul>
+
+	<div class="tab-content column-body">
+		<div class="tab-pane active" id="table" >
+			<t-Test-Accordion analysis="DatasetAnalysisVM.analysis" project="DatasetAnalysisVM.project" is-it-open="isOpen"></t-Test-Accordion>					
+		</div>
+		<div class="tab-pane" id="heatmap">
+			<view-Content-Item project='DatasetAnalysisVM.project' view='DatasetAnalysisVM.project.views'></view-Content-Item>
+		</div>
+	</div>
+</div>

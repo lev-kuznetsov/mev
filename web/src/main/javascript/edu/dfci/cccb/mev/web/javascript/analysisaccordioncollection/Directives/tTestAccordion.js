@@ -11,10 +11,10 @@
                         templateUrl: paths.module + '/templates/tTestAccordion.tpl.html',
                         scope: {
                             project: "=project",
-                            analysis: "=analysis"
+                            analysis: "=analysis",
+                            isItOpen: "@"
                         },
-                        link: function (scope) {
-
+                        link: function (scope, elem, attrs) {                        	
                             scope.$watch('analysis', function (newval) {
                                 if (newval) {
                                 	console.log(newval)
@@ -73,6 +73,8 @@
                             scope.viewGenes = function () {
                             	scope.tTest = scope.analysis
                                 scope.filteredResults = resultsFilter(scope.analysis.results, scope.filterParams);
+                            	//also filter heatmap
+                            	scope.applyToHeatmap();
                             };
 
                             scope.selectionParams = {

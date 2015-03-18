@@ -381,9 +381,10 @@
           <jsTestSrcDir>${project.basedir}/src/test/javascript/edu/dfci/cccb/mev/web/javascript/</jsTestSrcDir>
           <specIncludes>
             <include>**/*.js</include>
-          </specIncludes>
+          </specIncludes>                    
           <preloadSources>
-            <source>webjars/require.js</source>
+            <source>webjars/require.js</source>	
+            <source>spec/htmlUnitPolyfill.js</source>
           </preloadSources>
           <keepServerAlive>true</keepServerAlive>
           <customRunnerConfiguration>${project.basedir}/src/test/resources/require.config.js</customRunnerConfiguration>

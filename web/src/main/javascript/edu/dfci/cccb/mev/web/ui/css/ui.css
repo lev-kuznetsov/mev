@@ -1,0 +1,100 @@
+
+/* div.tab-content#import { */
+/* 	overflow:auto; */
+/* } */
+
+div.imports-container {
+	margin-top: 10px;
+}
+
+div.uploadDrag {
+	margin-top:20px;
+}
+
+input#upload-input {
+    display: block;
+    visibility: hidden;
+    width: 0;
+    hieght: 0;
+}
+
+.mev-preset-list-wrapper a{
+	text-decoration: none;
+}  
+/* Presets List Form  */
+.mev-filter-form-wrapper{
+	margin: 0 0 0 0;
+	float: right;
+}
+form.mev-filter-form{
+	margin: 0px 0px 0px 0px;
+}
+form.filter-form input{
+	margin: 5px 0px 0px 0px;
+}
+.mev-table-tight th, .mev-table-tight td {
+padding: 2px;
+}
+.mev-table-tight th a{
+	color: rgb(51, 51, 51);
+}
+
+#presetsGrid.gridStyle {
+    border: 1px solid rgba(212,212,212,0);
+    width: 100%;
+/*     height: 100%; */
+}
+#presetsGrid .ngAggregate {
+  	background-color: #fff; 
+ 	font-weight: bold; 
+}
+#presetsGrid .ngViewport{
+	overflow: inherit;
+}
+#import-presets-modal div.modal-dialog {
+  width: 95%;
+  height: 95%;
+  padding: 0;
+}
+#import-presets-modal div.modal-content {
+  height: 100%;
+  border-radius: 0;
+}
+.ngRow.selected {
+background-color: ;
+}
+a[role]  {
+	cursor: pointer; 
+}
+
+#userUploadsPanel{
+	height: 85vh;
+	background-color: #fff;
+	padding: 0 2em 0 2em;
+}
+
+.mev-modal{
+	padding: 3em
+}
+
+.geo_import_container{
+	padding: 0;
+}
+div#geods{
+	padding: 10px;
+}
+div#cohortSummaryTabPane{
+	padding: 10px;
+}
+.clinicalSummaryAccordion{
+	width:50%; 
+	float: left; 
+	padding: 0.5em;	
+}
+
+button#ds-drive-signin{
+	margin-top:25px;
+	margin-left:auto;
+	margin-right:auto;
+	width:90%;
+}

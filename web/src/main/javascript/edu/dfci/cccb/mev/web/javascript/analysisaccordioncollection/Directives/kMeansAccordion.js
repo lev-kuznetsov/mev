@@ -11,10 +11,12 @@
                         restrict: 'E',
                         scope: {
                             analysis: "=analysis",
-                            project: "=project"
+                            project: "=project",
+                            isItOpen: "@"
                         },
                         templateUrl: paths.module + '/templates/kmeansAccordion.tpl.html',
-                        link: function (scope) {
+                        link: function (scope, elem, attr) {
+                        	scope.isItOpen = attr.isItOpen || false;
                             scope.selectionParams = {
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16),

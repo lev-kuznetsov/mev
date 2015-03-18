@@ -1,0 +1,11 @@
+<script type="text/ng-template"  id="tree_item_renderer.html">
+	<project-node node="data" name="data.nodeData.name || data.nodeName"></project-node>	
+	<accordion>
+		<accordion-group ng-repeat="data in data.nodes" heading="{{data.nodeData.name || data.nodeName}}">			
+ 			<div  ng-include="'tree_item_renderer.html'"></div>
+		</accordion-group>
+	</accordion>					
+</script>
+<div ng-controller="ProjectTreeVM">
+	<div ng-repeat="data in tree" ng-include="script_id"></div>
+</div>

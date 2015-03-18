@@ -13,9 +13,9 @@
                         scope: {
                             analysis: "=analysis",
                             project: '=project',
+                            isItOpen: '@'
                         },
-                        link: function (scope) {
-                        	
+                        link: function (scope) {                        	
                         	//variable to remove embedded pair information
                         	scope.cleanData = undefined;
                         	
@@ -44,6 +44,8 @@
                             
                             scope.viewGenes = function(){
                         		 scope.filteredResults = tableFilter(scope.cleanData, scope.filterParams);
+                        		 //and filter the heatmap
+                        		 scope.applyToHeatmap();
                         	}
 
                             scope.headers = [{

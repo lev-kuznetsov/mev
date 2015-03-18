@@ -1,0 +1,8 @@
+<div >
+<ul dx-tree="tree[0]" ng-controller="ProjectTreeVM">
+  <li ng-repeat="node in $dxPrior.nodes">
+    {{ node.name }}
+    <ul dx-node="node"/>
+  </li>
+</ul>
+</div>
