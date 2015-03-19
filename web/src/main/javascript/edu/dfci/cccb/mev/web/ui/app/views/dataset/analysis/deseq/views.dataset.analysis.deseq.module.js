@@ -17,8 +17,7 @@ define(["ng", "lodash"], function(ng, _){
                 min: project.dataset.expression.min,
                 max: project.dataset.expression.max,
                 avg: project.dataset.expression.avg,
-            },
-            scrollableContainer: "[layout-column='right']"
+            }
         });
 	}]);
 	return module;

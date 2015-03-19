@@ -40,8 +40,7 @@ define(["ng", "lodash"], function(ng, _){
                 },
                 panel: {
                     top: analysis
-                },
-                scrollableContainer: "[layout-column='right']"
+                }
             });
         } else {
             project.generateView({
@@ -61,8 +60,7 @@ define(["ng", "lodash"], function(ng, _){
                 },
                 panel: {
                     side: analysis
-                },
-                scrollableContainer: "[layout-column='right']"
+                }
             });
         }
 	}]);
