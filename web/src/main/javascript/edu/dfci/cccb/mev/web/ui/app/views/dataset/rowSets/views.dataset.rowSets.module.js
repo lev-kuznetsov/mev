@@ -1,14 +1,8 @@
-define(["ng", "lodash",
-        "./controllers/RowSetsViewVM", 
-        "./controllers/RowSetViewVM"], 
-function(ng, _,
-		RowSetsViewVM, 
-		RowSetViewVM){
+define(["ng", "lodash"], 
+function(ng, _){
 	
 	var module=ng.module("mui.views.dataset.rowSets", []);
 	
-	module.controller("RowSetsViewVM", RowSetsViewVM);
-	module.controller("RowSetViewVM", RowSetViewVM);
 	module.config(['$stateProvider', '$urlRouterProvider',
 	   	     	function($stateProvider, $urlRouterProvider){	     				
 	   	     		$stateProvider	   	     		
@@ -16,9 +10,13 @@ function(ng, _,
 	   	     			url: "rowSets",
 	   	     			parent: "root.dataset",
 	   	     			templateUrl: "app/views/dataset/rowSets/templates/views.dataset.rowSets.tpl.html",	   	     			
-	   	     			controller: "RowSetsViewVM",
+	   	     			controller: "SelectionSetsViewVM",
 	   	     			controllerAs: "RowSetsViewVM",
-	   	     			resolve:{}
+	   	     			resolve:{
+		   	     			dimension: function(){
+	   	     					return "row";
+   	     					}
+	   	     			}
 	   	     		})
 	   	     		.state("root.dataset.rowSet", {
 	   	     			url: "rowSets/{setId}",
@@ -27,10 +25,10 @@ function(ng, _,
 	   	     			},
 	   	     			parent: "root.dataset",
 	   	     			templateUrl: "app/views/dataset/rowSets/templates/views.dataset.rowSet.tpl.html",	   	     			
-	   	     			controller: "RowSetViewVM",
+	   	     			controller: "SelectionSetViewVM",
 	   	     			controllerAs: "RowSetViewVM",
 	   	     			resolve:{
-	   	     				rowSet: ["$stateParams", "dataset", function($stateParams, dataset){
+	   	     				selectionSet: ["$stateParams", "dataset", function($stateParams, dataset){
 	   	     					var reset = dataset.resetSelections("row");
 	   	     					console.debug("resolve RowSet", reset);
 	   	     					
@@ -40,7 +38,7 @@ function(ng, _,
 		   	     					});
 		   	     					
 		   	     					if(!rowSet){
-		   	     						rowSet = {name: "new"};
+		   	     						rowSet = {name: "new", type: "row"};
 		   	     					}
 		   	     					
 		   	     					console.debug("resolved RowSet", rowSet);

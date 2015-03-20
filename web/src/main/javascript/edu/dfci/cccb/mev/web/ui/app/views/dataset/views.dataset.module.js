@@ -5,6 +5,7 @@ define(["ng",
         "./annotations/AnnotationsViewVM",
         "./columnSets/views.dataset.columnSets.module",
         "./rowSets/views.dataset.rowSets.module",
+        "./selectionSets/views.dataset.selectionSets.module",
         "./analysis/views.dataset.analysis.module"], 
 function(ng, 
 		DatasetViewVM, 
@@ -13,6 +14,7 @@ function(ng,
 		AnnotationsViewVM){
 	var module=ng.module("mui.views.dataset", ["mui.views.dataset.columnSets", 
 	                                           "mui.views.dataset.rowSets",
+	                                           "mui.views.dataset.SelectionSets",
 	                                           "mui.views.dataset.analysis"]);
 	
 	module.controller("DatasetViewVM", DatasetViewVM);	

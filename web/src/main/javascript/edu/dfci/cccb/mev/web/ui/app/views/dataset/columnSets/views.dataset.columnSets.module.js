@@ -1,14 +1,8 @@
-define(["ng", "lodash",
-        "./controllers/ColumnSetsViewVM", 
-        "./controllers/ColumnSetViewVM"], 
-function(ng, _,
-		ColumnSetsViewVM, 
-		ColumnSetViewVM){
+define(["ng", "lodash"], 
+function(ng, _){
 	
 	var module=ng.module("mui.views.dataset.columnSets", []);
 	
-	module.controller("ColumnSetsViewVM", ColumnSetsViewVM);
-	module.controller("ColumnSetViewVM", ColumnSetViewVM);
 	module.config(['$stateProvider', '$urlRouterProvider',
 	   	     	function($stateProvider, $urlRouterProvider){	     				
 	   	     		$stateProvider	   	     		
@@ -16,9 +10,13 @@ function(ng, _,
 	   	     			url: "columnSets",
 	   	     			parent: "root.dataset",
 	   	     			templateUrl: "app/views/dataset/columnSets/templates/views.dataset.columnSets.tpl.html",	   	     			
-	   	     			controller: "ColumnSetsViewVM",
+	   	     			controller: "SelectionSetsViewVM",
 	   	     			controllerAs: "ColumnSetsViewVM",
-	   	     			resolve:{}
+	   	     			resolve:{
+	   	     				dimension: function(){	   	     				
+	   	     					return "column";
+	   	     				}
+	   	     			}
 	   	     		})
 	   	     		.state("root.dataset.columnSet", {
 	   	     			url: "columnSets/{setId}",
@@ -27,10 +25,10 @@ function(ng, _,
 	   	     			},
 	   	     			parent: "root.dataset",
 	   	     			templateUrl: "app/views/dataset/columnSets/templates/views.dataset.columnSet.tpl.html",	   	     			
-	   	     			controller: "ColumnSetViewVM",
+	   	     			controller: "SelectionSetViewVM",
 	   	     			controllerAs: "ColumnSetViewVM",
 	   	     			resolve:{
-	   	     				columnSet: ["$stateParams", "dataset", function($stateParams, dataset){
+	   	     				selectionSet: ["$stateParams", "dataset", function($stateParams, dataset){
 	   	     					var reset = dataset.resetSelections("column");
 	   	     					console.debug("resolve ColumnSet", reset);
 	   	     					
@@ -40,7 +38,7 @@ function(ng, _,
 		   	     					});
 		   	     					
 		   	     					if(!columnSet){
-		   	     						columnSet = {name: "new"};
+		   	     						columnSet = {name: "new", type: "column"};
 		   	     					}
 		   	     					
 		   	     					console.debug("resolved ColumnSet", columnSet);

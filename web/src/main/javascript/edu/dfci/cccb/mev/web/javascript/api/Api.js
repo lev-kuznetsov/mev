@@ -91,7 +91,8 @@ define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular
     	
     }])
     .service ('SelectionResourceService', ['$resource', '$routeParams', function($resource, $routeParams){
-    	return $resource('/dataset/:datasetName/:dimension/selection',{
+    	
+    	var resource = $resource('/dataset/:datasetName/:dimension/selection',{
     		'format': 'json'
     	}, {
     		'getAll': {
@@ -110,7 +111,21 @@ define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular
     			'url':"/dataset/:datasetName/:dimension/selection/export",
     		}
     		
-    	})
+    	});
+    	
+//    	return resource;
+    	var SelectionResource = Object.create(resource);
+    	SelectionResource.getAll=function(params, data, callback){
+    		var result = resource.getAll(params, data, callback);
+    		result.$promise.then(function(response){
+    			response.selections.map(function(selection){
+    				selection.type=params.dimension;
+    			});
+    		});
+    		return result;
+    	};
+    	
+    	return SelectionResource;
     }]);
     
     	
