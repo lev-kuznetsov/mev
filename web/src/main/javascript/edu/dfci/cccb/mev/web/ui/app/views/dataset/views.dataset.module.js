@@ -20,7 +20,7 @@ function(ng,
 	module.controller("DatasetHomeVM", DatasetHomeVM);	
 	module.controller("AnnotationsViewVM", AnnotationsViewVM);
 	module.config(['$stateProvider', '$urlRouterProvider',
-	   	     	function($stateProvider, $urlRouterProvider){	     				
+	   	     	function($stateProvider, $urlRouterProvider){					
 	   	     		$stateProvider	   	     		
 	   	     		.state("root.dataset", {	   	     			
 	   	     			parent: "root",
@@ -70,7 +70,7 @@ function(ng,
 	   	     		})
 	   	     		.state("root.dataset.home", {		   	     		
 	   	     			parent: "root.dataset",
-	   	     			url: "home/",
+	   	     			url: "",
 	//   	     			"abstract": true,
 	//		   	     	params: {
 	//		   	     	   id: null
