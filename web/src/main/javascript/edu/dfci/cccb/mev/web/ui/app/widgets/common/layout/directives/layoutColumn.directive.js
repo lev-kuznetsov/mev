@@ -1,5 +1,5 @@
 define(["ng"], function(ng){
-	var LayoutColumnDirective = function($rootScope){
+	var LayoutColumnDirective = function($rootScope, LayoutSrv){
 		
 		return {
 			restrict: "A",					
@@ -22,18 +22,19 @@ define(["ng"], function(ng){
 					show: function(){
 						isClosed=true;
 					},
-					toggle: function(position){
+					toggle: function(){
 //						console.debug("layoutColumn.toggle", attrs.layoutColumn, isClosed, controller[0].rand, controller[1].rand);
-						$rootScope.$broadcast("ui:layoutColumn:toggle", {position: attrs.layoutColumn});						
+						$rootScope.$broadcast("ui:layoutColumn:toggle", {position: self.position});						
 					},
 					isClosed: function(){
 //						console.debug("layoutColumn.isClosed", attrs.layoutColumn, isClosed);
 						return isClosed;
-					}
+					},
+					position: attrs.layoutColumn					
 				};
 				
-				angular.extend(controller[1], layoutColumn);
-				
+				ng.extend(controller[1], layoutColumn);
+				LayoutSrv.register(layoutColumn);
 				scope.$on("ui:layoutColumn:toggle", function(event, args){					
 						isClosed=!isClosed;
 						console.debug("ui:layoutColumn:toggle", isClosed);
@@ -44,6 +45,6 @@ define(["ng"], function(ng){
 		};
 	};
 	
-	LayoutColumnDirective.$inject=["$rootScope"];
+	LayoutColumnDirective.$inject=["$rootScope", "LayoutSrv"];
 	return LayoutColumnDirective;  
 });

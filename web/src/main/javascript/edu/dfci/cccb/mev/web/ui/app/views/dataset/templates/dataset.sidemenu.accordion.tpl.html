@@ -1,7 +1,14 @@
 <sidemenu>
-
+<!-- $rootScope.$broadcast("ui:layoutColumn:toggle", {position: "left"}); -->
+<div >
+	<div class="btn btn-info " ng-click="LayoutSrv.toggle('left')">
+	  	<i ng-class="LayoutSrv.isClosed('left') ? 'fa fa-arrow-right' : 'fa fa-arrow-left'"></i>
+	</div>
+</div>
+	
 <accordion>
-	<accordion-group class="panel-info" >
+	
+	<accordion-group class="panel-info" ng-mouseleave='shrink($event)' ng-mouseenter='open($event)'>
 		<accordion-heading ><i ng-click="open($event)" class="fa fa-bar-chart"></i> <span >Statistics</span></accordion-heading>	
 		
 		<ul class="list-group">
@@ -12,9 +19,7 @@
 			<li class="list-group-item"><a data-toggle="modal" data-target="#anova">ANOVA</a></li>
 			<li class="list-group-item"><a data-toggle="modal" data-target="#deseq">DESeq</a></li>
 	    </ul>	    
-	</accordion-group> 
-	
-	<accordion-group class="panel-info">
+	</accordion-group><accordion-group class="panel-info" ng-mouseleave='shrink($event)' ng-mouseenter='open($event)'>
 	<accordion-heading><i class="fa fa-sitemap"></i> <span>Clustering</span></accordion-heading>
 		<ul class="list-group">
 	      <li class="list-group-item"><a data-toggle="modal" role="button" data-target="#hierarchical">Hierarchical</a></li>      
