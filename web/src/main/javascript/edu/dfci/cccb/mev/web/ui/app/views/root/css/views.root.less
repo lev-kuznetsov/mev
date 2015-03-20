@@ -55,30 +55,25 @@
 				}				
 			}
 		
-			&.columnScroll{
-				> div{
-					> * > div.row{
-						> div{
-							height: 100%;
-							overflow-y: auto;		
-						}
-					}
-				}								
-			}
+//			&.columnScroll{
+//				> div{
+//					> * > div.row{
+//						> div{
+//							height: 100%;
+//							overflow-y: auto;		
+//						}
+//					}
+//				}								
+//			}
 			&.columnContentScroll{
-				> div {
-					> * > div.row{
-						> div{
-							height: 100%;
-							max-height: 100%;
-							position: relative;
-							overflow-y: hidden;							
-							div.column-body {
-								height: 100%;
-								overflow-y: auto;
-							}
-						}
-					}
+				overflow-y: hidden;		
+				div.column-body,			
+				div.tab-content{
+					height: 100%;
+					max-height: 100%;
+					position: relative;
+					overflow-y: auto;							
+					
 				}	
 			}
 					
