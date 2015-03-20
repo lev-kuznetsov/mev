@@ -81,9 +81,9 @@
                                 return leaves[0].concat(leaves[1]);
                             };
 
-                            var padding = 20;
+                            var padding = 40;
 
-                            var labelsGutter = 50;
+                            var labelsGutter = 100;
 
                             var panel = {
                                 height: 200 + padding,
