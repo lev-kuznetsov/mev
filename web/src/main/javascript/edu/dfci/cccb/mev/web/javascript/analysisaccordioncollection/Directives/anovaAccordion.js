@@ -106,7 +106,14 @@
                             };
 
                             function traverse(results) {
+                            	                            	
                                 return tableFilter(results, scope.filterParams).map(projection.ids)
+                                //fix#945
+                                //the table shows a gene multiple times (once for each pairing set)
+                                //the heatmap, however, needs the unique gene id's
+                                .filter(function(value, index, array){
+                                	return array.indexOf(value) === index;
+                                });
                             }
 
                             scope.addSelections = function () {
