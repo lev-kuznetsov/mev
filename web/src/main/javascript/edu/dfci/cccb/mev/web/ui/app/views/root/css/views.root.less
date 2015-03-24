@@ -17,6 +17,7 @@
 @sidemenuOn-margin-left-shrink: @sidemenu-width-shrink ;
 @footer-height: @navbar-padding-vertical*2+@line-height-computed;
 //@footer-height: @padding-base-vertical+@line-height-computed*3;
+@column-header-height: 42px;
 
 #main-wrapper {
 	
@@ -49,8 +50,26 @@
 				> * > div.row{
 					height: 100%;
 					position: relative;								
-					> div{						
+					div[layout-column],
+					> div[class^='col-'], 
+					> div[class*=' col-']{						
 						padding-top: @sidemenu-padding-top;
+						height: 100%;
+						div.column-content{
+							height: 100%;
+							> [ui-view]{
+								height: 100%;
+								> .ng-scope{
+									height: 100%;
+								}
+							}	
+							.column-header{
+								height: @column-header-height;
+							}
+							.column-body{
+								height: 100%;
+							}
+						}
 					}
 				}				
 			}
@@ -72,8 +91,11 @@
 					height: 100%;
 					max-height: 100%;
 					position: relative;
-					overflow-y: auto;							
-					
+					padding-bottom: @column-header-height;							
+					> * {												
+						overflow: auto;
+						height: 100%;						
+					}
 				}	
 			}
 					
