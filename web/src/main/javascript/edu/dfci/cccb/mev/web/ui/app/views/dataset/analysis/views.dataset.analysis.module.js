@@ -13,7 +13,8 @@ define(["ng", "lodash",
 	                                                      "mui.views.dataset.analysis.fisher",
 	                                                      "mui.views.dataset.analysis.anova",
 	                                                      "mui.views.dataset.analysis.limma", 
-	                                                      "mui.views.dataset.analysis.deseq"]);
+	                                                      "mui.views.dataset.analysis.deseq",
+	                                                      "Mev.AnalysisAccordionCollection"]);
 	module.config(["$stateProvider", "$urlRouterProvider", "AnalysisTypes", function($stateProvider, $urlRouterProvider, AnalysisTypes){				
 		$stateProvider		
 		.state("root.dataset.analysis", {			
@@ -76,6 +77,10 @@ define(["ng", "lodash",
 				}]
 			}
 		});
+	}]);
+	
+	module.config(["resultsTableDefaultsProvider", function(resultsTableDefaultsProvider){
+		resultsTableDefaultsProvider.setOrdering("pValue");
 	}]);
 	
 	module.directive("mevAnalysis", ["$compile", function($compile){

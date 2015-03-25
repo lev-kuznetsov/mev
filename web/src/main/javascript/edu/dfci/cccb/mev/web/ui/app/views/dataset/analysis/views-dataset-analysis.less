@@ -98,7 +98,7 @@
 		
 		.btn{
 			.btn-sm();
-		}
+		}		
 	}
 	
 	results-table,
@@ -130,8 +130,23 @@
 					}
 				}
 			}
+			tfoot{
+				td{
+					border-bottom-style: none;
+				}				
+			}
+		}	
+		.pagination{
+			.pagination-sm();
+			margin: 0;
 			
-		}		
+			> li {
+				> a, span {
+					margin-left: initial;
+				}
+			}
+		}
+				
 	}
 	
 	.column-header,

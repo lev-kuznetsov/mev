@@ -20,10 +20,17 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="row in data | orderBy : tableOrdering">
+		<tr dir-paginate="row in data | orderBy : tableOrdering | itemsPerPage: 20 track by $index">
 			<td ng-repeat="header in headers">
 				<p>{{row[header.field]}}</p>
 			</td>
 		</tr>
 	</tbody>
+	<tfoot >
+		<tr>
+			<td colspan="{{headers.length}}">				
+				<dir-pagination-controls></dir-pagination-controls>
+			</td>
+		</tr>		
+	</tfoot>
 </table>

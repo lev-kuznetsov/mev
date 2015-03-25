@@ -30,7 +30,8 @@
 		    canvasToBlob : [ '/container/javascript/canvasToBlob/canvas-toBlob' ],
 		    fileSaver : [ '/container/javascript/fileSaver/FileSaver' ],
 		    qtip : [ '/library/webjars/qtip2/2.1.1/jquery.qtip' ],
-		    log4js : [ '/library/webjars/log4javascript/1.4.5/log4javascript' ]
+		    log4js : [ '/library/webjars/log4javascript/1.4.5/log4javascript'],
+		    mbAngularUtilsPagination: [paths.vendor('mbAngularUtils/pagination/dirPagination')]
 		},
 		
 		map: {
@@ -86,6 +87,9 @@
 		        deps : [ 'canvasToBlob' ],
 		        exports : 'fileSaver'
 		    },
+		    mbAngularUtilsPagination: {
+		    	deps: ['jquery', 'angular']
+		    }
 		},
 	  packages : [ {
 		    name : "mainmenu",
