@@ -54,7 +54,7 @@
                                 'id': {
                                     field: 'id',
                                     value: undefined,
-                                    op: "="
+                                    op: "~="
                                 },
                                 'logFoldChange': {
                                     field: 'logFoldChange',
@@ -75,28 +75,28 @@
 
                             scope.$watch('analysis', function (newval) {
                                 if (newval) {
-                                    scope.applyToHeatmap()
+                                    scope.viewGenes();
                                 }
                             })
                             
                             scope.$watch('filterParams.pValue.value', function(newval, oldval){
-                            	scope.applyToHeatmap()
+                            	scope.viewGenes();
                             });
                             
                             scope.$watch('filterParams.qValue.value', function(newval, oldval){
-                            	scope.applyToHeatmap()
+                            	scope.viewGenes();
                             });
                             
                             scope.$watch('filterParams.id.value', function(newval, oldval){
-                            	scope.applyToHeatmap()
+                            	scope.viewGenes();
                             });
                             
                             scope.$watch('filterParams.logFoldChange.value', function(newval, oldval){
-                            	scope.applyToHeatmap()
+                            	scope.viewGenes();
                             });
                             
                             scope.$watch('filterParams.logFoldChange.op', function(newval, oldval){
-                            	scope.applyToHeatmap()
+                            	scope.viewGenes();
                             });
                             
                             scope.filteredResults = undefined;
@@ -108,7 +108,11 @@
                                 return scope.filteredResults;
                             };
 
-                            
+                            scope.viewGenes = function(){
+	                       		 scope.filteredResults = tableFilter(scope.analysis.results, scope.filterParams);
+	                       		 //and filter the heatmap
+	                       		 scope.applyToHeatmap();
+	                       	}
 
                             scope.selectionParams = {
                                 name: undefined,
