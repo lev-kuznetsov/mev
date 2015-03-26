@@ -1,5 +1,5 @@
-define(['./datasetStatistics', './selectionSort', './selectionHelpers'], 
-		function( datasetStatistics, selectionSort, selectionHelpers){
+define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expressionModule'], 
+		function( datasetStatistics, selectionSort, selectionHelpers, expressionModule){
     
     //inverter :: [a] --> Object
     //  Function to invert an array into an object with properties of names
@@ -64,6 +64,10 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers'],
 			statistics : datasetStatistics,
 			ranger : ranger
 		};
+
+                this.expression.retrieve = function(input){
+                    return expressionModule.retrieve.call(self, input)
+                } 
 
 		
 		this.expression.sort = selectionSort;

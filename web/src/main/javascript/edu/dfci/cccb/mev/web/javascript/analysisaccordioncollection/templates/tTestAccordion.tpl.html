@@ -1,0 +1,68 @@
+	    <accordion-group heading="{{tTest.type}} : {{tTest.name}}" is-open="isTTestOpen" ng-init="isTTestOpen=false">	   
+	    	
+		            <div  class="results-wrapper" id="tTestResultsTable" ng-hide="!tTest.results">		            	
+			        	<div class="results-header clearfix">
+            				<div class="btn-toolbar pull-right" role="toolbar">
+				                <a class="btn btn-success" href="/dataset/{{project.dataset.datasetName}}/analysis/{{tTest.name}}?format=tsv">
+				                  <i class="icon-white icon-download"></i> Download
+				                </a> 
+				                <a class="btn btn-info" data-target="#selectionAdd{{tTest.name}}" data-toggle="modal">
+				                  </i> Create Selections
+				                </a> 
+					            <a class="btn btn-info" data-target="#exportDataset{{tTest.name}}" data-toggle="modal">
+				                  </i> New Dataset
+				                </a> 	            
+					            <!-- disable for beta1 -->
+					            <button class="btn btn-success" ng-click="applyToHeatmap()" >
+					                <a>
+					                  </i> View Genes on Heatmap
+					                </a> 
+					            </button>
+					            
+					      	</div>
+									      
+						</div>
+						<div class="results-body">							
+							<results-table data="filteredResults" headers="headers" filters="filterParams"></results-table>
+						</div>
+					</div>	
+				
+		</accordion-group>
+		
+		<bsmodal bindid="{{'selectionAdd' + tTest.name}}" func="" header="Add New Selection for {{tTest.name}}">
+
+			<div class="row">
+			
+				<form-group>
+					<form>
+						Name: <input type="text" class="input-small" ng-model="selectionParams.name">
+					<form>
+				</form-group>
+			
+			</div>
+			
+			<div class="row">			
+                <a class="btn btn-success pull-right" ng-click="addSelections()" data-dismiss="modal" aria-hidden="true">
+                  Create Selections
+                </a> 
+            </div>
+		</bsmodal> 
+		
+		<bsmodal bindid="{{'exportDataset' + tTest.name}}" func="" header="Export New Dataset for {{tTest.name}}">
+
+			<div class="row">
+			
+				<form-group>
+					<form>
+						Name: <input type="text" class="input-small" ng-model="exportParams.name">
+					<form>
+				</form-group>
+			
+			</div>
+			
+			<div class="row">			
+                <a class="btn btn-success pull-right" ng-click="exportSelection()" data-dismiss="modal" aria-hidden="true">
+                  Export New Dataset
+                </a> 
+            </div>
+		</bsmodal>
