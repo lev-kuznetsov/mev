@@ -12,32 +12,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.anova.domain.contract;
+package edu.dfci.cccb.mev.nmf.domain;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
+import edu.dfci.cccb.mev.hcl.domain.contract.Node;
 
 /**
  * @author levk
  * 
  */
-public interface Anova2 extends Analysis {
-  public interface Entry2 {
-    String geneId ();
+public class Nmf extends AbstractAnalysis<Nmf> {
+  private @JsonProperty Dataset w;
+  private @JsonProperty H h;
 
-    Double pValue ();
-
-    public interface Pairing2 {
-      String a ();
-
-      String b ();
-
-      Double logFoldChange ();
-    }
-
-    List<? extends Pairing2> logFoldChangePairings ();
+  public static class H {
+    private @JsonProperty Dataset matrix;
+    private @JsonProperty Node root;
   }
-
-  Iterable<? extends Entry2> entries ();
 }

@@ -12,32 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.anova.domain.contract;
-
-import java.util.List;
-
-import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
-
 /**
  * @author levk
- * 
+ *
  */
-public interface Anova2 extends Analysis {
-  public interface Entry2 {
-    String geneId ();
-
-    Double pValue ();
-
-    public interface Pairing2 {
-      String a ();
-
-      String b ();
-
-      Double logFoldChange ();
-    }
-
-    List<? extends Pairing2> logFoldChangePairings ();
-  }
-
-  Iterable<? extends Entry2> entries ();
-}
+package edu.dfci.cccb.mev.nmf.rest.controllers;

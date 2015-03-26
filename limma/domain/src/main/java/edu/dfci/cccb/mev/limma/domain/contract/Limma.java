@@ -33,6 +33,8 @@ public interface Limma extends Analysis {
     double pValue ();
 
     double qValue ();
+    
+    // double tStat () // FIXME ADD IT
   }
 
   public enum Species {
