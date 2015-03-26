@@ -19,17 +19,20 @@
 	                        dimension: {
 	                            name : 'Columns',
 	                            value : 'column'
-	                        }
+	                        },
+	                        rank: {name:3, value: 3},
+	                        method: {value: "brunet", name: "Brunet"},
+	                        nrun: {name:10, value:10}
 	                    };
 	                    
 	                    scope.options = {
 	                        dimensions : [{
-	                            name : 'Rows',
-	                            value : 'row'
-	                        }, {
 	                            name : 'Columns',
 	                            value : 'column'
-	                        }]
+	                        }],
+	                        rank: [{name:3, value: 3}],
+	                        method: [{value: "brunet", name: "Brunet"}],
+	                        nrun:[{name:10, value:10}]
 	                    };
 	                    
 	                    scope.addSelection = function(decked){
@@ -51,12 +54,14 @@
 	                        	datasetName : scope.dataset.datasetName,
 	                        	analysisType : "nmf",
 	                        	analysisName : scope.params.name,
-	                        	analysisParams : 'dimension='
-	                                + scope.params.dimension.value
 	                        }
 	                        
 	                        scope.dataset.analysis
-	                        .postf(analysisData, JSON.stringify(scope.params.selections),
+	                        .postf(analysisData, {
+	                        	rank: scope.params.rank.value,
+	                        	method: scope.params.method.value,
+	                        	nruns: scope.params.nrun.value
+	                        },
 		                        function(data, status, headers, config) {
 		                            
 	                        		scope.dataset.loadAnalyses();

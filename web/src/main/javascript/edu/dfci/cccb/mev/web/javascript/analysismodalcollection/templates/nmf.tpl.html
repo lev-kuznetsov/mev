@@ -1,11 +1,25 @@
 <form role="form">
 
      <div class="form-group">
-       <label for="deseq-test-name" class="control-label">Test Name</label>
-
-       <input id="deseq-test-name" ng-model="params.name" placeholder="Ex: My_Analysis_1">
+       <label for="nmf-test-name" class="control-label">Test Name</label>
+       <input id="nmf-test-name" ng-model="params.name" placeholder="Ex: My_Analysis_1">
+     </div>
+     
+     <div class="form-group">
+       <label for="nmf-test-method" class="control-label">Method</label>
+       <select id="nmf-test-method" ng-options="option.name for option in options.method" ng-model="params.method"></select>
+     </div>
+     
+     <div class="form-group">
+       <label for="nmf-test-rank" class="control-label">Rank</label>
+       <select id="nmf-test-rank" ng-options="option.name for option in options.rank" ng-model="params.rank"></select>
+     </div>
+     
+     <div class="form-group">
+       <label for="nmf-test-nrun" class="control-label">Runs</label>
+       <select id="nmf-test-nrun" ng-options="option.name for option in options.nrun" ng-model="params.nrun"></select>
      </div>
      
 </form> 
 		
-<a class="btn btn-success btn-block" ng-click="testInit()" data-dismiss="modal" aria-hidden="true">Analyze</a>
+<a class="btn btn-success btn-block" ng-click="initialize()" data-dismiss="modal" aria-hidden="true">Analyze</a>
