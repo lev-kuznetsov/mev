@@ -84,8 +84,8 @@ public class RDispatcher {
     RConnection c = to.attach ();
     c.assign (p, new REXPString (mapper.writeValueAsString (value)));
     log.debug ("Defining key '" + name + "' for value " + value);
-    command.append ("define ('").append (name)
-           .append ("', function (fromJson) { ")
+    command.append ("define (").append (name)
+           .append (" = function (fromJson) { ")
            .append ("r <- fromJson (").append (p).append ("); rm (\"").append (p).append ("\", envir = .GlobalEnv); r")
            .append (" }, scope = singleton, binder = binder); ");
     return c.detach ();
@@ -164,6 +164,7 @@ public class RDispatcher {
             Result annotation = field.getAnnotation (Result.class);
             if (annotation != null) {
               field.setAccessible (true);
+              System.out.println (field.getGenericType ());
               field.set (job,
                          mapper.readValue (result.asString (),
                                            mapper.getTypeFactory ().constructType (field.getGenericType ())));

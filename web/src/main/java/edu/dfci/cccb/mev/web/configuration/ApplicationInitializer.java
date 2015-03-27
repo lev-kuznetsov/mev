@@ -56,8 +56,8 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 
     mvcContext.register (DispatcherConfiguration.class, PersistenceConfiguration.class, ContainerConfigurations.class);
 
-    mvcContext.register (DatasetRestConfiguration.class);
     mvcContext.register (RDispatcherConfiguration.class);
+    mvcContext.register (DatasetRestConfiguration.class);
     mvcContext.register (PresetsRestConfiguration.class);
     mvcContext.register (GeoDatasetsConfigurationMain.class);
     mvcContext.register (ProbeAnnotationsConfigurationMain.class);

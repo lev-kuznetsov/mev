@@ -182,13 +182,13 @@
       <artifactId>mev-deseq-rest</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
-
+    
     <!-- NMF -->
-
+    
     <dependency>
-      <groupId>edu.dfci.cccb</groupId>
-      <artifactId>mev-nmf-rest</artifactId>
-      <version>BAYLIE-SNAPSHOT</version>
+        <groupId>edu.dfci.cccb</groupId>
+        <artifactId>mev-nmf-rest</artifactId>
+        <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
     <!-- Servlet -->
@@ -438,16 +438,15 @@
           </setup>
           <onInitialize>
             sapply (c ("devtools", "NMF"), function (lib)
-            if (!requireNamespace (lib))
-            install.packages (lib, repos="http://cran.rstudio.com"));
-            if (!requireNamespace
-            ("injectoR"))
-            devtools::install_github ("dfci-cccb/injectoR");
+              if (!requireNamespace (lib))
+                install.packages (lib, repos="http://cran.rstudio.com"));
+            if (!requireNamespace ("injectoR"))
+              devtools::install_github ("dfci-cccb/injectoR");
           </onInitialize>
           <onRequest>
             library (injectoR);
-            source
-            ("../nmf/domain/src/main/r/nmf.r");
+            source ("../dataset/domain/src/main/r/json.r");
+            source ("../nmf/domain/src/main/r/nmf.r");
           </onRequest>
         </configuration>
       </plugin>
@@ -520,7 +519,7 @@
       </plugins>
     </pluginManagement>
   </build>
-
+  
   <pluginRepositories>
     <pluginRepository>
       <id>cccb</id>

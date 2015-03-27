@@ -55,6 +55,6 @@ public class NmfController {
                   final @RequestParam (value = "method", defaultValue = "brunet") String method,
                   final @RequestParam (value = "nrun", defaultValue = "10") int nrun) throws DatasetException {
     NmfBuilder nmf = this.nmf.get ();
-    dataset.analyses ().put (nmf.name (name).rank (rank).method (method).nrun (nrun).build ());
+    dataset.analyses ().put (nmf.name (name).rank (rank).method (method).nrun (nrun).dataset (dataset).build ());
   }
 }
