@@ -3,8 +3,8 @@
     define([], function () {
         return function (module) {
 
-            module.directive('limmaAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService',
-                function (tableFilter, alertService, projection, paths) {
+            module.directive('limmaAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService', 'BoxPlotService',
+                function (tableFilter, alertService, projection, paths, BoxPlotService) {
                     return {
                         restrict: 'E',
                         templateUrl: paths.module + '/templates/limmaAccordion.tpl.html',
@@ -29,12 +29,13 @@
                                 {
                                     'name': 'Average Expression',
                                     'field': "averageExpression",
-                                    'icon': "none"
+                                    'icon': [">=", "<="]
                                 },
                                 {
                                     'name': 'P-Value',
                                     'field': "pValue",
-                                    'icon': "<="
+                                    'icon': "<=",
+                                    'default': 0.05
                                 },
                                 {
                                     'name': 'Q-Value',
@@ -42,56 +43,6 @@
                                     'icon': "<="
                                 }
                             ];
-
-                            scope.filterParams = {
-                                'id': {
-                                    field: 'id',
-                                    value: undefined,
-                                    op: "~="
-                                },
-                                'logFoldChange': {
-                                    field: 'logFoldChange',
-                                    value: undefined,
-                                    op: '>='
-                                },
-                                'pValue': {
-                                    field: 'pValue',
-                                    value: undefined,
-                                    op: '<='
-                                },
-                                'qValue': {
-                                    field: 'qValue',
-                                    value: undefined,
-                                    op: '<='
-                                }
-                            };
-                            
-                            
-                            scope.$watch('analysis', function (newval) {
-                                if (newval) {
-                                    scope.viewGenes()
-                                }
-                            })
-                            
-                            scope.$watch('filterParams.pValue.value', function(newval, oldval){
-                            	scope.viewGenes()
-                            })
-                            
-                            scope.$watch('filterParams.qValue.value', function(newval, oldval){
-                            	scope.viewGenes()
-                            })
-                            
-                            scope.$watch('filterParams.id.value', function(newval, oldval){
-                            	scope.viewGenes()
-                            })
-                            
-                            scope.$watch('filterParams.logFoldChange.value', function(newval, oldval){
-                            	scope.viewGenes()
-                            })
-                            
-                            scope.$watch('filterParams.logFoldChange.op', function(newval, oldval){
-                            	scope.viewGenes()
-                            })
                             
                             scope.filteredResults = undefined;
                             
@@ -99,56 +50,17 @@
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16)
                             }
-
-                            scope.viewGenes = function () {
+                                                        
+                            scope.viewGenes = function (filterParams) {
                             	
-                                scope.filteredResults = tableFilter(scope.analysis.results, scope.filterParams);
-                                var shownGenes = scope.filteredResults
-
-                                var max = Number.NEGATIVE_INFINITY,
-                                    min = Number.POSITIVE_INFINITY;
-                                
-                                function test(d) {
-
-                                    if (d.value > max) {
-                                        max = d.value
-                                    };
-
-                                    if (d.value < min) {
-                                        min = d.value
-                                    };
-                                };
-
-                                scope.boxPlotGenes = {
-                                    "data": shownGenes.map(function (gene, i) {
-                                        return {
-                                            'control': {
-                                                'values': scope.analysis.control.keys.map(function (label) {
-
-                                                    var datapoint = scope.project.dataset.expression.get([gene.id, label]);
-                                                    test(datapoint, max, min);
-                                                    return datapoint;
-                                                })
-                                            },
-                                            'experiment': {
-                                                'values': scope.analysis.experiment.keys.map(function (label) {
-
-                                                    var datapoint = scope.project.dataset.expression.get([gene.id, label]);
-                                                    test(datapoint, max, min);
-                                                    return datapoint;
-                                                })
-                                            },
-                                            'geneName': gene.id,
-                                            'pValue': gene.pValue
-                                        };
-                                    }),
-                                    'min': min - ((max - min) * .05),
-                                    'max': max + ((max - min) * .05),
-                                    'id': scope.analysis.randomId
-                                };
-                             
+                                scope.filteredResults = tableFilter(scope.analysis.results, filterParams);                                
+                                scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, scope.filteredResults, 
+                                		[scope.analysis.control, scope.analysis.experiment], 
+                                		scope.analysis.randomId);
+                                console.debug("limma boxPloGenes", scope.boxPlotGenes);
                                 //also filter the heat map
-                                scope.applyToHeatmap()
+                                scope.applyToHeatmap();
+                                
                             };
 
                             scope.addSelections = function () {

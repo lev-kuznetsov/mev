@@ -1,6 +1,6 @@
 (function(){
 
-  define([], function(){
+  define(["lodash"], function(_){
 
     return function(module){
 
@@ -10,11 +10,43 @@
             scope : {
             	data : "=data",
             	headers : "=headers",
-                filters : "=filters",
-                ordering : "@"
+                filters : "=?filters",
+                ordering : "@",
+                filterCallback : "&onFilter" 
             },
             templateUrl : paths.module + '/templates/resultsTable.tpl.html',
             link : function(scope, elem, attrs) {
+            	
+            	function getOpFromHeader(header){
+            		if(header.icon==='search')
+            			return "~=";                        		
+            		if(angular.isArray(header.icon))
+            			return header.icon[0];
+            		else
+            			return header.icon;                        			
+            	}
+            	
+            	if(!scope.filters){
+            		scope.filters={};
+                	scope.headers.map(function(header){
+                		if(header.icon && header.icon != 'none'){
+                			scope.filters[header.field] = {
+                					field: header.field,
+                					value: header["default"],
+                					op: header.op || getOpFromHeader(header)  
+                			};
+                		}
+                	});
+            	}
+            	scope.filterCallback({filterParams: scope.filters});
+            	scope.$watch('filters', function(newval, oldval){  
+                	if(!angular.equals(newval, oldval)){
+                		var filters = _.cloneDeep(newval);
+                		console.debug("resultTable $watch", newval, oldval, filters);                		                		
+                		scope.filterCallback({filterParams: filters});
+                	}
+                }, true);
+            	
             	
                 //Table reordering methods
                 var ctr = -1;
@@ -27,7 +59,8 @@
                     } else {
                         scope.tableOrdering = "-" + header.field;
                     }
-                }
+                };                
+                
             }	
         };
       }]);
@@ -48,6 +81,21 @@
     	 }
       });
       
+      module.filter('textOrNumber', function ($filter) {
+    	    return function (input, fractionSize) {
+    	        if (isNaN(input)) {
+    	            return input;
+    	        } else {
+    	            return $filter('number')(input, fractionSize);
+    	        };
+    	    };
+    	});
+      
+      module.filter('isArray', function() {
+    	  return function (input) {
+		    return angular.isArray(input);
+		  };
+      });
       return module;
 
     }

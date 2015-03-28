@@ -7,14 +7,12 @@
 	<li>
 		<a id="boxplotsTabLink" href="{{'#limma-' + analysis.randomId + '-boxPlot'}}" 
 			data-toggle="tab" 
-			target="_self"
-			ng-click="viewGenes()">Quartiles</a>
+			target="_self">Quartiles</a>
 	</li>
 	<li ng-if="isShowHeatmapTab">
 		<a id="heatmapTabLink" href="{{'#limma-' + analysis.randomId + '-heatmap'}}" 
 			data-toggle="tab" 
-			target="_self"
-			ng-click="viewGenes()">Heatmap</a>
+			target="_self">Heatmap</a>
 	</li>
 	<li ng-show='analysis.topGo.length > 0'>
 		<a id="heatmapTabLink" href="{{'#limma-' + analysis.randomId + '-topGoResults'}}" 
@@ -52,7 +50,7 @@
 							      
 				</div>
 				<div class="results-body">							
-						<results-table data="filteredResults" headers="headers" filters="filterParams" ordering="pValue"></results-table>
+						<results-table data="filteredResults" headers="headers" on-filter="viewGenes(filterParams)" ordering="pValue"></results-table>
 				</div>
 			</div>
 	</div>
@@ -150,14 +148,3 @@
               </a> 
           </div>
 </bsmodal>
-
-<style>
-line {
-    fill: #fff;
-    stroke: #000;
-    stroke-width: 1.5px;
-}
-line.int-lines {
-    stroke-dasharray: 7, 5;
-}
-</style>
