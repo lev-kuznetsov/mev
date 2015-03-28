@@ -69,8 +69,22 @@ define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular
         		var result = resource[methodName](params, data, callback);
         		
         		result.$promise.then(
-    				function(response){
-    					console.debug("AnalysisResource success", params, response, data);
+    				function(response){    					
+    					
+    					if(typeof data === "string")
+    						data = JSON.parse(data);
+    					if(Array.isArray(data))
+    						data = {data: data};
+    					var allParams = {
+    							analysisName: params.analysisName || data.analysisName || params.name || data.name || response.name
+    					};
+    					angular.extend(allParams, params);
+    					
+    					angular.extend(allParams, data);
+    					console.debug("AnalysisResource success", params, "data", data, "response", response);
+    					var sessionStorageKey = allParams.datasetName+"."+allParams.analysisName;
+    					console.debug("sessionStorageKey set", sessionStorageKey);
+    					sessionStorage.setItem(sessionStorageKey, JSON.stringify(allParams));
     					analysisEventBus.analysisSucceeded(params, data);
     	    		}, function(response){
     	    			console.debug("AnalysisResource error", response);
