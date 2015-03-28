@@ -1,6 +1,7 @@
 package edu.dfci.cccb.mev.t_test.domain.impl;
 
 import static edu.dfci.cccb.mev.t_test.domain.prototype.AbstractTTestBuilder.FULL_FILENAME;
+import static java.lang.Double.parseDouble;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -95,10 +96,25 @@ public class FileBackedTTest extends AbstractTTest implements AutoCloseable{
     };
   }
   
+  private String string (int index, String[] split) {
+    return split[index];
+  }
 
+  private Double number (int index, String[] split) {
+    String value = string (index, split);
+    if ("Inf".equals (value))
+      return Double.POSITIVE_INFINITY;
+    else if ("-Inf".equals (value))
+      return Double.NEGATIVE_INFINITY;
+    else if ("NA".equals (value))
+      return Double.NaN;
+    else
+      return parseDouble (value);
+  }
+  
   private Entry parse (String line) {
     final String[] split = line.split ("\t");
-    return new SimpleEntry (Double.parseDouble (split[1]),split[0], Double.parseDouble (split[2]));
+    return new SimpleEntry (number(1, split), string(0, split), number(2, split));
   }
 
   
