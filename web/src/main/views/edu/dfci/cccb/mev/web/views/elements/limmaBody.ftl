@@ -30,23 +30,23 @@
       
   </div>
   
-  <div class="form-group">
-    <label for="limmaAnalysisSpecies" class="control-label">Species</label>
-      <select id="limmaAnalysisSpecies" ng-model="params.species" ng-options="selection.name for selection in available.species">
-      </select>
-  </div>
+<!--   <div class="form-group"> -->
+<!--     <label for="limmaAnalysisSpecies" class="control-label">Species</label> -->
+<!--       <select id="limmaAnalysisSpecies" ng-model="params.species" ng-options="selection.name for selection in available.species"> -->
+<!--       </select> -->
+<!--   </div> -->
   
-  <div class="form-group">
-    <label for="limmaAnalysisGoType" class="control-label">Go Type</label>
-      <select id="limmaAnalysisGoType" ng-model="params.goType" ng-options="selection.name for selection in available.goType">
-      </select>
-  </div>
+<!--   <div class="form-group"> -->
+<!--     <label for="limmaAnalysisGoType" class="control-label">Go Type</label> -->
+<!--       <select id="limmaAnalysisGoType" ng-model="params.goType" ng-options="selection.name for selection in available.goType"> -->
+<!--       </select> -->
+<!--   </div> -->
   
-  <div class="form-group">
-    <label for="limmaAnalysisTestType" class="control-label">Test Type</label>
-      <select id="limmaAnalysisGoType" ng-model="params.testType" ng-options="selection.name for selection in available.testType">
-      </select>
-  </div>
+<!--   <div class="form-group"> -->
+<!--     <label for="limmaAnalysisTestType" class="control-label">Test Type</label> -->
+<!--       <select id="limmaAnalysisGoType" ng-model="params.testType" ng-options="selection.name for selection in available.testType"> -->
+<!--       </select> -->
+<!--   </div> -->
   
 </form>
 
