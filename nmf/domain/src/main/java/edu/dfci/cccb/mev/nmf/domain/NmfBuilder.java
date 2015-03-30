@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.r.AbstractDispatchedRAnalysisBuilder;
+import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Parameter;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.R;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
@@ -53,4 +54,9 @@ public class NmfBuilder extends AbstractDispatchedRAnalysisBuilder<NmfBuilder, N
   private @Getter @Setter @Parameter int nrun = 10;
 
   private @Getter @Result Nmf result;
+
+  @Callback
+  private void setName () {
+    result.name (name ());
+  }
 }
