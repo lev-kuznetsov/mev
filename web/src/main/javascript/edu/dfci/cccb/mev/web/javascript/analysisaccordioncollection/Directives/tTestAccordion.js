@@ -24,7 +24,10 @@
                                 'name': 'P-Value',
                                 'field': "pValue",
                                 'icon': "<=",
-                                'default': 0.05
+                                'default': 0.05,
+                                'max': 0.05,
+                                'min': 0.00,
+                                'step': 0.01
                             },{
                                 'name': 'Log-Fold-Change',
                                 'field': "logFoldChange",

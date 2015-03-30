@@ -33,21 +33,37 @@
                 			scope.filters[header.field] = {
                 					field: header.field,
                 					value: header["default"],
-                					op: header.op || getOpFromHeader(header)  
+                					op: header.op || getOpFromHeader(header),
+                					max: header.max
                 			};
                 		}
                 	});
             	}
             	scope.filterCallback({filterParams: scope.filters});
-            	scope.$watch('filters', function(newval, oldval){  
-                	if(!angular.equals(newval, oldval)){
-                		var filters = _.cloneDeep(newval);
-                		console.debug("resultTable $watch", newval, oldval, filters);                		                		
-                		scope.filterCallback({filterParams: filters});
-                	}
-                }, true);
-            	
-            	
+
+            	var vm={};            	
+            	            	
+//            	scope.$watch('filters', function(newval, oldval){  
+//            	if(!angular.equals(newval, oldval)){
+//            		var filters = _.cloneDeep(newval);
+//            		console.debug("resultTable $watch", newval, oldval, filters);                		                		
+////            		scope.filterCallback({filterParams: filters});
+//            	}
+//            }, true);
+            	            	
+            	vm.applyFilter=function($event){
+            		 if ($event.which === 13){            			 
+            			 console.debug("applyFilter", scope.filters, scope.filterForm);
+            			 Object.keys(scope.filters).map(function(key){
+            				var filter = scope.filters[key];
+            				if(filter.max && !filter.value || filter.value>filter.max)
+            					filter.value=filter.max;
+            			 });            			
+            			 scope.filterCallback({filterParams: scope.filters});            			 
+            			 scope.filterForm.$setPristine();
+            		 }
+            	};
+            	scope.vm=vm;
                 //Table reordering methods
                 var ctr = -1;
                 scope.tableOrdering = attrs.ordering || defaults.getOrdering();

@@ -103,7 +103,7 @@
 	
 	results-table,
 	.results-body{
-		table{
+		table{			
 			border: 0px none;
 			tr{
 				th,td{					
@@ -143,6 +143,18 @@
 			> li {
 				> a, span {
 					margin-left: initial;
+				}
+			}
+		}
+		form,ng-form{
+//			&.ng-dirty {
+//				input{					
+//					color: blue;
+//				}						
+//			}				
+			input{	
+				&.ng-dirty{
+					background-color: lighten(@brand-warning, 40%);
 				}
 			}
 		}
