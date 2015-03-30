@@ -104,7 +104,7 @@ public class RDispatcherConfiguration {
 
   @Bean
   @Rserve
-  public ObjectMapper mapper (Collection<Module> modules) {
+  public ObjectMapper mapper (@Rserve Collection<Module> modules) {
     return new ObjectMapper ().registerModules (modules);
   }
 

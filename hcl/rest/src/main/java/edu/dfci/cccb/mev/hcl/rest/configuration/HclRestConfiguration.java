@@ -33,17 +33,22 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 
 import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter;
+import edu.dfci.cccb.mev.dataset.domain.r.annotation.Rserve;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 import edu.dfci.cccb.mev.hcl.domain.contract.HclBuilder;
+import edu.dfci.cccb.mev.hcl.domain.contract.Node;
 import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 import edu.dfci.cccb.mev.hcl.domain.mock.MockNodeBuilder;
 import edu.dfci.cccb.mev.hcl.domain.simple.SimpleTwoDimensionalHclBuilder;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.BranchJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.HclJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.LeafJsonSerializer;
+import edu.dfci.cccb.mev.hcl.rest.assembly.json.NodeJsonDeserializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.SimpleHierarchicallyClusteredDimensionJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.newick.HclNewickMessageConverter;
 import edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter;
@@ -116,5 +121,17 @@ public class HclRestConfiguration extends MevRestConfigurerAdapter {
     resolvers.addAll (asList (new LinkagePathVariableMethodArgumentResolver (),
                               new MetricPathVariableMethodArgumentResolver (),
                               new AnalysisPathVariableMethodArgumentResolver<Hcl> (Hcl.class)));
+  }
+
+  @Bean
+  @Rserve
+  public Module registerRserveDeserializer () {
+    return new SimpleModule () {
+      private static final long serialVersionUID = 1L;
+
+      {
+        addDeserializer (Node.class, new NodeJsonDeserializer ());
+      }
+    };
   }
 }
