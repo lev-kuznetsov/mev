@@ -348,6 +348,7 @@
                              },
                              keys: scope.selectionParams.samples.map(function(sample){return sample['id']})
                          };
+                         
 
                          scope.project.dataset.selection.post({
                                  datasetName: scope.project.dataset.datasetName,
