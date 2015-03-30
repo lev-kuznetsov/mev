@@ -14,26 +14,28 @@
 	                templateUrl : paths.module + '/templates/nmf.tpl.html',
 	                link : function(scope, elems, attrs) {
 	                    
-	                    scope.params = {
-	                        name: undefined,
-	                        dimension: {
-	                            name : 'Columns',
-	                            value : 'column'
-	                        },
-	                        rank: {name:3, value: 3},
-	                        method: {value: "brunet", name: "Brunet"},
-	                        nrun: {name:10, value:10}
-	                    };
+	                    
 	                    
 	                    scope.options = {
-	                        dimensions : [{
-	                            name : 'Columns',
-	                            value : 'column'
-	                        }],
-	                        rank: [{name:3, value: 3}],
-	                        method: [{value: "brunet", name: "Brunet"}],
-	                        nrun:[{name:10, value:10}]
+	                        method: [{value: "brunet", name: "Brunet"},
+	                                 {value: "lee", name: "Lee"},
+	                                 {value: "offset", name: "Offset"},
+	                                 {value: "nsNMF", name: "nsNMF"}],
+	                        seed: [
+	                            {value: "nndsvd", name: "nndSVD"},
+								{value: "ica", name: "ICA"},
+								{value: "none", name: "None"},
+								{value: "random", name: "Random"}
+	                        ]
 	                    };
+	                    
+	                    scope.params = {
+		                        name: undefined,
+		                        rank: {name:3, value: 3},
+		                        method: scope.options.method[0],
+		                        nrun: {name:10, value:10},
+		                        seed: scope.options.seed[0]
+		                    };
 	                    
 	                    scope.addSelection = function(decked){
 	                      if (scope.params.selections.indexOf(decked.name) < 0 && scope.params.selections.length < 3) {
@@ -57,7 +59,7 @@
 	                        }
 	                        
 	                        scope.dataset.analysis
-	                        .postf(analysisData, {
+	                        .post3(analysisData, {
 	                        	rank: scope.params.rank.value,
 	                        	method: scope.params.method.value,
 	                        	nruns: scope.params.nrun.value

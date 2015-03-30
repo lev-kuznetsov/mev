@@ -2,65 +2,111 @@
 
 	<ul class="nav nav-tabs">
 		<li class="active">
-			<a id="annotationsTabLink" href="{{'#nmf-' + analysis.randomId + '-n-heatmap'}}" 
+			<a id="annotationsTabLink" href="{{'#nmf-' + analysis.randomId + '-w-heatmap-tab'}}" 
 			data-toggle="tab" 
-			target="_self">Matrix N Heatmap</a>
+			target="_self">Matrix W Heatmap</a>
 		</li>
 		<li>
-			<a id="heatmapTabLink" href="{{'#nmf-' + analysis.randomId + '-f-heatmap'}}" 
+			<a id="heatmapTabLink" href="{{'#nmf-' + analysis.randomId + '-h-heatmap-tab'}}" 
 				data-toggle="tab" 
-				target="_self">Matrix F Heatmap</a>
+				target="_self">Matrix H Heatmap</a>
 		</li>
 		<li>
-			<a id="heatmapTabLink" href="{{'#nmf-' + analysis.randomId + '-n-table'}}" 
+			<a id="heatmapTabLink" href="{{'#nmf-' + analysis.randomId + '-w-table-tab'}}" 
 				data-toggle="tab" 
-				target="_self">Matrix N Values</a>
+				target="_self">Matrix W Values</a>
 		</li>
 		<li>
-			<a id="heatmapTabLink" href="{{'#nmf-' + analysis.randomId + '-f-table'}}" 
+			<a id="heatmapTabLink" href="{{'#nmf-' + analysis.randomId + '-h-table-tab'}}" 
 				data-toggle="tab" 
-				target="_self">Matrix F Values</a>
+				target="_self">Matrix H Values</a>
 		</li>
 	</ul>
 	
-	<div class="tab-content" id="">
-		<div class="tab-pane active" id="{{'nmf-' + analysis.randomId + '-n-heatmap'}}">                      
+	<div class="tab-content"id="">
+		<div class="tab-pane active" id="{{'nmf-' + analysis.randomId + '-w-heatmap-tab'}}">                      
 			<div  class="results-wrapper">	
 				<div class="results-header clearfix">        				
-					<h3 class="pull-left analysis-results-header">N-Heatmap</h3>
+					<h3 class="pull-left analysis-results-header">W-Heatmap</h3>
 				</div>
-				<div class="results-body">
-					N-Heatmap
+				<div class="results-body" >
+					<div class="nmf-heatmap-wrapper">
+                    	<div class="loqui-scrollable nmf-Heatmap-Visualization" scroll-item-size="40" height="400" data="matrix.n"></div>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="tab-pane active" id="{{'nmf-' + analysis.randomId + '-f-heatmap'}}">                      
+		<div class="tab-pane" id="{{'nmf-' + analysis.randomId + '-h-heatmap-tab'}}">
 			<div  class="results-wrapper">	
 				<div class="results-header clearfix">        				
-					<h3 class="pull-left analysis-results-header">F-Heatmap</h3>
+					<h3 class="pull-left analysis-results-header">H-Heatmap</h3>
 				</div>
 				<div class="results-body">
-					F-Heatmap
+					<div class="nmf-heatmap-wrapper">
+	                    <div class="loqui-scrollable nmf-Heatmap-Visualization" height="400" data="matrix.f"></div>
+	                </div>
 				</div>
 			</div>
 		</div>
-		<div class="tab-pane active" id="{{'nmf-' + analysis.randomId + '-n-table'}}">                      
+		<div class="tab-pane" id="{{'nmf-' + analysis.randomId + '-w-table-tab'}}">
 			<div  class="results-wrapper">	
 				<div class="results-header clearfix">        				
-					<h3 class="pull-left analysis-results-header">N-Table</h3>
+					<h3 class="pull-left analysis-results-header">W-Table</h3>
 				</div>
 				<div class="results-body">
-					N-Table
+				    <table class="table table-striped table-bordered table-condensed">
+						<thead>
+						   	<tr>
+						   		<th>
+						   		<!--  Space for first column -->
+								</th>
+								<th ng-repeat='row in analysis.variances'>
+									<p>{{row.name}}</p>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="row in analysis.data">
+								<td>
+									<p>{{row.name}}</p>
+								</td>
+								<td ng-repeat="component in row.loadings">
+									<p>{{component.value}}</p>
+								</td>
+							</tr>
+						</tbody>
+				    </table>
 				</div>
 			</div>
 		</div>
-		<div class="tab-pane active" id="{{'nmf-' + analysis.randomId + '-f-table'}}">                      
+		<div class="tab-pane" id="{{'nmf-' + analysis.randomId + '-h-table-tab'}}">
 			<div  class="results-wrapper">	
 				<div class="results-header clearfix">        				
-					<h3 class="pull-left analysis-results-header">F-Table</h3>
+					<h3 class="pull-left analysis-results-header">H-Table</h3>
 				</div>
 				<div class="results-body">
-					F-Table
+					<table class="table table-striped table-bordered table-condensed">
+						<thead>
+						   	<tr>
+						   		<th>
+						   		<!--  Space for first column -->
+								</th>
+								<th ng-repeat='row in analysis.variances'>
+									<p>{{row.name}}</p>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="row in analysis.data">
+								<td>
+									<p>{{row.name}}</p>
+								</td>
+								<td ng-repeat="component in row.loadings">
+									<p>{{component.value}}</p>
+								</td>
+							</tr>
+						</tbody>
+				    </table>
 				</div>
 			</div>
 		</div>

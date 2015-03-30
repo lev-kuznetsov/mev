@@ -449,7 +449,7 @@
           </onInitialize>
           <onRequest>
             library (injectoR);
-            source ("../dataset/domain/src/main/r/json.r");
+            source ("../dataset/domain/src/main/r/json.R");
             source ("../nmf/domain/src/main/r/nmf.r");
           </onRequest>
         </configuration>
