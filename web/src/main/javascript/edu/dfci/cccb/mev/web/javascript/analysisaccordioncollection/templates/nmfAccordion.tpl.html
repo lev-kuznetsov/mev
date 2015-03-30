@@ -23,14 +23,16 @@
 		</li>
 	</ul>
 	
-	<div class="tab-content" id="">
+	<div class="tab-content"id="">
 		<div class="tab-pane active" id="{{'nmf-' + analysis.randomId + '-w-heatmap-tab'}}">                      
 			<div  class="results-wrapper">	
 				<div class="results-header clearfix">        				
 					<h3 class="pull-left analysis-results-header">W-Heatmap</h3>
 				</div>
-				<div class="results-body">
-                    <nmf-Heatmap-Visualization data="matrix.n"></nmf-Heatmap-Visualization>
+				<div class="results-body" >
+					<div class="nmf-heatmap-wrapper">
+                    	<div class="loqui-scrollable nmf-Heatmap-Visualization" scroll-item-size="40" height="400" data="matrix.n"></div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -40,7 +42,9 @@
 					<h3 class="pull-left analysis-results-header">H-Heatmap</h3>
 				</div>
 				<div class="results-body">
-                    <nmf-Heatmap-Visualization data="matrix.f"></nmf-Heatmap-Visualization>
+					<div class="nmf-heatmap-wrapper">
+	                    <div class="loqui-scrollable nmf-Heatmap-Visualization" height="400" data="matrix.f"></div>
+	                </div>
 				</div>
 			</div>
 		</div>

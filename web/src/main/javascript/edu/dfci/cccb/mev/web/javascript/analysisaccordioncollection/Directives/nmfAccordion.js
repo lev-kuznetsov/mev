@@ -1,8 +1,8 @@
 (function(){
 
-	var deps = ['d3', 'heatmapvisualization/lib/h3atmap', 'dendogram/lib/d3ndogram']
+	var deps = ['d3', 'heatmapvisualization/lib/h3atmap', 'dendogram/lib/d3ndogram', 'jquery']
 	
-    define(deps, function(d3, h3atmap, d3ndogram){
+    define(deps, function(d3, h3atmap, d3ndogram, jquery){
 
        return function(module){
 
@@ -17,7 +17,7 @@
                    link: function(scope){
                 	   
                 	   var cols = d3.range(5).map(function(ind){ return "sample" + ind })
-                	   var rows = d3.range(5).map(function(ind){ return "gene" + ind })
+                	   var rows = d3.range(100).map(function(ind){ return "gene" + ind })
                 	   var values = cols.map(function(column, index){
                 		   var column = rows.map(function(row){
                 			   return {
@@ -82,9 +82,9 @@
            .directive('nmfHeatmapVisualization', [function(){
         	   
         	   return {
-                   restrict: 'E',
+                   restrict: 'C',
                    scope: {
-                     data: "=data",
+                     data: "=data"
                    },
                    link: function(scope, element, attr){
                 	   
@@ -97,7 +97,6 @@
 		        			   }
 		        		   }
 		               }
-		        	   
 		        	   
 		        	   scope.d3ndogram = {}
 		        	   scope.d3ndogram.settings = {
@@ -157,11 +156,14 @@
 	                       'colors': d3.scale.linear().range(['#ffeda0', '#feb24c', '#f03b20'])
 	                   }
 		        	   
+		        	   var totalRowsCanFit = parseInt(attr.height / scope.visualization.settings.cell.height)
+		        	   var offsetRows = parseInt( (scope.h3atmap.settings.y['gutter-width']+ scope.h3atmap.settings.y.margin)
+		        			   / scope.visualization.settings.cell.height)
+		        	   
 		        	   var heatmap = h3atmap()
 		        	       
-		        	       
 		        	   var dendogram = d3ndogram()
-		        	   	
+		        	   
 		        	   scope.$watch('data', function(newval, oldval){
 		        		   if (newval){
 		        			   scope.visualization.svg.selectAll('*').remove()
@@ -208,12 +210,15 @@
 		        			   dendogram()
 		        			   
 		        			   var parsedPoints = newval.analysis.values.map(function(p){
-		        				   
 		        				   return {
 		        				       x: p.column,
 		        				       y: p.row,
 		        				       value: p.value
 		        				   }
+		        			   }).filter(function(point){
+		        				   return newval.analysis.row.keys.slice(0,totalRowsCanFit).reduce(function(agg, next){
+		        					   return next == point.y ? agg.concat([next]) : agg 
+		        				   }, []).length > 0
 		        			   })
 		        			   
 		        			   heatmap.draw({
@@ -225,12 +230,71 @@
 		        			        average: d3.mean(parsedPoints, function(d){return d.value}),
 		        			    })
 		        			   
-		        			   dendogram.draw({root:newval.analysis.tree})
+		        			   dendogram.draw({
+		        				   root:newval.analysis.tree
+		        			   })
 		        		   }
-		        	   })
+		        	   });
+		        	   
+		        	   
+		        	   scope.$on("UI:SCROLL", function($event, params){
+		        		    		        		   
+		        		   var numberOfRowsAbove = parseInt(params.scrollTop / scope.visualization.settings.cell.height) - offsetRows;
+		        		   var totalRowsCanFit = parseInt(params.height / scope.visualization.settings.cell.height);		        		   
+		        		   var shownrows = scope.data.analysis.row.keys.filter(function(row, index){
+		        			   return index > numberOfRowsAbove-2 &&
+		        			   		index < totalRowsCanFit + numberOfRowsAbove + 2
+		        		   });
+		        		   
+		        		   var parsedPoints = scope.data.analysis.values.map(function(p){
+		        				   return {
+		        				       x: p.column,
+		        				       y: p.row,
+		        				       value: p.value
+		        				   }
+		        			   }).filter(function(point){
+		        				   
+		        				   for (var k = 0; k < shownrows.length; k++){
+		        					   if (shownrows[k] == point.y){
+		        						   return true
+		        					   }
+		        				   }
+		        				   return false
+		        			   })
+		        		   
+		        		   heatmap.update({
+	        			        points: parsedPoints,
+	        			        rows: scope.data.analysis.row.keys,
+	        			        columns: scope.data.analysis.column.keys,
+	        			        min: d3.min(parsedPoints, function(d){return d.value}),
+	        			        max: d3.max(parsedPoints, function(d){return d.value}),
+	        			        average: d3.mean(parsedPoints, function(d){return d.value}),
+	        			    })
+		        	   });
+		        	   
                    }
         	   }
         	   
+           }])
+           .directive('loquiScrollable', [function(){
+        	   return {
+        		   restrict: 'C',        		   
+        		   link: function(scope, element, attributes){
+        			   
+        			   element.css({
+        				   'height': parseFloat(attributes.height),
+        				   'overflow': 'auto'
+        			   })
+        			   
+        			   element.on('scroll', function(){
+	    				   scope.$broadcast("UI:SCROLL", {
+	    					   scrollTop: element.scrollTop(),
+	    					   height: element.height()
+	    				   });
+        			   }); 
+        			   
+        		   }
+        	   }
            }])
            .directive('nmfAccordion', ['pathService', 'alertService', function(paths, alertService){
 
@@ -242,11 +306,6 @@
                    project: "=project"
                  },
                  link: function(scope, element, attr){
-                	 
-                	 scope.heatmapParams = {
-                		'width': 700,
-                		'height': 520
-                	 }
                      
                      scope.selectionParams = {
                          'name':undefined,

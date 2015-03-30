@@ -21,7 +21,6 @@
       './Directives/pcaAccordion',
       './Directives/resultsTable',
       './Directives/nmfAccordion',
-      './Directives/nmfHeatmap'
       ]
     
     var serviceDeps = [
