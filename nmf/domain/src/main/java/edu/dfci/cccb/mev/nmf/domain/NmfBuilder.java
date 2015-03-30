@@ -14,9 +14,12 @@
  */
 package edu.dfci.cccb.mev.nmf.domain;
 
+import java.lang.reflect.Field;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+
 import edu.dfci.cccb.mev.dataset.domain.r.AbstractDispatchedRAnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Parameter;
@@ -32,6 +35,14 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
 // @R
 // ("function (dataset, rank, method, nrun) nmf (dataset, rank = rank, method = method, nrun = nrun)")
 @R ("function (dataset) {"
+    + "hc2n <- function (hc, flat = TRUE) { dist <- 0; if (is.null(hc$labels)) labels <- seq(along = hc$order)"
+    + "else labels <- hc$labels; putparenthesis <- function(i) { j <- hc$merge[i, 1]; k <- hc$merge[i, 2]; if (j < 0) {"
+    + "left <- labels[-j]; if (k > 0)  dist <- hc$height[i] - hc$height[k] else dist <- hc$height[i]; } else {"
+    + "left <- putparenthesis(j) } if (k < 0) { right <- labels[-k] if (j > 0)  dist <- hc$height[i] - hc$height[j] "
+    + "else dist <- hc$height[i] } else { right <- putparenthesis(k) } if (flat)"
+    + "return(paste(\"(\", left, \":\", dist/2, \",\", right, \":\", dist/2, \")\", sep = \"\"))"
+    + "else return(list(left = left, right = right, dist = dist)) } n <- putparenthesis(nrow(hc$merge)) "
+    + "if (flat) n <- paste(n, \";\", sep = \"\") return(n) };"
     + "l <- function (n)"
     + "  if (typeof (n) == 'character') list (name = n) "
     + "  else list (distance = n$dist, left = toList (n$left), right = toList (n$right));"
@@ -40,7 +51,7 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
     + "h <- NMF::coef (m);"
     + "colnames (w) = c (1:dim (w)[ 2 ]);"
     + "rownames (h) = c (1:dim (h)[ 1 ]);"
-    + "list (w = w, h = list (matrix = h, root = l (ctc::hc2Newick (stats::hclust (stats::dist (t (h)))))));" +
+    + "list (w = w, h = list (matrix = h, root = l (hc2n (stats::hclust (stats::dist (t (h)))))));" +
     "}")
 @Accessors (fluent = true, chain = true)
 public class NmfBuilder extends AbstractDispatchedRAnalysisBuilder<NmfBuilder, Nmf> {
@@ -58,5 +69,10 @@ public class NmfBuilder extends AbstractDispatchedRAnalysisBuilder<NmfBuilder, N
   @Callback
   private void setName () {
     result.name (name ());
+  }
+
+  public static void main (String[] args) {
+    for (Field f : NmfBuilder.class.getDeclaredFields ())
+      System.out.println (f.getName () + ":" + f.getAnnotation (Result.class));
   }
 }
