@@ -29,7 +29,7 @@ public class TTestTsvMessageConverter extends AbstractTsvHttpMessageConverter<TT
   @Override
   protected void writeInternal (TTest tTest, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
     try (PrintStream out = new PrintStream (outputMessage.getBody ())) {
-      out.println ("Gene\tp-value");
+      out.println ("Gene\tp-value\tlog-fold-change");
       for (edu.dfci.cccb.mev.t_test.domain.contract.TTest.Entry e : tTest.fullResults ())
         out.println (e.geneId () + "\t" + e.pValue ()+"\t"+e.logFoldChange ());
     }    

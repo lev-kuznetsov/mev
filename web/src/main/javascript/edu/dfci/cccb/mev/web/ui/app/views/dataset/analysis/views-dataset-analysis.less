@@ -7,7 +7,7 @@
 		.button-variant(@btn-info-border; transparent; @btn-info-border);
 	}
 }
-.views-dataset-analysis{	
+.views-dataset{	
 	.nav{
 		&.nav-tabs{
 			border-bottom: 1px solid @brand-success;
@@ -53,7 +53,7 @@
 				}
 			}
 			
-			.ttest-action-menu{
+			.action-menu{
 				.pull-right();
 				.btn{
 					.btn-analysis-action-menu();	
@@ -72,7 +72,7 @@
 			margin-top: @analysis-header-acction-menu-top-spacing;
 			padding-bottom: 2px;
 			margin-bottom: @padding-base-vertical;
-	//		border-bottom: 1px solid @brand-success;
+			
 			.analysis-results-title{
 				display: none;
 				margin-top: @padding-base-vertical + @analysis-header-acction-menu-top-spacing;
@@ -87,23 +87,23 @@
 						.btn-sm();
 						.btn-analysis-action-menu();
 						padding: 8px 9px;
-						margin-left: @analysis-header-acction-menu-button-margin;					
+						margin-left: @analysis-header-acction-menu-button-margin;						
 					}		
 					.btn:first-child{
 						margin-left: 0;
 					}
 				}
-			}		
+			}			
 		}
 		
 		.btn{
 			.btn-sm();
-		}
+		}		
 	}
 	
 	results-table,
 	.results-body{
-		table{
+		table{			
 			border: 0px none;
 			tr{
 				th,td{					
@@ -130,9 +130,42 @@
 					}
 				}
 			}
+			tfoot{
+				td{
+					border-bottom-style: none;
+				}				
+			}
+		}	
+		.pagination{
+			.pagination-sm();
+			margin: 0;
 			
-		}		
+			> li {
+				> a, span {
+					margin-left: initial;
+				}
+			}
+		}
+		form,ng-form{
+//			&.ng-dirty {
+//				input{					
+//					color: blue;
+//				}						
+//			}				
+			input{	
+				&.ng-dirty{
+					background-color: lighten(@brand-warning, 40%);
+				}
+			}
+		}
+				
 	}
 	
+	.column-header,
+	.results-header{
+		.btn[ng-click='applyToHeatmap()']{
+			display: none;
+		}	
+	}
 }
 @import "ttest/views-dataset-analysis-ttest.less";

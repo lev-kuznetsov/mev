@@ -11,7 +11,9 @@
                     //     arrayPropertyName is the key to filter on in the array, stringOperator is ">=" | "<=" | "=="
                     //     and filterParameter is object to check array value at property id against using op
                     var filteredArray = array
-
+                    if(!filterOptions)
+                    	return array;
+                    
                     var filteredColumn = Object.keys(filterOptions)
                     
                     for (filteredColumnIndex in filteredColumn){

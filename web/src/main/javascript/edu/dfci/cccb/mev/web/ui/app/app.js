@@ -9,6 +9,7 @@ define(["ng",
         
         'ngGrid',
         'fileSaver',
+        'mbAngularUtilsPagination',
         
         'directives', 
         'services', 
@@ -38,6 +39,7 @@ define(["ng",
 	                                     "mui.domain.navigator",
 	                                     
 	                                     'ngGrid',
+	                                     'angularUtils.directives.dirPagination',
 	                                     
 	                                     'myApp.directives', 
 	                            	     'myApp.services',
@@ -120,8 +122,10 @@ define(["ng",
 	})	
 	.config(['$sceProvider', function($sceProvider) {		
 	  $sceProvider.enabled(false);
+	}])
+	.config(["paginationTemplateProvider", function(paginationTemplateProvider){
+		paginationTemplateProvider.setPath('/container/vendor/mbAngularUtils/pagination/dirPagination.tpl.html');
 	}])	
-	
 	.run(["$rootScope", "$state", "$stateParams",
 	function ($rootScope, $state, $stateParams) {
 		

@@ -69,8 +69,22 @@ define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular
         		var result = resource[methodName](params, data, callback);
         		
         		result.$promise.then(
-    				function(response){
-    					console.debug("AnalysisResource success", params, response, data);
+    				function(response){    					
+    					
+    					if(typeof data === "string")
+    						data = JSON.parse(data);
+    					if(Array.isArray(data))
+    						data = {data: data};
+    					var allParams = {
+    							analysisName: params.analysisName || data.analysisName || params.name || data.name || response.name
+    					};
+    					angular.extend(allParams, params);
+    					
+    					angular.extend(allParams, data);
+    					console.debug("AnalysisResource success", params, "data", data, "response", response);
+    					var sessionStorageKey = allParams.datasetName+"."+allParams.analysisName;
+    					console.debug("sessionStorageKey set", sessionStorageKey);
+    					sessionStorage.setItem(sessionStorageKey, JSON.stringify(allParams));
     					analysisEventBus.analysisSucceeded(params, data);
     	    		}, function(response){
     	    			console.debug("AnalysisResource error", response);
@@ -91,7 +105,8 @@ define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular
     	
     }])
     .service ('SelectionResourceService', ['$resource', '$routeParams', function($resource, $routeParams){
-    	return $resource('/dataset/:datasetName/:dimension/selection',{
+    	
+    	var resource = $resource('/dataset/:datasetName/:dimension/selection',{
     		'format': 'json'
     	}, {
     		'getAll': {
@@ -110,7 +125,21 @@ define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular
     			'url':"/dataset/:datasetName/:dimension/selection/export",
     		}
     		
-    	})
+    	});
+    	
+//    	return resource;
+    	var SelectionResource = Object.create(resource);
+    	SelectionResource.getAll=function(params, data, callback){
+    		var result = resource.getAll(params, data, callback);
+    		result.$promise.then(function(response){
+    			response.selections.map(function(selection){
+    				selection.type=params.dimension;
+    			});
+    		});
+    		return result;
+    	};
+    	
+    	return SelectionResource;
     }]);
     
     	

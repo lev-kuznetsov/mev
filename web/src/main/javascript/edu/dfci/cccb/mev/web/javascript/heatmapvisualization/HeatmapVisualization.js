@@ -30,11 +30,20 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 	project : '=project'
                 },
                 link : function($scope, elems, attr) {
-                	if(!$scope.heatmapView.scrollableContainer)
-                		$scope.heatmapView.scrollableContainer="div.tab-content";
+                	//use jquery to get the nearest scrollable parent
+                	var scrollable = $(elems).scrollParent();
+                	//if that didnt' work use the scrollableContainer attribute if supplied
+                	if(!scrollable && $scope.heatmapView.scrollableContainer)
+                		scrollable = $($scope.heatmapView.scrollableContainer);
+                	//finally, default to 'div.tab-content' for legacy code
+                	if(!scrollable)
+                		scrollable = $("div.tab-content");
                 	
-                	var scrollable = $($scope.heatmapView.scrollableContainer), delay = 50, timer = null;
-                	
+                	var delay = 50, timer = null;
+//                	if(!$scope.heatmapView.scrollableContainer)
+//                		$scope.heatmapView.scrollableContainer="div.tab-content";
+//                	var scrollable = $($scope.heatmapView.scrollableContainer), delay = 50, timer = null;
+                	console.debug("HeatmapVis scrollable", $scope.heatmapView.scrollableContainer, scrollable);
                        
                     var position = {
                 			top: scrollable.scrollTop(),

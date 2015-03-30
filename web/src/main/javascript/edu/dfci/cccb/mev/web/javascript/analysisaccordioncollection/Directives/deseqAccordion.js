@@ -4,8 +4,8 @@
 
         return function (module) {
 
-            module.directive('deseqAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService',
-                function (tableFilter, alertService, projection, paths) {
+            module.directive('deseqAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService', 'BoxPlotService',
+                function (tableFilter, alertService, projection, paths, BoxPlotService) {
                     return {
                         restrict: 'E',
                         templateUrl: paths.module + '/templates/DESeqAccordion.tpl.html',
@@ -41,7 +41,8 @@
                                 {
                                     'name': 'P-Value',
                                     'field': "pValue",
-                                    'icon': "<="
+                                    'icon': "<=",
+                                    'default': 0.05
                                 },
                                 {
                                     'name': 'q-Value',
@@ -49,66 +50,23 @@
                                     'icon': "<="
                                 }
                             ];
-
-                            scope.filterParams = {
-                                'id': {
-                                    field: 'id',
-                                    value: undefined,
-                                    op: "="
-                                },
-                                'logFoldChange': {
-                                    field: 'logFoldChange',
-                                    value: undefined,
-                                    op: '>='
-                                },
-                                'pValue': {
-                                    field: 'pValue',
-                                    value: 0.05,
-                                    op: '<='
-                                },
-                                'qValue': {
-                                    field: 'qValue',
-                                    value: undefined,
-                                    op: '<='
-                                }
-                            };
-
-                            scope.$watch('analysis', function (newval) {
-                                if (newval) {
-                                    scope.applyToHeatmap()
-                                }
-                            })
-                            
-                            scope.$watch('filterParams.pValue.value', function(newval, oldval){
-                            	scope.applyToHeatmap()
-                            });
-                            
-                            scope.$watch('filterParams.qValue.value', function(newval, oldval){
-                            	scope.applyToHeatmap()
-                            });
-                            
-                            scope.$watch('filterParams.id.value', function(newval, oldval){
-                            	scope.applyToHeatmap()
-                            });
-                            
-                            scope.$watch('filterParams.logFoldChange.value', function(newval, oldval){
-                            	scope.applyToHeatmap()
-                            });
-                            
-                            scope.$watch('filterParams.logFoldChange.op', function(newval, oldval){
-                            	scope.applyToHeatmap()
-                            });
                             
                             scope.filteredResults = undefined;
 
-                            scope.applyFilter = function () {
-
-                                scope.filteredResults = tableFilter(scope.analysis.results, scope.filterParams)
-
-                                return scope.filteredResults;
-                            };
-
+//                            scope.applyFilter = function () {
+//
+//                                scope.filteredResults = tableFilter(scope.analysis.results, scope.filterParams)
+//
+//                                return scope.filteredResults;
+//                            };
                             
+                            
+                            scope.viewGenes = function(filterParams){
+	                       		 scope.filteredResults = tableFilter(scope.analysis.results, filterParams);
+	                       		 //and filter the heatmap
+	                       		scope.$emit("ui:filteredResults", scope.filteredResults);	                       	
+	                       		 scope.applyToHeatmap();
+	                       	}
 
                             scope.selectionParams = {
                                 name: undefined,

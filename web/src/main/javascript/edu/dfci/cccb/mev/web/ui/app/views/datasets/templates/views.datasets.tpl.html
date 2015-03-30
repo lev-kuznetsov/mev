@@ -8,13 +8,13 @@
 	  <div class="col-md-9">	  	
 	    
 	    
-				      <ul class="nav nav-tabs" id="importTabs">
+				      <ul class="nav nav-tabs column-header" id="importTabs">
 				        <li id="tcga_tab"><a href="#tcga" data-toggle="tab" target="_self" >Import TCGA Datasets</a></li>
 				        <li id="google_tab" ng-show="googleDrive.signedIn"><a href="#google" data-toggle="tab" target="_self" >Google Drive</a></li>
 				        <li id="geods_tab"><a href="#geods" data-toggle="tab" target="_self" >Import GEO Datasets</a></li>
 				      </ul>
 				 	  
-				      <div class="tab-content" id="import">
+				      <div class="tab-content column-body" id="import">
 				         
 				        <div class="tab-pane" id="tcga">
 						  <div id="presetMgr" preset-manager ng-controller="PresetManagerController"></div>

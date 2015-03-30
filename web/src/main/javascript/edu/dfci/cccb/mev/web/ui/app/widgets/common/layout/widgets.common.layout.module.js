@@ -6,7 +6,7 @@ define(["ng", "./directives/layout.directive",
         "./controllers/LayoutRowVM", 
         "./controllers/LayoutColumnVM",
         "./controllers/LayoutColumnButtonsVM", 
-        "./services/layoutSrvc"], 
+        "./services/layoutSrv"], 
 function(ng, LayoutDirective, 
 		LayoutRowDirective, 
 		LayoutColumnDirective, 
@@ -15,7 +15,7 @@ function(ng, LayoutDirective,
 		LayoutRowVM, 
 		LayoutColumnVM,
 		LayoutColumnButtonsVM,
-		LayoutSrvc){
+		LayoutSrv){
 	var module=ng.module("mui.widgets.common.layout", []);
 	module.directive("layout", LayoutDirective);	
 	module.directive("layoutRow", LayoutRowDirective);
@@ -25,6 +25,6 @@ function(ng, LayoutDirective,
 	module.controller("LayoutRowVM", LayoutRowVM);	
 	module.controller("LayoutColumnVM", LayoutColumnVM);
 	module.controller("LayoutColumnButtonsVM", LayoutColumnButtonsVM);	
-	module.service("LayoutSrv", LayoutSrvc);
+	module.service("LayoutSrv", LayoutSrv);
 	return module;
 });

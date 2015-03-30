@@ -1,4 +1,4 @@
-define(["ng"], function(ng){
+define(["ng", "lodash"], function(ng, _){
 	var DatasetProjectViewVM=function DatasetViewVM($scope, $stateParams, $state, dataset, project, AnalysisEventBus, AnalysisTypes){
 		that=this;
 		console.debug("DatasetProjectViewVM", dataset, project);
@@ -42,8 +42,13 @@ define(["ng"], function(ng){
 		});
 		
 		AnalysisEventBus.onAnalysisSuccess($scope, function(type, name, data){
-			dataset.loadAnalyses().then(function(){
-				console.debug("DatasetProjectViewVM onAnalysisSuccess", type, name, data);				
+			dataset.loadAnalyses().then(function(response){
+				var analysis = _.find(dataset.analyses, function(analysis){ return analysis.name===name; });
+				
+				if(!analysis.params)
+					analysis.params=data;
+				
+				console.debug("DatasetProjectViewVM onAnalysisSuccess", type, name, analysis);				
 				$state.go("root.dataset.analysis", {analysisType: AnalysisTypes.reverseLookup[type], analysisId: name});
 			});			
         });

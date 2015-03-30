@@ -1,12 +1,12 @@
 (function () {
 
-    define([], function () {
+    define(["lodash"], function (_) {
 
 
         return function (module) {
 
-            module.directive('anovaAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService',
-                function (tableFilter, alertService, projection, paths) {
+            module.directive('anovaAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService', 'BoxPlotService',
+                function (tableFilter, alertService, projection, paths, BoxPlotService) {
                     return {
                         restrict: 'E',
                         templateUrl:paths.module + '/templates/anovaAccordion.tpl.html',
@@ -18,86 +18,41 @@
                         link: function (scope) {                        	
                         	//variable to remove embedded pair information
                         	scope.cleanData = undefined;
-                        	
-                        	scope.$watch('analysis', function (newval) {
-                                if (newval) {
-                                	scope.cleanData = expandEmbedded(newval.results)
-                                    scope.viewGenes()
-                                }
-                            })
+                        	scope.filteredResults = undefined;
                             
-                            scope.$watch('filterParams.pValue.value', function(newval, oldval){
-                            	scope.viewGenes()
-                            })
+                        	scope.headers = [{
+	                                'name': 'ID',
+	                                'field': "id",
+	                                'icon': "search"
+	                            },{
+	                            	'name': 'Partner A',
+	                            	'field': 'partnerA',
+	                            	'icon': "search"
+	                            },{
+	                            	'name': 'Partner B',
+	                            	'field': 'partnerB',
+	                            	'icon': "search"
+	                            },{
+	                                'name': 'P-Value',
+	                                'field': "pValue",
+	                                'icon': "<=",
+	                                'default': 0.05
+	                            },{
+	                            	'name': 'Pairwise LFC',
+	                            	'field': 'lfc',
+	                            	'icon': ["<=", ">="]
+	                            }
+	                        ];
                             
-                            scope.$watch('filterParams.id.value', function(newval, oldval){
-                            	scope.viewGenes()
-                            })
-                            
-                            scope.$watch('filterParams.pairwise_log_fold_change.value', function(newval, oldval){
-                            	scope.viewGenes()
-                            })
-                            
-                            scope.$watch('filterParams.pairwise_log_fold_change.op', function(newval, oldval){
-                            	scope.viewGenes()
-                            })
-                            
-                            scope.viewGenes = function(){
-                        		 scope.filteredResults = tableFilter(scope.cleanData, scope.filterParams);
-                        		 //and filter the heatmap
-                        		 scope.applyToHeatmap();
+                            scope.viewGenes = function(filterParams){
+                            	console.debug("anova viewGenes", filterParams);
+                            	
+                            	if(!scope.cleanData)
+                            		scope.cleanData = expandEmbedded(scope.analysis.results);
+                            	scope.filteredResults = tableFilter(scope.cleanData, filterParams);                        		 
+                            	scope.$emit("ui:filteredResults", _.uniq(scope.filteredResults, 'id'));                                
+                        		scope.applyToHeatmap();
                         	}
-
-                            scope.headers = [{
-                                    'name': 'ID',
-                                    'field': "id",
-                                    'icon': "search"
-                                },{
-                                	'name': 'Partner A',
-                                	'field': 'partnerA',
-                                	'icon': "search"
-                                },{
-                                	'name': 'Partner B',
-                                	'field': 'partnerB',
-                                	'icon': "search"
-                                },{
-                                    'name': 'P-Value',
-                                    'field': "pValue",
-                                    'icon': "<="
-                                },{
-                                	'name': 'Pairwise LFC',
-                                	'field': 'lfc',
-                                	'icon': ["<=", ">="]
-                                }
-                            ]
-
-                            scope.filterParams = {
-                                'id': {
-                                    field: 'id',
-                                    value: undefined,
-                                    op: '~='
-                                }, 
-                                'pValue': {
-                                    field: 'pValue',
-                                    value: undefined,
-                                    op: '<='
-                                },
-                                'lfc': {
-                                    field: 'lfc',
-                                    value: undefined,
-                                    op: '<='
-                                },
-                                'partnerA':{
-                                	field:'partnerA',
-                                	value:undefined,
-                                	op:'~='
-                                },
-                                'partnerB':{
-                                	field:'partnerB',
-                                	value:undefined,
-                                	op:'~='
-                                }
-                            };
 
                             scope.selectionParams = {
                                 name: undefined,
@@ -106,12 +61,20 @@
                             };
 
                             function traverse(results) {
-                                return tableFilter(results, scope.filterParams).map(projection.ids)
+                            	                            	
+                                return results.map(projection.ids)
+                                //fix#945
+                                //the table shows a gene multiple times (once for each pairing set)
+                                //the heatmap, however, needs the unique gene id's
+                                .filter(function(value, index, array){
+                                	return array.indexOf(value) === index;
+                                });
                             }
+                            
 
                             scope.addSelections = function () {
 
-                                var keys = traverse(scope.cleanData);
+                                var keys = traverse(scope.filteredResults);
                                 var selectionsData = {
                                     name: scope.selectionParams.name,
                                     properties: {
@@ -155,7 +118,7 @@
                             
                             scope.exportSelection = function () {
 
-                                var keys = traverse(scope.cleanData);
+                                var keys = traverse(scope.filteredResults);
                                 var selectionData = {
                                     name: scope.exportParams.name,
                                     properties: {
@@ -189,7 +152,7 @@
 
                             scope.applyToHeatmap = function () {
 
-                                var labels = traverse(scope.cleanData);
+                                var labels = traverse(scope.filteredResults);
 
                                 scope.project.generateView({
                                     viewType: 'heatmapView',

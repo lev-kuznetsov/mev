@@ -9,6 +9,7 @@ define([], function(){
 		};
 		var columnScroll=true;
 		var columnContentScroll=true;
+		var isLeftLayoutClosed=false;
 		
 		this.isSideMenuCollapse=function(){
 //			console.debug("root.isShrink", SideMenuSrv.isShrink());
@@ -36,8 +37,9 @@ define([], function(){
 			footer.fixed=!footer.fixed;
 		});
 		
-		this.hideLeft=function(){
-			$rootScope.$broadcast("ui:layoutColumn:toggle", {position: "left"});
+		this.toggleLeft=function(){
+			isLeftLayoutClosed=!isLeftLayoutClosed;
+			$rootScope.$broadcast("ui:layoutColumn:toggle", {position: "left"});			
 			console.debug("hide left");
 //			sidepanelSrvc.toggle("left");
 		};

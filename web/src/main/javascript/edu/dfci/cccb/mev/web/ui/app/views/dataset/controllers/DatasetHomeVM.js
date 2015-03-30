@@ -17,8 +17,7 @@ define(["ng"], function(ng){
                 min: dataset.expression.min,
                 max: dataset.expression.max,
                 avg: dataset.expression.avg,
-            },
-            scrollableContainer: "[layout-column='right']"
+            }
         });
 
 	};

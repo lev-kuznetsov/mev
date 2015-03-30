@@ -45,7 +45,7 @@ define([], function(){
 			compile: function(elm, attr){
 				link = {
                     post: function (scope, elm, attr, ctrl) {
-                    	console.debug("ui:projectNode:post-link", scope, elm, attr, ctrl);
+//                    	console.debug("ui:projectNode:post-link", scope, elm, attr, ctrl);
                     	scope.vm={
                     			id: scope.node.nodePath,
                     			toggle: function(e){

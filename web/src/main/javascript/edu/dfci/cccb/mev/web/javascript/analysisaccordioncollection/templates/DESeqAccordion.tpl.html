@@ -3,7 +3,7 @@
    	<div class="results-header clearfix">
    	                    				
 		<h3 class="analysis-results-title">{{analysis.name}} Results</h3>
-		<div class="btn-toolbar" role="toolbar">
+		<div class="btn-toolbar" role="toolbar" mui-yank="action-menu">
 			<div class="btn-group">
 				<a class="btn btn-info" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
 				  </i> Create Selections
@@ -13,54 +13,7 @@
 				      
 	</div>
 	<div class="results-body">							
-		<table class="table table-striped table-bordered table-condensed">
-			<thead>
-				<tr>
-					<th ng-repeat="header in headers">
-				                  	
-					<p ng-click="reorderLimmaTable(header)">
-				   	 <span class="caret" ></span>{{header.name}}
-				   	 <div class="input-group" ng-hide="header.icon == 'none'">
-						<span class="input-group-addon" ng-show="header.icon == 'search'"><span class="glyphicon glyphicon-search"></span></span>
-						<span class="input-group-addon" ng-hide="header.icon | isArray">{{header.icon}}</span>
-						<span class="input-group-addon" ng-show="header.icon | isArray">
-							<select ng-model="filterParams[header.field].op">
-								<option ng-repeat="icon in header.icon track by $index">{{icon}}</option>
-							</select>
-						</span>
-						<input type="text" class="form-control input-small" ng-model="filterParams[header.field].value">
-					 </div>	
-					</p>
-				
-				                  	
-				    </th>
-				</tr>
-			</thead>
-			<tbody>
-			        <tr ng-repeat="row in applyFilter(analysis.results)">
-			                <td>
-			                        {{row["id"]}}
-			                </td>
-			                <td>
-			                        <p title="{{row['logFoldChange']}}">{{row["logFoldChange"] | number:4}}</p>
-			                </td>
-			                <td>
-			                        <p title="{{row['meanExpressionControl']}}">{{row["meanExpressionControl"] | number:4}}<p>
-			                </td>
-			                <td>
-			                        <p title="{{row['meanExpressionExperimental']}}">{{row["meanExpressionExperimental"] | number:4}}<p>
-			                </td>
-			                
-			                <td>
-			                        <p title="{{row['pValue']}}">{{row["pValue"] | number:4}}</p>
-			                </td>
-			                <td>
-			                        <p title="{{row['qValue']}}">{{row["qValue"] | number:4}}</p>
-			                </td>
-			                
-			        </tr>
-			</tbody>
-		</table>
+		<results-table data="filteredResults" headers="headers" ordering="pValue" on-filter="viewGenes(filterParams)"></results-table>
 	</div>
 </div>
 
@@ -75,7 +28,7 @@
 		</form-group>
 	
 	</div>
-	
+		
 	<div class="row">			
               <a class="btn btn-success pull-right" ng-click="addSelections()" data-dismiss="modal" aria-hidden="true">
                 Create Selections

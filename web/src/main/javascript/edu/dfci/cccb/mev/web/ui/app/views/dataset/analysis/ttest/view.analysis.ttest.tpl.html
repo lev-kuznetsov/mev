@@ -4,8 +4,9 @@
 		<li id="table_tab" class="active">
 			<a href="#table" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}}</a>			
 		</li>
-		<li id="heatmap]_tab"><a href="#heatmap" class="pull-left" data-toggle="tab" target="_self">Heatmap</a></li>
-		<div class="ttest-action-menu" mui-paste="ttest-action-menu"></div>
+		<li id="heatmap_tab"><a href="#heatmap" class="pull-left" data-toggle="tab" target="_self">Heatmap</a></li>
+		<li id="quantiles_tab"><a href="#quantiles" data-toggle="tab" target="_self">Quantiles</a></li>
+		<div class="action-menu" mui-paste="action-menu"></div>
 		<!-- 
 		<div class="btn-toolbar pull-right" role="toolbar">
 			<div class="btn-group">
@@ -31,6 +32,11 @@
 		</div>
 		<div class="tab-pane" id="heatmap">
 			<view-Content-Item project='DatasetAnalysisVM.project' view='DatasetAnalysisVM.project.views'></view-Content-Item>
+		</div>
+		<div class="tab-pane" id="quantiles">
+			<div id="{{'ttest-' + analysis.randomId + '-svg-holder'}}">
+				<d3-Box-Plot-Visualization data="boxPlotGenes"></d3-Box-Plot-Visualization>
+			</div>
 		</div>
 	</div>
 </div>

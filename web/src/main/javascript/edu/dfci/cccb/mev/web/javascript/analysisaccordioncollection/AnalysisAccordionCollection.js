@@ -19,7 +19,8 @@
         './Services/tableResultsFilter',
         './Services/projectionService',
         './Services/pathService',
-        './Services/compareFactory'
+        './Services/compareFactory',
+        './Services/boxPlotService'
     ]
 
     define(deps.concat(directiveDeps).concat(serviceDeps), function(angular, jq, d3){

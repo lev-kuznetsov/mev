@@ -1,10 +1,10 @@
 define(["ng"], function(ng){
-	var SideMenuDirective = function SideMenuDirective(SidemenuSrv){
+	var SideMenuDirective = function SideMenuDirective(SidemenuSrv, LayoutSrv){
 		
 		return {			
 			restrict: "E",
 			transclude: true,
-			template: "<div ng-mouseleave='shrink($event)' ng-mouseenter=\'open($event)\' ng-transclude><div/>",
+			template: "<div ng-transclude><div/>",
 			controller: "SideMenuVM",
 			link: function(scope, elem, attr){
 				scope.hello="hiiiiii";
@@ -42,11 +42,12 @@ define(["ng"], function(ng){
 //					targetPanel.scope().isOpen=true;							
 //					angular.element(elem).unbind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd");
 				});	
+				scope.LayoutSrv=LayoutSrv;
 				
 			}
 		};
 	};	
 	
-	SideMenuDirective.$inject=["SideMenuSrv"];
+	SideMenuDirective.$inject=["SideMenuSrv", "LayoutSrv"];
 	return SideMenuDirective;
 });

@@ -1,27 +1,25 @@
-<ul class="nav nav-tabs column-header">
-	<span class="analysis-results-title">{{analysis.name}}</span>
+<ul class="nav nav-tabs column-header">	
 	<li class="active">
 		<a id="annotationsTabLink" href="{{'#limma-' + analysis.randomId + '-limmaTable'}}" 
 		data-toggle="tab" 
-		target="_self">Significant Values</a>
+		target="_self">{{analysis.name}}</a>
 	</li>
 	<li>
 		<a id="boxplotsTabLink" href="{{'#limma-' + analysis.randomId + '-boxPlot'}}" 
 			data-toggle="tab" 
-			target="_self"
-			ng-click="viewGenes()">Quartiles</a>
+			target="_self">Quartiles</a>
 	</li>
 	<li ng-if="isShowHeatmapTab">
 		<a id="heatmapTabLink" href="{{'#limma-' + analysis.randomId + '-heatmap'}}" 
 			data-toggle="tab" 
-			target="_self"
-			ng-click="viewGenes()">Heatmap</a>
+			target="_self">Heatmap</a>
 	</li>
 	<li ng-show='analysis.topGo.length > 0'>
 		<a id="heatmapTabLink" href="{{'#limma-' + analysis.randomId + '-topGoResults'}}" 
 			data-toggle="tab" 
 			target="_self">TopGo</a>
-	</li>
+	</li>	
+	<div class="action-menu" mui-paste="action-menu"></div>
 </ul>
 
 <div class="tab-content column-body" id="">
@@ -30,7 +28,7 @@
 				<div class="results-header clearfix">
 				                    				
 					<h3 class="analysis-results-title">{{analysis.name}} Results</h3>
-					<div class="btn-toolbar pull-right" role="toolbar">
+					<div class="btn-toolbar pull-right" role="toolbar" mui-yank="action-menu">
 		                <div class="btn-group">
 			                <a class="btn" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
 			                  Create Selections
@@ -52,7 +50,7 @@
 							      
 				</div>
 				<div class="results-body">							
-						<results-table data="filteredResults" headers="headers" filters="filterParams"></results-table>
+						<results-table data="filteredResults" headers="headers" on-filter="viewGenes(filterParams)" ordering="pValue"></results-table>
 				</div>
 			</div>
 	</div>
@@ -150,14 +148,3 @@
               </a> 
           </div>
 </bsmodal>
-
-<style>
-line {
-    fill: #fff;
-    stroke: #000;
-    stroke-width: 1.5px;
-}
-line.int-lines {
-    stroke-dasharray: 7, 5;
-}
-</style>

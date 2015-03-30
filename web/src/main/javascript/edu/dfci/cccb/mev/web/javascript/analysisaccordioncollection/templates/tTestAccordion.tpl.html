@@ -1,6 +1,6 @@
 <div  class="results-wrapper" id="tTestResultsTable" ng-hide="!tTest.results">		            	
     <div class="results-header clearfix">    	
-     	<div class="btn-toolbar" role="toolbar" mui-yank="ttest-action-menu">
+     	<div class="btn-toolbar" role="toolbar" mui-yank="action-menu">
      		<div class="btn-group">
 	             <a class="btn" href="/dataset/{{project.dataset.datasetName}}/analysis/{{tTest.name}}?format=tsv">
 	               <i class="icon-white icon-download"></i> Download
@@ -18,7 +18,7 @@
 				      
 	</div>
 	<div class="results-body">							
-		<results-table data="filteredResults" headers="headers" filters="filterParams"></results-table>
+		<results-table data="filteredResults" headers="headers" filters="filterParams" ordering="pValue" on-filter="viewGenes(filterParams)"></results-table>
 	</div>
 </div>	
 		
