@@ -56,7 +56,7 @@ public class NmfTest {
   private @Inject @Rserve ObjectMapper mapper;
 
   @Test
-  @Ignore
+  // @Ignore
   public void t () throws Exception {
     SimpleDatasetBuilder s = new SimpleDatasetBuilder ();
     s.setParserFactories (asList (new SuperCsvParserFactory ()));
@@ -67,7 +67,7 @@ public class NmfTest {
     b.dataset (s.build (new MockTsvInput ("mock", "id\tsa\tsb\tsc\n" +
                                                   "g1\t.1\t.2\t.3\n" +
                                                   "g2\t.4\t.5\t.6")));
-    b.build ();
+    System.out.println (b.build ());
   }
 
   @Test

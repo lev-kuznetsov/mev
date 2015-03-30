@@ -440,6 +440,10 @@
             sapply (c ("devtools", "NMF"), function (lib)
               if (!requireNamespace (lib))
                 install.packages (lib, repos="http://cran.rstudio.com"));
+            if (!requireNamespace ("amap"))
+              devtools::install_url ("https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/amap/0.8-12/amap_0.8-12.tar.gz");
+            if (!requireNamespace ("ctc"))
+              devtools::install_url ("https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/ctc/1.40.0/ctc_1.40.0.tar.gz");
             if (!requireNamespace ("injectoR"))
               devtools::install_github ("dfci-cccb/injectoR");
           </onInitialize>

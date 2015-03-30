@@ -164,7 +164,6 @@ public class RDispatcher {
             Result annotation = field.getAnnotation (Result.class);
             if (annotation != null) {
               field.setAccessible (true);
-              System.out.println (field.getGenericType ());
               field.set (job,
                          mapper.readValue (result.asString (),
                                            mapper.getTypeFactory ().constructType (field.getGenericType ())));

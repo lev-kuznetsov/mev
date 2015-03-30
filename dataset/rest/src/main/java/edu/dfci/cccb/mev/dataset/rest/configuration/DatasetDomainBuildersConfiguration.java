@@ -25,7 +25,7 @@ public class DatasetDomainBuildersConfiguration {
 
   @Bean
   @Primary
-  @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
+  @Scope ("prototype")
   public ValueStoreBuilder valueFactory (/* @Named ("mev-datasource") DataSource
                                           * dataSource */) throws Exception {
     // return new SharedCachedValueStoreBuilder (new

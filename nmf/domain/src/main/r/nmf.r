@@ -9,9 +9,17 @@
 #  }), binder = binder ());
 #  
 
-nmf <- function (dataset, rank = 3, method = 'brunet', nrun = 10) {
-  m <- NMF::nmf (dataset, rank = rank, method = method, nrun = nrun);
-  w <- NMF::basis (m);
-  h <- NMF::coef (m);
-  list (w = w, h = list (matrix = h));
-};
+#nmf <- function (dataset, rank = 3, method = 'brunet', nrun = 10) {
+#  m <- NMF::nmf (dataset, rank = rank, method = method, nrun = nrun);
+#  w <- NMF::basis (m);
+#  h <- NMF::coef (m);
+#  list (w = w, h = list (matrix = h));
+#};
+
+#toJSON.hclust <- function (x) {
+#  toList <- function (n)
+#    if (typeof (n) == 'character') list (name = n);
+#    else list (distance = n$dist, left = toList (n$left), right = toList (n$right));
+#
+#  jsonlite::toJSON (ctc::hc2Newick (x, FALSE),
+#};

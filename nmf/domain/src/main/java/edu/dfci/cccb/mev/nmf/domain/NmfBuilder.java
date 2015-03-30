@@ -31,12 +31,15 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
 // @R
 // ("function (dataset, rank, method, nrun) nmf (dataset, rank = rank, method = method, nrun = nrun)")
 @R ("function (dataset) {"
+    + "l <- function (n)"
+    + "  if (typeof (n) == 'character') list (name = n) "
+    + "  else list (distance = n$dist, left = toList (n$left), right = toList (n$right));"
     + "m <- NMF::nmf (dataset, rank = 3);"
     + "w <- NMF::basis (m);"
     + "h <- NMF::coef (m);"
     + "colnames (w) = c (1:dim (w)[ 2 ]);"
     + "rownames (h) = c (1:dim (h)[ 1 ]);"
-    + "list (w = w, h = list (matrix = h));" +
+    + "list (w = w, h = list (matrix = h, root = l (ctc::hc2Newick (stats::hclust (stats::dist (t (h)))))));" +
     "}")
 @Accessors (fluent = true, chain = true)
 public class NmfBuilder extends AbstractDispatchedRAnalysisBuilder<NmfBuilder, Nmf> {

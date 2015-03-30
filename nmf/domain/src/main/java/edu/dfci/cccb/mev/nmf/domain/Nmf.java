@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.nmf.domain;
 
+import lombok.ToString;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
@@ -24,10 +26,12 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Node;
  * @author levk
  * 
  */
+@ToString
 public class Nmf extends AbstractAnalysis<Nmf> {
   private @JsonProperty Dataset w;
   private @JsonProperty H h;
 
+  @ToString
   public static class H {
     private @JsonProperty Dataset matrix;
     private @JsonProperty Node root;
