@@ -34,6 +34,8 @@ public abstract class AbstractDispatchedRAnalysisBuilder <B extends AbstractDisp
   private @Getter @Setter @Inject @Rserve RDispatcher r;
   private CountDownLatch latch;
 
+  protected abstract A result ();
+
   @Override
   @Parameter
   protected Dataset dataset () {
@@ -43,8 +45,6 @@ public abstract class AbstractDispatchedRAnalysisBuilder <B extends AbstractDisp
   public AbstractDispatchedRAnalysisBuilder (String type) {
     super (type);
   }
-
-  protected abstract A result ();
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder#build() */

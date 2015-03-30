@@ -14,18 +14,10 @@
  */
 package edu.dfci.cccb.mev.nmf.domain;
 
-import java.util.concurrent.CountDownLatch;
-
-import javax.inject.Inject;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
-import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysisBuilder;
-import edu.dfci.cccb.mev.dataset.domain.r.RDispatcher;
-import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
+import edu.dfci.cccb.mev.dataset.domain.r.AbstractDispatchedRAnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Parameter;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.R;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
@@ -34,40 +26,28 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
  * @author levk
  * 
  */
-@R ("function (dataset, rank, method, seed, nrun, nmf) nmf (dataset, rank, method, nrun)")
+// @R
+// ("function (dataset, rank, method, nrun, nmf) nmf (dataset, rank, method, nrun)")
+// @R
+// ("function (dataset, rank, method, nrun) nmf (dataset, rank = rank, method = method, nrun = nrun)")
+@R ("function (dataset) {"
+    + "m <- NMF::nmf (dataset, rank = 3);"
+    + "w <- NMF::basis (m);"
+    + "h <- NMF::coef (m);"
+    + "colnames (w) = c (1:dim (w)[ 2 ]);"
+    + "rownames (h) = c (1:dim (h)[ 1 ]);"
+    + "list (w = w, h = list (matrix = h));" +
+    "}")
 @Accessors (fluent = true, chain = true)
-public class NmfBuilder extends AbstractAnalysisBuilder<NmfBuilder, Nmf> {
+public class NmfBuilder extends AbstractDispatchedRAnalysisBuilder<NmfBuilder, Nmf> {
 
   public NmfBuilder () {
     super ("nmf");
   }
 
-  private @Inject RDispatcher r;
-
-  private @Getter @Setter @Parameter Dataset dataset;
   private @Getter @Setter @Parameter int rank = 3;
   private @Getter @Setter @Parameter String method = "brunet";
   private @Getter @Setter @Parameter int nrun = 10;
 
-  private @Result Nmf result;
-
-  private final CountDownLatch semaphore = new CountDownLatch (1);
-
-  @Callback
-  private void done () {
-    semaphore.countDown ();
-  }
-
-  /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder#build() */
-  @Override
-  public Nmf build () throws DatasetException {
-    r.schedule (this);
-    try {
-      semaphore.await ();
-    } catch (InterruptedException e) {
-      throw new DatasetException (e);
-    }
-    return result;
-  }
+  private @Getter @Result Nmf result;
 }

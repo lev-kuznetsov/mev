@@ -15,25 +15,31 @@
 package edu.dfci.cccb.mev.dataset.rest.configuration;
 
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
-import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_SINGLETON;
 
 import java.io.InputStream;
 import java.net.InetSocketAddress;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+import lombok.extern.log4j.Log4j;
+
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.r.RDispatcher;
+import edu.dfci.cccb.mev.dataset.domain.r.RserveDatasetDeserializer;
 import edu.dfci.cccb.mev.dataset.domain.r.RserveDatasetSerializer;
 import edu.dfci.cccb.mev.dataset.domain.r.RserveDoubleDeserializer;
 import edu.dfci.cccb.mev.dataset.domain.r.RserveDoubleSerializer;
@@ -44,10 +50,13 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Rserve;
  * 
  */
 @Configuration
+@Log4j
 public class RDispatcherConfiguration {
+  {
+    log.info ("Configuring RDispatcher");
+  }
 
   @Bean
-  @Scope (SCOPE_SINGLETON)
   @Rserve
   public int concurrency () throws ConfigurationException {
     final PropertiesConfiguration config = new PropertiesConfiguration ();
@@ -56,13 +65,14 @@ public class RDispatcherConfiguration {
       config.load (configurationStream);
     else
       config.setProperty ("rserve.concurrency", "2");
+    log.info ("RDispatcher with concurrency " + config.getInt ("rserve.concurrency"));
     return config.getInt ("rserve.concurrency");
   }
 
   @Bean
-  @Scope (SCOPE_SINGLETON)
   @Rserve
-  public Module rserveDatasetSerializationModule () {
+  public Module rserveDatasetSerializationModule (final AutowireCapableBeanFactory factory) {
+    log.info ("Configuring Rserve json serialization");
     return new SimpleModule () {
       private static final long serialVersionUID = 1L;
 
@@ -71,26 +81,42 @@ public class RDispatcherConfiguration {
         addSerializer (Double.class, new RserveDoubleSerializer ());
 
         addDeserializer (Double.class, new RserveDoubleDeserializer ());
+        addDeserializer (Dataset.class, new RserveDatasetDeserializer ());
+      }
+
+      private void inject (Object instance) {
+        factory.autowireBean (instance);
+      }
+
+      @Override
+      public <T> SimpleModule addSerializer (Class<? extends T> type, JsonSerializer<T> ser) {
+        inject (ser);
+        return super.addSerializer (type, ser);
+      }
+
+      @Override
+      public <T> SimpleModule addDeserializer (Class<T> type, JsonDeserializer<? extends T> deser) {
+        inject (deser);
+        return super.addDeserializer (type, deser);
       }
     };
   }
 
   @Bean
-  @Scope (SCOPE_SINGLETON)
   @Rserve
   public ObjectMapper mapper (Collection<Module> modules) {
     return new ObjectMapper ().registerModules (modules);
   }
 
   @Bean
-  @Scope (SCOPE_SINGLETON)
+  @Rserve
   public RDispatcher r () {
+    log.info ("Supplying RDispatcher in default scope");
     return new RDispatcher ();
   }
 
   @Bean
   @Rserve
-  @Scope (SCOPE_SINGLETON)
   public Iterator<InetSocketAddress> hosts () throws ConfigurationException {
     final PropertiesConfiguration config = new PropertiesConfiguration ();
     InputStream configurationStream = getClass ().getResourceAsStream ("/rserve.properties");
@@ -100,6 +126,7 @@ public class RDispatcherConfiguration {
       config.setProperty ("rserve.host", "localhost:6311");
 
     final String[] hosts = config.getStringArray ("rserve.host");
+    log.info ("Configuring RDispatcher with hosts " + Arrays.asList (hosts));
     final InetSocketAddress[] socks = new InetSocketAddress[hosts.length];
     for (int i = socks.length; --i >= 0;) {
       String[] split = hosts[i].split (":");
