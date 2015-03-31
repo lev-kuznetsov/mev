@@ -84,7 +84,9 @@
         	   return {
                    restrict: 'C',
                    scope: {
-                     data: "=data"
+                     data: "=data",
+                     selectionParams: "=selectionParams",
+                     selectionDimension: "@selectionDimension"
                    },
                    link: function(scope, element, attr){
                 	   
@@ -229,6 +231,27 @@
 		        			        max: d3.max(parsedPoints, function(d){return d.value}),
 		        			        average: d3.mean(parsedPoints, function(d){return d.value}),
 		        			    })
+		        			    
+		        			    heatmap.on('brushend', function(extent, selectedCells){
+		        			    	console.log(scope.selectionDimension)
+		        			    	if (scope.selectionDimension == 'row'){
+		        			    		
+		        			    		scope.selectionParams.selections = selectedCells.map(function(cell){
+		        			    			return cell.y
+		        			    		})
+		        			    		
+		        			    		scope.selectionParams.dimension = 'row'
+		        			    		
+		        			    	} else {
+		        			    		scope.selectionParams.selections = selectedCells.map(function(cell){
+		        			    			return cell.x
+		        			    		})
+		        			    		
+		        			    		scope.selectionParams.dimension = 'column'
+		        			    	}
+		        			    	
+		        			    	scope.$apply()
+		        			    })
 		        			   
 		        			   dendogram.draw({
 		        				   root:newval.analysis.tree
@@ -238,7 +261,10 @@
 		        	   
 		        	   
 		        	   scope.$on("UI:SCROLL", function($event, params){
-		        		    		        		   
+		        		   
+		        		   console.log($event, params, attr);
+		        		   if(attr.id!=params.id)
+		        			   return;
 		        		   var numberOfRowsAbove = parseInt(params.scrollTop / scope.visualization.settings.cell.height) - offsetRows;
 		        		   var totalRowsCanFit = parseInt(params.height / scope.visualization.settings.cell.height);		        		   
 		        		   var shownrows = scope.data.analysis.row.keys.filter(function(row, index){
@@ -278,18 +304,19 @@
            }])
            .directive('loquiScrollable', [function(){
         	   return {
-        		   restrict: 'C',        		   
+        		   restrict: 'C',
         		   link: function(scope, element, attributes){
         			   
         			   element.css({
         				   'height': parseFloat(attributes.height),
         				   'overflow': 'auto'
         			   })
-        			   
+        			   console.debug("scrollable element", element);
         			   element.on('scroll', function(){
 	    				   scope.$broadcast("UI:SCROLL", {
-	    					   scrollTop: element.scrollTop(),
-	    					   height: element.height()
+	    					   scrollTop: $(element).scrollTop(),
+	    					   height: $(element).height(),
+	    					   id: attributes.id
 	    				   });
         			   }); 
         			   
@@ -309,11 +336,8 @@
                      
                      scope.selectionParams = {
                          'name':undefined,
-                		 'dimension': {
-                			 'x': undefined,
-                             'y': undefined
-                         },
-                         'samples':[],
+                		 'dimension': undefined,
+                         'selections':[],
                          'color': '#' + Math
 	                         .floor(Math.random() * 0xFFFFFF << 0)
 	                         .toString(16)
@@ -328,9 +352,8 @@
                 		 }
                 	 })
 
-                     scope.$watch('selectionParams.dimension.x', function(newval, oldval){
-                         
-                         return
+                     scope.$watch('selectionParams.selections', function(newval, oldval){
+                         console.log(newval)
                      }) 
                      
                      scope.$watch('selectionParams.dimension.y', function(newval, oldval){
