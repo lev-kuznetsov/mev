@@ -185,6 +185,9 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
     if (of == null)
       return null;
 
+    if (!(AutoCloseable.class.isAssignableFrom (of.getClass ()) || Closeable.class.isAssignableFrom (of.getClass ())))
+      return of; 
+
     return (T) newProxyInstance (of.getClass ().getClassLoader (), new HashSet<Class<?>> () {
       private static final long serialVersionUID = 1L;
 
