@@ -1,108 +1,114 @@
-<accordion-group heading="{{analysis.type}} : {{analysis.name}}" is-open="isLimmaOpen" ng-init="isLimmaOpen=false">
-
-	<ul class="nav nav-tabs">
-		<li class="active">
-			<a id="annotationsTabLink" href="{{'#limma-' + analysis.randomId + '-limmaTable'}}" 
+<ul class="nav nav-tabs column-header">	
+	<li class="active">
+		<a id="annotationsTabLink" href="{{'#limma-' + analysis.randomId + '-limmaTable'}}" 
+		data-toggle="tab" 
+		target="_self">{{analysis.name}}</a>
+	</li>
+	<li>
+		<a id="boxplotsTabLink" href="{{'#limma-' + analysis.randomId + '-boxPlot'}}" 
 			data-toggle="tab" 
-			target="_self">Table</a>
-		</li>
-		<li>
-			<a id="heatmapTabLink" href="{{'#limma-' + analysis.randomId + '-boxPlot'}}" 
-				data-toggle="tab" 
-				target="_self"
-				ng-click="viewGenes()">Quartiles</a>
-		</li>
-		<li ng-show='analysis.topGo.length > 0'>
-			<a id="heatmapTabLink" href="{{'#limma-' + analysis.randomId + '-topGoResults'}}" 
-				data-toggle="tab" 
-				target="_self">TopGo</a>
-		</li>
-	</ul>
-	
-	<div class="tab-content" id="">
-		<div class="tab-pane active" id="{{'limma-' + analysis.randomId + '-limmaTable'}}">                      
-			<div  class="results-wrapper">	
-					<div class="results-header clearfix">
-					                    				
-						<h3 class="pull-left analysis-results-header">Results</h3>
-						<div class="btn-toolbar pull-right" role="toolbar">
-			                
-			                <a class="btn btn-info" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
+			target="_self">Quartiles</a>
+	</li>
+	<li ng-if="isShowHeatmapTab">
+		<a id="heatmapTabLink" href="{{'#limma-' + analysis.randomId + '-heatmap'}}" 
+			data-toggle="tab" 
+			target="_self">Heatmap</a>
+	</li>
+	<li ng-show='analysis.topGo.length > 0'>
+		<a id="heatmapTabLink" href="{{'#limma-' + analysis.randomId + '-topGoResults'}}" 
+			data-toggle="tab" 
+			target="_self">TopGo</a>
+	</li>	
+	<div class="action-menu" mui-paste="action-menu"></div>
+</ul>
+
+<div class="tab-content column-body" id="">
+	<div class="tab-pane active" id="{{'limma-' + analysis.randomId + '-limmaTable'}}">                      
+		<div  class="results-wrapper">	
+				<div class="results-header clearfix">
+				                    				
+					<h3 class="analysis-results-title">{{analysis.name}} Results</h3>
+					<div class="btn-toolbar pull-right" role="toolbar" mui-yank="action-menu">
+		                <div class="btn-group">
+			                <a class="btn" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
 			                  Create Selections
 			                </a>
-			                
-			                <a class="btn btn-success" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
+			                <a class="btn" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
 			                  <i class="icon-white icon-download"></i> Download
 			                </a> 
-			                <a class="btn btn-info" data-target="#exportDataset{{analysis.name}}" data-toggle="modal">
+			                <a class="btn" data-target="#exportDataset{{analysis.name}}" data-toggle="modal">
 				                  New Dataset
 				            </a> 	   
 				            <!-- disable for beta1 -->
-				            <button class="btn btn-success" ng-click="applyToHeatmap()" >
-				                <a>
+				            <button class="btn" ng-click="applyToHeatmap()" >
+				                <span>
 				                  View Genes on Heatmap
-				                </a> 
+				                </span> 
 				            </button>
-				      	</div>
-								      
-					</div>
-					<div class="results-body">							
-							<results-table data="filteredResults" headers="headers" filters="filterParams"></results-table>
-					</div>
+			            </div>
+			      	</div>
+							      
 				</div>
-		</div>
-		<div class="tab-pane" id="{{'limma-' + analysis.randomId + '-boxPlot'}}">
-			<div id="{{'limma-' + analysis.randomId + '-svg-holder'}}">
-
-				<d3-Box-Plot-Visualization data="boxPlotGenes"></d3-Box-Plot-Visualization>
-
+				<div class="results-body">							
+						<results-table data="filteredResults" headers="headers" on-filter="viewGenes(filterParams)" ordering="pValue"></results-table>
+				</div>
 			</div>
-		</div>
-		<div class="tab-pane" id="{{'limma-' + analysis.randomId + '-topGoResults'}}">
-			<div class='top-go-results-table'>
+	</div>
+	<div class="tab-pane" id="{{'limma-' + analysis.randomId + '-boxPlot'}}">
+		<div id="{{'limma-' + analysis.randomId + '-svg-holder'}}">
 
-				<table class="table table-striped table-bordered table-condensed">
-					<thead>
-	                    <tr>
-	                      <th>
-	                      	<p>ID</p>
-	                      </th>
-	                      <th>
-	                      	<p>Term</p>
-	                      </th>
-	                      <th>
-	                      	<p>Annotated</p>
-	                      </th>
-	                      <th>
-	                      	<p>Significant</p>
-	                      </th>
-	                      <th>
-	                      	<p>Expected</p>
-	                      </th>
-	                      <th>
-	                      	<p>p Value</p>
-	                      </th>
-	                    </tr>
-					</thead>
-	                <tbody>
-	                	<tr ng-repeat='row in analysis.topGo'>
-	                		<td>{{row.id}}</td>
-	                		<td>{{row.term}}</td>
-	                		<td>{{row.annotated}}</td>
-	                		<td>{{row.significant}}</td>
-	                		<td>{{row.expected}}</td>
-	                		<td>{{row.pValue}}</td>
-	                	</tr>
-	                </tbody>
-			    </table>
+			<d3-Box-Plot-Visualization data="boxPlotGenes"></d3-Box-Plot-Visualization>
 
-			</div>
 		</div>
 	</div>
+	<div class="tab-pane" id="{{'limma-' + analysis.randomId + '-heatmap'}}" ng-if="isShowHeatmapTab">
+		<div id="{{'limma-' + analysis.randomId + '-svg-holder'}}">
 
-	
-</accordion-group>
+			<view-Content-Item project='project' view='project.views'></view-Content-Item>			
 
+		</div>
+	</div>
+	<div class="tab-pane" id="{{'limma-' + analysis.randomId + '-topGoResults'}}">
+		<div class='top-go-results-table'>
+
+			<table class="table table-striped table-bordered table-condensed">
+				<thead>
+                    <tr>
+                      <th>
+                      	<p>ID</p>
+                      </th>
+                      <th>
+                      	<p>Term</p>
+                      </th>
+                      <th>
+                      	<p>Annotated</p>
+                      </th>
+                      <th>
+                      	<p>Significant</p>
+                      </th>
+                      <th>
+                      	<p>Expected</p>
+                      </th>
+                      <th>
+                      	<p>p Value</p>
+                      </th>
+                    </tr>
+				</thead>
+                <tbody>
+                	<tr ng-repeat='row in analysis.topGo'>
+                		<td>{{row.id}}</td>
+                		<td>{{row.term}}</td>
+                		<td>{{row.annotated}}</td>
+                		<td>{{row.significant}}</td>
+                		<td>{{row.expected}}</td>
+                		<td>{{row.pValue}}</td>
+                	</tr>
+                </tbody>
+		    </table>
+
+		</div>
+	</div>
+</div>
 
 		
 <bsmodal bindid="{{'selectionAdd' + analysis.name}}" func="" header="{{'Add New Selection for' + analysis.name}}">
@@ -142,14 +148,3 @@
               </a> 
           </div>
 </bsmodal>
-
-<style>
-line {
-    fill: #fff;
-    stroke: #000;
-    stroke-width: 1.5px;
-}
-line.int-lines {
-    stroke-dasharray: 7, 5;
-}
-</style>

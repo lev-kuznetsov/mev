@@ -1,0 +1,18 @@
+<!-- <project-analysis-parameters parameters="DatasetAnalysisVM.analysis.params"></project-analysis-parameters> -->
+<div>
+	<ul class="nav nav-tabs column-header" id="importTabs">
+		<li id="clusters_tab" class="active"><a href="#clusters" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}}</a></li>	
+		<li id="heatmap_tab"><a href="#heatmap" data-toggle="tab" target="_self">Heatmap</a></li>
+		<div class="action-menu" mui-paste="action-menu"></div>
+	</ul>
+	
+	<div class="tab-content column-body">
+		<div class="tab-pane active" id="clusters" >			
+				<k-Means-Accordion analysis="DatasetAnalysisVM.analysis" project="DatasetAnalysisVM.project"></k-Means-Accordion>
+		</div>
+		<div class="tab-pane" id="heatmap">
+			<view-Content-Item project='DatasetAnalysisVM.project' view='DatasetAnalysisVM.project.views'></view-Content-Item>
+		</div>
+	
+	</div>
+</div>

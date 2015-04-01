@@ -32,18 +32,23 @@ import edu.dfci.cccb.mev.dataset.client.contract.JavascriptInjectorRegistry;
  *
  */
 @Controller
-@RequestMapping ({ "/", "/home" })
+@RequestMapping ({ "/" })
 @RequiredArgsConstructor (onConstructor = @_ (@Inject))
 @Log4j
 public class HomeController {
   
   private final JavascriptInjectorRegistry javascript;
 
-  @RequestMapping (method = GET)
-  public String home (Model model) {
+  @RequestMapping (value={"old/", "old"}, method = GET)
+  public String old (Model model) {
     if (log.isDebugEnabled ())
       log.debug ("Adding javascript injectors " + javascript + " to model as 'injectors'");
     model.addAttribute ("injectors", javascript);
     return "home";
+  }
+  
+  @RequestMapping (method = GET)
+  public String index (Model model) {    
+    return "index";
   }
 }

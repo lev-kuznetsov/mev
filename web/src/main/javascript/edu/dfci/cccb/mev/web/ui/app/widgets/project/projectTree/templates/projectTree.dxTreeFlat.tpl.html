@@ -1,0 +1,15 @@
+<div >
+{{nodeType}}:
+<ul dx-tree="project" ng-controller="ProjectTreeVM">	
+  <li ng-repeat="dataset in $dxPrior.dataset">
+    {{ dataset.name }}
+    <ul dx-node="dataset"></ul>
+ 		<ul dx-tree="dataset">
+ 			<li ng-repeat="result in $dxPrior.result">
+ 				{{ result.name }}
+ 				<ul dx-node="result"/>
+ 			</li>
+ 		</ul>   
+  </li>
+</ul>
+</div>

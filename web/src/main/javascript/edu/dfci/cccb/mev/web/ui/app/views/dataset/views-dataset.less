@@ -1,0 +1,28 @@
+@import "analysis/views-dataset-analysis.less";
+@import "selectionSets/views-dataset-selectionSets.less";
+
+.state-root.state-dataset{
+	.project-tree-header{
+		border-bottom: 1px solid @project-tree-border-color;
+		border-top: 1px solid transparent;	
+		padding: @nav-link-padding-ver @padding-base-horizontal;
+	//	margin: 0 -@padding-base-horizontal;
+		background-color: @body-bg;
+	}
+	
+	&.fixed-footer {
+		#main-footer{
+	//		background-color: black;
+	//		.fixed-footer & {				
+				border-top: 1px solid rgb(202, 202, 202);
+				padding-top: @padding-base-vertical;
+		//		padding-bottom: @padding-base-vertical;
+				.row,
+				.col-md-12 {
+					height: 100%;
+					overflow-y: auto;
+				}
+	//		}
+		}	
+	}	
+}

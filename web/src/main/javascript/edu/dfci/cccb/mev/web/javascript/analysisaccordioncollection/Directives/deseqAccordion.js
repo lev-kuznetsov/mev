@@ -4,14 +4,15 @@
 
         return function (module) {
 
-            module.directive('deseqAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService',
-                function (tableFilter, alertService, projection, paths) {
+            module.directive('deseqAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService', 'BoxPlotService',
+                function (tableFilter, alertService, projection, paths, BoxPlotService) {
                     return {
                         restrict: 'E',
                         templateUrl: paths.module + '/templates/DESeqAccordion.tpl.html',
                         scope: {
                             project: "=project",
-                            analysis: "=analysis"
+                            analysis: "=analysis",
+                            isItOpen: "@"
                         },
                         link: function (scope) {
 
@@ -40,7 +41,8 @@
                                 {
                                     'name': 'P-Value',
                                     'field': "pValue",
-                                    'icon': "<="
+                                    'icon': "<=",
+                                    'default': 0.05
                                 },
                                 {
                                     'name': 'q-Value',
@@ -48,39 +50,23 @@
                                     'icon': "<="
                                 }
                             ];
-
-                            scope.filterParams = {
-                                'id': {
-                                    field: 'id',
-                                    value: undefined,
-                                    op: "="
-                                },
-                                'logFoldChange': {
-                                    field: 'logFoldChange',
-                                    value: undefined,
-                                    op: '>='
-                                },
-                                'pValue': {
-                                    field: 'pValue',
-                                    value: 0.05,
-                                    op: '<='
-                                },
-                                'qValue': {
-                                    field: 'qValue',
-                                    value: undefined,
-                                    op: '<='
-                                }
-                            };
-
+                            
                             scope.filteredResults = undefined;
 
-                            scope.applyFilter = function () {
-
-                                scope.filteredResults = tableFilter(scope.analysis.results, scope.filterParams)
-
-                                return scope.filteredResults;
-                            };
-
+//                            scope.applyFilter = function () {
+//
+//                                scope.filteredResults = tableFilter(scope.analysis.results, scope.filterParams)
+//
+//                                return scope.filteredResults;
+//                            };
+                            
+                            
+                            scope.viewGenes = function(filterParams){
+	                       		 scope.filteredResults = tableFilter(scope.analysis.results, filterParams);
+	                       		 //and filter the heatmap
+	                       		scope.$emit("ui:filteredResults", scope.filteredResults);	                       	
+	                       		 scope.applyToHeatmap();
+	                       	}
 
                             scope.selectionParams = {
                                 name: undefined,
@@ -121,7 +107,30 @@
 
                             };
 
+                            scope.applyToHeatmap = function () {
 
+//                              var labels = getKeys(scope.filteredResults);
+                          	                                
+                          	var labels = scope.filteredResults.map(projection.ids);;
+
+                              scope.project.generateView({
+                                  viewType: 'heatmapView',
+                                  labels: {
+                                      column: {
+                                          keys: scope.project.dataset.column.keys
+                                      },
+                                      row: {
+                                          keys: labels
+                                      }
+                                  },
+                                  expression: {
+                                      min: scope.project.dataset.expression.min,
+                                      max: scope.project.dataset.expression.max,
+                                      avg: scope.project.dataset.expression.avg,
+                                  }
+                              });
+
+                          };
                         }
 
                     };

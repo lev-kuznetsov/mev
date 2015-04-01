@@ -190,7 +190,6 @@
 	    				var intersection = scope
 	    					.dataset.selections
 	    					.intersection({'selection1':set1, 'selection2':set2, 'dimension':'column'})
-						
 	    				return (intersection.length == 0)
 	    			}
 	    			
@@ -353,6 +352,7 @@
 							
 						}
 						
+<<<<<<< HEAD
 						for (table in tables){
 							
 							console.log({

@@ -1,43 +1,21 @@
 (function () {
 
-    define([], function () {
+    define(["lodash"], function (_) {
 
         return function (module) {
 
-            module.directive('tTestAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService',
-                function (resultsFilter, alertService, projection, paths) {
+            module.directive('tTestAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService', 'BoxPlotService',
+                function (resultsFilter, alertService, projection, paths, BoxPlotService) {
                     return {
                         restrict: 'E',
                         templateUrl: paths.module + '/templates/tTestAccordion.tpl.html',
                         scope: {
                             project: "=project",
-                            analysis: "=analysis"
+                            analysis: "=analysis",
+                            isItOpen: "@"
                         },
-                        link: function (scope) {
-
-                            scope.$watch('analysis', function (newval) {
-                                if (newval) {
-                                	console.log(newval)
-                                	scope.viewGenes()
-                                }
-                            });
-                            
-                            scope.$watch('filterParams.pValue.value', function(newval, oldval){
-                            	scope.viewGenes()
-                            })
-                            
-                            scope.$watch('filterParams.id.value', function(newval, oldval){
-                            	scope.viewGenes()
-                            })
-                            
-                            scope.$watch('filterParams.logFoldChange.value', function(newval, oldval){
-                            	scope.viewGenes()
-                            })
-                            
-                            scope.$watch('filterParams.logFoldChange.op', function(newval, oldval){
-                            	scope.viewGenes()
-                            })
-
+                        link: function (scope, elem, attrs) {                        	
+                                                        
                             scope.headers = [{
                                 'name': 'ID',
                                 'field': "id",
@@ -45,34 +23,24 @@
                             },{
                                 'name': 'P-Value',
                                 'field': "pValue",
-                                'icon': "<="
+                                'icon': "<=",
+                                'default': 0.05,
+                                'max': 0.05,
+                                'min': 0.00,
+                                'step': 0.01
                             },{
                                 'name': 'Log-Fold-Change',
                                 'field': "logFoldChange",
                                 'icon': [">=", "<="]
                             }]
-
-                            scope.filterParams = {
-                                'id': {
-                                    field: 'id',
-                                    value: undefined,
-                                    op: "~="
-                                },
-                                'logFoldChange': {
-                                    field: 'logFoldChange',
-                                    value: undefined,
-                                    op: '>='
-                                },
-                                'pValue': {
-                                    field: 'pValue',
-                                    value: undefined,
-                                    op: '<='
-                                }
-                            };
                             
-                            scope.viewGenes = function () {
-                            	scope.tTest = scope.analysis
-                                scope.filteredResults = resultsFilter(scope.analysis.results, scope.filterParams);
+                            scope.viewGenes = function (filterParams) {
+                            	scope.tTest = scope.analysis;
+                                scope.filteredResults = resultsFilter(scope.analysis.results, filterParams);
+                            	scope.$emit("ui:filteredResults", scope.filteredResults);
+                            	
+	                            //also filter heatmap
+	                            scope.applyToHeatmap();
                             };
 
                             scope.selectionParams = {

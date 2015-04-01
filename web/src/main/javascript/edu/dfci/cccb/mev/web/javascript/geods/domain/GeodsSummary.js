@@ -45,7 +45,7 @@ define([], function(){
 		
 		//privileged		
 		this.getImportedDatasetPath=function(){
-			var path = "/dataset/GDS"+self.gds+".soft"; 
+			var path = "/dataset/GDS"+self.gds+".soft/"; 
 			return path;
 		};
 		this.put=function(success){

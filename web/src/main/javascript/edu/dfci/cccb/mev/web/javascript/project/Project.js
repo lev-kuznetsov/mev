@@ -24,7 +24,7 @@ define(['angular',
                 
                 //construct
                 var project = new ProjectClass(DatasetFactory(datasetName, datasetResponseObj), generateView);
-
+                project.name=datasetName;
                 //properties
                 
                 return project;

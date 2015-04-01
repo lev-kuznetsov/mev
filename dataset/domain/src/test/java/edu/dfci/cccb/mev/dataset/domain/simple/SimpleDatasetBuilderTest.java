@@ -82,7 +82,7 @@ public class SimpleDatasetBuilderTest {
     };
     
     Selection sourceSelection = new SimpleSelection ("dataset.with.from.selection", new Properties (), keys);    
-    URL dataUrl = this.getClass ().getResource ("tcga/tcga_data/ACC/Level_3/ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv");        
+    URL dataUrl = this.getClass ().getResource ("/data/tcga/tcga_data/ACC/Level_3/ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv");        
     assertNotNull (dataUrl);
     
     RawInput rawInput = new MockUrlInput (dataUrl);             
@@ -93,7 +93,7 @@ public class SimpleDatasetBuilderTest {
   @Test 
   public void buildNoSelectionFilter5cols90K() throws DatasetBuilderException, InvalidDatasetNameException, InvalidDimensionTypeException{
 
-    URL dataUrl = this.getClass ().getResource ("tcga/tcga_data/COAD/Level_2/COAD.AgilentG4502A_07_3.Level_2.cols5.tsv");
+    URL dataUrl = this.getClass ().getResource ("/data/tcga/tcga_data/COAD/Level_2/COAD.AgilentG4502A_07_3.Level_2.cols5.tsv");
     assertNotNull (dataUrl);
     RawInput rawInput = new MockUrlInput (dataUrl);             
     builder.build (rawInput);
@@ -115,7 +115,7 @@ public class SimpleDatasetBuilderTest {
     
     Selection sourceSelection = new SimpleSelection ("dataset.with.from.selection", new Properties (), keys);
     
-    URL dataUrl = this.getClass ().getResource ("tcga/tcga_data/COAD/Level_2/COAD.AgilentG4502A_07_3.Level_2.cols5.tsv");
+    URL dataUrl = this.getClass ().getResource ("/data/tcga/tcga_data/COAD/Level_2/COAD.AgilentG4502A_07_3.Level_2.cols5.tsv");
     
     assertNotNull (dataUrl);
     

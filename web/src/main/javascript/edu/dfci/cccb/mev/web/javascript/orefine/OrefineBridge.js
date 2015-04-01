@@ -7,9 +7,16 @@ define(['jquery', 'angular'], function(jquery, angular){
 			var elm = document.querySelector('#selectionSetMgr');			
 			var selectionSetMgrDOM = angular.element(elm);
 			
+			var rootScope = angular.element(document).scope();
+			if(rootScope.$state){				
+				rootScope.$state.go("^."+selection.dimension.toLowerCase()+"Set", {setId: selection.name});
+			}
+			
 			var selectionSetManagerScope=selectionSetMgrDOM.scope();
-			console.debug("selectionSetManagerScope:"+angular.toJson(selectionSetManagerScope));			
-			selectionSetManagerScope.addItem(selection);
+			console.debug("selectionSetManagerScope:", selectionSetManagerScope);
+			if(selectionSetManagerScope){
+				selectionSetManagerScope.addItem(selection);
+			}
 			
 		},
 		openDataset: function(dataset){
@@ -18,8 +25,14 @@ define(['jquery', 'angular'], function(jquery, angular){
 			jquery('#import-presets-modal').modal('hide');	
 			jquery('div.modal-backdrop').hide();
 //			setTimeout(function(){
-				var datasetUrl = "/#/dataset/"+dataset.name+"/";					
-				window.location.replace(datasetUrl);
+			var rootScope = angular.element(document).scope();
+			if(rootScope.$state){				
+				rootScope.$state.go("root.dataset.home", {datasetId: dataset.name});
+				return;
+			}
+			
+			var datasetUrl = "/#/dataset/"+dataset.name+"/";					
+			window.location.replace(datasetUrl);
 //			}, 500);
 			
 		},

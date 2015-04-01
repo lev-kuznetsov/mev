@@ -10,12 +10,12 @@
                         restrict: 'E',
                         scope: {
                             analysis: "=analysis",
-                            project: "=project"
-
+                            project: "=project",
+			                isItOpen: "@"
                         },
                         templateUrl:paths.module + '/templates/hierarchicalAccordion.tpl.html',
                         link: function (scope, elems, attr) {
-
+							scope.isItOpen = attr.isItOpen || false;
                             scope.applyToHeatmap = function () {
 
                                 var labels = traverse(scope.analysis.root);
@@ -81,9 +81,9 @@
                                 return leaves[0].concat(leaves[1]);
                             };
 
-                            var padding = 20;
+                            var padding = 40;
 
-                            var labelsGutter = 50;
+                            var labelsGutter = 100;
 
                             var panel = {
                                 height: 200 + padding,

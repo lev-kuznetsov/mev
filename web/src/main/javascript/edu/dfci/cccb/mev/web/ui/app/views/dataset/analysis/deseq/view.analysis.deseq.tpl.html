@@ -1,0 +1,23 @@
+<!-- <project-analysis-parameters parameters="DatasetAnalysisVM.analysis.params"></project-analysis-parameters> -->
+<div>
+	<ul class="nav nav-tabs column-header" id="importTabs">
+		<li id="table_tab" class="active"><a href="#table" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}} Result</a></li>
+		<li id="heatmap]_tab"><a href="#heatmap" data-toggle="tab" target="_self">Heatmap</a></li>
+		<li id="quantiles_tab"><a href="#quantiles" data-toggle="tab" target="_self">Quantiles</a></li>
+		<div class="action-menu" mui-paste="action-menu"></div>	
+	</ul>
+
+	<div class="tab-content column-body">
+		<div class="tab-pane active" id="table" >		
+			<deseq-Accordion analysis="DatasetAnalysisVM.analysis" project="DatasetAnalysisVM.project" is-it-open="true" ></deseq-Accordion>					
+		</div>
+		<div class="tab-pane" id="heatmap">
+			<view-Content-Item project='DatasetAnalysisVM.project' view='DatasetAnalysisVM.project.views'></view-Content-Item>
+		</div>
+		<div class="tab-pane" id="quantiles">
+			<div id="{{'deseq-' + analysis.randomId + '-svg-holder'}}">
+				<d3-Box-Plot-Visualization data="boxPlotGenes"></d3-Box-Plot-Visualization>
+			</div>
+		</div>		
+	</div>
+</div>

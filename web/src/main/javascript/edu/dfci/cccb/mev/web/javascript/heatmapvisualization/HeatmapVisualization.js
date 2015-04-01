@@ -1,6 +1,6 @@
 define(['angular', 'd3', 'jquery',
         './lib/HeatmapVisualizationClass', './lib/generateParams',
-        'alertservice/AlertService', 'colorbrewer/ColorBrewer', 'jqueryUi', 'css-loader'], 
+        'alertservice/AlertService', 'colorbrewer/ColorBrewer', 'jqueryUi'], 
 function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
 	return angular.module('Mev.heatmapvisualization', ['d3colorBrewer', 'Mev.AlertService'])
 	.directive('heatmapSettings',[function() {
@@ -30,9 +30,20 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 	project : '=project'
                 },
                 link : function($scope, elems, attr) {
+                	//use jquery to get the nearest scrollable parent
+                	var scrollable = $(elems).scrollParent();
+                	//if that didnt' work use the scrollableContainer attribute if supplied
+                	if(!scrollable && $scope.heatmapView.scrollableContainer)
+                		scrollable = $($scope.heatmapView.scrollableContainer);
+                	//finally, default to 'div.tab-content' for legacy code
+                	if(!scrollable)
+                		scrollable = $("div.tab-content");
                 	
-                	var scrollable = $("div.tab-content"), delay = 50, timer = null;
-                	
+                	var delay = 50, timer = null;
+//                	if(!$scope.heatmapView.scrollableContainer)
+//                		$scope.heatmapView.scrollableContainer="div.tab-content";
+//                	var scrollable = $($scope.heatmapView.scrollableContainer), delay = 50, timer = null;
+                	console.debug("HeatmapVis scrollable", $scope.heatmapView.scrollableContainer, scrollable);
                        
                     var position = {
                 			top: scrollable.scrollTop(),
@@ -132,7 +143,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                     };
             	
                     var eventQ=[];
-                    $("div.tab-content").on("scroll", function(e){
+                    scrollable.on("scroll", function(e){
                     	//remove unhandled scholl events from the queue
                         while(eventQ.length>0){
                         	clearTimeout(eventQ.pop());
@@ -303,6 +314,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 	};
                 	//addSelection [Selection] --> null
                 	$scope.addSelection = function(dimension){
+                		console.debug("HeatmaVisualization: addSelection", dimension, $scope.visualization.view.selectionParams[dimension].labels, $scope.visualization.view.selectionParams[dimension])
                 		var selectionsData = {
                             name: $scope.visualization.view.selectionParams[dimension].name,
                             properties: {
@@ -322,7 +334,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 		}
                         
                         $scope.project.dataset.selection.post({
-                            datasetName : $routeParams.datasetName,
+                            datasetName : $scope.heatmapDataset.datasetName,
                             dimension : dimension
 
                         }, selectionsData,

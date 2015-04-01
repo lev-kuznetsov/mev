@@ -48,51 +48,47 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
     'greaterThan', 'extractValues','extractQuantiles', function(gT, eV, eQ){
     	
     	
-    	return function(data, groups){
+    	return function(data, params){
     		
-    		var sortedControl = data.control.values.sort(gT),
-                sortedExperiment = data.experiment.values.sort(gT);
-
-            var extractedControlValues = eV(sortedControl),
-                extractedExperimentValues = eV(sortedExperiment);
-
-            var experimentQuantile = eQ(extractedExperimentValues),
-                controlQuantile = eQ(extractedControlValues);
-            
-            //Error checking
-            
-            errs = []
-            if (groups.max < experimentQuantile.max || 
-                groups.max < controlQuantile.max){
+    		var quantiles = Object.keys(data.groups).map(function(groupName){
+    			var group = data.groups[groupName];
+    			var sortedGroup = group.values.sort(gT);
+    			var extractedGroupValues = eV(sortedGroup);
+    			var groupQuantile = eQ(extractedGroupValues);
+    			groupQuantile.name=groupName;
+    			groupQuantile.outliers = group.values.filter(function(value){
+                	return (value.value >= groupQuantile.ninetyseventh || 
+                			value.value <= groupQuantile.zerothird) ? true : false;
+                });
+    			groupQuantile.color=group.color;
+    			return groupQuantile;
+    		});
+    		
+    		var errs = [];
+    		quantiles.map(function(quantile){
+    			if (params.max < quantile.max){
+    	                errs.push(
+    	                        "A quantile max outside of data max!\n " 
+    	                        + "Quantile Max: " + quantile.max +"\n"
+    	                        + "Absolute Max: " + params.max);
+    			}
+    			if (params.min > quantile.min) {
+    	                errs.push(
+    	                    "A quantile min outside of data min!\n " 
+    	                    + "Quantile Min: " + quantile.min +"\n"
+    	                    + "Absolute Min: " + params.min)
+    	            };
+    		});
+    		
+    		if (errs.length > 0) {
                 
-                errs.push(
-                        "A quantile max outside of data max!\n " 
-                        + "Experment Max: " + experimentQuantile.max +"\n"
-                        + "Control Max: " + controlQuantile.max +"\n"
-                        + "Group Max: " + groups.max);
-                
-            } else if (groups.min > experimentQuantile.min || 
-                       groups.min > controlQuantile.min) {
-                
-                errs.push(
-                    "A quantile min outside of data min!\n " 
-                    + "Experment Min: " + experimentQuantile.min +"\n"
-                    + "Control Min: " + experimentQuantile.min +"\n"
-                    + "Group Min: " + groups.min)
-            };
-            
-            if (errs.length > 0) {
-             
                 for(i=0; i<errs.length; i++){
                     console.log(errs[i])
                    throw new RangeError(errs[i]); 
                 }
-                
                 return
-                
             };
-            
-            return [experimentQuantile, controlQuantile]
+    		return quantiles;    		
     	}
     }])
     .service('D3BoxPlots', ['D3Service', 'quantileGenerator', function (d3, quantileGenerator) {
@@ -106,12 +102,17 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
             var width = 30, //width of the box
                 padding = 5, //spacing on one side of the box
                 geneSpacing = 40, //space in between genes
-                height = 400,
-                geneWidth = (padding*4) + (2*width) + geneSpacing, // total width of a group,
-                margin = {top:60, bottom:30,left:50,right:20}
+                height = 400,                
+                margin = {top:60, bottom:30,left:50,right:20},
+                geneWidth = undefined;
             return {
-                draw: function (groups) {
-                    //assume groups = {
+                draw: function (params) {
+                	console.debug("boxplot.draw", params, itemsPerGroup);
+                	var groupNames = Object.keys(params.data[0].groups);
+                	var itemsPerGroup = groupNames.length;
+                	geneWidth = (padding*2*itemsPerGroup) + (itemsPerGroup*width) + geneSpacing; // total width of a group,
+                	
+                    //assume params = {
                     // data : [
                     //   {'control':{
                     //       values:[{'row':String, 'column':String, 'value':Number}, ...],
@@ -128,7 +129,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
 
                     element.append('svg')
                         .attr({
-                        'width': (groups.data.length * geneWidth) 
+                        'width': (params.data.length * geneWidth) 
                         	+ margin.left + margin.right,
                         'height': height + margin.top + margin.bottom,
                         'id': "svg-" + id
@@ -140,58 +141,58 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
 
                     var quantiles = d3.select('g#quantiles' + id);
 
-                    yScale = d3.scale.linear().domain([groups.min, groups.max])
+                    yScale = d3.scale.linear().domain([params.min, params.max])
                         .range([height -margin.bottom, margin.top]);
 
-                    groups.data.map(function (group, index) {
+                    params.data.map(function (item, index) {
 
                         quantiles.append('g').attr('id', 'quantile-' + index);
 
                         var box = quantiles.select('g#quantile-' + index);
 
-                        drawQuantile(yScale, group, box, (index * geneWidth) + margin.left, groups);
+                        drawQuantile(yScale, item, box, (index * geneWidth) + margin.left, params);
 
                     });
                     
-                    this.drawAxis(yScale, groups, svg, groups.data.length* geneSpacing);
+                    this.drawAxis(yScale, params, svg, params.data.length* geneSpacing);
                     
-                    this.drawLabels(svg);
+                    this.drawLabels(svg, params.data[0].groups);
 
                     
                 },
                 clear: function () {
-                    element.selectAll('*').remove()
+                    element.selectAll('*').remove();
                 },
-                drawLabels: function(svg){
-                	svg.append('g').attr('class','legend')
+                drawLabels: function(svg, groups){                	
+                	svg.append('g').attr('class','legend');                	
+                	var legend = svg.select('g.legend');
+                	var arGroups = Object.keys(groups).map(function(groupName){return groups[groupName]});
                 	
-                	var legend = svg.select('g.legend')
-                	
-                	legend.selectAll('rect').data(['experiment', 'control'])
+                	legend.selectAll('rect').data(arGroups)
                 		.enter().append('rect')
                 		.attr({
                 			'x': 5,
-                			'y': function(d,i){
-                				return (d === 'control') ? 10 : 25
+                			'y': function(d,i){                				
+                				return 10+15*i;
                 			},
                 			'width': 15,
                 			'height': 15
                 		})
                 		.attr('style', function(d,i){
-                        	return 'fill:'+(i === 0 ? "pink": "green")+';' 
-                    		+ 'fill-opacity:.25;stroke:black;stroke-width:1.5;'
+                        	return 'fill:'+d.color+';' 
+                    		+ 'fill-opacity:.25;stroke:black;stroke-width:1.5;';
                         });
                 	
-                	legend.selectAll('text').data([' - Experiment', ' - Control'])
+                	legend.selectAll('text').data(arGroups)
             		.enter().append('text')
             		.attr({
             			'x': 23,
             			'y': function(d,i){
-            				return (i === 0) ? 22 : 37
+            				return 22+15*i;
             			}
             		})
             		.text(function(d,i){
-                    	return d
+                    	return ' - ' + d.name;
                     });
                 },
                 drawAxis: function(yscale, groups, svg, width){
@@ -231,31 +232,30 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                 data: undefined
             };
             
-            function drawQuantile(scale, data, element, xposition, groups) {
+            function drawQuantile(scale, data, element, xposition, params) {
 
             	
-                var quantiles = quantileGenerator(data, groups);
-                var experimentQuantile = quantiles[0],
-                controlQuantile = quantiles[1];
-
-                var controlOutliers = data.control.values.filter(function(value){
-                	return (value.value >= controlQuantile.ninetyseventh || 
-                			value.value <= controlQuantile.zerothird) ? true : false;
+//             	cx: xposition + padding + width + (padding * 2) + (width / 2) //ctrl
+//		       	cx: xposition + padding 						+ (width / 2) //exp
+            	
+                var quantiles = quantileGenerator(data, params);
+                quantiles.map(function(quantile, index){
+                	element.append('g').attr('id', quantile.name+'-outliers');
+                    outliers = element.select('g#'+quantile.name+'-outliers');
+                    
+                    outliers.selectAll('circle').data(quantile.outliers).enter()
+                    .append('circle')
+                    .attr({
+                    	cx: xposition + padding + (width * index) + (padding * 2 * index) + (width / 2) ,
+    			       	cy:function(d){
+    			       		return scale(d.value);
+    			       	},
+    			       	r:2,
+    			       	fill:'red'
+                    });
                 });
+                                
                 
-                var experimentOutliers = data.experiment.values.filter(function(value){
-                	return (value.value >= experimentQuantile.ninetyseventh || 
-                			value.value <= experimentQuantile.zerothird) ? true : false;
-                });
-                
-                var outliers = [experimentOutliers, controlOutliers];
-                
-                element.append('g').attr('id', 'control-outliers');
-                outliersControl = element.select('g#control-outliers');
-                
-                element.append('g').attr('id', 'experiment-outliers');
-                outliersExperiment = element.select('g#experiment-outliers');
-
                 element.append('g').attr('id', 'median-line');
                 medianLine = element.select('g#median-line');
 
@@ -275,38 +275,14 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                 intTopLines = element.select('g#int-top-lines');
                 
                 element.append('g').attr('id', 'label');
-                label = element.select('g#label');
-                
-                //Outliers control
-                
-                outliersControl.selectAll('circle').data(controlOutliers).enter()
-                .append('circle')
-                .attr({
-                	cx: xposition + padding + width + (padding * 2) + (width / 2) ,
-			       	cy:function(d){
-			       		return scale(d.value)
-			       	},
-			       	r:2,
-			       	fill:'red'
-                })
-                
-                //Outliers experiment
-                outliersExperiment.selectAll('circle').data(experimentOutliers).enter()
-                .append('circle')
-                .attr({
-                	cx: xposition + padding + (width / 2) ,
-                		//+ (width + (padding * 2)),
-                	cy:function(d){
-                		return scale(d.value)
-                	},
-                	r:2,
-                	fill:'red'
-                })
+                label = element.select('g#label');                
 
                 //Median Line Draw
                 
                 medianLine.selectAll("line")
-                    .data([experimentQuantile.second, controlQuantile.second])
+                    .data(quantiles.map(function(quantile){
+                    	return quantile.second;
+                    }))
                     .enter().append("line")
                     .attr("class", "median")
                     .attr("x1", function (d, i) {
@@ -333,7 +309,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                 //quantile box draw
 
                 firstThirdQuantileBox.selectAll('rect')
-                    .data([experimentQuantile, controlQuantile]).enter()
+                    .data(quantiles).enter()
                     .append('rect')
                     .attr("class", "first-third")
                     .attr("x", function (d, i) {
@@ -352,14 +328,14 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
 	                    return d.first + "," + d.third + ":" + scale(d.first) + "," + scale(d.third);
 	                })
                     .attr('style', function(d,i){
-                    	return 'fill:'+(i === 0 ? "pink": "green")+';' 
+                    	return 'fill:'+d.color+';' 
                 		+ 'fill-opacity:.25;stroke:black;stroke-width:1;'
                     });
 
                 //minimum line draw
 
                 minLines.selectAll("line")
-                    .data([experimentQuantile, controlQuantile])
+                    .data(quantiles)
                     .enter().append("line")
                     .attr("class", "min-Lines")
                     .attr("x1", function (d, i) {
@@ -385,7 +361,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                 //maximum line draw
                 
                 maxLines.selectAll("line")
-                    .data([experimentQuantile, controlQuantile])
+                    .data(quantiles)
                     .enter().append("line")
                     .attr("class", "max-Lines")
                     .attr("x1", function (d, i) {
@@ -410,8 +386,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
 
                 //intermediate bottom line draw
                 
-                intBottomLines.selectAll("line").data([
-                experimentQuantile, controlQuantile])
+                intBottomLines.selectAll("line").data(quantiles)
                     .enter().append("line")
                     .attr("class", "int-bottom-lines")
                     .attr("x1", function (d, i) {
@@ -436,8 +411,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
 
                 //intermediate top line draw
                 
-                intTopLines.selectAll("line").data([
-                experimentQuantile, controlQuantile])
+                intTopLines.selectAll("line").data(quantiles)
                     .enter().append("line")
                     .attr("class", "int-top-lines")
                     .attr("x1", function (d, i) {
@@ -465,13 +439,14 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                 label.selectAll('text').data([data.name]).enter()
                 .append('text')
                 .attr({
-                	x: xposition + width + (2*padding),
-                	y: scale(groups.min) + 18
+//                	x: xposition + width + padding*2,
+                	x: xposition + geneWidth/3,
+                	y: scale(params.min) + 18
                 })
                 .text(data.geneName)
                 	.attr("font-family", "sans-serif")
                 	.attr("text-anchor", "middle")
-                     .attr("font-size", "20px")
+                     .attr("font-size", "14px")
                      .attr("fill", "red");
 
             };
@@ -508,7 +483,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
         return {
             scope: {
                 data: '=',
-            },
+            },            
             restrict: 'E',
             link: function (scope, elems, attrs) {
 
@@ -516,16 +491,16 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
 
                     if (data) {
                         
-                        try {
+//                        try {
                             var svg =  D3BoxPlots(data.id, D3Service.select(elems[0]));
                             svg.draw(data)
-                        } catch (e) {
-                            if (e instanceof RangeError){
-                            	raiseAlert.error(e.name + ': ' +e.message, "Box Plotting Error")
-                            } else {
-                            	raiseAlert.error(e.name + ': ' +e.message, "Error!")
-                            }
-                        }
+//                        } catch (e) {
+//                            if (e instanceof RangeError){
+//                            	raiseAlert.error(e.name + ': ' +e.message, "Box Plotting Error")
+//                            } else {
+//                            	raiseAlert.error(e.name + ': ' +e.message, "Error!")
+//                            }
+//                        }
                     }
 
                 });

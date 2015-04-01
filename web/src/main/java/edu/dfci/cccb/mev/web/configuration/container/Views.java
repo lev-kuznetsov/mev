@@ -29,12 +29,17 @@ public class Views {
   public FreeMarkerView home (FreeMarkerViewBuilder builder) {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/home.ftl").build ();
   }
+  
+  @Bean
+  public FreeMarkerView index (FreeMarkerViewBuilder builder) {
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/ui/index.html").build ();
+  }
 
   @Bean
   public FreeMarkerView api (FreeMarkerViewBuilder builder) {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/api.ftl").build ();
   }
-
+  
   // Elements
   
   @Bean (name = "elements/heatmapSettingsModalBody")
@@ -223,5 +228,5 @@ public class Views {
   public FreeMarkerView homePage (FreeMarkerViewBuilder builder) {
     return builder.setUrl ("/edu/dfci/cccb/mev/web/views/partials/home.ftl").build ();
   }
-  
+    
 }

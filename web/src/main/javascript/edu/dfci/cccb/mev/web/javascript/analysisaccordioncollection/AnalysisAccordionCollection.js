@@ -30,7 +30,7 @@
         './Services/compareFactory',
         './Services/pcaTransforms',
         './Services/pcaMulti'
- 
+        './Services/boxPlotService'
     ]
 
     define(deps.concat(directiveDeps).concat(serviceDeps), function(angular, jq, d3){

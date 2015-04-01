@@ -1,7 +1,8 @@
-define ([ 'angular', 'angularResource'], function (angular) {
+define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular, angularResource, AnalysisEventBus) {
 
     return angular
     .module ('Mev.Api', ['ngResource'])
+    .service('AnalysisEventBus', AnalysisEventBus)
     .service ('DatasetResourceService', ['$resource', function ($resource) {
     	 return $resource('/dataset/:datasetName/data',
 	    	{
@@ -19,21 +20,19 @@ define ([ 'angular', 'angularResource'], function (angular) {
 			},{
 				'get': {method:'GET'},
 				'post':{
-					url:'import/google/:id/load',
+					url:'/import/google/:id/load',
 					method: 'POST'
 				}
 			});
         }])
-    .service ('AnalysisResourceService', ['$resource', '$routeParams', function ($resource, $routeParams) {
-    	
-    	return $resource('/dataset/:datasetName/analysis',
-	    	{
-	    		'format':'json'
-			}, {
+    .service ('AnalysisResourceService', ['$resource', '$routeParams', 'AnalysisEventBus', function ($resource, $routeParams, analysisEventBus) {
+    	    	
+    	var resource = $resource('/dataset/:datasetName/analysis',
+	    	{	'format':'json'}, 
+			{
 				'getAll': {
 				    'url' : '/dataset/:datasetName/analysis',
 				    'method':"GET",
-				    
 				},
 				'get': {
 					'url': '/dataset/:datasetName'
@@ -42,32 +41,72 @@ define ([ 'angular', 'angularResource'], function (angular) {
                 },
                 'postf': {
                 	'method':'POST',
-                	'url': 'dataset/:datasetName'
+                	'url': '/dataset/:datasetName'
                         + '/analyze/:analysisType/:analysisName(:analysisParams)'
                 },
                 'post': {
                     'method':'POST',
-                    'url': 'dataset/:datasetName'
+                    'url': '/dataset/:datasetName'
                         + '/analyze/:analysisType'
                 },
                 'post3': {
                 	'method':'POST',
-                	'url': 'dataset/:datasetName'+
+                	'url': '/dataset/:datasetName'+
                 		'/analyze/:analysisType/:analysisName',
                 		//'headers':{'Content-Type':'application/x-www-form-urlencoded'}
                 },
                 'post4': {
                 	'method':'GET',
-                	'url': 'dataset/:datasetName'+
+                	'url': '/dataset/:datasetName'+
                 		'/analyze/:analysisType/:analysisName',
                 		//'headers':{'Content-Type':'application/x-www-form-urlencoded'}
                 }
                 
-			});
+			});    	    	
+    	function postWrapper(methodName){
+    		return function(params, data, callback){
+        		
+        		var result = resource[methodName](params, data, callback);
+        		
+        		result.$promise.then(
+    				function(response){    					
+    					
+    					if(typeof data === "string")
+    						data = JSON.parse(data);
+    					if(Array.isArray(data))
+    						data = {data: data};
+    					var allParams = {
+    							analysisName: params.analysisName || data.analysisName || params.name || data.name || response.name
+    					};
+    					angular.extend(allParams, params);
+    					
+    					angular.extend(allParams, data);
+    					console.debug("AnalysisResource success", params, "data", data, "response", response);
+    					var sessionStorageKey = allParams.datasetName+"."+allParams.analysisName;
+    					console.debug("sessionStorageKey set", sessionStorageKey);
+    					sessionStorage.setItem(sessionStorageKey, JSON.stringify(allParams));
+    					analysisEventBus.analysisSucceeded(params, data);
+    	    		}, function(response){
+    	    			console.debug("AnalysisResource error", response);
+    	    			analysisEventBus.analysisFailed(params, data);
+    	    		}
+    	    	);
+        		
+        		analysisEventBus.analysisStarted(params, data);
+    		};
+    	}
+    	var AnalysisResource = Object.create(resource);
+    	AnalysisResource.post=postWrapper("post");
+    	AnalysisResource.postf=postWrapper("postf");
+    	AnalysisResource.post3=postWrapper("post3");
+    	
+    	
+    	return AnalysisResource;    	
     	
     }])
     .service ('SelectionResourceService', ['$resource', '$routeParams', function($resource, $routeParams){
-    	return $resource('/dataset/:datasetName/:dimension/selection',{
+    	
+    	var resource = $resource('/dataset/:datasetName/:dimension/selection',{
     		'format': 'json'
     	}, {
     		'getAll': {
@@ -86,7 +125,21 @@ define ([ 'angular', 'angularResource'], function (angular) {
     			'url':"/dataset/:datasetName/:dimension/selection/export",
     		}
     		
-    	})
+    	});
+    	
+//    	return resource;
+    	var SelectionResource = Object.create(resource);
+    	SelectionResource.getAll=function(params, data, callback){
+    		var result = resource.getAll(params, data, callback);
+    		result.$promise.then(function(response){
+    			response.selections.map(function(selection){
+    				selection.type=params.dimension;
+    			});
+    		});
+    		return result;
+    	};
+    	
+    	return SelectionResource;
     }]);
     
     	

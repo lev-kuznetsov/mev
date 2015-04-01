@@ -1,0 +1,67 @@
+<!--     <mui-panel title="Projects" min max side> -->
+<!--     	<project-list show-add="true" show-edit="true"></project-list> -->
+<!--     	<panel-commands> -->
+<!--     		<panel-command delegate="project-list" method="addProject"></panel-command> -->
+<!--     	</panel-commands>	 -->
+<!--     </mui-panel> -->
+    
+<!--     <mui-panel title="Your Datasets" panel-options="{min: true, max: true, side: true}">     -->
+<!--     	<dataset-list show-add="true" show-edit="true"></dataset-list>    	 -->
+<!--     </mui-panel> -->
+
+<div class="panel panel-info" >
+  <div class="panel-heading ">			  
+	  <!-- max/min/etc controls for the panel -->
+	  <div class="panel-controls btn-group pull-right" dropdown >
+	  	<button type="button" class="btn" ng-click="HomeVM.toggle()">
+        <i class="fa fa-caret-up" ></i>
+      </button>		    
+      <button type="button" class="btn dropdown-toggle">
+        <i class="fa fa-cog"></i>
+      </button>					
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Another action</a></li>
+        <li><a href="#">Something else here</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Separated link</a></li>
+      </ul>
+    </div>
+        
+    		    
+      <h3 class="panel-title">Your Datasets</h3>
+  </div>
+  
+  <!-- List group -->
+  <ul class="panel-toolbar list-group" collapse="HomeVM.isCollapsed">
+    <li class="list-group-item">
+	    <div class="btn-toolbar" role="toolbar" >
+			  <div class="panel-actions btn-group" dropdown >
+			  	<button type="button" class="btn ">
+		        <i class="fa fa-plus"></i>
+		      </button>
+		      <button type="button" class="btn ">
+		        <span>merge</span>
+		      </button>		    		    
+		      <button type="button" class="btn dropdown-toggle">
+		        <i class="fa fa-cog"></i>
+		      </button>					
+		      <ul class="dropdown-menu" role="menu">
+		        <li><a href="#">Action</a></li>
+		        <li><a href="#">Another action</a></li>
+		        <li><a href="#">Something else here</a></li>
+		        <li class="divider"></li>
+		        <li><a href="#">Separated link</a></li>
+		      </ul>		      
+		    </div>		  	
+	  	</div>
+   	</li>		   
+  </ul>
+  
+  
+  <div class="panel-body" collapse="HomeVM.isCollapsed">
+          <!-- context commands -->		    
+    <dataset-list show-add="true" show-edit="true"></dataset-list>
+		
+  </div>
+</div>

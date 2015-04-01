@@ -108,7 +108,7 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
         // do nothing
       }
     }
-    Values values = valueStoreBuilder.build (parser.rowMap (), parser.columnMap ());
+    Values values = valueStoreBuilder.build ();
     return aggregate (content.name (), values, analyses (),
                       dimension (ROW, parser.rowKeys (), selections (), annotation ()),
                       dimension (COLUMN, parser.columnKeys (), selections (), annotation ()));

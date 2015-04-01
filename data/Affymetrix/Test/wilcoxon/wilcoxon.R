@@ -3,14 +3,17 @@
 ## input variables from MeV:
 # "../../../../data/Affymetrix/affy_U133plus2_dataset.txt": DATA FILE matrix
 # "../../../../data/Affymetrix/affy_U133plus2_dataset.annotate_mtx.txt": File store contrast 
-# two.sided: 'two.sided'/'greater'/'less'. Default='two.sided'
-# 1: boolean. Default=FALSE
+# "two.sided": 'two.sided'/'greater'/'less'. Default='two.sided'
 # 1: boolean. Default=FALSE
 # CORRECT_FOR_MULTIPLE_TESTING
 
 ## output file
 # WILCOX_OUT
 
+
+# Default Wilcoxon to not take variable for paired test
+# IS_PAIRED: boolean. Default=FALSE
+IS_PAIRED=FALSE
 ##
 ##
 ## read files
@@ -36,27 +39,31 @@ CON=sample.mtx[(sample.mtx[2]==0),1]
 
 
 
-result_mtx=matrix(NA, nrow=dim(in.mtx)[1], ncol=dim(in.mtx)[2]) 	  
+result_mtx=matrix(NA, nrow=dim(in.mtx)[1], ncol=6) 	  
 colnames(result_mtx)=c("ID", "Log Fold Change", "Average Expression", "W", "P-value", "q-value")
 
 w.test=lapply(rownames(in.mtx), function(X){
   		CONTROL=in.mtx[X, CON]
   		EXPERIMENT=in.mtx[X, EXP]
-		w.test = wilcox.test(x=CONTROL, y=EXPERIMENT, alternative=two.sided, paired=1, 
+		w.test = wilcox.test(x=CONTROL, y=EXPERIMENT, alternative="two.sided", paired=IS_PAIRED, 
 			conf.int=1)
 		logfc=log(mean(CONTROL)/mean(EXPERIMENT))
 		mean.exp=mean(in.mtx[X,])
-		return(cbind('Method'=w.test$method, 'W statistics'=w.test$statistic, 'P-value'=w.test$p.value, logfc, mean.exp))
+		return(cbind('ID'=X, 'Log Fold Change'=logfc, 'Average Expression'=mean.exp, 
+			'W'=w.test$statistic, 'P-value'=w.test$p.value))
   	})
+
+  	#, warning=function(w){print "warning: wilcoxon test"}, error=function(e){print "error: wilcoxon test"})
  
 result_mtx=w.test[[1]]
-for(idx in 2:length(a)){
+for(idx in 2:length(w.test)){
  	result_mtx=rbind(result_mtx, w.test[[idx]])
 }
 rownames(result_mtx)=NULL
 qvalue=p.adjust(as.numeric(result_mtx[,"P-value"]),method="fdr")
 result_mtx=cbind(result_mtx, 'adj.P-value'=qvalue)
 
-write.table(file="../../../../data/Affymetrix/Test/wilcoxon/result_out.txt", result_mtx, sep='\t',col.names=FALSE, quote=FALSE)
+
+write.table(file="../../../../data/Affymetrix/Test/wilcoxon/result_out.txt", result_mtx, sep='\t',col.names=TRUE, row.names=FALSE, quote=FALSE)
 
 ## End Wilcoxon test
