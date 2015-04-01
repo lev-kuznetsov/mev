@@ -47,7 +47,7 @@
 			case 'PC Analysis':
 				template = PCATemplate;
 				break
-			case 'NMF Analysis':
+			case 'nmf':
 				template = nmfTemplate;
 				break
 		    }

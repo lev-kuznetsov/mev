@@ -34,7 +34,6 @@
 				</div>
 			</accordion>
 			<pca-Test project="project"></pca-Test>
-			<nmf-Test project="project"></nmf-Test>
 		</div>
 		
 	</div>

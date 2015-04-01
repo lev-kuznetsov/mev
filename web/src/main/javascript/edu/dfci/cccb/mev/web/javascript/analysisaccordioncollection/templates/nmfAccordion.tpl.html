@@ -1,4 +1,4 @@
-<accordion-group heading="{{analysis.type}} : {{analysis.name}}" is-open="isAccordionOpen" ng-init="isAccordionOpen=false">
+<accordion-group heading="NMF : {{analysis.name}}" is-open="isAccordionOpen" ng-init="isAccordionOpen=false">
 
 	<ul class="nav nav-tabs">
 		<li class="active">
@@ -25,9 +25,9 @@
 				</div>
 				<div class="results-body" >
 					<div class="nmf-heatmap-wrapper">
-                    	<div id="{{'nmf-' + analysis.randomId + '-f-heatmap'}}" class="loqui-scrollable nmf-Heatmap-Visualization" 
+                    	<div id="{{'nmf-' + analysis.randomId + '-w-heatmap'}}" class="loqui-scrollable nmf-Heatmap-Visualization" 
                     	height="400" 
-                    	data="matrix.n" selection-params="selectionParams" selection-dimension="row"></div>
+                    	data="heatmap.w" selection-params="selectionParams" selection-dimension="row"></div>
 					</div>
 				</div>
 			</div>
@@ -45,7 +45,7 @@
 					<div class="nmf-heatmap-wrapper">
 	                    <div id="{{'nmf-' + analysis.randomId + '-h-heatmap'}}" class="loqui-scrollable nmf-Heatmap-Visualization" 
 	                    height="400" 
-	                    data="matrix.f" selection-params="selectionParams" selection-dimension="column"></div>
+	                    data="heatmap.h" selection-params="selectionParams" selection-dimension="column"></div>
 	                </div>
 				</div>
 			</div>

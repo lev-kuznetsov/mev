@@ -29,6 +29,7 @@ import edu.dfci.cccb.mev.hcl.domain.contract.Node;
  */
 @ToString
 public class Nmf extends AbstractAnalysis<Nmf> {
+  private final @JsonProperty String type = "nmf";
   private @Getter @JsonProperty Dataset w;
   private @Getter @JsonProperty H h;
 

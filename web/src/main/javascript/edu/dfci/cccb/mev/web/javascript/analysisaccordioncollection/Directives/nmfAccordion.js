@@ -7,79 +7,26 @@
        return function(module){
 
            module
-           .directive('nmfTest', ['pathService', 'pcaTransform', 'pcaMulti', function(paths, transform, generatePCA){
-        	   return {
-                   restrict: 'E',
-                   templateUrl: paths.module + '/templates/nmfAccordion.test.tpl.html',
-                   scope:{
-                  	 project: "="
-                   },
-                   link: function(scope){
-                	   
-                	   var cols = d3.range(5).map(function(ind){ return "sample" + ind })
-                	   var rows = d3.range(100).map(function(ind){ return "gene" + ind })
-                	   var values = cols.map(function(column, index){
-                		   var column = rows.map(function(row){
-                			   return {
-                				   'column': column,
-                				   'row': row,
-                				   'value': Math.random() + (index * .01)
-                			   }
-                		   })
-                		   
-                		   return column
-                	   }).reduce(function(aggregation, next){ return aggregation.concat(next)}, [])
-                	   
-						scope.analysis = {
-							'name': "BLAH2", 
-							'type':"Non-Negative Matrix Factorization",
-							'randomId': "JDLSFJLKJ", 
-							'analysis':{
-								"type": "column",
-								"row":{
-									"type":"row",
-									"keys": rows
-								},
-								"column":{
-									"type":"column",
-									"keys": cols
-								},
-								"values": values,
-								"tree": {
-						            distance: 0,
-						            children: [{
-						                distance: 0,
-						                children: [{
-						                    distance: 0,
-						                    name: "Node2"
-						                },{
-						                    distance: 0,
-						                    name: "Node1"
-						                }]
-						            },{
-						                distance: 0,
-						                children: [{
-						                    distance: 0,
-						                    children:[{
-						                        distance: 0,
-						                        name: "Node4"
-						                    },{
-						                        distance:0,
-						                        name: "Node5"
-						                    }]
-						                },{
-						                    distance: 0,
-						                    name: "Node3"
-						                }]
-
-						            }]
-						        }
-							}
-						}
-				   }
-          	   }
-             }])
-           .directive('nmfHeatmapVisualization', [function(){
+           .factory('removeDuplicates', [function(){
+        	   return function(acc, next){
+	    			
+	    			var nextInAcc = false
+	    			
+	    			for (var i = 0; i < acc.length; i++){
+	    				if (acc[i] == next){
+	    					nextInAcc = true
+	    					break
+	    				}
+	    			}
+	    			
+	    			if (nextInAcc){
+	    				return acc
+	    			}
+	    			
+	    			return acc.concat([next])
+	    		}
+           }])
+           .directive('nmfHeatmapVisualization', ['removeDuplicates', function(removeDuplicates){
         	   
         	   return {
                    restrict: 'C',
@@ -170,11 +117,11 @@
 		        		   if (newval){
 		        			   scope.visualization.svg.selectAll('*').remove()
 			        		   scope.h3atmap.settings.x['axis-width'] = 
-			        			   newval.analysis.column.keys.length * scope.visualization.settings.cell.width
+			        			   scope.data.column.keys.length * scope.visualization.settings.cell.width
 		        			   scope.h3atmap.settings.y['axis-width'] =  
-		        				   newval.analysis.row.keys.length * scope.visualization.settings.cell.height
+		        				   scope.data.row.keys.length * scope.visualization.settings.cell.height
 		        			   
-		        			   if (newval.analysis.type == 'row'){
+		        			   if (attr.selectionDimension == 'row'){
 		        				   scope.d3ndogram.settings.x.margin = scope.h3atmap.settings.x.margin
 			        			   scope.d3ndogram.settings.x['axis-width'] = scope.h3atmap.settings.x['gutter-width']
 			        			   scope.d3ndogram.settings.x['gutter-width'] = 0
@@ -205,47 +152,47 @@
 		        			   	   
 		        			   dendogram.selection(scope.visualization.svg)
 		        			       .settings(scope.d3ndogram.settings)
-		        			       .settings.invert(newval.analysis.type == 'row' ? true : false)
+		        			       .settings.invert(attr.selectionDimension == 'row' ? true : false)
 		        			   
 		        			   
 		        			   heatmap()
 		        			   dendogram()
 		        			   
-		        			   var parsedPoints = newval.analysis.values.map(function(p){
+		        			   var parsedPoints = scope.data.values.map(function(p){
 		        				   return {
 		        				       x: p.column,
 		        				       y: p.row,
 		        				       value: p.value
 		        				   }
 		        			   }).filter(function(point){
-		        				   return newval.analysis.row.keys.slice(0,totalRowsCanFit).reduce(function(agg, next){
+		        				   return scope.data.row.keys.slice(0,totalRowsCanFit).reduce(function(agg, next){
 		        					   return next == point.y ? agg.concat([next]) : agg 
 		        				   }, []).length > 0
 		        			   })
 		        			   
 		        			   heatmap.draw({
 		        			        points: parsedPoints,
-		        			        rows: newval.analysis.row.keys,
-		        			        columns: newval.analysis.column.keys,
-		        			        min: d3.min(parsedPoints, function(d){return d.value}),
-		        			        max: d3.max(parsedPoints, function(d){return d.value}),
-		        			        average: d3.mean(parsedPoints, function(d){return d.value}),
+		        			        rows: scope.data.row.keys,
+		        			        columns: scope.data.column.keys,
+		        			        min: scope.data.min,
+		        			        max: scope.data.max,
+		        			        average: scope.data.avg,
 		        			    })
 		        			    
 		        			    heatmap.on('brushend', function(extent, selectedCells){
-		        			    	console.log(scope.selectionDimension)
-		        			    	if (scope.selectionDimension == 'row'){
+		        			    	
+		        			    	if (attr.selectionDimension == 'row'){
 		        			    		
 		        			    		scope.selectionParams.selections = selectedCells.map(function(cell){
 		        			    			return cell.y
-		        			    		})
+		        			    		}).reduce(removeDuplicates, [])
 		        			    		
 		        			    		scope.selectionParams.dimension = 'row'
 		        			    		
 		        			    	} else {
 		        			    		scope.selectionParams.selections = selectedCells.map(function(cell){
 		        			    			return cell.x
-		        			    		})
+		        			    		}).reduce(removeDuplicates, [])
 		        			    		
 		        			    		scope.selectionParams.dimension = 'column'
 		        			    	}
@@ -253,26 +200,30 @@
 		        			    	scope.$apply()
 		        			    })
 		        			   
-		        			   dendogram.draw({
-		        				   root:newval.analysis.tree
-		        			   })
+		        			   if  (scope.data.root){
+		        				   dendogram.draw({
+			        				   root:scope.data.root
+			        			   })
+		        			   }
+		        			   
 		        		   }
 		        	   });
 		        	   
 		        	   
 		        	   scope.$on("UI:SCROLL", function($event, params){
 		        		   
-		        		   console.log($event, params, attr);
-		        		   if(attr.id!=params.id)
-		        			   return;
+		        		   if(attr.id!=params.id){
+		        			   return
+		        		   }
+		        		   
 		        		   var numberOfRowsAbove = parseInt(params.scrollTop / scope.visualization.settings.cell.height) - offsetRows;
 		        		   var totalRowsCanFit = parseInt(params.height / scope.visualization.settings.cell.height);		        		   
-		        		   var shownrows = scope.data.analysis.row.keys.filter(function(row, index){
+		        		   var shownrows = scope.data.row.keys.filter(function(row, index){
 		        			   return index > numberOfRowsAbove-2 &&
 		        			   		index < totalRowsCanFit + numberOfRowsAbove + 2
 		        		   });
 		        		   
-		        		   var parsedPoints = scope.data.analysis.values.map(function(p){
+		        		   var parsedPoints = scope.data.values.map(function(p){
 		        				   return {
 		        				       x: p.column,
 		        				       y: p.row,
@@ -290,11 +241,11 @@
 		        		   
 		        		   heatmap.update({
 	        			        points: parsedPoints,
-	        			        rows: scope.data.analysis.row.keys,
-	        			        columns: scope.data.analysis.column.keys,
-	        			        min: d3.min(parsedPoints, function(d){return d.value}),
-	        			        max: d3.max(parsedPoints, function(d){return d.value}),
-	        			        average: d3.mean(parsedPoints, function(d){return d.value}),
+	        			        rows: scope.data.row.keys,
+	        			        columns: scope.data.column.keys,
+	        			        min: scope.data.min,
+	        			        max: scope.data.max,
+	        			        average: scope.data.avg,
 	        			    })
 		        	   });
 		        	   
@@ -311,7 +262,7 @@
         				   'height': parseFloat(attributes.height),
         				   'overflow': 'auto'
         			   })
-        			   console.debug("scrollable element", element);
+        			   
         			   element.on('scroll', function(){
 	    				   scope.$broadcast("UI:SCROLL", {
 	    					   scrollTop: $(element).scrollTop(),
@@ -345,21 +296,20 @@
                 	 
                 	 scope.$watch('analysis', function(newval, oldval){
                 		 if (newval){
-                			 scope.matrix = {
-                		         'n': newval,
-                		         'f': newval
+                			 scope.heatmap = {
+                		         'w': newval.w,
+                		         'h': {
+                		        	 'root': newval.h.root,
+                		        	 'values': newval.h.matrix.values,
+                		        	 'column': newval.h.matrix.column,
+                		        	 'row': newval.h.matrix.row,
+                		        	 'max': newval.h.matrix.max,
+                		        	 'min': newval.h.matrix.min,
+                		        	 'avg': newval.h.matrix.avg,
+                		         }
                 			 } 
                 		 }
                 	 })
-
-                     scope.$watch('selectionParams.selections', function(newval, oldval){
-                         console.log(newval)
-                     }) 
-                     
-                     scope.$watch('selectionParams.dimension.y', function(newval, oldval){
-                         
-                         return
-                     })
                      
                      scope.addSelections = function(){
                     	 
@@ -369,28 +319,29 @@
                                  selectionDescription: '',
                                  selectionColor: scope.selectionParams.color,
                              },
-                             keys: scope.selectionParams.samples.map(function(sample){return sample['id']})
+                             keys: scope.selectionParams.selections
                          };
                          
-
                          scope.project.dataset.selection.post({
                                  datasetName: scope.project.dataset.datasetName,
-                                 dimension: "column"
+                                 dimension: scope.selectionParams.dimension
 
                              }, selectionData,
                              function (response) {
-                                 scope.project.dataset.resetSelections('column')
                                  var message = "Added " + scope.selectionParams.name + " as new Selection!";
                                  var header = "Heatmap Selection Addition";
                                  
-                                 scope.selectionParams.color = '#' + Math
-                                 .floor(Math.random() * 0xFFFFFF << 0)
-                                 .toString(16)
+                                 
+                                 scope.project.dataset.resetSelections(scope.selectionParams.dimension)
 
+                                 scope.selectionParams['color'] = '#' + 
+                                 	Math.floor(Math.random() * 0xFFFFFF << 0)
+            	                         .toString(16)
+                                 
                                  alertService.success(message, header);
                              },
                              function (data, status, headers, config) {
-                                 var message = "Couldn't add new selection. If " + "problem persists, please contact us.";
+                                 var message = "Couldn't add new selection. If problem persists, please contact us.";
 
                                  var header = "Selection Addition Problem (Error Code: " + status + ")";
 
