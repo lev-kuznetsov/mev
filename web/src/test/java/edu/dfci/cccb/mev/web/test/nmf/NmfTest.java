@@ -57,7 +57,7 @@ public class NmfTest {
   private @Inject @Rserve ObjectMapper mapper;
 
   @Test
-  //@Ignore
+  @Ignore
   public void t () throws Exception {
     SimpleDatasetBuilder s = new SimpleDatasetBuilder ();
     s.setParserFactories (asList (new SuperCsvParserFactory ()));
