@@ -17,7 +17,7 @@ package edu.dfci.cccb.mev.hcl.rest.assembly.json;
 import static java.util.Arrays.asList;
 
 import java.io.IOException;
-import java.util.TreeSet;
+import java.util.HashSet;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -39,7 +39,7 @@ public class NodeJsonDeserializer extends JsonDeserializer<Node> {
     JsonNode name = tree.get ("name");
     return name == null
                        ? new MockBranch (tree.get ("distance").asDouble (),
-                                         new TreeSet<Node> (asList (construct (tree.get ("left")),
+                                         new HashSet<Node> (asList (construct (tree.get ("left")),
                                                                     construct (tree.get ("right")))))
                        : new MockLeaf (name.asText ());
   }
