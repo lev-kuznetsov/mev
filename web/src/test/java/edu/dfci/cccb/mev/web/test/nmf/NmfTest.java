@@ -44,11 +44,12 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Rserve;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
 import edu.dfci.cccb.mev.dataset.rest.configuration.RDispatcherConfiguration;
+import edu.dfci.cccb.mev.hcl.rest.configuration.HclRestConfiguration;
 import edu.dfci.cccb.mev.nmf.domain.Nmf;
 import edu.dfci.cccb.mev.nmf.domain.NmfBuilder;
 
 @RunWith (SpringJUnit4ClassRunner.class)
-@ContextConfiguration (classes = { RDispatcherConfiguration.class, StoreBuilderConf.class })
+@ContextConfiguration (classes = { RDispatcherConfiguration.class, StoreBuilderConf.class, HclRestConfiguration.class })
 public class NmfTest {
 
   private @Inject RDispatcher r;
@@ -56,7 +57,7 @@ public class NmfTest {
   private @Inject @Rserve ObjectMapper mapper;
 
   @Test
-  // @Ignore
+  //@Ignore
   public void t () throws Exception {
     SimpleDatasetBuilder s = new SimpleDatasetBuilder ();
     s.setParserFactories (asList (new SuperCsvParserFactory ()));

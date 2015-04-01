@@ -14,12 +14,9 @@
  */
 package edu.dfci.cccb.mev.nmf.domain;
 
-import java.lang.reflect.Field;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
 import edu.dfci.cccb.mev.dataset.domain.r.AbstractDispatchedRAnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Parameter;
@@ -35,7 +32,7 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
 // @R
 // ("function (dataset, rank, method, nrun) nmf (dataset, rank = rank, method = method, nrun = nrun)")
 @R ("function (dataset) {"
-    + "hc2n <- function (hc, flat = TRUE) {\n"
+    + "hc2n <- function (hc, flat = FALSE) {\n"
     + "  dist <- 0;\n"
     + "  if (is.null (hc$labels)) labels <- seq(along = hc$order) else labels <- hc$labels;\n"
     + "  putparenthesis <- function (i) {\n"
@@ -58,13 +55,14 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
     + "};\n"
     + "l <- function (n)"
     + "  if (typeof (n) == 'character') list (name = n) "
-    + "  else list (distance = n$dist, left = toList (n$left), right = toList (n$right));"
+    + "  else list (distance = n$dist, left = l (n$left), right = l (n$right));"
     + "m <- NMF::nmf (dataset, rank = 3);"
     + "w <- NMF::basis (m);"
     + "h <- NMF::coef (m);"
-    + "colnames (w) = c (1:dim (w)[ 2 ]);"
-    + "rownames (h) = c (1:dim (h)[ 1 ]);"
-    + "list (w = w, h = list (matrix = h, root = l (hc2n (stats::hclust (stats::dist (t (h)))))));" +
+    + "colnames (w) <- c (1:dim (w)[ 2 ]);"
+    + "rownames (h) <- c (1:dim (h)[ 1 ]);"
+    + "list (w = as.data.frame (w), h = list (matrix = as.data.frame (h), root = l (hc2n (stats::hclust (stats::dist (t (h)))))));"
+    +
     "}")
 @Accessors (fluent = true, chain = true)
 public class NmfBuilder extends AbstractDispatchedRAnalysisBuilder<NmfBuilder, Nmf> {
@@ -76,16 +74,12 @@ public class NmfBuilder extends AbstractDispatchedRAnalysisBuilder<NmfBuilder, N
   private @Getter @Setter @Parameter int rank = 3;
   private @Getter @Setter @Parameter String method = "brunet";
   private @Getter @Setter @Parameter int nrun = 10;
+  private @Getter @Setter @Parameter String seed = "nndsvd";
 
   private @Getter @Result Nmf result;
 
   @Callback
   private void setName () {
     result.name (name ());
-  }
-
-  public static void main (String[] args) {
-    for (Field f : NmfBuilder.class.getDeclaredFields ())
-      System.out.println (f.getName () + ":" + f.getAnnotation (Result.class));
   }
 }

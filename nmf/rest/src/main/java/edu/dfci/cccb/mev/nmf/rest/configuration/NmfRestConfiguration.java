@@ -14,20 +14,15 @@
  */
 package edu.dfci.cccb.mev.nmf.rest.configuration;
 
-import java.util.List;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import com.fasterxml.jackson.databind.JsonSerializer;
-
 import edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.nmf.domain.Nmf;
 import edu.dfci.cccb.mev.nmf.domain.NmfBuilder;
-import edu.dfci.cccb.mev.nmf.rest.json.NmfJsonSerializer;
 
 /**
  * @author levk
@@ -46,14 +41,5 @@ public class NmfRestConfiguration extends MevRestConfigurerAdapter {
   @Bean
   public AnalysisPathVariableMethodArgumentResolver<Nmf> nmfAnalysisPathVariableMethodArgumentResolver () {
     return new AnalysisPathVariableMethodArgumentResolver<> (Nmf.class);
-  }
-
-  /* (non-Javadoc)
-   * @see
-   * edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter
-   * #addJsonSerializers(java.util.List) */
-  @Override
-  public void addJsonSerializers (List<JsonSerializer<?>> serializers) {
-    serializers.add (new NmfJsonSerializer ());
   }
 }
