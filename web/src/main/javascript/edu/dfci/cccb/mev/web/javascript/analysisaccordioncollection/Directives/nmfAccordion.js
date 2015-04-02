@@ -105,7 +105,7 @@
 	                       'colors': d3.scale.linear().range(['#ffeda0', '#feb24c', '#f03b20'])
 	                   }
 		        	   
-		        	   var totalRowsCanFit = parseInt(attr.height / scope.visualization.settings.cell.height)
+		        	   var totalRowsCanFit = 40
 		        	   var offsetRows = parseInt( (scope.h3atmap.settings.y['gutter-width']+ scope.h3atmap.settings.y.margin)
 		        			   / scope.visualization.settings.cell.height)
 		        	   
@@ -212,7 +212,7 @@
 		        	   
 		        	   scope.$on("UI:SCROLL", function($event, params){
 		        		   
-		        		   if(attr.id!=params.id){
+		        		   if(attr.id!=params.id || scope.data == undefined){
 		        			   return
 		        		   }
 		        		   
@@ -258,15 +258,18 @@
         		   restrict: 'C',
         		   link: function(scope, element, attributes){
         			   
-        			   element.css({
-        				   'height': parseFloat(attributes.height),
-        				   'overflow': 'auto'
-        			   })
-        			   
-        			   element.on('scroll', function(){
+        			   var scrollable = $(element).scrollParent();
+        			   if(!scrollable){
+        				   scrollable=element;
+        				   element.css({
+            				   'height': parseFloat(attributes.height),
+            				   'overflow': 'auto'
+            			   });
+        			   }
+        			   scrollable.on('scroll', function(){
 	    				   scope.$broadcast("UI:SCROLL", {
-	    					   scrollTop: $(element).scrollTop(),
-	    					   height: $(element).height(),
+	    					   scrollTop: scrollable.scrollTop(),
+	    					   height: scrollable.height(),
 	    					   id: attributes.id
 	    				   });
         			   }); 

@@ -33,6 +33,12 @@ public class Nmf extends AbstractAnalysis<Nmf> {
   private @Getter @JsonProperty Dataset w;
   private @Getter @JsonProperty H h;
 
+  @Override
+  @JsonProperty
+  public String name () {
+    return super.name ();
+  }
+
   @ToString
   public static class H {
     private @Getter @JsonProperty Dataset matrix;

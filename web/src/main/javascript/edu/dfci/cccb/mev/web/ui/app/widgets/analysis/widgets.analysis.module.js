@@ -41,6 +41,10 @@ function(ng, AnalyisEventBus){
 				shortName: "deseq",
 				viewModel: "DESeqVM"
 			},
+			"nmf":{
+				shortName: "nmf",
+				viewModel: "NmfVM"
+			},
 			reverseLookup: {
 				hcl: "Hierarchical Clustering",
 				limma: "LIMMA Differential Expression Analysis",
@@ -49,7 +53,8 @@ function(ng, AnalyisEventBus){
 				two_sample_ttest: "t-Test Analysis",
 				fisher: "Fisher test",
 				anova: "Anova Analysis",
-				deseq: "DESeq Differential Expression Analysis"
+				deseq: "DESeq Differential Expression Analysis",
+				nmf: "Non-Negative Matrix Factorization"
 					
 		} 
 	});	

@@ -29,7 +29,7 @@
         './Services/pathService',
         './Services/compareFactory',
         './Services/pcaTransforms',
-        './Services/pcaMulti'
+        './Services/pcaMulti',
         './Services/boxPlotService'
     ]
 

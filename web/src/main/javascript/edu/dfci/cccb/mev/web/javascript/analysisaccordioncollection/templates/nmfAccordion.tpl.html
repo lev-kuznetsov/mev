@@ -1,60 +1,51 @@
-<accordion-group heading="NMF : {{analysis.name}}" is-open="isAccordionOpen" ng-init="isAccordionOpen=false">
-
-	<ul class="nav nav-tabs">
-		<li class="active">
-			<a id="annotationsTabLink" href="{{'#nmf-' + analysis.randomId + '-w-heatmap-tab'}}" 
+<ul class="nav nav-tabs">	
+	<li class="active">
+		<a id="annotationsTabLink" href="{{'#nmf-' + analysis.randomId + '-w-heatmap-tab'}}" 
+		data-toggle="tab" 
+		target="_self">Matrix W Heatmap</a>
+	</li>
+	<li>
+		<a id="heatmapTabLink" href="{{'#nmf-' + analysis.randomId + '-h-heatmap-tab'}}" 
 			data-toggle="tab" 
-			target="_self">Matrix W Heatmap</a>
-		</li>
-		<li>
-			<a id="heatmapTabLink" href="{{'#nmf-' + analysis.randomId + '-h-heatmap-tab'}}" 
-				data-toggle="tab" 
-				target="_self">Matrix H Heatmap</a>
-		</li>
-	</ul>
-	
-	<div class="tab-content"id="">
-	
-		<div class="tab-pane active" id="{{'nmf-' + analysis.randomId + '-w-heatmap-tab'}}">                      
-			<div  class="results-wrapper">	
-				<div class="results-header clearfix">        				
-					<h3 class="pull-left analysis-results-header">W-Heatmap</h3>
-					<a class="btn btn-info pull-right" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
-		              Create Selections
-		            </a>
-				</div>
-				<div class="results-body" >
-					<div class="nmf-heatmap-wrapper">
-                    	<div id="{{'nmf-' + analysis.randomId + '-w-heatmap'}}" class="loqui-scrollable nmf-Heatmap-Visualization" 
-                    	height="400" 
-                    	data="heatmap.w" selection-params="selectionParams" selection-dimension="row"></div>
-					</div>
+			target="_self">Matrix H Heatmap</a>
+	</li>
+	<div class="action-menu" mui-paste="action-menu"></div>
+</ul>
+
+<div class="tab-content"id="">
+
+	<div class="tab-pane active" id="{{'nmf-' + analysis.randomId + '-w-heatmap-tab'}}">                      
+		<div  class="results-wrapper">	
+			<div class="results-header clearfix"></div>
+			<div class="results-body" >
+				<div class="nmf-heatmap-wrapper">
+                   	<div id="{{'nmf-' + analysis.randomId + '-w-heatmap'}}" class="loqui-scrollable nmf-Heatmap-Visualization"                    	 
+                   	data="heatmap.w" selection-params="selectionParams" selection-dimension="row"></div>
 				</div>
 			</div>
 		</div>
-		
-		<div class="tab-pane" id="{{'nmf-' + analysis.randomId + '-h-heatmap-tab'}}">
-			<div  class="results-wrapper">	
-				<div class="results-header clearfix">        				
-					<h3 class="pull-left analysis-results-header">H-Heatmap</h3>
+	</div>
+	
+	<div class="tab-pane" id="{{'nmf-' + analysis.randomId + '-h-heatmap-tab'}}">
+		<div  class="results-wrapper">	
+			<div class="results-header clearfix">        				
+			 <div class="btn-toolbar pull-right" role="toolbar" mui-yank="action-menu">
+		       <div class="btn-group">				
 					<a class="btn btn-info pull-right" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
 		              Create Selections
 		            </a>  
-				</div>
-				<div class="results-body">
-					<div class="nmf-heatmap-wrapper">
-	                    <div id="{{'nmf-' + analysis.randomId + '-h-heatmap'}}" class="loqui-scrollable nmf-Heatmap-Visualization" 
-	                    height="400" 
-	                    data="heatmap.h" selection-params="selectionParams" selection-dimension="column"></div>
-	                </div>
-				</div>
+	            </div>	          
+			</div>
+			<div class="results-body">
+				<div class="nmf-heatmap-wrapper">
+                    <div id="{{'nmf-' + analysis.randomId + '-h-heatmap'}}" class="loqui-scrollable nmf-Heatmap-Visualization"                     
+                    data="heatmap.h" selection-params="selectionParams" selection-dimension="column"></div>
+                </div>
 			</div>
 		</div>
-		
-	</div>    
-
-</accordion-group>
-
+	</div>
+	
+</div>    
 
 
 <bsmodal bindid="{{'selectionAdd' + analysis.name}}" func="" header="Add New Selection for {{analysis.name}}">

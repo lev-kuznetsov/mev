@@ -351,8 +351,7 @@
 							}
 							
 						}
-						
-<<<<<<< HEAD
+					
 						for (table in tables){
 							
 							console.log({

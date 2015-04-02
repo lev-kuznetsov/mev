@@ -5,7 +5,27 @@
 
         return function (module) {
 
-            module.directive('modalNmf', ['alertService', 'pathModalService', function(alertService, paths) { 
+            module.directive('integerRange', function() {
+            	  return {
+            		  	element: "CA",
+            		    require: 'ngModel',
+            		    link: function(scope, elm, attrs, ctrl) {
+            		      ctrl.$parsers.unshift(function(viewValue) {
+            		        if (parseFloat(viewValue) <= parseFloat(attrs.max) && 
+            		        		viewValue >= parseFloat(attrs.min)) {
+            		          // it is valid
+            		          ctrl.$setValidity('integer', true);
+            		          return viewValue;
+            		        } else {
+            		          // it is invalid, return undefined (no model update)
+            		          ctrl.$setValidity('integer', false);
+            		          return undefined;
+            		        }
+            		      });
+            		    }
+            		  };
+            		})
+            .directive('modalNmf', ['alertService', 'pathModalService', function(alertService, paths) { 
 	            return {
 	                restrict : 'C',
 	                scope : {
@@ -31,7 +51,7 @@
 	                    
 	                    scope.params = {
 		                        name: undefined,
-		                        rank: {name:3, value: 3},
+		                        rank: 3,
 		                        method: scope.options.method[0],
 		                        nrun: {name:10, value:10},
 		                        seed: scope.options.seed[0]
@@ -44,6 +64,12 @@
 	                    };
 	                    
 	                    scope.initialize = function(){
+	                    	
+	                    	if (typeof scope.params.rank == 'undefined' ){
+	                    		alertService.error("Cannot create NMF with rank greater than 20",
+	                    				"Non-Negative Matrix Factorization")
+	                    		return
+	                    	}
 	                        
 	                        var message = "Starting NMF for "
 	                            + scope.params.name;
@@ -63,27 +89,6 @@
 	                        	rank: scope.params.rank.value,
 	                        	method: scope.params.method.value,
 	                        	nruns: scope.params.nrun.value
-	                        },
-		                        function(data, status, headers, config) {
-		                            
-	                        		scope.dataset.loadAnalyses();
-	                        		
-		                            var message = "NMF "
-		                            	+ scope.params.name + " complete!";
-		
-		                            var header = "Non-Negative Matrix Factorization";
-		                                         
-		                            alertService.success(message,header);
-		                                    
-		                         }, function(data, status, headers, config) {
-		                            
-		                            var message = "Could not perform Non-Negative Matrix Factorization. If "
-		                                + "problem persists, please contact us.";
-		                            var header = "Analysis Problem (Error Code: "
-		                                + status
-		                                + ")";
-		                            alertService.error(message,header);
-	                            
 	                        });
 	                    };
 	                }
