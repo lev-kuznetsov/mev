@@ -7,7 +7,7 @@ define(["clinical/domain/ClinicalSummaryField"], function(ClinicalSumamryField){
 			for(var i=0;i<configs.length;i++){
 				var curConfig = configs[i];
 				var curFieldName = curConfig.field;
-				result.push(new ClinicalSumamryField(configs[i], repository.getData([curFieldName])));
+				result.push(new ClinicalSumamryField(configs[i], repository.getDataKeyVal([curFieldName])));
 			}
 			return result;
 		};

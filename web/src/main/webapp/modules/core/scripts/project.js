@@ -266,6 +266,7 @@ Refine.reinitializeProjectData = function(f, fError) {
         }
       } else {
         theProject.metadata = data;
+        parent.OpenRefineBridge.loadedProject(theProject);
         $.getJSON(
           "command/core/get-models?" + $.param({ project: theProject.id }), null,
           function(data) {

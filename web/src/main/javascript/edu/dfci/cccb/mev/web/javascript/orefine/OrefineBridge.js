@@ -19,6 +19,12 @@ define(['jquery', 'angular'], function(jquery, angular){
 			}
 			
 		},
+		loadedProject: function(theProject){
+			var rootScope = angular.element(document).scope();;
+			console.debug("loadedProject", theProject);
+			if(theProject.metadata.customMetadata.dimension==="COLUMN")
+				rootScope.$broadcast("openRefine:loadedAnnotations:column", theProject);
+		},
 		openDataset: function(dataset){
 			console.debug('in openDataset');
 			console.debug("dataset:"+angular.toJson(dataset));		

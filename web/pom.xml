@@ -191,6 +191,14 @@
         <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
+	<!-- Survival -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-survival-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
     <!-- Servlet -->
 
     <dependency>
@@ -294,6 +302,11 @@
       <version>${requirejs.version}</version>
     </dependency>
 
+    <dependency>
+    	<groupId>net.wimpi</groupId>
+    	<artifactId>telnetd-x</artifactId>
+    	<version>2.1.1</version>
+    </dependency>
   </dependencies>
 
   <build>

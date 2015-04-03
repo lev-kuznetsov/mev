@@ -3,7 +3,8 @@ define(["ng",
         "./sidemenu/widgets.common.sideMenu.module",
         "./panel/widgets.common.panel.module",
         "./layout/widgets.common.layout.module",
-        "./yank/widgets.common.yank.module.js"],
+        "./yank/widgets.common.yank.module",
+        "./plots/widgets.common.plots.module"],
 function(ng){
 	var module=ng.module("mui.widgets.common", [
 	                                            "mui.widgets.common.sidePanel",
