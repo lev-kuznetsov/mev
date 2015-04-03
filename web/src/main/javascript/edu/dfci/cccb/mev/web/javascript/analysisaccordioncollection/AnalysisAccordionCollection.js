@@ -1,6 +1,12 @@
 (function(){
 
-    var deps = ['angular', 'jquery', 'd3', 'alertservice/AlertService'] 
+    var deps = [
+		'angular', 
+		'jquery', 
+		'd3', 
+		'alertservice/AlertService', 
+		'scatterplot/ScatterplotModule'
+		] 
     
     var directiveDeps = [
       './Directives/analysisContentItem', 
@@ -12,7 +18,9 @@
       './Directives/tTestAccordion',
       './Directives/limmaAccordion',
       './Directives/hierarchicalAccordion',
-      './Directives/resultsTable'
+      './Directives/pcaAccordion',
+      './Directives/resultsTable',
+      './Directives/nmfAccordion',
       ]
     
     var serviceDeps = [
@@ -20,12 +28,18 @@
         './Services/projectionService',
         './Services/pathService',
         './Services/compareFactory',
+        './Services/pcaTransforms',
+        './Services/pcaMulti',
         './Services/boxPlotService'
     ]
 
     define(deps.concat(directiveDeps).concat(serviceDeps), function(angular, jq, d3){
 	
-        var module = angular.module('Mev.AnalysisAccordionCollection', ['Mev.AlertService'])
+    	var moduleDeps = [
+			'Mev.AlertService', 
+			'Mev.ScatterPlotVisualization'
+			]
+        var module = angular.module('Mev.AnalysisAccordionCollection', moduleDeps)
 
         //load each directive deps file onto the module using function arguments only
         for (var index = 0; index < directiveDeps.length; index++){

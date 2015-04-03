@@ -32,5 +32,5 @@ public class SimpleEntry2 implements Entry2 {
 
   private @Getter @JsonProperty String geneId;
   private @Getter @JsonProperty Double pValue;
-  private @Getter @JsonProperty List<Pairing2> changes;
+  private @Getter @JsonProperty List<Pairing2> logFoldChangePairings;
 }

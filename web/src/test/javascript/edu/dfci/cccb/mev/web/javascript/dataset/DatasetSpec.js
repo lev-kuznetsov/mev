@@ -42,6 +42,92 @@
 				expect(dataset).toBeDefined()
 			})
 
+                        describe('label indexed getters', function(){
+                            describe('when given object with column property', function(){
+                                describe('that is in column labels', function(){
+                                    var searchValue
+                                    beforeEach(function(){
+                                        searchValue = {'column': 'Sample1'}
+                                    })
+                                    it('should return all values with matching column property',function(){
+                                       var response = dataset.expression.retrieve(searchValue)
+                                       expect(response).toContain({'row':'gene1', 'column':'Sample1', 'value':1})
+                                       expect(response).toContain({'row':'gene2', 'column':'Sample1', 'value':1})
+                                       expect(response.length).toBe(2)
+                                    })
+                                })
+                                describe('that is not in column labels', function(){
+                                    var searchValue
+                                    beforeEach(function(){
+                                        searchValue = {'column': 'Sample10'}
+                                    })
+                                    it('should return an empty list', function(){
+                                       var response = dataset.expression.retrieve(searchValue)
+                                       expect(response.length).toBe(0)
+                                    })
+                                })
+                            })
+                            describe('when given object with row property', function(){
+                                describe('that is in row labels', function(){
+                                    var searchValue
+                                    beforeEach(function(){
+                                        searchValue = {'row': 'gene1'}
+                                    })
+                                    it('should return all values with matching row property', function(){
+                                       var response = dataset.expression.retrieve(searchValue)
+				       expect(response).toContain({'row':'gene1', 'column':'Sample1', 'value':1})
+				       expect(response).toContain({'row':'gene1', 'column':'Sample2', 'value':-1})
+				       expect(response).toContain({'row':'gene1', 'column':'Sample3', 'value':1})
+				       expect(response).toContain({'row':'gene1', 'column':'Sample4', 'value':1})
+                                       expect(response.length).toBe(4)
+                                    })
+                                })
+                                describe('that is not in row labels', function(){
+                                    var searchValue
+                                    beforeEach(function(){
+                                        searchValue = {'row': 'gene10'}
+                                    })
+                                    it('should return an empty list', function(){
+                                       var response = dataset.expression.retrieve(searchValue)
+                                       expect(response.length).toBe(0)
+                                    })
+                                })
+                            })
+                            describe('when given object with row and column property', function(){
+                                describe('that is in row and column labels', function(){
+                                    var searchValue
+                                    beforeEach(function(){
+                                        searchValue = {'row': 'gene1', 'column': 'Sample2'}
+                                    })
+                                    it('should return a single element with matching row property', function(){
+                                       var response = dataset.expression.retrieve(searchValue)
+				       expect(response).toContain({'row':'gene1', 'column':'Sample2', 'value':-1})
+                                       expect(response.length).toBe(1)
+                                    })
+                                })
+                                describe('that is not not in row and column labels', function(){
+                                    var searchValue
+                                    beforeEach(function(){
+                                        searchValue = {'row': 'gene10', 'column': 'Sample10'}
+                                    })
+                                    it('should return an empty list', function(){
+                                       var response = dataset.expression.retrieve(searchValue)
+                                       expect(response.length).toBe(0)
+                                    })
+                                })
+                                describe('that is empty', function(){
+                                    var searchValue
+                                    beforeEach(function(){
+                                        searchValue = {}
+                                    })
+                                    it('should return an empty list', function(){
+                                       var response = dataset.expression.retrieve(searchValue)
+                                       expect(response.length).toBe(0)
+                                    })
+                                })
+                            })
+                        })
+
 			describe('statistics module', function(){
 
 				describe('threshold contingency matrix function', function(){

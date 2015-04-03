@@ -5,7 +5,8 @@ define(["ng", "lodash",
         "./fisher/views.dataset.analysis.fisher.module",
         "./anova/views.dataset.analysis.anova.module",
         "./limma/views.dataset.analysis.limma.module",
-        "./deseq/views.dataset.analysis.deseq.module"], function(ng, _){
+        "./deseq/views.dataset.analysis.deseq.module",
+        "./nmf/views.dataset.analysis.nmf.module"], function(ng, _){
 	var module = ng.module("mui.views.dataset.analysis", ["mui.widgets.analysis", 
 	                                                      "mui.views.dataset.analysis.hcl", 
 	                                                      "mui.views.dataset.analysis.kmeans",
@@ -14,6 +15,7 @@ define(["ng", "lodash",
 	                                                      "mui.views.dataset.analysis.anova",
 	                                                      "mui.views.dataset.analysis.limma", 
 	                                                      "mui.views.dataset.analysis.deseq",
+	                                                      "mui.views.dataset.analysis.nmf",
 	                                                      "Mev.AnalysisAccordionCollection"]);
 	module.config(["$stateProvider", "$urlRouterProvider", "AnalysisTypes", function($stateProvider, $urlRouterProvider, AnalysisTypes){				
 		$stateProvider		

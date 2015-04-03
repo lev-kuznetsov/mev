@@ -25,6 +25,7 @@
 						<li><a data-toggle="modal" data-target="#wilcoxon">Wilcoxon Rank Sum</a></li>
 						<li><a data-toggle="modal" data-target="#anova">ANOVA</a></li>
 						<li><a data-toggle="modal" data-target="#deseq">DESeq</a></li>
+						<li><a data-toggle="modal" data-target="#nmfModal">Non-Negative Factorization</a></li>
 					</ul>
 				</li>
 				
@@ -34,6 +35,7 @@
 						VISUALIZATIONS
 					</a>
 					<ul class="dropdown-menu">
+						<li><a data-toggle="modal" data-target="#pcaModal">Principal Components</a></li>
 						<li><a data-target="#settingsModal"" data-toggle="modal">Heatmap Settings</a></li>
 					</ul>
 				</li>
@@ -109,4 +111,12 @@
 
 <bsmodal bindid="deseq" func="" header="DESeq Analysis">
  <div class="modal-D-E-Seq" heatmap-dataset="project.dataset"></div>
+</bsmodal> 
+
+<bsmodal bindid="pcaModal" func="" header="Principal Components Analysis">
+ <div class="modal-pca" dataset="project.dataset"></div>
+</bsmodal>
+
+<bsmodal bindid="nmfModal" func="" header="Non-Negative Matrix Factorization">
+ <div class="modal-nmf" dataset="project.dataset"></div>
 </bsmodal> 

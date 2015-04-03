@@ -36,7 +36,7 @@ public interface Anova2 extends Analysis {
       Double logFoldChange ();
     }
 
-    List<? extends Pairing2> changes ();
+    List<? extends Pairing2> logFoldChangePairings ();
   }
 
   Iterable<? extends Entry2> entries ();

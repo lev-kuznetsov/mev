@@ -32,7 +32,7 @@
 					<analysis-Content-Item analysis="analysis" project="project" generate-View="project.generateView"></analysis-Content-Item>
 				</accordion-group>				
 			</accordion>
-			
+			<pca-Test project="project"></pca-Test>
 		</div>
 		
 	</div>

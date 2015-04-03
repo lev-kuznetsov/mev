@@ -182,6 +182,14 @@
       <artifactId>mev-deseq-rest</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
+    
+    <!-- NMF -->
+    
+    <dependency>
+        <groupId>edu.dfci.cccb</groupId>
+        <artifactId>mev-nmf-rest</artifactId>
+        <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
 
     <!-- Servlet -->
 
@@ -420,10 +428,33 @@
         </configuration>
       </plugin>
 
-      <!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-antrun-plugin</artifactId> 
-        <version>1.7</version> <executions> <execution> <phase>validate</phase> <goals> 
-        <goal>run</goal> </goals> <configuration> <tasks> <echoproperties /> </tasks> 
-        </configuration> </execution> </executions> </plugin> -->
+      <plugin>
+        <groupId>edu.dfci.cccb</groupId>
+        <artifactId>rserve-maven-plugin</artifactId>
+        <version>0.0.7</version>
+        <configuration>
+          <setup>
+            <fileio>disable</fileio>
+            <encoding>utf8</encoding>
+          </setup>
+          <onInitialize>
+            sapply (c ("devtools", "NMF"), function (lib)
+              if (!requireNamespace (lib))
+                install.packages (lib, repos="http://cran.rstudio.com"));
+            if (!requireNamespace ("amap"))
+              devtools::install_url ("https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/amap/0.8-12/amap_0.8-12.tar.gz");
+            if (!requireNamespace ("ctc"))
+              devtools::install_url ("https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/ctc/1.40.0/ctc_1.40.0.tar.gz");
+            if (!requireNamespace ("injectoR"))
+              devtools::install_github ("dfci-cccb/injectoR");
+          </onInitialize>
+          <onRequest>
+            library (injectoR);
+            source ("../dataset/domain/src/main/r/json.R");
+            source ("../nmf/domain/src/main/r/nmf.r");
+          </onRequest>
+        </configuration>
+      </plugin>
 
     </plugins>
 
@@ -493,4 +524,12 @@
       </plugins>
     </pluginManagement>
   </build>
+  
+  <pluginRepositories>
+    <pluginRepository>
+      <id>cccb</id>
+      <name>CCCB Maven Repository</name>
+      <url>https://raw.github.com/dfci-cccb/maven-repo/master/releases/</url>
+    </pluginRepository>
+  </pluginRepositories>
 </project>

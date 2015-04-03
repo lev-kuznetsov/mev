@@ -20,7 +20,9 @@ import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -60,10 +62,15 @@ import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 @Accessors (fluent = false, chain = true)
 @Log4j
 public abstract class AbstractDatasetBuilder implements DatasetBuilder {
- 
+
   private @Getter @Setter @Inject Collection<? extends ParserFactory> parserFactories;
-  private @Getter @Setter @Inject ValueStoreBuilder valueStoreBuilder;
+  private @Getter @Setter ValueStoreBuilder valueStoreBuilder;
   private @Getter @Setter @Inject SelectionBuilder selectionBuilder;
+
+  @Inject
+  private void configureValueStoreBuilder (Provider<ValueStoreBuilder> valueStoreBuilder) {
+    this.valueStoreBuilder = valueStoreBuilder.get ();
+  }
 
   /* (non-Javadoc)
    * @see
@@ -72,33 +79,33 @@ public abstract class AbstractDatasetBuilder implements DatasetBuilder {
   @Override
   public Dataset build (RawInput content) throws DatasetBuilderException,
                                          InvalidDatasetNameException,
-                                         InvalidDimensionTypeException {    
-    if(log.isDebugEnabled ())
-      log.debug ("Building dataset..."+content.name ());
+                                         InvalidDimensionTypeException {
+    if (log.isDebugEnabled ())
+      log.debug ("Building dataset..." + content.name ());
     Parser parser;
     for (parser = parser (content); parser.next ();) {
       valueStoreBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));
-    }    
-    Values values = valueStoreBuilder.build ();
+    }
+    Values values = valueStoreBuilder.build (parser.rowMap (), parser.columnMap ());
     return aggregate (content.name (), values, analyses (),
                       dimension (ROW, parser.rowKeys (), selections (), annotation ()),
                       dimension (COLUMN, parser.columnKeys (), selections (), annotation ()));
   }
-  
+
   @Override
   public Dataset build (RawInput content, Selection columnSelection) throws DatasetBuilderException,
                                                                     InvalidDatasetNameException,
                                                                     InvalidDimensionTypeException {
-    if(log.isDebugEnabled ())
+    if (log.isDebugEnabled ())
       log.debug ("**selection: " + columnSelection.keys ());
     Parser parser;
     for (parser = parser (content); parser.next ();) {
       String curColumn = parser.projection (COLUMN);
-      
-      if(columnSelection.keys ().contains (curColumn)){
-        valueStoreBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));        
-      }else{
-        //do nothing
+
+      if (columnSelection.keys ().contains (curColumn)) {
+        valueStoreBuilder.add (parser.value (), parser.projection (ROW), parser.projection (COLUMN));
+      } else {
+        // do nothing
       }
     }
     Values values = valueStoreBuilder.build ();

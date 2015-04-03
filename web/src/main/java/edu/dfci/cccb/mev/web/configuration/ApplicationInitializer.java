@@ -28,11 +28,13 @@ import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfigu
 import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain;
 import edu.dfci.cccb.mev.anova.rest.configuration.AnovaRestConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
+import edu.dfci.cccb.mev.dataset.rest.configuration.RDispatcherConfiguration;
 import edu.dfci.cccb.mev.deseq.rest.configuration.DESeqRestConfiguration;
 import edu.dfci.cccb.mev.geods.rest.configuration.GeoDatasetsConfigurationMain;
 import edu.dfci.cccb.mev.hcl.rest.configuration.HclRestConfiguration;
 import edu.dfci.cccb.mev.kmeans.rest.configuration.KMeansRestConfiguration;
 import edu.dfci.cccb.mev.limma.rest.configuration.LimmaRestConfiguration;
+import edu.dfci.cccb.mev.nmf.rest.configuration.NmfRestConfiguration;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 import edu.dfci.cccb.mev.stats.rest.configuration.StatsRestConfiguration;
 import edu.dfci.cccb.mev.t_test.rest.configuration.TTestRestConfiguration;
@@ -54,6 +56,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 
     mvcContext.register (DispatcherConfiguration.class, PersistenceConfiguration.class, ContainerConfigurations.class);
 
+    mvcContext.register (RDispatcherConfiguration.class);
     mvcContext.register (DatasetRestConfiguration.class);
     mvcContext.register (PresetsRestConfiguration.class);
     mvcContext.register (GeoDatasetsConfigurationMain.class);
@@ -66,6 +69,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     mvcContext.register (TTestRestConfiguration.class);
     mvcContext.register (StatsRestConfiguration.class);
     mvcContext.register (DESeqRestConfiguration.class);
+    mvcContext.register (NmfRestConfiguration.class);
 
     DispatcherServlet dispatcher = new DispatcherServlet (mvcContext);
 

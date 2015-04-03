@@ -33,6 +33,7 @@
     <module>anova</module>
     <module>stats</module>
     <module>deseq</module>
+    <module>nmf</module>
 
     <module>web</module>
 

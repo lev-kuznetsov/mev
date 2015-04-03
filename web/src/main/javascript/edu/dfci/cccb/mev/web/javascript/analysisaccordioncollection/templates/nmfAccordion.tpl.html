@@ -1,0 +1,68 @@
+<ul class="nav nav-tabs">	
+	<li class="active">
+		<a id="annotationsTabLink" href="{{'#nmf-' + analysis.randomId + '-w-heatmap-tab'}}" 
+		data-toggle="tab" 
+		target="_self">Matrix W Heatmap</a>
+	</li>
+	<li>
+		<a id="heatmapTabLink" href="{{'#nmf-' + analysis.randomId + '-h-heatmap-tab'}}" 
+			data-toggle="tab" 
+			target="_self">Matrix H Heatmap</a>
+	</li>
+	<div class="action-menu" mui-paste="action-menu"></div>
+</ul>
+
+<div class="tab-content"id="">
+
+	<div class="tab-pane active" id="{{'nmf-' + analysis.randomId + '-w-heatmap-tab'}}">                      
+		<div  class="results-wrapper">	
+			<div class="results-header clearfix"></div>
+			<div class="results-body" >
+				<div class="nmf-heatmap-wrapper">
+                   	<div id="{{'nmf-' + analysis.randomId + '-w-heatmap'}}" class="loqui-scrollable nmf-Heatmap-Visualization"                    	 
+                   	data="heatmap.w" selection-params="selectionParams" selection-dimension="row"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="tab-pane" id="{{'nmf-' + analysis.randomId + '-h-heatmap-tab'}}">
+		<div  class="results-wrapper">	
+			<div class="results-header clearfix">        				
+			 <div class="btn-toolbar pull-right" role="toolbar" mui-yank="action-menu">
+		       <div class="btn-group">				
+					<a class="btn btn-info pull-right" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
+		              Create Selections
+		            </a>  
+	            </div>	          
+			</div>
+			<div class="results-body">
+				<div class="nmf-heatmap-wrapper">
+                    <div id="{{'nmf-' + analysis.randomId + '-h-heatmap'}}" class="loqui-scrollable nmf-Heatmap-Visualization"                     
+                    data="heatmap.h" selection-params="selectionParams" selection-dimension="column"></div>
+                </div>
+			</div>
+		</div>
+	</div>
+	
+</div>    
+
+
+<bsmodal bindid="{{'selectionAdd' + analysis.name}}" func="" header="Add New Selection for {{analysis.name}}">
+
+	<div class="row">
+	
+		<form-group>
+			<form>
+				Name: <input type="text" class="input-small" ng-model="selectionParams.name">
+			<form>
+		</form-group>
+	
+	</div>
+	
+	<div class="row">
+		<a class="btn btn-success pull-right" ng-click="addSelections()" data-dismiss="modal" aria-hidden="true">
+		  Create Selections
+		</a>
+    </div>
+</bsmodal>

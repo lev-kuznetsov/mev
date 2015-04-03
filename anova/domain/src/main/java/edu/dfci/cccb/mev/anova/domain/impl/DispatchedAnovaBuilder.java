@@ -14,11 +14,9 @@
  */
 package edu.dfci.cccb.mev.anova.domain.impl;
 
-import java.util.List;
-
+import lombok.Getter;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.anova.domain.contract.Anova2;
-import edu.dfci.cccb.mev.anova.domain.prototype.AbstractAnova2;
 import edu.dfci.cccb.mev.dataset.domain.r.AbstractDispatchedRAnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Parameter;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.R;
@@ -35,24 +33,9 @@ public class DispatchedAnovaBuilder extends AbstractDispatchedRAnalysisBuilder<D
   private @Parameter String[] group;
   private @Parameter double pValue;
 
-  private @Result List<SimpleEntry2> result;
+  private @Getter @Result Anova2 result;
 
   public DispatchedAnovaBuilder () {
     super ("Anova Analysis");
-  }
-
-  /* (non-Javadoc)
-   * @see
-   * edu.dfci.cccb.mev.dataset.domain.r.AbstractDispatchedRAnalysisBuilder#
-   * result() */
-  @Override
-  protected Anova2 result () {
-    return new AbstractAnova2 () {
-
-      @Override
-      public Iterable<? extends Entry2> entries () {
-        return result;
-      }
-    };
   }
 }
