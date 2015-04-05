@@ -7,8 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
-import edu.dfci.cccb.mev.survival.domain.contract.SurvivalAnalysisBuilder;
+import edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver;
+import edu.dfci.cccb.mev.survival.domain.contract.SurvivalAnalysis;
 import edu.dfci.cccb.mev.survival.domain.impl.SimpleSurvivalAnalysisBuilder;
 
 @Configuration
@@ -16,9 +16,14 @@ import edu.dfci.cccb.mev.survival.domain.impl.SimpleSurvivalAnalysisBuilder;
 public class SurvivalAnalysisConfiguration {
 
   @Bean
-  @Named("survival.analysis.builder")
+  @Named ("survival.analysis.builder")
   @Scope ("prototype")
-  public SimpleSurvivalAnalysisBuilder builder(){
-    return new SimpleSurvivalAnalysisBuilder();
+  public SimpleSurvivalAnalysisBuilder builder () {
+    return new SimpleSurvivalAnalysisBuilder ();
+  }
+
+  @Bean
+  public AnalysisPathVariableMethodArgumentResolver<SurvivalAnalysis> resolver () {
+    return new AnalysisPathVariableMethodArgumentResolver<> (SurvivalAnalysis.class);
   }
 }
