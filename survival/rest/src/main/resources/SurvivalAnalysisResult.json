@@ -3,7 +3,7 @@
 	"n_event" : 7,
 	"coef" : -0.2214,
 	"exp_coef" : 0.8014,
-	"se_ceof" : 0.7829,
+	"se_coef" : 0.7829,
 	"z" : -0.2829,
 	"pValue" : 0.7773,
 	"ci_lower" : 0.1728,
