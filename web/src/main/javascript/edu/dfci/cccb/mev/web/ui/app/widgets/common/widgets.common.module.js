@@ -11,6 +11,7 @@ function(ng){
 	                                            "mui.widgets.common.sideMenu",
 	                                            "mui.widgets.common.panel",
 	                                            "mui.widgets.common.layout",
-	                                            "mui.widgets.common.yank"]);
+	                                            "mui.widgets.common.yank",
+	                                            "mui.widgets.common.plots"]);
 	return module;
 });

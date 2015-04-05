@@ -43,7 +43,7 @@ function(ng, AnalyisEventBus){
 				shortName: "deseq",
 				viewModel: "DESeqVM"
 			},
-			"Survival Function": {
+			"Survival Analysis": {
 				shortName: "survival",
 				viewModel: "SurvivalVM"
 			},
@@ -61,7 +61,7 @@ function(ng, AnalyisEventBus){
 				anova: "Anova Analysis",
 				deseq: "DESeq Differential Expression Analysis",
 				nmf: "Non-Negative Matrix Factorization",
-				survival: "Survival Function"
+				survival: "Survival Analysis"
 		} 
 	});	
 	return module;

@@ -1,5 +1,5 @@
 define(["ng", "lodash"], function(ng, _){
-	var module = ng.module("mui.views.dataset.analysis.anova", []);
+	var module = ng.module("mui.views.dataset.analysis.survival", []);
 	module.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider){}])
 	.controller("SurvivalVM", ["$scope", "$state", "$stateParams", "project", "analysis",
 	                        function($scope, $state, $stateParams, project, analysis){
@@ -7,7 +7,7 @@ define(["ng", "lodash"], function(ng, _){
 		this.analysisId=$stateParams.analysisId;
 		this.analysis=analysis;
 		this.project=project;
-		scope.dataset=project.dataset;
+		$scope.dataset=project.dataset;
 		
 //		project.generateView({
 //            viewType:'heatmapView', 
