@@ -5,11 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.survival.domain.contract.SurvivalInputEntry;
-import edu.dfci.cccb.mev.survival.domain.contract.SurvivalInputEntryTcga;
 
 @ToString
 @NoArgsConstructor
