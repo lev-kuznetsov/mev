@@ -17,10 +17,6 @@ package edu.dfci.cccb.mev.deseq.domain.cli;
 
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static java.util.Arrays.asList;
-import static org.hamcrest.Matchers.any;
-import static org.hamcrest.Matchers.closeTo;
-import static org.junit.Assert.assertThat;
-
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Properties;

@@ -20,7 +20,6 @@ import static org.hamcrest.Matchers.*;
 
 import javax.script.ScriptEngineManager;
 
-import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 import edu.dfci.cccb.mev.stats.domain.contract.Fisher;
