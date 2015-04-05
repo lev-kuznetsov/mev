@@ -73,11 +73,6 @@
 	                    
 	                    scope.testInit = function(){
 	                        
-	                        var message = "Starting ANOVA for "
-	                            + scope.params.name + " analysis.";
-	
-	                        var header = "ANOVA";
-	                        
 	                        if (scope.params.selections.length < 2) {
 	                            
 	                            message = "Can't start ANOVA for "
@@ -88,8 +83,6 @@
 	                            alertService.info(message,header);
 	                            return
 	                        }
-	                        
-	                        alertService.info(message,header);
 	                        
 	                        var analysisData = {
 	                        	datasetName : scope.dataset.datasetName,
@@ -105,28 +98,7 @@
 	                        
 	                        
 	                        scope.dataset.analysis
-	                        .postf(analysisData, JSON.stringify(scope.params.selections),
-		                        function(data, status, headers, config) {
-		                            
-	                        		scope.dataset.loadAnalyses();
-	                        		
-		                            var message = "ANOVA for "
-		                            	+ scope.params.name + " complete!";
-		
-		                            var header = "ANOVA";
-		                                         
-		                            alertService.success(message,header);
-		                                    
-		                         }, function(data, status, headers, config) {
-		                            
-		                            var message = "Could not perform ANOVA. If "
-		                                + "problem persists, please contact us.";
-		                            var header = "Clustering Problem (Error Code: "
-		                                + status
-		                                + ")";
-		                            alertService.error(message,header);
-	                            
-	                        });
+	                        .postf(analysisData, JSON.stringify(scope.params.selections));
 	                    };
 	                }
 	            }
@@ -232,7 +204,7 @@
 	    					analysisName:scope.params.name,
 	    					experiment: scope.params.experiment.name,
 	    					control: scope.params.control.name
-	    				},{}, success, failure)
+	    				},{})
 	    				
 	    			}
 	
@@ -374,7 +346,7 @@
 		    					t: tables[table][1].below,
 		    					hypothesis: scope.params.hypothesis.value,
 		    					simulate: scope.params.simulate.value
-		    				}, success, failure)
+		    				})
 							
 						}
 						
@@ -440,7 +412,7 @@
 	    					pair: scope.params.pair.value,
 	    					confidentInterval: scope.params.confidentInterval.value,
 	    					hypothesis: scope.params.hypothesis.value
-						}, success, failure)
+						})
 	    			}
 	    		}
 	    	}
@@ -498,29 +470,7 @@
 	                        	datasetName : scope.dataset.datasetName, 
 	                            analysisType : scope.params.sampleType.url
 	                            
-	                    	}, scope.getPostData(), 
-	                        function(data, status, headers, config) {
-	                    	
-	                    		scope.dataset.loadAnalyses()
-	                    		var message = "t-Test analysis for "
-	                    			+ scope.params.name + " complete!";
-	
-	                            var header = "t-Test Analysis";
-	                                         
-	                            alertService.success(message,header);
-	                                    
-	                        },
-	                        
-	                        function(data, status, headers, config) {
-	                            
-	                            var message = "Could not perform t-Test. If "
-	                                + "problem persists, please contact us.";
-	                            var header = "Clustering Problem (Error Code: "
-	                                + status
-	                                + ")";
-	                            alertService.error(message,header);                                            
-	                            
-	                        });
+	                    	}, scope.getPostData());
 	                    };
 	                }
 	            };
@@ -563,13 +513,6 @@
 	
 	                    scope.testInit = function() {
 	
-	                        var message = "Started clustering analysis for "
-	                            + scope.params.name;
-	
-	                        var header = "Hierarchical Clustering Analysis";
-	                         
-	                        alertService.info(message,header);
-	
 	                        var analysisData = {
 	                        	name : scope.params.name,
 	                        	dimension : scope.params.dimension.value,
@@ -589,29 +532,7 @@
 	                        	datasetName : scope.dataset.datasetName, 
 	                            analysisType : 'hcl'
 	                            
-	                    	}, analysisData, 
-	                        function(data, status, headers, config) {
-	                            
-	                        	scope.dataset.loadAnalyses();
-	                        	
-	                            var message = "Clustering analysis for "
-	                                + scope.params.name + " complete!";
-	
-	                            var header = "Hierarchical Clustering Analysis";
-	                             
-	                            alertService.success(message,header);
-	                                                                
-	                        },
-	                        function(data, status, headers, config) {
-	                            
-	                            var message = "Could not perform clustering. If "
-	                                + "problem persists, please contact us.";
-	                            var header = "Clustering Problem (Error Code: "
-	                                + status
-	                                + ")";
-	                            alertService.error(message,header);
-	                            
-	                        });
+	                    	}, analysisData);
 	
 	                    };
 	
@@ -659,14 +580,7 @@
 	                        }
 	                        
 	                        scope.testInit = function(){
-	                            
-	                            var message = "Started K-Means analysis for "
-	                                + scope.params.analysisName;
-	
-	                            var header = "K-Means Clustering Analysis";
-	                             
-	                            alertService.info(message,header);
-	                            
+	                            	                            
 	                            var analysisData = {
 	                            	name : scope.params.analysisName,
 	                            	dimension : scope.params.analysisDimension,
@@ -686,31 +600,7 @@
 		                                + ",metric=" + analysisData.metric.value
 		                                + ",iterations=" + analysisData.iterations
 		                                + ",convergence=" + analysisData.convergence
-	                            }, {},
-	                            
-	                            function(data, status, headers, config) {
-	                                
-	                            	scope.dataset.loadAnalyses();
-	                            	
-	                                var message = "K-Means analysis for "
-	                                    + scope.params.analysisName + " complete!";
-	
-	                                var header = "K-Means Clustering Analysis";
-	                                 
-	                                alertService.success(message,header);
-		                            
-		                        },
-	                                            
-	                            function(data, status, headers, config) {
-	                                        
-	                                var message = "Could not perform k-means clustering. If "
-	                                    + "problem persists, please contact us.";
-	                                var header = "Clustering Problem (Error Code: "
-	                                    + status
-	                                    + ")";
-	                                alertService.error(message,header);
-	                                
-	                            });
+	                            }, {});
 	                        }
 	                    }
 	
@@ -830,13 +720,6 @@
 	            						return
 	            					}
 	                  
-	                                var message = "Started limma analysis for "
-	                                    + scope.params.name;
-	
-	                                var header = "LIMMA Analysis";
-	                                 
-	                                alertService.info(message,header);
-	
 	                                var analysisData = {
 	                            		analysisType: 'limma',
 	                                	datasetName: scope.dataset.datasetName,
@@ -852,30 +735,6 @@
 	                                
 	                                scope.dataset.analysis.post3(analysisData, {
 	                                	
-	                                },
-	                                function(data, status, headers, config) {
-	                                    
-	                                	scope.dataset.loadAnalyses();
-	                                	
-	                                    var message = "Completed limma analysis for "
-	                                        + analysisData.analysisName;
-	
-	                                    var header = "LIMMA Analysis Complete";
-	                                     
-	                                    alertService.success(message,header);
-	                                    
-	                                    
-	                                },
-	                                function(data, status, headers, config) {
-	                                    var message = "Error on limma analysis for "
-	                                        + analysisData.analysisName;
-	
-	                                    var header = "LIMMA Analysis Problem (Error Code: "
-	                                        + status
-	                                        + ")";
-	                                     
-	                                    alertService.error(message,header);
-	                                    
 	                                });                                              
 	                                
 	
