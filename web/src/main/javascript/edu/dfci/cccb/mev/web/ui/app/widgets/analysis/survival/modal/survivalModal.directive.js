@@ -26,15 +26,21 @@ define(["ng"], function(ng){
              	
                 scope.testInit = function(){                	
                 	var postData = getPostData();
-                	SurvivalAnalysisSrv.getInputDataTcga(postData).then(function(data){                		
-                		postData.input=data;
-                		console.debug("Survival postdata", postData);
-                		scope.dataset.analysis.post({
-	   	                    datasetName : scope.dataset.datasetName, 
-	   	                    analysisType : "survival"
-                		}, postData);
-                	});
-                    
+                	                		
+            		SurvivalAnalysisSrv.getInputDataTcga(postData).then(function(data){                		
+            			postData.input=data;
+            			
+            			console.debug("Survival postdata", postData);
+            			                			
+            			scope.dataset.analysis.post({
+            				datasetName : scope.dataset.datasetName, 
+            				analysisType : "survival"
+            			}, postData);
+            		})["catch"](function(e){
+            			alertService.error("Could not launch Survival Analysis: " + e);
+        				return postData;
+            		});
+                	
                 };
                 
                 scope.columnList=SurvivalColumnList.get();
