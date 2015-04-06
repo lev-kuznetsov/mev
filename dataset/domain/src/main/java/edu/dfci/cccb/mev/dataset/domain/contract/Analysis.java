@@ -16,8 +16,6 @@ package edu.dfci.cccb.mev.dataset.domain.contract;
 
 import java.util.Calendar;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
  * @author levk
  * 

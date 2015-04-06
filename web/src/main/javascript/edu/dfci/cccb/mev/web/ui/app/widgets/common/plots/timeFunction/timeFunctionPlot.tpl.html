@@ -1,0 +1,47 @@
+<div>
+
+<div id="survival-function-plot" class="plot"></div>
+<div class="plot-summary">
+<h1>Summary</h1>
+<table>
+<tr><td>n</td><td>{{analysis.result.n}}</td></tr>
+<tr><td>n of events</td><td>{{analysis.result.n_event}}</td></tr>
+<tr><td>coef</td><td>{{analysis.result.coef}}</td></tr>
+<tr><td>exp(coef)</td><td>{{analysis.result.exp_coef}}</td></tr>
+<tr><td>se(coef)</td><td>{{analysis.result.se_coef}}</td></tr>
+<tr><td>z</td><td>{{analysis.result.z}}</td></tr>
+<tr><td>pValue</td><td>{{analysis.result.pValue}}</td></tr>
+<tr><td>upper CI</td><td>{{analysis.result.ci_lower}}</td></tr>
+<tr><td>lower CI</td><td>{{analysis.result.ci_upper}}</td></tr>
+<tr><td>logrank</td><td>score: {{analysis.result.logrank.score}}, pValue: {{analysis.result.logrank.pValue}}</td></tr>
+</table>
+</div>
+<table ng-if="false">
+	<th>Time</th>
+	<th>{{analysis.params.experiment.name}}</th>
+	<th>{{analysis.params.control.name}}</th>
+	<tr ng-repeat="entry in plotData[0]">
+		<td>{{entry.time}}</td>
+		<td>{{entry.haz}}</td>
+		<td>{{plotData[1][$index].haz}}</td>
+	</tr>
+</table>
+<style>
+.plot path {
+    stroke: #000;
+    stroke-width: ", line.size ,"px;
+    fill: none;
+}
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 12px;
+}
+</style>
+</div>

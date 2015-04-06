@@ -33,8 +33,6 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.Synchronized;
 import lombok.ToString;
-import lombok.extern.log4j.Log4j;
-
 import org.apache.commons.io.IOUtils;
 
 import edu.dfci.cccb.mev.deseq.domain.prototype.AbstractDESeq;
@@ -45,7 +43,6 @@ import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
  * 
  */
 @ToString
-@Log4j
 public class FileBackedDESeq extends AbstractDESeq implements AutoCloseable {
 
   private @Getter final File full;

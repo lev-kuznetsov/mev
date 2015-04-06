@@ -37,6 +37,7 @@ import edu.dfci.cccb.mev.limma.rest.configuration.LimmaRestConfiguration;
 import edu.dfci.cccb.mev.nmf.rest.configuration.NmfRestConfiguration;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 import edu.dfci.cccb.mev.stats.rest.configuration.StatsRestConfiguration;
+import edu.dfci.cccb.mev.survival.rest.configuration.SurvivalAnalysisConfiguration;
 import edu.dfci.cccb.mev.t_test.rest.configuration.TTestRestConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
 
@@ -70,6 +71,8 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     mvcContext.register (StatsRestConfiguration.class);
     mvcContext.register (DESeqRestConfiguration.class);
     mvcContext.register (NmfRestConfiguration.class);
+	mvcContext.register (SurvivalAnalysisConfiguration.class);
+    
 
     DispatcherServlet dispatcher = new DispatcherServlet (mvcContext);
 

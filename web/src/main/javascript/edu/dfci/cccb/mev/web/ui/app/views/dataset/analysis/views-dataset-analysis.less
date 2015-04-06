@@ -102,9 +102,14 @@
 	}
 	
 	results-table,
-	.results-body{
-		table{			
+	.results-wrapper{
+		table{						
+			.table();
+			.table-striped();
+			.table-bordered();
+			.table-condensed();
 			border: 0px none;
+
 			tr{
 				th,td{					
 					vertical-align: top;
@@ -122,6 +127,14 @@
 					}
 				}
 				th{
+					.input-group {
+						> .form-control,
+						> .input-group-addon,
+						.input-group-btn > .btn{
+							.input-sm();
+						}
+					}
+										
 					&:first-child{						
 						padding-left: 0;
 					}
@@ -156,6 +169,32 @@
 				&.ng-dirty{
 					background-color: lighten(@brand-warning, 40%);
 				}
+			}
+		}
+		.plot{
+			display: inline-block;
+		}
+		.plot + .plot-summary{
+			display: inline-block;
+			vertical-align: top;
+		}
+		.plot-summary{
+			> h1:first-child{
+				margin: 0;
+				padding-bottom: @padding-base-vertical;				
+				font-size: @font-size-base;
+				font-weight: bold;
+			}
+			> table{				
+				.table();
+				.table-striped();
+				.table-bordered();
+				.table-condensed();
+				width: 30%;	
+				tr {
+					> td:nth-child(2){
+					}
+				}		
 			}
 		}
 				

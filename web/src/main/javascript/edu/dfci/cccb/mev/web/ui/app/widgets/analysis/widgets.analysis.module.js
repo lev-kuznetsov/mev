@@ -1,6 +1,7 @@
 define(["ng", 
         "./limma/widgets.analysis.limma.module", 
         "./hcl/widgets.analysis.hcl.module", 
+        "./survival/widgets.analysis.survival.module",
         "./default/widgets.analysis.default.module",
         "./analysisModal/widgets.analysis.modal.module",
         "./analysisLog/widgets.analysis.log.module"
@@ -8,6 +9,7 @@ define(["ng",
 function(ng, AnalyisEventBus){
 	var module = ng.module("mui.widgets.analysis", ["mui.widgets.analysis.limma",
 	                                                "mui.widgets.analysis.hcl",
+	                                                "mui.widgets.analysis.survival",
 	                                                "mui.widgets.analysis.default",
 	                                                "mui.widgets.analysis.modal",
 	                                                "mui.widgets.analysis.log"
@@ -41,6 +43,10 @@ function(ng, AnalyisEventBus){
 				shortName: "deseq",
 				viewModel: "DESeqVM"
 			},
+			"Survival Analysis": {
+				shortName: "survival",
+				viewModel: "SurvivalVM"
+			},
 			"nmf":{
 				shortName: "nmf",
 				viewModel: "NmfVM"
@@ -54,8 +60,8 @@ function(ng, AnalyisEventBus){
 				fisher: "Fisher test",
 				anova: "Anova Analysis",
 				deseq: "DESeq Differential Expression Analysis",
-				nmf: "Non-Negative Matrix Factorization"
-					
+				nmf: "Non-Negative Matrix Factorization",
+				survival: "Survival Analysis"
 		} 
 	});	
 	return module;

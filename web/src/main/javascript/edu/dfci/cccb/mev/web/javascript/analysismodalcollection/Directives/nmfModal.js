@@ -71,13 +71,6 @@
 	                    		return
 	                    	}
 	                        
-	                        var message = "Starting NMF for "
-	                            + scope.params.name;
-	
-	                        var header = "Non-Negative Matrix Factorization";
-	                        
-	                        alertService.info(message,header);
-	                        
 	                        var analysisData = {
 	                        	datasetName : scope.dataset.datasetName,
 	                        	analysisType : "nmf",

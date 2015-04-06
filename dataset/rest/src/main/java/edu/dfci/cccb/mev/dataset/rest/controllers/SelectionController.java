@@ -55,7 +55,6 @@ import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.export.DatasetExportRawInput;
-import edu.dfci.cccb.mev.dataset.domain.mock.MockTsvInput;
 
 /**
  * @author levk

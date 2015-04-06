@@ -14,8 +14,6 @@
  */
 package edu.dfci.cccb.mev.stats.domain.cli;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

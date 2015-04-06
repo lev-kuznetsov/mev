@@ -191,6 +191,14 @@
         <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
+	<!-- Survival -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-survival-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
     <!-- Servlet -->
 
     <dependency>
@@ -294,6 +302,11 @@
       <version>${requirejs.version}</version>
     </dependency>
 
+    <dependency>
+    	<groupId>net.wimpi</groupId>
+    	<artifactId>telnetd-x</artifactId>
+    	<version>2.1.1</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -437,18 +450,19 @@
             <fileio>disable</fileio>
             <encoding>utf8</encoding>
           </setup>
-          <onInitialize>
-            sapply (c ("devtools", "NMF"), function (lib)
-              if (!requireNamespace (lib))
-                install.packages (lib, repos="http://cran.rstudio.com"));
-            if (!requireNamespace ("amap"))
-              devtools::install_url ("https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/amap/0.8-12/amap_0.8-12.tar.gz");
-            if (!requireNamespace ("ctc"))
-              devtools::install_url ("https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/ctc/1.40.0/ctc_1.40.0.tar.gz");
-            if (!requireNamespace ("injectoR"))
-              devtools::install_github ("dfci-cccb/injectoR");
-          </onInitialize>
+<!--           <onInitialize> -->
+<!--             sapply (c ("devtools", "NMF"), function (lib) -->
+<!--               if (!requireNamespace (lib)) -->
+<!--                 install.packages (lib, repos="http://cran.rstudio.com")); -->
+<!--             if (!requireNamespace ("amap")) -->
+<!--               devtools::install_url ("https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/amap/0.8-12/amap_0.8-12.tar.gz"); -->
+<!--             if (!requireNamespace ("ctc")) -->
+<!--               devtools::install_url ("https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/ctc/1.40.0/ctc_1.40.0.tar.gz"); -->
+<!--             if (!requireNamespace ("injectoR")) -->
+<!--               devtools::install_github ("dfci-cccb/injectoR"); -->
+<!--           </onInitialize> -->
           <onRequest>
+            .libPaths (.libPaths ()[ -1 ]);
             library (injectoR);
             source ("../dataset/domain/src/main/r/json.R");
             source ("../nmf/domain/src/main/r/nmf.r");

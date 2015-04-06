@@ -31,8 +31,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.rest.google.SecurityContext;
 import edu.dfci.cccb.mev.web.domain.social.Drive;
 
@@ -46,8 +44,6 @@ import edu.dfci.cccb.mev.web.domain.social.Drive;
 public class DriveController {
 
   private @Inject Google google;
-  private @Inject Workspace workspace;
-  private @Inject DatasetBuilder builder;
 
   @RequestMapping (method = RequestMethod.GET)
   @SneakyThrows (UnsupportedEncodingException.class)
