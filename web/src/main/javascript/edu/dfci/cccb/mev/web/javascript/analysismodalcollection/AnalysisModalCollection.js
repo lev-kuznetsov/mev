@@ -71,19 +71,35 @@
 	                        }
 	                    })
 	                    
+	                    scope.$watch('params.pvalue', function(newval){
+	                    	if (newval){
+	                    		if (parseFloat(newval) > .05) {
+	                    			alertService.info("Cannot start ANOVA with P-value greater than .05", "ANOVA Parameter Warning")
+	                    		}
+	                    	}
+	                    })
+	                    
+	                    var parametersOK = function(){
+	                    	
+	                    	var notEnoughGroups = scope.params.selections.length < 2
+	                    	var sillyPValue = parseFloat(scope.params.pvalue) > .05
+		    				
+		    				var failing = (!scope.params.name || notEnoughGroups || sillyPValue)
+		
+		    				return !failing
+		    			}
+	                    
 	                    scope.testInit = function(){
 	                        
-	                        if (scope.params.selections.length < 2) {
+	                        if (!parametersOK()) {
 	                            
-	                            message = "Can't start ANOVA for "
-	                                + scope.params.name + " with less than two groups.";
+	                            message = "Bad analysis parameters selection";
 	
-	                            header = "ANOVA";
+	                            header = "ANOVA Start Error";
 	                            
-	                            alertService.info(message,header);
+	                            alertService.error(message, header);
 	                            return
 	                        }
-	                        
 	                        var analysisData = {
 	                        	datasetName : scope.dataset.datasetName,
 	                        	analysisType : "anova",
@@ -244,27 +260,26 @@
 	                    hypothesis: [{name:'Two-sided', value:'two.sided'},{name:'Greater', value:'greater'},{name:'Less', value:'less'}]
 	    			}
 	    			
+	    			var parametersOK = function(){
+                    	
+	    				var failing = (!scope.params.name || !scope.params.population || 
+	    						!scope.params.selection1 || !scope.params.selection2 ||
+	    						!scope.params.threshold)
+	
+	    				return !failing
+	    			}
+	    			
 	    			scope.testInit = function(){
 	    				
-	    				var success = function(data, status, headers, config){
-	
-							scope.dataset.loadAnalyses()
-	                		var message = "Fisher's Test analysis for "
-	                			+ scope.params.name + " complete!"
-	
-	                        var header = "Fisher's Test Analysis"
-	
-	                        alertService.success(message,header)
-	    				}
-	    				
-	    				var failure = function(data, status, headers, config) {
-	                        var message = "Could not perform Fisher's Test analysis. If "
-	                            + "problem persists, please contact us.";
-	                        var header = "Fisher's Test Problem (Error Code: "
-	                            + status
-	                            + ")";
-	                        alertService.error(message,header);  
-	    				}
+	    				if (!parametersOK()) {
+                            
+                            message = "Bad analysis parameters selection";
+
+                            header = "F-Test Start Error";
+                            
+                            alertService.error(message, header);
+                            return
+                        }
 	    				
 	    				var experiments = [];
 	
@@ -294,8 +309,6 @@
 	    				}
 	    				
 						var experiments = []
-						
-						console.log(scope.params.population)
 					
 						for (population in scope.params.population.keys) {
 							
@@ -308,7 +321,6 @@
 	    					
 	    				}
 	    				
-	
 						var tables = []
 						
 						for (experiment in experiments){
@@ -323,17 +335,28 @@
 							}
 							
 						}
+						
+						var success = function(data, status, headers, config){
+							
+							scope.dataset.loadAnalyses()
+	                		var message = "Fisher's Test analysis for "
+	                			+ scope.params.name + " complete!"
+	
+	                        var header = "Fisher's Test Analysis"
+	
+	                        alertService.success(message,header)
+	    				}
+	    				
+	    				var failure = function(data, status, headers, config) {
+	                        var message = "Could not perform Fisher's Test analysis. If "
+	                            + "problem persists, please contact us.";
+	                        var header = "Fisher's Test Problem (Error Code: "
+	                            + status
+	                            + ")";
+	                        alertService.error(message,header);  
+	    				}
 					
 						for (table in tables){
-							
-							console.log({
-		    					m: tables[table][0].above,
-		    					n: tables[table][1].above,
-		    					s: tables[table][0].below,
-		    					t: tables[table][1].below,
-		    					hypothesis: scope.params.hypothesis.value,
-		    					simulate: scope.params.simulate.value
-		    				})
 							
 							scope.dataset.analysis.post3({
 								datasetName:scope.dataset.datasetName,
@@ -381,7 +404,26 @@
 	                    hypothesis: [{name:'Two-sided', value:'two.sided'},{name:'Greater', value:'greater'},{name:'Less', value:'less'}]
 	    			}
 	    			
+	    			var parametersOK = function(){
+                    	
+	    				var failing = (!scope.params.name || !scope.params.pair || 
+	    						!scope.params.selection1 || !scope.params.selection2 ||
+	    						!scope.params.confidentInterval || !scope.params.hypothesis)
+	
+	    				return !failing
+	    			}
+	    			
 	    			scope.testInit = function(){
+	    				
+	    				if (!parametersOK()) {
+	                        
+	                        message = "Bad analysis parameters selection";
+
+	                        header = "Wilcoxon Test Start Error";
+	                        
+	                        alertService.error(message, header);
+	                        return
+	                    }
 	    				
 	    				var success = function(data, status, headers, config){
 	
@@ -440,12 +482,15 @@
 	                    		sampleTypes: [{label: "one sample", url:"one_sample_ttest"}, 
 	                    		        {label: "two sample", url:"two_sample_ttest"}]
 	                    };
+	                    
 	                    scope.isOneSample = function(){
 	                		return scope.params.sampleType.url=='one_sample_ttest';
 	                	};
+	                	
 	                	scope.isTwoSample = function(){
 	                		return scope.params.sampleType.url=='two_sample_ttest';
 	                	};
+	                	
 	                	scope.getPostData = function(){
 	                		var postRequest = {
 	                			name: scope.params.name,
@@ -462,9 +507,26 @@
 	                			postRequest.assumeEqualVariance=scope.params.assumeEqualVariance
 	                		}
 	                		return postRequest;                                		
-	                	};                                	
+	                	};  
+	                	
+	                	var parametersOK = function(){
+	                    	
+		    				var failing = (!scope.params.name)
+		
+		    				return !failing
+		    			}
+	                	
 	                    scope.testInit = function(){
 	                        
+	                    	if (!parametersOK()) {
+		                        
+		                        message = "Bad analysis parameters selection";
+
+		                        header = "T-Test Start Error";
+		                        
+		                        alertService.error(message, header);
+		                        return
+		                    }
 	
 	                    	scope.dataset.analysis.post({
 	                        	datasetName : scope.dataset.datasetName, 
@@ -510,9 +572,26 @@
 	                    }
 	                    
 	                    scope.params.selectedMetric = {name:"Euclidean", value:"euclidean"}
+	                    
+	                    var parametersOK = function(){
+	                    	
+		    				var failing = (!scope.params.name)
+		
+		    				return !failing
+		    			}
 	
 	                    scope.testInit = function() {
-	
+		                	
+		                	if (!parametersOK()) {
+		                        
+		                        message = "Bad analysis parameters selection";
+
+		                        header = "Hierarchical Start Error";
+		                        
+		                        alertService.error(message, header);
+		                        return
+		                    }
+	                    	
 	                        var analysisData = {
 	                        	name : scope.params.name,
 	                        	dimension : scope.params.dimension.value,
@@ -520,14 +599,6 @@
 	                        	linkage : scope.params.linkage.value
 	                        };
 	                        
-	//                        scope.dataset.analysis.postf({
-	//                            datasetName : scope.dataset.datasetName,
-	//                            analysisType : 'hcl',
-	//                            analysisName : analysisData.name,
-	//                            analysisParams : analysisData.dimension + ','
-	//                                + analysisData.metric + ','
-	//                                + analysisData.linkage
-	//                        }, {},
 	                        scope.dataset.analysis.post({
 	                        	datasetName : scope.dataset.datasetName, 
 	                            analysisType : 'hcl'
@@ -579,7 +650,26 @@
 	                                'analysisConvergence': 0
 	                        }
 	                        
+	                        var parametersOK = function(){
+		                    	
+			    				var failing = (!scope.params.analysisName)
+			
+			    				return !failing
+			    			}
+			                	
+			                	
+	                        
 	                        scope.testInit = function(){
+	                        	
+	                        	if (!parametersOK()) {
+			                        
+			                        message = "Bad analysis parameters selection";
+
+			                        header = "K-Means Clustering Start Error";
+			                        
+			                        alertService.error(message, header);
+			                        return
+			                    }
 	                            	                            
 	                            var analysisData = {
 	                            	name : scope.params.analysisName,
