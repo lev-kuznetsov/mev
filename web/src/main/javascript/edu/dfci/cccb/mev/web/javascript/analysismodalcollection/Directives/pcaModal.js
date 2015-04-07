@@ -46,6 +46,13 @@
 	                            scope.params.selections = []
 	                        }
 	                    })
+
+	                    var parametersOK = function(){
+
+		    				var failing = (!scope.params.name)
+		
+		    				return !failing
+		    			}
 	                    
 	                    scope.initialize = function(){
 	                        
@@ -53,6 +60,16 @@
 	                            + scope.params.name;
 	
 	                        var header = "Principal Components Analysis";
+
+	                        if (!parametersOK()) {
+	                            
+	                            message = "Bad analysis parameters selection";
+	
+	                            header = "PCA Start Error";
+	                            
+	                            alertService.error(message, header);
+	                            return
+	                        }
 	                        
 	                        if (scope.params.selections.length < 1) {
 	                            
@@ -61,7 +78,7 @@
 	
 	                            header = "Principal Components Analysis";
 	                            
-	                            alertService.info(message,header);
+	                            alertService.error(message,header);
 	                            return
 	                        }
 	                        

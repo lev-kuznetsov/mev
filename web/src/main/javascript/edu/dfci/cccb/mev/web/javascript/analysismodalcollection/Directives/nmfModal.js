@@ -62,14 +62,27 @@
 	                          scope.params.selections.push(decked.name)
 	                      }
 	                    };
+
+	                    var parametersOK = function(){
+
+                            var noRankSelected = typeof scope.params.rank == 'undefined' 		    				
+                            var rankTooHigh = parseFloat(scope.params.rank) > 20 		    				
+		    				var failing = (!scope.params.name || noRankSelected || rankTooHigh)
+		
+		    				return !failing
+		    			}
 	                    
 	                    scope.initialize = function(){
-	                    	
-	                    	if (typeof scope.params.rank == 'undefined' ){
-	                    		alertService.error("Cannot create NMF with rank greater than 20",
-	                    				"Non-Negative Matrix Factorization")
-	                    		return
-	                    	}
+
+	                        if (!parametersOK()) {
+	                            
+	                            message = "Bad analysis parameters selection";
+	
+	                            header = "NMF Start Error";
+	                            
+	                            alertService.error(message, header);
+	                            return
+	                        }
 	                        
 	                        var analysisData = {
 	                        	datasetName : scope.dataset.datasetName,
