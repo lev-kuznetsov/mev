@@ -445,11 +445,7 @@
         <groupId>edu.dfci.cccb</groupId>
         <artifactId>rserve-maven-plugin</artifactId>
         <version>0.0.7</version>
-        <configuration>
-          <setup>
-            <fileio>disable</fileio>
-            <encoding>utf8</encoding>
-          </setup>
+        <configuration>          
 <!--           <onInitialize> -->
 <!--             sapply (c ("devtools", "NMF"), function (lib) -->
 <!--               if (!requireNamespace (lib)) -->
@@ -461,6 +457,11 @@
 <!--             if (!requireNamespace ("injectoR")) -->
 <!--               devtools::install_github ("dfci-cccb/injectoR"); -->
 <!--           </onInitialize> -->
+		  <configure>
+		    <workdir>${mev.java.io.tmpdir}/Rserve</workdir>
+		    <encoding>utf8</encoding>
+		    <fileio>disable</fileio>
+		  </configure>
           <onRequest>
             .libPaths (.libPaths ()[ -1 ]);
             library (injectoR);
