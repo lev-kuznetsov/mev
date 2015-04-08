@@ -24,5 +24,14 @@
      </div>
      
 </ng-form> 
-		
-<a class="btn btn-success btn-block" ng-click="initialize()" data-dismiss="modal" aria-hidden="true">Analyze</a>
+
+<p class="bg-danger" 
+ng-disabled="{{!project.dataset.expression.min < 0}}">
+This data has negative values, so non-negative matrix factorization cannot be done. 
+</p>
+
+<a class="btn btn-success btn-block" 
+    ng-click="initialize()"
+    data-dismiss="modal" 
+    ng-disabled="{{project.dataset.expression.min < 0}}" 
+    aria-hidden="true">AnalyzeR</a>
