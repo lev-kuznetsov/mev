@@ -180,25 +180,6 @@
 	    					.intersection({'selection1':set1, 'selection2':set2, 'dimension':'column'})
 	    				return (intersection.length == 0)
 	    			}
-	    			
-	    			var success = function(data, status, headers, config){
-						scope.dataset.loadAnalyses()
-	            		var message = "DESeq analysis for "
-	            			+ scope.params.name + " complete!";
-	
-	                    var header = "DESeq Analysis";
-	
-	                    alertService.success(message,header);
-					}
-	    			
-					var failure = function(data, status, headers, config) {
-	                    var message = "Could not perform DESeq Analysis. If "
-	                        + "problem persists, please contact us.";
-	                    var header = "DESeq Analysis Problem (Error Code: "
-	                        + status
-	                        + ")";
-	                    alertService.error(message,header);  
-					}
 					
 					scope.testInit = function(){
 						
@@ -207,13 +188,6 @@
 							return
 						}
 						
-						var message = "Starting DESeq "
-	                        + scope.params.name + " analysis.";
-	
-	                    var header = "DESeq Analysis Start";
-	                    
-	                    alertService.info(message, header)
-	    				
 	    				scope.dataset.analysis.post3({
 	    					datasetName:scope.dataset.datasetName,
 	    					analysisType:'deseq',
