@@ -65,11 +65,20 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 			ranger : ranger
 		};
 
-                this.expression.retrieve = function(input){
-                    return expressionModule.retrieve.call(self, input)
-                } 
+        //Integer expressions check
+	    for (var k = 0; k < datasetRespObj.values.length; k++){	
+            if (datasetRespObj.values[k].value % 1 != 0) {
+                self.expression.hasNonIntegerValues = true 
+                break
+            }
+        }
+	    
 
-		
+        this.expression.retrieve = function(input){
+            return expressionModule.retrieve.call(self, input)
+        } 
+
+
 		this.expression.sort = selectionSort;
 
 		this.column = datasetRespObj.column;

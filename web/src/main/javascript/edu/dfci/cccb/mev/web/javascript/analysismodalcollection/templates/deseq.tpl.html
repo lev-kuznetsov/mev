@@ -19,5 +19,15 @@
      </div>
      
 </form> 
-		
-<a class="btn btn-success btn-block" ng-click="testInit()" data-dismiss="modal" aria-hidden="true">Analyze</a>
+
+<p class="bg-danger" 
+ng-disabled="{{!dataset.expression.hasNonIntegerValues}}">
+This data has non-integer values, so DESeq cannot be started. 
+</p>
+
+
+<a class="btn btn-success btn-block" 
+    ng-click="testInit()" 
+    data-dismiss="modal" 
+    ng-disabled="{{dataset.expression.hasNonIntegerValues}}"
+    aria-hidden="true">Analyze</a>
