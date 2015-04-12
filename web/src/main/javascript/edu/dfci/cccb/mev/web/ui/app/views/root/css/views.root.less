@@ -47,9 +47,13 @@
 			> div{
 				height: 100%;
 				position: relative;
-				> * > div.row{
+				div.row{
 					height: 100%;
-					position: relative;								
+					position: relative;
+					div.row{
+						height: initial;
+						position: initial;
+					}								
 					div[layout-column],
 					> div[class^='col-'], 
 					> div[class*=' col-']{						
@@ -71,7 +75,8 @@
 							}
 						}
 					}
-				}				
+				}
+								
 			}
 		
 //			&.columnScroll{

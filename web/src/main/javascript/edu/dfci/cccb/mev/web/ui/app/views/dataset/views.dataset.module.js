@@ -23,15 +23,25 @@ function(ng,
 	module.controller("AnnotationsViewVM", AnnotationsViewVM);
 	module.config(['$stateProvider', '$urlRouterProvider',
 	   	     	function($stateProvider, $urlRouterProvider){					
-	   	     		$stateProvider	   	     		
-	   	     		.state("root.dataset", {	   	     			
+	   	     		$stateProvider	  
+	   	     		.state("root.abstractDataset", {
 	   	     			parent: "root",
 	   	     			"abstract": true,
-	   	     			url: "/dataset/:datasetId/",
+	   	     			url: "/dataset",
+	   	     			breadcrumbProxy: "root.datasets",
+   	     				displayName: "datasets",
+   	     				template: "<ui-view></ui-view>"   	     					
+	   	     		})
+	   	     		.state("root.dataset", {	   	     			
+	   	     			parent: "root.abstractDataset",
+	   	     			"abstract": true,
+	   	     			url: "/:datasetId/",	   	     			
 //			   	     	params: {
 //			   	     		datasetId: null
 //			   	     	},	
 	   	     			templateUrl: "app/views/dataset/templates/dataset.tpl.html",
+	   	     			breadcrumbProxy: "root.dataset.home",
+	   	     			displayName: "{{dataset.datasetName}}",
 //	   	     			template: "<div>dataset: {{$stateParams.datasetId}}</div>",	   	     			
 	   	     			controller: "DatasetProjectViewVM",
 	   	     			controllerAs: "DatasetProjectViewVM",
@@ -73,16 +83,18 @@ function(ng,
 	   	     		.state("root.dataset.home", {		   	     		
 	   	     			parent: "root.dataset",
 	   	     			url: "",
+	   	     			displayName: "{{dataset.datasetName}}",
 	//   	     			"abstract": true,
 	//		   	     	params: {
 	//		   	     	   id: null
-	//		   	     	},	
+	//		   	     	},		   	     			
 	   	     			templateUrl: "app/views/dataset/templates/dataset.home.tpl.html",
 	//   	     			template: "<div>dataset: {{$stateParams.datasetId}}</div>",	   	     			
 	   	     			controller: "DatasetHomeVM",
 	   	     			controllerAs: "DatasetHomeVM",
 		   	     		data: {},
-	   	     			resolve:{}
+	   	     			resolve:{	   	     				
+	   	     			}
 	   	     		})
 	   	     		.state("dataset.annotations", {
 	   	     			url: "annotations/:dimension",

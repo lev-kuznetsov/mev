@@ -8,7 +8,8 @@ function(ng, WelcomeVM){
 	     			controller: "WelcomeVM",
 	     			controllerAs: "WelcomeVM",
 	     			parent: "root",
-	     			templateUrl: "app/views/welcome/templates/views.welcome.tpl.html"
+	     			templateUrl: "app/views/welcome/templates/views.welcome.tpl.html",
+	     			displayName: "mev"
 	     		});
 	}]);
 	module.controller("WelcomeVM", WelcomeVM);
