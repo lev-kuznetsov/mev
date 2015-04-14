@@ -1,4 +1,4 @@
-define([], function() {
+define(["jquery"], function($) {
 
 			function HVSocket() {
 				this._socket = null;

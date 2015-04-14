@@ -10,6 +10,7 @@ define(["ng",
         'ngGrid',
         'fileSaver',
         'mbAngularUtilsPagination',
+        'mbAngularUtilsBreadcrumbs',
         
         'directives', 
         'services', 
@@ -40,6 +41,7 @@ define(["ng",
 	                                     
 	                                     'ngGrid',
 	                                     'angularUtils.directives.dirPagination',
+	                                     'angularUtils.directives.uiBreadcrumbs',
 	                                     
 	                                     'myApp.directives', 
 	                            	     'myApp.services',
@@ -69,7 +71,10 @@ define(["ng",
 		.state("root", {
 			templateUrl: "app/views/root/templates/root.tpl.html",
 			controller: "RootCtrl",
-			controllerAs: "RootCtrl"
+			controllerAs: "RootCtrl",
+			abstract: true, 			
+ 			breadcrumbProxy: "root.welcome"
+ 			
 		})
 		.state("root.about", {
 			url: "/about",
@@ -133,6 +138,20 @@ define(["ng",
 	    
 	    $rootScope.$state = $state;
 	    $rootScope.$stateParams = $stateParams;	    
+	    
+	    $rootScope.$on('$stateChangeStart', 
+            function(event, toState, toParams, fromState, fromParams){ 
+//                $("#ui-view").html("");
+                $(".page-loading").removeClass("hidden");
+        });
+
+        $rootScope.$on('$stateChangeSuccess',
+            function(event, toState, toParams, fromState, fromParams){ 
+                $(".page-loading").addClass("hidden");
+        });
+
+	    
+	    
 	}]);
 	
 });

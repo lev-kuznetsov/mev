@@ -12,6 +12,7 @@ function(ng, _){
 	   	     			templateUrl: "app/views/dataset/rowSets/templates/views.dataset.rowSets.tpl.html",	   	     			
 	   	     			controller: "SelectionSetsViewVM",
 	   	     			controllerAs: "RowSetsViewVM",
+	   	     			displayName: "row sets",
 	   	     			resolve:{
 		   	     			dimension: function(){
 	   	     					return "row";
@@ -23,6 +24,7 @@ function(ng, _){
 	   	     			params: {
 	   	     				setId: "new"
 	   	     			},
+	   	     			displayName: "{{selectionSet.name}} row set",
 	   	     			parent: "root.dataset",
 	   	     			templateUrl: "app/views/dataset/rowSets/templates/views.dataset.rowSet.tpl.html",	   	     			
 	   	     			controller: "SelectionSetViewVM",

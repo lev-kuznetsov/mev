@@ -23,7 +23,8 @@ define(["ng", "lodash",
 		$stateProvider		
 		.state("root.dataset.analysis", {			
 			url: "analysis/{analysisType}/{analysisId}/",			
-			parent: "root.dataset",			
+			parent: "root.dataset",	
+			displayName: "{{analysis.name}} analysis",
 			templateProvider: ["$stateParams", "$http", function($stateParams, $http){
 				console.debug("root.dataset.analysis templateProvider ", $stateParams.analysisType);
 				var templateUrl="app/views/dataset/analysis/default/view.analysis.default.tpl.html";

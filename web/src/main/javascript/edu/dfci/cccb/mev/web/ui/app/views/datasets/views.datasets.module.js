@@ -8,7 +8,8 @@ function(ng, DatasetsVM){
 	     			controller: "ImportsCtrl",
 	     			controllerAs: "ImportsCtrl",
 	     			parent: "root",
-	     			templateUrl: "app/views/datasets/templates/views.datasets.tpl.html",	    				    				    			
+	     			templateUrl: "app/views/datasets/templates/views.datasets.tpl.html",
+	     			displayName: "datasets"
 	     		});
 	}]);
 	module.controller("DatasetsVM", DatasetsVM);

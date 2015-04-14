@@ -37,7 +37,8 @@
 		    fileSaver : [ '/container/javascript/fileSaver/FileSaver' ],
 		    qtip : [ '/library/webjars/qtip2/2.1.1/jquery.qtip' ],
 		    log4js : [ '/library/webjars/log4javascript/1.4.5/log4javascript' ],
-		    mbAngularUtilsPagination: [paths.vendor('mbAngularUtils/pagination/dirPagination')]
+		    mbAngularUtilsPagination: [paths.vendor('mbAngularUtils/pagination/dirPagination')],
+			mbAngularUtilsBreadcrumbs: [paths.vendor('mbAngularUtils/breadcrumbs/uiBreadcrumbs')]
 		},
 		
 		map: {
@@ -101,6 +102,9 @@
 		        exports : 'fileSaver'
 		    },
 		    mbAngularUtilsPagination: {
+		    	deps: ['jquery', 'angular']
+		    }, 
+		    mbAngularUtilsBreadcrumbs: {
 		    	deps: ['jquery', 'angular']
 		    }
 		},

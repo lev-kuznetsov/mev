@@ -13,7 +13,7 @@
 	
 	<div class="row" id="main-wrapper" ng-class="{'sidemenuOn': RootCtrl.isSideMenu(), 'shrink': RootCtrl.isSideMenuCollapse(), columnScroll: RootCtrl.isColumnScroll(), columnContentScroll: RootCtrl.isColumnContentScroll()}">
 		<div class="col-md-12" >			
-			<ui-view></ui-view>				
+			<ui-view id="ui-view"></ui-view>				
 		</div>
 	</div>
 	
@@ -24,8 +24,12 @@
 		<nav ng-if="!$state.current.data || ($state.current.data && !$state.current.data.footerUrl)" class="navbar navbar-default">
 			<div class="container-fluid">			
 				<ul class="nav navbar-nav">
-					<li><span>mev</span></li>
+					<li><span>mev</span></li>					
 				</ul>
+				<ul class="nav navbar-nav page-loading-container">
+					<li><span class="page-loading hidden"><i class="fa fa-spinner fa-spin"></i> please wait, loading...</span></li>					
+				</ul>
+				
 			</div>
 		</nav>
 	<!-- 	</div> -->

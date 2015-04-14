@@ -1,0 +1,6 @@
+<div class="breadcrumb btn-group btn-breadcrumb">
+  <a ng-repeat="crumb in breadcrumbs"
+      class="btn btn-default" ui-sref="{{ crumb.route }}" ng-if="!$last">{{ crumb.displayName }}&nbsp;
+  </a>
+  <a ng-repeat="crumb in breadcrumbs" class="btn btn-default" ng-class="{ active: $last }" ng-if="$last">{{ crumb.displayName }}</a>
+</ol>
