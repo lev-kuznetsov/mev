@@ -338,6 +338,10 @@
           <stopPort>${jetty.stop.port}</stopPort>
           <stopKey>stop</stopKey>
 
+		  <webApp>
+        	<extraClasspath>${mev.jetty.extraClasspath}</extraClasspath>
+    	  </webApp>
+
           <systemProperties>
             <force>true</force>
             <systemProperty>

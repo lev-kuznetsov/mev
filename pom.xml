@@ -60,7 +60,7 @@
     <!-- MEV Defaults -->
     <mev.Rscript>Rscript</mev.Rscript>
     <mev.java.io.tmpdir>${java.io.tmpdir}</mev.java.io.tmpdir>
-
+    <mev.jetty.extraClasspath>${basedir}/target/classes/</mev.jetty.extraClasspath>	
     <h2.version>1.3.174</h2.version>
     <org.hsqldb.version>2.3.0</org.hsqldb.version>
     <mev.hsqldb.textdb.allow_full_path>true</mev.hsqldb.textdb.allow_full_path>
@@ -86,6 +86,7 @@
       <id>local</id>
       <properties>
         <mev.spring_profiles_active>local</mev.spring_profiles_active>
+        <mev.jetty.extraClasspath>${user.home}/mev/config</mev.jetty.extraClasspath>
       </properties>
     </profile>
     <profile>
@@ -101,6 +102,7 @@
         <mev.java.io.tmpdir>/var/lib/mev/work</mev.java.io.tmpdir>
         <mev.Rscript>nice -20
           /common/projects/mev/lib/R/default/bin/Rscript</mev.Rscript>
+       	<mev.jetty.extraClasspath>/var/lib/mev/config</mev.jetty.extraClasspath>
       </properties>
     </profile>
   </profiles>
