@@ -22,6 +22,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
+import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysisBuilder;
@@ -29,7 +30,7 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Parameter;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Rserve;
 
-public abstract class AbstractDispatchedRAnalysisBuilder <B extends AbstractDispatchedRAnalysisBuilder<?, ?>, A extends Analysis> extends AbstractAnalysisBuilder<B, A> {
+public abstract class AbstractDispatchedRAnalysisBuilder <B extends AnalysisBuilder<?, ?>, A extends Analysis> extends AbstractAnalysisBuilder<B, A> {
 
   private @Getter @Setter @Inject @Rserve RDispatcher r;
   private CountDownLatch latch;

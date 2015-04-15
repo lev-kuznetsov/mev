@@ -72,8 +72,6 @@ public class KMeansAnalysisController {
                      final @PathVariable ("iterations") int iterations,
                      final @PathVariable ("convergence") double convergenceDelta) throws DatasetException {
     dataset.analyses ().put (kmeans.name (name)
-                                   .iterations (iterations)
-                                   .convergence (convergenceDelta)
                                    .k (k)
                                    .dimension (dimension)
                                    .metric (metric)

@@ -33,7 +33,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 
 import edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter;
 import edu.dfci.cccb.mev.kmeans.domain.contract.KMeansBuilder;
-import edu.dfci.cccb.mev.kmeans.domain.hadoop.HadoopKMeansBuilder;
+import edu.dfci.cccb.mev.kmeans.domain.r.DispatchedRKMeansBuilder;
 import edu.dfci.cccb.mev.kmeans.rest.assembly.json.KMeansJsonSerializer;
 import edu.dfci.cccb.mev.kmeans.rest.assembly.tsv.KMeansTsvMessageConverter;
 import edu.dfci.cccb.mev.kmeans.rest.resolvers.KMeansMetricPathVariableMethodArgumentResolver;
@@ -50,7 +50,7 @@ public class KMeansRestConfiguration extends MevRestConfigurerAdapter {
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
   public KMeansBuilder kMeansBuilder () {
-    return new HadoopKMeansBuilder ();
+    return new DispatchedRKMeansBuilder ();
   }
 
   /* (non-Javadoc)
