@@ -26,7 +26,7 @@
 </ng-form> 
 
 <p class="bg-danger" 
-ng-disabled="{{!project.dataset.expression.min < 0}}">
+ng-show="{{project.dataset.expression.min < 0}}">
 This data has negative values, so non-negative matrix factorization cannot be done. 
 </p>
 
