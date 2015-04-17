@@ -15,6 +15,7 @@
 package edu.dfci.cccb.mev.web.configuration.resolvers;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,7 +36,20 @@ public class MultipartUploadConfiguration {
   public MultipartResolver multipartResolver () {
     final long DEFAULT_MAX_UPLOAD_SIZE = 1024L * 1024L * 100; // 10Mb
 
-    CommonsMultipartResolver resolver = new CommonsMultipartResolver ();
+    //TODO: find a better way to bypass Spring controllers for OpenRefine
+    CommonsMultipartResolver resolver = new CommonsMultipartResolver (){
+      @Override
+      public boolean isMultipart(HttpServletRequest request){        
+        if(request.getServletPath().startsWith ("/annotations")){
+          //Let OpenRefine handle parsing of the multipart request
+          return false;
+        }else{
+          return super.isMultipart (request);
+        }
+        
+      }
+    };
+//    StandardServletMultipartResolver resolver = new StandardServletMultipartResolver ();
     resolver.setMaxUploadSize (environment.getProperty ("multipart.upload.max.size",
                                                         Long.class,
                                                         DEFAULT_MAX_UPLOAD_SIZE));

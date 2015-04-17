@@ -153,6 +153,7 @@ public class ImportingUtilities {
       JSONUtilities.safePut (config, "state", "error");
       JSONUtilities.safePut (config, "error", "Error uploading data");
       JSONUtilities.safePut (config, "errorDetails", e.getLocalizedMessage ());
+      e.printStackTrace ();
       return;
     }
 
@@ -242,7 +243,9 @@ public class ImportingUtilities {
     Dataset heatmap = (Dataset) request.getAttribute (REQUEST_ATTEIBUTE_DATASET);
     
     String sDimension = (String) request.getAttribute (REQUEST_ATTEIBUTE_DIMENSION);
-    Dimension dimension =heatmap.dimension (Dimension.Type.from (sDimension));
+    Dimension dimension = null; 
+    if(sDimension!=null)
+       dimension = heatmap.dimension (Dimension.Type.from (sDimension));
     
     progress.setProgress ("Uploading data ...", -1);
     parts: for (FileItem fileItem : tempFiles) {
