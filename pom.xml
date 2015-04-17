@@ -100,8 +100,7 @@
       <properties>
         <mev.spring_profiles_active>prod</mev.spring_profiles_active>
         <mev.java.io.tmpdir>/var/lib/mev/work</mev.java.io.tmpdir>
-        <mev.Rscript>nice -20
-          /common/projects/mev/lib/R/default/bin/Rscript</mev.Rscript>
+        <mev.Rscript>nice -20 /var/lib/mev/lib/R-2.15.3/bin/Rscript</mev.Rscript>
        	<mev.jetty.extraClasspath>/var/lib/mev/config</mev.jetty.extraClasspath>
       </properties>
     </profile>

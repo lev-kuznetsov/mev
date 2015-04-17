@@ -16,7 +16,7 @@
 
   <properties>
     <jetty.port>8080</jetty.port>
-    <jetty.stop.port>18080</jetty.stop.port>
+    <jetty.stop.port>18081</jetty.stop.port>
 
     <angularjs.version>1.2.13</angularjs.version>
     <d3.version>3.4.1</d3.version>
@@ -360,6 +360,11 @@
               <name>textdb.allow_full_path</name>
               <value>${mev.hsqldb.textdb.allow_full_path}</value>
             </systemProperty>
+             <systemProperty>
+              <name>h2.console.port</name>
+              <value>18044</value>
+            </systemProperty>           
+
           </systemProperties>
         </configuration>
       </plugin>
