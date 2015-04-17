@@ -46,7 +46,7 @@ public class FlatFileValueStoreBuilder extends AbstractValueStoreBuilder impleme
     log.debug ("Created TEMP FILE:" + file.getAbsolutePath ());
     writer = new RandomAccessFile (file, "rw");
   }
-  
+
   public FlatFileValueStoreBuilder (File file) throws IOException {
     this.file = file;
     writer = new RandomAccessFile (file, "rw");
@@ -88,7 +88,7 @@ public class FlatFileValueStoreBuilder extends AbstractValueStoreBuilder impleme
       throw new RuntimeException (e);
     }
   }
-  
+
   @Synchronized
   public Values build (Map<String, Integer> rows, Map<String, Integer> columns) {
     if (writer == null)
@@ -96,7 +96,7 @@ public class FlatFileValueStoreBuilder extends AbstractValueStoreBuilder impleme
     try {
       writer.close ();
       writer = null;
-      
+
       return new FlatFileValues (file, rows, columns, rows.size (), columns.size ());
     } catch (IOException e) {
       throw new RuntimeException (e);
@@ -112,7 +112,8 @@ public class FlatFileValueStoreBuilder extends AbstractValueStoreBuilder impleme
       try {
         writer.close ();
       } finally {
-        if (file instanceof Closeable) ((Closeable)file).close ();
+        if (file instanceof Closeable)
+          ((Closeable) file).close ();
       }
     }
   }
