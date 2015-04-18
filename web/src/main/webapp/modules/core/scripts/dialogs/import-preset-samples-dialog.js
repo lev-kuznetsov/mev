@@ -8,7 +8,9 @@ ImportPresetSamplesDialog.prototype._lastItem=null;
 
 
 ImportPresetSamplesDialog._isRowLimitMet=function(){
-	if(theProject.rowModel.filtered>50){		
+	var limit=200;
+	if(theProject.rowModel.filtered>limit){
+		alert("Cannot import more than "+limit+" samples");
 		return false;
 	}
 	return true;
@@ -131,11 +133,12 @@ ImportPresetSamplesDialog._exportWait = function(){
 //	        /annotations/import-dataset/command/core/view-preset-sample-annotations?import-preset="+presetName+"&dimension=column";
 	        var newUrl = "/annotations/import-dataset/command/core/view-preset-row-annotations?"+
 	        "import-preset="+$.url().param('import-preset')
-	        +"&dimension=row"
-	        +"&samples="+data.keys
-	        +"&samplesprojname="+data.samplesprojname;	        
+	        +"&dimension=row";
+//	        +"&samples="+data.keys
+//	        +"&samplesprojname="+data.samplesprojname;	        
 	        console.log("newUrl:"+newUrl);
-	        window.location.replace(newUrl);
+	        window.location.replace(newUrl);	        
+	        
 	      } else {
 	        alert($.i18n._("Error while importing dataset:" + data.message));
 	      }	    

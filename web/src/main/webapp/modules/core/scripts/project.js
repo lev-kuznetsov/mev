@@ -320,8 +320,7 @@ Refine._updateSet = function() {
 };
 Refine._importPresetSamples = function(){
 //	new ImportPresetSamplesDialog();
-	if(!ImportPresetSamplesDialog._isRowLimitMet()){
-		alert("Cannot import more than 50 samples");
+	if(!ImportPresetSamplesDialog._isRowLimitMet()){		
 		return;
 	}
 	ImportPresetSamplesDialog._exportWait();
