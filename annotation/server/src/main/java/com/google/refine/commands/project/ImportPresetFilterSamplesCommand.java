@@ -135,6 +135,10 @@ public class ImportPresetFilterSamplesCommand extends Command {
           writer.key("code");
           writer.value("ok");
           writer.endObject();
+          
+          request.getSession ().setAttribute ("samples", keys);
+          request.getSession ().setAttribute ("samplesprojname", newDatasetName);
+                    
       } catch (JSONException e) {
           respondException(response, e);
       }

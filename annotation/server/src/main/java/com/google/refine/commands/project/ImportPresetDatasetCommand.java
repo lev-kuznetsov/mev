@@ -57,16 +57,18 @@ public class ImportPresetDatasetCommand extends Command {
       final List<String> keys = new ArrayList<String> ();
       final List<Integer> unmatchedRowIndices = new ArrayList<Integer>();
       
-      final String sSamples = request.getParameter ("samples");
-      if(sSamples==null)
-        throw new NullArgumentException ("samples filter parameter not provided");
+//      final String sSamples = request.getParameter ("samples");
+//      if(sSamples==null)
+//        throw new NullArgumentException ("samples filter parameter not provided");
       
-      final List<String> samples = Arrays.asList (sSamples.split (","));
+//      final List<String> samples = Arrays.asList (sSamples.split (","));
+      final List<String> samples = (List<String>) request.getSession ().getAttribute ("samples");      
       if(samples.size ()<=0)
-        throw new NullArgumentException ("samples filter size is 0: "+sSamples);
+        throw new NullArgumentException ("samples filter size is 0");
       final Selection samplesSelection = new SimpleSelection ("samples", new Properties (), samples);
       
-      final String samplesProjectName=request.getParameter ("samplesprojname");
+//      final String samplesProjectName=request.getParameter ("samplesprojname");
+      final String samplesProjectName=(String) request.getSession().getAttribute("samplesprojname");
       if(samplesProjectName==null)
         throw new NullArgumentException ("samplesProjectName parameter not provided");
       
