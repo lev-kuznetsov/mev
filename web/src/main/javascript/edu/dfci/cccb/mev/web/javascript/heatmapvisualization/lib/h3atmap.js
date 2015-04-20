@@ -192,6 +192,41 @@
                 }
                 return dispatch
             }
+            
+            exports.axis = {
+        		'x':{
+        			'group': function(){
+        				if (arguments.length > 0){
+                            axis.x.group = arguments[0]
+                            return exports
+                        }
+                        return axis.x.group
+        			},
+        			'scale': function(){
+        				if (arguments.length > 0){
+                            axis.x.scale = arguments[0]
+                            return exports
+                        }
+                        return axis.x.scale
+        			}
+        		}, 
+        		'y':{
+        			'group': function(){
+        				if (arguments.length > 0){
+                            axis.y.group = arguments[0]
+                            return exports
+                        }
+                        return axis.y.group
+        			},
+        			'scale': function(){
+        				if (arguments.length > 0){
+                            axis.y.scale = arguments[0]
+                            return exports
+                        }
+                        return axis.y.scale
+        			}
+        		}
+        	}
 
             exports.selection = function(){
                 if (arguments.length > 0){
