@@ -102,7 +102,8 @@
 	                           'height': scope.visualization.settings.cell.height,
 	                           'padding-percentage': .10 
 	                       },
-	                       'colors': d3.scale.linear().range(['#ffeda0', '#feb24c', '#f03b20'])
+	                       'colors': d3.scale.linear().range(['#ffeda0', '#feb24c', '#f03b20']),
+	                       'selection': {'color': 'green'}
 	                   }
 		        	   
 		        	   var totalRowsCanFit = 40
@@ -181,18 +182,48 @@
 		        			    
 		        			    heatmap.on('brushend', function(extent, selectedCells){
 		        			    	
+		        			    	
 		        			    	if (attr.selectionDimension == 'row'){
 		        			    		
 		        			    		scope.selectionParams.selections = selectedCells.map(function(cell){
 		        			    			return cell.y
 		        			    		}).reduce(removeDuplicates, [])
-		        			    		
+
 		        			    		scope.selectionParams.dimension = 'row'
 		        			    		
+	        			    			heatmap.axis.y.group().selectAll('text')
+	        			    			.text(function(d, i){
+	        			    				if (scope.selectionParams.selections.indexOf(d) > -1){
+	        			    					d3.select(this)
+	        			    						.style('fill', scope.h3atmap.settings.selection.color)
+	        			    						.style('font-weight', 'bold')
+	        			    				} else {
+	        			    					d3.select(this)
+	        			    						.style('fill', 'black')
+	        			    						.style('font-weight', 'normal')
+	        			    				}
+	        			    				return d
+	        			    			})
+		        			    		
 		        			    	} else {
+		        			    		
 		        			    		scope.selectionParams.selections = selectedCells.map(function(cell){
 		        			    			return cell.x
 		        			    		}).reduce(removeDuplicates, [])
+		        			    		
+			        			    	heatmap.axis.x.group().selectAll('text')
+			        			    	.text(function(d, i){
+			        			    		if (scope.selectionParams.selections.indexOf(d) > -1){
+	        			    					d3.select(this)
+	        			    						.style('fill', scope.h3atmap.settings.selection.color)
+	        			    						.style('font-weight', 'bold')
+	        			    				} else {
+	        			    					d3.select(this)
+	        			    						.style('fill', 'black')
+	        			    						.style('font-weight', 'normal')
+	        			    				}
+	        			    				return d
+	        			    			})
 		        			    		
 		        			    		scope.selectionParams.dimension = 'column'
 		        			    	}
@@ -247,6 +278,40 @@
 	        			        max: scope.data.max,
 	        			        average: scope.data.avg,
 	        			    })
+	        			    
+	        			    if (attr.selectionDimension == 'row'){
+        			    		
+    			    			heatmap.axis.y.group().selectAll('text')
+    			    			.text(function(d, i){
+    			    				if (scope.selectionParams.selections.indexOf(d) > -1){
+    			    					d3.select(this)
+				    						.style('fill', scope.h3atmap.settings.selection.color)
+				    						.style('font-weight', 'bold')
+    			    				} else {
+    			    					d3.select(this)
+    			    						.style('fill', 'black')
+	    			    					.style('font-weight', 'normal')
+    			    				}
+    			    				return d
+    			    			})
+        			    		
+        			    	} else {
+        			    		
+	        			    	heatmap.axis.x.group().selectAll('text')
+	        			    	.text(function(d, i){
+	        			    		if (scope.selectionParams.selections.indexOf(d) > -1){
+	        			    			d3.select(this)
+				    						.style('fill', scope.h3atmap.settings.selection.color)
+				    						.style('font-weight', 'bold')
+    			    				} else {
+    			    					d3.select(this)
+	    			    					.style('fill', 'black')
+	    			    					.style('font-weight', 'normal')
+    			    				}
+    			    				return d
+    			    			})
+    			    			
+        			    	}
 		        	   });
 		        	   
                    }
