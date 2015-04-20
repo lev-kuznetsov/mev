@@ -24,6 +24,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.extern.log4j.Log4j;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
@@ -40,8 +43,8 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 @Log4j
 public abstract class AbstractAnalysisBuilder <B extends AnalysisBuilder<?, ?>, A extends Analysis> implements AnalysisBuilder<B, A> {
 
-  private @Getter final String type;
-  private @Getter (PROTECTED) String name;
+  private @Getter @JsonProperty final String type;
+  private @Getter (PROTECTED) @JsonProperty String name;
   private @Getter (PROTECTED) Dataset dataset;
 
   /* (non-Javadoc)

@@ -70,7 +70,7 @@ public class GoogleWorkspace implements Workspace {
   private static HashMap<String, HashMap<String, HashMap<String, Class<? extends Analysis>>>> SESSIONS =
                                                                                                          new HashMap<> ();
 
-  private @Inject DatasetBuilder builder;
+  private @Inject Provider<DatasetBuilder> builder;
   private @Inject ComposerFactory composer;
 
   private Google google;
@@ -109,9 +109,9 @@ public class GoogleWorkspace implements Workspace {
         private final Analyses analyses;
 
         {
-          delegate = builder.build (new MockTsvInput (google.driveOperations ()
-                                                            .getFile (id)
-                                                            .getTitle (), file));
+          delegate = builder.get ().build (new MockTsvInput (google.driveOperations ()
+                                                                   .getFile (id)
+                                                                   .getTitle (), file));
           final Analyses analysesDelegate = this.delegate.analyses ();
           if (!session.containsKey (id)) {
             session.put (id, new HashMap<String, Class<? extends Analysis>> ());
@@ -213,10 +213,9 @@ public class GoogleWorkspace implements Workspace {
    * edu.dfci.cccb.mev.dataset.domain.contract.Workspace#put(edu.dfci.cccb.
    * mev.dataset.domain.contract.Dataset) */
   @Override
-  @SneakyThrows ({
-                  IOException.class, DatasetComposingException.class, DatasetBuilderException.class,
-                  InvalidDatasetNameException.class })
+  @SneakyThrows ({ IOException.class, DatasetComposingException.class })
   public void put (Dataset dataset) {
+    workspaceDelegate.put (dataset);
     try (TemporaryFile ds = new TemporaryFile ()) {
       try (OutputStream out = new BufferedOutputStream (new FileOutputStream (ds))) {
         composer.compose (dataset).write (out);
@@ -228,7 +227,6 @@ public class GoogleWorkspace implements Workspace {
                         .getId ();
       session.put (id,
                    new HashMap<String, Class<? extends Analysis>> ());
-      load (id);
     }
   }
 

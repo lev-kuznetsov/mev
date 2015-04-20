@@ -12,21 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package edu.dfci.cccb.mev.kmeans.domain.contract;
-
-import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.kmeans.domain.hadoop.Metric;
-
 /**
  * @author levk
- * 
+ *
  */
-public interface KMeansBuilder extends AnalysisBuilder<KMeansBuilder, KMeans> {
-
-  KMeansBuilder k (int k);
-
-  KMeansBuilder dimension (Dimension dimension);
-
-  KMeansBuilder metric (Metric metric);
-}
+package edu.dfci.cccb.mev.kmeans.domain.r;
