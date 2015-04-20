@@ -10,7 +10,7 @@
 <!-- 			You may define sets using <a href="" ng-click="showAnnotations(selection, 'column')">column annotations</a> or by performing an analysis. -->
 <!-- </selection-set-list> -->
 <h3>Column Sets</h3>
-<table class="table table-condensed">
+<table class="table table-condensed" ng-if="ColumnSetsViewVM.dataset.column.selections && ColumnSetsViewVM.dataset.column.selections.length>0">
 <tr>
 	<th>name</th>
 	<th>color</th>
@@ -22,4 +22,7 @@
 	<td>{{selection.properties.selectionDescription}}</td>								
  </tr>
 </table>
+<p ng-if="!ColumnSetsViewVM.dataset.column.selections || (ColumnSetsViewVM.dataset.column.selections && ColumnSetsViewVM.dataset.column.selections.length<=0)">
+No column selections currently defined. You can add <a href="" ng-click="vm.addColumnSelection()">new clinical selections</a> by clicking <a href="" ng-click="vm.addColumnSelection()"><span class="fa fa-plus"></span></a> on Column Sets in the tree-view on the left.
+</p>
 <ui-view></ui-view>

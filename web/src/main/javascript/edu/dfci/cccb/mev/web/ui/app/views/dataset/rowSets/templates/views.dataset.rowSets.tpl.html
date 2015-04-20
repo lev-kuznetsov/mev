@@ -10,7 +10,7 @@
 <!-- 			You may define sets using <a href="" ng-click="showAnnotations(selection, 'row')">row annotations</a> or by performing an analysis. -->
 <!-- </selection-set-list> -->
 <h3>Row Sets</h3>
-<table class="table table-condensed">
+<table class="table table-condensed" ng-if="RowSetsViewVM.dataset.row.selections && RowSetsViewVM.dataset.row.selections.length>0">
 <tr>
 	<th>name</th>
 	<th>color</th>
@@ -22,4 +22,7 @@
 	<td>{{selection.properties.selectionDescription}}</td>								
  </tr>
 </table>
+<p ng-if="!RowSetsViewVM.dataset.row.selections || (RowSetsViewVM.dataset.row.selections && RowSetsViewVM.dataset.row.selections.length<=0)">
+No row selections currently defined. You can add <a href="" ng-click="vm.addRowSelection()">new row selections</a> by clicking <a href="" ng-click="vm.addRowSelection()"><span class="fa fa-plus"></span></a> on Row Sets in the tree-view on the left.
+</p>
 <ui-view></ui-view>
