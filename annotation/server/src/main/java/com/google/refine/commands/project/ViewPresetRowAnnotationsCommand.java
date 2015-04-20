@@ -56,15 +56,15 @@ public class ViewPresetRowAnnotationsCommand extends Command {
 //        String fileName = file.getName().toLowerCase();
 //        InputStream stream = new FileInputStream (file);
         
-        final String sSamples = request.getParameter ("samples");
-        if(sSamples==null)
-          throw new NullArgumentException ("samples filter parameter not provided");        
-        final List<String> samples = Arrays.asList (sSamples.split (","));
-        if(samples.size ()<=0)
-          throw new NullArgumentException ("samples filter size is 0: "+sSamples);      
-        final String samplesProjectName=request.getParameter ("samplesprojname");
-        if(samplesProjectName==null)
-          throw new NullArgumentException ("samplesProjectName parameter not provided");
+//        final String sSamples = request.getParameter ("samples");
+//        if(sSamples==null)
+//          throw new NullArgumentException ("samples filter parameter not provided");        
+//        final List<String> samples = Arrays.asList (sSamples.split (","));
+//        if(samples.size ()<=0)
+//          throw new NullArgumentException ("samples filter size is 0: "+sSamples);      
+//        final String samplesProjectName=request.getParameter ("samplesprojname");
+//        if(samplesProjectName==null)
+//          throw new NullArgumentException ("samplesProjectName parameter not provided");
 
         
         InputStream stream= descriptor.rowUrl ().openStream ();;         
@@ -155,8 +155,8 @@ public class ViewPresetRowAnnotationsCommand extends Command {
               filteredRows.accept (project, visitor);
             }
             
-            redirect(response, "/annotations/import-dataset/project?"
-                     +"import-preset="+datasetName+"&project=" + projectID+"&dimension=row&samples="+sSamples+"&samplesprojname="+samplesProjectName);
+//            redirect(response, "/annotations/import-dataset/project?"+"import-preset="+datasetName+"&project=" + projectID+"&dimension=row&samples="+sSamples+"&samplesprojname="+samplesProjectName);
+            redirect(response, "/annotations/import-dataset/project?"+"import-preset="+datasetName+"&project=" + projectID+"&dimension=row");
         } else {
             respondWithErrorPage(request, response, "Failed to import project. Reason unknown.", null);
         }

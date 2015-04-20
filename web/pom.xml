@@ -360,10 +360,10 @@
               <name>textdb.allow_full_path</name>
               <value>${mev.hsqldb.textdb.allow_full_path}</value>
             </systemProperty>
-            <systemProperty>
+             <systemProperty>
               <name>h2.console.port</name>
               <value>18044</value>
-            </systemProperty>
+            </systemProperty>           
           </systemProperties>
         </configuration>
       </plugin>
@@ -462,11 +462,11 @@
             if (!requireNamespace ("injectoR"))
               devtools::install_github ("dfci-cccb/injectoR");
           </onInitialize>
-		  <configure>
-		    <workdir>${mev.java.io.tmpdir}/Rserve</workdir>
-		    <encoding>utf8</encoding>
-		    <fileio>disable</fileio>
-		  </configure>
+          <configure>
+            <workdir>${mev.java.io.tmpdir}/Rserve</workdir>
+            <encoding>utf8</encoding>
+            <fileio>disable</fileio>
+            </configure>
           <onRequest>
             .libPaths (.libPaths ()[ -1 ]);
             library (injectoR);
