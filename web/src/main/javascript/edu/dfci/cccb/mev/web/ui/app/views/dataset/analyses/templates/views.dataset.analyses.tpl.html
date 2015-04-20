@@ -1,0 +1,33 @@
+<div>
+	<ul class="nav nav-tabs column-header">
+		<li id="statistical_tab" class="active"><a href="#statistical" data-toggle="tab" target="_self">Statystical</a></li>		
+		<li id="clustering_tab" ><a href="#clustering" data-toggle="tab" target="_self">Clustering</a></li>
+		<li id="meta-analysis_tab" ><a href="#meta-analyses" data-toggle="tab" target="_self">Meta-anayses</a></li>
+	</ul>
+
+	<div class="tab-content column-body">
+		<div class="tab-pane active" id="statistical">
+			<ul class="list-group">
+		      	<li class="list-group-item"><a data-toggle="modal" role="button" data-target="#limma"">LIMMA</a></li> 
+				<li class="list-group-item"><a data-toggle="modal" data-target="#tTest">t-Test</a></li>
+				<li class="list-group-item"><a data-toggle="modal" data-target="#fishertest">Fisher Exact Test</a></li>
+				<li class="list-group-item"><a data-toggle="modal" data-target="#wilcoxon">Wilcoxon Rank Sum</a></li>
+				<li class="list-group-item"><a data-toggle="modal" data-target="#anova">ANOVA</a></li>
+				<li class="list-group-item"><a data-toggle="modal" data-target="#deseq">DESeq</a></li>
+				<li class="list-group-item"><a data-toggle="modal" data-target="#nmfModal">Non-Negative Factorization</a></li>
+				<li class="list-group-item"><a data-toggle="modal" data-target="#pcaModal">Principal Components</a></li>
+		    </ul>
+		</div>
+		<div class="tab-pane " id="clustering">
+		    <ul class="list-group">
+		      <li class="list-group-item"><a data-toggle="modal" role="button" data-target="#hierarchical">Hierarchical</a></li>      
+		      <li class="list-group-item"><a data-toggle="modal" role="button" data-target="#kmeansclust">K-Means</a></li>
+		    </ul>
+		</div>
+		<div class="tab-pane " id="meta-analyses" >
+			<ul class="list-group">
+		      <li class="list-group-item"><a data-toggle="modal" role="button" data-target="#survivalModal">Survival Function</a></li>      	      
+		    </ul>
+		</div>
+			
+</div>
