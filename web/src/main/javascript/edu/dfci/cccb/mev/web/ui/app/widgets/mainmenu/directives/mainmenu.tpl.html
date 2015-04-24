@@ -24,31 +24,38 @@
         	
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" collapse="navbarCollapsed">
-      <ul class="nav navbar-nav navbar-right">        
-        <li class="dropdown">
-            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <i class="fa fa-gear"></i>                
-            </a>
-            <div class="dropdown-menu with-arrow panel panel-default" ng-click="$event.stopPropagation()">
-                <div class="panel-heading">
-                    Layout
-                </div>
-                <ul class="list-group">
-                    <li class="list-group-item">                        	
-                    	<div class="checkbox"><label class="checkbox"><input type="checkbox" ng-model="settings.sidemenu.shrink">Shrink</label></div>
-                    	<div class="checkbox"><label class="checkbox"><input type="checkbox" ng-click="toggleFixedHeader()" ng-model="settings.header.fixed">Fixed Header</label></div>
-                    	<div class="checkbox"><label class="checkbox"><input type="checkbox" ng-click="toggleFixedFooter()" ng-model="settings.footer.fixed">Fixed Footer</label></div>
-                    	<div class="checkbox"><label class="checkbox"><input type="checkbox" ng-click="toggleColumnScroll()" ng-model="settings.columnScroll">Column Scrollbar</label></div>
-                    	<div class="checkbox"><label class="checkbox"><input type="checkbox" ng-click="toggleColumnContentScroll()" ng-model="settings.columnContentScroll">Column Content Scrollbar</label></div>
+      <ul class="nav navbar-nav navbar-right">
+      	<li>    			
+			<a href="https://docs.google.com/forms/d/1oFbzyaMDw8dksDkNsY7f7ZJNibnC2GBjlgY2RXt5660/viewform" target="_new" class="btn btn-small btn-primary pull-right"></span>Beta Test - Feedback <span class="glyphicon glyphicon-star" style="color:gold;"></a>
+    	</li>
+    	<li>
+    		<a class="pull-right github" href="https://github.com/dfci-cccb/mev/issues" title="report issues on github"><i class="fa fa-github"></i></a>    			
+    	</li>
+              
+<!--         <li class="dropdown"> -->
+<!--             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> -->
+<!--                 <i class="fa fa-gear"></i>                 -->
+<!--             </a> -->
+<!--             <div class="dropdown-menu with-arrow panel panel-default" ng-click="$event.stopPropagation()"> -->
+<!--                 <div class="panel-heading"> -->
+<!--                     Layout -->
+<!--                 </div> -->
+<!--                 <ul class="list-group"> -->
+<!--                     <li class="list-group-item">                        	 -->
+<!--                     	<div class="checkbox"><label class="checkbox"><input type="checkbox" ng-model="settings.sidemenu.shrink">Shrink</label></div> -->
+<!--                     	<div class="checkbox"><label class="checkbox"><input type="checkbox" ng-click="toggleFixedHeader()" ng-model="settings.header.fixed">Fixed Header</label></div> -->
+<!--                     	<div class="checkbox"><label class="checkbox"><input type="checkbox" ng-click="toggleFixedFooter()" ng-model="settings.footer.fixed">Fixed Footer</label></div> -->
+<!--                     	<div class="checkbox"><label class="checkbox"><input type="checkbox" ng-click="toggleColumnScroll()" ng-model="settings.columnScroll">Column Scrollbar</label></div> -->
+<!--                     	<div class="checkbox"><label class="checkbox"><input type="checkbox" ng-click="toggleColumnContentScroll()" ng-model="settings.columnContentScroll">Column Content Scrollbar</label></div> -->
                     	
-										</li>
-										<li class="list-group-item"><a ui-sref="{layout: undefined}">Default Layout</a></li>
-        						<li class="list-group-item"><a ui-sref="{layout: 'uilayout'}">Ui Layout</a></li>
-        						<li class="list-group-item"><a ui-sref="{layout: '3cols'}">3sols Layout</a></li>
-        						<li class="list-group-item"><a ng-click="RootCtrl.toggleLeft()">Toggle Left</a></li>
-                </ul>            
-            </div>
-        </li>
+<!-- 										</li> -->
+<!-- 										<li class="list-group-item"><a ui-sref="{layout: undefined}">Default Layout</a></li> -->
+<!--         						<li class="list-group-item"><a ui-sref="{layout: 'uilayout'}">Ui Layout</a></li> -->
+<!--         						<li class="list-group-item"><a ui-sref="{layout: '3cols'}">3sols Layout</a></li> -->
+<!--         						<li class="list-group-item"><a ng-click="RootCtrl.toggleLeft()">Toggle Left</a></li> -->
+<!--                 </ul>             -->
+<!--             </div> -->
+<!--         </li> -->
       </ul>
       <ul class="nav navbar-nav navbar-center">
 	   		<li>
