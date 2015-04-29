@@ -1,28 +1,137 @@
 
 
-<!-- 
-<selection-set-manager id="selectionSetMgr" ng-controller="SelectionSetManagerCtl" selections="dataset.selections" heatmap-data="dataset" heatmap-id="{{dataset.datasetName}}"></selection-set-manager>
--->
+<!-- <project-analysis-parameters parameters="DatasetAnalysisVM.analysis.params"></project-analysis-parameters> -->
+<div ng-controller="SelectionSetManagerCtl">
+	<ul class="nav nav-tabs column-header" id="importTabs">
+		<li id="table_tab" class="active"><a href="#table" data-toggle="tab" target="_self">Row Sets</a></li>		
+		<div class="action-menu" mui-paste="action-menu"></div>	
+	</ul>
+
+	<div class="tab-content column-body">
+		<div class="tab-pane active" id="table" >	
+			
+			<div class="btn-toolbar" role="toolbar" mui-yank="action-menu">
+     		<div class="btn-group">
+		             <a class="btn" data-target="#selectionSetExportDatasetRow" data-toggle="modal">
+		               </i> New Dataset
+		             </a><a class="btn" data-target="#selectionSetAddRow" data-toggle="modal">
+		               </i> Merge
+		             </a><a class="btn" data-target="#selectionSetIntRow" data-toggle="modal">
+		               </i> Intersect
+		             </a><a class="btn" data-target="#selectionSetDiffRow" data-toggle="modal">
+		               </i> Difference
+		             </a>       
+	            </div>
+	      	</div>			
+			
+			<table class="table table-condensed" ng-if="RowSetsViewVM.dataset.row.selections && RowSetsViewVM.dataset.row.selections.length>0">
+			<tr>
+				<th>name</th>
+				<th>color</th>
+				<th>desription</th>								
+			 </tr>
+			<tr ng-repeat="selection in RowSetsViewVM.dataset.row.selections">
+				<td><input type="checkbox" ng-model="selection.setSelectionChecked" ng-true-value="true" ng-false-value="false">
+				<a href="" ui-sref="root.dataset.rowSet({setId: selection.name})">{{selection.name}}</a></td>
+				<td bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>
+				<td>{{selection.properties.selectionDescription}}</td>								
+			 </tr>
+			</table>
+			
+			<p ng-if="!RowSetsViewVM.dataset.row.selections || (RowSetsViewVM.dataset.row.selections && RowSetsViewVM.dataset.row.selections.length<=0)">
+			No row selections currently defined. You can add <a href="" ng-click="vm.addRowSelection()">new row selections</a> by clicking <a href="" ng-click="vm.addRowSelection()"><span class="fa fa-plus"></span></a> on Row Sets in the tree-view on the left.
+			</p>
+								
+		</div>
+	</div>
+
+<bsmodal bindid="selectionSetExportDatasetRow" func="" header="Export as New Dataset">
+
+	<div class="row">
+		<form-group>
+			<form>
+				<label for="uniColName" class="control-label">New Dataset Name:</label>
+				<input id="uniColName" type="text" class="input-small" ng-model="exportParams.row.name">
+			<form>
+		</form-group>
+	</div>
+	<div class="row">
+        <a class="btn btn-success pull-right" ng-click="exportSelection('row')" data-dismiss="modal" aria-hidden="true">
+              Export as New Dataset
+        </a>
+    </div>
+    
+</bsmodal> 
+
+<bsmodal bindid="selectionSetAddRow" func="" header="Merge Row Selections">
+
+	<div class="row">
+		<form-group>
+			<form>
+				<label for="uniColName" class="control-label">New Name:</label>
+				<input id="uniColName" type="text" class="input-small" ng-model="selectionParams.row.name">
+			<form>
+		</form-group>
+	</div>
+	<div class="row">
+        <a class="btn btn-success pull-right" ng-click="addMergedSelection('row')" data-dismiss="modal" aria-hidden="true">
+              Create Selection
+        </a>
+    </div>
+    
+</bsmodal> 
+
+<!-- Intersections -->
+
+<bsmodal bindid="selectionSetIntRow" func="" header="Intersect Row Selections">
+
+	<div class="row">
+		<form-group>
+			<form>
+				<label for="intColName" class="control-label">New Name:</label>
+				<input id="intColName" type="text" class="input-small" ng-model="selectionParams.row.name">
+			</form>
+		</form-group>
+	</div>
 	
-<!-- <selection-set-list  -->
-<!-- 			mev-selections="RowSetsViewVM.dataset.row.selections" 					 -->
-<!-- 			mev-demintion="row">				 -->
-<!-- 			You may define sets using <a href="" ng-click="showAnnotations(selection, 'row')">row annotations</a> or by performing an analysis. -->
-<!-- </selection-set-list> -->
-<h3>Row Sets</h3>
-<table class="table table-condensed" ng-if="RowSetsViewVM.dataset.row.selections && RowSetsViewVM.dataset.row.selections.length>0">
-<tr>
-	<th>name</th>
-	<th>color</th>
-	<th>desription</th>								
- </tr>
-<tr ng-repeat="selection in RowSetsViewVM.dataset.row.selections">
-	<td><a >{{selection.name}}</a></td>
-	<td bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>
-	<td>{{selection.properties.selectionDescription}}</td>								
- </tr>
-</table>
-<p ng-if="!RowSetsViewVM.dataset.row.selections || (RowSetsViewVM.dataset.row.selections && RowSetsViewVM.dataset.row.selections.length<=0)">
-No row selections currently defined. You can add <a href="" ng-click="vm.addRowSelection()">new row selections</a> by clicking <a href="" ng-click="vm.addRowSelection()"><span class="fa fa-plus"></span></a> on Row Sets in the tree-view on the left.
-</p>
-<ui-view></ui-view>
+	<div class="row">
+        <a class="btn btn-success pull-right" ng-click="addIntersectionSelection('row')" data-dismiss="modal" aria-hidden="true">
+              Create Selection
+        </a>
+    </div>
+    
+</bsmodal> 
+
+<!-- Set Differences -->
+
+<bsmodal bindid="selectionSetDiffRow" func="" header="Set Difference Row Selections">
+
+	<div class="row">
+		<form-group>
+			<form>
+				<label for="diffColName" class="control-label">New Name:</label>
+				<input id="diffColName" type="text" class="input-small" ng-model="selectionParams.row.name">
+			</form>
+		</form-group>
+	</div>
+	
+	<div class="row">
+		<form-group>
+			<form>
+				<label for="baseColSetSelector" class="control-label">Base Set:</label>
+				<select id="baseColSetSelector" ng-options="group.name for group in heatmapData.row.selections" 
+							ng-model="selectionParams.special.row"></select>
+			</form>
+		</form-group>
+	</div>
+	
+	<div class="row">
+        <a class="btn btn-success pull-right" ng-click="addDifferenceSelection('row')" data-dismiss="modal" aria-hidden="true">
+              Create Selection
+        </a>
+    </div>
+    
+</bsmodal> 
+
+</div>
+
