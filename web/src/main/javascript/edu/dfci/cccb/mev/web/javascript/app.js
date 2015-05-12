@@ -7,6 +7,7 @@ define(['angular',
         'setmanager/SetManager',
         'uiBootstrapTpls',
         'ngGrid',
+        'mbAngularUtilsBreadcrumbs',
         'heatmap/Heatmap',
         'heatmapvisualization/HeatmapVisualization',
         'analysisaccordioncollection/AnalysisAccordionCollection',
@@ -16,7 +17,8 @@ define(['angular',
         'mainmenu',
         'geods',
         'clinical',
-        'cohortanalysis/CohortAnalysis'
+        'cohortanalysis/CohortAnalysis',
+        'nguirouter'
         ], function(angular){
 	'use strict';
 	return angular.module('myApp', [
@@ -28,7 +30,9 @@ define(['angular',
 	     'Mev.SetManager',
 	     'Mev.PresetManager',
 	     'ui.bootstrap',
-	     'ngGrid',
+	     'ngGrid',	
+	     'angularUtils.directives.uiBreadcrumbs',
+	     'ui.router',	     
 	     'Mev.heatmap',
 	     'Mev.heatmapvisualization',
 	     'Mev.AnalysisAccordionCollection',
