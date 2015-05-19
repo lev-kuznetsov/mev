@@ -1,66 +1,49 @@
 library(topGO)
 library (injectoR)
-# GENELIST   Gene list of interest	 string vector
-# BACKGROUND  Background gene list	 string vector
-# SPECIES							 string	
-# GO_TYPE							 string
-# TEST_TYPE							 string	
-
-library(biomaRt)
-
-# HUMAN GENES
-#ensembl=useMart("ensembl")
-ensembl = useMart("ensembl",dataset="hsapiens_gene_ensembl")
-genes=getBM(c('entrezgene','hgnc_symbol'), mart=ensembl)#   , filters='with_go_id', values='GO:0004707', mart=ensembl)
-BACKGROUND=genes[,2] # Human Background
-
-
-
-# mouse genes
-ensembl=useMart('ensembl', dataset='mmusculus_gene_ensembl')
-genes=getBM(c('entrezgene','hgnc_symbol'), mart=ensembl)#   , filters='with_go_id', values='GO:0004707', mart=ensembl)
-BACKGROUND=genes[,2] # Human Background
 
 
 #########
-
-
-
-#GO_TYPE="BP"
-#TEST_TYPE='Fisher test'
-#SPECIES='human'
-
-
+#
 # GENELIST   Gene list of interest	 string vector
-# BACKGROUND  Background gene list	 string vector
-# SPECIES							 string	
-# GO_TYPE							 string
-# TEST_TYPE							 string     options: 'fisher', 'ks_test'
-# p.adjust.methods
-# c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY",
-#   "fdr", "none")
-# GO-terms to return
+# SPECIES							 string					options: "human", "mouse"
+# GO_TYPE							 string					options: "BP", "CC", "MF"
+# TEST_TYPE							 string     			options: 'fisher', 'ks_test'
+# P_ADJUST							 string 				options: "fdr", "hochberg", "bonferroni", "BH", "fdr", "none"
+# NODE_SIZE	 Num of GO term to return	int 				options: 1 to 100
+
+
+
+# library(biomaRt)
+# GENERATE BACKGROUND GENE LISTS
+# HUMAN GENES
+# ensembl=useMart("ensembl")
+# ensembl = useMart("ensembl",dataset="hsapiens_gene_ensembl")
+# genes=getBM(c('entrezgene','hgnc_symbol'), mart=ensembl)#   , filters='with_go_id', values='GO:0004707', mart=ensembl)
+# BACKGROUND=genes[,2] # Human Background
+# write.csv(unique(BACKGROUND), file="HSAPIENS_ALL_GENES.txt", row.names=FALSE, quote=FALSE)
+# # mouse genes
+# ensembl=useMart('ensembl', dataset='mmusculus_gene_ensembl')
+# genes=getBM(c('entrezgene','hgnc_symbol'), mart=ensembl)#   , filters='with_go_id', values='GO:0004707', mart=ensembl)
+# BACKGROUND=genes[,2] # Mouse Background
+# write.csv(unique(BACKGROUND), file="MMUSCULUS_ALL_GENES.txt", row.names=FALSE, quote=FALSE)
 
 
 shim('topGO', callback=function (){
-	define(gsea = function() function(GENELIST, BACKGROUND, 
+	define(gsea = function() function(
+		GENELIST, 
 	SPECIES='human', 
 	GO_TYPE='BP', 
 	TEST_TYPE='fisher',
-	P_ADJUST='fdr'){
-		
-	if(SPECIES=='human'){
-		library(org.Hs.eg.db)
-		anno.db='org.Hs.eg.db'
-		ensembl=useMart('ensembl', dataset='hsapiens_gene_ensembl')
-	}
-	if(SPECIES=='mouse'){
-		library(org.Mm.eg.db)
-		anno.db='org.Mm.eg.db'
-		ensembl=useMart('ensembl', dataset='mmusculus_gene_ensembl')
-	}
-	if(length(BACKGROUND)==0){
-		BACKGROUND=getBM('hgnc_symbol', mart=ensembl)[,1]
+	P_ADJUST='fdr', 
+	NODE_SIZE=100){
+ 	if(SPECIES=='human'){
+			library(org.Hs.eg.db)
+			anno.db='org.Hs.eg.db'
+			BACKGROUND=as.vector(read.csv(file="./HSAPIENS_ALL_GENES.txt")[,1])
+	}else if(SPECIES=='mouse'){
+			library(org.Mm.eg.db)
+			anno.db='org.Mm.eg.db'
+			BACKGROUND=as.vector(read.csv(file="./MMUSCULUS_ALL_GENES.txt")[,1])
 	}
 	
  	## create a topGOdata object
@@ -75,7 +58,7 @@ shim('topGO', callback=function (){
     myGOdata = new('topGOdata', 
  				ontology=GO_TYPE, 
  				description='topGO analysis', 
- 				nodeSize=100,
+ 				nodeSize=NODE_SIZE,
    				annot=annFUN.org, 
    				mapping=anno.db, 
    				ID='symbol', 
@@ -100,9 +83,9 @@ shim('topGO', callback=function (){
  	totalNodes = as.numeric(unlist(strsplit(topGO.count[5],' '))[1])
 
  	## summarize the top 100 GO terms and write to the file
- 	if (totalNodes >= 100){
- 	 	topGO.table = GenTable(myGOdata, topGO.result, topNodes=100)}
- 	if (totalNodes < 100){
+ 	if (totalNodes >= NODE_SIZE){
+ 	 	topGO.table = GenTable(myGOdata, topGO.result, topNodes=NODE_SIZE)}
+ 	if (totalNodes < NODE_SIZE){
    		topGO.table = GenTable(myGOdata, topGO.result, topNodes=totalNodes)}
    		
     colnames(topGO.table) = c('GO ID','GO Term','Annotated Genes','Significant Genes','Expected','P-value')
@@ -117,28 +100,30 @@ shim('topGO', callback=function (){
  	})
 }, binder=binder());
 
-
-
-
-
-GENELIST=c('MOAP1', 
-'CFLAR',
-'BAX',
-'AIFM3',
-'PERP',
-'BCL2L14',
-'BFAR',
-'BCL2L1',
-'BCL2L2',
-'FKSG2',
-'BCL2L10',
-'SIVA1',
-'TP53BP2'
-)
-
-
-res=inject (function (gsea) gsea (GENELIST=GENELIST, BACKGROUND=BACKGROUND))		
-
-#res=inject (function (nmf) nmf (in.mtx))		
-
  
+# CASE EXAMPLE
+#
+
+# GENELIST=c('MOAP1', 
+# 'CFLAR',
+# 'BAX',
+# 'AIFM3',
+# 'PERP',
+# 'BCL2L14',
+# 'BFAR',
+# 'BCL2L1',
+# 'BCL2L2',
+# 'FKSG2',
+# 'BCL2L10',
+# 'SIVA1',
+# 'TP53BP2'
+# )
+
+
+# res=inject (function (gsea) gsea (GENELIST=GENELIST, 
+# 	SPECIES='human', 
+# 	GO_TYPE='MF', 
+# 	TEST_TYPE='fisher',
+# 	P_ADJUST='fdr', 
+# 	NODE_SIZE=100))
+
