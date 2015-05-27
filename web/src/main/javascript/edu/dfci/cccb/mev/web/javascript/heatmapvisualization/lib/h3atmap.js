@@ -294,7 +294,7 @@
 
             //Helper functions
             
-            function axisLabelTransform = function(d){ 
+            function axisLabelTransform(d){ 
         		var cut = d.slice(0,7)
         		if (cut.length() < 7) {
         			return cut
