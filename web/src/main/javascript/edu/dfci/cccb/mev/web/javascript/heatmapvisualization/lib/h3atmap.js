@@ -355,8 +355,9 @@
                         .style("text-anchor", "start")
                         .attr("transform", function(d) {return "rotate(-90)"})
                         .attr("dy", (axis.x.scale.rangeBand()) +  "px")
-                        .attr("dx", ".15em")
-
+                        .attr("dx", ".15em")    
+                    	.text(function(d){ return d.slice(0,7) })
+	
                 axis.x.group.selectAll('path').style('display', 'none')
 
                 axis.y.group.call(axis.y.instance)
@@ -373,6 +374,8 @@
                     return "translate(" + (offset) + ",0)"
 
                 })
+                .selectAll("text")    
+                    .text(function(d){ return d.slice(0,7) })
 
                 axis.y.group.selectAll('path').style('display', 'none')
             }
