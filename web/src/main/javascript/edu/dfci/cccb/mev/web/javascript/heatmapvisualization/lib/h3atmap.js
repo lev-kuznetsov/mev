@@ -293,6 +293,16 @@
             }
 
             //Helper functions
+            
+            function axisLabelTransform(d){ 
+        		var cut = d.slice(0,7)
+        		if (cut.length() < 7) {
+        			return cut
+        		} else {
+        			return cut + ' ...'
+        		}
+        	}
+            
             function updateBrush(){
                 brush.instance.x(axis.x.scale)
                 brush.instance.y(axis.y.scale)
@@ -355,8 +365,9 @@
                         .style("text-anchor", "start")
                         .attr("transform", function(d) {return "rotate(-90)"})
                         .attr("dy", (axis.x.scale.rangeBand()) +  "px")
-                        .attr("dx", ".15em")
-
+                        .attr("dx", ".15em")    
+                    	.text(axisLabelTransform)
+	
                 axis.x.group.selectAll('path').style('display', 'none')
 
                 axis.y.group.call(axis.y.instance)
@@ -373,6 +384,8 @@
                     return "translate(" + (offset) + ",0)"
 
                 })
+                .selectAll("text")    
+                    .text(axisLabelTransform)
 
                 axis.y.group.selectAll('path').style('display', 'none')
             }
