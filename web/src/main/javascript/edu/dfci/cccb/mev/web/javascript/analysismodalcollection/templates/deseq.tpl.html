@@ -21,7 +21,7 @@
 </form> 
 
 <p class="bg-danger" 
-ng-disabled="{{!dataset.expression.hasNonIntegerValues}}">
+ng-disabled="{{!dataset.expression.hasNonIntegerValues}}" ng-show="dataset.expression.hasNonIntegerValues">
 This data has non-integer values, so DESeq cannot be started. 
 </p>
 
