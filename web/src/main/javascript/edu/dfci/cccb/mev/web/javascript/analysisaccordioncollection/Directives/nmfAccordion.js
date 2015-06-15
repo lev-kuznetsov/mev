@@ -355,7 +355,7 @@
                      
                      scope.selectionParams = {
                          'name':undefined,
-                		 'dimension': undefined,
+                		 'dimension': "column",
                          'selections':[],
                          'color': '#' + Math
 	                         .floor(Math.random() * 0xFFFFFF << 0)
