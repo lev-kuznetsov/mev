@@ -100,7 +100,7 @@ public class DispatchedRKMeansBuilder extends AbstractDispatchedRAnalysisBuilder
   }
 
   public DispatchedRKMeansBuilder () {
-    super ("kmeans");
+    super ("K-means Clustering");
   }
 
   /* (non-Javadoc)
@@ -132,6 +132,7 @@ public class DispatchedRKMeansBuilder extends AbstractDispatchedRAnalysisBuilder
   protected KMeans result () {
     return new AbstractKMeans () {}.clusters (clusters)
                                    .name (name ())
+                                   .type(type())
                                    .dataset (dataset ())
                                    .dimension (dataset ().dimension (Type.valueOf (dimension.toUpperCase ())));
   }
