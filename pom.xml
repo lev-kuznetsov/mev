@@ -108,6 +108,7 @@
       <id>aws</id>
       <properties>
         <mev.spring_profiles_active>aws</mev.spring_profiles_active>
+        <mev.Rscript>nice -20 /usr/local/lib64/R/bin/Rscript</mev.Rscript>
        	<mev.extraClasspath>/opt/mev/config</mev.extraClasspath>
       </properties>
       <dependencies>
