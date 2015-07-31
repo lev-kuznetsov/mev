@@ -47,7 +47,7 @@ function(ng, AnalyisEventBus){
 				shortName: "survival",
 				viewModel: "SurvivalVM"
 			},
-			"nmf":{
+			"Non-Negative Matrix Factorization":{
 				shortName: "nmf",
 				viewModel: "NmfVM"
 			},
