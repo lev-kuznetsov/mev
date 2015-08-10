@@ -7,6 +7,7 @@ import static java.lang.System.getProperty;
 import java.util.Properties;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.sql.DataSource;
 
 import lombok.extern.log4j.Log4j;
@@ -26,20 +27,27 @@ import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
+import edu.dfci.cccb.mev.configuration.util.contract.Config;
+import edu.dfci.cccb.mev.configuration.util.simple.SimpleConfig;
+
 @Log4j
 @Configuration
-@PropertySources({
-@PropertySource(value={"classpath:persistence/probe_annotations.persistence-defaults.properties"}),
-@PropertySource(value="classpath:persistence/probe_annotations.persistence-${spring_profiles_active}.properties", ignoreResourceNotFound=true)
-})
+//@PropertySources({
+//@PropertySource(value={"classpath:persistence/probe_annotations.persistence.properties"}),
+//@PropertySource(value="classpath:persistence/probe_annotations.persistence-${spring_profiles_active}.properties", ignoreResourceNotFound=true)
+//})
 public class ProbeAnnotationsPersistenceConfiguration {
   
   public ProbeAnnotationsPersistenceConfiguration () {
     log.info ("***loading "+this.getClass ().getSimpleName ()+"****");
   }
   
-  @Inject
-  private Environment environment;
+//  @Inject private Environment environment;
+  @Inject @Named("probe-annotations-presistence-config") private Config environment;  
+  @Bean(name="probe-annotations-presistence-config") 
+  public Config getConfig(){    
+    return new SimpleConfig ("probe_annotations.persistence.properties");
+  }
  
   @Bean(name="probe-annotations-datasource", destroyMethod = "close")
   public DataSource dataSource () {
@@ -64,9 +72,8 @@ public class ProbeAnnotationsPersistenceConfiguration {
   public LocalSessionFactoryBean sessionFactory () {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean ();
     sessionFactory.setDataSource (dataSource());
-    sessionFactory.setPackagesToScan (environment.getProperty ("session.factory.scan.packages",
-                                                               String[].class,
-                                                               new String[] { "edu.dfci.cccb.mev" }));
+    sessionFactory.setPackagesToScan (environment.getStringArray ("session.factory.scan.packages",
+                                                               "[edu.dfci.cccb.mev]" ));
     Properties hibernateProperties = new Properties ();
     hibernateProperties.setProperty ("hibernate.hbm2ddl.auto",
                                      environment.getProperty ("hibernate.hbm2ddl.auto",
@@ -139,7 +146,7 @@ public class ProbeAnnotationsPersistenceConfiguration {
 
       ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
       populator.addScript(
-              new ClassPathResource(environment.getRequiredProperty(MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"db.schema.script"))
+              new ClassPathResource(environment.getProperty(MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"db.schema.script"))
       );
 
       initializer.setDatabasePopulator(populator);

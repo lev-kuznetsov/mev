@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.context.annotation.Bean;
@@ -15,21 +17,28 @@ import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 import org.springframework.util.ResourceUtils;
 
+import edu.dfci.cccb.mev.configuration.util.contract.Config;
+import edu.dfci.cccb.mev.configuration.util.simple.SimpleConfig;
 import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
 
 @Log4j
 @Configuration
-@PropertySources({
-@PropertySource(value={"classpath:loader/probe_annotations.loader-defaults.properties"}),
-@PropertySource(value="classpath:loader/probe_annotations.loader-${spring_profiles_active}.properties", ignoreResourceNotFound=true)
-})
+//@PropertySources({
+//@PropertySource(value={"classpath:loader/probe_annotations.loader.properties"}),
+//@PropertySource(value="classpath:loader/probe_annotations.loader-${spring_profiles_active}.properties", ignoreResourceNotFound=true)
+//})
 public class ProbeAnnotationsFilesConfiguration {
   public static final String MEV_PROBE_ANNOTATIONS_PLATFORM_METAFILE="mev.annotations.probe.root.metadata.file";
   public static final String MEV_PROBE_ANNOTATIONS_ROOT_FOLDER_URL="mev.annotations.probe.root.url";
   public static final String MEV_PROBE_ANNOTATIONS_RELOAD_FLAG="mev.annotations.probe.reload.flag";
   public static final String MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX="mev.annotations.probe.";  
-  @Inject Environment environment;
-  
+//  @Inject Environment environment;  
+  @Inject @Named("probe-annotations-loader-config") private Config environment;  
+  @Bean(name="probe-annotations-loader-config") 
+  public Config getConfig(){    
+    return new SimpleConfig ("loader/probe_annotations.loader.properties");
+  }
+    
   @Bean(name="probe-annotations-root")
   public URL probeAnnotationsRoot() throws IOException{
     String probeAnnotationsRoot = environment.getProperty (MEV_PROBE_ANNOTATIONS_ROOT_FOLDER_URL);

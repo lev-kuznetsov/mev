@@ -5,17 +5,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
@@ -23,37 +26,42 @@ import org.apache.log4j.Logger;
 import edu.dfci.cccb.mev.configuration.util.contract.Config;
 import edu.dfci.cccb.mev.configuration.util.prototype.AbstractConfig;
 
+@Log4j
 public class SimpleConfig extends AbstractConfig implements Config {
-  private static final Logger log = Logger.getLogger (SimpleConfig.class);
+//  private static final Logger log = Logger.getLogger (SimpleConfig.class);
   private List<Map<String, String>> sources = new LinkedList<Map<String, String>> ();
 
-  private final String fileName;
-  private final String fileBaseName;
+  private final String fileName;  
+  private final String baseFileName;
   private final String fileExt;
   private final String appName;
   private final String envConfigDir;
+  private String envHomeDir;  
   
   public SimpleConfig() throws IOException, URISyntaxException{
     this("simple.properties");
   }
-  public SimpleConfig(String fileName) throws IOException, URISyntaxException{
-    this("MEV", fileName);
+   
+  public SimpleConfig(String fileName){
+    this("mev", fileName);
   }
   
-  public SimpleConfig(String appName, String fileName) throws IOException{
+  @SneakyThrows(value={IOException.class})
+  public SimpleConfig(String appName, String fileName) {
     this.appName = appName;
     this.fileName = fileName;
-    this.fileBaseName = FilenameUtils.getBaseName(this.fileName);
+    this.baseFileName = FilenameUtils.getFullPath (fileName) + FilenameUtils.getBaseName (fileName);
     this.fileExt = FilenameUtils.getExtension(this.fileName);   
     this.envConfigDir = this.appName.toUpperCase()+"_CONFIG_DIR";
+    this.envHomeDir = this.appName.toUpperCase ()+"_HOME";    
     
-    log.debug (String.format ("Init SimpleConfig fileName: %s", this.fileName));
+    log.debug (String.format ("Init SimpleConfig fileName: %s; %s", this.fileName, this.baseFileName));
 
     URL configUrl;
     Path configPath;
-
+        
     // load System Properties
-    Map<String, String> systemProperties = new HashMap<String, String> (System.getenv ().entrySet ().size ());
+    Map<String, String> systemProperties = new HashMap<String, String> (System.getProperties ().entrySet ().size ());
     for (Entry<Object, Object> entry : System.getProperties ().entrySet ()) {
       systemProperties.put (formatEnvKey ((String) entry.getKey ()), (String) entry.getValue ());
     }
@@ -63,53 +71,84 @@ public class SimpleConfig extends AbstractConfig implements Config {
     Map<String, String> envProperties = new HashMap<String, String> (System.getenv ().entrySet ().size ());
     for (Entry<String, String> entry : System.getenv ().entrySet ()) {
       envProperties.put (formatEnvKey (entry.getKey ()), entry.getValue ());
+    }    
+    sources.add (envProperties);    
+    
+    // check for home directory
+    String homeDir = getProperty (this.envHomeDir);
+    if(homeDir == null){
+      homeDir = System.getProperty ("user.home")+System.getProperty ("file.separator")+this.appName;
+      System.setProperty (this.envHomeDir, homeDir);
+      systemProperties.put (this.envHomeDir, homeDir);
     }
-    sources.add (envProperties);
-
-    // find config directory passed in via System or Environment variable
-    String envVarName = this.fileBaseName.toUpperCase()+"_CONFIG_DIR";    
-    loadFromEnvFolder(envVarName);    
-      
+    log.debug(String.format("MEV_HOME is %s", homeDir));
+    
     //check MEV_CONFIG_DIR folder
     loadFromEnvFolder(this.envConfigDir);
 
     // check current folder
-    configPath = Paths.get (fileName);
-    configUrl = configPath.toUri ().toURL ();
-    log.debug (String.format ("Current folder %s url %s", configPath, configUrl));
-    if (Files.exists (configPath)) {
-      log.debug (String.format ("Loading URL %s", configUrl));
-      sources.add (loadProperties (configUrl.openStream ()));
+    for(String curFileName : getFileNameToCheck()){     
+      configPath = Paths.get (curFileName);
+      configUrl = configPath.toUri ().toURL ();
+      log.debug (String.format ("Current folder %s url %s", configPath, configUrl));
+      if (Files.exists (configPath)) {
+        log.debug (String.format ("Loading URL %s", configUrl));
+        sources.add (loadProperties (configUrl.openStream ()));
+      }
     }
+    
     // check classpath root
-    configUrl = getClass ().getResource ("/" + fileName);
-    if (configUrl != null) {
-      log.debug (String.format ("Loading URL %s", configUrl));
-      sources.add (loadProperties (configUrl.openStream ()));
+    for(String curFileName : getFileNameToCheck()){
+      configUrl = getClass ().getResource ("/" + curFileName );
+      if (configUrl != null) {
+        log.debug (String.format ("Loading URL %s", configUrl));
+        sources.add (loadProperties (configUrl.openStream ()));
+      }
     }
 
     // check classpath for the default variables
-    configUrl = getClass ().getResource (fileName);
-    if (configUrl != null) {
-      log.debug (String.format ("Loading URL %s", configUrl));
-      sources.add (loadProperties (configUrl.openStream ()));
+    for(String curFileName : getFileNameToCheck()){    
+      configUrl = getClass ().getResource (curFileName);
+      if (configUrl != null) {
+        log.debug (String.format ("Loading URL %s", configUrl));
+        sources.add (loadProperties (configUrl.openStream ()));
+      }
     }
-  }
-
+  }  
+  
   /* (non-Javadoc)
    * @see
    * edu.dfci.cccb.mev.configuration.util.Config#getProperty(java.lang.String) */
   @Override
   public String getProperty (String name) {
+    name = formatEnvKey (name);
+    String value = null;
     for (Map<String, String> properties : sources) {
-      String value = properties.get (name);
+      value = properties.get (name);
+      if (value != null)
+        return value;
+      value = properties.get (name.toLowerCase ());
+      if (value != null)
+        return value;
+      value = properties.get (name.toUpperCase ());
       if (value != null)
         return value;
     }
+    if(this.environment!=null){
+      value = environment.getProperty (name); 
+    }
+      
     // throw new Exception(String.format("Property %s not found", name));
-    return null;
+    return value;
   }
-
+  private Iterable<String> getFileNameToCheck(){
+    List<String> result = new ArrayList<String> ();
+    for(String profile : getProfiles ())
+      result.add (this.baseFileName + "-" + profile + "." + this.fileExt);
+    result.add (this.fileName);
+    return result;
+  }
+  
   private String formatEnvKey (String key) {
     return key.replace ('_', '.');
   }

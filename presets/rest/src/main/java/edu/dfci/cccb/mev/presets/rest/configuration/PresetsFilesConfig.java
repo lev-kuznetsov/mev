@@ -18,6 +18,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 import org.springframework.util.ResourceUtils;
 
+import edu.dfci.cccb.mev.configuration.util.contract.Config;
+import edu.dfci.cccb.mev.configuration.util.simple.SimpleConfig;
 import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.Presets;
@@ -31,7 +33,9 @@ import lombok.extern.log4j.Log4j;
 @Configuration
 @PropertySources({
   @PropertySource ("classpath:/presets.properties"),
-  @PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true)
+  @PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true),
+  @PropertySource (value="file:${MEV_CONFIG_DIR}/presets.properties",ignoreResourceNotFound=true),
+  @PropertySource (value="file:${MEV_CONFIG_DIR}/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true),
 })
 public class PresetsFilesConfig {
   private final static String TCGA_PROPERTY_MATA_FILENAME="mev.presets.tcga.metadata.filename";
@@ -39,7 +43,8 @@ public class PresetsFilesConfig {
   @Inject Environment environment;
   
   @Bean  @Inject
-  public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot, 
+  public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot,
+                                @Named("presets-config") Config config,
                                 TcgaPresetsBuilder builder                                
                                 ) throws URISyntaxException, PresetException, IOException {
     
@@ -75,8 +80,9 @@ public class PresetsFilesConfig {
     return new TcgaPresetsBuilder ();
   }
   
-  @Bean (name="tcgaPresetRoot")
-  public URL tcgaPresetRoot() throws IOException{    
+  @Inject
+  @Bean (name="tcgaPresetRoot")   
+  public URL tcgaPresetRoot(@Named("presets-config") Config conf) throws IOException{    
     String pathTcgaRoot = environment.getProperty (TCGA_PROPERTY_ROOT_FOLDER);
     log.info ("**** Prests Root Config ****");
     log.info (TCGA_PROPERTY_ROOT_FOLDER+":" + pathTcgaRoot);

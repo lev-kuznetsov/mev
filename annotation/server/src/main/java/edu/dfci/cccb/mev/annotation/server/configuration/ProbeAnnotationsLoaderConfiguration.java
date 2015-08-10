@@ -21,17 +21,19 @@ import org.springframework.core.env.Environment;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.ProbeAnnotationsLoader;
 import edu.dfci.cccb.mev.annotation.domain.probe.contract.exceptions.AnnotationException;
 import edu.dfci.cccb.mev.annotation.domain.probe.h2.H2ProbeAnnotationsLoader;
+import edu.dfci.cccb.mev.configuration.util.contract.Config;
+import edu.dfci.cccb.mev.configuration.util.simple.SimpleConfig;
 
 @Log4j
 @Configuration
 //@PropertySources({
-//@PropertySource(value={"classpath:loader/probe_annotations.loader-defaults.properties"}),
+//@PropertySource(value={"classpath:loader/probe_annotations.loader.properties"}),
 //@PropertySource(value="classpath:loader/probe_annotations.loader-${spring_profiles_active}.properties", ignoreResourceNotFound=true)
 //})
 @Import(ProbeAnnotationsPersistenceConfiguration.class)
 public class ProbeAnnotationsLoaderConfiguration {
-  
-  @Inject Environment environment;
+  Config environment = new SimpleConfig ("loader/probe_annotations.loader.properties");
+//  @Inject Environment environment;
   public static final String MEV_PROBE_ANNOTATIONS_AFFYMETRIX_FOLDER="mev.annotations.probe.affymetrix.folder";
   public static final String MEV_PROBE_ANNOTATIONS_AFFYMETRIX_SUFFIX="mev.annotations.probe.affymetrix.file.suffix";
   
