@@ -21,6 +21,8 @@ import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain;
+import edu.dfci.cccb.mev.configuration.util.archaius.ArchaiusConfig;
+import edu.dfci.cccb.mev.configuration.util.contract.Config;
 
 @Log4j
 @Profile("test")
@@ -28,8 +30,12 @@ import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigu
 @Import(ProbeAnnotationsConfigurationMain.class)
 public class ProbeAnnotationsPersistanceConfigTest {
 
-  @Inject Environment environment; 
-  
+//  @Inject Environment environment; 
+  @Inject @Named("probe-annotations-loader-config") private Config environment;   
+  @Bean(name="probe-annotations-loader-config") 
+  public Config getConfig(){    
+    return new ArchaiusConfig ("loader/probe_annotations.loader.properties");
+  }
   
   @Bean(name="probe-annotations-root")
   public URL probeAnnotationsRoot() throws IOException{
@@ -51,11 +57,11 @@ public class ProbeAnnotationsPersistanceConfigTest {
 
       ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
       
-      String scriptDropAll = environment.getRequiredProperty(MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"db.schema.script.dropall");
+      String scriptDropAll = environment.getProperty(MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"db.schema.script.dropall");
       log.info ("***dataSourceInitializer-dropAllScript-TEST:"+scriptDropAll);
       populator.addScript(new ClassPathResource(scriptDropAll));
       
-      String scriptCreate = environment.getRequiredProperty(MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"db.schema.script");
+      String scriptCreate = environment.getProperty(MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX+"db.schema.script");
       log.info ("***dataSourceInitializer-createScript-TEST:"+scriptCreate);
       populator.addScript(new ClassPathResource(scriptCreate));
       

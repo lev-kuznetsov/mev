@@ -40,7 +40,7 @@ public class TestPresetsConfig {
   @Inject Environment environment;
   @Inject @Named("presets-config") Config config; 
   
-  @Test 
+  @Test @Ignore 
   public void test () {
         log.debug (String.format("env: %s\ncnf: %s", environment.getProperty ("MEV_HOME"), config.getProperty ("MEV_HOME")));
         log.debug (String.format("env: %s\ncnf: %s", environment.getProperty ("mev.annotations.probe.root.metadata.file"), config.getProperty ("mev.annotations.probe.root.metadata.file")));

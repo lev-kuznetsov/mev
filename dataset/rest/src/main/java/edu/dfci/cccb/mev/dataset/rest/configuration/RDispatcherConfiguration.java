@@ -42,6 +42,7 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import edu.dfci.cccb.mev.configuration.util.archaius.ArchaiusConfig;
 import edu.dfci.cccb.mev.configuration.util.composite.CompositeConfig;
 import edu.dfci.cccb.mev.configuration.util.contract.Config;
 import edu.dfci.cccb.mev.configuration.util.simple.SimpleConfig;
@@ -125,7 +126,7 @@ public class RDispatcherConfiguration {
 
   @Bean(name="rserve.config")
   public Config config() throws IOException, URISyntaxException{
-    return new SimpleConfig ("rserve.properties");
+    return new ArchaiusConfig ("rserve.properties");
   }
   
   @Bean

@@ -27,6 +27,7 @@ import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
+import edu.dfci.cccb.mev.configuration.util.archaius.ArchaiusConfig;
 import edu.dfci.cccb.mev.configuration.util.contract.Config;
 import edu.dfci.cccb.mev.configuration.util.simple.SimpleConfig;
 
@@ -46,7 +47,7 @@ public class ProbeAnnotationsPersistenceConfiguration {
   @Inject @Named("probe-annotations-presistence-config") private Config environment;  
   @Bean(name="probe-annotations-presistence-config") 
   public Config getConfig(){    
-    return new SimpleConfig ("probe_annotations.persistence.properties");
+    return new ArchaiusConfig ("persistence/probe_annotations.persistence.properties");
   }
  
   @Bean(name="probe-annotations-datasource", destroyMethod = "close")

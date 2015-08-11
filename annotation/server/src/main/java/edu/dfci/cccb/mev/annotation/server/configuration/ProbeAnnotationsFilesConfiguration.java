@@ -17,6 +17,7 @@ import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 import org.springframework.util.ResourceUtils;
 
+import edu.dfci.cccb.mev.configuration.util.archaius.ArchaiusConfig;
 import edu.dfci.cccb.mev.configuration.util.contract.Config;
 import edu.dfci.cccb.mev.configuration.util.simple.SimpleConfig;
 import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
@@ -36,7 +37,7 @@ public class ProbeAnnotationsFilesConfiguration {
   @Inject @Named("probe-annotations-loader-config") private Config environment;  
   @Bean(name="probe-annotations-loader-config") 
   public Config getConfig(){    
-    return new SimpleConfig ("loader/probe_annotations.loader.properties");
+    return new ArchaiusConfig ("loader/probe_annotations.loader.properties");
   }
     
   @Bean(name="probe-annotations-root")

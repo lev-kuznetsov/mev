@@ -125,19 +125,19 @@ public class SimpleConfig extends AbstractConfig implements Config {
     String value = null;
     for (Map<String, String> properties : sources) {
       value = properties.get (name);
-      if (value != null)
-        return value;
+      if (value != null) break;
       value = properties.get (name.toLowerCase ());
-      if (value != null)
-        return value;
+      if (value != null) break;
       value = properties.get (name.toUpperCase ());
-      if (value != null)
-        return value;
+      if (value != null) break;
     }
-    if(this.environment!=null){
+    if(value == null && this.environment!=null){
       value = environment.getProperty (name); 
     }
-      
+    if(value!=null && value.contains ("${")){
+      if(this.environment!=null)
+        value = this.environment.resolvePlaceholders (value);
+    }
     // throw new Exception(String.format("Property %s not found", name));
     return value;
   }
@@ -160,7 +160,7 @@ public class SimpleConfig extends AbstractConfig implements Config {
     BufferedReader reader = new BufferedReader (new InputStreamReader (is));
     String line;
     while ((line = reader.readLine ()) != null) {
-      String[] keyval = line.split ("=");
+      String[] keyval = line.split ("=", 2);
       if (keyval.length > 1) {
         log.debug (String.format ("Adding property %s value %s", keyval[0], keyval[1]));
         properties.put (keyval[0].trim (), keyval[1].trim ());
