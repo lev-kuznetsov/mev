@@ -31,12 +31,12 @@ import edu.dfci.cccb.mev.configuration.util.simple.SimpleConfig;
 @ComponentScan(value="edu.dfci.cccb.mev.presets", 
   includeFilters = @Filter (type = ANNOTATION, value = {Controller.class, RestController.class }),
   excludeFilters=@Filter(type=ANNOTATION, value = {Configuration.class}))
-@PropertySources({
-  @PropertySource ("classpath:/presets.properties"),
-  @PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true),
+//@PropertySources({
+//  @PropertySource ("classpath:/presets.properties"),
+//  @PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true),
 //  @PropertySource (value="file:${MEV_CONFIG_DIR}/presets.properties",ignoreResourceNotFound=true),
 //  @PropertySource (value="file:${MEV_CONFIG_DIR}/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true)
-})
+//})
 @Import(value={PresetsFilesConfig.class, PresetFlatFileConfig.class})
 public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
   @Inject private Environment environment;
@@ -44,5 +44,10 @@ public class PresetsRestConfiguration extends WebMvcConfigurerAdapter {
   public Config getPresetsConfig() throws IOException, URISyntaxException{
     log.debug (String.format("*****environment: %s", this.environment));
     return new ArchaiusConfig("presets.properties");
+  }
+  
+  @Bean(name="presets-persistence-config") 
+  public Config getConfig(){    
+    return new ArchaiusConfig ("persistence/presets.persistence.properties");
   }
 }

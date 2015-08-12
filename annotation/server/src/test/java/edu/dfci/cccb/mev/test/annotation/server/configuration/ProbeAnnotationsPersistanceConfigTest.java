@@ -32,10 +32,6 @@ public class ProbeAnnotationsPersistanceConfigTest {
 
 //  @Inject Environment environment; 
   @Inject @Named("probe-annotations-loader-config") private Config environment;   
-  @Bean(name="probe-annotations-loader-config") 
-  public Config getConfig(){    
-    return new ArchaiusConfig ("loader/probe_annotations.loader.properties");
-  }
   
   @Bean(name="probe-annotations-root")
   public URL probeAnnotationsRoot() throws IOException{

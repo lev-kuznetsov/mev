@@ -24,10 +24,10 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Configuration
-@PropertySources({
-  @PropertySource ("classpath:/presets.properties"),
-  @PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true)
-})
+//@PropertySources({
+//  @PropertySource ("classpath:/presets.properties"),
+//  @PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true)
+//})
 @Import({PresetPersistenceConfiguration.class})
 public class PresetHSQLConfig {
   private final static String TCGA_PROPERTY_DATASET_RELOAD_FLAG="mev.presets.tcga.data.reload";

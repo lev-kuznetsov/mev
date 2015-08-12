@@ -24,10 +24,10 @@ import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 
 @Configuration
 @ComponentScan(value="edu.dfci.cccb.mev.presets", includeFilters = @Filter (type = ANNOTATION, value = {Component.class }))
-@PropertySources({
-@PropertySource ("classpath:/presets.properties"),
-@PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true)
-})
+//@PropertySources({
+//@PropertySource ("classpath:/presets.properties"),
+//@PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true)
+//})
 @Import(value={PresetsRestConfiguration.class})
 public class PresetsLoaderConfiguration {
   

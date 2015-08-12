@@ -26,12 +26,12 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Configuration
-@PropertySources({
-  @PropertySource ("classpath:/presets.properties"),
-  @PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true),
+//@PropertySources({
+//  @PropertySource ("classpath:/presets.properties"),
+//  @PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true),
 //  @PropertySource (value="file:${MEV_CONFIG_DIR}/presets.properties",ignoreResourceNotFound=true),
 //  @PropertySource (value="file:${MEV_CONFIG_DIR}/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true),  
-})
+//})
 @Import ({PresetHSQLConfig.class})
 public class PresetFlatFileConfig {
   

@@ -31,20 +31,20 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Configuration
-@PropertySources({
-  @PropertySource ("classpath:/presets.properties"),
-  @PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true),
-  @PropertySource (value="file:${MEV_CONFIG_DIR}/presets.properties",ignoreResourceNotFound=true),
-  @PropertySource (value="file:${MEV_CONFIG_DIR}/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true),
-})
+//@PropertySources({
+//  @PropertySource ("classpath:/presets.properties"),
+//  @PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true),
+//  @PropertySource (value="file:${MEV_CONFIG_DIR}/presets.properties",ignoreResourceNotFound=true),
+//  @PropertySource (value="file:${MEV_CONFIG_DIR}/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true),
+//})
 public class PresetsFilesConfig {
   private final static String TCGA_PROPERTY_MATA_FILENAME="mev.presets.tcga.metadata.filename";
   private final static String TCGA_PROPERTY_ROOT_FOLDER="mev.presets.tcga.metadata.root";
-  @Inject Environment environment;
+//  @Inject Environment environment;
+  @Inject @Named("presets-config") Config environment;
   
   @Bean  @Inject
-  public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot,
-                                @Named("presets-config") Config config,
+  public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot,                                
                                 TcgaPresetsBuilder builder                                
                                 ) throws URISyntaxException, PresetException, IOException {
     

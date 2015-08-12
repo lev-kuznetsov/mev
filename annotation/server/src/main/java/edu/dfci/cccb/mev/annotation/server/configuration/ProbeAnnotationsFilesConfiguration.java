@@ -33,15 +33,15 @@ public class ProbeAnnotationsFilesConfiguration {
   public static final String MEV_PROBE_ANNOTATIONS_ROOT_FOLDER_URL="mev.annotations.probe.root.url";
   public static final String MEV_PROBE_ANNOTATIONS_RELOAD_FLAG="mev.annotations.probe.reload.flag";
   public static final String MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX="mev.annotations.probe.";  
-//  @Inject Environment environment;  
-  @Inject @Named("probe-annotations-loader-config") private Config environment;  
+//  @Inject Environment environment;    
   @Bean(name="probe-annotations-loader-config") 
   public Config getConfig(){    
     return new ArchaiusConfig ("loader/probe_annotations.loader.properties");
   }
-    
+  
+  @Inject
   @Bean(name="probe-annotations-root")
-  public URL probeAnnotationsRoot() throws IOException{
+  public URL probeAnnotationsRoot(@Named("probe-annotations-loader-config") Config environment) throws IOException{
     String probeAnnotationsRoot = environment.getProperty (MEV_PROBE_ANNOTATIONS_ROOT_FOLDER_URL);
     log.info ("**** Probe Annotations Root Config ****");
     log.info (MEV_PROBE_ANNOTATIONS_ROOT_FOLDER_URL+" property is set to:" + probeAnnotationsRoot);            
@@ -58,12 +58,12 @@ public class ProbeAnnotationsFilesConfiguration {
   }
   
   @Bean(name="probe-annotatinos-platforms-metafile") @Profile("!test")
-  public URL probeAnnotationsPlatformsMetafile() throws MalformedURLException, IOException{
+  public URL probeAnnotationsPlatformsMetafile(@Named("probe-annotations-loader-config") Config environment) throws MalformedURLException, IOException{
     String probeAnnotationsPlatformsMetafile = environment.getProperty (MEV_PROBE_ANNOTATIONS_PLATFORM_METAFILE);
     log.info (MEV_PROBE_ANNOTATIONS_PLATFORM_METAFILE+" property is set to:" + probeAnnotationsPlatformsMetafile);
     URL probeAnnotationsMetafileURL = ResourceUtils.getURL (probeAnnotationsPlatformsMetafile);
     if(probeAnnotationsMetafileURL.getProtocol ().equals (""))
-      probeAnnotationsMetafileURL=new URL(probeAnnotationsRoot (), probeAnnotationsPlatformsMetafile);
+      probeAnnotationsMetafileURL=new URL(probeAnnotationsRoot (environment), probeAnnotationsPlatformsMetafile);
     log.info ("probe-annotatinos-platforms-metafile:" + probeAnnotationsMetafileURL.toString ());
     
     if(!CCCPHelpers.UrlUtils.checkExists(probeAnnotationsMetafileURL))
