@@ -381,7 +381,15 @@
             <systemProperty>
             	<name>MEV_HOME</name>
             	<value>${MEV_HOME}</value>
-            </systemProperty>           
+            </systemProperty>
+            <systemProperty>
+            	<name>MEV_CONFIG_DIR</name>
+            	<value>${MEV_CONFIG_DIR}</value>
+            </systemProperty>          
+            <systemProperty>
+            	<name>MEV_CONFIG_BUCKET</name>
+            	<value>${MEV_CONFIG_BUCKET}</value>
+            </systemProperty>
           </systemProperties>
         </configuration>
       </plugin>
@@ -403,6 +411,7 @@
 	          	<h2.console.port>18044</h2.console.port>
 	          	<MEV_HOME>${MEV_HOME}</MEV_HOME>
 	          	<MEV_CONFIG_DIR>${MEV_CONFIG_DIR}</MEV_CONFIG_DIR>
+	          	<MEV_CONFIG_BUCKET>${MEV_CONFIG_BUCKET}</MEV_CONFIG_BUCKET>
          	</systemProperties>
           	<path>/</path>          	
           </configuration>

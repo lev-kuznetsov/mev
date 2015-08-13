@@ -89,7 +89,8 @@
         <mev.spring_profiles_active>local</mev.spring_profiles_active>
         <mev.extraClasspath>${user.home}/mev/config</mev.extraClasspath>
         <MEV_HOME>${user.home}/mev/</MEV_HOME>
-        <MEV_CONFIG_DIR>${MEV_HOME}/config</MEV_CONFIG_DIR>        
+        <MEV_CONFIG_DIR>${MEV_HOME}/config</MEV_CONFIG_DIR>
+        <MEV_CONFIG_BUCKET>mev-config</MEV_CONFIG_BUCKET>        
       </properties>
     </profile>
     <profile>

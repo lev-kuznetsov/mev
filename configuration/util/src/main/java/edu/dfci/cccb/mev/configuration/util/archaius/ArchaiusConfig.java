@@ -1,11 +1,11 @@
 package edu.dfci.cccb.mev.configuration.util.archaius;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.Map.Entry;
 
 import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.configuration.AbstractConfiguration;
 import org.apache.commons.configuration.ConfigurationException;
@@ -13,19 +13,27 @@ import org.apache.commons.configuration.ConfigurationUtils;
 import org.apache.commons.configuration.EnvironmentConfiguration;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.SystemConfiguration;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.S3ClientOptions;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
+import com.netflix.config.AbstractPollingScheduler;
 import com.netflix.config.ConcurrentCompositeConfiguration;
 import com.netflix.config.ConfigurationManager;
 import com.netflix.config.DeploymentContext;
 import com.netflix.config.DynamicConfiguration;
 import com.netflix.config.DynamicPropertyFactory;
+import com.netflix.config.FixedDelayPollingScheduler;
+import com.netflix.config.PolledConfigurationSource;
 import com.netflix.config.SimpleDeploymentContext;
+import com.netflix.config.sources.S3ConfigurationSource;
 
 import edu.dfci.cccb.mev.configuration.util.contract.Config;
 import edu.dfci.cccb.mev.configuration.util.helpers.ConfigurationUtilHelpers;
 
+@Log4j
 public class ArchaiusConfig implements Config {
 
   private String getProfile(AbstractConfiguration finalConfig){
@@ -78,12 +86,20 @@ public class ArchaiusConfig implements Config {
     String profileConfigName = baseFileName + "-" + ConfigurationManager.getDeploymentContext ().getDeploymentEnvironment () + "." + fileExt;
 
     // external polled folder
-    DynamicConfiguration dynamicConfig = new DynamicConfiguration ();
-    finalConfig.addConfiguration (dynamicConfig);
+    String s3Bucket = finalConfig.getString ("MEV_CONFIG_BUCKET");
+    if(!StringUtils.isEmpty(s3Bucket)){      
+      log.info (String.format("*** Processing s3 bucket %s for property file %s", s3Bucket, configName));
+      AmazonS3Client s3Client = new AmazonS3Client ();
+      s3Client.setS3ClientOptions(new S3ClientOptions().withPathStyleAccess(true));
+      
+      addS3Config (finalConfig, s3Client, s3Bucket, profileConfigName);
+      addS3Config (finalConfig, s3Client, s3Bucket, configName);      
+    }
 
     // external local folder
     String externalConfigFolder = finalConfig.getString ("MEV_CONFIG_DIR");
-    if (externalConfigFolder != null) {      
+    if (!StringUtils.isEmpty (externalConfigFolder)) {
+      log.info (String.format("*** Processing external config folder %s for property file %s", externalConfigFolder, configName));
       addExternalConfig (finalConfig, profileConfigName, externalConfigFolder);      
       addExternalConfig (finalConfig, configName, externalConfigFolder);
     }
@@ -98,6 +114,20 @@ public class ArchaiusConfig implements Config {
 
     if (!ConfigurationManager.isConfigurationInstalled ())
       ConfigurationManager.install (finalConfig);
+  }
+
+  private void addS3Config (ConcurrentCompositeConfiguration finalConfig, AmazonS3Client s3Client, String s3Bucket, String configName) {
+  
+    try{
+      PolledConfigurationSource s3Source = new S3ConfigurationSource(s3Client, s3Bucket, configName);    
+      AbstractPollingScheduler scheduler = new FixedDelayPollingScheduler();      
+      DynamicConfiguration dynamicConfig = new DynamicConfiguration (s3Source, scheduler);
+      finalConfig.addConfiguration (dynamicConfig);      
+    }catch(AmazonS3Exception e){
+      log.warn (String.format("*** Configuration %s was not found in bucket %s; error message: %s", configName, s3Bucket, e.getErrorMessage ()));
+    }catch(RuntimeException e){
+      log.warn (String.format("*** Configuration %s could not be load from bucket %s due to error: %s", configName, s3Bucket, e.getMessage ()));      
+    }
   }
 
   private void addClasspathConfig (String configName, ConcurrentCompositeConfiguration finalConfig) throws ConfigurationException {
@@ -128,18 +158,20 @@ public class ArchaiusConfig implements Config {
 
   @Override
   public String getTest () throws Throwable {
-    return null;
+    return getProperty ("simple.test");
   }
 
   @Override
-  public String getProperty (String name) {
-    return DynamicPropertyFactory.getInstance ()
-                                 .getStringProperty (name, null).get ();
+  public String getProperty (String key) {
+//    return DynamicPropertyFactory.getInstance ()
+//                                 .getStringProperty (name, null).get ();
+     return getProperty (key, null);   
   }
 
   @Override
-  public String getProperty (String name, String valueIfNull) {
-    return DynamicPropertyFactory.getInstance ().getStringProperty (name, valueIfNull).get ();
+  public String getProperty (String key, String valueIfNull) {
+//    return DynamicPropertyFactory.getInstance ().getStringProperty (key, valueIfNull).getValue ();
+    return ((AbstractConfiguration) DynamicPropertyFactory.getInstance ().getBackingConfigurationSource ()).getString (key, valueIfNull);
   }
 
   @Override
