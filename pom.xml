@@ -53,7 +53,7 @@
     <spring.version>4.0.3.RELEASE</spring.version>
     <jackson.version>2.2.2</jackson.version>
     <junit.version>4.11</junit.version>
-
+	<aws.java.sdk.version>1.9.6</aws.java.sdk.version>
     <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
 
@@ -114,14 +114,7 @@
         <mev.spring_profiles_active>aws</mev.spring_profiles_active>
         <mev.Rscript>nice -20 /usr/local/lib64/R/bin/Rscript</mev.Rscript>
        	<mev.extraClasspath>/opt/mev/config</mev.extraClasspath>
-      </properties>
-      <dependencies>
-      	<dependency>
-			<groupId>com.amazonaws</groupId>
-			<artifactId>aws-java-sdk</artifactId>
-			<version>1.9.6</version>
-		</dependency>
-      </dependencies>
+      </properties>      
     </profile>
   </profiles>
 
