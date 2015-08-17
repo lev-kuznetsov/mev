@@ -53,7 +53,7 @@
     <spring.version>4.0.3.RELEASE</spring.version>
     <jackson.version>2.2.2</jackson.version>
     <junit.version>4.11</junit.version>
-
+	<aws.java.sdk.version>1.9.6</aws.java.sdk.version>
     <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
 
@@ -63,7 +63,8 @@
     <mev.extraClasspath>${basedir}/target/classes/</mev.extraClasspath>	
     <h2.version>1.3.174</h2.version>
     <org.hsqldb.version>2.3.0</org.hsqldb.version>
-    <mev.hsqldb.textdb.allow_full_path>true</mev.hsqldb.textdb.allow_full_path>
+    <mev.hsqldb.textdb.allow_full_path>true</mev.hsqldb.textdb.allow_full_path>    
+    <MEV_HOME>.</MEV_HOME>
   </properties>
 
   <profiles>
@@ -87,6 +88,9 @@
       <properties>
         <mev.spring_profiles_active>local</mev.spring_profiles_active>
         <mev.extraClasspath>${user.home}/mev/config</mev.extraClasspath>
+        <MEV_HOME>${user.home}/mev/</MEV_HOME>
+        <MEV_CONFIG_DIR>${MEV_HOME}/config</MEV_CONFIG_DIR>
+        <MEV_CONFIG_BUCKET>mev-config</MEV_CONFIG_BUCKET>        
       </properties>
     </profile>
     <profile>
@@ -110,14 +114,7 @@
         <mev.spring_profiles_active>aws</mev.spring_profiles_active>
         <mev.Rscript>nice -20 /usr/local/lib64/R/bin/Rscript</mev.Rscript>
        	<mev.extraClasspath>/opt/mev/config</mev.extraClasspath>
-      </properties>
-      <dependencies>
-      	<dependency>
-			<groupId>com.amazonaws</groupId>
-			<artifactId>aws-java-sdk</artifactId>
-			<version>1.9.6</version>
-		</dependency>
-      </dependencies>
+      </properties>      
     </profile>
   </profiles>
 

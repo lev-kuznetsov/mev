@@ -18,10 +18,17 @@
     <module>rest</module>
     <module>client</module>
     <module>persistence</module>
+    <module>util</module>
   </modules>
 
   <dependencies>
 
+    <!-- AWS -->
+    <dependency>
+		<groupId>com.amazonaws</groupId>
+		<artifactId>aws-java-sdk</artifactId>
+		<version>${aws.java.sdk.version}</version>
+	</dependency>
     <!-- Spring -->
 
     <dependency>

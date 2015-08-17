@@ -16,11 +16,16 @@ package edu.dfci.cccb.mev.dataset.rest.configuration;
 
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import lombok.extern.log4j.Log4j;
 
@@ -37,6 +42,10 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import edu.dfci.cccb.mev.configuration.util.archaius.ArchaiusConfig;
+import edu.dfci.cccb.mev.configuration.util.composite.CompositeConfig;
+import edu.dfci.cccb.mev.configuration.util.contract.Config;
+import edu.dfci.cccb.mev.configuration.util.simple.SimpleConfig;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.r.RDispatcher;
 import edu.dfci.cccb.mev.dataset.domain.r.RserveDatasetDeserializer;
@@ -115,17 +124,25 @@ public class RDispatcherConfiguration {
     return new RDispatcher ();
   }
 
+  @Bean(name="rserve.config")
+  public Config config() throws IOException, URISyntaxException{
+    return new ArchaiusConfig ("rserve.properties");
+  }
+  
   @Bean
   @Rserve
-  public Iterator<InetSocketAddress> hosts () throws ConfigurationException {
-    final PropertiesConfiguration config = new PropertiesConfiguration ();
-    InputStream configurationStream = getClass ().getResourceAsStream ("/rserve.properties");
-    if (configurationStream != null)
-      config.load (configurationStream);
-    else
-      config.setProperty ("rserve.host", "localhost:6311");
-
-    final String[] hosts = config.getStringArray ("rserve.host");
+  @Inject
+  public Iterator<InetSocketAddress> hosts (@Named("rserve.config") Config config) throws ConfigurationException {
+//    final PropertiesConfiguration config = new PropertiesConfiguration ();
+//    InputStream configurationStream = getClass ().getResourceAsStream ("/rserve.properties");
+//    if (configurationStream != null)
+//      config.load (configurationStream);
+//    else
+//      config.setProperty ("rserve.host", "localhost:6311");
+//    final String[] hosts = config.getStringArray ("rserve.host");
+    
+    log.info ("Configuring RDispatcher with hosts...............");
+    final String[] hosts = config.getStringArray ("rserve.host", "localhost:6311");
     log.info ("Configuring RDispatcher with hosts " + Arrays.asList (hosts));
     final InetSocketAddress[] socks = new InetSocketAddress[hosts.length];
     for (int i = socks.length; --i >= 0;) {

@@ -6,7 +6,7 @@
   <artifactId>mev-configuration-persistence</artifactId>
   <packaging>jar</packaging>
 
-  <name>MeV Configuration of REST Components</name>
+  <name>MeV Configuration of Persistence Components</name>
   <url>http://github.com/dfci-cccb/mev</url>
 
   <parent>

@@ -319,16 +319,16 @@
         <version>2.6</version>
         <configuration>
           <failOnMissingWebXml>false</failOnMissingWebXml>
-          <webResources>            
-            <resource>
-              <directory>tomcat-config</directory>
-              <targetPath>META-INF</targetPath>
-              <filtering>true</filtering>
-              <includes>
-                <exclude>**/context.xml</exclude>
-              </includes>
-            </resource>
-          </webResources>
+<!--           <webResources>             -->
+<!--             <resource> -->
+<!--               <directory>tomcat-config</directory> -->
+<!--               <targetPath>META-INF</targetPath> -->
+<!--               <filtering>true</filtering> -->
+<!--               <includes> -->
+<!--                 <exclude>**/context.xml</exclude> -->
+<!--               </includes> -->
+<!--             </resource> -->
+<!--           </webResources> -->
         </configuration>
       </plugin>
 
@@ -377,7 +377,19 @@
              <systemProperty>
               <name>h2.console.port</name>
               <value>18044</value>
-            </systemProperty>           
+            </systemProperty>
+            <systemProperty>
+            	<name>MEV_HOME</name>
+            	<value>${MEV_HOME}</value>
+            </systemProperty>
+            <systemProperty>
+            	<name>MEV_CONFIG_DIR</name>
+            	<value>${MEV_CONFIG_DIR}</value>
+            </systemProperty>          
+            <systemProperty>
+            	<name>MEV_CONFIG_BUCKET</name>
+            	<value>${MEV_CONFIG_BUCKET}</value>
+            </systemProperty>
           </systemProperties>
         </configuration>
       </plugin>
@@ -388,15 +400,18 @@
           <version>2.2</version>
           <configuration>            
           	<port>8080</port>
-          	<additionalClasspathDirs>
-        		<additionalClasspathDir>${mev.extraClasspath}</additionalClasspathDir>
-      		</additionalClasspathDirs>
+<!--           	<additionalClasspathDirs> -->
+<!--         		<additionalClasspathDir>${mev.extraClasspath}</additionalClasspathDir> -->
+<!--       		</additionalClasspathDirs> -->
          	<systemProperties>
 	          	<java.io.tmpdir>${mev.java.io.tmpdir}</java.io.tmpdir>
 	          	<spring_profiles_active>${mev.spring_profiles_active}</spring_profiles_active>
 	          	<edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>${mev.Rscript}</edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>
 	          	<textdb.allow_full_path>${mev.hsqldb.textdb.allow_full_path}</textdb.allow_full_path>
 	          	<h2.console.port>18044</h2.console.port>
+	          	<MEV_HOME>${MEV_HOME}</MEV_HOME>
+	          	<MEV_CONFIG_DIR>${MEV_CONFIG_DIR}</MEV_CONFIG_DIR>
+	          	<MEV_CONFIG_BUCKET>${MEV_CONFIG_BUCKET}</MEV_CONFIG_BUCKET>
          	</systemProperties>
           	<path>/</path>          	
           </configuration>
