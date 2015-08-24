@@ -390,6 +390,14 @@
             	<name>MEV_CONFIG_BUCKET</name>
             	<value>${MEV_CONFIG_BUCKET}</value>
             </systemProperty>
+            <systemProperty>
+            	<name>archaius.fixedDelayPollingScheduler.delayMills</name>
+            	<value>${archaius.fixedDelayPollingScheduler.delayMills}</value>
+            </systemProperty>
+            <systemProperty>
+            	<name>archaius.fixedDelayPollingScheduler.initialDelayMills</name>
+            	<value>${archaius.fixedDelayPollingScheduler.initialDelayMills}</value>
+            </systemProperty>
           </systemProperties>
         </configuration>
       </plugin>
@@ -412,6 +420,8 @@
 	          	<MEV_HOME>${MEV_HOME}</MEV_HOME>
 	          	<MEV_CONFIG_DIR>${MEV_CONFIG_DIR}</MEV_CONFIG_DIR>
 	          	<MEV_CONFIG_BUCKET>${MEV_CONFIG_BUCKET}</MEV_CONFIG_BUCKET>
+	          	<archaius.fixedDelayPollingScheduler.initialDelayMills>${archaius.fixedDelayPollingScheduler.initialDelayMills}</archaius.fixedDelayPollingScheduler.initialDelayMills>
+	          	<archaius.fixedDelayPollingScheduler.delayMills>${archaius.fixedDelayPollingScheduler.delayMills}</archaius.fixedDelayPollingScheduler.delayMills>
          	</systemProperties>
           	<path>/</path>          	
           </configuration>

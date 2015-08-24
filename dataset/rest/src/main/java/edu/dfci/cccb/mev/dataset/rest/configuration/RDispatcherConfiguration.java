@@ -67,15 +67,16 @@ public class RDispatcherConfiguration {
 
   @Bean
   @Rserve
-  public int concurrency () throws ConfigurationException {
-    final PropertiesConfiguration config = new PropertiesConfiguration ();
-    InputStream configurationStream = getClass ().getResourceAsStream ("/rserve.properties");
-    if (configurationStream != null)
-      config.load (configurationStream);
-    else
-      config.setProperty ("rserve.concurrency", "2");
-    log.info ("RDispatcher with concurrency " + config.getInt ("rserve.concurrency"));
-    return config.getInt ("rserve.concurrency");
+  public int concurrency () throws ConfigurationException, NumberFormatException, IOException, URISyntaxException {
+//    final PropertiesConfiguration config = new PropertiesConfiguration ();
+//    InputStream configurationStream = getClass ().getResourceAsStream ("/rserve.properties");
+//    if (configurationStream != null)
+//      config.load (configurationStream);
+//    else
+//      config.setProperty ("rserve.concurrency", "2");
+//    log.info ("RDispatcher with concurrency " + config.getInt ("rserve.concurrency"));    
+//    return config.getInt ("rserve.concurrency");
+    return Integer.parseInt (config().getProperty ("rserve.concurrency",  "2"));
   }
 
   @Bean

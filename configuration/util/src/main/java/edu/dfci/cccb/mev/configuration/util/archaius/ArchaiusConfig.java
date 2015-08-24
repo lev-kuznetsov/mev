@@ -178,7 +178,7 @@ public class ArchaiusConfig implements Config {
   public String[] getStringArray (String key, String valueIfNull) {
     String[] value =
                      ((AbstractConfiguration) DynamicPropertyFactory.getInstance ().getBackingConfigurationSource ()).getStringArray (key);
-    if (value == null) {
+    if (value.length==0) {
       value = ConfigurationUtilHelpers.convertToArray (valueIfNull);
     }
     return value;
