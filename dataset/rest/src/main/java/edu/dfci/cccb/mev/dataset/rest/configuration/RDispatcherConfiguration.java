@@ -23,10 +23,12 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import lombok.Synchronized;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.configuration.ConfigurationException;
@@ -132,8 +134,8 @@ public class RDispatcherConfiguration {
   
   @Bean
   @Rserve
-  @Inject
-  public Iterator<InetSocketAddress> hosts (@Named("rserve.config") Config config) throws ConfigurationException {
+  @Scope(SCOPE_PROTOTYPE)
+  public List<InetSocketAddress> hosts (@Named("rserve.config") Config config) throws ConfigurationException {
 //    final PropertiesConfiguration config = new PropertiesConfiguration ();
 //    InputStream configurationStream = getClass ().getResourceAsStream ("/rserve.properties");
 //    if (configurationStream != null)
@@ -141,40 +143,35 @@ public class RDispatcherConfiguration {
 //    else
 //      config.setProperty ("rserve.host", "localhost:6311");
 //    final String[] hosts = config.getStringArray ("rserve.host");
-    
-    log.info ("Configuring RDispatcher with hosts...............");
+        
     final String[] hosts = config.getStringArray ("rserve.host", "localhost:6311");
-    log.info ("Configuring RDispatcher with hosts " + Arrays.asList (hosts));
+    log.info ("Configuring RDispatcher with hosts ............... " + Arrays.asList (hosts));
     final InetSocketAddress[] socks = new InetSocketAddress[hosts.length];
     for (int i = socks.length; --i >= 0;) {
       String[] split = hosts[i].split (":");
       socks[i] = new InetSocketAddress (split[0], split.length > 1 ? Integer.parseInt (split[1]) : 6311);
     }
-
-    return new Iterator<InetSocketAddress> () {
-      private int index = 0;
-
-      @Override
-      public boolean hasNext () {
-        return true;
-      }
-
-      @Override
-      public InetSocketAddress next () {
-        if (index >= socks.length)
-          index = 0;
-        return socks[index++];
-      }
-
-      @Override
-      public void remove () {}
-    };
+    return Arrays.asList (socks);
+  }  
+  
+ 
+  private class Sequencer{
+    private int counter=-1;
+    @Synchronized
+    public int next(){
+      if(counter< Integer.MAX_VALUE) counter++; else counter=0;
+      return counter;        
+    }
   }
-
+  @Bean
+  public Sequencer getSeq(){
+    return new Sequencer();
+  }
+  
   @Bean
   @Rserve
   @Scope (SCOPE_PROTOTYPE)
-  public InetSocketAddress host (Iterator<InetSocketAddress> hosts) {
-    return hosts.next ();
+  public InetSocketAddress host (List<InetSocketAddress> hosts, Sequencer seq) {
+    return hosts.get (seq.next() % hosts.size ());      
   }
 }
