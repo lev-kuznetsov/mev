@@ -65,7 +65,7 @@
     <org.hsqldb.version>2.3.0</org.hsqldb.version>
     <mev.hsqldb.textdb.allow_full_path>true</mev.hsqldb.textdb.allow_full_path>    
     <MEV_HOME>.</MEV_HOME>
-    <archaius.fixedDelayPollingScheduler.delayMills>3600000</archaius.fixedDelayPollingScheduler.delayMills>
+    <archaius.fixedDelayPollingScheduler.delayMills>60000</archaius.fixedDelayPollingScheduler.delayMills>
     <archaius.fixedDelayPollingScheduler.initialDelayMills>0</archaius.fixedDelayPollingScheduler.initialDelayMills>
   </properties>
 
