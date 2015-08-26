@@ -65,6 +65,8 @@
     <org.hsqldb.version>2.3.0</org.hsqldb.version>
     <mev.hsqldb.textdb.allow_full_path>true</mev.hsqldb.textdb.allow_full_path>    
     <MEV_HOME>.</MEV_HOME>
+    <archaius.fixedDelayPollingScheduler.delayMills>60000</archaius.fixedDelayPollingScheduler.delayMills>
+    <archaius.fixedDelayPollingScheduler.initialDelayMills>0</archaius.fixedDelayPollingScheduler.initialDelayMills>
   </properties>
 
   <profiles>
@@ -90,8 +92,13 @@
         <mev.extraClasspath>${user.home}/mev/config</mev.extraClasspath>
         <MEV_HOME>${user.home}/mev/</MEV_HOME>
         <MEV_CONFIG_DIR>${MEV_HOME}/config</MEV_CONFIG_DIR>
-        <MEV_CONFIG_BUCKET>mev-config</MEV_CONFIG_BUCKET>        
       </properties>
+    </profile>
+    <profile>
+    	<id>aws-config</id>    	
+    	<properties>
+    		<MEV_CONFIG_BUCKET>mev-config</MEV_CONFIG_BUCKET>
+    	</properties>
     </profile>
     <profile>
       <id>perf</id>

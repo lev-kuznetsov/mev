@@ -122,7 +122,8 @@ public class ArchaiusConfig implements Config {
       PolledConfigurationSource s3Source = new S3ConfigurationSource(s3Client, s3Bucket, configName);    
       AbstractPollingScheduler scheduler = new FixedDelayPollingScheduler();      
       DynamicConfiguration dynamicConfig = new DynamicConfiguration (s3Source, scheduler);
-      finalConfig.addConfiguration (dynamicConfig);      
+      //the polling configuration is added at the front to override any other configuration
+      finalConfig.addConfigurationAtFront (dynamicConfig, "MEV_BUCKET_CONFIG");
     }catch(AmazonS3Exception e){
       log.warn (String.format("*** Configuration %s was not found in bucket %s; error message: %s", configName, s3Bucket, e.getErrorMessage ()));
     }catch(RuntimeException e){
@@ -178,7 +179,7 @@ public class ArchaiusConfig implements Config {
   public String[] getStringArray (String key, String valueIfNull) {
     String[] value =
                      ((AbstractConfiguration) DynamicPropertyFactory.getInstance ().getBackingConfigurationSource ()).getStringArray (key);
-    if (value == null) {
+    if (value.length==0) {
       value = ConfigurationUtilHelpers.convertToArray (valueIfNull);
     }
     return value;
