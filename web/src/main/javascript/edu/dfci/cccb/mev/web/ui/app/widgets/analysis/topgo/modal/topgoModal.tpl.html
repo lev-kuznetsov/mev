@@ -1,0 +1,38 @@
+<form role="form">	
+     <div class="form-group">
+       <label for="deseq-test-name" class="control-label">Test Name</label>
+       <input id="deseq-test-name" ng-model="params.name" placeholder="Ex: My_Analysis_1">
+     </div>
+     
+     <div class="form-group">
+       <label for="deseq-test-control" class="control-label">Gene Selection</label>
+       <select id="deseq-test-control" ng-options="selection.name for selection in dataset.row.selections" ng-model="params.geneSelection"></select>
+     </div>
+     
+     <div class="form-group">
+       <label for="deseq-test-experiment" class="control-label">Species</label>
+       <select id="deseq-test-experiment" ng-options="species for species in topGoVM.species" ng-model="params.species"></select>
+     </div>
+     
+     <div class="form-group">
+       <label for="deseq-test-experiment" class="control-label">GO Type</label>
+       <select id="deseq-test-experiment" ng-options="goType for goType in topGoVM.goType" ng-model="params.goType"></select>
+     </div>
+     
+     <div class="form-group">
+       <label for="deseq-test-experiment" class="control-label">Test Type</label>
+       <select id="deseq-test-experiment" ng-options="testType for testType in topGoVM.testType" ng-model="params.testType"></select>
+     </div>
+     
+     <div class="form-group">
+       <label for="deseq-test-experiment" class="control-label">P-Adjust</label>
+       <select id="deseq-test-experiment" ng-options="pAdjust for pAdjust in topGoVM.pAdjust" ng-model="params.pAdjust"></select>
+     </div>
+     
+     <div class="form-group">
+       <label for="deseq-test-experiment" class="control-label">Node Size</label>
+       <input type="number" ng-model="params.nodeSize"></text>
+     </div>
+	<!--button ng-click="testInit()">hehe</button-->
+	<a class="btn btn-success btn-block" ng-click="testInit()" data-dismiss="modal" aria-hidden="true">Analyze</a>
+</form>

@@ -35,6 +35,7 @@
     <module>deseq</module>
     <module>nmf</module>
 	<module>survival</module>
+    <module>topgo</module>
     <module>web</module>
 
   </modules>
