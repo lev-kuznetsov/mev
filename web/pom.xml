@@ -529,7 +529,7 @@
               devtools::install_github ("dfci-cccb/injectoR");
             source ("https://bioconductor.org/biocLite.R");
             sapply (c ("topGO", "org.Hs.eg.db", "org.Mm.eg.db"), function (lib)
-              biocLite (lib);
+              if (!requireNamespace (lib)) biocLite (lib));
           </onInitialize>
           <configure>
             <workdir>${mev.java.io.tmpdir}/Rserve</workdir>
