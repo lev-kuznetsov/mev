@@ -527,6 +527,9 @@
               if (!requireNamespace (lib)) install.packages (lib, repos="http://cran.rstudio.com"));
             if (!requireNamespace ("injectoR"))
               devtools::install_github ("dfci-cccb/injectoR");
+            source ("https://bioconductor.org/biocLite.R");
+            sapply (c ("topGO", "org.Hs.eg.db", "org.Mm.eg.db"), function (lib)
+              biocLite (lib);
           </onInitialize>
           <configure>
             <workdir>${mev.java.io.tmpdir}/Rserve</workdir>
