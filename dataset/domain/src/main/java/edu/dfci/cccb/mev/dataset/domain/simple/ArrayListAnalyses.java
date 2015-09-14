@@ -43,6 +43,7 @@ public class ArrayListAnalyses extends AbstractAnalyses implements AutoCloseable
    * .dataset.domain.contract.Analysis) */
   @Override
   public void put (Analysis analysis) {
+    log.info ("Adding analysis " + analysis);
     analyses.add (0, analysis);
   }
 

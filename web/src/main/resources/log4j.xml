@@ -55,6 +55,9 @@
   <logger name="com.amazonaws.services.s3">
   	<level value="info"></level>
   </logger>
+  <logger name="edu.dfci.cccb">
+    <level value="info"></level>
+  </logger>
   <root>
     <priority value="debug"></priority>
     <appender-ref ref="stderr" />

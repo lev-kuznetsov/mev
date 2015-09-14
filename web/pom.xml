@@ -127,6 +127,14 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
+    <!-- topGO package -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-topgo-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
     <!-- K-Means Package -->
 
     <dependency>
@@ -182,16 +190,16 @@
       <artifactId>mev-deseq-rest</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
-    
+
     <!-- NMF -->
-    
+
     <dependency>
-        <groupId>edu.dfci.cccb</groupId>
-        <artifactId>mev-nmf-rest</artifactId>
-        <version>BAYLIE-SNAPSHOT</version>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-nmf-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
-	<!-- Survival -->
+    <!-- Survival -->
 
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
@@ -303,9 +311,9 @@
     </dependency>
 
     <dependency>
-    	<groupId>net.wimpi</groupId>
-    	<artifactId>telnetd-x</artifactId>
-    	<version>2.1.1</version>
+      <groupId>net.wimpi</groupId>
+      <artifactId>telnetd-x</artifactId>
+      <version>2.1.1</version>
     </dependency>
   </dependencies>
 
@@ -348,9 +356,9 @@
           <stopPort>${jetty.stop.port}</stopPort>
           <stopKey>stop</stopKey>
 
-		  <webApp>
-        	<extraClasspath>${mev.extraClasspath}</extraClasspath>
-    	  </webApp>
+          <webApp>
+            <extraClasspath>${mev.jetty.extraClasspath}</extraClasspath>
+          </webApp>
 
           <systemProperties>
             <force>true</force>
@@ -374,7 +382,7 @@
               <name>textdb.allow_full_path</name>
               <value>${mev.hsqldb.textdb.allow_full_path}</value>
             </systemProperty>
-             <systemProperty>
+            <systemProperty>
               <name>h2.console.port</name>
               <value>18044</value>
             </systemProperty>
@@ -469,9 +477,9 @@
           <jsTestSrcDir>${project.basedir}/src/test/javascript/edu/dfci/cccb/mev/web/javascript/</jsTestSrcDir>
           <specIncludes>
             <include>**/*.js</include>
-          </specIncludes>                    
+          </specIncludes>
           <preloadSources>
-            <source>webjars/require.js</source>	
+            <source>webjars/require.js</source>
             <source>spec/htmlUnitPolyfill.js</source>
           </preloadSources>
           <keepServerAlive>true</keepServerAlive>
@@ -513,22 +521,26 @@
         <artifactId>rserve-maven-plugin</artifactId>
         <version>0.0.7</version>
         <configuration>
-          <rserveSource>https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/Rserve/1.8-1/Rserve_1.8-1.tar.gz</rserveSource>  
+          <rserveSource>https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/Rserve/1.8-1/Rserve_1.8-1.tar.gz</rserveSource>
           <onInitialize>
             sapply (c ("devtools", "NMF"), function (lib)
-              if (!requireNamespace (lib))
-                install.packages (lib, repos="http://cran.rstudio.com"));
+              if (!requireNamespace (lib)) install.packages (lib, repos="http://cran.rstudio.com"));
             if (!requireNamespace ("injectoR"))
               devtools::install_github ("dfci-cccb/injectoR");
+            source ("https://bioconductor.org/biocLite.R");
+            sapply (c ("topGO", "org.Hs.eg.db", "org.Mm.eg.db"), function (lib)
+              if (!requireNamespace (lib)) biocLite (lib));
           </onInitialize>
           <configure>
             <workdir>${mev.java.io.tmpdir}/Rserve</workdir>
             <encoding>utf8</encoding>
             <fileio>disable</fileio>
-            </configure>
+          </configure>
           <onRequest>
             .libPaths (.libPaths ()[ -1 ]);
             library (injectoR);
+            library (topGO);
+            cwd = "${basedir}";
             source ("../dataset/domain/src/main/r/json.R");
             source ("../nmf/domain/src/main/r/nmf.r");
           </onRequest>
@@ -603,7 +615,7 @@
       </plugins>
     </pluginManagement>
   </build>
-  
+
   <pluginRepositories>
     <pluginRepository>
       <id>cccb</id>

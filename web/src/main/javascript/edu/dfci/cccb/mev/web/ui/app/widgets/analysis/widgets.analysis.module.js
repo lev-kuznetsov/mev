@@ -4,7 +4,8 @@ define(["ng",
         "./survival/widgets.analysis.survival.module",
         "./default/widgets.analysis.default.module",
         "./analysisModal/widgets.analysis.modal.module",
-        "./analysisLog/widgets.analysis.log.module"
+        "./analysisLog/widgets.analysis.log.module",
+        "./topgo/widgets.analysis.topgo.module"
         ], 
 function(ng, AnalyisEventBus){
 	var module = ng.module("mui.widgets.analysis", ["mui.widgets.analysis.limma",
@@ -12,7 +13,8 @@ function(ng, AnalyisEventBus){
 	                                                "mui.widgets.analysis.survival",
 	                                                "mui.widgets.analysis.default",
 	                                                "mui.widgets.analysis.modal",
-	                                                "mui.widgets.analysis.log"
+	                                                "mui.widgets.analysis.log",
+	                                                "mui.widgets.analysis.topgo"
 	                                                ])
 	.constant("AnalysisTypes", {
 			"Hierarchical Clustering": {
@@ -51,6 +53,10 @@ function(ng, AnalyisEventBus){
 				shortName: "nmf",
 				viewModel: "NmfVM"
 			},
+			"topGO Analysis":{
+			    shortName: "topgo",
+			    viewModel: "TopGoVM"
+			},
 			reverseLookup: {
 				hcl: "Hierarchical Clustering",
 				limma: "LIMMA Differential Expression Analysis",
@@ -61,7 +67,8 @@ function(ng, AnalyisEventBus){
 				anova: "Anova Analysis",
 				deseq: "DESeq Differential Expression Analysis",
 				nmf: "Non-Negative Matrix Factorization",
-				survival: "Survival Analysis"
+				survival: "Survival Analysis",
+				topgo: "topGO Analysis"
 		} 
 	});	
 	return module;
