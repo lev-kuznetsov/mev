@@ -42,7 +42,12 @@
       <artifactId>commons-fileupload</artifactId>
       <version>${commons-fileupload.version}</version>
     </dependency>
-
+	
+	<dependency>
+		<groupId>edu.dfci.cccb</groupId>
+		<artifactId>mev-configuration-util</artifactId>
+		<version>BAYLIE-SNAPSHOT</version>		
+	</dependency>
   </dependencies>
 
 </project>

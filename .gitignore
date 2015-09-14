@@ -39,3 +39,7 @@ mem.script
 bkp/
 /bkp
 
+#AWS Beanstalk
+**/.elasticbeanstalk/*
+!**/.elasticbeanstalk/*.cfg.yml
+!**/.elasticbeanstalk/*.global.yml

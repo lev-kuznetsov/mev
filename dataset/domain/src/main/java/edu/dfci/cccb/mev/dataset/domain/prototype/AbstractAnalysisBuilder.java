@@ -43,8 +43,8 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 @Log4j
 public abstract class AbstractAnalysisBuilder <B extends AnalysisBuilder<?, ?>, A extends Analysis> implements AnalysisBuilder<B, A> {
 
-  private @Getter @JsonProperty final String type;
-  private @Getter (PROTECTED) @JsonProperty String name;
+  private @Getter final String type;
+  private @Getter (PROTECTED) String name;
   private @Getter (PROTECTED) Dataset dataset;
 
   /* (non-Javadoc)

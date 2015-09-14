@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.context.annotation.Bean;
@@ -15,23 +17,31 @@ import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 import org.springframework.util.ResourceUtils;
 
+import edu.dfci.cccb.mev.configuration.util.archaius.ArchaiusConfig;
+import edu.dfci.cccb.mev.configuration.util.contract.Config;
+import edu.dfci.cccb.mev.configuration.util.simple.SimpleConfig;
 import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
 
 @Log4j
 @Configuration
-@PropertySources({
-@PropertySource(value={"classpath:loader/probe_annotations.loader-defaults.properties"}),
-@PropertySource(value="classpath:loader/probe_annotations.loader-${spring_profiles_active}.properties", ignoreResourceNotFound=true)
-})
+//@PropertySources({
+//@PropertySource(value={"classpath:loader/probe_annotations.loader.properties"}),
+//@PropertySource(value="classpath:loader/probe_annotations.loader-${spring_profiles_active}.properties", ignoreResourceNotFound=true)
+//})
 public class ProbeAnnotationsFilesConfiguration {
   public static final String MEV_PROBE_ANNOTATIONS_PLATFORM_METAFILE="mev.annotations.probe.root.metadata.file";
   public static final String MEV_PROBE_ANNOTATIONS_ROOT_FOLDER_URL="mev.annotations.probe.root.url";
   public static final String MEV_PROBE_ANNOTATIONS_RELOAD_FLAG="mev.annotations.probe.reload.flag";
   public static final String MEV_PROBE_ANNOTATIONS_PROPERTY_PREFIX="mev.annotations.probe.";  
-  @Inject Environment environment;
+//  @Inject Environment environment;    
+  @Bean(name="probe-annotations-loader-config") 
+  public Config getConfig(){    
+    return new ArchaiusConfig ("loader/probe_annotations.loader.properties");
+  }
   
+  @Inject
   @Bean(name="probe-annotations-root")
-  public URL probeAnnotationsRoot() throws IOException{
+  public URL probeAnnotationsRoot(@Named("probe-annotations-loader-config") Config environment) throws IOException{
     String probeAnnotationsRoot = environment.getProperty (MEV_PROBE_ANNOTATIONS_ROOT_FOLDER_URL);
     log.info ("**** Probe Annotations Root Config ****");
     log.info (MEV_PROBE_ANNOTATIONS_ROOT_FOLDER_URL+" property is set to:" + probeAnnotationsRoot);            
@@ -48,12 +58,12 @@ public class ProbeAnnotationsFilesConfiguration {
   }
   
   @Bean(name="probe-annotatinos-platforms-metafile") @Profile("!test")
-  public URL probeAnnotationsPlatformsMetafile() throws MalformedURLException, IOException{
+  public URL probeAnnotationsPlatformsMetafile(@Named("probe-annotations-loader-config") Config environment) throws MalformedURLException, IOException{
     String probeAnnotationsPlatformsMetafile = environment.getProperty (MEV_PROBE_ANNOTATIONS_PLATFORM_METAFILE);
     log.info (MEV_PROBE_ANNOTATIONS_PLATFORM_METAFILE+" property is set to:" + probeAnnotationsPlatformsMetafile);
     URL probeAnnotationsMetafileURL = ResourceUtils.getURL (probeAnnotationsPlatformsMetafile);
     if(probeAnnotationsMetafileURL.getProtocol ().equals (""))
-      probeAnnotationsMetafileURL=new URL(probeAnnotationsRoot (), probeAnnotationsPlatformsMetafile);
+      probeAnnotationsMetafileURL=new URL(probeAnnotationsRoot (environment), probeAnnotationsPlatformsMetafile);
     log.info ("probe-annotatinos-platforms-metafile:" + probeAnnotationsMetafileURL.toString ());
     
     if(!CCCPHelpers.UrlUtils.checkExists(probeAnnotationsMetafileURL))

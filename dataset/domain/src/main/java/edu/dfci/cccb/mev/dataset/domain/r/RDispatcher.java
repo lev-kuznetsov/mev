@@ -129,22 +129,32 @@ public class RDispatcher {
           }
         }
 
-        command.append ("inject (")
-               .append (job.getClass ().getAnnotation (R.class).value ())
-               .append (", binder); }), silent = TRUE);");
+        R r = job.getClass ().getAnnotation (R.class);
 
-        for (session = session.attach ().voidEvalDetach (command.toString ());;)
-          try {
-            connection = session.attach ();
-            break;
-          } catch (RserveException e) {
-            log.error (e);
-            if (!(e.getCause () instanceof SocketTimeoutException))
-              throw e;
-          }
+        if (r.synchronize ()) {
+          command.append ("inject (").append (r.value ()).append (", binder); }), silent = TRUE);");
+          connection = session.attach ();
+          connection.eval (command.toString ());
+          result = connection.eval ("inject (function (result) result (" + v + "));");
+          connection.close ();
+        } else {
+          command.append ("inject (")
+                 .append (r.value ())
+                 .append (", binder); }), silent = TRUE);");
 
-        result = connection.eval ("inject (function (result) result (" + v + "));");
-        connection.voidEval ("rm (" + v + ")");
+          for (session = session.attach ().voidEvalDetach (command.toString ());;)
+            try {
+              connection = session.attach ();
+              break;
+            } catch (RserveException e) {
+              log.error (e);
+              if (!(e.getCause () instanceof SocketTimeoutException))
+                throw e;
+            }
+
+          result = connection.eval ("inject (function (result) result (" + v + "));");
+          connection.voidEval ("rm (" + v + ")");
+        }
       } finally {
         if (connection != null)
           connection.close ();

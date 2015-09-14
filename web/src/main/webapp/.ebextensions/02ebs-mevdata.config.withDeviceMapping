@@ -1,0 +1,13 @@
+commands:
+  01mkdir:
+    command: mkdir -p /mnt/data 
+  02mount:
+    command: if $(grep -qs "mnt/data" /proc/mounts); then echo "/mnt/data already mounted"; else mount /dev/sdj /mnt/data; fi
+#option_settings:
+#  - namespace: aws:autoscaling:launchconfiguration
+#    option_name: BlockDeviceMappings
+#    value: /dev/sdj=snap-0f71ff7a
+  - namespace: aws:autoscaling:launchconfiguration
+    option_name: RootVolumeSize
+    value: '50'
+

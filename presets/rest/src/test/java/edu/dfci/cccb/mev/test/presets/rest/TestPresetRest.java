@@ -9,6 +9,7 @@ import java.net.URL;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,7 +25,7 @@ public class TestPresetRest {
   @Inject Presets tcgaPresets;
   @Inject @Named ("tcgaPresetRoot") URL tcgaPresetsRoot;
   
-  @Test
+  @Test 
   public void testTcgaPresetsRoot ()  {
     //URL expected = new URL("file:/home/antony/work/danafarber/mev/data/tcga/tcga_data_tempSubset/");
     File checkExists = new File(tcgaPresetsRoot.getFile ());

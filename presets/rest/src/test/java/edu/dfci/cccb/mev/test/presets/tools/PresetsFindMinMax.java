@@ -60,7 +60,8 @@ public class PresetsFindMinMax {
     }
   }
   
-  @Test @Ignore
+  
+  @Test 
   public void test () throws SQLException, PresetException {
     
     for(Preset preset : presets.getAll ()){

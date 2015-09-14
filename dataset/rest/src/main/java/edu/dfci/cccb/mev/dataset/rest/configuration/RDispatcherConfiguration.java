@@ -16,16 +16,18 @@ package edu.dfci.cccb.mev.dataset.rest.configuration;
 
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
-import java.io.InputStream;
+import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 
+import javax.inject.Named;
+
+import lombok.Synchronized;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,6 +39,8 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import edu.dfci.cccb.mev.configuration.util.archaius.ArchaiusConfig;
+import edu.dfci.cccb.mev.configuration.util.contract.Config;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.r.RDispatcher;
 import edu.dfci.cccb.mev.dataset.domain.r.RserveDatasetDeserializer;
@@ -53,20 +57,21 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Rserve;
 @Log4j
 public class RDispatcherConfiguration {
   {
-    log.info ("Configuring RDispatcher");
+    log.info ("Configuring RDispatcher " + this.getClass ());
   }
 
   @Bean
   @Rserve
-  public int concurrency () throws ConfigurationException {
-    final PropertiesConfiguration config = new PropertiesConfiguration ();
-    InputStream configurationStream = getClass ().getResourceAsStream ("/rserve.properties");
-    if (configurationStream != null)
-      config.load (configurationStream);
-    else
-      config.setProperty ("rserve.concurrency", "2");
-    log.info ("RDispatcher with concurrency " + config.getInt ("rserve.concurrency"));
-    return config.getInt ("rserve.concurrency");
+  public int concurrency () throws ConfigurationException, NumberFormatException, IOException, URISyntaxException {
+//    final PropertiesConfiguration config = new PropertiesConfiguration ();
+//    InputStream configurationStream = getClass ().getResourceAsStream ("/rserve.properties");
+//    if (configurationStream != null)
+//      config.load (configurationStream);
+//    else
+//      config.setProperty ("rserve.concurrency", "2");
+//    log.info ("RDispatcher with concurrency " + config.getInt ("rserve.concurrency"));    
+//    return config.getInt ("rserve.concurrency");
+    return Integer.parseInt (config().getProperty ("rserve.concurrency",  "2"));
   }
 
   @Bean
@@ -115,48 +120,38 @@ public class RDispatcherConfiguration {
     return new RDispatcher ();
   }
 
+  @Bean(name="rserve.config")
+  public Config config() throws IOException, URISyntaxException{
+    return new ArchaiusConfig ("rserve.properties");
+  }
+  
+ 
+  private class Sequencer{
+    private int counter=-1;
+    @Synchronized
+    public int next(){
+      if(counter< Integer.MAX_VALUE) counter++; else counter=0;
+      return counter;        
+    }
+  }
+  
+  @Bean
+  public Sequencer getSeq(){
+    return new Sequencer();
+  }
+  
   @Bean
   @Rserve
-  public Iterator<InetSocketAddress> hosts () throws ConfigurationException {
-    final PropertiesConfiguration config = new PropertiesConfiguration ();
-    InputStream configurationStream = getClass ().getResourceAsStream ("/rserve.properties");
-    if (configurationStream != null)
-      config.load (configurationStream);
-    else
-      config.setProperty ("rserve.host", "localhost:6311");
-
-    final String[] hosts = config.getStringArray ("rserve.host");
-    log.info ("Configuring RDispatcher with hosts " + Arrays.asList (hosts));
+  @Scope (SCOPE_PROTOTYPE)
+  public InetSocketAddress host (@Named("rserve.config") Config config, Sequencer seq) {
+    final String[] hosts = config.getStringArray ("rserve.host", "localhost:6311");
+    log.info ("Configuring RDispatcher with hosts ............... " + Arrays.asList (hosts));
     final InetSocketAddress[] socks = new InetSocketAddress[hosts.length];
     for (int i = socks.length; --i >= 0;) {
       String[] split = hosts[i].split (":");
       socks[i] = new InetSocketAddress (split[0], split.length > 1 ? Integer.parseInt (split[1]) : 6311);
     }
-
-    return new Iterator<InetSocketAddress> () {
-      private int index = 0;
-
-      @Override
-      public boolean hasNext () {
-        return true;
-      }
-
-      @Override
-      public InetSocketAddress next () {
-        if (index >= socks.length)
-          index = 0;
-        return socks[index++];
-      }
-
-      @Override
-      public void remove () {}
-    };
-  }
-
-  @Bean
-  @Rserve
-  @Scope (SCOPE_PROTOTYPE)
-  public InetSocketAddress host (Iterator<InetSocketAddress> hosts) {
-    return hosts.next ();
+    
+    return socks[seq.next() % socks.length];      
   }
 }

@@ -1,25 +1,149 @@
 
+<!-- <project-analysis-parameters parameters="DatasetAnalysisVM.analysis.params"></project-analysis-parameters> -->
+<div ng-controller="SelectionSetManagerCtl">
+	<ul class="nav nav-tabs column-header" id="importTabs">
+		<li id="table_tab" class="active"><a href="#table" data-toggle="tab" target="_self">Column Sets</a></li>		
+		<div class="action-menu" mui-paste="action-menu"></div>	
+	</ul>
 
-<!-- 
-<selection-set-manager id="selectionSetMgr" ng-controller="SelectionSetManagerCtl" selections="dataset.selections" heatmap-data="dataset" heatmap-id="{{dataset.datasetName}}"></selection-set-manager>
--->
+
+<!-- 	<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1"> -->
+<!-- 		<li role="presentation"><a role="menuitem" tabindex="-1" data-target="#selectionSetExportDatasetColumn"  -->
+<!-- 			data-toggle="modal">Export as New Dataset</a></li>			 -->
+<!-- 	    <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#selectionSetAddColumn"  -->
+<!-- 			data-toggle="modal">Merge Selected</a></li> -->
+<!-- 	    <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#selectionSetIntColumn"  -->
+<!-- 			data-toggle="modal">Intersect Selected</a></li> -->
+<!-- 	    <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#selectionSetDiffColumn"  -->
+<!-- 			data-toggle="modal">Difference Selected</a></li> -->
+<!-- 	</ul> -->
+
+	<div class="tab-content column-body">
+		<div class="tab-pane active" id="table" >	
+			
+			<div class="btn-toolbar" role="toolbar" mui-yank="action-menu">
+     		<div class="btn-group">
+		             <a class="btn" data-target="#selectionSetExportDatasetColumn" data-toggle="modal">
+		               </i> New Dataset
+		             </a><a class="btn" data-target="#selectionSetAddColumn" data-toggle="modal">
+		               </i> Merge
+		             </a><a class="btn" data-target="#selectionSetIntColumn" data-toggle="modal">
+		               </i> Intersect
+		             </a><a class="btn" data-target="#selectionSetDiffColumn" data-toggle="modal">
+		               </i> Difference
+		             </a>       
+	            </div>
+	      	</div>			
+			
+			<table class="table table-condensed" ng-if="ColumnSetsViewVM.dataset.column.selections && ColumnSetsViewVM.dataset.column.selections.length>0">
+			<tr>
+				<th>name</th>
+				<th>color</th>
+				<th>desription</th>								
+			 </tr>
+			<tr ng-repeat="selection in ColumnSetsViewVM.dataset.column.selections">	
+				<td>
+					<input type="checkbox" ng-model="selection.setSelectionChecked" ng-true-value="true" ng-false-value="false">
+					<a href="" ui-sref="root.dataset.columnSet({setId: selection.name})">{{selection.name}}</a>
+				</td>
+				<td bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>
+				<td>{{selection.properties.selectionDescription}}</td>								
+			 </tr>
+			</table>
+			
+			<p ng-if="!ColumnSetsViewVM.dataset.column.selections || (ColumnSetsViewVM.dataset.column.selections && ColumnSetsViewVM.dataset.column.selections.length<=0)">
+			No column selections currently defined. You can add <a href="" ng-click="vm.addColumnSelection()">new clinical selections</a> by clicking <a href="" ng-click="vm.addColumnSelection()"><span class="fa fa-plus"></span></a> on Column Sets in the tree-view on the left.
+			</p>
+								
+		</div>
+	</div>
+
+<bsmodal bindid="selectionSetExportDatasetColumn" func="" header="Export as New Dataset">
+
+	<div class="row">
+		<form-group>
+			<form>
+				<label for="uniColName" class="control-label">New Dataset Name:</label>
+				<input id="uniColName" type="text" class="input-small" ng-model="exportParams.column.name">
+			<form>
+		</form-group>
+	</div>
+	<div class="row">
+        <a class="btn btn-success pull-right" ng-click="exportSelection('column')" data-dismiss="modal" aria-hidden="true">
+              Export as New Dataset
+        </a>
+    </div>
+    
+</bsmodal> 
+
+<bsmodal bindid="selectionSetAddColumn" func="" header="Merge Column Selections">
+
+	<div class="row">
+		<form-group>
+			<form>
+				<label for="uniColName" class="control-label">New Name:</label>
+				<input id="uniColName" type="text" class="input-small" ng-model="selectionParams.column.name">
+			<form>
+		</form-group>
+	</div>
+	<div class="row">
+        <a class="btn btn-success pull-right" ng-click="addMergedSelection('column')" data-dismiss="modal" aria-hidden="true">
+              Create Selection
+        </a>
+    </div>
+    
+</bsmodal> 
+
+<!-- Intersections -->
+
+<bsmodal bindid="selectionSetIntColumn" func="" header="Intersect Column Selections">
+
+	<div class="row">
+		<form-group>
+			<form>
+				<label for="intColName" class="control-label">New Name:</label>
+				<input id="intColName" type="text" class="input-small" ng-model="selectionParams.column.name">
+			</form>
+		</form-group>
+	</div>
 	
-<!-- <selection-set-list  -->
-<!-- 			mev-selections="ColumnSetsViewVM.dataset.column.selections" 					 -->
-<!-- 			mev-demintion="column">				 -->
-<!-- 			You may define sets using <a href="" ng-click="showAnnotations(selection, 'column')">column annotations</a> or by performing an analysis. -->
-<!-- </selection-set-list> -->
-<h3>Column Sets</h3>
-<table class="table table-condensed">
-<tr>
-	<th>name</th>
-	<th>color</th>
-	<th>desription</th>								
- </tr>
-<tr ng-repeat="selection in ColumnSetsViewVM.dataset.column.selections">
-	<td><a >{{selection.name}}</a></td>
-	<td bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>
-	<td>{{selection.properties.selectionDescription}}</td>								
- </tr>
-</table>
-<ui-view></ui-view>
+	<div class="row">
+        <a class="btn btn-success pull-right" ng-click="addIntersectionSelection('column')" data-dismiss="modal" aria-hidden="true">
+              Create Selection
+        </a>
+    </div>
+    
+</bsmodal> 
+
+<!-- Set Differences -->
+
+<bsmodal bindid="selectionSetDiffColumn" func="" header="Set Difference Column Selections">
+
+	<div class="row">
+		<form-group>
+			<form>
+				<label for="diffColName" class="control-label">New Name:</label>
+				<input id="diffColName" type="text" class="input-small" ng-model="selectionParams.column.name">
+			</form>
+		</form-group>
+	</div>
+	
+	<div class="row">
+		<form-group>
+			<form>
+				<label for="baseColSetSelector" class="control-label">Base Set:</label>
+				<select id="baseColSetSelector" ng-options="group.name for group in heatmapData.column.selections" 
+							ng-model="selectionParams.special.column"></select>
+			</form>
+		</form-group>
+	</div>
+	
+	<div class="row">
+        <a class="btn btn-success pull-right" ng-click="addDifferenceSelection('column')" data-dismiss="modal" aria-hidden="true">
+              Create Selection
+        </a>
+    </div>
+    
+</bsmodal> 
+
+</div>

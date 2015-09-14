@@ -30,4 +30,6 @@ import java.lang.annotation.Target;
 public @interface R {
 
   String value ();
+
+  boolean synchronize () default false;
 }

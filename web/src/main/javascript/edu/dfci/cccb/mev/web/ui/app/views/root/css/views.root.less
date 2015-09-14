@@ -404,3 +404,34 @@ div[layout-column='left']{
         transform: rotate(359deg);
     }
 }
+
+
+#presetMgr{
+	height: 100%;
+	.mev-preset-list-wrapper{
+		height: 100%;
+		#presetsGrid{
+			height: 100%;
+		}
+	}
+}
+
+.nav{
+	&.nav-tabs{
+		border-bottom: 1px solid @brand-success;
+		> li {
+				&.active {
+					> a {
+						border: 1px solid @brand-success;
+						border-bottom: 1px solid @body-bg;
+					}
+				}
+				&:hover{
+					> a {
+						background-color: @body-bg;
+//						text-decoration: underline;
+					}
+				}
+			}
+	}
+}

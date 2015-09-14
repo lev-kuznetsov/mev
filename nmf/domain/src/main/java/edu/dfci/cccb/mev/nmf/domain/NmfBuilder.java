@@ -68,7 +68,7 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
 public class NmfBuilder extends AbstractDispatchedRAnalysisBuilder<NmfBuilder, Nmf> {
 
   public NmfBuilder () {
-    super ("nmf");
+    super ("Non-Negative Matrix Factorization");
   }
 
   private @Getter @Setter @Parameter int rank = 3;

@@ -2,12 +2,14 @@ package edu.dfci.cccb.mev.topgo.domain;
 
 import java.util.Collection;
 
+import lombok.ToString;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
 
+@ToString
 public class TopGo extends AbstractAnalysis<TopGo> {
 
   private Collection<TopGoRow> table;
@@ -17,7 +19,7 @@ public class TopGo extends AbstractAnalysis<TopGo> {
     this.table = table;
   }
 
-  @JsonValue
+  @JsonProperty ("results")
   private Collection<TopGoRow> table () {
     return table;
   }

@@ -324,9 +324,19 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
-        <version>2.3</version>
+        <version>2.6</version>
         <configuration>
           <failOnMissingWebXml>false</failOnMissingWebXml>
+<!--           <webResources>             -->
+<!--             <resource> -->
+<!--               <directory>tomcat-config</directory> -->
+<!--               <targetPath>META-INF</targetPath> -->
+<!--               <filtering>true</filtering> -->
+<!--               <includes> -->
+<!--                 <exclude>**/context.xml</exclude> -->
+<!--               </includes> -->
+<!--             </resource> -->
+<!--           </webResources> -->
         </configuration>
       </plugin>
 
@@ -361,6 +371,10 @@
               <value>${mev.spring_profiles_active}</value>
             </systemProperty>
             <systemProperty>
+              <name>spring.profiles.active</name>
+              <value>${mev.spring_profiles_active}</value>
+            </systemProperty>
+            <systemProperty>
               <name>edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable</name>
               <value>${mev.Rscript}</value>
             </systemProperty>
@@ -372,8 +386,53 @@
               <name>h2.console.port</name>
               <value>18044</value>
             </systemProperty>
+            <systemProperty>
+            	<name>MEV_HOME</name>
+            	<value>${MEV_HOME}</value>
+            </systemProperty>
+            <systemProperty>
+            	<name>MEV_CONFIG_DIR</name>
+            	<value>${MEV_CONFIG_DIR}</value>
+            </systemProperty>          
+            <systemProperty>
+            	<name>MEV_CONFIG_BUCKET</name>
+            	<value>${MEV_CONFIG_BUCKET}</value>
+            </systemProperty>
+            <systemProperty>
+            	<name>archaius.fixedDelayPollingScheduler.delayMills</name>
+            	<value>${archaius.fixedDelayPollingScheduler.delayMills}</value>
+            </systemProperty>
+            <systemProperty>
+            	<name>archaius.fixedDelayPollingScheduler.initialDelayMills</name>
+            	<value>${archaius.fixedDelayPollingScheduler.initialDelayMills}</value>
+            </systemProperty>
           </systemProperties>
         </configuration>
+      </plugin>
+
+	  <plugin>
+          <groupId>org.apache.tomcat.maven</groupId>
+          <artifactId>tomcat7-maven-plugin</artifactId>
+          <version>2.2</version>
+          <configuration>            
+          	<port>8080</port>
+<!--           	<additionalClasspathDirs> -->
+<!--         		<additionalClasspathDir>${mev.extraClasspath}</additionalClasspathDir> -->
+<!--       		</additionalClasspathDirs> -->
+         	<systemProperties>
+	          	<java.io.tmpdir>${mev.java.io.tmpdir}</java.io.tmpdir>
+	          	<spring_profiles_active>${mev.spring_profiles_active}</spring_profiles_active>
+	          	<edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>${mev.Rscript}</edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>
+	          	<textdb.allow_full_path>${mev.hsqldb.textdb.allow_full_path}</textdb.allow_full_path>
+	          	<h2.console.port>18044</h2.console.port>
+	          	<MEV_HOME>${MEV_HOME}</MEV_HOME>
+	          	<MEV_CONFIG_DIR>${MEV_CONFIG_DIR}</MEV_CONFIG_DIR>
+	          	<MEV_CONFIG_BUCKET>${MEV_CONFIG_BUCKET}</MEV_CONFIG_BUCKET>
+	          	<archaius.fixedDelayPollingScheduler.initialDelayMills>${archaius.fixedDelayPollingScheduler.initialDelayMills}</archaius.fixedDelayPollingScheduler.initialDelayMills>
+	          	<archaius.fixedDelayPollingScheduler.delayMills>${archaius.fixedDelayPollingScheduler.delayMills}</archaius.fixedDelayPollingScheduler.delayMills>
+         	</systemProperties>
+          	<path>/</path>          	
+          </configuration>
       </plugin>
 
       <plugin>

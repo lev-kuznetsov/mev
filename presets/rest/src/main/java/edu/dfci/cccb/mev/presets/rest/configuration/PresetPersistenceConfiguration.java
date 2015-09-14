@@ -25,12 +25,15 @@ import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
+import edu.dfci.cccb.mev.configuration.util.archaius.ArchaiusConfig;
+import edu.dfci.cccb.mev.configuration.util.contract.Config;
+
 @Log4j
 @Configuration
-@PropertySources({
-@PropertySource(value={"classpath:persistence/presets.persistence-defaults.properties"}),
-@PropertySource(value="classpath:persistence/presets.persistence-${spring_profiles_active}.properties", ignoreResourceNotFound=true)
-})
+//@PropertySources({
+//@PropertySource(value={"classpath:persistence/presets.persistence-defaults.properties"}),
+//@PropertySource(value="classpath:persistence/presets.persistence-${spring_profiles_active}.properties", ignoreResourceNotFound=true)
+//})
 public class PresetPersistenceConfiguration {
   private final String MEV_PRESETS_PROPERTY_PREFIX = "mev.presets.";
   
@@ -38,9 +41,10 @@ public class PresetPersistenceConfiguration {
     log.info ("***loading "+this.getClass ().getSimpleName ()+"****");
   }
   
-  @Inject
-  private Environment environment;  
- 
+//  @Inject private Environment environment;  
+  @Inject @Named("presets-persistence-config") private Config environment;  
+  
+  
 //  @Bean(name="presets-h2-server")
 //  public Lifecycle presetsH2TcpServer(){
 //    int port = environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"h2.tcp.port", Integer.class, 18054);
@@ -111,9 +115,9 @@ public class PresetPersistenceConfiguration {
   public LocalSessionFactoryBean sessionFactory (@Named("presets-datasource") DataSource datasource) {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean ();
     sessionFactory.setDataSource (datasource);
-    sessionFactory.setPackagesToScan (environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"session.factory.scan.packages",
-                                                               String[].class,
-                                                               new String[] { "edu.dfci.cccb.mev" }));
+    sessionFactory.setPackagesToScan (environment.getStringArray (MEV_PRESETS_PROPERTY_PREFIX+"session.factory.scan.packages",
+            "[edu.dfci.cccb.mev]" ));
+    
     Properties hibernateProperties = new Properties ();
     hibernateProperties.setProperty ("hibernate.hbm2ddl.auto",
                                      environment.getProperty (MEV_PRESETS_PROPERTY_PREFIX+"hibernate.hbm2ddl.auto",
@@ -167,7 +171,7 @@ public class PresetPersistenceConfiguration {
   //        jooqToSpringExceptionTransformer()
   //    ));
   
-      String sqlDialectName = environment.getRequiredProperty(MEV_PRESETS_PROPERTY_PREFIX+"jooq.sql.dialect");
+      String sqlDialectName = environment.getProperty(MEV_PRESETS_PROPERTY_PREFIX+"jooq.sql.dialect");
       SQLDialect dialect = SQLDialect.valueOf(sqlDialectName);
       jooqConfiguration.set(dialect);
   

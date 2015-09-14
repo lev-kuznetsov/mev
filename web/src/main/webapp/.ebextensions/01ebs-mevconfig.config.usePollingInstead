@@ -1,0 +1,15 @@
+files:
+  "/opt/mev/config/rserve.properties" :
+    mode: "000777"
+    owner: ec2-user
+    group: ec2-user
+    source: https://mev-config-prod.s3.amazonaws.com/rserve.properties
+    authentication: S3Access
+Resources:
+  AWSEBAutoScalingGroup:
+    Metadata:
+      AWS::CloudFormation::Authentication:
+        S3Access:
+          type: S3
+          roleName: aws-elasticbeanstalk-ec2-role
+          buckets: mev-config-prod

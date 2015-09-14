@@ -83,7 +83,7 @@ define(['jquery','angular'], function(jquery, angular){
 			function pushNewSelection(dimension, selectedSets){
 			    $http({
                     method:"POST", 
-               url:"/dataset/" + $routeParams.datasetName + "/" 
+               url:"/dataset/" + ($routeParams.datasetName || $scope.heatmapData.id) + "/" 
                 + dimension
                 + "/selection/",
                data:{
@@ -117,7 +117,7 @@ define(['jquery','angular'], function(jquery, angular){
 			function pushNewDataset(dimension, selectedSets){
 			    $http({
                     method:"POST", 
-               url:"/dataset/" + $routeParams.datasetName + "/" 
+               url:"/dataset/" + ($routeParams.datasetName || $scope.heatmapData.id) + "/" 
                 + dimension
                 + "/selection/export",
                data:{
