@@ -365,7 +365,7 @@
           <stopKey>stop</stopKey>
 
           <webApp>
-            <extraClasspath>${mev.jetty.extraClasspath}</extraClasspath>
+            <extraClasspath>${mev.extraClasspath}</extraClasspath>
           </webApp>
 
           <systemProperties>
