@@ -12,6 +12,7 @@
                         scope: {
                             project: "=project",
                             analysis: "=analysis",
+                            heatmapView: "=",
                             isItOpen: "@"
                         },
                         link: function (scope, elem, attrs) {                        	
@@ -125,9 +126,9 @@
                             scope.applyToHeatmap = function () {
 
                                 var labels = scope.filteredResults.map(projection.ids);
-
-                                scope.project.generateView({
+                                scope.heatmapView = scope.project.generateView({
                                     viewType: 'heatmapView',
+                                    note: scope.analysis.name,
                                     labels: {
                                         column: {
                                             keys: scope.project.dataset.column.keys

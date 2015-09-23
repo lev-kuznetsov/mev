@@ -1,134 +1,7 @@
 (function(){
 	
-	var paths = {
-		vendor: function(path){
-			return "/container/vendor/"+path;
-		},
-		app: function(path){
-			return "/container/ui/app/"+path;
-		}
-	};
-	
-	requirejs.config({
-		baseUrl: "/container/javascript",
-		paths: {
-			jquery : ["//code.jquery.com/jquery-2.1.1", paths.vendor("jquery/jquery-2.1.1")],
-			bootstrap: [paths.vendor("bootstrap-3.3.1/dist/js/bootstrap")],
-			ng : [paths.vendor("angularjs/angular"), "//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular"],			
-			uibootstrap: [paths.vendor("uibootstrap/ui-bootstrap-tpls-0.12.1.min")],			
-			nguirouter :  [paths.vendor("uirouter/angular-ui-router"), "//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.12/angular-ui-router"],
-			ngresource: [paths.vendor("angularjs/angular-resource")],
-			appjs: [paths.app("app")],
-			q: [paths.vendor("q/q.hack")],
-			underscore: [paths.vendor("underscore/underscore")],
-			lodash: [paths.vendor("lodash/lodash")],
-			angularTreeView: [paths.vendor("angular-treeview/treeView")],
-			lessjs: [paths.vendor("lessjs/less.min.js")],
-			bootstrapTree: [paths.vendor("bootstrap-tree/bootstrap-tree")],
-			
-			angularRoute : [ paths.vendor('angularjs/angular-route') ],
-			jqueryUi : ['//code.jquery.com/ui/1.9.2/jquery-ui.min', 'jquery-ui/1.9.2/jquery-ui.min'],
-			d3 : [ '//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3', '/library/webjars/d3js/3.4.1/d3.min' ],
-		    retina : [ '/library/webjars/retinajs/0.0.2/retina' ],
-		    notific8 : [ 'notific8.min' ],
-		    ngGrid : [ '//cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.7/ng-grid', '/container/javascript/ng-grid-2.0.7.min',  ],
-		    blob : [ '/container/javascript/canvasToBlob/Blob' ],
-		    canvasToBlob : [ '/container/javascript/canvasToBlob/canvas-toBlob' ],
-		    fileSaver : [ '/container/javascript/fileSaver/FileSaver' ],
-		    qtip : [ '/library/webjars/qtip2/2.1.1/jquery.qtip' ],
-		    log4js : [ '/library/webjars/log4javascript/1.4.5/log4javascript' ],
-		    mbAngularUtilsPagination: [paths.vendor('mbAngularUtils/pagination/dirPagination')],
-			mbAngularUtilsBreadcrumbs: [paths.vendor('mbAngularUtils/breadcrumbs/uiBreadcrumbs')]
-		},
-		
-		map: {
-	        '*': {
-	            angular: 'ng',
-	            angularResource: 'ngresource'
-	        }	        
-	    },
-		
-		shim: {
-			jquery: {
-				exports: "$"
-			},
-			jqueryUi: {
-				deps: ["jquery"]
-			},
-			bootstrap: {
-				deps: ["jquery"]
-			},
-			ng: {
-				deps: ["jquery"],
-				exports: "angular"
-			},
-			ngmocks: {
-				deps: ["ng"]
-			},
-			uibootstrap: {
-				deps: ["ng"]
-			},
-			nguirouter: {
-				deps: ["ng"]
-			},
-			q: {
-				deps: ["ng"],
-				exports: "q"
-			},
-			ngresource: {
-				deps: ["ng"]
-			},
-			angularTreeView: {
-				deps: ["ng"]
-			},
-			angularData: {
-				deps: ["ng"]
-			},
-			bootstrapTree: {
-				deps: ["ng", "jquery"]
-			},
-			angularRoute: {
-				deps: ["ng", "jquery"]
-			},
-			notific8: {
-		      deps : [ 'jquery' ],
-		      exports : 'notific8'
-		    },
-		    ngGrid: {
-		    	deps: ['jquery', 'ng']
-		    },
-		    'fileSaver' : {
-		        deps : [ 'canvasToBlob' ],
-		        exports : 'fileSaver'
-		    },
-		    mbAngularUtilsPagination: {
-		    	deps: ['jquery', 'angular']
-		    }, 
-		    mbAngularUtilsBreadcrumbs: {
-		    	deps: ['jquery', 'angular']
-		    }
-		},
-	  packages : [ {
-		    name : "mainmenu",
-		    location : "/container/javascript/mainmenu",
-		    main : "MainMenu.package"
-	  	},
-	  	{
-	  		name: "app",
-	  		location: "/container/ui/app"
-	  	},
-	  	{
-		    name : "geods",
-		    location : "/container/javascript/geods",
-		    main : "Geods.package"
-		},
-		{
-		    name : "clinical",
-		    location : "/container/javascript/clinicalSummary",
-		    main : "ClinicalSummary.package"
-		}
-	  ]
-	});
+	console.debug("REQUIREJS_CONFIG", REQUIREJS_CONFIG);
+	requirejs.config(REQUIREJS_CONFIG);
 	
 //	requirejs.onError = function (err) {
 //	    console.log(err.requireType);
@@ -213,7 +86,7 @@
 	    
 	};
 	
-	requirejs(["ng", "appjs", 'orefine/OrefineBridge'], function(ng, app, OpenRefineBridge){
+	requirejs(["ng", "appjs", 'orefine/OrefineBridge', "mui"], function(ng, app, OpenRefineBridge){		
 		ng.element(document).ready(function(){
 			ng.bootstrap(document, [app.name]);
 		});

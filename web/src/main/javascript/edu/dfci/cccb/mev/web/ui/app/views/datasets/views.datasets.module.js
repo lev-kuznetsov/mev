@@ -1,6 +1,6 @@
-define(["ng", "./controllers/DatasetsVM"], 
+define(["ng", "./_controllers/DatasetsVM"], 
 function(ng, DatasetsVM){
-	var module = ng.module("mui.views.datasets", []);
+	var module = ng.module("mui.views.datasets", ["mui.widgets.presets"]);
 	module.config(['$stateProvider', '$urlRouterProvider',
 	     	function($stateProvider, $urlRouterProvider){	     						
 	     		$stateProvider.state("root.datasets", {
@@ -8,7 +8,7 @@ function(ng, DatasetsVM){
 	     			controller: "ImportsCtrl",
 	     			controllerAs: "ImportsCtrl",
 	     			parent: "root",
-	     			templateUrl: "app/views/datasets/templates/views.datasets.tpl.html",
+	     			templateUrl: "app/views/datasets/_templates/views.datasets.tpl.html",
 	     			displayName: "datasets"
 	     		});
 	}]);

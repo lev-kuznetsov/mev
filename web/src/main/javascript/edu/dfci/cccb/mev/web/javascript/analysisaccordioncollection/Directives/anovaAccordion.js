@@ -13,6 +13,7 @@
                         scope: {
                             analysis: "=analysis",
                             project: '=project',
+                            heatmapView: "=",
                             isItOpen: '@'
                         },
                         link: function (scope) {                        	
@@ -154,7 +155,7 @@
 
                                 var labels = traverse(scope.filteredResults);
 
-                                scope.project.generateView({
+                                scope.heatmapView = scope.project.generateView({
                                     viewType: 'heatmapView',
                                     labels: {
                                         column: {

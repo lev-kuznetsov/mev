@@ -56,6 +56,7 @@ define([], function(){
 				}
 			},			
 			"dataset\.analyses\.[0123456789][0123456789]*": {
+				type: "Analysis",
 				state: {
 					name: ".dataset.analysis",
 					getParams: function(node){

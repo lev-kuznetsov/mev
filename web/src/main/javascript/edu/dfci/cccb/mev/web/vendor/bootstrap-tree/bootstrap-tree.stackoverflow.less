@@ -1,4 +1,6 @@
 @hight-color: @brand-warning;
+@node-padding-top: @padding-base-v;
+@node-padding: @node-padding-top / 2;
 
 .tree {
     min-height:20px;
@@ -16,7 +18,7 @@
     li {
 	    list-style-type:none;
 	    margin:0;
-	    padding:10px 5px 0 5px;
+	    padding:@node-padding-top @node-padding 0 @node-padding;
 	    position:relative;
 	
 	

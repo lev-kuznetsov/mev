@@ -1,6 +1,6 @@
 <div class="mev-preset-list-wrapper">
 
-<div ng-show="showImport==false" id="presetsGrid" class="gridStyle" ng-grid="gridOptions" ></div>
+<div id="presetsGrid" class="gridStyle" ng-grid="gridOptions" ></div>
 </div>
 
 <bsmodal id="import-presets-dialog" bindid="import-presets-modal" func="" header="Import TCGA Datasets">

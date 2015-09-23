@@ -39,7 +39,7 @@ define(['./HeatmapViewClass'], function(HeatmapViewClass){
             
             
             self.views = new HeatmapViewClass(params);
-            
+            return self.views;
         }
         
         return null;

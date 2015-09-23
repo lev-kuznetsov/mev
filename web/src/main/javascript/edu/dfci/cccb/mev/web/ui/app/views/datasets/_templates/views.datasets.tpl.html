@@ -5,9 +5,8 @@
 	            	<div uploads-Table uploads="userUploads"></div>
 		    	    
 	  </div>	
-	  <div class="col-md-9">	  	
-	    
-	    
+	  <div class="col-md-9 ">	  	
+	    <div class="column-wrapper">
 				      <ul class="nav nav-tabs column-header" id="importTabs">
 				        <li id="tcga_tab"><a href="#tcga" data-toggle="tab" target="_self" >Import TCGA Datasets</a></li>
 				        <li id="google_tab" ng-show="googleDrive.signedIn"><a href="#google" data-toggle="tab" target="_self" >Google Drive</a></li>
@@ -17,11 +16,12 @@
 				      <div class="tab-content column-body" id="import">
 				         
 				        <div class="tab-pane" id="tcga">
-						  <div id="presetMgr" preset-manager ng-controller="PresetManagerController"></div>
+<!-- 						  <div id="presetMgr" preset-manager ng-controller="PresetManagerController"></div> -->
+						  <div id="presetMgr" presets-list></div>
 				        </div>
 				        
 				        <div class="tab-pane" id="geods">
-						  <div id="geodsImportMgr" mev-geods-import-directive ng-controller="MevGeodsImportCtrl"></div>
+						  <div id="geodsImportMgr" mev-geods-import-directive ></div>
 				        </div>
 				        
 				        <div class="tab-pane" id="google">
@@ -49,7 +49,7 @@
 				        </div>
 				        
 				      </div>
-	    
+	   		</div>
 	  </div>
 	
 	</div>

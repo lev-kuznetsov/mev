@@ -1,16 +1,18 @@
-define(["ng", 
+define(["ng",
         "nguirouter",
         "bootstrap",
         "uibootstrap", 
         "ngresource",  
         "app/views/views.module",
         "app/widgets/widgets.module",
+        "app/utils/utils.module",
         "app/domain/domain.module",
         
         'ngGrid',
         'fileSaver',
         'mbAngularUtilsPagination',
-        'mbAngularUtilsBreadcrumbs',
+        'mbAngularUtilsBreadcrumbs',        
+        'jsDataAngular',
         
         'directives', 
         'services', 
@@ -28,20 +30,23 @@ define(["ng",
         'cohortanalysis/CohortAnalysis',        
         'setmanager/SetManager',
         'presets/PresetManager',
-        'mainpanel/MainPanel',
+        'mainpanel/MainPanel'
         
         ], function(ng){
 	"use strict";
 	return ng.module("ngbootstrap-app", ["ui.bootstrap",
 	                                     "ngResource",
 	                                     "ui.router",
+	                                     "mui.domain",
 	                                     "mui.views",
 	                                     "mui.components",
+	                                     "mui.utils",
 	                                     "mui.domain.navigator",
 	                                     
 	                                     'ngGrid',
 	                                     'angularUtils.directives.dirPagination',
 	                                     'angularUtils.directives.uiBreadcrumbs',
+	                                     'js-data',
 	                                     
 	                                     'myApp.directives', 
 	                            	     'myApp.services',

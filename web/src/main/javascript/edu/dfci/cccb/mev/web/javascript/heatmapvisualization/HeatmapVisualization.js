@@ -170,17 +170,17 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 	
                 	//When dataset information comes, generate new visualization.
                 	$scope.$watch('heatmapView', function(newval, oldval){
-
+                		console.debug("heatmapView change", oldval.note, newval.note);
                 		if (newval){
                 			
-                			
+                			console.debug("watch heatmapView ", newval.note);
                 			if (d3.select(elems[0]).selectAll('svg')){
 
                     			d3.select(elems[0]).selectAll('svg').remove()
                 			}
-                			
-                			d3.select(elems[0]).append('svg').attr('id', 'svg-Window-' + $scope.heatmapView.id);
-                        	svg = d3.select('#svg-Window-'+$scope.heatmapView.id);
+                			var svg = d3.select(elems[0]).append('svg'); 
+                			svg.attr('id', 'svg-Window-' + $scope.heatmapView.id);
+//                        	svg = d3.select(elems[0]).selectAll('#svg-Window-'+$scope.heatmapView.id);
                         	
                             $scope.colorEdge.min = newval.expression.min;
                             $scope.colorEdge.avg = newval.expression.avg;

@@ -12,6 +12,7 @@
                         scope: {
                             analysis: "=analysis",
                             project: "=project",
+                            heatmapView: "=",
                             isItOpen: "@"
                         },
                         templateUrl: paths.module + '/templates/kmeansAccordion.tpl.html',
@@ -87,7 +88,7 @@
 
                                 if (scope.analysis.dimension == "column") {
 
-                                    scope.project.generateView({
+                                    scope.heatmapView = scope.project.generateView({
                                         viewType: 'heatmapView',
                                         labels: {
                                             row: {
@@ -108,7 +109,7 @@
                                     });
 
                                 } else {
-                                    scope.project.generateView({
+                                	scope.heatmapView = scope.project.generateView({
                                         viewType: 'heatmapView',
                                         labels: {
                                             column: {
