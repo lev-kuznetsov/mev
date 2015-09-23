@@ -18,6 +18,7 @@
       }
     };
   </script>
+  <script type="text/javascript" src="/container/ui/requirejs.config.dev.js"></script>
   $cssDependencies$
   $javascriptDependencies$
   $preloadScriptTags$
@@ -30,11 +31,35 @@
     
     var specs = $specsList$;
 				
-    var configuration = {
-      $if(customRunnerConfiguration)$
-      $customRunnerConfiguration$
-      $endif$
+    var configuration = {      
     };
+    configuration = REQUIREJS_CONFIG;
+        
+    $if(customRunnerConfiguration)$
+      $customRunnerConfiguration$
+    $endif$
+    
+    function extend(to, from, copyArray){
+    	for (var property in from) {
+			if (from.hasOwnProperty(property)) {
+		        if(!to.hasOwnProperty(property)){
+		        	to[property] = from[property]; 
+		        }else{	
+		        	try{
+			        	for(var item in from[property]){
+			        		to[property].push(from[property][item]);
+			        	}
+		        	}catch(e){}	        	      	
+		        }
+		    }
+		}
+    }
+    
+    if(REQUIREJS_TESTCONFIG){
+    	extend(configuration.paths, REQUIREJS_TESTCONFIG.paths);
+    	extend(configuration.shim, REQUIREJS_TESTCONFIG.shim);
+    	extend(configuration.map["*"], REQUIREJS_TESTCONFIG.map["*"]);
+    }        
     
     if (!configuration.baseUrl) {
     	configuration.baseUrl = '$sourceDir$';

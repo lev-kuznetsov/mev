@@ -39,8 +39,11 @@
 			}
 			
 			> li {
+				> a {
+					display: inline-block;
+				}
 				&.active {
-					> a {
+					> a {						
 						border: 1px solid @brand-success;
 						border-bottom: 1px solid @body-bg;
 					}
@@ -54,6 +57,7 @@
 			}
 			
 			.action-menu{
+				margin-top: 4px;
 				.pull-right();
 				.btn{
 					.btn-analysis-action-menu();	
@@ -113,7 +117,7 @@
 			tr{
 				th,td{					
 					vertical-align: top;
-					white-space: nowrap;
+//					white-space: nowrap;
 					font-size: @font-size-base;
 					&:first-child{						
 						border-left: 0px none;

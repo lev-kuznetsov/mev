@@ -18,6 +18,7 @@
 @footer-height: @navbar-padding-vertical*2+@line-height-computed;
 //@footer-height: @padding-base-vertical+@line-height-computed*3;
 @column-header-height: 42px;
+@tab-pane-padding-h: @padding-base-v / 2;
 
 #main-wrapper {
 	
@@ -90,18 +91,78 @@
 //				}								
 //			}
 			&.columnContentScroll{
-				overflow-y: hidden;		
-				div.column-body,			
-				div.tab-content{
+				overflow-y: hidden;
+				
+				.column-wrapper{
+					//to get the tab container the right size, regardless of the header/footer
+					//there are two ways: flex and absolute positioning
+					//using absolute positioning because flex runs into the 
+					//layou-column's min/max button, while absolute positiioning just flows under it
+					//leaving flex properties for reference:
+					//set the container display to flex
+//					display: flex;
+//					flex-direction: column;
+					//absolute positioning:
+					//container must be set to full height and 
+					//relatively positioned
 					height: 100%;
+					position: relative;
+					
+					div.column-header{
+						//flex: header should collaps down to its contents
+						//hence flex-grow of 0
+//						flex-grow: 0;
+	//					z-index: 1;
+					}
+					div.column-body,			
+					div.tab-content{
+						//flex: content must occupy the remaining space
+						//hence flex-grow of 1
+//						flex-grow: 1;
+//						height: 100%;						
+						//using absolute positioning
+						//width must be set tp 100%
+						//top to the header's height
+						//and pin the buttom edge to cover all in between
+						position: absolute; 
+						width: 100%;						
+						top: @column-header-height;
+						bottom: 0;
+						
+						max-height: 100%;
+	//					padding-bottom: @column-header-height;
+	//					padding-top: @column-header-height;
+	//					margin-top: -@column-header-height;
+	//					z-index: -1;			
+						> * {												
+							position: absolute;
+							overflow: auto;
+							height: 100%;
+							width: 100%;
+							padding-left: @tab-pane-padding-h;
+	  						padding-right: @tab-pane-padding-h;						
+						}
+					}
+				}
+				
+				div.column-body,			
+				div.tab-content{					
+					flex-grow: 1;
+//					height: 100%;
 					max-height: 100%;
 					position: relative;
-					padding-bottom: @column-header-height;							
+//					padding-bottom: @column-header-height;
+//					padding-top: @column-header-height;
+//					margin-top: -@column-header-height;
+//					z-index: -1;			
 					> * {												
+						position: relative;
 						overflow: auto;
-						height: 100%;						
+						height: 100%;
+						padding-left: @tab-pane-padding-h;
+  						padding-right: @tab-pane-padding-h;						
 					}
-				}	
+				}
 			}
 					
 			&.sidemenuOn{
@@ -412,6 +473,7 @@ div[layout-column='left']{
 		height: 100%;
 		#presetsGrid{
 			height: 100%;
+			margin-left: -10px;
 		}
 	}
 }

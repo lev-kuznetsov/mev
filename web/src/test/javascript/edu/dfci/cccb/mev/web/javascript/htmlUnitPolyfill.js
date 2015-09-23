@@ -18,6 +18,7 @@
 		}else {
 			console = {
 				log: function () {},
+				info: function () {},
 				warn: function () {},
 				error: function () {},
 				debug: function () {}

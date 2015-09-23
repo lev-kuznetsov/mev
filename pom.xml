@@ -114,6 +114,7 @@
         <mev.java.io.tmpdir>/var/lib/mev/work</mev.java.io.tmpdir>
         <mev.Rscript>nice -20 /var/lib/mev/lib/R-2.15.3/bin/Rscript</mev.Rscript>
        	<mev.extraClasspath>/var/lib/mev/config</mev.extraClasspath>
+       	<MEV_CONFIG_DIR>/var/lib/mev/config</MEV_CONFIG_DIR>
       </properties>
     </profile>
     <profile>

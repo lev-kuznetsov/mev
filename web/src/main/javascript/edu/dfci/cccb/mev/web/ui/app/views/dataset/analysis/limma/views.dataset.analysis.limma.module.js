@@ -7,7 +7,7 @@ define(["ng", "lodash"], function(ng, _){
 		this.analysis=analysis;
 		this.project=project;
 		
-		project.generateView({
+		this.heatmapView = project.generateView({
             viewType:'heatmapView', 
             labels:{
                 row:{keys:project.dataset.row.keys}, 

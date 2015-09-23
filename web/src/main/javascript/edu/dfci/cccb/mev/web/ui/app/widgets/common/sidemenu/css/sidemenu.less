@@ -19,13 +19,10 @@ aside#sidemenu-container{
 	top: 0;	
 //	bottom: 0;
 //	left: -220px;
-	left: 0px;
-	height:100%;
-	min-height: 100%;
+	left: 0px;	
 	width: @sidemenu-width;	
 	transition: width 0.5s ease;
 	padding: @sidemenu-top 0 0 0;
-	
 	background-color: #fefefe;
 	border: @sidemenu-border;
 	-webkit-overflow-scrolling: touch;
@@ -50,8 +47,15 @@ aside#sidemenu-container{
 	left: 0;
 	z-index: @zindex-sidemenu-container;
 	padding-top: @sidemenu-top; 
-	width: @sidemenu-width;
-
+	width: @sidemenu-width;	
+	@media (min-width: @screen-sm-min){
+		height:100%;
+		min-height: 100%;
+	}
+	@media (max-width: @screen-xs-max) {
+		.responsive();	
+	}
+	
 	.fixed-header &{
 		position: fixed;
 		
@@ -59,11 +63,7 @@ aside#sidemenu-container{
 			.responsive();
 		}
 	}	
-	
-	@media (max-width: @screen-xs-max) {
-		.responsive();		
-	}
-	
+		
 	>div{
 		width: 100%;
 //		height: 100%;

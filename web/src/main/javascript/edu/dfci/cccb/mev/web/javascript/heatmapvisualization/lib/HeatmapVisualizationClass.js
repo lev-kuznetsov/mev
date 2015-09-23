@@ -35,33 +35,33 @@ function(d3, generateScales, drawCells, drawSelections,
 				+ params.selections.row.width
 				+ (View.labels.column.keys.length * params.cell.width) + 50 )
 
-		this.DOM.svg.append('g').attr("id", "heatmap-Cells");
-		this.DOM.heatmapCells = d3.select('#heatmap-Cells');
+		this.DOM.heatmapCells = this.DOM.svg.append('g').attr("id", "heatmap-Cells");
+//		this.DOM.heatmapCells = d3.select('#heatmap-Cells');
 		
-		this.DOM.svg.append('g').attr("id", "side-Panel");
-		this.DOM.sidePanel = d3.select('#side-Panel');
+		this.DOM.sidePanel = this.DOM.svg.append('g').attr("id", "side-Panel");
+//		this.DOM.sidePanel = d3.select('#side-Panel');
 		
-		this.DOM.svg.append('g').attr("id", "top-Panel");
-		this.DOM.topPanel = d3.select('#top-Panel');
+		this.DOM.topPanel = this.DOM.svg.append('g').attr("id", "top-Panel");
+//		this.DOM.topPanel = d3.select('#top-Panel');
 		
-		this.DOM.svg.append('g').attr("id", "column-Selections");
-		this.DOM.svg.append('g').attr("id", "row-Selections");
+//		this.DOM.svg.append('g').attr("id", "column-Selections");
+//		this.DOM.svg.append('g').attr("id", "row-Selections");
 		
 		this.DOM.selections = {
-			column : d3.select('#column-Selections'),
-			row : d3.select('#row-Selections')
+			column : this.DOM.svg.append('g').attr("id", "column-Selections"),
+			row : this.DOM.svg.append('g').attr("id", "row-Selections")
 		}
 		
-		this.DOM.svg.append('g').attr("id", "column-Labels");
-		this.DOM.svg.append('g').attr("id", "row-Labels");
+//		this.DOM.svg.append('g').attr("id", "column-Labels");
+//		this.DOM.svg.append('g').attr("id", "row-Labels");
 		
 		this.DOM.labels = {
-			column : d3.select('#column-Labels'),
-			row : d3.select('#row-Labels')
+			column : this.DOM.svg.append('g').attr("id", "column-Labels"),
+			row : this.DOM.svg.append('g').attr("id", "row-Labels")
 		};
 		
-		this.DOM.svg.append('g').attr("id", 'heatmap-Legend');
-		this.DOM.legend = d3.select("#heatmap-Legend")
+		this.DOM.legend = this.DOM.svg.append('g').attr("id", 'heatmap-Legend');
+//		this.DOM.legend = d3.select("#heatmap-Legend")
 		
 		this.params = params;
 		

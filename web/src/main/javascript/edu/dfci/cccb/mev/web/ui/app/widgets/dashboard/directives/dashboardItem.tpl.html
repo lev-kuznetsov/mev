@@ -1,0 +1,21 @@
+<div class="flex-spacing" ng-class="{max: panel.isMax, rowMax: panel.isRowMax}">
+	<div class="flex-panel">
+		<div class="header">
+			<div class="title">{{panel.header.title}}</div> 
+			<div class="controls">			
+				<a ng-show="panel.isRowMax && !panel.isMax" ng-click="panel.rowMin()">
+					<span class="fa fa-angle-double-left" style="font-weight: bold;"></span>					
+				</a>
+				<a ng-hide="panel.isRowMax || panel.isMax" ng-click="panel.rowMax()">
+					<span class="fa fa-angle-double-right"></span>
+				</a>
+				<a ng-show="panel.isMax" ng-click="panel.min()"><span class="fa fa-compress"></span></a>
+				<a ng-hide="panel.isMax" ng-click="panel.max()"><span class="fa fa-expand"></span></a>
+				<a ng-click="panel.remove($event)"><span class="fa fa-times"></span></a>
+			</div> 	
+		</div>  
+		<div class="content">
+			<div ng-transclude >panel content goes here</div>
+		</div>
+	</div>	
+</div>

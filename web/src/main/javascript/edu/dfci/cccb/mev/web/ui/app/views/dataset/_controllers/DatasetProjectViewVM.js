@@ -17,6 +17,7 @@ define(["ng", "lodash"], function(ng, _){
 		
 		project.generateView({
             viewType:'heatmapView', 
+            note: "DatasetProjectViewVM",
             labels:{
                 row:{keys:dataset.row.keys}, 
                 column:{keys:dataset.column.keys}

@@ -1,7 +1,7 @@
 define(["ng", 
-        "./controllers/DatasetViewVM", 
-        "./controllers/DatasetProjectViewVM",
-        "./controllers/DatasetHomeVM",
+        "./_controllers/DatasetViewVM", 
+        "./_controllers/DatasetProjectViewVM",
+        "./_controllers/DatasetHomeVM",
         "./annotations/AnnotationsViewVM",
         "./columnSets/views.dataset.columnSets.module",
         "./rowSets/views.dataset.rowSets.module",
@@ -41,15 +41,15 @@ function(ng,
 //			   	     	params: {
 //			   	     		datasetId: null
 //			   	     	},	
-	   	     			templateUrl: "app/views/dataset/templates/dataset.tpl.html",
+	   	     			templateUrl: "app/views/dataset/_templates/dataset.tpl.html",
 	   	     			breadcrumbProxy: "root.dataset.home",
 	   	     			displayName: "{{dataset.datasetName}}",
 //	   	     			template: "<div>dataset: {{$stateParams.datasetId}}</div>",	   	     			
 	   	     			controller: "DatasetProjectViewVM",
 	   	     			controllerAs: "DatasetProjectViewVM",
 		   	     		data: {
-			   	     		sidemenuUrl: "app/views/dataset/templates/dataset.sidemenu.accordion.tpl.html",
-			   	     		footerUrl: "app/views/dataset/templates/dataset.footer.tpl.html",
+			   	     		sidemenuUrl: "app/views/dataset/_templates/dataset.sidemenu.accordion.tpl.html",
+			   	     		footerUrl: "app/views/dataset/_templates/dataset.footer.tpl.html",
 			   	     	},
 	   	     			resolve:{
 		   	     			project: ["$stateParams", "ProjectFactory", "DatasetResourceService", function($stateParams, ProjectFactory, DatasetResourceService){
@@ -90,13 +90,22 @@ function(ng,
 	//		   	     	params: {
 	//		   	     	   id: null
 	//		   	     	},		   	     			
-	   	     			templateUrl: "app/views/dataset/templates/dataset.home.tpl.html",
-	//   	     			template: "<div>dataset: {{$stateParams.datasetId}}</div>",	   	     			
-	   	     			controller: "DatasetHomeVM",
-	   	     			controllerAs: "DatasetHomeVM",
+	   	     			views: {
+	   	     				"": {	   	     					
+	   	     					templateUrl: "app/views/dataset/_templates/dataset.home.tpl.html",
+	   	     					//   	     			template: "<div>dataset: {{$stateParams.datasetId}}</div>",	   	     			
+	   	     					controller: "DatasetHomeVM",
+	   	     					controllerAs: "DatasetHomeVM",
+	   	     				},
+	   	     				"@root.dataset.analysis": {	   	     					
+	   	     				},
+		   	     			"child2@root.dataset.home": {
+		   	     				template: "<h1>child2</h1>"
+		   	     			}
+	   	     			},
 		   	     		data: {},
-	   	     			resolve:{	   	     				
-	   	     			}
+	   	     			resolve:{}
+	   	     			
 	   	     		})
 	   	     		.state("dataset.annotations", {
 	   	     			url: "annotations/:dimension",

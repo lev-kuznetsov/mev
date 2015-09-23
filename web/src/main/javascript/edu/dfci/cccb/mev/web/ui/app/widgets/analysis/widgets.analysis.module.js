@@ -5,17 +5,12 @@ define(["ng",
         "./default/widgets.analysis.default.module",
         "./analysisModal/widgets.analysis.modal.module",
         "./analysisLog/widgets.analysis.log.module",
+        "./any/widgets.analysis.any.module",
+        "./analysisNode/widgets.analysis.analysisNode.module",
         "./topgo/widgets.analysis.topgo.module"
         ], 
 function(ng, AnalyisEventBus){
-	var module = ng.module("mui.widgets.analysis", ["mui.widgets.analysis.limma",
-	                                                "mui.widgets.analysis.hcl",
-	                                                "mui.widgets.analysis.survival",
-	                                                "mui.widgets.analysis.default",
-	                                                "mui.widgets.analysis.modal",
-	                                                "mui.widgets.analysis.log",
-	                                                "mui.widgets.analysis.topgo"
-	                                                ])
+	var module = ng.module("mui.widgets.analysis", arguments)
 	.constant("AnalysisTypes", {
 			"Hierarchical Clustering": {
 				shortName: "hcl",
@@ -67,8 +62,7 @@ function(ng, AnalyisEventBus){
 				anova: "Anova Analysis",
 				deseq: "DESeq Differential Expression Analysis",
 				nmf: "Non-Negative Matrix Factorization",
-				survival: "Survival Analysis",
-				topgo: "topGO Analysis"
+				survival: "Survival Analysis"
 		} 
 	});	
 	return module;

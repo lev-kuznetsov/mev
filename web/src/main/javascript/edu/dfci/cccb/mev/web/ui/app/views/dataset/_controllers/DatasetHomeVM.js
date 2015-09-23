@@ -7,8 +7,9 @@ define(["ng"], function(ng){
 		console.debug("***dataset home", dataset, project);
 //		this.annotations=annotations;	
 		
-		project.generateView({
-            viewType:'heatmapView', 
+		this.heatmapView = project.generateView({
+            viewType:'heatmapView',
+            note: "dataset.home",
             labels:{
                 row:{keys:dataset.row.keys}, 
                 column:{keys:dataset.column.keys}
