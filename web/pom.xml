@@ -520,8 +520,8 @@
               if (!requireNamespace (lib)) install.packages (lib, repos="http://cran.rstudio.com"));
             if (!requireNamespace ("injectoR"))
               devtools::install_github ("dfci-cccb/injectoR");
-            source ("https://bioconductor.org/biocLite.R");
-            sapply (c ("topGO", "org.Hs.eg.db", "org.Mm.eg.db"), function (lib)
+            source ("http://bioconductor.org/biocLite.R");
+            sapply (c ("topGO", "org.Hs.eg.db", "org.Mm.eg.db", "limma", "DESeq"), function (lib)
               if (!requireNamespace (lib)) biocLite (lib));
           </onInitialize>
           <configure>
@@ -530,7 +530,7 @@
             <fileio>disable</fileio>
           </configure>
           <onRequest>
-            .libPaths (.libPaths ()[ -1 ]);
+            .libPaths (c ("${project.build.directory}/rserve", .libPaths ()));
             library (injectoR);
             library (topGO);
             cwd = "${basedir}";
