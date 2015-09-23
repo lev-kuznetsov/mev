@@ -62,10 +62,11 @@ public class TopGoBuilder extends AbstractDispatchedRAnalysisBuilder<TopGoBuilde
   private @Getter @Setter @Parameter String pAdjust;
   private @Getter @Setter @Parameter int nodeSize;
 
-  private @Getter @Result TopGo result;
+  private volatile @Getter @Result TopGo result;
 
   @Callback
   private void setName () {
+    
     if (result != null)
       result.name (name ());
   }
