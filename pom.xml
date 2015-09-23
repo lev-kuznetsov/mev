@@ -36,6 +36,7 @@
     <module>nmf</module>
 	<module>survival</module>
     <module>topgo</module>
+    <module>histogram</module>
     <module>web</module>
 
   </modules>

@@ -1,0 +1,128 @@
+{
+	"name" : "surv1",
+	"datasetName" : "brca",
+	"experiment" : {
+		"name" : "exp",
+		"properties" : {
+			"selectionColor" : "#18d239",
+			"selectionDescription" : ""
+		},
+		"keys" : [],
+		"type" : "column"
+	},
+	"experimentName" : "exp",
+	"control" : {
+		"name" : "ctr",
+		"properties" : {
+			
+		},
+		"keys" : ["TCGA-AR-A1AT-01A-11R-A12P-07","TCGA-BH-A18R-01A-11R-A12D-07","TCGA-BH-A1ET-11B-23R-A137-07","TCGA-E2-A109-01A-11R-A10J-07","TCGA-AO-A0JI-01A-21R-A056-07"],
+		"type" : "column"
+	},
+	"controlName" : "ctr",
+	"input" : [{
+			"key" : "TCGA-AO-A03R-01A-21R-A034-07",
+			"days_to_death" : null,
+			"days_to_last_followup" : 1707,
+			"vital_status" : "Alive",
+			"group" : 2,
+			"status" : 0,
+			"time" : 1707
+		},{
+			"key" : "TCGA-AO-A0JI-01A-21R-A056-07",
+			"days_to_death" : null,
+			"days_to_last_followup" : 1172,
+			"vital_status" : "Alive",
+			"group" : 1,
+			"status" : 0,
+			"time" : 1172
+		},{
+			"key" : "TCGA-E2-A109-01A-11R-A10J-07",
+			"days_to_death" : null,
+			"days_to_last_followup" : 1172,
+			"vital_status" : "Alive",
+			"group" : 1,
+			"status" : 0,
+			"time" : 1172
+		},{
+			"key" : "TCGA-BH-A1ET-01A-11R-A137-07",
+			"days_to_death" : 2520,
+			"days_to_last_followup" : null,
+			"vital_status" : "Dead",
+			"group" : 2,
+			"status" : 1,
+			"time" : 2520
+		},{
+			"key" : "TCGA-A2-A0SW-01A-11R-A084-07",
+			"days_to_death" : 1364,
+			"days_to_last_followup" : null,
+			"vital_status" : "Dead",
+			"group" : 2,
+			"status" : 1,
+			"time" : 1364
+		},{
+			"key" : "TCGA-AO-A0JL-01A-11R-A056-07",
+			"days_to_death" : null,
+			"days_to_last_followup" : 1319,
+			"vital_status" : "Alive",
+			"group" : 2,
+			"status" : 0,
+			"time" : 1319
+		},{
+			"key" : "TCGA-BH-A18R-11A-42R-A12D-07",
+			"days_to_death" : 1141,
+			"days_to_last_followup" : null,
+			"vital_status" : "Dead",
+			"group" : 2,
+			"status" : 1,
+			"time" : 1141
+		},{
+			"key" : "TCGA-BH-A1ET-11B-23R-A137-07",
+			"days_to_death" : 2520,
+			"days_to_last_followup" : null,
+			"vital_status" : "Dead",
+			"group" : 1,
+			"status" : 1,
+			"time" : 2520
+		},{
+			"key" : "TCGA-A8-A09I-01A-22R-A034-07",
+			"days_to_death" : null,
+			"days_to_last_followup" : 1006,
+			"vital_status" : "Alive",
+			"group" : 2,
+			"status" : 0,
+			"time" : 1006
+		},{
+			"key" : "TCGA-E2-A14O-01A-31R-A115-07",
+			"days_to_death" : null,
+			"days_to_last_followup" : 1172,
+			"vital_status" : "Alive",
+			"group" : 2,
+			"status" : 0,
+			"time" : 1172
+		},{
+			"key" : "TCGA-AR-A1AT-01A-11R-A12P-07",
+			"days_to_death" : 1272,
+			"days_to_last_followup" : null,
+			"vital_status" : "Dead",
+			"group" : 1,
+			"status" : 1,
+			"time" : 1272
+		},{
+			"key" : "TCGA-BH-A18R-01A-11R-A12D-07",
+			"days_to_death" : 1141,
+			"days_to_last_followup" : null,
+			"vital_status" : "Dead",
+			"group" : 1,
+			"status" : 1,
+			"time" : 1141
+		},{
+			"key" : "TCGA-B6-A0X7-01A-11R-A10J-07",
+			"days_to_death" : 1791,
+			"days_to_last_followup" : null,
+			"vital_status" : "Dead",
+			"group" : 2,
+			"status" : 1,
+			"time" : 1791
+		}]
+}
