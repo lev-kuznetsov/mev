@@ -379,6 +379,10 @@
               <value>${mev.spring_profiles_active}</value>
             </systemProperty>
             <systemProperty>
+              <name>spring.profiles.active</name>
+              <value>${mev.spring_profiles_active}</value>
+            </systemProperty>
+            <systemProperty>
               <name>edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable</name>
               <value>${mev.Rscript}</value>
             </systemProperty>
@@ -426,6 +430,7 @@
          	<systemProperties>
 	          	<java.io.tmpdir>${mev.java.io.tmpdir}</java.io.tmpdir>
 	          	<spring_profiles_active>${mev.spring_profiles_active}</spring_profiles_active>
+	          	<spring.profiles.active>${mev.spring_profiles_active}</spring.profiles.active>
 	          	<edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>${mev.Rscript}</edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>
 	          	<textdb.allow_full_path>${mev.hsqldb.textdb.allow_full_path}</textdb.allow_full_path>
 	          	<h2.console.port>18044</h2.console.port>
