@@ -24,8 +24,9 @@
 		</thead>
 		<tbody>
 			<tr dir-paginate="row in data | orderBy : tableOrdering | itemsPerPage: 20 track by $index">
-				<td ng-repeat="header in headers">
-					{{row[header.field] | textOrNumber:5 }}
+				<td ng-repeat="header in headers">					
+					<a ng-if="header.link" href="{{header.link(row[header.field])}}" target="new">{{row[header.field]}}</a>
+					<span ng-if="!header.link" href="header.link(row[header.field])" target="new">{{row[header.field] | textOrNumber:5 }}</span>					
 				</td>
 			</tr>
 		</tbody>

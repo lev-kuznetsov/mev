@@ -14,7 +14,10 @@ define(["ng", "lodash"], function(ng, _){
 	            {
 	                'name': 'ID',
 	                'field': "goId",
-	                'icon': "search"
+	                'icon': "search",
+	                'link': function(value){
+	                	return "http://amigo.geneontology.org/amigo/term/"+value;
+	                }
 	            },
 	            {
 	                'name': 'GO Term',
