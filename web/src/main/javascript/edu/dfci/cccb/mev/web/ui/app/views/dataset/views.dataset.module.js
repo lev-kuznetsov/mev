@@ -2,6 +2,7 @@ define(["ng",
         "./_controllers/DatasetViewVM", 
         "./_controllers/DatasetProjectViewVM",
         "./_controllers/DatasetHomeVM",
+        "./_controllers/DatasetHeatmapVMFactory",
         "./annotations/AnnotationsViewVM",
         "./columnSets/views.dataset.columnSets.module",
         "./rowSets/views.dataset.rowSets.module",
@@ -12,6 +13,7 @@ function(ng,
 		DatasetViewVM, 
 		DatasetProjectViewVM,
 		DatasetHomeVM,
+		DatasetHeatmapVMFactory,
 		AnnotationsViewVM){
 	var module=ng.module("mui.views.dataset", ["mui.views.dataset.columnSets", 
 	                                           "mui.views.dataset.rowSets",
@@ -22,6 +24,7 @@ function(ng,
 	module.controller("DatasetViewVM", DatasetViewVM);	
 	module.controller("DatasetProjectViewVM", DatasetProjectViewVM);
 	module.controller("DatasetHomeVM", DatasetHomeVM);	
+	module.factory("DatasetHeatmapVMFactory", DatasetHeatmapVMFactory);	
 	module.controller("AnnotationsViewVM", AnnotationsViewVM);
 	module.config(['$stateProvider', '$urlRouterProvider',
 	   	     	function($stateProvider, $urlRouterProvider){					

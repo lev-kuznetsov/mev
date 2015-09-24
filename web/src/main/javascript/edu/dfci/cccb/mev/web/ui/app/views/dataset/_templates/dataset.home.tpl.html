@@ -8,20 +8,20 @@
 				<!-- 	<mui-dashboard-item name="hi" title="hi ;)" content-width="500" content-height="200">hello</mui-dashboard-item> -->
 				<!-- 	<mui-dashboard-item name="myturn"  title="my turn" content-width="500" content-height="200">Ee-ee-ee-ee</mui-dashboard-item> -->
 				<!-- 	<mui-dashboard-item name="ontheedge"  title="on the edge" content-width="300" content-height="200">Don't push me</mui-dashboard-item> -->
-						<mui-dashboard-item  mui-options='{"isRowMax": true}' name="Heatmap" title="Original Data">
-							<div class="column-wrapper">
-								<ul class="nav nav-tabs column-header" id="importTabs">
-									<li id="heatmap_tab"  class="active"><a href="#home-heatmap" data-toggle="tab" target="_self">Heatmap</a></li>		
-								</ul>	
-								<div class="tab-content column-body">
-									<div class="tab-pane active" id="home-heatmap">
-										<view-Content-Item project='project' view='heatmapView'></view-Content-Item>											
-									</div>
-								</div>
-							</div>
-						</mui-dashboard-item>
+<!-- 						<mui-dashboard-item  mui-options='{"isRowMax": true}' name="Heatmap" title="Original Data"> -->
+<!-- 							<div class="column-wrapper"> -->
+<!-- 								<ul class="nav nav-tabs column-header" id="importTabs"> -->
+<!-- 									<li id="heatmap_tab"  class="active"><a href="#home-heatmap" data-toggle="tab" target="_self">Heatmap</a></li>		 -->
+<!-- 								</ul>	 -->
+<!-- 								<div class="tab-content column-body"> -->
+<!-- 									<div class="tab-pane active" id="home-heatmap"> -->
+<!-- 										<view-Content-Item project='project' view='heatmapView'></view-Content-Item>											 -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</mui-dashboard-item> -->
 						<mui-dashboard-item ng-repeat="item in dashboard.items" mui-options='{"isRowMax": true}' name="{{item.name}}" title="{{item.title || item.name}}"> 
- 							<div any-analysis="{{item.name}}"></div> 
+ 							<div any-analysis="{{item.name}}" any-template-url="{{item.templateUrl}}" any-view-model="{{item.viewModel}}"></div> 
 						</mui-dashboard-item>											
 <!-- 						<mui-dashboard-item mui-options='{"isRowMax": true}' name="hcl" title="hcl" > -->
 <!-- 							<div any-analysis="hcl"></div> -->
