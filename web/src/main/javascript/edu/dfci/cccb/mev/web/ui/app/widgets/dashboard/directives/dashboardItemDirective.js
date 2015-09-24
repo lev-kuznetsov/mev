@@ -1,5 +1,46 @@
 define(["ng"], function(ng){
-	var DashbaordItemDirective = function DashbaordItemDirective($http){
+	"use strict";
+	var DashbaordItemDirective = function DashbaordItemDirective(DashboardLayout){
+		
+		function Panel(name, elm, attr, controller){
+				var _self = this;				
+				_self.name = attr.name,
+				_self.elm = elm;
+				_self.isMax = false;
+				_self.isRowMax = true;
+				_self.header = {
+					title: attr.title
+				}
+				_self.content = {
+					height: attr.contentHeight,
+					width: attr.contentWidth
+				};
+				_self.max = function(){
+					_self.elm.siblings().hide();							
+					controller.updateOptions({hStretchItems: true});
+					_self.isMax=true;
+				};
+				_self.min = function(){
+					controller.resetOptions();
+					_self.elm.siblings().show();
+					_self.isMax=false;
+				};
+				_self.rowMax = function(){
+					_self.isRowMax=true;
+				};
+				_self.rowMin = function(){
+					_self.isRowMax=false;
+				};
+				_self.remove = function($event){
+					console.debug("panel.remove", $event, scope.panel.name);
+					if(_self.isMax)
+						_self.min();
+					controller.remove(_self.name);
+					delete DashboardLayout.panels[_self.name];
+					elm.remove();
+				};
+		}
+		
 		return {			
 			restrict: "E",
 			replace: true,
@@ -15,55 +56,28 @@ define(["ng"], function(ng){
 			},
 			templateUrl: "app/widgets/dashboard/directives/dashboardItem.tpl.html",
 			link: function(scope, elm, attr, controller, $transclude){				
-				scope.panel={
-						name: attr.name,						
-						header: {
-							title: attr.title
-						},
-						content: {
-							height: attr.contentHeight,
-							width: attr.contentWidth
-						},
-						max: function(){
-							elm.siblings().hide();							
-							controller.updateOptions({hStretchItems: true});
-							scope.panel.isMax=true;
-						},
-						min: function(){
-							controller.resetOptions();
-							elm.siblings().show();
-							scope.panel.isMax=false;
-						},
-						rowMax: function(){
-							scope.panel.isRowMax=true;
-						},
-						rowMin: function(){
-							scope.panel.isRowMax=false;
-						},
-						remove: function($event){
-							console.debug("panel.remove", $event, scope.panel.name);
-							if(scope.panel.isMax)
-								scope.panel.min();
-							controller.remove(scope.panel.name);
-							elm.remove();
-						}
-				};
+				if(!DashboardLayout.panels[attr.name]){					
+					DashboardLayout.panels[attr.name] = new Panel(attr.name, elm, attr, controller);				
+					if(scope.muiOptions){										
+						ng.extend(DashboardLayout.panels[attr.name], scope.muiOptions);
+						console.debug("muiDashboardItem options", scope.muiOptions, scope, attr, scope.panel);					
+					}
+				}			
 				
-				if(scope.muiOptions){										
-					ng.extend(scope.panel, scope.muiOptions);
-					console.debug("muiDashboardItem options", scope.muiOptions, scope, attr, scope.panel);					
-				}
+				scope.panel =  DashboardLayout.panels[attr.name];
+				scope.panel.elm = elm;
 				scope.$on("ui:dashboard:removeItem", function($event, data){
 					console.debug("on panel ui:dashboard:removeItem", $event, data);
-					if(attr.name === data.name)
+					if(attr.name === data.name){						
 						scope.panel.remove(data.name);
+					}
 				});
 				elm.find(".content > *").width(attr.contentWidth).height(attr.contentHeight);				
 			}
 		};
 	};
 	
-	DashbaordItemDirective.$inject=["$http"];
+	DashbaordItemDirective.$inject=["DashboardLayout"];
 	DashbaordItemDirective.$name="muiDashboardItem";
 	DashbaordItemDirective.provider="Directive";
 	

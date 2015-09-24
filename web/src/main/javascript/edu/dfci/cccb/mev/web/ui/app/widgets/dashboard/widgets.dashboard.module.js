@@ -3,9 +3,10 @@ define(["ng",
         "./directives/dashboardItemDirective", 
         "./directives/dashboardItemAddDirective",
         "./directives/dashboardItemRemoveDirective",
-        "./controllers/DashboardVM"],        			
+        "./controllers/DashboardVM",
+        "./services/dashboardLayoutService"],        			
 function(ng, DashboardDirective, DashboardItemDirective, DashboardItemAddDirective, DashboardVM){
 	"use strict";
 	console.debug("mui.widgets.dashboard");
-	return ng.module("mui.widgets.dashboard", [], arguments);
+	return ng.module("mui.widgets.dashboard", arguments, arguments);
 });
