@@ -32,7 +32,7 @@ define(["ng"], function(ng){
 					_self.isRowMax=false;
 				};
 				_self.remove = function($event){
-					console.debug("panel.remove", $event, scope.panel.name);
+					console.debug("panel.remove", $event, _self.name);
 					if(_self.isMax)
 						_self.min();
 					controller.remove(_self.name);

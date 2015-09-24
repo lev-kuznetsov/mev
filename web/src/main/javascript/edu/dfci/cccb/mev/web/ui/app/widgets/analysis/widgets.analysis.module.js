@@ -48,7 +48,7 @@ function(ng, AnalyisEventBus){
 				shortName: "nmf",
 				viewModel: "NmfVM"
 			},
-			"topGO Analysis":{
+			"TopGO Analysis":{
 			    shortName: "topgo",
 			    viewModel: "TopGoVM"
 			},
@@ -62,7 +62,8 @@ function(ng, AnalyisEventBus){
 				anova: "Anova Analysis",
 				deseq: "DESeq Differential Expression Analysis",
 				nmf: "Non-Negative Matrix Factorization",
-				survival: "Survival Analysis"
+				survival: "Survival Analysis",
+				topgo: "TopGO Analysis"
 		} 
 	});	
 	return module;

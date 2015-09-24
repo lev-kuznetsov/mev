@@ -29,4 +29,10 @@ public class TopGo extends AbstractAnalysis<TopGo> {
   public String name () {
     return super.name ();
   }
+  
+  @Override
+  @JsonProperty
+  public String type() {
+    return super.type ();
+  }
 }
