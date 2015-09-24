@@ -299,7 +299,14 @@ html, body{
 }
 .column-config-menu{
 	position: relative;
-//	margin-right: -(@grid-gutter-width / 2) +  @sidemenu-padding-top;	
+	z-index: 100;
+//	margin-right: -(@grid-gutter-width / 2) +  @sidemenu-padding-top;
+	.btn{
+		margin-left: 2px;
+		> i{
+			padding: 3px;
+		}
+	}	
 	.btn.btn-xs{
 		padding: 3px 5px;
 	}
@@ -307,6 +314,7 @@ html, body{
 		padding: 8px 9px;
 	}
 }
+
 .wrapper-config-menu{
 	position: absolute; 
 	top: 0;
@@ -399,16 +407,6 @@ div[layout-column='left']{
 			
 		} 
 	}
-}
-
-.column-config-menu{
-	.btn{
-		margin-left: 2px;
-		> i{
-			padding: 3px;
-		}
-	}
-	 
 }
 
 .navbar-center{
