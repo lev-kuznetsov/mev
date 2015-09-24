@@ -7,7 +7,8 @@ define(["ng"], function(ng){
 			transclude: true,
 			scope: {
 				id: "@",
-				hStretchItems: "="
+				hStretchItems: "=",
+				muiContext: "="
 			},
 			template:	"<div  ng-class=\"{'container-flex': true, 'v-stretch': true, 'h-stretch': dashboard.hStretchItems}\" ng-transscope>" +					
 //							"<mui-dashboard-item ng-repeat=\"item in dashboard.items\" name=\"{{item.name}}\" title=\"{{item.title}}\" content-width=\"item.contentWidth\" content-height=\"item.contentHeight\">{{item.content}}</mui-dashboard-item>" +
@@ -17,6 +18,9 @@ define(["ng"], function(ng){
 					pre: setTransscope,
 					post: function(scope, elm, attr, controller, $transclude){		
 						console.debug("dashboard link");
+						Object.keys(scope.muiContext).map(function(key){
+							scope[key] = scope.muiContext[key];
+						});			
 						controller.setAttr({hStretchItems: scope.hStretchItems});										
 					}
 				};
