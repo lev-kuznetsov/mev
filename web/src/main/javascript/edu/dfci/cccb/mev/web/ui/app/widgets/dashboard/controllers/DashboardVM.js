@@ -1,5 +1,5 @@
 define(["ng", "lodash"], function(ng, _){
-	var DashboardVM = function DashboardVM($scope, DashboardItems, $rootScope){
+	var DashboardVM = function DashboardVM($scope, $rootScope){
 		var _self = this;				
 		this.toggleHStretch = function(isOn){				
 			_self.setOptions(options);
@@ -23,7 +23,8 @@ define(["ng", "lodash"], function(ng, _){
 			});
 			console.debug("remove _self.items", name, _self.items);
 		};
-		this.items = DashboardItems;
+		this.items = $scope.dashboardItems;
+			
 //		this.items = [
 //	        {
 //	        	name: "survival1",
@@ -64,7 +65,7 @@ define(["ng", "lodash"], function(ng, _){
 		$scope.$on("ui:dashboard:addItem", function($event, data){
 			var exists = _.find(_self.items, {name: data.name});
 			if(!exists){
-				_self.items.push(data);
+				_self.items.$add(data);
 			}else{
 				$rootScope.$broadcast("ui:analysisLog.append", "info", "Cannot add analysis '" + data.name + "' to the dashboard. It is already there.");
 			}
@@ -74,7 +75,7 @@ define(["ng", "lodash"], function(ng, _){
 			_self.remove(data.name);
 		});
 	};
-	DashboardVM.$inject=["$scope", "DashboardItems", "$rootScope"];
+	DashboardVM.$inject=["$scope", "$rootScope"];
 	DashboardVM.$name="DashboardVMController";
 	return DashboardVM;
 });

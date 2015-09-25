@@ -4,8 +4,8 @@ define(["ng"], function(ng){
 			var _self=this;
 			this.project=project;
 			this.dataset=project.dataset;
-			console.debug("DatasetHeatmapVMFactory", dataset, project);
-			console.debug("***dataset home", dataset, project);
+			console.debug("DatasetHeatmapVMFactory", project);
+			console.debug("***dataset home", project);
 //		this.annotations=annotations;	
 			
 			this.heatmapView = project.generateView({

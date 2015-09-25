@@ -7,8 +7,8 @@ define(['angular',
 function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){
 	
 	return angular.module('Mev.Dataset', ['Mev.Api'])
-	.factory('DatasetFactory', ['AnalysisResourceService', 'SelectionResourceService', "$q", 'AnalysisEventBus',
-	 function(AnalysisResourceService, SelectionResourceService, $q, analysisEventBus){
+	.factory('DatasetFactory', ['AnalysisResourceService', 'SelectionResourceService', "$q", 'AnalysisEventBus', "DashboardItems",
+	 function(AnalysisResourceService, SelectionResourceService, $q, analysisEventBus, DashboardItems){
 	    
 	    //DatasetFactory :: [String], [DatasetResponseObj] -> [Dataset]
 	    //  Function that takes dataset name and dataset response object and returns
@@ -24,7 +24,7 @@ function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){
 
 				dataset.$q = $q;
 				dataset.analysisEventBus = analysisEventBus;
-				
+				dataset.dashboardItems = new DashboardItems();
 				dataset.loadAnalyses = loadAnalyses;
 				dataset.setSelections = setSelections;
 				dataset.resetSelections = resetSelections;

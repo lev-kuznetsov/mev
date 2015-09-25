@@ -26,16 +26,18 @@ define(['./HeatmapViewClass'], function(HeatmapViewClass){
                     };
             }
             
-            if (params.panel && params.panel.side && self.views.panel && self.views.panel.top){
-                params.panel.top = self.views.panel.top;
-                params.labels.column.keys = self.views.labels.column.keys;
-                
-                
-            } else if (params.panel && params.panel.top && self.views.panel && self.views.panel.side) {
-                params.panel.side = self.views.panel.side;
-                params.labels.row.keys = self.views.labels.row.keys;
-                
-            }
+            //old functionality would show both analysis on the same heatmap if their display 
+            //did not conflict with each other (ex: row clustering and column clustering)
+            //now you have to specifically send the "merge" flag to activate this begavior
+            if(params.merge){
+	            if (params.panel && params.panel.side && self.views.panel && self.views.panel.top){
+	                params.panel.top = self.views.panel.top;
+	                params.labels.column.keys = self.views.labels.column.keys;                
+	            } else if (params.panel && params.panel.top && self.views.panel && self.views.panel.side) {
+	                params.panel.side = self.views.panel.side;
+	                params.labels.row.keys = self.views.labels.row.keys;   
+	            }
+        	}
             
             
             self.views = new HeatmapViewClass(params);

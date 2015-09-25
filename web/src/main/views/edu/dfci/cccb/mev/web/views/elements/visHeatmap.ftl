@@ -1,5 +1,5 @@
 
-<bsmodal bindid="columnSelectionsModal" func="" header="Add Column Selections">
+<bsmodal bindid="columnSelectionsModal-{{heatmapView.id}}" func="" header="Add Column Selections">
 	<form role="form">
 
 		<div class="form-group">
@@ -14,7 +14,7 @@
 	</form>
 </bsmodal> 
 
-<bsmodal bindid="rowSelectionsModal" func="" header="Add Row Selections">
+<bsmodal bindid="rowSelectionsModal-{{heatmapView.id}}" func="" header="Add Row Selections">
 	<form role="form">
 
 		<div class="form-group">
@@ -30,7 +30,7 @@
 	</form>
 </bsmodal> 
 
-<bsmodal bindid="settingsModal" header="Heatmap Visualization Settings">
+<bsmodal bindid="settingsModal-{{heatmapView.id}}" header="Heatmap Visualization Settings">
 	<heatmap-Settings current-colors="currentColors"
 		available-color-groups="availableColorGroups"
 		color-Edge="colorEdge"></heatmap-Settings>

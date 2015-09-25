@@ -4,7 +4,7 @@
 	</ul>	
 	<div class="tab-content column-body">
 		<div class="tab-pane active" id="dashboard">
-				<mui-dashboard h-stretch-items="false" mui-context="{project: DatasetHomeVM.project, heatmapView: DatasetHomeVM.heatmapView}">
+				<mui-dashboard dashboard-items="DatasetHomeVM.project.dataset.dashboardItems" h-stretch-items="false" mui-context="{project: DatasetHomeVM.project, heatmapView: DatasetHomeVM.heatmapView}">
 				<!-- 	<mui-dashboard-item name="hi" title="hi ;)" content-width="500" content-height="200">hello</mui-dashboard-item> -->
 				<!-- 	<mui-dashboard-item name="myturn"  title="my turn" content-width="500" content-height="200">Ee-ee-ee-ee</mui-dashboard-item> -->
 				<!-- 	<mui-dashboard-item name="ontheedge"  title="on the edge" content-width="300" content-height="200">Don't push me</mui-dashboard-item> -->
@@ -20,7 +20,7 @@
 <!-- 								</div> -->
 <!-- 							</div> -->
 <!-- 						</mui-dashboard-item> -->
-						<mui-dashboard-item ng-repeat="item in dashboard.items" mui-options='{"isRowMax": true}' name="{{item.name}}" title="{{item.title || item.name}}"> 
+						<mui-dashboard-item ng-repeat="(id, item) in dashboard.items" mui-options='{"isRowMax": true}' name="{{item.name}}" title="{{item.title || item.name}}"> 
  							<div any-analysis="{{item.name}}" any-template-url="{{item.templateUrl}}" any-view-model="{{item.viewModel}}"></div> 
 						</mui-dashboard-item>											
 <!-- 						<mui-dashboard-item mui-options='{"isRowMax": true}' name="hcl" title="hcl" > -->

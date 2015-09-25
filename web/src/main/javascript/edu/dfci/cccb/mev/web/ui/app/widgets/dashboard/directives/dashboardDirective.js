@@ -8,7 +8,8 @@ define(["ng"], function(ng){
 			scope: {
 				id: "@",
 				hStretchItems: "=",
-				muiContext: "&"
+				muiContext: "&",
+				dashboardItems: "=",
 			},
 			template:	"<div  ng-class=\"{'container-flex': true, 'v-stretch': true, 'h-stretch': dashboard.hStretchItems}\" ng-transscope>" +					
 //							"<mui-dashboard-item ng-repeat=\"item in dashboard.items\" name=\"{{item.name}}\" title=\"{{item.title}}\" content-width=\"item.contentWidth\" content-height=\"item.contentHeight\">{{item.content}}</mui-dashboard-item>" +

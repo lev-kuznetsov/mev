@@ -40,7 +40,8 @@ define(["ng", "lodash"], function(ng, _){
 	                    avg: project.dataset.expression.avg,
 	                },
 	                panel: {
-	                    top: analysis
+	                    top: analysis,
+	                    side: {}
 	                }
 	            });
 	        } else {
@@ -61,7 +62,8 @@ define(["ng", "lodash"], function(ng, _){
 	                    avg: project.dataset.expression.avg,
 	                },
 	                panel: {
-	                    side: analysis
+	                    side: analysis,
+	                    top: {}
 	                }
 	            });
 	        }
