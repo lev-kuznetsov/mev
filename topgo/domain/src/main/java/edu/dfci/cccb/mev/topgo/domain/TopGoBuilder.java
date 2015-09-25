@@ -67,11 +67,14 @@ public class TopGoBuilder extends AbstractDispatchedRAnalysisBuilder<TopGoBuilde
   @Callback
   private void setName () {
     
-    if (result != null)
+    if (result != null){      
       result.name (name ());
+      result.type (type());
+    }
+    
   }
 
   public TopGoBuilder () {
-    super ("topGO");
+    super ("TopGO Analysis");
   }
 }

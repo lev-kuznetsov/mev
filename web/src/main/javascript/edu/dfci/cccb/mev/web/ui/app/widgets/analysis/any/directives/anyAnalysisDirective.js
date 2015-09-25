@@ -17,7 +17,9 @@ define(["ng", "lodash"], function(ng, _){
 		return {
 			restrict: "AE",
 			scope: {
-				anyAnalysis: "@"				
+				anyAnalysis: "@",
+				anyTemplateUrl: "@",
+				anyViewModel: "@" 
 			},
 			template: function(tElement, tAttrs){
 				console.debug("anyAnalysis template", tAttrs);
@@ -39,15 +41,24 @@ define(["ng", "lodash"], function(ng, _){
 				console.debug("anyAnalysis ctrl:", $scope);
 				var project = resolveProject($state);
 				var analysis = resolveAnalysis($scope.anyAnalysis);
-				var analysisType = AnalysisTypes[analysis.type];
-				var ctrlName = analysisType.viewModel+"Factory";
-				console.debug("anyAnalysis ctrlName:", ctrlName, analysisType, $state, resolveProject($state), analysis);
-				$scope.DatasetAnalysisVM.project=project;
+				
+				var analysisType;
+				var ctrlName;
+				if($scope.anyViewModel){
+					ctrlName = $scope.anyViewModel;
+				}else{
+					analysisType = AnalysisTypes[analysis.type];
+					ctrlName = analysisType.viewModel+"Factory";
+					console.debug("anyAnalysis ctrlName:", ctrlName, analysisType, $state, resolveProject($state), analysis);
+				}
+				$scope.DatasetAnalysisVM.project=project;				
 				$scope.DatasetAnalysisVM.analysis=analysis;
 				$scope.getTemplateUrl=function(){
-					var templateUrl="app/views/dataset/analysis/default/view.analysis.default.tpl.html";					
-//					var analysis = resolveAnalysis($attrs.anyAnalysis);				
-//					var analysisType = AnalysisTypes[analysis.type];				
+					if($scope.anyTemplateUrl){
+						return $scope.anyTemplateUrl; 
+					}
+					
+					var templateUrl="app/views/dataset/analysis/default/view.analysis.default.tpl.html";						
 					if(analysisType && analysisType.shortName){
 						templateUrl=templateUrl.replace("default", analysisType.shortName).replace("default", analysisType.shortName);
 					}
@@ -68,6 +79,7 @@ define(["ng", "lodash"], function(ng, _){
 					console.debug("anyAnalysis link", scope, attr);
 					
 					scope.processAnalysis=function(){
+						if(!controller.analysis) return;
 						console.debug("processAnalysis", elm);						
 						elm.find("[href]").each(function(){							
 							var href = this.attributes.getNamedItem("href").value;
