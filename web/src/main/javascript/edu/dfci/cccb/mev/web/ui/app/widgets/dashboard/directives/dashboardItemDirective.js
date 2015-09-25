@@ -16,8 +16,10 @@ define(["ng"], function(ng){
 					width: attr.contentWidth
 				};
 				_self.max = function(){
-					_self.elm.siblings().hide();							
-					controller.updateOptions({hStretchItems: true});
+					_self.elm.siblings().hide();					
+					//we no longer need to set hStretchItems on the dashboard element
+					//because each panel sets its width to 100% when maximized
+//					controller.updateOptions({hStretchItems: true});
 					_self.isMax=true;
 				};
 				_self.min = function(){
