@@ -178,7 +178,7 @@ define(['d3', 'qtip'], function(d3, qtip){
 //        d3.select("g#"+((type == 'horizontal')? 'top' : 'side')+"-Panel").on('contextmenu', function(){
         canvas.on('contextmenu', function(){
         	d3.event.preventDefault();
-    		$('div#'+ ((type == 'horizontal')? 'column': 'row') + 'SelectionsModal').modal();
+    		$('div#'+ ((type == 'horizontal')? 'column': 'row') + 'SelectionsModal-' + self.view.id).modal();
         })
         
     	

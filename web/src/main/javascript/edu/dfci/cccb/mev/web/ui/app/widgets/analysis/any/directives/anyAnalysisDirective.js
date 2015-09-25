@@ -67,7 +67,7 @@ define(["ng", "lodash"], function(ng, _){
 				};				
 				if($injector.has(ctrlName)){					
 					var ctrl = $injector.get(ctrlName); 
-					console.debug("any controller", ctrlName, ctrl);
+					console.debug("any controller", ctrlName, ctrl, $scope.$id);
 					$injector.invoke(ctrl, $scope.DatasetAnalysisVM, {$scope: $scope, project: project, analysis: analysis});
 //					ctrl.call(this, $scope, project, analysis);	
 				}
