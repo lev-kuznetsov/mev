@@ -1,4 +1,4 @@
-library(limma)
+library(limma)  # imported by shim()
 
 ## NOTE
 ## Performs limma on a data matrix 
@@ -88,6 +88,16 @@ result=run.limma(in.mtx,
   Experiment=EXP,
   Control=CON)
 
+
+## Condition to add the ID column for limma version AFTER R 3.2.1, which return 6 column without
+## the ID column .  Updated 09/28/2015
+if(dim(result)[2]==6){
+	ID=rownames(result)
+	result=cbind(ID, result)
+}
+
+
+
 ##
 ## reassign colnames
 colnames(result)=c("ID", "Log Fold Change", "Average Expression", "t", "P-value", "q-value", "B")
@@ -97,88 +107,5 @@ colnames(result)=c("ID", "Log Fold Change", "Average Expression", "t", "P-value"
 ##
 result[,"Average Expression"]=if(min.val<0){result[,"Average Expression"]-(min.val*-1)}else{result[,"Average Expression"]}
 
-##
-## write rnk file
-gsea_rnk <-result[,c("ID", "t")]
-write.table(gsea_rnk, file=RNK_OUT, quote=FALSE, sep="\t", row.names=FALSE, col.names=FALSE)
-
-#################################
-## topGO implementation
-## Lan Hu, 07/01/2014
-#################################
-#tryCatch ({
-#  ## input variables from MeV:
-#  # SPECIES
-#  # GO_TYPE
-#  # THRES
-#  # TEST_TYPE
-#
-#  ## output file
-#  # TOPGO_OUT
-#
-#  library(topGO)
-#  library(org.Hs.eg.db)
-#  library(org.Mm.eg.db)
-#  library(org.Rn.eg.db)
-#
-#  ## assign the proper annotation db
-#  if (SPECIES=='human')
-#      anno.db = 'org.Hs.eg.db'
-#  if (SPECIES=='mouse')
-#      anno.db = 'org.Mm.eg.db'
-#  if (SPECIES=='rat')
-#      anno.db = 'org.Hs.eg.db'
-#
-#  ## create a topGOdata object
-#  myGenes = rep(0,nrow(result)) # from limma
-#  myGenes[result[,'P-value']<THRES] = 1 # mark 'significant ones'
-#  names(myGenes) = as.vector(result[,'ID']) # ID must be gene symbols
-#  myGenes = factor(myGenes)
-#
-#  myGOdata = new('topGOdata', ontology=GO_TYPE, description='topGO analysis', nodeSize=10,
-#    annot=annFUN.org, mapping=anno.db, ID='symbol', allGenes=myGenes)
-#
-#  ## run the enrichment test
-#  if (TEST_TYPE=='Fisher test')
-#      topGO.stat = new('classicCount', testStatistic=GOFisherTest, name=TEST_TYPE)
-#  if (TEST_TYPE=='KS test')
-#      topGO.stat = new('classicScore', testStatistic=GOKSTest, name=TEST_TYPE)
-#  topGO.result = getSigGroups(myGOdata, topGO.stat)
-#
-#  ## count the total significant GO groups (nodes)
-#  topGO.count = capture.output(topGO.result)
-#  totalNodes = as.numeric(unlist(strsplit(topGO.count[5],' '))[1])
-#
-#  ## summarize the top 100 GO terms and write to the file
-#  if (totalNodes >= 100){
-#    topGO.table = GenTable(myGOdata, topGO.result, topNodes=100)}
-#  if (totalNodes < 100){
-#    topGO.table = GenTable(myGOdata, topGO.result, topNodes=totalNodes)}
-#
-#  colnames(topGO.table) = c('GO ID','GO Term','Annotated Genes','Significant Genes','Expected','P-value')
-#
-#  write.table(file=TOPGO_OUT, topGO.table, sep='\t', quote=FALSE, row.names=FALSE, col.names=FALSE)
-#
-#}, error=function(cond) {}, warning=function (cond) {}, finally={})
-  #################################
-  ## End topGO
-  #################################
-
-##
-## write full result file
-result=result[result[,"P-value"]<0.05,]
-colnames(result)[1]=""
 write.table(result[,-c(4,7)], 
             file=RESULT_OUT, quote=FALSE, sep="\t", row.names=FALSE, col.names=FALSE)
-
-##
-## Define Significant gene expression
-## NOTE:  filtering is to be done at the user level rather than R analysis level
-## q.thresh=ALPHA
-## logfc.thresh=BETA
-
-##
-## write Significant gene set
-## result.sig=result[result[,"q-value"]<q.thresh && abs(result[,"Log Fold Change"])>logfc.thresh,]
-## write.table(result[,-c(4,7)], 
-##            file=SIGGENE_OUT, quote=FALSE, sep="\t", row.names=FALSE, col.names=FALSE)
