@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.web.test.histogram.controller;
+package edu.dfci.cccb.mev.web.test.genesd.controller;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.is;
@@ -53,7 +53,11 @@ import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.RDispatcherConfiguration;
+import edu.dfci.cccb.mev.genesd.domain.contract.GeneSDAnalysis;
+import edu.dfci.cccb.mev.genesd.domain.contract.GeneSDResult;
 import edu.dfci.cccb.mev.genesd.domain.impl.RserveGeneSDAnalysisBuilder;
+import edu.dfci.cccb.mev.genesd.domain.impl.SimpleGeneSDResult;
+import edu.dfci.cccb.mev.genesd.rest.configuration.GeneSDAnalysisConfiguration;
 import edu.dfci.cccb.mev.histogram.domain.contract.HistogramAnalysis;
 import edu.dfci.cccb.mev.histogram.domain.contract.HistogramResult;
 import edu.dfci.cccb.mev.histogram.domain.impl.SimpleHistogramResult;
@@ -70,9 +74,9 @@ import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
                                ContainerConfigurations.class, 
                                DatasetRestConfiguration.class,
                                RDispatcherConfiguration.class,
-                               HistogramAnalysisConfiguration.class
+                               GeneSDAnalysisConfiguration.class
                                })
-public class TestHistogramController {
+public class TestGeneSDController {
   
   @Autowired WebApplicationContext applicationContext;
   private MockMvc mockMvc;
@@ -81,23 +85,13 @@ public class TestHistogramController {
   private @Inject Workspace workspace;  
   private @Inject ObjectMapper jsonObjectMapper;
   Dataset dataset;  
-  @Inject @Named("genesd.analysis.builder") Provider<RserveGeneSDAnalysisBuilder> builderProvider; 
+  @Inject @Named("GeneSD.analysis.builder") Provider<RserveGeneSDAnalysisBuilder> builderProvider; 
   
-  /* Sample json result
-  {
-  "breaks":[7,8,9,10,11,12,13,14,15,16,17,18,19],
-  "counts":[4,6,7,24,14,17,31,74,27,14,15,1],
-  "density":[0.0171,0.0256,0.0299,0.1026,0.0598,0.0726,0.1325,0.3162,0.1154,0.0598,0.0641,0.0043],
-  "mids":[7.5,8.5,9.5,10.5,11.5,12.5,13.5,14.5,15.5,16.5,17.5,18.5]
-  }  
-  */
-  Integer abreaks[] = {0,5,10,15,20,25,30,35,40}; List<Integer> breaks = Arrays.asList (abreaks);
-  Integer acounts[] = {30,30,30,33,31,31,30,19}; List<Integer> counts= Arrays.asList (acounts);
-  Double adensity[] = {0.0256,0.0256,0.0256,0.0282,0.0265,0.0265,0.0256,0.0162}; List<Double> density= Arrays.asList (adensity);
-  Double amids[] = {2.5,7.5,12.5,17.5,22.5,27.5,32.5,37.5}; List<Double> mids= Arrays.asList (amids);
-  HistogramResult result;
+  GeneSDResult result;  
+  private String jsonResult = "{"
+          + "\"genes\":[\"Sell\",\"Gzmc\",\"Gzmb\",\"Pdcl3\",\"Fut7\",\"Card11\",\"Lars2\",\"Syngr2\",\"Chuk\",\"Actg1\",\"Cars\",\"St3gal2\",\"Ly6e\",\"Dmpk\",\"Ldha\",\"Plek\",\"Mtf2\",\"Cfl1\",\"Aldoa\",\"Tmsb4x\",\"Spp1\",\"Orc2\",\"Eef2\",\"Actb\",\"Tln1\",\"Lcp1\",\"Tagln2\",\"Atp5b\",\"Myh9\",\"Eif4a1\",\"Npm1\",\"Eef1a1\",\"Pabpc1\",\"Ppia\",\"Top2a\",\"Gnb2l1\",\"Pkm2\",\"Hnrnpa2b1\",\"Pgk1\"],"
+          + "\"sd\":[1.9458,1.8781,1.6143,1.439,1.3118,1.2852,1.2713,1.2454,1.2362,1.1808,1.1056,1.094,0.9577,0.9406,0.8323,0.7701,0.7468,0.6949,0.6706,0.6558,0.6225,0.6022,0.5536,0.536,0.5085,0.5046,0.4913,0.4662,0.4496,0.3662,0.356,0.3529,0.3379,0.3034,0.2906,0.2757,0.2502,0.2345,0.0543]}"; 
   
-  String jsonResult = "{\"breaks\":[7,8,9,10,11,12,13,14,15,16,17,18,19],\"counts\":[4,6,7,24,14,17,31,74,27,14,15,1],\"density\":[0.0171,0.0256,0.0299,0.1026,0.0598,0.0726,0.1325,0.3162,0.1154,0.0598,0.0641,0.0043],\"mids\":[7.5,8.5,9.5,10.5,11.5,12.5,13.5,14.5,15.5,16.5,17.5,18.5]}";
   @Before
   public void setup() throws DatasetBuilderException, InvalidDatasetNameException, InvalidDimensionTypeException, IOException{
     mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext).build();
@@ -122,7 +116,7 @@ public class TestHistogramController {
     String analysisName = "histo_test";
     @SuppressWarnings ("unused")
     MvcResult mvcResult = this.mockMvc.perform(
-                                               put(String.format("/dataset/%s/analyze/histogram/%s", dataset.name(), analysisName))            
+                                               put(String.format("/dataset/%s/analyze/genesd/%s", dataset.name(), analysisName))            
                                                .contentType (MediaType.APPLICATION_JSON)                                               
                                                .accept("application/json")
                                                .session (mockHttpSession)
@@ -131,16 +125,14 @@ public class TestHistogramController {
      .andDo(print())
      .andReturn ();
     
-      edu.dfci.cccb.mev.histogram.domain.contract.HistogramAnalysis analysis = (HistogramAnalysis) dataset.analyses ().get (analysisName);
-      log.debug("******* SimpleHistogramAnalysis:\n"+ jsonObjectMapper.writeValueAsString (analysis));      
+      GeneSDAnalysis analysis = (GeneSDAnalysis) dataset.analyses ().get (analysisName);
+      log.debug("******* SimpleGeneSDAnalysis:\n"+ jsonObjectMapper.writeValueAsString (analysis));      
       assertThat(analysis.name (), is(analysisName));      
       assertThat (analysis.result(), not(nullValue ()));
       
-      HistogramResult result = jsonObjectMapper.readValue(jsonResult, SimpleHistogramResult.class);
-      assertThat (analysis.result ().breaks (), is(result.breaks()));
-      assertThat (analysis.result ().counts (), is(result.counts()));
-      assertThat (analysis.result ().density(), is(result.density()));
-      assertThat (analysis.result ().mids (), is(result.mids()));      
+      GeneSDResult result = jsonObjectMapper.readValue(jsonResult, SimpleGeneSDResult.class);
+      assertThat (analysis.result ().genes (), is(result.genes()));
+      assertThat (analysis.result ().sd(), is(result.sd()));
       
   }
 
