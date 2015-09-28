@@ -111,26 +111,25 @@ public class CliRScriptEngine extends AbstractScriptEngine {
             }
           }.initialize (currentThread ()).start ();
           int result = r.waitFor ();
-          if (log.isDebugEnabled ())
-            try (ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
-                 Writer debug = new BufferedWriter (new OutputStreamWriter (buffer));
-                 Reader output = new BufferedReader (new InputStreamReader (r.getInputStream ()));
-                 Reader error = new BufferedReader (new InputStreamReader (r.getErrorStream ()));
-                 Reader code = new BufferedReader (new InputStreamReader (new FileInputStream (script)))) {
-              debug.write ("R process " + script + " exited with code " + result);
-              if (result != 0) {
-                debug.write ("\nOriginal script:\n");
-                for (int c; (c = code.read ()) >= 0; debug.write (c));
-                debug.write ("\nStandard output:\n");
-                for (int c; (c = output.read ()) >= 0; debug.write (c));
-              }
+          try (ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
+               Writer debug = new BufferedWriter (new OutputStreamWriter (buffer));
+               Reader output = new BufferedReader (new InputStreamReader (r.getInputStream ()));
+               Reader error = new BufferedReader (new InputStreamReader (r.getErrorStream ()));
+               Reader code = new BufferedReader (new InputStreamReader (new FileInputStream (script)))) {
+            debug.write ("R process " + script + " exited with code " + result);
+            if (result != 0) {
+              debug.write ("\nOriginal script:\n");
+              for (int c; (c = code.read ()) >= 0; debug.write (c));
+              debug.write ("\nStandard output:\n");
+              for (int c; (c = output.read ()) >= 0; debug.write (c));
               debug.write ("\nStandard error:\n");
               for (int c; (c = error.read ()) >= 0; debug.write (c));
               debug.flush ();
-              log.debug (buffer.toString ());
-            } catch (Exception e) {
-              log.warn ("Unable to dump debug output for R process " + script, e);
+              log.warn (buffer.toString ());
             }
+          } catch (Exception e) {
+            log.warn ("Unable to dump debug output for R process " + script, e);
+          }
           if (result == 0)
             return result;
           else
