@@ -1,0 +1,207 @@
+{
+	"randomId" : "dy8s56x0f6r",
+	"name" : "survive",
+	"result" : {
+		"n" : 12,
+		"n_event" : 0,
+		"coef" : 0,
+		"exp_coef" : 1,
+		"se_coef" : 0,
+		"z" : "NaN",
+		"pValue" : "NaN",
+		"ci_lower" : 1,
+		"ci_upper" : 1,
+		"logrank" : {
+			"score" : 0,
+			"pValue" : 1
+		},
+		"plot" : {
+			"control" : [{
+					"time" : 140,
+					"haz" : 0
+				},{
+					"time" : 159,
+					"haz" : 0
+				},{
+					"time" : 161,
+					"haz" : 0
+				},{
+					"time" : 166,
+					"haz" : 0
+				},{
+					"time" : 170,
+					"haz" : 0
+				},{
+					"time" : 188,
+					"haz" : 0
+				},{
+					"time" : 196,
+					"haz" : 0
+				},{
+					"time" : 267,
+					"haz" : 0
+				},{
+					"time" : 287,
+					"haz" : 0
+				},{
+					"time" : 373,
+					"haz" : 0
+				}],
+			"experiment" : [{
+					"time" : 140,
+					"haz" : 0
+				},{
+					"time" : 159,
+					"haz" : 0
+				},{
+					"time" : 161,
+					"haz" : 0
+				},{
+					"time" : 166,
+					"haz" : 0
+				},{
+					"time" : 170,
+					"haz" : 0
+				},{
+					"time" : 188,
+					"haz" : 0
+				},{
+					"time" : 196,
+					"haz" : 0
+				},{
+					"time" : 267,
+					"haz" : 0
+				},{
+					"time" : 287,
+					"haz" : 0
+				},{
+					"time" : 373,
+					"haz" : 0
+				}]
+		}
+	},
+	"type" : "Survival Analysis",
+	"params" : {
+		"analysisName" : "survive",
+		"datasetName" : "aaa",
+		"analysisType" : "survival",
+		"name" : "survive",
+		"experiment" : {
+			"name" : "eee",
+			"properties" : {
+				"selectionColor" : "#469d7c",
+				"selectionDescription" : ""
+			},
+			"keys" : ["TCGA-A7-A13F-11A-42R-A12P-07","TCGA-A7-A13E-01A-11R-A12P-07","TCGA-A7-A0DB-11A-33R-A089-07","TCGA-A7-A0DB-01A-11R-A00Z-07","TCGA-A7-A0CJ-01A-21R-A00Z-07","TCGA-A7-A0DA-01A-31R-A115-07"],
+			"type" : "column"
+		},
+		"experimentName" : "eee",
+		"control" : {
+			"name" : "ccc",
+			"properties" : {
+				"selectionColor" : "#52af05",
+				"selectionDescription" : ""
+			},
+			"keys" : ["TCGA-A7-A13F-01A-11R-A12P-07","TCGA-A7-A13D-01A-13R-A12P-07","TCGA-A7-A0D9-01A-31R-A056-07","TCGA-A7-A0CH-11A-32R-A089-07","TCGA-A7-A0CG-01A-12R-A056-07","TCGA-A7-A0CD-01A-11R-A00Z-07"],
+			"type" : "column"
+		},
+		"controlName" : "ccc",
+		"input" : [{
+				"key" : "TCGA-A7-A13F-11A-42R-A12P-07",
+				"days_to_death" : null,
+				"days_to_last_followup" : 196,
+				"vital_status" : "Alive",
+				"group" : 2,
+				"status" : 0,
+				"time" : 196
+			},{
+				"key" : "TCGA-A7-A0CD-01A-11R-A00Z-07",
+				"days_to_death" : null,
+				"days_to_last_followup" : 170,
+				"vital_status" : "Alive",
+				"group" : 1,
+				"status" : 0,
+				"time" : 170
+			},{
+				"key" : "TCGA-A7-A0CJ-01A-21R-A00Z-07",
+				"days_to_death" : null,
+				"days_to_last_followup" : 188,
+				"vital_status" : "Alive",
+				"group" : 2,
+				"status" : 0,
+				"time" : 188
+			},{
+				"key" : "TCGA-A7-A0CG-01A-12R-A056-07",
+				"days_to_death" : null,
+				"days_to_last_followup" : 166,
+				"vital_status" : "Alive",
+				"group" : 1,
+				"status" : 0,
+				"time" : 166
+			},{
+				"key" : "TCGA-A7-A0DB-01A-11R-A00Z-07",
+				"days_to_death" : null,
+				"days_to_last_followup" : 140,
+				"vital_status" : "Alive",
+				"group" : 2,
+				"status" : 0,
+				"time" : 140
+			},{
+				"key" : "TCGA-A7-A0D9-01A-31R-A056-07",
+				"days_to_death" : null,
+				"days_to_last_followup" : 159,
+				"vital_status" : "Alive",
+				"group" : 1,
+				"status" : 0,
+				"time" : 159
+			},{
+				"key" : "TCGA-A7-A0CH-11A-32R-A089-07",
+				"days_to_death" : null,
+				"days_to_last_followup" : 161,
+				"vital_status" : "Alive",
+				"group" : 1,
+				"status" : 0,
+				"time" : 161
+			},{
+				"key" : "TCGA-A7-A13F-01A-11R-A12P-07",
+				"days_to_death" : null,
+				"days_to_last_followup" : 196,
+				"vital_status" : "Alive",
+				"group" : 1,
+				"status" : 0,
+				"time" : 196
+			},{
+				"key" : "TCGA-A7-A0DA-01A-31R-A115-07",
+				"days_to_death" : null,
+				"days_to_last_followup" : 373,
+				"vital_status" : "Alive",
+				"group" : 2,
+				"status" : 0,
+				"time" : 373
+			},{
+				"key" : "TCGA-A7-A13D-01A-13R-A12P-07",
+				"days_to_death" : null,
+				"days_to_last_followup" : 267,
+				"vital_status" : "Alive",
+				"group" : 1,
+				"status" : 0,
+				"time" : 267
+			},{
+				"key" : "TCGA-A7-A13E-01A-11R-A12P-07",
+				"days_to_death" : null,
+				"days_to_last_followup" : 287,
+				"vital_status" : "Alive",
+				"group" : 2,
+				"status" : 0,
+				"time" : 287
+			},{
+				"key" : "TCGA-A7-A0DB-11A-33R-A089-07",
+				"days_to_death" : null,
+				"days_to_last_followup" : 140,
+				"vital_status" : "Alive",
+				"group" : 2,
+				"status" : 0,
+				"time" : 140
+			}]
+	}
+}

@@ -223,6 +223,14 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
     
+     <!-- Gene MAD -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-genemad-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+    
     <!-- Servlet -->
 
     <dependency>

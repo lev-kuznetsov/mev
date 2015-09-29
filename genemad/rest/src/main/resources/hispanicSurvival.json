@@ -1,0 +1,510 @@
+{
+	"name" : "hispanicSurvival",
+	"type" : "Survival Analysis",
+	"params" : {
+		"name" : "hispanicSurvival",
+		"datasetName" : "brca",
+		"experimentName" : "hispanic",
+		"experiment" : {
+			"name" : "hispanic",
+			"properties" : {
+				"selectionColor" : "#b2841d",
+				"selectionFacetLink" : "project?project=1600354011884&ui=%7B%22facets%22%3A%5B%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22days_to_last_followup%22%2C%22columnName%22%3A%22days_to_last_followup%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%5D%7D%2C%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22days_to_death%22%2C%22columnName%22%3A%22days_to_death%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%5D%7D%2C%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22ethnicity%22%2C%22columnName%22%3A%22ethnicity%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%7B%22v%22%3A%7B%22v%22%3A%22HISPANIC%20OR%20LATINO%22%2C%22l%22%3A%22HISPANIC%20OR%20LATINO%22%7D%7D%2C%7B%22v%22%3A%7B%22v%22%3A%22%5BNot%20Available%5D%22%2C%22l%22%3A%22%5BNot%20Available%5D%22%7D%7D%5D%7D%5D%7D",
+				"selectionDescription" : ""
+			},
+			"keys" : ["TCGA-AR-A0U0-01A-11R-A109-07","TCGA-AR-A0TX-01A-11R-A084-07","TCGA-AR-A1AN-01A-11R-A12P-07","TCGA-AR-A0U3-01A-11R-A109-07","TCGA-AR-A0TT-01A-31R-A084-07","TCGA-AR-A0TU-01A-31R-A109-07","TCGA-AR-A0TV-01A-21R-A084-07","TCGA-AR-A1AS-01A-11R-A12P-07","TCGA-AR-A1AV-01A-21R-A12P-07"]
+		},
+		"controlName" : "notHispanic",
+		"control" : {
+			"name" : "notHispanic",
+			"properties" : {
+				"selectionColor" : "#908e5c",
+				"selectionFacetLink" : "project?project=1600354011884&ui=%7B%22facets%22%3A%5B%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22days_to_last_followup%22%2C%22columnName%22%3A%22days_to_last_followup%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%5D%7D%2C%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22days_to_death%22%2C%22columnName%22%3A%22days_to_death%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%5D%7D%2C%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22ethnicity%22%2C%22columnName%22%3A%22ethnicity%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%7B%22v%22%3A%7B%22v%22%3A%22NOT%20HISPANIC%20OR%20LATINO%22%2C%22l%22%3A%22NOT%20HISPANIC%20OR%20LATINO%22%7D%7D%5D%7D%5D%7D",
+				"selectionDescription" : ""
+			},
+			"keys" : ["TCGA-AR-A1AK-01A-21R-A12P-07","TCGA-AR-A0TQ-01A-11R-A084-07","TCGA-AR-A0U1-01A-11R-A115-07","TCGA-AR-A1AL-01A-21R-A12P-07","TCGA-AR-A0TP-01A-11R-A084-07","TCGA-AR-A1AY-01A-21R-A12P-07","TCGA-AR-A1AO-01A-11R-A12P-07","TCGA-AR-A0TZ-01A-12R-A084-07","TCGA-AR-A0U2-01A-11R-A109-07","TCGA-AR-A0TS-01A-11R-A115-07","TCGA-AR-A1AP-01A-11R-A12P-07","TCGA-AR-A1AI-01A-11R-A12P-07","TCGA-AR-A1AR-01A-31R-A137-07","TCGA-AR-A1AX-01A-11R-A12P-07","TCGA-AR-A0TY-01A-12R-A115-07","TCGA-AR-A1AU-01A-11R-A12P-07","TCGA-AR-A1AW-01A-21R-A12P-07","TCGA-AR-A1AQ-01A-11R-A12P-07","TCGA-AR-A0TR-01A-11R-A084-07","TCGA-AR-A0TW-01A-11R-A084-07","TCGA-AR-A1AH-01A-11R-A12D-07","TCGA-AR-A1AJ-01A-21R-A12P-07","TCGA-AR-A1AT-01A-11R-A12P-07","TCGA-AR-A0U4-01A-11R-A109-07"]
+		},
+		"input" : [{
+				"key" : "TCGA-AR-A1AK-01A-21R-A12P-07",
+				"time" : 1558,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1558,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0U0-01A-11R-A109-07",
+				"time" : 1988,
+				"status" : 0,
+				"group" : 2,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1988,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0TQ-01A-11R-A084-07",
+				"time" : 1500,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1500,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0U1-01A-11R-A115-07",
+				"time" : 2134,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 2134,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A1AL-01A-21R-A12P-07",
+				"time" : 1485,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1485,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0TX-01A-11R-A084-07",
+				"time" : 1972,
+				"status" : 0,
+				"group" : 2,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1972,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0TP-01A-11R-A084-07",
+				"time" : 2521,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 2521,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A1AY-01A-21R-A12P-07",
+				"time" : 614,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 614,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A1AO-01A-11R-A12P-07",
+				"time" : 1324,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1324,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0TZ-01A-12R-A084-07",
+				"time" : 1313,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1313,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0U2-01A-11R-A109-07",
+				"time" : 2551,
+				"status" : 1,
+				"group" : 1,
+				"days_to_death" : 2551,
+				"days_to_last_followup" : null,
+				"vital_status" : "Dead"
+			},{
+				"key" : "TCGA-AR-A1AN-01A-11R-A12P-07",
+				"time" : 1329,
+				"status" : 0,
+				"group" : 2,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1329,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0TS-01A-11R-A115-07",
+				"time" : 1138,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1138,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A1AP-01A-11R-A12P-07",
+				"time" : 1215,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1215,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A1AI-01A-11R-A12P-07",
+				"time" : 1881,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1881,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A1AR-01A-31R-A137-07",
+				"time" : 523,
+				"status" : 1,
+				"group" : 1,
+				"days_to_death" : 523,
+				"days_to_last_followup" : null,
+				"vital_status" : "Dead"
+			},{
+				"key" : "TCGA-AR-A1AX-01A-11R-A12P-07",
+				"time" : 1103,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1103,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0U3-01A-11R-A109-07",
+				"time" : 2316,
+				"status" : 0,
+				"group" : 2,
+				"days_to_death" : null,
+				"days_to_last_followup" : 2316,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0TT-01A-31R-A084-07",
+				"time" : 1679,
+				"status" : 0,
+				"group" : 2,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1679,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0TY-01A-12R-A115-07",
+				"time" : 1699,
+				"status" : 1,
+				"group" : 1,
+				"days_to_death" : 1699,
+				"days_to_last_followup" : null,
+				"vital_status" : "Dead"
+			},{
+				"key" : "TCGA-AR-A1AU-01A-11R-A12P-07",
+				"time" : 1409,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1409,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A1AW-01A-21R-A12P-07",
+				"time" : 1072,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1072,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0TU-01A-31R-A109-07",
+				"time" : 360,
+				"status" : 0,
+				"group" : 2,
+				"days_to_death" : null,
+				"days_to_last_followup" : 360,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A1AQ-01A-11R-A12P-07",
+				"time" : 1309,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1309,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0TR-01A-11R-A084-07",
+				"time" : 160,
+				"status" : 1,
+				"group" : 1,
+				"days_to_death" : 160,
+				"days_to_last_followup" : null,
+				"vital_status" : "Dead"
+			},{
+				"key" : "TCGA-AR-A0TW-01A-11R-A084-07",
+				"time" : 739,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 739,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0TV-01A-21R-A084-07",
+				"time" : 904,
+				"status" : 0,
+				"group" : 2,
+				"days_to_death" : null,
+				"days_to_last_followup" : 904,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A1AH-01A-11R-A12D-07",
+				"time" : 2298,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 2298,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A1AJ-01A-21R-A12P-07",
+				"time" : 1604,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1604,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A1AT-01A-11R-A12P-07",
+				"time" : 1272,
+				"status" : 1,
+				"group" : 1,
+				"days_to_death" : 1272,
+				"days_to_last_followup" : null,
+				"vital_status" : "Dead"
+			},{
+				"key" : "TCGA-AR-A1AS-01A-11R-A12P-07",
+				"time" : 1242,
+				"status" : 0,
+				"group" : 2,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1242,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A1AV-01A-21R-A12P-07",
+				"time" : 1295,
+				"status" : 0,
+				"group" : 2,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1295,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0U4-01A-11R-A109-07",
+				"time" : 1684,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1684,
+				"vital_status" : "Alive"
+			}]
+	},
+	"result" : {
+		"n" : 33,
+		"n_event" : 5,
+		"coef" : -19.5549,
+		"exp_coef" : 3.2168E-9,
+		"se_coef" : 13948.3127,
+		"z" : -0.0014,
+		"pValue" : 0.9989,
+		"ci_lower" : 0.0,
+		"ci_upper" : "Infinity",
+		"logrank" : {
+			"score" : 1.5948,
+			"pValue" : 0.2066
+		},
+		"plot" : {
+			"control" : [{
+					"time" : 160,
+					"haz" : 0.0417
+				},{
+					"time" : 360,
+					"haz" : 0.0417
+				},{
+					"time" : 523,
+					"haz" : 0.0851
+				},{
+					"time" : 614,
+					"haz" : 0.0851
+				},{
+					"time" : 739,
+					"haz" : 0.0851
+				},{
+					"time" : 904,
+					"haz" : 0.0851
+				},{
+					"time" : 1072,
+					"haz" : 0.0851
+				},{
+					"time" : 1103,
+					"haz" : 0.0851
+				},{
+					"time" : 1138,
+					"haz" : 0.0851
+				},{
+					"time" : 1215,
+					"haz" : 0.0851
+				},{
+					"time" : 1242,
+					"haz" : 0.0851
+				},{
+					"time" : 1272,
+					"haz" : 0.1476
+				},{
+					"time" : 1295,
+					"haz" : 0.1476
+				},{
+					"time" : 1309,
+					"haz" : 0.1476
+				},{
+					"time" : 1313,
+					"haz" : 0.1476
+				},{
+					"time" : 1324,
+					"haz" : 0.1476
+				},{
+					"time" : 1329,
+					"haz" : 0.1476
+				},{
+					"time" : 1409,
+					"haz" : 0.1476
+				},{
+					"time" : 1485,
+					"haz" : 0.1476
+				},{
+					"time" : 1500,
+					"haz" : 0.1476
+				},{
+					"time" : 1558,
+					"haz" : 0.1476
+				},{
+					"time" : 1604,
+					"haz" : 0.1476
+				},{
+					"time" : 1679,
+					"haz" : 0.1476
+				},{
+					"time" : 1684,
+					"haz" : 0.1476
+				},{
+					"time" : 1699,
+					"haz" : 0.3143
+				},{
+					"time" : 1881,
+					"haz" : 0.3143
+				},{
+					"time" : 1972,
+					"haz" : 0.3143
+				},{
+					"time" : 1988,
+					"haz" : 0.3143
+				},{
+					"time" : 2134,
+					"haz" : 0.3143
+				},{
+					"time" : 2298,
+					"haz" : 0.3143
+				},{
+					"time" : 2316,
+					"haz" : 0.3143
+				},{
+					"time" : 2521,
+					"haz" : 0.3143
+				},{
+					"time" : 2551,
+					"haz" : 1.3143
+				}],
+			"experiment" : [{
+					"time" : 160,
+					"haz" : 1.3403E-10
+				},{
+					"time" : 360,
+					"haz" : 1.3403E-10
+				},{
+					"time" : 523,
+					"haz" : 2.739E-10
+				},{
+					"time" : 614,
+					"haz" : 2.739E-10
+				},{
+					"time" : 739,
+					"haz" : 2.739E-10
+				},{
+					"time" : 904,
+					"haz" : 2.739E-10
+				},{
+					"time" : 1072,
+					"haz" : 2.739E-10
+				},{
+					"time" : 1103,
+					"haz" : 2.739E-10
+				},{
+					"time" : 1138,
+					"haz" : 2.739E-10
+				},{
+					"time" : 1215,
+					"haz" : 2.739E-10
+				},{
+					"time" : 1242,
+					"haz" : 2.739E-10
+				},{
+					"time" : 1272,
+					"haz" : 4.7495E-10
+				},{
+					"time" : 1295,
+					"haz" : 4.7495E-10
+				},{
+					"time" : 1309,
+					"haz" : 4.7495E-10
+				},{
+					"time" : 1313,
+					"haz" : 4.7495E-10
+				},{
+					"time" : 1324,
+					"haz" : 4.7495E-10
+				},{
+					"time" : 1329,
+					"haz" : 4.7495E-10
+				},{
+					"time" : 1409,
+					"haz" : 4.7495E-10
+				},{
+					"time" : 1485,
+					"haz" : 4.7495E-10
+				},{
+					"time" : 1500,
+					"haz" : 4.7495E-10
+				},{
+					"time" : 1558,
+					"haz" : 4.7495E-10
+				},{
+					"time" : 1604,
+					"haz" : 4.7495E-10
+				},{
+					"time" : 1679,
+					"haz" : 4.7495E-10
+				},{
+					"time" : 1684,
+					"haz" : 4.7495E-10
+				},{
+					"time" : 1699,
+					"haz" : 1.0111E-9
+				},{
+					"time" : 1881,
+					"haz" : 1.0111E-9
+				},{
+					"time" : 1972,
+					"haz" : 1.0111E-9
+				},{
+					"time" : 1988,
+					"haz" : 1.0111E-9
+				},{
+					"time" : 2134,
+					"haz" : 1.0111E-9
+				},{
+					"time" : 2298,
+					"haz" : 1.0111E-9
+				},{
+					"time" : 2316,
+					"haz" : 1.0111E-9
+				},{
+					"time" : 2521,
+					"haz" : 1.0111E-9
+				},{
+					"time" : 2551,
+					"haz" : 4.2279E-9
+				}]
+		}
+	}
+}

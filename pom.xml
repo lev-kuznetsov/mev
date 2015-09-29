@@ -38,6 +38,7 @@
     <module>topgo</module>
     <module>histogram</module>
     <module>genesd</module>
+    <module>genemad</module>
     <module>web</module>
 
   </modules>
