@@ -1,6 +1,8 @@
 package edu.dfci.cccb.mev.histogram.domain.impl;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
@@ -13,9 +15,10 @@ import edu.dfci.cccb.mev.histogram.domain.contract.HistogramResult;
 
 @ToString
 @Accessors (fluent = true)
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class SimpleHistogramAnalysis extends AbstractAnalysis<SimpleHistogramAnalysis> implements HistogramAnalysis {
-  public final @Getter @JsonProperty String name;
-  public final @Getter @JsonProperty String type;
-  public final @Getter @JsonProperty HistogramResult result;
+  public @Getter @JsonProperty String name;
+  public @Getter @JsonProperty String type;
+  public @Getter @JsonProperty SimpleHistogramResult result;
 }
