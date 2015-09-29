@@ -4,10 +4,11 @@ define(['./AnalysisClass'], function(AnalysisClass){
     //  Function to reload analyses list with new values 
     return function(){
         var self = this;
-        
+              
         self.analyses = [];
+                
         
-        return self.analysis.getAll({datasetName: self.datasetName}).$promise.then(function(response){
+    	return self.analysis.getAll({datasetName: self.datasetName}).$promise.then(function(response){
             
         	var requests = [];
         	var analyses = [];
@@ -36,9 +37,27 @@ define(['./AnalysisClass'], function(AnalysisClass){
             });
             
         }).then(function(response){
+        	var defaultAnalyses = [];
+        	function checkDefaultAnalysis(type){
+            	if(self.analyses.filter(function(analysis){
+                	return analysis.name === type;
+                }).length === 0){
+            		defaultAnalyses.push(
+            				self.analysis.put({analysisType: type,
+        	                           datasetName: self.datasetName,
+        	                           analysisName : type}, {})
+                	);
+                }
+            	return undefined;
+            }
+        	checkDefaultAnalysis("histogram");  
+        	return self.$q.all(defaultAnalyses);
+        })
+        .then(function(response){
         	console.debug("qall2", response);
         	self.analysisEventBus.analysisLoadedAll();
-        });        
+        });;
+                
     };
     
 });

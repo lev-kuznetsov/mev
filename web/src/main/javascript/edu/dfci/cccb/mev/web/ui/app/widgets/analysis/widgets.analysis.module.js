@@ -52,6 +52,10 @@ function(ng, AnalyisEventBus){
 			    shortName: "topgo",
 			    viewModel: "TopGoVM"
 			},
+			"Histogram Analysis":{
+			    shortName: "histogram",
+			    viewModel: "HistogramVM"
+			},
 			reverseLookup: {
 				hcl: "Hierarchical Clustering",
 				limma: "LIMMA Differential Expression Analysis",
@@ -63,7 +67,8 @@ function(ng, AnalyisEventBus){
 				deseq: "DESeq Differential Expression Analysis",
 				nmf: "Non-Negative Matrix Factorization",
 				survival: "Survival Analysis",
-				topgo: "TopGO Analysis"
+				topgo: "TopGO Analysis",
+				histogram: "Histogram Analysis"
 		} 
 	});	
 	return module;

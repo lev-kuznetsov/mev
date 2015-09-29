@@ -60,6 +60,11 @@ define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular
                 	'url': '/dataset/:datasetName'+
                 		'/analyze/:analysisType/:analysisName',
                 		//'headers':{'Content-Type':'application/x-www-form-urlencoded'}
+                },
+                'put': {
+                	'method': 'PUT',
+                	'url': '/dataset/:datasetName'+
+                		'/analyze/:analysisType/:analysisName'
                 }
                 
 			});    	    	
@@ -99,6 +104,7 @@ define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular
     	AnalysisResource.post=postWrapper("post");
     	AnalysisResource.postf=postWrapper("postf");
     	AnalysisResource.post3=postWrapper("post3");
+    	AnalysisResource.post3=postWrapper("put");
     	
     	
     	return AnalysisResource;    	

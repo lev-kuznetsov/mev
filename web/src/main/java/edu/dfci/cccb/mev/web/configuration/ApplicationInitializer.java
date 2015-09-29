@@ -32,6 +32,7 @@ import edu.dfci.cccb.mev.dataset.rest.configuration.RDispatcherConfiguration;
 import edu.dfci.cccb.mev.deseq.rest.configuration.DESeqRestConfiguration;
 import edu.dfci.cccb.mev.geods.rest.configuration.GeoDatasetsConfigurationMain;
 import edu.dfci.cccb.mev.hcl.rest.configuration.HclRestConfiguration;
+import edu.dfci.cccb.mev.histogram.rest.configuration.HistogramAnalysisConfiguration;
 import edu.dfci.cccb.mev.kmeans.rest.configuration.KMeansRestConfiguration;
 import edu.dfci.cccb.mev.limma.rest.configuration.LimmaRestConfiguration;
 import edu.dfci.cccb.mev.nmf.rest.configuration.NmfRestConfiguration;
@@ -74,6 +75,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     mvcContext.register (NmfRestConfiguration.class);
     mvcContext.register (SurvivalAnalysisConfiguration.class);
     mvcContext.register (TopGoConfiguration.class);
+    mvcContext.register (HistogramAnalysisConfiguration.class);
 
     DispatcherServlet dispatcher = new DispatcherServlet (mvcContext);
 
