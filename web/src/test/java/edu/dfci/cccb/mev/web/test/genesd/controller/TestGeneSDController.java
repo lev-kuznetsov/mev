@@ -5,14 +5,13 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -53,15 +52,14 @@ import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.RDispatcherConfiguration;
+import edu.dfci.cccb.mev.genemad.domain.contract.GeneMADAnalysis;
+import edu.dfci.cccb.mev.genemad.domain.impl.SimpleGeneMADAnalysis;
 import edu.dfci.cccb.mev.genesd.domain.contract.GeneSDAnalysis;
 import edu.dfci.cccb.mev.genesd.domain.contract.GeneSDResult;
 import edu.dfci.cccb.mev.genesd.domain.impl.RserveGeneSDAnalysisBuilder;
+import edu.dfci.cccb.mev.genesd.domain.impl.SimpleGeneSDAnalysis;
 import edu.dfci.cccb.mev.genesd.domain.impl.SimpleGeneSDResult;
 import edu.dfci.cccb.mev.genesd.rest.configuration.GeneSDAnalysisConfiguration;
-import edu.dfci.cccb.mev.histogram.domain.contract.HistogramAnalysis;
-import edu.dfci.cccb.mev.histogram.domain.contract.HistogramResult;
-import edu.dfci.cccb.mev.histogram.domain.impl.SimpleHistogramResult;
-import edu.dfci.cccb.mev.histogram.rest.configuration.HistogramAnalysisConfiguration;
 import edu.dfci.cccb.mev.web.configuration.DispatcherConfiguration;
 import edu.dfci.cccb.mev.web.configuration.PersistenceConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
@@ -85,7 +83,7 @@ public class TestGeneSDController {
   private @Inject Workspace workspace;  
   private @Inject ObjectMapper jsonObjectMapper;
   Dataset dataset;  
-  @Inject @Named("GeneSD.analysis.builder") Provider<RserveGeneSDAnalysisBuilder> builderProvider; 
+  @Inject @Named("genesd.analysis.builder") Provider<RserveGeneSDAnalysisBuilder> builderProvider; 
   
   GeneSDResult result;  
   private String jsonResult = "{"
@@ -111,9 +109,9 @@ public class TestGeneSDController {
   }
   
   //This test only works if local rserve is running
-  @Test @Ignore
+  @Test 
   public void test () throws Exception {
-    String analysisName = "histo_test";
+    String analysisName = "genesd_test";
     @SuppressWarnings ("unused")
     MvcResult mvcResult = this.mockMvc.perform(
                                                put(String.format("/dataset/%s/analyze/genesd/%s", dataset.name(), analysisName))            
@@ -133,6 +131,25 @@ public class TestGeneSDController {
       GeneSDResult result = jsonObjectMapper.readValue(jsonResult, SimpleGeneSDResult.class);
       assertThat (analysis.result ().genes (), is(result.genes()));
       assertThat (analysis.result ().sd(), is(result.sd()));
+      assertThat (analysis.type(), is("Gene SD Analysis"));
+      
+      MvcResult mvcResultGET = this.mockMvc.perform(
+                                                    get(String.format("/dataset/%s/analysis/%s", dataset.name(), analysisName))            
+                                                    .contentType (MediaType.APPLICATION_JSON)                                               
+                                                    .accept("application/json")
+                                                    .session (mockHttpSession)
+                                                    .param ("format", "json")
+                                                    )        
+          .andExpect (status ().isOk ())
+          .andDo(print())
+          .andReturn ();
+          log.debug(String.format("mvcResultGET content: %s", mvcResultGET.getResponse ().getContentAsString ()));
+          
+          GeneSDAnalysis analysisFromJson = jsonObjectMapper.readValue(mvcResultGET.getResponse ().getContentAsString (), SimpleGeneSDAnalysis.class);
+          assertThat (analysis.result ().genes (), is(result.genes()));
+          assertThat (analysis.result ().sd(), is(result.sd()));
+          assertThat (analysis.type(), is("Gene SD Analysis"));          
+          assertThat (analysisFromJson.name(), is(analysisName));
       
   }
 
