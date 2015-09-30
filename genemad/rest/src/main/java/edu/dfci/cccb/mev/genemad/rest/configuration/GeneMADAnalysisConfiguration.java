@@ -16,8 +16,7 @@ import edu.dfci.cccb.mev.genemad.domain.impl.RserveGeneMADAnalysisBuilder;
 @ComponentScan ("edu.dfci.cccb.mev.genemad.rest.controllers")
 public class GeneMADAnalysisConfiguration {
 
-  @Bean
-  @Named ("genemad.analysis.builder")
+  @Bean(name="genemad.analysis.builder")
   @Scope ("prototype")
   public RserveGeneMADAnalysisBuilder builder () {
     return new RserveGeneMADAnalysisBuilder ();

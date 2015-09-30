@@ -16,8 +16,7 @@ import edu.dfci.cccb.mev.histogram.domain.impl.SimpleHistogramAnalysisBuilder;
 @ComponentScan ("edu.dfci.cccb.mev.histogram.rest.controllers")
 public class HistogramAnalysisConfiguration {
 
-  @Bean
-  @Named ("histogram.analysis.builder")
+  @Bean(name="histogram.analysis.builder")
   @Scope ("prototype")
   public SimpleHistogramAnalysisBuilder builder () {
     return new SimpleHistogramAnalysisBuilder ();

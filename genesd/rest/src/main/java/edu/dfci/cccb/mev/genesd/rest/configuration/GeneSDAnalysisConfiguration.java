@@ -16,8 +16,7 @@ import edu.dfci.cccb.mev.genesd.domain.impl.RserveGeneSDAnalysisBuilder;
 @ComponentScan ("edu.dfci.cccb.mev.genesd.rest.controllers")
 public class GeneSDAnalysisConfiguration {
 
-  @Bean
-  @Named ("genesd.analysis.builder")
+  @Bean(name="genesd.analysis.builder")  
   @Scope ("prototype")
   public RserveGeneSDAnalysisBuilder builder () {
     return new RserveGeneSDAnalysisBuilder ();
