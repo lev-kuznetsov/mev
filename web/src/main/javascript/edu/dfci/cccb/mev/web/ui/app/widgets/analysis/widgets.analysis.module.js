@@ -56,6 +56,14 @@ function(ng, AnalyisEventBus){
 			    shortName: "histogram",
 			    viewModel: "HistogramVM"
 			},
+			"Gene SD Analysis":{
+				shortName: "genesd",
+				viewModel: "GeneSDVM"
+			},
+			"Gene MAD Analysis":{
+				shortName: "genesd",
+				viewModel: "GeneMADVM"
+			},
 			reverseLookup: {
 				hcl: "Hierarchical Clustering",
 				limma: "LIMMA Differential Expression Analysis",
@@ -68,7 +76,9 @@ function(ng, AnalyisEventBus){
 				nmf: "Non-Negative Matrix Factorization",
 				survival: "Survival Analysis",
 				topgo: "TopGO Analysis",
-				histogram: "Histogram Analysis"
+				histogram: "Histogram Analysis",
+				genesd: "Gene SD Analysis",
+				genemad: "Gene MAD Analysis"
 		} 
 	});	
 	return module;
