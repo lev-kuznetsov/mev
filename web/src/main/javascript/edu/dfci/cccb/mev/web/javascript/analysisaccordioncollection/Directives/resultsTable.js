@@ -4,10 +4,11 @@
 
     return function(module){
 
-      module.directive('resultsTable', ['pathService', 'resultsTableDefaults', function(paths, defaults){
+      module.directive('resultsTable', ['pathService', 'resultsTableDefaults', "tableResultsFilter", "$timeout", function(paths, defaults, tableResultsFilter, $timeout){
         return {
             restrict : 'E',
             scope : {
+            	id: "=",
             	data : "=data",
             	headers : "=headers",
                 filters : "=?filters",
@@ -25,7 +26,19 @@
             		else
             			return header.icon;                        			
             	}
-            	
+            	function notifyResultChange(){
+            		scope.$emit("ui:resultsTable:filteredResults", scope.vm.filteredResults);
+            		if(scope.filterCallback)
+            			scope.filterCallback({filteredResults: scope.vm.filteredResults});
+            	}
+//scope.renderedData is populated by the 'as renderedData' at the ng-repeat template
+//Tried tapping renderedData when signaling changes in sort/fitlers. 
+//However, this does not work if pagination is enabled because only the first page of the results 
+//is rendered. We want to send the whole result data to event sibscribers.
+//            	scope.$watchCollection("renderedData", function(){
+//            		console.debug("resultsTable watchCollection", scope.res);
+//            		scope.$emit("ui:resultsTable:filteredResults", scope.res);
+//            	});
             	if(!scope.filters){
             		scope.filters={};
                 	scope.headers.map(function(header){
@@ -39,9 +52,11 @@
                 		}
                 	});
             	}
-            	scope.filterCallback({filterParams: scope.filters});
+            	
+            	scope.vm={};
+            	scope.vm.filteredResults = tableResultsFilter(scope.data, scope.filters);      
+            	notifyResultChange();
 
-            	var vm={};            	
             	            	
 //            	scope.$watch('filters', function(newval, oldval){  
 //            	if(!angular.equals(newval, oldval)){
@@ -51,7 +66,7 @@
 //            	}
 //            }, true);
             	            	
-            	vm.applyFilter=function($event){
+            	scope.vm.applyFilter=function($event){
             		 if ($event.which === 13){            			 
             			 console.debug("applyFilter", scope.filters, scope.filterForm);
             			 Object.keys(scope.filters).map(function(key){
@@ -59,11 +74,13 @@
             				if(filter.max && !filter.value || filter.value>filter.max)
             					filter.value=filter.max;
             			 });            			
-            			 scope.filterCallback({filterParams: scope.filters});            			 
+            			 scope.vm.filteredResults = tableResultsFilter(scope.data, scope.filters);
+            			 scope.reorderTable({field: scope.tableOrdering});
             			 scope.filterForm.$setPristine();
             		 }
             	};
-            	scope.vm=vm;
+            	
+            	
                 //Table reordering methods
                 var ctr = -1;
                 scope.tableOrdering = attrs.ordering || defaults.getOrdering();
@@ -75,8 +92,18 @@
                     } else {
                         scope.tableOrdering = "-" + header.field;
                     }
-                };                
-                
+                    scope.vm.filteredResults.sort(function(a, b){
+                    	if (a[header.field] > b[header.field]) {
+                    	    return 1*ctr;
+                    	  }
+                    	  if (a[header.field] < b[header.field]) {
+                    	    return -1*ctr;
+                    	  }
+                    	  // a must be equal to b
+                    	  return 0;
+                    })
+                    notifyResultChange();
+                };
             }	
         };
       }]);

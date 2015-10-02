@@ -22,15 +22,15 @@ define(["ng", "lodash"], function(ng, _){
 	        });
 			
 			
-			$scope.$on("ui:filteredResults",function($event, results){
-				var control = _.find(project.dataset.column.selections, function(selection){return selection.name===analysis.params.controlName});
-	        	var experiment = _.find(project.dataset.column.selections, function(selection){return selection.name===analysis.params.experimentName});
+			$scope.$on("ui:resultsTable:filteredResults",function($event, results){
+				var control = _.find(project.dataset.column.selections, function(selection){return selection.name===analysis.params.controlName;});
+	        	var experiment = _.find(project.dataset.column.selections, function(selection){return selection.name===analysis.params.experimentName;});
 	        	
 	       		$scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(project.dataset, results, 
 	         		[control, experiment],
 	         		analysis.randomId);
 			});	
-		} 
+		};
 	}])
 	.controller("tTestVM", ["$scope", "$injector", "BoxPlotService", "tTestVMFactory", "project", "analysis", 
 	                        function($scope, $injector, BoxPlotService, tTestVMFactory, project, analysis){

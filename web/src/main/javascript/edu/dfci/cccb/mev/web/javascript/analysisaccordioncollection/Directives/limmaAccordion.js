@@ -51,17 +51,19 @@
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16)
                             }
-                                                        
-                            scope.viewGenes = function (filterParams) {
-                            	
-                                scope.filteredResults = tableFilter(scope.analysis.results, filterParams);                                
-                                scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, scope.filteredResults, 
+// if using events, must filter on "id" so as not to process events raised by other resultTables ont he same page
+// to do that: (1) set unique id on the <result-table> element and (2) check targetScopeFilter in this handler
+// In the end it's easier to use a callback function (such as viewGenes below)
+//                            scope.$on("ui:resultsTable:filteredResults", function($event, filteredResults){
+//                            	var labels = filteredResults.map(projection.ids);
+//                            	scope.applyToHeatmap(filteredResults);
+//                            });
+                            scope.viewGenes = function (filteredResults) {
+                            	scope.filteredResults = filteredResults;
+                            	scope.applyToHeatmap(filteredResults);
+                                scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, filteredResults, 
                                 		[scope.analysis.control, scope.analysis.experiment], 
                                 		scope.analysis.randomId);
-                                console.debug("limma boxPloGenes", scope.boxPlotGenes);
-                                //also filter the heat map
-                                scope.applyToHeatmap();
-                                
                             };
 
                             scope.addSelections = function () {
@@ -138,11 +140,9 @@
 
                             };
 
-                            scope.applyToHeatmap = function () {
-
-//                                var labels = getKeys(scope.filteredResults);
+                            scope.applyToHeatmap = function (filteredResults) {
                             	                                
-                            	var labels = scope.filteredResults.map(projection.ids);;
+                            	var labels = filteredResults.map(projection.ids);
 
                                 scope.heatmapView = scope.project.generateView({
                                     viewType: 'heatmapView',
