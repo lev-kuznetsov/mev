@@ -15,12 +15,8 @@ define(["ng", "lodash"], function(ng, _){
 			_self.updateOptions(attr);
 		};				
 		this.remove = function(target){
-			_.remove(_self.items, function(item){
-				if(typeof target === "string")
-					return item.name === target;
-				else
-					return item == target;
-			});
+//			_.remove(_self.items, {name: target});
+			delete _self.items[target];
 			console.debug("remove _self.items", name, _self.items);
 		};
 		this.items = $scope.dashboardItems;
