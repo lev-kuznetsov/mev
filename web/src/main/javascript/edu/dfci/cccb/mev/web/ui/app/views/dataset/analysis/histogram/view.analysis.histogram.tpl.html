@@ -8,8 +8,8 @@
 	<div class="tab-content column-body">
 		<div class="tab-pane active results-wrapper" id="survival" >
 			<div class="results-header clearfix"></div>
-			<div class="results-body">			
-				{{DatasetAnalysisVM.analysis}}
+			<div class="results-body">				
+				<r-hist-plot data="DatasetAnalysisVM.analysis.result" mui-x-label="" y-label="count"></r-hist-plot>
 			</div>					
 		</div>		
 	</div>

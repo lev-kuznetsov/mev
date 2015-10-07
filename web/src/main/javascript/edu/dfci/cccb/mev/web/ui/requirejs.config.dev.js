@@ -42,7 +42,8 @@ var REQUIREJS_CONFIG = (function(){
 		    mbAngularUtilsPagination: [paths.vendor('mbAngularUtils/pagination/dirPagination')],
 			mbAngularUtilsBreadcrumbs: [paths.vendor('mbAngularUtils/breadcrumbs/uiBreadcrumbs')],
 			jsData : ['//cdnjs.cloudflare.com/ajax/libs/js-data/2.3.0/js-data'],
-			jsDataAngular : ['//cdnjs.cloudflare.com/ajax/libs/js-data-angular/3.0.0/js-data-angular']
+			jsDataAngular : ['//cdnjs.cloudflare.com/ajax/libs/js-data-angular/3.0.0/js-data-angular'],
+			d3tip: ["//cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.7/d3-tip.min"]
 		},		
 		map: {
 	        '*': {
@@ -114,6 +115,9 @@ var REQUIREJS_CONFIG = (function(){
 		    mbAngularUtilsBreadcrumbs: {
 		    	deps: ['jquery', 'angular']
 		    },
+		    d3tip: {
+		    	deps: ['d3']
+		    }
 //		    jsDataAngular: {
 //		    	deps: ['ng', 'jsData']
 //		    }
