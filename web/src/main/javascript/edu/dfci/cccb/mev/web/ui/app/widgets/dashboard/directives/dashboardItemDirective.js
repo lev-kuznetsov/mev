@@ -7,7 +7,7 @@ define(["ng"], function(ng){
 				_self.name = attr.name,
 				_self.elm = elm;
 				_self.isMax = false;
-				_self.isRowMax = true;
+				_self.isRowMax = false;
 				_self.header = {
 					title: attr.title
 				}
