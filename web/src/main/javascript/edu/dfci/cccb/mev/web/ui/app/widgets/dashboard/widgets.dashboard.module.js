@@ -9,7 +9,7 @@ function(ng, DashboardDirective, DashboardItemDirective, DashboardItemAddDirecti
 	"use strict";
 	console.debug("mui.widgets.dashboard");
 	return ng.module("mui.widgets.dashboard", arguments, arguments)
-	.animation(".flex-spacing", function(){		
+	.animation(".flex-spacing", ["$rootScope", function($rootScope){		
 		
 		return {
 //setClass, leave, move are not triggered by dashboard panels			
@@ -29,16 +29,16 @@ function(ng, DashboardDirective, DashboardItemDirective, DashboardItemAddDirecti
 			enter : function(element, done, options){
 				console.debug("ANIMATE ENTER", element, done, options);
 				if(options.preparationClasses === "rowMax-add")
-					element.scope().$broadcast("mui:dashboard:panel:rowMax", element);
+					$rootScope.$broadcast("mui:dashboard:panel:rowMax", element);
 				done();
 			},
 			//fired when panel is maximized or row-maximized
 			addClass : function(element, addedClasses, done, options){
 		    	console.debug("ANIMATE ADD", element, addedClasses, done, options);
 		    	if(addedClasses === "max")
-		    		element.scope().$broadcast("mui:dashboard:panel:max", element);
+		    		$rootScope.$broadcast("mui:dashboard:panel:max", element);
 		    	else if(addedClasses==="rowMax"){
-		    		element.scope().$broadcast("mui:dashboard:panel:rowMax", element);
+		    		$rootScope.$broadcast("mui:dashboard:panel:rowMax", element);
 		    	}
 		    	done();
 		    },
@@ -46,12 +46,12 @@ function(ng, DashboardDirective, DashboardItemDirective, DashboardItemAddDirecti
 		    removeClass : function(element, addedClasses, done, options){
 				console.debug("ANIMATE REMOVE", element, addedClasses, done, options);
 				if(addedClasses === "max")
-		    		element.scope().$broadcast("mui:dashboard:panel:min", element);
+		    		$rootScope.$broadcast("mui:dashboard:panel:min", element);
 		    	else if(addedClasses==="rowMax"){
-		    		element.scope().$broadcast("mui:dashboard:panel:rowMin", element);
+		    		$rootScope.$broadcast("mui:dashboard:panel:rowMin", element);
 		    	}
 				done();
 			},
 		};
-	});
+	}]);
 });
