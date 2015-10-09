@@ -7,7 +7,15 @@ define([], function(){
 					templateUrl: "app/views/dataset/_templates/dataset.heatmap.tpl.html",
 					viewModel: "DatasetHeatmapVMFactory"
 			};
-			
+			this["Histogram"] = {
+					name: "Histogram"					
+			};
+			this["Gene SD"] = {
+					name: "Gene SD"					
+			};
+			this["Gene MAD"] = {
+					name: "Gene MAD"					
+			};
 			this.$add = function(item){
 				_self[item.name] = item;
 			};
