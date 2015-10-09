@@ -9,7 +9,16 @@ define(["ng", "d3", "d3tip"], function(ng, d3){
 				muiXLabel: "@",
 				yLabel: "@"
 			},
-			template: "<div class='rhistPlot' on-size-changed='sizeChanged'><svg></svg></div>",
+//this template uses the on-size-changed custom directive to trigger resize event
+//the on-size-change event taps the window object, so it only works when the window is resized,
+//not when the dashboard panels are resized independently of the window
+//			template: "<div class='rhistPlot' on-size-changed='sizeChanged'><svg preserveAspectRatio='xMinYMin'></svg></div>",
+//this template sets the preserveAspectRatio attribute which only works if the  viewBox is defined
+//The viewBox allows the browser to shrink/expand the svg graphics as its container size changes
+//This works but is not ideal because the graphics become hard to read
+//			template: "<div class='rhistPlot'><svg preserveAspectRatio='xMinYMin'></svg></div>",
+//Finally, this template relies on $animate events and updates the svg graphics manually
+			template: "<div class='rhistPlot'><svg></svg></div>",
 			link: function(scope, elem, attrs){
 				
 				console.debug("histogram", ng.element(elem[0]));
@@ -72,7 +81,9 @@ define(["ng", "d3", "d3tip"], function(ng, d3){
 //				});
 
 			    // put the graph in the "mpg" div
-			    var canvas = svg.attr("width", width + margin.left + margin.right)
+			    var canvas = svg
+//			      .attr("viewBox", "0 0 "+(width + margin.left + margin.right)+" "+(height + margin.top + margin.bottom))
+				  .attr("width", width + margin.left + margin.right)
 				  .attr("height", height + margin.top + margin.bottom)
 				  .append("g")
 				  .attr("transform", "translate(" + margin.left + "," + 
@@ -122,12 +133,21 @@ define(["ng", "d3", "d3tip"], function(ng, d3){
 				  .style("text-anchor", "middle")
 				  .text(scope.yLabel);		
 			    
-			    scope.sizeChanged = function(){
-					console.debug("histogram wxh", root.width(), root.height());					
-					svg.attr("width", root.width() + margin.left + margin.right);
-					x.range([0, root.width()]);
-					x2.range([0, root.width()]);
-					canvas.select(".x.axis").call(xAxis);
+			    scope.sizeChanged = function($event, element){			    		
+					console.debug("histogram wxh", root.width(), root.height());										
+//					svg.attr("viewBox", "0 0 "+(root.width() + margin.left + margin.right)+" "+(root.height() + margin.top + margin.bottom));
+					var el = root;
+					console.debug("ANIMATE histogram sizeChanged", el.width(), el.height());
+					var width = el.width() - margin.left - margin.right;
+					var height = root.height() - margin.top - margin.bottom;
+					svg.attr("width", el.width());
+					svg.attr("height", el.height());
+					x.range([0, width]);
+					x2.range([0, width]);
+					y.range([height, 0]);
+					canvas.select(".x.axis")
+					.attr("transform", "translate(0," + height + ")")
+					.call(xAxis);
 					canvas.select(".y.axis").call(yAxis);
 					canvas.selectAll(".bar")					  					  
 					  .attr("transform", function(d, i) { return "translate(" + 
@@ -137,6 +157,10 @@ define(["ng", "d3", "d3tip"], function(ng, d3){
 					  .attr("width", x(binsize - 2 * binmargin))
 					  .attr("height", function(d) { return height - y(d); });
 				};
+				scope.$on("mui:dashboard:panel:rowMax", scope.sizeChanged);
+				scope.$on("mui:dashboard:panel:rowMin", scope.sizeChanged);
+				scope.$on("mui:dashboard:panel:max", scope.sizeChanged);
+				scope.$on("mui:dashboard:panel:min", scope.sizeChanged);
 			}
 		};
 	};
