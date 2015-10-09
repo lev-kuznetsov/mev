@@ -7,7 +7,7 @@ define(["ng", "d3", "d3tip"], function(ng, d3){
 			scope: {
 				data: "=",
 				muiXLabel: "@",
-				yLabel: "@"
+				yLabel: "@"				
 			},
 //this template uses the on-size-changed custom directive to trigger resize event
 //the on-size-change event taps the window object, so it only works when the window is resized,
@@ -21,6 +21,23 @@ define(["ng", "d3", "d3tip"], function(ng, d3){
 			template: "<div class='rhistPlot'><svg></svg></div>",
 			link: function(scope, elem, attrs){
 				
+				function AspectRatio(curWidth, curHeight, targetRatio){
+					var _self=this;
+					_self.targetRatio = targetRatio || 5 / 3;
+				    _self.curRatio = curWidth / curHeight;
+				    if(_self.curRatio > _self.targetRatio)
+				    	_self.targetWidth = _self.targetRatio * curHeight;
+				    else if(_self.curRatio < _self.targetRatio)
+				    	_self.targetHeight = curWidth / _self.targetRatio;
+				    
+				    _self.height = function(){
+				    	return _self.targetHeight || curHeight;
+				    };
+				    _self.width = function(){
+				    	return _self.targetWidth || curWidth;
+				    };				    
+				};
+				
 				console.debug("histogram", ng.element(elem[0]));
 				var root = elem.find(".rhistPlot");
 				var d3root = d3.select(root[0]);
@@ -30,6 +47,16 @@ define(["ng", "d3", "d3tip"], function(ng, d3){
 				var margin = {top: 10, right: 30, bottom: 50, left: 60};			    
 			    var width = root.width() - margin.left - margin.right;
 			    var height = root.height() - margin.top - margin.bottom;
+			    var aspectRatio = new AspectRatio(width, height);
+			    width = aspectRatio.width();
+			    height = aspectRatio.height();
+//			    var targetRatio = 5 / 3;
+//			    var curRatio = width / height;
+//			    if(curRatio > targetRatio)
+//			    	width = targetRatio * height;
+//			    else if(curRatio < targetRatio)
+//			    	height = width / targetRation;
+			    
 			    
 			    var binsize = scope.data.breaks[1]-scope.data.breaks[0];
 			    var leftoffset = 0;
@@ -140,6 +167,10 @@ define(["ng", "d3", "d3tip"], function(ng, d3){
 					console.debug("ANIMATE histogram sizeChanged", el.width(), el.height());
 					var width = el.width() - margin.left - margin.right;
 					var height = root.height() - margin.top - margin.bottom;
+					var aspectRatio = new AspectRatio(width, height);
+				    width = aspectRatio.width();
+				    height = aspectRatio.height();
+				    
 					svg.attr("width", el.width());
 					svg.attr("height", el.height());
 					x.range([0, width]);
