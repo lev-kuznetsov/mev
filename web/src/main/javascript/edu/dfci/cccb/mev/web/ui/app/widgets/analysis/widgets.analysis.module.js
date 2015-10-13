@@ -9,7 +9,8 @@ define(["ng",
         "./analysisNode/widgets.analysis.analysisNode.module",
         "./topgo/widgets.analysis.topgo.module",
         "./genesd/widgets.analysis.genesd.module",
-        "./histogram/widgets.analysis.histogram.module"
+        "./histogram/widgets.analysis.histogram.module",
+        "./pca/widgets.analysis.pca.module"
         ], 
 function(ng, AnalyisEventBus){
 	var module = ng.module("mui.widgets.analysis", arguments)
