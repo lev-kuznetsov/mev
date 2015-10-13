@@ -135,6 +135,14 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
+    <!-- PCA package -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-pca-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
     <!-- K-Means Package -->
 
     <dependency>
@@ -327,16 +335,16 @@
         <version>2.6</version>
         <configuration>
           <failOnMissingWebXml>false</failOnMissingWebXml>
-<!--           <webResources>             -->
-<!--             <resource> -->
-<!--               <directory>tomcat-config</directory> -->
-<!--               <targetPath>META-INF</targetPath> -->
-<!--               <filtering>true</filtering> -->
-<!--               <includes> -->
-<!--                 <exclude>**/context.xml</exclude> -->
-<!--               </includes> -->
-<!--             </resource> -->
-<!--           </webResources> -->
+          <!-- <webResources> -->
+          <!-- <resource> -->
+          <!-- <directory>tomcat-config</directory> -->
+          <!-- <targetPath>META-INF</targetPath> -->
+          <!-- <filtering>true</filtering> -->
+          <!-- <includes> -->
+          <!-- <exclude>**/context.xml</exclude> -->
+          <!-- </includes> -->
+          <!-- </resource> -->
+          <!-- </webResources> -->
         </configuration>
       </plugin>
 
@@ -387,52 +395,52 @@
               <value>18044</value>
             </systemProperty>
             <systemProperty>
-            	<name>MEV_HOME</name>
-            	<value>${MEV_HOME}</value>
+              <name>MEV_HOME</name>
+              <value>${MEV_HOME}</value>
             </systemProperty>
             <systemProperty>
-            	<name>MEV_CONFIG_DIR</name>
-            	<value>${MEV_CONFIG_DIR}</value>
-            </systemProperty>          
-            <systemProperty>
-            	<name>MEV_CONFIG_BUCKET</name>
-            	<value>${MEV_CONFIG_BUCKET}</value>
+              <name>MEV_CONFIG_DIR</name>
+              <value>${MEV_CONFIG_DIR}</value>
             </systemProperty>
             <systemProperty>
-            	<name>archaius.fixedDelayPollingScheduler.delayMills</name>
-            	<value>${archaius.fixedDelayPollingScheduler.delayMills}</value>
+              <name>MEV_CONFIG_BUCKET</name>
+              <value>${MEV_CONFIG_BUCKET}</value>
             </systemProperty>
             <systemProperty>
-            	<name>archaius.fixedDelayPollingScheduler.initialDelayMills</name>
-            	<value>${archaius.fixedDelayPollingScheduler.initialDelayMills}</value>
+              <name>archaius.fixedDelayPollingScheduler.delayMills</name>
+              <value>${archaius.fixedDelayPollingScheduler.delayMills}</value>
+            </systemProperty>
+            <systemProperty>
+              <name>archaius.fixedDelayPollingScheduler.initialDelayMills</name>
+              <value>${archaius.fixedDelayPollingScheduler.initialDelayMills}</value>
             </systemProperty>
           </systemProperties>
         </configuration>
       </plugin>
 
-	  <plugin>
-          <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat7-maven-plugin</artifactId>
-          <version>2.2</version>
-          <configuration>            
-          	<port>8080</port>
-<!--           	<additionalClasspathDirs> -->
-<!--         		<additionalClasspathDir>${mev.extraClasspath}</additionalClasspathDir> -->
-<!--       		</additionalClasspathDirs> -->
-         	<systemProperties>
-	          	<java.io.tmpdir>${mev.java.io.tmpdir}</java.io.tmpdir>
-	          	<spring_profiles_active>${mev.spring_profiles_active}</spring_profiles_active>
-	          	<edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>${mev.Rscript}</edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>
-	          	<textdb.allow_full_path>${mev.hsqldb.textdb.allow_full_path}</textdb.allow_full_path>
-	          	<h2.console.port>18044</h2.console.port>
-	          	<MEV_HOME>${MEV_HOME}</MEV_HOME>
-	          	<MEV_CONFIG_DIR>${MEV_CONFIG_DIR}</MEV_CONFIG_DIR>
-	          	<MEV_CONFIG_BUCKET>${MEV_CONFIG_BUCKET}</MEV_CONFIG_BUCKET>
-	          	<archaius.fixedDelayPollingScheduler.initialDelayMills>${archaius.fixedDelayPollingScheduler.initialDelayMills}</archaius.fixedDelayPollingScheduler.initialDelayMills>
-	          	<archaius.fixedDelayPollingScheduler.delayMills>${archaius.fixedDelayPollingScheduler.delayMills}</archaius.fixedDelayPollingScheduler.delayMills>
-         	</systemProperties>
-          	<path>/</path>          	
-          </configuration>
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <port>8080</port>
+          <!-- <additionalClasspathDirs> -->
+          <!-- <additionalClasspathDir>${mev.extraClasspath}</additionalClasspathDir> -->
+          <!-- </additionalClasspathDirs> -->
+          <systemProperties>
+            <java.io.tmpdir>${mev.java.io.tmpdir}</java.io.tmpdir>
+            <spring_profiles_active>${mev.spring_profiles_active}</spring_profiles_active>
+            <edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>${mev.Rscript}</edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>
+            <textdb.allow_full_path>${mev.hsqldb.textdb.allow_full_path}</textdb.allow_full_path>
+            <h2.console.port>18044</h2.console.port>
+            <MEV_HOME>${MEV_HOME}</MEV_HOME>
+            <MEV_CONFIG_DIR>${MEV_CONFIG_DIR}</MEV_CONFIG_DIR>
+            <MEV_CONFIG_BUCKET>${MEV_CONFIG_BUCKET}</MEV_CONFIG_BUCKET>
+            <archaius.fixedDelayPollingScheduler.initialDelayMills>${archaius.fixedDelayPollingScheduler.initialDelayMills}</archaius.fixedDelayPollingScheduler.initialDelayMills>
+            <archaius.fixedDelayPollingScheduler.delayMills>${archaius.fixedDelayPollingScheduler.delayMills}</archaius.fixedDelayPollingScheduler.delayMills>
+          </systemProperties>
+          <path>/</path>
+        </configuration>
       </plugin>
 
       <plugin>
@@ -524,7 +532,8 @@
           <rserveSource>https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/Rserve/1.8-1/Rserve_1.8-1.tar.gz</rserveSource>
           <onInitialize>
             sapply (c ("devtools", "NMF"), function (lib)
-              if (!requireNamespace (lib)) install.packages (lib, repos="http://cran.rstudio.com"));
+              if (!requireNamespace (lib))
+                install.packages (lib, repos="http://cran.rstudio.com"));
             if (!requireNamespace ("injectoR"))
               devtools::install_github ("dfci-cccb/injectoR");
             source ("https://bioconductor.org/biocLite.R");
