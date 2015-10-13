@@ -34,9 +34,11 @@
     <module>stats</module>
     <module>deseq</module>
     <module>nmf</module>
-	<module>survival</module>
+    <module>survival</module>
     <module>topgo</module>
     <module>histogram</module>
+    <module>genesd</module>
+    <module>genemad</module>
     <module>web</module>
 
   </modules>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>mev-genesd-domain</artifactId>
+	<packaging>jar</packaging>
+	
+	<name>MeV Gene SD Plugin Domain Component</name>
+	<url>http://github.com/dfci-cccb/mev</url>
+	
+	<parent>
+		<groupId>edu.dfci.cccb</groupId>
+		<artifactId>mev-genesd</artifactId>
+		<version>BAYLIE-SNAPSHOT</version>
+	</parent>
+	
+	<!-- MeV Dataset Domain -->
+	<dependencies>
+	   <dependency>
+	     <groupId>edu.dfci.cccb</groupId>
+	     <artifactId>mev-dataset-domain</artifactId>
+	     <version>BAYLIE-SNAPSHOT</version>
+	   </dependency>
+	</dependencies>
+	
+</project>

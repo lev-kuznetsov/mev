@@ -9,7 +9,7 @@
 		<div class="tab-pane active results-wrapper" id="topgo" >
 			<div class="results-header clearfix"></div>
 			<div class="results-body">			
-				<results-table data="filteredResults" headers="headers" on-filter="viewGenes(filterParams)" ordering="pValue"></results-table>
+				<results-table data="DatasetAnalysisVM.analysis.results" headers="headers" ordering="pValue" on-filter="viewGenes(filteredResults)"></results-table>
 			</div>					
 		</div>		
 	</div>

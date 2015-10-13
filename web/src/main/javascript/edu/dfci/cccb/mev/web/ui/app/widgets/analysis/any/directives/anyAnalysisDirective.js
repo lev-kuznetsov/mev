@@ -84,7 +84,7 @@ define(["ng", "lodash"], function(ng, _){
 						elm.find("[href]").each(function(){							
 							var href = this.attributes.getNamedItem("href").value;
 							if(href && href.startsWith("#")){
-								var newId = controller.analysis.name+"-"+href.substr(1);								
+								var newId = controller.analysis.name.replace(" ", "_")+"-"+href.substr(1);								
 								console.debug("id ...", href, newId);	
 								this.href="#"+newId;								
 								elm.find(href).each(function(){

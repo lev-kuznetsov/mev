@@ -7,8 +7,7 @@ define(["ng", "lodash"], function(ng, _){
 			this.analysisId=analysis.name;
 			this.analysis=analysis;
 			this.project=project;
-			this.dataset=project.dataset;
-			this.analysis = analysis;
+			this.dataset=project.dataset;			
 			
 			$scope.headers = [
 	            {
@@ -54,16 +53,17 @@ define(["ng", "lodash"], function(ng, _){
 	        ];
 	        
 	        $scope.filteredResults = undefined;
-	        $scope.viewGenes = function (filterParams) {
-		    	
-	        	$scope.filteredResults = tableFilter(_self.analysis.results, filterParams);                                
-		        console.debug("topgo ", $scope.filteredResults);
+	        $scope.viewGenes = function (filteredResults) {
+	        	$scope.filteredResults = filteredResults;
+//	        	$scope.filteredResults = tableFilter(_self.analysis.results, filterParams);                                
+//		        console.debug("topgo ", $scope.filteredResults);
 		    };		
 		};
 	}])
 	.controller("TopGoVM", ["$scope", "$state", "$stateParams", "tableResultsFilter", "project", "analysis", "TopGoVMFactory",
 	                        function($scope, $state, $stateParams, tableFilter, project, analysis, TopGoVMFactory){
 		TopGoVMFactory.call(this, $scope, project, analysis, tableFilter);
+		console.debug("TopGoVMFactory", $scope);
 	}]);
 	return module;
 });

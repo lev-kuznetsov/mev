@@ -26,6 +26,20 @@ define(['./HeatmapViewClass'], function(HeatmapViewClass){
                     };
             }
             
+            if(!params.expression){
+            	params.expression = {
+	                min: self.dataset.expression.min,
+	                max: self.dataset.expression.max,
+	                avg: self.dataset.expression.avg,
+	            };
+            }
+            if(params.labels && !params.labels.column){
+            	params.labels.column = {keys: self.dataset.column.keys};
+            }
+            if(params.labels && !params.labels.row){
+            	params.labels.row = {keys: self.dataset.r.keys};
+            }
+            
             //old functionality would show both analysis on the same heatmap if their display 
             //did not conflict with each other (ex: row clustering and column clustering)
             //now you have to specifically send the "merge" flag to activate this begavior

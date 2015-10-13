@@ -1,5 +1,6 @@
 define(["ng",
-        "nguirouter",
+        "ngAnimate",
+        "nguirouter",        
         "bootstrap",
         "uibootstrap", 
         "ngresource",  
@@ -34,7 +35,8 @@ define(["ng",
         
         ], function(ng){
 	"use strict";
-	return ng.module("ngbootstrap-app", ["ui.bootstrap",
+	return ng.module("ngbootstrap-app", ["ngAnimate",
+	                                     "ui.bootstrap",
 	                                     "ngResource",
 	                                     "ui.router",
 	                                     "mui.domain",

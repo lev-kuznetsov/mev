@@ -1,5 +1,5 @@
 define(["ng"], function(ng){
-	var LayoutColumnDirective = function($rootScope, LayoutSrv){
+	var LayoutColumnDirective = function($rootScope, LayoutSrv, $animate){
 		
 		return {
 			restrict: "A",					
@@ -41,10 +41,27 @@ define(["ng"], function(ng){
 //						isClosed=false;
 //					}
 				});
+				//the $animate:close event does not fire for ccs-driven annomatinos
+//				elem.bind("$animate:close",
+//                        function handleAnimationEvent( event, data ) {
+//                            console.debug("ANIMATE2 ... DONE");
+//                        });
+				//addClass and removeClass do not fire for the column-layout container,
+				//instead does fire for the div:flex-spacing container (it has an ng-class attribute) and it's children link elements ("a") those that have ng-hide/ng-show attributes set
+				$animate.on("addClass", elem, function(element, phase){
+					console.debug("ANIMATE3 ... ", phase, elem, element.context.className);
+//					if(phase==="close")
+//						scope.$broadcast("ui:layoutColumn:sizeChanged");
+				});
+				$animate.on("removeClass", elem, function(element, phase){
+					console.debug("ANIMATE4 ... ", phase, elem, element.context.className);
+//					if(phase==="close")
+//						scope.$broadcast("ui:layoutColumn:sizeChanged");
+				});
 			}
 		};
 	};
 	
-	LayoutColumnDirective.$inject=["$rootScope", "LayoutSrv"];
+	LayoutColumnDirective.$inject=["$rootScope", "LayoutSrv", "$animate"];
 	return LayoutColumnDirective;  
 });

@@ -7,7 +7,9 @@ define(["ng",
         "./analysisLog/widgets.analysis.log.module",
         "./any/widgets.analysis.any.module",
         "./analysisNode/widgets.analysis.analysisNode.module",
-        "./topgo/widgets.analysis.topgo.module"
+        "./topgo/widgets.analysis.topgo.module",
+        "./genesd/widgets.analysis.genesd.module",
+        "./histogram/widgets.analysis.histogram.module"
         ], 
 function(ng, AnalyisEventBus){
 	var module = ng.module("mui.widgets.analysis", arguments)
@@ -52,6 +54,18 @@ function(ng, AnalyisEventBus){
 			    shortName: "topgo",
 			    viewModel: "TopGoVM"
 			},
+			"Histogram Analysis":{
+			    shortName: "histogram",
+			    viewModel: "HistogramVM"
+			},
+			"Gene SD Analysis":{
+				shortName: "genesd",
+				viewModel: "GeneSDVM"
+			},
+			"Gene MAD Analysis":{
+				shortName: "genesd",
+				viewModel: "GeneMADVM"
+			},
 			reverseLookup: {
 				hcl: "Hierarchical Clustering",
 				limma: "LIMMA Differential Expression Analysis",
@@ -63,7 +77,10 @@ function(ng, AnalyisEventBus){
 				deseq: "DESeq Differential Expression Analysis",
 				nmf: "Non-Negative Matrix Factorization",
 				survival: "Survival Analysis",
-				topgo: "TopGO Analysis"
+				topgo: "TopGO Analysis",
+				histogram: "Histogram Analysis",
+				genesd: "Gene SD Analysis",
+				genemad: "Gene MAD Analysis"
 		} 
 	});	
 	return module;

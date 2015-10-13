@@ -207,11 +207,27 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
-    <!-- Survival -->
+    <!-- Histogram -->
 
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
       <artifactId>mev-histogram-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
+     <!-- Gene SD -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-genesd-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+    
+     <!-- Gene MAD -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-genemad-rest</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
     

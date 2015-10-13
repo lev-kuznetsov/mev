@@ -3,7 +3,7 @@ define(["ng", "lodash"], function(ng, _){
 	module.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider){}])
 	.factory("DESeqVMFactory", ["BoxPlotService", "projectionService", function(BoxPlotService, projectionService){
 		return function($scope, project, analysis, BoxPlotService, projectionService){
-			"use strict"
+			"use strict";
 			var _self = this;
 			this.analysisId=analysis.name;
 			this.analysis=analysis;
@@ -23,16 +23,13 @@ define(["ng", "lodash"], function(ng, _){
 				}
 			});
 			
-			$scope.$on("ui:filteredResults", function($event, results){
+			$scope.$on("ui:resultsTable:filteredResults", function($event, results){
 				var control = _.find(project.dataset.column.selections, function(selection){return selection.name===analysis.params.control;});
 				var experiment = _.find(project.dataset.column.selections, function(selection){return selection.name===analysis.params.experiment;});
 				
 				$scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(project.dataset, results, 
 						[control, experiment], 
-						analysis.randomId);
-				
-                var labels = results.map(projectionService.ids);                
-				console.debug("deseq boxPloGenes", $scope.boxPlotGenes);
+						analysis.randomId);				
 			});
 		};
 	}])

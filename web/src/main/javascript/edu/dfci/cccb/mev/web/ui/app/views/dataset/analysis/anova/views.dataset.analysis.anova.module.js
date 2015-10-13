@@ -21,7 +21,7 @@ define(["ng", "lodash"], function(ng, _){
 	            }
 	        });
 			
-			$scope.$on("ui:filteredResults",function($event, results){
+			$scope.$on("ui:anova:filteredResults",function($event, results){
 				
 				var groups = analysis.params.data.map(function(selectionName){
 					return _.find(project.dataset.column.selections, function(selection){return selection.name===selectionName;});

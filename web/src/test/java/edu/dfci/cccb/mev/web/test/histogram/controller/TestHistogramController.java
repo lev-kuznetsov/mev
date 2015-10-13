@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -54,8 +55,9 @@ import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.RDispatcherConfiguration;
 import edu.dfci.cccb.mev.histogram.domain.contract.HistogramAnalysis;
+import edu.dfci.cccb.mev.histogram.domain.contract.HistogramAnalysisBuilder;
 import edu.dfci.cccb.mev.histogram.domain.contract.HistogramResult;
-import edu.dfci.cccb.mev.histogram.domain.impl.SimpleHistogramAnalysisBuilder;
+import edu.dfci.cccb.mev.histogram.domain.impl.SimpleHistogramAnalysis;
 import edu.dfci.cccb.mev.histogram.domain.impl.SimpleHistogramResult;
 import edu.dfci.cccb.mev.histogram.rest.configuration.HistogramAnalysisConfiguration;
 import edu.dfci.cccb.mev.web.configuration.DispatcherConfiguration;
@@ -81,7 +83,7 @@ public class TestHistogramController {
   private @Inject Workspace workspace;  
   private @Inject ObjectMapper jsonObjectMapper;
   Dataset dataset;  
-  @Inject @Named("histogram.analysis.builder") Provider<SimpleHistogramAnalysisBuilder> builderProvider; 
+  @Inject @Named("histogram.analysis.builder") Provider<HistogramAnalysisBuilder> builderProvider; 
   
   /* Sample json result
   {
@@ -118,7 +120,6 @@ public class TestHistogramController {
   
   //This test only works if local rserve is running
   @Test @Ignore
-  @SuppressWarnings ("serial")  
   public void test () throws Exception {
     String analysisName = "histo_test";
     @SuppressWarnings ("unused")
@@ -132,7 +133,7 @@ public class TestHistogramController {
      .andDo(print())
      .andReturn ();
     
-      HistogramAnalysis analysis = (HistogramAnalysis) dataset.analyses ().get (analysisName);
+      edu.dfci.cccb.mev.histogram.domain.contract.HistogramAnalysis analysis = (HistogramAnalysis) dataset.analyses ().get (analysisName);
       log.debug("******* SimpleHistogramAnalysis:\n"+ jsonObjectMapper.writeValueAsString (analysis));      
       assertThat(analysis.name (), is(analysisName));      
       assertThat (analysis.result(), not(nullValue ()));
@@ -142,6 +143,23 @@ public class TestHistogramController {
       assertThat (analysis.result ().counts (), is(result.counts()));
       assertThat (analysis.result ().density(), is(result.density()));
       assertThat (analysis.result ().mids (), is(result.mids()));      
+      
+      MvcResult mvcResultGET = this.mockMvc.perform (get(String.format("/dataset/%s/analysis/%s", dataset.name(), analysisName))
+                                                     .contentType (MediaType.APPLICATION_JSON)                                               
+                                                     .accept("application/json")
+                                                     .session (mockHttpSession)
+                                                     .param ("format", "json")                                                     
+                                                     )
+     .andExpect (status ().isOk ())
+     .andDo(print())
+     .andReturn ();                                                
+      HistogramAnalysis analysisFromGET = jsonObjectMapper.readValue (mvcResultGET.getResponse ().getContentAsString (), SimpleHistogramAnalysis.class); 
+      assertThat (analysisFromGET.result ().breaks (), is(result.breaks()));
+      assertThat (analysisFromGET.result ().counts (), is(result.counts()));
+      assertThat (analysisFromGET.result ().density(), is(result.density()));
+      assertThat (analysisFromGET.result ().mids (), is(result.mids()));      
+      assertThat (analysisFromGET.name (), is(analysisName));
+      assertThat(analysisFromGET.type (), is("Histogram Analysis"));
       
   }
 

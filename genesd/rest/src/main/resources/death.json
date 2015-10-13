@@ -1,0 +1,216 @@
+{
+	"name" : "death",
+	"type" : "Survival Analysis",
+	"params" : {
+		"name" : "death",
+		"datasetName" : "brca",
+		"experimentName" : "death",
+		"experiment" : {
+			"name" : "death",
+			"properties" : {
+				"selectionColor" : "#1ab233",
+				"selectionFacetLink" : "project?project=1600354011884&ui=%7B%22facets%22%3A%5B%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22days_to_last_followup%22%2C%22columnName%22%3A%22days_to_last_followup%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%5D%7D%2C%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22days_to_death%22%2C%22columnName%22%3A%22days_to_death%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%7B%22v%22%3A%7B%22v%22%3A%221699%22%2C%22l%22%3A%221699%22%7D%7D%2C%7B%22v%22%3A%7B%22v%22%3A%221272%22%2C%22l%22%3A%221272%22%7D%7D%2C%7B%22v%22%3A%7B%22v%22%3A%222551%22%2C%22l%22%3A%222551%22%7D%7D%2C%7B%22v%22%3A%7B%22v%22%3A%22523%22%2C%22l%22%3A%22523%22%7D%7D%2C%7B%22v%22%3A%7B%22v%22%3A%22160%22%2C%22l%22%3A%22160%22%7D%7D%5D%7D%5D%7D",
+				"selectionDescription" : ""
+			},
+			"keys" : ["TCGA-AR-A0U2-01A-11R-A109-07","TCGA-AR-A1AR-01A-31R-A137-07","TCGA-AR-A0TY-01A-12R-A115-07","TCGA-AR-A0TR-01A-11R-A084-07","TCGA-AR-A1AT-01A-11R-A12P-07"]
+		},
+		"controlName" : "live",
+		"control" : {
+			"name" : "live",
+			"properties" : {
+				"selectionColor" : "#7b95cf",
+				"selectionFacetLink" : "project?project=1600354011884&ui=%7B%22facets%22%3A%5B%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22days_to_last_followup%22%2C%22columnName%22%3A%22days_to_last_followup%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%7B%22v%22%3A%7B%22v%22%3A%221103%22%2C%22l%22%3A%221103%22%7D%7D%2C%7B%22v%22%3A%7B%22v%22%3A%221072%22%2C%22l%22%3A%221072%22%7D%7D%2C%7B%22v%22%3A%7B%22v%22%3A%221138%22%2C%22l%22%3A%221138%22%7D%7D%2C%7B%22v%22%3A%7B%22v%22%3A%221242%22%2C%22l%22%3A%221242%22%7D%7D%2C%7B%22v%22%3A%7B%22v%22%3A%221215%22%2C%22l%22%3A%221215%22%7D%7D%2C%7B%22v%22%3A%7B%22v%22%3A%22739%22%2C%22l%22%3A%22739%22%7D%7D%2C%7B%22v%22%3A%7B%22v%22%3A%22614%22%2C%22l%22%3A%22614%22%7D%7D%5D%7D%2C%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22days_to_death%22%2C%22columnName%22%3A%22days_to_death%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%5D%7D%5D%7D",
+				"selectionDescription" : ""
+			},
+			"keys" : ["TCGA-AR-A1AY-01A-21R-A12P-07","TCGA-AR-A0TS-01A-11R-A115-07","TCGA-AR-A1AP-01A-11R-A12P-07","TCGA-AR-A1AX-01A-11R-A12P-07","TCGA-AR-A1AW-01A-21R-A12P-07","TCGA-AR-A0TW-01A-11R-A084-07","TCGA-AR-A1AS-01A-11R-A12P-07"]
+		},
+		"input" : [{
+				"key" : "TCGA-AR-A1AY-01A-21R-A12P-07",
+				"time" : 614,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 614,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0U2-01A-11R-A109-07",
+				"time" : 2551,
+				"status" : 1,
+				"group" : 2,
+				"days_to_death" : 2551,
+				"days_to_last_followup" : null,
+				"vital_status" : "Dead"
+			},{
+				"key" : "TCGA-AR-A0TS-01A-11R-A115-07",
+				"time" : 1138,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1138,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A1AP-01A-11R-A12P-07",
+				"time" : 1215,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1215,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A1AR-01A-31R-A137-07",
+				"time" : 523,
+				"status" : 1,
+				"group" : 2,
+				"days_to_death" : 523,
+				"days_to_last_followup" : null,
+				"vital_status" : "Dead"
+			},{
+				"key" : "TCGA-AR-A1AX-01A-11R-A12P-07",
+				"time" : 1103,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1103,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0TY-01A-12R-A115-07",
+				"time" : 1699,
+				"status" : 1,
+				"group" : 2,
+				"days_to_death" : 1699,
+				"days_to_last_followup" : null,
+				"vital_status" : "Dead"
+			},{
+				"key" : "TCGA-AR-A1AW-01A-21R-A12P-07",
+				"time" : 1072,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1072,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A0TR-01A-11R-A084-07",
+				"time" : 160,
+				"status" : 1,
+				"group" : 2,
+				"days_to_death" : 160,
+				"days_to_last_followup" : null,
+				"vital_status" : "Dead"
+			},{
+				"key" : "TCGA-AR-A0TW-01A-11R-A084-07",
+				"time" : 739,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 739,
+				"vital_status" : "Alive"
+			},{
+				"key" : "TCGA-AR-A1AT-01A-11R-A12P-07",
+				"time" : 1272,
+				"status" : 1,
+				"group" : 2,
+				"days_to_death" : 1272,
+				"days_to_last_followup" : null,
+				"vital_status" : "Dead"
+			},{
+				"key" : "TCGA-AR-A1AS-01A-11R-A12P-07",
+				"time" : 1242,
+				"status" : 0,
+				"group" : 1,
+				"days_to_death" : null,
+				"days_to_last_followup" : 1242,
+				"vital_status" : "Alive"
+			}]
+	},
+	"result" : {
+		"n" : 12,
+		"n_event" : 5,
+		"coef" : 21.7541,
+		"exp_coef" : 2.8034083591216E9,
+		"se_coef" : 29832.3837,
+		"z" : 7.0E-4,
+		"pValue" : 0.9994,
+		"ci_lower" : 0.0,
+		"ci_upper" : "Infinity",
+		"logrank" : {
+			"score" : 3.1355,
+			"pValue" : 0.0766
+		},
+		"plot" : {
+			"control" : [{
+					"time" : 160,
+					"haz" : 7.1342E-11
+				},{
+					"time" : 523,
+					"haz" : 1.6052E-10
+				},{
+					"time" : 614,
+					"haz" : 1.6052E-10
+				},{
+					"time" : 739,
+					"haz" : 1.6052E-10
+				},{
+					"time" : 1072,
+					"haz" : 1.6052E-10
+				},{
+					"time" : 1103,
+					"haz" : 1.6052E-10
+				},{
+					"time" : 1138,
+					"haz" : 1.6052E-10
+				},{
+					"time" : 1215,
+					"haz" : 1.6052E-10
+				},{
+					"time" : 1242,
+					"haz" : 1.6052E-10
+				},{
+					"time" : 1272,
+					"haz" : 2.7942E-10
+				},{
+					"time" : 1699,
+					"haz" : 4.5778E-10
+				},{
+					"time" : 2551,
+					"haz" : 8.1448E-10
+				}],
+			"experiment" : [{
+					"time" : 160,
+					"haz" : 0.2
+				},{
+					"time" : 523,
+					"haz" : 0.45
+				},{
+					"time" : 614,
+					"haz" : 0.45
+				},{
+					"time" : 739,
+					"haz" : 0.45
+				},{
+					"time" : 1072,
+					"haz" : 0.45
+				},{
+					"time" : 1103,
+					"haz" : 0.45
+				},{
+					"time" : 1138,
+					"haz" : 0.45
+				},{
+					"time" : 1215,
+					"haz" : 0.45
+				},{
+					"time" : 1242,
+					"haz" : 0.45
+				},{
+					"time" : 1272,
+					"haz" : 0.7833
+				},{
+					"time" : 1699,
+					"haz" : 1.2833
+				},{
+					"time" : 2551,
+					"haz" : 2.2833
+				}]
+		}
+	}
+}

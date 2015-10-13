@@ -1,6 +1,6 @@
 <div class="row" layout-row>
 	
-	<div layout-column="left" ng-class="{'col-0': layoutColumn.isClosed(), 'col-md-3': !layoutColumn.isClosed()}" content-id="content-wrapper" >		
+	<div layout-column="left" class="layout-column" ng-class="{'col-0': layoutColumn.isClosed(), 'col-md-3': !layoutColumn.isClosed()}" content-id="content-wrapper" >		
 		<div class="pull-right column-config-menu">
 <!-- 			<div class="btn btn-info btn-sm" ng-click="layoutColumn.toggle()"><i class="fa fa-arrow-left"></i></div> -->
 		</div>
@@ -13,7 +13,7 @@
 	   </div>
 	</div>	
 	
-	<div layout-column="right" ng-class="{'col-md-12': layoutColumn.isClosed(), 'col-md-9': !layoutColumn.isClosed()}" id="content-wrapper">
+	<div layout-column="right" class="layout-column" ng-class="{'col-md-12': layoutColumn.isClosed(), 'col-md-9': !layoutColumn.isClosed()}" id="content-wrapper">
 		
 		<div class="pull-right column-config-menu">
 			<div class="btn btn-info btn-sm" ng-click="layoutColumn.toggle()">

@@ -62,11 +62,11 @@
 //                            };
                             
                             
-                            scope.viewGenes = function(filterParams){
-	                       		 scope.filteredResults = tableFilter(scope.analysis.results, filterParams);
+                            scope.viewGenes = function(filteredResults){
+	                       		 scope.filteredResults = filteredResults;
 	                       		 //and filter the heatmap
-	                       		scope.$emit("ui:filteredResults", scope.filteredResults);	                       	
-	                       		 scope.applyToHeatmap();
+//	                       		scope.$emit("ui:filteredResults", scope.filteredResults);	                       	
+	                       		 scope.applyToHeatmap(filteredResults);
 	                       	}
 
                             scope.selectionParams = {
@@ -108,30 +108,9 @@
 
                             };
 
-                            scope.applyToHeatmap = function () {
-
-//                              var labels = getKeys(scope.filteredResults);
-                          	                                
-                          	var labels = scope.filteredResults.map(projection.ids);;
-
-                              scope.heatmapView = scope.project.generateView({
-                                  viewType: 'heatmapView',
-                                  note: "deseq update " + scope.analysis.name,
-                                  labels: {
-                                      column: {
-                                          keys: scope.project.dataset.column.keys
-                                      },
-                                      row: {
-                                          keys: labels
-                                      }
-                                  },
-                                  expression: {
-                                      min: scope.project.dataset.expression.min,
-                                      max: scope.project.dataset.expression.max,
-                                      avg: scope.project.dataset.expression.avg,
-                                  }
-                              });
-
+                            scope.applyToHeatmap = function (filteredResults) {
+                            	var labels = filteredResults.map(projection.ids);;
+                            	scope.heatmapView = scope.heatmapView.applyFilter("row", labels);                              
                           };
                         }
 

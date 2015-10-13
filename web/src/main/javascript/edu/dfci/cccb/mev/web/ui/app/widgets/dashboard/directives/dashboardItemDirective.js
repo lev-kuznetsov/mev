@@ -1,13 +1,14 @@
 define(["ng"], function(ng){
 	"use strict";
-	var DashbaordItemDirective = function DashbaordItemDirective(DashboardLayout){
+	var DashbaordItemDirective = function DashbaordItemDirective(DashboardLayout, $rootScope){
 		
 		function Panel(name, elm, attr, controller){
 				var _self = this;				
 				_self.name = attr.name,
 				_self.elm = elm;
 				_self.isMax = false;
-				_self.isRowMax = true;
+				_self.isRowMax = false;				
+				_self.controller = controller;
 				_self.header = {
 					title: attr.title
 				}
@@ -23,7 +24,7 @@ define(["ng"], function(ng){
 					_self.isMax=true;
 				};
 				_self.min = function(){
-					controller.resetOptions();
+					_self.controller.resetOptions();
 					_self.elm.siblings().show();
 					_self.isMax=false;
 				};
@@ -37,9 +38,8 @@ define(["ng"], function(ng){
 					console.debug("panel.remove", $event, _self.name);
 					if(_self.isMax)
 						_self.min();
-					controller.remove(_self.name);
+					_self.controller.remove(_self.name);
 					delete DashboardLayout.panels[_self.name];
-					elm.remove();
 				};
 		}
 		
@@ -68,10 +68,11 @@ define(["ng"], function(ng){
 				
 				scope.panel =  DashboardLayout.panels[attr.name];
 				scope.panel.elm = elm;
+				scope.panel.controller = controller;
 				scope.$on("ui:dashboard:removeItem", function($event, data){
 					console.debug("on panel ui:dashboard:removeItem", $event, data);
 					if(attr.name === data.name){						
-						scope.panel.remove(data.name);
+						scope.panel.remove(data.name);						
 					}
 				});
 				elm.find(".content > *").width(attr.contentWidth).height(attr.contentHeight);				
@@ -79,7 +80,7 @@ define(["ng"], function(ng){
 		};
 	};
 	
-	DashbaordItemDirective.$inject=["DashboardLayout"];
+	DashbaordItemDirective.$inject=["DashboardLayout", "$rootScope"];
 	DashbaordItemDirective.$name="muiDashboardItem";
 	DashbaordItemDirective.provider="Directive";
 	
