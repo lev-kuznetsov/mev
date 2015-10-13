@@ -52,8 +52,6 @@ import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.RDispatcherConfiguration;
-import edu.dfci.cccb.mev.genemad.domain.contract.GeneMADAnalysis;
-import edu.dfci.cccb.mev.genemad.domain.impl.SimpleGeneMADAnalysis;
 import edu.dfci.cccb.mev.genesd.domain.contract.GeneSDAnalysis;
 import edu.dfci.cccb.mev.genesd.domain.contract.GeneSDResult;
 import edu.dfci.cccb.mev.genesd.domain.impl.RserveGeneSDAnalysisBuilder;
@@ -109,7 +107,7 @@ public class TestGeneSDController {
   }
   
   //This test only works if local rserve is running
-  @Test 
+  @Test @Ignore
   public void test () throws Exception {
     String analysisName = "genesd_test";
     @SuppressWarnings ("unused")
