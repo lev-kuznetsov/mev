@@ -60,6 +60,11 @@ define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular
                 	'url': '/dataset/:datasetName'+
                 		'/analyze/:analysisType/:analysisName',
                 		//'headers':{'Content-Type':'application/x-www-form-urlencoded'}
+                },
+                'put': {
+                	'method': 'PUT',
+                	'url': '/dataset/:datasetName'+
+                		'/analyze/:analysisType/:analysisName'
                 }
                 
 			});    	    	
@@ -93,12 +98,14 @@ define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular
     	    	);
         		
         		analysisEventBus.analysisStarted(params, data);
+        		return result;
     		};
     	}
     	var AnalysisResource = Object.create(resource);
     	AnalysisResource.post=postWrapper("post");
     	AnalysisResource.postf=postWrapper("postf");
     	AnalysisResource.post3=postWrapper("post3");
+    	AnalysisResource.put=postWrapper("put");
     	
     	
     	return AnalysisResource;    	

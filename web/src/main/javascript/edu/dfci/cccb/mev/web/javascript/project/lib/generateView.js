@@ -26,20 +26,36 @@ define(['./HeatmapViewClass'], function(HeatmapViewClass){
                     };
             }
             
-            if (params.panel && params.panel.side && self.views.panel && self.views.panel.top){
-                params.panel.top = self.views.panel.top;
-                params.labels.column.keys = self.views.labels.column.keys;
-                
-                
-            } else if (params.panel && params.panel.top && self.views.panel && self.views.panel.side) {
-                params.panel.side = self.views.panel.side;
-                params.labels.row.keys = self.views.labels.row.keys;
-                
+            if(!params.expression){
+            	params.expression = {
+	                min: self.dataset.expression.min,
+	                max: self.dataset.expression.max,
+	                avg: self.dataset.expression.avg,
+	            };
             }
+            if(params.labels && !params.labels.column){
+            	params.labels.column = {keys: self.dataset.column.keys};
+            }
+            if(params.labels && !params.labels.row){
+            	params.labels.row = {keys: self.dataset.r.keys};
+            }
+            
+            //old functionality would show both analysis on the same heatmap if their display 
+            //did not conflict with each other (ex: row clustering and column clustering)
+            //now you have to specifically send the "merge" flag to activate this begavior
+            if(params.merge){
+	            if (params.panel && params.panel.side && self.views.panel && self.views.panel.top){
+	                params.panel.top = self.views.panel.top;
+	                params.labels.column.keys = self.views.labels.column.keys;                
+	            } else if (params.panel && params.panel.top && self.views.panel && self.views.panel.side) {
+	                params.panel.side = self.views.panel.side;
+	                params.labels.row.keys = self.views.labels.row.keys;   
+	            }
+        	}
             
             
             self.views = new HeatmapViewClass(params);
-            
+            return self.views;
         }
         
         return null;

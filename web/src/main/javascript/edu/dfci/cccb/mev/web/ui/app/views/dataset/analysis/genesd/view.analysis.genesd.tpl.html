@@ -1,0 +1,22 @@
+<!-- <project-analysis-parameters parameters="DatasetAnalysisVM.analysis.params"></project-analysis-parameters> -->
+<div class="column-wrapper genesd">
+	<ul class="nav nav-tabs column-header" id="importTabs">
+		<li id="genesd_top_tab" class="active"><a href="#genesd_top" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}} High</a></li>
+		<li id="genesd_bottom_tab"><a href="#genesd_bottom" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}} Low</a></li>
+<!-- 		<li id="heatmap_tab"><a href="#heatmap" data-toggle="tab" target="_self">Heatmap</a></li> -->
+		<div class="action-menu" mui-paste="action-menu"></div>	
+	</ul>
+
+	<div class="tab-content column-body">
+		<div class="tab-pane active results-wrapper" id="genesd_top" >										
+				<results-table id="DatasetAnalysisVM.heatmapViewTop.id" data="DatasetAnalysisVM.sigGenesTop.data" headers="DatasetAnalysisVM.sigGenesTop.headers" ordering="-value" ></results-table>
+				<view-Content-Item project='DatasetAnalysisVM.project' view='DatasetAnalysisVM.heatmapViewTop'></view-Content-Item>				
+		</div>		
+		<div class="tab-pane results-wrapper" id="genesd_bottom" >										
+				<results-table id="DatasetAnalysisVM.heatmapViewBottom.id" data="DatasetAnalysisVM.sigGenesBottom.data" headers="DatasetAnalysisVM.sigGenesBottom.headers" ordering="value" ></results-table>
+				<view-Content-Item project='DatasetAnalysisVM.project' view='DatasetAnalysisVM.heatmapViewBottom'></view-Content-Item>				
+		</div>		
+<!-- 		<div class="tab-pane results-wrapper" id="heatmap" >									 -->
+<!-- 		</div>		 -->
+	</div>
+</div>

@@ -12,6 +12,7 @@
                         scope: {
                             project: "=project",
                             analysis: "=analysis",
+                            heatmapView: "=",
                             isItOpen: "@"
                         },
                         link: function (scope, elem, attrs) {                        	
@@ -34,14 +35,10 @@
                                 'icon': [">=", "<="]
                             }]
                             
-                            scope.viewGenes = function (filterParams) {
-                            	scope.tTest = scope.analysis;
-                                scope.filteredResults = resultsFilter(scope.analysis.results, filterParams);
-                            	scope.$emit("ui:filteredResults", scope.filteredResults);
-                            	
-	                            //also filter heatmap
-	                            scope.applyToHeatmap();
-                            };
+                            scope.$on("ui:resultsTable:filteredResults", function($event, filteredResults){
+                            	scope.filteredResults = filteredResults;
+                            	scope.applyToHeatmap(filteredResults);
+                            });
 
                             scope.selectionParams = {
                                 name: undefined,
@@ -122,27 +119,9 @@
 
                             };
                             
-                            scope.applyToHeatmap = function () {
-
-                                var labels = scope.filteredResults.map(projection.ids);
-
-                                scope.project.generateView({
-                                    viewType: 'heatmapView',
-                                    labels: {
-                                        column: {
-                                            keys: scope.project.dataset.column.keys
-                                        },
-                                        row: {
-                                            keys: labels
-                                        }
-                                    },
-                                    expression: {
-                                        min: scope.project.dataset.expression.min,
-                                        max: scope.project.dataset.expression.max,
-                                        avg: scope.project.dataset.expression.avg,
-                                    }
-                                });
-
+                            scope.applyToHeatmap = function (filteredResults) {
+                                var labels = filteredResults.map(projection.ids);
+                                scope.heatmapView = scope.heatmapView.applyFilter("row", labels);
                             };
 
 

@@ -13,13 +13,13 @@
                         scope: {
                             analysis: "=analysis",
                             project: '=project',
+                            heatmapView: "=",
                             isItOpen: '@'
                         },
                         link: function (scope) {                        	
                         	//variable to remove embedded pair information
-                        	scope.cleanData = undefined;
                         	scope.filteredResults = undefined;
-                            
+                        	scope.cleanData = expandEmbedded(scope.analysis.results);                        	
                         	scope.headers = [{
 	                                'name': 'ID',
 	                                'field': "id",
@@ -44,14 +44,13 @@
 	                            }
 	                        ];
                             
-                            scope.viewGenes = function(filterParams){
-                            	console.debug("anova viewGenes", filterParams);
-                            	
-                            	if(!scope.cleanData)
-                            		scope.cleanData = expandEmbedded(scope.analysis.results);
-                            	scope.filteredResults = tableFilter(scope.cleanData, filterParams);                        		 
-                            	scope.$emit("ui:filteredResults", _.uniq(scope.filteredResults, 'id'));                                
-                        		scope.applyToHeatmap();
+                            scope.viewGenes = function(filteredResults){
+                            	console.debug("anova viewGenes", filteredResults);
+                            	scope.filteredResults = filteredResults;
+//                            	scope.cleanData = filteredResults;
+//                            	scope.filteredResults = tableFilter(scope.cleanData, filterParams);                        		 
+                            	scope.$emit("ui:anova:filteredResults", _.uniq(filteredResults, 'id'));                                
+                            	scope.applyToHeatmap(filteredResults);
                         	}
 
                             scope.selectionParams = {
@@ -150,11 +149,11 @@
 
                             };
 
-                            scope.applyToHeatmap = function () {
+                            scope.applyToHeatmap = function (filteredResults) {
 
-                                var labels = traverse(scope.filteredResults);
+                                var labels = traverse(filteredResults);
 
-                                scope.project.generateView({
+                                scope.heatmapView = scope.project.generateView({
                                     viewType: 'heatmapView',
                                     labels: {
                                         column: {

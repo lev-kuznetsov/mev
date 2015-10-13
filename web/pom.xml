@@ -215,6 +215,30 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
+    <!-- Histogram -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-histogram-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
+     <!-- Gene SD -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-genesd-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+    
+     <!-- Gene MAD -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-genemad-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+    
     <!-- Servlet -->
 
     <dependency>
@@ -365,7 +389,7 @@
           <stopKey>stop</stopKey>
 
           <webApp>
-            <extraClasspath>${mev.jetty.extraClasspath}</extraClasspath>
+            <extraClasspath>${mev.extraClasspath}</extraClasspath>
           </webApp>
 
           <systemProperties>
@@ -407,12 +431,8 @@
               <value>${MEV_CONFIG_BUCKET}</value>
             </systemProperty>
             <systemProperty>
-              <name>archaius.fixedDelayPollingScheduler.delayMills</name>
-              <value>${archaius.fixedDelayPollingScheduler.delayMills}</value>
-            </systemProperty>
-            <systemProperty>
-              <name>archaius.fixedDelayPollingScheduler.initialDelayMills</name>
-              <value>${archaius.fixedDelayPollingScheduler.initialDelayMills}</value>
+            	<name>archaius.fixedDelayPollingScheduler.initialDelayMills</name>
+            	<value>${archaius.fixedDelayPollingScheduler.initialDelayMills}</value>
             </systemProperty>
           </systemProperties>
         </configuration>
@@ -420,27 +440,28 @@
 
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
-        <artifactId>tomcat7-maven-plugin</artifactId>
-        <version>2.2</version>
-        <configuration>
-          <port>8080</port>
-          <!-- <additionalClasspathDirs> -->
-          <!-- <additionalClasspathDir>${mev.extraClasspath}</additionalClasspathDir> -->
-          <!-- </additionalClasspathDirs> -->
-          <systemProperties>
-            <java.io.tmpdir>${mev.java.io.tmpdir}</java.io.tmpdir>
-            <spring_profiles_active>${mev.spring_profiles_active}</spring_profiles_active>
-            <edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>${mev.Rscript}</edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>
-            <textdb.allow_full_path>${mev.hsqldb.textdb.allow_full_path}</textdb.allow_full_path>
-            <h2.console.port>18044</h2.console.port>
-            <MEV_HOME>${MEV_HOME}</MEV_HOME>
-            <MEV_CONFIG_DIR>${MEV_CONFIG_DIR}</MEV_CONFIG_DIR>
-            <MEV_CONFIG_BUCKET>${MEV_CONFIG_BUCKET}</MEV_CONFIG_BUCKET>
-            <archaius.fixedDelayPollingScheduler.initialDelayMills>${archaius.fixedDelayPollingScheduler.initialDelayMills}</archaius.fixedDelayPollingScheduler.initialDelayMills>
-            <archaius.fixedDelayPollingScheduler.delayMills>${archaius.fixedDelayPollingScheduler.delayMills}</archaius.fixedDelayPollingScheduler.delayMills>
-          </systemProperties>
-          <path>/</path>
-        </configuration>
+          <artifactId>tomcat7-maven-plugin</artifactId>
+          <version>2.2</version>
+          <configuration>            
+          	<port>8080</port>
+<!--           	<additionalClasspathDirs> -->
+<!--         		<additionalClasspathDir>${mev.extraClasspath}</additionalClasspathDir> -->
+<!--       		</additionalClasspathDirs> -->
+         	<systemProperties>
+	          	<java.io.tmpdir>${mev.java.io.tmpdir}</java.io.tmpdir>
+	          	<spring_profiles_active>${mev.spring_profiles_active}</spring_profiles_active>
+	          	<spring.profiles.active>${mev.spring_profiles_active}</spring.profiles.active>
+	          	<edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>${mev.Rscript}</edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>
+	          	<textdb.allow_full_path>${mev.hsqldb.textdb.allow_full_path}</textdb.allow_full_path>
+	          	<h2.console.port>18044</h2.console.port>
+	          	<MEV_HOME>${MEV_HOME}</MEV_HOME>
+	          	<MEV_CONFIG_DIR>${MEV_CONFIG_DIR}</MEV_CONFIG_DIR>
+	          	<MEV_CONFIG_BUCKET>${MEV_CONFIG_BUCKET}</MEV_CONFIG_BUCKET>
+	          	<archaius.fixedDelayPollingScheduler.initialDelayMills>${archaius.fixedDelayPollingScheduler.initialDelayMills}</archaius.fixedDelayPollingScheduler.initialDelayMills>
+	          	<archaius.fixedDelayPollingScheduler.delayMills>${archaius.fixedDelayPollingScheduler.delayMills}</archaius.fixedDelayPollingScheduler.delayMills>
+         	</systemProperties>
+          	<path>/</path>          	
+          </configuration>
       </plugin>
 
       <plugin>
@@ -477,6 +498,9 @@
           </execution>
         </executions>
         <configuration>
+          <skipJasmineTests>true</skipJasmineTests>
+          <skipTests>true</skipTests>
+          <haltOnFailure>false</haltOnFailure>
           <specRunnerTemplate>REQUIRE_JS</specRunnerTemplate>
           <jsSrcDir>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/javascript/</jsSrcDir>
           <sourceIncludes>
@@ -493,34 +517,20 @@
           <keepServerAlive>true</keepServerAlive>
           <customRunnerConfiguration>${project.basedir}/src/test/resources/require.config.js</customRunnerConfiguration>
           <customRunnerTemplate>${project.basedir}/src/test/resources/RequireJsAngularBootstrappedSpecRunner.htmltemplate</customRunnerTemplate>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>com.github.timurstrekalov</groupId>
-        <artifactId>saga-maven-plugin</artifactId>
-        <version>${saga-maven-plugin.version}</version>
-        <!-- It is impossible to suppress logback-classic logging due to 
-          logback-classic directly implementing SLF4J and the saga plugin directly 
-          depending on it and maven's inability to exclude dependencies the plugin 
-          is directly depending on (http://jira.codehaus.org/browse/MNG-2163), only 
-          transistive dependencies may be excluded -->
-        <executions>
-          <execution>
-            <phase>verify</phase>
-            <goals>
-              <goal>coverage</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <baseDir>http://localhost:${jasmine.serverPort}</baseDir>
-          <outputDir>${project.build.directory}/coverage</outputDir>
-          <noInstrumentPatterns>
-            <pattern>.*spec.*</pattern>
-            <pattern>.*/META\-INF/.*\.js</pattern>
-            <pattern>.*/webjars?/.*\.js</pattern>
-          </noInstrumentPatterns>
+          <additionalContexts>
+          	  <context>
+			    <contextRoot>container/javascript</contextRoot>
+			    <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/javascript</directory>
+			  </context>
+			  <context>
+			    <contextRoot>container/vendor</contextRoot>
+			    <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/vendor</directory>
+			  </context>
+			  <context>
+			    <contextRoot>container/ui</contextRoot>
+			    <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/ui</directory>
+			  </context>
+			</additionalContexts>
         </configuration>
       </plugin>
 
@@ -536,8 +546,8 @@
                 install.packages (lib, repos="http://cran.rstudio.com"));
             if (!requireNamespace ("injectoR"))
               devtools::install_github ("dfci-cccb/injectoR");
-            source ("https://bioconductor.org/biocLite.R");
-            sapply (c ("topGO", "org.Hs.eg.db", "org.Mm.eg.db"), function (lib)
+            source ("http://bioconductor.org/biocLite.R");
+            sapply (c ("topGO", "org.Hs.eg.db", "org.Mm.eg.db", "limma", "DESeq"), function (lib)
               if (!requireNamespace (lib)) biocLite (lib));
           </onInitialize>
           <configure>
@@ -546,7 +556,7 @@
             <fileio>disable</fileio>
           </configure>
           <onRequest>
-            .libPaths (.libPaths ()[ -1 ]);
+            .libPaths (c ("${project.build.directory}/rserve", .libPaths ()));
             library (injectoR);
             library (topGO);
             cwd = "${basedir}";

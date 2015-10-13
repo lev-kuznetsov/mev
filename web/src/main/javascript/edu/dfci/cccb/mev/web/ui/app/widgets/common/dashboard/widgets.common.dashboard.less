@@ -1,0 +1,79 @@
+.addBorder{
+	border: solid 1px blue;
+}
+html{
+	height: 100%;
+	&.pos,body{
+		position: relative;
+	}	
+	body{		
+		.addBorder;
+		height: 100%;
+		background-color: #efc;
+	}
+}
+//flexbox
+
+.container-flex{
+	display: flex;		
+	flex-direction: row;
+	flex-wrap: wrap;
+	overflow-y: auto;
+	&.v-stretch{
+		height: 50%;
+	}
+	&.right-to-left{
+		flex-direction: row-reverse;
+	}	
+	&.top-to-bottom{
+		flex-direction: column;
+	}
+	&.upsidedown{
+		flex-direction: column-reverse;
+	}		
+	&.h-stretch{		
+		.flex-panel{
+			flex-grow: 1;
+		}		
+	}
+	.flex-panel{
+		background-color: beige;		
+		display: flex;
+		flex-direction: column;		
+		.header{
+			flex-grow: 0;
+			color: white;
+			background-color: coral;
+		}
+		.content{
+			flex-grow: 1;
+			overflow-x: auto;
+			background-color: white;			
+			div {
+				background-color: bisque;
+			}
+		}
+	}
+	
+}
+
+#one{			
+	width: 200px;
+	height: 200px;
+}
+#two{
+	width: 400px;
+	height: 200px;
+}
+#three{
+	width: 600px;
+	height: 200px;
+}
+
+.debug {
+	div{
+			border: solid 1px red;
+			padding: 2px;
+			margin: 2px;		
+		}		
+}

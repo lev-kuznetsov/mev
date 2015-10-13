@@ -32,7 +32,9 @@
 		    qtip : [ '/library/webjars/qtip2/2.1.1/jquery.qtip' ],
 		    log4js : [ '/library/webjars/log4javascript/1.4.5/log4javascript'],
 		    mbAngularUtilsPagination: [paths.vendor('mbAngularUtils/pagination/dirPagination')],
-			mbAngularUtilsBreadcrumbs: [paths.vendor('mbAngularUtils/breadcrumbs/uiBreadcrumbs')]
+			mbAngularUtilsBreadcrumbs: [paths.vendor('mbAngularUtils/breadcrumbs/uiBreadcrumbs')],
+//			jsData : ['//cdnjs.cloudflare.com/ajax/libs/js-data/2.0.0/js-data.min'],
+			jsDataAngular : ['//cdnjs.cloudflare.com/ajax/libs/js-data/2.0.0/js-data-angular.min'],
 		},
 		
 		map: {
@@ -93,6 +95,9 @@
 		    }, 
 		    mbAngularUtilsBreadcrumbs: {
 		    	deps: ['jquery', 'angular']
+		    },
+		    jsDataAngular: {
+		    	deps: ['jsData', 'ng']
 		    }
 		},
 	  packages : [ {

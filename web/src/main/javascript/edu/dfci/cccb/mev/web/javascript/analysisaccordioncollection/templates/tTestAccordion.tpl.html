@@ -1,4 +1,4 @@
-<div  class="results-wrapper" id="tTestResultsTable" ng-hide="!tTest.results">		            	
+<div  class="results-wrapper" id="tTestResultsTable" >		            	
     <div class="results-header clearfix">    	
      	<div class="btn-toolbar" role="toolbar" mui-yank="action-menu">
      		<div class="btn-group">
@@ -18,7 +18,7 @@
 				      
 	</div>
 	<div class="results-body">							
-		<results-table data="filteredResults" headers="headers" filters="filterParams" ordering="pValue" on-filter="viewGenes(filterParams)"></results-table>
+		<results-table data="analysis.results" headers="headers" ordering="pValue"></results-table>
 	</div>
 </div>	
 		

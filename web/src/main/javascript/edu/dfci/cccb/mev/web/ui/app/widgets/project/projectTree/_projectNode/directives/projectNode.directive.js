@@ -23,6 +23,7 @@ define([], function(){
 			Analyses: "<div>{{node.nodeName}}</div>",
 			"Column Sets": "<column-node node='node'></column-node>",
 			"Row Sets": "<row-node node='node'></row-node>",
+			"Analysis": "<analysis-node node='node'></analysis-node>",
 //			Dataset: "<div ng-click='console.debug(\"dataset.click\")'>{{node.nodeName}}</div>",
 //			Analysis: "<project-analysis analysis=\"node.nodeData\"></project-analysis>",			
 			Default: "<project-node-default node='node' ></project-node-default>"
@@ -73,17 +74,22 @@ define([], function(){
                     				$rootScope.$broadcast("ui:projectTree:nodeSelected", scope.node);
                     			}
                     	};
-                    	
-//                    	console.debug("Post LINK: ", scope.node);
+                    	 
+                    	console.debug("Post LINK node: ", scope.node.nodeName, scope.node.nodeConfig.type, scope.node);
 //                    	scope.$watch("node.nodeData", function(newVal, oldVal){
 //                        	if(newVal && !oldVal){
 //                        		scope.$emit("ui:projectTree:dataChanged");
 //                        	}
 //                        }, true);
                     	
-                    	var template = templateMap[scope.node.nodeName] || templateMap.Default;
+                    	var template = templateMap[scope.node.nodeName] || templateMap[scope.node.nodeConfig.type] || templateMap.Default;
                     	template="<i class='nodeToggle glyphicon glyphicon-minus-sign' ng-click='vm.nodeclick($event)'></i>"+template;
                     	elm.html(template);                    	
+//                    	elm.after("<span class=\"nodeAction\"><a>hi</a></span>")
+//  border: solid 1px #999;
+//  padding: 4px;
+//  border-radius: 20px;
+//  margin-left: 5px;
                         $compile(elm.contents())(scope);                           
                     }
 				};
