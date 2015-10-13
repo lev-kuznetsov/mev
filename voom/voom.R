@@ -1,5 +1,5 @@
 shim ('limma', callback=function (eBayes, lmFit, topTable) {
-  define (voom=function () function (dataset, control, experiment) {
+  define (voom = function (dataset, control, experiment) {
   
 ##library(limma)  # imported by shim()
 ##library(DESeq)
@@ -104,7 +104,6 @@ result[,"Average Expression"]=if(min.val<0){result[,"Average Expression"]-(min.v
 ##
 ## write rnk file
 gsea_rnk <-result[,c("ID", "t")]
-write.table(gsea_rnk, file=RNK_OUT, quote=FALSE, sep="\t", row.names=FALSE, col.names=FALSE)
   
   
   

@@ -44,6 +44,7 @@ import edu.dfci.cccb.mev.stats.rest.configuration.StatsRestConfiguration;
 import edu.dfci.cccb.mev.survival.rest.configuration.SurvivalAnalysisConfiguration;
 import edu.dfci.cccb.mev.t_test.rest.configuration.TTestRestConfiguration;
 import edu.dfci.cccb.mev.topgo.rest.configuration.TopGoConfiguration;
+import edu.dfci.cccb.mev.voom.rest.configuration.VoomConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
 
 /**
@@ -79,6 +80,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     mvcContext.register (SurvivalAnalysisConfiguration.class);
     mvcContext.register (TopGoConfiguration.class);
     mvcContext.register (PcaConfiguration.class);
+    mvcContext.register (VoomConfiguration.class);
     mvcContext.register (HistogramAnalysisConfiguration.class);
     mvcContext.register (GeneSDAnalysisConfiguration.class);
     mvcContext.register (GeneMADAnalysisConfiguration.class);
