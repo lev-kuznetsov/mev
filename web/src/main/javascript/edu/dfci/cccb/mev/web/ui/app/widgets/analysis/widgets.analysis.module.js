@@ -10,7 +10,8 @@ define(["ng",
         "./topgo/widgets.analysis.topgo.module",
         "./genesd/widgets.analysis.genesd.module",
         "./histogram/widgets.analysis.histogram.module",
-        "./pca/widgets.analysis.pca.module"
+        "./pca/widgets.analysis.pca.module",
+        "./voom/widgets.analysis.voom.module",
         ], 
 function(ng, AnalyisEventBus){
 	var module = ng.module("mui.widgets.analysis", arguments)
@@ -67,6 +68,10 @@ function(ng, AnalyisEventBus){
 				shortName: "genesd",
 				viewModel: "GeneMADVM"
 			},
+			"Voom":{
+				shortName: "voom",
+				viewModel: "VoomVM"
+			},
 			reverseLookup: {
 				hcl: "Hierarchical Clustering",
 				limma: "LIMMA Differential Expression Analysis",
@@ -81,7 +86,8 @@ function(ng, AnalyisEventBus){
 				topgo: "TopGO Analysis",
 				histogram: "Histogram Analysis",
 				genesd: "Gene SD Analysis",
-				genemad: "Gene MAD Analysis"
+				genemad: "Gene MAD Analysis",
+				voom: "Voom"
 		} 
 	});	
 	return module;

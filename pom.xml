@@ -40,6 +40,7 @@
     <module>histogram</module>
     <module>genesd</module>
     <module>genemad</module>
+    <module>voom</module>
     <module>web</module>
 
   </modules>
