@@ -5,7 +5,7 @@ define(["ng"], function(ng){
              scope : {
              	dataset : '=heatmapDataset'
              },
-             templateUrl : "app/widgets/analysis/topgo/modal/voomModal.tpl.html",
+             templateUrl : "app/widgets/analysis/voom/modal/voomModal.tpl.html",
              link : function(scope, elems, attrs) {
                  scope.voomVM = voomVM;
                  scope.params = {
@@ -15,7 +15,6 @@ define(["ng"], function(ng){
              	var getPostData = function(){
              		var postRequest = {
              			name: scope.params.name,
-             			datasetName : scope.dataset.datasetName,
              			experiment : scope.params.experiment.keys,
              			control : scope.params.control.keys
              		};             		
