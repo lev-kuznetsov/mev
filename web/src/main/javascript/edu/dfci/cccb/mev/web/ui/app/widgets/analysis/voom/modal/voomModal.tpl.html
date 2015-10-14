@@ -1,0 +1,19 @@
+<form role="form">	
+     <div class="form-group">
+       <label for="deseq-test-name" class="control-label">Test Name</label>
+       <input id="deseq-test-name" ng-model="params.name" placeholder="Ex: My_Analysis_1">
+     </div>
+     
+     <div class="form-group">
+       <label for="deseq-test-control" class="control-label">Experiment Selection</label>
+       <select id="deseq-test-control" ng-options="selection.name for selection in dataset.column.selections" ng-model="params.experiment"></select>
+     </div>
+     
+     <div class="form-group">
+       <label for="deseq-test-control" class="control-label">Control Selection</label>
+       <select id="deseq-test-control" ng-options="selection.name for selection in dataset.column.selections" ng-model="params.control"></select>
+     </div>
+     
+	<!--button ng-click="testInit()">hehe</button-->
+	<a class="btn btn-success btn-block" ng-click="testInit()" data-dismiss="modal" aria-hidden="true">Analyze</a>
+</form>
