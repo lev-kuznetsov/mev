@@ -16,7 +16,9 @@ define(["ng"], function(ng){
              		var postRequest = {
              			name: scope.params.name,
              			experiment : scope.params.experiment.keys,
-             			control : scope.params.control.keys
+             			control : scope.params.control.keys,
+             			$$experiment : scope.params.experiment,
+             			$$control: scope.params.control,
              		};             		
              		return postRequest;                                		
              	};

@@ -68,7 +68,7 @@ function(ng, AnalyisEventBus){
 				shortName: "genesd",
 				viewModel: "GeneMADVM"
 			},
-			"Voom":{
+			"voom":{
 				shortName: "voom",
 				viewModel: "VoomVM"
 			},
@@ -87,7 +87,7 @@ function(ng, AnalyisEventBus){
 				histogram: "Histogram Analysis",
 				genesd: "Gene SD Analysis",
 				genemad: "Gene MAD Analysis",
-				voom: "Voom"
+				voom: "voom"
 		} 
 	});	
 	return module;
