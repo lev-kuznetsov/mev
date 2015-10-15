@@ -12,7 +12,8 @@ define(["ng", "lodash",
         "./histogram/views.dataset.analysis.histogram.module",
         "./genesd/views.dataset.analysis.genesd.module",
         "./genemad/views.dataset.analysis.genemad.module",
-        "./voom/views.dataset.analysis.voom.module"
+        "./voom/views.dataset.analysis.voom.module",
+        "./pca/views.dataset.analysis.pca.module",
         ], function(ng, _){
 	var module = ng.module("mui.views.dataset.analysis", ["mui.widgets.analysis", 
 	                                                      "mui.views.dataset.analysis.hcl", 
@@ -29,6 +30,7 @@ define(["ng", "lodash",
 	                                                      "mui.views.dataset.analysis.genesd",
 	                                                      "mui.views.dataset.analysis.genemad",
 	                                                      "mui.views.dataset.analysis.voom",
+	                                                      "mui.views.dataset.analysis.pca",
 	                                                      "Mev.AnalysisAccordionCollection"]);
 	module.config(["$stateProvider", "$urlRouterProvider", "AnalysisTypes", function($stateProvider, $urlRouterProvider, AnalysisTypes){				
 		$stateProvider		

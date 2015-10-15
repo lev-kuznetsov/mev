@@ -20,6 +20,8 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -36,15 +38,16 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 @SuppressWarnings ("unchecked")
 public abstract class AbstractAnalysis <T extends AbstractAnalysis<?>> implements Analysis, Comparable<AbstractAnalysis<?>> {
 
-  private @Getter String name;
-  private @Getter String type;
+  private @JsonProperty @Getter String name;
+  private @JsonProperty @Getter String type;
   private @Getter Calendar timestamp = getInstance ();
 
   public T name (String name) {
     this.name = name;
     return (T) this;
   }
-
+  
+  
   public T type (String type) {
     this.type = type;
     return (T) this;
