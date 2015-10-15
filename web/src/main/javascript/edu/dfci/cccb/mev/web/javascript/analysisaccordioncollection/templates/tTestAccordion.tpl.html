@@ -1,12 +1,13 @@
 <div  class="results-wrapper" id="tTestResultsTable" >		            	
     <div class="results-header clearfix">    	
-     	<div class="btn-toolbar" role="toolbar" mui-yank="action-menu">
+<!--      	<div class="btn-toolbar" role="toolbar" mui-yank="action-menu"> -->
+     	<div class="btn-toolbar" role="toolbar" >
      		<div class="btn-group">
-	             <a class="btn" href="/dataset/{{project.dataset.datasetName}}/analysis/{{tTest.name}}?format=tsv">
+	             <a class="btn" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
 	               <i class="icon-white icon-download"></i> Download
-	             </a><a class="btn" data-target="#selectionAdd{{tTest.name}}" data-toggle="modal">
+	             </a><a class="btn" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
 	               </i> Create Selections
-	             </a><a class="btn" data-target="#exportDataset{{tTest.name}}" data-toggle="modal">
+	             </a><a class="btn" data-target="#exportDataset{{analysis.name}}" data-toggle="modal">
 	               </i> New Dataset
 	             </a><button class="btn" ng-click="applyToHeatmap()" >
 	                <span>
@@ -22,7 +23,7 @@
 	</div>
 </div>	
 		
-<bsmodal bindid="{{'selectionAdd' + tTest.name}}" func="" header="Add New Selection for {{tTest.name}}">
+<bsmodal bindid="{{'selectionAdd' + analysis.name}}" func="" header="Add New Selection for {{analysis.name}}">
 
 	<div class="row">
 	
@@ -41,7 +42,7 @@
           </div>
 </bsmodal> 
 
-<bsmodal bindid="{{'exportDataset' + tTest.name}}" func="" header="Export New Dataset for {{tTest.name}}">
+<bsmodal bindid="{{'exportDataset' + analysis.name}}" func="" header="Export New Dataset for {{analysis.name}}">
 
 	<div class="row">
 	
