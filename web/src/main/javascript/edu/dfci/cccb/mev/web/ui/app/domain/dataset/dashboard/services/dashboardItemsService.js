@@ -10,11 +10,11 @@ define([], function(){
 			this["Histogram"] = {
 					name: "Histogram"					
 			};
-			this["Gene SD"] = {
-					name: "Gene SD"					
+			this["GeneSD"] = {
+					name: "GeneSD"					
 			};
-			this["Gene MAD"] = {
-					name: "Gene MAD"					
+			this["GeneMAD"] = {
+					name: "GeneMAD"					
 			};
 			this.$add = function(item){
 				_self[item.name] = item;
