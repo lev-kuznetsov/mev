@@ -5,13 +5,14 @@ define(["ng",
         "./default/widgets.analysis.default.module",
         "./analysisModal/widgets.analysis.modal.module",
         "./analysisLog/widgets.analysis.log.module",
+        "./analysisMenu/widgets.analysis.menu.module",
         "./any/widgets.analysis.any.module",
         "./analysisNode/widgets.analysis.analysisNode.module",
         "./topgo/widgets.analysis.topgo.module",
         "./genesd/widgets.analysis.genesd.module",
         "./histogram/widgets.analysis.histogram.module",
         "./pca/widgets.analysis.pca.module",
-        "./voom/widgets.analysis.voom.module",
+        "./voom/widgets.analysis.voom.module"
         ], 
 function(ng, AnalyisEventBus){
 	var module = ng.module("mui.widgets.analysis", arguments)
@@ -65,7 +66,7 @@ function(ng, AnalyisEventBus){
 				viewModel: "GeneSDVM"
 			},
 			"Gene MAD Analysis":{
-				shortName: "genesd",
+				shortName: "genemad",
 				viewModel: "GeneMADVM"
 			},
 			"voom":{
