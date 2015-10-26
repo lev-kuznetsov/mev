@@ -5,13 +5,14 @@ define(["ng",
         "./default/widgets.analysis.default.module",
         "./analysisModal/widgets.analysis.modal.module",
         "./analysisLog/widgets.analysis.log.module",
+        "./analysisMenu/widgets.analysis.menu.module",
         "./any/widgets.analysis.any.module",
         "./analysisNode/widgets.analysis.analysisNode.module",
         "./topgo/widgets.analysis.topgo.module",
         "./genesd/widgets.analysis.genesd.module",
         "./histogram/widgets.analysis.histogram.module",
         "./pca/widgets.analysis.pca.module",
-        "./voom/widgets.analysis.voom.module",
+        "./voom/widgets.analysis.voom.module"
         ], 
 function(ng, AnalyisEventBus){
 	var module = ng.module("mui.widgets.analysis", arguments)
@@ -65,12 +66,16 @@ function(ng, AnalyisEventBus){
 				viewModel: "GeneSDVM"
 			},
 			"Gene MAD Analysis":{
-				shortName: "genesd",
+				shortName: "genemad",
 				viewModel: "GeneMADVM"
 			},
-			"Voom":{
+			"voom":{
 				shortName: "voom",
 				viewModel: "VoomVM"
+			},
+			"pca":{
+				shortName: "pca",
+				viewModel: "PcaVM"
 			},
 			reverseLookup: {
 				hcl: "Hierarchical Clustering",
@@ -87,7 +92,8 @@ function(ng, AnalyisEventBus){
 				histogram: "Histogram Analysis",
 				genesd: "Gene SD Analysis",
 				genemad: "Gene MAD Analysis",
-				voom: "Voom"
+				voom: "voom",
+				pca: "pca",
 		} 
 	});	
 	return module;

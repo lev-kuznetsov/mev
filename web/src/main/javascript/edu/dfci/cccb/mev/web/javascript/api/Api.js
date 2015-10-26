@@ -1,4 +1,4 @@
-define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular, angularResource, AnalysisEventBus) {
+define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus'], function (angular, _, angularResource, AnalysisEventBus) {
 
     return angular
     .module ('Mev.Api', ['ngResource'])
@@ -25,14 +25,18 @@ define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular
 				}
 			});
         }])
-    .service ('AnalysisResourceService', ['$resource', '$routeParams', 'AnalysisEventBus', function ($resource, $routeParams, analysisEventBus) {
-    	    	
+    .service ('AnalysisResourceService', ['$resource', '$http','$routeParams', 'AnalysisEventBus', function ($resource, $http, $routeParams, analysisEventBus) {
+    		
+    	var transformRequest = [function(data, headers){
+            console.log("transformRequest", data);
+            return data;
+    	}].concat($http.defaults.transformRequest);
     	var resource = $resource('/dataset/:datasetName/analysis',
 	    	{	'format':'json'}, 
 			{
 				'getAll': {
 				    'url' : '/dataset/:datasetName/analysis',
-				    'method':"GET",
+				    'method':"GET",				    
 				},
 				'get': {
 					'url': '/dataset/:datasetName'
@@ -74,7 +78,7 @@ define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular
         		var result = resource[methodName](params, data, callback);
         		
         		result.$promise.then(
-    				function(response){    					
+    				function(response){
     					
     					if(typeof data === "string")
     						data = JSON.parse(data);
@@ -83,13 +87,13 @@ define ([ 'angular', 'angularResource', './AnalysisEventBus'], function (angular
     					var allParams = {
     							analysisName: params.analysisName || data.analysisName || params.name || data.name || response.name
     					};
-    					angular.extend(allParams, params);
+    					angular.extend(allParams, params);    					
     					
     					angular.extend(allParams, data);
     					console.debug("AnalysisResource success", params, "data", data, "response", response);
     					var sessionStorageKey = allParams.datasetName+"."+allParams.analysisName;
     					console.debug("sessionStorageKey set", sessionStorageKey);
-    					sessionStorage.setItem(sessionStorageKey, JSON.stringify(allParams));
+    					sessionStorage.setItem(sessionStorageKey, JSON.stringify(allParams));    	    			
     					analysisEventBus.analysisSucceeded(params, data);
     	    		}, function(response){
     	    			console.debug("AnalysisResource error", response);

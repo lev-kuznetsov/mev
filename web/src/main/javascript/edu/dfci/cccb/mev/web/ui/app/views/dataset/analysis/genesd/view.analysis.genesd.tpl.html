@@ -8,15 +8,65 @@
 	</ul>
 
 	<div class="tab-content column-body">
-		<div class="tab-pane active results-wrapper" id="genesd_top" >										
+		<div class="tab-pane active results-wrapper" id="genesd_top" >
+			<div class="results-header clearfix">
+				<!--      	<div class="btn-toolbar" role="toolbar" mui-yank="action-menu"> -->
+		     	<div class="btn-toolbar" role="toolbar" >
+		     		<div class="btn-group">
+			            <btn-create-selection mui-target="Top" mui-analysis="DatasetAnalysisVM.analysis" 
+			             	mui-dataset="dataset" mui-items="DatasetAnalysisVM.filteredResultsTop" mui-key-name="geneId">
+			            </btn-create-selection><!-- 
+			            --><btn-export-selection mui-target="Top" mui-analysis="DatasetAnalysisVM.analysis" 
+			             	mui-dataset="dataset" mui-items="DatasetAnalysisVM.filteredResultsTop" mui-key-name="geneId">
+			            </btn-export-selection>           
+		            </div>
+		      	</div>
+			</div>
+			<div class="results-body">													
 				<results-table id="DatasetAnalysisVM.heatmapViewTop.id" data="DatasetAnalysisVM.sigGenesTop.data" headers="DatasetAnalysisVM.sigGenesTop.headers" ordering="-value" ></results-table>
-				<view-Content-Item project='DatasetAnalysisVM.project' view='DatasetAnalysisVM.heatmapViewTop'></view-Content-Item>				
+				<view-Content-Item project='DatasetAnalysisVM.project' view='DatasetAnalysisVM.heatmapViewTop'></view-Content-Item>
+			</div>				
 		</div>		
-		<div class="tab-pane results-wrapper" id="genesd_bottom" >										
+		<div class="tab-pane results-wrapper" id="genesd_bottom" >
+			<div class="results-header clearfix">
+				<!--      	<div class="btn-toolbar" role="toolbar" mui-yank="action-menu"> -->
+		     	<div class="btn-toolbar" role="toolbar" >
+		     		<div class="btn-group">
+			             <btn-create-selection mui-target="Bottom" mui-analysis="DatasetAnalysisVM.analysis" 
+			             	mui-dataset="dataset" mui-items="DatasetAnalysisVM.filteredResultsBottom" mui-key-name="geneId">
+			            </btn-create-selection><!-- 
+			            --><btn-export-selection mui-target="Bottom" mui-analysis="DatasetAnalysisVM.analysis" 
+			             	mui-dataset="dataset" mui-items="DatasetAnalysisVM.filteredResultsBottom" mui-key-name="geneId">
+			            </btn-export-selection>
+		            </div>
+		      	</div>
+			</div>
+			<div class="results-body">													
 				<results-table id="DatasetAnalysisVM.heatmapViewBottom.id" data="DatasetAnalysisVM.sigGenesBottom.data" headers="DatasetAnalysisVM.sigGenesBottom.headers" ordering="value" ></results-table>
-				<view-Content-Item project='DatasetAnalysisVM.project' view='DatasetAnalysisVM.heatmapViewBottom'></view-Content-Item>				
+				<view-Content-Item project='DatasetAnalysisVM.project' view='DatasetAnalysisVM.heatmapViewBottom'></view-Content-Item>
+			</div>				
 		</div>		
 <!-- 		<div class="tab-pane results-wrapper" id="heatmap" >									 -->
 <!-- 		</div>		 -->
 	</div>
 </div>
+
+
+<bsmodal bindid="exportDataset{{DatasetAnalysisVM.analysis.name}}Bottom" func="" header="Export New Dataset for {{DatasetAnalysisVM.analysis.name}}">
+
+	<div class="row">
+	
+		<form-group>
+			<form>
+				Name: <input type="text" class="input-small" ng-model="exportParams.name">
+			<form>
+		</form-group>
+	
+	</div>
+	
+	<div class="row">			
+              <a class="btn btn-success pull-right" ng-click="exportSelection(filteredResultsBottom)" data-dismiss="modal" aria-hidden="true">
+                Export New Dataset
+              </a> 
+          </div>
+</bsmodal>

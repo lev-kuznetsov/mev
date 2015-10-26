@@ -1,6 +1,6 @@
 define(["ng", "lodash"], function(ng, _){
 	var module = ng.module("mui.views.dataset.analysis.genesd", [])	
-	.factory("GeneSDVMFactory", ["$stateParams", "SigGenes", function($stateParams, SigGenes){
+	.factory("GeneSDVMFactory", ["$stateParams", "SigGenes", "alertService", function($stateParams, SigGenes, alertService){
 		
 		return function GeneSDVMFactory($scope, $stateParams, project, analysis){
 			var _self=this;
@@ -10,7 +10,8 @@ define(["ng", "lodash"], function(ng, _){
 			$scope.dataset=project.dataset;
 			this.sigGenesTop = SigGenes(20, analysis.result.genes, analysis.result.sd, "SD");
 			this.sigGenesBottom = SigGenes(-20, analysis.result.genes, analysis.result.sd, "SD");
-			
+//			$scope.filteredResultsTop = this.sigGenesTop;
+//			$scope.filteredResultsBottom = this.sigGenesBottom;			
 			this.heatmapViewTop = project.generateView({
 	            viewType:'heatmapView',
 	            note: analysis.name+"_geneSDTop",
@@ -26,12 +27,17 @@ define(["ng", "lodash"], function(ng, _){
 	            }
 	        });
 			
+            
 			$scope.$on("ui:resultsTable:filteredResults", function($event, filteredResults){
 				var labels = filteredResults.map(function(gene){return gene.geneId;});
-				if($event.targetScope.id === _self.heatmapViewTop.id)
+				if($event.targetScope.id === _self.heatmapViewTop.id){					
+					_self.filteredResultsTop = filteredResults;
 					_self.heatmapViewTop = _self.heatmapViewTop.applyFilter("row", labels);
-				else if($event.targetScope.id === _self.heatmapViewBottom.id)
+				}
+				else if($event.targetScope.id === _self.heatmapViewBottom.id){					
+					_self.filteredResultsBottom = filteredResults;
 					_self.heatmapViewBottom = _self.heatmapViewBottom.applyFilter("row", labels);
+				}
             });
 		};
 	}])

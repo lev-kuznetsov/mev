@@ -20,8 +20,8 @@ define(['./AnalysisClass'], function(AnalysisClass){
             	return undefined;
             }
             checkDefaultAnalysis({type: "histogram", name: "Histogram"});
-            checkDefaultAnalysis({type: "genesd", name: "Gene SD"});
-            checkDefaultAnalysis({type: "genemad", name: "Gene MAD"});
+            checkDefaultAnalysis({type: "genesd", name: "GeneSD"});
+            checkDefaultAnalysis({type: "genemad", name: "GeneMAD"});
             return defaultAnalyses;
         }).then(function(response){
         	return self.$q.all(defaultAnalyses).then(function(response){

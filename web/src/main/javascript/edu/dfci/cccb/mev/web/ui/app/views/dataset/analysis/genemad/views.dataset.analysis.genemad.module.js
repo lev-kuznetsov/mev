@@ -27,10 +27,13 @@ define(["ng", "lodash"], function(ng, _){
 			
 			$scope.$on("ui:resultsTable:filteredResults", function($event, filteredResults){
 				var labels = filteredResults.map(function(gene){return gene.geneId;});
-				if($event.targetScope.id === _self.heatmapViewTop.id)
+				if($event.targetScope.id === _self.heatmapViewTop.id){
+					_self.filteredResultsTop = filteredResults;					
 					_self.heatmapViewTop = _self.heatmapViewTop.applyFilter("row", labels);
-				else if($event.targetScope.id === _self.heatmapViewBottom.id)
+				}else if($event.targetScope.id === _self.heatmapViewBottom.id){
+					_self.filteredResultsBottom = filteredResults;					
 					_self.heatmapViewBottom = _self.heatmapViewBottom.applyFilter("row", labels);
+				}
             });
 		};		
 	}])

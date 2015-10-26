@@ -1,0 +1,16 @@
+<a class="btn" data-target="#{{vm.getId()}}" data-toggle="modal"></i> New Dataset</a>
+<bsmodal bindid="{{vm.getId()}}" func="" header="Export New Dataset for {{vm.analysis.name}}">
+	<div class="row">
+		<form-group>
+			<form>
+				Name: <input type="text" class="input-small" ng-model="vm.exportParams.name">
+			<form>
+		</form-group>
+	</div>
+	<div class="row">			
+          <a class="btn btn-success pull-right" ng-click="vm.exportSelection(muiItems)" data-dismiss="modal" aria-hidden="true">
+             Export New Dataset
+          </a> 
+    </div>
+</bsmodal>
+ 

@@ -1,0 +1,15 @@
+<a class="btn" data-target="#{{vm.getId()}}" data-toggle="modal"></i> Create Selections</a>
+<bsmodal bindid="{{vm.getId()}}" func="" header="Add New Selection for {{vm.analysis.name}}">
+	<div class="row">	
+		<form-group>
+			<form>
+				Name: <input type="text" class="input-small" ng-model="vm.selectionParams.name">
+			<form>
+		</form-group>
+	</div>	
+	<div class="row">			
+              <a class="btn btn-success pull-right" ng-click="vm.addSelections(muiItems)" data-dismiss="modal" aria-hidden="true">
+                Create Selections
+              </a> 
+          </div>
+</bsmodal> 
