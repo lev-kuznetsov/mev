@@ -22,7 +22,7 @@ var REQUIREJS_CONFIG = (function(){
 			nguirouter :  [paths.vendor("uirouter/angular-ui-router"), "//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.12/angular-ui-router"],
 			ngresource: [paths.vendor("angularjs/angular-resource")],
 			appjs: [paths.app("app")],
-			q: [paths.vendor("q/q.hack")],
+			q: [paths.vendor("q/q")],
 			underscore: [paths.vendor("underscore/underscore")],
 			lodash: [paths.vendor("lodash/lodash")],
 			angularTreeView: [paths.vendor("angular-treeview/treeView")],
@@ -46,7 +46,9 @@ var REQUIREJS_CONFIG = (function(){
 			jsData : ['//cdnjs.cloudflare.com/ajax/libs/js-data/2.3.0/js-data'],
 			jsDataAngular : ['//cdnjs.cloudflare.com/ajax/libs/js-data-angular/3.0.0/js-data-angular'],
 			d3tip: ["//cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.7/d3-tip.min"],
-			
+			PouchDB: ["//cdn.jsdelivr.net/pouchdb/5.1.0/pouchdb.min"],
+			blobUtil: [paths.vendor("blob-util/dist/blob-util")],
+			pouchDbLru: [paths.vendor("pouchdb-lru-cache/dist/pouchdb.lru-cache")]
 		},		
 		map: {
 	        '*': {
@@ -85,8 +87,7 @@ var REQUIREJS_CONFIG = (function(){
 			nguirouter: {
 				deps: ["ng"]
 			},
-			q: {
-				deps: ["ng"],
+			q: {				
 				exports: "q"
 			},
 			ngresource: {
@@ -94,6 +95,15 @@ var REQUIREJS_CONFIG = (function(){
 			},
 			angularTreeView: {
 				deps: ["ng"]
+			},
+			PouchDB: {
+				exports: "PouchDB"
+			},
+			pouchDbLru: {
+				deps: ["PouchDB"]				
+			},
+			blobUtil: {
+				exports: "blobUtil"
 			},
 //			angularData: {
 //				deps: ["ng"]
