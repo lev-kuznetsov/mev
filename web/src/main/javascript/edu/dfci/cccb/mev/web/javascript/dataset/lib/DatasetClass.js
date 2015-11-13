@@ -1,5 +1,5 @@
-define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expressionModule', 'q', 'PouchDB', 'pouchDbLru'], 
-		function( datasetStatistics, selectionSort, selectionHelpers, expressionModule, q, PouchDB, pouchDbLru){
+define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expressionModule', 'q', 'PouchDB', 'jsLru', 'blobUtil'], 
+		function( datasetStatistics, selectionSort, selectionHelpers, expressionModule, q, PouchDB, jsLru, blobUtil){
     
     //inverter :: [a] --> Object
     //  Function to invert an array into an object with properties of names
@@ -20,18 +20,108 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
     //  Function to create an array of a range of numbers from 0 to Number-1 of
     //  length Number
     function ranger(n){
-    	var r = [];PouchDB.plugin
+    	var r = [];
     	for (var i=0; i<n;i++){
     		r.push(i)
     	}
     	return r;
     }
-
+    
+    function ValueStore(ds, datasetRespObj){
+    	var self = this;    	
+    	this.chunkSize = 10e6;
+    	this.itemsPerChunk = this.chunkSize / Float64Array.BYTES_PER_ELEMENT;
+    	this.ready = false;
+    	var db = new PouchDB("gbm_swap");
+	    var lruCache = new jsLru(5);
+    	//init swap
+    	init(datasetRespObj.valuesBuffer);
+    	
+    	
+		function init(ab){
+			var chunks = {};
+			for (var i = 0, size = 0; size < ab.byteLength; size += self.chunkSize, i++){
+//				promise = db.lru.put("values"+i, new Blob([ab.slice(size, size + chunkSize)]), "application/octet-binary");
+				chunks[chunkName(i)]={
+					type : "application/octet-binary",
+					data : new Blob([ab.slice(size, size + self.chunkSize)]),
+					content_type : "application/octet-binary"
+				};
+				console.debug("chunk", i);
+			};
+			console.debug("swap: chunks", chunks);
+			
+			db.put({_id : "swap", _attachments : chunks})
+			.then(function(response) {
+				self.ready = true;
+				delete datasetRespObj.valuesBuffer;
+				delete datasetRespObj.dataview;
+				console.log('swap: datasetName successfull!', response);
+			})["catch"](function(err){
+				console.log('swap: error put', err);
+			});
+		}
+			
+		function chunkName(index){
+			return "chunk"+index;
+		}
+    	
+    	function getItemIndex(r, c){
+        	return ds.column.keys.length * r + c;    	
+        }
+        function getChunkForIndex(itemIndex){        	        	
+        	return Math.floor(itemIndex / self.itemsPerChunk);    	
+        }
+        function getChunkOffset(itemIndex){        	        	
+        	return itemIndex % self.itemsPerChunk;    	
+        }
+        function getByIndex(itemIndex){
+        	
+        	var chunkIndex = getChunkForIndex(itemIndex);
+        	var chunkOffset = getChunkOffset(itemIndex);        	
+        	var dataview = lruCache.get(chunkIndex);        	        	
+        	if(dataview){
+        		return q.when(dataview.getFloat64(chunkOffset*Float64Array.BYTES_PER_ELEMENT, false));
+        	}else{        		
+//        		console.debug("swap: miss ", itemIndex, chunkIndex);
+        		return db.getAttachment("swap", chunkName(chunkIndex))
+        		.then(function(blob){
+        			return blobUtil
+        			.blobToArrayBuffer(blob)
+        			.then(function(arrayBuff){
+				    	ab = arrayBuff;		    	
+				    	var dataview = new DataView(ab);	    					    	
+				    	return dataview;
+					});
+				}).then(function(dataview){
+					if(!lruCache.find(chunkIndex))
+						lruCache.put(chunkIndex, dataview);
+					return q.when(dataview.getFloat64(chunkOffset*Float64Array.BYTES_PER_ELEMENT, false));
+				})["catch"](function (err) {
+				  console.log("swap getAttachment error", err);
+				});
+        	}
+        }
+//        	getFloat64(chunkOffset*Float64Array.BYTES_PER_ELEMENT, false);
+        function getByKey(labelPair){
+        	
+    		var r = ds.rowLabels2Indexes[labelPair[0]];
+    	    var c = ds.columnLabels2Indexes[labelPair[1]];
+    	    var itemIndex = getItemIndex(r, c);
+    	    if(self.ready)
+    	    	return getByIndex(itemIndex);
+    	    else
+    	    	return q.when(datasetRespObj.dataview.getFloat64((r*ds.column.keys.length+c)*Float64Array.BYTES_PER_ELEMENT, false));    		
+        }
+        return {        	
+        	getByKey: getByKey,        	
+        };
+    };
 	//Constructor :: [String], [DatasetResponseObj] -> $Function [Dataset]
     //  Function that constructs base dataset object without angular module
     //  dependent behaviors.
 	return function(datasetName, datasetRespObj){
-	    console.debug("q, pouch", q, PouchDB);
+	    
 	    if (!datasetName){
 	        throw TypeError('datasetName parameter not defined');
 	        return null
@@ -42,16 +132,11 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 	        return null
 	    }
 	    
-	    
-	 
-		var self = this;
-		
+	    var self = this;
 		this.id = datasetName;
 		
-		PouchDB.plugin(pouchDbLru);
-		var db = new PouchDB(datasetName);
 //		db.initLru(5000000); 
-		
+		this.valueStore = new ValueStore(self, datasetRespObj);   		
 		this.datasetName = datasetName;
 		this.expression = {
 			values: datasetRespObj.values,
@@ -71,16 +156,17 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 			max: datasetRespObj.max,
 			min: datasetRespObj.min,
 			avg: datasetRespObj.avg,
-			tryGet: function(labelPair){
-				var deferred = q.defer();
-				setTimeout(function(){
-					var r = self.rowLabels2Indexes[labelPair[0]];
-				    var c = self.columnLabels2Indexes[labelPair[1]];
-					var value = datasetRespObj.dataview.getFloat64((r*self.column.keys.length+c)*Float64Array.BYTES_PER_ELEMENT, false);
-					deferred.resolve(value);
-				}, 500);				
-				return deferred.promise;
-			},
+			tryGet: this.valueStore.getByKey,
+//			tryGet: function(labelPair){
+//				var deferred = q.defer();				
+//				setTimeout(function(){
+//					var r = self.rowLabels2Indexes[labelPair[0]];
+//				    var c = self.columnLabels2Indexes[labelPair[1]];
+//					var value = datasetRespObj.dataview.getFloat64((r*self.column.keys.length+c)*Float64Array.BYTES_PER_ELEMENT, false);
+//					deferred.resolve(value);
+//				}, 500);				
+//				return deferred.promise;
+//			},
 			get: function(labelPair){
 			    
 			    var r = self.rowLabels2Indexes[labelPair[0]];

@@ -1,3 +1,4 @@
+"use strict"
 define(["ng", 
         "PouchDB",
         "./_controllers/DatasetViewVM", 
@@ -72,14 +73,12 @@ function(ng,
 		   	     				var valuesPromise = undefined;
 
 		   	     				return $q.all([dataset.$promise, 
-   	     				           $http.get('/container/mock/lgg.matrix', {responseType: "arraybuffer"}).then(function(resposne) {
-				   	    	        	ab = resposne.data;
-				   	      				ar = new Float64Array(ab, 0);
+   	     				           $http.get('/container/mock/gbm.matrix', {responseType: "arraybuffer"}).then(function(resposne) {
+				   	    	        	var ab = resposne.data;
+				   	      				
 				   	      				var dataview = new DataView(ab);
-				   	      				console.debug("array", ab.byteLength);
-				   	      				for(var i=0;i<Math.min(ar.length, 12);i++){					
-				   	      					console.debug("ar" + i, ar[i], dataview.getFloat64(i*Float64Array.BYTES_PER_ELEMENT, false));
-				   	      				}		
+				   	      				console.debug("array", ab.byteLength);				   	      				
+				   	      				dataset.valuesBuffer = ab;
 				   	      				dataset.dataview = dataview;
 				   	      				return dataset;
 		   	     					})]).then(function(response){

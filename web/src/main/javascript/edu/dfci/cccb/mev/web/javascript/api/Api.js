@@ -5,7 +5,7 @@ define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus'], functio
     .service('AnalysisEventBus', AnalysisEventBus)
     .service ('DatasetResourceServiceMock', ['$resource', '$q', '$http', 
                                              function ($resource, $q, $http, DatasetValuesResource) {
-    	 var resource = $resource('/container/mock/lgg.json',
+    	 var resource = $resource('/container/mock/gbm.json',
 	    	{},{
 				'get': {method:'GET'}
 			});   
