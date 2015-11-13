@@ -48,7 +48,8 @@ var REQUIREJS_CONFIG = (function(){
 			d3tip: ["//cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.7/d3-tip.min"],
 			PouchDB: ["//cdn.jsdelivr.net/pouchdb/5.1.0/pouchdb.min"],
 			blobUtil: [paths.vendor("blob-util/dist/blob-util")],
-			pouchDbLru: [paths.vendor("pouchdb-lru-cache/dist/pouchdb.lru-cache")]
+			pouchDbLru: [paths.vendor("pouchdb-lru-cache/dist/pouchdb.lru-cache")],
+			jsLru: [paths.vendor("rsms/js-lru/lru")]
 		},		
 		map: {
 	        '*': {
@@ -104,6 +105,9 @@ var REQUIREJS_CONFIG = (function(){
 			},
 			blobUtil: {
 				exports: "blobUtil"
+			},
+			jsLru: {
+				exports: "LRUCache"
 			},
 //			angularData: {
 //				deps: ["ng"]
