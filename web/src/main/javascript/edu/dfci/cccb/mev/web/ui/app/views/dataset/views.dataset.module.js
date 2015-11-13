@@ -1,4 +1,5 @@
 define(["ng", 
+        "PouchDB",
         "./_controllers/DatasetViewVM", 
         "./_controllers/DatasetProjectViewVM",
         "./_controllers/DatasetHomeVM",
@@ -9,7 +10,8 @@ define(["ng",
         "./selectionSets/views.dataset.selectionSets.module",
         "./analysis/views.dataset.analysis.module",
         "./analyses/views.dataset.analyses.module"], 
-function(ng, 
+function(ng,
+		PouchDB,
 		DatasetViewVM, 
 		DatasetProjectViewVM,
 		DatasetHomeVM,
@@ -55,7 +57,7 @@ function(ng,
 			   	     		footerUrl: "app/views/dataset/_templates/dataset.footer.tpl.html",
 			   	     	},
 	   	     			resolve:{
-		   	     			project: ["$stateParams", "ProjectFactory", "DatasetResourceService", function($stateParams, ProjectFactory, DatasetResourceService){
+		   	     			project: ["$stateParams", "ProjectFactory", "DatasetResourceServiceMock", "$q", "$http", function($stateParams, ProjectFactory, DatasetResourceService, $q, $http){
 	   	     					
 		   	     				var dataset = DatasetResourceService.get({
 		   	     					datasetName: $stateParams.datasetId
@@ -67,12 +69,24 @@ function(ng,
 		   	     					console.debug("**** Failed to Load Dataset", $stateParams.datasetId, error);
 		   	     				});
 	   	     					
-		   	     				return dataset.$promise.then(function(response){
-			   	     				var project = ProjectFactory($stateParams.datasetId, response);	   	     					
+		   	     				var valuesPromise = undefined;
+
+		   	     				return $q.all([dataset.$promise, 
+   	     				           $http.get('/container/mock/lgg.matrix', {responseType: "arraybuffer"}).then(function(resposne) {
+				   	    	        	ab = resposne.data;
+				   	      				ar = new Float64Array(ab, 0);
+				   	      				var dataview = new DataView(ab);
+				   	      				console.debug("array", ab.byteLength);
+				   	      				for(var i=0;i<Math.min(ar.length, 12);i++){					
+				   	      					console.debug("ar" + i, ar[i], dataview.getFloat64(i*Float64Array.BYTES_PER_ELEMENT, false));
+				   	      				}		
+				   	      				dataset.dataview = dataview;
+				   	      				return dataset;
+		   	     					})]).then(function(response){
+		   	     					var project = ProjectFactory($stateParams.datasetId, dataset);	   	     					
 		   	     					console.debug("***Project", project);	   	     					
 		   	     					return project;
-		   	     				});
-		   	     				
+	   	     					});	   	     							   	     				;		   	     				
 	   	     				}],
 	   	     				dataset: ["$state", "$stateParams", "DatasetResourceService", "project",
 	   	     				function($state, $stateParams, DatasetResourceService, project){

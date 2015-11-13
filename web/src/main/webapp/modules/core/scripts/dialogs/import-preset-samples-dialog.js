@@ -8,6 +8,7 @@ ImportPresetSamplesDialog.prototype._lastItem=null;
 
 
 ImportPresetSamplesDialog._isRowLimitMet=function(){
+	return true;
 	var limit=200;
 	if(theProject.rowModel.filtered>limit){
 		alert("Cannot import more than "+limit+" samples");

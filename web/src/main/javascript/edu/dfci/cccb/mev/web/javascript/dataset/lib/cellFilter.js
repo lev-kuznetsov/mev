@@ -22,9 +22,10 @@ define([], function(){
         //get rows from cells using indexes
         indexes.map(function(index){
            //get row by slicing using index
-           var row = self.expression.values
-               .slice(index* self.column.keys.length, 
-            		   self.column.keys.length*(1+index));
+//           var row = self.expression.values
+//               .slice(index* self.column.keys.length, 
+//            		   self.column.keys.length*(1+index));
+           var row = self.expression.dataview.getRow(index);
            //push rows onto cells
            row.map(function(cell){
                cells.push(cell);

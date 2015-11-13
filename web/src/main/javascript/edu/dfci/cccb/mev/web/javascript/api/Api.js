@@ -3,6 +3,36 @@ define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus'], functio
     return angular
     .module ('Mev.Api', ['ngResource'])
     .service('AnalysisEventBus', AnalysisEventBus)
+    .service ('DatasetResourceServiceMock', ['$resource', '$q', '$http', 
+                                             function ($resource, $q, $http, DatasetValuesResource) {
+    	 var resource = $resource('/container/mock/lgg.json',
+	    	{},{
+				'get': {method:'GET'}
+			});   
+    	 
+    	 var DatasetResource = Object.create(resource);       	 
+    	 DatasetResource.get = function(params, data, callback){
+    		 var result = resource.get(params, data, callback);
+    		 
+    		 result.$promise.then(function(response){
+    			       			 
+    		 });
+    		 
+    		 return result;
+    	 };
+    	 
+    	 
+    	 return DatasetResource;
+    }])
+//    .service ('DatasetValuesResourceService', ['$resource', function ($resource) {
+//    	return $resource('/container/mock/dummy.matrix',
+//    			{},{
+//    				'get': {method:'GET', responseType: "arraybuffer"}
+//    			});
+//    	
+//    	
+//    	
+//    }])
     .service ('DatasetResourceService', ['$resource', function ($resource) {
     	 return $resource('/dataset/:datasetName/data',
 	    	{
@@ -10,6 +40,7 @@ define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus'], functio
 			},{
 				'get': {method:'GET'}
 			});
+    	 
     	 
     	
     }])
@@ -112,7 +143,7 @@ define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus'], functio
     	AnalysisResource.put=postWrapper("put");
     	
     	
-    	return AnalysisResource;    	
+    	return AnalysisResource;    	$promise
     	
     }])
     .service ('SelectionResourceService', ['$resource', '$routeParams', function($resource, $routeParams){
