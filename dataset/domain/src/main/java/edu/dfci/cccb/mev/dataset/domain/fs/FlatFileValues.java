@@ -64,6 +64,11 @@ public class FlatFileValues extends AbstractValues implements Closeable {
     }
   }
 
+  @Override
+  public boolean skipJson() {
+    return true;
+  };
+  
   /* (non-Javadoc)
    * @see
    * edu.dfci.cccb.mev.dataset.domain.contract.Values#get(java.lang.String,

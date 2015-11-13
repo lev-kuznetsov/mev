@@ -85,6 +85,7 @@ public class SimpleDatasetJsonSerializer extends JsonSerializer<Dataset> {
     double min = MAX_VALUE, max = -MAX_VALUE, sum = .0;
     int count = 0;
     jgen.writeArrayFieldStart ("values");
+    
     if (!(values instanceof Iterable<?>)) {
       for (String row : rows) {
         for (String column : columns) {
@@ -95,28 +96,33 @@ public class SimpleDatasetJsonSerializer extends JsonSerializer<Dataset> {
             sum += value;
             count++;
           }
-          jgen.writeStartObject ();
-          jgen.writeStringField ("row", row);
-          jgen.writeStringField ("column", column);
-          jgen.writeNumberField ("value", value);
-          jgen.writeEndObject ();
+          if(!values.skipJson ()){            
+            jgen.writeStartObject ();
+            jgen.writeStringField ("row", row);
+            jgen.writeStringField ("column", column);
+            jgen.writeNumberField ("value", value);
+            jgen.writeEndObject ();
+          }
         }
       }
     } else {
-
+      
       for (Value oValue : (Iterable<Value>) values) {
         double value = oValue.value ();
         min = min > value ? value : min;
         max = max < value ? value : max;
         sum += value;
         count++;
-        jgen.writeStartObject ();
-        jgen.writeStringField ("row", oValue.row ());
-        jgen.writeStringField ("column", oValue.column ());
-        jgen.writeNumberField ("value", value);
-        jgen.writeEndObject ();
+        if(!values.skipJson ()){          
+          jgen.writeStartObject ();
+          jgen.writeStringField ("row", oValue.row ());
+          jgen.writeStringField ("column", oValue.column ());
+          jgen.writeNumberField ("value", value);
+          jgen.writeEndObject ();
+        }
       }
     }
+    
     jgen.writeEndArray ();
     jgen.writeNumberField ("min", min);
     jgen.writeNumberField ("max", max);

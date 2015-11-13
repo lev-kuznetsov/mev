@@ -6,10 +6,11 @@ import lombok.RequiredArgsConstructor;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Value;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
+import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValues;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleValue;
 
 @RequiredArgsConstructor
-public class PresetValuesLogScaleAdapter implements Values, Iterable<Value>, AutoCloseable {
+public class PresetValuesLogScaleAdapter extends AbstractValues implements Values, Iterable<Value>, AutoCloseable {
 
   private final Values values;
   

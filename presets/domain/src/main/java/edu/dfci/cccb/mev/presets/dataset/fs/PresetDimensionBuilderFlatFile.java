@@ -75,7 +75,7 @@ public class PresetDimensionBuilderFlatFile extends AbstractPresetDimensionBuild
       }
       return new SimpleDimension (type, selection.keys (), new ArrayListSelections (), null);
     }else{
-      return build (Dimension.Type.ROW, descriptor);
+      return build (type, descriptor);
     }
   }
   

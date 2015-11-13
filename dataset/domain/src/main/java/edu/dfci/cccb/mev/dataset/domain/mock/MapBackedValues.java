@@ -40,7 +40,12 @@ public class MapBackedValues extends AbstractValues {
   }
 
   private final Map<Coordinate, Double> values;
-
+  
+  @Override
+  public boolean skipJson() {
+    return false;
+  };
+  
   /**
    * 
    */
