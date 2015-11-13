@@ -1,0 +1,27 @@
+{
+  "name": "play-pouch",
+  "homepage": "https://github.com/apartensky/mev",
+  "authors": [
+    "apartensky <apartensky@gmail.com>"
+  ],
+  "description": "trying out pouchdb",
+  "main": "app.js",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "blob-util": "~1.1.2",
+    "q-bower": "~1.0.1",
+    "pouchdb-lru-cache": "~1.1.4",
+    "q": "~2.0.2"
+  }
+}

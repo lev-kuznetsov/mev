@@ -43,3 +43,7 @@ bkp/
 **/.elasticbeanstalk/*
 !**/.elasticbeanstalk/*.cfg.yml
 !**/.elasticbeanstalk/*.global.yml
+
+#Bower 
+**.matrix
+**bower_components/
