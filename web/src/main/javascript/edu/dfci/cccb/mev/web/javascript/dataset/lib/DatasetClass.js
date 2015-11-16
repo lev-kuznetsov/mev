@@ -52,7 +52,7 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 			console.debug("swap: chunks", chunks);
 			db.get("swap").then(function(swap){
 				swap._attachments = chunks;
-				db.put({_id : "swap", _attachments : chunks})
+				db.put(swap)
 				.then(function(response) {
 					self.ready = true;
 					delete datasetRespObj.valuesBuffer;
@@ -61,7 +61,13 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 				})["catch"](function(err){
 					console.log('swap: error put', err);
 				});
-			})
+			})["catch"](function(e){
+				if(e.status===404){
+					db.put({_id: "swap", _attachments: chunks});
+				}else{
+					throw e;
+				}
+			});
 		}
 			
 		function chunkName(index){
@@ -77,28 +83,31 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
         function getChunkOffset(itemIndex){        	        	
         	return itemIndex % self.itemsPerChunk;    	
         }
+        function loadChunkDataView(chunkIndex){
+        	return db.getAttachment("swap", chunkName(chunkIndex))
+    		.then(function(blob){
+    			return blobUtil
+    			.blobToArrayBuffer(blob)
+    			.then(function(arrayBuff){
+			    	ab = arrayBuff;		    	
+			    	var dataview = new DataView(ab);
+			    	if(!lruCache.find(chunkIndex))
+						lruCache.put(chunkIndex, dataview);
+			    	return dataview;
+				});
+			});
+        }
         function getByIndex(itemIndex){
         	
         	var chunkIndex = getChunkForIndex(itemIndex);
         	var chunkOffset = getChunkOffset(itemIndex);        	
         	var dataview = lruCache.get(chunkIndex);        	        	
         	if(dataview){
-        		return q.when(dataview.getFloat64(chunkOffset*Float64Array.BYTES_PER_ELEMENT, false));
+        		return dataview.getFloat64(chunkOffset*Float64Array.BYTES_PER_ELEMENT, false);
         	}else{        		
-//        		console.debug("swap: miss ", itemIndex, chunkIndex);
-        		return db.getAttachment("swap", chunkName(chunkIndex))
-        		.then(function(blob){
-        			return blobUtil
-        			.blobToArrayBuffer(blob)
-        			.then(function(arrayBuff){
-				    	ab = arrayBuff;		    	
-				    	var dataview = new DataView(ab);	    					    	
-				    	return dataview;
-					});
-				}).then(function(dataview){
-					if(!lruCache.find(chunkIndex))
-						lruCache.put(chunkIndex, dataview);
-					return q.when(dataview.getFloat64(chunkOffset*Float64Array.BYTES_PER_ELEMENT, false));
+        		console.debug("swap: miss ", itemIndex, chunkIndex);
+        		loadChunkDataView().then(function(dataview){					
+					return dataview.getFloat64(chunkOffset*Float64Array.BYTES_PER_ELEMENT, false);
 				})["catch"](function (err) {
 				  console.log("swap getAttachment error", err);
 				});
@@ -111,18 +120,34 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
     	    var c = ds.columnLabels2Indexes[labelPair[1]];
     	    var itemIndex = getItemIndex(r, c);
     	    if(self.ready)
-    	    	return getByIndex(itemIndex);
+    	    	return q.when(getByIndex(itemIndex));
     	    else
     	    	return q.when(datasetRespObj.dataview.getFloat64((r*ds.column.keys.length+c)*Float64Array.BYTES_PER_ELEMENT, false));    		
         }
-        function getSome(labelPairs){
-        	
-        	for(var i=0; i<labelPairs.length; i++){
-        		var r = ds.rowLabels2Indexes[labelPairs[i][0]];
-        	    var c = ds.columnLabels2Indexes[labelPairs[i][1]];
-        	    var index = getItemIndex(r,c);
-        	    
+        function getSome(shownCells){
+        	var chunkPromises = [];
+        	var chunkIndexes = {}
+        	for(var i=0; i<shownCells.length; i++){
+//        		var r = ds.rowLabels2Indexes[labelPairs[i][0]];
+//        	    var c = ds.columnLabels2Indexes[labelPairs[i][1]];
+        		var r = ds.rowLabels2Indexes[shownCells[i].row];
+        	    var c = ds.columnLabels2Indexes[shownCells[i].column];
+        		var index = getItemIndex(r,c);
+        		shownCells[i].index = index;
+        		var chunkIndex = getChunkForIndex(index);        		
+        		if(!chunkIndexes[chunkIndex] && !lruCache.find(chunkIndex)){        			
+        			chunkPromises.push(loadChunkDataView(chunkIndex));
+        			chunkIndexes[chunkIndex]=true;
+        		}
         	}
+        	return q.all(chunkPromises)      		
+        	.then(function(){
+        		for(var i=0; i<shownCells.length; i++){
+        			shownCells[i].value = getByIndex(shownCells[i].index); 
+        		}
+        		return shownCells;
+        	});
+        	
         }
         return {        	
         	getByKey: getByKey,  

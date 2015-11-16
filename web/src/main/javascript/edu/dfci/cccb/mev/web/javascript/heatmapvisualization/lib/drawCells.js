@@ -18,55 +18,62 @@ define(['./cellFilter', 'd3', 'qtip', 'q'], function(cellFilter, d3, qtip, q){
 		    });
 		});
 		
+		ds.expression.getSome(self.shownCells).then(function(shownCells){
+			// DATA JOIN
+			//Join new data with old elements, if any.
+			var domCells = self.DOM.heatmapCells.selectAll('rect');
+			var allCells = domCells.data(shownCells, function(k){
+				return k.row+";"+k.column;
+			});
+
+			// UPDATE
+			// Update old elements as needed here 
+			//	... nothing to update for existing cells
+			
+			// ENTER
+			// Create new elements as needed.
+			var newCells = allCells.enter();
+			
+			var newDom = newCells.append('rect')
+				.attr({
+					x : function(d){ return self.scales.cells.xScale(d.column);},
+					y : function(d){ return self.scales.cells.yScale(d.row);},
+					height: self.params.cell.height - self.params.cell.padding,
+					width: self.params.cell.width - self.params.cell.padding,
+					fill: function(d){ return self.scales.cells.colorScale(d.value)},
+//					fill: function(d){
+//						var node = this;
+//						ds.expression.tryGet([d.row, d.column]).then(function(value){						
+//							node.setAttribute("fill", self.scales.cells.colorScale(value));
+//						});
+////						return self.scales.cells.colorScale(d.value);
+//						return "";
+//					},
+					'cell-value': function(d) { return d.value;},
+					'cell-column': function(d) { return d.column;},
+					'cell-row': function(d) { return d.row;},
+			});
+			console.debug("swap:", newDom.size());
+			
+//			newCells.attr({fill: "blue"});
+			// ENTER + UPDATE
+			// Appending to the enter selection expands the update selection to include
+			// entering elements; so, operations on the update selection after appending to
+			// the enter selection will apply to both entering and updating nodes.
+			//	... nothing to update for all cells
+			
+	        // EXIT
+	        // Remove old elements as needed.
+			var deleteCells = allCells.exit(); 
+			deleteCells.remove();
+		});
 //		self.shownCells = labelPairs.map(function(pair){ return ds.expression.get(pair);});
 		
 //		ds.expression.getAll(labelPairs).then(function(shownCells){
 //			
 //		});
 //		
-		// DATA JOIN
-		//Join new data with old elements, if any.
-		var domCells = self.DOM.heatmapCells.selectAll('rect');
-		var allCells = domCells.data(self.shownCells, function(k){
-			return k.row+";"+k.column;
-		});
-
-		// UPDATE
-		// Update old elements as needed here 
-		//	... nothing to update for existing cells
 		
-		// ENTER
-		// Create new elements as needed.
-		var newCells = allCells.enter();
-		newCells.append('rect')
-			.attr({
-				x : function(d){ return self.scales.cells.xScale(d.column);},
-				y : function(d){ return self.scales.cells.yScale(d.row);},
-				height: self.params.cell.height - self.params.cell.padding,
-				width: self.params.cell.width - self.params.cell.padding,
-				fill: function(d){
-					var node = this;
-					ds.expression.tryGet([d.row, d.column]).then(function(value){						
-						node.setAttribute("fill", self.scales.cells.colorScale(value));
-					});
-//					return self.scales.cells.colorScale(d.value);
-					return "";
-				},
-				'cell-value': function(d) { return d.value;},
-				'cell-column': function(d) { return d.column;},
-				'cell-row': function(d) { return d.row;},
-		});
-		
-		// ENTER + UPDATE
-		// Appending to the enter selection expands the update selection to include
-		// entering elements; so, operations on the update selection after appending to
-		// the enter selection will apply to both entering and updating nodes.
-		//	... nothing to update for all cells
-		
-        // EXIT
-        // Remove old elements as needed.
-		var deleteCells = allCells.exit(); 
-		deleteCells.remove();
 		
 		var rowLabels = self.DOM.labels.row.selectAll('text').data(labels.row, function(k){return k;}),
 		colLabels = self.DOM.labels.column.selectAll('text').data(labels.column, function(k){return k;});
