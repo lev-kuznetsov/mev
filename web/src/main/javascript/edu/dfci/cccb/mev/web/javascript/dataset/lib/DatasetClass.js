@@ -50,16 +50,18 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 				console.debug("chunk", i);
 			};
 			console.debug("swap: chunks", chunks);
-			
-			db.put({_id : "swap", _attachments : chunks})
-			.then(function(response) {
-				self.ready = true;
-				delete datasetRespObj.valuesBuffer;
-				delete datasetRespObj.dataview;
-				console.log('swap: datasetName successfull!', response);
-			})["catch"](function(err){
-				console.log('swap: error put', err);
-			});
+			db.get("swap").then(function(swap){
+				swap._attachments = chunks;
+				db.put({_id : "swap", _attachments : chunks})
+				.then(function(response) {
+					self.ready = true;
+					delete datasetRespObj.valuesBuffer;
+					delete datasetRespObj.dataview;
+					console.log('swap: datasetName successfull!', response);
+				})["catch"](function(err){
+					console.log('swap: error put', err);
+				});
+			})
 		}
 			
 		function chunkName(index){
@@ -113,8 +115,18 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
     	    else
     	    	return q.when(datasetRespObj.dataview.getFloat64((r*ds.column.keys.length+c)*Float64Array.BYTES_PER_ELEMENT, false));    		
         }
+        function getSome(labelPairs){
+        	
+        	for(var i=0; i<labelPairs.length; i++){
+        		var r = ds.rowLabels2Indexes[labelPairs[i][0]];
+        	    var c = ds.columnLabels2Indexes[labelPairs[i][1]];
+        	    var index = getItemIndex(r,c);
+        	    
+        	}
+        }
         return {        	
-        	getByKey: getByKey,        	
+        	getByKey: getByKey,  
+        	getSome: getSome,
         };
     };
 	//Constructor :: [String], [DatasetResponseObj] -> $Function [Dataset]
@@ -157,6 +169,7 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 			min: datasetRespObj.min,
 			avg: datasetRespObj.avg,
 			tryGet: this.valueStore.getByKey,
+			getSome: this.valueStore.getSome,
 //			tryGet: function(labelPair){
 //				var deferred = q.defer();				
 //				setTimeout(function(){
