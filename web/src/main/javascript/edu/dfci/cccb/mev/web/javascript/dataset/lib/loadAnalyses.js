@@ -19,9 +19,10 @@ define(['./AnalysisClass'], function(AnalysisClass){
                 }
             	return undefined;
             }
-            checkDefaultAnalysis({type: "histogram", name: "Histogram"});
-            checkDefaultAnalysis({type: "genesd", name: "GeneSD"});
-            checkDefaultAnalysis({type: "genemad", name: "GeneMAD"});
+//We now load default analyses after switching to the Dataset view
+//            checkDefaultAnalysis({type: "histogram", name: "Histogram"});
+//            checkDefaultAnalysis({type: "genesd", name: "GeneSD"});
+//            checkDefaultAnalysis({type: "genemad", name: "GeneMAD"});
             return defaultAnalyses;
         }).then(function(response){
         	return self.$q.all(defaultAnalyses).then(function(response){

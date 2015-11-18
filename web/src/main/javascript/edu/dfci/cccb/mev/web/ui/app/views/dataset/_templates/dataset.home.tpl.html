@@ -21,7 +21,7 @@
 <!-- 							</div> -->
 <!-- 						</mui-dashboard-item> -->
 						<mui-dashboard-item ng-repeat="(id, item) in dashboard.items" mui-options='{}' name="{{item.name}}" title="{{item.title || item.name}}"> 
- 							<div any-analysis="{{item.name}}" any-template-url="{{item.templateUrl}}" any-view-model="{{item.viewModel}}"></div> 
+ 							<div any-analysis="{{item.name}}" any-analysis-launch="item.launch" any-template-url="{{item.templateUrl}}" any-view-model="{{item.viewModel}}"></div> 
 						</mui-dashboard-item>											
 <!-- 						<mui-dashboard-item mui-options='{"isRowMax": true}' name="hcl" title="hcl" > -->
 <!-- 							<div any-analysis="hcl"></div> -->
