@@ -9,8 +9,6 @@ import java.net.URL;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.sql.DataSource;
 
 import lombok.extern.log4j.Log4j;
 
@@ -32,20 +30,15 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsConfigurationMain;
 import edu.dfci.cccb.mev.annotation.server.configuration.ProbeAnnotationsFilesConfiguration;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.presets.contract.PresetDatasetBuilder;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
-import edu.dfci.cccb.mev.presets.dataset.fs.PresetDatasetBuilderFlatFileNoVals;
-import edu.dfci.cccb.mev.presets.dataset.fs.PresetDimensionBuilderFlatFile;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
 import edu.dfci.cccb.mev.presets.util.timer.Timer;
-import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
-import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
 import edu.dfci.cccb.mev.web.configuration.DispatcherConfiguration;
 import edu.dfci.cccb.mev.web.configuration.PersistenceConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
