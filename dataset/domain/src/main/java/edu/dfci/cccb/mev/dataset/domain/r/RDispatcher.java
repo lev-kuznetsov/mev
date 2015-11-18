@@ -17,7 +17,9 @@ package edu.dfci.cccb.mev.dataset.domain.r;
 import static java.lang.Math.abs;
 import static java.util.UUID.randomUUID;
 
+import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -35,7 +37,6 @@ import lombok.extern.log4j.Log4j;
 
 import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.REXPMismatchException;
-import org.rosuda.REngine.REXPString;
 import org.rosuda.REngine.Rserve.RConnection;
 import org.rosuda.REngine.Rserve.RSession;
 import org.rosuda.REngine.Rserve.RserveException;
@@ -78,16 +79,21 @@ public class RDispatcher {
   }
 
   @SneakyThrows (JsonProcessingException.class)
-  private RSession define (String name, Object value, RSession to, StringBuffer command) throws RserveException {
-    UUID unique = randomUUID ();
-    String p = "p." + abs (unique.getMostSignificantBits ()) + "." + abs (unique.getLeastSignificantBits ());
+  private RSession define (String name, Object value, RSession to, StringBuffer command) throws RserveException,
+                                                                                        IOException {
+    // UUID unique = randomUUID ();
+    // String p = "p." + abs (unique.getMostSignificantBits ()) + "." + abs
+    // (unique.getLeastSignificantBits ());
     RConnection c = to.attach ();
-    c.assign (p, new REXPString (mapper.writeValueAsString (value)));
+    try (OutputStream target = new BufferedOutputStream (c.createFile (name), 1024*1024)) {
+      mapper.writeValue (target, value);
+    }
+    // c.assign (p, new REXPString (mapper.writeValueAsString (value)));
     log.debug ("Defining key '" + name + "' for value " + value);
-    command.append ("define (").append (name)
-           .append (" = function (fromJson) { ")
-           .append ("r <- fromJson (").append (p).append ("); rm (\"").append (p).append ("\", envir = .GlobalEnv); r")
-           .append (" }, scope = singleton, binder = binder); ");
+    command.append ("define (").append (name).append (" = function () jsonlite::fromJSON (sprintf (\"%s\", paste (readLines ('").append (name).append("'), collapse = \",\"))), scope = singleton, binder = binder); ");
+//    command.append ("define (").append (name)
+//           .append (" = function () { r <- jsonlite::stream_in (file ('")
+//           .append (name).append ("')); if (length (r) == 1) r[ 1, 1 ] else r; } , scope = singleton, binder = binder); ");
     return c.detach ();
   }
 
