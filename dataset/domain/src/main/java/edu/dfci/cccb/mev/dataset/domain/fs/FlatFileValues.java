@@ -19,8 +19,10 @@ import static java.nio.channels.FileChannel.MapMode.READ_ONLY;
 
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
 import java.util.ArrayList;
@@ -69,6 +71,9 @@ public class FlatFileValues extends AbstractValues implements Closeable {
     return true;
   };
   
+  public InputStream asInputStream() throws FileNotFoundException{
+    return new FileInputStream (this.file);
+  }
   /* (non-Javadoc)
    * @see
    * edu.dfci.cccb.mev.dataset.domain.contract.Values#get(java.lang.String,

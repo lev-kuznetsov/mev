@@ -21,7 +21,7 @@ import static java.lang.reflect.Proxy.newProxyInstance;
 import static java.util.Arrays.asList;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 import static org.springframework.context.annotation.ScopedProxyMode.NO;
-import static org.springframework.http.MediaType.TEXT_PLAIN;
+import static org.springframework.http.MediaType.*;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 import static org.springframework.web.servlet.HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE;
@@ -41,6 +41,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
@@ -56,6 +58,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListWorkspace;
+import edu.dfci.cccb.mev.dataset.rest.assembly.binary.FlatFileValuesBinaryMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.DimensionTypeJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDatasetJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDimensionJsonSerializer;
@@ -144,7 +147,8 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   @Override
   public void addHttpMessageConverters (List<HttpMessageConverter<?>> converters) {
     converters.addAll (asList (new DatasetTsvMessageConverter (),
-                               new SelectionsTsvMessageConverter ()));
+                               new SelectionsTsvMessageConverter (),
+                               new FlatFileValuesBinaryMessageConverter()));
   }
 
   /* (non-Javadoc)
@@ -177,6 +181,7 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   @Override
   public void configureContentNegotiation (ContentNegotiationConfigurer configurer) {
     configurer.mediaType (TSV_EXTENSION, TSV_MEDIA_TYPE)
+              .mediaType ("binary", APPLICATION_OCTET_STREAM)
               .mediaType ("text", TEXT_PLAIN);
   }
 
