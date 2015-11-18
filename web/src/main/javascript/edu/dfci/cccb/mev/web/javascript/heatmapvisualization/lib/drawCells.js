@@ -66,6 +66,8 @@ define(['./cellFilter', 'd3', 'qtip', 'q'], function(cellFilter, d3, qtip, q){
 	        // Remove old elements as needed.
 			var deleteCells = allCells.exit(); 
 			deleteCells.remove();
+		})["catch"](function(e){
+			throw e;
 		});
 //		self.shownCells = labelPairs.map(function(pair){ return ds.expression.get(pair);});
 		

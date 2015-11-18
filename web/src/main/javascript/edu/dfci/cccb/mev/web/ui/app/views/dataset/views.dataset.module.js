@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 define(["ng", 
         "PouchDB",
         "./_controllers/DatasetViewVM", 
@@ -17,7 +17,7 @@ function(ng,
 		DatasetProjectViewVM,
 		DatasetHomeVM,
 		DatasetHeatmapVMFactory,
-		AnnotationsViewVM){
+		AnnotationsViewVM){	
 	var module=ng.module("mui.views.dataset", ["mui.views.dataset.columnSets", 
 	                                           "mui.views.dataset.rowSets",
 	                                           "mui.views.dataset.SelectionSets",
@@ -58,9 +58,9 @@ function(ng,
 			   	     		footerUrl: "app/views/dataset/_templates/dataset.footer.tpl.html",
 			   	     	},
 	   	     			resolve:{
-		   	     			project: ["$stateParams", "ProjectFactory", "DatasetResourceServiceMock", "$q", "$http", function($stateParams, ProjectFactory, DatasetResourceService, $q, $http){
+	   	     				datasetResource: ["$stateParams", "DatasetResourceService", "$q", "$http", function($stateParams, DatasetResourceService, $q, $http){
 	   	     					
-		   	     				var dataset = DatasetResourceService.get({
+		   	     				var datasetResource = DatasetResourceService.get({
 		   	     					datasetName: $stateParams.datasetId
 		   	     				}, function(response){
 		   	     				    console.debug("**** Loaded Dataset", $stateParams.datasetId, response);
@@ -70,25 +70,20 @@ function(ng,
 		   	     					console.debug("**** Failed to Load Dataset", $stateParams.datasetId, error);
 		   	     				});
 	   	     					
-		   	     				var valuesPromise = undefined;
-
-		   	     				return $q.all([dataset.$promise, 
-   	     				           $http.get('/container/mock/gbm.matrix', {responseType: "arraybuffer"}).then(function(resposne) {
-				   	    	        	var ab = resposne.data;
-				   	      				
-				   	      				var dataview = new DataView(ab);
-				   	      				console.debug("array", ab.byteLength);				   	      				
-				   	      				dataset.valuesBuffer = ab;
-				   	      				dataset.dataview = dataview;
-				   	      				return dataset;
-		   	     					})]).then(function(response){
-		   	     					var project = ProjectFactory($stateParams.datasetId, dataset);	   	     					
-		   	     					console.debug("***Project", project);	   	     					
-		   	     					return project;
-	   	     					});	   	     							   	     				;		   	     				
+		   	     				var valuesPromise = undefined;		   	     				
+		   	     				return datasetResource;
+		   	     					   	     							   	     				;	   	     					
 	   	     				}],
-	   	     				dataset: ["$state", "$stateParams", "DatasetResourceService", "project",
-	   	     				function($state, $stateParams, DatasetResourceService, project){
+	   	     				project: ["$state", "$stateParams", "datasetResource", "ProjectFactory",
+	   	     				function($state, $stateParams, datasetResource, ProjectFactory){
+	   	     						return datasetResource.$promise.then(function(response){
+			   	     					var project = ProjectFactory($stateParams.datasetId, datasetResource);	   	     					
+			   	     					console.debug("***Project", project);	   	     					
+			   	     					return project;
+			   	     				});	   	     					
+	   	     				}],	
+	   	     				dataset: ["$state", "$stateParams", "project", 
+	   	     				function($state, $stateParams, project){
 	   	     					console.info("***resolving dataset", $stateParams.datasetId, $stateParams, $state, project);
 	   	     					return project.dataset
 	   	     					.loadAnalyses().then(function(){
