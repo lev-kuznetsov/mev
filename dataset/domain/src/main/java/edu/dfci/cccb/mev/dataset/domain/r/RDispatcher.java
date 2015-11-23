@@ -65,7 +65,7 @@ public class RDispatcher {
 
   @Inject
   public void configureScheduler (@Rserve int concurrency) {
-    dispatcher = Executors.newFixedThreadPool (2);
+    dispatcher = Executors.newFixedThreadPool (concurrency);
   }
 
   public void schedule (final Object job) {
@@ -85,7 +85,7 @@ public class RDispatcher {
     // String p = "p." + abs (unique.getMostSignificantBits ()) + "." + abs
     // (unique.getLeastSignificantBits ());
     RConnection c = to.attach ();
-    try (OutputStream target = new BufferedOutputStream (c.createFile (name), 1024*1024)) {
+    try (OutputStream target = new BufferedOutputStream (c.createFile (name), 1024*1024*100)) {
       mapper.writeValue (target, value);
     }
     // c.assign (p, new REXPString (mapper.writeValueAsString (value)));

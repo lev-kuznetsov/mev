@@ -18,6 +18,7 @@ import static edu.dfci.cccb.mev.dataset.domain.support.LifecycleUtilities.destro
 
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,7 +36,7 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalyses;
 @ToString
 public class ArrayListAnalyses extends AbstractAnalyses implements AutoCloseable {
 
-  private List<Analysis> analyses = new ArrayList<> ();
+  private List<Analysis> analyses = Collections.synchronizedList (new ArrayList<Analysis> ());
 
   /* (non-Javadoc)
    * @see
