@@ -28,7 +28,9 @@ public class PcaBuilder extends AbstractDispatchedRAnalysisBuilder<PcaBuilder, P
 
   @Callback
   private void setName () {
-    if (result != null)
+    if (result != null){      
       result.name (name ());
+      result.type (type());
+    }
   }
 }

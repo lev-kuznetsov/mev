@@ -32,7 +32,9 @@ var REQUIREJS_CONFIG = (function(){
 			resizeSensor: [paths.vendor("marcj/css-element-queries/ResizeSensor")],
 			angularRoute : [ paths.vendor('angularjs/angular-route') ],
 			jqueryUi : ['//code.jquery.com/ui/1.9.2/jquery-ui.min', 'jquery-ui/1.9.2/jquery-ui.min'],
-			d3 : [ '//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3' ],
+			d3 : [ '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.9/d3' ],
+			nvd3: ['//cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3'],
+			angularNvd3 : [ paths.vendor('angular-nvd3/dist/angular-nvd3') ],
 		    retina : [ '/library/webjars/retinajs/0.0.2/retina' ],
 		    notific8 : [ 'notific8.min' ],
 		    ngGrid : [ '//cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.7/ng-grid', '/container/javascript/ng-grid-2.0.7.min',  ],
@@ -49,7 +51,8 @@ var REQUIREJS_CONFIG = (function(){
 			PouchDB: ["//cdn.jsdelivr.net/pouchdb/5.1.0/pouchdb.min"],
 			blobUtil: [paths.vendor("blob-util/dist/blob-util")],
 			pouchDbLru: [paths.vendor("pouchdb-lru-cache/dist/pouchdb.lru-cache")],
-			jsLru: [paths.vendor("rsms/js-lru/lru")]
+			jsLru: [paths.vendor("rsms/js-lru/lru")],
+			
 		},		
 		map: {
 	        '*': {
@@ -144,7 +147,14 @@ var REQUIREJS_CONFIG = (function(){
 		    resizeSensor: {
 		    	deps: ["elementQueries"],
 		    	exports: "ResizeSensor"
-		    },		    
+		    },		
+		    nvd3: {
+		    	deps: ["d3"],
+		    	exports: "nv"
+		    },
+		    angularNvd3: {
+		    	deps: ["angular", "nvd3"]		    	
+		    }
 //		    jsDataAngular: {
 //		    	deps: ['ng', 'jsData']
 //		    }
