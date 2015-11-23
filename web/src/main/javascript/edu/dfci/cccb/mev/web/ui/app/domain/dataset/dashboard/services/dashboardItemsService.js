@@ -7,10 +7,10 @@ define([], function(){
 				templateUrl: "app/views/dataset/_templates/dataset.heatmap.tpl.html",
 				viewModel: "DatasetHeatmapVMFactory"
 			};
-			this["Histogram"] = {
-				name: "Histogram",				
-				launch: {analysisType: "histogram", analysisName: "Histogram"}					
-			};
+//			this["Histogram"] = {
+//				name: "Histogram",				
+//				launch: {analysisType: "histogram", analysisName: "Histogram"}					
+//			};
 			this["GeneSD"] = {
 				name: "GeneSD",
 				launch: {analysisType: "genesd", analysisName: "GeneSD"}
