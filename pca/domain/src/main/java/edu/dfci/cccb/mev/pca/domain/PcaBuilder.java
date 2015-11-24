@@ -8,10 +8,11 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
 @R ("function (dataset) {\n"
     + "pca <- prcomp (t (data.matrix (dataset)));\n"
     + "list (sdev = pca$sdev,"
-    + "      center = as.list (pca$center),"
-    + "      scale = pca$scale,"
-    + "      x = apply (as.data.frame (t (pca$x)), 2, function (x) as.list (x)),"
-    + "      rotation = apply (as.data.frame (t (pca$rotation)), 2, function (x) as.list (x)));" +
+//    + "      center = as.list (pca$center),"
+//    + "      scale = pca$scale,"
+    + "      x = apply (as.data.frame (t (pca$x)), 2, function (x) as.list (x))"
+//    + "      rotation = apply (as.data.frame (t (pca$rotation)), 2, function (x) as.list (x))"
+    + ");" +
     "}")
 public class PcaBuilder extends AbstractDispatchedRAnalysisBuilder<PcaBuilder, Pca> {
 
