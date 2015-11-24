@@ -87,6 +87,12 @@
       <version>${jackson.version}</version>
     </dependency>
 
+	<!-- REXP Proto -->
+	<dependency>
+		<groupId>org.jpmml</groupId>
+		<artifactId>proto-rexp</artifactId>
+		<version>1.0.0</version>
+	</dependency>
   </dependencies>
 
   <repositories>
