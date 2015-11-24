@@ -21,7 +21,8 @@ import static java.lang.reflect.Proxy.newProxyInstance;
 import static java.util.Arrays.asList;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 import static org.springframework.context.annotation.ScopedProxyMode.NO;
-import static org.springframework.http.MediaType.*;
+import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM;
+import static org.springframework.http.MediaType.TEXT_PLAIN;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 import static org.springframework.web.servlet.HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE;
@@ -32,6 +33,8 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
@@ -41,8 +44,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
@@ -50,6 +51,9 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 
 import com.fasterxml.jackson.databind.JsonSerializer;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 
 import edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
@@ -65,7 +69,6 @@ import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDimensionJsonSe
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleSelectionJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.SelectionsTsvMessageConverter;
-import edu.dfci.cccb.mev.dataset.rest.google.GoogleWorkspace;
 import edu.dfci.cccb.mev.dataset.rest.google.SecurityContext;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver;
 import edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver;
@@ -82,6 +85,19 @@ import edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgum
 @Import ({ DatasetDomainBuildersConfiguration.class })
 public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
 
+  private final LoadingCache<String, Workspace> googleWorkspaces =
+                                                                   CacheBuilder.newBuilder ()
+                                                                               .maximumSize (Long.MAX_VALUE)
+                                                                               .expireAfterWrite (Long.MAX_VALUE,
+                                                                                                  TimeUnit.DAYS)
+                                                                               .build (new CacheLoader<String, Workspace> () {
+
+                                                                                 @Override
+                                                                                 public Workspace load (String arg0) throws Exception {
+                                                                                   return nonCloseableProxy (new ArrayListWorkspace ());
+                                                                                 }
+                                                                               });
+
   // Domain conversational objects
 
   @Bean
@@ -89,7 +105,11 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   public Workspace workspace () {
     log.debug ("Supplying " + (SecurityContext.userSignedIn () ? "Google" : "regular") + " workspace");
     if (SecurityContext.userSignedIn ())
-      return new GoogleWorkspace ();
+      try {
+        return googleWorkspaces.get (SecurityContext.getCurrentUser ().getId ());
+      } catch (ExecutionException e) {
+        throw new RuntimeException (e);
+      }
     else
       return new ArrayListWorkspace ();
   }
@@ -148,7 +168,7 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   public void addHttpMessageConverters (List<HttpMessageConverter<?>> converters) {
     converters.addAll (asList (new DatasetTsvMessageConverter (),
                                new SelectionsTsvMessageConverter (),
-                               new FlatFileValuesBinaryMessageConverter()));
+                               new FlatFileValuesBinaryMessageConverter ()));
   }
 
   /* (non-Javadoc)
@@ -191,7 +211,7 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
       return null;
 
     if (!(AutoCloseable.class.isAssignableFrom (of.getClass ()) || Closeable.class.isAssignableFrom (of.getClass ())))
-      return of; 
+      return of;
 
     return (T) newProxyInstance (of.getClass ().getClassLoader (), new HashSet<Class<?>> () {
       private static final long serialVersionUID = 1L;
