@@ -12,7 +12,7 @@ define([], function(){
 				}
 			},
 			"dataset.column": {
-				label: "Column Sets", 
+				label: "Sample Sets", 
 				state: {
 					name: ".dataset.columnSets", 
 					getParams: function(node){
@@ -31,7 +31,7 @@ define([], function(){
 			},
 			
 			"dataset.row": {
-				label: "Row Sets",
+				label: "Gene/Probe Sets",
 				state: {
 					name: ".dataset.rowSets", 
 					getParams: function(node){
