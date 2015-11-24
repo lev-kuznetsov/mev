@@ -1,0 +1,25 @@
+{
+    "row": {
+        "type": "row",
+        "keys": [
+            "geneA",
+            "geneB",
+            "geneC"
+        ],
+        "selections": []
+    },
+    "column": {
+        "type": "column",
+        "keys": [
+            "sample1",
+            "sample2",
+            "sample3",
+            "sample4"
+        ],
+        "selections": []
+    },
+    "values": [],
+    "min": 0.1,
+    "max": 0.9,
+    "avg": 0.43500000000000005
+}

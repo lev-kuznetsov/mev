@@ -3,6 +3,7 @@ package edu.dfci.cccb.mev.pca.rest.controllers;
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_URL_ELEMENT;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
 import java.util.Map;
@@ -11,6 +12,8 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -32,5 +35,11 @@ public class PcaController {
   @ResponseStatus (OK)
   public void start (@RequestBody Map<String, String> params) throws DatasetException {
     data.analyses ().put (pca.get ().dataset (data).name (params.get ("name")).build ());
+  }
+  
+  @RequestMapping (value = "/analyze/pca/{name}", method = PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseStatus (OK)
+  public void put (final @PathVariable ("name") String name) throws DatasetException {
+    data.analyses ().put (pca.get ().dataset (data).name (name).build ());
   }
 }

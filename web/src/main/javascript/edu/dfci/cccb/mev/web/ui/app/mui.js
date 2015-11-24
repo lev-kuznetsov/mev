@@ -9,7 +9,8 @@ define(["lodash"], function(_){
 				provider: "provider",
 				controller: "controller",
 				value: "value",
-				constant: "constant"
+				constant: "constant",
+				animation: "animation"
 		};
 		
 		function MevError(msg){

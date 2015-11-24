@@ -1,0 +1,40 @@
+<html >
+<head>
+<meta charset="utf-8">  <!-- it's important for d3.js -->
+
+<link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css">
+<style>
+.brush {
+    fill: blue;
+    stroke: blue;
+    fill-opacity: 0.2;
+    stroke-opacity: 0.8;
+}
+path.nv-point.selected,
+cirvle.selected {
+  stroke: red;
+  fill: red;
+}
+</style>
+
+<script src="bower_components/crossfilter/crossfilter.js"></script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/d3/d3.js"></script>
+<script src="bower_components/d3-tip/index.js"></script>
+<link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
+<script src="bower_components/nvd3/build/nv.d3.js"></script> <!-- or use another assembly -->
+<script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+
+<script src="scatterPlotExample.js"></script>
+
+</head>
+<body ng-app="mainApp.controllers">
+<div ng-controller="scatterChartCtrl">
+<nvd3 options="options" data="data"></nvd3>
+<button ng-click="addBrush()">add brush</button>
+<button ng-click="removeBrush()">remove brush</button>
+</div>
+
+</body>
+</html>

@@ -8,6 +8,7 @@ define([], function(){
 			this.dataset = scope.muiDataset;
 			this.items = scope.muiItems;
 			this.key = scope.muiKeyName || "id";
+			this.dimension = scope.muiDimension || "row";
 			this.getId = function(){
 				return "selectionAdd" + self.analysis.name + self.target; 
 			};
@@ -26,11 +27,11 @@ define([], function(){
 
                 self.dataset.selection.post({
                         datasetName: self.dataset.datasetName,
-                        dimension: "row"
+                        dimension: self.dimension
 
                     }, selectionData,
                     function (response) {
-                        self.dataset.resetSelections('row');
+                        self.dataset.resetSelections(self.dimension);
                         var message = "Added " + self.selectionParams.name + " as new Selection!";
                         var header = "Heatmap Selection Addition";
 
@@ -53,7 +54,8 @@ define([], function(){
 				muiAnalysis: "=",
 				muiDataset: "=",
 				muiItems: "=",
-				muiKeyName: "@"
+				muiKeyName: "@",
+				muiDimension: "@"
 			},
 //			template: "<a class=\"btn\" data-target=\"#{{vm.getId()}}\" data-toggle=\"modal\"></i> Create Selections</a>",
 			templateUrl: "app/widgets/analysis/analysisMenu/btnCreateSelection/btnCreateSelection.tpl.html",

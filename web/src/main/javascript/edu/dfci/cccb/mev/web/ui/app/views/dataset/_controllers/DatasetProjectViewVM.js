@@ -29,6 +29,13 @@ define(["ng", "lodash"], function(ng, _){
             }
         });
 		
+		function isAnalysisInDashbaord(analysis){
+			return _.find(project.dataset.dashboardItems, function(item){
+				return item.name === analysis.name;
+			});
+			
+		}
+		
 		$scope.$on("ui:projectTree:nodeSelected", function($event, node){
 			that.node=node;			
 			
@@ -49,8 +56,12 @@ define(["ng", "lodash"], function(ng, _){
 				if(!analysis.params)
 					analysis.params=data;
 				
-				console.debug("DatasetProjectViewVM onAnalysisSuccess", type, name, analysis);				
-				$state.go("root.dataset.analysis", {analysisType: AnalysisTypes.reverseLookup[type], analysisId: name});
+				console.debug("DatasetProjectViewVM onAnalysisSuccess", type, name, analysis);	
+				if(isAnalysisInDashbaord(analysis))
+					console.debug("dashbaord: analysis is in dashbaord - Refresh!!");
+				else
+					$state.go("root.dataset.analysis", {analysisType: AnalysisTypes.reverseLookup[type], analysisId: name});
+				
 			});			
         });
 		AnalysisEventBus.onAnalysisLoadedAll($scope, function(){
@@ -61,6 +72,15 @@ define(["ng", "lodash"], function(ng, _){
 		$scope.$on('SeletionAddedEvent', function(event, dimensionType){
       	    dataset.resetSelections(dimensionType);      	        	  
          });
+		
+		_.forEach(project.dataset.dashboardItems, function(item){
+			if(item.launch && 
+			!_.find(project.dataset.analyses, function(analysis){return analysis.name === item.launch.analysisName;})){
+				var params = _.extend(item.launch, {datasetName: project.dataset.datasetName});
+				console.debug("dashbaord: launching", item, params);
+				project.dataset.analysis.put(params, {});
+			}
+		});
 
 	};
 	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "dataset", "project", "AnalysisEventBus", "AnalysisTypes"];

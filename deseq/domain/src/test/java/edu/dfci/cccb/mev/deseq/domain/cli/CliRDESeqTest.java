@@ -17,6 +17,7 @@ package edu.dfci.cccb.mev.deseq.domain.cli;
 
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static java.util.Arrays.asList;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Properties;
@@ -26,6 +27,7 @@ import javax.script.ScriptEngineManager;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
@@ -47,7 +49,7 @@ import edu.dfci.cccb.mev.deseq.domain.simple.StatelessScriptEngineFileBackedDESe
 @Log4j
 public class CliRDESeqTest {
 
-  @Test
+  @Test @Ignore
   public void test () throws Exception {
     try (InputStream inp = getClass ().getResourceAsStream ("/test_data.tsv");
          ByteArrayOutputStream copy = new ByteArrayOutputStream ()) {

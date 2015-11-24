@@ -25,10 +25,12 @@ import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 
 /**
  * @author levk
@@ -51,4 +53,15 @@ public class DataController {
                  + asList (dataset.getClass ().getInterfaces ()));
     return dataset;
   }
+  
+  @RequestMapping(method=GET, value="/values", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
+  public Values values() throws Exception{
+    if (log.isDebugEnabled ())
+      log.debug ("Returning VALUES "
+                 + dataset + " of type " + dataset.getClass () + " implementing "
+                 + asList (dataset.getClass ().getInterfaces ()));
+    
+    return dataset.values();       
+  }
+  
 }

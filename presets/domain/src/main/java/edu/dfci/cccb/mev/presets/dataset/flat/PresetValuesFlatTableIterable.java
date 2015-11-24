@@ -38,12 +38,13 @@ import com.google.common.cache.LoadingCache;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Value;
+import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValues;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleValue;
 import edu.dfci.cccb.mev.presets.contract.PresetValues;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.util.timer.Timer;
 @Log4j
-public class PresetValuesFlatTableIterable implements PresetValues, Iterable<Value>, AutoCloseable {
+public class PresetValuesFlatTableIterable extends AbstractValues implements PresetValues, Iterable<Value>, AutoCloseable {
 
   private static final TimeUnit DURATION_UNIT = SECONDS;
   private static final long DURATION = 100;

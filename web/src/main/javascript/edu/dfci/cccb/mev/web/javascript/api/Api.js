@@ -1,17 +1,35 @@
 define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus'], function (angular, _, angularResource, AnalysisEventBus) {
-
+	
     return angular
     .module ('Mev.Api', ['ngResource'])
     .service('AnalysisEventBus', AnalysisEventBus)
-    .service ('DatasetResourceService', ['$resource', function ($resource) {
-    	 return $resource('/dataset/:datasetName/data',
-	    	{
-	    		'format':'json'
-			},{
-				'get': {method:'GET'}
-			});
+    .service ('DatasetResourceService', ['$resource', '$q', '$http', 
+                                             function ($resource, $q, $http, DatasetValuesResource) {
     	 
+    	var resource = $resource('/dataset/:datasetName/data',{format: "json"},{'get': {method:'GET'}});       	 
+    	var DatasetResource = Object.create(resource);       	 
     	
+    	DatasetResource.get = function(params, data, callback){
+    	
+    		var dataset = resource.get(params, data, callback);
+    		var valuesPromise;
+    		return dataset.$promise.then(function(datasetRespObj){
+    			valuesPromise = $http.get('/dataset/'+params.datasetName+'/data/values', {params: {format: "binary"}, responseType: "arraybuffer", headers: {"Accept": "application/octet-stream"}});
+    			return valuesPromise;
+    		}).then(function(values) {
+ 	        	var ab = values.data;     				
+ 				var dataview = new DataView(ab);
+ 				console.debug("swap: array", ab.byteLength);				   	      				
+ 				dataset.valuesBuffer = ab;
+ 				dataset.dataview = dataview;
+ 				return dataset;
+// 				return dataset;
+			})["catch"](function(e){
+				throw e;
+			});    		    		
+    	 };
+    	 
+    	 return DatasetResource;
     }])
     .service('GoogleDriveResourceService', ['$resource', function($resource){
         	return $resource('/import/google',
@@ -112,7 +130,7 @@ define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus'], functio
     	AnalysisResource.put=postWrapper("put");
     	
     	
-    	return AnalysisResource;    	
+    	return AnalysisResource;    	$promise
     	
     }])
     .service ('SelectionResourceService', ['$resource', '$routeParams', function($resource, $routeParams){

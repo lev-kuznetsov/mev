@@ -24,4 +24,9 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Values;
  */
 @EqualsAndHashCode
 @ToString
-public abstract class AbstractValues implements Values {}
+public abstract class AbstractValues implements Values {
+  @Override
+  public boolean skipJson(){
+    return false;
+  }
+}

@@ -18,9 +18,10 @@ import org.jooq.ResultQuery;
 import org.jooq.Table;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
+import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValues;
 import edu.dfci.cccb.mev.presets.contract.PresetValues;
 @Log4j
-public class PresetValuesFlatTable implements PresetValues {
+public class PresetValuesFlatTable extends AbstractValues implements PresetValues {
 
   private final DSLContext context;
   private final Table<Record> table;

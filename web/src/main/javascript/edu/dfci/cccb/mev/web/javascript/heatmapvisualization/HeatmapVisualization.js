@@ -47,7 +47,9 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                        
                     var position = {
                 			top: scrollable.scrollTop(),
-                			height:scrollable.height()
+                			height:scrollable.height(),
+                			left: scrollable.scrollLeft(),
+                            width:scrollable.width()
                 	};
                 	
                 	$scope.availableColorGroups = Object.getOwnPropertyNames(d3colors);
@@ -155,7 +157,9 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                         	eventQ.pop();                        	
                     		position = {
                                     top: scrollable.scrollTop(),
-                                    height:scrollable.height()
+                                    height:scrollable.height(),
+                                    left: scrollable.scrollLeft(),
+                                    width:scrollable.width()
                           	    };
                     		$scope.visualization.updateCells(position, $scope.heatmapDataset);
 	                    	
