@@ -25,7 +25,15 @@ define(["ng", "lodash", "nvd3"], function(ng, _, nvd3){
 	    		console.debug("pca _selection", _selection);
 	    		return _selection;
 	    	};
-	    	
+	    	$scope.sizeChanged=function(){
+	    		console.debug("pca resize");
+	    		window.dispatchEvent(new Event('resize'));
+	    	};
+	    	$scope.$on("mui:dashboard:panel:rowMax", $scope.sizeChanged);
+			$scope.$on("mui:dashboard:panel:rowMin", $scope.sizeChanged);
+			$scope.$on("mui:dashboard:panel:max", $scope.sizeChanged);
+			$scope.$on("mui:dashboard:panel:min", $scope.sizeChanged);
+			
 			this.analysisId=analysis.name;
 			this.analysis=analysis;
 			this.project=project;
