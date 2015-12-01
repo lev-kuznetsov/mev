@@ -1,5 +1,5 @@
 define(['q', 'PouchDB', 'jsLru', 'blobUtil'], function(q, PouchDB, jsLru, blobUtil){
-	return function ValueStore(dataset, $http){
+	return function ValueStore(dataset, $http, $rootScope){
     	var self = this;    	
     	this.chunkSize = 10e6;
     	this.itemsPerChunk = this.chunkSize / Float64Array.BYTES_PER_ELEMENT;
@@ -14,7 +14,7 @@ define(['q', 'PouchDB', 'jsLru', 'blobUtil'], function(q, PouchDB, jsLru, blobUt
     		worker.postMessage({id: dataset.id});
     		worker.onmessage = function(e) {
     		  console.debug("worker done", e)
-    		  self.ready=true;
+    		  self.ready=true;    		  
     		  deferred.resolve(e);
     		};
     		return deferred.promise;
@@ -59,7 +59,8 @@ define(['q', 'PouchDB', 'jsLru', 'blobUtil'], function(q, PouchDB, jsLru, blobUt
 			self.ready = true;
 			delete dataset.valuesBuffer;
 			delete dataset.dataview;
-			console.log('swap: datasetName successfull!', dataset.id, response);			
+			console.log('swap: datasetName successfull!', dataset.id, response);
+			$rootScope.$broadcast("mui:model:dataset:values:loaded");
 			return response;
 		}
     	
