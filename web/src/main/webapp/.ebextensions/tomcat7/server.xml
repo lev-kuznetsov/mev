@@ -69,11 +69,16 @@
          Define a non-SSL HTTP/1.1 Connector on port 8080
     -->
     <Connector port="8080" protocol="HTTP/1.1"
+			   address="0.0.0.0"
                connectionTimeout="20000"
                redirectPort="8443" 
 	       disableUploadTimeout="true"
 		connectionUploadTimeout="600000"
 		keepAliveTimeout="1800000"
+		compression="true"
+		socket.soKeepAlive="true"
+		socket.soTimeout="3600000"
+		maxKeepAliveRequests="-1"
 />
     <!-- A "Connector" using the shared thread pool-->
     <!--
