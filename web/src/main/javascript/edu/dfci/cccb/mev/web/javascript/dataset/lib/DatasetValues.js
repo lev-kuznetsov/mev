@@ -8,19 +8,27 @@ define(['q', 'PouchDB', 'jsLru', 'blobUtil'], function(q, PouchDB, jsLru, blobUt
 	    var lruCache = new jsLru(5);
     	//init swap
     	init();
-    	
     	function fetchDataValues(){
-    		var valuesPromise = $http.get('/dataset/'+dataset.id+'/data/values', {params: {format: "binary"}, responseType: "arraybuffer", headers: {"Accept": "application/octet-stream"}})
-			.then(function(values){
-				var ab = values.data;     				
- 				var dataview = new DataView(ab);
- 				console.debug("swap: array", ab.byteLength);				   	      				
- 				dataset.valuesBuffer = ab;
- 				dataset.dataview = dataview;
- 				
- 				return ab;
- 			});
-			return valuesPromise;
+    		var deferred = q.defer();
+    		var worker = new Worker('/container/javascript/dataset/lib/DatasetValuesWorker.js');
+    		worker.postMessage({id: dataset.id});
+    		worker.onmessage = function(e) {
+    		  console.debug("worker done", e)
+    		  self.ready=true;
+    		  deferred.resolve(e);
+    		};
+    		return deferred.promise;
+//    		var valuesPromise = $http.get('/dataset/'+dataset.id+'/data/values', {params: {format: "binary"}, responseType: "arraybuffer", headers: {"Accept": "application/octet-stream"}})
+//			.then(function(values){
+//				var ab = values.data;     				
+// 				var dataview = new DataView(ab);
+// 				console.debug("swap: array", ab.byteLength);				   	      				
+// 				dataset.valuesBuffer = ab;
+// 				dataset.dataview = dataview;
+// 				
+// 				return ab;
+// 			});
+//			return valuesPromise;
     	}
     	
     	function chunkDataValues(ab){
@@ -51,7 +59,7 @@ define(['q', 'PouchDB', 'jsLru', 'blobUtil'], function(q, PouchDB, jsLru, blobUt
 			self.ready = true;
 			delete dataset.valuesBuffer;
 			delete dataset.dataview;
-			console.log('swap: datasetName successfull!', dataset.id, response);
+			console.log('swap: datasetName successfull!', dataset.id, response);			
 			return response;
 		}
     	
@@ -61,9 +69,9 @@ define(['q', 'PouchDB', 'jsLru', 'blobUtil'], function(q, PouchDB, jsLru, blobUt
 			db.get("values")
 			["catch"](function(e){
 				if(e.status===404){
-					return fetchDataValues()
-						.then(chunkDataValues)
-						.then(saveDataValues);					
+					return fetchDataValues();
+//						.then(chunkDataValues)
+//						.then(saveDataValues);					
 				}else{
 					throw e;
 				}
