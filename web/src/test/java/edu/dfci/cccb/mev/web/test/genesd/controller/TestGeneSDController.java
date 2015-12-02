@@ -39,6 +39,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
@@ -129,7 +130,7 @@ public class TestGeneSDController {
       GeneSDResult result = jsonObjectMapper.readValue(jsonResult, SimpleGeneSDResult.class);
       assertThat (analysis.result ().genes (), is(result.genes()));
       assertThat (analysis.result ().sd(), is(result.sd()));
-      assertThat (analysis.type(), is("Gene SD Analysis"));
+      assertThat (analysis.type(), is(GeneSDAnalysis.ANALYSIS_TYPE));
       
       MvcResult mvcResultGET = this.mockMvc.perform(
                                                     get(String.format("/dataset/%s/analysis/%s", dataset.name(), analysisName))            
@@ -146,9 +147,62 @@ public class TestGeneSDController {
           GeneSDAnalysis analysisFromJson = jsonObjectMapper.readValue(mvcResultGET.getResponse ().getContentAsString (), SimpleGeneSDAnalysis.class);
           assertThat (analysis.result ().genes (), is(result.genes()));
           assertThat (analysis.result ().sd(), is(result.sd()));
-          assertThat (analysis.type(), is("Gene SD Analysis"));          
+          assertThat (analysis.type(), is(GeneSDAnalysis.ANALYSIS_TYPE));          
           assertThat (analysisFromJson.name(), is(analysisName));
       
   }
+  
+  @Test 
+  public void testAsync () throws Exception {
+    String analysisName = "genesd_test";
+    @SuppressWarnings ("unused")
+    MvcResult mvcResult = this.mockMvc.perform(
+                                               put(String.format("/dataset/%s/analyze/genesd/%s", dataset.name(), analysisName))            
+                                               .contentType (MediaType.APPLICATION_JSON)                                               
+                                               .accept("application/json")
+                                               .session (mockHttpSession)
+            )            
+            .andExpect (status ().isOk ())
+            .andDo(print())
+            .andReturn ();
+    
+    //The first put will generate an AnalysisStatus object with "IN_PROGRESS" status
+    Analysis analysisStatus = dataset.analyses ().get (analysisName);
+    log.debug("******* AnalysisStatus:\n"+ jsonObjectMapper.writeValueAsString (analysisStatus));      
+    assertThat(analysisStatus.name (), is(analysisName));        
+    assertThat(analysisStatus.type (), is(GeneSDAnalysis.ANALYSIS_TYPE));        
+    assertThat(analysisStatus.status (), is(Analysis.MEV_ANALYSIS_STATUS_IN_PROGRESS));
+    
+    //Wait for analysis to complete
+    Thread.sleep (1000L);
 
+    GeneSDAnalysis analysis = (GeneSDAnalysis) dataset.analyses ().get (analysisName);
+    log.debug("******* SimpleGeneSDAnalysis:\n"+ jsonObjectMapper.writeValueAsString (analysis));      
+    assertThat(analysis.name (), is(analysisName));      
+    assertThat (analysis.result(), not(nullValue ()));
+    
+    GeneSDResult result = jsonObjectMapper.readValue(jsonResult, SimpleGeneSDResult.class);
+    assertThat (analysis.result ().genes (), is(result.genes()));
+    assertThat (analysis.result ().sd(), is(result.sd()));
+    assertThat (analysis.type(), is(GeneSDAnalysis.ANALYSIS_TYPE));
+    
+    MvcResult mvcResultGET = this.mockMvc.perform(
+                                                  get(String.format("/dataset/%s/analysis/%s", dataset.name(), analysisName))            
+                                                  .contentType (MediaType.APPLICATION_JSON)                                               
+                                                  .accept("application/json")
+                                                  .session (mockHttpSession)
+                                                  .param ("format", "json")
+            )        
+            .andExpect (status ().isOk ())
+            .andDo(print())
+            .andReturn ();
+    log.debug(String.format("mvcResultGET content: %s", mvcResultGET.getResponse ().getContentAsString ()));
+    
+    GeneSDAnalysis analysisFromJson = jsonObjectMapper.readValue(mvcResultGET.getResponse ().getContentAsString (), SimpleGeneSDAnalysis.class);
+    assertThat (analysis.result ().genes (), is(result.genes()));
+    assertThat (analysis.result ().sd(), is(result.sd()));
+    assertThat (analysis.type(), is(GeneSDAnalysis.ANALYSIS_TYPE));          
+    assertThat (analysisFromJson.name(), is(analysisName));
+    
+  }
 }

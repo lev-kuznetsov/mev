@@ -1,4 +1,4 @@
-define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus'], function (angular, _, angularResource, AnalysisEventBus) {
+define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus', '../dataset/lib/AnalysisClass'], function (angular, _, angularResource, AnalysisEventBus, AnalysisClass) {
 	
     return angular
     .module ('Mev.Api', ['ngResource'])
@@ -29,12 +29,14 @@ define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus'], functio
 				}
 			});
         }])
-    .service ('AnalysisResourceService', ['$resource', '$http','$routeParams', 'AnalysisEventBus', function ($resource, $http, $routeParams, analysisEventBus) {
+    .service ('AnalysisResourceService', ['$resource', '$http','$routeParams', "$timeout", 'AnalysisEventBus', 
+                                          function ($resource, $http, $routeParams, $timeout, analysisEventBus) {
     		
     	var transformRequest = [function(data, headers){
             console.log("transformRequest", data);
             return data;
     	}].concat($http.defaults.transformRequest);
+    	
     	var resource = $resource('/dataset/:datasetName/analysis',
 	    	{	'format':'json'}, 
 			{
@@ -76,6 +78,13 @@ define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus'], functio
                 }
                 
 			});    	    	
+
+    	var AnalysisResource = Object.create(resource);
+    	AnalysisResource.post=postWrapper("post");
+    	AnalysisResource.postf=postWrapper("postf");
+    	AnalysisResource.post3=postWrapper("post3");
+    	AnalysisResource.put=postWrapper("put");
+
     	function postWrapper(methodName){
     		return function(params, data, callback){
         		
@@ -89,7 +98,7 @@ define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus'], functio
     					if(Array.isArray(data))
     						data = {data: data};
     					var allParams = {
-    							analysisName: params.analysisName || data.analysisName || params.name || data.name || response.name
+    						analysisName: params.analysisName || data.analysisName || params.name || data.name || response.name
     					};
     					angular.extend(allParams, params);    					
     					
@@ -97,26 +106,44 @@ define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus'], functio
     					console.debug("AnalysisResource success", params, "data", data, "response", response);
     					var sessionStorageKey = allParams.datasetName+"."+allParams.analysisName;
     					console.debug("sessionStorageKey set", sessionStorageKey);
-    					sessionStorage.setItem(sessionStorageKey, JSON.stringify(allParams));    	    			
-    					analysisEventBus.analysisSucceeded(params, data);
+    					sessionStorage.setItem(sessionStorageKey, JSON.stringify(allParams));  
+    					
+    					function poll(prevResponse, wait){
+    	        			if(prevResponse.status && prevResponse.status === "IN_PROGRESS"){    	        				
+    	        				$timeout(function(){
+    	    						AnalysisResource.get(allParams,
+    	                    			function(newResponse){    	
+    	    								poll(newResponse, 5000);
+    	                        		});    							
+    	    					}, wait);			
+    						}else{    							
+    							var analysis = new AnalysisClass(prevResponse);
+//    	                		var sessionStorageKey = self.datasetName+"."+name;
+//    	    					console.debug("sessionStorageKey get", sessionStorageKey);
+//    	                		params = JSON.parse(sessionStorage.getItem(self.datasetName+"."+name));
+    	                		analysis.params = params;
+    	                		console.debug("PollAnalysis result", analysis.name, analysis);                        		
+    	                		analysisEventBus.analysisSucceeded(params, data, analysis);
+    						}
+    	        		};
+    					
+//    					analysisEventBus.analysisStarted(response);
+    	        		analysisEventBus.analysisStarted(allParams.analysisType, allParams.analysisName, new AnalysisClass(response));
+    					poll(response, 500);
+    					
+    					 					
     	    		}, function(response){
     	    			console.debug("AnalysisResource error", response);
     	    			analysisEventBus.analysisFailed(params, data);
     	    		}
     	    	);
         		
-        		analysisEventBus.analysisStarted(params, data);
         		return result;
     		};
     	}
-    	var AnalysisResource = Object.create(resource);
-    	AnalysisResource.post=postWrapper("post");
-    	AnalysisResource.postf=postWrapper("postf");
-    	AnalysisResource.post3=postWrapper("post3");
-    	AnalysisResource.put=postWrapper("put");
     	
     	
-    	return AnalysisResource;    	$promise
+    	return AnalysisResource;    	
     	
     }])
     .service ('SelectionResourceService', ['$resource', '$routeParams', function($resource, $routeParams){

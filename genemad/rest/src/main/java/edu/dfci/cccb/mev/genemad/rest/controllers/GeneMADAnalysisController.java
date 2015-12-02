@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.genemad.domain.impl.RserveGeneMADAnalysisBuilder;
@@ -33,9 +34,9 @@ public class GeneMADAnalysisController {
 
   @RequestMapping (value = "/analyze/genemad/{name}", method = PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus (OK)
-  public void startSurvivalAnalysis (final @PathVariable ("name") String name) throws DatasetException {
+  public Analysis startSurvivalAnalysis (final @PathVariable ("name") String name) throws DatasetException {
     log.debug ("##### Gene MAD" + name);
     RserveGeneMADAnalysisBuilder builder = builderProvider.get ();
-    dataset.analyses ().put (builder.name (name).build ());
+    return builder.name (name).buildAsync ();
   }
 }

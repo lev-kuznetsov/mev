@@ -163,6 +163,12 @@ public class GoogleWorkspace implements Workspace {
             public Analysis get (String name) throws AnalysisNotFoundException {
               return analysesDelegate.get (name);
             }
+
+            @Override
+            public void complete (Analysis result) throws AnalysisNotFoundException {
+              // TODO Auto-generated method stub
+              
+            }
           };
         }
 

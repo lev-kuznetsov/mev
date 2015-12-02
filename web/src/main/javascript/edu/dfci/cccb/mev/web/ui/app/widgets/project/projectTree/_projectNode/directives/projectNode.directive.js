@@ -39,7 +39,7 @@ define([], function(){
 				node: "="
 			},
 			replace: true,
-			template: "<span  id='{{vm.id}}'  ng-class='{selected: vm.isSelected()}' class='nodeWrapper node-{{node.nodenode.name || node.nodeName}}' ng-click='vm.onClick($event)' ng-dblclick='vm.toggle($event)'></span>",
+			template: "<span  id='{{vm.id}}'  ng-class='{selected: vm.isSelected(), disabled: vm.isDisabled()}' class='nodeWrapper node-{{node.nodenode.name || node.nodeName}}' ng-click='vm.onClick($event)' ng-dblclick='vm.toggle($event)'></span>",
 //			templateUrl: "app/widgets/project/projectTree/_projectNode/templates/projectNodeDefault.bootstrapTree.tpl.html",
 //			templateUrl: "app/widgets/project/projectTree/_projectNode/templates/projectNodeDefault.tpl.html",			
 			require: "^projectTree",
@@ -68,7 +68,12 @@ define([], function(){
                     			isSelected: function(){
                     				return ctrl.getSelected()===scope.node.nodePath;
                     			},
-                    			onClick: function(e){                    				
+                    			isDisabled: function(){
+                    				return scope.node.nodeData.status && scope.node.nodeData.status === "IN_PROGRESS";
+                    			},
+                    			onClick: function(e){
+//                    				if(this.isDisabled())
+//                    					return;
                     				ctrl.toggleSelected(scope.node.nodePath);
                     				console.debug("node.click, ui:projectTree:nodeSelected", scope.node.nodeName);                    				
                     				$rootScope.$broadcast("ui:projectTree:nodeSelected", scope.node);

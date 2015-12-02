@@ -25,6 +25,11 @@ function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){
 
 				dataset.$q = $q;				
 				dataset.analysisEventBus = analysisEventBus;
+				analysisEventBus.onAnalysisSuccess($rootScope, function(analysis){
+//					if(!dataset.analyses)
+//						dataset.analyses = [];
+//					dataset.analyses.push(analysis);
+				});
 				dataset.dashboardItems = new DashboardItems();
 				dataset.loadAnalyses = loadAnalyses;
 				dataset.setSelections = setSelections;

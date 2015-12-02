@@ -25,16 +25,9 @@ import edu.dfci.cccb.mev.genesd.domain.impl.SimpleGeneSDResult;
       + "list(genes=names(gene.sd), sd=gene.sd)\n"
       + "}")
 public class RserveGeneSDAnalysisBuilder extends AbstractDispatchedRAnalysisBuilder<RserveGeneSDAnalysisBuilder, GeneSDAnalysis>{
-  
+    
   public RserveGeneSDAnalysisBuilder () {
-    super ("Gene SD Analysis");
-  }
-  @Getter @Setter private String name;
-  
-  
-  public RserveGeneSDAnalysisBuilder name (String name) {
-    this.name=name;
-    return this;
+    super (GeneSDAnalysis.ANALYSIS_TYPE);
   }
   
   @Result private SimpleGeneSDResult dtoResult;
@@ -42,7 +35,7 @@ public class RserveGeneSDAnalysisBuilder extends AbstractDispatchedRAnalysisBuil
   
   @Override
   protected GeneSDAnalysis result () {
-    return new SimpleGeneSDAnalysis (this.name, this.type(), dtoResult);
+    return new SimpleGeneSDAnalysis (this.name(), this.type(), dtoResult);
   }
   
   @Callback
