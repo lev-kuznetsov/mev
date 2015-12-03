@@ -34,7 +34,6 @@ public class HistogramAnalysisController {
   private @Getter @Setter @Inject Provider<SimpleHistogramAnalysisBuilder> builderProvider;
 
   @RequestMapping (value = "/analyze/histogram/{name}", method = PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseStatus (OK)
   public Analysis startSurvivalAnalysis (final @PathVariable ("name") String name) throws DatasetException {
     log.debug ("##### Histogram" + name);
     SimpleHistogramAnalysisBuilder builder = builderProvider.get ();

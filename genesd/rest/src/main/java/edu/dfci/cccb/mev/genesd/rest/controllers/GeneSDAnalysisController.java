@@ -32,8 +32,7 @@ public class GeneSDAnalysisController {
   private @Getter @Setter @Inject Dataset dataset;
   private @Getter @Setter @Inject Provider<RserveGeneSDAnalysisBuilder> builderProvider;
 
-  @RequestMapping (value = "/analyze/genesd/{name}", method = PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseStatus (OK)
+  @RequestMapping (value = "/analyze/genesd/{name}", method = PUT, consumes = MediaType.APPLICATION_JSON_VALUE)  
   public Analysis startSurvivalAnalysis (final @PathVariable ("name") String name) throws DatasetException {
     log.debug ("##### Gene SD" + name);
     RserveGeneSDAnalysisBuilder builder = builderProvider.get ();

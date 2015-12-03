@@ -121,12 +121,13 @@ public class TestHistogramController {
   }
   
   //This test only works if local rserve is running
-  @Test
+  @Test @Ignore
   public void test () throws Exception {
     String analysisName = "histo_test";
     @SuppressWarnings ("unused")
     MvcResult mvcResult = this.mockMvc.perform(
-                                               put(String.format("/dataset/%s/analyze/histogram/%s", dataset.name(), analysisName))            
+                                               put(String.format("/dataset/%s/analyze/histogram/%s", dataset.name(), analysisName))
+                                               .param ("format", "json")
                                                .contentType (MediaType.APPLICATION_JSON)                                               
                                                .accept("application/json")
                                                .session (mockHttpSession)
@@ -143,7 +144,7 @@ public class TestHistogramController {
       assertThat(analysisStatus.status (), is(Analysis.MEV_ANALYSIS_STATUS_IN_PROGRESS));
       
       //Wait for analysis to complete
-      Thread.sleep (1000L);
+      Thread.sleep (2000L);
     
       HistogramAnalysis analysis = (HistogramAnalysis) dataset.analyses ().get (analysisName);
       log.debug("******* SimpleHistogramAnalysis:\n"+ jsonObjectMapper.writeValueAsString (analysis));      
