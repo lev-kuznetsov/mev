@@ -67,7 +67,8 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 			min: datasetRespObj.min,
 			avg: datasetRespObj.avg,
 			tryGet: this.valueStore.getByKey,
-			getSome: this.valueStore.getSome,			
+			getSome: this.valueStore.getSome,
+			getDict: this.valueStore.getDict,
 //			tryGet: function(labelPair){
 //				var deferred = q.defer();				
 //				setTimeout(function(){

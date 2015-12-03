@@ -121,7 +121,10 @@ define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus', '../data
 //    	                		var sessionStorageKey = self.datasetName+"."+name;
 //    	    					console.debug("sessionStorageKey get", sessionStorageKey);
 //    	                		params = JSON.parse(sessionStorage.getItem(self.datasetName+"."+name));
-    	                		analysis.params = params;
+    							if(analysis.params)    								
+    								angular.extend(analysis.params, allParams);
+    							else
+    								analysis.params = allParams;
     	                		console.debug("PollAnalysis result", analysis.name, analysis);                        		
     	                		analysisEventBus.analysisSucceeded(params, data, analysis);
     						}

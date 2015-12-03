@@ -137,23 +137,29 @@ define(['q', 'PouchDB', 'jsLru', 'blobUtil'], function(q, PouchDB, jsLru, blobUt
     	    else
     	    	return q.when(dataset.dataview.getFloat64((r*dataset.column.keys.length+c)*Float64Array.BYTES_PER_ELEMENT, false));    		
         }
+        
+        function prefetchChunks(shownCells){
+        	var chunkPromises = [];
+    		var chunkIndexes = {};
+    		for(var i=0; i<shownCells.length; i++){
+//    		var r = dataset.rowLabels2Indexes[labelPairs[i][0]];
+//    	    var c = dataset.columnLabels2Indexes[labelPairs[i][1]];
+    			var r = dataset.rowLabels2Indexes[shownCells[i].row];
+    			var c = dataset.columnLabels2Indexes[shownCells[i].column];
+    			var index = getItemIndex(r,c);
+    			shownCells[i].index = index;
+    			var chunkIndex = getChunkForIndex(index);        		
+    			if(!chunkIndexes[chunkIndex] && !lruCache.find(chunkIndex)){        			
+    				chunkPromises.push(loadChunkDataView(chunkIndex));
+    				chunkIndexes[chunkIndex]=true;
+    			}
+    		}
+    		return chunkPromises;
+        }
+        
         function getSome(shownCells){
         	if(self.ready){        		
-        		var chunkPromises = [];
-        		var chunkIndexes = {};
-        		for(var i=0; i<shownCells.length; i++){
-//        		var r = dataset.rowLabels2Indexes[labelPairs[i][0]];
-//        	    var c = dataset.columnLabels2Indexes[labelPairs[i][1]];
-        			var r = dataset.rowLabels2Indexes[shownCells[i].row];
-        			var c = dataset.columnLabels2Indexes[shownCells[i].column];
-        			var index = getItemIndex(r,c);
-        			shownCells[i].index = index;
-        			var chunkIndex = getChunkForIndex(index);        		
-        			if(!chunkIndexes[chunkIndex] && !lruCache.find(chunkIndex)){        			
-        				chunkPromises.push(loadChunkDataView(chunkIndex));
-        				chunkIndexes[chunkIndex]=true;
-        			}
-        		}
+        		var chunkPromises = prefetchChunks(shownCells);
         		return q.all(chunkPromises)      		
         		.then(function(){
         			for(var i=0; i<shownCells.length; i++){
@@ -161,8 +167,8 @@ define(['q', 'PouchDB', 'jsLru', 'blobUtil'], function(q, PouchDB, jsLru, blobUt
         			}
         			return shownCells;
         		})["catch"](function(e){
-        			throw e;
-        		});
+        			console.error("ERROR", e);	            	
+	            });
         	}else{
         		if(dataset.dataview){        			
         			for(var i=0; i<shownCells.length; i++){
@@ -180,9 +186,34 @@ define(['q', 'PouchDB', 'jsLru', 'blobUtil'], function(q, PouchDB, jsLru, blobUt
         	
         }
         
+        function getDict(shownCells){
+        	var chunkPromises = prefetchChunks(shownCells);
+        	var dict = {};
+    		return q.all(chunkPromises)      		
+    		.then(function(){
+    			for(var i=0; i<shownCells.length; i++){
+    				shownCells[i].value = getByIndex(shownCells[i].index);
+    				var rowName = shownCells[i].row;
+    				var columnName = shownCells[i].column;    				
+    				if(!dict[rowName]){    					
+    					dict[rowName] = {};
+    				}
+    				if(!dict[rowName][columnName]){    					
+    					dict[rowName][columnName] = {
+    						value: shownCells[i].value
+    					};
+    				}    				
+    			}
+    			return dict;
+    		})["catch"](function(e){
+    			throw e;
+    		});
+        }
+        
         return {        	
         	getByKey: getByKey,  
         	getSome: getSome,
+        	getDict: getDict
         };
     };
 });
