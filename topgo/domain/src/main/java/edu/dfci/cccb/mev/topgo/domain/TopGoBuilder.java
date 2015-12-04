@@ -5,19 +5,22 @@ import java.util.Collection;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.r.AbstractDispatchedRAnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
+import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback.CallbackType;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Parameter;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.R;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
 
+@Log4j
 @R (value = "function (dataset, genelist, species, goType, testType, pAdjust, nodeSize, bg) {\n"
             + "if (species == 'human') {\n"
             + "  anno.db = 'org.Hs.eg.db';\n"
-            + "  bg = as.vector (read.table (file = file.path (cwd, '../topgo/domain/src/main/resources/HSAPIENS_ALL_GENES.txt'))[ , 1 ]);\n"
+            + "  bg = as.vector (read.table (file = file.path (mwd, '../topgo/domain/src/main/resources/HSAPIENS_ALL_GENES.txt'))[ , 1 ]);\n"
             + "} else if (species == 'mouse') {\n"
             + "  anno.db = 'org.Mm.eg.db';\n"
-            + "  bg = as.vector (read.table (file = file.path (cwd, '../topgo/domain/src/main/resources/MMUSCULUS_ALL_GENES.txt'))[ , 1 ]);\n"
+            + "  bg = as.vector (read.table (file = file.path (mwd, '../topgo/domain/src/main/resources/MMUSCULUS_ALL_GENES.txt'))[ , 1 ]);\n"
             + "};\n"
             + "allGenes <- unique (c (genelist, bg));\n"
             + "geneStatus <- rep (0, length (allGenes));\n"
@@ -62,16 +65,13 @@ public class TopGoBuilder extends AbstractDispatchedRAnalysisBuilder<TopGoBuilde
   private @Getter @Setter @Parameter String pAdjust;
   private @Getter @Setter @Parameter int nodeSize;
 
-  private volatile @Getter @Result TopGo result;
+  private volatile @Result @Getter TopGo result;
 
-  @Callback
+  @Callback (CallbackType.SUCCESS)
   private void setName () {
-    
-    if (result != null){      
-      result.name (name ());
-      result.type (type());
-    }
-    
+    log.debug (String.format("TopGO Callback: %s", result));
+    result.name (name ());
+    result.type (type());
   }
 
   public TopGoBuilder () {
