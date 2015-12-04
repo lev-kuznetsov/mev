@@ -1,5 +1,6 @@
 package edu.dfci.cccb.mev.survival.domain.impl;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.r.AbstractDispatchedRAnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Parameter;
@@ -63,6 +64,8 @@ public class SimpleSurvivalAnalysisBuilder extends AbstractDispatchedRAnalysisBu
   
   @Override
   protected SimpleSurvivalAnalysis result () {
+    if(dtoResult==null)
+      return null;
     return new SimpleSurvivalAnalysis (name(), type(), params, dtoResult);
   }
   
