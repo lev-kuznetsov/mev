@@ -21,19 +21,23 @@ import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
+import edu.dfci.cccb.mev.dataset.domain.r.annotation.Error;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Parameter;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Rserve;
 
+@Log4j
 public abstract class AbstractDispatchedRAnalysisBuilder <B extends AnalysisBuilder<?, ?>, A extends Analysis> extends AbstractAnalysisBuilder<B, A> {
 
   private @Getter @Setter @Inject @Rserve RDispatcher r;
   private CountDownLatch latch;
+  protected @Error String error;
 
   protected abstract A result ();
 
@@ -49,6 +53,7 @@ public abstract class AbstractDispatchedRAnalysisBuilder <B extends AnalysisBuil
 
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder#build() */
+  @SuppressWarnings ("unchecked")
   @Override
   @SneakyThrows (InterruptedException.class)
   public A build () throws DatasetException {
@@ -59,7 +64,10 @@ public abstract class AbstractDispatchedRAnalysisBuilder <B extends AnalysisBuil
     }
     r.schedule (this);
     latch.await ();
-    return result ();
+    Analysis result = result();    
+    if(result == null)
+      throw new DatasetException (String.format("ERROR in %s analysis %s: result is null; cause: %s", type(), name(), this.error));    
+    return (A) result;
   }
 
   @Callback
