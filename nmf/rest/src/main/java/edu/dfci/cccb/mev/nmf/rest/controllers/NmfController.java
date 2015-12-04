@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.nmf.domain.NmfBuilder;
@@ -50,11 +51,11 @@ public class NmfController {
 
   @RequestMapping (value = "/analyze/nmf/{name}", method = POST)
   @ResponseStatus (OK)
-  public void go (final @PathVariable ("name") String name,
+  public Analysis go (final @PathVariable ("name") String name,
                   final @RequestParam (value = "rank", defaultValue = "3") int rank,
                   final @RequestParam (value = "method", defaultValue = "brunet") String method,
                   final @RequestParam (value = "nrun", defaultValue = "10") int nrun) throws DatasetException {
     NmfBuilder nmf = this.nmf.get ();
-    dataset.analyses ().put (nmf.name (name).rank (rank).method (method).nrun (nrun).dataset (dataset).build ());
+    return nmf.name (name).rank (rank).method (method).nrun (nrun).dataset (dataset).buildAsync ();
   }
 }

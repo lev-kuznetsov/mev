@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.pca.domain.PcaBuilder;
@@ -33,13 +34,13 @@ public class PcaController {
 
   @RequestMapping (value = "/analyze/pca", method = POST)
   @ResponseStatus (OK)
-  public void start (@RequestBody Map<String, String> params) throws DatasetException {
-    data.analyses ().put (pca.get ().dataset (data).name (params.get ("name")).build ());
+  public Analysis start (@RequestBody Map<String, String> params) throws DatasetException {
+    return pca.get ().dataset (data).name (params.get ("name")).buildAsync ();
   }
   
   @RequestMapping (value = "/analyze/pca/{name}", method = PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus (OK)
-  public void put (final @PathVariable ("name") String name) throws DatasetException {
-    data.analyses ().put (pca.get ().dataset (data).name (name).build ());
+  public Analysis put (final @PathVariable ("name") String name) throws DatasetException {
+    return pca.get ().dataset (data).name (name).buildAsync ();
   }
 }

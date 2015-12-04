@@ -2,10 +2,15 @@ package edu.dfci.cccb.mev.web.test.t_test.rest.controllers;
 
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
 import java.util.Properties;
 
 import javax.inject.Inject;
+
 import lombok.extern.log4j.Log4j;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +36,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
@@ -102,7 +108,8 @@ public class TestTTestAnalysisController {
     
     @SuppressWarnings ("unused") 
     MvcResult result = mockMvc.perform (
-                                        MockMvcRequestBuilders.post ("/dataset/"+dataset.name ()+"/analyze/one_sample_ttest")                                        
+                                        MockMvcRequestBuilders.post ("/dataset/"+dataset.name ()+"/analyze/one_sample_ttest")
+                                        .param ("format", "json")
                                         .contentType (MediaType.APPLICATION_JSON)
                                         .content (jsonDto)
                                         .session (mockHttpSession)
@@ -110,7 +117,17 @@ public class TestTTestAnalysisController {
     .andDo (MockMvcResultHandlers.print ())
     .andExpect (MockMvcResultMatchers.status ().isOk ())
     .andReturn ();
-       
+    
+    //The first put will generate an AnalysisStatus object with "IN_PROGRESS" status
+    Analysis analysisStatus = dataset.analyses ().get (dto.name());
+    log.debug("******* AnalysisStatus:\n"+ jsonObjectMapper.writeValueAsString (analysisStatus));      
+    assertThat(analysisStatus.name (), is(dto.name()));        
+    assertThat(analysisStatus.type (), is("t-Test Analysis"));        
+    assertThat(analysisStatus.status (), is(Analysis.MEV_ANALYSIS_STATUS_IN_PROGRESS));        
+     
+    //Wait for analysis to complete
+    Thread.sleep (2000L);
+    
     TTest analysis = (TTest)dataset.analyses ().get (analysesName);    
     String jsonTTest = jsonObjectMapper.writeValueAsString (analysis);
     log.debug ("jsonAnalysis: " + jsonTTest);
@@ -131,7 +148,8 @@ public class TestTTestAnalysisController {
     
     @SuppressWarnings ("unused") 
     MvcResult result = mockMvc.perform (
-                                        MockMvcRequestBuilders.post ("/dataset/"+dataset.name ()+"/analyze/two_sample_ttest")                                        
+                                        MockMvcRequestBuilders.post ("/dataset/"+dataset.name ()+"/analyze/two_sample_ttest")
+                                        .param ("format", "json")
                                         .contentType (MediaType.APPLICATION_JSON)
                                         .content (jsonDto)
                                         .session (mockHttpSession)
@@ -140,6 +158,16 @@ public class TestTTestAnalysisController {
     .andExpect (MockMvcResultMatchers.status ().isOk ())
     .andReturn ();
        
+    //The first put will generate an AnalysisStatus object with "IN_PROGRESS" status
+    Analysis analysisStatus = dataset.analyses ().get (dto.name());
+    log.debug("******* AnalysisStatus:\n"+ jsonObjectMapper.writeValueAsString (analysisStatus));      
+    assertThat(analysisStatus.name (), is(dto.name()));        
+    assertThat(analysisStatus.type (), is("t-Test Analysis"));        
+    assertThat(analysisStatus.status (), is(Analysis.MEV_ANALYSIS_STATUS_IN_PROGRESS));        
+     
+    //Wait for analysis to complete
+    Thread.sleep (2000L);
+    
     TTest analysis = (TTest)dataset.analyses ().get (analysesName);    
     String jsonTTest = jsonObjectMapper.writeValueAsString (analysis);
     log.debug ("jsonAnalysis: " + jsonTTest);
@@ -162,9 +190,11 @@ public class TestTTestAnalysisController {
     String jsonDto = jsonObjectMapper.writeValueAsString (dto);
     log.debug ("jsonDto: " + jsonDto);
     
+    
     @SuppressWarnings ("unused") 
     MvcResult result = mockMvc.perform (
-                                        MockMvcRequestBuilders.post ("/dataset/"+dataset.name ()+"/analyze/paired_ttest")                                        
+                                        MockMvcRequestBuilders.post ("/dataset/"+dataset.name ()+"/analyze/paired_ttest")    
+                                        .param ("format", "json")
                                         .contentType (MediaType.APPLICATION_JSON)
                                         .content (jsonDto)
                                         .session (mockHttpSession)
@@ -172,7 +202,17 @@ public class TestTTestAnalysisController {
     .andDo (MockMvcResultHandlers.print ())
     .andExpect (MockMvcResultMatchers.status ().isOk ())
     .andReturn ();
-       
+    
+    //The first put will generate an AnalysisStatus object with "IN_PROGRESS" status
+    Analysis analysisStatus = dataset.analyses ().get (dto.name());
+    log.debug("******* AnalysisStatus:\n"+ jsonObjectMapper.writeValueAsString (analysisStatus));      
+    assertThat(analysisStatus.name (), is(dto.name()));        
+    assertThat(analysisStatus.type (), is("t-Test Analysis"));        
+    assertThat(analysisStatus.status (), is(Analysis.MEV_ANALYSIS_STATUS_IN_PROGRESS));        
+     
+    //Wait for analysis to complete
+    Thread.sleep (2000L);
+    
     TTest analysis = (TTest)dataset.analyses ().get (analysesName);    
     String jsonTTest = jsonObjectMapper.writeValueAsString (analysis);
     log.debug ("jsonAnalysis: " + jsonTTest);

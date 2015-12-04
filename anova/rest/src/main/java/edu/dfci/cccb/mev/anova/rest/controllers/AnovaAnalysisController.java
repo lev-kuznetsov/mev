@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.dfci.cccb.mev.anova.domain.contract.AnovaBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 
@@ -37,16 +38,16 @@ public class AnovaAnalysisController {
                            + ",mtc={mtc})",
                    method = POST)
   @ResponseStatus (OK)
-  public void startOneSample (final @PathVariable ("name") String name,
+  public Analysis startOneSample (final @PathVariable ("name") String name,
                               final @PathVariable ("pval") double pValue,
                               final @PathVariable ("mtc") boolean multTestCorrection,
                               final @RequestBody String[] sampleGroups) throws DatasetException {
-    dataset.analyses ().put (anovaBuilder.name (name)
-                                         .dataset (dataset)
-                                         .groupSelections (sampleGroups)
-                                         .pValue (pValue)
-                                         .multipleTestCorrectionFlag (multTestCorrection)
-                                         .build ());
+    return anovaBuilder.name (name)
+               .dataset (dataset)
+               .groupSelections (sampleGroups)
+               .pValue (pValue)
+               .multipleTestCorrectionFlag (multTestCorrection)
+               .buildAsync ();
   }
 
 }

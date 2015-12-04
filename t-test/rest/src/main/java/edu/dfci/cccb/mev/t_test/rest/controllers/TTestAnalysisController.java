@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
@@ -53,14 +54,14 @@ public static class OneSampleTTestDTO{
 }
 @RequestMapping (value = "/analyze/one_sample_ttest", method = POST)
 @ResponseStatus (OK)
-public void startOneSampleJson (@RequestBody OneSampleTTestDTO dto) throws DatasetException {
-dataset.analyses ().put (oneSampleTTestBuilder.name (dto.name())
+public Analysis startOneSampleJson (@RequestBody OneSampleTTestDTO dto) throws DatasetException {
+  return oneSampleTTestBuilder.name (dto.name())
                  .dataset (dataset)
                  .controlSelection (dataset.dimension (Type.COLUMN).selections ().get (dto.experimentName ()))
                  .pValue (dto.pValue())
                  .multipleTestCorrectionFlag (dto.multTestCorrection())
                  .oneSampleMean (dto.userMean())
-                 .build ());
+                 .buildAsync ();
 }
   
   
@@ -82,15 +83,15 @@ public static class TwoSampleTTestDTO{
 @RequestMapping (value = "/analyze/two_sample_ttest",
   method = POST)
 @ResponseStatus (OK)
-public void startTwoSampleJson (@RequestBody TwoSampleTTestDTO dto) throws DatasetException {
-dataset.analyses ().put (twoSampleTTestBuilder.name (dto.name ())
+public Analysis startTwoSampleJson (@RequestBody TwoSampleTTestDTO dto) throws DatasetException {
+  return twoSampleTTestBuilder.name (dto.name ())
                  .dataset (dataset)
                  .experimentSelection (dataset.dimension (Type.COLUMN).selections ().get (dto.experimentName ()))
                  .controlSelection (dataset.dimension (Type.COLUMN).selections ().get (dto.controlName ()))
                  .pValue (dto.pValue())
                  .equalVarianceFlag (dto.assumeEqualVariance())
                  .multipleTestCorrectionFlag (dto.multTestCorrection())
-                 .build ());
+                 .buildAsync ();
 }
 
   
@@ -110,14 +111,14 @@ public static class PairedSampleTTestDTO{
 @RequestMapping (value = "/analyze/paired_ttest",
 method = POST)
 @ResponseStatus (OK)
-public void startPaired(@RequestBody PairedSampleTTestDTO dto) throws DatasetException {
-dataset.analyses ().put (pairedTTestBuilder.name (dto.name())
+public Analysis startPaired(@RequestBody PairedSampleTTestDTO dto) throws DatasetException {
+  return pairedTTestBuilder.name (dto.name())
                .dataset (dataset)
                .experimentSelection (dataset.dimension (Type.COLUMN).selections ().get (dto.experimentName ()))
                .controlSelection (dataset.dimension (Type.COLUMN).selections ().get (dto.controlName ()))
                .pValue (dto.pValue ())
                .multipleTestCorrectionFlag (dto.multTestCorrection())
-               .build ());
+               .buildAsync ();
 }
   
   
