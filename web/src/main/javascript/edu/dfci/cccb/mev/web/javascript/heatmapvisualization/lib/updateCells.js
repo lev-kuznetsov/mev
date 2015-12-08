@@ -3,7 +3,7 @@ define([], function(){
   //updateCells :: !params(Params), !view(View), Object -> null
     //   Used to update shown cells using position object with
     //   top and height pixel properties
-    return function(position, dataset) {
+    return function(position, dataset, options) {
             
         var self = this;
         var totalTop = this.params.labels.column.height
@@ -47,7 +47,7 @@ define([], function(){
 //                column: self.view.labels.column.keys
                 column: self.view.labels.column.keys.slice(startCol, endCol),
         }
-        this.drawCells(labels, dataset)
+        this.drawCells(labels, dataset, options && options.force);
         
     };
     

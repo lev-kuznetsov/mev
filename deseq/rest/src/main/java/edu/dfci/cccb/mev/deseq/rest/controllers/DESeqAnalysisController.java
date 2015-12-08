@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.deseq.domain.contract.DESeqBuilder;
@@ -51,13 +52,13 @@ public class DESeqAnalysisController {
   @RequestMapping (value = "/analyze/deseq/{name}",
                    method = POST)
   @ResponseStatus (OK)
-  public void start (final @PathVariable ("name") String name,
+  public Analysis start (final @PathVariable ("name") String name,
                      final @RequestParam ("experiment") String experiment,
                      final @RequestParam ("control") String control) throws DatasetException {
-    dataset.analyses ().put (deseq.name (name)
-                                  .dataset (dataset)
-                                  .experiment (dataset.dimension (COLUMN).selections ().get (experiment))
-                                  .control (dataset.dimension (COLUMN).selections ().get (control))
-                                  .build ());
+    return deseq.name (name)
+        .dataset (dataset)
+        .experiment (dataset.dimension (COLUMN).selections ().get (experiment))
+        .control (dataset.dimension (COLUMN).selections ().get (control))
+        .buildAsync ();
   }
 }

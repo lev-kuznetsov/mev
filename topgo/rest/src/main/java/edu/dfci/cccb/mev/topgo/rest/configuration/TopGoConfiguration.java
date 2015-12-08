@@ -16,12 +16,12 @@ public class TopGoConfiguration extends MevRestConfigurerAdapter {
 
   @Bean
   @Scope ("prototype")
-  public TopGoBuilder nmfBuilder () {
+  public TopGoBuilder topgoBuilder () {
     return new TopGoBuilder ();
   }
 
   @Bean
-  public AnalysisPathVariableMethodArgumentResolver<TopGo> nmfAnalysisPathVariableMethodArgumentResolver () {
+  public AnalysisPathVariableMethodArgumentResolver<TopGo> topgoAnalysisPathVariableMethodArgumentResolver () {
     return new AnalysisPathVariableMethodArgumentResolver<> (TopGo.class);
   }
 }

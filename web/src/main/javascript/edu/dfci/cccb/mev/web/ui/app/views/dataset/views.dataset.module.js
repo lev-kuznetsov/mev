@@ -68,10 +68,8 @@ function(ng,
 		   	     				}, function(error){
 	//	   	     					downloadFailure();
 		   	     					console.debug("**** Failed to Load Dataset", $stateParams.datasetId, error);
-		   	     				});
-	   	     					
-		   	     				var valuesPromise = undefined;		   	     				
-		   	     				return datasetResource;
+		   	     				});	   	     					
+		   	     				return datasetResource.$promise;
 		   	     					   	     							   	     				;	   	     					
 	   	     				}],
 	   	     				project: ["$state", "$stateParams", "datasetResource", "ProjectFactory",

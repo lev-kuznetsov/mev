@@ -73,7 +73,26 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
 
                 	    }
                 	});
-
+                	$scope.repaintView = function(){
+                		var updatedView = Object.create($scope.heatmapView);	                      
+	                    updatedView.expression.min = $scope.project.dataset.expression.min;
+	                    updatedView.expression.max = $scope.project.dataset.expression.max;
+	                    updatedView.expression.avg = $scope.project.dataset.expression.avg;
+	                    updatedView.coloring = undefined;
+	                    $scope.heatmapView = updatedView;
+                	}
+                	$scope.$on("mui:model:dataset:values:loaded", function(){
+//                		$scope.repaintView();
+                		var position = {
+                    			top: scrollable.scrollTop(),
+                    			height:scrollable.height(),
+                    			left: scrollable.scrollLeft(),
+                                width:scrollable.width()
+                    	};
+                		if($scope.visualization)
+                			$scope.visualization.updateCells(position, $scope.heatmapDataset, {force: true});
+                	});
+                	
                     $scope.colorEdge = {
 
                       min: undefined,
@@ -97,13 +116,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                     $scope.applyDefaultRanges = function (){
                     	
                     	$('#settingsModal').modal('hide');
-	                      var updatedView = Object.create($scope.heatmapView);
-	                      
-	                      updatedView.expression.min = $scope.project.dataset.expression.min;
-	                      updatedView.expression.max = $scope.project.dataset.expression.max;
-	                      updatedView.expression.avg = $scope.project.dataset.expression.avg;
-	                      updatedView.coloring = undefined;
-	                      $scope.heatmapView = updatedView;
+                    	$scope.repaintView();
 
                     };
                     

@@ -21,12 +21,16 @@ import javax.inject.Inject;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
+import edu.dfci.cccb.mev.dataset.domain.contract.MevException;
 
 /**
  * @author levk
@@ -66,4 +70,30 @@ public abstract class AbstractAnalysisBuilder <B extends AnalysisBuilder<?, ?>, 
     this.dataset = dataset;
     return (B) this;
   }
+  
+  public class AnalysisStatus extends AbstractAnalysis<AnalysisStatus> implements Analysis{}
+  
+  @Override  
+  public AnalysisStatus buildAsync(){
+    
+    final AnalysisStatus status = new AnalysisStatus ().type (type()).name (name()).status (Analysis.MEV_ANALYSIS_STATUS_IN_PROGRESS);
+    
+    new Thread (new Runnable() {           
+      @Override      
+      public void run () {
+          try {
+            dataset().analyses ().complete (build());
+            log.info(String.format("Analysis %s of type %s completed succesfully.", name(), type()));
+          } catch (DatasetException e) {                    
+            status.status (Analysis.MEV_ANALYSIS_STATUS_ERROR).error (new DatasetException(String.format("Error running %s analysis %s", type, name), e).toString ());
+            log.error(String.format("ERROR in %s analysis %s.", type, name));
+            e.printStackTrace();                            
+          }
+      }
+    }).start ();
+    
+    dataset().analyses().put(status);
+    return status;
+  }
+  
 }

@@ -1,14 +1,15 @@
+"use strict";
 define(['angular',
         './lib/DatasetClass',
         './lib/loadAnalyses',
         './lib/setSelections',
-        './lib/resetSelections',
+        './lib/resetSelections',        
         'api/Api'], 
 function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){
 	
 	return angular.module('Mev.Dataset', ['Mev.Api'])
-	.factory('DatasetFactory', ['AnalysisResourceService', 'SelectionResourceService', "$q", 'AnalysisEventBus', "DashboardItems",
-	 function(AnalysisResourceService, SelectionResourceService, $q, analysisEventBus, DashboardItems){
+	.factory('DatasetFactory', ['AnalysisResourceService', 'SelectionResourceService', "$q", "$http", '$rootScope', 'AnalysisEventBus', "DashboardItems",
+	 function(AnalysisResourceService, SelectionResourceService, $q, $http, $rootScope, analysisEventBus, DashboardItems){
 	    
 	    //DatasetFactory :: [String], [DatasetResponseObj] -> [Dataset]
 	    //  Function that takes dataset name and dataset response object and returns
@@ -16,14 +17,19 @@ function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){
 		return function(datasetName, datasetResponseObj){
 		    
 		    
-				var dataset = new DatasetClass(datasetName, datasetResponseObj);				
+				var dataset = new DatasetClass(datasetName, datasetResponseObj, $http, $rootScope);				
 				
 				dataset.analysis = AnalysisResourceService;
 				console.debug("api:AnalysisResourceService", AnalysisResourceService, dataset.analysis);
 				dataset.selection = SelectionResourceService;
 
-				dataset.$q = $q;
+				dataset.$q = $q;				
 				dataset.analysisEventBus = analysisEventBus;
+				analysisEventBus.onAnalysisSuccess($rootScope, function(analysis){
+//					if(!dataset.analyses)
+//						dataset.analyses = [];
+//					dataset.analyses.push(analysis);
+				});
 				dataset.dashboardItems = new DashboardItems();
 				dataset.loadAnalyses = loadAnalyses;
 				dataset.setSelections = setSelections;

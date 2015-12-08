@@ -49,20 +49,33 @@ define(["ng", "lodash"], function(ng, _){
 			$state.go(targetState, params);
 		});
 		
+		AnalysisEventBus.onAnalysisStarted($scope, function(type, name, data){
+			console.debug("DatasetProjectViewVM onAnalysisStarted");
+			var analysis = data.response;
+			dataset.analyses.push(analysis);
+			$scope.$broadcast("ui:projectTree:dataChanged");
+		});
+		
 		AnalysisEventBus.onAnalysisSuccess($scope, function(type, name, data){
-			dataset.loadAnalyses().then(function(response){
-				var analysis = _.find(dataset.analyses, function(analysis){ return analysis.name===name; });
+//			dataset.loadAnalyses().then(function(response){
+				var analysis = data.response;
+				var found = _.findIndex(dataset.analyses, function(analysis){ return analysis.name===name; });
+				if(found > -1){
+					dataset.analyses[found] = analysis;					
+				}else {					
+					dataset.analyses.push(analysis);
+				}
 				
-				if(!analysis.params)
-					analysis.params=data;
+//				if(!analysis.params)
+//					analysis.params=data;
 				
 				console.debug("DatasetProjectViewVM onAnalysisSuccess", type, name, analysis);	
 				if(isAnalysisInDashbaord(analysis))
 					console.debug("dashbaord: analysis is in dashbaord - Refresh!!");
-				else
-					$state.go("root.dataset.analysis", {analysisType: AnalysisTypes.reverseLookup[type], analysisId: name});
-				
-			});			
+//				else
+//					$state.go("root.dataset.analysis", {analysisType: AnalysisTypes.reverseLookup[type], analysisId: name});
+				$scope.$broadcast("ui:projectTree:dataChanged");
+//			});			
         });
 		AnalysisEventBus.onAnalysisLoadedAll($scope, function(){
 			console.debug("DatasetProjectViewVM onAnalysisLoadedAll");

@@ -15,8 +15,7 @@ import edu.dfci.cccb.mev.survival.domain.impl.SimpleSurvivalAnalysisBuilder;
 @ComponentScan ("edu.dfci.cccb.mev.survival.rest.controllers")
 public class SurvivalAnalysisConfiguration {
 
-  @Bean
-  @Named ("survival.analysis.builder")
+  @Bean(name="survival.analysis.builder")
   @Scope ("prototype")
   public SimpleSurvivalAnalysisBuilder builder () {
     return new SimpleSurvivalAnalysisBuilder ();

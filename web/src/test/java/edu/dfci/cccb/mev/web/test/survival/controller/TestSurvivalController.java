@@ -33,6 +33,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
@@ -41,6 +42,8 @@ import edu.dfci.cccb.mev.dataset.domain.mock.MockTsvInput;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.RDispatcherConfiguration;
+import edu.dfci.cccb.mev.genemad.domain.contract.GeneMADAnalysis;
+import edu.dfci.cccb.mev.survival.domain.contract.SurvivalAnalysis;
 import edu.dfci.cccb.mev.survival.domain.contract.SurvivalInputEntryTcga;
 import edu.dfci.cccb.mev.survival.domain.contract.SurvivalParams;
 import edu.dfci.cccb.mev.survival.domain.impl.SimpleSurvivalAnalysis;
@@ -66,13 +69,8 @@ public class TestSurvivalController {
   @Autowired WebApplicationContext applicationContext;
   private MockMvc mockMvc;
   private MockHttpSession mockHttpSession;
-    
-//  private @Inject @Named("presets-datasource") DataSource dataSource;
-//  private @Inject PresetDatasetBuilder presetDatasetBuilder;
   @Inject DatasetBuilder datasetBuilder;  
   private @Inject Workspace workspace;  
-//  private URL dataRootUrl;
-//  private URL annotationsRootUrl;
   private @Inject ObjectMapper jsonObjectMapper;
   
 //  @PostConstruct
@@ -172,25 +170,40 @@ public class TestSurvivalController {
             "   }", SimpleSelection.class);
     log.debug("*********** simple selection"+selection);
     
+    
+    
 //    dtoJson = "{\"name\":\"surv1\",\"datasetName\":\"brca\",\"experiment\":{\"name\":\"exp\",\"properties\":{\"selectionColor\":\"#18d239\",\"selectionDescription\":\"\"},\"keys\":[\"TCGA-A8-A09I-01A-22R-A034-07\",\"TCGA-A2-A0SW-01A-11R-A084-07\",\"TCGA-BH-A18R-11A-42R-A12D-07\",\"TCGA-AO-A03R-01A-21R-A034-07\",\"TCGA-AO-A0JL-01A-11R-A056-07\",\"TCGA-E2-A14O-01A-31R-A115-07\",\"TCGA-BH-A1ET-01A-11R-A137-07\",\"TCGA-B6-A0X7-01A-11R-A10J-07\"],\"type\":\"column\"},\"experimentName\":\"exp\",\"control\":{\"name\":\"ctr\",\"properties\":{\"selectionColor\":\"#9c22eb\",\"selectionDescription\":\"\"},\"keys\":[\"TCGA-AR-A1AT-01A-11R-A12P-07\",\"TCGA-BH-A18R-01A-11R-A12D-07\",\"TCGA-BH-A1ET-11B-23R-A137-07\",\"TCGA-E2-A109-01A-11R-A10J-07\",\"TCGA-AO-A0JI-01A-21R-A056-07\"],\"type\":\"column\"},\"controlName\":\"ctr\",\"input\":[{\"key\":\"TCGA-AO-A03R-01A-21R-A034-07\",\"days_to_death\":null,\"days_to_last_followup\":1707,\"vital_status\":\"Alive\",\"group\":2,\"status\":0,\"time\":1707},{\"key\":\"TCGA-AO-A0JI-01A-21R-A056-07\",\"days_to_death\":null,\"days_to_last_followup\":1172,\"vital_status\":\"Alive\",\"group\":1,\"status\":0,\"time\":1172},{\"key\":\"TCGA-E2-A109-01A-11R-A10J-07\",\"days_to_death\":null,\"days_to_last_followup\":1172,\"vital_status\":\"Alive\",\"group\":1,\"status\":0,\"time\":1172},{\"key\":\"TCGA-BH-A1ET-01A-11R-A137-07\",\"days_to_death\":2520,\"days_to_last_followup\":null,\"vital_status\":\"Dead\",\"group\":2,\"status\":1,\"time\":2520},{\"key\":\"TCGA-A2-A0SW-01A-11R-A084-07\",\"days_to_death\":1364,\"days_to_last_followup\":null,\"vital_status\":\"Dead\",\"group\":2,\"status\":1,\"time\":1364},{\"key\":\"TCGA-AO-A0JL-01A-11R-A056-07\",\"days_to_death\":null,\"days_to_last_followup\":1319,\"vital_status\":\"Alive\",\"group\":2,\"status\":0,\"time\":1319},{\"key\":\"TCGA-BH-A18R-11A-42R-A12D-07\",\"days_to_death\":1141,\"days_to_last_followup\":null,\"vital_status\":\"Dead\",\"group\":2,\"status\":1,\"time\":1141},{\"key\":\"TCGA-BH-A1ET-11B-23R-A137-07\",\"days_to_death\":2520,\"days_to_last_followup\":null,\"vital_status\":\"Dead\",\"group\":1,\"status\":1,\"time\":2520},{\"key\":\"TCGA-A8-A09I-01A-22R-A034-07\",\"days_to_death\":null,\"days_to_last_followup\":1006,\"vital_status\":\"Alive\",\"group\":2,\"status\":0,\"time\":1006},{\"key\":\"TCGA-E2-A14O-01A-31R-A115-07\",\"days_to_death\":null,\"days_to_last_followup\":1172,\"vital_status\":\"Alive\",\"group\":2,\"status\":0,\"time\":1172},{\"key\":\"TCGA-AR-A1AT-01A-11R-A12P-07\",\"days_to_death\":1272,\"days_to_last_followup\":null,\"vital_status\":\"Dead\",\"group\":1,\"status\":1,\"time\":1272},{\"key\":\"TCGA-BH-A18R-01A-11R-A12D-07\",\"days_to_death\":1141,\"days_to_last_followup\":null,\"vital_status\":\"Dead\",\"group\":1,\"status\":1,\"time\":1141},{\"key\":\"TCGA-B6-A0X7-01A-11R-A10J-07\",\"days_to_death\":1791,\"days_to_last_followup\":null,\"vital_status\":\"Dead\",\"group\":2,\"status\":1,\"time\":1791}]}";
     //this one results in upper_ci=Inf
     dtoJson = "{\"name\":\"survival\",\"datasetName\":\"blood\",\"experimentName\":\"lymphnodesYes\",\"experiment\":{\"name\":\"lymphnodesYes\",\"properties\":{\"selectionColor\":\"#07801e\",\"selectionFacetLink\":\"project?project=1576060861743&ui=%7B%22facets%22%3A%5B%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22ethnicity%22%2C%22columnName%22%3A%22ethnicity%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%5D%7D%2C%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22icd_10%22%2C%22columnName%22%3A%22icd_10%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%5D%7D%2C%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22number_of_lymphnodes_positive_by_he%22%2C%22columnName%22%3A%22number_of_lymphnodes_positive_by_he%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%7B%22v%22%3A%7B%22v%22%3A%222%22%2C%22l%22%3A%222%22%7D%7D%2C%7B%22v%22%3A%7B%22v%22%3A%2210%22%2C%22l%22%3A%2210%22%7D%7D%2C%7B%22v%22%3A%7B%22v%22%3A%221%22%2C%22l%22%3A%221%22%7D%7D%2C%7B%22v%22%3A%7B%22v%22%3A%224%22%2C%22l%22%3A%224%22%7D%7D%5D%7D%5D%7D\",\"selectionDescription\":\"\"},\"keys\":[\"TCGA-A2-A0SY-01A-31R-A084-07\",\"TCGA-AO-A0JB-01A-11R-A056-07\",\"TCGA-A2-A0SW-01A-11R-A084-07\",\"TCGA-BH-A18R-11A-42R-A12D-07\",\"TCGA-AN-A0FW-01A-11R-A034-07\",\"TCGA-BH-A18N-01A-11R-A12D-07\",\"TCGA-AR-A1AT-01A-11R-A12P-07\",\"TCGA-BH-A18N-11A-43R-A12D-07\",\"TCGA-BH-A18R-01A-11R-A12D-07\"]},\"controlName\":\"lymphnodes0\",\"control\":{\"name\":\"lymphnodes0\",\"properties\":{\"selectionColor\":\"#cdc4b7\",\"selectionFacetLink\":\"project?project=1576060861743&ui=%7B%22facets%22%3A%5B%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22ethnicity%22%2C%22columnName%22%3A%22ethnicity%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%5D%7D%2C%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22icd_10%22%2C%22columnName%22%3A%22icd_10%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%5D%7D%2C%7B%22c%22%3A%7B%22type%22%3A%22list%22%2C%22name%22%3A%22number_of_lymphnodes_positive_by_he%22%2C%22columnName%22%3A%22number_of_lymphnodes_positive_by_he%22%2C%22expression%22%3A%22value%22%2C%22omitBlank%22%3Afalse%2C%22omitError%22%3Afalse%2C%22selectBlank%22%3Afalse%2C%22selectError%22%3Afalse%2C%22invert%22%3Afalse%7D%2C%22o%22%3A%7B%22sort%22%3A%22name%22%7D%2C%22s%22%3A%5B%7B%22v%22%3A%7B%22v%22%3A%220%22%2C%22l%22%3A%220%22%7D%7D%5D%7D%5D%7D\",\"selectionDescription\":\"\"},\"keys\":[\"TCGA-BH-A0BO-01A-23R-A12D-07\",\"TCGA-AR-A1AW-01A-21R-A12P-07\",\"TCGA-BH-A0H3-01A-11R-A12P-07\",\"TCGA-BH-A18V-11A-52R-A12D-07\",\"TCGA-BH-A18V-01A-11R-A12D-07\",\"TCGA-BH-A0H5-11A-62R-A115-07\",\"TCGA-BH-A0H5-01A-21R-A115-07\"]},\"input\":[{\"key\":\"TCGA-A2-A0SY-01A-31R-A084-07\",\"time\":1154,\"status\":0,\"group\":2,\"days_to_death\":null,\"days_to_last_followup\":1154,\"vital_status\":\"Alive\"},{\"key\":\"TCGA-BH-A0BO-01A-23R-A12D-07\",\"time\":1085,\"status\":0,\"group\":1,\"days_to_death\":null,\"days_to_last_followup\":1085,\"vital_status\":\"Alive\"},{\"key\":\"TCGA-AO-A0JB-01A-11R-A056-07\",\"time\":1150,\"status\":0,\"group\":2,\"days_to_death\":null,\"days_to_last_followup\":1150,\"vital_status\":\"Alive\"},{\"key\":\"TCGA-A2-A0SW-01A-11R-A084-07\",\"time\":1364,\"status\":1,\"group\":2,\"days_to_death\":1364,\"days_to_last_followup\":null,\"vital_status\":\"Dead\"},{\"key\":\"TCGA-AR-A1AW-01A-21R-A12P-07\",\"time\":1072,\"status\":0,\"group\":1,\"days_to_death\":null,\"days_to_last_followup\":1072,\"vital_status\":\"Alive\"},{\"key\":\"TCGA-BH-A18R-11A-42R-A12D-07\",\"time\":1141,\"status\":1,\"group\":2,\"days_to_death\":1141,\"days_to_last_followup\":null,\"vital_status\":\"Dead\"},{\"key\":\"TCGA-BH-A0H3-01A-11R-A12P-07\",\"time\":1149,\"status\":0,\"group\":1,\"days_to_death\":null,\"days_to_last_followup\":1149,\"vital_status\":\"Alive\"},{\"key\":\"TCGA-BH-A18V-11A-52R-A12D-07\",\"time\":1555,\"status\":1,\"group\":1,\"days_to_death\":1555,\"days_to_last_followup\":null,\"vital_status\":\"Dead\"},{\"key\":\"TCGA-AN-A0FW-01A-11R-A034-07\",\"time\":11,\"status\":0,\"group\":2,\"days_to_death\":null,\"days_to_last_followup\":11,\"vital_status\":\"Alive\"},{\"key\":\"TCGA-BH-A18V-01A-11R-A12D-07\",\"time\":1555,\"status\":1,\"group\":1,\"days_to_death\":1555,\"days_to_last_followup\":null,\"vital_status\":\"Dead\"},{\"key\":\"TCGA-BH-A18N-01A-11R-A12D-07\",\"time\":1148,\"status\":1,\"group\":2,\"days_to_death\":1148,\"days_to_last_followup\":null,\"vital_status\":\"Dead\"},{\"key\":\"TCGA-AR-A1AT-01A-11R-A12P-07\",\"time\":1272,\"status\":1,\"group\":2,\"days_to_death\":1272,\"days_to_last_followup\":null,\"vital_status\":\"Dead\"},{\"key\":\"TCGA-BH-A0H5-11A-62R-A115-07\",\"time\":1080,\"status\":0,\"group\":1,\"days_to_death\":null,\"days_to_last_followup\":1080,\"vital_status\":\"Alive\"},{\"key\":\"TCGA-BH-A18N-11A-43R-A12D-07\",\"time\":1148,\"status\":1,\"group\":2,\"days_to_death\":1148,\"days_to_last_followup\":null,\"vital_status\":\"Dead\"},{\"key\":\"TCGA-BH-A18R-01A-11R-A12D-07\",\"time\":1141,\"status\":1,\"group\":2,\"days_to_death\":1141,\"days_to_last_followup\":null,\"vital_status\":\"Dead\"},{\"key\":\"TCGA-BH-A0H5-01A-21R-A115-07\",\"time\":1080,\"status\":0,\"group\":1,\"days_to_death\":null,\"days_to_last_followup\":1080,\"vital_status\":\"Alive\"}]}";
     SimpleSurvivalParams params = jsonObjectMapper.readValue (dtoJson, SimpleSurvivalParams.class);
     @SuppressWarnings ("unused")
     MvcResult mvcResult = this.mockMvc.perform(
-                                               post("/dataset/survival_test/analyze/survival")            
+                                               post("/dataset/survival_test/analyze/"+params.name ())
+                                               .param ("format", "json")
                                                .contentType (MediaType.APPLICATION_JSON)
                                                .content (dtoJson)
                                                .accept("application/json")
                                                .session (mockHttpSession)
                                                )            
-     .andExpect (status ().isOk ())
      .andDo(print())
+     .andExpect (status ().isOk ())     
      .andReturn ();
     
-      SimpleSurvivalAnalysis analysis = (SimpleSurvivalAnalysis) dataset.analyses ().get (params.name ());
-      assertThat(analysis.name (), is(params.name()));      
-      log.debug("******* SimpleSurvivalAnalysis:\n"+ jsonObjectMapper.writeValueAsString (analysis));
+    //The first put will generate an AnalysisStatus object with "IN_PROGRESS" status    
+    Analysis analysisStatus = dataset.analyses ().get (params.name ());
+    log.debug("******* AnalysisStatus:\n"+ jsonObjectMapper.writeValueAsString (analysisStatus));      
+    assertThat(analysisStatus.name (), is(params.name ()));        
+    assertThat(analysisStatus.type (), is(SurvivalAnalysis.ANALYSIS_TYPE));        
+    assertThat(analysisStatus.status (), is(Analysis.MEV_ANALYSIS_STATUS_IN_PROGRESS));        
+     
+    //Wait for analysis to complete
+    Thread.sleep (2000L);
+        
+    SimpleSurvivalAnalysis analysis = (SimpleSurvivalAnalysis) dataset.analyses ().get (params.name ());
+    assertThat(analysis.name (), is(params.name()));      
+    assertThat(analysis.type (), is(SurvivalAnalysis.ANALYSIS_TYPE));        
+    assertThat(analysis.status (), is(Analysis.MEV_ANALYSIS_STATUS_COMPLETED));
+    log.debug("******* SimpleSurvivalAnalysis:\n"+ jsonObjectMapper.writeValueAsString (analysis));
       
   }
 

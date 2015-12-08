@@ -487,13 +487,16 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
             restrict: 'E',
             link: function (scope, elems, attrs) {
 
-                scope.$watch('data', function (data, olddata) {
+                scope.$watch('data', function (dataPromise, olddata) {
 
-                    if (data) {
+                    if (dataPromise) {
                         
 //                        try {
-                            var svg =  D3BoxPlots(data.id, D3Service.select(elems[0]));
-                            svg.draw(data)
+                    		dataPromise.then(function(data){
+                    			var svg =  D3BoxPlots(data.id, D3Service.select(elems[0]));
+                                svg.draw(data);
+                    		});;
+                            
 //                        } catch (e) {
 //                            if (e instanceof RangeError){
 //                            	raiseAlert.error(e.name + ': ' +e.message, "Box Plotting Error")

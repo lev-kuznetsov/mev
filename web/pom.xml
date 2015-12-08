@@ -566,10 +566,10 @@
           </configure>
           <onRequest>
             .libPaths (c ("${project.build.directory}/rserve", .libPaths ()));
+            assign ("mwd", "${project.basedir}", e = .GlobalEnv);
             library (injectoR);
             library (topGO);
             source ("../dataset/domain/src/main/r/json.R");
-            source ("../nmf/domain/src/main/r/nmf.r");
           </onRequest>
         </configuration>
       </plugin>

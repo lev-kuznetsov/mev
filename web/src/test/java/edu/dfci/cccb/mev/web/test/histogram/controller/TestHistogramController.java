@@ -41,6 +41,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
@@ -54,6 +55,7 @@ import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.RDispatcherConfiguration;
+import edu.dfci.cccb.mev.genesd.domain.contract.GeneSDAnalysis;
 import edu.dfci.cccb.mev.histogram.domain.contract.HistogramAnalysis;
 import edu.dfci.cccb.mev.histogram.domain.contract.HistogramAnalysisBuilder;
 import edu.dfci.cccb.mev.histogram.domain.contract.HistogramResult;
@@ -124,7 +126,8 @@ public class TestHistogramController {
     String analysisName = "histo_test";
     @SuppressWarnings ("unused")
     MvcResult mvcResult = this.mockMvc.perform(
-                                               put(String.format("/dataset/%s/analyze/histogram/%s", dataset.name(), analysisName))            
+                                               put(String.format("/dataset/%s/analyze/histogram/%s", dataset.name(), analysisName))
+                                               .param ("format", "json")
                                                .contentType (MediaType.APPLICATION_JSON)                                               
                                                .accept("application/json")
                                                .session (mockHttpSession)
@@ -132,8 +135,18 @@ public class TestHistogramController {
      .andExpect (status ().isOk ())
      .andDo(print())
      .andReturn ();
+
+      //The first put will generate an AnalysisStatus object with "IN_PROGRESS" status
+      Analysis analysisStatus = dataset.analyses ().get (analysisName);
+      log.debug("******* AnalysisStatus:\n"+ jsonObjectMapper.writeValueAsString (analysisStatus));      
+      assertThat(analysisStatus.name (), is(analysisName));        
+      assertThat(analysisStatus.type (), is(HistogramAnalysis.ANALYSIS_TYPE));        
+      assertThat(analysisStatus.status (), is(Analysis.MEV_ANALYSIS_STATUS_IN_PROGRESS));
+      
+      //Wait for analysis to complete
+      Thread.sleep (2000L);
     
-      edu.dfci.cccb.mev.histogram.domain.contract.HistogramAnalysis analysis = (HistogramAnalysis) dataset.analyses ().get (analysisName);
+      HistogramAnalysis analysis = (HistogramAnalysis) dataset.analyses ().get (analysisName);
       log.debug("******* SimpleHistogramAnalysis:\n"+ jsonObjectMapper.writeValueAsString (analysis));      
       assertThat(analysis.name (), is(analysisName));      
       assertThat (analysis.result(), not(nullValue ()));
@@ -159,7 +172,7 @@ public class TestHistogramController {
       assertThat (analysisFromGET.result ().density(), is(result.density()));
       assertThat (analysisFromGET.result ().mids (), is(result.mids()));      
       assertThat (analysisFromGET.name (), is(analysisName));
-      assertThat(analysisFromGET.type (), is("Histogram Analysis"));
+      assertThat(analysisFromGET.type (), is(HistogramAnalysis.ANALYSIS_TYPE));
       
   }
 

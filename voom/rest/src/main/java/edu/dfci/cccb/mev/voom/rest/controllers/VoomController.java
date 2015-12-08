@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.voom.domain.VoomBuilder;
@@ -38,12 +39,12 @@ public class VoomController {
 
   @RequestMapping (value = "/analyze/voom", method = POST)
   @ResponseStatus (OK)
-  public void start (@RequestBody VoomParams params) throws DatasetException {
-    dataset.analyses ().put (voom.get ()
-                                 .experiment (params.experiment)
-                                 .control (params.control)
-                                 .dataset (dataset)
-                                 .name (params.name)
-                                 .build ());
+  public Analysis start (@RequestBody VoomParams params) throws DatasetException {
+    return voom.get ()
+               .experiment (params.experiment)
+               .control (params.control)
+               .dataset (dataset)
+               .name (params.name)
+               .buildAsync ();
   }
 }

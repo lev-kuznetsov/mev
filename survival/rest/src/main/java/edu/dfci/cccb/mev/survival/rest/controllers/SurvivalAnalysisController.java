@@ -16,9 +16,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.survival.domain.impl.SimpleSurvivalAnalysisBuilder;
@@ -26,18 +28,17 @@ import edu.dfci.cccb.mev.survival.domain.impl.SimpleSurvivalParams;
 
 @Log4j
 @RestController
-@RequestMapping("/dataset/" + DATASET_URL_ELEMENT)
+@RequestMapping ("/dataset/" + DATASET_URL_ELEMENT)
 @Scope (SCOPE_REQUEST)
 public class SurvivalAnalysisController {
   private @Getter @Setter @Inject Dataset dataset;
   private @Getter @Setter @Inject Provider<SimpleSurvivalAnalysisBuilder> builderProvider;
   
-  @RequestMapping (value = "/analyze/survival", method = POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseStatus (OK)
-  public void startSurvivalAnalysis (@RequestBody SimpleSurvivalParams dto) throws DatasetException {
+  @RequestMapping (value = "/analyze/survival", method = POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+  public Analysis startSurvivalAnalysis (@RequestBody SimpleSurvivalParams dto) throws DatasetException {
     log.debug("##### Survival" + dto);
 //    SimpleSurvivalAnalysisBuilder builder = new SimpleSurvivalAnalysisBuilder (); 
     SimpleSurvivalAnalysisBuilder builder = builderProvider.get ();
-    dataset.analyses ().put (builder.params (dto).build ());
+    return builder.params (dto).buildAsync ();
   }
 }

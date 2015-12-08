@@ -14,6 +14,7 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.r;
 
+import static java.lang.Double.MIN_VALUE;
 import static java.lang.Double.NEGATIVE_INFINITY;
 import static java.lang.Double.POSITIVE_INFINITY;
 import static java.lang.Double.valueOf;
@@ -45,6 +46,8 @@ public class RserveDoubleDeserializer extends JsonDeserializer<Double> {
       return POSITIVE_INFINITY;
     else if ("-Inf".equals (value))
       return NEGATIVE_INFINITY;
+    else if(value.startsWith ("<"))
+      return MIN_VALUE;
     else
       return valueOf (value);
   }

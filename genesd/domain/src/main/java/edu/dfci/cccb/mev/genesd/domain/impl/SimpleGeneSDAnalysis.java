@@ -19,6 +19,7 @@ import edu.dfci.cccb.mev.genesd.domain.impl.SimpleGeneSDAnalysis;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SimpleGeneSDAnalysis extends AbstractAnalysis<SimpleGeneSDAnalysis> implements GeneSDAnalysis {
+  
   public @Getter @JsonProperty String name;
   public @Getter @JsonProperty String type;
   public @Getter @JsonProperty SimpleGeneSDResult result;

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.topgo.domain.TopGoBuilder;
@@ -49,16 +50,16 @@ public class TopGoController {
 
   @RequestMapping (value = "/analyze/topgo", method = POST)
   @ResponseStatus (OK)
-  public void start (@RequestBody TopGoParameters parameters) throws DatasetException {
+  public Analysis start (@RequestBody TopGoParameters parameters) throws DatasetException {
     log.debug ("Requested topGO analysis with parameters " + parameters);
-    dataset.analyses ().put (topGo.get ()
-                                  .species (parameters.species)
-                                  .goType (parameters.goType)
-                                  .testType (parameters.testType)
-                                  .pAdjust (parameters.pAdjust)
-                                  .nodeSize (parameters.nodeSize)
-                                  .genelist (Arrays.asList (parameters.genelist))
-                                  .dataset (dataset)
-                                  .name (parameters.name).build ());
+    return topGo.get ()
+                .species (parameters.species)
+                .goType (parameters.goType)
+                .testType (parameters.testType)
+                .pAdjust (parameters.pAdjust)
+                .nodeSize (parameters.nodeSize)
+                .genelist (Arrays.asList (parameters.genelist))
+                .dataset (dataset)
+                .name (parameters.name).buildAsync ();
   }
 }

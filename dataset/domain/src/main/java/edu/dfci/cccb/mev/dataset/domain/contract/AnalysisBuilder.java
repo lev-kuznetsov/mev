@@ -27,4 +27,6 @@ public interface AnalysisBuilder <B extends AnalysisBuilder<?, ?>, A extends Ana
   B dataset (Dataset dataset);
 
   A build () throws DatasetException;
+
+  Analysis buildAsync ();
 }
