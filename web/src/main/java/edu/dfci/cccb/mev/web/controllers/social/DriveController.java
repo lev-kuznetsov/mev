@@ -21,9 +21,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j;
-
 import org.springframework.social.google.api.Google;
 import org.springframework.social.google.api.drive.DriveFile;
 import org.springframework.social.google.api.drive.DriveFilesPage;
@@ -33,6 +30,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.dfci.cccb.mev.dataset.rest.google.SecurityContext;
 import edu.dfci.cccb.mev.web.domain.social.Drive;
+import edu.dfci.cccb.mev.web.domain.social.Entry;
+import edu.dfci.cccb.mev.web.domain.social.File;
+import edu.dfci.cccb.mev.web.domain.social.Folder;
 
 /**
  * @author levk
@@ -40,30 +40,30 @@ import edu.dfci.cccb.mev.web.domain.social.Drive;
  */
 @RestController
 @RequestMapping ("/import/google")
-@Log4j
 public class DriveController {
 
   private @Inject Google google;
 
   @RequestMapping (method = RequestMethod.GET)
-  @SneakyThrows (UnsupportedEncodingException.class)
-  public Drive drive () {
-    if (SecurityContext.userSignedIn ()) {
-      List<edu.dfci.cccb.mev.web.domain.social.Drive.DriveFile> result = new ArrayList<> ();
-      List<DriveFile> files;
-      String nextPageToken = "";
-      do {
-        log.debug ("Getting google drive page with token " + nextPageToken);
-        DriveFilesPage page = google.driveOperations ().getRootFiles (URLEncoder.encode (nextPageToken, "UTF-8"));
-        files = page.getItems ();
-        for (DriveFile file : files)
-          if (!file.isFolder () && !file.isHidden ())
-            result.add (new edu.dfci.cccb.mev.web.domain.social.Drive.DriveFile (file.getTitle (), file.getId ()));
-        nextPageToken = page.getNextPageToken ();
-      } while (nextPageToken != null);
-      return new Drive (true, result.toArray (new edu.dfci.cccb.mev.web.domain.social.Drive.DriveFile[0]));
-    } else {
-      return new Drive (false, null);
-    }
+  public Drive drive () throws UnsupportedEncodingException {
+    return SecurityContext.userSignedIn () ? new Drive (true, list ("root")) : new Drive (false, null);
+  }
+
+  private Entry[] list (String parent) throws UnsupportedEncodingException {
+    List<Entry> items = new ArrayList<> ();
+    List<DriveFile> list;
+    String nextToken = "";
+    do {
+      DriveFilesPage page = google.driveOperations ().getFiles (URLEncoder.encode (parent, "UTF-8"),
+                                                                URLEncoder.encode (nextToken, "UTF-8"));
+      list = page.getItems ();
+      for (DriveFile file : list)
+        if (!file.isHidden ())
+          items.add (file.isFolder ()
+                                     ? new Folder (file.getTitle (), list (file.getId ()))
+                                     : new File (file.getTitle (), file.getId ()));
+      nextToken = page.getNextPageToken ();
+    } while (nextToken != null);
+    return items.toArray (new Entry[0]);
   }
 }

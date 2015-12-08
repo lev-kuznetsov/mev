@@ -15,13 +15,10 @@
 package edu.dfci.cccb.mev.web.domain.social;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author levk
@@ -29,10 +26,5 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @ToString
 @EqualsAndHashCode
-@RequiredArgsConstructor
 @JsonInclude (Include.NON_NULL)
-public class Drive {
-
-  private @Getter final @JsonProperty boolean signedIn;
-  private @Getter final @JsonProperty Entry[] files;
-}
+public class Entry {}

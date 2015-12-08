@@ -28,11 +28,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * 
  */
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode (callSuper = true)
 @RequiredArgsConstructor
 @JsonInclude (Include.NON_NULL)
-public class Drive {
+public class Folder extends Entry {
 
-  private @Getter final @JsonProperty boolean signedIn;
-  private @Getter final @JsonProperty Entry[] files;
+  private @Getter final @JsonProperty String name;
+  private @Getter final @JsonProperty Entry[] entries;
 }
