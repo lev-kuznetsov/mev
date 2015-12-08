@@ -21,9 +21,8 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,21 +39,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 import edu.dfci.cccb.mev.hcl.domain.contract.HclBuilder;
 import edu.dfci.cccb.mev.hcl.domain.contract.InvalidAlgorithmException;
 import edu.dfci.cccb.mev.hcl.domain.contract.InvalidMetricException;
-import edu.dfci.cccb.mev.hcl.domain.contract.Linkage;
-import edu.dfci.cccb.mev.hcl.domain.contract.Metric;
-import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
-import edu.dfci.cccb.mev.hcl.domain.simple.SimpleTwoDimensionalHclBuilder;
 
 /**
  * @author levk
@@ -67,79 +64,84 @@ import edu.dfci.cccb.mev.hcl.domain.simple.SimpleTwoDimensionalHclBuilder;
 @Scope (SCOPE_REQUEST)
 public class HclAnalysisController {
 
-  private @Getter @Setter (onMethod = @_ (@Inject)) NodeBuilder nodeBuilder;
   private @Getter @Setter (onMethod = @_ (@Inject)) Dataset dataset;
+  private @Getter @Setter @Inject Provider<HclBuilder> build;
 
-//  @RequestMapping (value = "/analyze/hcl/" + ANALYSIS_URL_ELEMENT + "(" + DIMENSION_URL_ELEMENT + ","
-//                           + METRIC_URL_ELEMENT + "," + LINKAGE_URL_ELEMENT + ")",
-//                   method = POST)
-//  @ResponseStatus (OK)
-//  public void start (final @PathVariable (ANALYSIS_MAPPING_NAME) String name,
-//                     final @PathVariable (DIMENSION_MAPPING_NAME) Dimension dimension,
-//                     final @PathVariable (METRIC_MAPPING_NAME) Metric metric,
-//                     final @PathVariable (LINKAGE_MAPPING_NAME) Linkage linkage) throws DatasetNotFoundException,
-//                                                                                InvalidDimensionTypeException {
-//    // TODO: inject a factory instead of manual injection
-//    final HclBuilder builder = new SimpleTwoDimensionalHclBuilder ().nodeBuilder (nodeBuilder)
-//                                                                    .dataset (dataset)
-//                                                                    .dimension (dimension)
-//                                                                    .linkage (linkage)
-//                                                                    .metric (metric);
-//
-//    log.debug ("Running HCL on " + dataset);
-//
-//    new Thread () {
-//      /* (non-Javadoc)
-//       * @see java.lang.Thread#run() */
-//      @Override
-//      public void run () {
-//        try {
-//          dataset.analyses ().put (builder.name (name).build ());
-//        } catch (DatasetException e) {
-//          log.warn ("Could not cluster hierarchically", e);
-//        }
-//      }
-//    }.run (); // .start (); TODO: async analysis
-//  }
+  // @RequestMapping (value = "/analyze/hcl/" + ANALYSIS_URL_ELEMENT + "(" +
+  // DIMENSION_URL_ELEMENT + ","
+  // + METRIC_URL_ELEMENT + "," + LINKAGE_URL_ELEMENT + ")",
+  // method = POST)
+  // @ResponseStatus (OK)
+  // public void start (final @PathVariable (ANALYSIS_MAPPING_NAME) String name,
+  // final @PathVariable (DIMENSION_MAPPING_NAME) Dimension dimension,
+  // final @PathVariable (METRIC_MAPPING_NAME) Metric metric,
+  // final @PathVariable (LINKAGE_MAPPING_NAME) Linkage linkage) throws
+  // DatasetNotFoundException,
+  // InvalidDimensionTypeException {
+  // // TODO: inject a factory instead of manual injection
+  // final HclBuilder builder = new SimpleTwoDimensionalHclBuilder
+  // ().nodeBuilder (nodeBuilder)
+  // .dataset (dataset)
+  // .dimension (dimension)
+  // .linkage (linkage)
+  // .metric (metric);
+  //
+  // log.debug ("Running HCL on " + dataset);
+  //
+  // new Thread () {
+  // /* (non-Javadoc)
+  // * @see java.lang.Thread#run() */
+  // @Override
+  // public void run () {
+  // try {
+  // dataset.analyses ().put (builder.name (name).build ());
+  // } catch (DatasetException e) {
+  // log.warn ("Could not cluster hierarchically", e);
+  // }
+  // }
+  // }.run (); // .start (); TODO: async analysis
+  // }
 
   @NoArgsConstructor
   @AllArgsConstructor
-  @Accessors(fluent=true)
-  public static class HclDto{
+  @Accessors (fluent = true)
+  public static class HclDto {
     @JsonProperty @Getter private String name;
-    @JsonProperty @Getter private String dimension;  
-    @JsonProperty @Getter private String metric;  
+    @JsonProperty @Getter private String dimension;
+    @JsonProperty @Getter private String metric;
     @JsonProperty @Getter private String linkage;
   }
+
   @RequestMapping (value = "/analyze/hcl", method = POST)
   @ResponseStatus (OK)
   public Analysis startJson (@RequestBody final HclDto dto) throws DatasetNotFoundException,
-                                                          InvalidDimensionTypeException, InvalidAlgorithmException, InvalidMetricException {
-    
+                                                           InvalidDimensionTypeException,
+                                                           InvalidAlgorithmException,
+                                                           InvalidMetricException {
+
     // TODO: inject a factory instead of manual injection
-    final HclBuilder builder = new SimpleTwoDimensionalHclBuilder ().nodeBuilder (nodeBuilder)
-                                                                    .dataset (dataset)
-                                                                    .dimension (dataset.dimension (Type.from (dto.dimension())))
-                                                                    .linkage (Linkage.from (dto.linkage()))
-                                                                    .metric (Metric.from (dto.metric()))
-                                                                    .name (dto.name ());
+    final HclBuilder builder = build.get ().dataset (dataset)
+                                    .dimension (dataset.dimension (Type.from (dto.dimension ())))
+                                    .linkage (dto.linkage ())
+                                    .metric (dto.metric ())
+                                    .name (dto.name ());
 
     log.debug ("Running HCL on " + dataset);
     return builder.buildAsync ();
-    
-//    new Thread () {
-//      /* (non-Javadoc)
-//       * @see java.lang.Thread#run() */
-//      @Override
-//      public void run () {
-//        try {
-//          dataset.analyses ().put (builder.name (dto.name()).build ());
-//        } catch (DatasetException e) {
-//          log.warn ("Could not cluster hierarchically", e);
-//        }
-//      }
-//    }.run (); // .start (); TODO: async analysis
-    
+
+    // new Thread () {
+    // /* (non-Javadoc)
+    // * @see java.lang.Thread#run() */
+    // @Override
+    // public void run () {
+    // try {
+    // dataset.analyses ().put (builder.name (dto.name()).build ());
+    // } catch (DatasetException e) {
+    // log.warn ("Could not cluster hierarchically", e);
+    // }
+    // }
+    // }.run (); // .start (); TODO: async analysis
+
   }
 
   @Deprecated

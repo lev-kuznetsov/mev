@@ -27,7 +27,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
  */
 public interface KMeans extends Analysis {
 
-  Set<Set<String>> clusters ();
+  Set<Cluster> clusters ();
   
   Type dimension ();
 

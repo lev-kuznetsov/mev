@@ -12,8 +12,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.web.domain.social;
+
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  * @author levk
- *
+ * 
  */
-package edu.dfci.cccb.mev.kmeans.rest.resolvers;
+@ToString
+@EqualsAndHashCode
+@JsonInclude (Include.NON_NULL)
+public class Entry {}

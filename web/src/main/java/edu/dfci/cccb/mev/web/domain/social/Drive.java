@@ -34,13 +34,5 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Drive {
 
   private @Getter final @JsonProperty boolean signedIn;
-  private @Getter final @JsonProperty DriveFile[] files;
-
-  @ToString
-  @EqualsAndHashCode
-  @RequiredArgsConstructor
-  public static class DriveFile {
-    private @Getter final @JsonProperty String name;
-    private @Getter final @JsonProperty String id;
-  }
+  private @Getter final @JsonProperty Entry[] files;
 }

@@ -20,31 +20,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractDimension;
+import edu.dfci.cccb.mev.kmeans.domain.contract.Cluster;
 
 /**
  * @author levk
  * 
  */
 @Accessors (fluent = true)
-@EqualsAndHashCode (callSuper = true)
 @ToString
 public class SimpleFlatClusteredDimension extends AbstractDimension {
 
-  private @Getter final Set<Set<String>> clusters;
+  private @Getter final Set<Cluster> clusters;
   private @Getter final List<String> keys;
 
   /**
    * @param type
    */
   public SimpleFlatClusteredDimension (Type type,
-                                       final Set<Set<String>> clusters,
+                                       final Set<Cluster> clusters,
                                        Selections selections,
                                        Annotation annotation) {
     super (type);

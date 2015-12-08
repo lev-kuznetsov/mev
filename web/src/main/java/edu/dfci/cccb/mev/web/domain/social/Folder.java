@@ -12,8 +12,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package edu.dfci.cccb.mev.web.domain.social;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author levk
- *
+ * 
  */
-package edu.dfci.cccb.mev.hcl.rest.resolvers;
+@ToString
+@EqualsAndHashCode (callSuper = true)
+@RequiredArgsConstructor
+@JsonInclude (Include.NON_NULL)
+public class Folder extends Entry {
+
+  private @Getter final @JsonProperty String name;
+  private @Getter final @JsonProperty Entry[] entries;
+}

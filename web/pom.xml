@@ -549,7 +549,7 @@
           <configuration>
           <rserveSource>https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/Rserve/1.8-1/Rserve_1.8-1.tar.gz</rserveSource>
           <onInitialize>
-            sapply (c ("devtools", "NMF"), function (lib)
+            sapply (c ("devtools", "NMF", "RProtoBuf"), function (lib)
               if (!requireNamespace (lib))
                 install.packages (lib, repos="http://cran.rstudio.com"));
             if (!requireNamespace ("injectoR"))

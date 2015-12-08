@@ -25,7 +25,7 @@ public interface HclBuilder extends AnalysisBuilder<HclBuilder, Hcl> {
 
   HclBuilder dimension (Dimension dimension);
 
-  HclBuilder metric (Metric metric);
+  HclBuilder metric (String metric);
 
-  HclBuilder linkage (Linkage linkage);
+  HclBuilder linkage (String linkage);
 }
