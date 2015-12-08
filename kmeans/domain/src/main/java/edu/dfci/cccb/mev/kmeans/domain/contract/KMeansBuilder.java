@@ -16,7 +16,6 @@ package edu.dfci.cccb.mev.kmeans.domain.contract;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
-import edu.dfci.cccb.mev.kmeans.domain.hadoop.Metric;
 
 /**
  * @author levk
@@ -28,5 +27,5 @@ public interface KMeansBuilder extends AnalysisBuilder<KMeansBuilder, KMeans> {
 
   KMeansBuilder dimension (Dimension dimension);
 
-  KMeansBuilder metric (Metric metric);
+  KMeansBuilder metric (String metric);
 }

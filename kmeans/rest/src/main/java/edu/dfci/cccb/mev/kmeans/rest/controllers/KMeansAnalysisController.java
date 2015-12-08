@@ -19,8 +19,6 @@ import static edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMetho
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_URL_ELEMENT;
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver.DIMENSION_MAPPING_NAME;
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver.DIMENSION_URL_ELEMENT;
-import static edu.dfci.cccb.mev.kmeans.rest.resolvers.KMeansMetricPathVariableMethodArgumentResolver.METRIC_MAPPING_NAME;
-import static edu.dfci.cccb.mev.kmeans.rest.resolvers.KMeansMetricPathVariableMethodArgumentResolver.METRIC_URL_ELEMENT;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
@@ -42,7 +40,6 @@ import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.kmeans.domain.contract.KMeans;
 import edu.dfci.cccb.mev.kmeans.domain.contract.KMeansBuilder;
-import edu.dfci.cccb.mev.kmeans.domain.hadoop.Metric;
 
 /**
  * @author levk
@@ -60,7 +57,7 @@ public class KMeansAnalysisController {
   @RequestMapping (value = "/analyze/kmeans/" + ANALYSIS_URL_ELEMENT + "("
                            + "dimension=" + DIMENSION_URL_ELEMENT + ","
                            + "k={k},"
-                           + "metric=" + METRIC_URL_ELEMENT + ","
+                           + "metric={metric},"
                            + "iterations={iterations},"
                            + "convergence={convergence})",
                    method = POST)
@@ -68,7 +65,7 @@ public class KMeansAnalysisController {
   public void start (final @PathVariable (ANALYSIS_MAPPING_NAME) String name,
                      final @PathVariable (DIMENSION_MAPPING_NAME) Dimension dimension,
                      final @PathVariable ("k") int k,
-                     final @PathVariable (METRIC_MAPPING_NAME) Metric metric,
+                     final @PathVariable ("metric") String metric,
                      final @PathVariable ("iterations") int iterations,
                      final @PathVariable ("convergence") double convergenceDelta) throws DatasetException {
     dataset.analyses ().put (kmeans.name (name)
