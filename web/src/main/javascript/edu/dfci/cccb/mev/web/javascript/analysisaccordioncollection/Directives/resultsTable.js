@@ -129,7 +129,10 @@
     	        if (isNaN(input)) {
     	            return input;
     	        } else {
-    	            return $filter('number')(input, fractionSize);
+    	        	if(input>1000)
+    	        		return input.toExponential(4);
+    	        	else
+    	        		return $filter('number')(input, fractionSize);
     	        };
     	    };
     	});
