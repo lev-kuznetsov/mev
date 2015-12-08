@@ -75,7 +75,7 @@ define(["ng", "lodash"], function(ng, _){
 							templateUrl=templateUrl.replace("default", analysisType.shortName).replace("default", analysisType.shortName);								
 						}	
 					}
-					console.debug("anyAnalysis templateUrl:", templateUrl, analysisType, $state, resolveProject($state), analysis);
+//					console.debug("anyAnalysis templateUrl:", templateUrl, analysisType, $state, resolveProject($state), analysis);
 					return templateUrl;
 				};
 				

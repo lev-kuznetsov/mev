@@ -46,7 +46,7 @@ define(['q', 'PouchDB', 'jsLru', 'blobUtil'], function(q, PouchDB, jsLru, blobUt
     	}
     	
     	function saveDataValues(chunks){
-    		console.debug("swap: chunks", chunks);
+//    		console.debug("swap: chunks", chunks);
     		var doc = {_id: "values", _attachments: chunks};
     		return db.put(doc)
 			.then()["catch"](function(err){
@@ -118,7 +118,7 @@ define(['q', 'PouchDB', 'jsLru', 'blobUtil'], function(q, PouchDB, jsLru, blobUt
         	if(dataview){
         		return dataview.getFloat64(chunkOffset*Float64Array.BYTES_PER_ELEMENT, false);
         	}else{        		
-        		console.debug("swap: miss ", itemIndex, chunkIndex);
+//        		console.debug("swap: miss ", itemIndex, chunkIndex);
         		loadChunkDataView().then(function(dataview){					
 					return dataview.getFloat64(chunkOffset*Float64Array.BYTES_PER_ELEMENT, false);
 				})["catch"](function (err) {
