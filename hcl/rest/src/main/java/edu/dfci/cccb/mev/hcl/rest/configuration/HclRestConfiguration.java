@@ -44,7 +44,7 @@ import edu.dfci.cccb.mev.hcl.domain.contract.HclBuilder;
 import edu.dfci.cccb.mev.hcl.domain.contract.Node;
 import edu.dfci.cccb.mev.hcl.domain.contract.NodeBuilder;
 import edu.dfci.cccb.mev.hcl.domain.mock.MockNodeBuilder;
-import edu.dfci.cccb.mev.hcl.domain.simple.SimpleTwoDimensionalHclBuilder;
+import edu.dfci.cccb.mev.hcl.domain.r.RHclBuilder;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.BranchJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.HclJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.LeafJsonSerializer;
@@ -52,8 +52,6 @@ import edu.dfci.cccb.mev.hcl.rest.assembly.json.NodeJsonDeserializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.SimpleHierarchicallyClusteredDimensionJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.newick.HclNewickMessageConverter;
 import edu.dfci.cccb.mev.hcl.rest.assembly.newick.NodeNewickMessageConverter;
-import edu.dfci.cccb.mev.hcl.rest.resolvers.LinkagePathVariableMethodArgumentResolver;
-import edu.dfci.cccb.mev.hcl.rest.resolvers.MetricPathVariableMethodArgumentResolver;
 
 /**
  * @author levk
@@ -72,7 +70,7 @@ public class HclRestConfiguration extends MevRestConfigurerAdapter {
   @Bean
   @Scope (value = SCOPE_REQUEST, proxyMode = INTERFACES)
   public HclBuilder hclBuilder () {
-    return new SimpleTwoDimensionalHclBuilder ();
+    return new RHclBuilder ();
   }
 
   /* (non-Javadoc)
@@ -118,9 +116,7 @@ public class HclRestConfiguration extends MevRestConfigurerAdapter {
    * #addPreferredArgumentResolvers(java.util.List) */
   @Override
   public void addPreferredArgumentResolvers (List<HandlerMethodArgumentResolver> resolvers) {
-    resolvers.addAll (asList (new LinkagePathVariableMethodArgumentResolver (),
-                              new MetricPathVariableMethodArgumentResolver (),
-                              new AnalysisPathVariableMethodArgumentResolver<Hcl> (Hcl.class)));
+    resolvers.add (new AnalysisPathVariableMethodArgumentResolver<Hcl> (Hcl.class));
   }
 
   @Bean
