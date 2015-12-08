@@ -111,7 +111,7 @@ define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus', '../data
     					function poll(prevResponse, wait){
     	        			if(prevResponse.status && prevResponse.status === "IN_PROGRESS"){    	        				
     	        				$timeout(function(){
-    	    						AnalysisResource.get(allParams,
+    	    						AnalysisResource.get({datasetName: allParams.datasetName, analysisName: allParams.name},
     	                    			function(newResponse){    	
     	    								poll(newResponse, 5000);
     	                        		});    							
@@ -173,13 +173,13 @@ define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus', '../data
     	});
     	
 //    	return resource;
-    	var SelectionResource = Object.create(resource);
+    	var SelectionResource = Object.create(resource);    	
     	SelectionResource.getAll=function(params, data, callback){
     		var result = resource.getAll(params, data, callback);
     		result.$promise.then(function(response){
     			response.selections.map(function(selection){
     				selection.type=params.dimension;
-    			});
+    			});    			
     		});
     		return result;
     	};
