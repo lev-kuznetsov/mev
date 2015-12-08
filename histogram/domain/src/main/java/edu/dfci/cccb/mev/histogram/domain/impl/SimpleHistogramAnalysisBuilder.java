@@ -24,14 +24,7 @@ import edu.dfci.cccb.mev.histogram.domain.contract.HistogramAnalysisBuilder;
 public class SimpleHistogramAnalysisBuilder extends AbstractDispatchedRAnalysisBuilder<SimpleHistogramAnalysisBuilder, HistogramAnalysis>{
   
   public SimpleHistogramAnalysisBuilder () {
-    super ("Histogram Analysis");
-  }
-  @Getter @Setter private String name;
-  
-  
-  public SimpleHistogramAnalysisBuilder name (String name) {
-    this.name=name;
-    return this;
+    super (HistogramAnalysis.ANALYSIS_TYPE);
   }
   
   @Result private SimpleHistogramResult dtoResult;
@@ -39,7 +32,7 @@ public class SimpleHistogramAnalysisBuilder extends AbstractDispatchedRAnalysisB
   
   @Override
   protected HistogramAnalysis result () {
-    return new SimpleHistogramAnalysis (this.name, this.type(), dtoResult);
+    return new SimpleHistogramAnalysis (this.name(), this.type(), dtoResult);
   }
   
   @Callback

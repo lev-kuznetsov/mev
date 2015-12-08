@@ -67,12 +67,34 @@ define(["ng", "lodash"], function(ng, _){
 					
 					var templateUrl="app/views/dataset/analysis/default/view.analysis.default.tpl.html";						
 					if($scope.DatasetAnalysisVM.analysis){
-						var analysisType = AnalysisTypes[$scope.DatasetAnalysisVM.analysis.type];
-						templateUrl=templateUrl.replace("default", analysisType.shortName).replace("default", analysisType.shortName);
+						var analysis = $scope.DatasetAnalysisVM.analysis;
+						if(analysis.status && analysis.status === "IN_PROGRESS"){
+							//analysis is not ready - keep the default template
+						}else{
+							var analysisType = AnalysisTypes[$scope.DatasetAnalysisVM.analysis.type];
+							templateUrl=templateUrl.replace("default", analysisType.shortName).replace("default", analysisType.shortName);								
+						}	
 					}
-					console.debug("anyAnalysis templateUrl:", templateUrl, analysisType, $state, resolveProject($state), analysis);
+//					console.debug("anyAnalysis templateUrl:", templateUrl, analysisType, $state, resolveProject($state), analysis);
 					return templateUrl;
-				};				
+				};
+				
+				AnalysisEventBus.onAnalysisSuccess($scope, function(type, name, data){
+					if($scope.anyAnalysisLaunch){
+						var analysis = data.response;
+						if(analysis.name===$scope.anyAnalysisLaunch.analysisName){							
+							$scope.DatasetAnalysisVM.analysis = analysis;
+							var analysisType = AnalysisTypes[$scope.DatasetAnalysisVM.analysis.type];
+							var ctrlName = analysisType.viewModel+"Factory";
+							if($injector.has(ctrlName)){					
+								var ctrl = $injector.get(ctrlName); 														
+								$injector.invoke(ctrl, $scope.DatasetAnalysisVM, {$scope: $scope, project: project, analysis: analysis});
+//						ctrl.call(this, $scope, project, analysis);	
+							}
+						}
+					}
+				});
+				
 				AnalysisEventBus.onAnalysisLoadedAll($scope, function(){
 					
 					if($scope.anyAnalysisLaunch){
@@ -89,6 +111,7 @@ define(["ng", "lodash"], function(ng, _){
 						}
 					}
 		        });
+				
 				if($scope.DatasetAnalysisVM.analysis || $scope.anyViewModel){					
 					if($injector.has(ctrlName)){					
 						var ctrl = $injector.get(ctrlName); 

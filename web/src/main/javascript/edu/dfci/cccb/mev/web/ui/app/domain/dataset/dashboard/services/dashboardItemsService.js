@@ -2,11 +2,11 @@ define([], function(){
 	var DashboardItems = function DashboardItems(){
 		return function(){			
 			var _self = this;			
-			this["Original Data"] = {				
-				name: "Original Data",
-				templateUrl: "app/views/dataset/_templates/dataset.heatmap.tpl.html",
-				viewModel: "DatasetHeatmapVMFactory"
-			};
+//			this["Original Data"] = {				
+//				name: "Original Data",
+//				templateUrl: "app/views/dataset/_templates/dataset.heatmap.tpl.html",
+//				viewModel: "DatasetHeatmapVMFactory"
+//			};
 			this["Histogram"] = {
 				name: "Histogram",				
 				launch: {analysisType: "histogram", analysisName: "Histogram"}					
@@ -19,10 +19,10 @@ define([], function(){
 				name: "GeneMAD",
 				launch: {analysisType: "genemad", analysisName: "GeneMAD"}				
 			};
-//			this["PCA"] = {
-//					name: "PCA",
-//					launch: {analysisType: "pca", analysisName: "PCA"}				
-//				};
+			this["PCA"] = {
+				name: "PCA",
+				launch: {analysisType: "pca", analysisName: "PCA"}				
+			};
 			this.$add = function(item){
 				_self[item.name] = item;
 			};			

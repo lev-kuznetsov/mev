@@ -23,16 +23,4 @@ public class TopGo extends AbstractAnalysis<TopGo> {
   private Collection<TopGoRow> table () {
     return table;
   }
-
-  @Override
-  @JsonProperty
-  public String name () {
-    return super.name ();
-  }
-  
-  @Override
-  @JsonProperty
-  public String type() {
-    return super.type ();
-  }
 }

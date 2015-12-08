@@ -7,25 +7,25 @@ define(['./AnalysisClass'], function(AnalysisClass){
         self.analyses = [];
         var defaultAnalyses = [];
         
-        return self.analysis.getAll({datasetName: self.datasetName}).$promise.then(function(response){
-        	function checkDefaultAnalysis(checkAnalysis){
-            	if(response.names.filter(function(name){
-                	return name === checkAnalysis.name;
-                }).length === 0){
-            		var resource = self.analysis.put({analysisType: checkAnalysis.type,
-                        datasetName: self.datasetName,
-                        analysisName : checkAnalysis.name}, {});
-            		defaultAnalyses.push(resource.$promise);
-                }
-            	return undefined;
-            }
-//We now load default analyses after switching to the Dataset view
-//            checkDefaultAnalysis({type: "histogram", name: "Histogram"});
-//            checkDefaultAnalysis({type: "genesd", name: "GeneSD"});
-//            checkDefaultAnalysis({type: "genemad", name: "GeneMAD"});
-            return defaultAnalyses;
-        }).then(function(response){
-        	return self.$q.all(defaultAnalyses).then(function(response){
+//        return self.analysis.getAll({datasetName: self.datasetName}).$promise.then(function(response){
+//        	function checkDefaultAnalysis(checkAnalysis){
+//            	if(response.names.filter(function(name){
+//                	return name === checkAnalysis.name;
+//                }).length === 0){
+//            		var resource = self.analysis.put({analysisType: checkAnalysis.type,
+//                        datasetName: self.datasetName,
+//                        analysisName : checkAnalysis.name}, {});
+//            		defaultAnalyses.push(resource.$promise);
+//                }
+//            	return undefined;
+//            }
+////We now load default analyses after switching to the Dataset view
+////            checkDefaultAnalysis({type: "histogram", name: "Histogram"});
+////            checkDefaultAnalysis({type: "genesd", name: "GeneSD"});
+////            checkDefaultAnalysis({type: "genemad", name: "GeneMAD"});
+//            return defaultAnalyses;
+//        }).then(function(response){
+//        	return self.$q.all(defaultAnalyses).then(function(response){
             	return self.analysis.getAll({datasetName: self.datasetName}).$promise.then(function(response){
                     
                 	var requests = [];
@@ -58,8 +58,8 @@ define(['./AnalysisClass'], function(AnalysisClass){
                 	console.debug("qall2", response);
                 	self.analysisEventBus.analysisLoadedAll();
                 });;
-            }); 
-        })
+//            }); 
+//        })
         
                
     };

@@ -1,10 +1,12 @@
 package edu.dfci.cccb.mev.survival.domain.impl;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.r.AbstractDispatchedRAnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Parameter;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.R;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
+import edu.dfci.cccb.mev.survival.domain.contract.SurvivalAnalysis;
 import edu.dfci.cccb.mev.survival.domain.contract.SurvivalParams;
 
 @R ("function (data) {\n" + 
@@ -48,12 +50,13 @@ import edu.dfci.cccb.mev.survival.domain.contract.SurvivalParams;
 public class SimpleSurvivalAnalysisBuilder extends AbstractDispatchedRAnalysisBuilder<SimpleSurvivalAnalysisBuilder, SimpleSurvivalAnalysis> {
     
   public SimpleSurvivalAnalysisBuilder () {
-    super ("Survival Analysis");
+    super (SurvivalAnalysis.ANALYSIS_TYPE);
   }
 
   @Parameter("data") private SurvivalParams params;  
   public SimpleSurvivalAnalysisBuilder params (SurvivalParams params) {
     this.params=params;
+    name(params.name ());
     return this;
   }
   
@@ -61,7 +64,9 @@ public class SimpleSurvivalAnalysisBuilder extends AbstractDispatchedRAnalysisBu
   
   @Override
   protected SimpleSurvivalAnalysis result () {
-    return new SimpleSurvivalAnalysis (params.name(), this.type(), params, dtoResult);
+    if(dtoResult==null)
+      return null;
+    return new SimpleSurvivalAnalysis (name(), type(), params, dtoResult);
   }
   
   @Callback

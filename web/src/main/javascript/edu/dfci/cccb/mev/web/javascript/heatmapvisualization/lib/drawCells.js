@@ -2,7 +2,7 @@ define(['./cellFilter', 'd3', 'qtip', 'q'], function(cellFilter, d3, qtip, q){
 	
 	//drawCells !View, !shownCells, !scales, Array [String], -> null
 	//	draws cells on heatmapvisualization object
-	return function(labels, ds){
+	return function(labels, ds, repaintAll){
 		var self = this;
 
 		var labelPairs = [];
@@ -40,7 +40,7 @@ define(['./cellFilter', 'd3', 'qtip', 'q'], function(cellFilter, d3, qtip, q){
 					y : function(d){ return self.scales.cells.yScale(d.row);},
 					height: self.params.cell.height - self.params.cell.padding,
 					width: self.params.cell.width - self.params.cell.padding,
-					fill: function(d){ return self.scales.cells.colorScale(d.value)},
+					fill: function(d){ return self.scales.cells.colorScale(d.value);},
 //					fill: function(d){
 //						var node = this;
 //						ds.expression.tryGet([d.row, d.column]).then(function(value){						
@@ -61,6 +61,9 @@ define(['./cellFilter', 'd3', 'qtip', 'q'], function(cellFilter, d3, qtip, q){
 			// entering elements; so, operations on the update selection after appending to
 			// the enter selection will apply to both entering and updating nodes.
 			//	... nothing to update for all cells
+			if(repaintAll)
+				domCells.attr({fill: function(d){ return self.scales.cells.colorScale(d.value);}});
+//				domCells.attr({fill: "blue"});
 			
 	        // EXIT
 	        // Remove old elements as needed.

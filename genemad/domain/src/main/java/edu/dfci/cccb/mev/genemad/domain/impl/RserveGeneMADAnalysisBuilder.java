@@ -18,20 +18,13 @@ public class RserveGeneMADAnalysisBuilder extends AbstractDispatchedRAnalysisBui
   public RserveGeneMADAnalysisBuilder () {
     super ("Gene MAD Analysis");
   }
-  @Getter @Setter private String name;
-  
-  
-  public RserveGeneMADAnalysisBuilder name (String name) {
-    this.name=name;
-    return this;
-  }
   
   @Result private SimpleGeneMADResult dtoResult;
   @Error private String error;
   
   @Override
   protected GeneMADAnalysis result () {
-    return new SimpleGeneMADAnalysis (this.name, this.type(), dtoResult);
+    return new SimpleGeneMADAnalysis (this.name(), this.type(), dtoResult);
   }
   
   @Callback

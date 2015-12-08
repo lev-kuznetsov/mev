@@ -6,20 +6,24 @@ var REQUIREJS_CONFIG = (function(){
 		},
 		app: function(path){
 			return "/container/ui/app/"+path;
+		},
+		bower: function(path){
+			return this.vendor("bower_components/"+path);
 		}
 	};
 	
 	return {
+		wait: 20,
 		baseUrl: "/container/javascript",
 		paths: {
-			jquery : ["//code.jquery.com/jquery-2.1.1", paths.vendor("jquery/jquery-2.1.1")],
+			jquery : ["//code.jquery.com/jquery-2.1.1"],
 			bootstrap: [paths.vendor("bootstrap-3.3.1/dist/js/bootstrap")],
-			ngX : ["//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular", paths.vendor("angularjs/angular"), "//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular"],
+			ngX : [paths.bower("angular/angular"), "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular", paths.vendor("angularjs/angular"), "//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular"],
 			ng: [paths.app("mui-ng")],
 			mui: [paths.app("mui")],
-			ngAnimate: ["//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-animate.min"],
+			ngAnimate: [paths.bower("angular-animate/angular-animate"), "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-animate.min"],
 			uibootstrap: [paths.vendor("uibootstrap/ui-bootstrap-tpls-0.12.1.min")],			
-			nguirouter :  [paths.vendor("uirouter/angular-ui-router"), "//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.12/angular-ui-router"],
+			nguirouter :  [paths.vendor("uirouter/angular-ui-router")], //, "//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.12/angular-ui-router"
 			ngresource: [paths.vendor("angularjs/angular-resource")],
 			appjs: [paths.app("app")],
 			q: [paths.vendor("q/q")],

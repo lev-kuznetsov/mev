@@ -40,6 +40,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
@@ -112,7 +113,7 @@ public class HclAnalysisController {
   }
   @RequestMapping (value = "/analyze/hcl", method = POST)
   @ResponseStatus (OK)
-  public void startJson (@RequestBody final HclDto dto) throws DatasetNotFoundException,
+  public Analysis startJson (@RequestBody final HclDto dto) throws DatasetNotFoundException,
                                                           InvalidDimensionTypeException, InvalidAlgorithmException, InvalidMetricException {
     
     // TODO: inject a factory instead of manual injection
@@ -120,22 +121,25 @@ public class HclAnalysisController {
                                                                     .dataset (dataset)
                                                                     .dimension (dataset.dimension (Type.from (dto.dimension())))
                                                                     .linkage (Linkage.from (dto.linkage()))
-                                                                    .metric (Metric.from (dto.metric()));
+                                                                    .metric (Metric.from (dto.metric()))
+                                                                    .name (dto.name ());
 
     log.debug ("Running HCL on " + dataset);
-
-    new Thread () {
-      /* (non-Javadoc)
-       * @see java.lang.Thread#run() */
-      @Override
-      public void run () {
-        try {
-          dataset.analyses ().put (builder.name (dto.name()).build ());
-        } catch (DatasetException e) {
-          log.warn ("Could not cluster hierarchically", e);
-        }
-      }
-    }.run (); // .start (); TODO: async analysis
+    return builder.buildAsync ();
+    
+//    new Thread () {
+//      /* (non-Javadoc)
+//       * @see java.lang.Thread#run() */
+//      @Override
+//      public void run () {
+//        try {
+//          dataset.analyses ().put (builder.name (dto.name()).build ());
+//        } catch (DatasetException e) {
+//          log.warn ("Could not cluster hierarchically", e);
+//        }
+//      }
+//    }.run (); // .start (); TODO: async analysis
+    
   }
 
   @Deprecated

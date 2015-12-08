@@ -61,6 +61,9 @@ define([], function(){
 					name: ".dataset.analysis",
 					getParams: function(node){
 						return {analysisId: node.nodeData.name, analysisType: node.nodeData.type};
+					},
+					isDisabled: function(node){
+						return node.nodeData.status==='IN_PROGRESS';
 					}
 				}
 			}

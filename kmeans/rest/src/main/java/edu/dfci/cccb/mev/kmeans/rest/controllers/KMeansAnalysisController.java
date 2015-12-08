@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
@@ -65,18 +66,17 @@ public class KMeansAnalysisController {
                            + "convergence={convergence})",
                    method = POST)
   @ResponseStatus (OK)
-  public void start (final @PathVariable (ANALYSIS_MAPPING_NAME) String name,
+  public Analysis start (final @PathVariable (ANALYSIS_MAPPING_NAME) String name,
                      final @PathVariable (DIMENSION_MAPPING_NAME) Dimension dimension,
                      final @PathVariable ("k") int k,
                      final @PathVariable (METRIC_MAPPING_NAME) Metric metric,
                      final @PathVariable ("iterations") int iterations,
                      final @PathVariable ("convergence") double convergenceDelta) throws DatasetException {
-    dataset.analyses ().put (kmeans.name (name)
-                                   .k (k)
-                                   .dimension (dimension)
-                                   .metric (metric)
-                                   .dataset (dataset)
-                                   .build ());
+    return kmeans.name (name).k (k)
+                     .dimension (dimension)
+                     .metric (metric)
+                     .dataset (dataset)
+                     .buildAsync ();
   }
 
   @RequestMapping (value = "/analysis/" + ANALYSIS_URL_ELEMENT + "/kmeans",

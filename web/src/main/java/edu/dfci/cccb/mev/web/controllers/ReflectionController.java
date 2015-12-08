@@ -22,6 +22,7 @@ import lombok.ToString;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.dfci.cccb.mev.web.domain.reflection.Reflector;
@@ -46,5 +47,10 @@ public class ReflectionController {
   public String api (Model model) {
     model.addAttribute ("reflection", reflection);
     return "api";
+  }
+
+  @RequestMapping (value = "/{sec}")
+  public void timeout (@PathVariable ("sec") long sec) throws InterruptedException {
+    Thread.sleep (sec * 1000);
   }
 }

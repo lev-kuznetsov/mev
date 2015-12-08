@@ -27,6 +27,8 @@ public interface Analyses {
   Analysis get (String name) throws AnalysisNotFoundException;
 
   void remove (String name) throws AnalysisNotFoundException;
-
+  
   List<String> list ();
+
+  void complete (Analysis result) throws AnalysisNotFoundException;
 }

@@ -37,9 +37,11 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 @Accessors (fluent = true)
 @SuppressWarnings ("unchecked")
 public abstract class AbstractAnalysis <T extends AbstractAnalysis<?>> implements Analysis, Comparable<AbstractAnalysis<?>> {
-
+  
   private @JsonProperty @Getter String name;
   private @JsonProperty @Getter String type;
+  private @JsonProperty @Getter String status = Analysis.MEV_ANALYSIS_STATUS_COMPLETED;
+  private @JsonProperty @Getter String error;
   private @Getter Calendar timestamp = getInstance ();
 
   public T name (String name) {
@@ -50,6 +52,16 @@ public abstract class AbstractAnalysis <T extends AbstractAnalysis<?>> implement
   
   public T type (String type) {
     this.type = type;
+    return (T) this;
+  }
+
+  public T status (String status) {
+    this.status = status;
+    return (T) this;
+  }
+  
+  public T error (String error) {
+    this.error = error;
     return (T) this;
   }
 

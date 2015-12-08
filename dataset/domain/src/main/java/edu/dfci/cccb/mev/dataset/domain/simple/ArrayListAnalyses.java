@@ -48,6 +48,19 @@ public class ArrayListAnalyses extends AbstractAnalyses implements AutoCloseable
     analyses.add (0, analysis);
   }
 
+  @Override
+  public void complete (Analysis result) throws AnalysisNotFoundException {
+    for (Analysis analysis : analyses)
+      if (analysis.name ().equals (result.name ())) {
+        remove(result.name());
+        put(result);        
+        if (log.isDebugEnabled ())
+          log.info ("Completed analysis " + result.name () + " of type " + analysis.getClass ().getName ());
+        return;
+      }
+    throw new AnalysisNotFoundException ().name (result.name());
+  }
+  
   /* (non-Javadoc)
    * @see
    * edu.dfci.cccb.mev.dataset.domain.contract.Analyses#get(java.lang.String) */
@@ -99,4 +112,5 @@ public class ArrayListAnalyses extends AbstractAnalyses implements AutoCloseable
   public void close () throws Exception {
     destroy (new Exception ("Failure closing analyses"), analyses);
   }
+
 }
