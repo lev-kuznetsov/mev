@@ -61,9 +61,7 @@ public interface Limma extends Analysis {
     double pValue ();
   }
 
-  Iterable<Entry> full ();
-
-  Iterable<GoEntry> topGo ();
+  Iterable<? extends Entry> full ();
 
   Selection control ();
 
