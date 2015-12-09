@@ -111,7 +111,8 @@ define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus', '../data
     					function poll(prevResponse, wait){
     	        			if(prevResponse.status && prevResponse.status === "IN_PROGRESS"){    	        				
     	        				$timeout(function(){
-    	    						AnalysisResource.get({datasetName: allParams.datasetName, analysisName: allParams.name},
+    	        					var pollParams = {datasetName: allParams.datasetName, analysisName: allParams.analysisName};
+    	    						AnalysisResource.get(pollParams,
     	                    			function(newResponse){    	
     	    								poll(newResponse, 5000);
     	                        		});    							

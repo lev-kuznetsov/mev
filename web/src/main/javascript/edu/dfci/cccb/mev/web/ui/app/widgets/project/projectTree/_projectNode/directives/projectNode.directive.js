@@ -21,8 +21,8 @@ define([], function(){
 		var templateMap = {
 			Datasets: "<div>{{node.nodeName}}</div>",
 			Analyses: "<div>{{node.nodeName}}</div>",
-			"Column Sets": "<column-node node='node'></column-node>",
-			"Row Sets": "<row-node node='node'></row-node>",
+			"Sample Sets": "<column-node node='node'></column-node>",
+			"Gene Sets": "<row-node node='node'></row-node>",
 			"Analysis": "<analysis-node node='node'></analysis-node>",
 //			Dataset: "<div ng-click='console.debug(\"dataset.click\")'>{{node.nodeName}}</div>",
 //			Analysis: "<project-analysis analysis=\"node.nodeData\"></project-analysis>",			

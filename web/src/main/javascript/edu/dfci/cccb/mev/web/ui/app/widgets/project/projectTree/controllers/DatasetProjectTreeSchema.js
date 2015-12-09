@@ -31,7 +31,7 @@ define([], function(){
 			},
 			
 			"dataset.row": {
-				label: "Gene/Probe Sets",
+				label: "Gene Sets",
 				state: {
 					name: ".dataset.rowSets", 
 					getParams: function(node){
