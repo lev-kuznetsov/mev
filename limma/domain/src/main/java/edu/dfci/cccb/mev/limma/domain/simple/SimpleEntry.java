@@ -14,11 +14,15 @@
  */
 package edu.dfci.cccb.mev.limma.domain.simple;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import edu.dfci.cccb.mev.limma.domain.contract.Limma.Entry;
 
 /**
@@ -27,13 +31,14 @@ import edu.dfci.cccb.mev.limma.domain.contract.Limma.Entry;
  */
 @ToString
 @EqualsAndHashCode
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Accessors (fluent = true)
 public class SimpleEntry implements Entry {
 
-  private @Getter final String id;
-  private @Getter final double logFoldChange;
-  private @Getter final double averageExpression;
-  private @Getter final double pValue;
-  private @Getter final double qValue;
+  private @Getter @JsonProperty String id;
+  private @Getter @JsonProperty double logFoldChange;
+  private @Getter @JsonProperty double averageExpression;
+  private @Getter @JsonProperty double pValue;
+  private @Getter @JsonProperty double qValue;
 }

@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
-import edu.dfci.cccb.mev.limma.domain.contract.Limma.Species;
 import edu.dfci.cccb.mev.limma.domain.contract.LimmaBuilder;
 
 /**
@@ -54,18 +53,12 @@ public class LimmaAnalysisController {
                    method = POST)
   @ResponseStatus (OK)
   public Analysis start (final @PathVariable ("name") String name,
-                     final @RequestParam ("experiment") String experiment,
-                     final @RequestParam ("control") String control,
-                     final @RequestParam ("species") String species,
-                     final @RequestParam ("go") String go,
-                     final @RequestParam ("test") String test) throws DatasetException {
+                         final @RequestParam ("experiment") String experiment,
+                         final @RequestParam ("control") String control) throws DatasetException {
     return limma.name (name)
                 .dataset (dataset)
                 .experiment (dataset.dimension (COLUMN).selections ().get (experiment))
                 .control (dataset.dimension (COLUMN).selections ().get (control))
-                .species (Species.valueOf (species.toUpperCase ()))
-                .go (go)
-                .test (test)
                 .buildAsync ();
   }
 }
