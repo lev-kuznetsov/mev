@@ -16,6 +16,7 @@
 		</div>
 		<div class="tab-pane" id="quantiles">
 			<div id="{{'ttest-' + analysis.randomId + '-svg-holder'}}">
+				<input type="number" ng-model="DatasetAnalysisVM.top" /><button ng-click="DatasetAnalysisVM.getTop()">top</button>
 				<d3-Box-Plot-Visualization data="boxPlotGenes"></d3-Box-Plot-Visualization>
 			</div>
 		</div>
