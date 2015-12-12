@@ -556,7 +556,7 @@
               devtools::install_github ("dfci-cccb/injectoR");
             source ("http://bioconductor.org/biocLite.R");
             sapply (c ("topGO", "org.Hs.eg.db", "org.Mm.eg.db", "limma", "DESeq", "edgeR"), function (lib)
-              if (!requireNamespace (lib)) biocLite (lib));
+              if (!requireNamespace (lib)) biocLite (lib));            
           </onInitialize>
           <configure>
             <workdir>${mev.java.io.tmpdir}/Rserve</workdir>
@@ -569,6 +569,7 @@
             assign ("mwd", "${project.basedir}", e = .GlobalEnv);
             library (injectoR);
             library (topGO);
+            library (RProtoBuf)
             source ("../dataset/domain/src/main/r/json.R");
           </onRequest>
         </configuration>
