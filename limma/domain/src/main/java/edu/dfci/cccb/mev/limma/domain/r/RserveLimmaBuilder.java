@@ -49,7 +49,7 @@ import edu.dfci.cccb.mev.limma.domain.simple.SimpleEntry;
     // Check to determine if matrix contains negative values
     // off set the matrix to operate in positive values for limma
     // starting with 0
-    + "min.val=min(in.mtx);\n"
+    + "min.val=min(in.mtx,na.rm=TRUE);\n"
     + "in.mtx=if(min.val<0){in.mtx+min.val*-1}else{in.mtx};\n"
 
     // Assign group
