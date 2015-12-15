@@ -56,6 +56,7 @@ var REQUIREJS_CONFIG = (function(){
 			blobUtil: [paths.vendor("blob-util/dist/blob-util")],
 			pouchDbLru: [paths.vendor("pouchdb-lru-cache/dist/pouchdb.lru-cache")],
 			jsLru: [paths.vendor("rsms/js-lru/lru")],
+			agGrid: [paths.bower("ag-grid/dist/ag-grid")],
 			
 		},		
 		map: {
@@ -130,6 +131,9 @@ var REQUIREJS_CONFIG = (function(){
 		      exports : 'notific8'
 		    },
 		    ngGrid: {
+		    	deps: ['jquery', 'ng']
+		    },
+		    agGrid: {
 		    	deps: ['jquery', 'ng']
 		    },
 		    'fileSaver' : {

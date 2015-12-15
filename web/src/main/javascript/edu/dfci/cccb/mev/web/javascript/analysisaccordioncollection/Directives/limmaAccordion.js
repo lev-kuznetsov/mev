@@ -15,35 +15,53 @@
                             isItOpen: "@",
                             isShowHeatmapTab: "@"
                         },
+                        controller: ["$scope", function($scope){
+                        	$scope.headers = [
+                                 {
+                                     'name': 'ID',
+                                     'field': "id",
+                                     'icon': "search"
+                                 },
+                                 {
+                                     'name': 'Log-Fold-Change',
+                                     'field': "logFoldChange",
+                                     'icon': [">=", "<="]
+                                 },
+                                 {
+                                     'name': 'Average Expression',
+                                     'field': "averageExpression",
+                                     'icon': [">=", "<="]
+                                 },
+                                 {
+                                     'name': 'P-Value',
+                                     'field': "pValue",
+                                     'icon': "<=",
+                                     'default': 0.05
+                                 },
+                                 {
+                                     'name': 'Q-Value',
+                                     'field': "qValue",
+                                     'icon': "<="
+                                 }
+                             ];
+                        	
+                            var columnDefs = $scope.headers.map(function(header){
+                            	header["headerName"]=header.name;
+                            	return header;
+                            });
+                            	
+	                        var rowData = [
+//                              {make: "Toyota", model: "Celica", price: 35000},
+//                              {make: "Ford", model: "Mondeo", price: 32000},
+//                              {make: "Porsche", model: "Boxter", price: 72000}
+	                        ];	
+	                        $scope.gridOptions = {
+                              columnDefs: columnDefs,
+                              rowData: rowData
+	                        };
+                        }],
                         link: function (scope) {
-                            scope.headers = [
-                                {
-                                    'name': 'ID',
-                                    'field': "id",
-                                    'icon': "search"
-                                },
-                                {
-                                    'name': 'Log-Fold-Change',
-                                    'field': "logFoldChange",
-                                    'icon': [">=", "<="]
-                                },
-                                {
-                                    'name': 'Average Expression',
-                                    'field': "averageExpression",
-                                    'icon': [">=", "<="]
-                                },
-                                {
-                                    'name': 'P-Value',
-                                    'field': "pValue",
-                                    'icon': "<=",
-                                    'default': 0.05
-                                },
-                                {
-                                    'name': 'Q-Value',
-                                    'field': "qValue",
-                                    'icon': "<="
-                                }
-                            ];
+                            
                             
                             scope.filteredResults = undefined;
                             
@@ -59,13 +77,14 @@
 //                            	scope.applyToHeatmap(filteredResults);
 //                            });
                             scope.viewGenes = function (filteredResults) {
+                            	scope.gridOptions.api.setRowData(filteredResults);
                             	scope.filteredResults = filteredResults;
                             	scope.applyToHeatmap(filteredResults);
-                            	scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, filteredResults, 
-                            			[scope.analysis.params.control, scope.analysis.params.experiment], 
-                            			scope.analysis.randomId);
+                                scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, filteredResults, 
+                                		[scope.analysis.params.control, scope.analysis.params.experiment], 
+                                		scope.analysis.randomId);
                             };
-
+                            
                             scope.addSelections = function () {
 
                                 var userselections = scope.filteredResults.map(projection.ids);
@@ -139,7 +158,7 @@
                                     });
 
                             };
-
+	                          
                             scope.applyToHeatmap = function (filteredResults) {
                             	                                
                             	var labels = filteredResults.map(projection.ids);
@@ -163,6 +182,7 @@
                                 });
 
                             };
+                            scope.viewGenes(scope.analysis.results);
                         }
 
                     };
