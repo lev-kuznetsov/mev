@@ -61,9 +61,9 @@
                             scope.viewGenes = function (filteredResults) {
                             	scope.filteredResults = filteredResults;
                             	scope.applyToHeatmap(filteredResults);
-                                scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, filteredResults, 
-                                		[scope.analysis.control, scope.analysis.experiment], 
-                                		scope.analysis.randomId);
+                            	scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, filteredResults, 
+                            			[scope.analysis.params.control, scope.analysis.params.experiment], 
+                            			scope.analysis.randomId);
                             };
 
                             scope.addSelections = function () {
