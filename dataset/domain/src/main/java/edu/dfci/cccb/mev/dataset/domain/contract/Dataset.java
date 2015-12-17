@@ -15,6 +15,7 @@
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
 import java.io.IOException;
+import java.util.List;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 
@@ -45,4 +46,5 @@ public interface Dataset {
                                                       InvalidCoordinateException,
                                                       IOException,
                                                       DatasetBuilderException, InvalidDatasetNameException;
+  Dataset subset(String name, List<String> columns, List<String> rows);
 }
