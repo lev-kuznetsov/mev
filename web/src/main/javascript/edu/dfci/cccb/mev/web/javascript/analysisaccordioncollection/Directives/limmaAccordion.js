@@ -17,6 +17,12 @@
                         },
                         controller: ["$scope", function($scope){
                         	$scope.headers = [
+								//this row just shows the row index, doesn't use any data from the row
+//								{
+//									headerName: "#", cellRenderer: function(params) {
+//										return params.node.id + 1;
+//									} 
+//								 },
                                  {
                                      'name': 'ID',
                                      'field': "id",
@@ -47,6 +53,13 @@
                         	
                             var columnDefs = $scope.headers.map(function(header){
                             	header["headerName"]=header.name;
+                            	if(Array.isArray(header.icon) ||
+                            			header.icon.charAt(0) === "<" ||
+                            			header.icon.charAt(0) === ">" || 
+                            			header.icon.charAt(0) === "="){
+                            		header.filter = "number";
+                            	}
+                            	
                             	return header;
                             });
                             	
@@ -59,9 +72,63 @@
                               columnDefs: columnDefs,
                               rowData: rowData
 	                        };
+	                        
+	                        $scope.pageSize = '20';
+
+	                        $scope.gridOptions = {
+	                            // note - we do not set 'virtualPaging' here, so the grid knows we are doing standard paging
+//	                            enableSorting: true,
+//	                            enableFilter: true,
+	                        	enableServerSideSorting: true,
+	                            enableServerSideFilter: true,
+	                            enableColResize: true,
+	                            columnDefs: columnDefs,
+	                            afterFilterChanged: {
+	                            	
+	                            }
+	                        };
+
+	                        $scope.onPageSizeChanged = function() {
+	                            $scope.createNewDatasource();
+	                        };
+	                        
+	                        $scope.createNewDatasource = function () {	                            
+	                            var dataSource = {
+	                                rowCount: $scope.analysis.results.length, //not setting the row count, infinite paging will be used
+	                                pageSize: parseInt($scope.pageSize), // changing to number, as scope keeps it as a string
+	                                getRows: function (params) {
+	                                    // this code should contact the server for rows. however for the purposes of the demo,
+	                                    // the data is generated locally, a timer is used to give the experience of
+	                                    // an asynchronous call
+	                                    console.log('asking for ' + params.startRow + ' to ' + params.endRow);
+//	                                    setTimeout( function() {
+                                        // take a chunk of the array, matching the start and finish times
+                                        var rowsThisPage = $scope.analysis.results.slice(params.startRow, params.endRow);
+                                        // see if we have come to the last page. if we have, set lastRow to
+                                        // the very last row of the last page. if you are getting data from
+                                        // a server, lastRow could be returned separately if the lastRow
+                                        // is not in the current page.
+                                        var lastRow = -1;
+                                        if ($scope.analysis.results.length <= params.endRow) {
+                                            lastRow = $scope.analysis.results.length;
+                                        }
+                                        params.successCallback(rowsThisPage, lastRow);
+                                        
+                                        $scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData($scope.project.dataset, rowsThisPage, 
+                                        		[$scope.analysis.params.control, $scope.analysis.params.experiment], 
+                                        		$scope.analysis.randomId);
+//	                                    }, 500);
+	                                }
+	                            };
+
+	                            $scope.gridOptions.api.setDatasource(dataSource);
+	                        }
+
+
                         }],
                         link: function (scope) {
                             
+                        	
                             
                             scope.filteredResults = undefined;
                             
@@ -77,12 +144,9 @@
 //                            	scope.applyToHeatmap(filteredResults);
 //                            });
                             scope.viewGenes = function (filteredResults) {
-                            	scope.gridOptions.api.setRowData(filteredResults);
+                            	
                             	scope.filteredResults = filteredResults;
                             	scope.applyToHeatmap(filteredResults);
-                                scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, filteredResults, 
-                                		[scope.analysis.params.control, scope.analysis.params.experiment], 
-                                		scope.analysis.randomId);
                             };
                             
                             scope.addSelections = function () {
@@ -182,7 +246,10 @@
                                 });
 
                             };
-                            scope.viewGenes(scope.analysis.results);
+//                            scope.viewGenes(scope.analysis.results);
+//                            scope.gridOptions.api.setRowData(filteredResults);
+                            scope.createNewDatasource();
+                            scope.gridOptions.api.sizeColumnsToFit() 
                         }
 
                     };
