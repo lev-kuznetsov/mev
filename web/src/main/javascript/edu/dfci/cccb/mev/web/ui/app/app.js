@@ -19,6 +19,7 @@ define(["ng",
         'pouchDbLru',        
         'angularNvd3',
         'agGrid',
+        'crossfilter',
         
         'directives', 
         'services', 

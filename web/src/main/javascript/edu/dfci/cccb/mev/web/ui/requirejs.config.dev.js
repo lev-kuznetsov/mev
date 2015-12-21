@@ -57,6 +57,7 @@ var REQUIREJS_CONFIG = (function(){
 			pouchDbLru: [paths.vendor("pouchdb-lru-cache/dist/pouchdb.lru-cache")],
 			jsLru: [paths.vendor("rsms/js-lru/lru")],
 			agGrid: [paths.bower("ag-grid/dist/ag-grid")],
+			crossfilter: [paths.bower("crossfilter/crossfilter")]
 			
 		},		
 		map: {
@@ -162,6 +163,10 @@ var REQUIREJS_CONFIG = (function(){
 		    },
 		    angularNvd3: {
 		    	deps: ["angular", "nvd3"]		    	
+		    },
+		    crossfilter: {
+		    	deps: [],
+		    	exports: "crossfilter"
 		    }
 //		    jsDataAngular: {
 //		    	deps: ['ng', 'jsData']
