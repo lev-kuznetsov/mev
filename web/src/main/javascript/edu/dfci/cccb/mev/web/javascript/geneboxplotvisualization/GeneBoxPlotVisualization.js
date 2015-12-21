@@ -99,10 +99,10 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
     	//  D3 in this context is from the D3 service
         return function (id, element) {
 
-            var width = 30, //width of the box
-                padding = 5, //spacing on one side of the box
-                geneSpacing = 40, //space in between genes
-                height = 400,                
+            var width = 10, //width of the box
+                padding = 2, //spacing on one side of the box
+                geneSpacing = 15, //space in between genes
+                height = 300,                
                 margin = {top:60, bottom:30,left:50,right:20},
                 geneWidth = undefined;
             return {
@@ -220,7 +220,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
 	            	xAxis.append('line')
 	            		.attr({
 	            			'x1':40,
-	            			'x2':(groups.data.length * geneWidth),
+	            			'x2':(groups.data.length * geneWidth) + width,
 	            			'y1':yscale.range()[0],
 	            			'y2':yscale.range()[0],
 	            		})
