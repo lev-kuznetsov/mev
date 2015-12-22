@@ -81,31 +81,43 @@ public class RDispatcher {
     });
   }
 
-  @SneakyThrows ({JsonProcessingException.class, MevException.class})
+  @SneakyThrows ({ JsonProcessingException.class, MevException.class })
   private RSession define (String name, Object value, RSession to, StringBuffer command) throws RserveException,
                                                                                         IOException {
     // UUID unique = randomUUID ();
     // String p = "p." + abs (unique.getMostSignificantBits ()) + "." + abs
     // (unique.getLeastSignificantBits ());
     RConnection c = to.attach ();
-    try (OutputStream target = new BufferedOutputStream (c.createFile (name), 1024*1024*100)) {
-        if(value instanceof Dataset){
-          log.debug ("ProtoBuf Dataset ............. !!! ");
-          protobuf.serialize ((Dataset)value, target);
-        }else{          
-          mapper.writeValue (target, value);
-        }
+    try (OutputStream target = new BufferedOutputStream (c.createFile (name), 1024 * 1024 * 100)) {
+      if (value instanceof Dataset) {
+        log.debug ("ProtoBuf Dataset ............. !!! ");
+        protobuf.serialize ((Dataset) value, target);
+      } else {
+        mapper.writeValue (target, value);
+      }
     }
     // c.assign (p, new REXPString (mapper.writeValueAsString (value)));
-    log.debug ("Defining key '" + name + "' for value " + value);   
-    if(value instanceof Dataset){
+    log.debug ("Defining key '" + name + "' for value " + value);
+    if (value instanceof Dataset) {
       log.debug ("ProtoBuf Command ............. !!! ");
-      command.append ("define (").append (name).append (" = function () { con<-file('").append(name).append("', open = \"rb\"); ").append (name).append ("<-unserialize_pb(con); close(con); ").append(name).append("; }, scope = singleton, binder = binder); ");
-    }else{      
-      command.append ("define (").append (name).append (" = function () jsonlite::fromJSON (sprintf (\"%s\", paste (readLines ('").append (name).append("'), collapse = \",\"))), scope = singleton, binder = binder); ");
-//    command.append ("define (").append (name)
-//           .append (" = function () { r <- jsonlite::stream_in (file ('")
-//           .append (name).append ("')); if (length (r) == 1) r[ 1, 1 ] else r; } , scope = singleton, binder = binder); ");
+      command.append ("define (")
+             .append (name).append (" = function () { ")
+             .append ("con<-file('").append (name).append ("', open = \"rb\"); ")
+             .append ("on.exit (close (con));")
+             .append (name).append ("<-unserialize_pb(con); ")
+             .append (name).append ("[ is.na (").append (name).append (") ] <- NA; ")
+             .append (name).append (";")
+             .append (" }, scope = singleton, binder = binder); ");
+    } else {
+      command.append ("define (")
+             .append (name)
+             .append (" = function () jsonlite::fromJSON (sprintf (\"%s\", paste (readLines ('")
+             .append (name)
+             .append ("'), collapse = \",\"))), scope = singleton, binder = binder); ");
+      // command.append ("define (").append (name)
+      // .append (" = function () { r <- jsonlite::stream_in (file ('")
+      // .append (name).append
+      // ("')); if (length (r) == 1) r[ 1, 1 ] else r; } , scope = singleton, binder = binder); ");
     }
     return c.detach ();
   }
