@@ -3,7 +3,7 @@ define(['q', 'jsLru'], function(q, jsLru){
     	var self = this;    	
     	var lruCache = new jsLru(5);
     	//init swap
-    	init();
+    	var dataPromise = init();
     	function init(){	
 			return fetchDataValues();
 		}
@@ -54,21 +54,24 @@ define(['q', 'jsLru'], function(q, jsLru){
         }
         
         function getDict(shownCells){        	
-        	var dict = {};    		
-			for(var i=0; i<shownCells.length; i++){
-				
-				var rowName = shownCells[i].row;
-				var columnName = shownCells[i].column;				
-				if(!dict[rowName]){    					
-					dict[rowName] = {};
-				}
-				if(!dict[rowName][columnName]){    					
-					dict[rowName][columnName] = {
-						value: getByKey([rowName, columnName])
-					};
-				}    				
-			}
-			return q.when(dict);
+        	
+			return dataPromise.then(function(){
+				var dict = {};    		
+				for(var i=0; i<shownCells.length; i++){
+					
+					var rowName = shownCells[i].row;
+					var columnName = shownCells[i].column;				
+					if(!dict[rowName]){    					
+						dict[rowName] = {};
+					}
+					if(!dict[rowName][columnName]){    					
+						dict[rowName][columnName] = {
+							value: getByKey([rowName, columnName])
+						};
+					}    				
+				};
+				return dict;
+			});
     		
         }
         
