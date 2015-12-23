@@ -31,14 +31,16 @@
             		if(scope.filterCallback)
             			scope.filterCallback({filteredResults: scope.vm.filteredResults});
             	}
-//scope.renderedData is populated by the 'as renderedData' at the ng-repeat template
+//scope.renderedData is populated by the 'as renderedData track by $index' at the ng-repeat template
 //Tried tapping renderedData when signaling changes in sort/fitlers. 
 //However, this does not work if pagination is enabled because only the first page of the results 
-//is rendered. We want to send the whole result data to event sibscribers.
-//            	scope.$watchCollection("renderedData", function(){
-//            		console.debug("resultsTable watchCollection", scope.res);
-//            		scope.$emit("ui:resultsTable:filteredResults", scope.res);
-//            	});
+//is rendered. We are using it to notify clients of pagination changed event
+            	scope.$watchCollection("renderedData", function(newval, oldval){
+            		if(newval){            			
+            			console.debug("resultsTable watchCollection", newval);
+            			scope.$emit("ui:resultsTable:pageChanged", newval);
+            		}
+            	});
             	if(!scope.filters){
             		scope.filters={};
                 	scope.headers.map(function(header){
