@@ -131,7 +131,7 @@
     	        if (isNaN(input)) {
     	            return input;
     	        } else {
-    	        	if(input>1000)
+    	        	if(Math.abs(input)>1000)
     	        		return input.toExponential(4);
     	        	else
     	        		return $filter('number')(input, fractionSize);
