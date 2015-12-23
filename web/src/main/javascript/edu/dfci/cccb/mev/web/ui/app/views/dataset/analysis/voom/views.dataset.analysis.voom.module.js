@@ -65,7 +65,7 @@ define(["ng", "lodash"], function(ng, _){
 	            	'icon': "<="
 	            }];
 			this.udpateFilteredView = function (filteredResults) {
-            	$scope.filteredResults = filteredResults;
+            	_self.filteredResults = filteredResults;
             	var labels = filteredResults.map(function(item){return item._row;});
             	_self.heatmapView = _self.heatmapView.applyFilter("row", labels);                
             };
