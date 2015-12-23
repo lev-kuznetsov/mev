@@ -63,6 +63,25 @@
                                 		[$scope.analysis.params.control, $scope.analysis.params.experiment], 
                                 		$scope.analysis.randomId); 
                             });
+                            
+                            $scope.applyToHeatmap = function (filteredResults) {
+                                
+                            	var labels = filteredResults.map(projection.ids);
+                            	
+                                $scope.heatmapView = $scope.project.generateView({
+                                    viewType: 'heatmapView',
+                                    note: $scope.analysis.name,
+                                    labels: {
+                                        column: {
+                                            keys: $scope.project.dataset.column.keys
+                                        },
+                                        row: {
+                                            keys: labels
+                                        }
+                                    }
+                                });
+
+                            };
                         }],
                         link: function (scope) {
                             
@@ -156,25 +175,6 @@
                             };
 	                        
                             
-                            scope.applyToHeatmap = function (filteredResults) {
-                            	                                
-                            	var labels = filteredResults.map(projection.ids);
-                            	
-                                scope.heatmapView = scope.project.generateView({
-                                    viewType: 'heatmapView',
-                                    note: scope.analysis.name,
-                                    labels: {
-                                        column: {
-                                            keys: scope.project.dataset.column.keys
-                                        },
-                                        row: {
-                                            keys: labels
-                                        }
-                                    }
-                                });
-
-                            };
- 
                         }
 
                     };
