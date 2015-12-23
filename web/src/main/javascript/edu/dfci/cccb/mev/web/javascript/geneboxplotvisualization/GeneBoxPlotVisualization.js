@@ -449,7 +449,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                 	.attr("text-anchor", "left")
                      .attr("font-size", "14px")
                      .attr("fill", "red")
-                     .attr("transform", "rotate(45,"+x+","+y+")");
+                     .attr("transform", "rotate(35,"+x+","+y+")");
 
             };
         };
