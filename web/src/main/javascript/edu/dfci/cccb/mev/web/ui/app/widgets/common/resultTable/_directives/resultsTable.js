@@ -9,7 +9,8 @@ define(["lodash"], function(_){
             	headers : "=headers",
                 filters : "=?filters",
                 ordering : "@",
-                filterCallback : "&onFilter" 
+                filterCallback : "&onFilter",
+                onPaged : "&"
             },            
 //            templateUrl : paths.module + '/templates/resultsTable.tpl.html',
             template: "<div ag-grid='gridOptions' class='ag-fresh' style='height: 100%;'></div>",
@@ -26,7 +27,7 @@ define(["lodash"], function(_){
                 		header.filterParams.xd = xf.dimension(function(d){
         					return Number(d[header.field]);
         				});
-                	}else if(header.field === "id"){
+                	}else if(header.field === "id" || header.icon==="search"){
                 		header.filterParams = {
                 				values: _.pluck($scope.data, header.field), 
                 				newRowsAction: 'keep', 
@@ -81,8 +82,12 @@ define(["lodash"], function(_){
                                 }
                                 params.successCallback(rowsThisPage, lastRow);
 //                                this.rowCount = dataAfterSortingAndFiltering.length;
-                                $scope.$emit("ui:resultsTable:pageChanged", rowsThisPage);
                                 $scope.$emit("ui:resultsTable:filteredResults", dataAfterSortingAndFiltering);
+                                if($scope.filterCallback)
+                                	$scope.filterCallback({filteredResults: dataAfterSortingAndFiltering});
+                                if($scope.onPaged)
+                    				$scope.onPaged({pageResults: rowsThisPage});
+                                $scope.$emit("ui:resultsTable:pageChanged", rowsThisPage);                 
 //                            }, 500);
                         }
                     };
