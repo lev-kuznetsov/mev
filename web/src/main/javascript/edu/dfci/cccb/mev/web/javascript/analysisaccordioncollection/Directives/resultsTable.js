@@ -13,7 +13,8 @@
             	headers : "=headers",
                 filters : "=?filters",
                 ordering : "@",
-                filterCallback : "&onFilter" 
+                filterCallback : "&onFilter",
+                onPaged : "&"
             },
             templateUrl : paths.module + '/templates/resultsTable.tpl.html',
             link : function(scope, elem, attrs) {
@@ -39,6 +40,8 @@
             		if(newval){            			
             			console.debug("resultsTable watchCollection", newval);
             			scope.$emit("ui:resultsTable:pageChanged", newval);
+            			if(scope.onPaged)
+            				scope.onPaged({pageResults: newval});
             		}
             	});
             	if(!scope.filters){
