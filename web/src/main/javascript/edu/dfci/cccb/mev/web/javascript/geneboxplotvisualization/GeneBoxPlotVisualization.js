@@ -486,7 +486,8 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
             scope: {
                 data: '=',
             },            
-            restrict: 'E',
+            restrict: 'E',            
+            template: "<div>Loading ...</div>",
             link: function (scope, elems, attrs) {
 
                 scope.$watch('data', function (dataPromise, olddata) {
