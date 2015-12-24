@@ -56,6 +56,8 @@ var REQUIREJS_CONFIG = (function(){
 			blobUtil: [paths.vendor("blob-util/dist/blob-util")],
 			pouchDbLru: [paths.vendor("pouchdb-lru-cache/dist/pouchdb.lru-cache")],
 			jsLru: [paths.vendor("rsms/js-lru/lru")],
+			agGrid: [paths.bower("ag-grid/dist/ag-grid")],
+			crossfilter: [paths.bower("crossfilter/crossfilter")]
 			
 		},		
 		map: {
@@ -132,6 +134,9 @@ var REQUIREJS_CONFIG = (function(){
 		    ngGrid: {
 		    	deps: ['jquery', 'ng']
 		    },
+		    agGrid: {
+		    	deps: ['jquery', 'ng']
+		    },
 		    'fileSaver' : {
 		        deps : [ 'canvasToBlob' ],
 		        exports : 'fileSaver'
@@ -158,6 +163,10 @@ var REQUIREJS_CONFIG = (function(){
 		    },
 		    angularNvd3: {
 		    	deps: ["angular", "nvd3"]		    	
+		    },
+		    crossfilter: {
+		    	deps: [],
+		    	exports: "crossfilter"
 		    }
 //		    jsDataAngular: {
 //		    	deps: ['ng', 'jsData']

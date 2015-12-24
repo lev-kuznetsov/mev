@@ -2,23 +2,38 @@
 <div class="column-wrapper">
 	<ul class="nav nav-tabs column-header" id="importTabs">
 		<li id="table_tab" class="active"><a href="#table" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}}</a></li>
-		<li id="heatmap_tab"><a href="#heatmap" class="pull-left" data-toggle="tab" target="_self">Heatmap</a></li>
-		<li id="quantiles_tab"><a href="#quantiles" data-toggle="tab" target="_self">Quantiles</a></li>
+		<li id="heatmap_tab"><a href="#heatmap" class="pull-left" data-toggle="tab" target="_self">Heatmap</a></li>		
 		<div class="action-menu" mui-paste="action-menu"></div>		
 	</ul>
 
-	<div class="tab-content column-body">
-		<div class="tab-pane active" id="table" >
-			<results-table data="DatasetAnalysisVM.analysis.results" headers="DatasetAnalysisVM.headers" ordering="P.Value" on-filter="DatasetAnalysisVM.viewGenes(filteredResults)"></results-table>
+	<div class="tab-content column-body results-wrapper">
+		<div class="results-header clearfix">			
+	     	<div class="btn-toolbar" role="toolbar" mui-yank="action-menu">
+	     		<div class="btn-group">
+		             <btn-create-selection mui-target="Top" mui-analysis="DatasetAnalysisVM.analysis" 
+		             	mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.filteredResults" mui-key-name="_row">
+		            </btn-create-selection><!-- 
+		            --><btn-export-selection mui-target="Top" mui-analysis="DatasetAnalysisVM.analysis" 
+		             	mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.filteredResults" mui-key-name="_row">
+		            </btn-export-selection>
+	            </div>
+	      	</div>
+		</div>
+		<div class="tab-pane active results-body" id="table" >			
+			<div class="results-top" id="{{'voom-' + analysis.randomId + '-svg-holder'}}">
+				<d3-Box-Plot-Visualization data="DatasetAnalysisVM.boxPlotGenes"></d3-Box-Plot-Visualization>
+			</div>
+			<div class="results-bottom">				
+				<results-table-ag data="DatasetAnalysisVM.analysis.results" headers="DatasetAnalysisVM.headers" ordering="P.Value" 
+					on-filter="DatasetAnalysisVM.udpateFilteredView(filteredResults)" 
+					on-paged="DatasetAnalysisVM.updatePageView(pageResults)"></results-table-ag>
 <!-- 			<results-table id="DatasetAnalysisVM.heatmapView.id" data="DatasetAnalysisVM.analysis.results" headers="DatasetAnalysisVM.headers" ordering="-value" ></results-table> -->
+			</div>
+			
 		</div>
 		<div class="tab-pane" id="heatmap">
 			<view-Content-Item project='DatasetAnalysisVM.project' view='DatasetAnalysisVM.heatmapView'></view-Content-Item>
 		</div>
-		<div class="tab-pane" id="quantiles">
-			<div id="{{'voom-' + analysis.randomId + '-svg-holder'}}">
-				<d3-Box-Plot-Visualization data="DatasetAnalysisVM.boxPlotGenes"></d3-Box-Plot-Visualization>
-			</div>
-		</div>
+		
 	</div>
 </div>

@@ -9,7 +9,7 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.R;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
 
 @R ("function (dataset, top) {\n"
-    + "pca <- prcomp (t (data.matrix (dataset)));\n"
+    + "pca <- prcomp (t (data.matrix (na.omit(dataset))));\n"
     + "list (sdev = pca$sdev,"
 //    + "      center = as.list (pca$center),"
 //    + "      scale = pca$scale,"
@@ -25,7 +25,7 @@ public class PcaBuilder extends AbstractDispatchedRAnalysisBuilder<PcaBuilder, P
 
   private @Result Pca result;
 
-  private @Setter @Getter @Parameter int top = 2;
+  private @Setter @Getter @Parameter int top = 3;
   
   @Override
   protected Pca result () {

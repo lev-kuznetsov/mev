@@ -68,6 +68,14 @@
 //	                       		scope.$emit("ui:filteredResults", scope.filteredResults);	                       	
 	                       		 scope.applyToHeatmap(filteredResults);
 	                       	}
+                            
+                            scope.viewPage = function(pageResults){
+                				var control = _.find(scope.project.dataset.column.selections, function(selection){return selection.name===scope.analysis.params.control;});
+                				var experiment = _.find(scope.project.dataset.column.selections, function(selection){return selection.name===scope.analysis.params.experiment;});                				
+                				scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, pageResults, 
+                						[control, experiment], 
+                						scope.analysis.randomId);
+                            }
 
                             scope.selectionParams = {
                                 name: undefined,

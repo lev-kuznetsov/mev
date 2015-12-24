@@ -1,4 +1,4 @@
-define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expressionModule', "./DatasetValues"], 
+define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expressionModule', "./DatasetValues32"], 
 		function( datasetStatistics, selectionSort, selectionHelpers, expressionModule, DatasetValues){
 	"use strict";    
     //inverter :: [a] --> Object

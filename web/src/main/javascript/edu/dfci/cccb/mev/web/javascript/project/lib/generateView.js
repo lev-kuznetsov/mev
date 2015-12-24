@@ -33,6 +33,7 @@ define(['./HeatmapViewClass'], function(HeatmapViewClass){
 	                avg: self.dataset.expression.avg,
 	            };
             }
+            
             if(params.labels && !params.labels.column){
             	params.labels.column = {keys: self.dataset.column.keys};
             }
@@ -52,6 +53,13 @@ define(['./HeatmapViewClass'], function(HeatmapViewClass){
 	                params.labels.row.keys = self.views.labels.row.keys;   
 	            }
         	}
+            if(self.views.viewType && //this is an update to an existing view
+            		_.isEqual(self.views.expression, params.expression) && //expression values are not beind updated
+            		_.isEqual(self.views.labels.column.keys, params.labels.column.keys) && //column order is the same 
+            		_.isEqual(self.views.labels.row.keys, params.labels.row.keys)){ //row order is the same
+            	return self.views; //-> no need to generate a new view
+            }
+            
             
             
             self.views = new HeatmapViewClass(params);

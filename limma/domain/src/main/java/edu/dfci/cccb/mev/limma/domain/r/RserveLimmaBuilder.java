@@ -49,7 +49,7 @@ import edu.dfci.cccb.mev.limma.domain.simple.SimpleEntry;
     // Check to determine if matrix contains negative values
     // off set the matrix to operate in positive values for limma
     // starting with 0
-    + "min.val=min(in.mtx);\n"
+    + "min.val=min(in.mtx,na.rm=TRUE);\n"
     + "in.mtx=if(min.val<0){in.mtx+min.val*-1}else{in.mtx};\n"
 
     // Assign group
@@ -70,13 +70,15 @@ import edu.dfci.cccb.mev.limma.domain.simple.SimpleEntry;
     // adjust the offset back to its original input values
     + "result[,'Average Expression']=if(min.val<0){result[,'Average Expression']-(min.val*-1)}else\n"
     + "{result[,'Average Expression']};\n"
-
+    + "result=result[result$`P-value` <= " + RserveLimmaBuilder.THRESHOLD + ",];\n"
+    
     + "unname(apply(result,1,function(x)"
     + "  list(id=unname(x[1]),logFoldChange=as.numeric(unname(x[2])),averageExpression=as.numeric(unname(x[3])),"
     + "       pValue=as.numeric(unname(x[5])),qValue=as.numeric(unname(x[6])))))" +
     "}")
 public class RserveLimmaBuilder extends AbstractDispatchedRAnalysisBuilder<LimmaBuilder, Limma> implements LimmaBuilder {
 
+  public static final double THRESHOLD = 0.05; 
   private @Setter Selection control;
   private @Setter Selection experiment;
   private @Getter Limma result;

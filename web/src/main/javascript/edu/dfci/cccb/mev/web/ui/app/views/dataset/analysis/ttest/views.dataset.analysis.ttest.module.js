@@ -3,6 +3,7 @@ define(["ng", "lodash"], function(ng, _){
 	module.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider){}])
 	.factory("tTestVMFactory", [function(){
 		return function tTestVMFactory($scope, BoxPlotService, project, analysis){
+			var _self = this;
 			this.analysisId=analysis.name;
 			this.analysis=analysis;
 			this.project=project;
@@ -19,17 +20,7 @@ define(["ng", "lodash"], function(ng, _){
 	                max: project.dataset.expression.max,
 	                avg: project.dataset.expression.avg,
 	            }
-	        });
-			
-			
-			$scope.$on("ui:resultsTable:filteredResults",function($event, results){
-				var control = _.find(project.dataset.column.selections, function(selection){return selection.name===analysis.params.controlName;});
-	        	var experiment = _.find(project.dataset.column.selections, function(selection){return selection.name===analysis.params.experimentName;});
-	        	
-	       		$scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(project.dataset, results, 
-	         		[control, experiment],
-	         		analysis.randomId);
-			});	
+	        });			
 		};
 	}])
 	.controller("tTestVM", ["$scope", "$injector", "BoxPlotService", "tTestVMFactory", "project", "analysis", 

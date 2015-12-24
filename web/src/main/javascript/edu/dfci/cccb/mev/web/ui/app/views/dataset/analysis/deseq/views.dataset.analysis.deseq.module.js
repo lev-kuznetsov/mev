@@ -21,16 +21,7 @@ define(["ng", "lodash"], function(ng, _){
 					max: project.dataset.expression.max,
 					avg: project.dataset.expression.avg,
 				}
-			});
-			
-			$scope.$on("ui:resultsTable:filteredResults", function($event, results){
-				var control = _.find(project.dataset.column.selections, function(selection){return selection.name===analysis.params.control;});
-				var experiment = _.find(project.dataset.column.selections, function(selection){return selection.name===analysis.params.experiment;});
-				
-				$scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(project.dataset, results, 
-						[control, experiment], 
-						analysis.randomId);				
-			});
+			});			
 		};
 	}])
 	.controller("DESeqVM", ["$scope", "$state", "$stateParams", "project", "analysis", "BoxPlotService", "projectionService", "DESeqVMFactory",

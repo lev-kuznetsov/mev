@@ -109,7 +109,8 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
 
                        if (colorEdge.min && colorEdge.max &&colorEdge.avg) {
 //TODO: Add j-query slider
-                         colorSlider.slider('option', 'values', [colorEdge.min, colorEdge.avg, colorEdge.max]);
+//Currently the heatmap colormap is not adjustable, so I commented out - it was often throwing an error on page load                    	   
+//                         colorSlider.slider('option', 'values', [colorEdge.min, colorEdge.avg, colorEdge.max]);
                        }
                     });
 

@@ -1,7 +1,7 @@
 <div  class="results-wrapper" id="tTestResultsTable" >		            	
     <div class="results-header clearfix">    	
-<!--      	<div class="btn-toolbar" role="toolbar" mui-yank="action-menu"> -->
-     	<div class="btn-toolbar" role="toolbar" >
+<!--      	<div class="btn-toolbar" role="toolbar" > -->
+     	<div class="btn-toolbar" role="toolbar" mui-yank="action-menu">
      		<div class="btn-group">
 	             <a class="btn" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
 	               <i class="icon-white icon-download"></i> Download
@@ -18,8 +18,13 @@
       	</div>
 				      
 	</div>
-	<div class="results-body">							
-		<results-table data="analysis.results" headers="headers" ordering="pValue"></results-table>
+	<div class="results-body">	
+		<div class="results-top">
+			<d3-Box-Plot-Visualization data="boxPlotGenes"></d3-Box-Plot-Visualization>
+		</div>
+		<div class="results-bottom">
+			<results-table data="analysis.results" headers="headers" ordering="pValue"></results-table>
+		</div>						
 	</div>
 </div>	
 		

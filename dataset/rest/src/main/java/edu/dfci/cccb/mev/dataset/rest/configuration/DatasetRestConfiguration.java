@@ -62,6 +62,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListWorkspace;
+import edu.dfci.cccb.mev.dataset.rest.assembly.binary.FlatFileValuesBinary32FloatMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.binary.FlatFileValuesBinaryMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.DimensionTypeJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDatasetJsonSerializer;
@@ -168,7 +169,7 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   public void addHttpMessageConverters (List<HttpMessageConverter<?>> converters) {
     converters.addAll (asList (new DatasetTsvMessageConverter (),
                                new SelectionsTsvMessageConverter (),
-                               new FlatFileValuesBinaryMessageConverter ()));
+                               new FlatFileValuesBinary32FloatMessageConverter ()));
   }
 
   /* (non-Javadoc)

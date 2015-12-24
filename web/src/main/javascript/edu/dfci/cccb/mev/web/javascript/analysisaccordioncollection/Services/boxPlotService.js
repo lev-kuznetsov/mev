@@ -1,6 +1,6 @@
 (function(){
     
-    define([], function(){
+	define(["lodash"], function(_){
         return function(module){
             module.service('BoxPlotService', ["$q", function($q){
             	
@@ -20,6 +20,8 @@
     	            var coords = [];
     	            genes.map(function(gene, i){
     	            	selections.map(function(selection){
+    	            		if(typeof selection === "string")
+    	            			selection = _.find(dataset.column.selections, {name: selection}); 
     	            		selection.keys.map(function(sampleId){
     	            			return coords.push({
     	            				row: gene[key],
@@ -39,6 +41,8 @@
                                 };
                                 
                                 selections.map(function(selection){
+                                	if(typeof selection === "string")
+                                		selection = _.find(dataset.column.selections, {name: selection}); 
                                 	retGene.groups[selection.name] = {                        			
                                         'values': selection.keys.map(function (label) {
                                              var datapoint = dict[gene[key]][label];

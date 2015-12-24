@@ -32,6 +32,8 @@ public interface Dimension {
   
   Dimension annotation (Annotation annotation);
 
+  Dimension subset(List<String> keys);
+  
   public enum Type {
     ROW ("row", "y", "1", "gene", "probe", "height"),
     COLUMN ("column", "col", "sample", "0", "x", "width");
