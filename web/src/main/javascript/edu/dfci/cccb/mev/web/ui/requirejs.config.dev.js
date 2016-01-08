@@ -37,7 +37,7 @@ var REQUIREJS_CONFIG = (function(){
 			angularRoute : [ paths.vendor('angularjs/angular-route') ],
 			jqueryUi : ['//code.jquery.com/ui/1.9.2/jquery-ui.min', 'jquery-ui/1.9.2/jquery-ui.min'],
 			d3 : [ '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.9/d3' ],
-			nvd3: ['//cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3'],
+			nvd3: [paths.vendor('nvd3/build/nv.d3'), '//cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3'],
 			angularNvd3 : [ paths.vendor('angular-nvd3/dist/angular-nvd3') ],
 		    retina : [ '/library/webjars/retinajs/0.0.2/retina' ],
 		    notific8 : [ 'notific8.min' ],
@@ -57,14 +57,15 @@ var REQUIREJS_CONFIG = (function(){
 			pouchDbLru: [paths.vendor("pouchdb-lru-cache/dist/pouchdb.lru-cache")],
 			jsLru: [paths.vendor("rsms/js-lru/lru")],
 			agGrid: [paths.bower("ag-grid/dist/ag-grid")],
-			crossfilter: [paths.bower("crossfilter/crossfilter")]
-			
+			crossfilter: [paths.bower("crossfilter/crossfilter")],
+			"mev-scatter-plot": [paths.app("widgets/common/plots/scatterPlot/widgets.common.plots.scatterPlot.module")]
 		},		
 		map: {
 	        '*': {
 	            angular: 'ng',
 	            angularResource: 'ngresource',
-	            'js-data': 'jsData'	            
+	            'js-data': 'jsData',
+	            'angular-nvd3': 'angularNvd3'
 	        }	        
 	    },
 		

@@ -30,5 +30,6 @@ define(["ng"], function(ng){
          };
 	};
 	PcaModalDirective.$inject=["alertService", "PcaVM"];
+	PcaModalDirective.$name="PcaModalDirective";
 	return PcaModalDirective;
 });
