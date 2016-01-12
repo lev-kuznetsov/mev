@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.r.AbstractDispatchedRAnalysisBuilder;
+import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
+import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback.CallbackType;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Parameter;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.R;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
@@ -32,5 +34,10 @@ public class PathwayEnrichmentBuilder extends AbstractDispatchedRAnalysisBuilder
 
   public PathwayEnrichmentBuilder () {
     super ("pe");
+  }
+
+  @Callback
+  private void setResultName () {
+    result.name (name ());
   }
 }
