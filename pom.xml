@@ -41,6 +41,7 @@
     <module>genesd</module>
     <module>genemad</module>
     <module>voom</module>
+    <module>pathway-enrichment</module>
     <module>web</module>
 
   </modules>
