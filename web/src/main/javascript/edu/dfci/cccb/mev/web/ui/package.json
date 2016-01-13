@@ -12,6 +12,7 @@
     "angular-route": "^1.4.8",
     "angular-ui-router": "^0.2.15",
     "angular-utils-pagination": "^0.9.4",
+    "blob-util": "^1.1.2",
     "browser-filesaver": "^1.1.0",
     "crossfilter": "^1.3.12",
     "d3": "^3.5.12",
@@ -48,12 +49,10 @@
       "dataset/*": "/container/javascript/dataset/*.js",
       "heatmapvisualization/*": "/container/javascript/heatmapvisualization/*.js",
       "dendogram/*": "/container/javascript/dendogram/*.js",
-      
       "jsLru": "/container/vendor/rsms/js-lru/lru.js",
       "angular-utils-ui-breadcrumbs": "/container/vendor/mbAngularUtils/breadcrumbs/uiBreadcrumbs.js",
       "angular-ui-bootstrap": "/container/vendor/uibootstrap/ui-bootstrap-tpls-0.12.1.min.js",
       "canvasToBlob": "/container/javascript/canvasToBlob/canvas-toBlob.js",
-      "blob-util": "/container/vendor/blob-util/dist/blob-util.js",
       "crossfilter": "/container/vendor/bower_components/crossfilter/crossfilter.js",
       "bootstrap": "/container/vendor/bootstrap-3.3.1/dist/js/bootstrap.js",
       "ng": "/container/ui/app/mui-ng.js",
@@ -78,7 +77,9 @@
         ]
       },
       "ng": {
-      	"deps": ["jquery"]
+        "deps": [
+          "jquery"
+        ]
       },
       "mui": {
         "deps": [
@@ -138,9 +139,6 @@
         "deps": [
           "PouchDB"
         ]
-      },
-      "blob-util": {
-        "exports": "blobUtil"
       },
       "jsLru": {
         "exports": "LRUCache"
