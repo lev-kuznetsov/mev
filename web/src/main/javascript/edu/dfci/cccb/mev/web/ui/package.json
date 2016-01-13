@@ -1,0 +1,229 @@
+{
+  "name": "mev-web",
+  "version": "0.0.1",
+  "description": "MeV - Multi Experiment Viewer",
+  "main": "stealmain.js",
+  "dependencies": {
+    "ag-grid": "^2.3.7",
+    "angular": "^1.4.8",
+    "angular-animate": "^1.4.8",
+    "angular-nvd3": "~1.0.5",
+    "angular-resource": "^1.4.8",
+    "angular-route": "^1.4.8",
+    "angular-ui-router": "^0.2.15",
+    "angular-utils-pagination": "^0.9.4",
+    "browser-filesaver": "^1.1.0",
+    "crossfilter": "^1.3.12",
+    "d3": "^3.5.12",
+    "d3-tip": "^0.6.7",
+    "jquery": "^2.2.0",
+    "jquery-ui": "^1.10.5",
+    "js-data": "^2.8.2",
+    "js-data-angular": "^3.1.0",
+    "lodash": "^2.4.1",
+    "ng-grid": "/home/antony/git/ui-grid",
+    "notific8": "^2.3.1",
+    "nvd3": "apartensky/nvd3#1.8.1+master",
+    "q": "^1.4.1",
+    "steal": "^0.13.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "system": {
+    "configDependencies": [
+      "bower.json!bower"
+    ],
+    "paths": {
+      "orefine/*": "/container/javascript/orefine/*.js",
+      "mainmenu": "/container/javascript/mainmenu/MainMenu.module.js",
+      "geods": "/container/javascript/geods/Geods.package.js",
+      "geods/*": "/container/javascript/geods/*.js",
+      "js/*": "/container/javascript/*.js",
+      "colorbrewer/*": "/container/javascript/colorbrewer/*.js",
+      "extend": "/container/javascript/extend.js",
+      "alertservice/*": "/container/javascript/alertservice/*.js",
+      "api/*": "/container/javascript/api/*.js",
+      "dataset/*": "/container/javascript/dataset/*.js",
+      "heatmapvisualization/*": "/container/javascript/heatmapvisualization/*.js",
+      "dendogram/*": "/container/javascript/dendogram/*.js",
+      
+      "jsLru": "/container/vendor/rsms/js-lru/lru.js",
+      "angular-utils-ui-breadcrumbs": "/container/vendor/mbAngularUtils/breadcrumbs/uiBreadcrumbs.js",
+      "angular-ui-bootstrap": "/container/vendor/uibootstrap/ui-bootstrap-tpls-0.12.1.min.js",
+      "canvasToBlob": "/container/javascript/canvasToBlob/canvas-toBlob.js",
+      "blob-util": "/container/vendor/blob-util/dist/blob-util.js",
+      "crossfilter": "/container/vendor/bower_components/crossfilter/crossfilter.js",
+      "bootstrap": "/container/vendor/bootstrap-3.3.1/dist/js/bootstrap.js",
+      "ng": "/container/ui/app/mui-ng.js",
+      "mui": "/container/ui/app/mui.js"
+    },
+    "map": {
+      "ngX": "angular"
+    },
+    "meta": {
+      "jquery": {
+        "exports": "jQuery",
+        "foramt": "global"
+      },
+      "jquery-ui": {
+        "deps": [
+          "jquery"
+        ]
+      },
+      "angular": {
+        "deps": [
+          "jquery"
+        ]
+      },
+      "ng": {
+      	"deps": ["jquery"]
+      },
+      "mui": {
+        "deps": [
+          "jquery"
+        ]
+      },
+      "bootstrap": {
+        "deps": [
+          "jquery",
+          "angular"
+        ]
+      },
+      "ngX": {
+        "deps": [
+          "jquery"
+        ],
+        "exports": "angular"
+      },
+      "ngmocks": {
+        "deps": [
+          "ng"
+        ]
+      },
+      "ngAnimate": {
+        "deps": [
+          "ng"
+        ]
+      },
+      "log4js": {
+        "exports": "log4javascript"
+      },
+      "angular-ui-bootstrap": {
+        "deps": [
+          "jquery"
+        ]
+      },
+      "nguirouter": {
+        "deps": [
+          "ng"
+        ]
+      },
+      "q": {},
+      "angular-resource": {
+        "deps": [
+          "ng"
+        ]
+      },
+      "angularTreeView": {
+        "deps": [
+          "ng"
+        ]
+      },
+      "PouchDB": {
+        "exports": "PouchDB"
+      },
+      "pouchDbLru": {
+        "deps": [
+          "PouchDB"
+        ]
+      },
+      "blob-util": {
+        "exports": "blobUtil"
+      },
+      "jsLru": {
+        "exports": "LRUCache"
+      },
+      "bootstrapTree": {
+        "deps": [
+          "ng",
+          "jquery"
+        ]
+      },
+      "angular-route": {
+        "deps": [
+          "ng",
+          "jquery"
+        ]
+      },
+      "notific8": {
+        "deps": [
+          "jquery"
+        ]
+      },
+      "ng-grid": {
+        "deps": [
+          "jquery",
+          "ng"
+        ]
+      },
+      "ag-grid": {
+        "deps": [
+          "jquery",
+          "ng"
+        ]
+      },
+      "browser-filesaver": {
+        "deps": [
+          "canvasToBlob"
+        ],
+        "exports": "saveAs"
+      },
+      "angular-utils-pagination": {
+        "deps": [
+          "jquery",
+          "angular"
+        ]
+      },
+      "angular-utils-ui-breadcrumbs": {
+        "deps": [
+          "jquery",
+          "angular"
+        ]
+      },
+      "d3tip": {
+        "deps": [
+          "d3"
+        ]
+      },
+      "elementQueries": {
+        "exports": "ElementQueries"
+      },
+      "resizeSensor": {
+        "deps": [
+          "elementQueries"
+        ],
+        "exports": "ResizeSensor"
+      },
+      "nvd3": {
+        "deps": [
+          "d3"
+        ],
+        "exports": "nv"
+      },
+      "angularNvd3": {
+        "deps": [
+          "angular",
+          "nvd3"
+        ]
+      },
+      "crossfilter": {
+        "deps": [],
+        "exports": "crossfilter"
+      }
+    }
+  },
+  "author": "",
+  "license": "ISC"
+}

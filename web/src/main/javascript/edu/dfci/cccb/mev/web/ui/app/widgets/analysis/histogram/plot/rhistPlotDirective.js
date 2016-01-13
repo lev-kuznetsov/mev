@@ -1,4 +1,4 @@
-define(["ng", "d3", "d3tip"], function(ng, d3){
+define(["ng", "d3", "d3-tip"], function(ng, d3){
 	"use strict";
 	var RHistPlotDirective = function RHistPlotDirective(){
 		

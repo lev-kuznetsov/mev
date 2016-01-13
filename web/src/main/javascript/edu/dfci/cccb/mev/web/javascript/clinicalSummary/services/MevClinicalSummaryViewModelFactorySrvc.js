@@ -1,8 +1,8 @@
 define(["angular", 
-        "clinical/ClinicalSummary.module",        
-        "clinical/domain/ClinicalSummaryListVM",
-        "clinical/domain/ClinicalSummaryVM",
-        "clinical/services/MevClinicalSummaryFactorySrvc"], 
+        "../ClinicalSummary.module",        
+        "../domain/ClinicalSummaryListVM",
+        "../domain/ClinicalSummaryVM",
+        "./MevClinicalSummaryFactorySrvc"], 
 function(angular, angularModule, ClinicalSummaryListVM, ClinicalSummaryVM){
 	angularModule.service("MevClinicalSummaryViewModelFactorySrvc", ["MevClinicalSummaryFactorySrvc",
 	                                                                 function(MevClinicalSummaryFactorySrvc){

@@ -1,4 +1,4 @@
-define(["clinical/domain/ClinicalSummaryField"], function(ClinicalSumamryField){
+define(["../domain/ClinicalSummaryField"], function(ClinicalSumamryField){
 	var ClinicalSummaryFactory = function(configs, repository){
 	
 		//public

@@ -1,8 +1,8 @@
 define(["angular", 
-        "clinical/ClinicalSummary.module",
-        "clinical/domain/ClinicalSummaryRepository",
-        "angularResource", 
-        "angularRoute"], 
+        "../ClinicalSummary.module",
+        "../domain/ClinicalSummaryRepository",
+        "angular-route", 
+        "angular-route"], 
 function(angular, 
 			angularModule, 
 			ClinicalSummaryRepository){

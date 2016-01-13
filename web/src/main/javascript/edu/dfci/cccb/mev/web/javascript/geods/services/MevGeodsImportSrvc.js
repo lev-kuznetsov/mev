@@ -1,4 +1,4 @@
-define(["angular", "geods/Geods.module", "angularResource", ], 
+define(["angular", "geods/Geods.module", "angular-route", ], 
 function(angular, angularModule, ngResource){
 	angularModule.service("MevGeodsImportSrvc", ["$resource", function($resource){
 		var rootUrl = "/geods";

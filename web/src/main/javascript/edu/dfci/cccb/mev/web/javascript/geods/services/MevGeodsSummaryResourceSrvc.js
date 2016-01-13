@@ -1,4 +1,4 @@
-define(["angular", "geods/Geods.module", "angularResource", "geods/domain/GeodsSummary"], function(angular, angularModule, ngResource, GeodsSummary){
+define(["angular", "geods/Geods.module", "angular-route", "geods/domain/GeodsSummary"], function(angular, angularModule, ngResource, GeodsSummary){
 	angularModule.service("MevGeodsSummaryResourceSrvc", ["$resource", function($resource){
 		var eutilsRootUrl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 		var eutilsSummaryUrl=eutilsRootUrl+"esummary.fcgi";			

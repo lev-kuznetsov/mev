@@ -1,7 +1,7 @@
 define(["angular", 
         "geods/Geods.module",         
         "geods/domain/GeodsSummaryFactory",
-        "angularResource",
+        "angular-route",
         "geods/services/MevGeodsSummaryResourceSrvc", 
         "geods/services/MevGeodsImportSrvc",
         "geods/services/MevGeodsSearchResourceSrvc"], 

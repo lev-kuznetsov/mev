@@ -2,7 +2,7 @@ define(['jquery',
         'angular',
         'extend',
         'd3',
-        'project/Project', 'api/Api', 'colorbrewer/ColorBrewer'],
+        '../project/Project', 'api/Api', 'colorbrewer/ColorBrewer'],
     function($, angular, extend, d3) {
 	
 	return angular

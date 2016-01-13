@@ -1,5 +1,5 @@
-//define(["ng", "jquery", "d3", "nvd3", "angularNvd3", "lodash", "./_directives/scatterPlotDirective", "nvd3/build/nv.d3.css!", "./style/scatter.less!"], 
-define(["ng", "jquery", "d3", "nvd3", "angularNvd3", "lodash", "./_directives/scatterPlotDirective"], 
+//define(["ng", "jquery", "d3", "nvd3", "angular-nvd3", "lodash", "./_directives/scatterPlotDirective", "nvd3/build/nv.d3.css!", "./style/scatter.less!"],  
+define(["ng", "jquery", "d3", "nvd3", "angular-nvd3", "lodash", "./_directives/scatterPlotDirective"], 
 function(ng, $, d3, nvd3, ngnvd3, _, scatterPlotDirective){	
 	"use strict";
 	return ng.module("mui.widgets.common.plots.scatterPlot", [])	

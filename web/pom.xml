@@ -538,6 +538,10 @@
 			    <contextRoot>container/ui</contextRoot>
 			    <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/ui</directory>
 			  </context>
+			  <context>
+			    <contextRoot>container/libs</contextRoot>
+			    <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/libs</directory>
+			  </context>
 			</additionalContexts>
         </configuration>
       </plugin>
