@@ -13,7 +13,8 @@
     "angular-ui-router": "^0.2.15",
     "angular-utils-pagination": "^0.9.4",
     "blob-util": "^1.1.2",
-    "browser-filesaver": "^1.1.0",    
+    "blueimp-canvas-to-blob": "^3.1.0",
+    "browser-filesaver": "^1.1.0",
     "crossfilter": "^1.3.12",
     "d3": "^3.5.12",
     "d3-tip": "^0.6.7",
@@ -50,10 +51,8 @@
       "heatmapvisualization/*": "/container/javascript/heatmapvisualization/*.js",
       "dendogram/*": "/container/javascript/dendogram/*.js",
       "jsLru": "/container/vendor/rsms/js-lru/lru.js",
-      
       "angular-utils-ui-breadcrumbs": "/container/vendor/mbAngularUtils/breadcrumbs/uiBreadcrumbs.js",
-      "angular-ui-bootstrap": "/container/vendor/uibootstrap/ui-bootstrap-tpls-0.12.1.min.js",      
-      "canvasToBlob": "/container/javascript/canvasToBlob/canvas-toBlob.js",
+      "angular-ui-bootstrap": "/container/vendor/uibootstrap/ui-bootstrap-tpls-0.12.1.min.js",
       "bootstrap": "/container/vendor/bootstrap-3.3.1/dist/js/bootstrap.js",
       "ng": "/container/ui/app/mui-ng.js",
       "mui": "/container/ui/app/mui.js"
@@ -175,7 +174,7 @@
       },
       "browser-filesaver": {
         "deps": [
-          "canvasToBlob"
+          "blueimp-canvas-to-blob"
         ],
         "exports": "saveAs"
       },
