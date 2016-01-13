@@ -50,10 +50,10 @@
       "heatmapvisualization/*": "/container/javascript/heatmapvisualization/*.js",
       "dendogram/*": "/container/javascript/dendogram/*.js",
       "jsLru": "/container/vendor/rsms/js-lru/lru.js",
+      
       "angular-utils-ui-breadcrumbs": "/container/vendor/mbAngularUtils/breadcrumbs/uiBreadcrumbs.js",
       "angular-ui-bootstrap": "/container/vendor/uibootstrap/ui-bootstrap-tpls-0.12.1.min.js",
       "canvasToBlob": "/container/javascript/canvasToBlob/canvas-toBlob.js",
-      "crossfilter": "/container/vendor/bower_components/crossfilter/crossfilter.js",
       "bootstrap": "/container/vendor/bootstrap-3.3.1/dist/js/bootstrap.js",
       "ng": "/container/ui/app/mui-ng.js",
       "mui": "/container/ui/app/mui.js"
@@ -215,10 +215,6 @@
           "angular",
           "nvd3"
         ]
-      },
-      "crossfilter": {
-        "deps": [],
-        "exports": "crossfilter"
       }
     }
   },
