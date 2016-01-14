@@ -28,7 +28,8 @@
     "notific8": "^2.3.1",
     "nvd3": "apartensky/nvd3#1.8.1+master",
     "q": "^1.4.1",
-    "steal": "^0.13.0"
+    "steal": "^0.13.0",
+    "mui": "../libs/mui"
   },
   "devDependencies": {},
   "scripts": {
@@ -52,12 +53,11 @@
       "heatmapvisualization/*": "/container/javascript/heatmapvisualization/*.js",
       "dendogram/*": "/container/javascript/dendogram/*.js",
       "jsLru": "/container/vendor/rsms/js-lru/lru.js",
-      "angular-ui-bootstrap": "/container/vendor/uibootstrap/ui-bootstrap-tpls-0.12.1.min.js",
-      "ng": "/container/ui/app/mui-ng.js",
-      "mui": "/container/ui/app/mui.js"
+
+      "angular-ui-bootstrap": "/container/vendor/uibootstrap/ui-bootstrap-tpls-0.12.1.min.js"      
     },
     "map": {
-      "ngX": "angular"
+      "ng": "mui"
     },
     "meta": {
       "jquery": {
@@ -89,12 +89,6 @@
           "jquery",
           "angular"
         ]
-      },
-      "ngX": {
-        "deps": [
-          "jquery"
-        ],
-        "exports": "angular"
       },
       "ngmocks": {
         "deps": [
