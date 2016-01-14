@@ -1,6 +1,7 @@
 {
   "name": "mev-web",
   "version": "0.0.1",
+  "repository": "github.com/dfci-cccb/mev",
   "description": "MeV - Multi Experiment Viewer",
   "main": "stealmain.js",
   "dependencies": {
@@ -10,6 +11,7 @@
     "angular-nvd3": "~1.0.5",
     "angular-resource": "^1.4.8",
     "angular-route": "^1.4.8",
+    "angular-ui-bootstrap": "^0.14.3",
     "angular-ui-router": "^0.2.15",
     "angular-utils-pagination": "^0.9.4",
     "blob-util": "^1.1.2",
@@ -24,12 +26,12 @@
     "js-data": "^2.8.2",
     "js-data-angular": "^3.1.0",
     "lodash": "^2.4.1",
+    "mui": "../libs/mui",
     "ng-grid": "apartensky/ui-grid#2.0.14+npmfix",
     "notific8": "^2.3.1",
     "nvd3": "apartensky/nvd3#1.8.1+master",
     "q": "^1.4.1",
-    "steal": "^0.13.0",
-    "mui": "../libs/mui"
+    "steal": "^0.13.0"
   },
   "devDependencies": {},
   "scripts": {
@@ -52,14 +54,12 @@
       "dataset/*": "/container/javascript/dataset/*.js",
       "heatmapvisualization/*": "/container/javascript/heatmapvisualization/*.js",
       "dendogram/*": "/container/javascript/dendogram/*.js",
-      "jsLru": "/container/vendor/rsms/js-lru/lru.js",
-
-      "angular-ui-bootstrap": "/container/vendor/uibootstrap/ui-bootstrap-tpls-0.12.1.min.js"      
+      "jsLru": "/container/vendor/rsms/js-lru/lru.js"
     },
     "map": {
       "ng": "mui"
     },
-    "meta": {                                                            
+    "meta": {
       "notific8": {
         "deps": [
           "jquery",
