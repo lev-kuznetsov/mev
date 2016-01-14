@@ -1,4 +1,4 @@
-define(["lodash"], function(_){
+define(["lodash", "crossfilter"], function(_, crossfilter){
 	
     var ResultsTableDirective = function ResultsTableDirective(){
         return {
