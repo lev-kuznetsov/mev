@@ -22,7 +22,6 @@
     "d3": "^3.5.12",
     "d3-tip": "^0.6.7",
     "jquery": "^2.2.0",
-    "jquery-ui": "^1.10.5",
     "js-data": "^2.8.2",
     "js-data-angular": "^3.1.0",
     "lodash": "^2.4.1",
@@ -33,7 +32,10 @@
     "q": "^1.4.1",
     "steal": "^0.13.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "steal-tools": "^0.13.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -42,19 +44,18 @@
       "bower.json!bower"
     ],
     "paths": {
-      "orefine/*": "/container/javascript/orefine/*.js",
-      "mainmenu": "/container/javascript/mainmenu/MainMenu.module.js",
-      "geods": "/container/javascript/geods/Geods.package.js",
-      "geods/*": "/container/javascript/geods/*.js",
-      "js/*": "/container/javascript/*.js",
-      "colorbrewer/*": "/container/javascript/colorbrewer/*.js",
-      "extend": "/container/javascript/extend.js",
-      "alertservice/*": "/container/javascript/alertservice/*.js",
-      "api/*": "/container/javascript/api/*.js",
-      "dataset/*": "/container/javascript/dataset/*.js",
-      "heatmapvisualization/*": "/container/javascript/heatmapvisualization/*.js",
-      "dendogram/*": "/container/javascript/dendogram/*.js",
-      "jsLru": "/container/vendor/rsms/js-lru/lru.js"
+        "mainmenu": "../javascript/mainmenu/MainMenu.module.js",
+        "geods": "../javascript/geods/Geods.package.js",
+        "geods/*": "../javascript/geods/*.js",
+        "js/*": "../javascript/*.js",
+        "colorbrewer/*": "../javascript/colorbrewer/*.js",
+        "extend": "../javascript/extend.js",
+        "alertservice/*": "../javascript/alertservice/*.js",
+        "api/*": "../javascript/api/*.js",
+        "dataset/*": "../javascript/dataset/*.js",
+        "heatmapvisualization/*": "../javascript/heatmapvisualization/*.js",
+        "dendogram/*": "../javascript/dendogram/*.js",
+        "jsLru": "../vendor/rsms/js-lru/lru.js"
     },
     "map": {
       "ng": "mui"
@@ -65,6 +66,9 @@
           "jquery",
           "notific8/dist/jquery.notific8.css"
         ]
+      },
+      "pouchdb": {
+        "format": "global"
       }
     }
   },
