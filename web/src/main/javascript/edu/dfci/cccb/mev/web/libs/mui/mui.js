@@ -24,10 +24,11 @@ define(["angular", "lodash"], function(ng, _){
 			if(!func.$name)
 				throw new MevError("Compnent name not specified for func "+func.name);
 			
-			var provider = func.provider;
+			var provider = func.provider || func.$provider;
+			func.provider = provider;
 			if(provider){
-				if(!_self.providerMap[func.provider.toLowerCase()]){
-					throw new MevError("Invalid angular provider '"+func.provider+"'");
+				if(!_self.providerMap[provider.toLowerCase()]){
+					throw new MevError("Invalid angular provider '"+provider+"'");
 				}
 				return provider.toLowerCase();
 			}
