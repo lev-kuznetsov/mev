@@ -7,7 +7,6 @@ module.exports = function (grunt) {
           system: {
             main: "stealmain",
             config: "package.json!npm"
-            // config: __dirname + "/stealbuild.json"
           },
           buildOptions: {
             minify: false,
