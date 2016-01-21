@@ -473,6 +473,26 @@
       </plugin>
 
       <plugin>
+            <groupId>com.fizzed</groupId>
+            <artifactId>fizzed-watcher-maven-plugin</artifactId>
+            <version>1.0.6</version>
+            <configuration>
+                <touchFile>target/classes/watcher.txt</touchFile>
+                <watches>
+                    <watch>
+                        <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/ui</directory>                        
+                    </watch>
+                    <watch>
+                        <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/libs</directory>                        
+                    </watch>                    
+                </watches>
+                <goals>
+                    <goal>process-resources</goal>                    
+                </goals>
+            </configuration>
+        </plugin>
+
+      <plugin>
         <groupId>com.github.searls</groupId>
         <artifactId>jasmine-maven-plugin</artifactId>
         <version>${jasmine-maven-plugin.version}</version>
