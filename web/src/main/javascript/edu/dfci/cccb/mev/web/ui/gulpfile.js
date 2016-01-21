@@ -1,6 +1,7 @@
 "use strict";
-var gulp = require('gulp');
-var stealTools = require('steal-tools');
+var gulp = require('gulp'),
+ stealTools = require('steal-tools'),
+ path = require('path');
 
 // Steal Build / Watch the App
 gulp.task('build', function() {
@@ -10,8 +11,10 @@ gulp.task('build', function() {
   });
 });
 
-var source = '/home/antony/git/mev/web/src/main/javascript/edu/dfci/cccb/mev/web';
-var destination = '/home/antony/git/mev/web/target/classes/edu/dfci/cccb/mev/web';
+var source = path.join(__dirname, "..");                  
+var destination = source.replace("src/main/javascript", "target/classes");
+console.log("source", source);
+console.log("destination", destination);
 // The default task (called when you run `gulp` from cli)
 gulp.task('watch', function(){
   var watcher = gulp.watch(["!"+source+"/**/node_modules/", 
