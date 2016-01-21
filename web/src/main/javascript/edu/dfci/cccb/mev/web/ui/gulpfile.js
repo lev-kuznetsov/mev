@@ -15,11 +15,12 @@ var destination = '/home/antony/git/mev/web/target/classes/edu/dfci/cccb/mev/web
 // The default task (called when you run `gulp` from cli)
 gulp.task('watch', function(){
   var watcher = gulp.watch(["!"+source+"/**/node_modules/", 
-    source+"/ui/*.*",
-    source+"/ui/app/**/*.*",
-    source+"/ui/less/**/*.*",
-    source+"/ui/node_modules/*/*.*",
-    source + "/ui/live.js"]);
+    source+"/*/*.*",
+    source+"/*/*/*.*",
+    source+"/*/*/*/*.*",
+    "!"+source+"/libs/*/node_modules/**",   
+    "!"+source+"/ui/node_modules/**"
+    ]);
   watcher.on("change", function(event) {
     console.log("File " + event.path + " was " + event.type + ", copying to target...");
     gulp.src(event.path, {base: source}).pipe(gulp.dest(destination));
