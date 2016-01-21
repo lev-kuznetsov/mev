@@ -21,6 +21,9 @@ gulp.task('watch', function(){
     source+"/*/*.*",
     source+"/*/*/*.*",
     source+"/*/*/*/*.*",
+    source+"/*/*/*/*/*.*",
+    source+"/*/*/*/*/*/*.*",
+    source+"/*/*/*/*/*/*/*.*",
     "!"+source+"/libs/*/node_modules/**",   
     "!"+source+"/ui/node_modules/**"
     ]);
