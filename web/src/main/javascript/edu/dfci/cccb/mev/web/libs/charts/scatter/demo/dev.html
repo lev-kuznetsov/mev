@@ -1,0 +1,10 @@
+<html>
+	<head>
+		<script src="../node_modules/steal/steal.js" data-main="demo/index" data-load-bundles></script>		
+	</head>
+    <body data-ng-controller="myCtrl">		
+    	logx<input ng-model="vm.logScaleX" type="checkbox"/>
+    	logY<input ng-model="vm.logScaleY" type="checkbox"/>
+        <scatter-plot input-data="data" label-x="'x-label'" label-y="'y-label'" log-scale-x="vm.logScaleX" log-scale-y="vm.logScaleY"></scatter-plot>
+    </body>    	
+</html>

@@ -1,0 +1,11 @@
+<html>
+	<head>
+		<script src="../node_modules/steal/steal.js?demo/live.js"></script>
+	</head>
+    <body ng-controller="pcaDemoCtrl">	
+    	<select ng-model="vm.curResult" ng-change="vm.showResult()">
+    		<option ng-repeat="(key, value) in vm.results">{{key}}</option>
+    	</select><br><br>
+        <div mev-pca-analysis="analysis.result" mev-selections="analysis.dataset.column.selections"></div>
+    </body>    
+</html>

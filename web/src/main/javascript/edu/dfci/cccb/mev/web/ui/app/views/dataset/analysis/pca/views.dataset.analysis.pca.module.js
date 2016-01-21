@@ -1,6 +1,6 @@
 "use strict";
-define(["ng", "lodash", "nvd3"], function(ng, _, nvd3){
-	var module = ng.module("mui.views.dataset.analysis.pca", []);
+define(["ng", "lodash", "nvd3", "mev-pca"], function(ng, _, nvd3){
+	var module = ng.module("mui.views.dataset.analysis.pca", arguments, arguments);
 	module.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider){}])
 	.factory("PcaVMFactory", [function(){
 		return function PcaVMFactory($scope, BoxPlotService, project, analysis){

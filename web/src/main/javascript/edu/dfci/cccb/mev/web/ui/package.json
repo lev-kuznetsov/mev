@@ -25,8 +25,9 @@
     "js-data": "^2.8.2",
     "js-data-angular": "^3.1.0",
     "lodash": "^2.4.1",
-    "mui": "../libs/mui",
-    "liver": "../libs/liver",
+    "mui": "file:../libs/mui",
+    "liver": "file:../libs/liver",
+    "mev-pca": "file:../libs/domain/pca",
     "ng-grid": "apartensky/ui-grid#2.0.14+npmfix",
     "notific8": "^2.3.1",
     "nvd3": "apartensky/nvd3#1.8.1+master",
@@ -36,7 +37,9 @@
   "devDependencies": {
     "grunt": "^0.4.5",
     "gulp": "^3.9.0", 
-    "steal-tools": "^0.13.2"
+    "steal-tools": "^0.13.2",
+    "system-text": "^0.1.0",
+    "systemjs-plugin-json": "^0.1.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
