@@ -46,8 +46,7 @@
   },
   "system": {
     "configDependencies": [
-      "bower.json!bower",
-      "live-reload"
+      "bower.json!bower"
     ],
     "paths": {
       "mainmenu": "../javascript/mainmenu/MainMenu.module.js",
