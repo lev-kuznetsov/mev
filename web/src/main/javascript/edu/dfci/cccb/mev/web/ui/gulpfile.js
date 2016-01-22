@@ -1,16 +1,41 @@
 "use strict";
 var gulp = require('gulp'),
  stealTools = require('steal-tools'),
- path = require('path');
+ path = require('path'),
+ _ = require("lodash");
+
+// Load package.json 
+var pkg = require('./package.json')
 
 // Steal Build / Watch the App
-gulp.task('build', function() {
-  stealTools.build({
-    main: 'stealmain',
+var defaults = {
+  system: {
+    main: pkg.main.replace(".js", ""),
     config: "package.json!npm"
-  });
+  },
+  buildOptions: {
+    minify: false,
+    sourceMaps: true,
+    watch: false,
+    uglifyOptions: {
+      mangle: false
+    },
+    bundleSteal: true
+  }
+};
+//augment config with "watch" options
+var watchConfig = _.merge({buildOptions: {watch: true}}, defaults);
+watchConfig.buildOptions.watch=true;
+
+gulp.task('build', function() {
+  stealTools.build(defaults.system, defaults.buildOptions);
+});
+gulp.task('watch-build', function() {
+  stealTools.build(watchConfig.system, watchConfig.buildOptions);
 });
 
+
+//Copy on write to the jetty directory
 var source = path.join(__dirname, "..");                  
 var destination = source.replace("src/main/javascript", "target/classes");
 console.log("source", source);
@@ -32,4 +57,4 @@ gulp.task('watch', function(){
     gulp.src(event.path, {base: source}).pipe(gulp.dest(destination));
   });
 });
-gulp.task("default", ["watch"]);
+gulp.task("default", ["build"]);
