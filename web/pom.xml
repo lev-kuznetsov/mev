@@ -608,9 +608,11 @@
           <exclude>**/tcga/*</exclude>
         </excludes>
       </resource>
+
       <resource>
         <directory>src/main/resources/tcga</directory>
       </resource>
+
       <resource>
         <directory>src/main/javascript</directory>
         <filtering>false</filtering>
@@ -638,6 +640,7 @@
       </resource>
     </resources>
 
+    
     <pluginManagement>
       <plugins>
         <!--This plugin's configuration is used to store Eclipse m2e settings 
@@ -674,6 +677,114 @@
     </pluginManagement>
   </build>
 
+  <profiles>
+      <profile>
+        <id>jsdev</id>     
+        <build>
+          <resources>
+            <resource>
+              <directory>src/main/javascript</directory>
+              <filtering>false</filtering>
+              <includes>
+                <include>nothing</include>
+              </includes>            
+              <excludes>              
+                <exclude>**/*</exclude>              
+              </excludes>
+            </resource>                  
+          </resources>
+          <plugins>
+            <plugin>
+              <artifactId>maven-clean-plugin</artifactId>
+              <version>2.4.1</version>
+              <executions>
+                <execution>
+                    <id>y</id>
+                    <phase>process-resources</phase>
+                    <goals>
+                        <goal>clean</goal>
+                    </goals>
+                </execution>                
+              </executions>
+              <configuration>
+                  <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                  <filesets>                                    
+                      <fileset>
+                        <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web</directory>
+                        <followSymlinks>false</followSymlinks>                        
+                        <includes>
+                          <include>javascript</include>
+                          <include>libs</include>
+                          <include>mock</include>
+                          <include>ui</include>
+                          <include>vendor</include>
+                        </includes>      
+                      </fileset>      
+                      <fileset>
+                          <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/javascript</directory>
+                          <followSymlinks>false</followSymlinks>                        
+                      </fileset>
+                      <fileset>
+                          <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/libs</directory>
+                          <followSymlinks>false</followSymlinks>                        
+                      </fileset>
+                      <fileset>
+                          <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/mock</directory>
+                          <followSymlinks>false</followSymlinks>                        
+                      </fileset>
+                      <fileset>
+                          <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/ui</directory>
+                          <followSymlinks>false</followSymlinks>                        
+                      </fileset>
+                      <fileset>
+                          <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/vendor</directory>
+                          <followSymlinks>false</followSymlinks>                        
+                      </fileset>                                        
+                  </filesets>                  
+              </configuration>
+          </plugin>
+          <plugin>
+                <groupId>com.pyx4j</groupId>
+                <artifactId>maven-junction-plugin</artifactId>
+                <version>1.0.3</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>link</goal>
+                        </goals>
+                    </execution>                    
+                </executions>
+                <configuration>
+                    <links>
+                        <link>
+                            <!-- add allowLinking="true" to Tomcat's conf/Context.xml; also, disable update in Edit Configuration on frame deactiviation -->
+                            <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/javascript</dst>
+                            <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/javascript</src>
+                        </link>
+                        <link>
+                            <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/libs</dst>
+                            <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/libs</src>
+                        </link>
+                        <link>
+                            <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/mock</dst>
+                            <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/mock</src>
+                        </link>
+                        <link>
+                            <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/ui</dst>
+                            <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/ui</src>
+                        </link>
+                        <link>
+                            <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/vendor</dst>
+                            <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/vendor</src>
+                        </link>
+                    </links>
+                </configuration>
+            </plugin>
+          </plugins>
+        </build>
+      </profile>
+    </profiles>
   <pluginRepositories>
     <pluginRepository>
       <id>cccb</id>
