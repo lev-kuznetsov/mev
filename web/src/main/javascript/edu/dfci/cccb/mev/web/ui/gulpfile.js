@@ -5,31 +5,52 @@ var gulp = require('gulp'),
  _ = require("lodash");
 
 // Load package.json 
-var pkg = require('./package.json')
-
-// Steal Build / Watch the App
+var pkg = require('./package.json');
+var bundlesPath = pkg.system.bundlesPath || "dist/bundles";
+// Steal Build - defaults to Production
 var defaults = {
   system: {
     main: pkg.main.replace(".js", ""),
-    config: "package.json!npm"
+    config: "package.json!npm",
+    bundlesPath: bundlesPath + "/min"
   },
   buildOptions: {
-    minify: false,
-    sourceMaps: true,
+    minify: true,
+    sourceMaps: false,
     watch: false,
     uglifyOptions: {
-      mangle: false
+      //mangle does not work for angular.js
+      //need to provide "reserved" option to UglifyJS
+      //but is not currently supported by StealJS 
+      //(because it usess the #simpleWay of launching uglify)
+      mangle: false      
     },
     bundleSteal: true
   }
 };
+gulp.task('build', function() {
+  stealTools.build(defaults.system, defaults.buildOptions);
+});
+
+//correct for dev
+gulp.task('build-dev', function() {
+  var devConfig = _.merge(_.cloneDeep(defaults), {
+    system: {
+      bundlesPath: bundlesPath+"/dev"
+    },
+    buildOptions: {
+      minify: false, 
+      sourceMaps: true
+    }
+  });
+  console.log("devConfig", devConfig);
+  stealTools.build(devConfig.system, devConfig.buildOptions);
+});
+
 //augment config with "watch" options
 var watchConfig = _.merge({buildOptions: {watch: true}}, defaults);
 watchConfig.buildOptions.watch=true;
 
-gulp.task('build', function() {
-  stealTools.build(defaults.system, defaults.buildOptions);
-});
 gulp.task('watch-build', function() {
   stealTools.build(watchConfig.system, watchConfig.buildOptions);
 });
