@@ -1,0 +1,54 @@
+<div class="pca-scatter-plot">
+	<div class="chart">
+		<div class="controls">	
+				<label>X</label>					
+				<select ng-change="vm.updateAxis()" ng-model="vm.xLabel">
+					<option selected>PC1</option>
+					<option >PC2</option>
+					<option>PC3</option>
+				</select>
+
+				<label>Y</label>					
+				<select ng-change="vm.updateAxis()" ng-model="vm.yLabel">
+					<option>PC1</option>
+					<option selected>PC2</option>
+					<option>PC3</option>
+				</select>
+
+				<label class="break">Selections</label>
+				<table class="table table-condensed" ng-if="selections && selections.length>0">		
+					<tr ng-repeat="selection in selections">	
+						<td>
+							<input type="checkbox" ng-model="selection.checked" ng-change="vm.updateSelection(selection)" ng-true-value="true" ng-false-value="false">
+							{{selection.name}}
+						</td>
+						<td style="width: 20px" bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>
+						<td>{{selection.properties.selectionDescription}}</td>								
+					</tr>
+				</table>
+		</div>
+		<div class="body">		
+				<div class="scatter-plot" input-data="vm.data" label-x="vm.xLabel" label-y="vm.yLabel" selections="vm.selections"></div>
+		</div>				
+		<div class="footer">
+			<div class="selection" ng-if="vm.selected && vm.selected.items.length>0">
+				<table class="table table-condensed" >		
+					<thead>
+						<th>Selected Samples</th>
+						<th>{{vm.selected.xLabel}}</th>
+						<th>{{vm.selected.yLabel}}</th>
+					</thead>
+					<tr ng-repeat="sample in vm.selected.items">	
+						<td>{{sample.id}}</td>
+						<td>{{sample.x}}</td>
+						<td>{{sample.y}}</td>								
+					</tr>
+				</table>
+			</div>	
+		</div>
+		
+	</div>	
+	
+	
+
+</div>

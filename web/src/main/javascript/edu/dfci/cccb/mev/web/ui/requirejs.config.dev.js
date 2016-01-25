@@ -9,6 +9,9 @@ var REQUIREJS_CONFIG = (function(){
 		},
 		bower: function(path){
 			return this.vendor("bower_components/"+path);
+		},
+		js: function(path){
+			return this.vendor("/container/javascript/"+path);
 		}
 	};
 	
@@ -21,10 +24,10 @@ var REQUIREJS_CONFIG = (function(){
 			ngX : [paths.bower("angular/angular"), "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular", paths.vendor("angularjs/angular"), "//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular"],
 			ng: [paths.app("mui-ng")],
 			mui: [paths.app("mui")],
-			ngAnimate: [paths.bower("angular-animate/angular-animate"), "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-animate.min"],
-			uibootstrap: [paths.vendor("uibootstrap/ui-bootstrap-tpls-0.12.1.min")],			
-			nguirouter :  [paths.vendor("uirouter/angular-ui-router")], //, "//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.12/angular-ui-router"
-			ngresource: [paths.vendor("angularjs/angular-resource")],
+			"angular-animate": [paths.bower("angular-animate/angular-animate"), "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-animate.min"],
+			"angular-ui-bootstrap": [paths.vendor("uibootstrap/ui-bootstrap-tpls-0.12.1.min")],			
+			"angular-ui-router" :  [paths.vendor("uirouter/angular-ui-router")], //, "//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.12/angular-ui-router"
+			"angular-resource": [paths.vendor("angularjs/angular-resource")],
 			appjs: [paths.app("app")],
 			q: [paths.vendor("q/q")],
 			underscore: [paths.vendor("underscore/underscore")],
@@ -34,37 +37,35 @@ var REQUIREJS_CONFIG = (function(){
 			bootstrapTree: [paths.vendor("bootstrap-tree/bootstrap-tree")],
 			elementQueries: [paths.vendor("marcj/css-element-queries/ElementQueries")],
 			resizeSensor: [paths.vendor("marcj/css-element-queries/ResizeSensor")],
-			angularRoute : [ paths.vendor('angularjs/angular-route') ],
-			jqueryUi : ['//code.jquery.com/ui/1.9.2/jquery-ui.min', 'jquery-ui/1.9.2/jquery-ui.min'],
+			"angular-route" : [ paths.vendor('angularjs/angular-route') ],
+			"jquery-ui" : ['//code.jquery.com/ui/1.9.2/jquery-ui.min', 'jquery-ui/1.9.2/jquery-ui.min'],
 			d3 : [ '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.9/d3' ],
-			nvd3: ['//cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3'],
-			angularNvd3 : [ paths.vendor('angular-nvd3/dist/angular-nvd3') ],
+			nvd3: [paths.vendor('nvd3/build/nv.d3'), '//cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3'],
+			"angular-nvd3" : [ paths.vendor('angular-nvd3/dist/angular-nvd3') ],
 		    retina : [ '/library/webjars/retinajs/0.0.2/retina' ],
 		    notific8 : [ 'notific8.min' ],
-		    ngGrid : [ '//cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.7/ng-grid', '/container/javascript/ng-grid-2.0.7.min',  ],
+		    "ng-grid" : [ '//cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.7/ng-grid', '/container/javascript/ng-grid-2.0.7.min',  ],
 		    blob : [ '/container/javascript/canvasToBlob/Blob' ],
 		    canvasToBlob : [ '/container/javascript/canvasToBlob/canvas-toBlob' ],
-		    fileSaver : [ '/container/javascript/fileSaver/FileSaver' ],
+		    "browser-filesaver" : [ '/container/javascript/fileSaver/FileSaver' ],
 		    qtip : [ '//cdnjs.cloudflare.com/ajax/libs/qtip2/2.1.1/jquery.qtip', '/library/webjars/qtip2/2.1.1/jquery.qtip' ],
 		    log4js : [ '//cdnjs.cloudflare.com/ajax/libs/log4javascript/1.4.9/log4javascript', '/library/webjars/log4javascript/1.4.5/log4javascript' ],
-		    mbAngularUtilsPagination: [paths.vendor('mbAngularUtils/pagination/dirPagination')],
-			mbAngularUtilsBreadcrumbs: [paths.vendor('mbAngularUtils/breadcrumbs/uiBreadcrumbs')],
-			jsData : ['//cdnjs.cloudflare.com/ajax/libs/js-data/2.3.0/js-data'],
-			jsDataAngular : ['//cdnjs.cloudflare.com/ajax/libs/js-data-angular/3.0.0/js-data-angular'],
-			d3tip: ["//cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.7/d3-tip.min"],
-			PouchDB: ["//cdn.jsdelivr.net/pouchdb/5.1.0/pouchdb.min"],
-			blobUtil: [paths.vendor("blob-util/dist/blob-util")],
+		    "angular-utils-pagination": [paths.vendor('mbAngularUtils/pagination/dirPagination')],
+			"angular-utils-ui-breadcrumbs": [paths.vendor('mbAngularUtils/breadcrumbs/uiBreadcrumbs')],
+			"js-data" : ['//cdnjs.cloudflare.com/ajax/libs/js-data/2.3.0/js-data'],
+			"js-data-angular" : ['//cdnjs.cloudflare.com/ajax/libs/js-data-angular/3.0.0/js-data-angular'],
+			"d3-tip": ["//cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.7/d3-tip.min"],
+			"pouchdb": ["//cdn.jsdelivr.net/pouchdb/5.1.0/pouchdb.min"],
+			"blob-util": [paths.vendor("blob-util/dist/blob-util")],
 			pouchDbLru: [paths.vendor("pouchdb-lru-cache/dist/pouchdb.lru-cache")],
 			jsLru: [paths.vendor("rsms/js-lru/lru")],
-			agGrid: [paths.bower("ag-grid/dist/ag-grid")],
-			crossfilter: [paths.bower("crossfilter/crossfilter")]
-			
+			"ag-grid": [paths.bower("ag-grid/dist/ag-grid")],
+			"crossfilter": [paths.bower("crossfilter/crossfilter")],
+			"mev-scatter-plot": [paths.app("widgets/common/plots/scatterPlot/widgets.common.plots.scatterPlot.module")]
 		},		
 		map: {
 	        '*': {
 	            angular: 'ng',
-	            angularResource: 'ngresource',
-	            'js-data': 'jsData'	            
 	        }	        
 	    },
 		
@@ -72,7 +73,7 @@ var REQUIREJS_CONFIG = (function(){
 			jquery: {
 				exports: "$"
 			},
-			jqueryUi: {
+			"jquery-ui": {
 				deps: ["jquery"]
 			},
 			bootstrap: {
@@ -85,34 +86,34 @@ var REQUIREJS_CONFIG = (function(){
 			ngmocks: {
 				deps: ["ng"]
 			},
-			ngAnimate: {
+			"angular-animate": {
 				deps: ["ng"]
 			},
 			log4js : {
 			    exports : 'log4javascript'
 			},
-			uibootstrap: {
+			"angular-ui-bootstrap": {
 				deps: ["ng"]
 			},
-			nguirouter: {
+			"angular-ui-router": {
 				deps: ["ng"]
 			},
 			q: {				
 				exports: "q"
 			},
-			ngresource: {
+			"angular-resource": {
 				deps: ["ng"]
 			},
 			angularTreeView: {
 				deps: ["ng"]
 			},
-			PouchDB: {
+			"pouchdb": {
 				exports: "PouchDB"
 			},
 			pouchDbLru: {
 				deps: ["PouchDB"]				
 			},
-			blobUtil: {
+			"blob-util": {
 				exports: "blobUtil"
 			},
 			jsLru: {
@@ -124,30 +125,30 @@ var REQUIREJS_CONFIG = (function(){
 			bootstrapTree: {
 				deps: ["ng", "jquery"]
 			},
-			angularRoute: {
+			"angular-route": {
 				deps: ["ng", "jquery"]
 			},
 			notific8: {
 		      deps : [ 'jquery' ],
 		      exports : 'notific8'
 		    },
-		    ngGrid: {
+		    "ng-grid": {
 		    	deps: ['jquery', 'ng']
 		    },
-		    agGrid: {
+		    "ag-grid": {
 		    	deps: ['jquery', 'ng']
 		    },
-		    'fileSaver' : {
+		    'browser-filesaver' : {
 		        deps : [ 'canvasToBlob' ],
 		        exports : 'fileSaver'
 		    },
-		    mbAngularUtilsPagination: {
+		    "angular-utils-pagination": {
 		    	deps: ['jquery', 'angular']
 		    }, 
-		    mbAngularUtilsBreadcrumbs: {
+		    "angular-utils-ui-breadcrumbs": {
 		    	deps: ['jquery', 'angular']
 		    },
-		    d3tip: {
+		    "d3-tip": {
 		    	deps: ['d3']
 		    },
 		    elementQueries: {
@@ -161,7 +162,7 @@ var REQUIREJS_CONFIG = (function(){
 		    	deps: ["d3"],
 		    	exports: "nv"
 		    },
-		    angularNvd3: {
+		    "angular-nvd3": {
 		    	deps: ["angular", "nvd3"]		    	
 		    },
 		    crossfilter: {
@@ -186,10 +187,14 @@ var REQUIREJS_CONFIG = (function(){
 		    location : "/container/javascript/geods",
 		    main : "Geods.package"
 		},
+//		{
+//		    name : "clinical",
+//		    location : "/container/javascript/clinicalSummary",
+//		    main : "ClinicalSummary.package"
+//		},
 		{
-		    name : "clinical",
-		    location : "/container/javascript/clinicalSummary",
-		    main : "ClinicalSummary.package"
+			name: "js",
+			location : "/container/javascript"
 		}
 	  ]
 	}

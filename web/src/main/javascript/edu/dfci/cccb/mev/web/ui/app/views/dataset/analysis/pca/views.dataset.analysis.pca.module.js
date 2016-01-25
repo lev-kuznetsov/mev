@@ -1,11 +1,13 @@
 "use strict";
-define(["ng", "lodash", "nvd3"], function(ng, _, nvd3){
-	var module = ng.module("mui.views.dataset.analysis.pca", []);
+define(["ng", "lodash", "nvd3", "mev-pca"], function(ng, _, nvd3){
+	var module = ng.module("mui.views.dataset.analysis.pca", arguments, arguments);
 	module.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider){}])
 	.factory("PcaVMFactory", [function(){
 		return function PcaVMFactory($scope, BoxPlotService, project, analysis){
 			var _self = this;
 			var _svg, _svgElement, _brush, _chart, _selection=[];
+			this.curSelection = [];
+			
 			function _addBrush(){
 	    		if(_svg && _brush)
 	    			if(_svg.selectAll(".brush").size()===0)
@@ -21,9 +23,10 @@ define(["ng", "lodash", "nvd3"], function(ng, _, nvd3){
 	    		if(_svg && _brush)
 	    			_svg.selectAll(".brush").remove();
 	    	};
+	    	
 	    	this.getSelection=function(){
 	    		console.debug("pca _selection", _selection);
-	    		return _selection;
+	    		return _self.curSelection;
 	    	};
 	    	$scope.sizeChanged=function(){
 	    		console.debug("pca resize");

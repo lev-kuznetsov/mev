@@ -1,0 +1,58 @@
+.pca-analysis,
+pca-analysis{	
+}
+@chart-control-width: 10%;
+@chart-body-width: 100% - @chart-control-width;
+
+.pca-scatter-plot{
+	.chart{
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		.controls{
+			 flex: 3 0 @chart-control-width;			
+
+			 label{
+			    display: inline-block;
+			    float: left;
+			    clear: left;
+			    /*width: 250px;*/
+			    text-align: right;
+			    margin-bottom: 10px;
+
+			    &:after{
+			    	content: ":";
+			    }
+
+			    &.break{
+			    	display: block;
+			    	float: none;
+			    	text-align: initial;
+			    }
+			}
+			input,select,table {
+			  display: inline-block;
+			  float: left;
+			}
+
+
+		}
+		.body{
+			flex: 7 7 @chart-body-width;
+		}		
+		.footer{		
+			  flex: 7 7 @chart-body-width;
+			  max-width: @chart-body-width;
+			  /* display: flex; */
+			  /* flex-direction: row; */
+			  align-self: flex-end;
+
+			display: flex;
+			flex-direction: row;
+			.selection{
+				flex: 10;
+			}
+		}
+	}
+}

@@ -1,8 +1,8 @@
 define(["angular", 
-        "clinical/ClinicalSummary.module", 
-        "clinical/controllers/ClinicalSummaryCtrl",
-        "clinical/domain/ClinicalSummaryRepository",
-        "clinical/services/MevClinicalSummaryRepositorySrvc",
-        "clinical/services/MevClinicalSummaryFactorySrvc",
-        "clinical/directives/ClinicalSummary.directives"], function(){
+        "./ClinicalSummary.module", 
+        "./controllers/ClinicalSummaryCtrl",
+        "./domain/ClinicalSummaryRepository",
+        "./services/MevClinicalSummaryRepositorySrvc",
+        "./services/MevClinicalSummaryFactorySrvc",
+        "./directives/ClinicalSummary.directives"], function(){
 });

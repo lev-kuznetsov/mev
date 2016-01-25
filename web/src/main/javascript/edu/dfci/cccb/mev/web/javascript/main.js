@@ -11,7 +11,7 @@ require.config ({
     jqueryUi : ['//code.jquery.com/ui/1.9.2/jquery-ui.min', 'jquery-ui/1.9.2/jquery-ui.min'],
     angular : [ '//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular',
                '/library/webjars/angularjs/1.2.13/angular' ],   
-    angularRoute : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min',
+    "angular-route" : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min',
                     '/library/webjars/angularjs/1.2.13/angular-route.min' ],
     angularResource : [ 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-resource.min',
                        '/library/webjars/angularjs/1.2.13/angular-resource.min' ],
@@ -34,7 +34,7 @@ require.config ({
     qtip : [ '/library/webjars/qtip2/2.1.1/jquery.qtip' ],
     'log4js' : [ '/library/webjars/log4javascript/1.4.5/log4javascript' ],
     lodash: ["//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min"],
-    nguirouter :  ["//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min"],
+    "angular-ui-router" :  ["//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min"],
     mbAngularUtilsBreadcrumbs: ['/container/vendor/mbAngularUtils/breadcrumbs/uiBreadcrumbs']
   },
   shim : {
@@ -42,7 +42,7 @@ require.config ({
       exports : 'angular',
       deps: ["jquery"]
     },
-    'angularRoute' : {
+    'angular-route' : {
       exports : 'ngRoute',
       deps : [ 'angular' ]
     },
@@ -87,7 +87,7 @@ require.config ({
     'log4js' : {
       exports : 'log4javascript'
     },
-    nguirouter: {
+    "angular-ui-router": {
 		deps: ["angular"]
 	},
 	mbAngularUtilsBreadcrumbs: {

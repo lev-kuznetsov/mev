@@ -1,0 +1,34 @@
+{
+  "name": "mev-web",
+  "description": "MeV - Multi Experiment Viewer",
+  "main": "stealmain",
+  "authors": [
+    "apartensky <apartensky@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/apartensky/mev",
+  "moduleType": [
+    "amd"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pouchdb": "~5.1.0",
+    "angular-utils-ui-breadcrumbs": "~0.2.2",
+    "jquery-ui": "~1.11.4"
+  },
+  "system": {
+    "meta": {
+      "angular-utils-ui-breadcrumbs": {
+        "deps": [
+          "angular"
+        ]
+      }
+    }
+  }
+}

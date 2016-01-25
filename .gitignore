@@ -47,3 +47,10 @@ bkp/
 #Bower 
 **.matrix
 **bower_components/
+!web/src/main/javascript/edu/dfci/cccb/mev/web/vendor/bower_components/
+
+#npm
+#**node_modules/
+**node_modules/
+npm-debug.log
+

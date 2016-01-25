@@ -11,11 +11,15 @@
 	
 	var deps = ['angular', 'alertservice/AlertService']
 	
-	define(deps.concat(directiveDeps).concat(serviceDeps), function(angular){
+	define(['angular', 'alertservice/AlertService', 
+	        './Directives/pcaModal',
+	        './Directives/nmfModal',
+	        './Services/pathModalService'
+	                     ], function(angular){
 	
 		var module = angular.module('Mev.AnalysisModalCollection', ['Mev.AlertService'])
 		
-		module.path = "container/javascript/analysismodalcollection/"
+		module.path = "/container/javascript/analysismodalcollection/"
 			
 		//load each directive deps file onto the module using function arguments only
         for (var index = 0; index < directiveDeps.length; index++){

@@ -1,6 +1,6 @@
 define(["angular", 
-        "clinical/ClinicalSummary.module",
-        "clinical/services/MevClinicalSummaryFactorySrvc"], 
+        "../ClinicalSummary.module",
+        "../services/MevClinicalSummaryFactorySrvc"], 
 function(angular, angularModule){
 	angularModule.controller("MevClinicalSummaryCtrl", ["MevClinicalSummaryFactorySrvc",
                                            function(MevClinicalSummaryFactorySrvc){				
