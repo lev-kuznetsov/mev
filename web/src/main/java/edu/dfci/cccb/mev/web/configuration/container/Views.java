@@ -32,7 +32,7 @@ public class Views {
   
   @Bean
   public FreeMarkerView index (FreeMarkerViewBuilder builder) {
-    return builder.setUrl ("/edu/dfci/cccb/mev/web/ui/index.html").build ();
+    return builder.setUrl ("/edu/dfci/cccb/mev/web/ui/stealmain.html").build ();
   }
 
   @Bean

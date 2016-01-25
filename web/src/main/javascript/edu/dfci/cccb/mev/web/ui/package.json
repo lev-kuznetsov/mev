@@ -1,0 +1,82 @@
+{
+  "name": "mev-web",
+  "version": "0.0.1",
+  "repository": "github.com/dfci-cccb/mev",
+  "description": "MeV - Multi Experiment Viewer",
+  "main": "stealmain.js",
+  "dependencies": {
+    "ag-grid": "^2.3.7",
+    "angular": "^1.4.8",
+    "angular-animate": "^1.4.8",
+    "angular-nvd3": "~1.0.5",
+    "angular-resource": "^1.4.8",
+    "angular-route": "^1.4.8",
+    "angular-ui-bootstrap": "^0.14.3",
+    "angular-ui-router": "^0.2.15",
+    "angular-utils-pagination": "^0.9.4",
+    "blob-util": "^1.1.2",
+    "blueimp-canvas-to-blob": "^3.1.0",
+    "bootstrap": "^3.3.6",
+    "browser-filesaver": "^1.1.0",
+    "crossfilter": "^1.3.12",
+    "d3": "^3.5.12",
+    "d3-tip": "^0.6.7",
+    "jquery": "^2.2.0",
+    "js-data": "^2.8.2",
+    "js-data-angular": "^3.1.0",
+    "lodash": "^2.4.1",
+    "mui": "file:../libs/mui",
+    "liver": "file:../libs/liver",
+    "mev-pca": "file:../libs/domain/pca",
+    "ng-grid": "apartensky/ui-grid#2.0.14+npmfix",
+    "notific8": "^2.3.1",
+    "nvd3": "apartensky/nvd3#1.8.1+master",
+    "q": "^1.4.1",
+    "steal": "^0.13.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "gulp": "^3.9.0", 
+    "steal-tools": "^0.13.2",
+    "system-text": "^0.1.0",
+    "systemjs-plugin-json": "^0.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "system": {
+    "configDependencies": [
+      "bower.json!bower"
+    ],
+    "paths": {
+      "mainmenu": "../javascript/mainmenu/MainMenu.module.js",
+      "geods": "../javascript/geods/Geods.package.js",
+      "geods/*": "../javascript/geods/*.js",
+      "js/*": "../javascript/*.js",
+      "colorbrewer/*": "../javascript/colorbrewer/*.js",
+      "extend": "../javascript/extend.js",
+      "alertservice/*": "../javascript/alertservice/*.js",
+      "api/*": "../javascript/api/*.js",
+      "dataset/*": "../javascript/dataset/*.js",
+      "heatmapvisualization/*": "../javascript/heatmapvisualization/*.js",
+      "dendogram/*": "../javascript/dendogram/*.js",
+      "jsLru": "../vendor/rsms/js-lru/lru.js"
+    },
+    "map": {
+      "ng": "mui"
+    },
+    "meta": {
+      "notific8": {
+        "deps": [
+          "jquery",
+          "notific8/dist/jquery.notific8.css"
+        ]
+      },
+      "pouchdb": {
+        "format": "global"
+      }
+    }
+  },
+  "author": "",
+  "license": "ISC"
+}

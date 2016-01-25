@@ -64,14 +64,18 @@ define(["ng", "lodash"], function(ng, _){
 	            	'field': "B",
 	            	'icon': "<="
 	            }];
-			this.viewGenes = function (filteredResults) {
-            	$scope.filteredResults = filteredResults;
+			this.udpateFilteredView = function (filteredResults) {
+            	_self.filteredResults = filteredResults;
             	var labels = filteredResults.map(function(item){return item._row;});
-            	_self.heatmapView = _self.heatmapView.applyFilter("row", labels);
-                _self.boxPlotGenes = BoxPlotService.prepareBoxPlotData(_self.project.dataset, filteredResults, 
+            	_self.heatmapView = _self.heatmapView.applyFilter("row", labels);                
+            };
+            this.updatePageView = function (pageResults) {
+            	_self.boxPlotGenes = BoxPlotService.prepareBoxPlotData(_self.project.dataset, pageResults, 
                 		[_self.analysis.params.$$control, _self.analysis.params.$$experiment], 
                 		_self.analysis.randomId, "_row");
             };
+            $scope.$on("ui:resultsTable:pageChanged", function($event, results){            	
+            });
 			$scope.$on("ui:resultsTable:filteredResults",function($event, results){
 //				var control = _.find(project.dataset.column.selections, function(selection){return selection.name===analysis.params.controlName;});
 //	        	var experiment = _.find(project.dataset.column.selections, function(selection){return selection.name===analysis.params.experimentName;});

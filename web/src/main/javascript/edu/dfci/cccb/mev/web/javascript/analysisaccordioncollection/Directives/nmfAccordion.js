@@ -1,8 +1,7 @@
 (function(){
 
-	var deps = ['d3', 'heatmapvisualization/lib/h3atmap', 'dendogram/lib/d3ndogram', 'jquery']
 	
-    define(deps, function(d3, h3atmap, d3ndogram, jquery){
+    define(['d3', 'heatmapvisualization/lib/h3atmap', 'dendogram/lib/d3ndogram', 'jquery'], function(d3, h3atmap, d3ndogram, jquery){
 
        return function(module){
 

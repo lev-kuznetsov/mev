@@ -25,8 +25,13 @@
       	</div>
 				      
 	</div>
-	<div class="results-body">							
-		<results-table data="cleanData" headers="headers" ordering="pValue" on-filter="viewGenes(filteredResults)"></results-table>
+	<div class="results-body">									
+		<div class="results-top">
+			<d3-Box-Plot-Visualization data="boxPlotGenes"></d3-Box-Plot-Visualization>
+		</div>
+		<div class="results-bottom">
+			<results-table data="cleanData" headers="headers" ordering="pValue" on-filter="viewGenes(filteredResults)" on-paged="viewPage(pageResults)"></results-table>						
+		</div>
 	</div>
 </div>	          
 

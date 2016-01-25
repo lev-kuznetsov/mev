@@ -221,7 +221,7 @@ angular.module('mainApp.controllers', ['nvd3'])
                 },
                 zoom: {
                     //NOTE: All attributes below are optional
-                    enabled: false,
+                    enabled: true,
                     scaleExtent: [1, 10],
                     useFixedDomain: false,
                     useNiceScale: false,

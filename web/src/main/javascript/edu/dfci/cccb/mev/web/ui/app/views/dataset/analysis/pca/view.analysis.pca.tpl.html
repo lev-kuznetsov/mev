@@ -21,7 +21,8 @@
 		      	</div>
 			</div>
 			<div class="results-body">
-				<nvd3 options="DatasetAnalysisVM.options" data="DatasetAnalysisVM.data"></nvd3>
+				<div mev-pca-analysis="DatasetAnalysisVM.analysis" mev-selections="DatasetAnalysisVM.project.dataset.column.selections" cur-selection="DatasetAnalysisVM.curSelection"></div>
+<!-- 				<nvd3 options="DatasetAnalysisVM.options" data="DatasetAnalysisVM.data"></nvd3> -->
 <!-- 				<d3-Scatterplot data="DatasetAnalysisVM.pc.data" selected="DatasetAnalysisVM.selectionParams.samples" width="600" height="400"></d3-Scatterplot> -->
 			</div>
 		</div>		

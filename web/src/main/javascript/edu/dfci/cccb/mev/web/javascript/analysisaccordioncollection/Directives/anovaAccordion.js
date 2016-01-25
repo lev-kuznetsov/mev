@@ -45,14 +45,25 @@
 	                        ];
                             
                             scope.viewGenes = function(filteredResults){
-                            	console.debug("anova viewGenes", filteredResults);
+                            	console.debug("anova viewGenes", filteredResults);                            	
                             	scope.filteredResults = filteredResults;
 //                            	scope.cleanData = filteredResults;
 //                            	scope.filteredResults = tableFilter(scope.cleanData, filterParams);                        		 
                             	scope.$emit("ui:anova:filteredResults", _.uniq(filteredResults, 'id'));                                
                             	scope.applyToHeatmap(filteredResults);
                         	}
-
+                            scope.viewPage = function(pageResults){
+                            	var groups = scope.analysis.params.data.map(function(selectionName){
+                					return _.find(scope.project.dataset.column.selections, function(selection){return selection.name===selectionName;});
+                				});
+                            	
+                            	pageResultsUniq = _.uniq(pageResults, 'id')
+                            	scope.$emit("ui:anova:pageResults", pageResultsUniq);
+                            	scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, pageResultsUniq, 
+                    	         		groups,
+                    	         		scope.analysis.randomId);
+                            };
+                                
                             scope.selectionParams = {
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16),

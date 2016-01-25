@@ -15,6 +15,9 @@
 package edu.dfci.cccb.mev.dataset.domain.prototype;
 
 import static lombok.AccessLevel.PROTECTED;
+
+import java.util.List;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,7 @@ import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
+import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 
 /**
  * @author levk
@@ -45,5 +49,10 @@ public abstract class AbstractDimension implements Dimension {
            + "(type=" + type () + ", "
            + "selections=" + selections + ", "
            + "keys=" + (keys ().size () > 10 ? "<" + keys ().size () + " keys>" : keys ()) + ")";
+  }
+  
+  @Override
+  public Dimension subset (List<String> keys) {
+    return new SimpleDimension (type, keys, selections, annotation);
   }
 }

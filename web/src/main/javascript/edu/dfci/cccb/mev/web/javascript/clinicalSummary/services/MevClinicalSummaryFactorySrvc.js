@@ -1,8 +1,8 @@
 define(["angular", 
-        "clinical/ClinicalSummary.module",
-        "clinical/domain/ClinicalSummaryFactory",
-        "clinical/services/MevClinicalSummaryConfigSrvc",
-        "clinical/services/MevClinicalSummaryRepositorySrvc"],
+        "../ClinicalSummary.module",
+        "../domain/ClinicalSummaryFactory",
+        "../services/MevClinicalSummaryConfigSrvc",
+        "../services/MevClinicalSummaryRepositorySrvc"],
 function(angular, 
 		angularModule,
 		ClinicalSummaryFactory){

@@ -1,6 +1,6 @@
 define(['angular', 'd3', 'jquery',
         './lib/HeatmapVisualizationClass', './lib/generateParams',
-        'alertservice/AlertService', 'colorbrewer/ColorBrewer', 'jqueryUi'], 
+        'alertservice/AlertService', 'colorbrewer/ColorBrewer', 'jquery-ui'], 
 function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
 	return angular.module('Mev.heatmapvisualization', ['d3colorBrewer', 'Mev.AlertService'])
 	.directive('heatmapSettings',[function() {
@@ -109,7 +109,8 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
 
                        if (colorEdge.min && colorEdge.max &&colorEdge.avg) {
 //TODO: Add j-query slider
-                         colorSlider.slider('option', 'values', [colorEdge.min, colorEdge.avg, colorEdge.max]);
+//Currently the heatmap colormap is not adjustable, so I commented out - it was often throwing an error on page load                    	   
+//                         colorSlider.slider('option', 'values', [colorEdge.min, colorEdge.avg, colorEdge.max]);
                        }
                     });
 

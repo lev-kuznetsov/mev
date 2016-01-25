@@ -1,6 +1,6 @@
 define(['angular', 
         'angularResource', 
-        'angularRoute', 
+        'angular-route', 
         'directives', 
         'services', 
         'controllers', 
@@ -18,7 +18,7 @@ define(['angular',
         'geods',
         'clinical',
         'cohortanalysis/CohortAnalysis',
-        'nguirouter'
+        'angular-ui-router'
         ], function(angular){
 	'use strict';
 	return angular.module('myApp', [

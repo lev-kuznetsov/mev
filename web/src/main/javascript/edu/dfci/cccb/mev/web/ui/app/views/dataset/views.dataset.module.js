@@ -1,6 +1,6 @@
 "use strict";
 define(["ng", 
-        "PouchDB",
+        "pouchdb",
         "./_controllers/DatasetViewVM", 
         "./_controllers/DatasetProjectViewVM",
         "./_controllers/DatasetHomeVM",

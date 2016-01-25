@@ -53,8 +53,14 @@ define(["lodash"], function(_){
 					return true;
 				
 				//if has the require array and a provider function -> assume AngularJS module
-				if(Array.isArray(dep.requires) && typeof dep.provider === "function")
-					return true;
+				try{					
+					if(Array.isArray(dep.requires) && typeof dep.provider === "function")
+						return true;
+				}catch(e){
+					console.error("invalid dep", e);
+					throw e;
+				}
+				
 			}).map(function(dep){
 				//return names only
 				//all strings should be considered module names

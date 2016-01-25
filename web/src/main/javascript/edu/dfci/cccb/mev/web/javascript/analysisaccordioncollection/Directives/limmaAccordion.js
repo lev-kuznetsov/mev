@@ -1,6 +1,6 @@
 (function () {
 
-    define([], function () {
+    define(["lodash", "crossfilter"], function (_, crossfilter) {
         return function (module) {
 
             module.directive('limmaAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService', 'BoxPlotService',
@@ -14,36 +14,78 @@
                             heatmapView: "=",
                             isItOpen: "@",
                             isShowHeatmapTab: "@"
-                        },
+                        },                        
+                        controller: ["$scope", function($scope){
+	                    	$scope.headers = [
+								//this row just shows the row index, doesn't use any data from the row
+	//              								{
+	//              									headerName: "#", cellRenderer: function(params) {
+	//              										return params.node.id + 1;
+	//              									} 
+	//              								 },
+	                               {
+	                                   'name': 'ID',
+	                                   'field': "id",
+	                                   'icon': "search"
+	                               },
+	                               {
+	                                   'name': 'Log-Fold-Change',
+	                                   'field': "logFoldChange",
+	                                   'icon': [">=", "<="]
+	                               },
+	                               {
+	                                   'name': 'Average Expression',
+	                                   'field': "averageExpression",
+	                                   'icon': [">=", "<="]
+	                               },
+	                               {
+	                                   'name': 'P-Value',
+	                                   'field': "pValue",
+	                                   'icon': "<=",
+	                                   'default': 0.05
+	                               },
+	                               {
+	                                   'name': 'Q-Value',
+	                                   'field': "qValue",
+	                                   'icon': "<="
+	                               }
+	                           ];
+	                    	
+	                    	//if using events, must filter on "id" so as not to process events raised by other resultTables ont he same page
+	                    	// to do that: (1) set unique id on the <result-table> element and (2) check targetScopeFilter in this handler
+	                    	// In the end it's easier to use a callback function (such as viewGenes below)
+                            $scope.$on("ui:resultsTable:filteredResults", function($event, filteredResults){
+                            	$scope.filteredResults = filteredResults;
+                            	$scope.applyToHeatmap(filteredResults);                            	
+                            });
+                            $scope.$on("ui:resultsTable:pageChanged", function($event, pageResults){
+                            	$scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData($scope.project.dataset, pageResults, 
+                                		[$scope.analysis.params.control, $scope.analysis.params.experiment], 
+                                		$scope.analysis.randomId); 
+                            });
+                            
+                            $scope.applyToHeatmap = function (filteredResults) {
+                                
+                            	var labels = filteredResults.map(projection.ids);
+                            	
+                                $scope.heatmapView = $scope.project.generateView({
+                                    viewType: 'heatmapView',
+                                    note: $scope.analysis.name,
+                                    labels: {
+                                        column: {
+                                            keys: $scope.project.dataset.column.keys
+                                        },
+                                        row: {
+                                            keys: labels
+                                        }
+                                    }
+                                });
+
+                            };
+                        }],
                         link: function (scope) {
-                            scope.headers = [
-                                {
-                                    'name': 'ID',
-                                    'field': "id",
-                                    'icon': "search"
-                                },
-                                {
-                                    'name': 'Log-Fold-Change',
-                                    'field': "logFoldChange",
-                                    'icon': [">=", "<="]
-                                },
-                                {
-                                    'name': 'Average Expression',
-                                    'field': "averageExpression",
-                                    'icon': [">=", "<="]
-                                },
-                                {
-                                    'name': 'P-Value',
-                                    'field': "pValue",
-                                    'icon': "<=",
-                                    'default': 0.05
-                                },
-                                {
-                                    'name': 'Q-Value',
-                                    'field': "qValue",
-                                    'icon': "<="
-                                }
-                            ];
+                            
+                        	
                             
                             scope.filteredResults = undefined;
                             
@@ -51,21 +93,13 @@
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16)
                             }
-// if using events, must filter on "id" so as not to process events raised by other resultTables ont he same page
-// to do that: (1) set unique id on the <result-table> element and (2) check targetScopeFilter in this handler
-// In the end it's easier to use a callback function (such as viewGenes below)
-//                            scope.$on("ui:resultsTable:filteredResults", function($event, filteredResults){
-//                            	var labels = filteredResults.map(projection.ids);
-//                            	scope.applyToHeatmap(filteredResults);
-//                            });
+// 
                             scope.viewGenes = function (filteredResults) {
+                            	
                             	scope.filteredResults = filteredResults;
                             	scope.applyToHeatmap(filteredResults);
-                                scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, filteredResults, 
-                                		[scope.analysis.control, scope.analysis.experiment], 
-                                		scope.analysis.randomId);
                             };
-
+                            
                             scope.addSelections = function () {
 
                                 var userselections = scope.filteredResults.map(projection.ids);
@@ -139,30 +173,8 @@
                                     });
 
                             };
-
-                            scope.applyToHeatmap = function (filteredResults) {
-                            	                                
-                            	var labels = filteredResults.map(projection.ids);
-
-                                scope.heatmapView = scope.project.generateView({
-                                    viewType: 'heatmapView',
-                                    note: scope.analysis.name,
-                                    labels: {
-                                        column: {
-                                            keys: scope.project.dataset.column.keys
-                                        },
-                                        row: {
-                                            keys: labels
-                                        }
-                                    },
-                                    expression: {
-                                        min: scope.project.dataset.expression.min,
-                                        max: scope.project.dataset.expression.max,
-                                        avg: scope.project.dataset.expression.avg,
-                                    }
-                                });
-
-                            };
+	                        
+                            
                         }
 
                     };

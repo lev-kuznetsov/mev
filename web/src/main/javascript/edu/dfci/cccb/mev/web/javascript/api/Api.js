@@ -1,4 +1,4 @@
-define ([ 'angular', 'lodash', 'angularResource', './AnalysisEventBus', '../dataset/lib/AnalysisClass'], function (angular, _, angularResource, AnalysisEventBus, AnalysisClass) {
+define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dataset/lib/AnalysisClass'], function (angular, _, angularResource, AnalysisEventBus, AnalysisClass) {
 	
     return angular
     .module ('Mev.Api', ['ngResource'])

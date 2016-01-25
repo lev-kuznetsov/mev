@@ -1,5 +1,5 @@
 define(
-        ['angular', 'jquery', 'd3', 'services', 'colorbrewer/ColorBrewer'],
+        ['angular', 'jquery', 'd3', 'colorbrewer/ColorBrewer'],
         function(angular, jq, d3) {
 
             return angular

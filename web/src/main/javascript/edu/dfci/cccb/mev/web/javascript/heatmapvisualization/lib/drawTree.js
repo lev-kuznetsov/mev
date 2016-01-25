@@ -1,4 +1,4 @@
-define(['d3', 'qtip'], function(d3, qtip){
+define(['d3', ], function(d3){
   
     var cluster = d3.layout.cluster().sort(null)
         .separation( function(a, b) {

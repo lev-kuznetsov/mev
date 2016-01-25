@@ -126,7 +126,7 @@ public class TestTTestAnalysisController {
     assertThat(analysisStatus.status (), is(Analysis.MEV_ANALYSIS_STATUS_IN_PROGRESS));        
      
     //Wait for analysis to complete
-    Thread.sleep (2000L);
+    Thread.sleep (3000L);
     
     TTest analysis = (TTest)dataset.analyses ().get (analysesName);    
     String jsonTTest = jsonObjectMapper.writeValueAsString (analysis);
@@ -166,7 +166,7 @@ public class TestTTestAnalysisController {
     assertThat(analysisStatus.status (), is(Analysis.MEV_ANALYSIS_STATUS_IN_PROGRESS));        
      
     //Wait for analysis to complete
-    Thread.sleep (2000L);
+    Thread.sleep (3000L);
     
     TTest analysis = (TTest)dataset.analyses ().get (analysesName);    
     String jsonTTest = jsonObjectMapper.writeValueAsString (analysis);
@@ -211,7 +211,7 @@ public class TestTTestAnalysisController {
     assertThat(analysisStatus.status (), is(Analysis.MEV_ANALYSIS_STATUS_IN_PROGRESS));        
      
     //Wait for analysis to complete
-    Thread.sleep (2000L);
+    Thread.sleep (3000L);
     
     TTest analysis = (TTest)dataset.analyses ().get (analysesName);    
     String jsonTTest = jsonObjectMapper.writeValueAsString (analysis);

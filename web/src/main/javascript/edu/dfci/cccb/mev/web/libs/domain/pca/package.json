@@ -1,0 +1,37 @@
+{
+  "name": "mev-pca",
+  "version": "0.0.0",
+  "description": "mev pca",
+  "main": "src/pca.module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "system": {
+    "configDependencies": [
+      "bower.json!bower",
+      "live-reload"
+    ],
+    "ext": {
+      "html": "system-text",
+      "json": "systemjs-plugin-json"
+    }
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "steal": "^0.12.9",
+    "steal-tools": "^0.12.4",
+    "system-text": "^0.1.0",
+    "systemjs-plugin-json": "^0.1.0",
+    "angular-ui-bootstrap": "^0.14.3",
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.1.4"
+  },
+  "dependencies": {
+    "angular": "^1.4.8",
+    "d3": "^3.5.13",    
+    "lodash": "^2.4.2",
+    "mev-scatter-plot": "file:../../charts/scatter",
+    "mui": "file:../../mui"
+  }
+}

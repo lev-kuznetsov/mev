@@ -45,7 +45,6 @@ import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.MultipartTsvInput;
-import edu.dfci.cccb.mev.dataset.rest.google.GoogleWorkspace;
 
 /**
  * @author levk
@@ -88,7 +87,5 @@ public class WorkspaceController {
                           this.workspace instanceof ScopedObject
                                                                 ? (Workspace) ((ScopedObject) this.workspace).getTargetObject ()
                                                                 : this.workspace;
-    if (workspace instanceof GoogleWorkspace)
-      ((GoogleWorkspace) workspace).load (id);
   }
 }

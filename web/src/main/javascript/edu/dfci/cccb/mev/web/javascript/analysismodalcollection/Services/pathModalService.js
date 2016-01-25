@@ -4,7 +4,7 @@
         return function(module){
             module.factory('pathModalService', [function(){
                 return {
-                    'module': "container/javascript/analysismodalcollection"
+                    'module': "/container/javascript/analysismodalcollection"
                 }
             }])
         }

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.hamcrest.core.*;
 
 import java.nio.ByteBuffer;
@@ -15,6 +16,7 @@ import lombok.extern.log4j.Log4j;
 
 import org.hamcrest.core.IsEqual;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -86,7 +88,7 @@ public class TestFlatFilesValuesBinaryController {
     workspace.put (mockDataset);
   }
   
-  @Test
+  @Test @Ignore
   public void test () throws Exception {
     @SuppressWarnings("unused")
     MvcResult mvcResult = this.mockMvc.perform(get("/dataset/mock_set/data/values").param ("format", "binary")
@@ -104,6 +106,28 @@ public class TestFlatFilesValuesBinaryController {
          String row = mockDataset.dimension (Type.ROW).keys ().get(irow);
          String column = mockDataset.dimension (Type.COLUMN).keys ().get(icol);
          assertThat (expected.getDouble ((irow*numOfCols+icol)*Double.SIZE/Byte.SIZE), IsEqual.equalTo (mockDataset.values ().get (row, column))); ;
+       }
+     }
+  }
+  
+  @Test
+  public void testFloat () throws Exception {
+    @SuppressWarnings("unused")
+    MvcResult mvcResult = this.mockMvc.perform(get("/dataset/mock_set/data/values").param ("format", "binary")
+                                     .session (mockHttpSession)
+                                     .accept("application/octet-stream"))            
+     .andExpect (status ().isOk ())
+     .andDo(print())
+     .andReturn ();
+     
+     byte[] values = mvcResult.getResponse ().getContentAsByteArray ();
+     ByteBuffer expected = ByteBuffer.wrap (values);
+     int numOfCols = mockDataset.dimension (Type.COLUMN).keys ().size ();
+     for(int irow = 0; irow < mockDataset.dimension (Type.ROW).keys ().size (); irow++){
+       for(int icol = 0; icol < numOfCols; icol++){
+         String row = mockDataset.dimension (Type.ROW).keys ().get(irow);
+         String column = mockDataset.dimension (Type.COLUMN).keys ().get(icol);
+         assertThat (expected.getFloat ((irow*numOfCols+icol)*Float.SIZE/Byte.SIZE), IsEqual.equalTo ((float)mockDataset.values ().get (row, column))); ;
        }
      }
   }

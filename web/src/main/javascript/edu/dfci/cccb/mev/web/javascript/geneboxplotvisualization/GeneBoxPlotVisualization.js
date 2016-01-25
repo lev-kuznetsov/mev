@@ -99,11 +99,11 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
     	//  D3 in this context is from the D3 service
         return function (id, element) {
 
-            var width = 30, //width of the box
-                padding = 5, //spacing on one side of the box
-                geneSpacing = 40, //space in between genes
-                height = 400,                
-                margin = {top:60, bottom:30,left:50,right:20},
+            var width = 8, //width of the box
+                padding = 2, //spacing on one side of the box
+                geneSpacing = 10, //space in between genes
+                height = 300,   
+                margin = {top:60, bottom:30,left:75,right:20},
                 geneWidth = undefined;
             return {
                 draw: function (params) {
@@ -200,7 +200,7 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                 	svg.append('g')
                 		.attr('class', 'y axis')
                 		.attr('id', 'svg-yaxis-'+id)
-                		.attr("transform", "translate(" + 40 + ",0)")
+                		.attr("transform", "translate(" + margin.left + ",0)")
                 		
                 	var yAxis = svg.select('g#svg-yaxis-'+id)
                 	
@@ -219,8 +219,8 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
 	            	
 	            	xAxis.append('line')
 	            		.attr({
-	            			'x1':40,
-	            			'x2':(groups.data.length * geneWidth),
+	            			'x1':margin.left,
+	            			'x2':(groups.data.length * geneWidth) + width,
 	            			'y1':yscale.range()[0],
 	            			'y2':yscale.range()[0],
 	            		})
@@ -435,19 +435,21 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
                 });
                 
                 //Labels
-                
+                var x = xposition + geneWidth/3 - 15;
+                var y = scale(params.min) + 10;
                 label.selectAll('text').data([data.name]).enter()
                 .append('text')
                 .attr({
 //                	x: xposition + width + padding*2,
-                	x: xposition + geneWidth/3,
-                	y: scale(params.min) + 18
+                	x: x,
+                	y: y
                 })
                 .text(data.geneName)
                 	.attr("font-family", "sans-serif")
-                	.attr("text-anchor", "middle")
+                	.attr("text-anchor", "left")
                      .attr("font-size", "14px")
-                     .attr("fill", "red");
+                     .attr("fill", "red")
+                     .attr("transform", "rotate(35,"+x+","+y+")");
 
             };
         };
@@ -484,7 +486,8 @@ define(['angular', 'd3', 'alertservice/AlertService'], function(angular, d3){
             scope: {
                 data: '=',
             },            
-            restrict: 'E',
+            restrict: 'E',            
+            template: "<div>Loading ...</div>",
             link: function (scope, elems, attrs) {
 
                 scope.$watch('data', function (dataPromise, olddata) {

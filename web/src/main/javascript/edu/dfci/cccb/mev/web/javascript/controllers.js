@@ -1,5 +1,5 @@
 define(
-        ['jquery', 'angular', 'd3', 'notific8', 'api/Api', 'alertservice/AlertService', 'angularRoute'],
+        ['jquery', 'angular', 'd3', 'notific8', 'api/Api', 'alertservice/AlertService', 'angular-route'],
         function($, angular, d3) {
 
             return angular

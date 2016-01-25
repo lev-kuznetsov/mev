@@ -1,4 +1,4 @@
-define(['./cellFilter', 'd3', 'qtip', 'q'], function(cellFilter, d3, qtip, q){
+define(['./cellFilter', 'd3', 'q'], function(cellFilter, d3, q){
 	
 	//drawCells !View, !shownCells, !scales, Array [String], -> null
 	//	draws cells on heatmapvisualization object

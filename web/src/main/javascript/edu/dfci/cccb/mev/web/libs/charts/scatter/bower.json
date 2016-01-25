@@ -1,0 +1,35 @@
+{
+  "name": "mev-scatter-plot",
+  "description": "mev scatter plot",
+  "main": [
+    "index",
+    "src/styles/scatter.less"
+  ],
+  "authors": [
+    "apartensky <apartensky@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [
+    "amd"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {    
+  },
+  "system": {   
+    "meta": {    
+      "angular": {
+        "format": "global",
+        "exports": "angular",
+        "deps": ["jquery"]
+      }
+    }
+  }
+}

@@ -15,6 +15,15 @@
                             heatmapView: "=",
                             isItOpen: "@"
                         },
+                        controller: ["$scope", function($scope){
+                        	$scope.$on("ui:resultsTable:pageChanged", function($event, pageResults){
+                				var control = _.find($scope.project.dataset.column.selections, function(selection){return selection.name===$scope.analysis.params.controlName;});
+                	        	var experiment = _.find($scope.project.dataset.column.selections, function(selection){return selection.name===$scope.analysis.params.experimentName;});
+                				$scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData($scope.project.dataset, pageResults, 
+                						[control, experiment],
+                						$scope.analysis.randomId);
+                			});
+                        }],
                         link: function (scope, elem, attrs) {                        	
                                                         
                             scope.headers = [{
@@ -39,7 +48,7 @@
                             	scope.filteredResults = filteredResults;
                             	scope.applyToHeatmap(filteredResults);
                             });
-
+                            
                             scope.selectionParams = {
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16)

@@ -33,7 +33,31 @@
         './Services/boxPlotService'
     ]
 
-    define(deps.concat(directiveDeps).concat(serviceDeps), function(angular, jq, d3){
+    define(['angular', 
+		'jquery', 
+		'd3', 
+		'alertservice/AlertService', 
+		'../scatterplot/ScatterplotModule',
+		'./Directives/analysisContentItem', 
+	      './Directives/fTestAccordion', 
+	      './Directives/wilcoxonTestAccordion',
+	      './Directives/kMeansAccordion',
+	      './Directives/anovaAccordion',
+	      './Directives/deseqAccordion',
+	      './Directives/tTestAccordion',
+	      './Directives/limmaAccordion',
+	      './Directives/hierarchicalAccordion',
+	      './Directives/pcaAccordion',
+	      './Directives/resultsTable',
+	      './Directives/nmfAccordion',
+	      './Services/tableResultsFilter',
+	        './Services/projectionService',
+	        './Services/pathService',
+	        './Services/compareFactory',
+	        './Services/pcaTransforms',
+	        './Services/pcaMulti',
+	        './Services/boxPlotService'
+		], function(angular, jq, d3){
 	
     	var moduleDeps = [
 			'Mev.AlertService', 

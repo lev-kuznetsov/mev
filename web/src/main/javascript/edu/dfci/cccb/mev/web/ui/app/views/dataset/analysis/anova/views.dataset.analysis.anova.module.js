@@ -19,18 +19,7 @@ define(["ng", "lodash"], function(ng, _){
 	                max: project.dataset.expression.max,
 	                avg: project.dataset.expression.avg,
 	            }
-	        });
-			
-			$scope.$on("ui:anova:filteredResults",function($event, results){
-				
-				var groups = analysis.params.data.map(function(selectionName){
-					return _.find(project.dataset.column.selections, function(selection){return selection.name===selectionName;});
-				});
-				
-	       		$scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(project.dataset, results, 
-	         		groups,
-	         		analysis.randomId);
-			});
+	        });			
 		};
 	}])
 	.controller("AnovaVM", ["$scope", "project", "analysis", "BoxPlotService", "AnovaVMFactory",
