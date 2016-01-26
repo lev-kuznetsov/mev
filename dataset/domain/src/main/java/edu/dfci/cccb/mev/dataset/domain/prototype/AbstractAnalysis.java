@@ -20,12 +20,13 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 
 /**
@@ -36,8 +37,8 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 @ToString
 @Accessors (fluent = true)
 @SuppressWarnings ("unchecked")
-public abstract class AbstractAnalysis <T extends AbstractAnalysis<?>> implements Analysis, Comparable<AbstractAnalysis<?>> {
-  
+public abstract class AbstractAnalysis <T extends AbstractAnalysis<?>> implements Analysis {
+
   private @JsonProperty @Getter String name;
   private @JsonProperty @Getter String type;
   private @JsonProperty @Getter String status = Analysis.MEV_ANALYSIS_STATUS_COMPLETED;
@@ -48,8 +49,7 @@ public abstract class AbstractAnalysis <T extends AbstractAnalysis<?>> implement
     this.name = name;
     return (T) this;
   }
-  
-  
+
   public T type (String type) {
     this.type = type;
     return (T) this;
@@ -59,7 +59,7 @@ public abstract class AbstractAnalysis <T extends AbstractAnalysis<?>> implement
     this.status = status;
     return (T) this;
   }
-  
+
   public T error (String error) {
     this.error = error;
     return (T) this;
@@ -73,7 +73,7 @@ public abstract class AbstractAnalysis <T extends AbstractAnalysis<?>> implement
   /* (non-Javadoc)
    * @see java.lang.Comparable#compareTo(java.lang.Object) */
   @Override
-  public int compareTo (AbstractAnalysis<?> o) {
+  public int compareTo (Analysis o) {
     return timestamp ().compareTo (o.timestamp ());
   }
 }

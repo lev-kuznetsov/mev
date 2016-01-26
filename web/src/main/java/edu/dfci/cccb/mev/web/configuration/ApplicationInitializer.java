@@ -39,6 +39,7 @@ import edu.dfci.cccb.mev.kmeans.rest.configuration.KMeansRestConfiguration;
 import edu.dfci.cccb.mev.limma.rest.configuration.LimmaRestConfiguration;
 import edu.dfci.cccb.mev.nmf.rest.configuration.NmfRestConfiguration;
 import edu.dfci.cccb.mev.pca.rest.configuration.PcaConfiguration;
+import edu.dfci.cccb.mev.pe.rest.configuration.PathwayEnrichmentConfiguration;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 import edu.dfci.cccb.mev.stats.rest.configuration.StatsRestConfiguration;
 import edu.dfci.cccb.mev.survival.rest.configuration.SurvivalAnalysisConfiguration;
@@ -84,6 +85,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     mvcContext.register (HistogramAnalysisConfiguration.class);
     mvcContext.register (GeneSDAnalysisConfiguration.class);
     mvcContext.register (GeneMADAnalysisConfiguration.class);
+    mvcContext.register (PathwayEnrichmentConfiguration.class);
 
     DispatcherServlet dispatcher = new DispatcherServlet (mvcContext);
 

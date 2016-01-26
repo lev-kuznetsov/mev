@@ -248,6 +248,14 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
     
+    <!-- Pathway Enrichment -->
+    
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-pathway-enrichment-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+    
     <!-- Servlet -->
 
     <dependency>
@@ -578,14 +586,13 @@
           <configuration>
           <rserveSource>https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/Rserve/1.8-1/Rserve_1.8-1.tar.gz</rserveSource>
           <onInitialize>
-            sapply (c ("devtools", "NMF", "RProtoBuf"), function (lib)
+            sapply (c ("NMF", "RProtoBuf", "injectoR"), function (lib)
               if (!requireNamespace (lib))
                 install.packages (lib, repos="http://cran.rstudio.com"));
-            if (!requireNamespace ("injectoR"))
-              devtools::install_github ("dfci-cccb/injectoR");
             source ("http://bioconductor.org/biocLite.R");
-            sapply (c ("topGO", "org.Hs.eg.db", "org.Mm.eg.db", "limma", "DESeq", "edgeR"), function (lib)
-              if (!requireNamespace (lib)) biocLite (lib));            
+            sapply (c ("topGO", "org.Hs.eg.db", "org.Mm.eg.db",
+                       "limma", "DESeq", "edgeR", "ReactomePA"), function (lib)
+              if (!requireNamespace (lib)) biocLite (lib));
           </onInitialize>
           <configure>
             <workdir>${mev.java.io.tmpdir}/Rserve</workdir>
