@@ -229,8 +229,32 @@ public class RDispatcher {
             }
           }
         }
-    } catch (RserveException | InvocationTargetException | IllegalArgumentException | REXPMismatchException | IOException e) {
+    }catch(InvocationTargetException e){
       log.error ("Failure processing job " + job, e);
+    }catch (RserveException | IllegalArgumentException | REXPMismatchException | IOException e) {
+      log.error ("Failure processing job " + job, e);
+      for (Class<?> clazz = job.getClass (); clazz != null; clazz = clazz.getSuperclass ()){
+        for (Field field : clazz.getDeclaredFields ()) {
+          Error annotation = field.getAnnotation (Error.class);
+          if (annotation != null) {
+            field.setAccessible (true);
+            field.set (job, e.toString ());
+          }
+        }
+        for (Method method : clazz.getDeclaredMethods ()) {
+          Callback annotation = method.getAnnotation (Callback.class);
+          if (annotation != null) {
+            if (annotation.value () != CallbackType.SUCCESS) {
+              method.setAccessible (true);
+              try{                
+                method.invoke (job);
+              }catch(InvocationTargetException invokeError){
+                log.error ("Failure reporting the error to caller " + job, invokeError);
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

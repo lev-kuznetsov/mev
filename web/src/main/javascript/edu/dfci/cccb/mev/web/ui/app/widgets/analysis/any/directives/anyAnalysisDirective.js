@@ -66,9 +66,9 @@ define(["ng", "lodash"], function(ng, _){
 					}
 					
 					var templateUrl="app/views/dataset/analysis/default/view.analysis.default.tpl.html";						
-					if($scope.DatasetAnalysisVM.analysis){
+					if($scope.DatasetAnalysisVM.analysis){						
 						var analysis = $scope.DatasetAnalysisVM.analysis;
-						if(analysis.status && analysis.status === "IN_PROGRESS"){
+						if(analysis.status && (analysis.status === "IN_PROGRESS" || analysis.status === "ERROR")){
 							//analysis is not ready - keep the default template
 						}else{
 							var analysisType = AnalysisTypes[$scope.DatasetAnalysisVM.analysis.type];
@@ -94,6 +94,16 @@ define(["ng", "lodash"], function(ng, _){
 						}
 					}
 				});
+
+				AnalysisEventBus.onAnalysisFailure($scope, function(type, name, data){
+					if($scope.anyAnalysisLaunch){
+						var analysis = data.response;
+						if(analysis.name===$scope.anyAnalysisLaunch.analysisName){							
+							$scope.DatasetAnalysisVM.analysis = analysis;
+							var analysisType = AnalysisTypes[$scope.DatasetAnalysisVM.analysis.type];							
+						}
+					}
+				});
 				
 				AnalysisEventBus.onAnalysisLoadedAll($scope, function(){
 					
@@ -113,11 +123,13 @@ define(["ng", "lodash"], function(ng, _){
 		        });
 				
 				if($scope.DatasetAnalysisVM.analysis || $scope.anyViewModel){					
-					if($injector.has(ctrlName)){					
-						var ctrl = $injector.get(ctrlName); 
-						console.debug("any controller", ctrlName, ctrl, $scope.$id);
-						$injector.invoke(ctrl, $scope.DatasetAnalysisVM, {$scope: $scope, project: project, analysis: analysis});
-//					ctrl.call(this, $scope, project, analysis);	
+					if($scope.DatasetAnalysisVM.analysis.status==="SUCCESS"){
+						if($injector.has(ctrlName)){					
+							var ctrl = $injector.get(ctrlName); 
+							console.debug("any controller", ctrlName, ctrl, $scope.$id);
+							$injector.invoke(ctrl, $scope.DatasetAnalysisVM, {$scope: $scope, project: project, analysis: analysis});
+	//					ctrl.call(this, $scope, project, analysis);	
+						}
 					}
 				}
 				

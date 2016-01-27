@@ -1,7 +1,7 @@
 <span>{{node.nodeData.name}} </span>
 <span class="btn-group btn-group-sm pull-right">	
 	<div class="btn-group " dropdown >			
-		<a ng-if="AnalysisNodeVM.isDashboardState() && node.nodeData.status!=='IN_PROGRESS'" ng-click="AnalysisNodeVM.onClick($event)" title="add to dashboard">
+		<a ng-if="AnalysisNodeVM.isDashboardState() && node.nodeData.status==='SUCCESS'" ng-click="AnalysisNodeVM.onClick($event)" title="add to dashboard">
 			<span class="btn dropdown-toggle fa fa-arrow-circle-o-right"></span>	    
 		</a>
 		<a ng-if="node.nodeData.status==='IN_PROGRESS'" >

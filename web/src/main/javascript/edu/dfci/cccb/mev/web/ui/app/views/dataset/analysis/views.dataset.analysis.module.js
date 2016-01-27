@@ -38,15 +38,15 @@ define(["ng", "lodash",
 			url: "analysis/{analysisType}/{analysisId}/",			
 			parent: "root.dataset",	
 			displayName: "{{analysis.name}} analysis",
-			templateProvider: ["$stateParams", "$http", function($stateParams, $http){
-				console.debug("root.dataset.analysis templateProvider ", $stateParams.analysisType);
+			templateProvider: ["$stateParams", "$http", "analysis", function($stateParams, $http, analysis){
+				console.debug("root.dataset.analysis templateProvider ", $stateParams.analysisType, analysis);
 				var templateUrl="app/views/dataset/analysis/default/view.analysis.default.tpl.html";
 				
-				
-				var analysisType = AnalysisTypes[$stateParams.analysisType];
-				
-				if(analysisType && analysisType.shortName){
-					templateUrl=templateUrl.replace("default", analysisType.shortName).replace("default", analysisType.shortName);
+				if(analysis.status!=="ERROR"){
+					var analysisType = AnalysisTypes[$stateParams.analysisType];				
+					if(analysisType && analysisType.shortName){
+						templateUrl=templateUrl.replace("default", analysisType.shortName).replace("default", analysisType.shortName);
+					}
 				}
 				console.debug("analysis templateUrl:", templateUrl);
    	     		return $http.get(templateUrl).then(function(response){
@@ -54,10 +54,14 @@ define(["ng", "lodash",
    	     			return response.data;
    	     		});
 			}],
-			controllerProvider: ["$state", "$stateParams", function($state, $stateParams){
+			controllerProvider: ["$state", "$stateParams", "analysis", function($state, $stateParams, analysis){
 				console.debug("DatasetAnalysisVM", $state, $state.is("root.dataset.analysis"), AnalysisTypes[$stateParams.analysisType]);		
 				
-				return AnalysisTypes[$stateParams.analysisType].viewModel;
+				if(analysis.status!=="ERROR"){
+					return AnalysisTypes[$stateParams.analysisType].viewModel;
+				}else{
+					return "AnalysisDefaultVM";
+				}
 //				if($state.is("root.dataset.analysis")){
 //					$state.go(".result", {resultId: analysis.result[0].name});
 				
@@ -100,7 +104,9 @@ define(["ng", "lodash",
 	module.config(["resultsTableDefaultsProvider", function(resultsTableDefaultsProvider){
 		resultsTableDefaultsProvider.setOrdering("pValue");
 	}]);
-	
+	module.controller("AnalysisDefaultVM", ["$scope", "analysis", function($scope, analysis){
+		this.analysis=analysis;
+	}]);
 	module.directive("mevAnalysis", ["$compile", function($compile){
 		return {
 			restrict: "AE",

@@ -117,17 +117,20 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     	    								poll(newResponse, 5000);
     	                        		});    							
     	    					}, wait);			
-    						}else{    							
-    							var analysis = new AnalysisClass(prevResponse);
-//    	                		var sessionStorageKey = self.datasetName+"."+name;
-//    	    					console.debug("sessionStorageKey get", sessionStorageKey);
-//    	                		params = JSON.parse(sessionStorage.getItem(self.datasetName+"."+name));
+    						}else{
+    							var analysis = new AnalysisClass(prevResponse);                            
     							if(analysis.params)    								
     								angular.extend(analysis.params, allParams);
     							else
     								analysis.params = allParams;
-    	                		console.debug("PollAnalysis result", analysis.name, analysis);                        		
-    	                		analysisEventBus.analysisSucceeded(params, data, analysis);
+                                if(prevResponse.status === "ERROR"){                                    
+    	                		    console.error("PollAnalysis error", analysis.name, analysis);                        		
+                                    analysisEventBus.analysisFailed(params, data, analysis);    
+                                }else{
+                                    console.log("PollAnalysis result", analysis.name, analysis);                               
+                                    analysisEventBus.analysisSucceeded(params, data, analysis);    
+                                }
+    	                		
     						}
     	        		};
     					

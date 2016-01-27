@@ -77,8 +77,19 @@ define(["ng", "lodash"], function(ng, _){
 				$scope.$broadcast("ui:projectTree:dataChanged");
 //			});			
         });
+        AnalysisEventBus.onAnalysisFailure($scope, function(type, name, data){
+				var analysis = data.response;
+				var found = _.findIndex(dataset.analyses, function(analysis){ return analysis.name===name; });
+				if(found > -1){
+					dataset.analyses[found] = analysis;					
+				}else {					
+					dataset.analyses.push(analysis);
+				}
+				$scope.$broadcast("ui:projectTree:dataChanged");
+//			});			
+        });
 		AnalysisEventBus.onAnalysisLoadedAll($scope, function(){
-			console.debug("DatasetProjectViewVM onAnalysisLoadedAll");
+			console.debug("DatasetProjectViewVM onAnalysisLoadedAll");	
 			$scope.$broadcast("ui:projectTree:dataChanged");			
 		});
 		
