@@ -1,0 +1,9 @@
+<div class="form-group">
+   <label class="mev-param-label" mev-param="param"></label>
+   <select ng-if="!isOptionsArray" id="param-{{param.id}}" ng-options="(param.bound ? option[param.bound] : option)  as option[param.display] for option in param.options()" ng-model="param.value">   	 
+   	<option ng-if="!param.required" selected></option>
+   </select>
+   <select ng-if="isOptionsArray" id="param-{{param.id}}" ng-options="option for option in param.options()" ng-model="param.value">
+   	 <option value=""></option>
+   </select>
+</div>

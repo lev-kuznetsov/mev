@@ -1,0 +1,37 @@
+{
+  "name": "mev-analysis",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/mevAnalysis.module.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "devDependencies": {
+    "angular-mocks": "^1.4.9",
+    "bootstrap": "^3.3.6",
+    "mev-mock": "file:../mock",
+    "mevStealBootstrap": "file:../../utils/steal-bootstrap",
+    "steal": "^0.13.2",
+    "steal-jasmine": "0.0.2",
+    "steal-test-bootstrap": "file:../../utils/steal-test-bootstrap"
+  },
+  "dependencies": {
+    "angular-resource": "^1.5.0",
+    "lodash": "^4.0.1",
+    "mev-bs-modal": "file:../../widgets/bsmodal",
+    "mev-domain-common": "file:../common",
+    "mui": "file:../../mui",
+    "system-text": "^0.1.0"
+  },
+  "system": {
+    "ext": {
+      "html": "system-text"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+<ng-form id="filterForm" name="filterForm">
+	<table>	
+		<thead>		
+		   	<tr>	   	
+			<th ng-repeat="header in headers">
+				<p ng-click="reorderTable(header)">{{header.name}}</p>
+			      
+				<div class="input-group" ng-hide="header.icon == 'none'">
+					<span class="input-group-addon" ng-show="header.icon === 'search'">
+					    <span class="glyphicon glyphicon-search"></span>
+					</span>
+					<span class="input-group-addon" ng-hide="header.icon==='search' || (header.icon | mevIsArray)">{{header.icon}}</span>				
+					<span class="input-group-addon" ng-show="header.icon | mevIsArray">
+						<select ng-model="filters[header.field].op">
+							<option ng-repeat="icon in header.icon track by $index">{{icon}}</option>
+						</select>
+					</span>
+					<input class="form-control input-small" ng-keypress="vm.applyFilter($event)"
+					type="{{(header.min || header.max) ? 'number' : 'text'}}" min="{{header.min.toString()}}" max="{{header.max.toString()}}" step="{{header.step.toString()}}" 
+					ng-model="filters[header.field].value"></input>
+				</div>
+			</th>		
+			</tr>		
+		</thead>
+		<tbody>
+			<tr dir-paginate="row in vm.filteredResults | itemsPerPage: 20 as renderedData track by $index ">
+				<td ng-repeat="header in headers">					
+					<a ng-if="header.link" href="{{header.link(row[header.field])}}" target="new">{{row[header.field]}}</a>
+					<span ng-if="!header.link" href="header.link(row[header.field])" target="new">{{row[header.field] | textOrNumber:5 }}</span>					
+				</td>
+			</tr>
+		</tbody>
+		<tfoot >
+			<tr>
+				<td colspan="{{headers.length}}">				
+					<dir-pagination-controls></dir-pagination-controls>
+				</td>
+			</tr>		
+		</tfoot>
+	</table>
+</ng-form>

@@ -1,0 +1,74 @@
+@padding-base-h: unit(extract(@padding-base-horizontal, 1));
+@padding-base-h-unit: get-unit(extract(@padding-base-horizontal, 1));
+@padding-base-v: unit(extract(@padding-base-vertical, 1));
+@padding-base-v-unit: get-unit(extract(@padding-base-vertical, 1));
+
+@zindex-mainmenu: @zindex-modal - 10;
+@zindex-mainmenu-fixed: @zindex-mainmenu;
+
+@zindex-sidemenu: @zindex-mainmenu - 10;
+@zindex-sidemenu-container: @zindex-sidemenu;
+
+@zindex-mainfooter: @zindex-sidemenu - 10;  
+
+@nav-link-padding-ver: extract(@nav-link-padding, 1);
+@nav-link-padding-hor: extract(@nav-link-padding, 2);
+
+@project-tree-border-color: @brand-info;
+
+//== Navbar
+@navbar-height: 44px;
+@navbar-padding-vertical: 12px;
+@navbar-padding-horizontal: 15px;
+
+//== Tabs
+@nav-tabs-border-color:                     @brand-success;
+
+@nav-tabs-link-hover-border-color:          @gray-lighter;
+
+@nav-tabs-active-link-hover-bg:             @body-bg;
+@nav-tabs-active-link-hover-color:          @brand-primary;
+@nav-tabs-active-link-hover-border-color:   @gray-lighter;
+
+//use this variable to override the default bootstrap font path
+//or put the fonts into the /ui/fonts folder
+//@icon-font-path: "@{vendorUrl}/bootstrap-3.3.1/fonts/";
+
+//== Pagination
+//
+//##
+
+@pagination-color:                     @brand-info;
+@pagination-bg:                        @body-bg;
+@pagination-border:                    transparent;
+
+@pagination-hover-color:               @pagination-color;
+@pagination-hover-bg:                  @pagination-bg;
+@pagination-hover-border:              @pagination-color;
+
+@pagination-active-color:              @brand-info;
+@pagination-active-bg:                 @body-bg;
+@pagination-active-border:             @brand-info;
+
+@pagination-disabled-color:            @brand-info;
+@pagination-disabled-bg:               @body-bg;
+@pagination-disabled-border:           transparent;
+
+
+//== Breadcrumbs
+//
+//##
+
+@breadcrumb-padding-vertical:   0px;
+@breadcrumb-padding-horizontal: 15px;
+//** Breadcrumb background color
+@breadcrumb-bg:                 transparent;
+//** Breadcrumb text color
+@breadcrumb-color:              white;
+//** Text color of current page in the breadcrumb
+@breadcrumb-active-color:       white;
+//** Textual separator for between breadcrumb elements
+//@breadcrumb-separator:          "\276D\00a0";
+@breadcrumb-separator:          "\232A\00a0";
+//@breadcrumb-separator:          "\203A\00a0";
+

@@ -1,0 +1,11 @@
+<html>
+<head>
+	<script src="../node_modules/mev-steal-bootstrap/src/mev-steal-bootstrap.js"></script>
+	<script>
+		live("../package.json!npm", "demo/index");
+	</script>
+</head>
+<body ng-controller="demoCtrl">	
+	<mev-results-table data="analysis.results" headers="headers" ordering="pValue" on-filter="viewGenes(filteredResults)"></mev-results-table>
+</body>
+</html>

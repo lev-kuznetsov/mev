@@ -10,25 +10,25 @@ define(["ng",
         "./rowSets/views.dataset.rowSets.module",
         "./selectionSets/views.dataset.selectionSets.module",
         "./analysis/views.dataset.analysis.module",
-        "./analyses/views.dataset.analyses.module"], 
+        "./analyses/views.dataset.analyses.module",
+        "mev-analysis",
+        "mev-bs-modal",
+        "mevPathwayEnrichment"], 
 function(ng,
 		PouchDB,
 		DatasetViewVM, 
 		DatasetProjectViewVM,
 		DatasetHomeVM,
 		DatasetHeatmapVMFactory,
-		AnnotationsViewVM){	
-	var module=ng.module("mui.views.dataset", ["mui.views.dataset.columnSets", 
-	                                           "mui.views.dataset.rowSets",
-	                                           "mui.views.dataset.SelectionSets",
-	                                           "mui.views.dataset.analysis",
-	                                           "mui.views.dataset.analyses"]);
+		AnnotationsViewVM
+		){	
+	var module=ng.module("mui.views.dataset", arguments, arguments);
 	
 	module.controller("DatasetViewVM", DatasetViewVM);	
 	module.controller("DatasetProjectViewVM", DatasetProjectViewVM);
 	module.controller("DatasetHomeVM", DatasetHomeVM);	
 	module.factory("DatasetHeatmapVMFactory", DatasetHeatmapVMFactory);	
-	module.controller("AnnotationsViewVM", AnnotationsViewVM);
+	module.controller("AnnotationsViewVM", AnnotationsViewVM);	
 	module.config(['$stateProvider', '$urlRouterProvider',
 	   	     	function($stateProvider, $urlRouterProvider){					
 	   	     		$stateProvider	  
@@ -69,8 +69,7 @@ function(ng,
 	//	   	     					downloadFailure();
 		   	     					console.debug("**** Failed to Load Dataset", $stateParams.datasetId, error);
 		   	     				});	   	     					
-		   	     				return datasetResource.$promise;
-		   	     					   	     							   	     				;	   	     					
+		   	     				return datasetResource.$promise;		   	     				
 	   	     				}],
 	   	     				project: ["$state", "$stateParams", "datasetResource", "ProjectFactory",
 	   	     				function($state, $stateParams, datasetResource, ProjectFactory){
