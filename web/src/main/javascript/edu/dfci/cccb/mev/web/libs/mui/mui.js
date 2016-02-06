@@ -8,9 +8,11 @@ define(["angular", "lodash"], function(ng, _){
 				directive: "directive",
 				provider: "provider",
 				controller: "controller",
+				filter: "filter",
 				value: "value",
 				constant: "constant",
-				animation: "animation"
+				animation: "animation",
+				config: "config"
 		};
 		
 		function MevError(msg){
@@ -20,12 +22,13 @@ define(["angular", "lodash"], function(ng, _){
 		_self.inferProvider = function inferProvider(func){
 			if(typeof func !== "function")
 				throw new MevError("Compnent with name '"+func.name+"' is not a function, but is "+typeof func);
-			
-			if(!func.$name)
-				throw new MevError("Compnent name not specified for func "+func.name);
-			
+						
 			var provider = func.provider || func.$provider;
 			func.provider = provider;
+
+			if(provider!=="config" && !func.$name)
+				throw new MevError("Compnent name not specified for func "+func.name);			
+
 			if(provider){
 				if(!_self.providerMap[provider.toLowerCase()]){
 					throw new MevError("Invalid angular provider '"+provider+"'");
@@ -86,9 +89,14 @@ define(["angular", "lodash"], function(ng, _){
 		
 		_self.register = function(func){
 			var provider = _self.inferProvider(func);
-			
-			var name = _self.formatComponentName(func);
-			return this[provider](name, func);
+						
+			if(provider==="config")
+				return this[provider](func);
+			else{
+				var name = _self.formatComponentName(func);
+				return this[provider](name, func);
+			}
+
 		};
 		
 		_self.registerAll = function(components){
