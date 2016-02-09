@@ -10,7 +10,9 @@
                 filters : "=?filters",
                 ordering : "@",
                 filterCallback : "&onFilter",
-                onPaged : "&"
+                onPaged : "&",
+                onRowSelected: "&",
+                selectedRows: "="
             },
             template : template,
             link : function(scope, elem, attrs) {
@@ -105,6 +107,15 @@
                     })
                     notifyResultChange();
                 };
+                scope.selectedRows={};
+                scope.selectRow=function(field, row, callback){
+                    var value = row[field];
+                    if(row.isChecked)
+                        scope.selectedRows[value] = row;
+                    else
+                        delete scope.selectedRows[value];
+                    callback(value, row, row.isChecked);
+                }
             }   
         };
 

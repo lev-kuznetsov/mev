@@ -15,6 +15,7 @@ define(["mui", "mev-bs-modal", "angular-resource",
 	"./type/view/startForm/AnalysisStartFormDirective",
 	"./type/view/modal/AnalysisStartModalDirective",
 	"./type/view/modal/AnalysisStartButtonDirective",
+	"./type/view/route/AnalysisTypeState",
 	"./endpoint/rest/AnalysisRest",
 	"./events/AnalysisEventBus",
 	], function(ng){

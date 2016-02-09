@@ -24,9 +24,11 @@
 		</thead>
 		<tbody>
 			<tr dir-paginate="row in vm.filteredResults | itemsPerPage: 20 as renderedData track by $index ">
-				<td ng-repeat="header in headers">					
+				<td ng-repeat="header in headers" ng-class="{'text-nowrap': header.nowrap}">					
 					<a ng-if="header.link" href="{{header.link(row[header.field])}}" target="new">{{row[header.field]}}</a>
-					<span ng-if="!header.link" href="header.link(row[header.field])" target="new">{{row[header.field] | textOrNumber:5 }}</span>					
+					<a ng-if="header.click" href="#" ng-click="header.click(row[header.field], row)">{{row[header.field]}}</a>
+					<input type="checkbox" ng-if="header.check" ng-model="row.isChecked" ng-change="selectRow(header.field, row, header.check)">	
+					<span ng-if="!header.link && !header.click" >{{row[header.field] | textOrNumber:5 }}</span>					
 				</td>
 			</tr>
 		</tbody>

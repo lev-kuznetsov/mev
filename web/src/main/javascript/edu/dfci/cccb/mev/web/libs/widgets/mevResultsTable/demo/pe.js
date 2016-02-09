@@ -3,7 +3,7 @@ define(["mui",
 	"../data/mouse_test_data_limma.json",
 	"../data/mouse_test_data_pe.json",
 	"bootstrap/dist/css/bootstrap.min.css",
-	"mev-results-table"], function(ng, limmaJson, peJson){
+	"mev-results-table"], function(ng, limmaJson){
 	var demo = ng.module("demo", arguments, arguments)
 	.controller("demoCtrl", ["$scope", function(scope){
 
@@ -40,7 +40,6 @@ define(["mui",
 	    	// scope.applyToHeatmap(filteredResults);
 	   };
        scope.analysis = limmaJson;
-       scope.pe = peJson;
 
 	}]);
 

@@ -2,12 +2,13 @@
 define(["mui", "mevPathwayEnrichment",
 	"../data/mouse_test_data_pe.json", 
 	"../data/mouse_test_data_limma.json", 
+	"mev-dataset/src/main/dataset/lib/AnalysisClass",
 	"mev-bs-modal",
 	"mev-results-table",	
-	"mev-mock",
+	"mev-mock",	
 	"bootstrap", "bootstrap/dist/css/bootstrap.min.css"
 	], 
-	function(ng, mevPathwayEnrichment, peJson, limmaJson){
+	function(ng, mevPathwayEnrichment, peJson, limmaJson, AnalysisClass){
 	var demo = ng.module("demo", arguments, arguments)
 	.controller("demoCtrl", ["$scope", "mevPathwayEnrichmentAnalysisType", function(scope, PathwayEnrichmentAnalysisType){
 		scope.PathwayEnrichmentAnalysisType = PathwayEnrichmentAnalysisType;
@@ -16,7 +17,8 @@ define(["mui", "mevPathwayEnrichment",
 	       {
 	           'name': 'Description',
 	           'field': "Description",
-	           'icon': "search"
+	           'icon': "search",
+	           'nowrap': true,
 	       },{
 	           'name': 'P-Value',
 	           'field': "pvalue",
@@ -46,9 +48,11 @@ define(["mui", "mevPathwayEnrichment",
 	    	// scope.applyToHeatmap(filteredResults);
 	   };
        scope.analysis = peJson;
-
-	}]).run(["$state", function($state){
-		$state.go("mock");
+	}])
+	.run(["$state", "mevMockProject", function($state, mevMockProject){
+		mevMockProject.dataset.analyses.push(new AnalysisClass(peJson));
+		$state.go("root.dataset.analysisType.pe", {datasetId: mevMockProject.dataset.id, analysisId: peJson.name});
+		// $state.go("mock");
 	}])
 	// .service("mevSelectionLocator", function(){
 	

@@ -10,6 +10,9 @@
 		<div class="mev-analysis-start-form" mev-analysis-type="PathwayEnrichmentAnalysisType"></div>		
 	</mev-bs-modal>
 	<a mev-bs-modal-trigger="#pathwayEnrichmentModal">pathway enrichment</a>
-	<mev-results-table data="analysis.result" headers="headers" ordering="pValue" on-filter="viewGenes(filteredResults)"></mev-results-table>
+	<div ui-view>
+		Loading ...
+	</div>	
+	<!-- <mev-results-table data="analysis.result" headers="headers" ordering="pValue" on-filter="viewGenes(filteredResults)"></mev-results-table> -->
 </body>
 </html>

@@ -1,7 +1,8 @@
+"use strict";
 define(["ng", "lodash"], function(ng, _){
 	var DatasetProjectViewVM=function DatasetViewVM($scope, $stateParams, $state, dataset, project, AnalysisEventBus, AnalysisTypes, mevAnalysisTypes,
 		mevPathwayEnrichmentAnalysisType){
-		that=this;
+		var that=this;
 		console.debug("DatasetProjectViewVM", dataset, project);
 		this.project=project;		
 		
@@ -40,16 +41,21 @@ define(["ng", "lodash"], function(ng, _){
 		}
 		
 		$scope.$on("ui:projectTree:nodeSelected", function($event, node){
-			that.node=node;			
+			// that.node=node;			
 			
-			var params = node.nodeConfig.state.getParams(node);
-			if(node.nodeParent && node.nodeParent.nodeConfig){
-				ng.extend(params, node.nodeParent.nodeConfig.state.getParams(node.nodeParent));
-			}
+			// var params = node.nodeConfig.state.getParams(node);
+			// if(node.nodeParent && node.nodeParent.nodeConfig){
+			// 	ng.extend(params, node.nodeParent.nodeConfig.state.getParams(node.nodeParent));
+			// }
 			
-			var targetState = "root"+node.nodeConfig.state.name;
-			console.debug("ui:projectTree:nodeSelected $on", $event, node, $state, params, targetState);			
-			$state.go(targetState, params);
+			// var targetState = "root"+node.nodeConfig.state.name;
+			// console.debug("ui:projectTree:nodeSelected $on", $event, node, $state, params, targetState);			
+			// $state.go(targetState, params);
+			if(node.nodeData.params && mevAnalysisTypes.all()[node.nodeData.params.analysisType])
+				$state.go("root.dataset.analysisType"+"."+node.nodeData.params.analysisType, 
+					{datasetId: node.nodeData.params.datasetName, analysisId: node.nodeData.name});
+			else
+				node.activate();
 		});
 		
 		AnalysisEventBus.onAnalysisStarted($scope, function(type, name, data){
