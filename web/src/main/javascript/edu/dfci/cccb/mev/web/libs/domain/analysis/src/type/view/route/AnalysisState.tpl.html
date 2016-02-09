@@ -1,0 +1,6 @@
+<div ng-if="!DatasetAnalysisVM.analysis">Loading ...</div>
+<div ng-if="DatasetAnalysisVM.analysis && DatasetAnalysisVM.analysis.status==='ERROR'">Problem while running analysis: {{DatasetAnalysisVM.analysis.name}}
+	<div>Parameters: <span class="mev-error-message">{{DatasetAnalysisVM.analysis.params}}</span></div>
+	<div>Error: <span class="mev-error-message">{{DatasetAnalysisVM.analysis.error}}</span></div>
+</div>
+
