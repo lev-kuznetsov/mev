@@ -6,6 +6,6 @@
     	<select ng-model="vm.curResult" ng-change="vm.showResult()">
     		<option ng-repeat="(key, value) in vm.results">{{key}}</option>
     	</select><br><br>
-        <div mev-pca-analysis="analysis.result" mev-selections="analysis.dataset.column.selections"></div>
+        <div mev-pca-analysis="analysis.result" mev-selections="analysis.dataset.column.selections" cur-selection="vm.curSelection"></div>
     </body>    
 </html>

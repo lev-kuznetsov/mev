@@ -23,12 +23,12 @@
     ]
   },
   "dependencies": {
-    "jquery": "~2.1.4",
-    "angular-nvd3": "~1.0.5",
-    "nvd3": "apartensky/nvd3#1.8.1+master",
-    "lodash": "2.4.x",
     "angular": "1.4.8",
+    "angular-nvd3": "~1.0.5",
+    "crossfilter": "^1.3.12",
+    "jquery": "~2.1.4",
+    "lodash": "2.4.x",
     "mui": "file:../../mui",
-    "crossfilter": "^1.3.12"
+    "nvd3": "apartensky/nvd3#1.8.1+master"
   }
 }

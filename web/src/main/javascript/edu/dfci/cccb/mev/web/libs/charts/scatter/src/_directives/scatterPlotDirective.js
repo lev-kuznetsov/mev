@@ -1,5 +1,5 @@
-define(["angular", "d3", "lodash"], function(angular, d3, _){
-	"use strict";
+"use strict";
+define(["angular", "d3", "lodash", "crossfilter"], function(angular, d3, _, crossfilter){	
 	var ScatterPlotDirective = function ScatterPlotDirective(){
 		return {
 			restrict: "EC",
@@ -9,7 +9,8 @@ define(["angular", "d3", "lodash"], function(angular, d3, _){
 				labelY: "=",
 				logScaleX: "=",
 				logScaleY: "=",
-				zoomEnabled: "&"
+				zoomEnabled: "&",
+				useCrossfilter: "@"
 			},
 			controller: "scatterCtrl",
 			template: "<nvd3 options='options' data='data' config='config' api='api'></nvd3>",
@@ -30,7 +31,7 @@ define(["angular", "d3", "lodash"], function(angular, d3, _){
 					getZoomEnabled: function (){
 						return scope.zoomEnabled();
 					}
-				}
+				};
 				var _svg, _brush, _chart;
 				function _addBrush(){
 					if(_svg && _brush)
@@ -43,14 +44,26 @@ define(["angular", "d3", "lodash"], function(angular, d3, _){
 				
 				if(scope.inputData === "random"){					
 					scope.inputData = ctrl.generateData(2,3);					
-				}				
+				}	
+				var xf, xfxDim, xfyDim;			
+				function setData(newData){
+					scope.data = newData;	
+					var values = _.flatten(_.map(scope.data, function(series){
+						return series.values;
+					}));
+					if(scope.useCrossfilter){
+						xf = crossfilter(values);
+						xfxDim = xf.dimension(function(d) { return d.x; });
+	    				xfyDim = xf.dimension(function(d) { return d.y; });	
+					}					
+				}
 
-				scope.data = scope.inputData;
+				
 				scope.options = getOptions();
 				scope.$watch("inputData", function(newVal){										
 					// scope.api.updateWithOptions(getOptions());
 					if(newVal){
-						scope.data = scope.inputData;
+						setData(scope.inputData);
 						console.debug("domain data", scope.inputData);
 						scope.options = getOptions();						
 					}					
@@ -70,7 +83,7 @@ define(["angular", "d3", "lodash"], function(angular, d3, _){
 					}
 				});
 
-				scope.$watch(function(){return scope.zoomEnabled()}, function(newVal, oldVal){					
+				scope.$watch(function(){return scope.zoomEnabled();}, function(newVal, oldVal){					
 					if(typeof newVal !== "undefined" && typeof oldVal !== "undefined"){
 						scope.options = getOptions();
 						scope.api.updateWithOptions(scope.options);
@@ -133,10 +146,10 @@ define(["angular", "d3", "lodash"], function(angular, d3, _){
 			                pointSize: 64,
 			                pointScale: d3.scale.identity(),			                
 			                callback: function(chart){
-			                	console.debug("chart", chart);                	
+			                	// console.debug("chart", chart);                	
 			                	chart.dispatch.on('renderEnd', function(){
 			                		_chart = chart;                    	
-			                        console.log('render complete', arguments, chart);
+			                        // console.log('render complete', arguments, chart);
 			                        
 			                        var svgDom = angular.element("svg");
 			                		console.debug(".nvd3-svg", svgDom.height());
@@ -176,41 +189,45 @@ define(["angular", "d3", "lodash"], function(angular, d3, _){
 			                		function updateSelection(){
 						                			
 			                			var extent = getBrushExtent();
-		//	                			xDim.filterRange(xExtent);
-		//	                			yDim.filterRange(yExtent);
-			                					            			
-				            			var node = _svg.selectAll('.nv-group > path.nv-point');		            			
-				                		console.debug("node", node.size(), node);                    						            			
-										var count = 0;
+			                			
 
-				            			node.classed("selected", function(d){
-		//		            				console.debug("d", d, d.length);
-											console.debug("count", count++, d, d.length);
-				            				if(d.length===2){	            	
-				            					var datum = d[0];
-				            					var x = _chart.x()(datum);
-				            					var y = _chart.y()(datum);
-				            					var select = extent[0][0] <= x && x < extent[1][0] &&				            					
-				            					extent[0][1] <= y && y < extent[1][1];	            					
-				            					if(select){		            						
-				            						console.debug("selected x range", extent[0][0],  x, extent[1][0]);
-				            						console.debug("selected y range", extent[0][1], y, extent[1][1]);
-				            						// console.debug("selected", select);
-				            						selection.push(datum);
-				            					}else{
-													console.debug("not x range", extent[0][0],  x, extent[1][0]);
-				            						console.debug("not  y range", extent[0][1], y, extent[1][1]);
-				            					}
-				            					return select;
-				            				}else{
-												console.debug("bad datum", d, d.length);
-				            					return false;
-				            				}
-				            				
-				            			});
-
+			                			if(scope.useCrossfilter){
+											xfxDim.filterRange(extent.x);
+			                				xfyDim.filterRange(extent.y);
+			                				selection = xfxDim.top(Infinity);	
+										}else{
+											var node = _svg.selectAll('.nv-group > path.nv-point');		            			
+					                		console.debug("node", node.size(), node);                    						            			
+											var count = 0;
+					            			node.classed("selected", function(d){
+			//		            				console.debug("d", d, d.length);
+												console.debug("count", count++, d, d.length);
+					            				if(d.length===2){	            	
+					            					var datum = d[0];
+					            					var x = _chart.x()(datum);
+					            					var y = _chart.y()(datum);
+					            					var select = extent[0][0] <= x && x < extent[1][0] &&				            					
+					            					extent[0][1] <= y && y < extent[1][1];	            					
+					            					if(select){		            						
+					            						// console.debug("selected x range", extent[0][0],  x, extent[1][0]);
+					            						// console.debug("selected y range", extent[0][1], y, extent[1][1]);
+					            						// console.debug("selected", select);
+					            						selection.push(datum);
+					            					}else{
+														// console.debug("not x range", extent[0][0],  x, extent[1][0]);
+					         //    						console.debug("not  y range", extent[0][1], y, extent[1][1]);
+					            					}
+					            					return select;
+					            				}else{
+													console.debug("bad datum", d, d.length);
+					            					return false;
+					            				}
+					            				
+					            			});
+										}
+			                			// selection = xfSelection;			                			
+			                			// console.debug("brushend selection", selection);
 										raiseEventSelectionUpdated(selection);
-			                			console.debug("brushend selection", selection);
 			                		}
 
 			                		function getSelectedData(){
