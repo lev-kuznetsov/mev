@@ -12,7 +12,8 @@ define(["angular", "lodash"], function(ng, _){
 				value: "value",
 				constant: "constant",
 				animation: "animation",
-				config: "config"
+				config: "config",
+				decorator: "decorator"
 		};
 		
 		function MevError(msg){
