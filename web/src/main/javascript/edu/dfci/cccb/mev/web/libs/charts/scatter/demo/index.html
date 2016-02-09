@@ -5,6 +5,6 @@
     <body data-ng-controller="myCtrl">		
     	logX<input ng-model="vm.logScaleX" type="checkbox"/>
     	logY<input ng-model="vm.logScaleY" type="checkbox"/>
-        <div class="mev-scatter-plot" input-data="data" label-x="'x-label'" label-y="'y-label'" log-scale-x="vm.logScaleX" log-scale-y="vm.logScaleY"></mev-scatter-plot>
+        <div class="mev-scatter-plot" zoom-enabled="vm.zoomEnabled" input-data="data" label-x="'x-label'" label-y="'y-label'" log-scale-x="vm.logScaleX" log-scale-y="vm.logScaleY" use-crossfilter="true"></div>
     </body>    	
 </html>

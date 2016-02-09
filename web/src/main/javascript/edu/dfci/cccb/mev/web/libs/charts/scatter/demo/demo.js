@@ -6,7 +6,8 @@ define(["angular", "mev-scatter-plot"], function(ng){
 		$scope.data = "random";
 		$scope.vm={
 			logScaleX: false,
-			logScaleY: false
+			logScaleY: false,
+			zoomEnabled: false
 		};
 	}]);
 
