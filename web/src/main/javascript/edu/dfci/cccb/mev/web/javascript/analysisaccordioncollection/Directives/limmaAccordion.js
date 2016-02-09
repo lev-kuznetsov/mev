@@ -1,10 +1,12 @@
+"use strict";
 (function () {
 
-    define(["lodash", "crossfilter"], function (_, crossfilter) {
+    define(["mui", "lodash", "crossfilter", "mev-scatter-plot"], function (ng, _, crossfilter, mevScatterPlot) {
         return function (module) {
 
             module.directive('limmaAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService', 'BoxPlotService',
-                function (tableFilter, alertService, projection, paths, BoxPlotService) {
+                "$window", "$timeout",
+                function (tableFilter, alertService, projection, paths, BoxPlotService, $window, $timeout) {
                     return {
                         restrict: 'E',
                         templateUrl: paths.module + '/templates/limmaAccordion.tpl.html',
@@ -63,7 +65,7 @@
                                 		[$scope.analysis.params.control, $scope.analysis.params.experiment], 
                                 		$scope.analysis.randomId); 
                             });
-                            
+                            var scope = $scope;
                             $scope.applyToHeatmap = function (filteredResults) {
                                 
                             	var labels = filteredResults.map(projection.ids);
@@ -82,17 +84,107 @@
                                 });
 
                             };
+
+                            function scatterTransformData(analysis, x, y, selections) {
+                                
+                                var selectedSets = _.filter(selections, function(s){return s.checked;});
+                                var groups = {};
+                                var count=0;
+                                _.forEach(analysis.results, function(item){
+                                    if(++count > 1000)
+                                        return false;
+                                    var groupAcc = {names: [], color: "grey"};
+                                    _.map(selectedSets, function(selection){
+                                        if(_.contains(selection.keys, item.id)){                        
+                                            groupAcc.names.push(selection.name);
+                                            groupAcc.color = selection.properties.selectionColor;
+                                        }
+                                    });
+
+                                    var groupName = "none";
+                                    if(groupAcc.names.length===1)
+                                        groupName = groupAcc.names[0];
+                                    else if(groupAcc.names.length>1)
+                                        groupName = groupAcc.names.join("+");
+
+                                    var group = groups[groupName];
+                                    if(!group){
+                                        groups[groupName] = group = {};
+                                        group.name = group.key = groupName;                  
+                                        group.names = groupAcc.names;
+                                        if(group.names.length<2){
+                                            group.color = groupAcc.color;
+                                        }else{
+                                            group.color = '#'+Math.floor(Math.random()*16777215).toString(16);
+                                        }   
+                                        group.shape = 'circle';
+                                        group.values=[];
+                                    }
+                                                
+                                    group.values.push({
+                                        x: item[x],
+                                        y: item[y],
+                                        size: 10,                       
+                                        sample: item.id,
+                                        id: item.id                      
+                                    });
+                                });         
+                                
+                                if(Object.keys(groups).length === 1)
+                                    groups["none"].name = groups["none"].key = "Selection: none";
+
+                                return _.sortBy(groups, function(group){
+                                    return group.name === "none"  ? Infinity : group.names.length;                   
+                                });
+                            }
+
+                            scope.selections = scope.project.dataset.selections.row;
+                            scope.scatterVm = {
+                                xLabel: "logFoldChange",
+                                yLabel: "averageExpression",
+                                logScaleX: false,
+                                logScaleY: false,
+                                dragAction: "select",
+                                isZoomEnabled: function(){
+                                    return scope.scatterVm.dragAction === "zoom";
+                                },
+                                
+                                updateSelection: function(){
+                                    scope.scatterVm.setData(scatterTransformData(scope.analysis, scope.scatterVm.xLabel, scope.scatterVm.yLabel, scope.selections));         
+                                },
+                                setData: function(data){
+                                    scope.scatterVm.data = data;                       
+                                    scope.scatterVm.selection = undefined;
+                                },
+                                updateScale: function(){
+                                    scope.scatterVm.setData(); 
+                                }
+                            };
+                            scope.$watch("analysis", function(newVal){
+                                scope.scatterVm.setData(scatterTransformData(newVal, scope.scatterVm.xLabel, scope.scatterVm.yLabel, scope.selections));    
+                            });
                         }],
                         link: function (scope) {
                             
-                        	
+                            
+                            ng.element('#scatterPlotTab').click(function (e) {
+                                $timeout(function() {
+                                    var evt = $window.document.createEvent('UIEvents'); 
+                                    evt.initUIEvent('resize', true, false, $window, 0); 
+                                    $window.dispatchEvent(evt);
+                                });
+                                    // e.preventDefault()
+                                    // ng.element(this).tab('show')                                                                    
+                                    // ng.element(window).trigger('resize'); // Added this line to force NVD3 to redraw the chart
+                                    // scope.$apply();
+                            })                 
                             
                             scope.filteredResults = undefined;
                             
                             scope.selectionParams = {
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16)
-                            }
+                            };
 // 
                             scope.viewGenes = function (filteredResults) {
                             	
@@ -119,7 +211,7 @@
 
                                     }, selectionData,
                                     function (response) {
-                                        scope.project.dataset.resetSelections('row')
+                                        scope.project.dataset.resetSelections('row');
                                         var message = "Added " + scope.selectionParams.name + " as new Selection!";
                                         var header = "Heatmap Selection Addition";
 
@@ -133,7 +225,7 @@
                                         alertService.error(message, header);
                                     });
 
-                            }
+                            };
 
                             scope.exportParams = {
                                 name: undefined,
@@ -179,9 +271,9 @@
 
                     };
                     
-            }])
+            }]);
 
-        }
-    })
+        };
+    });
 
-})()
+})();

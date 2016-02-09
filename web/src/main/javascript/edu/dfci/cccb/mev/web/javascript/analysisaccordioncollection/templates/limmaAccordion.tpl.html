@@ -9,6 +9,11 @@
 			data-toggle="tab" 
 			target="_self">Heatmap</a>
 	</li>
+	<li>
+		<a id="scatterPlotTab" href="{{'#limma-' + analysis.randomId + '-scatterPlot'}}" 
+			data-toggle="tab" 
+			target="_self">Scatter Plot</a>
+	</li>
 	<div class="action-menu" mui-paste="action-menu"></div>
 </ul>
 
@@ -54,6 +59,14 @@
 		<div id="{{'limma-' + analysis.randomId + '-svg-holder'}}">
 
 			<view-Content-Item project='project' view='project.views'></view-Content-Item>
+
+		</div>
+	</div>
+	<div class="tab-pane" id="{{'limma-' + analysis.randomId + '-scatterPlot'}}">
+		<div id="{{'limma-' + analysis.randomId + '-scatter-holder'}}" style="width: 100%" >
+
+			<div style="width: 100%" class="mev-scatter-plot" input-data="scatterVm.data" label-x="scatterVm.xLabel" label-y="scatterVm.yLabel" selections="scatterVm.selections"
+					log-scale-x="scatterVm.logScaleX" log-scale-y="scatterVm.logScaleY" zoom-enabled="scatterVm.isZoomEnabled()"></div>
 
 		</div>
 	</div>

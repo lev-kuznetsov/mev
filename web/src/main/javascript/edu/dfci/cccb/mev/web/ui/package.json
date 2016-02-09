@@ -32,6 +32,7 @@
     "mev-pca": "file:../libs/domain/pca",
     "mev-project": "file:../libs/domain/project",
     "mev-results-table": "file:../libs/widgets/mevResultsTable",
+    "mev-scatter-plot": "file:../libs/charts/scatter",
     "mevPathwayEnrichment": "file:../libs/domain/pathwayEnrichment",
     "mui": "file:../libs/mui",
     "ng-grid": "apartensky/ui-grid#2.0.14+npmfix",
