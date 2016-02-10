@@ -3,8 +3,18 @@
 		<script src="../node_modules/steal/steal.js" main="demo/index" ></script>
 	</head>
     <body data-ng-controller="myCtrl">		
-    	logX<input ng-model="vm.logScaleX" type="checkbox"/>
-    	logY<input ng-model="vm.logScaleY" type="checkbox"/>
-        <div class="mev-scatter-plot" zoom-enabled="vm.zoomEnabled" input-data="data" label-x="'x-label'" label-y="'y-label'" log-scale-x="vm.logScaleX" log-scale-y="vm.logScaleY" use-crossfilter="true"></div>
+    	<!-- logX<input ng-model="vm.logScaleX" type="checkbox"/>
+    	logY<input ng-model="vm.logScaleY" type="checkbox"/> -->
+        <div class="mev-scatter-plot" drag-action="'select'" 
+        	mev-input="vm.limma.results" 
+        	mev-x-field="logFoldChange" 
+        	mev-y-field="averageExpression"         	
+        	label-x="'x-label'" 
+        	label-y="'y-label'" 
+        	log-scale-x="vm.logScaleX" 
+        	log-scale-y="vm.logScaleY" 
+        	use-crossfilter="false" 
+        	mev-selections="vm.dataset.row.selections" 
+        	mev-id-field="id" ></div>
     </body>    	
 </html>

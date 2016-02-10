@@ -18,6 +18,7 @@
                             isShowHeatmapTab: "@"
                         },                        
                         controller: ["$scope", function($scope){
+                            $scope.fields = ["logFoldChange", "averageExpression"];
 	                    	$scope.headers = [
 								//this row just shows the row index, doesn't use any data from the row
 	//              								{

@@ -1,7 +1,7 @@
 "use strict";
-define(["steal-jasmine", 
-	"mev-scatter-plot", 
-	"crossfilter"], function(jsamineRequire, mevScatterPlot, crossfilter){
+define(["steal-jasmine", "mev-scatter-plot", "crossfilter", 
+	"./services/adaptors/TestNvd3DataAdaptor.spec"], 
+function(jsamineRequire, mevScatterPlot, crossfilter){
 
 	function generateData(groups, points) {
 		var data = [],
@@ -31,7 +31,7 @@ define(["steal-jasmine",
 	};
 
 
-	describe("Mev Scatter Plot tests", function(){
+	describe("Mev Scatter Plot tests - playing with lodash", function(){
 		it("ensure mevScatterPlot is an AngularJS module", function(){
 			console.debug("mevScatterPlot", mevScatterPlot);
 			expect(true).toBe(true);
@@ -44,6 +44,34 @@ define(["steal-jasmine",
 			}));
 			console.log("values", values);
 			expect(true).toBe(true);
+		});		
+
+
+		it("find out how forEach works with array", function(){
+			var arr = [{x: 1, y: 1}, {x: 2, y: 2}, {x: 3, y: 3}];
+			var count=0;
+			var arrMap = [];
+			_.forEach(arr, function(item, index){											
+				console.log("count", count);				
+				if(count++>1) return false;
+				arrMap.push(item.x)
+			})
+			console.log("arrMap", arrMap);	
+			expect(arrMap.length).toBe(2);
+			expect(arrMap).toEqual([1, 2]);
+		});		
+		it("find out how forEach works with object", function(){
+			var arr = {a: {x: 1, y: 1}, b: {x: 2, y: 2}, c: {x: 3, y: 3}};
+			var count=0;
+			var arrMap = [];
+			_.forEach(arr, function(item, key){											
+				console.log("count", count);				
+				if(count++>1) return false;
+				arrMap.push(key)
+			})
+			console.log("arrMap", arrMap);	
+			expect(arrMap.length).toBe(2);
+			expect(arrMap).toEqual(["a", "b"]);
 		});		
 	});
 });

@@ -87,7 +87,8 @@ define(function(require){
 					},
 					updateScale: function(){
 						scope.vm.setData();	
-					}
+					},
+					fields: ["PC1", "PC2", "PC3"]
 				};
 
 				scope.$watch("pcaAnalysis", function(newVal){

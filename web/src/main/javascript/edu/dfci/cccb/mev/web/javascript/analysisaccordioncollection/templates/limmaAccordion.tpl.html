@@ -65,8 +65,25 @@
 	<div class="tab-pane" id="{{'limma-' + analysis.randomId + '-scatterPlot'}}">
 		<div id="{{'limma-' + analysis.randomId + '-scatter-holder'}}" style="width: 100%" >
 
-			<div style="width: 100%" class="mev-scatter-plot" input-data="scatterVm.data" label-x="scatterVm.xLabel" label-y="scatterVm.yLabel" selections="scatterVm.selections"
-					log-scale-x="scatterVm.logScaleX" log-scale-y="scatterVm.logScaleY" zoom-enabled="scatterVm.isZoomEnabled()"></div>
+			<!-- <div style="width: 100%" 
+			class="mev-scatter-plot" 
+			input-data="scatterVm.data" 
+			label-x="scatterVm.xLabel" 
+			label-y="scatterVm.yLabel" 
+			selections="scatterVm.selections"
+			log-scale-x="scatterVm.logScaleX" 
+			log-scale-y="scatterVm.logScaleY" 
+			zoom-enabled="scatterVm.isZoomEnabled()"></div> -->			
+		    <div class="mev-scatter-plot" drag-action="'select'" 
+	        	mev-input="analysis.results" 
+	        	mev-x-field="logFoldChange" 
+	        	mev-y-field="averageExpression" 
+	        	mev-fields="fields"        	
+	        	log-scale-x="scatterVm.logScaleX" 
+				log-scale-y="scatterVm.logScaleY" 
+	        	mev-selections="project.dataset.row.selections" 
+	        	mev-id-field="id" >
+        	</div>
 
 		</div>
 	</div>

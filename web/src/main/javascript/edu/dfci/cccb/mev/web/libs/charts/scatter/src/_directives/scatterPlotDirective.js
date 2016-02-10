@@ -1,19 +1,23 @@
 "use strict";
-define(["angular", "d3", "lodash", "crossfilter"], function(angular, d3, _, crossfilter){	
-	var ScatterPlotDirective = function ScatterPlotDirective(){
+define(["angular", "d3", "lodash", "crossfilter", "./scatterPlot.tpl.html"], 
+function(angular, d3, _, crossfilter, template){	
+	var ScatterPlotDirective = function ScatterPlotDirective(mevNvd3DataAdaptor){
 		return {
 			restrict: "EC",
 			scope: {
-				inputData: "=",
-				labelX: "=",
-				labelY: "=",
+				input: "=mevInput",
+				selections: "=mevSelections",
+				xField: "@mevXField",
+				yField: "@mevYField",
+				fields: "=mevFields",				
+				idField: "@mevIdField",
 				logScaleX: "=",
 				logScaleY: "=",
-				zoomEnabled: "&",
-				useCrossfilter: "@"
+				dragAction: "=",
+				useCrossfilter: "="
 			},
 			controller: "scatterCtrl",
-			template: "<nvd3 options='options' data='data' config='config' api='api'></nvd3>",
+			template: template,
 			link: function(scope, elm, attrs, ctrl){				
 				var _self = this;
 				scope.api=undefined;
@@ -22,14 +26,48 @@ define(["angular", "d3", "lodash", "crossfilter"], function(angular, d3, _, cros
 					// refreshDataOnly: false
 					// debounce: 100
 				};
-				scope.zoomEnabled = scope.zoomEnabled || true;
+				if(!scope.fields)
+					scope.fields = [];
+				if(!_.contains(scope.fields, scope.xField))
+					scope.fields.push(scope.xField);
+				if(!_.contains(scope.fields, scope.yField))
+					scope.fields.push(scope.yField);
+
+				function getCheckedSelections(){
+					if(!_.isArray(scope.selections))
+						scope.selections = [];				
+					return _.filter(scope.selections, function(s){return s.checked;});
+				}
+				function findField(fixedFieldName){
+					var targetField = fixedFieldName === "xField" ? "yField" : "xField";
+					_.forEach(scope.fields, function(field){
+						if(scope[fixedFieldName] !== field){
+							scope[targetField] = field;
+							return false;
+						}
+					});
+				}
 				scope.vm = {
 					refresh: function(){
 						scope.api.updateWithOptions(getOptions());
 						// scope.api.refrsh();
 					},
-					getZoomEnabled: function (){
-						return scope.zoomEnabled();
+					zoomEnabled: function (){
+						return scope.dragAction === "zoom";
+					},
+					dragAction: "select",
+					updateSelection: function(){
+						updateData();
+					},
+					updateXAxis: function(){				
+						if(scope.xField === scope.yField)
+							findField("xField");
+						updateData();	
+					},
+					updateYAxis: function(){
+						if(scope.yField === scope.xField)
+							findField("yField");
+						updateData();	
 					}
 				};
 				var _svg, _brush, _chart;
@@ -42,16 +80,21 @@ define(["angular", "d3", "lodash", "crossfilter"], function(angular, d3, _, cros
 						.call(_brush);
 				}
 				
-				if(scope.inputData === "random"){					
+				if(scope.input === "random"){					
 					scope.inputData = ctrl.generateData(2,3);					
 				}	
 				var xf, xfxDim, xfyDim;			
-				function setData(newData){
-					scope.data = newData;	
-					var values = _.flatten(_.map(scope.data, function(series){
-						return series.values;
-					}));
+				function updateData(newData, newSelections){
+					if(!newData) newData = scope.input;
+					if(!newSelections) newSelections = getCheckedSelections();
+
+					scope.data = mevNvd3DataAdaptor.transform(newData, scope.xField, scope.yField, scope.idField, newSelections, 1000);	
+					scope.inputData = scope.data;
+
 					if(scope.useCrossfilter){
+						var values = _.flatten(_.map(scope.data, function(series){
+							return series.values;
+						}));
 						xf = crossfilter(values);
 						xfxDim = xf.dimension(function(d) { return d.x; });
 	    				xfyDim = xf.dimension(function(d) { return d.y; });	
@@ -60,10 +103,10 @@ define(["angular", "d3", "lodash", "crossfilter"], function(angular, d3, _, cros
 
 				
 				scope.options = getOptions();
-				scope.$watch("inputData", function(newVal){										
+				scope.$watch("input", function(newVal){										
 					// scope.api.updateWithOptions(getOptions());
 					if(newVal){
-						setData(scope.inputData);
+						updateData(scope.input);
 						console.debug("domain data", scope.inputData);
 						scope.options = getOptions();						
 					}					
@@ -83,7 +126,7 @@ define(["angular", "d3", "lodash", "crossfilter"], function(angular, d3, _, cros
 					}
 				});
 
-				scope.$watch(function(){return scope.zoomEnabled();}, function(newVal, oldVal){					
+				scope.$watch(function(){return scope.vm.zoomEnabled();}, function(newVal, oldVal){					
 					if(typeof newVal !== "undefined" && typeof oldVal !== "undefined"){
 						scope.options = getOptions();
 						scope.api.updateWithOptions(scope.options);
@@ -164,11 +207,16 @@ define(["angular", "d3", "lodash", "crossfilter"], function(angular, d3, _, cros
 			                		
 			                		//add brush (only if graph is in unclickable mode)
 			                		//~ if(!_chart.interactive())
-			                		if(!scope.zoomEnabled())
+			                		if(!scope.vm.zoomEnabled())
 			                			_addBrush();
 			                		
 			                		var selection = [];
 			                		function raiseEventSelectionUpdated(selection){
+			                			scope.vm.selected = {
+											items: selection,
+											xLabel: scope.xField,
+											yLabel: scope.yField
+										};
 			                			scope.$apply(function(){
 			        	        			scope.$emit("mev.scatterPlot.selection", _.clone(selection, true));
 										});
@@ -379,14 +427,14 @@ define(["angular", "d3", "lodash", "crossfilter"], function(angular, d3, _, cros
 			                showDistY: true,
 			                duration: 350,
 			                xAxis: {
-			                    axisLabel: scope.labelX,
+			                    axisLabel: scope.xField,
 			                    tickFormat: function(d){
 			                        return d3.format('.02f')(d);
 			                    }
 			                },
 			                yAxis: {
-			                    axisLabel: scope.labelY,
-			                    tickFormat: function(d){
+		                    axisLabel: scope.yField,
+		                    tickFormat: function(d){
 			                        return d3.format('.02f')(d);
 			                    },
 			                    axisLabelDistance: -5
@@ -394,7 +442,7 @@ define(["angular", "d3", "lodash", "crossfilter"], function(angular, d3, _, cros
 			                padData: false,
 			                zoom: {
 			                    //NOTE: All attributes below are optional
-			                    enabled: scope.zoomEnabled(),
+			                    enabled: scope.vm.zoomEnabled(),
 			                    scaleExtent: [1, 10],
 			                    useFixedDomain: false,
 			                    useNiceScale: false,
@@ -408,7 +456,7 @@ define(["angular", "d3", "lodash", "crossfilter"], function(angular, d3, _, cros
 			}
 		};
 	};
-	ScatterPlotDirective.$inject=[];
+	ScatterPlotDirective.$inject=["mevNvd3DataAdaptor"];
 	ScatterPlotDirective.$name="mevScatterPlot";
 	ScatterPlotDirective.$provider="directive";
 	ScatterPlotDirective.provider="directive";				
