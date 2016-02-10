@@ -15,7 +15,7 @@
   "dependencies": {
     "angular": "^1.4.8",
     "lodash": "^2.4.2",
-    "jquery": "~2.1.4"
+    "jquery": "~2.2.0"
   },
   "system": {
     "meta": {

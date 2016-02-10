@@ -9,26 +9,33 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "angular-mocks": "^1.5.0",
     "grunt": "^0.4.5",
     "steal": "^0.12.9",
     "steal-jasmine": "0.0.2",
     "steal-tools": "^0.12.4",
     "system-live-reload": "^1.4.0",
-    "system-trace": "^0.1.7"
+    "system-trace": "^0.1.7",
+    "systemjs-plugin-json": "^0.1.0"
   },
   "system": {
     "paths": {},
     "configDependencies": [
       "live-reload"
-    ]
+    ],
+    "ext": {
+      "html": "system-text",
+      "json": "systemjs-plugin-json"
+    }
   },
   "dependencies": {
     "angular": "1.4.8",
     "angular-nvd3": "~1.0.5",
     "crossfilter": "^1.3.12",
-    "jquery": "~2.1.4",
-    "lodash": "2.4.x",
+    "jquery": "~2.2.0",
+    "lodash": "^2.4.2",
     "mui": "file:../../mui",
-    "nvd3": "apartensky/nvd3#1.8.1+master"
+    "nvd3": "apartensky/nvd3#1.8.1+master",
+    "system-text": "^0.1.0"
   }
 }

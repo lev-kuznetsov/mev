@@ -75,6 +75,9 @@
       "ng": "mui"
     },
     "meta": {
+      "bootstrap": {
+          "deps": ["jquery"]
+        },
       "notific8": {
         "deps": [
           "jquery",
