@@ -63,11 +63,13 @@ function(angular, d3, _, crossfilter, template){
 						if(scope.xField === scope.yField)
 							findField("xField");
 						updateData();	
+						updateOptions();
 					},
 					updateYAxis: function(){
 						if(scope.yField === scope.xField)
 							findField("yField");
 						updateData();	
+						updateOptions();
 					}
 				};
 				var _svg, _brush, _chart;
