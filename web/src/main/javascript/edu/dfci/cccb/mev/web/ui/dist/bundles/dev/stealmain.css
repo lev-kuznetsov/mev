@@ -667,43 +667,41 @@ cirvle.selected {
 .nvtooltip table td.value {
   font-weight: normal;
 }
-
-/*mev-pca@0.0.0#src/style/pcaAnalysis.less!$less*/
-.pca-scatter-plot .chart {
+.mev-scatter-plot .chart {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-end;
 }
-.pca-scatter-plot .chart .controls {
+.mev-scatter-plot .chart .controls {
   flex: 3 0 10%;
 }
-.pca-scatter-plot .chart .controls .inlineGroup label {
+.mev-scatter-plot .chart .controls .inlineGroup label {
   display: inline-block;
   text-align: right;
   margin-bottom: 10px;
   float: none;
   clear: none;
 }
-.pca-scatter-plot .chart .controls .inlineGroup label:after {
+.mev-scatter-plot .chart .controls .inlineGroup label:after {
   content: ":";
 }
-.pca-scatter-plot .chart .controls .inlineGroup input,
-.pca-scatter-plot .chart .controls .inlineGroup select,
-.pca-scatter-plot .chart .controls .inlineGroup table {
+.mev-scatter-plot .chart .controls .inlineGroup input,
+.mev-scatter-plot .chart .controls .inlineGroup select,
+.mev-scatter-plot .chart .controls .inlineGroup table {
   display: inline-block;
   float: none;
 }
-.pca-scatter-plot .chart .controls .btn-group > label {
+.mev-scatter-plot .chart .controls .btn-group > label {
   display: inline-block;
   text-align: initial;
   float: initial;
   clear: initial;
 }
-.pca-scatter-plot .chart .controls .btn-group > label:after {
+.mev-scatter-plot .chart .controls .btn-group > label:after {
   content: "";
 }
-.pca-scatter-plot .chart .controls label {
+.mev-scatter-plot .chart .controls label {
   display: inline-block;
   float: left;
   clear: left;
@@ -711,24 +709,24 @@ cirvle.selected {
   text-align: right;
   margin-bottom: 10px;
 }
-.pca-scatter-plot .chart .controls label:after {
+.mev-scatter-plot .chart .controls label:after {
   content: ":";
 }
-.pca-scatter-plot .chart .controls label.break {
+.mev-scatter-plot .chart .controls label.break {
   display: block;
   float: none;
   text-align: initial;
 }
-.pca-scatter-plot .chart .controls input,
-.pca-scatter-plot .chart .controls select,
-.pca-scatter-plot .chart .controls table {
+.mev-scatter-plot .chart .controls input,
+.mev-scatter-plot .chart .controls select,
+.mev-scatter-plot .chart .controls table {
   display: inline-block;
   float: left;
 }
-.pca-scatter-plot .chart .body {
+.mev-scatter-plot .chart .body {
   flex: 7 7 90%;
 }
-.pca-scatter-plot .chart .footer {
+.mev-scatter-plot .chart .footer {
   flex: 7 7 90%;
   max-width: 90%;
   /* display: flex; */
@@ -737,8 +735,15 @@ cirvle.selected {
   display: flex;
   flex-direction: row;
 }
-.pca-scatter-plot .chart .footer .selection {
+.mev-scatter-plot .chart .footer .selection {
   flex: 10;
+}
+
+/*mev-pca@0.0.0#src/style/pcaAnalysis.less!$less*/
+
+/*app/widgets/analysis/any/style/widgets.analysis.any.less!$less*/
+.mev-error-message {
+  word-wrap: break-word;
 }
 
 /*notific8@2.3.1#dist/jquery.notific8.css!$css*/
@@ -7732,7 +7737,8 @@ sidemenu ul li.open ul {
 sidemenu ul.closed {
   background-color: blue;
 }
-bsmodal {
+bsmodal,
+mev-bs-modal {
   z-index: 1040;
 }
 .panel .panel-heading {
@@ -7983,6 +7989,9 @@ fieldset[disabled] .panel .panel-toolbar .list-group-item .btn-group button.acti
 .tree li span.nodeWrapper.disabled {
   color: #95a5a6;
   pointer-events: none;
+}
+.tree li span.nodeWrapper.error {
+  color: #ed7669;
 }
 .tree li span.nodeWrapper > :first-child.glyphicon-minus-sign,
 .tree li span.nodeWrapper > :first-child.glyphicon-plus-sign {
