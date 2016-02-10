@@ -218,7 +218,7 @@ function(angular, d3, _, crossfilter, template){
 											yLabel: scope.yField
 										};
 			                			scope.$apply(function(){
-			        	        			scope.$emit("mev.scatterPlot.selection", _.clone(selection, true));
+			        	        			scope.$emit("mev.scatterPlot.selection", _.clone(scope.vm.selected,true));
 										});
 			                		}
 			                		function clearSelection(){

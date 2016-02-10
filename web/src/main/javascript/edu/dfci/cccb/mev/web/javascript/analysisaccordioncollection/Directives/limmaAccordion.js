@@ -86,84 +86,7 @@
 
                             };
 
-                            function scatterTransformData(analysis, x, y, selections) {
-                                
-                                var selectedSets = _.filter(selections, function(s){return s.checked;});
-                                var groups = {};
-                                var count=0;
-                                _.forEach(analysis.results, function(item){
-                                    if(++count > 1000)
-                                        return false;
-                                    var groupAcc = {names: [], color: "grey"};
-                                    _.map(selectedSets, function(selection){
-                                        if(_.contains(selection.keys, item.id)){                        
-                                            groupAcc.names.push(selection.name);
-                                            groupAcc.color = selection.properties.selectionColor;
-                                        }
-                                    });
-
-                                    var groupName = "none";
-                                    if(groupAcc.names.length===1)
-                                        groupName = groupAcc.names[0];
-                                    else if(groupAcc.names.length>1)
-                                        groupName = groupAcc.names.join("+");
-
-                                    var group = groups[groupName];
-                                    if(!group){
-                                        groups[groupName] = group = {};
-                                        group.name = group.key = groupName;                  
-                                        group.names = groupAcc.names;
-                                        if(group.names.length<2){
-                                            group.color = groupAcc.color;
-                                        }else{
-                                            group.color = '#'+Math.floor(Math.random()*16777215).toString(16);
-                                        }   
-                                        group.shape = 'circle';
-                                        group.values=[];
-                                    }
-                                                
-                                    group.values.push({
-                                        x: item[x],
-                                        y: item[y],
-                                        size: 10,                       
-                                        sample: item.id,
-                                        id: item.id                      
-                                    });
-                                });         
-                                
-                                if(Object.keys(groups).length === 1)
-                                    groups["none"].name = groups["none"].key = "Selection: none";
-
-                                return _.sortBy(groups, function(group){
-                                    return group.name === "none"  ? Infinity : group.names.length;                   
-                                });
-                            }
-
-                            scope.selections = scope.project.dataset.selections.row;
-                            scope.scatterVm = {
-                                xLabel: "logFoldChange",
-                                yLabel: "averageExpression",
-                                logScaleX: false,
-                                logScaleY: false,
-                                dragAction: "select",
-                                isZoomEnabled: function(){
-                                    return scope.scatterVm.dragAction === "zoom";
-                                },
-                                
-                                updateSelection: function(){
-                                    scope.scatterVm.setData(scatterTransformData(scope.analysis, scope.scatterVm.xLabel, scope.scatterVm.yLabel, scope.selections));         
-                                },
-                                setData: function(data){
-                                    scope.scatterVm.data = data;                       
-                                    scope.scatterVm.selection = undefined;
-                                },
-                                updateScale: function(){
-                                    scope.scatterVm.setData(); 
-                                }
-                            };
-                            scope.$watch("analysis", function(newVal){
-                                scope.scatterVm.setData(scatterTransformData(newVal, scope.scatterVm.xLabel, scope.scatterVm.yLabel, scope.selections));    
-                            });
+                            
                         }],
                         link: function (scope) {
                             
@@ -227,6 +150,77 @@
                                     });
 
                             };
+
+                            scope.scatterVm={
+                                selected: {
+                                    items: []
+                                },
+                                addSelections: function(){
+                                    var userselections = scope.scatterVm.selected.items.map(projection.ids);
+                                    var selectionData = {
+                                        name: scope.selectionParams.name,
+                                        properties: {
+                                            selectionDescription: '',
+                                            selectionColor: scope.selectionParams.color,
+                                        },
+                                        keys: userselections
+                                    };
+                                    scope.project.dataset.selection.post({
+                                        datasetName: scope.project.dataset.datasetName,
+                                        dimension: "row"
+
+                                    }, selectionData,
+                                    function (response) {
+                                        scope.project.dataset.resetSelections('row');
+                                        var message = "Added " + scope.selectionParams.name + " as new Selection!";
+                                        var header = "Heatmap Selection Addition";
+
+                                        alertService.success(message, header);
+                                    },
+                                    function (data, status, headers, config) {
+                                        var message = "Couldn't add new selection. If " + "problem persists, please contact us.";
+
+                                        var header = "Selection Addition Problem (Error Code: " + status + ")";
+
+                                        alertService.error(message, header);
+                                    });
+                                },
+                                exportSelection: function(){
+
+                                    var keys = scope.scatterVm.selected.items.map(projection.ids);
+                                    var selectionData = {
+                                        name: scope.exportParams.name,
+                                        properties: {
+                                            selectionDescription: '',
+                                            selectionColor: scope.exportParams.color,
+                                        },
+                                        keys: keys
+                                    };
+
+                                    scope.project.dataset.selection.export({
+                                        datasetName: scope.project.dataset.datasetName,
+                                        dimension: "row"
+
+                                    }, selectionData,
+                                    function (response) {
+                                        scope.project.dataset.resetSelections('row');
+                                        var message = "Added " + scope.exportParams.name + " as new Dataset!";
+                                        var header = "New Dataset Export";
+
+                                        alertService.success(message, header);
+                                    },
+                                    function (data, status, headers, config) {
+                                        var message = "Couldn't export new dataset. If " + "problem persists, please contact us.";
+
+                                        var header = "New Dataset Export Problem (Error Code: " + status + ")";
+
+                                        alertService.error(message, header);
+                                    });
+                                }
+                            };
+                            scope.$on("mev.scatterPlot.selection", function($event, selected){                 
+                                scope.scatterVm.selected = selected;
+                            });
 
                             scope.exportParams = {
                                 name: undefined,

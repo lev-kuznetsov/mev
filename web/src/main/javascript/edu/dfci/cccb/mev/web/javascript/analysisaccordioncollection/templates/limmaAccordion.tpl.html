@@ -23,7 +23,7 @@
 				<div class="results-header clearfix">
 				                    				
 					<h3 class="analysis-results-title">{{analysis.name}} Results</h3>
-					<div class="btn-toolbar pull-right" role="toolbar" mui-yank="action-menu">
+					<div class="btn-toolbar pull-right" role="toolbar" >
 		                <div class="btn-group">
 			                <a class="btn" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
 			                  Create Selections
@@ -56,52 +56,109 @@
 			</div>
 	</div>
 	<div class="tab-pane" id="{{'limma-' + analysis.randomId + '-heatmap'}}" ng-if="isShowHeatmapTab">
-		<div id="{{'limma-' + analysis.randomId + '-svg-holder'}}">
-
-			<view-Content-Item project='project' view='project.views'></view-Content-Item>
-
+		<div id="{{'limma-' + analysis.randomId + '-svg-holder'}}" class="results-wrapper">
+			<div class="results-header clearfix">
+				                    				
+				<h3 class="analysis-results-title">{{analysis.name}} Results</h3>
+				<div class="btn-toolbar pull-right" role="toolbar" >
+	                <div class="btn-group">
+		                <a class="btn" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
+		                  Create Selections
+		                </a>
+		                <a class="btn" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
+		                  <i class="icon-white icon-download"></i> Download
+		                </a> 
+		                <a class="btn" data-target="#exportDataset{{analysis.name}}" data-toggle="modal">
+			                  New Dataset
+			            </a> 	   
+			            <!-- disable for beta1 -->
+			            <button class="btn" ng-click="applyToHeatmap()" >
+			                <span>
+			                  View Genes on Heatmap
+			                </span> 
+			            </button>
+		            </div>
+			    </div>
+							      
+			</div>
+			<div class="results-body">	
+				<view-Content-Item project='project' view='project.views'></view-Content-Item>
+			</div>			
 		</div>
 	</div>
 	<div class="tab-pane" id="{{'limma-' + analysis.randomId + '-scatterPlot'}}">
-		<div id="{{'limma-' + analysis.randomId + '-scatter-holder'}}" style="width: 100%" >
+		<div id="{{'limma-' + analysis.randomId + '-scatter-holder'}}" class="results-wrapper">
 
-			<!-- <div style="width: 100%" 
-			class="mev-scatter-plot" 
-			input-data="scatterVm.data" 
-			label-x="scatterVm.xLabel" 
-			label-y="scatterVm.yLabel" 
-			selections="scatterVm.selections"
-			log-scale-x="scatterVm.logScaleX" 
-			log-scale-y="scatterVm.logScaleY" 
-			zoom-enabled="scatterVm.isZoomEnabled()"></div> -->			
-		    <div class="mev-scatter-plot" drag-action="'select'" 
-	        	mev-input="analysis.results" 
-	        	mev-x-field="logFoldChange" 
-	        	mev-y-field="averageExpression" 
-	        	mev-fields="fields"        	
-	        	log-scale-x="scatterVm.logScaleX" 
-				log-scale-y="scatterVm.logScaleY" 
-	        	mev-selections="project.dataset.row.selections" 
-	        	mev-id-field="id" >
+			<div class="results-header clearfix">
+				                    				
+				<h3 class="analysis-results-title">{{analysis.name}} Results</h3>
+				<div class="btn-toolbar pull-right" role="toolbar" >
+	                <div class="btn-group">
+		                <a class="btn" data-target="#selectionAdd{{analysis.name}}Scatter" data-toggle="modal">
+		                  Create Selections
+		                </a>
+		                <a class="btn" data-target="#exportDataset{{analysis.name}}Scatter" data-toggle="modal">
+			                  New Dataset
+			            </a> 	
+		            </div>
+			    </div>
+							      
+			</div>
+			<div class="results-body">	
+
+		    	<div class="mev-scatter-plot" drag-action="'select'" 
+		        	mev-input="analysis.results" 
+		        	mev-x-field="logFoldChange" 
+		        	mev-y-field="averageExpression" 
+		        	mev-fields="fields"        	
+		        	log-scale-x="scatterVm.logScaleX" 
+					log-scale-y="scatterVm.logScaleY" 
+		        	mev-selections="project.dataset.row.selections" 
+		        	mev-id-field="id" >
+				</div>
+				<bsmodal bindid="{{'selectionAdd' + analysis.name+'Scatter'}}" func="" header="{{'Add New Selection for ' + analysis.name}}">
+					<div class="row">
+						<form-group>
+							<form>
+								Name: <input type="text" class="input-small" ng-model="selectionParams.name">
+							<form>
+						</form-group>
+					</div>
+					<div class="row">
+				            <a ng-click="scatterVm.addSelections()" data-dismiss="modal" aria-hidden="true" class="btn btn-success pull-right">
+				              Create Selections
+				            </a> 
+				    </div>
+				</bsmodal> 
+
+				<bsmodal bindid="{{'exportDataset' + analysis.name+'Scatter'}}" func="" header="Export New Dataset for {{analysis.name}}">
+					<div class="row">	
+						<form-group>
+							<form>
+								Name: <input type="text" class="input-small" ng-model="exportParams.name">
+							<form>
+						</form-group>
+					</div>
+					<div class="row">			
+				              <a class="btn btn-success pull-right" ng-click="scatterVm.exportSelection()" data-dismiss="modal" aria-hidden="true">
+				                Export New Dataset
+				              </a> 
+				          </div>
+				</bsmodal>
         	</div>
-
 		</div>
 	</div>
 </div>
 
 		
 <bsmodal bindid="{{'selectionAdd' + analysis.name}}" func="" header="{{'Add New Selection for' + analysis.name}}">
-
 	<div class="row">
-	
 		<form-group>
 			<form>
 				Name: <input type="text" class="input-small" ng-model="selectionParams.name">
 			<form>
 		</form-group>
-	
 	</div>
-	
 	<div class="row">
             <a ng-click="addSelections()" data-dismiss="modal" aria-hidden="true" class="btn btn-success pull-right">
               Create Selections
@@ -110,20 +167,18 @@
 </bsmodal> 
 
 <bsmodal bindid="{{'exportDataset' + analysis.name}}" func="" header="Export New Dataset for {{analysis.name}}">
-
-	<div class="row">
-	
+	<div class="row">	
 		<form-group>
 			<form>
 				Name: <input type="text" class="input-small" ng-model="exportParams.name">
 			<form>
 		</form-group>
-	
 	</div>
-	
 	<div class="row">			
               <a class="btn btn-success pull-right" ng-click="exportSelection()" data-dismiss="modal" aria-hidden="true">
                 Export New Dataset
               </a> 
           </div>
 </bsmodal>
+
+
