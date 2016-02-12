@@ -70,15 +70,13 @@ import edu.dfci.cccb.mev.limma.domain.simple.SimpleEntry;
     // adjust the offset back to its original input values
     + "result[,'Average Expression']=if(min.val<0){result[,'Average Expression']-(min.val*-1)}else\n"
     + "{result[,'Average Expression']};\n"
-    + "result=result[result$`P-value` <= " + RserveLimmaBuilder.THRESHOLD + ",];\n"
     
     + "unname(apply(result,1,function(x)"
     + "  list(id=unname(x[1]),logFoldChange=as.numeric(unname(x[2])),averageExpression=as.numeric(unname(x[3])),"
-    + "       pValue=as.numeric(unname(x[5])),qValue=as.numeric(unname(x[6])))))" +
+    + "       pValue=as.numeric(unname(x[5])),t=as.numeric(unname(x[4])),qValue=as.numeric(unname(x[6])))))" +
     "}")
 public class RserveLimmaBuilder extends AbstractDispatchedRAnalysisBuilder<LimmaBuilder, Limma> implements LimmaBuilder {
 
-  public static final double THRESHOLD = 0.05; 
   private @Setter Selection control;
   private @Setter Selection experiment;
   private @Getter Limma result;
