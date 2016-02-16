@@ -42,6 +42,7 @@
     <module>genemad</module>
     <module>voom</module>
     <module>pathway-enrichment</module>
+    <module>gsea</module>
     <module>web</module>
 
   </modules>

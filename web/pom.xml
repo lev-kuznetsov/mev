@@ -28,7 +28,7 @@
     <jetty.version>8.1.13.v20130916</jetty.version>
     <jetty.checkAliases>true</jetty.checkAliases>
     <jasmine-maven-plugin.version>1.3.1.5</jasmine-maven-plugin.version>
-    <saga-maven-plugin.version>1.5.3</saga-maven-plugin.version>    
+    <saga-maven-plugin.version>1.5.3</saga-maven-plugin.version>
   </properties>
 
   <dependencies>
@@ -143,7 +143,7 @@
       <artifactId>mev-pca-rest</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
-    
+
     <!-- Voom package -->
 
     <dependency>
@@ -232,30 +232,38 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
-     <!-- Gene SD -->
+    <!-- Gene SD -->
 
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
       <artifactId>mev-genesd-rest</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
-    
-     <!-- Gene MAD -->
+
+    <!-- Gene MAD -->
 
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
       <artifactId>mev-genemad-rest</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
-    
+
     <!-- Pathway Enrichment -->
-    
+
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
       <artifactId>mev-pathway-enrichment-rest</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
-    
+
+    <!-- GSEA -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-gsea-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
     <!-- Servlet -->
 
     <dependency>
@@ -414,7 +422,7 @@
             <systemProperty>
               <name>java.io.tmpdir</name>
               <value>${mev.java.io.tmpdir}</value>
-            </systemProperty>            
+            </systemProperty>
             <systemProperty>
               <name>spring_profiles_active</name>
               <value>${mev.spring_profiles_active}</value>
@@ -461,49 +469,49 @@
 
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat7-maven-plugin</artifactId>
-          <version>2.2</version>
-          <configuration>            
-            <port>8080</port>
-<!--            <additionalClasspathDirs> -->
-<!--            <additionalClasspathDir>${mev.extraClasspath}</additionalClasspathDir> -->
-<!--          </additionalClasspathDirs> -->
-            <systemProperties>
-                <java.io.tmpdir>${mev.java.io.tmpdir}</java.io.tmpdir>
-                <spring_profiles_active>${mev.spring_profiles_active}</spring_profiles_active>
-                <spring.profiles.active>${mev.spring_profiles_active}</spring.profiles.active>
-                <edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>${mev.Rscript}</edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>
-                <textdb.allow_full_path>${mev.hsqldb.textdb.allow_full_path}</textdb.allow_full_path>
-                <h2.console.port>18044</h2.console.port>
-                <MEV_HOME>${MEV_HOME}</MEV_HOME>
-                <MEV_CONFIG_DIR>${MEV_CONFIG_DIR}</MEV_CONFIG_DIR>
-                <MEV_CONFIG_BUCKET>${MEV_CONFIG_BUCKET}</MEV_CONFIG_BUCKET>
-                <archaius.fixedDelayPollingScheduler.initialDelayMills>${archaius.fixedDelayPollingScheduler.initialDelayMills}</archaius.fixedDelayPollingScheduler.initialDelayMills>
-                <archaius.fixedDelayPollingScheduler.delayMills>${archaius.fixedDelayPollingScheduler.delayMills}</archaius.fixedDelayPollingScheduler.delayMills>
-            </systemProperties>
-            <path>/</path>            
-          </configuration>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <port>8080</port>
+          <!-- <additionalClasspathDirs> -->
+          <!-- <additionalClasspathDir>${mev.extraClasspath}</additionalClasspathDir> -->
+          <!-- </additionalClasspathDirs> -->
+          <systemProperties>
+            <java.io.tmpdir>${mev.java.io.tmpdir}</java.io.tmpdir>
+            <spring_profiles_active>${mev.spring_profiles_active}</spring_profiles_active>
+            <spring.profiles.active>${mev.spring_profiles_active}</spring.profiles.active>
+            <edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>${mev.Rscript}</edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>
+            <textdb.allow_full_path>${mev.hsqldb.textdb.allow_full_path}</textdb.allow_full_path>
+            <h2.console.port>18044</h2.console.port>
+            <MEV_HOME>${MEV_HOME}</MEV_HOME>
+            <MEV_CONFIG_DIR>${MEV_CONFIG_DIR}</MEV_CONFIG_DIR>
+            <MEV_CONFIG_BUCKET>${MEV_CONFIG_BUCKET}</MEV_CONFIG_BUCKET>
+            <archaius.fixedDelayPollingScheduler.initialDelayMills>${archaius.fixedDelayPollingScheduler.initialDelayMills}</archaius.fixedDelayPollingScheduler.initialDelayMills>
+            <archaius.fixedDelayPollingScheduler.delayMills>${archaius.fixedDelayPollingScheduler.delayMills}</archaius.fixedDelayPollingScheduler.delayMills>
+          </systemProperties>
+          <path>/</path>
+        </configuration>
       </plugin>
 
       <plugin>
-            <groupId>com.fizzed</groupId>
-            <artifactId>fizzed-watcher-maven-plugin</artifactId>
-            <version>1.0.6</version>
-            <configuration>
-                <touchFile>target/classes/watcher.txt</touchFile>
-                <watches>
-                    <watch>
-                        <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/ui</directory>                        
-                    </watch>
-                    <watch>
-                        <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/libs</directory>                        
-                    </watch>                    
-                </watches>
-                <goals>
-                    <goal>process-resources</goal>                    
-                </goals>
-            </configuration>
-        </plugin>
+        <groupId>com.fizzed</groupId>
+        <artifactId>fizzed-watcher-maven-plugin</artifactId>
+        <version>1.0.6</version>
+        <configuration>
+          <touchFile>target/classes/watcher.txt</touchFile>
+          <watches>
+            <watch>
+              <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/ui</directory>
+            </watch>
+            <watch>
+              <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/libs</directory>
+            </watch>
+          </watches>
+          <goals>
+            <goal>process-resources</goal>
+          </goals>
+        </configuration>
+      </plugin>
 
       <plugin>
         <groupId>com.github.searls</groupId>
@@ -559,23 +567,23 @@
           <customRunnerConfiguration>${project.basedir}/src/test/resources/require.config.js</customRunnerConfiguration>
           <customRunnerTemplate>${project.basedir}/src/test/resources/RequireJsAngularBootstrappedSpecRunner.htmltemplate</customRunnerTemplate>
           <additionalContexts>
-              <context>
-          <contextRoot>container/javascript</contextRoot>
-          <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/javascript</directory>
-        </context>
-        <context>
-          <contextRoot>container/vendor</contextRoot>
-          <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/vendor</directory>
-        </context>
-        <context>
-          <contextRoot>container/ui</contextRoot>
-          <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/ui</directory>
-        </context>
-        <context>
-          <contextRoot>container/libs</contextRoot>
-          <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/libs</directory>
-        </context>
-      </additionalContexts>
+            <context>
+              <contextRoot>container/javascript</contextRoot>
+              <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/javascript</directory>
+            </context>
+            <context>
+              <contextRoot>container/vendor</contextRoot>
+              <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/vendor</directory>
+            </context>
+            <context>
+              <contextRoot>container/ui</contextRoot>
+              <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/ui</directory>
+            </context>
+            <context>
+              <contextRoot>container/libs</contextRoot>
+              <directory>${project.basedir}/src/main/javascript/edu/dfci/cccb/mev/web/libs</directory>
+            </context>
+          </additionalContexts>
         </configuration>
       </plugin>
 
@@ -583,16 +591,19 @@
         <groupId>edu.dfci.cccb</groupId>
         <artifactId>rserve-maven-plugin</artifactId>
         <version>0.0.7</version>
-          <configuration>
+        <configuration>
           <rserveSource>https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/Rserve/1.8-1/Rserve_1.8-1.tar.gz</rserveSource>
           <onInitialize>
-            sapply (c ("NMF", "RProtoBuf", "injectoR"), function (lib)
-              if (!requireNamespace (lib))
-                install.packages (lib, repos="http://cran.rstudio.com"));
-            source ("http://bioconductor.org/biocLite.R");
-            sapply (c ("topGO", "org.Hs.eg.db", "org.Mm.eg.db",
-                       "limma", "DESeq", "edgeR", "ReactomePA"), function (lib)
-              if (!requireNamespace (lib)) biocLite (lib));
+            sapply (c ("NMF", "RProtoBuf", "injectoR"),
+            function (lib)
+            if (!requireNamespace (lib))
+            install.packages (lib, repos="http://cran.rstudio.com"));
+            source
+            ("http://bioconductor.org/biocLite.R");
+            sapply (c ("topGO",
+            "org.Hs.eg.db", "org.Mm.eg.db",
+            "limma", "DESeq", "edgeR", "ReactomePA"), function (lib)
+            if (!requireNamespace (lib)) biocLite (lib));
           </onInitialize>
           <configure>
             <workdir>${mev.java.io.tmpdir}/Rserve</workdir>
@@ -601,11 +612,14 @@
             <workdir.clean>enable</workdir.clean>
           </configure>
           <onRequest>
-            .libPaths (c ("${project.build.directory}/rserve", .libPaths ()));
-            assign ("mwd", "${project.basedir}", e = .GlobalEnv);
+            .libPaths (c ("${project.build.directory}/rserve",
+            .libPaths ()));
+            assign ("mwd", "${project.basedir}", e =
+            .GlobalEnv);
             library (injectoR);
             library (topGO);
-            library (RProtoBuf)
+            library
+            (RProtoBuf)
             source ("../dataset/domain/src/main/r/json.R");
           </onRequest>
         </configuration>
@@ -641,7 +655,7 @@
       </resource>
     </resources>
 
-    
+
     <pluginManagement>
       <plugins>
         <!--This plugin's configuration is used to store Eclipse m2e settings 
@@ -679,190 +693,194 @@
   </build>
 
   <profiles>
-      <profile>
-        <id>live</id>     
-        <properties>
-          <!-- ensure jetty allows serving files from symlinks -->
-          <jetty.checkAliases>false</jetty.checkAliases>
-        </properties>
-        <build>
-          <resources>
-            <resource>
-              <directory>src/main/javascript</directory>
-              <filtering>false</filtering>
-              <includes>
-                <include>nothing</include>
-              </includes>            
-              <excludes>              
-                <exclude>**/*</exclude>              
-              </excludes>
-            </resource>                  
-          </resources>
-          <plugins>
-            <plugin>
-              <artifactId>maven-clean-plugin</artifactId>
-              <version>2.4.1</version>
-              <executions>
-                <execution>
-                    <id>y</id>
-                    <phase>process-resources</phase>
-                    <goals>
-                        <goal>clean</goal>
-                    </goals>
-                </execution>                
-              </executions>
-              <configuration>
-                  <excludeDefaultDirectories>true</excludeDefaultDirectories>
-                  <filesets>       
-                      <!-- this first file set removes the symlinks used in the live-reload mode (if they are there) -->                             
-                      <!-- this is necessary because the plugin junction will fail if the links already exist -->
-                      <!-- note, this first fileset will not remove regular folders (used in bundle mode), only symlinks-->
-                      <fileset>
-                        <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web</directory>
-                        <followSymlinks>false</followSymlinks>                        
-                        <includes>
-                          <include>javascript</include>
-                          <include>libs</include>
-                          <include>mock</include>
-                          <include>ui</include>
-                          <include>vendor</include>
-                        </includes>      
-                      </fileset>      
-                      <!-- these remaining filesets remove the regular folders (not symlinks) before 
-                      we replace them with symlinks with the "unction" plugin -->
-                      <fileset>
-                          <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/javascript</directory>
-                          <followSymlinks>false</followSymlinks>                        
-                      </fileset>
-                      <fileset>
-                          <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/libs</directory>
-                          <followSymlinks>false</followSymlinks>                        
-                      </fileset>
-                      <fileset>
-                          <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/mock</directory>
-                          <followSymlinks>false</followSymlinks>                        
-                      </fileset>
-                      <fileset>
-                          <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/ui</directory>
-                          <followSymlinks>false</followSymlinks>                        
-                      </fileset>
-                      <fileset>
-                          <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/vendor</directory>
-                          <followSymlinks>false</followSymlinks>                        
-                      </fileset>                                        
-                  </filesets>                  
-              </configuration>
+    <profile>
+      <id>live</id>
+      <properties>
+        <!-- ensure jetty allows serving files from symlinks -->
+        <jetty.checkAliases>false</jetty.checkAliases>
+      </properties>
+      <build>
+        <resources>
+          <resource>
+            <directory>src/main/javascript</directory>
+            <filtering>false</filtering>
+            <includes>
+              <include>nothing</include>
+            </includes>
+            <excludes>
+              <exclude>**/*</exclude>
+            </excludes>
+          </resource>
+        </resources>
+        <plugins>
+          <plugin>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>2.4.1</version>
+            <executions>
+              <execution>
+                <id>y</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>clean</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <excludeDefaultDirectories>true</excludeDefaultDirectories>
+              <filesets>
+                <!-- this first file set removes the symlinks used in the 
+                  live-reload mode (if they are there) -->
+                <!-- this is necessary because the plugin junction will fail 
+                  if the links already exist -->
+                <!-- note, this first fileset will not remove regular folders 
+                  (used in bundle mode), only symlinks -->
+                <fileset>
+                  <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web</directory>
+                  <followSymlinks>false</followSymlinks>
+                  <includes>
+                    <include>javascript</include>
+                    <include>libs</include>
+                    <include>mock</include>
+                    <include>ui</include>
+                    <include>vendor</include>
+                  </includes>
+                </fileset>
+                <!-- these remaining filesets remove the regular folders 
+                  (not symlinks) before we replace them with symlinks with the "unction" plugin -->
+                <fileset>
+                  <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/javascript</directory>
+                  <followSymlinks>false</followSymlinks>
+                </fileset>
+                <fileset>
+                  <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/libs</directory>
+                  <followSymlinks>false</followSymlinks>
+                </fileset>
+                <fileset>
+                  <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/mock</directory>
+                  <followSymlinks>false</followSymlinks>
+                </fileset>
+                <fileset>
+                  <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/ui</directory>
+                  <followSymlinks>false</followSymlinks>
+                </fileset>
+                <fileset>
+                  <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/vendor</directory>
+                  <followSymlinks>false</followSymlinks>
+                </fileset>
+              </filesets>
+            </configuration>
           </plugin>
           <plugin>
-                <groupId>com.pyx4j</groupId>
-                <artifactId>maven-junction-plugin</artifactId>
-                <version>1.0.3</version>
-                <executions>
-                    <execution>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>link</goal>
-                        </goals>
-                    </execution>                    
-                </executions>
-                <configuration>
-                    <links>
-                        <link>
-                            <!-- add allowLinking="true" to Tomcat's conf/Context.xml; also, disable update in Edit Configuration on frame deactiviation -->
-                            <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/javascript</dst>
-                            <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/javascript</src>
-                        </link>
-                        <link>
-                            <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/libs</dst>
-                            <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/libs</src>
-                        </link>
-                        <link>
-                            <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/mock</dst>
-                            <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/mock</src>
-                        </link>
-                        <link>
-                            <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/ui</dst>
-                            <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/ui</src>
-                        </link>
-                        <link>
-                            <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/vendor</dst>
-                            <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/vendor</src>
-                        </link>
-                    </links>
-                </configuration>
-            </plugin>
-          </plugins>
-        </build>
-      </profile>
+            <groupId>com.pyx4j</groupId>
+            <artifactId>maven-junction-plugin</artifactId>
+            <version>1.0.3</version>
+            <executions>
+              <execution>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>link</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <links>
+                <link>
+                  <!-- add allowLinking="true" to Tomcat's conf/Context.xml; 
+                    also, disable update in Edit Configuration on frame deactiviation -->
+                  <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/javascript</dst>
+                  <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/javascript</src>
+                </link>
+                <link>
+                  <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/libs</dst>
+                  <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/libs</src>
+                </link>
+                <link>
+                  <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/mock</dst>
+                  <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/mock</src>
+                </link>
+                <link>
+                  <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/ui</dst>
+                  <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/ui</src>
+                </link>
+                <link>
+                  <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/vendor</dst>
+                  <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/vendor</src>
+                </link>
+              </links>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
 
-      <profile>
-        <id>bundle</id>
-        <activation>
-          <activeByDefault>true</activeByDefault>
-        </activation>
-        <build>          
-          <plugins> 
-              <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.4.1</version>
-                <executions>
-                  <execution>
-                      <id>y</id>
-                      <phase>process-resources</phase>
-                      <goals>
-                          <goal>clean</goal>
-                      </goals>
-                  </execution>                
-                </executions>
+    <profile>
+      <id>bundle</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>2.4.1</version>
+            <executions>
+              <execution>
+                <id>y</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>clean</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <excludeDefaultDirectories>true</excludeDefaultDirectories>
+              <filesets>
+                <fileset>
+                  <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web</directory>
+                  <followSymlinks>false</followSymlinks>
+                  <includes>
+                    <include>javascript</include>
+                    <include>libs</include>
+                    <include>mock</include>
+                    <include>ui</include>
+                    <include>vendor</include>
+                  </includes>
+                </fileset>
+              </filesets>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>copy-resources</id>
+                <!-- here the phase you need -->
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
                 <configuration>
-                    <excludeDefaultDirectories>true</excludeDefaultDirectories>
-                    <filesets>       
-                        <fileset>
-                          <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web</directory>
-                          <followSymlinks>false</followSymlinks>                        
-                          <includes>
-                            <include>javascript</include>
-                            <include>libs</include>
-                            <include>mock</include>
-                            <include>ui</include>
-                            <include>vendor</include>
-                          </includes>      
-                        </fileset>      
-                    </filesets>                  
+                  <outputDirectory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>src/main/javascript/edu/dfci/cccb/mev/web</directory>
+                      <filtering>false</filtering>
+                      <includes>
+                        <include>**</include>
+                      </includes>
+                      <excludes>
+                        <exclude>**/node_modules/**</exclude>
+                      </excludes>
+                    </resource>
+                  </resources>
                 </configuration>
-            </plugin>
-            <plugin>
-              <artifactId>maven-resources-plugin</artifactId>              
-              <executions>
-                <execution>
-                  <id>copy-resources</id>
-                  <!-- here the phase you need -->
-                  <phase>process-resources</phase>
-                  <goals>
-                    <goal>copy-resources</goal>
-                  </goals>
-                  <configuration>                    
-                    <outputDirectory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web</outputDirectory>
-                    <resources>
-                      <resource>
-                        <directory>src/main/javascript/edu/dfci/cccb/mev/web</directory>
-                        <filtering>false</filtering>
-                        <includes>
-                          <include>**</include>              
-                        </includes>
-                        <excludes>
-                          <exclude>**/node_modules/**</exclude>
-                        </excludes>
-                      </resource>       
-                    </resources>
-                  </configuration>            
-                </execution>
-              </executions>
-            </plugin>
-          </plugins>
-        </build>
-      </profile>
-    </profiles>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
   <pluginRepositories>
     <pluginRepository>
       <id>cccb</id>
