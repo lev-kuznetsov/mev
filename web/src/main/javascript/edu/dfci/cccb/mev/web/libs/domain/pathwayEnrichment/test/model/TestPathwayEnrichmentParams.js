@@ -1,6 +1,6 @@
 "use strict";
-define(["steal-jasmine", "mui", "angular-mocks", "mevPathwayEnrichment"], 
-function(jasmineRequire, ng, ngMocks, mevPathwayEnrichment){	
+define(["mevPathwayEnrichment", "steal-jasmine", "mui", "angular-mocks"], 
+function(mevPathwayEnrichment, jasmineRequire, ng, ngMocks){	
 	return describe("mevPathwayEnrichment tests", function(){
 		beforeEach(module("ngMock"));
 
@@ -22,8 +22,7 @@ function(jasmineRequire, ng, ngMocks, mevPathwayEnrichment){
 
 		it("ensure PathwayEnrichmentParams.getValues works with object initializer", function(){ 	
 			console.debug("mevPathwayEnrichment", PathwayEnrichmentParams.getValues());  			
-			expect(PathwayEnrichmentParams.getValues()).toEqual({name: undefined, species: "human", pAdjust: "fdr", pValueCutoff: 0.05, minGSSize: 20, 
-				genes: undefined});
+			expect(PathwayEnrichmentParams.getValues()).toEqual({ name: undefined, organism: 'human', pAdjustMethod: 'fdr', pvalueCutoff: 0.05, minGSSize: 20, genelist: undefined });
 			expect(true).toBe(true);     								
 		});		 			
 

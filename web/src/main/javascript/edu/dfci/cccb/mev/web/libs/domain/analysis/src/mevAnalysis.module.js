@@ -1,4 +1,4 @@
-define(["mui", "mev-bs-modal", "angular-resource",
+define(["mui", "mev-bs-modal", "angular-resource", "angular-ui-router",
 	"./params/view/text/TextParamDirective",
 	"./params/view/integer/IntegerParamDirective",
 	"./params/view/selectionSet/SelectionSetParamDirective",

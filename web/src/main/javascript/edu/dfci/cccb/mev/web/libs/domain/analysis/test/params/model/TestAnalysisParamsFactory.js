@@ -1,10 +1,10 @@
 "use strict";
-define(["mui", "angular-mocks", "mev-analysis",
+define(["mui", "mev-analysis", "angular-mocks", 
 	"mev-analysis/src/params/model/decimal/DecimalParam",
 	"mev-analysis/src/params/model/integer/IntegerParam",
 	"mev-analysis/src/params/model/select/SelectParam",
 	"mev-analysis/src/params/model/selectionSet/SelectionSetParam"
-	], function(ng, ngMocks, mevAnalysis, DecimalParam, IntegerParam, SelectParam){
+	], function(ng, mevAnalysis, ngMocks, DecimalParam, IntegerParam, SelectParam){
 
 	return describe("mevAnalysisParamsFactory tests", function(){
 		

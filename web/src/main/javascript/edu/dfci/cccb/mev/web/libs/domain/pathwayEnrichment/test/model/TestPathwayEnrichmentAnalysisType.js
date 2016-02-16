@@ -1,6 +1,6 @@
 "use strict";
-define(["steal-jasmine", "mui", "angular-mocks", "mevPathwayEnrichment", "mev-analysis"], 
-function(jasmineRequire, ng, ngMocks, mevPathwayEnrichment, mevAnalysis){
+define(["mevPathwayEnrichment", "mev-analysis", "steal-jasmine", "mui", "angular-mocks"], 
+function(mevPathwayEnrichment, mevAnalysis, jasmineRequire, ng, ngMocks){
 	describe("Test PathwayEnrichmentAnalsyisType", function(){
 		beforeEach(module("ngMock"));
 		var SelectionSetAggregator;

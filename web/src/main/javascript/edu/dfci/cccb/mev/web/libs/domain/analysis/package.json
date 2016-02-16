@@ -16,13 +16,14 @@
     "angular-mocks": "^1.4.9",
     "bootstrap": "^3.3.6",
     "mev-mock": "file:../mock",
-    "mevStealBootstrap": "file:../../utils/steal-bootstrap",
+    "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
     "steal": "^0.13.2",
     "steal-jasmine": "0.0.2",
     "steal-test-bootstrap": "file:../../utils/steal-test-bootstrap"
   },
   "dependencies": {
     "angular-resource": "^1.5.0",
+    "angular-ui-router": "^0.2.18",
     "lodash": "^4.0.1",
     "mev-bs-modal": "file:../../widgets/bsmodal",
     "mev-domain-common": "file:../common",
