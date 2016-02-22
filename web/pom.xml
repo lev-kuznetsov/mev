@@ -594,16 +594,13 @@
         <configuration>
           <rserveSource>https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/Rserve/1.8-1/Rserve_1.8-1.tar.gz</rserveSource>
           <onInitialize>
-            sapply (c ("NMF", "RProtoBuf", "injectoR"),
-            function (lib)
-            if (!requireNamespace (lib))
-            install.packages (lib, repos="http://cran.rstudio.com"));
-            source
-            ("http://bioconductor.org/biocLite.R");
-            sapply (c ("topGO",
-            "org.Hs.eg.db", "org.Mm.eg.db",
-            "limma", "DESeq", "edgeR", "ReactomePA"), function (lib)
-            if (!requireNamespace (lib)) biocLite (lib));
+            sapply (c ("NMF", "RProtoBuf", "injectoR"), function (lib)
+              if (!requireNamespace (lib))
+                install.packages (lib, repos="http://cran.rstudio.com"));
+            source ("http://bioconductor.org/biocLite.R");
+            sapply (c ("topGO", "org.Hs.eg.db", "org.Mm.eg.db",
+                       "limma", "DESeq", "edgeR", "ReactomePA"), function (lib)
+              if (!requireNamespace (lib)) biocLite (lib));
           </onInitialize>
           <configure>
             <workdir>${mev.java.io.tmpdir}/Rserve</workdir>
@@ -614,12 +611,10 @@
           <onRequest>
             .libPaths (c ("${project.build.directory}/rserve",
             .libPaths ()));
-            assign ("mwd", "${project.basedir}", e =
-            .GlobalEnv);
+            assign ("mwd", "${project.basedir}", e = .GlobalEnv);
             library (injectoR);
             library (topGO);
-            library
-            (RProtoBuf)
+            library (RProtoBuf)
             source ("../dataset/domain/src/main/r/json.R");
           </onRequest>
         </configuration>
