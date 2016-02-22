@@ -7,7 +7,8 @@ define(["lodash", "../select/SelectParam", "../BaseParam"], function(_, SelectPa
 						type: "select",
 						options: function(){
 							return mevAnnotationsLocator.find(spec.dimension).getFields();
-						}
+						},
+						refreshListeners: ["openRefine:loadedAnnotations:"+spec.dimension]
 					})
 				)
 			);
