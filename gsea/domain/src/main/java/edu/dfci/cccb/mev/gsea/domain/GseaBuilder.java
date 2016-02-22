@@ -31,12 +31,12 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
             + "names(geneList.lfc)=output[,1];\n"
             + "geneList.lfc=sort(geneList.lfc, decreasing=TRUE);\n"
 
-            + "gsea.res<-gsePathway(geneList.lfc, nPerm, minGSSize=input$minGSSize,\n"
-            + "                     pvalueCutoff=input$adjPvalueCutoff,"
-            + "                     pAdjustMethod=input$pAdjustMethod, verbose=FALSE);\n"
+            + "gsea.res<-gsePathway(geneList.lfc, nPerm, minGSSize=minGSSize,\n"
+            + "                     pvalueCutoff=adjPvalueCutoff,"
+            + "                     pAdjustMethod=pAdjustMethod, verbose=FALSE);\n"
 
             + "gsea.res=summary(gsea.res);" +
-            "}", synchronize = false)
+            "}", synchronize = true)
 @Accessors (fluent = true, chain = true)
 public class GseaBuilder extends AbstractDispatchedRAnalysisBuilder<GseaBuilder, Gsea> {
 
