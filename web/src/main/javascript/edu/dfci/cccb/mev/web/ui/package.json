@@ -27,8 +27,10 @@
     "liver": "file:../libs/liver",
     "lodash": "^2.4.1",
     "mev-analysis": "file:../libs/domain/analysis",
+    "mev-annotations": "file:../libs/domain/annotations",
     "mev-bs-modal": "file:../libs/widgets/bsmodal",
     "mev-dataset": "file:../libs/domain/dataset",
+    "mev-gsea": "file:../libs/domain/gsea",
     "mev-pca": "file:../libs/domain/pca",
     "mev-project": "file:../libs/domain/project",
     "mev-results-table": "file:../libs/widgets/mevResultsTable",
@@ -76,8 +78,10 @@
     },
     "meta": {
       "bootstrap": {
-          "deps": ["jquery"]
-        },
+        "deps": [
+          "jquery"
+        ]
+      },
       "notific8": {
         "deps": [
           "jquery",

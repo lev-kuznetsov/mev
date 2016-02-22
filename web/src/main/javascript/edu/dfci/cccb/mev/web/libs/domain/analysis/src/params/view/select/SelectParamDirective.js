@@ -1,5 +1,5 @@
 define(["lodash", "./SelectParam.tpl.html"], function(_, template){
-	function mevSelectParamDirective(){
+	function mevSelectParamDirective($q){
 		return {
 			restrict: "EAC",
 			template: template,
@@ -12,12 +12,27 @@ define(["lodash", "./SelectParam.tpl.html"], function(_, template){
 			}],
 			link: function(scope){
 				var spec = scope.param;
-				scope.isOptionsArray = spec.display ? false : true;
 
+				function setOptions(){
+					var theOptions = scope.param.options();
+					if(_.isFunction(theOptions.then)){
+						theOptions.then(function(options){
+							scope.param.optionsx = options;
+						});
+					}else{
+						scope.param.optionsx = theOptions;
+					}
+				}				
+				setOptions();
+				scope.$on("openRefine:loadedAnnotations:"+scope.param.dimension, function(){
+					console.debug("loadedProject 2");
+					setOptions();
+				});
+				scope.isOptionsArray = spec.display ? false : true;
 			}
-		}
+		};
 	}
-	mevSelectParamDirective.$inject=[];
+	mevSelectParamDirective.$inject=["$q"];
 	mevSelectParamDirective.$name="mevSelectParamDirective";
 	return mevSelectParamDirective;
-})
+});

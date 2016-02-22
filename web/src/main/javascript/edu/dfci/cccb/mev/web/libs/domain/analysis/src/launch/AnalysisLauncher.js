@@ -1,12 +1,12 @@
 "use strict";
 define([], function(){
 	function service(mevContext, mevAnalysisRest){
-		this.start = function(AnalysisType){		 
+		this.start = function(AnalysisType, params){		 
 			var project = mevContext.root();
 			mevAnalysisRest.post({
         				datasetName : project.dataset.datasetName, 
         				analysisType : AnalysisType.id
-        			}, AnalysisType.params.getValues());
+        			}, params || AnalysisType.params.getValues());
 		};
 	}	
 	service.$inject=["mevContext", "mevAnalysisRest"];

@@ -9,4 +9,4 @@ define(["lodash", "../BaseParam"], function(_, BaseParam){
 	}
 	NameParam.prototype = new BaseParam();
 	return NameParam;
-})
+});

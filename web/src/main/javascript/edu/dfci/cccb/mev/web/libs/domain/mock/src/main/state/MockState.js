@@ -1,5 +1,4 @@
-"use strict";
-define(["mui", "angular-ui-router", "../project/MockProject"], function(ng){
+define(["mui", "angular-ui-router", "../project/MockProject"], function(ng){ "use strict";
 
 	function config($stateProvider){	
 		$stateProvider	   	     		

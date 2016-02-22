@@ -1,5 +1,4 @@
-"use strict";
-define(["mui"], function(ng){
+define(["mui"], function(ng){ "use strict";
 	function BaseParam(){
 		this.validate = function (){
 			if(this.required===true && !this.value)

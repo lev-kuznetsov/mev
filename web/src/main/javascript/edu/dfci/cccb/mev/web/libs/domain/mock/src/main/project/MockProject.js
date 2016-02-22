@@ -1,8 +1,8 @@
-"use strict";
 define(["mev-project/data/mouse_test_data.tsv.json", "mev-project"], 
-function(mouseJson){
+function(mouseJson){ "use strict";
 	function value(mevProject){		
-		return mevProject("mouse_test_data.tsv", mouseJson);
+		var project = mevProject("mouse_test_data.tsv", mouseJson);
+		return project;
 	}
 	value.$inject=["mevProject"];
 	value.$name="mevMockProject";

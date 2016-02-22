@@ -1,5 +1,5 @@
-"use strict";
 define(["lodash", "../select/SelectParam"], function(_, SelectParam){
+	"use strict";
 	function SelectionSetParamFactory(mevSelectionLocator){
 		return function(spec){
 

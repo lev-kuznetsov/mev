@@ -1,5 +1,4 @@
-"use strict";
-define(["./AnyParameter.tpl.html"], function(template){
+define(["./AnyParameter.tpl.html"], function(template){ "use strict";
 	function AnyParameterDirective(){
 		return {
 			restrict: "EAC",
@@ -8,9 +7,9 @@ define(["./AnyParameter.tpl.html"], function(template){
 				param: "=mevParam"
 			},
 			
-		}
+		};
 	}
-	AnyParameterDirective.$name="mevAnyParameterDirective"
+	AnyParameterDirective.$name="mevAnyParameterDirective";
 	AnyParameterDirective.$inject=[];
 	return AnyParameterDirective;
 });

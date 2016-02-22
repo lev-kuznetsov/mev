@@ -133,7 +133,8 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 	        }
 		}
 		
-		this.analyses = [];
+		this.analyses = datasetRespObj.analyses || [];
+
 
 	};
 	

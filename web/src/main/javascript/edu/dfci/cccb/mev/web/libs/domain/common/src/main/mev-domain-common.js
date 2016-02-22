@@ -1,7 +1,8 @@
-"use strict";
 define(["mui", "angular-ui-router",
 	"./services/context/Context",
 	"./services/selection/SelectionLocator",
-	], function(ng){
+	"./services/analysis/AnalysisLocator",
+	"./services/annotations/AnnotationsLocator",	
+	], function(ng){ "use strict";
 	return ng.module("mevDomainCommon", arguments, arguments);
 });

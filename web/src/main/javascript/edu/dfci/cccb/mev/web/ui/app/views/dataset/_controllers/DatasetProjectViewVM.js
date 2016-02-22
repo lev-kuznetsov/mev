@@ -1,7 +1,6 @@
-"use strict";
-define(["ng", "lodash"], function(ng, _){
+define(["ng", "lodash"], function(ng, _){ "use strict";
 	var DatasetProjectViewVM=function DatasetViewVM($scope, $stateParams, $state, dataset, project, AnalysisEventBus, AnalysisTypes, mevAnalysisTypes,
-		mevPathwayEnrichmentAnalysisType){
+		mevPathwayEnrichmentAnalysisType, mevGseaAnalysisType){
 		var that=this;
 		console.debug("DatasetProjectViewVM", dataset, project);
 		this.project=project;		
@@ -19,6 +18,7 @@ define(["ng", "lodash"], function(ng, _){
 		this.analysisTypes = mevAnalysisTypes.all();
 		// this.PathwayEnrichmentAnalysisType = mevAnalysisTypes.get("pe");
 		this.PathwayEnrichmentAnalysisType = mevPathwayEnrichmentAnalysisType;
+		this.GseaAnalsyisType = mevGseaAnalysisType;
 		project.generateView({
             viewType:'heatmapView', 
             note: "DatasetProjectViewVM",
@@ -116,6 +116,7 @@ define(["ng", "lodash"], function(ng, _){
 		});
 
 	};
-	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "dataset", "project", "AnalysisEventBus", "AnalysisTypes", "mevAnalysisTypes", "mevPathwayEnrichmentAnalysisType"];
+	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "dataset", "project", "AnalysisEventBus", "AnalysisTypes", "mevAnalysisTypes", 
+	"mevPathwayEnrichmentAnalysisType", "mevGseaAnalysisType"];
 	return DatasetProjectViewVM;
 });

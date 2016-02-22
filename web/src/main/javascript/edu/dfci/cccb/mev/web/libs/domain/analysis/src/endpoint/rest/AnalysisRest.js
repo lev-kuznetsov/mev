@@ -1,6 +1,5 @@
-"use strict";
 define(["mui", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/lib/AnalysisClass"], function(ng, AnalysisEventBus, AnalysisClass){
-    function AnalysisRest($resource, $http, $timeout, analysisEventBus) {
+    function AnalysisRest($resource, $http, $timeout, analysisEventBus) { "use strict";
             
         var transformRequest = [function(data, headers){
             console.log("transformRequest", data);
@@ -69,13 +68,14 @@ define(["mui", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/li
                             data = {data: data};
                         var allParams = {
                             analysisName: params.analysisName || data.analysisName || params.name || data.name || response.name
-                        };
-                        ng.extend(allParams, params);                      
-                        
-                        ng.extend(allParams, data);
+                        };                        
+                        ng.extend(allParams, params);                                              
+                        ng.extend(allParams, data);                        
                         console.debug("AnalysisResource success", params, "data", data, "response", response);
                         var sessionStorageKey = allParams.datasetName+"."+allParams.analysisName;
                         console.debug("sessionStorageKey set", sessionStorageKey);
+                        delete params.limma;
+                        delete allParams.limma;
                         sessionStorage.setItem(sessionStorageKey, JSON.stringify(allParams));  
                         
                         function poll(prevResponse, wait){

@@ -34,13 +34,11 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 	return function(datasetName, datasetRespObj, $http, $rootScope){
 	    
 	    if (!datasetName){
-	        throw TypeError('datasetName parameter not defined');
-	        return null
+	        throw new TypeError('datasetName parameter not defined');	    
 	    }
 	    
 	    if (!datasetRespObj) {
-	        throw TypeError('datasetRespObj parameter not defined')
-	        return null
+	        throw new TypeError('datasetRespObj parameter not defined');
 	    }
 	    
 	    var self = this;
@@ -97,16 +95,16 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 
         //Integer expressions check
 	    for (var k = 0; k < datasetRespObj.values.length; k++){	
-            if (datasetRespObj.values[k].value % 1 != 0) {
-                self.expression.hasNonIntegerValues = true 
-                break
+            if (datasetRespObj.values[k].value % 1 !== 0) {
+                self.expression.hasNonIntegerValues = true;
+                break;
             }
         }
 	    
 
         this.expression.retrieve = function(input){
-            return expressionModule.retrieve.call(self, input)
-        } 
+            return expressionModule.retrieve.call(self, input);
+        };
 
 
 		this.expression.sort = selectionSort;
@@ -118,22 +116,22 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 		this.rowLabels2Indexes = inversion.call(datasetRespObj.row.keys);
 		
 		this.column.indexOf = function(label){
-		    return self.columnLabels2Indexes[label]
+		    return self.columnLabels2Indexes[label];
 		};
 		
 		this.row.indexOf = function(label){
-            return self.columnLabels2Indexes[label]
+            return self.columnLabels2Indexes[label];
         };
 
 		this.selections={
 	        column: datasetRespObj.column.selections,
 	        row: datasetRespObj.row.selections,
 	        intersection: function(params){
-	        	return selectionHelpers.selectionIntersect.call(self, params)
+	        	return selectionHelpers.selectionIntersect.call(self, params);
 	        }
-		}
+		};
 		
-		this.analyses = [];
+		this.analyses = datasetRespObj.analyses || [];
 
 	};
 	

@@ -1,5 +1,4 @@
-"use strict";
-define(["lodash", "./AnalysisTypes"], function(_){
+define(["lodash", "./AnalysisTypes"], function(_){ "use strict";
 	var injectable = function(AnalysisLauncher, mevAnalysisTypes, AnalysisParamsFactory){
 
 		function AnalysisType(id, name, params){
@@ -15,8 +14,8 @@ define(["lodash", "./AnalysisTypes"], function(_){
 			mevAnalysisTypes.register(this);
 		}
 		_.extend(AnalysisType.prototype, { 
-			start: function(){
-				return AnalysisLauncher.start(this);
+			start: function(params){
+				return AnalysisLauncher.start(this, params);
 			}, 
 			validate: function(){			
 				return _.reduce(this.params, function(errors, param, key){
@@ -28,7 +27,8 @@ define(["lodash", "./AnalysisTypes"], function(_){
 					}
 					return errors;
 				}, []);
-			}
+			},
+			parent: AnalysisType.prototype
 		});
 
 		return AnalysisType;

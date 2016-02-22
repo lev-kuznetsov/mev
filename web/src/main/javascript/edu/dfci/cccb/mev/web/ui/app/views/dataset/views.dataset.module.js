@@ -1,4 +1,3 @@
-"use strict";
 define(["ng", 
         "pouchdb",
         "./_controllers/DatasetViewVM", 
@@ -13,7 +12,9 @@ define(["ng",
         "./analyses/views.dataset.analyses.module",
         "mev-analysis",
         "mev-bs-modal",
-        "mevPathwayEnrichment"], 
+        "mevPathwayEnrichment",
+        "mev-gsea",
+        "mev-annotations",], 
 function(ng,
 		PouchDB,
 		DatasetViewVM, 
@@ -21,7 +22,7 @@ function(ng,
 		DatasetHomeVM,
 		DatasetHeatmapVMFactory,
 		AnnotationsViewVM
-		){	
+		){	"use strict";
 	var module=ng.module("mui.views.dataset", arguments, arguments);
 	
 	module.controller("DatasetViewVM", DatasetViewVM);	
