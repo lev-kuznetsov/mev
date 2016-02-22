@@ -37,8 +37,6 @@ import edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgume
 import edu.dfci.cccb.mev.limma.domain.contract.Limma;
 import edu.dfci.cccb.mev.limma.domain.contract.LimmaBuilder;
 import edu.dfci.cccb.mev.limma.domain.r.RserveLimmaBuilder;
-import edu.dfci.cccb.mev.limma.rest.assembly.json.EntryJsonSerializer;
-import edu.dfci.cccb.mev.limma.rest.assembly.json.GoEntryJsonSerializer;
 import edu.dfci.cccb.mev.limma.rest.assembly.json.LimmaJsonSerializer;
 import edu.dfci.cccb.mev.limma.rest.assembly.tsv.LimmaTsvMessageConverter;
 
@@ -73,7 +71,7 @@ public class LimmaRestConfiguration extends MevRestConfigurerAdapter {
    * #addJsonSerializers(java.util.List) */
   @Override
   public void addJsonSerializers (List<JsonSerializer<?>> serializers) {
-    serializers.addAll (asList (new EntryJsonSerializer (), new LimmaJsonSerializer (), new GoEntryJsonSerializer ()));
+    serializers.addAll (asList (new LimmaJsonSerializer ()));
   }
 
   /* (non-Javadoc)
