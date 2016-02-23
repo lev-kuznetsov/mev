@@ -6,7 +6,14 @@ define(["lodash", "../select/SelectParam", "../BaseParam"], function(_, SelectPa
 			_.assign(this, new SelectParam(
 				_.assign(this, spec, {
 						type: "select",
-						options: mevAnalysisLocator.find.bind(this, spec.type)
+						options: mevAnalysisLocator.find.bind(this, spec.type),
+						setValue: function(options){
+							var analyses = options;
+							if(analyses.length===1){
+								this.value = analyses[0];								
+							}
+						}.bind(this),
+						display: "name"				
 					})
 				)
 			);

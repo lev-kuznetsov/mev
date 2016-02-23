@@ -10,7 +10,7 @@ define(["lodash", "./SelectParam.tpl.html"], function(_, template){
 				var spec = scope.param;
 				scope.initial = spec.value;
 
-				scope.setOptions = function setOptions(){
+				scope.setOptions = function setOptions(){	
 					var theOptions = scope.param.options();
 					if(_.isFunction(theOptions.then)){
 						theOptions.then(function(options){
@@ -23,19 +23,31 @@ define(["lodash", "./SelectParam.tpl.html"], function(_, template){
 							if(newv === oldv) return;
 							if(newv.length === 0 && oldv.length === 0) return;
 							scope.param.optionsx = newv;
-						}, true);
+							scope.setValue(newv);
+						}, true);						
+						scope.setValue(theOptions);
 					}
 				};
-				if(scope.param.refreshListeners){
-					scope.param.refreshListeners.map(function(item){
-						scope.$on(item, function(){					
-							scope.setOptions();
+				scope.setValue = function setValue(options){
+					if(scope.param.setValue){
+						scope.param.setValue(options);
+					}
+				};
+				scope.registerEventListeners = function registerEventListeners(){
+					if(scope.param.refreshListeners){
+						scope.param.refreshListeners.map(function(item){
+							scope.$on(item, function(){					
+								scope.setOptions();
+							});
 						});
-					});
-				}
+					}
+				};
 
+				
 				scope.isOptionsArray = spec.display ? false : true;
-				scope.setOptions();				
+				scope.setOptions();						
+				scope.registerEventListeners();			
+
 			}],
 			link: function(scope){				
 				

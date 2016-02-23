@@ -101,7 +101,7 @@ function(_, mevAnalsysType,
 			return geneMapping.then(function(geneMapping){				
 				return limmaResults.reduce(function(result, item){
 					// "SYMBOL":"IL8","logFC":8.3599,"AveExpr":10.1369,"t":79.7198,"P.Value":2.4498e-22,"adj.P.Val":2.9396e-18}
-					var SYMBOL = geneMapping ? geneMapping[item.id] : item.id;
+					var SYMBOL = geneMapping[item.id] ? geneMapping[item.id] : item.id;
 					if(!SYMBOL){
 						console.log("no gene mapping found for '" + item.id + "' in '" + geneSymbolField + "'" );					
 					}else{

@@ -5,8 +5,8 @@ define(["lodash"], function(_){
 		if(!_.isFunction(options)){			
 			spec.options = function(){			
 				return options;
-			}
-		}
+			};
+		}		
 		_.assign(this, {type: "select"}, spec);
-	}
-})
+	};
+});

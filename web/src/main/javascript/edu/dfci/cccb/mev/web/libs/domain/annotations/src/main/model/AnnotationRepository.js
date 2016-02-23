@@ -125,7 +125,8 @@ define([], function(){
 
 				return _initPromise.then(function(data){
 					//if key is not supplied - assume the first column is the row id				
-					var fromIndex = key ? _fieldNameToIndexMap[key] : 6;
+					var fromIndex = key ? _fieldNameToIndexMap[key] : 
+						(_fieldNameToIndexMap["probeset_id"] ? _fieldNameToIndexMap["probeset_id"] : 6);
 					var toIndex = _fieldNameToIndexMap[field];
 
 					var map = {};
@@ -138,7 +139,8 @@ define([], function(){
 					for(var irow=0;irow<data.rows.rows.length;irow++){
 						var curRow=data.rows.rows[irow];
 						var rowValues=curRow.cells;
-						map[rowValues[fromIndex].v] = rowValues[toIndex].v;						
+						if(rowValues[fromIndex])
+							map[rowValues[fromIndex].v] = rowValues[toIndex].v;						
 					}
 
 					return map;

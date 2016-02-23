@@ -5,8 +5,8 @@
         return function (module) {
 
             module.directive('limmaAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService', 'BoxPlotService',
-                "$window", "$timeout",
-                function (tableFilter, alertService, projection, paths, BoxPlotService, $window, $timeout) {
+                "$window", "$timeout", "mevAnalysisTypes",
+                function (tableFilter, alertService, projection, paths, BoxPlotService, $window, $timeout, mevAnalysisTypes) {
                     return {
                         restrict: 'E',
                         templateUrl: paths.module + '/templates/limmaAccordion.tpl.html',
@@ -18,6 +18,8 @@
                             isShowHeatmapTab: "@"
                         },                        
                         controller: ["$scope", function($scope){
+
+                            $scope.analysisTypes = mevAnalysisTypes.all();
                             $scope.fields = ["logFoldChange", "averageExpression"];
 	                    	$scope.headers = [
 								//this row just shows the row index, doesn't use any data from the row
