@@ -141,10 +141,11 @@ define(["mui", "lodash", "app/utils/utils"], function(ng,_,utils){ "use strict";
 				});
 
 				var parentNode = node;
-				var prevAnalysis = analyses[index-1];
+				var prevAnalysis = _.find(analyses, function(item){					
+					return analysis.name.indexOf(item.name+".")===0;
+				});
 				if(prevAnalysis)
-					if(analysis.name.indexOf(prevAnalysis.name+".")===0)
-						parentNode = node.descendant(prevAnalysis.name);
+					parentNode = node.descendant(prevAnalysis.name);
 
 				parentNode.add(analysisNode);
 			}, analysesNode);
