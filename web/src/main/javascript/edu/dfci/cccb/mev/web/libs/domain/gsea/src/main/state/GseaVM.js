@@ -42,7 +42,6 @@ define(["lodash"], function(_){ "use strict";
 		   	scope.filteredResults = filteredResults;
 		  	// scope.applyToHeatmap(filteredResults);
 		};
-		scope.analysisTypes = mevAnalysisTypes.getAll();
 	}	
 	GseaVM.$inject=["$scope", "project", "analysis", "mevAnalysisTypes"];
 	GseaVM.$name="GseaVM";
