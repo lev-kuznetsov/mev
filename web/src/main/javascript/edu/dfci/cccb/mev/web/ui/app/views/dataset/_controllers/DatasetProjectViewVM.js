@@ -1,6 +1,6 @@
 define(["ng", "lodash"], function(ng, _){ "use strict";
 	var DatasetProjectViewVM=function DatasetViewVM($scope, $stateParams, $state, dataset, project, AnalysisEventBus, AnalysisTypes, mevAnalysisTypes,
-		mevPathwayEnrichmentAnalysisType, mevGseaAnalysisType){
+		mevPathwayEnrichmentAnalysisType, mevGseaAnalysisType, mevPcaAnalysisType){
 		var that=this;
 		console.debug("DatasetProjectViewVM", dataset, project);
 		this.project=project;		
@@ -117,6 +117,6 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 
 	};
 	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "dataset", "project", "AnalysisEventBus", "AnalysisTypes", "mevAnalysisTypes", 
-	"mevPathwayEnrichmentAnalysisType", "mevGseaAnalysisType"];
+	"mevPathwayEnrichmentAnalysisType", "mevGseaAnalysisType", "mevPcaAnalysisType"];
 	return DatasetProjectViewVM;
 });

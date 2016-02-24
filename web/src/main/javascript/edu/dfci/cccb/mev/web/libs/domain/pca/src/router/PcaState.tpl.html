@@ -1,0 +1,30 @@
+<!-- <project-analysis-parameters parameters="DatasetAnalysisVM.analysis.params"></project-analysis-parameters> -->
+<div class="column-wrapper">
+	<ul class="nav nav-tabs column-header" id="importTabs">
+		<li id="table_tab" class="active"><a href="#table" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}} XXX</a></li>
+		<div class="action-menu" mui-paste="action-menu"></div>		
+	</ul>
+
+	<div class="tab-content column-body">
+		<div class="tab-pane active results-wrapper" id="table" >
+			<div class="results-header clearfix">
+				<!--      	<div class="btn-toolbar" role="toolbar" mui-yank="action-menu"> -->
+		     	<div class="btn-toolbar" role="toolbar" >
+		     		<div class="btn-group">
+			            <btn-create-selection mui-target="Top" mui-analysis="DatasetAnalysisVM.analysis" 
+			             	mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.getSelection()" mui-key-name="id" mui-dimension="column">
+			            </btn-create-selection><!-- 
+			            --><btn-export-selection mui-target="Top" mui-analysis="DatasetAnalysisVM.analysis" 
+			             	mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.getSelection()" mui-key-name="id" mui-dimension="column">
+			            </btn-export-selection>           
+		            </div>
+		      	</div>
+			</div>
+			<div class="results-body">
+				<div mev-pca-analysis="DatasetAnalysisVM.analysis" mev-selections="DatasetAnalysisVM.project.dataset.column.selections" cur-selection="DatasetAnalysisVM.curSelection"></div>
+<!-- 				<nvd3 options="DatasetAnalysisVM.options" data="DatasetAnalysisVM.data"></nvd3> -->
+<!-- 				<d3-Scatterplot data="DatasetAnalysisVM.pc.data" selected="DatasetAnalysisVM.selectionParams.samples" width="600" height="400"></d3-Scatterplot> -->
+			</div>
+		</div>		
+	</div>
+</div>
