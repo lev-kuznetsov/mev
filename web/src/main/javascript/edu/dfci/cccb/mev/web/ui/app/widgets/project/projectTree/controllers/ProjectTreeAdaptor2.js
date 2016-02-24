@@ -114,7 +114,7 @@ define(["mui", "lodash", "app/utils/utils"], function(ng,_,utils){ "use strict";
 						}
 					}
 				});
-				columnSetsNode.add(selectionNode);
+				rowSetsNode.add(selectionNode);
 			});
 
 			var analysesNode = createNode(project.dataset.analyses, {
