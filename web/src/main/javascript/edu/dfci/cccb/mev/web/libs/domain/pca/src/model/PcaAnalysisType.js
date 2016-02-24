@@ -1,8 +1,10 @@
-define([], function(){"use strict";
+define(["../router/PcaState.tpl.html"], function(template){"use strict";
 	function component(MevAnalysisType, mevAnalysisParams){
 		var pcaType = new MevAnalysisType({
 			id: "pca",
 			name: "PCA",
+			viewModel: "PcaStateVM",
+			template: template,
 			params: mevAnalysisParams([
 				// new mevSelectionSetParam({
 				// 	"id": "samplelist",

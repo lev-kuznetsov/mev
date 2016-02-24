@@ -15,10 +15,7 @@ define([], function(){
 		}
 
 		function getType(id){
-			var type;
-			if(!(type = analysisTypes[id]))
-				throw "Error: analysisType not found: '" + id + "'";
-			return type;
+			return analysisTypes[id];			
 		}
 		function getAll(){
 			return analysisTypes;

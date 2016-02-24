@@ -1,6 +1,6 @@
 define(["ng", "lodash"], function(ng, _){
 	"use strict";
-	var AnyAnalysisDirective = function AnyAnalysisDirective(AnalysisTypes, $state, $resolve, $injector, AnalysisEventBus){
+	var AnyAnalysisDirective = function AnyAnalysisDirective(AnalysisTypes, $state, $resolve, $injector, AnalysisEventBus, mevAnalysisTypes, $compile){
 		
 		
 		
@@ -25,7 +25,8 @@ define(["ng", "lodash"], function(ng, _){
 			},
 			template: function(tElement, tAttrs){
 				console.debug("anyAnalysis template", tAttrs);
-				return "<div ng-include=\"getTemplateUrl()\" onload=\"processAnalysis()\">"+tAttrs.anyAnalysis+"</div>";				
+				return "<div ng-if='!mevAnalysisType.template'' ng-include=\"getTemplateUrl()\" onload=\"processAnalysis()\">"+tAttrs.anyAnalysis+"</div>" +
+				"<div ng-if='mevAnalysisType.template' ng-init='paste()'></div>";				
 			},
 //			templateUrl: function(tElement, tAttrs){				
 //				var templateUrl="app/views/dataset/analysis/default/view.analysis.default.tpl.html";
@@ -46,9 +47,9 @@ define(["ng", "lodash"], function(ng, _){
 								
 				var analysisType;
 				if(analysis){
-					analysisType = AnalysisTypes[analysis.type];					
+					analysisType = mevAnalysisTypes.get(analysis.type) || AnalysisTypes[analysis.type];					
 				}else if($scope.anyAnalysisLaunch && $scope.anyAnalysisLaunch.analysisType){					
-					analysisType = AnalysisTypes[AnalysisTypes.reverseLookup[$scope.anyAnalysisLaunch.analysisType]];
+					analysisType = mevAnalysisTypes.get($scope.anyAnalysisLaunch.analysisType) || AnalysisTypes[AnalysisTypes.reverseLookup[$scope.anyAnalysisLaunch.analysisType]];
 				}
 				
 				var ctrlName;
@@ -60,6 +61,7 @@ define(["ng", "lodash"], function(ng, _){
 				}
 				$scope.DatasetAnalysisVM.project=project;				
 				$scope.DatasetAnalysisVM.analysis=analysis;
+				$scope.mevAnalysisType = analysisType;
 				$scope.getTemplateUrl=function(){
 					if($scope.anyTemplateUrl){
 						return $scope.anyTemplateUrl; 
@@ -141,11 +143,16 @@ define(["ng", "lodash"], function(ng, _){
 				return function(scope, elm, attr, controller){
 					console.debug("anyAnalysis link", scope, attr);
 					
+					scope.paste=function(){
+						elm.html($compile(scope.mevAnalysisType.template)(scope));    
+						scope.processAnalysis();
+					};
+
 					scope.processAnalysis=function(){
 						if(!controller.analysis) {
 							console.debug("anyAnalysis: not found");
 							return;
-						};
+						}
 						console.debug("processAnalysis", elm);						
 						elm.find("[href]").each(function(){							
 							var href = this.attributes.getNamedItem("href").value;
@@ -168,6 +175,6 @@ define(["ng", "lodash"], function(ng, _){
 		};
 	};
 	AnyAnalysisDirective.$name="anyAnalysisDirective";
-	AnyAnalysisDirective.$inject=["AnalysisTypes", "$state", "$resolve", "$injector", "AnalysisEventBus"];
+	AnyAnalysisDirective.$inject=["AnalysisTypes", "$state", "$resolve", "$injector", "AnalysisEventBus", "mevAnalysisTypes", "$compile"];
 	return AnyAnalysisDirective;
 });

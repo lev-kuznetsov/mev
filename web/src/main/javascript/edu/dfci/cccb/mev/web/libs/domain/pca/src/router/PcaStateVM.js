@@ -18,7 +18,7 @@ define(["lodash"], function(_){ "use strict";
 			scope.$on("mui:dashboard:panel:max", scope.sizeChanged);
 			scope.$on("mui:dashboard:panel:min", scope.sizeChanged);	
 		}
-		factory.$inject=PcaStateVMFactory.$inject;		
+		factory.$inject=["$scope", "project", "analysis"];		
 		return factory;
 	}	
 	PcaStateVMFactory.$inject=[];
