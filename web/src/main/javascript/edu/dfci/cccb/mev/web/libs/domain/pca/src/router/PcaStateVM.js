@@ -1,24 +1,28 @@
 define(["lodash"], function(_){ "use strict";
-	function PcaStateVM(scope, project, analysis, mevAnalysisTypes){ 
+	function PcaStateVMFactory(){ 
+		function factory(scope, project, analysis){
+			var _self = this;
+			this.project = project;
+			this.analysis = analysis;
+			this.curSelection = [];
+		  	this.getSelection=function(){
+		  		return _self.curSelection;
+		  	};
 
-		this.project = project;
-		this.analysis = analysis;
-		this.curSelection = [];
-	  	scope.getSelection=function(){
-	  		return scope.curSelection;
-	  	};
-
-	  	scope.sizeChanged=function(){
-    		console.debug("pca resize");
-    		window.dispatchEvent(new Event('resize'));
-    	};
-    	scope.$on("mui:dashboard:panel:rowMax", scope.sizeChanged);
-		scope.$on("mui:dashboard:panel:rowMin", scope.sizeChanged);
-		scope.$on("mui:dashboard:panel:max", scope.sizeChanged);
-		scope.$on("mui:dashboard:panel:min", scope.sizeChanged);
+		  	scope.sizeChanged=function(){
+	    		console.debug("pca resize");
+	    		window.dispatchEvent(new Event('resize'));
+	    	};
+	    	scope.$on("mui:dashboard:panel:rowMax", scope.sizeChanged);
+			scope.$on("mui:dashboard:panel:rowMin", scope.sizeChanged);
+			scope.$on("mui:dashboard:panel:max", scope.sizeChanged);
+			scope.$on("mui:dashboard:panel:min", scope.sizeChanged);	
+		}
+		factory.$inject=PcaStateVMFactory.$inject;		
+		return factory;
 	}	
-	PcaStateVM.$inject=["$scope", "project", "analysis", "mevAnalysisTypes"];
-	PcaStateVM.$name="PcaStateVM";
-	PcaStateVM.$provider="controller";
-	return PcaStateVM;
+	PcaStateVMFactory.$inject=[];
+	PcaStateVMFactory.$name="PcaStateVMFactoryFactory";
+	PcaStateVMFactory.$provider="factory";
+	return PcaStateVMFactory;
 });
