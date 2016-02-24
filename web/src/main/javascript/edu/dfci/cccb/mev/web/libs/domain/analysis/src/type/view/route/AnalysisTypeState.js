@@ -5,7 +5,7 @@ define([], function(){
 	 		.state("root.dataset.analysisType", {	 			
 	 			parent: "root.dataset",
 	 			url: "analysisType/",
-	 			abstract: false,
+	 			abstract: true,
 	 			template: "<ui-view></ui-view>",	   	     			
 	 			resolve:{
 	 				anaysisType: [function(){
