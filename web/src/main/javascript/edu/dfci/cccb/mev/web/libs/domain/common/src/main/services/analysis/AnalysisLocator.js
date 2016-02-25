@@ -1,6 +1,8 @@
 define(["lodash"], function(_){
 	function mevAnalysisLocator(mevContext){		
 		this.find = function(type){
+			var context = mevContext.current() || mevContext.root();
+			if(!context) return;
 			if(type){
 				if(mevContext.current().type && mevContext.current().type === type)
 					return [mevContext.current()];

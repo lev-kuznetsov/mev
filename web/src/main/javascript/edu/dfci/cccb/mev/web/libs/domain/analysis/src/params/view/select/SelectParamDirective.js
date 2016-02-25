@@ -19,6 +19,7 @@ define(["lodash", "./SelectParam.tpl.html"], function(_, template){
 					}else{						
 						scope.param.optionsx = theOptions;
 						scope.$watch(function(){return scope.param.options();}, function(newv, oldv){
+							if(!newv) return;
 							if(_.isEqual(newv, oldv)) return;
 							if(newv === oldv) return;
 							if(newv.length === 0 && oldv.length === 0) return;
