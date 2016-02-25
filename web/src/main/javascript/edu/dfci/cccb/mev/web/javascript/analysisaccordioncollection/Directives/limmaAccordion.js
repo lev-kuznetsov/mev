@@ -50,7 +50,7 @@
 	                                   'default': 0.05
 	                               },
 	                               {
-	                                   'name': 'Q-Value',
+	                                   'name': 'q-Value',
 	                                   'field': "qValue",
 	                                   'icon': "<="
 	                               }

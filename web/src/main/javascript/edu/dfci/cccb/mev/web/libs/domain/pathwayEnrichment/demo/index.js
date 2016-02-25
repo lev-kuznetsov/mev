@@ -29,7 +29,7 @@ define(["mui", "mevPathwayEnrichment",
 	           'field': "p.adjust",
 	           'icon': "<="
 	       },{
-	           'name': 'Q-Value',
+	           'name': 'q-Value',
 	           'field': "qvalue",
 	           'icon': "<="
 	       },{

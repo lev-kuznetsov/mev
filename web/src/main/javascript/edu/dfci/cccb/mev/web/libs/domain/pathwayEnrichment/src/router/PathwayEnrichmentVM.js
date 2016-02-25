@@ -27,7 +27,7 @@ define(["lodash"], function(_){ "use strict";
 		           'field': "p.adjust",
 		           'icon': "<="
 		       },{
-		           'name': 'Q-Value',
+		           'name': 'q-Value',
 		           'field': "qvalue",
 		           'icon': "<="
 		       },{
