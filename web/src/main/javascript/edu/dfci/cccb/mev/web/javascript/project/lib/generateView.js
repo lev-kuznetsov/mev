@@ -56,7 +56,8 @@ define(['./HeatmapViewClass'], function(HeatmapViewClass){
             if(self.views.viewType && //this is an update to an existing view
             		_.isEqual(self.views.expression, params.expression) && //expression values are not beind updated
             		_.isEqual(self.views.labels.column.keys, params.labels.column.keys) && //column order is the same 
-            		_.isEqual(self.views.labels.row.keys, params.labels.row.keys)){ //row order is the same
+            		_.isEqual(self.views.labels.row.keys, params.labels.row.keys) &&
+                    _.isEqual(self.views.note, params.note)){ //row order is the same                    
             	return self.views; //-> no need to generate a new view
             }
             
