@@ -4,13 +4,8 @@ define(["lodash"], function(_){"use strict";
 			if(!AnalysisType) AnalysisType = this;
 			var project = mevContext.root();
 			var dataParams = data || AnalysisType.params.getValues();
-			if(mevContext.getLevel()==="bottom"){
-				if(mevContext.getLevel()==="bottom"){
-					dataParams.name = mevContext.current().name + "." + dataParams.name;
-				}
-			}
-			if(!urlParams) urlParams = {};
 
+			if(!urlParams) urlParams = {};
 			_.extend(urlParams, {
 				datasetName : project.dataset.datasetName, 
 				analysisType : AnalysisType.id
@@ -18,6 +13,17 @@ define(["lodash"], function(_){"use strict";
 			if(method==="put")
 				urlParams.analysisName = dataParams.name;
 
+			
+			if(mevContext.getLevel()==="bottom"){
+				dataParams.name = mevContext.current().name + "." + dataParams.name;
+				if(urlParams.analysisName)
+					urlParams.analysisName = dataParams.name;
+			}else{
+				dataParams.name = urlParams.analysisType + "_" + dataParams.name;
+				if(urlParams.analysisName)
+					urlParams.analysisName = urlParams.analysisType + "_" + urlParams.analysisName;
+			}						
+			
 			mevAnalysisRest[method || "post"](urlParams, dataParams);			
 		};
 	}	
