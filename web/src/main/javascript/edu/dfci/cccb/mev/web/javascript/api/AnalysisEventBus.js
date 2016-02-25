@@ -22,7 +22,10 @@ define(["angular"], function(angular){
 			console.debug("registered "+eventName);
 			$scope.$on(eventName, function($event, data){
 				console.debug("recieved "+eventName, $event, data);
-				handler(data.analysisType, data.analysisName, data);
+				var type = data.analysisType;
+				if(!type && data.response) 
+					type = data.response.type;
+				handler(type, data.analysisName, data);
 			});
 		}
 		
