@@ -26,12 +26,14 @@ define(["ng", "lodash"], function(ng, _){
 	            {
 	                'name': 'Annotated Genes',
 	                'field': "annotatedGenes",
-	                'icon': [">=", "<="]
+	                'icon': [">=", "<="],
+	                'datatype': "integer"
 	            },
 	            {
 	                'name': 'Significant Genes',
 	                'field': "significantGenes",
-	                'icon': [">=", "<="]
+	                'icon': [">=", "<="],	                
+	                'datatype': "integer"
 	            },
 	            {
 	                'name': 'Expected',

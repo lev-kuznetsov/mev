@@ -28,7 +28,7 @@
 					<a ng-if="header.link" href="{{header.link(row[header.field])}}" target="new">{{row[header.field]}}</a>
 					<a ng-if="header.click" href="#" ng-click="header.click(row[header.field], row)">{{row[header.field]}}</a>
 					<input type="checkbox" ng-if="header.check" ng-model="row.isChecked" ng-change="selectRow(header.field, row, header.check)">	
-					<span ng-if="!header.link && !header.click" >{{row[header.field] | textOrNumber:5 }}</span>					
+					<span ng-if="!header.link && !header.click" >{{row[header.field] | mevTextOrNumber:5:header }}</span>					
 				</td>
 			</tr>
 		</tbody>

@@ -33,7 +33,8 @@ define(["lodash"], function(_){ "use strict";
 		       },{
 		           'name': 'Count',
 		           'field': "Count",
-		           'icon': ["<=", ">="]
+		           'icon': ["<=", ">="],
+		           'datatype': "integer"
 		       },{
 		           'name': 'ID',
 		           'field': "geneID",

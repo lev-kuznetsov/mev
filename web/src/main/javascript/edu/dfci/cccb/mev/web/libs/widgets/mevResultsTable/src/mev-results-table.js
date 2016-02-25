@@ -12,18 +12,6 @@ function(ng){
 	  return function (input) {
 	    return ng.isArray(input);
 	  };
-  	})
-  	.filter('textOrNumber', function ($filter) {
-	    return function (input, fractionSize) {
-	        if (isNaN(input)) {
-	            return input;
-	        } else {
-	        	if(Math.abs(input)>1000)    	        		 
-	        		return Number.parseFloat(input).toExponential(fractionSize);
-	        	else
-	        		return $filter('number')(input, fractionSize);
-	        };
-	    };
-	});
+  	});
 
 });

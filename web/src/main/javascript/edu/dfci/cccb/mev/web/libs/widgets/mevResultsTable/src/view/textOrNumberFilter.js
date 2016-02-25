@@ -1,14 +1,17 @@
-"use strict";
-define([], function($filter){
-    function mevTextOrNumber(input, fractionSize) {
-        if (isNaN(input)) {
-            return input;
-        } else {
-        	if(Math.abs(input)>1000)    	        		 
-        		return Number.parseFloat(input).toExponential(fractionSize);
-        	else
-        		return $filter('number')(input, fractionSize);
-        }
+define([], function($filter){ "use strict";
+    function mevTextOrNumber($filter) {
+        return function(input, fractionSize, header){
+            if (isNaN(input)) {
+                return input;
+            } else {            
+                if(header && header.datatype==="integer") 
+                        fractionSize=0;
+                if(Math.abs(input)>1000)                         
+                    return Number.parseFloat(input).toExponential(fractionSize);
+                else
+                    return $filter('number')(input, fractionSize);
+            }    
+        };        
     }
     mevTextOrNumber.$inject=["$filter"];    
     mevTextOrNumber.$name="mevTextOrNumber";

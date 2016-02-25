@@ -27,7 +27,8 @@ define(["lodash"], function(_){ "use strict";
 	       },{
 	           'name': 'Set Size',
 	           'field': "setSize",
-	           'icon': ["<=", ">="]
+	           'icon': ["<=", ">="],
+	           'datatype': "integer"
 	       },{
 	           'name': 'enrichmentScore',
 	           'field': "enrichmentScore",
