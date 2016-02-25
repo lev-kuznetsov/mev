@@ -127,7 +127,7 @@ function(_, mevAnalsysType,
 			console.debug("gsea params values", paramValues);
 			prepareParams(paramValues).then(function(params){
 				console.debug("gsea out params", params);
-				_self.parent.start.call(_self, params);	
+				_self.parent.start.call(_self, _self, params);	
 			});			
 		};
 

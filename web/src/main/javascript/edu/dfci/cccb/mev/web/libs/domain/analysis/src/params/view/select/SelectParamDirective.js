@@ -31,7 +31,10 @@ define(["lodash", "./SelectParam.tpl.html"], function(_, template){
 				scope.setValue = function setValue(options){
 					if(scope.param.setValue){
 						scope.param.setValue(options);
+					}else if(scope.param.required && options.length===1){
+						scope.param.value = options[0];
 					}
+
 				};
 				scope.registerEventListeners = function registerEventListeners(){
 					if(scope.param.refreshListeners){

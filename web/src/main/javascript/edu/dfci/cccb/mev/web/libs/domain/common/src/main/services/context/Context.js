@@ -1,5 +1,4 @@
-"use strict";
-define(["lodash"], function(_){
+define(["lodash"], function(_){ "use strict";
 	function ngcomponent($state){
 		_.extend(this, {
 			root: function(){
@@ -9,6 +8,12 @@ define(["lodash"], function(_){
 				return $state.$current.path[$state.$current.path.length-1].locals.globals.analysis ||
 				$state.$current.path[$state.$current.path.length-1].locals.globals.dataset ||
 				$state.$current.path[$state.$current.path.length-1].locals.globals.project;
+			},
+			setLevel: function(level){				
+				this.level = level || "root";
+			},
+			getLevel: function(){
+				return this.level || "root";
 			}
 		});					
 	}

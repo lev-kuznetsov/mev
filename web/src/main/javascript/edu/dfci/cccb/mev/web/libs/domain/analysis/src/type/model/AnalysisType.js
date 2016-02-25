@@ -15,7 +15,7 @@ define(["lodash", "./AnalysisTypes"], function(_){ "use strict";
 		}
 		_.extend(AnalysisType.prototype, { 
 			start: function(params){
-				return AnalysisLauncher.start(this, params);
+				return AnalysisLauncher.start.apply(this, arguments);
 			}, 
 			validate: function(){			
 				return _.reduce(this.params, function(errors, param, key){
