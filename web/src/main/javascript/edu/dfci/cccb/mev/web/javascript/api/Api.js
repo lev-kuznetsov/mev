@@ -87,11 +87,16 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
 
     	function postWrapper(methodName){
     		return function(params, data, callback){
-        		if(params.analysisName)
-                    params.analysisName = params.analysisType + "_" + params.analysisName;
-                if(data.name)
-                    data.name = params.analysisType + "_" + data.name;
-
+                if(params.analysisName && params.analysisName.toLowerCase() === params.analysisType.toLowerCase()){
+                    //do not prefix analysis name with type - name already contains the type
+                }else{
+                    if(params.analysisName)
+                        params.analysisName = params.analysisType + "_" + params.analysisName;
+                    if(data.name)
+                        data.name = params.analysisType + "_" + data.name;
+    
+                }
+        		
         		var result = resource[methodName](params, data, callback);
         		
         		result.$promise.then(
