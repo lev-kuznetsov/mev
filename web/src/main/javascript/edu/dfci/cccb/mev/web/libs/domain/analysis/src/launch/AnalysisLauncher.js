@@ -15,7 +15,7 @@ define(["lodash"], function(_){"use strict";
 
 			
 			if(mevContext.getLevel()==="bottom"){
-				dataParams.name = mevContext.current().name + "." + dataParams.name;
+				dataParams.name = mevContext.current().name + "." + urlParams.analysisType + "_" + dataParams.name;
 				if(urlParams.analysisName)
 					urlParams.analysisName = dataParams.name;
 			}else{
