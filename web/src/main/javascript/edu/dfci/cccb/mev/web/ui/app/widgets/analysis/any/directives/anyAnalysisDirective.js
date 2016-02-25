@@ -14,7 +14,15 @@ define(["ng", "lodash"], function(ng, _){
 			});
 			return analysis;
 		}
-		
+		function getAnalysisType(analysis, $scope){
+			if(_.isString(analysis)){
+				return mevAnalysisTypes.get(analysis) || AnalysisTypes[analysis];
+			}else if(_.isObject(analysis)){
+				return mevAnalysisTypes.get(analysis.type) || AnalysisTypes[analysis.type];
+			}else if($scope && $scope.anyAnalysisLaunch && $scope.anyAnalysisLaunch.analysisType){					
+				return mevAnalysisTypes.get($scope.anyAnalysisLaunch.analysisType) || AnalysisTypes[AnalysisTypes.reverseLookup[$scope.anyAnalysisLaunch.analysisType]];
+			}
+		}
 		return {
 			restrict: "AE",
 			scope: {
@@ -45,12 +53,7 @@ define(["ng", "lodash"], function(ng, _){
 				var project = resolveProject($state);
 				var analysis = resolveAnalysis($scope.anyAnalysis);
 								
-				var analysisType;
-				if(analysis){
-					analysisType = mevAnalysisTypes.get(analysis.type) || AnalysisTypes[analysis.type];					
-				}else if($scope.anyAnalysisLaunch && $scope.anyAnalysisLaunch.analysisType){					
-					analysisType = mevAnalysisTypes.get($scope.anyAnalysisLaunch.analysisType) || AnalysisTypes[AnalysisTypes.reverseLookup[$scope.anyAnalysisLaunch.analysisType]];
-				}
+				var analysisType = getAnalysisType(analysis, $scope);
 				
 				var ctrlName;
 				if($scope.anyViewModel){
@@ -86,7 +89,7 @@ define(["ng", "lodash"], function(ng, _){
 						var analysis = data.response;
 						if(analysis.name===$scope.anyAnalysisLaunch.analysisName){							
 							$scope.DatasetAnalysisVM.analysis = analysis;
-							var analysisType = AnalysisTypes[$scope.DatasetAnalysisVM.analysis.type];
+							var analysisType = getAnalysisType($scope.DatasetAnalysisVM.analysis.type);
 							var ctrlName = analysisType.viewModel+"Factory";
 							if($injector.has(ctrlName)){					
 								var ctrl = $injector.get(ctrlName); 														
@@ -102,7 +105,7 @@ define(["ng", "lodash"], function(ng, _){
 						var analysis = data.response;
 						if(analysis.name===$scope.anyAnalysisLaunch.analysisName){							
 							$scope.DatasetAnalysisVM.analysis = analysis;
-							var analysisType = AnalysisTypes[$scope.DatasetAnalysisVM.analysis.type];							
+							var analysisType = getAnalysisType($scope.DatasetAnalysisVM.analysis.type);							
 						}
 					}
 				});
@@ -113,7 +116,7 @@ define(["ng", "lodash"], function(ng, _){
 						var analysis = _.find(project.dataset.analyses, function(analysis){ return analysis.name===$scope.anyAnalysisLaunch.analysisName; });
 						if(analysis){							
 							$scope.DatasetAnalysisVM.analysis = analysis;
-							var analysisType = AnalysisTypes[$scope.DatasetAnalysisVM.analysis.type];
+							var analysisType = getAnalysisType($scope.DatasetAnalysisVM.analysis.type);
 							var ctrlName = analysisType.viewModel+"Factory";
 							if($injector.has(ctrlName)){					
 								var ctrl = $injector.get(ctrlName); 														
@@ -144,8 +147,15 @@ define(["ng", "lodash"], function(ng, _){
 					console.debug("anyAnalysis link", scope, attr);
 					
 					scope.paste=function(){
-						elm.html($compile(scope.mevAnalysisType.template)(scope));    
-						scope.processAnalysis();
+						var analysis = scope.DatasetAnalysisVM.analysis;
+						var template;
+						if(!analysis || (analysis && analysis.status && (analysis.status === "IN_PROGRESS" || analysis.status === "ERROR"))){
+							template = scope.mevAnalysisType.defaultTemplate;
+						}else{
+							template = scope.mevAnalysisType.template;
+						}
+						elm.html($compile(template)(scope));    
+						scope.processAnalysis();							
 					};
 
 					scope.processAnalysis=function(){

@@ -1,4 +1,4 @@
-define(["lodash", "./AnalysisTypes"], function(_){ "use strict";
+define(["lodash", "../view/defaultTemplate/analysis.default.tpl.html", "./AnalysisTypes"], function(_, defaultTemplate){ "use strict";
 	var injectable = function(AnalysisLauncher, mevAnalysisTypes, AnalysisParamsFactory){
 
 		function AnalysisType(id, name, params){
@@ -28,7 +28,8 @@ define(["lodash", "./AnalysisTypes"], function(_){ "use strict";
 					return errors;
 				}, []);
 			},
-			parent: AnalysisType.prototype
+			parent: AnalysisType.prototype,
+			defaultTemplate: defaultTemplate
 		});
 
 		return AnalysisType;

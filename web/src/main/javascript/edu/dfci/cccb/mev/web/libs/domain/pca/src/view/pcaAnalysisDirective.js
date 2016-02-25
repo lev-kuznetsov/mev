@@ -92,7 +92,8 @@ define(function(require){
 				};
 
 				scope.$watch("pcaAnalysis", function(newVal){
-					scope.vm.setData(transformData(newVal, scope.vm.xLabel, scope.vm.yLabel, scope.selections));	
+					if(newVal)
+						scope.vm.setData(transformData(newVal, scope.vm.xLabel, scope.vm.yLabel, scope.selections));	
 				});
 
 				scope.$on("mev.scatterPlot.selection", function($event, selected){					
