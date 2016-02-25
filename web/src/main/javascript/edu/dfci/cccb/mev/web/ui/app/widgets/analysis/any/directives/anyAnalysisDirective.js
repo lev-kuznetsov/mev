@@ -157,7 +157,10 @@ define(["ng", "lodash"], function(ng, _){
 						elm.html($compile(template)(scope));    
 						scope.processAnalysis();							
 					};
-
+					scope.$watch("DatasetAnalysisVM.analysis", function(newv){
+						if(newv && scope.mevAnalysisType.template)
+							scope.paste();
+					})
 					scope.processAnalysis=function(){
 						if(!controller.analysis) {
 							console.debug("anyAnalysis: not found");
