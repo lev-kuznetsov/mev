@@ -17,7 +17,7 @@ define(["../router/PcaState.tpl.html",
 				// 	"required": true
 				// })
 				new mevSelectionSetParam({
-					"id": "samplelist",
+					"id": "sampleList",
 					"dimension": "column", 
 					"displayName": "Sample Set",
 					"display": "name",

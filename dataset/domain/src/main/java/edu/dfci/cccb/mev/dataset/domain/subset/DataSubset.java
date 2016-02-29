@@ -25,7 +25,6 @@ public class DataSubset extends AbstractDataset implements Dataset {
   private final Dataset parent;
   private final Dimension columns;
   private final Dimension rows;
-  private final Analyses analyses;
   
   @SneakyThrows(value = {InvalidDimensionTypeException.class})
   public DataSubset(String name, Dataset parent, List<String> columns, List<String> rows) throws InvalidDatasetNameException {
@@ -33,7 +32,6 @@ public class DataSubset extends AbstractDataset implements Dataset {
     this.parent = parent;
     this.columns = parent.dimension (Type.COLUMN).subset (columns);
     this.rows = parent.dimension (Type.ROW).subset (rows);
-    this.analyses = new ArrayListAnalyses ();
   }
   
 
@@ -42,8 +40,7 @@ public class DataSubset extends AbstractDataset implements Dataset {
     super("subset");    
     this.parent = parent;
     this.columns = parent.dimension (Type.COLUMN).subset (columns);
-    this.rows = parent.dimension (Type.ROW).subset (rows);
-    this.analyses = new ArrayListAnalyses ();
+    this.rows = parent.dimension (Type.ROW).subset (rows);    
   }
   
   @Override
@@ -73,7 +70,7 @@ public class DataSubset extends AbstractDataset implements Dataset {
 
   @Override
   public Analyses analyses () {
-    return this.analyses;
+    return this.parent.analyses();
   }
 
   @Override
