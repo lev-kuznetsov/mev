@@ -1,8 +1,4 @@
-"use strict";
-define(["lodash", "./name/NameParam"], function(_, NameParam){
-	
-
-
+define(["lodash", "./name/NameParam"], function(_, NameParam){ "use strict";
 	function AnalysisParamsFactory(){	
 		return function mevAnalysisParamsFactory(params, validate){
 			var nameParam = new NameParam({
@@ -14,7 +10,7 @@ define(["lodash", "./name/NameParam"], function(_, NameParam){
 				params.getValues = function(){				
 					var result = {};
 					return _.reduce(this, function(result, item, key){					
-						result[item.id]=item.value;
+						result[item.id]=item.getValue ? item.getValue() : (item.value && item.bound ? item.value[item.bound] : item.value);
 						return result;
 					}, result);				
 				};				
@@ -25,7 +21,7 @@ define(["lodash", "./name/NameParam"], function(_, NameParam){
 				var tmp = Object.create({
 					getValues: function(){				
 						return _.mapValues(this, function(o){					
-							return o.value;
+							return o.getValue ? o.getValue() : o.value;
 						});				
 					},
 					validate: validate
@@ -38,7 +34,7 @@ define(["lodash", "./name/NameParam"], function(_, NameParam){
 				});		
 				return ret;
 			}				
-		}		
+		};
 	}
 
 	AnalysisParamsFactory.$inject=[];
