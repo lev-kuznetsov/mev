@@ -64,7 +64,7 @@ define(["lodash"], function(_){
 		        });
 		    }, idField);         
 		    
-		    if(Object.keys(groups).length === 1)
+		    if(Object.keys(groups).length === 1 && groups.none)
 		        groups.none.name = groups.none.key = "Selection: none";
 
 		    return _.sortBy(groups, function(group){
