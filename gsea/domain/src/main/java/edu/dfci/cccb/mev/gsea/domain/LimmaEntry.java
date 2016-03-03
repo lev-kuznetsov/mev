@@ -10,6 +10,6 @@ public class LimmaEntry {
   private @JsonProperty double logFC;
   private @JsonProperty ("AveExpr") double averageExpression;
   private @JsonProperty double t;
-  private @JsonProperty ("PValue") double pValue;
-  private @JsonProperty ("adjPVal") double pAdjust;
+  private @JsonProperty ("P.Value") double pValue;
+  private @JsonProperty ("adj.P.Val") double pAdjust;
 }

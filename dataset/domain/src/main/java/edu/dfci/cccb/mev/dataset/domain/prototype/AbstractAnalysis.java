@@ -22,6 +22,7 @@ import java.util.TimeZone;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
@@ -41,8 +42,8 @@ public abstract class AbstractAnalysis <T extends AbstractAnalysis<?>> implement
 
   private @JsonProperty @Getter String name;
   private @JsonProperty @Getter String type;
-  private @JsonProperty @Getter String status = Analysis.MEV_ANALYSIS_STATUS_COMPLETED;
-  private @JsonProperty @Getter String error;
+  private @JsonProperty @Getter @Setter String status = Analysis.MEV_ANALYSIS_STATUS_SUCCESS;
+  private @JsonProperty @Getter @Setter String error;
   private @Getter Calendar timestamp = getInstance ();
 
   public T name (String name) {

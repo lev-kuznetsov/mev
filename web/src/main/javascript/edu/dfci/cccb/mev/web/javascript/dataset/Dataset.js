@@ -1,15 +1,14 @@
-"use strict";
-define(['angular',
+define(['angular', 
         './lib/DatasetClass',
         './lib/loadAnalyses',
         './lib/setSelections',
         './lib/resetSelections',        
         'api/Api'], 
-function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){
+function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){ "use strict";
 	
 	return angular.module('Mev.Dataset', ['Mev.Api'])
-	.factory('DatasetFactory', ['AnalysisResourceService', 'SelectionResourceService', "$q", "$http", '$rootScope', 'AnalysisEventBus', "DashboardItems",
-	 function(AnalysisResourceService, SelectionResourceService, $q, $http, $rootScope, analysisEventBus, DashboardItems){
+	.factory('DatasetFactory', ['AnalysisResourceService', 'SelectionResourceService', "$q", "$http", '$rootScope', 'AnalysisEventBus', "DashboardItems", "mevAnnotationRepository",
+	 function(AnalysisResourceService, SelectionResourceService, $q, $http, $rootScope, analysisEventBus, DashboardItems, MevAnnotationRepository){
 	    
 	    //DatasetFactory :: [String], [DatasetResponseObj] -> [Dataset]
 	    //  Function that takes dataset name and dataset response object and returns
@@ -35,6 +34,15 @@ function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){
 				dataset.setSelections = setSelections;
 				dataset.resetSelections = resetSelections;
 				
+
+				dataset.getAnnotations=function(dimension){
+					if(!this._annotations)
+						this._annotations={};				
+					if(!this._annotations[dimension])
+						this._annotations[dimension] = new MevAnnotationRepository(dimension);
+					return this._annotations[dimension];
+				};
+
 				return dataset;
 				
 			};

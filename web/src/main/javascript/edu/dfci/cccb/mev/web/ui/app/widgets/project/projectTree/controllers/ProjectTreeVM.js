@@ -45,6 +45,6 @@ function(ng, RecursiveTreeMixin) {
 		});		
 	};
 	
-	ProjectTreeVM.$inject=["ProjectTreeAdaptor", "$modal", "$scope", "AnalysisEventBus"];
+	ProjectTreeVM.$inject=["ProjectTreeAdaptor2", "$modal", "$scope", "AnalysisEventBus"];
 	return ProjectTreeVM;
 });

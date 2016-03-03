@@ -1,5 +1,6 @@
 define(["ng", "./controllers/ProjectTreeVM", 
         "./controllers/ProjectTreeAdaptor", 
+        "./controllers/ProjectTreeAdaptor2", 
         "./controllers/DatasetProjectTreeEventBus",
         "./directives/projectTree.directive", 
         "./controllers/ProjectTreeSchema",
@@ -8,6 +9,7 @@ define(["ng", "./controllers/ProjectTreeVM",
         "./_projectNode/directives/projectNodeDefault.directive"],		
 function(ng, ProjectTreeVM, 
 		ProjectTreeAdaptor, 
+		ProjectTreeAdaptor2, 
 		DatasetProjectTreeEventBus,
 		ProjectTreeDirective, 
 		ProjectTreeSchema,
@@ -19,6 +21,7 @@ function(ng, ProjectTreeVM,
 	module.factory("ProjectTreeSchema", ProjectTreeSchema);
 	module.factory("DatasetProjectTreeSchema", DatasetProjectTreeSchema);
 	module.factory("ProjectTreeAdaptor", ProjectTreeAdaptor);
+	module.factory("ProjectTreeAdaptor2", ProjectTreeAdaptor2);
 	module.service("DatasetProjectTreeEventBus", DatasetProjectTreeEventBus);
 	module.controller("ProjectTreeVM", ProjectTreeVM);	
 	module.directive("projectTree", ProjectTreeDirective);	

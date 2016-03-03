@@ -22,6 +22,11 @@ define(["lodash"], function(_){
 					},
 					existsInDashboard: function(){
 						return _.find(DashboardItems, {name: scope.node.nodeData.name}) ? true : false;
+					},
+					getDisplayName: function(){
+						if(scope.node.parent)
+							return scope.node.nodeData.name.replace(scope.node.parent.nodeData.name+".", "");
+						return scope.node.nodeData.name;
 					}
 				};
 			}

@@ -89,6 +89,6 @@ public abstract class MevException extends Exception {
    * @see java.lang.Throwable#toString() */
   @Override
   public String toString () {
-    return super.toString () + " arguments: " + arguments;
+    return String.format ("%s arguments: %s; cause: %s", super.toString (), arguments, getCause ());
   }
 }

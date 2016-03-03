@@ -25,7 +25,6 @@ define(["ng", "lodash", "nvd3", "mev-pca"], function(ng, _, nvd3){
 	    	};
 	    	
 	    	this.getSelection=function(){
-	    		console.debug("pca _selection", _selection);
 	    		return _self.curSelection;
 	    	};
 	    	$scope.sizeChanged=function(){

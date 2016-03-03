@@ -15,7 +15,7 @@ public class GseaConfiguration {
 
   @Bean
   @Scope ("prototype")
-  public GseaBuilder builder () {
+  public GseaBuilder gseaBuilder () {
     return new GseaBuilder ();
   }
 

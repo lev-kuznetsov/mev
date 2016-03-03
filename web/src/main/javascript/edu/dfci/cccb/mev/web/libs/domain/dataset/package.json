@@ -1,0 +1,26 @@
+{
+  "name": "mev-dataset",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/main/mev-dataset.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "dependencies": {
+    "angular-mocks": "^1.5.0",
+    "lodash": "^4.2.1",
+    "mui": "file:../../mui",
+    "q": "^1.4.1",
+    "steal": "^0.13.2"
+  },
+  "devDependencies": {
+    "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
+    "steal-jasmine": "0.0.2"
+  }
+}

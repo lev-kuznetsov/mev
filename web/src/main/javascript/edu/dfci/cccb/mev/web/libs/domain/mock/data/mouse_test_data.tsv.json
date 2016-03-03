@@ -1,0 +1,47 @@
+{
+	"row": {
+		"type": "row",
+		"keys": ["Actb", "Actg1", "Aldoa", "Atp5b", "Card11", "Cars", "Cfl1", "Chuk", "Dmpk", "Eef1a1", "Eef2", "Eif4a1", "Fut7", "Gnb2l1", "Gzmb", "Gzmc", "Hnrnpa2b1", "Lars2", "Lcp1", "Ldha", "Ly6e", "Mtf2", "Myh9", "Npm1", "Orc2", "Pabpc1", "Pdcl3", "Pgk1", "Pkm2", "Plek", "Ppia", "Sell", "Spp1", "St3gal2", "Syngr2", "Tagln2", "Tln1", "Tmsb4x", "Top2a"],
+		"selections": [{
+			"name": "g2",
+			"properties": {
+				"selectionColor": "#a7c20e",
+				"selectionDescription": ""
+			},
+			"keys": ["Cfl1", "Lars2", "Mtf2", "Myh9", "Tmsb4x", "Tln1", "Actb", "Pabpc1", "Eif4a1", "Tagln2", "Gnb2l1", "Top2a", "Lcp1", "Atp5b", "Eef1a1", "Pkm2", "Hnrnpa2b1", "Npm1", "Ppia", "Pgk1"]
+		}, {
+			"name": "g1",
+			"properties": {
+				"selectionColor": "#40fb1a",
+				"selectionDescription": ""
+			},
+			"keys": ["Tmsb4x", "Spp1", "Orc2", "Eef2", "Actb", "Tln1", "Lcp1", "Tagln2", "Atp5b", "Myh9", "Eif4a1", "Npm1", "Eef1a1", "Pabpc1", "Ppia", "Top2a", "Gnb2l1", "Pkm2", "Hnrnpa2b1", "Pgk1"]
+		}]
+	},
+	"column": {
+		"type": "column",
+		"keys": ["A", "B", "C", "D", "E", "F"],
+		"selections": [{
+			"name": "s2",
+			"properties": {
+				"selectionColor": "#b0220e",
+				"selectionDescription": ""
+			},
+			"keys": ["D", "E", "F"]
+		}, {
+			"name": "s1",
+			"properties": {
+				"selectionColor": "#5fd97b",
+				"selectionDescription": ""
+			},
+			"keys": ["A", "B", "C"]
+		}]
+	},
+	"values": [],
+	"min": 7.45,
+	"max": 18.08,
+	"avg": 13.692521367521374,
+	"analyses": [
+		{"name":"limma1","timestamp":{"timeInMillis":1455659735252,"seconds":35,"minutes":55,"hours":4,"period":"PM"},"type":"LIMMA Differential Expression Analysis","results":[{"id":"Gzmc","logFoldChange":-3.41,"averageExpression":12.985,"pValue":1.1468E-6,"qValue":0.0,"t":-14.1078},{"id":"Sell","logFoldChange":-3.52,"averageExpression":12.2467,"pValue":1.914E-6,"qValue":0.0,"t":-13.1433},{"id":"Gzmb","logFoldChange":-2.85,"averageExpression":13.795,"pValue":0.0,"qValue":5.0E-4,"t":-8.3559},{"id":"Fut7","logFoldChange":-2.33,"averageExpression":8.8383,"pValue":1.0E-4,"qValue":5.0E-4,"t":-8.1319},{"id":"St3gal2","logFoldChange":-1.9267,"averageExpression":9.6633,"pValue":2.0E-4,"qValue":0.0013,"t":-6.8947},{"id":"Dmpk","logFoldChange":-1.6667,"averageExpression":9.9333,"pValue":2.0E-4,"qValue":0.0015,"t":-6.5909},{"id":"Ly6e","logFoldChange":-1.6767,"averageExpression":13.6983,"pValue":4.0E-4,"qValue":0.0018,"t":-6.1666},{"id":"Actg1","logFoldChange":2.0333,"averageExpression":16.2167,"pValue":4.0E-4,"qValue":0.0018,"t":6.141},{"id":"Card11","logFoldChange":-2.1667,"averageExpression":9.25,"pValue":6.0E-4,"qValue":0.0028,"t":-5.6069},{"id":"Syngr2","logFoldChange":2.08,"averageExpression":11.4233,"pValue":9.0E-4,"qValue":0.0035,"t":5.306},{"id":"Cars","logFoldChange":1.8433,"averageExpression":11.6483,"pValue":0.0012,"qValue":0.0041,"t":5.0844},{"id":"Pdcl3","logFoldChange":2.2967,"averageExpression":11.5217,"pValue":0.0023,"qValue":0.0074,"t":4.5193},{"id":"Orc2","logFoldChange":1.05,"averageExpression":11.3983,"pValue":0.0025,"qValue":0.0074,"t":4.4641},{"id":"Chuk","logFoldChange":1.9633,"averageExpression":12.3617,"pValue":0.003,"qValue":0.0083,"t":4.3207},{"id":"Mtf2","logFoldChange":1.1933,"averageExpression":11.47,"pValue":0.006,"qValue":0.0156,"t":3.79},{"id":"Plek","logFoldChange":1.2,"averageExpression":14.6133,"pValue":0.0081,"qValue":0.0197,"t":3.5743},{"id":"Cfl1","logFoldChange":1.0633,"averageExpression":14.8883,"pValue":0.0122,"qValue":0.028,"t":3.2814},{"id":"Aldoa","logFoldChange":-1.0067,"averageExpression":13.6867,"pValue":0.0161,"qValue":0.0348,"t":-3.0935},{"id":"Actb","logFoldChange":0.82,"averageExpression":16.9433,"pValue":0.0209,"qValue":0.0429,"t":2.9141},{"id":"Ldha","logFoldChange":1.1267,"averageExpression":15.6333,"pValue":0.0307,"qValue":0.0598,"t":2.6567},{"id":"Lcp1","logFoldChange":-0.7233,"averageExpression":13.9417,"pValue":0.0396,"qValue":0.0735,"t":-2.4879},{"id":"Eif4a1","logFoldChange":-0.5233,"averageExpression":14.3617,"pValue":0.0752,"qValue":0.1332,"t":-2.065},{"id":"Eef1a1","logFoldChange":-0.4933,"averageExpression":17.7033,"pValue":0.0895,"qValue":0.1518,"t":-1.9496},{"id":"Atp5b","logFoldChange":-0.58,"averageExpression":13.7233,"pValue":0.096,"qValue":0.156,"t":-1.903},{"id":"Npm1","logFoldChange":-0.4433,"averageExpression":14.6383,"pValue":0.1379,"qValue":0.2151,"t":-1.6608},{"id":"Lars2","logFoldChange":-1.1633,"averageExpression":12.1017,"pValue":0.1674,"qValue":0.2512,"t":-1.5284},{"id":"Myh9","logFoldChange":-0.4367,"averageExpression":14.8183,"pValue":0.2182,"qValue":0.3152,"t":-1.3439},{"id":"Tagln2","logFoldChange":-0.4133,"averageExpression":14.0933,"pValue":0.2794,"qValue":0.3892,"t":-1.1659},{"id":"Tmsb4x","logFoldChange":0.49,"averageExpression":16.145,"pValue":0.3076,"qValue":0.4136,"t":1.0947},{"id":"Hnrnpa2b1","logFoldChange":0.25,"averageExpression":14.8317,"pValue":0.3285,"qValue":0.4271,"t":1.0451},{"id":"Top2a","logFoldChange":-0.25,"averageExpression":14.3017,"pValue":0.3753,"qValue":0.4607,"t":-0.9426},{"id":"Eef2","logFoldChange":-0.3733,"averageExpression":16.0833,"pValue":0.378,"qValue":0.4607,"t":-0.9368},{"id":"Gnb2l1","logFoldChange":0.23,"averageExpression":14.7183,"pValue":0.4047,"qValue":0.4783,"t":0.8829},{"id":"Spp1","logFoldChange":0.24,"averageExpression":14.9633,"pValue":0.6121,"qValue":0.6841,"t":0.529},{"id":"Pabpc1","logFoldChange":0.1567,"averageExpression":17.2717,"pValue":0.6139,"qValue":0.6841,"t":0.5263},{"id":"Pgk1","logFoldChange":-0.09,"averageExpression":14.515,"pValue":0.6705,"qValue":0.7264,"t":-0.4426},{"id":"Ppia","logFoldChange":-0.09,"averageExpression":14.855,"pValue":0.7604,"qValue":0.782,"t":-0.3163},{"id":"Tln1","logFoldChange":0.1233,"averageExpression":14.7117,"pValue":0.7619,"qValue":0.782,"t":0.3142},{"id":"Pkm2","logFoldChange":0.01,"averageExpression":14.015,"pValue":0.9706,"qValue":0.9706,"t":0.0381}],"control":null,"experiment":null}
+	]
+}

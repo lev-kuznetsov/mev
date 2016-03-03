@@ -1,6 +1,7 @@
-define(["ng", "lodash"], function(ng, _){
-	var DatasetProjectViewVM=function DatasetViewVM($scope, $stateParams, $state, dataset, project, AnalysisEventBus, AnalysisTypes){
-		that=this;
+define(["ng", "lodash"], function(ng, _){ "use strict";
+	var DatasetProjectViewVM=function DatasetViewVM($scope, $stateParams, $state, dataset, project, AnalysisEventBus, AnalysisTypes, mevAnalysisTypes,
+		mevPathwayEnrichmentAnalysisType, mevGseaAnalysisType, mevPcaAnalysisType){
+		var that=this;
 		console.debug("DatasetProjectViewVM", dataset, project);
 		this.project=project;		
 		
@@ -10,11 +11,14 @@ define(["ng", "lodash"], function(ng, _){
 		this.getProjectName=function(){
 			return project.name;
 		};
-				
+		
 		this.node={nodeName: "Dataset"};
 		console.debug("***dataset", dataset, project);
 //		this.annotations=annotations;	
-		
+		this.analysisTypes = mevAnalysisTypes.all();
+		// this.PathwayEnrichmentAnalysisType = mevAnalysisTypes.get("pe");
+		this.PathwayEnrichmentAnalysisType = mevPathwayEnrichmentAnalysisType;
+		this.GseaAnalsyisType = mevGseaAnalysisType;
 		project.generateView({
             viewType:'heatmapView', 
             note: "DatasetProjectViewVM",
@@ -37,16 +41,21 @@ define(["ng", "lodash"], function(ng, _){
 		}
 		
 		$scope.$on("ui:projectTree:nodeSelected", function($event, node){
-			that.node=node;			
+			// that.node=node;			
 			
-			var params = node.nodeConfig.state.getParams(node);
-			if(node.nodeParent && node.nodeParent.nodeConfig){
-				ng.extend(params, node.nodeParent.nodeConfig.state.getParams(node.nodeParent));
-			}
+			// var params = node.nodeConfig.state.getParams(node);
+			// if(node.nodeParent && node.nodeParent.nodeConfig){
+			// 	ng.extend(params, node.nodeParent.nodeConfig.state.getParams(node.nodeParent));
+			// }
 			
-			var targetState = "root"+node.nodeConfig.state.name;
-			console.debug("ui:projectTree:nodeSelected $on", $event, node, $state, params, targetState);			
-			$state.go(targetState, params);
+			// var targetState = "root"+node.nodeConfig.state.name;
+			// console.debug("ui:projectTree:nodeSelected $on", $event, node, $state, params, targetState);			
+			// $state.go(targetState, params);
+			if(node.nodeData.params && mevAnalysisTypes.all()[node.nodeData.params.analysisType])
+				$state.go("root.dataset.analysisType"+"."+node.nodeData.params.analysisType, 
+					{datasetId: node.nodeData.params.datasetName, analysisId: node.nodeData.name});
+			else
+				node.activate();
 		});
 		
 		AnalysisEventBus.onAnalysisStarted($scope, function(type, name, data){
@@ -77,8 +86,19 @@ define(["ng", "lodash"], function(ng, _){
 				$scope.$broadcast("ui:projectTree:dataChanged");
 //			});			
         });
+        AnalysisEventBus.onAnalysisFailure($scope, function(type, name, data){
+				var analysis = data.response;
+				var found = _.findIndex(dataset.analyses, function(analysis){ return analysis.name===name; });
+				if(found > -1){
+					dataset.analyses[found] = analysis;					
+				}else {					
+					dataset.analyses.push(analysis);
+				}
+				$scope.$broadcast("ui:projectTree:dataChanged");
+//			});			
+        });
 		AnalysisEventBus.onAnalysisLoadedAll($scope, function(){
-			console.debug("DatasetProjectViewVM onAnalysisLoadedAll");
+			console.debug("DatasetProjectViewVM onAnalysisLoadedAll");	
 			$scope.$broadcast("ui:projectTree:dataChanged");			
 		});
 		
@@ -96,6 +116,7 @@ define(["ng", "lodash"], function(ng, _){
 		});
 
 	};
-	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "dataset", "project", "AnalysisEventBus", "AnalysisTypes"];
+	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "dataset", "project", "AnalysisEventBus", "AnalysisTypes", "mevAnalysisTypes", 
+	"mevPathwayEnrichmentAnalysisType", "mevGseaAnalysisType", "mevPcaAnalysisType"];
 	return DatasetProjectViewVM;
 });

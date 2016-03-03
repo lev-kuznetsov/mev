@@ -31,6 +31,7 @@ function(angular, d3, jquery, HeatmapVisualizationClass, generateParams){
                 },
                 link : function($scope, elems, attr) {
                 	//use jquery to get the nearest scrollable parent
+                    var $ = jquery;
                 	var scrollable = $(elems).scrollParent();
                 	//if that didnt' work use the scrollableContainer attribute if supplied
                 	if(!scrollable && $scope.heatmapView.scrollableContainer)

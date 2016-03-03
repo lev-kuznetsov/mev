@@ -6,7 +6,7 @@ define([], function(){
 		
 		var self = this;
 		
-		this.cell =  {height:15, width:15, padding: 1};
+		this.cell =  {height:15, width:15, padding: 0};
 
 		this.panel = {
 			side:{

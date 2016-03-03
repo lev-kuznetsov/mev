@@ -93,7 +93,7 @@
       
       if(window.location.href.indexOf("localhost")>=0 ||
          window.location.href.indexOf("dfci")>=0){
-         return "bundle"
+         return "bundle";
       }
 
       return "prod";
@@ -117,7 +117,7 @@
       
       var env = getEnv();
       if(env.indexOf("bundle")>=0){
-        system.bundlesPath = system.bundlesPath.replace("/min", "/dev");
+        system.bundlesPath = system.bundlesPath.replace("/min", "/dev");      
       }else if(env.indexOf("live")>=0){
         system.loadBundles = false;
         system.main = "steallive";
@@ -143,8 +143,6 @@
   </head>
   <body>
 <!--    <mev-main-menu></mev-main-menu> -->
-   <ui-view>
-   	Loading ... please wait.
-   </ui-view>   
+   <ui-view/>
   </body>
 </html>

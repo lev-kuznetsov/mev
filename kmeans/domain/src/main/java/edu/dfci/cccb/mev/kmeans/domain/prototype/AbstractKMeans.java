@@ -23,6 +23,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
@@ -43,8 +44,12 @@ import edu.dfci.cccb.mev.kmeans.domain.simple.SimpleFlatClusteredDimension;
 @Accessors (fluent = true, chain = true)
 public abstract class AbstractKMeans extends AbstractAnalysis<AbstractKMeans> implements KMeans {
 
-  private @Getter @Setter Set<Cluster> clusters;
+  private @JsonProperty @Getter @Setter Set<Cluster> clusters;
   private @Setter Dimension dimension;
+  @JsonProperty("dimension")
+  private String getDimension(){
+    return dimension.type().toString ();
+  }
   private @Getter @Setter Dataset dataset;
   private @Inject ObjectMapper mapper;
 

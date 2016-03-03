@@ -6,10 +6,16 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
+
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+import lombok.extern.log4j.Log4j;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
@@ -19,11 +25,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.pca.domain.PcaBuilder;
 
+@Log4j
 @RestController
 @RequestMapping ("/dataset/" + DATASET_URL_ELEMENT)
 @Scope (SCOPE_REQUEST)
@@ -38,9 +47,16 @@ public class PcaController {
     return pca.get ().dataset (data).name (params.get ("name")).buildAsync ();
   }
   
+  @Accessors(fluent=true)
+  @ToString
+  private static class PcaDto{
+	  @JsonProperty @Getter private String name;
+	  @JsonProperty(required=false) @Getter private List<String> sampleList;	  
+  }
+  
   @RequestMapping (value = "/analyze/pca/{name}", method = PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus (OK)
-  public Analysis put (final @PathVariable ("name") String name) throws DatasetException {
-    return pca.get ().dataset (data).name (name).buildAsync ();
+  public Analysis put (final @PathVariable ("name") String name, @RequestBody PcaDto dto) throws DatasetException {
+    return pca.get ().dataset (data).name (name).sampleList(dto.sampleList()).buildAsync ();
   }
 }

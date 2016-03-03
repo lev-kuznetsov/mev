@@ -54,10 +54,10 @@ public class KMeansRestConfiguration extends MevRestConfigurerAdapter {
    * @see
    * edu.dfci.cccb.mev.configuration.rest.prototype.MevRestConfigurerAdapter
    * #addJsonSerializers(java.util.List) */
-  @Override
-  public void addJsonSerializers (List<JsonSerializer<?>> serializers) {
-    serializers.add (new KMeansJsonSerializer ());
-  }
+//  @Override
+//  public void addJsonSerializers (List<JsonSerializer<?>> serializers) {
+//    serializers.add (new KMeansJsonSerializer ());
+//  }
 
   /* (non-Javadoc)
    * @see

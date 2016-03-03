@@ -1,0 +1,19 @@
+{
+  "name": "steal-test-bootstrap",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/steal-test-bootstrap.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "devDependencies": {
+    "steal": "^0.13.2",
+    "steal-jasmine": "0.0.2"
+  }
+}

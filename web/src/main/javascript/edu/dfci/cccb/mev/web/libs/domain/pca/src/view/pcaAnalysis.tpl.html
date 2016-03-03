@@ -1,73 +1,11 @@
-<div class="pca-scatter-plot">
-	<div class="chart">
-		<div class="controls">	
-				<label>X</label>					
-				<select ng-change="vm.updateAxis()" ng-model="vm.xLabel">
-					<option selected>PC1</option>
-					<option >PC2</option>
-					<option>PC3</option>
-				</select>
-
-				<label>Y</label>					
-				<select ng-change="vm.updateAxis()" ng-model="vm.yLabel">
-					<option>PC1</option>
-					<option selected>PC2</option>
-					<option>PC3</option>
-				</select>
-
-				<label class="break">Log Scale</label>				
-				<div class="inlineGroup">
-					<label>X</label><input ng-model="vm.logScaleX" type="checkbox" />
-				    <label>Y</label><input ng-model="vm.logScaleY" type="checkbox" />
-				</div>
-
-				<label class="break">Tools</label>
-				<div class="btn-group">
-			        <label class="btn btn-info btn-sm" ng-model="vm.dragAction" uib-btn-radio="'zoom'">
-			        	<input name="dragAction" type="radio" ng-model="vm.dragAction" ng-value="'zoom'" aria-label="Zoom"/>
-			        	<span class="glyphicon glyphicon-zoom-in"  aria-hidden="true"></span>
-			        </label>
-			        <label class="btn btn-info btn-sm" ng-model="vm.dragAction" uib-btn-radio="'select'">
-			        	<input name="dragAction" type="radio" ng-model="vm.dragAction" ng-value="'select'" aria-label="Select"/>
-			        	<span class="glyphicon glyphicon-screenshot"  aria-hidden="true"></span>
-			        </label>			        
-			    </div>
-
-				<label class="break">Selections</label>		
-				<table class="table table-condensed" ng-if="selections && selections.length>0">		
-					<tr ng-repeat="selection in selections">	
-						<td>
-							<input type="checkbox" ng-model="selection.checked" ng-change="vm.updateSelection(selection)" ng-true-value="true" ng-false-value="false">
-							{{selection.name}}
-						</td>
-						<td style="width: 20px" bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>
-						<td>{{selection.properties.selectionDescription}}</td>								
-					</tr>
-				</table>
-		</div>
-		<div class="body">		
-				<div class="mev-scatter-plot" input-data="vm.data" label-x="vm.xLabel" label-y="vm.yLabel" selections="vm.selections"
-					log-scale-x="vm.logScaleX" log-scale-y="vm.logScaleY" zoom-enabled="vm.isZoomEnabled()"></div>
-		</div>				
-		<div class="footer">
-			<div class="selection" ng-if="vm.selected && vm.selected.items.length>0">
-				<table class="table table-condensed" >		
-					<thead>
-						<th>Selected Samples</th>
-						<th>{{vm.selected.xLabel}}</th>
-						<th>{{vm.selected.yLabel}}</th>
-					</thead>
-					<tr ng-repeat="sample in vm.selected.items">	
-						<td>{{sample.id}}</td>
-						<td>{{sample.x}}</td>
-						<td>{{sample.y}}</td>								
-					</tr>
-				</table>
-			</div>	
-		</div>
-		
-	</div>	
-	
-	
-
+<div class="pca-scatter-plot">		
+	<div class="mev-scatter-plot" drag-action="'select'" 
+    	mev-input="pcaAnalysis.x" 
+    	mev-x-field="{{vm.fields[0]}}" 
+    	mev-y-field="{{vm.fields[1]}}" 
+    	mev-fields="vm.fields"
+    	log-scale-x="vm.logScaleX" 
+    	log-scale-y="vm.logScaleY" 
+    	mev-selections="selections">
+    </div>		
 </div>

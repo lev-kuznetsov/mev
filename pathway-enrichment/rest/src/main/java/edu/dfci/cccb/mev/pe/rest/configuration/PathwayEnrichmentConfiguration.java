@@ -16,12 +16,12 @@ public class PathwayEnrichmentConfiguration extends MevRestConfigurerAdapter {
 
   @Bean
   @Scope ("prototype")
-  public PathwayEnrichmentBuilder builder () {
+  public PathwayEnrichmentBuilder pathwayEnrichmentBuilder () {
     return new PathwayEnrichmentBuilder ();
   }
 
   @Bean
-  public AnalysisPathVariableMethodArgumentResolver<PathwayEnrichment> analysisPathVariableMethodArgumentResolver () {
+  public AnalysisPathVariableMethodArgumentResolver<PathwayEnrichment> pathwayEnrichmentVariableMethodArgumentResolver () {
     return new AnalysisPathVariableMethodArgumentResolver<> (PathwayEnrichment.class);
   }
 }

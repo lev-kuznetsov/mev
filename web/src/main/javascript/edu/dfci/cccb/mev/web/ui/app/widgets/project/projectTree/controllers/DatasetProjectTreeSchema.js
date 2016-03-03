@@ -1,5 +1,18 @@
-define([], function(){
+define(["lodash"], function(_){
 	var DatasetProjectTreeSchema=function DatasetProjectTreeSchema(){
+	function getInheritedParams(defaults, node){
+		var params = defaults || {};
+		if(node.nodeParent && node.nodeParent.nodeConfig){
+			_.extend(params, node.nodeParent.nodeConfig.state.getParams(node.nodeParent));
+		}						
+		return params;
+	}
+	var stateBase = {
+		getParams: function(node){
+			return {};
+		}
+	}	
+	
 	return {
 							
 			"dataset": {
@@ -60,7 +73,7 @@ define([], function(){
 				state: {
 					name: ".dataset.analysis",
 					getParams: function(node){
-						return {analysisId: node.nodeData.name, analysisType: node.nodeData.type};
+						return getInheritedParams({analysisId: node.nodeData.name, analysisType: node.nodeData.type}, node);
 					},
 					isDisabled: function(node){
 						return node.nodeData.status==='IN_PROGRESS';

@@ -130,10 +130,12 @@
       });
       
       module.filter('textOrNumber', function ($filter) {
-    	    return function (input, fractionSize) {
+    	    return function (input, fractionSize, header) {
     	        if (isNaN(input)) {
     	            return input;
     	        } else {
+                    if(header && header.datatype==="integer") 
+                        fractionSize=0;
     	        	if(Math.abs(input)>1000)    	        		 
     	        		return Number.parseFloat(input).toExponential(fractionSize);
     	        	else

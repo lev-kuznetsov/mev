@@ -1,10 +1,12 @@
+"use strict";
 (function () {
 
-    define(["lodash", "crossfilter"], function (_, crossfilter) {
+    define(["mui", "lodash", "crossfilter", "mev-scatter-plot"], function (ng, _, crossfilter, mevScatterPlot) {
         return function (module) {
 
             module.directive('limmaAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService', 'BoxPlotService',
-                function (tableFilter, alertService, projection, paths, BoxPlotService) {
+                "$window", "$timeout", "mevAnalysisTypes",
+                function (tableFilter, alertService, projection, paths, BoxPlotService, $window, $timeout, mevAnalysisTypes) {
                     return {
                         restrict: 'E',
                         templateUrl: paths.module + '/templates/limmaAccordion.tpl.html',
@@ -16,6 +18,9 @@
                             isShowHeatmapTab: "@"
                         },                        
                         controller: ["$scope", function($scope){
+
+                            $scope.analysisTypes = mevAnalysisTypes.all();
+                            $scope.fields = ["logFoldChange", "averageExpression"];
 	                    	$scope.headers = [
 								//this row just shows the row index, doesn't use any data from the row
 	//              								{
@@ -45,7 +50,7 @@
 	                                   'default': 0.05
 	                               },
 	                               {
-	                                   'name': 'Q-Value',
+	                                   'name': 'q-Value',
 	                                   'field': "qValue",
 	                                   'icon': "<="
 	                               }
@@ -63,7 +68,7 @@
                                 		[$scope.analysis.params.control, $scope.analysis.params.experiment], 
                                 		$scope.analysis.randomId); 
                             });
-                            
+                            var scope = $scope;
                             $scope.applyToHeatmap = function (filteredResults) {
                                 
                             	var labels = filteredResults.map(projection.ids);
@@ -82,17 +87,30 @@
                                 });
 
                             };
+
+                            
                         }],
                         link: function (scope) {
                             
-                        	
+                            
+                            ng.element('#scatterPlotTab').click(function (e) {
+                                $timeout(function() {
+                                    var evt = $window.document.createEvent('UIEvents'); 
+                                    evt.initUIEvent('resize', true, false, $window, 0); 
+                                    $window.dispatchEvent(evt);
+                                });
+                                    // e.preventDefault()
+                                    // ng.element(this).tab('show')                                                                    
+                                    // ng.element(window).trigger('resize'); // Added this line to force NVD3 to redraw the chart
+                                    // scope.$apply();
+                            })                 
                             
                             scope.filteredResults = undefined;
                             
                             scope.selectionParams = {
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16)
-                            }
+                            };
 // 
                             scope.viewGenes = function (filteredResults) {
                             	
@@ -119,7 +137,7 @@
 
                                     }, selectionData,
                                     function (response) {
-                                        scope.project.dataset.resetSelections('row')
+                                        scope.project.dataset.resetSelections('row');
                                         var message = "Added " + scope.selectionParams.name + " as new Selection!";
                                         var header = "Heatmap Selection Addition";
 
@@ -133,7 +151,78 @@
                                         alertService.error(message, header);
                                     });
 
-                            }
+                            };
+
+                            scope.scatterVm={
+                                selected: {
+                                    items: []
+                                },
+                                addSelections: function(){
+                                    var userselections = scope.scatterVm.selected.items.map(projection.ids);
+                                    var selectionData = {
+                                        name: scope.selectionParams.name,
+                                        properties: {
+                                            selectionDescription: '',
+                                            selectionColor: scope.selectionParams.color,
+                                        },
+                                        keys: userselections
+                                    };
+                                    scope.project.dataset.selection.post({
+                                        datasetName: scope.project.dataset.datasetName,
+                                        dimension: "row"
+
+                                    }, selectionData,
+                                    function (response) {
+                                        scope.project.dataset.resetSelections('row');
+                                        var message = "Added " + scope.selectionParams.name + " as new Selection!";
+                                        var header = "Heatmap Selection Addition";
+
+                                        alertService.success(message, header);
+                                    },
+                                    function (data, status, headers, config) {
+                                        var message = "Couldn't add new selection. If " + "problem persists, please contact us.";
+
+                                        var header = "Selection Addition Problem (Error Code: " + status + ")";
+
+                                        alertService.error(message, header);
+                                    });
+                                },
+                                exportSelection: function(){
+
+                                    var keys = scope.scatterVm.selected.items.map(projection.ids);
+                                    var selectionData = {
+                                        name: scope.exportParams.name,
+                                        properties: {
+                                            selectionDescription: '',
+                                            selectionColor: scope.exportParams.color,
+                                        },
+                                        keys: keys
+                                    };
+
+                                    scope.project.dataset.selection.export({
+                                        datasetName: scope.project.dataset.datasetName,
+                                        dimension: "row"
+
+                                    }, selectionData,
+                                    function (response) {
+                                        scope.project.dataset.resetSelections('row');
+                                        var message = "Added " + scope.exportParams.name + " as new Dataset!";
+                                        var header = "New Dataset Export";
+
+                                        alertService.success(message, header);
+                                    },
+                                    function (data, status, headers, config) {
+                                        var message = "Couldn't export new dataset. If " + "problem persists, please contact us.";
+
+                                        var header = "New Dataset Export Problem (Error Code: " + status + ")";
+
+                                        alertService.error(message, header);
+                                    });
+                                }
+                            };
+                            scope.$on("mev.scatterPlot.selection", function($event, selected){                 
+                                scope.scatterVm.selected = selected;
+                            });
 
                             scope.exportParams = {
                                 name: undefined,
@@ -179,9 +268,9 @@
 
                     };
                     
-            }])
+            }]);
 
-        }
-    })
+        };
+    });
 
-})()
+})();

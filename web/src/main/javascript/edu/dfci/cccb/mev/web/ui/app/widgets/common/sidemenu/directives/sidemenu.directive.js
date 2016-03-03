@@ -1,13 +1,14 @@
+"use strict";
 define(["ng"], function(ng){
-	var SideMenuDirective = function SideMenuDirective(SidemenuSrv, LayoutSrv){
+	var SideMenuDirective = function SideMenuDirective(SidemenuSrv, LayoutSrv, mevAnalysisTypes){
 		
 		return {			
 			restrict: "E",
 			transclude: true,
 			template: "<div ng-transclude><div/>",
 			controller: "SideMenuVM",
-			link: function(scope, elem, attr){
-				scope.hello="hiiiiii";
+			controllerAs: "SideMenuVM",
+			link: function(scope, elem, attr){				
 				scope.closed=false;
 				scope.test=function($event){					
 					scope.closed=!scope.closed;
@@ -15,10 +16,10 @@ define(["ng"], function(ng){
 				};
 				
 				scope.shrink=function($event){
-//					console.debug("shrink!", angular.element(elem).find("accorion"));					
+//					console.debug("shrink!", ng.element(elem).find("accorion"));					
 					if(SidemenuSrv.isShrink()){
-						angular.element($event.target).closest('#sidemenu-container').addClass("shrink");						
-						var openPanels=angular.element(elem).find(".panel-collapse.in");
+						ng.element($event.target).closest('#sidemenu-container').addClass("shrink");						
+						var openPanels=ng.element(elem).find(".panel-collapse.in");
 //						console.debug("WILL collapse", openPanels);
 						if(openPanels.length>0){
 							openPanels.scope().isOpen=false;							
@@ -27,23 +28,22 @@ define(["ng"], function(ng){
 				};
 				
 				scope.open=function($event){
-					angular.element($event.target).parent().parent().toggleClass("open");
+					ng.element($event.target).parent().parent().toggleClass("open");
 					
-					var targetPanel = angular.element($event.target).closest('.panel').find('.panel-collapse');
+					var targetPanel = ng.element($event.target).closest('.panel').find('.panel-collapse');
 					if(SidemenuSrv.isShrink()){
 //						console.debug("SHIRNK - OPEN!", elem, $event.target, targetPanel);
 //						targetPanel.scope().isOpen=true;											
-						angular.element($event.target).closest('#sidemenu-container').removeClass("shrink");
+						ng.element($event.target).closest('#sidemenu-container').removeClass("shrink");
 					}
 				};
 //				webkitTransitionEnd oTransitionEnd MSTransitionEnd transitionend 
-				angular.element(elem).on("transitionend", function($event){							
+				ng.element(elem).on("transitionend", function($event){							
 //					console.debug("Trans ENDED", $event);
 //					targetPanel.scope().isOpen=true;							
-//					angular.element(elem).unbind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd");
+//					ng.element(elem).unbind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd");
 				});	
 				scope.LayoutSrv=LayoutSrv;
-				
 			}
 		};
 	};	

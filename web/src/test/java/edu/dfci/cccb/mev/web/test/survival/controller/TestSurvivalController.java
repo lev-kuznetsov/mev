@@ -202,7 +202,7 @@ public class TestSurvivalController {
     SimpleSurvivalAnalysis analysis = (SimpleSurvivalAnalysis) dataset.analyses ().get (params.name ());
     assertThat(analysis.name (), is(params.name()));      
     assertThat(analysis.type (), is(SurvivalAnalysis.ANALYSIS_TYPE));        
-    assertThat(analysis.status (), is(Analysis.MEV_ANALYSIS_STATUS_COMPLETED));
+    assertThat(analysis.status (), is(Analysis.MEV_ANALYSIS_STATUS_SUCCESS));
     log.debug("******* SimpleSurvivalAnalysis:\n"+ jsonObjectMapper.writeValueAsString (analysis));
       
   }
