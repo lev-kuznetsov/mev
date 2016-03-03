@@ -38,7 +38,7 @@ define(['./HeatmapViewClass'], function(HeatmapViewClass){
             	params.labels.column = {keys: self.dataset.column.keys};
             }
             if(params.labels && !params.labels.row){
-            	params.labels.row = {keys: self.dataset.r.keys};
+            	params.labels.row = {keys: self.dataset.row.keys};
             }
             
             //old functionality would show both analysis on the same heatmap if their display 
@@ -61,9 +61,34 @@ define(['./HeatmapViewClass'], function(HeatmapViewClass){
             	return self.views; //-> no need to generate a new view
             }
             
+            function getStats(params){
+                var stats = {
+                    min: Infinity,
+                    max: -Infinity,
+                    sum: 0,
+                    count: 0
+                };
+                _.transform(params.labels.column.keys, function(result, column, index){
+                    _.transform(params.labels.row.keys, function(result, row, index){
+                        var value = self.dataset.expression.tryGet([row, column]);
+                            if(!isNaN(value)){    
+                            if(value < result.min) result.min = value;
+                            if(value > result.max) result.max = value;
+                            result.sum += value;
+                            result.count++;
+                        }
+                    }, result);
+                }, stats);          
+                stats.avg = stats.sum / stats.count;
+                return stats;
+            }
+
+            if(params.labels.column.keys.length < self.dataset.column.keys.length || params.labels.row.keys.length < self.dataset.row.keys.length){
+                var stats = getStats(params);
+                _.assign(params.expression, stats);
+            }
             
-            
-            self.views = new HeatmapViewClass(params);
+            self.views = new HeatmapViewClass(params, self.dataset);
             return self.views;
         }
         
