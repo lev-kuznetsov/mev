@@ -1,4 +1,4 @@
-define(['./cellFilter', 'd3', 'q'], function(cellFilter, d3, q){
+define(['./cellFilter', 'd3', 'q', "jquery"], function(cellFilter, d3, q, $){
 	
 	//drawCells !View, !shownCells, !scales, Array [String], -> null
 	//	draws cells on heatmapvisualization object
@@ -134,6 +134,8 @@ define(['./cellFilter', 'd3', 'q'], function(cellFilter, d3, q){
 			width: 50,
 			fill: function(d){return self.scales.cells.colorScale(labelColorScale(d));}
 			
+		}).on("click", function(d, i){
+			$('#settingsModal-'+self.view.id).modal('show');
 		});
 		
 		self.DOM.legend.selectAll("text").data(rands).enter()

@@ -39,7 +39,7 @@ define([], function(){
 			high: "yellow",
 			mid: "black",
 			low: "blue",
-			group: "BuBkYl"
+			group: "Blue,Black,Yellow"
 		};
 		
 		if (params){
