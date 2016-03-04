@@ -162,7 +162,7 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     	return AnalysisResource;    	
     	
     }])
-    .service ('SelectionResourceService', ['$resource', '$routeParams', function($resource, $routeParams){
+    .service ('SelectionResourceService', ['$resource', '$routeParams', '$http', function($resource, $routeParams, $http){
     	
     	var resource = $resource('/dataset/:datasetName/:dimension/selection',{
     		'format': 'json'
@@ -196,6 +196,19 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     		});
     		return result;
     	};
+        SelectionResource.export=function(params, data, callback){
+            var result = resource.export(params, data, callback);
+            result.$promise.then(function(response){
+                $http({
+                   method:"POST", 
+                   url:"/annotations/" + params.datasetName + "/annotation/row" 
+                   + "/export?destId="+data.name});
+               $http({
+                   method:"POST", 
+                   url:"/annotations/" + params.datasetName + "/annotation/column" 
+                   + "/export?destId="+data.name});
+            })
+        }
     	
     	return SelectionResource;
     }]);
