@@ -38,7 +38,7 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValues;
  * 
  */
 @Log4j
-public class FlatFileValues extends AbstractValues implements Closeable {
+public class FlatFileValues extends AbstractValues implements Closeable, IFlatFileValues {
 
   private static final int MAPPING_SIZE = 1 << 30;
 
@@ -58,22 +58,28 @@ public class FlatFileValues extends AbstractValues implements Closeable {
     this.width = width;
 
     long size = 8L * height * width;
-    //Need to make RandomAccessFile writable to allow it to grow in case the dataset is larger than the initial allocated file size. 
-    //Otherwise "java.io.IOException: Channel not open for writing - cannot extend file to required size" is thrown
     try (RandomAccessFile access = new RandomAccessFile (file, "r")) {      
       for (long offset = 0; offset < size; offset += MAPPING_SIZE)
         mappings.add (access.getChannel ().map (READ_ONLY, offset, min (size - offset, MAPPING_SIZE)));      
     }
   }
 
+  /* (non-Javadoc)
+ * @see edu.dfci.cccb.mev.dataset.domain.fs.IFlatFileValues#skipJson()
+ */
   @Override
   public boolean skipJson() {
     return true;
   };
   
+  /* (non-Javadoc)
+   * @see edu.dfci.cccb.mev.dataset.domain.fs.IFlatFileValues#asInputStream()
+   */
+  @Override
   public InputStream asInputStream() throws FileNotFoundException{
     return new FileInputStream (this.file);
   }
+  
   /* (non-Javadoc)
    * @see
    * edu.dfci.cccb.mev.dataset.domain.contract.Values#get(java.lang.String,
