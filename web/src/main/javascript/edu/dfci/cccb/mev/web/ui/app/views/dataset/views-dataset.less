@@ -6,9 +6,13 @@
 	.project-tree-header{
 		border-bottom: 1px solid @project-tree-border-color;
 		border-top: 1px solid transparent;	
-		padding: @nav-link-padding-ver @padding-base-horizontal;
+		padding: 0px @padding-base-horizontal 0px 4px;		
 	//	margin: 0 -@padding-base-horizontal;
 		background-color: @body-bg;
+		select.form-control {
+		  	border: 0px none;			
+			box-shadow: none;			
+		}
 	}
 	
 	&.fixed-footer {

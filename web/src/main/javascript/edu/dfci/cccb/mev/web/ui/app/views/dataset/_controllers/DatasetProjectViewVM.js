@@ -1,5 +1,5 @@
 define(["ng", "lodash"], function(ng, _){ "use strict";
-	var DatasetProjectViewVM=function DatasetViewVM($scope, $stateParams, $state, dataset, project, AnalysisEventBus, AnalysisTypes, mevAnalysisTypes,
+	var DatasetProjectViewVM=function DatasetViewVM($scope, $stateParams, $state, DatasetResourceService, dataset, project, AnalysisEventBus, AnalysisTypes, mevAnalysisTypes,
 		mevPathwayEnrichmentAnalysisType, mevGseaAnalysisType, mevPcaAnalysisType){
 		var that=this;
 		console.debug("DatasetProjectViewVM", dataset, project);
@@ -39,7 +39,22 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 			});
 			
 		}
-		
+		function filterDatasetNames(datasetNames){
+			return datasetNames.filter(function(item){
+				return item.indexOf(that.parentDatasetName)===0;
+			});
+		}
+		function switchDataset(){
+			$state.go("root.dataset.home", {datasetId: that.curDatasetName});
+		}
+		DatasetResourceService.getAll();
+		that.curDatasetName = dataset.id;		
+		that.parentDatasetName = dataset.id.split("--")[0];
+		that.switchDataset=switchDataset;
+		$scope.$on("mev:datasets:list:refreshed", function($event, data){			
+			that.datasetNames = filterDatasetNames(data);
+		});
+
 		$scope.$on("ui:projectTree:nodeSelected", function($event, node){
 			// that.node=node;			
 			
@@ -116,7 +131,7 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 		});
 
 	};
-	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "dataset", "project", "AnalysisEventBus", "AnalysisTypes", "mevAnalysisTypes", 
+	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "DatasetResourceService", "dataset", "project", "AnalysisEventBus", "AnalysisTypes", "mevAnalysisTypes", 
 	"mevPathwayEnrichmentAnalysisType", "mevGseaAnalysisType", "mevPcaAnalysisType"];
 	return DatasetProjectViewVM;
 });
