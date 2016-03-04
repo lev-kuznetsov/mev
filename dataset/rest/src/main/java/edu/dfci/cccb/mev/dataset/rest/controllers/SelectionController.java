@@ -54,6 +54,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.SelectionBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.export.DatasetExportRawInput;
 
 /**
@@ -117,8 +118,10 @@ public class SelectionController {
   public void exportSelection (@RequestBody Selection selection) throws DatasetBuilderException, InvalidDatasetNameException, InvalidDimensionTypeException {
     if (log.isDebugEnabled ())
       log.debug ("============>Export new dataset" + selection);
-    workspace.put (datasetBuilder.build (new DatasetExportRawInput (selection.name(), dataset, selection, dimension.type ())));
-    
+//    workspace.put (datasetBuilder.build (new DatasetExportRawInput (selection.name(), dataset, selection, dimension.type ())));
+    List<String> colums = dimension.type() == Type.COLUMN ? selection.keys() : dataset.dimension(Type.COLUMN).keys();
+    List<String> rows = dimension.type() == Type.ROW ? selection.keys() : dataset.dimension(Type.ROW).keys();    
+    workspace.put (dataset.subset(selection.name(), colums, rows));    
   }
 
   @RequestMapping (value = "/selection/" + SELECTION_URL_ELEMENT, method = POST)
