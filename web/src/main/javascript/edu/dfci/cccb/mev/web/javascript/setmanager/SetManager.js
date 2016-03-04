@@ -75,7 +75,8 @@ define(['jquery','angular'], function(jquery, angular){
 			
 			function getSelected(dimension){
 			    return $scope.heatmapData[dimension].selections.filter(function(d){
-                    return (d.setSelectionChecked == "true") ? true : false
+                    // return (d.setSelectionChecked === true) ? true : false
+                    return d.setSelectionChecked;
                         
                 })
 			};
@@ -134,15 +135,14 @@ define(['jquery','angular'], function(jquery, angular){
                         var message = "Exported new dataset with name " + $scope.exportParams[dimension].name + ".";
                         var header = "Export New Dataset";
                  
-                 	   $http({
-                           method:"POST", 
-                           url:"/annotations/" + $routeParams.datasetName + "/annotation/row" 
-    	                   + "/export?destId="+$scope.exportParams[dimension].name});
-                	   $http({
-                           method:"POST", 
-                           url:"/annotations/" + $routeParams.datasetName + "/annotation/column" 
-    	                   + "/export?destId="+$scope.exportParams[dimension].name});
-//                       http://localhost:8080/annotations/dummy.data.txt/annotation/row/export?destHeatmapId=bbb
+                 	  //  $http({
+                    //        method:"POST", 
+                    //        url:"/annotations/" + $scope.heatmapData.id + "/annotation/row" 
+    	               //     + "/export?destId="+$scope.exportParams[dimension].name});
+                	   // $http({
+                    //        method:"POST", 
+                    //        url:"/annotations/" + $scope.heatmapData.id + "/annotation/column" 
+    	               //     + "/export?destId="+$scope.exportParams[dimension].name});
                  
                         alertService.success(message,header);
                })
