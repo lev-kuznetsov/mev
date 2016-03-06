@@ -23,13 +23,21 @@ define(["../router/PcaState.tpl.html",
 					"display": "name",
 					"bound": "keys",
 					"required": true
+				}),
+				new mevSelectionSetParam({
+					"id": "geneList",
+					"dimension": "row", 
+					"displayName": "Gene Set",
+					"display": "name",
+					"bound": "keys",
+					"required": true
 				})
 			])
 		});
 		pcaType.start=function(){			
 			var paramValues = this.params.getValues();			
 			this.parent.start.call(this, this, paramValues, {analysisName: paramValues.name}, "put");	
-		}
+		};
 		return pcaType;
 	}
 	component.$name="mevPcaAnalysisType";	
