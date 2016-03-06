@@ -36,17 +36,22 @@ public class PcaBuilder extends AbstractDispatchedRAnalysisBuilder<PcaBuilder, P
   @Override
   @Parameter
   @SneakyThrows({InvalidDatasetNameException.class, InvalidDimensionTypeException.class})
-  protected Dataset dataset (){
-	  if(sampleList==null)
+  protected Dataset dataset (){	  
+	  if(sampleList==null && geneList==null)
 		  return super.dataset();
-	  else
-		  return new DataSubset(super.dataset(), this.sampleList(), super.dataset().dimension(Type.ROW).keys());
+	  else{		  
+		  
+		  return new DataSubset(super.dataset(), 
+				 this.sampleList() != null ? this.sampleList() : super.dataset().dimension(Type.COLUMN).keys(),
+				 this.geneList() != null ? this.geneList() : super.dataset().dimension(Type.ROW).keys());
+	  }
   }
   
   private @Result Pca result;
 
   private @Setter @Getter @Parameter int top = 3;
   private @Getter @Setter List<String> sampleList;
+  private @Getter @Setter List<String> geneList;
   
   @Override
   protected Pca result () {
