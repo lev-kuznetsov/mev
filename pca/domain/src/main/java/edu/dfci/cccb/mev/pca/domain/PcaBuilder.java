@@ -40,15 +40,21 @@ public class PcaBuilder extends AbstractDispatchedRAnalysisBuilder<PcaBuilder, P
 	  if(sampleList==null && geneList==null)
 		  return super.dataset();
 	  else{		  
-		  
-		  return new DataSubset(super.dataset(), 
-				 this.sampleList() != null ? this.sampleList() : super.dataset().dimension(Type.COLUMN).keys(),
-				 this.geneList() != null ? this.geneList() : super.dataset().dimension(Type.ROW).keys());
+		  {
+			  synchronized (subsetlock) {				
+				  if(this.dataset==null)
+					  this.dataset = new DataSubset(super.dataset(), 
+							  this.sampleList() != null ? this.sampleList() : super.dataset().dimension(Type.COLUMN).keys(),
+									  this.geneList() != null ? this.geneList() : super.dataset().dimension(Type.ROW).keys());
+				  return this.dataset;
+			  }
+		  }
 	  }
   }
   
   private @Result Pca result;
-
+  private Dataset dataset;
+  private Object subsetlock = new Object();
   private @Setter @Getter @Parameter int top = 3;
   private @Getter @Setter List<String> sampleList;
   private @Getter @Setter List<String> geneList;
