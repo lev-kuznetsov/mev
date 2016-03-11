@@ -21,6 +21,8 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Provider;
 
@@ -110,6 +112,8 @@ public class HclAnalysisController {
     @JsonProperty @Getter private String dimension;
     @JsonProperty @Getter private String metric;
     @JsonProperty @Getter private String linkage;
+    @JsonProperty(required=false) @Getter private List<String> columns;
+    @JsonProperty(required=false) @Getter private List<String> rows;
   }
 
   @RequestMapping (value = "/analyze/hcl", method = POST)
@@ -124,6 +128,8 @@ public class HclAnalysisController {
                                     .dimension (dataset.dimension (Type.from (dto.dimension ())))
                                     .linkage (dto.linkage ())
                                     .metric (dto.metric ())
+                                    .columns(dto.columns())
+                                    .rows(dto.rows())
                                     .name (dto.name ());
 
     log.debug ("Running HCL on " + dataset);

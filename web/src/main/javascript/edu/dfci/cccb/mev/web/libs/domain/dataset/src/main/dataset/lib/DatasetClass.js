@@ -1,4 +1,4 @@
-define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expressionModule', "./DatasetValues32"], 
+define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expressionModule', "./DatasetValues"], 
 		function( datasetStatistics, selectionSort, selectionHelpers, expressionModule, DatasetValues){
 	"use strict";    
     //inverter :: [a] --> Object
@@ -45,7 +45,32 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 		this.id = datasetName;
 		
 		this.datasetName = datasetName;
-		this.valueStore = new DatasetValues(this, $http, $rootScope);
+
+		this.column = datasetRespObj.column;
+		this.row = datasetRespObj.row;
+		
+		this.columnLabels2Indexes = inversion.call(datasetRespObj.column.keys);
+		this.rowLabels2Indexes = inversion.call(datasetRespObj.row.keys);
+		
+		this.column.indexOf = function(label){
+		    return self.columnLabels2Indexes[label];
+		};
+		
+		this.row.indexOf = function(label){
+            return self.columnLabels2Indexes[label];
+        };
+
+		this.selections={
+	        column: datasetRespObj.column.selections,
+	        row: datasetRespObj.row.selections,
+	        intersection: function(params){
+	        	return selectionHelpers.selectionIntersect.call(self, params);
+	        }
+		};
+		
+		this.analyses = datasetRespObj.analyses || [];
+		this.values = datasetRespObj.values;
+		this.valueStore = new DatasetValues(this, $http, $rootScope, this);
 		this.expression = {
 			values: datasetRespObj.values,
 			data: {
@@ -91,7 +116,8 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 			},
 			statistics : datasetStatistics,
 			ranger : ranger
-		};
+		};		
+		this.expression.sort = selectionSort;
 
         //Integer expressions check
 	    for (var k = 0; k < datasetRespObj.values.length; k++){	
@@ -107,31 +133,7 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
         };
 
 
-		this.expression.sort = selectionSort;
-
-		this.column = datasetRespObj.column;
-		this.row = datasetRespObj.row;
 		
-		this.columnLabels2Indexes = inversion.call(datasetRespObj.column.keys);
-		this.rowLabels2Indexes = inversion.call(datasetRespObj.row.keys);
-		
-		this.column.indexOf = function(label){
-		    return self.columnLabels2Indexes[label];
-		};
-		
-		this.row.indexOf = function(label){
-            return self.columnLabels2Indexes[label];
-        };
-
-		this.selections={
-	        column: datasetRespObj.column.selections,
-	        row: datasetRespObj.row.selections,
-	        intersection: function(params){
-	        	return selectionHelpers.selectionIntersect.call(self, params);
-	        }
-		};
-		
-		this.analyses = datasetRespObj.analyses || [];
 
 	};
 	

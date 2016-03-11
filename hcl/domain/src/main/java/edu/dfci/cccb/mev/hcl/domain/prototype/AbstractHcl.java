@@ -14,6 +14,7 @@
  */
 package edu.dfci.cccb.mev.hcl.domain.prototype;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,12 +36,15 @@ import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHierarchicallyClusteredDimensio
 @ToString (exclude = "dataset")
 @EqualsAndHashCode (callSuper = true)
 @Accessors (fluent = true, chain = true)
+@JsonIgnoreProperties({"root", "timestamp", "dimension"})
 public abstract class AbstractHcl extends AbstractAnalysis<AbstractHcl> implements Hcl {
-
+  public final static String ANALYSIS_TYPE = "Hierarchical Clustering";
   private @Getter @Setter Node root;
   private @Setter Dimension dimension;
   private @Getter @Setter Dataset dataset;
-
+  public AbstractHcl(){
+	  type(ANALYSIS_TYPE);
+  }
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.hcl.domain.contract.HclResult#apply() */
   @Override

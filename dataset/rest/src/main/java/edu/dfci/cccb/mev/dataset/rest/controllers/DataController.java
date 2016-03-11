@@ -74,6 +74,15 @@ public class DataController {
     return dataset.values();       
   }
   
+  @RequestMapping(method=GET, value="/values")
+  public Values valuesJson() throws Exception{
+    if (log.isDebugEnabled ())
+      log.debug ("Returning VALUES as JSON"
+                 + dataset + " of type " + dataset.getClass () + " implementing "
+                 + asList (dataset.getClass ().getInterfaces ()));
+    
+    return dataset.values();       
+  }
 
   @NoArgsConstructor
   @AllArgsConstructor

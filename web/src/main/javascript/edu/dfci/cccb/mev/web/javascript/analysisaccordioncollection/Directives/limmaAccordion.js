@@ -63,6 +63,7 @@
                             	$scope.filteredResults = filteredResults;
                             	$scope.applyToHeatmap(filteredResults);                            	
                             });
+
                             $scope.$on("ui:resultsTable:pageChanged", function($event, pageResults){
                             	$scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData($scope.project.dataset, pageResults, 
                                 		[$scope.analysis.params.control, $scope.analysis.params.experiment], 
@@ -106,7 +107,12 @@
                             })                 
                             
                             scope.filteredResults = undefined;
-                            
+                            scope.analysis.getFilteredKeys = function(dimension){
+                                if(dimension==="row")
+                                    return scope.filteredResults.map(function(item){
+                                        return item.id;
+                                    });
+                            }
                             scope.selectionParams = {
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16)

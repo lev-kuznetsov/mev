@@ -51,12 +51,13 @@ public class PcaController {
   @ToString
   private static class PcaDto{
 	  @JsonProperty @Getter private String name;
-	  @JsonProperty(required=false) @Getter private List<String> sampleList;	  
+	  @JsonProperty(required=false) @Getter private List<String> sampleList;
+	  @JsonProperty(required=false) @Getter private List<String> geneList;
   }
   
   @RequestMapping (value = "/analyze/pca/{name}", method = PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus (OK)
   public Analysis put (final @PathVariable ("name") String name, @RequestBody PcaDto dto) throws DatasetException {
-    return pca.get ().dataset (data).name (name).sampleList(dto.sampleList()).buildAsync ();
+    return pca.get ().dataset (data).name (name).sampleList(dto.sampleList()).geneList(dto.geneList()).buildAsync ();
   }
 }

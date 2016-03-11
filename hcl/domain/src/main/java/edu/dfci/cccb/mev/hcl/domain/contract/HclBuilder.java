@@ -14,6 +14,8 @@
  */
 package edu.dfci.cccb.mev.hcl.domain.contract;
 
+import java.util.List;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 
@@ -28,4 +30,8 @@ public interface HclBuilder extends AnalysisBuilder<HclBuilder, Hcl> {
   HclBuilder metric (String metric);
 
   HclBuilder linkage (String linkage);
+  
+  HclBuilder columns (List<String> columns);
+
+  HclBuilder rows (List<String> rows);
 }

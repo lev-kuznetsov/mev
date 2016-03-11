@@ -6,18 +6,31 @@ define(["lodash"], function(_){
 			if(mevContext.getLevel()==="root"){				
 				return mevContext.root().dataset.selections[dimension];
 			}else if(context.type){
-				if(context.params && context.params.control && context.params.experiment ){					
+				var selections = [];
+				if(context.params && context.params.control && context.params.experiment ){
 					var unionSet = {
 						name: context.params.experiment + "+" + context.params.control,
 						keys: []
 					};
-					_.transform(mevContext.root().dataset.selections[context.params.dimension || dimension], function(result, selection, index){
-						if(selection.name === context.params.control || selection.name === context.params.experiment){
+					_.transform(mevContext.root().dataset.selections[dimension], function(result, selection, index){
+						if(context.params.dimension === dimension && (selection.name === context.params.control || selection.name === context.params.experiment)){
 							result.keys = _.union(result.keys, selection.keys);
 						}
 					}, unionSet);
-					return[unionSet];
+					if(unionSet.keys.length > 0 ){
+						selections.push(unionSet);
+					}
 				}
+				if(context.getFilteredKeys){
+					var filteredKeys = context.getFilteredKeys(dimension);
+					if(filteredKeys && filteredKeys.length > 0){
+						selections.push({
+							name: "current filter",
+							keys: filteredKeys
+						});
+					}
+				}
+				return selections;
 			 }
 			 
 			 

@@ -9581,8 +9581,12 @@ cirvle.selected {
 .state-root.state-dataset .project-tree-header {
   border-bottom: 1px solid #3498DB;
   border-top: 1px solid transparent;
-  padding: 10px 15px;
+  padding: 0px 15px 0px 4px;
   background-color: #fff;
+}
+.state-root.state-dataset .project-tree-header select.form-control {
+  border: 0px none;
+  box-shadow: none;
 }
 .state-root.state-dataset.fixed-footer #main-footer {
   border-top: 1px solid #cacaca;

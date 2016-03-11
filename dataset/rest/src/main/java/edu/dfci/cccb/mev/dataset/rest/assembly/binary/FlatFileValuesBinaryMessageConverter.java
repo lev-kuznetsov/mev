@@ -25,12 +25,13 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
 import edu.dfci.cccb.mev.dataset.domain.fs.FlatFileValues;
+import edu.dfci.cccb.mev.dataset.domain.fs.IFlatFileValues;
 
 /**
  * @author levk
  * 
  */
-public class FlatFileValuesBinaryMessageConverter extends AbstractHttpMessageConverter<FlatFileValues> {
+public class FlatFileValuesBinaryMessageConverter extends AbstractHttpMessageConverter<IFlatFileValues> {
 
   /**
    * 
@@ -45,7 +46,7 @@ public class FlatFileValuesBinaryMessageConverter extends AbstractHttpMessageCon
    * (java.lang.Class) */
   @Override
   protected boolean supports (Class<?> clazz) {
-    return FlatFileValues.class.isAssignableFrom (clazz);
+    return IFlatFileValues.class.isAssignableFrom (clazz);
   }
 
   /* (non-Javadoc)
@@ -53,7 +54,7 @@ public class FlatFileValuesBinaryMessageConverter extends AbstractHttpMessageCon
    * org.springframework.http.converter.AbstractHttpMessageConverter#readInternal
    * (java.lang.Class, org.springframework.http.HttpInputMessage) */
   @Override
-  protected FlatFileValues readInternal (Class<? extends FlatFileValues> clazz, HttpInputMessage inputMessage) throws IOException,
+  protected IFlatFileValues readInternal (Class<? extends IFlatFileValues> clazz, HttpInputMessage inputMessage) throws IOException,
                                                                                                       HttpMessageNotReadableException {
     throw new UnsupportedOperationException ();
   }
@@ -63,7 +64,7 @@ public class FlatFileValuesBinaryMessageConverter extends AbstractHttpMessageCon
    * org.springframework.http.converter.AbstractHttpMessageConverter#writeInternal
    * (java.lang.Object, org.springframework.http.HttpOutputMessage) */
   @Override
-  protected void writeInternal (FlatFileValues t, HttpOutputMessage outputMessage) throws IOException,
+  protected void writeInternal (IFlatFileValues t, HttpOutputMessage outputMessage) throws IOException,
                                                                               HttpMessageNotWritableException {    
    IOUtils.copy (t.asInputStream (), outputMessage.getBody ());
   }

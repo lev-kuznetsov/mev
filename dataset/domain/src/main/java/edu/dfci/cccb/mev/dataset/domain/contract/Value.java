@@ -1,7 +1,9 @@
 package edu.dfci.cccb.mev.dataset.domain.contract;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public interface Value {
-  String row();
-  String column();
-  double value();
+	@JsonProperty String row();
+	@JsonProperty String column();
+	@JsonProperty double value();
 }

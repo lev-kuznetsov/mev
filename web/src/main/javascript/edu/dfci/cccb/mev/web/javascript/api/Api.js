@@ -3,18 +3,32 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     return angular
     .module ('Mev.Api', ['ngResource'])
     .service('AnalysisEventBus', AnalysisEventBus)
-    .service ('DatasetResourceService', ['$resource', '$q', '$http', 
-                                             function ($resource, $q, $http, DatasetValuesResource) {
+    .service ('DatasetResourceService', ['$resource', '$q', '$http', '$rootScope',
+                                             function ($resource, $q, $http, $rootScope) {
     	 
-    	var resource = $resource('/dataset/:datasetName/data',{format: "json"},{'get': {method:'GET'}});       	 
+    	var resource = $resource('/dataset/:datasetName/data',{format: "json"},
+            {
+                'get': {method:'GET'},
+                'getAll': {
+                    url: '/dataset',
+                    method: 'GET',
+                    isArray: true
+                }
+            });       	 
     	var DatasetResource = Object.create(resource);       	 
     	
     	DatasetResource.get = function(params, data, callback){
-    	
     		var dataset = resource.get(params, data, callback);    		
     		return dataset;
     	 };
-    	 
+    	 DatasetResource.getAll = function(params, data, callback){
+            var datasetsResource = resource.getAll(params, data, callback);
+            datasetsResource.$promise.then(function(response){
+                $rootScope.$broadcast("mev:datasets:list:refreshed", response);
+            });
+            return datasetsResource;
+         };
+
     	 return DatasetResource;
     }])
     .service('GoogleDriveResourceService', ['$resource', function($resource){
@@ -162,7 +176,7 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     	return AnalysisResource;    	
     	
     }])
-    .service ('SelectionResourceService', ['$resource', '$routeParams', function($resource, $routeParams){
+    .service ('SelectionResourceService', ['$resource', '$routeParams', '$http', 'DatasetResourceService', function($resource, $routeParams, $http, datasetResource){
     	
     	var resource = $resource('/dataset/:datasetName/:dimension/selection',{
     		'format': 'json'
@@ -196,6 +210,21 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     		});
     		return result;
     	};
+        SelectionResource.export=function(params, data, callback){
+            data.name = params.datasetName + "--" + data.name;
+            var result = resource.export(params, data, callback);            
+            result.$promise.then(function(response){
+                $http({
+                   method:"POST", 
+                   url:"/annotations/" + params.datasetName + "/annotation/row" 
+                   + "/export?destId="+data.name});
+               $http({
+                   method:"POST", 
+                   url:"/annotations/" + params.datasetName + "/annotation/column" 
+                   + "/export?destId="+data.name});
+               datasetResource.getAll();
+            })
+        }
     	
     	return SelectionResource;
     }]);
