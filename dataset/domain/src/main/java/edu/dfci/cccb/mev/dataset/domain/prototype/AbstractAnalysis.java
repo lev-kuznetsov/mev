@@ -26,6 +26,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
@@ -38,6 +39,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 @ToString
 @Accessors (fluent = true)
 @SuppressWarnings ("unchecked")
+@JsonIgnoreProperties({"timestamp"})
 public abstract class AbstractAnalysis <T extends AbstractAnalysis<?>> implements Analysis {
 
   private @JsonProperty @Getter String name;
@@ -65,7 +67,7 @@ public abstract class AbstractAnalysis <T extends AbstractAnalysis<?>> implement
     this.error = error;
     return (T) this;
   }
-
+  
   public T timestamp (Locale locale, TimeZone timezone) {
     timestamp = getInstance (timezone, locale);
     return (T) this;

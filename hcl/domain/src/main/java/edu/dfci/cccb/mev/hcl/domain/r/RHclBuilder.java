@@ -24,7 +24,7 @@ import edu.dfci.cccb.mev.hcl.domain.contract.HclBuilder;
 import edu.dfci.cccb.mev.hcl.domain.contract.Node;
 import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHcl;
 
-@R ("function (dataset, metric, linkage) {"
+@R ("function (dataset, metric, linkage, dimension) {"
     + "hc2n <- function (hc, flat = FALSE) {\n"
     + "  dist <- 0;\n"
     + "  if (is.null (hc$labels)) labels <- seq(along = hc$order) else labels <- hc$labels;\n"
@@ -48,8 +48,9 @@ import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHcl;
     + "};\n"
     + "l <- function (n)"
     + "  if (typeof (n) == 'character') list (name = n) "
-    + "  else list (distance = n$dist, left = l (n$left), right = l (n$right));"
-    + "l (hc2n (stats::hclust (cluster::daisy (t (dataset), m = metric), method = linkage)));" +
+    + "  else list (distance = n$dist, left = l (n$left), right = l (n$right));\n"
+    + "d <- if (dimension == 'row') dataset else t (dataset);\n"
+    + "l (hc2n (stats::hclust (cluster::daisy (d, m = metric), method = linkage)));" +
     "}")
 @Accessors (fluent = true, chain = true)
 public class RHclBuilder extends AbstractDispatchedRAnalysisBuilder<HclBuilder, Hcl> implements HclBuilder {
@@ -70,6 +71,12 @@ public class RHclBuilder extends AbstractDispatchedRAnalysisBuilder<HclBuilder, 
   
   private Object subsetlock = new Object();
   private Dataset dataset;
+  
+  @Parameter("dimension")
+  private String dimensionName(){
+	  return this.dimension.type().name().toLowerCase();
+  }
+  
   @Override
   @Parameter
   @SneakyThrows({InvalidDatasetNameException.class, InvalidDimensionTypeException.class})
@@ -81,7 +88,8 @@ public class RHclBuilder extends AbstractDispatchedRAnalysisBuilder<HclBuilder, 
 			  if(this.dataset==null)
 				  this.dataset = new DataSubset(super.dataset(), 
 						  this.columns() != null ? this.columns() : super.dataset().dimension(Type.COLUMN).keys(),
-								  this.rows() != null ? this.rows() : super.dataset().dimension(Type.ROW).keys());
+						  this.rows() != null ? this.rows() : super.dataset().dimension(Type.ROW).keys()
+				  );
 			  return this.dataset;
 		  }		 
 	  }
