@@ -19,8 +19,7 @@
   ],
   "dependencies": {
     "pouchdb": "~5.1.0",
-    "angular-utils-ui-breadcrumbs": "~0.2.2",
-    "jquery-ui": "~1.11.4"
+    "angular-utils-ui-breadcrumbs": "~0.2.2"    
   },
   "system": {
     "meta": {
