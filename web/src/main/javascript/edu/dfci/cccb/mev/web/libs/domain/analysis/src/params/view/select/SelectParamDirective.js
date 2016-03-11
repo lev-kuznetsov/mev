@@ -1,5 +1,5 @@
 define(["lodash", "./SelectParam.tpl.html"], function(_, template){
-	function mevSelectParamDirective($q){
+	function mevSelectParamDirective($q, mevContext){
 		return {
 			restrict: "EAC",
 			template: template,
@@ -9,7 +9,23 @@ define(["lodash", "./SelectParam.tpl.html"], function(_, template){
 			controller: ["$scope", function(scope){
 				var spec = scope.param;
 				scope.initial = spec.value;
-
+				function decorateOptions(options){
+					scope.param.optionsx = _.cloneDeep(options);
+					if(mevContext.getLevel()===scope.param.allowAll && !_.find(scope.param.optionsx, function(item){
+							return item==="all" || (scope.param.display && item[scope.param.display] === "all");
+					})){
+						var all;
+						if(scope.param.display){							
+							all = {};
+							all[scope.param.display] = "all";
+							if(scope.param.bound) all[scope.param.bound] = undefined;
+						}else{
+							all = "all";
+						}
+						scope.param.optionsx.unshift(all);
+					}							
+					scope.setValue(options);
+				}
 				scope.setOptions = function setOptions(){	
 					var theOptions = scope.param.options();
 					if(_.isFunction(theOptions.then)){
@@ -17,17 +33,17 @@ define(["lodash", "./SelectParam.tpl.html"], function(_, template){
 							scope.param.optionsx = options;
 						});
 					}else{						
-						scope.param.optionsx = theOptions;
+						decorateOptions(theOptions);
+						scope.setValue(theOptions);
 						scope.$watch(function(){return scope.param.options();}, function(newv, oldv){
 							if(!newv) return;
 							if(_.isEqual(newv, oldv)) return;
 							if(newv === oldv) return;
-							if(newv.length === 0 && oldv.length === 0) return;
-							scope.param.optionsx = newv;
-							scope.setValue(newv);
-						}, true);						
-						scope.setValue(theOptions);
+							if(newv.length === 0 && oldv.length === 0) return;							
+							decorateOptions(newv);
+						}, true);
 					}
+
 				};
 				scope.setValue = function setValue(options){
 					if(scope.param.setValue){
@@ -35,7 +51,7 @@ define(["lodash", "./SelectParam.tpl.html"], function(_, template){
 					}else if(scope.param.required && options.length===1){
 						scope.param.value = options[0];
 					}
-
+					// else 
 				};
 				scope.registerEventListeners = function registerEventListeners(){
 					if(scope.param.refreshListeners){
@@ -58,7 +74,7 @@ define(["lodash", "./SelectParam.tpl.html"], function(_, template){
 			}
 		};
 	}
-	mevSelectParamDirective.$inject=["$q"];
+	mevSelectParamDirective.$inject=["$q", "mevContext"];
 	mevSelectParamDirective.$name="mevSelectParamDirective";
 	return mevSelectParamDirective;
 });
