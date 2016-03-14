@@ -21,7 +21,7 @@ import static edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMeth
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
 import java.io.IOException;
@@ -111,6 +111,14 @@ public class SelectionController {
     if (log.isDebugEnabled ())
       log.debug ("Adding selection " + selection);
     dimension.selections ().put (selection);
+  }
+  
+  @RequestMapping (value = "/selection/{name}", method = DELETE)
+  @ResponseStatus (OK)
+  public void deleteByName (@PathVariable("name") String name) throws SelectionNotFoundException {
+    if (log.isDebugEnabled ())
+      log.debug ("Deleting selection " + name);
+    dimension.selections ().remove(name);
   }
   
   @RequestMapping (value = "/selection/export", method = POST)
