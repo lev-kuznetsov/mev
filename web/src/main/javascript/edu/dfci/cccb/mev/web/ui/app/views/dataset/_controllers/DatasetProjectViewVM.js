@@ -73,6 +73,14 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 				node.activate();
 		});
 		
+		$scope.$on("root.dataset.selectionSet.delete", function($event, dimension, selection){
+			console.debug("nodeDeleted", selection, $event);
+			dataset.selection.delete({datasetName: dataset.id, dimension: dimension, selectionName: selection.name}).$promise.then(function(){
+				dataset.resetSelections(dimension);
+			});
+
+		});
+
 		AnalysisEventBus.onAnalysisStarted($scope, function(type, name, data){
 			console.debug("DatasetProjectViewVM onAnalysisStarted");
 			var analysis = data.response;

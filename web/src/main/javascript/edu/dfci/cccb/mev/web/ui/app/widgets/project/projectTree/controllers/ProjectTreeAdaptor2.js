@@ -85,6 +85,7 @@ define(["mui", "lodash", "app/utils/utils"], function(ng,_,utils){ "use strict";
 			datasetNode.add(columnSetsNode);
 			project.dataset.column.selections.forEach(function(selection){
 				var selectionNode = createNode(selection, {
+					type: "selectionSet",
 					state: {
 						name: ".dataset.columnSet",
 						getParams: function(node){
@@ -107,6 +108,7 @@ define(["mui", "lodash", "app/utils/utils"], function(ng,_,utils){ "use strict";
 			datasetNode.add(rowSetsNode);
 			project.dataset.row.selections.forEach(function(selection){
 				var selectionNode = createNode(selection, {
+					type: "selectionSet",
 					state: {
 						name: ".dataset.rowSet",
 						getParams: function(node){

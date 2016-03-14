@@ -24,6 +24,7 @@ define([], function(){
 			"Sample Sets": "<column-node node='node'></column-node>",
 			"Gene Sets": "<row-node node='node'></row-node>",
 			"Analysis": "<analysis-node node='node'></analysis-node>",
+			"selectionSet": "<selection-set-node node='node'></selection-set-node>",
 //			Dataset: "<div ng-click='console.debug(\"dataset.click\")'>{{node.nodeName}}</div>",
 //			Analysis: "<project-analysis analysis=\"node.nodeData\"></project-analysis>",			
 			Default: "<project-node-default node='node' ></project-node-default>"

@@ -1,0 +1,12 @@
+<span>{{node.nodeConfig.label || node.nodeData.name}}</span>
+<span class="btn-group btn-group-sm pull-right">
+	<div class="btn-group " dropdown >			
+		<a ng-click="vm.delete($event)">
+			<span class="btn dropdown-toggle fa fa-close"></span>	    
+		</a>
+	</div>	
+</span>
+<!-- <mev-bs-modal bindid="deleteSelection" func="" header="Delete Selection {{node.nodeData.name}}">
+	<a class="btn btn-success btn-block" ng-click="start()" data-dismiss="modal" aria-hidden="true">Analyze</a>
+	<a class="btn btn-success btn-block" ng-click="cancel()" data-dismiss="modal" aria-hidden="true">Analyze</a>
+</mev-bs-modal> -->
