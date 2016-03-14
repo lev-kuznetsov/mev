@@ -12,7 +12,9 @@
                 filterCallback : "&onFilter",
                 onPaged : "&",
                 onRowSelected: "&",
-                selectedRows: "="
+                selectedRows: "=",
+                top: "=mevTop",
+                pagination: "=mevPagination"
             },
             template : template,
             link : function(scope, elem, attrs) {
@@ -24,6 +26,18 @@
                         return header.icon[0];
                     else
                         return header.icon;                                 
+                }
+                function doFilter(){
+                    console.debug("applyFilter", scope.filters, scope.filterForm);
+                         Object.keys(scope.filters).map(function(key){
+                            var filter = scope.filters[key];
+                            if(filter.max && !filter.value || filter.value>filter.max)
+                                filter.value=filter.max;
+                         });         
+                         scope.vm.filteredResults = mevResultsTableFilter(scope.data, scope.filters, scope.top);
+                         // scope.reorderTable({field: scope.tableOrdering});
+                         scope.filterForm.$setPristine();
+                         notifyResultChange();
                 }
                 function notifyResultChange(){
                     scope.$emit("ui:resultsTable:filteredResults", scope.vm.filteredResults);
@@ -57,8 +71,8 @@
                 }
                 
                 scope.vm={};
-                scope.vm.filteredResults = mevResultsTableFilter(scope.data, scope.filters);      
-                notifyResultChange();
+                // scope.vm.filteredResults = mevResultsTableFilter(scope.data, scope.filters, scope.top);      
+                doFilter();
 
                                 
 //              scope.$watch('filters', function(newval, oldval){  
@@ -68,21 +82,15 @@
 ////                    scope.filterCallback({filterParams: filters});
 //              }
 //            }, true);
-                                
                 scope.vm.applyFilter=function($event){
                      if ($event.which === 13){                       
-                         console.debug("applyFilter", scope.filters, scope.filterForm);
-                         Object.keys(scope.filters).map(function(key){
-                            var filter = scope.filters[key];
-                            if(filter.max && !filter.value || filter.value>filter.max)
-                                filter.value=filter.max;
-                         });                        
-                         scope.vm.filteredResults = mevResultsTableFilter(scope.data, scope.filters);
-                         scope.reorderTable({field: scope.tableOrdering});
-                         scope.filterForm.$setPristine();
+                         doFilter()
                      }
                 };
-                
+                scope.vm.updateTop=function(limit){
+                    scope.top.current = limit;
+                    doFilter();
+                }
                 
                 //Table reordering methods
                 var ctr = -1;

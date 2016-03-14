@@ -1,9 +1,8 @@
-"use strict";
 define([], 
-function(){
+function(){ "use strict";
     
     function mevResultsTableFilter($filter, compare){
-        return function(array, filterOptions){
+        return function(array, filterOptions, top){
             //function to filter array with parameters specified by filterOptions
             //  where filterOptions is an object with properties 
             //  {'<columnName>':{id:<arrayPropertyName>, op:<stringOperator>, value:<filterParameter>}}
@@ -13,9 +12,8 @@ function(){
             if(!filterOptions)
             	return array;
             
-            var filteredColumn = Object.keys(filterOptions);
-            var filteredColumnIndex;
-            for (filteredColumnIndex in filteredColumn){
+            var filteredColumn = Object.keys(filterOptions);            
+            for (var filteredColumnIndex in filteredColumn){
                 var key = filteredColumn[filteredColumnIndex];
                 
                 var comparator = compare()
@@ -34,8 +32,10 @@ function(){
                 }
                 
                 filteredArray = $filter('filter')(filteredArray, comparator);
+
             }
-            
+            if(top && top.current)
+                filteredArray = $filter('limitTo')(filteredArray, top.current);
             return filteredArray;
         };
     }
