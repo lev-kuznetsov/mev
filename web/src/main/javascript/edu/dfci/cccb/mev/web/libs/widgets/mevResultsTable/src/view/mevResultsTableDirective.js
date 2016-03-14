@@ -1,5 +1,4 @@
-"use strict";
-  define(["mui", "lodash", "./mevResultsTable.tpl.html"], function(ng, _, template ){
+  define(["mui", "lodash", "./mevResultsTable.tpl.html"], function(ng, _, template ){"use strict";
     function mevResultsTableDirective(mevResultsTableDefaults, mevResultsTableFilter, $timeout){
         return {
             restrict : 'E',
@@ -12,7 +11,7 @@
                 filterCallback : "&onFilter",
                 onPaged : "&",
                 onRowSelected: "&",
-                selectedRows: "=",
+                selectedRows: "=?",
                 top: "=mevTop",
                 pagination: "=mevPagination"
             },
@@ -84,13 +83,12 @@
 //            }, true);
                 scope.vm.applyFilter=function($event){
                      if ($event.which === 13){                       
-                         doFilter()
-                     }
+                         doFilter();                     }
                 };
                 scope.vm.updateTop=function(limit){
                     scope.top.current = limit;
                     doFilter();
-                }
+                };
                 
                 //Table reordering methods
                 var ctr = -1;
@@ -112,7 +110,7 @@
                           }
                           // a must be equal to b
                           return 0;
-                    })
+                    });
                     notifyResultChange();
                 };
                 scope.selectedRows={};
@@ -123,7 +121,7 @@
                     else
                         delete scope.selectedRows[value];
                     callback(value, row, row.isChecked);
-                }
+                };
             }   
         };
 
