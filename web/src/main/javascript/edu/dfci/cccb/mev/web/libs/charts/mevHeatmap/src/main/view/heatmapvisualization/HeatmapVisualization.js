@@ -12,7 +12,7 @@ function(angular, d3, jquery, _, HeatmapVisualizationClass, generateParams, heat
                 colorEdge : '=colorEdge',
                 applyNewRanges : '=applyNewRanges',
                 applyDefaultRanges : '=applyDefaultRanges',
-                heatmapView: "=heatmapView"
+                heatmapView: "=mevHeatmapView"
             },            
             link: function(scope, elm, attr){
                 scope.currentColors.group = d3colors.current();
@@ -30,9 +30,8 @@ function(angular, d3, jquery, _, HeatmapVisualizationClass, generateParams, heat
                 // templateUrl : "/container/javascript/heatmapvisualization/templates/visHeatmap.tpl.html",
                 template: heatmapTemplate,
                 scope: {
-                	heatmapView: "=heatmapView",
-                	heatmapDataset: "=heatmapDataset",
-                	project : '=project'
+                	heatmapView: "=mevHeatmapView",
+                	heatmapDataset: "=mevDataset"                	
                 },
                 controller: function($scope){
                     $scope.currentColors = { 

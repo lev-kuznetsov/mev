@@ -15,7 +15,7 @@ function(ng, AnalysisClass, hclJson){
 
 
 		$stateProvider.state("mock-heatmap", {			
-			template: "<button ng-click=\"vm.refresh()\">refresh</button><mev-heatmap heatmap-View=\"vm.heatmapView\" heatmap-Dataset=\"vm.project.dataset\" project=\"project\"> </mev-heatmap>",
+			template: "<button ng-click=\"vm.refresh()\">refresh</button><mev-heatmap mev-heatmap-View=\"vm.heatmapView\" mev-dataset=\"vm.project.dataset\" > </mev-heatmap>",
 			controller: ["mevMockProject", function(project){
 				var analysis = project.dataset.analyses.filter(function(item){
 					return item.name==="hcl_cols";

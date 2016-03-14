@@ -31,7 +31,7 @@
 </mev-bs-modal> 
 
 <mev-bs-modal bindid="settingsModal-{{heatmapView.id}}" header="Heatmap Visualization Settings">
-	<mev-heatmap-settings heatmap-view="heatmapView" current-colors="currentColors"
+	<mev-heatmap-settings mev-heatmap-view="heatmapView" current-colors="currentColors"
 		available-color-groups="availableColorGroups"
 		color-Edge="colorEdge"></mev-heatmap-settings>
 	<a class="btn btn-info" ng-click="applyNewRanges()" data-dismiss="modal" aria-hidden="true">Apply New Ranges</a>
