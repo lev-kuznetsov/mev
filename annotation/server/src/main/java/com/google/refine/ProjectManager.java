@@ -419,6 +419,21 @@ public abstract class ProjectManager {
     return null;
   }
 
+  
+  private String getRootProjectName(String name){
+	if(name.contains("--")){
+		String type = null;
+		if(name.endsWith("column"))
+			type = "column";
+		else if(name.endsWith("row"))
+			type = "row";
+		
+		String subset = name.substring(name.indexOf("--"), name.length()-type.length());
+		name = name.replace(subset, "");
+	}
+	return name;
+  }
+  
   /**
    * Tries to find the project id when given a project name Requires that all
    * project metadata exists has been loaded to memory from the data store
@@ -426,7 +441,7 @@ public abstract class ProjectManager {
    * @param name The name of the project
    * @return The id of the project, or -1 if it cannot be found
    */
-  public long getProjectID (String name) {
+  public long getProjectID (String name) {		
     for (Entry<Long, ProjectMetadata> entry : _projectsMetadata.entrySet ()) {
       if (entry.getValue ().getName ().equals (name)) {
         return entry.getKey ();
