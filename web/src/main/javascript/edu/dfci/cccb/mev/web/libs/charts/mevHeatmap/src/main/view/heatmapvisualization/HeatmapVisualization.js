@@ -1,7 +1,7 @@
 define(['mui', 'd3', 'jquery', "lodash",
-        './lib/HeatmapVisualizationClass', './lib/generateParams', './directives/visHeatmap.tpl.html',
+        './lib/HeatmapVisualizationClass', './lib/generateParams', './directives/visHeatmap.tpl.html', "./directives/heatmapSettingsModalBody.tpl.html",
         '../colorBrewer/mevColorBrewer', '../alertService/mevHeatmapAlert', 'jquery-ui'], 
-function(angular, d3, jquery, _, HeatmapVisualizationClass, generateParams, heatmapTemplate){ "use strict";
+function(angular, d3, jquery, _, HeatmapVisualizationClass, generateParams, heatmapTemplate, heatmapSettingTemplate){ "use strict";
 	return angular.module('mevHeatmapVisualization', ['mevColorBrewer'])
 	.directive('mevHeatmapSettings',["mevD3colors", function(d3colors) {
         return {
@@ -12,12 +12,12 @@ function(angular, d3, jquery, _, HeatmapVisualizationClass, generateParams, heat
                 colorEdge : '=colorEdge',
                 applyNewRanges : '=applyNewRanges',
                 applyDefaultRanges : '=applyDefaultRanges',
-                heatmapView: "=heatmapView"
+                heatmapView: "=mevHeatmapView"
             },            
             link: function(scope, elm, attr){
                 scope.currentColors.group = d3colors.current();
             },
-            templateUrl : "/container/javascript/heatmapvisualization/templates/heatmapSettingsModalBody.tpl.html",
+            template : heatmapSettingTemplate,
             
         };
 	}])
@@ -30,9 +30,31 @@ function(angular, d3, jquery, _, HeatmapVisualizationClass, generateParams, heat
                 // templateUrl : "/container/javascript/heatmapvisualization/templates/visHeatmap.tpl.html",
                 template: heatmapTemplate,
                 scope: {
-                	heatmapView: "=heatmapView",
-                	heatmapDataset: "=heatmapDataset",
-                	project : '=project'
+                	heatmapView: "=mevHeatmapView",
+                	heatmapDataset: "=mevDataset"                	
+                },
+                controller: function($scope){
+                    $scope.currentColors = { 
+                        group: d3colors.current()
+                    };
+                    $scope.availableColorGroups = _.keys(d3colors);
+                    $scope.currentColors = d3colors.coloring;
+                    
+                    $scope.visualization = undefined;
+                    $scope.$on("ui:d3colors:change", function($event, data){
+                        if($scope.currentColors.group !== data){
+                            $scope.currentColors.group = data;
+                            var updatedView = _.extend({}, $scope.heatmapView);
+                            if(!updatedView.coloring) updatedView.coloring = {};
+                            // updatedView.coloring.group = data;
+                            // updatedView.coloring.low = d3colors[updatedView.coloring.group][3][0];
+                            // updatedView.coloring.mid = d3colors[updatedView.coloring.group][3][1];
+                            // updatedView.coloring.high = d3colors[updatedView.coloring.group][3][2];
+
+                            updatedView.coloring = d3colors.coloring;
+                            $scope.heatmapView = updatedView;                            
+                        }
+                    });
                 },
                 link : function($scope, elems, attr) {
                 	//use jquery to get the nearest scrollable parent
@@ -58,30 +80,16 @@ function(angular, d3, jquery, _, HeatmapVisualizationClass, generateParams, heat
                             width:scrollable.width()
                 	};
                 	
-                	$scope.availableColorGroups = _.keys(d3colors);
-                	$scope.currentColors = {group:undefined};
                 	
-                	$scope.visualization = undefined;
                 	
                 	var svg = undefined;
-                	$scope.$on("ui:d3colors:change", function($event, data){
-                        if($scope.currentColors.group !== data){
-                            $scope.currentColors.group = data;
-                            var updatedView = _.extend({}, $scope.heatmapView);
-                            if(!updatedView.coloring) updatedView.coloring = {};
-                            updatedView.coloring.group = data;
-                            updatedView.coloring.low = d3colors[updatedView.coloring.group][3][0];
-                            updatedView.coloring.mid = d3colors[updatedView.coloring.group][3][1];
-                            updatedView.coloring.high = d3colors[updatedView.coloring.group][3][2];
-                            $scope.heatmapView = updatedView;                            
-                        }
-                    });
+                	
                 	$scope.repaintView = function(){
                 		var updatedView = _.extend({}, $scope.heatmapView);	                      
 	                    updatedView.expression.min = $scope.heatmapDataset.expression.min;
 	                    updatedView.expression.max = $scope.heatmapDataset.expression.max;
 	                    updatedView.expression.avg = $scope.heatmapDataset.expression.avg;
-	                    updatedView.coloring = undefined;
+	                    updatedView.coloring = d3colors.current();
 	                    $scope.heatmapView = updatedView;
                 	}
                 	$scope.$on("mui:model:dataset:values:loaded", function(){
@@ -139,11 +147,11 @@ function(angular, d3, jquery, _, HeatmapVisualizationClass, generateParams, heat
                     	  
                     	    var updatedView = _.extend({}, $scope.heatmapView);
                       	    
-                    	    updatedView.coloring = $scope.currentColors;
-                            updatedView.coloring.low = d3colors[updatedView.coloring.group][3][0];
-                            updatedView.coloring.mid = d3colors[updatedView.coloring.group][3][1];
-                            updatedView.coloring.high = d3colors[updatedView.coloring.group][3][2];
-                            d3colors.current(updatedView.coloring.group);
+                    	    // updatedView.coloring = ;
+                         //    updatedView.coloring.low = d3colors[updatedView.coloring.group][3][0];
+                         //    updatedView.coloring.mid = d3colors[updatedView.coloring.group][3][1];
+                         //    updatedView.coloring.high = d3colors[updatedView.coloring.group][3][2];                            
+                            updatedView.coloring = d3colors.current($scope.currentColors.group);                             
 
                             updatedView.expression.min = parseFloat($scope.colorEdge.min);
                             updatedView.expression.max = parseFloat($scope.colorEdge.max);
@@ -210,7 +218,7 @@ function(angular, d3, jquery, _, HeatmapVisualizationClass, generateParams, heat
                             $scope.colorEdge.min = newval.expression.min;
                             $scope.colorEdge.avg = newval.expression.avg;
                             $scope.colorEdge.max = newval.expression.max;
-                            var params = new generateParams((newval.coloring) ? {colors:newval.coloring}: undefined);
+                            var params = new generateParams((newval.coloring) ? {colors:newval.coloring}: {colors: d3colors.coloring});
                 			$scope.visualization = new HeatmapVisualizationClass(newval,svg, params)
                 		}
                 		

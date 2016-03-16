@@ -741,6 +741,42 @@ cirvle.selected {
 
 /*mev-pca@0.0.0#src/style/pcaAnalysis.less!$less*/
 
+/*mev-results-table@0.0.1#src/style/mevResultsTable.less!$less*/
+.mev-topfilter-button {
+  display: inline-block;
+}
+
+/*mev-heatmap@0.0.1#src/main/style/mev-heatmap.less!$less*/
+#heatmap-Legend {
+  cursor: pointer;
+}
+#selectionCircle {
+  cursor: pointer;
+}
+#selectionCircle:hover {
+  fill: #ff0000;
+}
+div.d3tooltip {
+  position: relative;
+  text-align: left;
+  width: 100%;
+  height: 100%;
+  padding: 2px;
+  font: 12px sans-serif;
+  border: none;
+  /*  pointer-events: none;	This line needs to be removed */
+}
+div.d3tooltip a {
+  cursor: pointer;
+  background-color: #18bc9c;
+  padding: 2px 4px;
+  color: white;
+  z-index: 1060;
+}
+div.d3tooltip a:hover {
+  background-color: #3498DB;
+}
+
 /*app/widgets/analysis/any/style/widgets.analysis.any.less!$less*/
 .mev-error-message {
   word-wrap: break-word;
@@ -9394,6 +9430,16 @@ select[multiple].views-dataset .results-wrapper table tbody tr th .input-group .
 .views-dataset results-table .pagination > li span,
 .views-dataset .results-wrapper .pagination > li span {
   margin-left: initial;
+  padding: 3px 3px;
+}
+.views-dataset results-table .pagination > li:first-child > span,
+.views-dataset .results-wrapper .pagination > li:first-child > span {
+  margin-left: 0;
+  padding-left: 0;
+}
+.views-dataset results-table .pagination > li:first-child > span:hover,
+.views-dataset .results-wrapper .pagination > li:first-child > span:hover {
+  border: solid 1px transparent;
 }
 .views-dataset results-table form input.ng-dirty,
 .views-dataset .results-wrapper form input.ng-dirty,
@@ -9515,9 +9561,11 @@ select[multiple].views-dataset .results-wrapper table tbody tr th .input-group .
   display: flex;
   flex-direction: row;
 }
+.genesd .results-body mev-results-table,
 .genesd .results-body results-table {
   flex: 1;
 }
+.genesd .results-body mev-heatmap,
 .genesd .results-body view-content-item {
   flex: 2.5;
 }
@@ -9525,9 +9573,11 @@ select[multiple].views-dataset .results-wrapper table tbody tr th .input-group .
   display: flex;
   flex-direction: row;
 }
+.genemad .results-body mev-results-table,
 .genemad .results-body results-table {
   flex: 1;
 }
+.genemad .results-body mev-heatmap,
 .genemad .results-body view-content-item {
   flex: 2.5;
 }

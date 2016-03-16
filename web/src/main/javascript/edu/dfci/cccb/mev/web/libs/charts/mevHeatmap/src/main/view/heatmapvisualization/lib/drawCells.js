@@ -164,7 +164,20 @@ define(['./cellFilter', 'd3', "jquery"], function(cellFilter, d3, $){
             .text(function(d, i){
                 return labelColorScale(d);
             });
-            
+        
+        var fo = self.DOM.legend.append("foreignObject").attr({
+        	x: 30,
+        	y: 305,
+        	height: 50,
+        	width: 50
+        });
+        var div = fo.append('xhtml:div');
+        div.append("p")
+        // .html("<span class=\"glyphicon glyphicon-cog\"></span>")
+        .html("<a>settings</a>")
+        .on("click", function(d, i){
+			$('#settingsModal-'+self.view.id).modal('show');
+		});;        
 		
 	};
 });

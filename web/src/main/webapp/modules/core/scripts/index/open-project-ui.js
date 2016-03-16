@@ -117,7 +117,8 @@ Refine.OpenProjectUI.prototype._renderProjects = function(data) {
   if (!projects.length) {
     $("#no-project-message").clone().show().appendTo(container);
   } else {
-    Refine.selectActionArea('open-project');
+	//ap
+    //Refine.selectActionArea('open-project');
 
     var table = $(
       '<table class="list-table"><tr>' +

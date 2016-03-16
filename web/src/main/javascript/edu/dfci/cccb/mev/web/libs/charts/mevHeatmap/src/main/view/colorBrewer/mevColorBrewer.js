@@ -7,16 +7,37 @@ define ([ 'mui', 'd3', "lodash"], function (angular, d3, _) { "use strict";
         var ret = Object.create({            
             current: function(val){
                   if(val) {
-                        if(this.$current!==val){
-                              this.$current=val;
-                              $rootScope.$broadcast("ui:d3colors:change", val);
-                        }
+                    if(this.$current!==val){
+                          this.$current=val;
+                          $rootScope.$broadcast("ui:d3colors:change", val);
+                    }
+                    return {
+                        group: this.$current,
+                        low: this[this.$current][3][0],
+                        mid: this[this.$current][3][1],
+                        high: this[this.$current][3][2]
+                      };  
                   }else{
                         return this.$current || "Blue,Black,Yellow";    
                   } 
             }
         }, 
-        {$current: {writable: true, value: "Blue,Black,Yellow"}});
+        {
+          $current: {
+            writable: true, 
+            value: "Blue,Black,Yellow"
+          },
+          coloring: {
+            get: function(){
+              return {
+                group: this.$current,
+                low: this[this.$current][3][0],
+                mid: this[this.$current][3][1],
+                high: this[this.$current][3][2]
+              };              
+            }
+          }
+        });
 
         _.extend(ret, {
             "Blue,Black,Yellow":{

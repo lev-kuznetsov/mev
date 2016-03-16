@@ -195,7 +195,11 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     		'export':{
     			'method': 'POST',
     			'url':"/dataset/:datasetName/:dimension/selection/export",
-    		}
+    		},
+            'delete': {
+                'method': 'DELETE',
+                'url': '/dataset/:datasetName/:dimension/selection/:selectionName'
+            }
     		
     	});
     	

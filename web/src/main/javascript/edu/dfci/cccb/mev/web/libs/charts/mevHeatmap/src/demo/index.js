@@ -1,5 +1,5 @@
 define(["mui", "mev-dataset/src/main/dataset/lib/AnalysisClass", "../data/mev_test_data.hcl_cols.json", "mev-heatmap", "mev-mock", "angular-ui-router",	
-	"bootstrap", "bootstrap/dist/css/bootstrap.min.css"], 
+	"bootstrap", "bootstrap/dist/css/bootstrap.min.css", "jquery-ui-bundle/jquery-ui.css"], 
 function(ng, AnalysisClass, hclJson){
 
 	var demo = ng.module("demo", arguments, arguments).directive("mevBlah", function(){
@@ -15,7 +15,7 @@ function(ng, AnalysisClass, hclJson){
 
 
 		$stateProvider.state("mock-heatmap", {			
-			template: "<mev-heatmap heatmap-View=\"vm.heatmapView\" heatmap-Dataset=\"vm.project.dataset\" project=\"project\"> </mev-heatmap>",
+			template: "<button ng-click=\"vm.refresh()\">refresh</button><mev-heatmap mev-heatmap-View=\"vm.heatmapView\" mev-dataset=\"vm.project.dataset\" > </mev-heatmap>",
 			controller: ["mevMockProject", function(project){
 				var analysis = project.dataset.analyses.filter(function(item){
 					return item.name==="hcl_cols";
@@ -55,6 +55,24 @@ function(ng, AnalysisClass, hclJson){
 	                    top: analysis
 	                }
 		        });
+
+		        this.refresh=function(){
+					this.heatmapView = project.generateView({
+			            viewType:'heatmapView', 
+			            labels:{
+			                row:{keys:project.dataset.row.keys}, 
+			                column:{keys:labels}
+			            },
+			            expression:{
+			                min: project.dataset.expression.min,
+			                max: project.dataset.expression.max,
+			                avg: project.dataset.expression.avg,
+			            },
+		                panel: {
+		                    top: analysis
+		                }
+			        });		        	
+		        };
 			}],
 			controllerAs: "vm"
 		});
