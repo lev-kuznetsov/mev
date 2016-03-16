@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import lombok.extern.log4j.Log4j;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -19,7 +20,7 @@ import edu.dfci.cccb.mev.genesd.domain.contract.GeneSDAnalysisBuilder;
 import edu.dfci.cccb.mev.genesd.domain.impl.SimpleGeneSDAnalysis;
 import edu.dfci.cccb.mev.genesd.domain.impl.RserveGeneSDAnalysisBuilder;
 import edu.dfci.cccb.mev.genesd.domain.impl.SimpleGeneSDResult;
-
+@Log4j
 @R ("function (dataset) {\n"
       + "gene.sd=sort(apply(as.matrix(dataset), 1, sd), decreasing=TRUE)\n" 
       + "list(genes=names(gene.sd), sd=gene.sd)\n"
@@ -39,8 +40,7 @@ public class RserveGeneSDAnalysisBuilder extends AbstractDispatchedRAnalysisBuil
   }
   
   @Callback
-  private void cb () {
-    System.out.println ("result:"+dtoResult);
-    System.out.println ("error:"+error);
+  private void cb () {    
+    log.error ("RserveGeneSDAnalysisBuilder ERROR: "+error);
   }
 }

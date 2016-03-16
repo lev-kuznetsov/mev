@@ -44,7 +44,10 @@ public class ArrayListAnalyses extends AbstractAnalyses implements AutoCloseable
    * .dataset.domain.contract.Analysis) */
   @Override
   public void put (Analysis analysis) {
-    log.info ("Adding analysis " + analysis);
+	if(log.isDebugEnabled())
+		log.info(String.format("Adding analysis %s with status %s: %s", analysis.name(), analysis.status(), analysis));
+	else    
+		log.debug(String.format("Adding analysis %s with status %s", analysis.name(), analysis.status()));
     analyses.add (0, analysis);
   }
 
