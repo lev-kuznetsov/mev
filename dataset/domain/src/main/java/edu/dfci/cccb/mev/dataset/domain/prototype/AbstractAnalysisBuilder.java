@@ -87,10 +87,9 @@ public abstract class AbstractAnalysisBuilder <B extends AnalysisBuilder<?, ?>, 
               result.name(name());
             dataset().analyses ().complete (result);
             log.info(String.format("Analysis %s of type %s completed wit status %s.", name(), type(), result.status ()));
-          } catch (DatasetException e) {                    
+          } catch (Throwable e) {                    
             status.status (Analysis.MEV_ANALYSIS_STATUS_ERROR).error (new DatasetException(String.format("Error running analysis '%s' of type %s: %s", type, name, e.getMessage ()), e).toString ());
-            log.error(String.format("ERROR in %s analysis %s.", type, name));
-            e.printStackTrace();                            
+            log.error(String.format("ERROR in %s analysis %s.", type, name), e);
           }
       }
     }).start ();
