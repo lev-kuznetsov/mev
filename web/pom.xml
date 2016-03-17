@@ -754,7 +754,7 @@
                   </includes>
                 </fileset>
                 <!-- these remaining filesets remove the regular folders 
-                  (not symlinks) before we replace them with symlinks with the "unction" plugin -->
+                  (not symlinks) before we replace them with symlinks with the "junction" plugin -->
                 <fileset>
                   <directory>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/javascript</directory>
                   <followSymlinks>false</followSymlinks>
@@ -778,45 +778,45 @@
               </filesets>
             </configuration>
           </plugin>
-          <plugin>
-            <groupId>com.pyx4j</groupId>
-            <artifactId>maven-junction-plugin</artifactId>
-            <version>1.0.3</version>
-            <executions>
-              <execution>
-                <phase>process-resources</phase>
-                <goals>
-                  <goal>link</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <links>
-                <link>
-                  <!-- add allowLinking="true" to Tomcat's conf/Context.xml; 
-                    also, disable update in Edit Configuration on frame deactiviation -->
-                  <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/javascript</dst>
-                  <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/javascript</src>
-                </link>
-                <link>
-                  <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/libs</dst>
-                  <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/libs</src>
-                </link>
-                <link>
-                  <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/mock</dst>
-                  <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/mock</src>
-                </link>
-                <link>
-                  <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/ui</dst>
-                  <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/ui</src>
-                </link>
-                <link>
-                  <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/vendor</dst>
-                  <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/vendor</src>
-                </link>
-              </links>
-            </configuration>
-          </plugin>
+<!--           <plugin> -->
+<!--             <groupId>com.pyx4j</groupId> -->
+<!--             <artifactId>maven-junction-plugin</artifactId> -->
+<!--             <version>1.0.3</version> -->
+<!--             <executions> -->
+<!--               <execution> -->
+<!--                 <phase>process-resources</phase> -->
+<!--                 <goals> -->
+<!--                   <goal>link</goal> -->
+<!--                 </goals> -->
+<!--               </execution> -->
+<!--             </executions> -->
+<!--             <configuration> -->
+<!--               <links> -->
+<!--                 <link> -->
+<!--                   add allowLinking="true" to Tomcat's conf/Context.xml; --> 
+<!--                     also, disable update in Edit Configuration on frame deactiviation  -->
+<!--                   <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/javascript</dst> -->
+<!--                   <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/javascript</src> -->
+<!--                 </link> -->
+<!--                 <link> -->
+<!--                   <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/libs</dst> -->
+<!--                   <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/libs</src> -->
+<!--                 </link> -->
+<!--                 <link> -->
+<!--                   <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/mock</dst> -->
+<!--                   <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/mock</src> -->
+<!--                 </link> -->
+<!--                 <link> -->
+<!--                   <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/ui</dst> -->
+<!--                   <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/ui</src> -->
+<!--                 </link> -->
+<!--                 <link> -->
+<!--                   <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/vendor</dst> -->
+<!--                   <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/vendor</src> -->
+<!--                 </link> -->
+<!--               </links> -->
+<!--             </configuration> -->
+<!--           </plugin> -->
         </plugins>
       </build>
     </profile>
@@ -874,17 +874,25 @@
                       <directory>src/main/javascript/edu/dfci/cccb/mev/web</directory>
                       <filtering>false</filtering>
                       <includes>
-                        <include>**</include>
-                      </includes>
-                      <excludes>
-                        <exclude>**/node_modules/**</exclude>
-                      </excludes>
-                    </resource>
+                        <include>javascript/**</include>
+	                    <include>libs/*</include>
+	                    <include>mock/**</include>	                    
+	                    <include>vendor/**</include>
+	                    <include>ui/*.*</include>
+	                    <include>ui/bower_components/**</include>
+	                    <include>ui/css/**</include>
+	                    <include>ui/dist/**</include>
+	                    <include>ui/fonts/**</include>
+	                    <include>ui/less/**</include>
+                        <include>ui/app/**</include>
+                        <include>ui/node_modules/*/*</include>
+                      </includes>                      
+                    </resource>                    
                   </resources>
                 </configuration>
               </execution>
             </executions>
-          </plugin>
+          </plugin>          
         </plugins>
       </build>
     </profile>
