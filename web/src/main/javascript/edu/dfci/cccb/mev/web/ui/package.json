@@ -31,6 +31,7 @@
     "mev-annotations": "file:../libs/domain/annotations",
     "mev-bs-modal": "file:../libs/widgets/bsmodal",
     "mev-dataset": "file:../libs/domain/dataset",
+    "mev-domain-common": "file:../libs/domain/common",
     "mev-gsea": "file:../libs/domain/gsea",
     "mev-hcl": "file:../libs/domain/hcl",
     "mev-heatmap": "file:../libs/charts/mevHeatmap",
