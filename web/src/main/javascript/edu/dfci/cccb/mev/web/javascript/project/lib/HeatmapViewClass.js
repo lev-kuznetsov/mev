@@ -46,8 +46,38 @@ define(['extend', "lodash"], function(extend, _){
 			return extend({}, self);
 		};
 		
-		extend(self, params);
+		function getStats(params){
+	        var stats = {
+	            min: Infinity,
+	            max: -Infinity,
+	            sum: 0,
+	            count: 0
+	        };
+	        _.transform(params.labels.column.keys, function(result, column, index){
+	            _.transform(params.labels.row.keys, function(result, row, index){
+	                var value = self.dataset.expression.tryGet([row, column]);
+	                    if(!isNaN(value)){    
+	                    if(value < result.min) result.min = value;
+	                    if(value > result.max) result.max = value;
+	                    result.sum += value;
+	                    result.count++;
+	                }
+	            }, result);
+	        }, stats);          
+	        stats.avg = stats.sum / stats.count;
+	        return stats;
+	    }
+	    
+	    if(params.labels.column.keys.length < self.dataset.column.keys.length || params.labels.row.keys.length < self.dataset.row.keys.length){
+	        var stats = getStats(params);
+	        _.assign(params.expression, stats);
+	    }
 
+	    self.refresh = function(){
+	    	var stats = getStats(self);
+	        _.assign(self.expression, stats);	    		
+	    };
+		extend(self, params);
 	};
 	
 });

@@ -65,11 +65,14 @@ function(d3, generateScales, drawCells, drawSelections,
 		
 		this.params = params;
 		
-		this.scales = generateScales(params, View);
-		
+		this.scales = generateScales(params, View);		
 		
 		this.view = View;
 		
+		this.updateScales = function(view){			
+			this.scales = generateScales(self.params, view || self.view);
+		}
+
 		this.drawCells = drawCells;
 		this.drawSelections = drawSelections;
 		this.drawAnalysis = drawAnalysis;

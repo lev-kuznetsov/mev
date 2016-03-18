@@ -55,6 +55,22 @@ function(angular, d3, jquery, _, HeatmapVisualizationClass, generateParams, heat
                             $scope.heatmapView = updatedView;                            
                         }
                     });
+                    this.onDataLoaded = $scope.$on("mui:model:dataset:values:loaded", function(){
+//                      $scope.repaintView();
+                        var position = {
+                                top: $scope.scrollable.scrollTop(),
+                                height:$scope.scrollable.height(),
+                                left: $scope.scrollable.scrollLeft(),
+                                width:$scope.scrollable.width()
+                        };
+                        if($scope.visualization){
+                            $scope.heatmapView.refresh();                            
+                            // $scope.visualization.updateScales();
+                            // $scope.visualization.updateCells(position, $scope.heatmapDataset, {force: true});
+                            $scope.colorEdge.refresh();
+                            $scope.applyNewRanges();
+                        }
+                    });
                 },
                 link : function($scope, elems, attr) {
                 	//use jquery to get the nearest scrollable parent
@@ -66,7 +82,7 @@ function(angular, d3, jquery, _, HeatmapVisualizationClass, generateParams, heat
                 	//finally, default to 'div.tab-content' for legacy code
                 	if(!scrollable)
                 		scrollable = $("div.tab-content");
-                	
+                	$scope.scrollable = scrollable;
                 	var delay = 50, timer = null;
 //                	if(!$scope.heatmapView.scrollableContainer)
 //                		$scope.heatmapView.scrollableContainer="div.tab-content";
@@ -92,23 +108,18 @@ function(angular, d3, jquery, _, HeatmapVisualizationClass, generateParams, heat
 	                    updatedView.coloring = d3colors.current();
 	                    $scope.heatmapView = updatedView;
                 	}
-                	$scope.$on("mui:model:dataset:values:loaded", function(){
-//                		$scope.repaintView();
-                		var position = {
-                    			top: scrollable.scrollTop(),
-                    			height:scrollable.height(),
-                    			left: scrollable.scrollLeft(),
-                                width:scrollable.width()
-                    	};
-                		if($scope.visualization)
-                			$scope.visualization.updateCells(position, $scope.heatmapDataset, {force: true});
-                	});
                 	
                     $scope.colorEdge = {
 
                       min: undefined,
                       max: undefined,
-                      avg: undefined
+                      avg: undefined,
+                      refresh: function(){
+                        $scope.colorEdge.min = $scope.heatmapView.expression.min;
+                        $scope.colorEdge.max = $scope.heatmapView.expression.max;
+                        $scope.colorEdge.avg = $scope.heatmapView.expression.avg;
+                          
+                      }
 
                     };
                     var colorSlider = jquery('div#heatmapColorSlider')

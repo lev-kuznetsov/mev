@@ -40,7 +40,9 @@ define(['./cellFilter', 'd3', "jquery"], function(cellFilter, d3, $){
 					y : function(d){ return self.scales.cells.yScale(d.row);},
 					height: self.params.cell.height - self.params.cell.padding,
 					width: self.params.cell.width - self.params.cell.padding,
-					fill: function(d){ return self.scales.cells.colorScale(d.value);},
+					fill: function(d){ 
+						return self.scales.cells.colorScale(d.value);
+					},
 //					fill: function(d){
 //						var node = this;
 //						ds.expression.tryGet([d.row, d.column]).then(function(value){						
@@ -126,6 +128,7 @@ define(['./cellFilter', 'd3', "jquery"], function(cellFilter, d3, $){
 			.range([self.view.expression.min, self.view.expression.max]);
 			
 		self.DOM.legend.selectAll("rect").remove();
+		self.DOM.legend.selectAll("text").remove();
 		self.DOM.legend.selectAll("rect").data(rands).enter().append("rect")
 		.attr({
 			x : function(d, i){ return 30;},

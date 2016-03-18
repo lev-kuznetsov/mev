@@ -2,6 +2,7 @@ package edu.dfci.cccb.mev.genemad.domain.impl;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.r.AbstractDispatchedRAnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Error;
@@ -9,6 +10,7 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.R;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
 import edu.dfci.cccb.mev.genemad.domain.contract.GeneMADAnalysis;
 
+@Log4j
 @R ("function (dataset) {\n"
       + "gene.mad=sort(apply(as.matrix(dataset),1,mad), decreasing=TRUE)\n" 
       + "genemad<-list(genes=names(gene.mad), mad=gene.mad)"
@@ -29,7 +31,6 @@ public class RserveGeneMADAnalysisBuilder extends AbstractDispatchedRAnalysisBui
   
   @Callback
   private void cb () {
-    System.out.println ("result:"+dtoResult);
-    System.out.println ("error:"+error);
+	  log.error ("RserveGeneMADAnalysisBuilder ERROR: "+error);
   }
 }

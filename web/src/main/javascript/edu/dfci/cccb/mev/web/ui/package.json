@@ -33,6 +33,7 @@
     "mev-dataset": "file:../libs/domain/dataset",
     "mev-gsea": "file:../libs/domain/gsea",
     "mev-hcl": "file:../libs/domain/hcl",
+    "mev-heatmap": "file:../libs/charts/mevHeatmap",
     "mev-pca": "file:../libs/domain/pca",
     "mev-project": "file:../libs/domain/project",
     "mev-results-table": "file:../libs/widgets/mevResultsTable",
@@ -95,7 +96,9 @@
         "format": "global"
       },
       "jquery-ui": {
-        "deps": ["jquery"]
+        "deps": [
+          "jquery"
+        ]
       }
     }
   },
