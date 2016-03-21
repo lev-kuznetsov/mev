@@ -1,9 +1,13 @@
 define(["lodash"], function(_){
 	function mevSelectionLocator(mevContext){		
-		this.find = function(dimension){
+		this.find = function(dimension, level){
 			var context = mevContext.current() || mevContext.root();
+			if(level)
+				context = mevContext.get(level);
+			else
+				level = mevContext.getLevel() || "root";
 			if(!context) return [];
-			if(mevContext.getLevel()==="root"){				
+			if(level==="root"){				
 				return mevContext.root().dataset.selections[dimension];
 			}else if(context.type){
 				var selections = [];

@@ -34,9 +34,11 @@
 			                <a class="btn" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
 			                  <i class="icon-white icon-download"></i> Download
 			                </a> 
-			                <a class="btn" data-target="#exportDataset{{analysis.name}}" data-toggle="modal">
+			                <!--<a class="btn" data-target="#exportDataset{{analysis.name}}" data-toggle="modal">
 				                  New Dataset
-				            </a> 	 
+				            </a>-->
+				            <btn-export-selection mui-target="Top" mui-analysis="analysis" 
+			             	mui-dataset="project.dataset" mui-items="filteredResults" mui-key-name="id" mui-dimension="row" mev-context-level="bottom">
 				            <!-- disable for beta1 -->
 				            <button class="btn" ng-click="applyToHeatmap()" >
 				                <span>

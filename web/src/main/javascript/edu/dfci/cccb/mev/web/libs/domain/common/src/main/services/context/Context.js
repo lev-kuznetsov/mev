@@ -14,6 +14,12 @@ define(["lodash"], function(_){ "use strict";
 			},
 			getLevel: function(){
 				return this.level || "root";
+			},
+			get: function(level){
+				if(level === "root")
+					return this.root();
+				else
+					return this.current();
 			}
 		});					
 	}
