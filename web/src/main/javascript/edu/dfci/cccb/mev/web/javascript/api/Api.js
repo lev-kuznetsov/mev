@@ -13,6 +13,10 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
                     url: '/dataset',
                     method: 'GET',
                     isArray: true
+                },
+                'subset': {
+                    url: '/dataset/:datasetName/data/subset/export',
+                    method: "POST"
                 }
             });       	 
     	var DatasetResource = Object.create(resource);       	 
@@ -26,6 +30,22 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
             datasetsResource.$promise.then(function(response){
                 $rootScope.$broadcast("mev:datasets:list:refreshed", response);
             });
+            return datasetsResource;
+         };
+         DatasetResource.subset = function(params, data, callback){        
+            data.name = params.datasetName + "--" + data.name;    
+            var datasetsResource = resource.subset(params, data, callback);            
+            datasetsResource.$promise.then(function(response){
+                $http({
+                   method:"POST", 
+                   url:"/annotations/" + params.datasetName + "/annotation/row" 
+                   + "/export?destId="+data.name});
+               $http({
+                   method:"POST", 
+                   url:"/annotations/" + params.datasetName + "/annotation/column" 
+                   + "/export?destId="+data.name});
+               DatasetResource.getAll();
+            })
             return datasetsResource;
          };
 
