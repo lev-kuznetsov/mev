@@ -57,7 +57,8 @@ public abstract class AbstractDimension implements Dimension {
   @Override
   public Dimension subset (List<String> keys) {
 	Selections subsetSelections = new ArrayListSelections();
-	
+	if(keys == null)
+		keys = this.keys();
 	for(Selection selection : this.selections.getAll()){				
 		for(String key : keys)
 			if(selection.keys().contains(key)){

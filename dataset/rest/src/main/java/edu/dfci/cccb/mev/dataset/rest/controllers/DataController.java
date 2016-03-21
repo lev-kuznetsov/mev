@@ -41,6 +41,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.Values;
+import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 
 /**
  * @author levk
@@ -54,7 +55,8 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Values;
 public class DataController {
 
   private @Inject Dataset dataset;
-
+  private @Inject Workspace workspace;
+  
   @RequestMapping (method = GET)
   public Dataset dataset () {
     if (log.isDebugEnabled ())
@@ -89,8 +91,8 @@ public class DataController {
   @Accessors(fluent=true)
   public static class SubsetRequest{
     private @Getter @JsonProperty  String name;;
-    private @Getter @JsonProperty  List<String> columns;
-    private @Getter @JsonProperty  List<String> rows;
+    private @Getter @JsonProperty(required=false)  List<String> columns;
+    private @Getter @JsonProperty(required=false)  List<String> rows;
   }
   
   @RequestMapping(method=POST, value="/subset")
@@ -102,6 +104,16 @@ public class DataController {
                  + asList (subset.getClass ().getInterfaces ()));
     
     return subset; 
+  }
+  
+  @RequestMapping(method=POST, value="/subset/export")
+  public void exportSubset(@RequestBody SubsetRequest dto) throws Exception{
+    Dataset subset = dataset.subset (dto.name(), dto.columns (), dto.rows ());
+    if (log.isDebugEnabled ())
+      log.debug ("Returning SUBSET "
+                 + dataset + " of type " + subset.getClass () + " implementing "
+                 + asList (subset.getClass ().getInterfaces ()));    
+    workspace.put(subset); 
   }
   
 }
