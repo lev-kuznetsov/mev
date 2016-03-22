@@ -7,8 +7,10 @@ define(['angular',
 function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){ "use strict";
 	
 	return angular.module('Mev.Dataset', ['Mev.Api'])
-	.factory('DatasetFactory', ['AnalysisResourceService', 'SelectionResourceService', "$q", "$http", '$rootScope', 'AnalysisEventBus', "DashboardItems", "mevAnnotationRepository",
-	 function(AnalysisResourceService, SelectionResourceService, $q, $http, $rootScope, analysisEventBus, DashboardItems, MevAnnotationRepository){
+	.factory('DatasetFactory', ['AnalysisResourceService', 'SelectionResourceService', "$q", "$http", '$rootScope', 'AnalysisEventBus', "DashboardItems", 
+		"mevAnnotationRepository", "DatasetResourceService",
+	 function(AnalysisResourceService, SelectionResourceService, $q, $http, $rootScope, analysisEventBus, DashboardItems, 
+	 	MevAnnotationRepository, DatasetResourceService){
 	    
 	    //DatasetFactory :: [String], [DatasetResponseObj] -> [Dataset]
 	    //  Function that takes dataset name and dataset response object and returns
@@ -33,7 +35,7 @@ function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){ "u
 				dataset.loadAnalyses = loadAnalyses;
 				dataset.setSelections = setSelections;
 				dataset.resetSelections = resetSelections;
-				
+				dataset.subset = DatasetResourceService.subset;
 
 				dataset.getAnnotations=function(dimension){
 					if(!this._annotations)
