@@ -45,16 +45,17 @@ public class GseaBuilder extends AbstractDispatchedRAnalysisBuilder<GseaBuilder,
   private @Parameter @Setter int minGSSize = 20;
   private @Parameter @Setter String organism = "human";
   private @Parameter @Setter String pAdjustMethod = "fdr";
-  private @Parameter @Setter double adjValueCutoff = 0.05;
+  private @Parameter("adjPvalueCutoff") @Setter double adjValueCutoff = 0.05;
 
   private @Getter Gsea result;
-
+  @Result List<GseaEntry> response;
+  
   public GseaBuilder () {
     super ("gsea");
   }
 
   @Callback (CallbackType.SUCCESS)
-  private void inject (@Result List<GseaEntry> result) {
-    this.result = new Gsea (name (), result);
+  private void inject () {
+    this.result = new Gsea (name (), response);
   }
 }
