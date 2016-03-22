@@ -26,12 +26,12 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
             + "              logFC=absMax(limma[limma[,'SYMBOL']==GS, 'logFC'])))\n"
             + "}, GStoEG_map=GStoEG_map);\n"
 
-            + "output=matrix(unlist(EntrezData), ncol = 2, byrow = TRUE);\n"
+            + "output<-do.call(rbind, EntrezData);\n"
             + "geneList.lfc=as.numeric(output[,2]);\n"
             + "names(geneList.lfc)=output[,1];\n"
             + "geneList.lfc=sort(geneList.lfc, decreasing=TRUE);\n"
 
-            + "gsea.res<-gsePathway(geneList.lfc, nPerm, minGSSize=minGSSize,\n"
+            + "gsea.res<-gsePathway(geneList.lfc, nPerm=nPerm, minGSSize=minGSSize,\n"
             + "                     pvalueCutoff=adjPvalueCutoff,"
             + "                     pAdjustMethod=pAdjustMethod, verbose=FALSE);\n"
 
