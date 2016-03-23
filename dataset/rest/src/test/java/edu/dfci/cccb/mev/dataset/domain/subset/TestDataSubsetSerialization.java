@@ -1,7 +1,6 @@
 package edu.dfci.cccb.mev.dataset.domain.subset;
 
 import static java.util.Arrays.asList;
-import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
@@ -23,20 +22,13 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.mock.MapBackedValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.mock.MockTsvInput;
-import edu.dfci.cccb.mev.dataset.domain.r.RserveDatasetDeserializer;
-import edu.dfci.cccb.mev.dataset.domain.r.RserveDatasetSerializer;
-import edu.dfci.cccb.mev.dataset.domain.r.RserveDoubleDeserializer;
-import edu.dfci.cccb.mev.dataset.domain.r.RserveDoubleSerializer;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;

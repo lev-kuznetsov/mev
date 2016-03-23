@@ -55,7 +55,6 @@ import edu.dfci.cccb.mev.dataset.domain.contract.SelectionNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
-import edu.dfci.cccb.mev.dataset.domain.export.DatasetExportRawInput;
 
 /**
  * @author levk

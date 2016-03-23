@@ -21,7 +21,6 @@ import java.io.IOException;
 
 import lombok.extern.log4j.Log4j;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
@@ -29,7 +28,6 @@ import org.springframework.http.converter.AbstractHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
-import edu.dfci.cccb.mev.dataset.domain.fs.FlatFileValues;
 import edu.dfci.cccb.mev.dataset.domain.fs.IFlatFileValues;
 
 /**

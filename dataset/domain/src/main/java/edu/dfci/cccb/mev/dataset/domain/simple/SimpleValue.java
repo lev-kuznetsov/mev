@@ -1,11 +1,8 @@
 package edu.dfci.cccb.mev.dataset.domain.simple;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValue;
 
