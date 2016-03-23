@@ -11,76 +11,13 @@
                         scope: {
                             analysis: "=analysis",
                             project: "=project",
+                            dimension: "@mevDimension",
 			                isItOpen: "@"
                         },
                         templateUrl:paths.module + '/templates/hierarchicalAccordion.tpl.html',
                         link: function (scope, elems, attr) {
 							scope.isItOpen = attr.isItOpen || false;
-                            scope.applyToHeatmap = function () {
-
-                                var labels = traverse(scope.analysis.root);
-
-                                if (scope.analysis.dimension == "column") {
-
-                                    scope.project.generateView({
-                                        viewType: 'heatmapView',
-                                        labels: {
-                                            row: {
-                                                keys: scope.project.dataset.row.keys
-                                            },
-                                            column: {
-                                                keys: labels
-                                            }
-                                        },
-                                        expression: {
-                                            min: scope.project.dataset.expression.min,
-                                            max: scope.project.dataset.expression.max,
-                                            avg: scope.project.dataset.expression.avg,
-                                        },
-                                        panel: {
-                                            top: scope.analysis
-                                        }
-                                    });
-
-                                } else {
-                                    scope.project.generateView({
-                                        viewType: 'heatmapView',
-                                        labels: {
-                                            column: {
-                                                keys: scope.project.dataset.column.keys
-                                            },
-                                            row: {
-                                                keys: labels
-                                            }
-                                        },
-                                        expression: {
-                                            min: scope.project.dataset.expression.min,
-                                            max: scope.project.dataset.expression.max,
-                                            avg: scope.project.dataset.expression.avg,
-                                        },
-                                        panel: {
-                                            side: scope.analysis
-                                        }
-                                    });
-                                }
-                            };
-
-                            function traverse(tree) {
-
-                                var leaves = {
-                                    '0': [],
-                                    '1': []
-                                };
-
-                                if (tree.children.length > 0) {
-                                    for (var i = 0; i < tree.children.length; i++) {
-                                        leaves[i] = (!tree.children[i].children) ? [tree.children[i].name] : traverse(tree.children[i])
-                                    }
-                                };
-
-                                return leaves[0].concat(leaves[1]);
-                            };
-
+                            
                             var padding = 40;
 
                             var labelsGutter = 100;
@@ -236,7 +173,7 @@
                                     drawAnalysisTree(
                                         panelWindow,
                                         Cluster,
-                                        newval.root,
+                                        newval.result[scope.dimension],
                                         "horizontal");
                                 }
                             });
@@ -276,7 +213,7 @@
                                     context.drawImage(image, 0, 0);
 
                                     canvas.toBlob(function (blob) {
-                                        saveAs(blob, cluster.name + ".png");
+                                        saveAs(blob, cluster.name + "_" + scope.dimension + ".png");
                                     });
                                     //                    	 var canvasdata = canvas.toDataURL("image/png");
                                     //                    	  

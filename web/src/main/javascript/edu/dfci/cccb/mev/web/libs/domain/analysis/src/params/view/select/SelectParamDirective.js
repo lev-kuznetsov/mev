@@ -11,7 +11,7 @@ define(["lodash", "./SelectParam.tpl.html"], function(_, template){
 				scope.initial = spec.value;
 				function decorateOptions(options){
 					scope.param.optionsx = _.cloneDeep(options);
-					if(mevContext.getLevel()===scope.param.allowAll && !_.find(scope.param.optionsx, function(item){
+					if((mevContext.getLevel()===scope.param.allowAll || scope.param.allowAll===true)  && !_.find(scope.param.optionsx, function(item){
 							return item==="all" || (scope.param.display && item[scope.param.display] === "all");
 					})){
 						var all;
