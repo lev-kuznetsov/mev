@@ -45,8 +45,8 @@ function(_, mevAnalsysType,
 			name: "GSEA",
 			params: mevAnalysisParams([
 				new MevParentAnalysisParam({
-					"id": "limma",
-					"type": "LIMMA Differential Expression Analysis",
+					"id": "parent",
+					"type": ["LIMMA Differential Expression Analysis", "t-Test Analysis"],
 					"display": "name",
 					"required": true
 				}), 

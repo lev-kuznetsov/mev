@@ -34,6 +34,15 @@ define(["lodash"], function(_){
 						});
 					}
 				}
+				if(context.getOriginalInputKeys){
+					var filteredKeys = context.getOriginalInputKeys(dimension);
+					if(filteredKeys && filteredKeys.length > 0){
+						selections.push({
+							name: filteredKeys.displayName || "original "+dimension+" input",
+							keys: filteredKeys
+						});
+					}
+				}
 				return selections;
 			 }
 			 
