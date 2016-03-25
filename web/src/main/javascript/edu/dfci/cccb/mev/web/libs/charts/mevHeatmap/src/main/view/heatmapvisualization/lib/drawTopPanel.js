@@ -7,7 +7,7 @@ define([], function(){
         if ( newval.type == "Hierarchical Clustering") {
             
 
-            self.drawTree(self.DOM.topPanel,newval.root,'horizontal')
+            self.drawTree(self.DOM.topPanel,newval.result.column,'horizontal')
 
         } else if (newval.type == "K-means Clustering") {
 

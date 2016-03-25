@@ -42,7 +42,6 @@ import edu.dfci.cccb.mev.dataset.domain.mock.MockTsvInput;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.RDispatcherConfiguration;
-import edu.dfci.cccb.mev.genemad.domain.contract.GeneMADAnalysis;
 import edu.dfci.cccb.mev.survival.domain.contract.SurvivalAnalysis;
 import edu.dfci.cccb.mev.survival.domain.contract.SurvivalInputEntryTcga;
 import edu.dfci.cccb.mev.survival.domain.contract.SurvivalParams;

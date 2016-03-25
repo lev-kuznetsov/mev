@@ -12,14 +12,10 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
-import org.springframework.core.env.Environment;
 import org.springframework.util.ResourceUtils;
 
 import edu.dfci.cccb.mev.configuration.util.archaius.ArchaiusConfig;
 import edu.dfci.cccb.mev.configuration.util.contract.Config;
-import edu.dfci.cccb.mev.configuration.util.simple.SimpleConfig;
 import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
 
 @Log4j

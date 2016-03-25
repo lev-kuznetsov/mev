@@ -48,7 +48,6 @@ import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.fs.FlatFileValueStoreBuilder;
-import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysisBuilder.AnalysisStatus;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;

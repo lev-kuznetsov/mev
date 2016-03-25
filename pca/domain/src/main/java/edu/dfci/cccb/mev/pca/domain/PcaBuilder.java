@@ -1,6 +1,5 @@
 package edu.dfci.cccb.mev.pca.domain;
 
-import java.util.Collection;
 import java.util.List;
 
 import lombok.Getter;

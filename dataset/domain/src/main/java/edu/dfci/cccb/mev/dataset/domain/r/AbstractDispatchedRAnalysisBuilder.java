@@ -31,7 +31,6 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Error;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Parameter;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Rserve;
-import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback.CallbackType;
 
 @Log4j
 public abstract class AbstractDispatchedRAnalysisBuilder <B extends AnalysisBuilder<?, ?>, A extends Analysis> extends AbstractAnalysisBuilder<B, A> {

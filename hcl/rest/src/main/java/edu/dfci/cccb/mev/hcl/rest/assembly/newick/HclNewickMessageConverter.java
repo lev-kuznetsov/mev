@@ -74,6 +74,7 @@ public class HclNewickMessageConverter extends AbstractHttpMessageConverter<Hcl>
   @Override
   protected void writeInternal (Hcl t, HttpOutputMessage outputMessage) throws IOException,
                                                                        HttpMessageNotWritableException {
-    nodeNewickMessageConverter.writeInternal (t.root (), outputMessage);
+    nodeNewickMessageConverter.writeInternal (t.result ().column(), outputMessage);
+    nodeNewickMessageConverter.writeInternal (t.result ().row(), outputMessage);
   }
 }

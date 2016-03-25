@@ -7,7 +7,7 @@ define(["ng", "lodash"], function(ng, _){
 			this.analysis=analysis;
 			this.project=project;
 			$scope.dataset=project.dataset;
-			this.sigGenesTop = SigGenes(100, analysis.result.genes, analysis.result.mad, "MAD");			
+			this.sigGenesTop = SigGenes(500, analysis.result.genes, analysis.result.mad, "MAD");			
 			this.heatmapViewTop = project.generateView({
 	            viewType:'heatmapView',
 	            note: analysis.name+"_genesMADTop",

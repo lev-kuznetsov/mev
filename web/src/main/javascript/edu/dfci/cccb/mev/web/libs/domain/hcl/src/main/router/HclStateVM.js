@@ -9,7 +9,8 @@ define(["lodash"], function(_){ "use strict";
 
 			this.analysisId=analysis.name;			
 			
-			var labels = traverse(analysis.root);
+			var labelsColum = analysis.result.column ? traverse(analysis.result.column) : null;
+			var labelsRow = analysis.result.row ? traverse(analysis.result.row) : null;
 			function traverse(tree) {
 	            var leaves = {
 	                '0': [],
@@ -25,8 +26,7 @@ define(["lodash"], function(_){ "use strict";
 	            return leaves[0].concat(leaves[1]);
 	        };		
 	        
-	        if (analysis.dimension == "column") {
-	            this.heatmapView = project.generateView({
+	        this.heatmapView = project.generateView({
 	                viewType: 'heatmapView',
 	                note: analysis.name,
 	                labels: {
@@ -34,39 +34,32 @@ define(["lodash"], function(_){ "use strict";
 	                        keys: analysis.params.rows || project.dataset.row.keys
 	                    },
 	                    column: {
-	                        keys: labels
-	                    }
-	                },
-	                // expression: {
-	                //     min: project.dataset.expression.min,
-	                //     max: project.dataset.expression.max,
-	                //     avg: project.dataset.expression.avg,
-	                // },
-	                panel: {
-	                    top: analysis
-	                }
-	            });
-	        } else {
-	        	this.heatmapView = project.generateView({
-	                viewType: 'heatmapView',
-	                note: analysis.name,
-	                labels: {
-	                    column: {
 	                        keys: analysis.params.columns || project.dataset.column.keys
-	                    },
-	                    row: {
-	                        keys: labels
 	                    }
 	                },
+	                panel: {}
 	                // expression: {
 	                //     min: project.dataset.expression.min,
 	                //     max: project.dataset.expression.max,
 	                //     avg: project.dataset.expression.avg,
-	                // },
-	                panel: {
-	                    side: analysis
-	                }
+	                // },	                
 	            });
+
+	        if (analysis.result.column) {
+	        	_.assign(this.heatmapView.labels.column, {
+	        		keys: labelsColum
+	        	});
+	            _.assign(this.heatmapView.panel, {
+                    top: analysis
+                });
+	        }
+	        if(analysis.result.row) {
+	        	_.assign(this.heatmapView.labels.row, {
+	        		keys: labelsRow
+	        	});
+	            _.assign(this.heatmapView.panel, {
+                    side: analysis
+                });
 	        }
 			  	
 		}

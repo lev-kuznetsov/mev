@@ -16,7 +16,7 @@ function(_, mevAnalsysType,
 	DecimalParam,
 	ParentAnalysisParam,
 	AnnotationFieldParam){ "use strict";
-	function gseaAnalysisType(MevAnalysisType, mevAnalysisParams, MevParentAnalysisParam, MevAnnotationFieldParam, mevAnnotationRepository){
+	function gseaAnalysisType(MevAnalysisType, mevAnalysisParams, MevParentAnalysisParam, MevAnnotationFieldParam, mevAnnotationRepository, $q){
 
 		var limmaParam = Object.create(
 			new MevParentAnalysisParam({
@@ -97,7 +97,7 @@ function(_, mevAnalsysType,
 
 		function prepareLimmaResult(limmaResults, geneSymbolField){			
 			var annotations = new mevAnnotationRepository("row");
-			var geneMapping = geneSymbolField ? annotations.getMapping(geneSymbolField) : undefined;
+			var geneMapping = geneSymbolField ? annotations.getMapping(geneSymbolField) : $q.when({});
 			return geneMapping.then(function(geneMapping){				
 				return limmaResults.reduce(function(result, item){
 					// "SYMBOL":"IL8","logFC":8.3599,"AveExpr":10.1369,"t":79.7198,"P.Value":2.4498e-22,"adj.P.Val":2.9396e-18}
@@ -134,7 +134,7 @@ function(_, mevAnalsysType,
 		return gseaType;
 	
 	}	
-	gseaAnalysisType.$inject=["mevAnalysisType", "mevAnalysisParams", "mevParentAnalysisParam", "mevAnnotationFieldParam", "mevAnnotationRepository", ];
+	gseaAnalysisType.$inject=["mevAnalysisType", "mevAnalysisParams", "mevParentAnalysisParam", "mevAnnotationFieldParam", "mevAnnotationRepository", "$q"];
 	gseaAnalysisType.$name="mevGseaAnalysisType";
 	gseaAnalysisType.$provider="factory";
 	return gseaAnalysisType;

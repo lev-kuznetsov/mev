@@ -57,11 +57,8 @@ import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.RDispatcherConfiguration;
-import edu.dfci.cccb.mev.hcl.domain.contract.Node;
-import edu.dfci.cccb.mev.hcl.domain.mock.MockBranch;
 import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHcl;
 import edu.dfci.cccb.mev.hcl.rest.configuration.HclRestConfiguration;
-import edu.dfci.cccb.mev.hcl.rest.controllers.HclAnalysisController;
 import edu.dfci.cccb.mev.hcl.rest.controllers.HclAnalysisController.HclDto;
 import edu.dfci.cccb.mev.pca.domain.PcaBuilder;
 import edu.dfci.cccb.mev.web.configuration.DispatcherConfiguration;
@@ -90,7 +87,8 @@ public class TestHclController {
 	  @Inject @Named("pca.analysis.builder") Provider<PcaBuilder> builderProvider; 
 	  
 	   
-	  private String jsonResult = "{\"name\":\"hcl_cols\",\"timestamp\":{\"timeInMillis\":1457387955748,\"seconds\":15,\"minutes\":59,\"hours\":4,\"period\":\"PM\"},\"type\":\"Hierarchical Clustering\",\"root\":{\"distance\":0.0,\"children\":[{\"distance\":3.1877,\"children\":[{\"distance\":2.594,\"children\":[{\"name\":\"C\"},{\"name\":\"A\"}]},{\"name\":\"B\"}]},{\"distance\":1.1129,\"children\":[{\"name\":\"F\"},{\"distance\":2.9154,\"children\":[{\"name\":\"D\"},{\"name\":\"E\"}]}]}]},\"dimension\":\"column\"}";
+//	  private String jsonResult = "{\"name\":\"hcl_cols\",\"timestamp\":{\"timeInMillis\":1457387955748,\"seconds\":15,\"minutes\":59,\"hours\":4,\"period\":\"PM\"},\"type\":\"Hierarchical Clustering\",\"root\":{\"distance\":0.0,\"children\":[{\"distance\":3.1877,\"children\":[{\"distance\":2.594,\"children\":[{\"name\":\"C\"},{\"name\":\"A\"}]},{\"name\":\"B\"}]},{\"distance\":1.1129,\"children\":[{\"name\":\"F\"},{\"distance\":2.9154,\"children\":[{\"name\":\"D\"},{\"name\":\"E\"}]}]}]},\"dimension\":\"column\"}";
+	  private String jsonResult = "{\"name\":\"hcl_cols\",\"timestamp\":{\"timeInMillis\":1457387955748,\"seconds\":15,\"minutes\":59,\"hours\":4,\"period\":\"PM\"},\"type\":\"Hierarchical Clustering\",\"dimension\":\"column\", \"result\": {\"column\":{\"distance\":0,\"left\":{\"distance\":1.1129,\"left\":{\"name\":\"F\"},\"right\":{\"distance\":2.9154,\"left\":{\"name\":\"D\"},\"right\":{\"name\":\"E\"}}},\"right\":{\"distance\":3.1877,\"left\":{\"name\":\"B\"},\"right\":{\"distance\":2.594,\"left\":{\"name\":\"A\"},\"right\":{\"name\":\"C\"}}}}}}";
 	  private String jsonResultRoot = "\"root\": {\n" + 
 	  		"		\"distance\": 0.0,\n" + 
 	  		"		\"children\": [{\n" + 
@@ -148,7 +146,13 @@ public class TestHclController {
 		HclDto dto = new HclDto("hcl_rows", "row", "euclidean", "complete", null, null);
 		run(dto);
 	}
-
+	
+	@Test @Ignore
+	public void testBoth() throws Exception {		
+		HclDto dto = new HclDto("hcl_rows", null, "euclidean", "complete", null, null);
+		run(dto);
+	}
+		
 	private void run(HclDto dto) throws Exception, JsonProcessingException,
 			AnalysisNotFoundException, InterruptedException, IOException,
 			JsonParseException, JsonMappingException,
@@ -180,8 +184,8 @@ public class TestHclController {
 	      SimpleHcl analysis = (SimpleHcl) dataset.analyses ().get (dto.name());
 	      log.debug("******* SimpleHclAnalysis:\n"+ jsonObjectMapper.writeValueAsString (analysis));      
 	      assertThat(analysis.name (), is(dto.name()));      
-	      assertThat (analysis.root(), not(nullValue ()));	      
-	      SimpleHcl result = jsonObjectMapper.readValue(jsonResult, SimpleHcl.class);
+	      assertThat (analysis.result(), not(nullValue ()));	      
+//	      SimpleHcl result = jsonObjectMapper.readValue(jsonResult, SimpleHcl.class);
 //	      assertThat (analysis.dimension(), is(result.dimension()));
 //	      MockBranch root = jsonObjectMapper.readValue(jsonResultRoot, MockBranch.class);
 	      
@@ -196,11 +200,17 @@ public class TestHclController {
 	     .andExpect (status ().isOk ())
 	     .andDo(print())
 	     .andReturn ();                                                
-	      SimpleHcl analysisFromGET = jsonObjectMapper.readValue (mvcResultGET.getResponse ().getContentAsString (), SimpleHcl.class); 
-	      assertThat (analysisFromGET.name (), is(dto.name()));
-	      assertThat (analysisFromGET.name(), is(dto.name()));
-	      
-	      assertThat(analysisFromGET.type (), is(SimpleHcl.ANALYSIS_TYPE));
+//	      SimpleHcl analysisFromGET = jsonObjectMapper.readValue (mvcResultGET.getResponse ().getContentAsString (), SimpleHcl.class); 
+//	      assertThat (analysisFromGET.name (), is(dto.name()));
+//	      assertThat (analysisFromGET.name(), is(dto.name()));
+	      if(dto.dimension()!=null)
+	    	  assertFalse(mvcResultGET.getResponse ().getContentAsString ().contains("\""+dto.dimension()+"\":null"));
+	      else{
+	    	  assertFalse(mvcResultGET.getResponse ().getContentAsString ().contains("\"row\":null"));
+	    	  assertFalse(mvcResultGET.getResponse ().getContentAsString ().contains("\"column\":null"));
+	      }
+	    	  
+//	      assertThat(analysisFromGET.type (), is(SimpleHcl.ANALYSIS_TYPE));
 	}
 
 }

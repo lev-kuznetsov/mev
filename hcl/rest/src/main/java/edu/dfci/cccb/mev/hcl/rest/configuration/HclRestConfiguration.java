@@ -47,6 +47,7 @@ import edu.dfci.cccb.mev.hcl.domain.mock.MockNodeBuilder;
 import edu.dfci.cccb.mev.hcl.domain.r.RHclBuilder;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.BranchJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.HclJsonSerializer;
+import edu.dfci.cccb.mev.hcl.rest.assembly.json.HclResultJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.LeafJsonSerializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.NodeJsonDeserializer;
 import edu.dfci.cccb.mev.hcl.rest.assembly.json.SimpleHierarchicallyClusteredDimensionJsonSerializer;
@@ -91,6 +92,7 @@ public class HclRestConfiguration extends MevRestConfigurerAdapter {
   @Override
   public void addJsonSerializers (List<JsonSerializer<?>> serializers) {
     serializers.addAll (asList (new HclJsonSerializer (),
+    							new HclResultJsonSerializer(),
                                 new LeafJsonSerializer (),
                                 new BranchJsonSerializer (),
                                 new SimpleHierarchicallyClusteredDimensionJsonSerializer ()));

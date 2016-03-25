@@ -1,7 +1,5 @@
 package edu.dfci.cccb.mev.genemad.domain.impl;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.r.AbstractDispatchedRAnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;

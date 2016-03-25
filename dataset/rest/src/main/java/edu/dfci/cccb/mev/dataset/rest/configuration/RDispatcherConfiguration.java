@@ -84,8 +84,10 @@ public class RDispatcherConfiguration {
       {
         addSerializer (Dataset.class, new RserveDatasetSerializer ());
         addSerializer (Double.class, new RserveDoubleSerializer ());
+        addSerializer (double.class, new RserveDoubleSerializer ());
 
         addDeserializer (Double.class, new RserveDoubleDeserializer ());
+        addDeserializer (double.class, new RserveDoubleDeserializer ());
         addDeserializer (Dataset.class, new RserveDatasetDeserializer ());
       }
 

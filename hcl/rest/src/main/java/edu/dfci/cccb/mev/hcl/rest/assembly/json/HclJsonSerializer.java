@@ -48,8 +48,8 @@ public class HclJsonSerializer extends AbstractAnalysisJsonSerializer<Hcl> {
   @Override
   protected void serializeAnalysisContent (Hcl value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
                                                                                                       JsonProcessingException {
-    super.serializeAnalysisContent (value, jgen, provider);
-    provider.defaultSerializeField ("root", value.root (), jgen);
+    super.serializeAnalysisContent (value, jgen, provider);        
+    provider.defaultSerializeField ("result", value.result(), jgen);
     provider.defaultSerializeField ("dimension", value.dimension (), jgen);
   }
 }

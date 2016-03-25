@@ -29,7 +29,6 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
 import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListSelections;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
-import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 
 /**
  * @author levk

@@ -55,7 +55,6 @@ import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.RDispatcherConfiguration;
-import edu.dfci.cccb.mev.genesd.domain.contract.GeneSDAnalysis;
 import edu.dfci.cccb.mev.histogram.domain.contract.HistogramAnalysis;
 import edu.dfci.cccb.mev.histogram.domain.contract.HistogramAnalysisBuilder;
 import edu.dfci.cccb.mev.histogram.domain.contract.HistogramResult;

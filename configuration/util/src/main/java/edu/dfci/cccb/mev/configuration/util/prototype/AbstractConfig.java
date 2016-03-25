@@ -1,12 +1,8 @@
 package edu.dfci.cccb.mev.configuration.util.prototype;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.apache.commons.configuration.ConversionException;
-import org.apache.commons.lang.ClassUtils;
-import org.apache.commons.lang.ObjectUtils;
 import org.springframework.core.env.Environment;
 
 import edu.dfci.cccb.mev.configuration.util.contract.Config;

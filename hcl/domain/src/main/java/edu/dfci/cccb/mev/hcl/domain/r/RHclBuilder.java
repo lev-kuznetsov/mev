@@ -1,5 +1,6 @@
 package edu.dfci.cccb.mev.hcl.domain.r;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
@@ -21,7 +22,7 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
 import edu.dfci.cccb.mev.dataset.domain.subset.DataSubset;
 import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 import edu.dfci.cccb.mev.hcl.domain.contract.HclBuilder;
-import edu.dfci.cccb.mev.hcl.domain.contract.Node;
+import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractHcl.CHclResult;
 import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHcl;
 
 @R ("function (dataset, metric, linkage, dimension) {"
@@ -49,8 +50,14 @@ import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHcl;
     + "l <- function (n)"
     + "  if (typeof (n) == 'character') list (name = n) "
     + "  else list (distance = n$dist, left = l (n$left), right = l (n$right));\n"
-    + "d <- if (dimension == 'row') dataset else t (dataset);\n"
-    + "l (hc2n (stats::hclust (cluster::daisy (d, m = metric), method = linkage)));" +
+    + "if(is.null(dimension) || length(dimension)==0) dimension = list(\"row\", \"column\")\n"      
+    + "runHcl <- function(dimension){"
+    + "  d <- if (dimension == 'row') dataset else t (dataset);\n"
+    + "  l (hc2n (stats::hclust (cluster::daisy (d, m = metric), method = linkage)));\n"
+    + "};\n"
+    + "result<-list();\n"
+    + "for (dim in dimension) result[[dim]] <- runHcl(dim);\n" 
+    + "result;\n" +
     "}")
 @Accessors (fluent = true, chain = true)
 public class RHclBuilder extends AbstractDispatchedRAnalysisBuilder<HclBuilder, Hcl> implements HclBuilder {
@@ -59,10 +66,15 @@ public class RHclBuilder extends AbstractDispatchedRAnalysisBuilder<HclBuilder, 
     super ("Hierarchical Clustering");
   }
 
-  private @Getter @Setter Dimension dimension;
+  private List<Dimension> dimensions = new ArrayList<Dimension>();
+  @Override
+  public HclBuilder dimension(Dimension dimension){
+	  dimensions.add(dimension);
+	  return this;
+  }
   private @Getter @Setter @Parameter String metric;
   private @Getter @Setter @Parameter String linkage;
-  private @Result Node root;
+  private @Result CHclResult response;
   private @Getter Hcl result;
   private @Getter @Error String error;
 
@@ -72,9 +84,12 @@ public class RHclBuilder extends AbstractDispatchedRAnalysisBuilder<HclBuilder, 
   private Object subsetlock = new Object();
   private Dataset dataset;
   
-  @Parameter("dimension")
-  private String dimensionName(){
-	  return this.dimension.type().name().toLowerCase();
+  @Parameter("dimension")  
+  private List<String> dimensionNames(){
+	  List<String> dimensionNames = new ArrayList<String>();		  
+	  for(Dimension dim : this.dimensions)
+		  dimensionNames.add(dim.type().name().toLowerCase());
+	  return dimensionNames;
   }
   
   @Override
@@ -97,6 +112,6 @@ public class RHclBuilder extends AbstractDispatchedRAnalysisBuilder<HclBuilder, 
   
   @Callback (CallbackType.SUCCESS)
   private void formatResult () {
-    result = new SimpleHcl ().dataset (dataset ()).dimension (dimension).name (name ()).type (type ()).root (root);
+    result = new SimpleHcl ().dataset (dataset ()).dimensions (dimensions).name (name ()).type (type ()).result (response);
   }
 }

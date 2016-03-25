@@ -14,16 +14,7 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.assembly.json.simple;
 
-import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
-import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
-import static java.lang.Double.MAX_VALUE;
-import static java.lang.Double.NaN;
-import static java.lang.Double.isInfinite;
-import static java.lang.Double.isNaN;
-
 import java.io.IOException;
-import java.util.List;
-
 import lombok.SneakyThrows;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
@@ -34,7 +25,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
