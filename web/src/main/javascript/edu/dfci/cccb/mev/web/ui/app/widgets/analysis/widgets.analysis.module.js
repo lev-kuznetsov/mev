@@ -10,8 +10,7 @@ define(["ng",
         "./analysisNode/widgets.analysis.analysisNode.module",
         "./topgo/widgets.analysis.topgo.module",
         "./genesd/widgets.analysis.genesd.module",
-        "./histogram/widgets.analysis.histogram.module",
-        "./pca/widgets.analysis.pca.module",
+        "./histogram/widgets.analysis.histogram.module",        
         "./voom/widgets.analysis.voom.module"
         ], 
 function(ng, AnalyisEventBus){
