@@ -22,15 +22,18 @@
     "steal": "^0.12.9",
     "steal-tools": "^0.12.4",
     "system-text": "^0.1.0",
-    "systemjs-plugin-json": "^0.1.0",
+    "systemjs-plugin-json": "^0.1.0",    
     "angular-ui-bootstrap": "^0.14.3",
     "bootstrap": "^3.3.6",
-    "jquery": "^2.1.4"
+    "jquery": "^2.1.4",
+    "mev-mock": "file:../mock",
+    "angular": "^1.4.8",
+    "angular-ui-router": "^0.2.18"
   },
   "dependencies": {
-    "angular": "^1.4.8",
-    "d3": "^3.5.13",    
+    "d3": "^3.5.13",
     "lodash": "^2.4.2",
+    "mev-analysis": "file:../analysis",
     "mev-scatter-plot": "file:../../charts/scatter",
     "mui": "file:../../mui"
   }
