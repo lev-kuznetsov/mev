@@ -25,7 +25,7 @@
     "jquery-ui-bundle": "1.11.4",
     "js-data": "^2.8.2",
     "js-data-angular": "^3.1.0",
-    "liver": "file:../libs/liver",
+    "liver": "file:../libs/utils/liver",
     "lodash": "^2.4.1",
     "mev-analysis": "file:../libs/domain/analysis",
     "mev-annotations": "file:../libs/domain/annotations",
