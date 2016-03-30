@@ -40,7 +40,7 @@ function(){ "use strict";
         };
     }
     mevResultsTableFilter.$inject=["$filter", "mevResultsTableCompare"];
-    mevResultsTableFilter.$name="mevResultsTableFilter";
+    mevResultsTableFilter.$name="mevResultsTable";
     mevResultsTableFilter.$provider="filter";
     return mevResultsTableFilter;
 });

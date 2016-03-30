@@ -22,7 +22,7 @@ define(["lodash"], function(_){ "use strict";
 		return factory;
 	}	
 	PcaStateVMFactory.$inject=[];
-	PcaStateVMFactory.$name="PcaStateVMFactoryFactory";
+	PcaStateVMFactory.$name="PcaStateVMFactory";
 	PcaStateVMFactory.$provider="factory";
 	return PcaStateVMFactory;
 });

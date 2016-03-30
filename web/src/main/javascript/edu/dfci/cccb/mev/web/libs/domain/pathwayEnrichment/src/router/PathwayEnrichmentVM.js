@@ -54,7 +54,7 @@ define(["lodash"], function(_){ "use strict";
 		return factory;
 	}	
 	PathwayEnrichmentVM.$inject=[];
-	PathwayEnrichmentVM.$name="PathwayEnrichmentVMFactoryFactory";
+	PathwayEnrichmentVM.$name="PathwayEnrichmentVMFactory";
 	PathwayEnrichmentVM.$provider="factory";
 	return PathwayEnrichmentVM;
 });
