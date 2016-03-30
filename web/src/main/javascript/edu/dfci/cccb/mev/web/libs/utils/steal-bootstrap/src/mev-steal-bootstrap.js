@@ -103,4 +103,10 @@
   global.writeCookie = writeCookie;
   global.readCookie = readCookie;
   global.eraseCookie = eraseCookie;
+  global.mevEnv=function(env){
+    if(env)
+      this.writeCookie("env", env);
+    else
+      this.readCookie("env");
+  };
 })(window);

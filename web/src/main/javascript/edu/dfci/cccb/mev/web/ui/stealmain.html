@@ -136,7 +136,11 @@
       stealscript.setAttribute('charset',"UTF-8");
       document.head.appendChild(stealscript);
     }
-
+    function mevEnv(env){
+      if(env)
+        writeCookie("env", env);
+      return readCookie("env");
+    }
     var steal = getConfig();
     startSteal(steal)
   </script> 	
