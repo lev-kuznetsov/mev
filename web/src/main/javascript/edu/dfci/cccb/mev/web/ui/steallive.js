@@ -1,7 +1,7 @@
 //Make sure global is set. blob@0.0.4 expects it to be there.
 "use strict";
 window.global = window;
-import angular from "angular";
+import angular from "mui";
 import jquery from "jquery";
 import app from "./app/app";
 import boot from "./less/boot.less";
