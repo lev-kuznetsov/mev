@@ -6,7 +6,7 @@
   "main": "stealmain.js",
   "dependencies": {
     "ag-grid": "^2.3.7",
-    "angular": "^1.4.8",
+    "angular": "1.4.x",
     "angular-animate": "^1.4.8",
     "angular-nvd3": "~1.0.5",
     "angular-resource": "^1.4.8",
