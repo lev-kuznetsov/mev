@@ -196,7 +196,8 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     	return AnalysisResource;    	
     	
     }])
-    .service ('SelectionResourceService', ['$resource', '$routeParams', '$http', 'DatasetResourceService', function($resource, $routeParams, $http, datasetResource){
+    .service ('SelectionResourceService', ['$resource', '$routeParams', '$http', 'DatasetResourceService', '$rootScope',
+    function($resource, $routeParams, $http, datasetResource, $rootScope){
     	
     	var resource = $resource('/dataset/:datasetName/:dimension/selection',{
     		'format': 'json'
@@ -225,6 +226,13 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     	
 //    	return resource;
     	var SelectionResource = Object.create(resource);    	
+        SelectionResource.post=function(params, data, callback){
+            var result = resource.post(params, data, callback);     
+            result.$promise.then(function(response){
+                $rootScope.$broadcast("mui:dataset:selections:added", params.dimension, params, data, response);
+            });
+            return result;
+        };
     	SelectionResource.getAll=function(params, data, callback){
     		var result = resource.getAll(params, data, callback);
     		result.$promise.then(function(response){

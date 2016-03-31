@@ -125,8 +125,10 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 			$scope.$broadcast("ui:projectTree:dataChanged");			
 		});
 		
-		$scope.$on('SeletionAddedEvent', function(event, dimensionType){
-      	    dataset.resetSelections(dimensionType);      	        	  
+		$scope.$on('mui:dataset:selections:added', function(event, dimensionType, params, selection, response){
+      	    dataset.resetSelections(dimensionType).$promise.then(function(){
+      	    	$scope.$broadcast("ui:projectTree:dataChanged");
+      	    });      	        	        	    
          });
 		
 		_.forEach(project.dataset.dashboardItems, function(item){
