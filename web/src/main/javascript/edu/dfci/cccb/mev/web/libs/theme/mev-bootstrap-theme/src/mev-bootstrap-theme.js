@@ -1,3 +1,3 @@
-define(["bootstrap", "./mev-bootstrap-theme.less"], function(){
+define(["jquery", "bootstrap", "./mev-bootstrap-theme.less"], function(){
 	return "mev-bootstrap-theme";
 });
