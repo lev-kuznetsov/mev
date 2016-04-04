@@ -105,8 +105,8 @@
   global.eraseCookie = eraseCookie;
   global.mevEnv=function(env){
     if(env)
-      this.writeCookie("env", env);
+      global.writeCookie("env", env);
     else
-      this.readCookie("env");
+      return global.readCookie("env");
   };
 })(window);
