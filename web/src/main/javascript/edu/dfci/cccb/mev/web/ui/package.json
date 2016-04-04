@@ -29,6 +29,7 @@
     "lodash": "^2.4.1",
     "mev-analysis": "file:../libs/domain/analysis",
     "mev-annotations": "file:../libs/domain/annotations",
+    "mev-bootstrap-theme": "file:../libs/theme/mev-bootstrap-theme",
     "mev-bs-modal": "file:../libs/widgets/bsmodal",
     "mev-dataset": "file:../libs/domain/dataset",
     "mev-domain-common": "file:../libs/domain/common",
