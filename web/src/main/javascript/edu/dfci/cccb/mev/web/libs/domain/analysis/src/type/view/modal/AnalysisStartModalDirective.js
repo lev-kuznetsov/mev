@@ -15,7 +15,7 @@ define(["./AnalysisStartModal.tpl.html"], function(template){
 		};
 	}
 	AnalysisStartModalDirective.$inject=[];
-	AnalysisStartModalDirective.$name="mevAnalysisStartModalDirective";
+	AnalysisStartModalDirective.$name="mevAnalysisStartModal";
 	AnalysisStartModalDirective.$provider="directive";
 	return AnalysisStartModalDirective;
 });
