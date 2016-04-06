@@ -886,6 +886,7 @@
 	                    <include>ui/less/**</include>
                         <include>ui/app/**</include>
                         <include>ui/node_modules/*/*</include>
+                        <include>ui/node_modules/mev-steal-bootstrap/**/*</include>
                       </includes>                      
                     </resource>                    
                   </resources>
