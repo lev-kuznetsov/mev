@@ -12,10 +12,12 @@ define(['jquery', 'angular'], function(jquery, angular){
 				rootScope.$state.go("^."+selection.dimension.toLowerCase()+"Set", {setId: selection.name});
 			}
 			
-			var selectionSetManagerScope=selectionSetMgrDOM.scope();
+			var selectionSetManagerScope=selectionSetMgrDOM.scope();			
 			console.debug("selectionSetManagerScope:", selectionSetManagerScope);
 			if(selectionSetManagerScope){
 				selectionSetManagerScope.addItem(selection);
+			}else{
+				rootScope.$broadcast("mui:dataset:selections:added", selection.dimension.toLowerCase(), selection);
 			}
 			
 		},
