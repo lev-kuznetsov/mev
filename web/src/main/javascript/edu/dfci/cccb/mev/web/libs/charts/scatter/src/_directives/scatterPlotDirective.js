@@ -1,6 +1,6 @@
 "use strict";
 define(["angular", "d3", "lodash", "crossfilter", "./scatterPlot.tpl.html"], 
-function(angular, d3, _, crossfilter, template){	
+function(angular, d3, _, crossfilter, template){"use strict";	
 	var ScatterPlotDirective = function ScatterPlotDirective(mevNvd3DataAdaptor){
 		return {
 			restrict: "EC",
@@ -191,9 +191,10 @@ function(angular, d3, _, crossfilter, template){
 			                pointSize: 64,
 			                pointScale: d3.scale.identity(),			                
 			                callback: function(chart){
-			                	// console.debug("chart", chart);                	
+			                	// console.debug("chart", chart);   
+			                	_chart = chart;             			                	
 			                	chart.dispatch.on('renderEnd', function(){
-			                		_chart = chart;                    	
+			                		_chart = chart;                    				                		
 			                        // console.log('render complete', arguments, chart);
 			                        
 			                        var svgDom = angular.element("svg");
