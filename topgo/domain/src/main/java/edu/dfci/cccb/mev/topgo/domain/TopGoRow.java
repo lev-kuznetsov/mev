@@ -9,8 +9,8 @@ public class TopGoRow {
 
   private @JsonProperty String goId;
   private @JsonProperty String goTerm;
-  private @JsonProperty String annotatedGenes;
-  private @JsonProperty String significantGenes;
+  private @JsonProperty Integer annotatedGenes;
+  private @JsonProperty Integer significantGenes;
   private @JsonProperty String expected;
   private @JsonProperty double pValue;
   private @JsonProperty ("adj.p") double adjP;
