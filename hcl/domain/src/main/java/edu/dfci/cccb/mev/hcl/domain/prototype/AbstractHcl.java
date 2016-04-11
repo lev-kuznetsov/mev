@@ -14,19 +14,26 @@
  */
 package edu.dfci.cccb.mev.hcl.domain.prototype;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
 import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
+import edu.dfci.cccb.mev.hcl.domain.contract.HclResult;
 import edu.dfci.cccb.mev.hcl.domain.contract.Node;
-import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHierarchicallyClusteredDimension;
 
 /**
  * @author levk
@@ -35,28 +42,30 @@ import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHierarchicallyClusteredDimensio
 @ToString (exclude = "dataset")
 @EqualsAndHashCode (callSuper = true)
 @Accessors (fluent = true, chain = true)
+@JsonIgnoreProperties({"timestamp", "dimension"})
 public abstract class AbstractHcl extends AbstractAnalysis<AbstractHcl> implements Hcl {
-
-  private @Getter @Setter Node root;
-  private @Setter Dimension dimension;
-  private @Getter @Setter Dataset dataset;
-
-  /* (non-Javadoc)
-   * @see edu.dfci.cccb.mev.hcl.domain.contract.HclResult#apply() */
-  @Override
-  public Dimension apply () throws DatasetException {
-    Dimension result = new SimpleHierarchicallyClusteredDimension (dimension.type (),
-                                                                   root,
-                                                                   dimension.selections (),
-                                                                   dimension.annotation ());
-    dataset.set (result);
-    return result;
+  public final static String ANALYSIS_TYPE = "Hierarchical Clustering";
+  
+  @NoArgsConstructor 
+  public static class CHclResult implements HclResult{
+	  private @JsonProperty @Getter @Setter Node column;
+	  private @JsonProperty @Getter @Setter Node row;	
   }
-
+  
+  private @JsonProperty @Getter @Setter CHclResult result;
+  private @Setter List<Dimension> dimensions;
+  private @Getter @Setter Dataset dataset;
+  public AbstractHcl(){
+	  type(ANALYSIS_TYPE);
+  }
+  
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.hcl.domain.contract.Hcl#dimension() */
   @Override
-  public Type dimension () {
-    return dimension.type ();
+  public List<Dimension.Type> dimension () {
+	List<Type> types = new ArrayList<Dimension.Type>();
+    for(Dimension dim : dimensions)
+    	types.add(dim.type());
+    return types;    
   }
 }

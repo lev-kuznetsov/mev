@@ -34,7 +34,8 @@ public interface Limma extends Analysis {
 
     double qValue ();
     
-    // double tStat () // FIXME ADD IT
+    double t();
+    
   }
 
   public enum Species {

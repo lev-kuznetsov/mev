@@ -24,7 +24,10 @@
         "after"      : false,
         "afterEach"  : false,
         /* Node */
-        "__dirname": true
+        "__dirname": true,
+        /* Angular Mocks*/
+        "module" : false,
+        "inject" : false
 
     }
 }

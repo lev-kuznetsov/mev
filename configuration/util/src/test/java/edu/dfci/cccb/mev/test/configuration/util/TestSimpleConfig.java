@@ -1,6 +1,5 @@
 package edu.dfci.cccb.mev.test.configuration.util;
 
-import static org.junit.Assert.*;
 import lombok.extern.log4j.Log4j;
 
 import org.junit.Ignore;

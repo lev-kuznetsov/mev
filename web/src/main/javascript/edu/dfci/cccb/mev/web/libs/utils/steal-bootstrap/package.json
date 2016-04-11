@@ -1,0 +1,15 @@
+{
+  "name": "mev-steal-bootstrap",
+  "version": "0.0.1",
+  "description": "helps configure steal script tag",
+  "main": "src/stealBootstrap.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC"
+}

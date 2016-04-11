@@ -6,7 +6,9 @@
 		</div>
 		
 		<div class="row column-header">			
-			<div class="project-tree-header">{{DatasetProjectViewVM.getProject().name}}</div>
+			<div class="project-tree-header">
+				<select class="form-control" ng-options="datasetName for datasetName in DatasetProjectViewVM.datasetNames" ng-change="DatasetProjectViewVM.switchDataset()" ng-model="DatasetProjectViewVM.curDatasetName"></select>
+			</div>
 		</div>
 		<div class="row column-body project-tree-content">	
 		   	<project-tree class="col-md-12" node-type='Data' project="DatasetProjectViewVM.getProject()"></project-tree>
@@ -83,3 +85,7 @@
 <bsmodal bindid="voomModal" func="" header="VOOM Analysis">
 	<div class="voom-modal" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
 </bsmodal>
+
+
+<mev-analysis-start-modal mev-analysis-type="analysisType" ng-repeat="analysisType in DatasetProjectViewVM.analysisTypes" >
+</mev-analysis-start-modal>

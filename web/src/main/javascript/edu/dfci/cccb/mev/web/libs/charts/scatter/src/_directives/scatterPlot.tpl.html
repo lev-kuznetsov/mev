@@ -1,0 +1,58 @@
+<div class="chart">
+	<div class="controls">	
+		<label>X</label>					
+		<select ng-change="vm.updateXAxis()" ng-model="xField" ng-options="field for field in fields"></select>
+
+		<label>Y</label>					
+		<select ng-change="vm.updateYAxis()" ng-model="yField" ng-options="field for field in fields"></select>
+		
+		<label class="break">Log Scale</label>				
+		<div class="inlineGroup">
+			<label>X</label><input ng-model="logScaleX" type="checkbox" />
+		    <label>Y</label><input ng-model="logScaleY" type="checkbox" />
+		</div>
+
+		<label class="break">Tools</label>
+		<div class="btn-group">
+	        <label class="btn btn-info btn-sm" ng-model="dragAction" uib-btn-radio="'zoom'">
+	        	<input name="dragAction" type="radio" ng-model="dragAction" ng-value="'zoom'" aria-label="Zoom"/>
+	        	<span class="glyphicon glyphicon-zoom-in"  aria-hidden="true"></span>
+	        </label>
+	        <label class="btn btn-info btn-sm" ng-model="dragAction" uib-btn-radio="'select'">
+	        	<input name="dragAction" type="radio" ng-model="dragAction" ng-value="'select'" aria-label="Select"/>
+	        	<span class="glyphicon glyphicon-screenshot"  aria-hidden="true"></span>
+	        </label>			        
+	    </div>
+
+	    <label class="break">Selections</label>		
+		<table class="table table-condensed" ng-if="selections && selections.length>0">		
+			<tr ng-repeat="selection in selections">	
+				<td>
+					<input type="checkbox" ng-model="selection.checked" ng-change="vm.updateSelection(selection)" ng-true-value="true" ng-false-value="false">
+					{{selection.name}}
+				</td>
+				<td style="width: 20px" bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>
+				<td>{{selection.properties.selectionDescription}}</td>								
+			</tr>
+		</table>
+	</div>
+	<div class="body">
+		<nvd3 options='options' data='data' config='config' api='api'></nvd3>
+	</div>
+	<div class="footer">
+		<div class="selection" ng-if="vm.selected && vm.selected.items.length>0">
+			<table class="table table-condensed" >		
+				<thead>
+					<th>Selected</th>
+					<th>{{vm.selected.xLabel}}</th>
+					<th>{{vm.selected.yLabel}}</th>
+				</thead>
+				<tr ng-repeat="item in vm.selected.items">	
+					<td>{{item.id}}</td>
+					<td>{{item.x}}</td>
+					<td>{{item.y}}</td>								
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

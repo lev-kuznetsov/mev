@@ -21,23 +21,38 @@
     "crossfilter": "^1.3.12",
     "d3": "^3.5.12",
     "d3-tip": "^0.6.7",
-    "jquery": "^2.2.0",
+    "jquery": "^2.2.1",
+    "jquery-ui-bundle": "1.11.4",
     "js-data": "^2.8.2",
     "js-data-angular": "^3.1.0",
-    "lodash": "^2.4.1",
-    "mui": "file:../libs/mui",
     "liver": "file:../libs/liver",
+    "lodash": "^2.4.1",
+    "mev-analysis": "file:../libs/domain/analysis",
+    "mev-annotations": "file:../libs/domain/annotations",
+    "mev-bs-modal": "file:../libs/widgets/bsmodal",
+    "mev-dataset": "file:../libs/domain/dataset",
+    "mev-domain-common": "file:../libs/domain/common",
+    "mev-gsea": "file:../libs/domain/gsea",
+    "mev-hcl": "file:../libs/domain/hcl",
+    "mev-heatmap": "file:../libs/charts/mevHeatmap",
     "mev-pca": "file:../libs/domain/pca",
+    "mev-project": "file:../libs/domain/project",
+    "mev-results-table": "file:../libs/widgets/mevResultsTable",
+    "mev-scatter-plot": "file:../libs/charts/scatter",
+    "mevPathwayEnrichment": "file:../libs/domain/pathwayEnrichment",
+    "mui": "file:../libs/mui",
     "ng-grid": "apartensky/ui-grid#2.0.14+npmfix",
     "notific8": "^2.3.1",
     "nvd3": "apartensky/nvd3#1.8.1+master",
     "q": "^1.4.1",
-    "steal": "^0.13.0"
+    "steal": "^0.13.2"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
-    "gulp": "^3.9.0", 
-    "steal-tools": "^0.13.2",
+    "gulp": "^3.9.0",
+    "gulp-jasmine-browser": "^1.0.0",
+    "gulp-util": "^3.0.7",
+    "steal-tools": "^0.13.3",
     "system-text": "^0.1.0",
     "systemjs-plugin-json": "^0.1.0"
   },
@@ -63,9 +78,15 @@
       "jsLru": "../vendor/rsms/js-lru/lru.js"
     },
     "map": {
-      "ng": "mui"
+      "ng": "mui",
+      "jquery-ui": "jquery-ui-bundle"
     },
     "meta": {
+      "bootstrap": {
+        "deps": [
+          "jquery"
+        ]
+      },
       "notific8": {
         "deps": [
           "jquery",
@@ -74,6 +95,11 @@
       },
       "pouchdb": {
         "format": "global"
+      },
+      "jquery-ui": {
+        "deps": [
+          "jquery"
+        ]
       }
     }
   },

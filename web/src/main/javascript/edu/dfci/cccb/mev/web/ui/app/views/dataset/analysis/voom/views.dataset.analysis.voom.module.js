@@ -50,7 +50,7 @@ define(["ng", "lodash"], function(ng, _){
                     'step': 0.01
 	            },
 	            {
-	                'name': 'Q-Value',
+	                'name': 'q-Value',
 	                'field': "adj.P.Val",
 	                'icon': "<="
 	            },

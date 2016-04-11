@@ -14,44 +14,14 @@
  */
 package edu.dfci.cccb.mev.test.histogram.rest;
 
-import static java.util.Arrays.asList;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
-import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import lombok.Getter;
-
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
-import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
-import edu.dfci.cccb.mev.dataset.domain.fs.FlatFileValueStoreBuilder;
-import edu.dfci.cccb.mev.dataset.domain.r.annotation.Parameter;
-import edu.dfci.cccb.mev.dataset.domain.r.annotation.R;
-import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
-import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
-import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
-import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.dataset.rest.configuration.RDispatcherConfiguration;
-import edu.dfci.cccb.mev.genesd.domain.contract.GeneSDAnalysis;
-import edu.dfci.cccb.mev.genesd.domain.contract.GeneSDAnalysisBuilder;
-import edu.dfci.cccb.mev.genesd.domain.impl.RserveGeneSDAnalysisBuilder;
 import edu.dfci.cccb.mev.genesd.rest.configuration.GeneSDAnalysisConfiguration;
 
 @RunWith (SpringJUnit4ClassRunner.class)

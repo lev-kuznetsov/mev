@@ -240,7 +240,8 @@ public class AnnotationController extends WebApplicationObjectSupport {
       return;
     }
     long destProjectId = Project.generateID();
-    Dimension dim =destHeatmap.dimension (Dimension.Type.from (dimension));    
+    Dimension dim =destHeatmap.dimension (Dimension.Type.from (dimension));
+    projectManager.save(true);
     projectManager.copyProject (sourceProjectId, destProjectId, heatmapId, destHeatmap, dim);
   }
 

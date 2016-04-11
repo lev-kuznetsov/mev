@@ -3,18 +3,12 @@ package edu.dfci.cccb.mev.genemad.domain.impl;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
 import edu.dfci.cccb.mev.genemad.domain.contract.GeneMADAnalysis;
-import edu.dfci.cccb.mev.genemad.domain.contract.GeneMADResult;
 import edu.dfci.cccb.mev.genemad.domain.impl.SimpleGeneMADAnalysis;
 
 @ToString

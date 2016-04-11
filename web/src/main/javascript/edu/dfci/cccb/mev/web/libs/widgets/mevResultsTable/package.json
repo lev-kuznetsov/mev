@@ -1,0 +1,31 @@
+{
+  "name": "mev-results-table",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/mev-results-table.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "dependencies": {
+    "angular-utils-pagination": "^0.10.0",
+    "mui": "file:../../mui",
+    "steal": "^0.13.2",
+    "system-text": "^0.1.0"
+  },
+  "system": {
+    "ext": {
+      "html": "system-text"
+    }
+  },
+  "devDependencies": {
+    "bootstrap": "^3.3.6",
+    "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
+    "systemjs-plugin-json": "^0.1.0"
+  }
+}

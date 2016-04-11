@@ -68,7 +68,9 @@
 	    		color: @gray;
 	    		pointer-events: none;
 	    	}
-	    	
+	    	&.error {
+	    		color: lighten(@brand-danger, 10%);
+	    	}
 		   	> :first-child{
 				&.glyphicon-minus-sign,
 				&.glyphicon-plus-sign{

@@ -4,8 +4,6 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
-import java.util.Arrays;
-
 import lombok.extern.log4j.Log4j;
 
 import org.junit.Before;

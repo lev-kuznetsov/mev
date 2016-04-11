@@ -64,12 +64,21 @@ public abstract class AbstractDispatchedRAnalysisBuilder <B extends AnalysisBuil
     }
     r.schedule (this);
     latch.await ();
-    Analysis result = result();    
+    Analysis result = result();
+    if(error!=null){
+      if(result!=null)
+        result.status (AnalysisStatus.MEV_ANALYSIS_STATUS_ERROR).error(error);
+      else
+        result = new AnalysisStatus ()
+          .name (name())
+          .type (type())
+          .status(AnalysisStatus.MEV_ANALYSIS_STATUS_ERROR).error (error);
+    }
     if(result == null)
       throw new DatasetException (String.format("ERROR in %s analysis %s: result is null; cause: %s", type(), name(), this.error));    
     return (A) result;
   }
-
+    
   @Callback
   private synchronized void cb () {
     latch.countDown ();

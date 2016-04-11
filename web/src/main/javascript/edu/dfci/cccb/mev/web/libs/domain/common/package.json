@@ -1,0 +1,26 @@
+{
+  "name": "mev-domain-common",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/main/mev-domain-common.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "dependencies": {
+    "angular-ui-router": "^0.2.17",
+    "mui": "file:../../mui",
+    "steal": "^0.13.2"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.4.9",
+    "jasmine-core": "^2.4.1",    
+    "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
+    "steal-jasmine": "0.0.2"
+  }
+}

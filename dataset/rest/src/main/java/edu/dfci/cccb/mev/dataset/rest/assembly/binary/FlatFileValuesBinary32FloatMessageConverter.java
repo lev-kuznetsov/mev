@@ -21,7 +21,6 @@ import java.io.IOException;
 
 import lombok.extern.log4j.Log4j;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
@@ -29,14 +28,14 @@ import org.springframework.http.converter.AbstractHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
-import edu.dfci.cccb.mev.dataset.domain.fs.FlatFileValues;
+import edu.dfci.cccb.mev.dataset.domain.fs.IFlatFileValues;
 
 /**
  * @author levk
  * 
  */
 @Log4j
-public class FlatFileValuesBinary32FloatMessageConverter extends AbstractHttpMessageConverter<FlatFileValues> {
+public class FlatFileValuesBinary32FloatMessageConverter extends AbstractHttpMessageConverter<IFlatFileValues> {
 
   /**
    * 
@@ -51,7 +50,7 @@ public class FlatFileValuesBinary32FloatMessageConverter extends AbstractHttpMes
    * (java.lang.Class) */
   @Override
   protected boolean supports (Class<?> clazz) {
-    return FlatFileValues.class.isAssignableFrom (clazz);
+    return IFlatFileValues.class.isAssignableFrom (clazz);
   }
 
   /* (non-Javadoc)
@@ -59,7 +58,7 @@ public class FlatFileValuesBinary32FloatMessageConverter extends AbstractHttpMes
    * org.springframework.http.converter.AbstractHttpMessageConverter#readInternal
    * (java.lang.Class, org.springframework.http.HttpInputMessage) */
   @Override
-  protected FlatFileValues readInternal (Class<? extends FlatFileValues> clazz, HttpInputMessage inputMessage) throws IOException,
+  protected IFlatFileValues readInternal (Class<? extends IFlatFileValues> clazz, HttpInputMessage inputMessage) throws IOException,
                                                                                                       HttpMessageNotReadableException {
     throw new UnsupportedOperationException ();
   }
@@ -69,7 +68,7 @@ public class FlatFileValuesBinary32FloatMessageConverter extends AbstractHttpMes
    * org.springframework.http.converter.AbstractHttpMessageConverter#writeInternal
    * (java.lang.Object, org.springframework.http.HttpOutputMessage) */
   @Override
-  protected void writeInternal (FlatFileValues t, HttpOutputMessage outputMessage) throws IOException,
+  protected void writeInternal (IFlatFileValues t, HttpOutputMessage outputMessage) throws IOException,
                                                                               HttpMessageNotWritableException {
    
     try(DataOutputStream out = new DataOutputStream (outputMessage.getBody ())){
@@ -80,7 +79,7 @@ public class FlatFileValuesBinary32FloatMessageConverter extends AbstractHttpMes
           out.writeFloat (fval);
         }
       }catch(EOFException e){
-        log.debug("Finished serializing FlatFileValues");
+        log.debug("Finished serializing IFlatFileValues");
       }
     }   
   }

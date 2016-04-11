@@ -3,18 +3,52 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     return angular
     .module ('Mev.Api', ['ngResource'])
     .service('AnalysisEventBus', AnalysisEventBus)
-    .service ('DatasetResourceService', ['$resource', '$q', '$http', 
-                                             function ($resource, $q, $http, DatasetValuesResource) {
+    .service ('DatasetResourceService', ['$resource', '$q', '$http', '$rootScope',
+                                             function ($resource, $q, $http, $rootScope) {
     	 
-    	var resource = $resource('/dataset/:datasetName/data',{format: "json"},{'get': {method:'GET'}});       	 
+    	var resource = $resource('/dataset/:datasetName/data',{format: "json"},
+            {
+                'get': {method:'GET'},
+                'getAll': {
+                    url: '/dataset',
+                    method: 'GET',
+                    isArray: true
+                },
+                'subset': {
+                    url: '/dataset/:datasetName/data/subset/export',
+                    method: "POST"
+                }
+            });       	 
     	var DatasetResource = Object.create(resource);       	 
     	
     	DatasetResource.get = function(params, data, callback){
-    	
     		var dataset = resource.get(params, data, callback);    		
     		return dataset;
     	 };
-    	 
+    	 DatasetResource.getAll = function(params, data, callback){
+            var datasetsResource = resource.getAll(params, data, callback);
+            datasetsResource.$promise.then(function(response){
+                $rootScope.$broadcast("mev:datasets:list:refreshed", response);
+            });
+            return datasetsResource;
+         };
+         DatasetResource.subset = function(params, data, callback){        
+            data.name = params.datasetName + "--" + data.name;    
+            var datasetsResource = resource.subset(params, data, callback);            
+            datasetsResource.$promise.then(function(response){
+                $http({
+                   method:"POST", 
+                   url:"/annotations/" + params.datasetName + "/annotation/row" 
+                   + "/export?destId="+data.name});
+               $http({
+                   method:"POST", 
+                   url:"/annotations/" + params.datasetName + "/annotation/column" 
+                   + "/export?destId="+data.name});
+               DatasetResource.getAll();
+            })
+            return datasetsResource;
+         };
+
     	 return DatasetResource;
     }])
     .service('GoogleDriveResourceService', ['$resource', function($resource){
@@ -87,6 +121,15 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
 
     	function postWrapper(methodName){
     		return function(params, data, callback){
+                if(params.analysisName && params.analysisName.toLowerCase() === params.analysisType.toLowerCase()){
+                    //do not prefix analysis name with type - name already contains the type
+                }else{
+                    if(params.analysisName)
+                        params.analysisName = params.analysisType + "_" + params.analysisName;
+                    if(data.name)
+                        data.name = params.analysisType + "_" + data.name;
+    
+                }
         		
         		var result = resource[methodName](params, data, callback);
         		
@@ -117,17 +160,20 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     	    								poll(newResponse, 5000);
     	                        		});    							
     	    					}, wait);			
-    						}else{    							
-    							var analysis = new AnalysisClass(prevResponse);
-//    	                		var sessionStorageKey = self.datasetName+"."+name;
-//    	    					console.debug("sessionStorageKey get", sessionStorageKey);
-//    	                		params = JSON.parse(sessionStorage.getItem(self.datasetName+"."+name));
+    						}else{
+    							var analysis = new AnalysisClass(prevResponse);                            
     							if(analysis.params)    								
     								angular.extend(analysis.params, allParams);
     							else
     								analysis.params = allParams;
-    	                		console.debug("PollAnalysis result", analysis.name, analysis);                        		
-    	                		analysisEventBus.analysisSucceeded(params, data, analysis);
+                                if(prevResponse.status === "ERROR"){                                    
+    	                		    console.error("PollAnalysis error", analysis.name, analysis);                        		
+                                    analysisEventBus.analysisFailed(params, data, analysis);    
+                                }else{
+                                    console.log("PollAnalysis result", analysis.name, analysis);                               
+                                    analysisEventBus.analysisSucceeded(params, data, analysis);    
+                                }
+    	                		
     						}
     	        		};
     					
@@ -150,7 +196,7 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     	return AnalysisResource;    	
     	
     }])
-    .service ('SelectionResourceService', ['$resource', '$routeParams', function($resource, $routeParams){
+    .service ('SelectionResourceService', ['$resource', '$routeParams', '$http', 'DatasetResourceService', function($resource, $routeParams, $http, datasetResource){
     	
     	var resource = $resource('/dataset/:datasetName/:dimension/selection',{
     		'format': 'json'
@@ -169,7 +215,11 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     		'export':{
     			'method': 'POST',
     			'url':"/dataset/:datasetName/:dimension/selection/export",
-    		}
+    		},
+            'delete': {
+                'method': 'DELETE',
+                'url': '/dataset/:datasetName/:dimension/selection/:selectionName'
+            }
     		
     	});
     	
@@ -184,6 +234,21 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     		});
     		return result;
     	};
+        SelectionResource.export=function(params, data, callback){
+            data.name = params.datasetName + "--" + data.name;
+            var result = resource.export(params, data, callback);            
+            result.$promise.then(function(response){
+                $http({
+                   method:"POST", 
+                   url:"/annotations/" + params.datasetName + "/annotation/row" 
+                   + "/export?destId="+data.name});
+               $http({
+                   method:"POST", 
+                   url:"/annotations/" + params.datasetName + "/annotation/column" 
+                   + "/export?destId="+data.name});
+               datasetResource.getAll();
+            })
+        }
     	
     	return SelectionResource;
     }]);

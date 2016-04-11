@@ -41,7 +41,7 @@ public class RserveDoubleDeserializer extends JsonDeserializer<Double> {
   public Double deserialize (JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
     String value = jp.readValueAs (String.class);
     if ("NA".equals (value))
-      return null;
+      return Double.NaN;
     else if ("Inf".equals (value))
       return POSITIVE_INFINITY;
     else if ("-Inf".equals (value))

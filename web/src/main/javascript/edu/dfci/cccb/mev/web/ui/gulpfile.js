@@ -78,4 +78,28 @@ gulp.task('watch', function(){
     gulp.src(event.path, {base: source}).pipe(gulp.dest(destination));
   });
 });
+
+// var jasmineBrowser = require('gulp-jasmine-browser');
+// var watch = require('gulp-watch')
+
+// gulp.task('jasmine', function() {
+//   // var filesForTest = ["!"+source+"/**/node_modules/", 
+//   //   source+"/libs/domain/common/test/TestContext.spec.js",
+//   //   source+"/*/Test*.js",
+//   //   source+"/*/*/Test*.js",
+//   //   source+"/*/*/*/Test*.js",
+//   //   source+"/*/*/*/*/Test*.js",
+//   //   source+"/*/*/*/*/*/Test*.js",
+//   //   source+"/*/*/*/*/*/*/Test*.js",
+//   //   "!"+source+"/libs/*/node_modules/**",   
+//   //   "!"+source+"/ui/node_modules/**"
+//   //   ] 
+//   console.log(source+"/libs/domain/common/test/TestContext.spec.js");
+//   var filesForTest = [source+"/libs/domain/common/test/TestContext.spec.js"]
+//   return gulp.src(filesForTest) 
+//     .pipe(watch(filesForTest))
+//     .pipe(jasmineBrowser.specRunner())
+//     .pipe(jasmineBrowser.server({port: 8888}));
+// });
+
 gulp.task("default", ["build"]);

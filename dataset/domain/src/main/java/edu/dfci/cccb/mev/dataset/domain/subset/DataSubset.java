@@ -10,7 +10,6 @@ import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
-import edu.dfci.cccb.mev.dataset.domain.contract.DimensionBuilder;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidCoordinateException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
@@ -28,29 +27,27 @@ public class DataSubset extends AbstractDataset implements Dataset {
   private final Analyses analyses;
   
   @SneakyThrows(value = {InvalidDimensionTypeException.class})
-  public DataSubset(String name, Dataset parent, List<String> columns, List<String> rows) throws InvalidDatasetNameException {
+  public DataSubset(String name, Dataset parent, List<String> columns, List<String> rows) throws InvalidDatasetNameException {	
     super(name);
     this.parent = parent;
     this.columns = parent.dimension (Type.COLUMN).subset (columns);
     this.rows = parent.dimension (Type.ROW).subset (rows);
+	//if name is provided, assume we are creating a new dataset with its own set of analyses
     this.analyses = new ArrayListAnalyses ();
   }
   
 
   @SneakyThrows({InvalidDimensionTypeException.class}) 
   public DataSubset(Dataset parent, List<String> columns, List<String> rows) throws InvalidDatasetNameException {
-    super("subset");    
+    super(parent.name());    
     this.parent = parent;
     this.columns = parent.dimension (Type.COLUMN).subset (columns);
-    this.rows = parent.dimension (Type.ROW).subset (rows);
-    this.analyses = new ArrayListAnalyses ();
+    this.rows = parent.dimension (Type.ROW).subset (rows);    
+	//if name is NOT provided, assume we are just asking for a subset of data from an existing dataset
+	//so keep its analysis intact
+    this.analyses = parent.analyses();
   }
-  
-  @Override
-  public String name () {
-    return parent.name ();
-  }
-
+    
   @Override
   public Values values () {
     return new ValuesSubset (parent.values (), columns.keys (), rows.keys (), false);    

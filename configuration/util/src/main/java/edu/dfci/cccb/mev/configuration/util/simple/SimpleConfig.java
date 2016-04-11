@@ -21,8 +21,6 @@ import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.log4j.Logger;
-
 import edu.dfci.cccb.mev.configuration.util.contract.Config;
 import edu.dfci.cccb.mev.configuration.util.prototype.AbstractConfig;
 

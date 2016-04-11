@@ -14,9 +14,9 @@
  */
 package edu.dfci.cccb.mev.hcl.domain.contract;
 
+import java.util.Collection;
+
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 
 /**
@@ -25,9 +25,7 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
  */
 public interface Hcl extends Analysis {
 
-  Node root ();
-
-  Dimension apply () throws DatasetException;
+  HclResult result ();
   
-  Type dimension ();
+  Collection<Type> dimension ();
 }

@@ -1,0 +1,18 @@
+<html>
+<head>
+	<script src="../../../node_modules/mev-steal-bootstrap/src/mev-steal-bootstrap.js"></script>
+	<script>
+		startStealLive("../../../package.json!npm", "src/type/demo/index");
+	</script>
+</head>
+
+<body ng-controller="demoCtrl" >	
+	<div class="mev-analysis-start-form" mev-analysis-type="types[0]"></div>
+========
+	<div class="mev-analysis-start-form" mev-analysis-type="types[1]"></div>
+	<div>{{types[1].params.getValues()}}</div>
+=========
+	<div class="mev-analysis-start-modal" mev-analysis-type="types[0]"></div>
+	<a class="mev-analysis-start-button" mev-analysis-type="types[0]"></a>
+</body>
+</html>

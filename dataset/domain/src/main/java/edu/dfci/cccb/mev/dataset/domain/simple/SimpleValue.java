@@ -1,16 +1,18 @@
 package edu.dfci.cccb.mev.dataset.domain.simple;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractValue;
 
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Accessors(fluent=true)
 public class SimpleValue extends AbstractValue {
 
-  private final @Getter String row;
-  private final @Getter String column;
-  private final @Getter double value;  
+	private @Getter String row;
+	private @Getter String column;
+	private @Getter double value;  
 
 }

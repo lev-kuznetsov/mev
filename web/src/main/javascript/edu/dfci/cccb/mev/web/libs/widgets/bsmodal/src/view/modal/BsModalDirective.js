@@ -1,0 +1,46 @@
+"use strict";
+define(["mui", "./BsModal.tpl.html"], function(ng, template){
+    function directive(){
+    	 return {
+            restrict : 'E',
+            scope : {
+
+                bindid : '@',
+                header : '@',
+                test : '@',
+                func : '&'
+
+            },
+            transclude : true,
+            template : template,
+            compile: function(tElem, tAttrs){                                    	
+            	return {
+            		post: function(scope, elem, attrs, ctrl){
+            			var rootElement = ng.element("body > ui-view:first-child");
+            			
+            			if(rootElement.length===0)
+            				rootElement = ng.element("body > ng-view:first-child");
+            			if(rootElement.length > 1)
+            				rootElement = rootElement[0];
+
+        			
+        				var exists = rootElement.children("[bindid='"+scope.bindid+"']");                                    				
+        				if(exists.length>0){                                    					                                    				
+        					//we already have this modal, remove to avoid duplicates                                     					
+        					exists.html('').remove();
+        					console.debug("BSMODAL remove", attrs.bindid, rootElement.children("[bindid='"+scope.bindid+"']").length);
+        				}
+        				console.debug("BSMODAL appaned", attrs.bindid);
+    					rootElement.append(elem);
+            			
+            			
+            		}
+            	};
+            }
+        };
+    }
+    directive.$inject=["$compile"];
+    directive.$name="mevBsModalDirective";
+    return directive;
+
+});

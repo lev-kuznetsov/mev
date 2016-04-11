@@ -1,4 +1,7 @@
-define(["mui", "jquery", "d3", "nvd3", "angular-nvd3", "lodash", "./_directives/scatterPlotDirective", "nvd3/build/nv.d3.css!", "./style/scatter.less!"], 
+define(["mui", "jquery", "d3", "nvd3", "angular-nvd3", "lodash", 
+	"./_directives/scatterPlotDirective", 
+	"./services/adaptors/Nvd3DataAdaptor",
+	"nvd3/build/nv.d3.css!", "./style/scatter.less!"], 
 function(ng, $, d3, nvd3, ngnvd3, _, scatterPlotDirective){	
 	"use strict";
 	return ng.module("mevScatterPlot", arguments, arguments)

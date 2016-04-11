@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
+import edu.dfci.cccb.mev.pe.domain.PathwayEnrichment.PathwayEnrichmentParameters;
 import edu.dfci.cccb.mev.pe.domain.PathwayEnrichmentBuilder;
 
 @RestController
@@ -36,28 +37,19 @@ public class PathwayEnrichmentController {
   private @Inject Dataset dataset;
   private @Inject Provider<PathwayEnrichmentBuilder> pe;
 
-  @ToString
-  @JsonIgnoreProperties (ignoreUnknown = true)
-  private static class TopGoParameters {
-    private @JsonProperty String name;
-    private @JsonProperty String[] genelist;
-    private @JsonProperty String organism;
-    private @JsonProperty String pAdjustMethod;
-    private @JsonProperty int minGSSize;
-    private @JsonProperty double pvalueCutoff;
-  }
+  
 
   @RequestMapping (value = "/analyze/pe", method = POST)
   @ResponseStatus (OK)
-  public Analysis start (@RequestBody TopGoParameters parameters) throws DatasetException {
+  public Analysis start (@RequestBody PathwayEnrichmentParameters parameters) throws DatasetException {
     log.debug ("Requested topGO analysis with parameters " + parameters);
     return pe.get ()
-             .organism (parameters.organism)
-             .genelist (Arrays.asList (parameters.genelist))
-             .pAdjustMethod (parameters.pAdjustMethod)
-             .minGSSize (parameters.minGSSize)
-             .pvalueCutoff (parameters.pvalueCutoff)
-             .dataset (dataset)
-             .name (parameters.name).buildAsync ();
+             .organism (parameters.organism())
+             .genelist (Arrays.asList (parameters.genelist()))
+             .pAdjustMethod (parameters.pAdjustMethod())
+             .minGSSize (parameters.minGSSize())
+             .pvalueCutoff (parameters.pvalueCutoff())             
+             .name (parameters.name())
+             .params (parameters).buildAsync ();
   }
 }

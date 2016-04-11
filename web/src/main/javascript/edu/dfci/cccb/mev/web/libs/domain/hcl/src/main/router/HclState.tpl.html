@@ -1,0 +1,27 @@
+<!-- <project-analysis-parameters parameters="DatasetAnalysisVM.analysis.params"></project-analysis-parameters> -->
+<div class="analysis-hcl column-wrapper">
+	<ul class="nav nav-tabs column-header" id="importTabs">
+		<li id="heatmap_tab" class="active"><a href="#heatmap" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}}</a></li>
+		<li ng-if="DatasetAnalysisVM.analysis.result.column" id="histogram_tab_samples"><a href="#dendogram-samples" data-toggle="tab" target="_self">Samples Dendogram</a></li>
+		<li ng-if="DatasetAnalysisVM.analysis.result.row" id="histogram_tab_genes"><a href="#dendogram-genes" data-toggle="tab" target="_self">Genes Dendogram</a></li>
+		<div class="action-menu" mui-paste="action-menu"></div>	
+	</ul>
+	
+	<div class="tab-content column-body" >
+		<div class="tab-pane active" id="heatmap">
+			<!-- <view-Content-Item project='DatasetAnalysisVM.project' view='DatasetAnalysisVM.heatmapView'></view-Content-Item> -->
+			<mev-heatmap mev-heatmap-View="DatasetAnalysisVM.heatmapView" mev-dataset="DatasetAnalysisVM.project.dataset"> </mev-heatmap>
+		</div>
+		<div class="tab-pane" id="dendogram-samples" ng-if="DatasetAnalysisVM.analysis.result.column">
+			<hierarchical-Accordion analysis="DatasetAnalysisVM.analysis"
+			project="DatasetAnalysisVM.project" mev-dimension="column" is-it-open="isOpen"
+			ng-init="isOpen=true"> </hierarchical-Accordion>				
+		</div>
+		<div class="tab-pane" id="dendogram-genes" ng-if="DatasetAnalysisVM.analysis.result.row">
+			<hierarchical-Accordion analysis="DatasetAnalysisVM.analysis"
+			project="DatasetAnalysisVM.project" mev-dimension="row" is-it-open="isOpen"
+			ng-init="isOpen=true"> </hierarchical-Accordion>				
+		</div>
+	</div>
+	
+</div>

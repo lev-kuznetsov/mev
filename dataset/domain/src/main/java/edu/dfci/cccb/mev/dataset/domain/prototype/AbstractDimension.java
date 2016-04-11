@@ -25,7 +25,9 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.contract.Annotation;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.Selections;
+import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListSelections;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDimension;
 
 /**
@@ -53,6 +55,16 @@ public abstract class AbstractDimension implements Dimension {
   
   @Override
   public Dimension subset (List<String> keys) {
-    return new SimpleDimension (type, keys, selections, annotation);
+	Selections subsetSelections = new ArrayListSelections();
+	if(keys == null)
+		keys = this.keys();
+	for(Selection selection : this.selections.getAll()){				
+		for(String key : keys)
+			if(selection.keys().contains(key)){
+				subsetSelections.put(selection);
+				break;
+			}	
+	}
+	return new SimpleDimension (type, keys, subsetSelections, annotation);
   }
 }

@@ -87,19 +87,17 @@ define(function(require){
 					},
 					updateScale: function(){
 						scope.vm.setData();	
-					}
+					},
+					fields: ["PC1", "PC2", "PC3"]
 				};
 
 				scope.$watch("pcaAnalysis", function(newVal){
-					scope.vm.setData(transformData(newVal, scope.vm.xLabel, scope.vm.yLabel, scope.selections));	
+					if(newVal)
+						scope.vm.setData(transformData(newVal, scope.vm.xLabel, scope.vm.yLabel, scope.selections));	
 				});
 
-				scope.$on("mev.scatterPlot.selection", function($event, selection){					
-					scope.vm.selected = {
-						items: selection,
-						xLabel: scope.vm.xLabel,
-						yLabel: scope.vm.yLabel
-					};					
+				scope.$on("mev.scatterPlot.selection", function($event, selected){					
+					scope.vm.selected = selected;
 					scope.curSelection = scope.vm.selected.items;
 					console.debug("pca selection", scope.vm.bar);
 				});

@@ -24,6 +24,7 @@ define([], function(){
 			"Sample Sets": "<column-node node='node'></column-node>",
 			"Gene Sets": "<row-node node='node'></row-node>",
 			"Analysis": "<analysis-node node='node'></analysis-node>",
+			"selectionSet": "<selection-set-node node='node'></selection-set-node>",
 //			Dataset: "<div ng-click='console.debug(\"dataset.click\")'>{{node.nodeName}}</div>",
 //			Analysis: "<project-analysis analysis=\"node.nodeData\"></project-analysis>",			
 			Default: "<project-node-default node='node' ></project-node-default>"
@@ -39,7 +40,7 @@ define([], function(){
 				node: "="
 			},
 			replace: true,
-			template: "<span  id='{{vm.id}}'  ng-class='{selected: vm.isSelected(), disabled: vm.isDisabled()}' class='nodeWrapper node-{{node.nodenode.name || node.nodeName}}' ng-click='vm.onClick($event)' ng-dblclick='vm.toggle($event)'></span>",
+			template: "<span  id='{{vm.id}}'  ng-class='{selected: vm.isSelected(), disabled: vm.isDisabled(), error: vm.isError()}' class='nodeWrapper node-{{node.nodenode.name || node.nodeName}}' ng-click='vm.onClick($event)' ng-dblclick='vm.toggle($event)'></span>",
 //			templateUrl: "app/widgets/project/projectTree/_projectNode/templates/projectNodeDefault.bootstrapTree.tpl.html",
 //			templateUrl: "app/widgets/project/projectTree/_projectNode/templates/projectNodeDefault.tpl.html",			
 			require: "^projectTree",
@@ -69,7 +70,10 @@ define([], function(){
                     				return ctrl.getSelected()===scope.node.nodePath;
                     			},
                     			isDisabled: function(){
-                    				return scope.node.nodeData.status && scope.node.nodeData.status === "IN_PROGRESS";
+                    				return scope.node.nodeData.status && (scope.node.nodeData.status === "IN_PROGRESS");
+                    			},
+                    			isError: function(){
+                    				return scope.node.nodeData.status && scope.node.nodeData.status === "ERROR";
                     			},
                     			onClick: function(e){
 //                    				if(this.isDisabled())

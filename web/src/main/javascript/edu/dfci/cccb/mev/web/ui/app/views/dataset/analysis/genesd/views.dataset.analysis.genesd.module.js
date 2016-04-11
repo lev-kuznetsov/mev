@@ -8,10 +8,8 @@ define(["ng", "lodash"], function(ng, _){
 			this.analysis=analysis;
 			this.project=project;
 			$scope.dataset=project.dataset;
-			this.sigGenesTop = SigGenes(20, analysis.result.genes, analysis.result.sd, "SD");
-			this.sigGenesBottom = SigGenes(-20, analysis.result.genes, analysis.result.sd, "SD");
+			this.sigGenesTop = SigGenes(500, analysis.result.genes, analysis.result.sd, "SD");
 //			$scope.filteredResultsTop = this.sigGenesTop;
-//			$scope.filteredResultsBottom = this.sigGenesBottom;			
 			this.heatmapViewTop = project.generateView({
 	            viewType:'heatmapView',
 	            note: analysis.name+"_geneSDTop",
@@ -23,7 +21,6 @@ define(["ng", "lodash"], function(ng, _){
 	            viewType:'heatmapView',
 	            note: analysis.name+"_geneSDBottom",
 	            labels:{
-	                row:{keys:this.sigGenesBottom.keys}, 
 	            }
 	        });
 			
@@ -33,11 +30,7 @@ define(["ng", "lodash"], function(ng, _){
 				if($event.targetScope.id === _self.heatmapViewTop.id){					
 					_self.filteredResultsTop = filteredResults;
 					_self.heatmapViewTop = _self.heatmapViewTop.applyFilter("row", labels);
-				}
-				else if($event.targetScope.id === _self.heatmapViewBottom.id){					
-					_self.filteredResultsBottom = filteredResults;
-					_self.heatmapViewBottom = _self.heatmapViewBottom.applyFilter("row", labels);
-				}
+				}				
             });
 		};
 	}])

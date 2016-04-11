@@ -165,11 +165,20 @@
 		}	
 		.pagination{
 			.pagination-sm();
-			margin: 0;
-			
+			margin: 0;			
 			> li {
 				> a, span {
 					margin-left: initial;
+					padding: 3px 3px;
+				}
+				&:first-child{
+					> span {
+						margin-left: 0;
+						padding-left: 0;
+						&:hover{
+							border: solid 1px transparent;
+						}
+					}
 				}
 			}
 		}

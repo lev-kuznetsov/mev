@@ -2,18 +2,14 @@ package edu.dfci.cccb.mev.web.test.dataset.rest.controller.dataset.subset;
 
 import static org.junit.Assert.*;
 import static java.util.Arrays.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.Arrays;
 
 import javax.inject.Inject;
 
 import lombok.extern.log4j.Log4j;
 
-import org.hamcrest.core.IsEqual;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

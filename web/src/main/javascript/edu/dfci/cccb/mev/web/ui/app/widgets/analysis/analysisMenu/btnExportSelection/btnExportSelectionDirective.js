@@ -1,6 +1,6 @@
 define([], function(){
 	"use strict";
-	var BtnExportSelectionDirective = function BtnExportSelectionDirective(alertService){
+	var BtnExportSelectionDirective = function BtnExportSelectionDirective(alertService, mevSelectionLocator){
 		function BtnExportSelectionVM(scope){
 			var self = this;			
 			this.target = scope.muiTarget;
@@ -9,6 +9,7 @@ define([], function(){
 			this.items = scope.muiItems;
 			this.key = scope.muiKeyName || "id";
 			this.dimension = scope.muiDimension || "row";
+			this.contextLevel = scope.contextLevel || "bottom";
 			this.getId = function(){
 				return "selectionExport" + self.analysis.name + self.target; 
 			};
@@ -26,26 +27,33 @@ define([], function(){
                     },
                     keys: keys
                 };
+				
+				var subsetData = {
+					name: self.exportParams.name                    
+                };
+                subsetData[this.dimension+"s"] = keys;
+                var otherDimension = this.dimension === "row" ? "column" : "row";
+                var selections = mevSelectionLocator.find(otherDimension, scope.contextLevel);
+                if(selections.length===1)
+                	subsetData[otherDimension+"s"] = selections[0].keys;
 
-                self.dataset.selection.export({
-                        datasetName: self.dataset.datasetName,
-                        dimension: self.dimension
+                self.dataset.subset({
+                    datasetName: self.dataset.datasetName
+                }, subsetData,
+                function (response) {
+                	self.dataset.resetSelections(self.dimension);
+                    var message = "Added " + self.exportParams.name + " as new Dataset!";
+                    var header = "New Dataset Export";
 
-                    }, selectionData,
-                    function (response) {
-                    	self.dataset.resetSelections(self.dimension);
-                        var message = "Added " + self.exportParams.name + " as new Dataset!";
-                        var header = "New Dataset Export";
+                    alertService.success(message, header);
+                },
+                function (data, status, headers, config) {
+                    var message = "Couldn't export new dataset. If " + "problem persists, please contact us.";
 
-                        alertService.success(message, header);
-                    },
-                    function (data, status, headers, config) {
-                        var message = "Couldn't export new dataset. If " + "problem persists, please contact us.";
+                    var header = "New Dataset Export Problem (Error Code: " + status + ")";
 
-                        var header = "New Dataset Export Problem (Error Code: " + status + ")";
-
-                        alertService.error(message, header);
-                    });
+                    alertService.error(message, header);
+                });
 
             };
 		}
@@ -58,7 +66,8 @@ define([], function(){
 				muiDataset: "=",
 				muiItems: "=",
 				muiKeyName: "@",
-				muiDimension: "@"
+				muiDimension: "@",
+				contextLevel: "@mevContextLevel"
 			},
 //			template: "<a class=\"btn\" data-target=\"#{{vm.getId()}}\" data-toggle=\"modal\"></i> Create Selections</a>",
 			templateUrl: "app/widgets/analysis/analysisMenu/btnExportSelection/btnExportSelection.tpl.html",
@@ -68,6 +77,6 @@ define([], function(){
 		};
 	}; 
 	BtnExportSelectionDirective.$name = "BtnExportSelectionDirective";
-	BtnExportSelectionDirective.$inject = ["alertService"];
+	BtnExportSelectionDirective.$inject = ["alertService", "mevSelectionLocator"];
 	return BtnExportSelectionDirective;
 });

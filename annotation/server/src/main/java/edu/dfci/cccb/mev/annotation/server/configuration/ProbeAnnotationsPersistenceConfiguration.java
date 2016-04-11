@@ -16,9 +16,6 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
-import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
@@ -29,7 +26,6 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
 import edu.dfci.cccb.mev.configuration.util.archaius.ArchaiusConfig;
 import edu.dfci.cccb.mev.configuration.util.contract.Config;
-import edu.dfci.cccb.mev.configuration.util.simple.SimpleConfig;
 
 @Log4j
 @Configuration

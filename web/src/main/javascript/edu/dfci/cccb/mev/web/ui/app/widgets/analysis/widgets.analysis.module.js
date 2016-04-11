@@ -73,10 +73,10 @@ function(ng, AnalyisEventBus){
 				shortName: "voom",
 				viewModel: "VoomVM"
 			},
-			"pca":{
-				shortName: "pca",
-				viewModel: "PcaVM"
-			},
+			// "pca":{
+			// 	shortName: "pca",
+			// 	viewModel: "PcaVM"
+			// },
 			reverseLookup: {
 				hcl: "Hierarchical Clustering",
 				limma: "LIMMA Differential Expression Analysis",

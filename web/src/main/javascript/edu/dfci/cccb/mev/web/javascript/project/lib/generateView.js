@@ -38,7 +38,7 @@ define(['./HeatmapViewClass'], function(HeatmapViewClass){
             	params.labels.column = {keys: self.dataset.column.keys};
             }
             if(params.labels && !params.labels.row){
-            	params.labels.row = {keys: self.dataset.r.keys};
+            	params.labels.row = {keys: self.dataset.row.keys};
             }
             
             //old functionality would show both analysis on the same heatmap if their display 
@@ -56,13 +56,13 @@ define(['./HeatmapViewClass'], function(HeatmapViewClass){
             if(self.views.viewType && //this is an update to an existing view
             		_.isEqual(self.views.expression, params.expression) && //expression values are not beind updated
             		_.isEqual(self.views.labels.column.keys, params.labels.column.keys) && //column order is the same 
-            		_.isEqual(self.views.labels.row.keys, params.labels.row.keys)){ //row order is the same
+            		_.isEqual(self.views.labels.row.keys, params.labels.row.keys) &&
+                    _.isEqual(self.views.note, params.note)){ //row order is the same                    
             	return self.views; //-> no need to generate a new view
             }
             
-            
-            
-            self.views = new HeatmapViewClass(params);
+
+            self.views = new HeatmapViewClass(params, self.dataset);
             return self.views;
         }
         

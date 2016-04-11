@@ -1,0 +1,20 @@
+{
+  "name": "mev-bootstrap-theme",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/mev-bootstrap-theme.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
+    "steal": "^0.13.2"
+  }
+}

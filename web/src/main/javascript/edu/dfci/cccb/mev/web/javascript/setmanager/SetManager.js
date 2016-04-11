@@ -1,5 +1,5 @@
 define(['jquery','angular'], function(jquery, angular){
-	angular.module( 'Mev.SetManager', [])
+	angular.module( 'Mev.SetManager', ["mevDomainCommon"])
 		.directive('selectionSetManager', [function (){
 			  return {				  		  
 				  scope: {
@@ -42,8 +42,8 @@ define(['jquery','angular'], function(jquery, angular){
 			};
 		}])		
 		.controller('SelectionSetManagerCtl', 
-	    ['$scope', '$element', '$attrs', '$routeParams', '$http', 'alertService', 
-		function($scope, $element, $attrs, $routeParams, $http, alertService){
+	    ['$scope', '$element', '$attrs', '$routeParams', '$http', 'alertService', "mevContext",
+		function($scope, $element, $attrs, $routeParams, $http, alertService, mevContext){
 			
 			$scope.sayHelloCtl = function() {
 				alert($scope.heatmapId + ":" + $scope.dataset.selections.column.values.length + ":" + $scope.$id);
@@ -75,10 +75,12 @@ define(['jquery','angular'], function(jquery, angular){
 			
 			function getSelected(dimension){
 			    return $scope.heatmapData[dimension].selections.filter(function(d){
-                    return (d.setSelectionChecked == "true") ? true : false
+                    // return (d.setSelectionChecked === true) ? true : false
+                    return d.setSelectionChecked;
                         
                 })
 			};
+			$scope.getSelected = getSelected;
 			
 			function pushNewSelection(dimension, selectedSets){
 			    $http({
@@ -115,7 +117,36 @@ define(['jquery','angular'], function(jquery, angular){
 			};
 			
 			function pushNewDataset(dimension, selectedSets){
-			    $http({
+				var selectionData = {
+                    name: $scope.exportParams[dimension].name,
+                    properties: {
+                        selectionDescription: '',
+                        selectionColor: '#ffffff',
+                    },
+                    keys: selectedSets
+                };
+				mevContext.current().selection.export({
+                    datasetName: $routeParams.datasetName || $scope.heatmapData.id,
+                    dimension: dimension
+
+                }, selectionData,
+                function (response) {
+                	mevContext.current().resetSelections(dimension);
+                    var message = "Added " + $scope.exportParams[dimension].name + " as new Dataset!";
+                    var header = "New Dataset Export";
+
+                    alertService.success(message, header);
+                },
+                function (data, status, headers, config) {
+                    var message = "Couldn't export new dataset. If " + "problem persists, please contact us.";
+
+                    var header = "New Dataset Export Problem (Error Code: " + status + ")";
+
+                    alertService.error(message, header);
+                });
+
+/*
+		    $http({
                     method:"POST", 
                url:"/dataset/" + ($routeParams.datasetName || $scope.heatmapData.id) + "/" 
                 + dimension
@@ -134,15 +165,14 @@ define(['jquery','angular'], function(jquery, angular){
                         var message = "Exported new dataset with name " + $scope.exportParams[dimension].name + ".";
                         var header = "Export New Dataset";
                  
-                 	   $http({
-                           method:"POST", 
-                           url:"/annotations/" + $routeParams.datasetName + "/annotation/row" 
-    	                   + "/export?destId="+$scope.exportParams[dimension].name});
-                	   $http({
-                           method:"POST", 
-                           url:"/annotations/" + $routeParams.datasetName + "/annotation/column" 
-    	                   + "/export?destId="+$scope.exportParams[dimension].name});
-//                       http://localhost:8080/annotations/dummy.data.txt/annotation/row/export?destHeatmapId=bbb
+                 	  //  $http({
+                    //        method:"POST", 
+                    //        url:"/annotations/" + $scope.heatmapData.id + "/annotation/row" 
+    	               //     + "/export?destId="+$scope.exportParams[dimension].name});
+                	   // $http({
+                    //        method:"POST", 
+                    //        url:"/annotations/" + $scope.heatmapData.id + "/annotation/column" 
+    	               //     + "/export?destId="+$scope.exportParams[dimension].name});
                  
                         alertService.success(message,header);
                })
@@ -155,7 +185,7 @@ define(['jquery','angular'], function(jquery, angular){
                         + ")";
                              
                      alertService.error(message,header);
-               });
+               });*/
 			};
 			
 			$scope.addDifferenceSelection = function(dimension){

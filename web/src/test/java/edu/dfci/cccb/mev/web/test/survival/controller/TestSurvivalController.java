@@ -42,7 +42,6 @@ import edu.dfci.cccb.mev.dataset.domain.mock.MockTsvInput;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
 import edu.dfci.cccb.mev.dataset.rest.configuration.RDispatcherConfiguration;
-import edu.dfci.cccb.mev.genemad.domain.contract.GeneMADAnalysis;
 import edu.dfci.cccb.mev.survival.domain.contract.SurvivalAnalysis;
 import edu.dfci.cccb.mev.survival.domain.contract.SurvivalInputEntryTcga;
 import edu.dfci.cccb.mev.survival.domain.contract.SurvivalParams;
@@ -202,7 +201,7 @@ public class TestSurvivalController {
     SimpleSurvivalAnalysis analysis = (SimpleSurvivalAnalysis) dataset.analyses ().get (params.name ());
     assertThat(analysis.name (), is(params.name()));      
     assertThat(analysis.type (), is(SurvivalAnalysis.ANALYSIS_TYPE));        
-    assertThat(analysis.status (), is(Analysis.MEV_ANALYSIS_STATUS_COMPLETED));
+    assertThat(analysis.status (), is(Analysis.MEV_ANALYSIS_STATUS_SUCCESS));
     log.debug("******* SimpleSurvivalAnalysis:\n"+ jsonObjectMapper.writeValueAsString (analysis));
       
   }

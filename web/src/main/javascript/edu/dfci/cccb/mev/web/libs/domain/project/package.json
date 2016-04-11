@@ -1,0 +1,26 @@
+{
+  "name": "mev-project",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/main/mev-project.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "dependencies": {
+    "angular-mocks": "^1.5.0",
+    "lodash": "^4.2.1",
+    "mev-dataset": "file:../dataset",
+    "mui": "file:../../mui",
+    "steal": "^0.13.2"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "devDependencies": {
+    "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
+    "steal-jasmine": "0.0.2"
+  }
+}

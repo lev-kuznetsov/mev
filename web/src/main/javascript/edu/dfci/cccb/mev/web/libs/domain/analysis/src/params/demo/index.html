@@ -1,0 +1,21 @@
+<html>
+<head>
+	<script src="../../../node_modules/mev-steal-bootstrap/src/mev-steal-bootstrap.js"></script>
+	<script>
+		startStealLive("../../../package.json!npm", "src/params/demo/index");
+	</script>
+</head>
+
+<body ng-controller="demoCtrl" >	
+	<div  class="mev-text-param" mev-param="params[0]"></div>	
+	<div class="mev-select-param" mev-param="params[1]"></div>	
+	<div class="mev-integer-param" mev-param="params[2]"></div>	
+	<div class="mev-decimal-param" mev-param="params[3]"></div>	
+	<div class="mev-select-param" mev-param="params[4]"></div>		
+	{{params[4].value}}
+	=======
+	
+	<div ng-repeat="param in params" class="mev-any-parameter" mev-param="param"></div>
+	{{params.getValues()}}
+</body>
+</html>

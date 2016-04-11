@@ -26,17 +26,17 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
             + "              logFC=absMax(limma[limma[,'SYMBOL']==GS, 'logFC'])))\n"
             + "}, GStoEG_map=GStoEG_map);\n"
 
-            + "output=matrix(unlist(EntrezData), ncol = 2, byrow = TRUE);\n"
+            + "output<-do.call(rbind, EntrezData);\n"
             + "geneList.lfc=as.numeric(output[,2]);\n"
             + "names(geneList.lfc)=output[,1];\n"
             + "geneList.lfc=sort(geneList.lfc, decreasing=TRUE);\n"
 
-            + "gsea.res<-gsePathway(geneList.lfc, nPerm, minGSSize=input$minGSSize,\n"
-            + "                     pvalueCutoff=input$adjPvalueCutoff,"
-            + "                     pAdjustMethod=input$pAdjustMethod, verbose=FALSE);\n"
+            + "gsea.res<-gsePathway(geneList.lfc, nPerm=nPerm, minGSSize=minGSSize,\n"
+            + "                     pvalueCutoff=adjPvalueCutoff,"
+            + "                     pAdjustMethod=pAdjustMethod, verbose=FALSE);\n"
 
             + "gsea.res=summary(gsea.res);" +
-            "}", synchronize = false)
+            "}", synchronize = true)
 @Accessors (fluent = true, chain = true)
 public class GseaBuilder extends AbstractDispatchedRAnalysisBuilder<GseaBuilder, Gsea> {
 
@@ -45,16 +45,17 @@ public class GseaBuilder extends AbstractDispatchedRAnalysisBuilder<GseaBuilder,
   private @Parameter @Setter int minGSSize = 20;
   private @Parameter @Setter String organism = "human";
   private @Parameter @Setter String pAdjustMethod = "fdr";
-  private @Parameter @Setter double adjValueCutoff = 0.05;
+  private @Parameter("adjPvalueCutoff") @Setter double adjValueCutoff = 0.05;
 
   private @Getter Gsea result;
-
+  @Result List<GseaEntry> response;
+  
   public GseaBuilder () {
     super ("gsea");
   }
 
   @Callback (CallbackType.SUCCESS)
-  private void inject (@Result List<GseaEntry> result) {
-    this.result = new Gsea (name (), result);
+  private void inject () {
+    this.result = new Gsea (name (), response);
   }
 }

@@ -14,12 +14,12 @@
  */
 package edu.dfci.cccb.mev.hcl.rest.controllers;
 
-import static edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver.ANALYSIS_MAPPING_NAME;
-import static edu.dfci.cccb.mev.dataset.rest.resolvers.AnalysisPathVariableMethodArgumentResolver.ANALYSIS_URL_ELEMENT;
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_URL_ELEMENT;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -33,7 +33,6 @@ import lombok.experimental.Accessors;
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -43,12 +42,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.contract.DatasetNotFoundException;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
-import edu.dfci.cccb.mev.hcl.domain.contract.Hcl;
 import edu.dfci.cccb.mev.hcl.domain.contract.HclBuilder;
 import edu.dfci.cccb.mev.hcl.domain.contract.InvalidAlgorithmException;
 import edu.dfci.cccb.mev.hcl.domain.contract.InvalidMetricException;
@@ -107,9 +104,11 @@ public class HclAnalysisController {
   @Accessors (fluent = true)
   public static class HclDto {
     @JsonProperty @Getter private String name;
-    @JsonProperty @Getter private String dimension;
+    @JsonProperty(required=false) @Getter private String dimension;
     @JsonProperty @Getter private String metric;
     @JsonProperty @Getter private String linkage;
+    @JsonProperty(required=false) @Getter private List<String> columns;
+    @JsonProperty(required=false) @Getter private List<String> rows;
   }
 
   @RequestMapping (value = "/analyze/hcl", method = POST)
@@ -119,13 +118,22 @@ public class HclAnalysisController {
                                                            InvalidAlgorithmException,
                                                            InvalidMetricException {
 
+	
     // TODO: inject a factory instead of manual injection
-    final HclBuilder builder = build.get ().dataset (dataset)
-                                    .dimension (dataset.dimension (Type.from (dto.dimension ())))
+    final HclBuilder builder = build.get ().dataset (dataset)                                    
                                     .linkage (dto.linkage ())
                                     .metric (dto.metric ())
+                                    .columns(dto.columns())
+                                    .rows(dto.rows())
                                     .name (dto.name ());
-
+    if(dto.dimension()!=null && 
+    		(dto.dimension().equalsIgnoreCase(Dimension.Type.ROW.toString()) || 
+    		dto.dimension().equalsIgnoreCase(Dimension.Type.COLUMN.toString()))){    	
+    	builder.dimension (dataset.dimension (Type.from (dto.dimension ())));    	
+    }else{
+    	builder.dimension(dataset.dimension(Dimension.Type.ROW));
+    	builder.dimension(dataset.dimension(Dimension.Type.COLUMN));
+    }
     log.debug ("Running HCL on " + dataset);
     return builder.buildAsync ();
 
@@ -143,17 +151,5 @@ public class HclAnalysisController {
     // }.run (); // .start (); TODO: async analysis
 
   }
-
-  @Deprecated
-  @RequestMapping (value = "/analysis/" + ANALYSIS_URL_ELEMENT,
-                   method = POST)
-  public Dimension applyNoType (@PathVariable (ANALYSIS_MAPPING_NAME) Hcl analysis) throws DatasetException {
-    return analysis.apply ();
-  }
-
-  @RequestMapping (value = "/analysis/" + ANALYSIS_URL_ELEMENT + "/hcl",
-                   method = POST)
-  public Dimension apply (@PathVariable (ANALYSIS_MAPPING_NAME) Hcl analysis) throws DatasetException {
-    return analysis.apply ();
-  }
+  
 }

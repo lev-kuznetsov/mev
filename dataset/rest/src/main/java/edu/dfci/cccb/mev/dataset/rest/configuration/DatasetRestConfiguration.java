@@ -63,9 +63,9 @@ import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.simple.ArrayListWorkspace;
 import edu.dfci.cccb.mev.dataset.rest.assembly.binary.FlatFileValuesBinary32FloatMessageConverter;
-import edu.dfci.cccb.mev.dataset.rest.assembly.binary.FlatFileValuesBinaryMessageConverter;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.DimensionTypeJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDatasetJsonSerializer;
+import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDatasetValuesJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleDimensionJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.json.simple.SimpleSelectionJsonSerializer;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.DatasetTsvMessageConverter;
@@ -151,6 +151,7 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   public void addJsonSerializers (List<JsonSerializer<?>> serializers) {
     serializers.addAll (asList (new DimensionTypeJsonSerializer (),
                                 new SimpleDatasetJsonSerializer (),
+                                new SimpleDatasetValuesJsonSerializer(),
                                 new SimpleDimensionJsonSerializer (),
                                 // This serializer returns selections as an
                                 // array.

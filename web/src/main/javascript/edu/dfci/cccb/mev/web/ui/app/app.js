@@ -19,6 +19,7 @@ define(["ng",
        'angular-nvd3',
        'ag-grid',
        'crossfilter',
+       'blueimp-canvas-to-blob',
        
        'js/directives', 
        'js/services', 

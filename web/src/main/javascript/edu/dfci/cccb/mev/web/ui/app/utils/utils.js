@@ -150,15 +150,15 @@ define(["lodash"], function(_){
 	};
 
 	
-	function buildNodeTree(source, schema, fnBuildNode){
+	function buildNodeTree(source, schema, fnBuildNodeCallback){
 		var tree = objectToNodeTree(source, function(obj, path){
 			
-			var fnBuildNode = fnBuildNode || function(config, data, path){
+			var fnBuildNode = fnBuildNodeCallback || function(config, data, path){
 //				console.debug("Nodepath:", _.map(path, "key").join("."));
 				return {
 					nodeName: config.label || path[path.length-1].key,					
 					nodeConfig: config, 
-					nodeData: obj,
+					nodeData: data,
 					nodePath: _.map(path, "key").join("."),
 					nodeParent: path.length>1 ? path[path.length-2].node : undefined,
 					nodes:[]};

@@ -1,0 +1,30 @@
+{
+	"row": {
+		"type": "row",
+		"keys": ["Actb", "Actg1", "Aldoa", "Atp5b", "Card11", "Cars", "Cfl1", "Chuk", "Dmpk", "Eef1a1", "Eef2", "Eif4a1", "Fut7", "Gnb2l1", "Gzmb", "Gzmc", "Hnrnpa2b1", "Lars2", "Lcp1", "Ldha", "Ly6e", "Mtf2", "Myh9", "Npm1", "Orc2", "Pabpc1", "Pdcl3", "Pgk1", "Pkm2", "Plek", "Ppia", "Sell", "Spp1", "St3gal2", "Syngr2", "Tagln2", "Tln1", "Tmsb4x", "Top2a"],
+		"selections": [{
+			"name": "g2",
+			"properties": {
+				"selectionColor": "#a7c20e",
+				"selectionDescription": ""
+			},
+			"keys": ["Cfl1", "Lars2", "Mtf2", "Myh9", "Tmsb4x", "Tln1", "Actb", "Pabpc1", "Eif4a1", "Tagln2", "Gnb2l1", "Top2a", "Lcp1", "Atp5b", "Eef1a1", "Pkm2", "Hnrnpa2b1", "Npm1", "Ppia", "Pgk1"]
+		}, {
+			"name": "g1",
+			"properties": {
+				"selectionColor": "#40fb1a",
+				"selectionDescription": ""
+			},
+			"keys": ["Tmsb4x", "Spp1", "Orc2", "Eef2", "Actb", "Tln1", "Lcp1", "Tagln2", "Atp5b", "Myh9", "Eif4a1", "Npm1", "Eef1a1", "Pabpc1", "Ppia", "Top2a", "Gnb2l1", "Pkm2", "Hnrnpa2b1", "Pgk1"]
+		}]
+	},
+	"column": {
+		"type": "column",
+		"keys": ["A", "B", "C", "D", "E", "F"],
+		"selections": []
+	},
+	"values": [],
+	"min": 7.45,
+	"max": 18.08,
+	"avg": 13.692521367521374
+}
