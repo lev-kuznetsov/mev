@@ -46,5 +46,8 @@ public interface Dataset {
                                                       InvalidCoordinateException,
                                                       IOException,
                                                       DatasetBuilderException, InvalidDatasetNameException;
-  Dataset subset(String name, List<String> columns, List<String> rows);
+
+  Dataset subset (String name, List<String> columns, List<String> rows);
+
+  Dataset rename (String name) throws InvalidDatasetNameException;
 }

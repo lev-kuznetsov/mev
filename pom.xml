@@ -43,6 +43,7 @@
     <module>voom</module>
     <module>pathway-enrichment</module>
     <module>gsea</module>
+    <module>normalization</module>
     <module>web</module>
 
   </modules>
