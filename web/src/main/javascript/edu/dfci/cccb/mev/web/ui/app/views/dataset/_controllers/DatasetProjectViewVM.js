@@ -123,8 +123,13 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 				$scope.$broadcast("ui:projectTree:dataChanged");
 //			});			
         });
-		AnalysisEventBus.onAnalysisLoadedAll($scope, function(){
-			console.debug("DatasetProjectViewVM onAnalysisLoadedAll");	
+		AnalysisEventBus.onAnalysisLoadedAll($scope, function($event, analyses){
+			console.debug("DatasetProjectViewVM onAnalysisLoadedAll");
+			analyses.forEach(function(analysis){
+				var analysisType = mevAnalysisTypes.get(analysis.params.analysisType || analysis.type || analysis.params.type);
+				if(analysisType && _.isFunction(analysisType.modelDecorator))
+					analysisType.modelDecorator(response);
+			})
 			$scope.$broadcast("ui:projectTree:dataChanged");			
 		});
 		
