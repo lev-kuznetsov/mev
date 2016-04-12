@@ -18,7 +18,7 @@
     "jquery": "~2.2.0",
     "lodash": "^4.8.2",
     "mui": "file:../../mui",
-    "nvd3": "apartensky/nvd3#1.8.1+master",
+    "nvd3": "apartensky/nvd3#1.8.2+dotPlot.1",
     "steal": "^0.15.8",
     "system-text": "^0.1.0"
   },
