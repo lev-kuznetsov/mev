@@ -16,7 +16,7 @@ define(["lodash", "./mevEnrichmentBarchart.tpl.html"], function(_, template){"us
 					return item.getPValue();
 				}).getPValue();				
 
-				var pValueScale = d3.scale.linear().domain([0, maxPvalue]).range(["blue", "red"]);
+				var pValueScale = d3.scale.linear().domain([0, maxPvalue]).range(["blue", "yellow"]);
 				scope.options = {
 		            chart: {
 		                type: 'multiBarHorizontalChart',
@@ -145,7 +145,7 @@ define(["lodash", "./mevEnrichmentBarchart.tpl.html"], function(_, template){"us
 				.attr("y2", "100%")
 				.attr("spreadMethod", "pad");
 
-				legend.append("stop").attr("offset", "0%").attr("stop-color", "red").attr("stop-opacity", 1);
+				legend.append("stop").attr("offset", "0%").attr("stop-color", "yellow").attr("stop-opacity", 1);
 				legend.append("stop").attr("offset", "100%").attr("stop-color", "blue").attr("stop-opacity", 1);
 
 				key.append("rect").attr("width", w - 100).attr("height", h - 100).style("fill", "url(#gradient)").attr("transform", "translate(0,10)");
