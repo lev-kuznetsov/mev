@@ -1,7 +1,6 @@
-"use strict";
-define(["mui"], function(ng){
+define(["mui", "lodash"], function(ng, _){"use strict";
 
-	var AnalysisEventBus = function($rootScope){
+	var AnalysisEventBus = function($rootScope, mevAnalysisTypes){
 				
 		
 		function formatAnalysisEventData(descriptor, params, response){
@@ -9,7 +8,12 @@ define(["mui"], function(ng){
 					analysisName: descriptor.analysisName || params.analysisName || params.name || response.name
 			};
 			ng.extend(eventData, descriptor);
-			ng.extend(eventData, params);			
+			ng.extend(eventData, params);
+			var analysisType = mevAnalysisTypes.get(descriptor.analysisType || params.analysisType || response.type);
+			if(!analysisType && _.isString(descriptor))
+				analysisType = mevAnalysisTypes.get(descriptor);
+			if(analysisType && _.isFunction(analysisType.modelDecorator))
+				analysisType.modelDecorator(response);
 			eventData.response=response;
 			return eventData;
 		}
@@ -48,7 +52,7 @@ define(["mui"], function(ng){
 			});
 		};
 	};
-	AnalysisEventBus.$inject=["$rootScope"];
+	AnalysisEventBus.$inject=["$rootScope", "mevAnalysisTypes"];
 	AnalysisEventBus.$name="mevAnalysisEventBus";
 	AnalysisEventBus.$provider="service";
 	return AnalysisEventBus;

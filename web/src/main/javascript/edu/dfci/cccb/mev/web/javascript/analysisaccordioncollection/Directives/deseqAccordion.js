@@ -1,11 +1,9 @@
-(function () {
-
-    define([], function () {
+define([], function () {
 
         return function (module) {
 
-            module.directive('deseqAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService', 'BoxPlotService',
-                function (tableFilter, alertService, projection, paths, BoxPlotService) {
+            module.directive('deseqAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService', 'BoxPlotService', 'mevAnalysisTypes',
+                function (tableFilter, alertService, projection, paths, BoxPlotService, mevAnalysisTypes) {
                     return {
                         restrict: 'E',
                         templateUrl: paths.module + '/templates/DESeqAccordion.tpl.html',
@@ -15,9 +13,28 @@
                             heatmapView: "=",
                             isItOpen: "@"
                         },
-                        link: function (scope) {
+                        controller: ["$scope", "mevAnalysisTypes", function($scope, mevAnalysisTypes){
+                            $scope.analysisTypes = mevAnalysisTypes.all();                
+                        }],
+                        link: function (scope) {            
 
+                            
+                            scope.analysis.getFilteredKeys = function(dimension){
+                                if(dimension==="row")
+                                    return scope.filteredResults.map(function(item){
+                                        return item.id;
+                                    });
+                            };
+                            scope.analysis.getOriginalInputKeys=function(dimension){
+                                if(dimension==="column"){
+                                    var selectionNames = [scope.analysis.params.experiment, scope.analysis.params.control];
 
+                                    var keys = scope.project.dataset.selections.unionByName("column", selectionNames);
+                                    keys.displayName = selectionNames.join("+");
+                                    return keys;
+                                }
+
+                            };
                             scope.headers = [
                                 {
                                     'name': 'ID',
@@ -129,7 +146,4 @@
 
         }
 
-    })
-
-
-})()
+})

@@ -130,7 +130,9 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 	        row: datasetRespObj.row.selections,
 	        intersection: function(params){
 	        	return selectionHelpers.selectionIntersect.call(self, params)
-	        }
+	        },
+	        union: selectionHelpers.union,
+	        unionByName: selectionHelpers.unionByName.bind(this)
 		}
 		
 		this.analyses = datasetRespObj.analyses || [];

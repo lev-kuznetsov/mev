@@ -1,12 +1,12 @@
 "use strict";
-define(["lodash", "mevPathwayEnrichment", 
+define(["lodash",
 	"mev-analysis/src/params/model/AnalysisParamsFactory",
 	"mev-analysis/src/params/model/text/TextParam",
 	"mev-analysis/src/params/model/select/SelectParam",
 	"mev-analysis/src/params/model/integer/IntegerParam",
 	"mev-analysis/src/params/model/decimal/DecimalParam", 
 	"mev-analysis/src/params/model/selectionSet/SelectionSetParam", 
-	], function(_, mevPathwayEnrichment, AnalysisParamsFactory, 
+	], function(_, AnalysisParamsFactory,
 		TextParam, SelectParam, IntegerParam, DecimalParam){	
 	//	private @Getter @Setter @Parameter int minGSSize = 20;
 	//  private @Getter @Setter @Parameter double pvalueCutoff = 0.25;

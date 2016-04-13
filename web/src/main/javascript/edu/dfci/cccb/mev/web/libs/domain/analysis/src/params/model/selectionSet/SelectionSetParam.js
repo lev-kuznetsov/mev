@@ -13,7 +13,7 @@ define(["lodash", "../select/SelectParam"], function(_, SelectParam){
 
 		};
 	}
-	SelectionSetParamFactory.$name="mevSelectionSetParamFactory";
+	SelectionSetParamFactory.$name="mevSelectionSetParam";
 	SelectionSetParamFactory.$provider="factory";
 	SelectionSetParamFactory.$inject=["mevSelectionLocator"];
 	return SelectionSetParamFactory;

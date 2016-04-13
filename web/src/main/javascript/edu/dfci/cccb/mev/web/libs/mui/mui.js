@@ -73,10 +73,13 @@ define(["angular", "lodash"], function(ng, _){
 		_self.formatComponentName = function(func){
 			var name = func.$name;
 			
-			//if $name ends with the "provider" suffix remove the suffix
-			//i.e. DashboardController -> Dashboard		 
-			if(name.toLowerCase().indexOf(func.provider, this.length - func.provider.length) !== -1){			
-				name = name.substring(0, name.length - func.provider.length);
+			//if func.$provider is not explicitly specified
+			if(!func.$provider){				
+				//if $name ends with the "provider" suffix remove the suffix
+				//i.e. DashboardController -> Dashboard		 
+				if(name.toLowerCase().indexOf(func.provider, this.length - func.provider.length) !== -1){			
+					name = name.substring(0, name.length - func.provider.length);
+				}
 			}
 			
 			//make sure directive names start with a lower case letter
@@ -134,8 +137,7 @@ define(["angular", "lodash"], function(ng, _){
 				//so find angular js modules in that list
 				deps = Array.prototype.slice.call(deps);
 				modules = modules.concat(_self.selectNgModules(deps));
-			};
-			
+			}			
 			if(args){
 				//if "args" is passed in, most likely caller is using "deps" for explicit dependencies and args for requirejs
 				var aArgs = Array.prototype.slice.call(args);
@@ -155,6 +157,6 @@ define(["angular", "lodash"], function(ng, _){
 			
 		};
 		return ng;	
-	};
+	}
 	return mui(ng);
 });

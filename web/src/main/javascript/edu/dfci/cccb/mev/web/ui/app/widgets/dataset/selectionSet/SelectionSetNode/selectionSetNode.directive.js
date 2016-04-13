@@ -16,6 +16,7 @@ define([], function(){
 						e.stopPropagation();
 					}	
 				};
+				/*
 				var killwatch=scope.$watchCollection("node.nodeData.selections", function(newv, oldv){
 					console.debug("$watch node.nodeData", newv===oldv);
 					if(newv !== oldv){
@@ -23,7 +24,8 @@ define([], function(){
 						killwatch();
 						scope.$emit("ui:projectTree:dataChanged");						
 					}					
-				});								
+				});						
+				*/		
 			}
 		};
 	};

@@ -16,7 +16,7 @@ define(["lodash", "../select/SelectParam", "../BaseParam"], function(_, SelectPa
 		AnnotationFieldParam.prototype = new BaseParam();
 		return AnnotationFieldParam;
 	}
-	AnnotationFieldParamFactory.$name="mevAnnotationFieldParamFactory";
+	AnnotationFieldParamFactory.$name="mevAnnotationFieldParam";
 	AnnotationFieldParamFactory.$provider="factory";
 	AnnotationFieldParamFactory.$inject=["mevAnnotationsLocator"];
 	return AnnotationFieldParamFactory;

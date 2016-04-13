@@ -1,10 +1,10 @@
 define(["mui"], function(){
-	function component($q, $resource, $routeParams, $stateParams, AnnotationProjectIdResource){
+	function component($q, $resource, $stateParams, AnnotationProjectIdResource){
 		var _self=this;
 		var url="/annotations/:datasetName/annotation/:dimension/new/dataset/command/core/get-columns-info";		
 		this.AnnotationFieldsResource = $resource(
 				url, 
-				{datasetName: $routeParams.datasetName || $stateParams.datasetId},
+				{datasetName: $stateParams.datasetId},
 				{get: {method: "GET", isArray: true}
 		});		
 		
@@ -14,7 +14,7 @@ define(["mui"], function(){
 				if(data.project<=0)
 					return $q.when({error: -1});
 				else
-					data.datasetName=$routeParams.datasetName || $stateParams.datasetId;
+					data.datasetName=$stateParams.datasetId;
 					data.dimension=dimension;
 					var fieldsPromise = _self.AnnotationFieldsResource.get(data).$promise;
 					fieldsPromise.params = data;
@@ -23,7 +23,7 @@ define(["mui"], function(){
 		};			
 	}
 	component.$name="AnnotationFieldsResource";
-	component.$inject=["$q", "$resource", "$routeParams", "$stateParams", "AnnotationProjectIdResource"];
+	component.$inject=["$q", "$resource", "$stateParams", "AnnotationProjectIdResource"];
 	component.$provider="service";
 	return component;
 

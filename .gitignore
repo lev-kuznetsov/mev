@@ -25,6 +25,7 @@ src/**/html/app/data/*
 .springBeans
 .tern-project
 .externalToolBuilders/
+.idea/
 
 # Maven target
 target/

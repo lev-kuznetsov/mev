@@ -1,6 +1,6 @@
 define(["ng", "lodash"], function(ng, _){ "use strict";
 	var DatasetProjectViewVM=function DatasetViewVM($scope, $stateParams, $state, DatasetResourceService, dataset, project, AnalysisEventBus, AnalysisTypes, mevAnalysisTypes,
-		mevPathwayEnrichmentAnalysisType, mevGseaAnalysisType, mevPcaAnalysisType, mevHclAnalysisType){
+		mevPathwayEnrichmentAnalysisType, mevGseaAnalysisType, mevPcaAnalysisType, mevHclAnalysisType, mevTopgoAnalysisType){
 		var that=this;
 		console.debug("DatasetProjectViewVM", dataset, project);
 		this.project=project;		
@@ -69,6 +69,9 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 			if(node.nodeData.params && mevAnalysisTypes.all()[node.nodeData.params.analysisType])
 				$state.go("root.dataset.analysisType"+"."+node.nodeData.params.analysisType, 
 					{datasetId: node.nodeData.params.datasetName, analysisId: node.nodeData.name});
+			else if(node.nodeData.type && mevAnalysisTypes.all()[node.nodeData.type])
+				$state.go("root.dataset.analysisType"+"."+node.nodeData.type, 
+					{datasetId: dataset.id, analysisId: node.nodeData.name});
 			else
 				node.activate();
 		});
@@ -120,13 +123,20 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 				$scope.$broadcast("ui:projectTree:dataChanged");
 //			});			
         });
-		AnalysisEventBus.onAnalysisLoadedAll($scope, function(){
-			console.debug("DatasetProjectViewVM onAnalysisLoadedAll");	
+		AnalysisEventBus.onAnalysisLoadedAll($scope, function($event, analyses){
+			console.debug("DatasetProjectViewVM onAnalysisLoadedAll");
+			analyses.forEach(function(analysis){
+				var analysisType = mevAnalysisTypes.get(analysis.params.analysisType || analysis.type || analysis.params.type);
+				if(analysisType && _.isFunction(analysisType.modelDecorator))
+					analysisType.modelDecorator(response);
+			})
 			$scope.$broadcast("ui:projectTree:dataChanged");			
 		});
 		
-		$scope.$on('SeletionAddedEvent', function(event, dimensionType){
-      	    dataset.resetSelections(dimensionType);      	        	  
+		$scope.$on('mui:dataset:selections:added', function(event, dimensionType, params, selection, response){
+      	    dataset.resetSelections(dimensionType).$promise.then(function(){
+      	    	$scope.$broadcast("ui:projectTree:dataChanged");
+      	    });      	        	        	    
          });
 		
 		_.forEach(project.dataset.dashboardItems, function(item){
@@ -140,6 +150,6 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 
 	};
 	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "DatasetResourceService", "dataset", "project", "AnalysisEventBus", "AnalysisTypes", "mevAnalysisTypes", 
-	"mevPathwayEnrichmentAnalysisType", "mevGseaAnalysisType", "mevPcaAnalysisType", "mevHclAnalysisType"];
+	"mevPathwayEnrichmentAnalysisType", "mevGseaAnalysisType", "mevPcaAnalysisType", "mevHclAnalysisType", "mevTopgoAnalysisType"];
 	return DatasetProjectViewVM;
 });

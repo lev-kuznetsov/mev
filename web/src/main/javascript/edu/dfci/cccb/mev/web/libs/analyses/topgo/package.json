@@ -1,0 +1,42 @@
+{
+  "name": "mev-topgo",
+  "version": "0.0.1",
+  "description": "mev topgo analysis",
+  "main": "src/main/mev-topgo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.10.0",
+    "mev-analysis": "file:../../domain/analysis",
+    "mev-results-table": "file:../../widgets/mevResultsTable",
+    "mev-bs-modal": "file:../../widgets/bsmodal",
+    "mev-enrichment-dotplot": "file:../../charts/mevEnrichmentDotplot",
+    "mui": "file:../../mui",
+    "steal": "^0.13.2",
+    "system-text": "^0.1.0",
+    "angular": "^1.4.9",
+    "angular-ui-router": "^0.2.17",
+    "jquery": "^2.2.0"
+  },
+  "devDependencies": {
+    "angular": "^1.4.9",
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.0",
+    "mev-domain-common": "file:../../domain/common",
+    "mev-mock": "file:../../domain/mock",
+    "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
+    "systemjs-plugin-json": "^0.1.0"
+  },
+  "system": {
+    "ext": {
+      "html": "system-text"
+    }
+  }
+}
