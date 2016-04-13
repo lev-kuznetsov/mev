@@ -6,21 +6,24 @@ define(["lodash", "./mevEnrichmentBarchart.tpl.html"], function(_, template){"us
 				config: "=mevEnrichmentBarchart"
 			},
 			template: template,
-			controller: ["$scope", "mevBarchartNvd3Adaptor", "mevEnrichmentDataAdaptor", function(scope, mevBarchartNvd3Adaptor, mevEnrcihmentDataAdaptor){
+			controller: ["$scope", "mevBarchartNvd3Adaptor", function(scope, mevBarchartNvd3Adaptor){
 
 				
-				var data = mevEnrcihmentDataAdaptor(scope.config.data);
+				var data = scope.config.data;
 				scope.data=mevBarchartNvd3Adaptor(scope.config, data);
 
-				var maxPvalue = scope.maxPvalue  = _.maxBy(data, function(item){
+				var maxPvalueElm = _.maxBy(data, function(item){
 					return item.getPValue();
-				}).getPValue();				
+				});
 
-				var pValueScale = d3.scale.linear().domain([0, maxPvalue]).range(["blue", "yellow"]);
+				if(maxPvalueElm)
+					scope.maxPvalue = maxPvalueElm.getPValue();
+
+				var pValueScale = d3.scale.linear().domain([0, scope.maxPvalue]).range(["blue", "yellow"]);
 				scope.options = {
 		            chart: {
 		                type: 'multiBarHorizontalChart',
-		                height: 600,
+		                height: d3.max([450, data.length*12]),
 		                x: function(d){return d.getName();},
 		                y: function(d){return d.getMatched();},
 		                showControls: false,
@@ -130,7 +133,7 @@ define(["lodash", "./mevEnrichmentBarchart.tpl.html"], function(_, template){"us
 				};
 				var d3root = d3.select(elem[0]);
 				d3root.select(".controls svg").remove();
-				var svgPValueLegend = d3.select("#pValueLegend").append("svg");
+				var svgPValueLegend = d3root.select("#pValueLegend").append("svg");
 				svgPValueLegend.attr("width", pValueLegendConfig.width).attr("height", pValueLegendConfig.height);	
 
 				var w = pValueLegendConfig.width, h = pValueLegendConfig.height;
