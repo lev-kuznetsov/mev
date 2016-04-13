@@ -1,5 +1,5 @@
-/*nvd3@1.8.1-dev#build/nv.d3.css!$css*/
-/* nvd3 version 1.8.1-dev (https://github.com/novus/nvd3) 2015-09-10 */
+/*nvd3@1.8.2-dev#build/nv.d3.css!$css*/
+/* nvd3 version 1.8.2-dev (https://github.com/novus/nvd3) 2016-04-12 */
 .nvd3 .nv-axis {
     pointer-events:none;
     opacity: 1;
@@ -71,6 +71,7 @@
 
 .nvd3 .nv-multibar .nv-groups rect,
 .nvd3 .nv-multibarHorizontal .nv-groups rect,
+.nvd3 .nv-dotPlot .nv-groups circle,
 .nvd3 .nv-discretebar .nv-groups rect {
     stroke-opacity: 0;
 
@@ -81,12 +82,14 @@
 
 .nvd3 .nv-multibar .nv-groups rect:hover,
 .nvd3 .nv-multibarHorizontal .nv-groups rect:hover,
+.nvd3 .nv-dotPlot .nv-groups circle:hover,
 .nvd3 .nv-candlestickBar .nv-ticks rect:hover,
 .nvd3 .nv-discretebar .nv-groups rect:hover {
     fill-opacity: 1;
 }
 
 .nvd3 .nv-discretebar .nv-groups text,
+.nvd3 .nv-dotPlot .nv-groups text,
 .nvd3 .nv-multibarHorizontal .nv-groups text {
     font-weight: bold;
     fill: rgba(0,0,0,1);
@@ -164,6 +167,18 @@
     stroke: #333;
 }
 
+
+.nv-force-node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+.nv-force-link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+.nv-force-node text {
+  stroke-width: 0px
+}
 
 .nvd3 .nv-legend .nv-disabled rect {
     /*fill-opacity: 0;*/
@@ -334,6 +349,16 @@ svg.nvd3-svg {
     fill-opacity: .7;
 }
 
+/**********
+*  Print
+*/
+
+@media print {
+  .nvd3 text {
+    stroke-width: 0;
+    fill-opacity: 1;
+  }
+}
 
 .nvd3.nv-ohlcBar .nv-ticks .nv-tick {
     stroke-width: 1px;
@@ -409,8 +434,11 @@ svg.nvd3-svg {
     stroke-opacity: 1;
 }
 
-.nvd3.nv-pie .hover path {
+.nvd3.nv-pie path {
     fill-opacity: .7;
+}
+.nvd3.nv-pie .hover path {
+    fill-opacity: 1;
 }
 .nvd3.nv-pie .nv-label {
     pointer-events: none;
@@ -744,6 +772,222 @@ cirvle.selected {
 /*mev-results-table@0.0.1#src/style/mevResultsTable.less!$less*/
 .mev-topfilter-button {
   display: inline-block;
+}
+
+/*mev-enrichment-dotplot@0.0.1#src/main/style/mevEnrichmentDotplot.less!$less*/
+.brush {
+  fill: blue;
+  stroke: blue;
+  fill-opacity: 0.2;
+  stroke-opacity: 0.8;
+}
+path.nv-point.selected,
+cirvle.selected {
+  stroke: red;
+  fill: red;
+}
+.nvtooltip .series-color {
+  width: 10px;
+  height: 10px;
+  margin-left: 5px;
+  margin-bottom: 2px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.nvtooltip table td.value {
+  font-weight: normal;
+}
+.chart {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.chart .controls {
+  padding-top: 5px;
+  flex: 3 0 20%;
+}
+.chart .controls .legend .axis text {
+  font: 10px sans-serif;
+}
+.chart .controls .legend .axis line,
+.chart .controls .legend .axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+.chart .controls .legend svg {
+  padding-left: 50px;
+}
+.chart .controls .inlineGroup label {
+  display: inline-block;
+  text-align: right;
+  margin-bottom: 10px;
+  float: none;
+  clear: none;
+}
+.chart .controls .inlineGroup label:after {
+  content: ":";
+}
+.chart .controls .inlineGroup input,
+.chart .controls .inlineGroup select,
+.chart .controls .inlineGroup table {
+  display: inline-block;
+  float: none;
+}
+.chart .controls .btn-group > label {
+  display: inline-block;
+  text-align: initial;
+  float: initial;
+  clear: initial;
+}
+.chart .controls .btn-group > label:after {
+  content: "";
+}
+.chart .controls label {
+  display: inline-block;
+  float: left;
+  clear: left;
+  /*width: 250px;*/
+  text-align: right;
+  margin-bottom: 10px;
+}
+.chart .controls label:after {
+  content: ":";
+}
+.chart .controls label.break {
+  display: block;
+  float: none;
+  text-align: initial;
+}
+.chart .controls input,
+.chart .controls select,
+.chart .controls table {
+  display: inline-block;
+  float: left;
+}
+.chart .body {
+  flex: 7 7 80%;
+}
+.chart .footer {
+  flex: 7 7 80%;
+  max-width: 80%;
+  /* display: flex; */
+  /* flex-direction: row; */
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+}
+.chart .footer .selection {
+  flex: 10;
+}
+
+/*mev-enrichment-barchart@0.0.1#src/main/style/mevEnrichmentBarchart.less!$less*/
+.brush {
+  fill: blue;
+  stroke: blue;
+  fill-opacity: 0.2;
+  stroke-opacity: 0.8;
+}
+path.nv-point.selected,
+cirvle.selected {
+  stroke: red;
+  fill: red;
+}
+.nvtooltip .series-color {
+  width: 10px;
+  height: 10px;
+  margin-left: 5px;
+  margin-bottom: 2px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.nvtooltip table td.value {
+  font-weight: normal;
+}
+.chart {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.chart .controls {
+  padding-top: 5px;
+  flex: 3 0 20%;
+}
+.chart .controls .legend .axis text {
+  font: 10px sans-serif;
+}
+.chart .controls .legend .axis line,
+.chart .controls .legend .axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+.chart .controls .legend svg {
+  padding-left: 50px;
+}
+.chart .controls .inlineGroup label {
+  display: inline-block;
+  text-align: right;
+  margin-bottom: 10px;
+  float: none;
+  clear: none;
+}
+.chart .controls .inlineGroup label:after {
+  content: ":";
+}
+.chart .controls .inlineGroup input,
+.chart .controls .inlineGroup select,
+.chart .controls .inlineGroup table {
+  display: inline-block;
+  float: none;
+}
+.chart .controls .btn-group > label {
+  display: inline-block;
+  text-align: initial;
+  float: initial;
+  clear: initial;
+}
+.chart .controls .btn-group > label:after {
+  content: "";
+}
+.chart .controls label {
+  display: inline-block;
+  float: left;
+  clear: left;
+  /*width: 250px;*/
+  text-align: right;
+  margin-bottom: 10px;
+}
+.chart .controls label:after {
+  content: ":";
+}
+.chart .controls label.break {
+  display: block;
+  float: none;
+  text-align: initial;
+}
+.chart .controls input,
+.chart .controls select,
+.chart .controls table {
+  display: inline-block;
+  float: left;
+}
+.chart .body {
+  flex: 7 7 80%;
+}
+.chart .footer {
+  flex: 7 7 80%;
+  max-width: 80%;
+  /* display: flex; */
+  /* flex-direction: row; */
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+}
+.chart .footer .selection {
+  flex: 10;
 }
 
 /*mev-heatmap@0.0.1#src/main/style/mev-heatmap.less!$less*/
