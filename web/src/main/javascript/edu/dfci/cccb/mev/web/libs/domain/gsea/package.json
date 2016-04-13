@@ -18,12 +18,14 @@
     "mev-mock": "file:../mock",
     "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
     "steal": "^0.13.2",
-    "steal-jasmine": "0.0.2"
+    "steal-jasmine": "0.0.2",
+    "systemjs-plugin-json": "^0.1.0"
   },
   "dependencies": {
     "lodash": "^4.4.0",
     "mev-analysis": "file:../analysis",
     "mev-annotations": "file:../annotations",
+    "mev-enrichment-barchart": "file:../../charts/mevEnrichmentBarchart",
     "mev-results-table": "file:../../widgets/mevResultsTable",
     "mui": "file:../../mui"
   }

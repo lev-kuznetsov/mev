@@ -138,7 +138,38 @@ function(_, mevAnalsysType,
 				_self.parent.start.call(_self, _self, params);	
 			});			
 		};
+		gseaType.modelDecorator = function(analysis){
+			var gseaRowModel = {
+				getTotal: function () {
+					return this.setSize;
+				},
+				getMatched: function () {
+					return this.setSize;
+				},
+				getName: function () {
+					return this.Description;
+				},
+				getPValue: function () {
+					return this.pvalue;
+				}
+			};
 
+			function formatResults(input){
+				return input.map(function(item){
+					return _.extend(item, gseaRowModel);
+				});
+			};
+
+			function isPeRow(item){
+				return _.every(_.functions(gseaRowModel), function(methodName){
+					return _.hasIn(item, methodName);
+				});
+			}
+
+			if(analysis && analysis.result && analysis.result.length > 0)
+				if(!isPeRow(analysis.result[0]))
+					formatResults(analysis.result);
+		};
 		return gseaType;
 	
 	}	
