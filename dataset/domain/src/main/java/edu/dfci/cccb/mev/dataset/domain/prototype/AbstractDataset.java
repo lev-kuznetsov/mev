@@ -54,9 +54,14 @@ public abstract class AbstractDataset implements Dataset, AutoCloseable {
   private @Getter String name;
 
   protected AbstractDataset (String name) throws InvalidDatasetNameException {
+    rename (name);
+  }
+
+  public Dataset rename (String name) throws InvalidDatasetNameException {
     if (!VALID_DATASET_NAME_PATTERN.matcher (name).matches ())
       throw new InvalidDatasetNameException ().name (name);
     this.name = name;
+    return this;
   }
 
   @Override
@@ -91,10 +96,10 @@ public abstract class AbstractDataset implements Dataset, AutoCloseable {
       workspace.put (builder.build (new MockTsvInput (name, temp)));
     }
   }
-  
+
   @Override
-  @SneakyThrows(InvalidDatasetNameException.class)
+  @SneakyThrows (InvalidDatasetNameException.class)
   public Dataset subset (String name, List<String> columns, List<String> rows) {
-        return new DataSubset (name, this, columns, rows);
+    return new DataSubset (name, this, columns, rows);
   }
 }
