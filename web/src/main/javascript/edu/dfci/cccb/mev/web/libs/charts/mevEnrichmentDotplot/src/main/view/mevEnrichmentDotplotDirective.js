@@ -1,4 +1,4 @@
-define(["lodash", "./mevEnrichmentBarchart.tpl.html"], function(_, template){"use strict";
+define(["lodash", "./mevEnrichmentDotplot.tpl.html"], function(_, template){"use strict";
 	var directive = function mevEnrichmentDotplotDirective(){
 		return {
 			restrict: "AEC",
