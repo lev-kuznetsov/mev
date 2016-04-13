@@ -1,4 +1,4 @@
-define(["mui",
+define(["mui", "angular-ui-router", "mev-analysis", "mev-annotations", "mev-results-table",
 	"./model/gseaAnalysisType",
 	"./state/GseaState",
 	"./state/GseaVM"

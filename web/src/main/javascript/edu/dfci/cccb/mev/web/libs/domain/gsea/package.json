@@ -13,6 +13,9 @@
   "author": "apartensky",
   "license": "ISC",
   "devDependencies": {
+    "angular": "^1.4.10",
+    "angular-ui-router": "^0.2.18",
+    "mev-mock": "file:../mock",
     "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
     "steal": "^0.13.2",
     "steal-jasmine": "0.0.2"
@@ -20,6 +23,8 @@
   "dependencies": {
     "lodash": "^4.4.0",
     "mev-analysis": "file:../analysis",
+    "mev-annotations": "file:../annotations",
+    "mev-results-table": "file:../../widgets/mevResultsTable",
     "mui": "file:../../mui"
   }
 }
