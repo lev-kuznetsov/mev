@@ -1,13 +1,14 @@
-define([], function(){
+define([], function(){"use strict";	
 	var SigGenesFactory = function(){
 		return function SigGenesFactory(n, genes, values, headers){		
 			var _self = this;
-			this.genes = genes;
-			this.values = values;			
+			var genes = genes;
+			var values = values;			
+			var aHeaders;
 			if(Array.isArray(headers)){				
-				this.headers = headers;
+				aHeaders = headers;
 			}else{
-				this.headers = [{
+				aHeaders = [{
 	                'name': 'ID',
 	                'field': "geneId",
 	                'icon': "search"
@@ -17,7 +18,7 @@ define([], function(){
 	                'icon' : n>0 ? ">=" : "<="
 	            }];
 				if(typeof headers === "string"){
-					this.headers[1].name = headers;
+					aHeaders[1].name = headers;
 				}
 			}
 			
@@ -28,7 +29,7 @@ define([], function(){
 						value: values[i]
 					};
 				});
-			};			
+			}			
 			function getN(n){
 				if(n>0)
 					return formatData(genes.slice(0, n), values.slice(0, n));
@@ -38,7 +39,7 @@ define([], function(){
 			return {
 				keys: genes.slice(0, 19),
 				data: getN(n),
-				headers: self.headers
+				headers: aHeaders
 			};
 		};
 	};

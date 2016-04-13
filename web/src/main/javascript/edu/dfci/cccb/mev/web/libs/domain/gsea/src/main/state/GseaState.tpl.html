@@ -1,6 +1,7 @@
 <div class="column-wrapper">
 	<ul class="nav nav-tabs column-header" id="analysisTabs">
-		<li id="table_tab" class="active"><a href="#table" data-toggle="tab" target="_self">{{analysis.name}}</a></li>
+		<li id="table_tab" class="active"><a href="#table" data-toggle="tab" target="_self" >{{analysis.name}}</a></li>
+		<li id="barchart_tab" ><a href="#barchart" data-toggle="tab" target="_self" ng-click="activateTab($event)">Bar chart</a></li>
 		<div class="action-menu" mui-paste="action-menu"></div>		
 	</ul>
 
@@ -20,6 +21,16 @@
 			<div class="results-body">
 				<mev-results-table data="analysis.result" headers="headers" ordering="pValue" selected-rows="selectedRows"></mev-results-table>
 			</div>
-		</div>		
+		</div>
+		<div class="tab-pane results-wrapper" id="barchart" >
+			<div class="results-header clearfix">
+				<div class="btn-toolbar" role="toolbar" >
+				</div>
+			</div>
+			<div class="results-body">
+				<div mev-enrichment-barchart="barChartConfig"></div>
+			</div>
+		</div>
 	</div>
+
 </div>

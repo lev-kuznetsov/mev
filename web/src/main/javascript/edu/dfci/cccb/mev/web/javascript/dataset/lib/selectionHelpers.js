@@ -45,11 +45,18 @@ define(["lodash"], function(_){
 			
 			
 		},
-		union: function(dimension, selections){
+		union: function(selections){			
 			var keySets = selections.map(function(item){
 				return item.keys;
 			});
-			return _.union(keySets);
+			return _.union.apply(this,keySets);
+		},
+		unionByName: function(dimension, names){
+			self = this;
+			var selections = _.filter(self.selections[dimension], function(item){
+				return _.contains(names, item.name);
+			});
+			return this.selections.union(selections);
 		}
 	}	
 });

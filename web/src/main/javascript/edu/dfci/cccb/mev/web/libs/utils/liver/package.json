@@ -13,8 +13,10 @@
     "steal-tools": "^0.12.4"
   },
   "dependencies": {
+    "lodash": "2.4.2",
+    "mev-mock": "file:../../domain/mock",
+    "mev-steal-bootstrap": "file:../steal-bootstrap",
+    "mui": "file:../../mui"
   },
-  "system": {
-    
-  }
+  "system": {}
 }

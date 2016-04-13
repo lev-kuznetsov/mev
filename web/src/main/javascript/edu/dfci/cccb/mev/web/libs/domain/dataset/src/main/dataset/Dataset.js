@@ -35,7 +35,21 @@ function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){
 				dataset.loadAnalyses = loadAnalyses;
 				dataset.setSelections = setSelections;
 				dataset.resetSelections = resetSelections;
-				
+				dataset.getAnnotations=function(dimension){
+					//this is just a mock for now (the real implementation is still under "javascript/dataset")
+					if(!this._annotations)
+						this._annotations={
+							row: {
+								getFields: function(){return [];}
+							},
+							column: {
+								getFields: function(){return [];}
+							}
+						};
+					// if(!this._annotations[dimension])
+					// 	this._annotations[dimension] = new MevAnnotationRepository(dimension);
+					return this._annotations[dimension];
+				};
 				return dataset;
 				
 			};

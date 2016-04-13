@@ -18,7 +18,12 @@
 		      	</div>
 			</div>
 			<div class="results-body">
-				<mev-results-table data="analysis.result" headers="headers" ordering="pValue" selected-rows="selectedRows"></mev-results-table>
+				<div >
+					<div mev-enrichment-dotplot="dotPlotConfig"></div>
+				</div>
+				<div >
+					<mev-results-table data="analysis.result" headers="headers" ordering="pValue" selected-rows="selectedRows"></mev-results-table>
+				</div>
 			</div>
 		</div>		
 	</div>

@@ -23,7 +23,7 @@ define(["lodash", "../view/defaultTemplate/analysis.default.tpl.html", "./Analys
 					if(_.isFunction(param.validate)){
 						var error = param.validate();
 						if(error)
-							erros.push(error);
+							errors.push(error);
 					}
 					return errors;
 				}, []);

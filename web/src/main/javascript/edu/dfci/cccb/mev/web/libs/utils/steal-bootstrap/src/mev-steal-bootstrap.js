@@ -47,14 +47,21 @@
 
   function getConfig(baseURL, main, livePort, live){
     var env = "prod";
+    var relativeBaseURL = baseURL;
+    if(baseURL.charAt(0)==="/"){
+      relativeBaseURL = "";
+      baseURL.match(/\//g).forEach(function(){
+        relativeBaseURL += "../";
+      });
+    }
     var system = {
-      config: baseURL+"package.json!npm",
-      baseURL: baseURL,
+      config: relativeBaseURL+"package.json!npm",
+      baseURL: relativeBaseURL,
       bundlesPath: baseURL+"dist/bundles/min",
       main: main,
       loadBundles: true,
       getStealSrc: function getStealSrc(){      
-        var stealsrc = baseURL+"/node_modules/steal/steal.js";          
+        var stealsrc = baseURL+"node_modules/steal/steal.js";          
         if(this && this.loadBundles)
           stealsrc = this.bundlesPath+"/"+this.main+".js"      
         return stealsrc;
@@ -99,8 +106,16 @@
     stealscript.setAttribute('charset',"UTF-8");
     document.head.appendChild(stealscript);
   }
+  global.getConfig = getConfig;
+  global.start = startSteal;
   global.live=global.startStealLive;
   global.writeCookie = writeCookie;
   global.readCookie = readCookie;
   global.eraseCookie = eraseCookie;
+  global.mevEnv=function(env){
+    if(env)
+      global.writeCookie("env", env);
+    else
+      return global.readCookie("env");
+  };
 })(window);

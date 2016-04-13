@@ -13,8 +13,18 @@
   "author": "apartensky",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "^3.3.6",
+    "bootstrap": "3.3.1",
+    "jquery": "^2.2.1",
     "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
     "steal": "^0.13.2"
+  },
+  "system": {
+    "meta": {
+      "bootstrap": {
+        "deps": [
+          "jquery"
+        ]
+      }
+    }
   }
 }

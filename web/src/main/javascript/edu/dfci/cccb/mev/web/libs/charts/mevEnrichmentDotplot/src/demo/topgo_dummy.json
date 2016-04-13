@@ -1,0 +1,167 @@
+{
+    "name": "topgo_mad20",
+    "type": "TopGO Analysis",
+    "status": "SUCCESS",
+    "error": null,
+    "results": [{
+        "goId": "GO:0051602",
+        "goTerm": "response to electrical stimulus",
+        "annotatedGenes": 39,
+        "significantGenes": 3,
+        "expected": "0.05",
+        "pValue": 1.2E-5,
+        "adj.p": 2.0E-4
+    }, {
+        "goId": "GO:0003008",
+        "goTerm": "system process",
+        "annotatedGenes": 1853,
+        "significantGenes": 9,
+        "expected": "2.17",
+        "pValue": 1.0E-4,
+        "adj.p": 6.0E-4
+    }, {
+        "goId": "GO:0007268",
+        "goTerm": "synaptic transmission",
+        "annotatedGenes": 715,
+        "significantGenes": 6,
+        "expected": "0.84",
+        "pValue": 1.2E-4,
+        "adj.p": 6.0E-4
+    }, {
+        "goId": "GO:0032501",
+        "goTerm": "multicellular organismal process",
+        "annotatedGenes": 6630,
+        "significantGenes": 16,
+        "expected": "7.76",
+        "pValue": 1.3E-4,
+        "adj.p": 6.0E-4
+    }, {
+        "goId": "GO:0007267",
+        "goTerm": "cell-cell signaling",
+        "annotatedGenes": 1209,
+        "significantGenes": 7,
+        "expected": "1.41",
+        "pValue": 2.8E-4,
+        "adj.p": 0.0011
+    }, {
+        "goId": "GO:0050877",
+        "goTerm": "neurological system process",
+        "annotatedGenes": 1241,
+        "significantGenes": 7,
+        "expected": "1.45",
+        "pValue": 3.3E-4,
+        "adj.p": 0.0011
+    }, {
+        "goId": "GO:0002675",
+        "goTerm": "positive regulation of acute inflammator...",
+        "annotatedGenes": 25,
+        "significantGenes": 2,
+        "expected": "0.03",
+        "pValue": 3.8E-4,
+        "adj.p": 0.0011
+    }, {
+        "goId": "GO:0044707",
+        "goTerm": "single-multicellular organism process",
+        "annotatedGenes": 6381,
+        "significantGenes": 15,
+        "expected": "7.47",
+        "pValue": 5.1E-4,
+        "adj.p": 0.0011
+    }, {
+        "goId": "GO:0007600",
+        "goTerm": "sensory perception",
+        "annotatedGenes": 945,
+        "significantGenes": 6,
+        "expected": "1.11",
+        "pValue": 5.4E-4,
+        "adj.p": 0.0011
+    }, {
+        "goId": "GO:0016339",
+        "goTerm": "calcium-dependent cell-cell adhesion via...",
+        "annotatedGenes": 30,
+        "significantGenes": 2,
+        "expected": "0.04",
+        "pValue": 5.5E-4,
+        "adj.p": 0.0011
+    }, {
+        "goId": "GO:0042127",
+        "goTerm": "regulation of cell proliferation",
+        "annotatedGenes": 1408,
+        "significantGenes": 7,
+        "expected": "1.65",
+        "pValue": 7.2E-4,
+        "adj.p": 0.0012
+    }, {
+        "goId": "GO:0044060",
+        "goTerm": "regulation of endocrine process",
+        "annotatedGenes": 37,
+        "significantGenes": 2,
+        "expected": "0.04",
+        "pValue": 8.4E-4,
+        "adj.p": 0.0012
+    }, {
+        "goId": "GO:0008088",
+        "goTerm": "axon cargo transport",
+        "annotatedGenes": 39,
+        "significantGenes": 2,
+        "expected": "0.05",
+        "pValue": 9.4E-4,
+        "adj.p": 0.0012
+    }, {
+        "goId": "GO:0045104",
+        "goTerm": "intermediate filament cytoskeleton organ...",
+        "annotatedGenes": 39,
+        "significantGenes": 2,
+        "expected": "0.05",
+        "pValue": 9.4E-4,
+        "adj.p": 0.0012
+    }, {
+        "goId": "GO:0045103",
+        "goTerm": "intermediate filament-based process",
+        "annotatedGenes": 40,
+        "significantGenes": 2,
+        "expected": "0.05",
+        "pValue": 9.9E-4,
+        "adj.p": 0.0012
+    }, {
+        "goId": "GO:0060986",
+        "goTerm": "endocrine hormone secretion",
+        "annotatedGenes": 40,
+        "significantGenes": 2,
+        "expected": "0.05",
+        "pValue": 9.9E-4,
+        "adj.p": 0.0012
+    }, {
+        "goId": "GO:0006775",
+        "goTerm": "fat-soluble vitamin metabolic process",
+        "annotatedGenes": 41,
+        "significantGenes": 2,
+        "expected": "0.05",
+        "pValue": 0.00103,
+        "adj.p": 0.0012
+    }, {
+        "goId": "GO:0044057",
+        "goTerm": "regulation of system process",
+        "annotatedGenes": 400,
+        "significantGenes": 4,
+        "expected": "0.47",
+        "pValue": 0.00105,
+        "adj.p": 0.0012
+    }, {
+        "goId": "GO:0033993",
+        "goTerm": "response to lipid",
+        "annotatedGenes": 716,
+        "significantGenes": 5,
+        "expected": "0.84",
+        "pValue": 0.00114,
+        "adj.p": 0.0012
+    }, {
+        "goId": "GO:0032370",
+        "goTerm": "positive regulation of lipid transport",
+        "annotatedGenes": 50,
+        "significantGenes": 2,
+        "expected": "0.06",
+        "pValue": 0.00154,
+        "adj.p": 0.0015
+    }]
+}
