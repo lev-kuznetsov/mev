@@ -10,7 +10,9 @@ define(["mui", "lodash"], function(ng, _){"use strict";
 			ng.extend(eventData, descriptor);
 			ng.extend(eventData, params);
 			var analysisType = mevAnalysisTypes.get(descriptor.analysisType || params.analysisType || response.type);
-			if(analysisType, _.isFunction(analysisType.modelDecorator))
+			if(!analysisType && _.isString(descriptor))
+				analysisType = mevAnalysisTypes.get(descriptor);
+			if(analysisType && _.isFunction(analysisType.modelDecorator))
 				analysisType.modelDecorator(response);
 			eventData.response=response;
 			return eventData;
