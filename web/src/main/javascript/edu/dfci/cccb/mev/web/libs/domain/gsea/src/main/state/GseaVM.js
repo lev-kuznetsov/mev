@@ -1,5 +1,5 @@
 define(["lodash"], function(_){ "use strict";
-	function GseaVM(scope, project, analysis, mevAnalysisTypes){ 
+	function GseaVM(scope, project, analysis, mevAnalysisTypes, $timeout, $window){
 
 		scope.project = project;
 		scope.analysis = analysis;
@@ -50,8 +50,19 @@ define(["lodash"], function(_){ "use strict";
 		   	scope.filteredResults = filteredResults;
 		  	// scope.applyToHeatmap(filteredResults);
 		};
+		scope.$on("$viewContentLoaded", function(event){
+			console.log("$viewContentLoaded", arguments);
+		});
+		scope.activateTab=function($event){
+			// console.log("ngClick", arguments);
+			$timeout(function() {
+				var evt = $window.document.createEvent('UIEvents');
+				evt.initUIEvent('resize', true, false, $window, 0);
+				$window.dispatchEvent(evt);
+			});
+		};
 	}	
-	GseaVM.$inject=["$scope", "project", "analysis", "mevAnalysisTypes"];
+	GseaVM.$inject=["$scope", "project", "analysis", "mevAnalysisTypes", "$timeout", "$window"];
 	GseaVM.$name="GseaVM";
 	GseaVM.$provider="controller";
 	return GseaVM;
