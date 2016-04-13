@@ -136,7 +136,7 @@ define(["lodash", "./mevEnrichmentBarchart.tpl.html"], function(_, template){"us
 				};
 				var d3root = d3.select(elem[0]);
 				d3root.select(".controls svg").remove();
-				var svgPValueLegend = d3.select("#pValueLegend").append("svg");
+				var svgPValueLegend = d3root.select("#pValueLegend").append("svg");
 				svgPValueLegend.attr("width", pValueLegendConfig.width).attr("height", pValueLegendConfig.height);	
 
 				var w = pValueLegendConfig.width, h = pValueLegendConfig.height;
