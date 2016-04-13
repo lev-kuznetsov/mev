@@ -37,7 +37,7 @@ function(_, template){"use strict";
 
 				function isPeRow(item){
 					return _.every(_.functions(peRowModel), function(methodName){
-						return _.hasIn(item, methodName);
+						return _.has(item, methodName);
 					});
 				}
 
