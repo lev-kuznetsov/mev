@@ -26,7 +26,7 @@ src/**/html/app/data/*
 .tern-project
 .externalToolBuilders/
 .idea/
-
+**.iml
 # Maven target
 target/
 /target
