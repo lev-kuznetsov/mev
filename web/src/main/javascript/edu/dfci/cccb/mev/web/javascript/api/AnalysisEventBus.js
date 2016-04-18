@@ -13,6 +13,8 @@ define(["angular"], function(angular){
 			var analysisType = mevAnalysisTypes.get(descriptor.analysisType || params.analysisType || response.type);
 			if(analysisType && _.isFunction(analysisType.modelDecorator))
 				analysisType.modelDecorator(response);
+			if(analysisType && _.isFunction(analysisType.onSuccess))
+				analysisType.onSuccess(response);
 			eventData.response=response;
 			return eventData;
 		}

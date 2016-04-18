@@ -14,6 +14,8 @@ define(["mui", "lodash"], function(ng, _){"use strict";
 				analysisType = mevAnalysisTypes.get(descriptor);
 			if(analysisType && _.isFunction(analysisType.modelDecorator))
 				analysisType.modelDecorator(response);
+			if(analysisType && _.isFunction(analysisType.onSuccess))
+				analysisType.onSuccess(response);
 			eventData.response=response;
 			return eventData;
 		}
