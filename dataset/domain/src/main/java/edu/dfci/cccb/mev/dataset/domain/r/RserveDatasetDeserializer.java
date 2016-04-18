@@ -18,10 +18,7 @@ import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.COLUMN;
 import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.ROW;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 import javax.inject.Inject;
@@ -85,9 +82,9 @@ public class RserveDatasetDeserializer extends JsonDeserializer<Dataset> {
         }
       }
     }
-    Map<String, Integer> rows = new HashMap<> ();
+    Map<String, Integer> rows = new LinkedHashMap<> ();
     for (int i = rowNames.size (); --i >= 0; rows.put (rowNames.get (i), i));
-    Map<String, Integer> columns = new HashMap<> ();
+    Map<String, Integer> columns = new LinkedHashMap<>();
     for (int i = columnNames.size (); --i >= 0; columns.put (columnNames.get (i), i));
     return new SimpleDataset ("na", valueStoreBuilder.build (rows, columns), new ArrayListAnalyses (),
                               new SimpleDimension (ROW, rowNames, new ArrayListSelections (), null),
