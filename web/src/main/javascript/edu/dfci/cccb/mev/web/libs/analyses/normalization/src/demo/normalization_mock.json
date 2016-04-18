@@ -1,0 +1,1 @@
+{"name":"normalization_deseq","type":"normalization","status":"SUCCESS","error":null,"params":{"method":"deseq","name":"normalization_deseq","exportName":"raw_count_matrix.sort.primary.counts--normalized-deseq"}}
