@@ -19,6 +19,7 @@ import static java.util.UUID.randomUUID;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -45,7 +46,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
+import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
+import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
 import edu.dfci.cccb.mev.dataset.domain.contract.MevException;
+import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback.CallbackType;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Error;
@@ -64,6 +70,7 @@ public class RDispatcher {
   private @Inject @Rserve Provider<InetSocketAddress> host;
   private @Inject @Rserve ObjectMapper mapper;
   private ProtobufSerializer protobuf = new ProtobufSerializer ();
+  private @Inject Provider<DatasetBuilder> builder;
   private Executor dispatcher;
 
   @Inject
@@ -186,35 +193,71 @@ public class RDispatcher {
           result = connection.eval ("inject (function (result) result (" + v + "));");
           connection.voidEval ("rm (" + v + ")");
         }
+
+        for (Class<?> clazz = job.getClass (); clazz != null; clazz = clazz.getSuperclass ())
+          if (result.inherits ("try-error"))
+            for (Field field : clazz.getDeclaredFields ()) {
+              Error annotation = field.getAnnotation (Error.class);
+              if (annotation != null) {
+                field.setAccessible (true);
+                field.set (job, result.asString ());
+              }
+            }
+          else if (result.inherits ("result-json"))
+            for (Field field : clazz.getDeclaredFields ()) {
+              Result annotation = field.getAnnotation (Result.class);
+              if (annotation != null) {
+                field.setAccessible (true);
+                if (Dataset.class.equals (field.getType ())) {
+                  try (InputStream i = connection.openFile ("out.tsv")) {
+                    DatasetBuilder builder = this.builder.get ();
+                    field.set (job, builder.build (new RawInput () {
+
+                      @Override
+                      public long size () {
+                        return -1;
+                      }
+
+                      @Override
+                      public RawInput name (String name) {
+                        return this;
+                      }
+
+                      @Override
+                      public String name () {
+                        return "out";
+                      }
+
+                      @Override
+                      public InputStream input () throws IOException {
+                        return i;
+                      }
+
+                      @Override
+                      public String contentType () {
+                        return TAB_SEPARATED_VALUES;
+                      }
+                    }));
+                  } catch (InvalidDimensionTypeException | InvalidDatasetNameException | DatasetBuilderException e) {
+                    throw new RuntimeException (e);
+                  }
+                } else {
+                  Object value = mapper.readValue (result.asString (),
+                                                   mapper.getTypeFactory ().constructType (field.getGenericType ()));
+                  log.debug ("Injecting result into "
+                             + field.getDeclaringClass ().getSimpleName () + "." + field.getName () + ": " + value);
+                  field.set (job, value);
+                }
+              }
+            }
+          else
+            throw new UnsupportedOperationException ("Unrecognized result "
+                                                     + result.getClass () + ":" + result.toDebugString ());
+
       } finally {
         if (connection != null)
           connection.close ();
       }
-
-      for (Class<?> clazz = job.getClass (); clazz != null; clazz = clazz.getSuperclass ())
-        if (result.inherits ("try-error"))
-          for (Field field : clazz.getDeclaredFields ()) {
-            Error annotation = field.getAnnotation (Error.class);
-            if (annotation != null) {
-              field.setAccessible (true);
-              field.set (job, result.asString ());
-            }
-          }
-        else if (result.inherits ("result-json"))
-          for (Field field : clazz.getDeclaredFields ()) {
-            Result annotation = field.getAnnotation (Result.class);
-            if (annotation != null) {
-              field.setAccessible (true);
-              Object value = mapper.readValue (result.asString (),
-                                               mapper.getTypeFactory ().constructType (field.getGenericType ()));
-              log.debug ("Injecting result into "
-                         + field.getDeclaringClass ().getSimpleName () + "." + field.getName () + ": " + value);
-              field.set (job, value);
-            }
-          }
-        else
-          throw new UnsupportedOperationException ("Unrecognized result "
-                                                   + result.getClass () + ":" + result.toDebugString ());
 
       for (Class<?> clazz = job.getClass (); clazz != null; clazz = clazz.getSuperclass ())
         for (Method method : clazz.getDeclaredMethods ()) {
@@ -229,11 +272,11 @@ public class RDispatcher {
             }
           }
         }
-    }catch(InvocationTargetException e){
+    } catch (InvocationTargetException e) {
       log.error ("Failure processing job " + job, e);
-    }catch (RserveException | IllegalArgumentException | REXPMismatchException | IOException e) {
+    } catch (RserveException | IllegalArgumentException | REXPMismatchException | IOException e) {
       log.error ("Failure processing job " + job, e);
-      for (Class<?> clazz = job.getClass (); clazz != null; clazz = clazz.getSuperclass ()){
+      for (Class<?> clazz = job.getClass (); clazz != null; clazz = clazz.getSuperclass ()) {
         for (Field field : clazz.getDeclaredFields ()) {
           Error annotation = field.getAnnotation (Error.class);
           if (annotation != null) {
@@ -246,9 +289,9 @@ public class RDispatcher {
           if (annotation != null) {
             if (annotation.value () != CallbackType.SUCCESS) {
               method.setAccessible (true);
-              try{                
+              try {
                 method.invoke (job);
-              }catch(InvocationTargetException invokeError){
+              } catch (InvocationTargetException invokeError) {
                 log.error ("Failure reporting the error to caller " + job, invokeError);
               }
             }
