@@ -11,6 +11,7 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.R;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
 
 @R ("function(dataset, control=NA, experiment=NA, method='fdr', log = TRUE){\n"
+        + "library('edgeR')\n"
     + "ALL_SAMPLES=colnames(dataset)\n"
     + "if (!(experiment %in% ALL_SAMPLES) || !(control %in% ALL_SAMPLES)){\n"
     + "  stop('Could not find samples corresponding to the desired contrast.')\n"
@@ -34,6 +35,16 @@ public class EdgeBuilder extends AbstractDispatchedRAnalysisBuilder<EdgeBuilder,
   private @Parameter @Setter Set<String> control;
   private @Parameter @Setter Set<String> experiment;
   private @Parameter @Setter String method;
+
+  private Edge.EdgeParams params;
+  public EdgeBuilder params(Edge.EdgeParams params){
+    name(params.name());
+    this.control = params.control();
+    this.experiment = params.experiment();
+    this.method = params.method();
+    return this;
+  }
+
   private @Result Collection<EdgeEntry> result;
 
   public EdgeBuilder () {
@@ -42,6 +53,6 @@ public class EdgeBuilder extends AbstractDispatchedRAnalysisBuilder<EdgeBuilder,
 
   @Override
   protected Edge result () {
-    return new Edge (result);
+    return new Edge (params, result);
   }
 }
