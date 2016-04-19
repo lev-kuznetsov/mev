@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.dfci.cccb.mev.dataset.domain.contract.*;
 import edu.dfci.cccb.mev.dataset.domain.fs.FlatFileValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
+import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.normalization.domain.Normalization;
@@ -47,9 +48,14 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import java.io.IOException;
 import java.net.URL;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
+import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type;
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -71,6 +77,17 @@ public class TestNormalizatinoController {
 	private @Inject
 	ObjectMapper jsonObjectMapper;
 	Dataset dataset;
+	private @Inject Provider<SelectionBuilder> selectionBuilder;
+
+	private Selection createSelection(String name, List<String> keys){
+		//create column selections
+		SelectionBuilder selectionBuilder = this.selectionBuilder.get();
+		final Properties properties = new Properties ();
+		properties.put ("selectionDescription", "first mock selection");
+		properties.put ("selectionColor", "#ff0000");
+		SimpleSelection selection = new SimpleSelection (name, properties, keys);
+		return selection;
+	}
 
 	@Before
 	public void setup() throws IOException, InvalidDimensionTypeException, InvalidDatasetNameException, DatasetBuilderException {
@@ -86,6 +103,16 @@ public class TestNormalizatinoController {
 		dataset = new SimpleDatasetBuilder().setParserFactories (asList (new SuperCsvParserFactory()))
 				.setValueStoreBuilder (new FlatFileValueStoreBuilder())
 				.build (input);
+
+		//put column selection
+		dataset.dimension (Dimension.Type.COLUMN).selections ().put (
+				createSelection("s1", Arrays.asList("A", "B"))
+		);
+		//put row selection
+		dataset.dimension (Dimension.Type.ROW).selections ().put (
+				createSelection("g1", Arrays.asList("Sell", "Cars"))
+		);
+
 		workspace.put (dataset);
 	}
 	@Test @Ignore
@@ -156,6 +183,8 @@ public class TestNormalizatinoController {
 		//The first put will generate an AnalysisStatus object with "IN_PROGRESS" status
 		Dataset normalized = workspace.get (analysis.params().exportName());
 		assertThat(normalized.name (), is(analysis.params().exportName()));
+		assertThat(normalized.dimension(Type.COLUMN).selections().get("s1").keys(), is(Arrays.asList("A", "B")));
+		assertThat(normalized.dimension(Type.ROW).selections().get("g1").keys(), is(Arrays.asList("Sell", "Cars")));
 		log.debug("******* NormalizationExport:\n"+ jsonObjectMapper.writeValueAsString (normalized));
 	}
 
