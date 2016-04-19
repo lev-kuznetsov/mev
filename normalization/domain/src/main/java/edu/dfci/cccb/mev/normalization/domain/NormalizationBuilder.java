@@ -104,7 +104,8 @@ import edu.dfci.cccb.mev.normalization.domain.Normalization.NormalizationParamet
 
     + "if(method == '8') nmat = 1-(1-counts>0)\n"
 
-    + "return(data.frame(nmat))\n" +
+    + "write.table(nd,file='out.tsv',sep='\t',quote=FALSE,col.names=NA)\n"
+    + "return(NULL)\n" +
     "}")
 @Accessors (fluent = true, chain = true)
 public class NormalizationBuilder extends AbstractDispatchedRAnalysisBuilder<NormalizationBuilder, Normalization> {
