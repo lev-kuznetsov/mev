@@ -104,7 +104,7 @@ import edu.dfci.cccb.mev.normalization.domain.Normalization.NormalizationParamet
 
     + "if(method == '8') nmat = 1-(1-counts>0)\n"
 
-    + "write.table(nd,file='out.tsv',sep='\t',quote=FALSE,col.names=NA)\n"
+    + "write.table(nmat,file='out.tsv',sep='\t',quote=FALSE,col.names=NA)\n"
     + "return(NULL)\n" +
     "}")
 @Accessors (fluent = true, chain = true)

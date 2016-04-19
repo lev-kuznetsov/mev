@@ -17,15 +17,13 @@ package edu.dfci.cccb.mev.dataset.domain.r;
 import static java.lang.Math.abs;
 import static java.util.UUID.randomUUID;
 
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.SocketTimeoutException;
+import java.util.Collection;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -33,6 +31,10 @@ import java.util.concurrent.Executors;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.*;
+import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
 
@@ -45,13 +47,6 @@ import org.rosuda.REngine.Rserve.RserveException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
-import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
-import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
-import edu.dfci.cccb.mev.dataset.domain.contract.MevException;
-import edu.dfci.cccb.mev.dataset.domain.contract.RawInput;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback.CallbackType;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Error;
@@ -70,7 +65,10 @@ public class RDispatcher {
   private @Inject @Rserve Provider<InetSocketAddress> host;
   private @Inject @Rserve ObjectMapper mapper;
   private ProtobufSerializer protobuf = new ProtobufSerializer ();
-  private @Inject Provider<DatasetBuilder> builder;
+
+  private @Inject Provider<Collection<? extends ParserFactory>> parserFactories;
+  private @Inject Provider<ValueStoreBuilder> valueStoreBuilder;
+
   private Executor dispatcher;
 
   @Inject
@@ -95,7 +93,7 @@ public class RDispatcher {
     // String p = "p." + abs (unique.getMostSignificantBits ()) + "." + abs
     // (unique.getLeastSignificantBits ());
     RConnection c = to.attach ();
-    try (OutputStream target = new BufferedOutputStream (c.createFile (name), 1024 * 1024 * 100)) {
+    try (OutputStream target = new BufferedOutputStream (c.createFile (name), 1024 * 1024 * 10)) {
       if (value instanceof Dataset) {
         log.debug ("ProtoBuf Dataset ............. !!! ");
         protobuf.serialize ((Dataset) value, target);
@@ -209,8 +207,8 @@ public class RDispatcher {
               if (annotation != null) {
                 field.setAccessible (true);
                 if (Dataset.class.equals (field.getType ())) {
-                  try (InputStream i = connection.openFile ("out.tsv")) {
-                    DatasetBuilder builder = this.builder.get ();
+                  try (InputStream i = new BufferedInputStream(connection.openFile ("out.tsv"), 10*1024*1024)) {
+                    DatasetBuilder builder = new SimpleDatasetBuilder().setValueStoreBuilder(valueStoreBuilder.get()).setParserFactories(parserFactories.get());
                     field.set (job, builder.build (new RawInput () {
 
                       @Override
