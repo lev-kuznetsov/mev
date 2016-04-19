@@ -1,14 +1,10 @@
 package edu.dfci.cccb.mev.normalization.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import edu.dfci.cccb.mev.dataset.domain.contract.*;
+import lombok.*;
+import static edu.dfci.cccb.mev.dataset.domain.contract.Dimension.Type.*;
 import lombok.experimental.Accessors;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.domain.r.AbstractDispatchedRAnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback.CallbackType;
@@ -128,8 +124,12 @@ public class NormalizationBuilder extends AbstractDispatchedRAnalysisBuilder<Nor
   }
 
   @Callback (CallbackType.SUCCESS)
-  private void export () throws InvalidDatasetNameException {
-//    workspace.put (normalized);
+  @SneakyThrows({InvalidDimensionTypeException.class})
+  private void export ()  {
+    Dimension columns = dataset().dimension(COLUMN).subset(null);
+    normalized.set(columns);
+    Dimension rows = dataset().dimension(ROW).subset(null);
+    normalized.set(rows);
   }
 
   @Override
