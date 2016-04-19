@@ -75,6 +75,6 @@ public class TopGoBuilder extends AbstractDispatchedRAnalysisBuilder<TopGoBuilde
   }
 
   public TopGoBuilder () {
-    super ("TopGO Analysis");
+    super ("topgo");
   }
 }

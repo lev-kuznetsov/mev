@@ -1,9 +1,9 @@
 define(["mui"], function(){
-	function component($q, $resource, $routeParams, $stateParams, AnnotationProjectIdResource){
+	function component($q, $resource, $stateParams, AnnotationProjectIdResource){
 		var _self=this;
 		var url="/annotations/:datasetName/annotation/:dimension/new/dataset/command/core/get-rows";
 		this.AnnotationValuesResource = $resource(url, {
-			datasetName: $routeParams.datasetName || $stateParams.datasetId,
+			datasetName: $stateParams.datasetId,
 			limit: 30000
 		});		
 		
@@ -13,7 +13,7 @@ define(["mui"], function(){
 				if(data.project<=0)
 					return $q.when({error: "OpenRefine - project not found"});
 				else	
-					data.datasetName=$routeParams.datasetName || $stateParams.datasetId;
+					data.datasetName=$stateParams.datasetId;
 					data.dimension=dimension;
 					return _self.AnnotationValuesResource.get(data).$promise;
 				
@@ -21,7 +21,7 @@ define(["mui"], function(){
 		};		
 	}
 	component.$name="AnnotationValuesResource";
-	component.$inject=["$q", "$resource", "$routeParams", "$stateParams", "AnnotationProjectIdResource"];
+	component.$inject=["$q", "$resource", "$stateParams", "AnnotationProjectIdResource"];
 	component.$provider="service";
 	return component;
 

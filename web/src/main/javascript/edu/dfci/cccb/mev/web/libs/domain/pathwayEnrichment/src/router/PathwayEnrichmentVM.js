@@ -1,10 +1,17 @@
 define(["lodash"], function(_){ "use strict";
-	function PathwayEnrichmentVM(){
+	function PathwayEnrichmentVM(mevAnalysisTypes){
 		function factory(scope, project, analysis){
 			scope.project = project;
 			scope.analysis = analysis;
 			scope.selectedRows = {};
 			scope.selectedGenes = [];
+			var analysisType = mevAnalysisTypes.get("pe");
+			if(analysisType && _.isFunction(analysisType.modelDecorator))
+				analysisType.modelDecorator(analysis);
+			scope.dotPlotConfig = {
+				data: scope.analysis.result,
+				series: "Counts"
+			}
 			scope.headers = [	       
 		       {
 		           'name': 'Description',
@@ -53,8 +60,8 @@ define(["lodash"], function(_){ "use strict";
 		factory.$inject=["$scope", "project", "analysis"];
 		return factory;
 	}	
-	PathwayEnrichmentVM.$inject=[];
-	PathwayEnrichmentVM.$name="PathwayEnrichmentVMFactoryFactory";
+	PathwayEnrichmentVM.$inject=["mevAnalysisTypes"];
+	PathwayEnrichmentVM.$name="PathwayEnrichmentVMFactory";
 	PathwayEnrichmentVM.$provider="factory";
 	return PathwayEnrichmentVM;
 });

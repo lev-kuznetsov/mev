@@ -4,8 +4,8 @@
 
         return function (module) {
 
-            module.directive('tTestAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService', 'BoxPlotService',
-                function (resultsFilter, alertService, projection, paths, BoxPlotService) {
+            module.directive('tTestAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService', 'BoxPlotService', 'mevAnalysisTypes',
+                function (resultsFilter, alertService, projection, paths, BoxPlotService, mevAnalysisTypes) {
                     return {
                         restrict: 'E',
                         templateUrl: paths.module + '/templates/tTestAccordion.tpl.html',
@@ -16,6 +16,7 @@
                             isItOpen: "@"
                         },
                         controller: ["$scope", function($scope){
+                            $scope.analysisTypes = mevAnalysisTypes.all();
                         	$scope.$on("ui:resultsTable:pageChanged", function($event, pageResults){
                 				var control = _.find($scope.project.dataset.column.selections, function(selection){return selection.name===$scope.analysis.params.controlName;});
                 	        	var experiment = _.find($scope.project.dataset.column.selections, function(selection){return selection.name===$scope.analysis.params.experimentName;});
@@ -53,7 +54,22 @@
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16)
                             };
+                            scope.analysis.getFilteredKeys = function(dimension){
+                                if(dimension==="row")
+                                    return scope.filteredResults.map(function(item){
+                                        return item.id;
+                                    });
+                            };
+                            scope.analysis.getOriginalInputKeys=function(dimension){
+                                if(dimension==="column"){
+                                    var selectionNames = [scope.analysis.params.experimentName, scope.analysis.params.controlName];
 
+                                    var keys = scope.project.dataset.selections.unionByName("column", selectionNames);
+                                    keys.displayName = selectionNames.join("+");
+                                    return keys;
+                                }
+
+                            };
                             scope.addSelections = function () {
 
                                 var keys = scope.filteredResults.map(projection.ids);

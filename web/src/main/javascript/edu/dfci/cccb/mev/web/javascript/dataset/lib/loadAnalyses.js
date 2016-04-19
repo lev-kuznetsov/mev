@@ -1,4 +1,4 @@
-define(['./AnalysisClass'], function(AnalysisClass){
+define(['./AnalysisClass'], function(AnalysisClass){"use strict";
 
     //loadAnalyses :: !analysis !analyses --> null
     //  Function to reload analyses list with new values 
@@ -37,7 +37,7 @@ define(['./AnalysisClass'], function(AnalysisClass){
                             		var analysis = new AnalysisClass(res);
                             		var sessionStorageKey = self.datasetName+"."+name;
                 					console.debug("sessionStorageKey get", sessionStorageKey);
-                            		params = JSON.parse(sessionStorage.getItem(self.datasetName+"."+name));
+                            		var params = JSON.parse(sessionStorage.getItem(self.datasetName+"."+name));
                             		analysis.params = params;
                             		console.debug("LoadAnalysis", analysis.name, analysis);
                             		analyses.push(analysis);
@@ -56,7 +56,7 @@ define(['./AnalysisClass'], function(AnalysisClass){
                     
                 }).then(function(response){
                 	console.debug("qall2", response);
-                	self.analysisEventBus.analysisLoadedAll();
+                	self.analysisEventBus.analysisLoadedAll(self.analyses);
                 });;
 //            }); 
 //        })

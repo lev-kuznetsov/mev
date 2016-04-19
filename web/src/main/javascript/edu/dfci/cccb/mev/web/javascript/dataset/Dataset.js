@@ -36,6 +36,7 @@ function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){ "u
 				dataset.setSelections = setSelections;
 				dataset.resetSelections = resetSelections;
 				dataset.subset = DatasetResourceService.subset;
+				dataset.getAll = DatasetResourceService.getAll;
 
 				dataset.getAnnotations=function(dimension){
 					if(!this._annotations)

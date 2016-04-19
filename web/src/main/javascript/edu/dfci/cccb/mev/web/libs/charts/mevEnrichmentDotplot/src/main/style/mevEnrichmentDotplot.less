@@ -1,0 +1,127 @@
+.brush {
+    fill: blue;
+    stroke: blue;
+    fill-opacity: 0.2;
+    stroke-opacity: 0.8;
+}
+path.nv-point.selected,
+cirvle.selected {
+  stroke: red;
+  fill: red;
+}
+.nvtooltip {	
+	.series-color{
+	  width: 10px;
+	  height: 10px;
+	  margin-left: 5px;
+	  margin-bottom: 2px;
+	  display: inline-block;
+	  vertical-align: middle;
+	}
+
+	table {
+		td.value {
+			font-weight: normal;
+		}
+	}
+}
+
+.pca-analysis,
+pca-analysis{	
+}
+@chart-control-width: 20%;
+@chart-body-width: 100% - @chart-control-width;
+
+.chart{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	.controls{
+		 padding-top: 5px;
+		 flex: 3 0 @chart-control-width;			
+		 .legend{
+		 	.axis text {
+				font: 10px sans-serif;
+			}
+			.axis line, .axis path {
+				fill: none;
+				stroke: #000;
+				shape-rendering: crispEdges;
+			}
+			svg{ 
+				padding-left: 50px;
+			}
+		 }
+		 .inlineGroup{
+		 	label{
+			 	display: inline-block;
+			    text-align: right;
+			    margin-bottom: 10px;
+			    float: none;
+					clear: none;
+			    &:after{
+			    	content: ":";
+			    }
+		 	}
+		 	input,select,table{
+		 		display: inline-block;
+		 		float: none;
+		 	}
+		 }
+
+
+	    .btn-group {
+	    	> label{
+	    		display: inline-block;
+	    		text-align: initial;				    
+			    float: initial;
+					clear: initial;
+		    	&:after {
+			    	content: "";
+			    }
+	    	}
+	    } 
+
+		 label{
+		    display: inline-block;
+		    float: left;
+		    clear: left;
+		    /*width: 250px;*/
+		    text-align: right;
+		    margin-bottom: 10px;
+
+		    &:after{
+		    	content: ":";
+		    }
+
+		    &.break{
+		    	display: block;
+		    	float: none;
+		    	text-align: initial;
+		    }
+		}
+		input,select,table {
+		  display: inline-block;
+		  float: left;
+		}
+
+
+	}
+	.body{
+		flex: 7 7 @chart-body-width;
+	}		
+	.footer{		
+		  flex: 7 7 @chart-body-width;
+		  max-width: @chart-body-width;
+		  /* display: flex; */
+		  /* flex-direction: row; */
+		  align-self: flex-end;
+
+		display: flex;
+		flex-direction: row;
+		.selection{
+			flex: 10;
+		}
+	}
+}

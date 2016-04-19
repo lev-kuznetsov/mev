@@ -21,7 +21,7 @@ define(["lodash", "../select/SelectParam", "../BaseParam"], function(_, SelectPa
 		ParentAnalysisParam.prototype = new BaseParam();
 		return ParentAnalysisParam;
 	}
-	ParentAnalysisParamFactory.$name="mevParentAnalysisParamFactory";
+	ParentAnalysisParamFactory.$name="mevParentAnalysisParam";
 	ParentAnalysisParamFactory.$provider="factory";
 	ParentAnalysisParamFactory.$inject=["mevAnalysisLocator"];
 	return ParentAnalysisParamFactory;

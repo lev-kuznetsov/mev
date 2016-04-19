@@ -30,14 +30,20 @@
 	      <li class="list-group-item"><a data-toggle="modal" role="button" data-target="#kmeansclust">K-Means</a></li>
 	    </ul>				
 	</accordion-group><accordion-group class="panel-info" ng-mouseleave='shrink($event)' ng-mouseenter='open($event)'>
-		<accordion-heading><i class="fa fa-medium"></i> <span>Meta-analysis</span></accordion-heading>
+	<accordion-heading><i class="fa fa-medium"></i> <span>Meta-analysis</span></accordion-heading>
 		<ul class="list-group">
-	      <li class="list-group-item"><a data-toggle="modal" role="button" data-target="#survivalModal">Survival Analysis</a></li>      	      
-		  <li class="list-group-item"><a data-toggle="modal" role="button" data-target="#TopGoModal">TopGO</a></li>
+	      <li class="list-group-item"><a data-toggle="modal" role="button" data-target="#survivalModal">Survival Analysis</a></li>
+			<li class="list-group-item"><a class="mev-analysis-start-button" mev-analysis-type="SideMenuVM.analysisTypes['topgo']">topgo</a></li>
 		  <li class="list-group-item"><a class="mev-analysis-start-button" mev-analysis-type="SideMenuVM.analysisTypes['pe']">aaa</a></li>		  		  
 		  <li class="list-group-item"><a class="mev-analysis-start-button" mev-analysis-type="SideMenuVM.analysisTypes['gsea']">bbb</a></li>		
 	    </ul>				
-	</accordion-group>
+	</accordion-group><accordion-group class="panel-info" ng-mouseleave='shrink($event)' ng-mouseenter='open($event)'>
+	<accordion-heading><i class="fa fa-balance-scale"></i> <span>Normalization</span></accordion-heading>
+	<ul class="list-group">
+		<li class="list-group-item"><a class="mev-analysis-start-button" mev-analysis-type="SideMenuVM.analysisTypes['normalization']">bbb</a></li>
+	</ul>
+</accordion-group>
+
 	
 </accordion>
 

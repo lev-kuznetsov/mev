@@ -1,7 +1,7 @@
 //Make sure global is set. blob@0.0.4 expects it to be there.
 "use strict";
 window.global = window;
-import angular from "angular";
+import angular from "mui";
 import jquery from "jquery";
 import app from "./app/app";
 import boot from "./less/boot.less";
@@ -10,9 +10,10 @@ import liver from "liver";
 
 var root = angular.element(document);
 root.ready(function(){	
-	if(root.injector()){	
+	if(root.injector()){			
+		root.scope().$root.$destroy();
 		root.data("$injector", null);
-		angular.element("body > ui-view").removeData().empty()
+		angular.element("body > ui-view").removeData().empty();		
 		console.log("ng already bootstrapped, force re-init", root.injector());
 	}
 	angular.bootstrap(root, [app.name]);    

@@ -263,6 +263,14 @@
       <artifactId>mev-gsea-rest</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
+    
+    <!-- Normalization -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-normalization-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
 
     <!-- Servlet -->
 
@@ -887,6 +895,7 @@
 	                    <include>ui/less/**</include>
                         <include>ui/app/**</include>
                         <include>ui/node_modules/*/*</include>
+                        <include>ui/node_modules/mev-steal-bootstrap/**/*</include>
                       </includes>                      
                     </resource>                    
                   </resources>

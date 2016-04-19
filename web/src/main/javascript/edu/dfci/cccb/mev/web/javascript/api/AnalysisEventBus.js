@@ -1,7 +1,7 @@
 define(["angular"], function(angular){
 	'use strict';
 	
-	var AnalysisEventBus = function($rootScope){
+	var AnalysisEventBus = function($rootScope, mevAnalysisTypes){
 				
 		
 		function formatAnalysisEventData(descriptor, params, response){
@@ -9,7 +9,12 @@ define(["angular"], function(angular){
 					analysisName: descriptor.analysisName || params.analysisName || params.name || response.name
 			};
 			angular.extend(eventData, descriptor);
-			angular.extend(eventData, params);			
+			angular.extend(eventData, params);
+			var analysisType = mevAnalysisTypes.get(descriptor.analysisType || params.analysisType || response.type);
+			if(analysisType && _.isFunction(analysisType.modelDecorator))
+				analysisType.modelDecorator(response);
+			if(analysisType && _.isFunction(analysisType.onSuccess))
+				analysisType.onSuccess(response);
 			eventData.response=response;
 			return eventData;
 		}
@@ -42,16 +47,21 @@ define(["angular"], function(angular){
 		this.onAnalysisFailure  = registerHandler.bind(this, MSG_ANALYSIS_FAILURE);
 		
 		var MSG_ANALYSIS_LOADED_ALL="event:analysis:all";
-		this.analysisLoadedAll = function(){
-			$rootScope.$broadcast(MSG_ANALYSIS_LOADED_ALL);
+		this.analysisLoadedAll = function(analyses){
+			analyses.forEach(function(analysis){
+				var analysisType = mevAnalysisTypes.get(analysis.params.analysisType || analysis.type || analysis.params.type);
+				if(analysisType && _.isFunction(analysisType.modelDecorator))
+					analysisType.modelDecorator(analysis);
+			})
+			$rootScope.$broadcast(MSG_ANALYSIS_LOADED_ALL, analyses);
 		};
 		this.onAnalysisLoadedAll = function($scope, handler){
-			$scope.$on(MSG_ANALYSIS_LOADED_ALL, function($event){
-				handler();
+			$scope.$on(MSG_ANALYSIS_LOADED_ALL, function($event, analyses){
+				handler($event, analyses);
 			});
 		}
 	};
-	
-	AnalysisEventBus.$inject=["$rootScope"];
+
+	AnalysisEventBus.$inject=["$rootScope", "mevAnalysisTypes"];
 	return AnalysisEventBus;
 });

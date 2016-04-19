@@ -1,5 +1,5 @@
 define(["mui"], function(){
-	function component($resource, $routeParams, $stateParams){	
+	function component($resource, $stateParams){
 		url="/annotations/:datasetName/annotation/:dimension/get-project-id";
 		var AnnotationProjectIdResource = $resource(
 			url, 
@@ -8,13 +8,13 @@ define(["mui"], function(){
 		
 		this.get=function(dimension){
 			return AnnotationProjectIdResource.get({
-				datasetName: $routeParams.datasetName || $stateParams.datasetId,
+				datasetName: $stateParams.datasetId,
 				dimension: dimension || "column"
 			}).$promise;			
 		};
 	}
 	component.$name="AnnotationProjectIdResource";
-	component.$inject=["$resource", "$routeParams", "$stateParams"];
+	component.$inject=["$resource", "$stateParams"];
 	component.$provider="service";
 	return component;
 

@@ -1,1 +1,1 @@
-define(["mev-bootstrap-theme"], function(){});
+define(["mev-bootstrap-theme", "./demo.less"], function(){});

@@ -45,8 +45,8 @@ function(_, mevAnalsysType,
 			name: "GSEA",
 			params: mevAnalysisParams([
 				new MevParentAnalysisParam({
-					"id": "limma",
-					"type": "LIMMA Differential Expression Analysis",
+					"id": "parent",
+					"type": ["LIMMA Differential Expression Analysis", "t-Test Analysis", "voom", "DESeq Differential Expression Analysis"],
 					"display": "name",
 					"required": true
 				}), 
@@ -83,10 +83,10 @@ function(_, mevAnalsysType,
 
 		function prepareParams(params){
 			// "name":"vvv","organism":"human","pAdjustMethod":"fdr","minGSSize":20,"adjValueCutoff":0.05,"limma":
-			return prepareLimmaResult(params.limma.results, params.geneSymbolField).then(function(limmaResults){
+			return prepareLimmaResult(params.parent.results, params.geneSymbolField).then(function(limmaResults){
 				return {
-					name: params.limma.name+"."+params.name,
-					organism: params.limma.params.species,
+					name: params.parent.name+"."+params.name,
+					organism: params.parent.params.species,
 					pAdjustMethod: params.pAdjustMethod,
 					minGSSize: params.minGSSize,
 					adjValueCutoff: params.adjValueCutoff,
@@ -99,15 +99,23 @@ function(_, mevAnalsysType,
 			var annotations = new mevAnnotationRepository("row");
 			var geneMapping = geneSymbolField ? annotations.getMapping(geneSymbolField) : $q.when({});
 			return geneMapping.then(function(geneMapping){				
-				return limmaResults.reduce(function(result, item){
-					// "SYMBOL":"IL8","logFC":8.3599,"AveExpr":10.1369,"t":79.7198,"P.Value":2.4498e-22,"adj.P.Val":2.9396e-18}
-					var SYMBOL = geneMapping[item.id] ? geneMapping[item.id] : item.id;
+				var idField = "id";
+				if(_.isFunction(limmaResults.getIdField)){
+					idField = limmaResults.getIdField();
+				}
+				var logFoldChangeField = "logFoldChange";				
+				if(_.isFunction(limmaResults.getLogFoldChangeField)){
+					logFoldChangeField = limmaResults.getLogFoldChangeField();
+				}
+				return limmaResults.reduce(function(result, item, index, arr){
+					// "SYMBOL":"IL8","logFC":8.3599,"AveExpr":10.1369,"t":79.7198,"P.Value":2.4498e-22,"adj.P.Val":2.9396e-18}					
+					var SYMBOL = geneMapping[item[idField]] ? geneMapping[item[idField]] : item[idField];
 					if(!SYMBOL){
-						console.log("no gene mapping found for '" + item.id + "' in '" + geneSymbolField + "'" );					
+						console.log("no gene mapping found for '" + item[idField] + "' in '" + geneSymbolField + "'" );					
 					}else{
 						var gseaItem = {
 							"SYMBOL": SYMBOL,
-							"logFC": item.logFoldChange,
+							"logFC": item[logFoldChangeField],
 							"AveExpr": item.averageExpression,
 							"t": item.t,
 							"P.Value": item.pValue,
@@ -130,7 +138,38 @@ function(_, mevAnalsysType,
 				_self.parent.start.call(_self, _self, params);	
 			});			
 		};
+		gseaType.modelDecorator = function(analysis){
+			var gseaRowModel = {
+				getTotal: function () {
+					return this.setSize;
+				},
+				getMatched: function () {
+					return this.setSize;
+				},
+				getName: function () {
+					return this.Description;
+				},
+				getPValue: function () {
+					return this.pvalue;
+				}
+			};
 
+			function formatResults(input){
+				return input.map(function(item){
+					return _.extend(item, gseaRowModel);
+				});
+			};
+
+			function isPeRow(item){
+				return _.every(_.functions(gseaRowModel), function(methodName){
+					return _.hasIn(item, methodName);
+				});
+			}
+
+			if(analysis && analysis.result && analysis.result.length > 0)
+				if(!isPeRow(analysis.result[0]))
+					formatResults(analysis.result);
+		};
 		return gseaType;
 	
 	}	

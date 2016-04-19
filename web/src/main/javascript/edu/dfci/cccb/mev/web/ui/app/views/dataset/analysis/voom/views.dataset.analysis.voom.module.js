@@ -2,12 +2,12 @@ define(["ng", "lodash"], function(ng, _){
 	var module = ng.module("mui.views.dataset.analysis.voom", []);
 	module.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider){}])
 	.factory("VoomVMFactory", [function(){
-		return function voomVMFactory($scope, BoxPlotService, project, analysis){
+		return function voomVMFactory($scope, BoxPlotService, mevAnalysisTypes, project, analysis){
 			var _self = this;
 			this.analysisId=analysis.name;
 			this.analysis=analysis;
 			this.project=project;
-		
+			this.analysisTypes = mevAnalysisTypes.all();
 			this.heatmapView = project.generateView({
 	            viewType:'heatmapView',
 	            note: analysis.name,
@@ -25,6 +25,31 @@ define(["ng", "lodash"], function(ng, _){
 //	            "adj.P.Val": 6.1609e-14,
 //	            "B": 24.7832
 //	        },
+			this.analysis.getFilteredKeys = function(dimension){
+				if(dimension==="row")
+					return _self.filteredResults.map(function(item){
+						return item._row;
+					});					
+			};			
+			this.analysis.results;
+			this.analysis.results.getIdField=function(){
+				return "_row";
+			};
+			this.analysis.results.getLogFoldChangeField=function(){
+				return "logFC";
+			}	
+
+					
+			this.analysis.getOriginalInputKeys=function(dimension){
+				if(dimension==="column"){
+					var selectionNames = [_self.analysis.params.$$experiment.name, _self.analysis.params.$$control.name];
+
+					var keys = _self.project.dataset.selections.unionByName("column", selectionNames);
+					keys.displayName = selectionNames.join("+");
+					return keys;
+				}
+
+			};
 			this.headers = [{
 	                'name': 'ID',
 	                'field': "_row",
@@ -86,10 +111,10 @@ define(["ng", "lodash"], function(ng, _){
 			});	
 		};
 	}])
-	.controller("VoomVM", ["$scope", "$injector", "BoxPlotService", "VoomVMFactory", "project", "analysis", 
-	                        function($scope, $injector, BoxPlotService, VoomVMFactory, project, analysis){
+	.controller("VoomVM", ["$scope", "$injector", "BoxPlotService", "VoomVMFactory","mevAnalysisTypes", "project", "analysis", 
+	                        function($scope, $injector, BoxPlotService, VoomVMFactory, mevAnalysisTypes, project, analysis){
 		
-		VoomVMFactory.call(this, $scope, BoxPlotService, project, analysis);
+		VoomVMFactory.call(this, $scope, BoxPlotService, mevAnalysisTypes, project, analysis);
 		
 	}]);
 	return module;

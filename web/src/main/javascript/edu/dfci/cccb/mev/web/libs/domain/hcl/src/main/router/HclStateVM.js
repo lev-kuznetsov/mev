@@ -67,7 +67,7 @@ define(["lodash"], function(_){ "use strict";
 		return factory;
 	}	
 	HclStateVMFactory.$inject=[];
-	HclStateVMFactory.$name="HclStateVMFactoryFactory";
+	HclStateVMFactory.$name="HclStateVMFactory";
 	HclStateVMFactory.$provider="factory";
 	return HclStateVMFactory;
 });
