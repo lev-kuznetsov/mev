@@ -1,6 +1,6 @@
 define(["ng", "lodash"], function(ng, _){ "use strict";
 	var DatasetProjectViewVM=function DatasetViewVM($scope, $stateParams, $state, DatasetResourceService, dataset, project, AnalysisEventBus, AnalysisTypes, mevAnalysisTypes,
-		mevPathwayEnrichmentAnalysisType, mevGseaAnalysisType, mevPcaAnalysisType, mevHclAnalysisType, mevTopgoAnalysisType){
+		mevPathwayEnrichmentAnalysisType, mevGseaAnalysisType, mevPcaAnalysisType, mevHclAnalysisType, mevTopgoAnalysisType, mevNormalizationAnalysisType){
 		var that=this;
 		console.debug("DatasetProjectViewVM", dataset, project);
 		this.project=project;		
@@ -67,7 +67,10 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 			// console.debug("ui:projectTree:nodeSelected $on", $event, node, $state, params, targetState);			
 			// $state.go(targetState, params);
 			if(node.nodeData.params && mevAnalysisTypes.all()[node.nodeData.params.analysisType])
-				$state.go("root.dataset.analysisType"+"."+node.nodeData.params.analysisType, 
+				if(node.nodeData.params.analysisType==="normalization")
+					$state.go("root.dataset.home", {datasetId: node.nodeData.params.exportName});
+				else
+					$state.go("root.dataset.analysisType"+"."+node.nodeData.params.analysisType,
 					{datasetId: node.nodeData.params.datasetName, analysisId: node.nodeData.name});
 			else if(node.nodeData.type && mevAnalysisTypes.all()[node.nodeData.type])
 				$state.go("root.dataset.analysisType"+"."+node.nodeData.type, 
@@ -150,6 +153,6 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 
 	};
 	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "DatasetResourceService", "dataset", "project", "AnalysisEventBus", "AnalysisTypes", "mevAnalysisTypes", 
-	"mevPathwayEnrichmentAnalysisType", "mevGseaAnalysisType", "mevPcaAnalysisType", "mevHclAnalysisType", "mevTopgoAnalysisType"];
+	"mevPathwayEnrichmentAnalysisType", "mevGseaAnalysisType", "mevPcaAnalysisType", "mevHclAnalysisType", "mevTopgoAnalysisType", "mevNormalizationAnalysisType"];
 	return DatasetProjectViewVM;
 });

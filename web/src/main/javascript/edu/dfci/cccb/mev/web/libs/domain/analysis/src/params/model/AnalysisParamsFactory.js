@@ -5,7 +5,9 @@ define(["lodash", "./name/NameParam"], function(_, NameParam){ "use strict";
 				required: true
 			});		
 			if(_.isArray(params)){
-				params.unshift(nameParam);
+				if(!_.find(params, function(item){return item.id==="name"})){
+					params.unshift(nameParam);
+				}
 
 				params.getValues = function(){				
 					var result = {};

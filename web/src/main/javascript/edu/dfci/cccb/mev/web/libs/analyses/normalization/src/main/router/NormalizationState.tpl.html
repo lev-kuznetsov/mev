@@ -1,0 +1,21 @@
+<div>
+	<ul class="nav nav-tabs column-header" id="importTabs">
+		<li id="normalization_tab" class="active"><a href="#normalization" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}}</a></li>
+		<div class="action-menu" mui-paste="action-menu"></div>
+	</ul>
+
+	<div class="tab-content column-body">
+		<div class="tab-pane active results-wrapper" id="normalization" >
+			<div class="results-header clearfix"></div>
+			<div class="results-body" >
+				<div ng-if="DatasetAnalysisVM.analysis.status==='SUCCESS'">
+					Normalization completed successfully. Click here to view the <a ui-sref="root.dataset.home({datasetId: DatasetAnalysisVM.analysis.params.exportName})">normalized dataset</a>.
+				</div>
+				<div ng-if="DatasetAnalysisVM.analysis.status==='ERROR'">
+					An error occurred while running normalization.<br>
+					{{DatasetAnalysisVM.analysis}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

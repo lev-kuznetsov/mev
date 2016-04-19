@@ -1,5 +1,9 @@
 package edu.dfci.cccb.mev.normalization.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
@@ -11,8 +15,10 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback.CallbackType;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Parameter;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.R;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
+import edu.dfci.cccb.mev.normalization.domain.Normalization.NormalizationParameters;
 
-@R ("function(dataset,method='deseq',phenoData=NULL,featureData=NULL, log = TRUE,...){\n"
+@R ("function(dataset,method='deseq'){\n"
+        + "phenoData=NULL;featureData=NULL;log = TRUE;\n"
     + "library('rafalib')\n"
     + "library('metagenomeSeq')\n"
     + "library('DESeq')\n"
@@ -73,13 +79,13 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
     + "}\n"
 
     + "if(method == '4'){\n"
-    + "  deseq_sf = estimateSizeFactorsForMatrix(counts,...)\n"
+    + "  deseq_sf = estimateSizeFactorsForMatrix(counts)\n"
     + "  nmat = sweep(counts,2,deseq_sf,'/')\n"
     + "}\n"
 
     + "if(method == '5'){\n"
     + "  d <- DGEList(counts, lib.size = as.vector(colSums(counts)))\n"
-    + "  d <- calcNormFactors(d,method='TMM',...)\n"
+    + "  d <- calcNormFactors(d,method='TMM')\n"
     + "  nmat = cpm(d, normalized.lib.size=TRUE)\n"
     + "}\n"
 
@@ -96,21 +102,26 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
     + "if(method == '7'){\n"
     + "  dds <- DESeqDataSetFromMatrix(counts, pData(obj), ~1)\n"
     + "  dds <- estimateSizeFactors(dds)\n"
-    + "  dds <- estimateDispersions(dds,...)\n"
+    + "  dds <- estimateDispersions(dds)\n"
     + "  nmat = getVarianceStabilizedData(dds)\n"
     + "}\n"
 
     + "if(method == '8') nmat = 1-(1-counts>0)\n"
 
-    + "return(nmat)\n" +
+    + "return(data.frame(nmat))\n" +
     "}")
 @Accessors (fluent = true, chain = true)
 public class NormalizationBuilder extends AbstractDispatchedRAnalysisBuilder<NormalizationBuilder, Normalization> {
 
-  private @Setter Workspace workspace;
-  private @Setter String exportName;
-  private @Parameter @Setter String method = "deseq";
+  private @Parameter String method = "deseq";
   private @Result Dataset normalized;
+  private Normalization.NormalizationParameters params;
+  public NormalizationBuilder params(NormalizationParameters params){
+    this.params = params;
+    this.method = params.method();
+    name(params.name());
+    return this;
+  }
 
   public NormalizationBuilder () {
     super ("normalization");
@@ -118,11 +129,12 @@ public class NormalizationBuilder extends AbstractDispatchedRAnalysisBuilder<Nor
 
   @Callback (CallbackType.SUCCESS)
   private void export () throws InvalidDatasetNameException {
-    workspace.put (normalized.rename (exportName));
+//    workspace.put (normalized);
   }
 
   @Override
   protected Normalization result () {
-    return new Normalization (exportName).name (name ());
+    return new Normalization (params, normalized);
   }
+
 }
