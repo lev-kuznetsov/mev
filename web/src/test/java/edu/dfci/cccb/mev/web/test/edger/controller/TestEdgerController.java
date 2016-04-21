@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.dfci.cccb.mev.dataset.domain.contract.*;
 import edu.dfci.cccb.mev.dataset.domain.fs.FlatFileValueStoreBuilder;
 import edu.dfci.cccb.mev.dataset.domain.simple.SimpleDatasetBuilder;
+import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
 import edu.dfci.cccb.mev.dataset.domain.tsv.UrlTsvInput;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
@@ -91,8 +92,8 @@ public class TestEdgerController {
 
     @Test
     public void testAsync() throws Exception {
-        Set<String> control = new HashSet<String>(Arrays.asList("A", "B", "C"));
-        Set<String> experiment = new HashSet<String>(Arrays.asList("D", "E", "F"));
+        Selection control = jsonObjectMapper.readValue("{\"name\":\"s1\",\"properties\":{\"selectionColor\":\"#5fd97b\",\"selectionDescription\":\"\"},\"keys\":[\"A\",\"B\",\"C\"]}", SimpleSelection.class);
+        Selection experiment = jsonObjectMapper.readValue("{\"name\":\"s2\",\"properties\":{\"selectionColor\":\"#b0220e\",\"selectionDescription\":\"\"},\"keys\":[\"D\",\"E\",\"F\"]}", SimpleSelection.class);
         Edge.EdgeParams dto = new Edge.EdgeParams("edger-test", experiment, control, "fdr");
         MvcResult mvcResult = this.mockMvc.perform(
                 put(String.format("/dataset/%s/analyze/edger/%s", dataset.name(), dto.name()))
@@ -114,7 +115,7 @@ public class TestEdgerController {
         assertThat(analysisStatus.status (), is(Analysis.MEV_ANALYSIS_STATUS_IN_PROGRESS));
 
         //Wait for analysis to complete
-        Thread.sleep (3000L);
+        Thread.sleep (10000L);
 
         //get the analysis directly from workspace
         log.debug("**************************");
@@ -135,6 +136,7 @@ public class TestEdgerController {
                 .andReturn ();
         Edge analysisFromGET = jsonObjectMapper.readValue (mvcResultGET.getResponse ().getContentAsString (), Edge.class);
         assertThat (analysisFromGET.name (), is(dto.name()));
+        assertNotNull (analysisFromGET.params());
         assertNotNull (analysisFromGET.results ());
         assertThat(analysisFromGET.results ().size(), greaterThan(0));
         assertThat(analysisFromGET.status (), is(Analysis.MEV_ANALYSIS_STATUS_SUCCESS));
