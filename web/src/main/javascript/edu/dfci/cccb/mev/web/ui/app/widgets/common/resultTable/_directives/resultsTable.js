@@ -29,7 +29,7 @@ define(["lodash", "crossfilter"], function(_, crossfilter){
         				});
                 	}else if(header.field === "id" || header.icon==="search"){
                 		header.filterParams = {
-                				values: _.pluck($scope.data, header.field), 
+                				values: _.map($scope.data, header.field),
                 				newRowsAction: 'keep', 
                 				xd: xf.dimension(function(d){
                 					return d[header.field];

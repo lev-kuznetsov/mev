@@ -12,7 +12,7 @@ function(ng, _, healthVis, healthVisSurvival){
 			templateUrl: "app/widgets/common/plots/timeFunction/timeFunctionPlot.tpl.html",
 			link: function(scope, elem, attrs){
 				var healthVisSurvivalPlot = new healthVisSurvival();
-				var maxDomain = _.max(scope.analysis.params.input, 'time').time;
+				var maxDomain = _.maxBy(scope.analysis.params.input, 'time').time;
 				var experiment = scope.analysis.result.plot.experiment;
 				var control = scope.analysis.result.plot.control;
 				healthVisParams = {
