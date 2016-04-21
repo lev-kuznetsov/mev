@@ -34,7 +34,7 @@ public interface Selection {
   @JsonProperty
   String name ();
 
-  @JsonProperty
+  @JsonProperty(required = false)
   Properties properties ();
 
   @JsonProperty

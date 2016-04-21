@@ -1,6 +1,7 @@
 package edu.dfci.cccb.mev.edger.domain;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import lombok.Setter;
@@ -39,9 +40,10 @@ public class EdgeBuilder extends AbstractDispatchedRAnalysisBuilder<EdgeBuilder,
   private Edge.EdgeParams params;
   public EdgeBuilder params(Edge.EdgeParams params){
     name(params.name());
-    this.control = params.control();
-    this.experiment = params.experiment();
+    this.control = new HashSet<String>(params.control().keys());
+    this.experiment = new HashSet<String>(params.experiment().keys());
     this.method = params.method();
+    this.params = params;
     return this;
   }
 

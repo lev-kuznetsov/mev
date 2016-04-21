@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,9 +41,8 @@ public class Edge extends AbstractAnalysis<Edge> {
   @AllArgsConstructor
   public static class EdgeParams {
     @JsonProperty @Getter String name;
-    @JsonProperty @Getter Set<String> experiment;
-    @JsonProperty @Getter Set<String> control;
-    @JsonProperty @Getter String method; // one of: "fdr", "holm", "hochberg", "BH",
-                                 // "BY", "bonferroni", "none"
+    @JsonProperty @Getter Selection experiment;
+    @JsonProperty @Getter Selection control;
+    @JsonProperty @Getter String method; // one of: "fdr", "holm", "hochberg", "BH", "BY", "bonferroni", "none"
   }
 }
