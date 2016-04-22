@@ -53,7 +53,7 @@ import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHcl;
     + "if(is.null(dimension) || length(dimension)==0) dimension = list(\"row\", \"column\")\n"      
     + "runHcl <- function(dimension){"
     + "  d <- if (dimension == 'row') dataset else t (dataset);\n"
-    + "  l (hc2n (stats::hclust (cluster::daisy (d, m = metric), method = linkage)));\n"
+    + "  l (hc2n (stats::hclust (stats::dist (d, m = metric), method = linkage)));\n"
     + "};\n"
     + "result<-list();\n"
     + "for (dim in dimension) result[[dim]] <- runHcl(dim);\n" 
