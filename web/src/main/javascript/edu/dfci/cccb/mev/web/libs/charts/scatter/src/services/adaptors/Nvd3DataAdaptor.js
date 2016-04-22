@@ -30,7 +30,7 @@ define(["lodash"], function(_){
 
 		        var groupAcc = {names: [], color: "grey"};
 		        _.map(selections, function(selection){
-		            if(_.contains(selection.keys, id)){                        
+		            if(_.includes(selection.keys, id)){
 		                groupAcc.names.push(selection.name);
 		                groupAcc.color = selection.properties.selectionColor;
 		            }

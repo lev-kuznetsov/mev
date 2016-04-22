@@ -5,9 +5,9 @@ define(["lodash"],function(_){
 			var group = {
 				"key": config.series,
 				"color": "#1f77b4",
-				"values": _.orderBy(input, function(item){
-					return item.getMatched();
-				}, ["desc"])
+				"values": _.sortBy(input, function(item){
+					return -item.getMatched();
+				})
 			};
 			groups.push(group);			
 			return groups;

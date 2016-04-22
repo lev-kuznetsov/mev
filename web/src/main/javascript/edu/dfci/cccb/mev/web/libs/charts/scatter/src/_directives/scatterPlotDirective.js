@@ -28,9 +28,9 @@ function(angular, d3, _, crossfilter, template){"use strict";
 				};
 				if(!scope.fields)
 					scope.fields = [];
-				if(!_.contains(scope.fields, scope.xField))
+				if(!_.includes(scope.fields, scope.xField))
 					scope.fields.push(scope.xField);
-				if(!_.contains(scope.fields, scope.yField))
+				if(!_.includes(scope.fields, scope.yField))
 					scope.fields.push(scope.yField);
 
 				function getCheckedSelections(){
