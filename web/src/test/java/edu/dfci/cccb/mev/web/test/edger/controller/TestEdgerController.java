@@ -17,6 +17,7 @@ import edu.dfci.cccb.mev.web.configuration.PersistenceConfiguration;
 import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
 import lombok.extern.log4j.Log4j;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +91,7 @@ public class TestEdgerController {
         workspace.put (dataset);
     }
 
-    @Test
+    @Test @Ignore
     public void testAsync() throws Exception {
         Selection control = jsonObjectMapper.readValue("{\"name\":\"s1\",\"properties\":{\"selectionColor\":\"#5fd97b\",\"selectionDescription\":\"\"},\"keys\":[\"A\",\"B\",\"C\"]}", SimpleSelection.class);
         Selection experiment = jsonObjectMapper.readValue("{\"name\":\"s2\",\"properties\":{\"selectionColor\":\"#b0220e\",\"selectionDescription\":\"\"},\"keys\":[\"D\",\"E\",\"F\"]}", SimpleSelection.class);
