@@ -1,4 +1,4 @@
-define(['./AnalysisClass'], function(AnalysisClass){"use strict";
+define(['./AnalysisClass', "lodash"], function(AnalysisClass, _){"use strict";
 
     //loadAnalyses :: !analysis !analyses --> null
     //  Function to reload analyses list with new values 
@@ -38,7 +38,12 @@ define(['./AnalysisClass'], function(AnalysisClass){"use strict";
                             		var sessionStorageKey = self.datasetName+"."+name;
                 					console.debug("sessionStorageKey get", sessionStorageKey);
                             		var params = JSON.parse(sessionStorage.getItem(self.datasetName+"."+name));
-                            		analysis.params = params;
+									if(params){
+										if(analysis.params)
+                            				_.extend(analysis.params, params);
+										else
+											analysis.params = params;
+									}
                             		console.debug("LoadAnalysis", analysis.name, analysis);
                             		analyses.push(analysis);
                         		});
