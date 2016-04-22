@@ -1,10 +1,10 @@
 <ng-form id="filterForm" name="filterForm">
 	<table>	
 		<thead>		
-			<tr ng-if="pagination || top">
+			<tr ng-if="pagination  || top">
 				<td colspan="{{headers.length}}">				
-					<dir-pagination-controls ng-if="pagination && pagination.itemsPerPage"></dir-pagination-controls>					
-					<div><ul class="pagination">
+					<dir-pagination-controls ng-if="pagination && pagination.itemsPerPage"></dir-pagination-controls>
+					<div ng-if="top"><ul class="pagination">
 							<li><span>Top:</span></li>							
 							<li ng-class="{active: limit===top.current}" ng-repeat="limit in top.options">
 								<a id="mev-top-{{limit}}" ng-click="vm.updateTop(limit)" >{{limit}}</a>
@@ -34,16 +34,8 @@
 			</th>		
 			</tr>				
 		</thead>
-		<tbody>
-			<tr ng-if="pagination && pagination.itemsPerPage" dir-paginate="row in vm.filteredResults | itemsPerPage: pagination.itemsPerPage as renderedData track by $index ">
-				<td ng-repeat="header in headers" ng-class="{'text-nowrap': header.nowrap}">					
-					<a ng-if="header.link" href="{{header.link(row[header.field])}}" target="new">{{row[header.field]}}</a>
-					<a ng-if="header.click" href="#" ng-click="header.click(row[header.field], row)">{{row[header.field]}}</a>
-					<input type="checkbox" ng-if="header.check" ng-model="row.isChecked" ng-change="selectRow(header.field, row, header.check)">	
-					<span ng-if="!header.link && !header.click" >{{row[header.field] | mevTextOrNumber:5:header }}</span>					
-				</td>
-			</tr>
-			<tr ng-if="!(pagination && pagination.itemsPerPage)" ng-repeat="row in vm.filteredResults">
+		<tbody >
+			<tr dir-paginate="row in vm.filteredResults | itemsPerPage: pagination.itemsPerPage as renderedData track by $index ">
 				<td ng-repeat="header in headers" ng-class="{'text-nowrap': header.nowrap}">					
 					<a ng-if="header.link" href="{{header.link(row[header.field])}}" target="new">{{row[header.field]}}</a>
 					<a ng-if="header.click" href="#" ng-click="header.click(row[header.field], row)">{{row[header.field]}}</a>
@@ -56,7 +48,7 @@
 			<tr ng-if="pagination || top">
 				<td colspan="{{headers.length}}">				
 					<dir-pagination-controls ng-if="pagination && pagination.itemsPerPage"></dir-pagination-controls>					
-					<div><ul class="pagination">
+					<div ng-if="top"><ul class="pagination">
 							<li><span>Top:</span></li>							
 							<li ng-class="{active: limit===top.current}" ng-repeat="limit in top.options">
 								<a id="mev-top-{{limit}}" ng-click="vm.updateTop(limit)" >{{limit}}</a>
