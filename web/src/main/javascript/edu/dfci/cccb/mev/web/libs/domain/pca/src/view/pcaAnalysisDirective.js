@@ -14,7 +14,7 @@ define(function(require){
 		    _.map(analysis.x, function(item, key){
 		    	var groupAcc = {names: [], color: "grey"};
 		    	_.map(selectedSets, function(selection){
-		    		if(_.contains(selection.keys, key)){		    			
+		    		if(_.includes(selection.keys, key)){
 		    			groupAcc.names.push(selection.name);
 		    			groupAcc.color = selection.properties.selectionColor;
 		    		}

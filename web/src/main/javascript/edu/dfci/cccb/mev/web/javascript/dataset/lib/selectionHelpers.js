@@ -54,7 +54,7 @@ define(["lodash"], function(_){
 		unionByName: function(dimension, names){
 			self = this;
 			var selections = _.filter(self.selections[dimension], function(item){
-				return _.contains(names, item.name);
+				return _.includes(names, item.name);
 			});
 			return this.selections.union(selections);
 		}
