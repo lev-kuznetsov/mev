@@ -24,7 +24,6 @@
 		</div>
 		<div class="tab-pane active results-body" id="table" >
 			<div class="results-top" id="{{'edger-' + analysis.randomId + '-svg-holder'}}">
-				<d3-Box-Plot-Visualization data="DatasetAnalysisVM.boxPlotGenes"></d3-Box-Plot-Visualization>
 				<mev-boxplot data="DatasetAnalysisVM.boxPlotGenes"></mev-boxplot>
 			</div>
 			<div class="results-bottom">
@@ -33,7 +32,7 @@
 								  <!--on-paged="DatasetAnalysisVM.updatePageView(pageResults)"></results-table-ag>-->
 				<mev-results-table id="DatasetAnalysisVM.heatmapView.id" data="DatasetAnalysisVM.analysis.results" headers="DatasetAnalysisVM.headers" ordering="-value"
 								   on-filter="DatasetAnalysisVM.udpateFilteredView(filteredResults)"
-								   on-paged="DatasetAnalysisVM.updatePageView(pageResults)"></mev-results-table>
+								   on-paged="DatasetAnalysisVM.updatePageView(pageResults)" mev-pagination="{itemsPerPage: 20}"></mev-results-table>
 			</div>
 
 		</div>

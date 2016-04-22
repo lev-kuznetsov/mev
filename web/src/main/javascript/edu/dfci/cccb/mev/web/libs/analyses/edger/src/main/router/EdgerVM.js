@@ -31,7 +31,7 @@ define(["lodash"], function(_){ "use strict";
 
             this.analysis.getOriginalInputKeys=function(dimension){
                 if(dimension==="column"){
-                    var selectionNames = [_self.analysis.params.$$experiment.name, _self.analysis.params.$$control.name];
+                    var selectionNames = [_self.analysis.params.experiment.name, _self.analysis.params.control.name];
 
                     var keys = _self.project.dataset.selections.unionByName("column", selectionNames);
                     keys.displayName = selectionNames.join("+");
@@ -57,8 +57,8 @@ define(["lodash"], function(_){ "use strict";
                     'name': 'P-Value',
                     'field': "PValue",
                     'icon': "<=",
-                    'default': 0.5,
-                    'max': 0.5,
+                    'default': 0.05,
+                    'max': 0.05,
                     'min': 0.00,
                     'step': 0.01
                 }];
@@ -80,16 +80,29 @@ define(["lodash"], function(_){ "use strict";
                 _self.filteredResults = filteredResults;
                 var labels = filteredResults.map(function(item){return item._row;});
                 _self.heatmapView = _self.heatmapView.applyFilter("row", labels);
-                _self.boxPlotGenes = mevBoxplotService.prepareBoxPlotData(_self.project.dataset, filteredResults,
-                    [_self.analysis.params.control, _self.analysis.params.experiment],
-                    _self.analysis.randomId, "_row");
+                // _self.boxPlotGenes = mevBoxplotService.prepareBoxPlotData(_self.project.dataset, filteredResults,
+                //     [_self.analysis.params.control, _self.analysis.params.experiment],
+                //     _self.analysis.randomId, "_row");
             };
             this.updatePageView = function (pageResults) {
                 _self.boxPlotGenes = mevBoxplotService.prepareBoxPlotData(_self.project.dataset, pageResults,
                     [_self.analysis.params.control, _self.analysis.params.experiment],
                     _self.analysis.randomId, "_row");
             };
-
+            //if using events, must filter on "id" so as not to process events raised by other resultTables ont he same page
+            // to do that: (1) set unique id on the <result-table> element and (2) check targetScopeFilter in this handler
+            // In the end it's easier to use a callback function (such as viewGenes below)
+            // $scope.$on("ui:resultsTable:filteredResults", function($event, filteredResults){
+            //     _self.filteredResults = filteredResults;
+            //     var labels = filteredResults.map(function(item){return item._row;});
+            //     _self.heatmapView = _self.heatmapView.applyFilter("row", labels);
+            // });
+            //
+            // $scope.$on("ui:resultsTable:pageChanged", function($event, pageResults){
+            //     _self.boxPlotGenes = mevBoxplotService.prepareBoxPlotData(_self.project.dataset, pageResults,
+            //         [_self.analysis.params.control, _self.analysis.params.experiment],
+            //         _self.analysis.randomId, "_row");
+            // });
 
         };
         factory.$inject=["$scope", "project", "analysis"];
