@@ -1021,6 +1021,20 @@ div.d3tooltip a:hover {
   background-color: #3498DB;
 }
 
+/*mev-boxplot@0.0.1#src/main/style/boxplot.less!$less*/
+mev-boxplot line,
+.mev-boxplot line,
+[mev-boxplot] line {
+  fill: #fff;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+mev-boxplot line.int-lines,
+.mev-boxplot line.int-lines,
+[mev-boxplot] line.int-lines {
+  stroke-dasharray: 7, 5;
+}
+
 /*app/widgets/analysis/any/style/widgets.analysis.any.less!$less*/
 .mev-error-message {
   word-wrap: break-word;
