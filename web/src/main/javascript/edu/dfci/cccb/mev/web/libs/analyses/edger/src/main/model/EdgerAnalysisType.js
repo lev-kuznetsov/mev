@@ -8,7 +8,7 @@ define(["lodash", "mev-analysis/src/type/model/AnalysisType",
 
             var edgerType = new mevAnalysisType({
                 id: "edger",
-                name: "Edger",
+                name: "EdgeR",
                 viewModel: "EdgerVM",
                 params: mevAnalysisParams([
                     new mevSelectionSetParam({
