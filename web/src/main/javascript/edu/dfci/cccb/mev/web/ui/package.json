@@ -34,7 +34,7 @@
     "mev-dataset": "file:../libs/domain/dataset",
     "mev-domain-common": "file:../libs/domain/common",
     "mev-edger": "file:../libs/analyses/edger",
-    "mev-gsea": "file:../libs/domain/gsea",
+    "mev-gsea": "file:../libs/analyses/gsea",
     "mev-hcl": "file:../libs/domain/hcl",
     "mev-heatmap": "file:../libs/charts/mevHeatmap",
     "mev-normalization": "file:../libs/analyses/normalization",
