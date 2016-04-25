@@ -13,9 +13,13 @@
                 onRowSelected: "&",
                 selectedRows: "=?",
                 top: "=mevTop",
-                pagination: "=mevPagination"
+                pagination: "=?mevPagination"
             },
             template : template,
+            controller: ["$scope", function(scope){
+                if(!scope.top && !scope.pagination)
+                    scope.pagination = {itemsPerPage: 20}
+            }],
             link : function(scope, elem, attrs) {
                 
                 function getOpFromHeader(header){
@@ -47,7 +51,7 @@
 //Tried tapping renderedData when signaling changes in sort/fitlers. 
 //However, this does not work if pagination is enabled because only the first page of the results 
 //is rendered. We are using it to notify clients of pagination changed event
-                scope.$watchCollection("renderedData", function(newval, oldval){
+                scope.$watch("renderedData", function(newval, oldval){
                     if(newval){                     
                         console.debug("resultsTable watchCollection", newval);
                         scope.$emit("ui:resultsTable:pageChanged", newval);

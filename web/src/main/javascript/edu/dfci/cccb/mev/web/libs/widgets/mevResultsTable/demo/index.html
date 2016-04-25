@@ -5,7 +5,9 @@
 		live("../package.json!npm", "demo/index");
 	</script>
 </head>
-<body ng-controller="demoCtrl">	
+<body ng-controller="demoCtrl">
+	Default Pagination
+	<mev-results-table data="analysis.results" headers="headers" ordering="pValue"  on-filter="viewGenes(filteredResults)"></mev-results-table>
 	Paginated
 	<mev-results-table data="analysis.results" mev-pagination="{itemsPerPage: 10}" headers="headers" ordering="pValue"  on-filter="viewGenes(filteredResults)"></mev-results-table>
 	Top
