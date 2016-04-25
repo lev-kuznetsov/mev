@@ -25,7 +25,7 @@
     "lodash": "^4.4.0",
     "mev-analysis": "file:../analysis",
     "mev-annotations": "file:../annotations",
-    "mev-enrichment-barchart": "file:../../charts/mevEnrichmentBarchart",
+    "mev-hbarchart": "file:../../charts/mevHBarchart",
     "mev-results-table": "file:../../widgets/mevResultsTable",
     "mui": "file:../../mui"
   }

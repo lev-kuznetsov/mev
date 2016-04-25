@@ -10,7 +10,20 @@ define(["lodash"], function(_){ "use strict";
 			analysisType.modelDecorator(analysis);
 		scope.barChartConfig = {
 			data: scope.analysis.result,
-			series: "Counts"
+			series: "Score",
+			x: {
+				field: function(d){
+					return d.Description;
+				}
+			},
+			y: {
+				field: "enrichmentScore",
+				precision: 4,
+				sort: "desc"
+			},
+			z: {
+				field: "p.adjust"
+			}
 		}
 		scope.headers = [	       
 	       {
