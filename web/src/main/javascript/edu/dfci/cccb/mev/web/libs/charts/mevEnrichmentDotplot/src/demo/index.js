@@ -3,8 +3,7 @@ define(["mui", "mev-enrichment-dotplot", "./topgo_dummy.json"], function(ng, mod
 	
 	app.controller('MainCtrl', ["$scope", "mevEnrichmentDataAdaptor", function($scope, mevEnrichmentDataAdaptor) {
 		$scope.config={
-			data: mevEnrichmentDataAdaptor(topgoJson.results),
-			series: "Counts"
+			data: mevEnrichmentDataAdaptor(topgoJson.results)
 		};
 	}]);
 	ng.element(document).ready(function(){
