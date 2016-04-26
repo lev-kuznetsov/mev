@@ -17,7 +17,7 @@
     "lodash": "^4.11.1",
     "mev-analysis": "file:../../domain/analysis",
     "mev-boxplot": "file:../../charts/mevBoxPlot",
-    "mev-gsea": "file:../../domain/gsea",
+    "mev-gsea": "file:../gsea",
     "mev-hcl": "file:../../domain/hcl",
     "mev-pca": "file:../../domain/pca",
     "mev-results-table": "file:../../widgets/mevResultsTable",

@@ -69,6 +69,11 @@
                                 		[$scope.analysis.params.control, $scope.analysis.params.experiment], 
                                 		$scope.analysis.randomId); 
                             });
+                            $scope.viewGenes = function (filteredResults) {
+
+                                scope.filteredResults = filteredResults;
+                                scope.applyToHeatmap(filteredResults);
+                            };
                             var scope = $scope;
                             $scope.applyToHeatmap = function (filteredResults) {
                                 
@@ -106,7 +111,7 @@
                                     // scope.$apply();
                             })                 
                             
-                            scope.filteredResults = undefined;
+                            // scope.filteredResults = undefined;
                             scope.analysis.getFilteredKeys = function(dimension){
                                 if(dimension==="row")
                                     return scope.filteredResults.map(function(item){
@@ -116,12 +121,6 @@
                             scope.selectionParams = {
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16)
-                            };
-// 
-                            scope.viewGenes = function (filteredResults) {
-                            	
-                            	scope.filteredResults = filteredResults;
-                            	scope.applyToHeatmap(filteredResults);
                             };
                             
                             scope.addSelections = function () {
