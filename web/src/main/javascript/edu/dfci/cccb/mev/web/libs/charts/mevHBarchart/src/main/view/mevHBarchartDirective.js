@@ -96,7 +96,7 @@ define(["lodash", "./mevHBarchart.tpl.html"], function(_, template){"use strict"
 						                .attr("colspan", 3)
 						                .append("strong")
 						                .classed("id", true)
-						                .html(zConfig.get(item.data));
+						                .html(zConfig.label + ": " + zConfig.get(item.data));
 
 						            
 						        
@@ -124,14 +124,13 @@ define(["lodash", "./mevHBarchart.tpl.html"], function(_, template){"use strict"
 							        trowEnter.append("td")
 							            .classed("value",true)
 							            .html(function(p, i) {
-											return _.reduce(
-												scope.config.tooltipFields,
+											var fields = scope.config.tooltip ? scope.config.tooltip.fields : {};
+											return _.reduce(fields,
 												function(html, field, key){
-													return html += ", " + (_.isString(field) ? field : field.label  || key)
-														+ ": " + item.data[key]
+													return html += ", " + key
+														+ ": " +( _.isFunction(field) ? field.call(item.data, item.data) : item.data[field]);
 												},
-												yConfig.get(item.data)
-												+ ", " + zConfig.label + ": " + zConfig.get(item.data));
+												yConfig.get(item.data));
 										});
 
 							        trowEnter.selectAll("td").each(function(p) {
