@@ -8,7 +8,11 @@ define(["lodash", "./mevEnrichmentBarchart.tpl.html"], function(_, template){"us
 			template: template,
 			controller: ["$scope", "mevBarchartNvd3Adaptor", function(scope, mevBarchartNvd3Adaptor){
 
-				
+				if(!scope.config.y)
+					scope.config.y = _.extend({}, {
+						field: "getMatched",
+						precision: 0
+					})
 				var data = scope.config.data;
 				scope.data=mevBarchartNvd3Adaptor(scope.config, data);
 
@@ -25,7 +29,9 @@ define(["lodash", "./mevEnrichmentBarchart.tpl.html"], function(_, template){"us
 		                type: 'multiBarHorizontalChart',
 		                height: d3.max([450, data.length*12]),
 		                x: function(d){return d.getName();},
-		                y: function(d){return d.getMatched();},
+		                y: function(d){
+							return scope.config.y.field ? _.isFunction(d[scope.config.y.field]) ? d[scope.config.y.field](d) : d[scope.config.y.field]  : d.getMatched();
+						},
 		                showControls: false,
 		                showValues: true,
 		                duration: 500,
@@ -33,7 +39,7 @@ define(["lodash", "./mevEnrichmentBarchart.tpl.html"], function(_, template){"us
 		                    showMaxMin: false
 		                },
 		                valueFormat: function(d){
-		                	return d3.format(',.0f')(d);
+		                	return d3.format(',.'+scope.config.y.precision+'f')(d);
 		                },
 		                yAxis: {
 		                    axisLabel: 'Counts',
@@ -102,7 +108,8 @@ define(["lodash", "./mevEnrichmentBarchart.tpl.html"], function(_, template){"us
 
 							        trowEnter.append("td")
 							            .classed("value",true)
-							            .html(function(p, i) { return item.data.getMatched() + 
+							            .html(function(p, i) {
+											return item.data[scope.config.y.field] +
 							            	", Total: " + item.data.getTotal() +
 							            	", p-Value: " + item.data.getPValue();});
 
