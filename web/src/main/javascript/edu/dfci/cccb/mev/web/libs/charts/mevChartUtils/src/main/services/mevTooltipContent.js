@@ -98,10 +98,11 @@ define(["mui", "d3"], function(ng, d3){
 
             //now show the dimension data
             var sTitle = title.node().innerHTML;
+            var colorDim = findColorDim(config);
             if(!isInTitle(sTitle, config.x, item)) addDimRow(tbodyEnter, config.x, item);
             if(!isInTitle(sTitle, config.y, item)) addDimRow(tbodyEnter, config.y, item);
-            if(config.z && !isInTitle(sTitle, config.z, item)) addDimRow(tbodyEnter, config.z, item);
-            if(config.size && !isInTitle(sTitle, config.size, item)) addDimRow(tbodyEnter, config.size, item);
+            if(config.z && config.z !== colorDim && !isInTitle(sTitle, config.z, item)) addDimRow(tbodyEnter, config.z, item);
+            if(config.size && config.size !== colorDim && !isInTitle(sTitle, config.size, item)) addDimRow(tbodyEnter, config.size, item);
 
             //finally append any additional fields
             var fields = config.tooltip ? config.tooltip.fields : {};
