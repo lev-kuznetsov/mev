@@ -6,31 +6,12 @@ define(["lodash", "./mevHBarchart.tpl.html"], function(_, template){"use strict"
 				config: "=mevHbarchart"
 			},
 			template: template,
-			controller: ["$scope", "mevBarchartNvd3Adaptor", "mevTooltipContent", function(scope, mevBarchartNvd3Adaptor, mevTooltipContent){
+			controller: ["$scope", "mevBarchartNvd3Adaptor", "mevTooltipContent", "mevChartDimConfig",
+				function(scope, mevBarchartNvd3Adaptor, mevTooltipContent, mevChartDimConfig){
 
-				function mixinGetter(dimConfig){
-					if(_.isString(dimConfig.field)){
-						dimConfig.get = function(d){
-							return d[dimConfig.field];
-						};
-						dimConfig.label = dimConfig.label || dimConfig.field;
-					}
-					else if(_.isFunction(dimConfig.field))
-						dimConfig.get = dimConfig.field;
-					else
-						throw new Error("DimConfig - no field specified: " + JSON.stringify(dimConfig));
-				}
-
-				function mixinDimConfig(dimConfig){
-					if(!dimConfig)
-						throw new Error("dimConfig is undefined " + JSON.stringify(dimConfig));
-					mixinGetter(dimConfig);
-					return dimConfig;
-				}
-
-				var xConfig = mixinDimConfig(scope.config.x);
-				var yConfig = mixinDimConfig(scope.config.y);
-				var zConfig = mixinDimConfig(scope.config.z);
+				var xConfig = mevChartDimConfig(scope.config.x);
+				var yConfig = mevChartDimConfig(scope.config.y);
+				var zConfig = mevChartDimConfig(scope.config.z);
 				var data = scope.config.data;
 				scope.data=mevBarchartNvd3Adaptor(scope.config, data);
 

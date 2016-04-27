@@ -6,32 +6,13 @@ define(["mui", "./mevDotplot.tpl.html"], function(ng, template){ "use strict";
 				config: "=mevDotplot"
 			},
 			template: template,
-			controller: ["$scope", "mevDotplotNvd3Adaptor", "mevTooltipContent", function(scope, mevDotplotNvd3Adaptor, mevTooltipContent){
+			controller: ["$scope", "mevDotplotNvd3Adaptor", "mevTooltipContent", "mevChartDimConfig",
+				function(scope, mevDotplotNvd3Adaptor, mevTooltipContent, mevChartDimConfig){
 
-				function mixinGetter(dimConfig){
-					if(_.isString(dimConfig.field)){
-						dimConfig.get = function(d){
-							return d[dimConfig.field];
-						};
-						dimConfig.label = dimConfig.label || dimConfig.field;
-					}
-					else if(_.isFunction(dimConfig.field))
-						dimConfig.get = dimConfig.field;
-					else
-						throw new Error("DimConfig - no field specified: " + JSON.stringify(dimConfig));
-				}
-
-				function mixinDimConfig(dimConfig){
-					if(!dimConfig)
-						throw new Error("dimConfig is undefined " + JSON.stringify(dimConfig));
-					mixinGetter(dimConfig);
-					return dimConfig;
-				}
-
-				var xConfig = mixinDimConfig(scope.config.x);
-				var yConfig = mixinDimConfig(scope.config.y);
-				var sizeConfig = mixinDimConfig(scope.config.size);
-				var colorConfig = mixinDimConfig(scope.config.color);
+				var xConfig = mevChartDimConfig(scope.config.x);
+				var yConfig = mevChartDimConfig(scope.config.y);
+				var sizeConfig = mevChartDimConfig(scope.config.size);
+				var colorConfig = mevChartDimConfig(scope.config.color);
 				var data = scope.config.data;
 				scope.data=mevDotplotNvd3Adaptor(scope.config, data);
 
