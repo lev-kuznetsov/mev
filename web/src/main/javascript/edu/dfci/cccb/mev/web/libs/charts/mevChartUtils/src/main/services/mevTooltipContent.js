@@ -63,7 +63,7 @@ define(["mui", "d3"], function(ng, d3){
 
             var tooltip = d3.select(document.createElement("div"))
                 .data([item])
-                .classed("tooltip", true);
+                .classed("mev-tooltip", true);
 
             //show the title
             var title = tooltip.append("div");

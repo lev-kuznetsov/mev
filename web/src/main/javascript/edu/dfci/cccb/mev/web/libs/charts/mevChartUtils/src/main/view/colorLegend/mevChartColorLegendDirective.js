@@ -1,4 +1,4 @@
-define(["lodash", "d3"], function(_, d3){
+define(["lodash", "d3", "./mevChartColorLegend.less"], function(_, d3){
    var directive = function(){
        return {
            restrict: "AEC",
