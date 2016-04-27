@@ -12,7 +12,7 @@ define(["lodash", "d3"], function(_, d3){
                _.extend(scope.config, {
                    legend: {
                        width: 130,
-                       height: 300
+                       height: 250
                    }
                 });
 
