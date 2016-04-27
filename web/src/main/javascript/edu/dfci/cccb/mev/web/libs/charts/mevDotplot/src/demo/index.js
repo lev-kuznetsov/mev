@@ -31,6 +31,9 @@ define(["mui", "lodash", "mev-dotplot", "./topgo_dummy.json"], function(ng, _, m
 			  precision: 4
 		  },
 		  tooltip: {
+			  title: function(config, item){
+			  	return config.x.label + ": " + config.x.get(item.data);
+			  },
 			  fields: {
 				  "Total": function(d){
 					  return d.annotatedGenes;
