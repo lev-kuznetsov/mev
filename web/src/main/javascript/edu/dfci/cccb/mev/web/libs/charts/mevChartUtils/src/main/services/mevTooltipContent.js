@@ -1,26 +1,27 @@
 define(["mui", "d3"], function(ng, d3){
     var service = function (){
         return function mevTooltipContent(config, item){
-            // Format function for the tooltip values column.
-            var valueFormatter = function(d, i) {
-                return d;
-            };
+            if (item === null) return '';
+            _.extend(config.tooltip || _.extend(config, {tooltip: {}}), {
+                title: function(config, item){
+                    var key = config.x.label;
+                    if(!key && _.isString(config.x.field)) key = config.x.field;
+                    return (key ? key + ": " :  "") + config.x.get(item.data);
+                }
+            });
 
-            // Format function for the tooltip header value.
-            var headerFormatter = function(d) {
-                return "" + ": " + d;
-            };
-
-            var keyFormatter = function(d, i) {
-                return d;
-            };
-
-            if (item === null) {
-                return '';
-            }
+            function keyFormatter(d, i) { return d;};
 
             function isInTitle(sTitle, dimConfig, item){
                 return sTitle.indexOf(dimConfig.get(item.data)) >= 0;
+            }
+            function findColorDim(config){
+                var colorDim = _.find(config, function(item, key){
+                    //it is a color dimension if it has a "colors" attribute
+                    // or if it's under the "color" key
+                    return item.colors || key === "color";
+                })
+                return colorDim;
             }
             function addDimRow(tbodyEnter, dimConfig, item){
                 var trowEnter = tbodyEnter.selectAll("tr")
@@ -86,9 +87,9 @@ define(["mui", "d3"], function(ng, d3){
                 .classed("key",true)
                 .classed("total",function(p) { return !!p.total;})
                 .html(function(p, i) {
-                        return config.color ?
-                        keyFormatter(config.color.label, i)
-                        + ": " + config.color.get(item.data)
+                        var colorDim = findColorDim(config);
+                        return colorDim ?
+                            keyFormatter(colorDim.label, i) + ": " + colorDim.get(item.data)
                             : keyFormatter(p.key, i);
                     }
                 );
