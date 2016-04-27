@@ -6,26 +6,21 @@ define(["lodash", "./mevHBarchart.tpl.html"], function(_, template){"use strict"
 				config: "=mevHbarchart"
 			},
 			template: template,
-			controller: ["$scope", "mevBarchartNvd3Adaptor", "mevTooltipContent", "mevChartDimConfig",
-				function(scope, mevBarchartNvd3Adaptor, mevTooltipContent, mevChartDimConfig){
-
-				var xConfig = mevChartDimConfig(scope.config.x);
-				var yConfig = mevChartDimConfig(scope.config.y);
-				var zConfig = mevChartDimConfig(scope.config.z);
-				var data = scope.config.data;
-				scope.data=mevBarchartNvd3Adaptor(scope.config, data);
-
-				_.extend(zConfig, {
-					colors: ["blue", "yellow"],
-					min: 0,
-					max: zConfig.get(_.maxBy(data, zConfig.get))
-				})
-				var zScale = d3.scale.linear().domain([zConfig.min, zConfig.max]).range(zConfig.colors);
-
-				scope.options = {
+			controller: ["$scope", "mevBarchartNvd3Adaptor", "mevTooltipContent", "mevChartDimConfig", "mevChartColorDimConfig",
+				function(scope, mevBarchartNvd3Adaptor, mevTooltipContent, mevChartDimConfig, mevChartColorDimConfig){
+					var input = scope.config.data;
+					var xConfig = mevChartDimConfig(scope.config.x);
+					var yConfig = mevChartDimConfig(scope.config.y);
+					var zConfig = mevChartColorDimConfig(
+						mevChartDimConfig(scope.config.z),
+						input
+					);
+					
+					scope.data=mevBarchartNvd3Adaptor(scope.config, input);
+					scope.options = {
 		            chart: {
 		                type: 'multiBarHorizontalChart',
-		                height: d3.max([450, data.length*12]),
+		                height: d3.max([450, input.length*12]),
 		                x: xConfig.get,
 		                y: yConfig.get,
 		                showControls: false,
@@ -44,7 +39,7 @@ define(["lodash", "./mevHBarchart.tpl.html"], function(_, template){"use strict"
 		                    }
 		                },
 		                barColor: function(d){
-		                  return zScale(zConfig.get(d));
+		                  return zConfig.scale(zConfig.get(d));
 		                },
 		                margin: {"left": 400},
 		                tooltip: {

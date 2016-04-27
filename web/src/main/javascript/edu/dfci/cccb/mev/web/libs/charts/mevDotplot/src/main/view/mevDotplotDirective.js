@@ -6,57 +6,49 @@ define(["mui", "./mevDotplot.tpl.html"], function(ng, template){ "use strict";
 				config: "=mevDotplot"
 			},
 			template: template,
-			controller: ["$scope", "mevDotplotNvd3Adaptor", "mevTooltipContent", "mevChartDimConfig",
-				function(scope, mevDotplotNvd3Adaptor, mevTooltipContent, mevChartDimConfig){
+			controller: ["$scope", "mevDotplotNvd3Adaptor", "mevTooltipContent", "mevChartDimConfig", "mevChartColorDimConfig",
+				function(scope, mevDotplotNvd3Adaptor, mevTooltipContent, mevChartDimConfig, mevChartColorDimConfig){
+					var input = scope.config.data;
+					var xConfig = mevChartDimConfig(scope.config.x);
+					var yConfig = mevChartDimConfig(scope.config.y);
+					var sizeConfig = mevChartDimConfig(scope.config.size);
+					var colorConfig = mevChartColorDimConfig(
+							mevChartDimConfig(scope.config.color),
+							input);
 
-				var xConfig = mevChartDimConfig(scope.config.x);
-				var yConfig = mevChartDimConfig(scope.config.y);
-				var sizeConfig = mevChartDimConfig(scope.config.size);
-				var colorConfig = mevChartDimConfig(scope.config.color);
-				var data = scope.config.data;
-				scope.data=mevDotplotNvd3Adaptor(scope.config, data);
-
-				_.extend(colorConfig, {
-					colors: ["blue", "yellow"],
-					min: 0,
-					max: colorConfig.get(_.maxBy(data, colorConfig.get))
-				});
-				_.extend(colorConfig, {
-					scale: d3.scale.linear().domain([colorConfig.min, colorConfig.max]).range(colorConfig.colors)
-				});
-
-				scope.options = {
-					chart: {
-						type: 'dotPlotChart',
-						height: _.max([450, 10*scope.data.length]),
-						x: xConfig.get,
-						y: yConfig.get,
-						z: sizeConfig.get,
-						showControls: false,
-						showValues: true,
-						duration: 500,
-						xAxis: {
-							showMaxMin: false
-						},
-						valueFormat: function(d){
-							return d3.format(',.4f')(d);
-						},
-						yAxis: {
-							axisLabel: 'Ratio',
-							tickFormat: function(d){
+					scope.data=mevDotplotNvd3Adaptor(scope.config, input);
+					scope.options = {
+						chart: {
+							type: 'dotPlotChart',
+							height: _.max([450, 10*scope.data.length]),
+							x: xConfig.get,
+							y: yConfig.get,
+							z: sizeConfig.get,
+							showControls: false,
+							showValues: true,
+							duration: 500,
+							xAxis: {
+								showMaxMin: false
+							},
+							valueFormat: function(d){
 								return d3.format(',.4f')(d);
+							},
+							yAxis: {
+								axisLabel: 'Ratio',
+								tickFormat: function(d){
+									return d3.format(',.4f')(d);
+								}
+							},
+							barColor: function(d){
+								return colorConfig.scale(colorConfig.get(d));
+							},
+							margin: {"left": 300},
+							tooltip: {
+								contentGenerator: mevTooltipContent.bind(null, scope.config)
 							}
-						},
-						barColor: function(d){
-							return colorConfig.scale(colorConfig.get(d));
-						},
-						margin: {"left": 300},
-						tooltip: {
-							contentGenerator: mevTooltipContent.bind(null, scope.config)
 						}
-					}
-				};
-			}],
+					};
+				}],
 			link: function(scope, elem, attr, ctrl){
 				var colorLegendConfig = {
 					width: 130,
