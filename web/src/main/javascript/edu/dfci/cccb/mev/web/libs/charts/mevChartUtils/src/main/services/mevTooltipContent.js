@@ -2,11 +2,13 @@ define(["mui", "d3"], function(ng, d3){
     var service = function (){
         return function mevTooltipContent(config, item){
             if (item === null) return '';
-            _.extend(config.tooltip || _.extend(config, {tooltip: {}}), {
-                title: function(config, item){
-                    var key = config.x.label;
-                    if(!key && _.isString(config.x.field)) key = config.x.field;
-                    return (key ? key + ": " :  "") + config.x.get(item.data);
+            _.extend(config, {
+                tooltip: {
+                    title: function(config, item){
+                        var key = config.x.label;
+                        if(!key && _.isString(config.x.field)) key = config.x.field;
+                        return (key ? key + ": " :  "") + config.x.get(item.data);
+                    }
                 }
             });
 
