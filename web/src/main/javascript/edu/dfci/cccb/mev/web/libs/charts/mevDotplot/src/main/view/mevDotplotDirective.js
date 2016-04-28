@@ -14,7 +14,9 @@ define(["mui", "./mevDotplot.tpl.html"], function(ng, template){ "use strict";
 					var sizeConfig = mevChartDimConfig(scope.config.size);
 					var colorConfig = mevChartColorDimConfig(
 							mevChartDimConfig(scope.config.color),
-							input);
+							input, function() {
+								scope.api.refresh();
+						});
 
 					scope.data=mevDotplotNvd3Adaptor(scope.config, input);
 					scope.options = {

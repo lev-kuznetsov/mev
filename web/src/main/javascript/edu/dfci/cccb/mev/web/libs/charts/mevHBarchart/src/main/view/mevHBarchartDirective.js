@@ -13,8 +13,9 @@ define(["lodash", "./mevHBarchart.tpl.html"], function(_, template){"use strict"
 					var yConfig = mevChartDimConfig(scope.config.y);
 					var zConfig = mevChartColorDimConfig(
 						mevChartDimConfig(scope.config.z),
-						input
-					);
+						input, function() {
+							scope.api.refresh();
+						});
 
 					scope.data=mevBarchartNvd3Adaptor(scope.config, input);
 					scope.options = {
