@@ -14,16 +14,20 @@
   },
   "dependencies": {
     "angular": "1.4.x",
-    "lodash": "^2.4.2",
-    "jquery": "~2.2.0"
+    "jquery": "~2.2.0",
+    "lodash": "^4.11.1"
   },
   "system": {
     "meta": {
       "mui": {
-        "deps": ["angular"]        
+        "deps": [
+          "angular"
+        ]
       },
-      "angular": {        
-        "deps": ["jquery"]
+      "angular": {
+        "deps": [
+          "jquery"
+        ]
       }
     }
   }

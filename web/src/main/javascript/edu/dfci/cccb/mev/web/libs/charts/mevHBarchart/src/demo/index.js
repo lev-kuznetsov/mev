@@ -18,11 +18,13 @@ define(["mui", "lodash", "mev-hbarchart", "./topgo_dummy.json", "./gsea.json"], 
 			z: {
 				field: "pValue"
 			},
-			tooltipFields: {
-				"annotatedGenes": {
-					label: "Total"
-				},
-				"expected": {}
+			tooltip: {
+				fields: {
+					"Total": function(d){
+						return d["annotatedGenes"];
+					},
+					"Expected": "expected"
+				}
 			}
 		};
 		$scope.gseaConfig={
