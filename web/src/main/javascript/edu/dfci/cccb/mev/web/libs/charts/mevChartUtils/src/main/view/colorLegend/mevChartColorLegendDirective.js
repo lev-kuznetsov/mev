@@ -27,8 +27,8 @@ define(["lodash", "d3", "./mevChartColorLegend.tpl.html", "./mevChartColorLegend
                    draw: function(config, d3root){
                        var colorLegendConfig = config.legend;
                        d3root.select("svg").remove();
-                       // var svgColorValueLegend = d3root.insert("svg", ":first-child");
-                       var svgColorValueLegend = d3root.append("svg");
+                       var svgColorValueLegend = d3root.insert("svg", ":first-child");
+                       // var svgColorValueLegend = d3root.append("svg");
                        svgColorValueLegend.attr("width", colorLegendConfig.width).attr("height", colorLegendConfig.height);
 
                        var w = colorLegendConfig.width, h = colorLegendConfig.height;

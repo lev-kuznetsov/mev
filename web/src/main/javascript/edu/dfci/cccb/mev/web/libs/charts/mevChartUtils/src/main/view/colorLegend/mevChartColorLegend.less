@@ -2,6 +2,12 @@
   .legend,
   .mev-chart-color-legend,
   [mev-chart-color-legend]{
+    display: flex;
+    flex-direction: column;
+    > input, select{
+      max-width: 50%;
+      margin-left: 50px;
+    }
     .axis text {
       font: 10px sans-serif;
     }
