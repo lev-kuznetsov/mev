@@ -1,4 +1,4 @@
-define(["lodash", "d3", "./mevChartColorLegend.tpl.html", "./mevChartColorLegend.less"], function(_, d3, template){
+define(["lodash", "d3", "./mevChartColorLegend.tpl.html", "./mevChartColorLegend.less"], function(_, d3, template){ "use strict";
    var directive = function(){
        return {
            restrict: "AEC",
@@ -9,51 +9,21 @@ define(["lodash", "d3", "./mevChartColorLegend.tpl.html", "./mevChartColorLegend
            controller: ["$scope", function(scope){
                if(!scope.config)
                    throw new Error("Config is undefined");
-
                _.extend(scope.config, {
                    legend: {
                        width: 80,
                        height: 190,
                        margin: [30, 50],
-                       color: {
-                           available: [
-                               {
-                                   label: "Blue,Yellow",
-                                   range: ["blue", "yellow"]
-                               },
-                               {
-                                   label: "Red,Green",
-                                   range: ['red', 'green'],
-                               },
-                               {
-                                   label: "Red,Blue",
-                                   range: ['red', 'blue']
-                               }
-                           ],
-                           find: function(color){
-                               if(_.isArray(color))
-                                   return _.find(this.available, function(item){
-                                       return _.isEqual(color, item.range);
-                                   });
-                               else
-                                   return _.find(this.available, function(item){
-                                       return color===item.label;
-                                   });
-                           }
-                       }
                    }
                });
-
-
            }],
            link: function(scope, elem, attr, ctrl){
                scope.vm = {
                    updateColor: function updateColor($event){
-                       console.debug("udpatecolor", scope.vm.color);
                        scope.config.updateColor(scope.vm.color);
                        this.draw(scope.config, d3.select(elem[0]));
                    },
-                   color: scope.config.legend.color.find(scope.config.colors),
+                   color: scope.config.colors,
                    draw: function(config, d3root){
                        var colorLegendConfig = config.legend;
                        d3root.select("svg").remove();
