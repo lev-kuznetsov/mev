@@ -774,29 +774,45 @@ cirvle.selected {
   display: inline-block;
 }
 
-/*mev-enrichment-dotplot@0.0.1#src/main/style/mevEnrichmentDotplot.less!$less*/
-.brush {
-  fill: blue;
-  stroke: blue;
-  fill-opacity: 0.2;
-  stroke-opacity: 0.8;
+/*mev-chart-utils@0.0.1#src/main/view/colorLegend/mevChartColorLegend.less!$less*/
+.chart .legend,
+.chart .mev-chart-color-legend,
+.chart [mev-chart-color-legend] {
+  display: flex;
+  flex-direction: column;
 }
-path.nv-point.selected,
-cirvle.selected {
-  stroke: red;
-  fill: red;
+.chart .legend > input,
+.chart .mev-chart-color-legend > input,
+.chart [mev-chart-color-legend] > input,
+.chart .legend select,
+.chart .mev-chart-color-legend select,
+.chart [mev-chart-color-legend] select {
+  max-width: 50%;
+  margin-left: 50px;
 }
-.nvtooltip .series-color {
-  width: 10px;
-  height: 10px;
-  margin-left: 5px;
-  margin-bottom: 2px;
-  display: inline-block;
-  vertical-align: middle;
+.chart .legend .axis text,
+.chart .mev-chart-color-legend .axis text,
+.chart [mev-chart-color-legend] .axis text {
+  font: 10px sans-serif;
 }
-.nvtooltip table td.value {
-  font-weight: normal;
+.chart .legend .axis line,
+.chart .mev-chart-color-legend .axis line,
+.chart [mev-chart-color-legend] .axis line,
+.chart .legend .axis path,
+.chart .mev-chart-color-legend .axis path,
+.chart [mev-chart-color-legend] .axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
 }
+.chart .legend svg,
+.chart .mev-chart-color-legend svg,
+.chart [mev-chart-color-legend] svg {
+  padding-left: 50px;
+  display: block;
+}
+
+/*mev-chart-utils@0.0.1#src/main/style/mevChart.less!$less*/
 .chart {
   display: flex;
   flex-direction: row;
@@ -806,18 +822,6 @@ cirvle.selected {
 .chart .controls {
   padding-top: 5px;
   flex: 3 0 20%;
-}
-.chart .controls .legend .axis text {
-  font: 10px sans-serif;
-}
-.chart .controls .legend .axis line,
-.chart .controls .legend .axis path {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-.chart .controls .legend svg {
-  padding-left: 50px;
 }
 .chart .controls .inlineGroup label {
   display: inline-block;
@@ -882,18 +886,7 @@ cirvle.selected {
   flex: 10;
 }
 
-/*mev-hbarchart@0.0.1#src/main/style/mevHBarchart.less!$less*/
-.brush {
-  fill: blue;
-  stroke: blue;
-  fill-opacity: 0.2;
-  stroke-opacity: 0.8;
-}
-path.nv-point.selected,
-cirvle.selected {
-  stroke: red;
-  fill: red;
-}
+/*mev-chart-utils@0.0.1#src/main/style/mevTooltipContent.less!$less*/
 .nvtooltip .series-color {
   width: 10px;
   height: 10px;
@@ -902,93 +895,23 @@ cirvle.selected {
   display: inline-block;
   vertical-align: middle;
 }
-.nvtooltip table td.value {
+.nvtooltip .mev-tooltip {
+  margin: 6px;
+}
+.nvtooltip .mev-tooltip .tooltip-title {
+  font-weight: bold;
+  font-size: larger;
+}
+.nvtooltip .mev-tooltip table {
+  margin: 0px;
+}
+.nvtooltip .mev-tooltip table td.value {
   font-weight: normal;
 }
-.chart {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-.chart .controls {
-  padding-top: 5px;
-  flex: 3 0 20%;
-}
-.chart .controls .legend .axis text {
-  font: 10px sans-serif;
-}
-.chart .controls .legend .axis line,
-.chart .controls .legend .axis path {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-.chart .controls .legend svg {
-  padding-left: 50px;
-}
-.chart .controls .inlineGroup label {
-  display: inline-block;
-  text-align: right;
-  margin-bottom: 10px;
-  float: none;
-  clear: none;
-}
-.chart .controls .inlineGroup label:after {
-  content: ":";
-}
-.chart .controls .inlineGroup input,
-.chart .controls .inlineGroup select,
-.chart .controls .inlineGroup table {
-  display: inline-block;
-  float: none;
-}
-.chart .controls .btn-group > label {
-  display: inline-block;
-  text-align: initial;
-  float: initial;
-  clear: initial;
-}
-.chart .controls .btn-group > label:after {
-  content: "";
-}
-.chart .controls label {
-  display: inline-block;
-  float: left;
-  clear: left;
-  /*width: 250px;*/
-  text-align: right;
-  margin-bottom: 10px;
-}
-.chart .controls label:after {
-  content: ":";
-}
-.chart .controls label.break {
-  display: block;
-  float: none;
-  text-align: initial;
-}
-.chart .controls input,
-.chart .controls select,
-.chart .controls table {
-  display: inline-block;
-  float: left;
-}
-.chart .body {
-  flex: 7 7 80%;
-}
-.chart .footer {
-  flex: 7 7 80%;
-  max-width: 80%;
-  /* display: flex; */
-  /* flex-direction: row; */
-  align-self: flex-end;
-  display: flex;
-  flex-direction: row;
-}
-.chart .footer .selection {
-  flex: 10;
-}
+
+/*mev-dotplot@0.0.1#src/main/style/mevDotplot.less!$less*/
+
+/*mev-hbarchart@0.0.1#src/main/style/mevHBarchart.less!$less*/
 
 /*mev-heatmap@0.0.1#src/main/style/mev-heatmap.less!$less*/
 #heatmap-Legend {
