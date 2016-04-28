@@ -12,8 +12,15 @@ define(["lodash"], function(_){ "use strict";
 				data: scope.analysis.result,
 				series: "Counts"
 			}
-			scope.headers = [	       
-		       {
+			scope.headers = [
+				{
+					'name': 'ID',
+					'field': "ID",
+					'icon': "search",
+					'link': function (value) {
+						return "http://www.reactome.org/content/detail/R-HSA-" + value;
+					}
+				},{
 		           'name': 'Description',
 		           'field': "Description",
 		           'icon': "search",
