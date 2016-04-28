@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
-    "mevPathwayEnrichment": "file:../../domain/pathwayEnrichment",
+    "mevPathwayEnrichment": "file:../../analyses/pathwayEnrichment",
     "systemjs-plugin-json": "^0.1.0"
   },
   "system": {
