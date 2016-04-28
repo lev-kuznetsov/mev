@@ -11,15 +11,15 @@ define(["lodash", "d3", "./mevChartColorLegend.tpl.html", "./mevChartColorLegend
                    throw new Error("Config is undefined");
                _.extend(scope.config, {
                    legend: {
-                       width: 80,
+                       width: 150,
                        height: 190,
-                       margin: [30, 50],
+                       margin: [30, 120],
                    }
                });
            }],
            link: function(scope, elem, attr, ctrl){
                scope.vm = {
-                   updateColor: function updateColor($event){
+                   updateColor: function updateColor(broadcast){
                        scope.config.updateColor(scope.vm.color);
                        this.draw(scope.config, d3.select(elem[0]));
                    },
@@ -27,7 +27,8 @@ define(["lodash", "d3", "./mevChartColorLegend.tpl.html", "./mevChartColorLegend
                    draw: function(config, d3root){
                        var colorLegendConfig = config.legend;
                        d3root.select("svg").remove();
-                       var svgColorValueLegend = d3root.insert("svg", ":first-child");
+                       // var svgColorValueLegend = d3root.insert("svg", ":first-child");
+                       var svgColorValueLegend = d3root.append("svg");
                        svgColorValueLegend.attr("width", colorLegendConfig.width).attr("height", colorLegendConfig.height);
 
                        var w = colorLegendConfig.width, h = colorLegendConfig.height;
@@ -42,8 +43,8 @@ define(["lodash", "d3", "./mevChartColorLegend.tpl.html", "./mevChartColorLegend
                            .attr("y2", "100%")
                            .attr("spreadMethod", "pad");
 
-                       legend.append("stop").attr("offset", "0%").attr("stop-color", this.color.range[1]).attr("stop-opacity", 1);
-                       legend.append("stop").attr("offset", "100%").attr("stop-color", this.color.range[0]).attr("stop-opacity", 1);
+                       legend.append("stop").attr("offset", "0%").attr("stop-color", config.colors.range[1]).attr("stop-opacity", 1);
+                       legend.append("stop").attr("offset", "100%").attr("stop-color", config.colors.range[0]).attr("stop-opacity", 1);
 
                        key.append("rect").attr("width", w - marginh).attr("height", h - marginv).style("fill", "url(#gradient)").attr("transform", "translate(0,10)");
 
@@ -55,8 +56,13 @@ define(["lodash", "d3", "./mevChartColorLegend.tpl.html", "./mevChartColorLegend
                            .call(yAxis)
                            .append("text").attr("y", h - marginv).attr("dy", ".71em").style("text-anchor", "end").text(config.label);
                    }
-               }
-
+               };
+               scope.$on("mui:charts:color:updated", function($event, source, color){
+                   if(source!==scope.config){
+                       scope.vm.draw(scope.config, d3.select(elem[0]));
+                       scope.vm.color = scope.config.colors;
+                   }
+               });
                scope.vm.draw(scope.config, d3.select(elem[0]));
            }
        }
