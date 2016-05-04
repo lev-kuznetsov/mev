@@ -1,0 +1,30 @@
+{
+  "name": "mev-network-graph",
+  "homepage": "https://github.com/apartensky/mev",
+  "authors": [
+    "apartensky <apartensky@gmail.com>"
+  ],
+  "description": "mev network graph",
+  "main": "src/main/mev-network-graph",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "vega": "~2.5.2",
+    "steal": "0.13.2",
+    "ng-vega": "~1.3.2"
+  },
+  "system": {
+    "configDependencies": [
+      "package.json!npm"
+    ]
+  }
+}

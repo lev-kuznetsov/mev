@@ -1,0 +1,28 @@
+{
+  "name": "mev-network-graph",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/main/mev-network-graph.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "dependencies": {
+    "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
+    "mui": "file:../../mui",
+    "steal": "^0.13.2"
+  },
+  "devDependencies": {
+    "systemjs-plugin-json": "^0.1.0"
+  },
+  "system": {
+    "configDependencies": [
+      "bower.json!bower"
+    ]
+  }
+}
