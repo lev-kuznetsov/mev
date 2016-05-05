@@ -14,12 +14,12 @@
       "url": "data/miserables.json",
       "format": {"type": "json", "property": "nodes"},
       "transform": [{
-          "type": "force",
-          "links": "edges",
-          "linkDistance": 70,
-          "charge": -80,
-          "iterations": 1000
-        }]
+        "type": "force",
+        "links": "edges",
+        "linkDistance": 70,
+        "charge": -80,
+        "iterations": 1000
+      }]
     },
     {
       "name": "activeNode",
@@ -33,11 +33,37 @@
           "type": "formula",
           "field": "ff_y",
           "expr": "hoverNode.y > 400 ? hoverNode.y - 10 : hoverNode.y + 20"
+        },
+        {
+          "type": "formula",
+          "field": "fields",
+          "expr": "[{ label: tooltip.config.fields[1].name, value: datum.datum[tooltip.config.fields[1].name], index: 1 }]"
         }
       ],
       "modify": [{
         "type": "toggle",
         "signal": "hoverNode"
+      }]
+    },
+    {
+      "name": "tooltip",
+      "values": [
+        {
+          "name": "name"
+        },
+        {
+          "name": "index"
+        },
+        {
+          "name": "group"
+        }
+      ],
+      "transform": [{
+        "type": "formula",
+        "expr": "if(hoverNode.datum, hoverNode.datum[datum.name], null)",
+        "field": "value"
+      },{
+        "type": "rank"
       }]
     },
     {
@@ -49,13 +75,30 @@
     "name": "hoverNode",
     "init": {},
     "streams": [{
-        "type": "@node:mouseover",
-        "expr": "{ datum: eventItem().datum, x: eventX(), y: eventY() }"
-      },
-      {
-        "type": "@node:mouseout",
-        "expr": "{}"
-      }]
+      "type": "@node:mouseover",
+      "expr": "{ datum: eventItem().datum, x: eventX(), y: eventY() }"
+    },{
+      "type": "@node:mouseout",
+      "expr": "{}"
+    }]
+  },{
+    "name": "tooltip",
+    "init": {
+      "config": {
+        "fields": [
+          {
+            "name": "name"
+          },
+          {
+            "name": "index"
+          },
+          {
+            "name": "group"
+          }
+        ]
+      }
+    },
+    "expr": ""
   }],
   "scales": [
     {
@@ -120,24 +163,37 @@
       "from": {"data": "activeNode"},
       "properties": {
         "update": {
-          "width": {"value": 250},
-          "height": {"value": 80},
-          "fill": {"value": "#ffa"},
-          "fillOpacity": {"value": 0.85},
-          "stroke": {"value": "#aaa"},
-          "strokeWidth": {"value": 0.5},
           "x": {"field": "ff_x"},
           "y": {"field": "ff_y"}
         }
       },
       "marks": [{
+        "type": "rect",
+        "properties": {
+            "update": {
+              "width": {"value": 250},
+              "height": {"value": 80},
+              "fill": {"value": "#ffa"},
+              "fillOpacity": {"value": 0.85},
+              "stroke": {"value": "#aaa"},
+              "strokeWidth": {"value": 0.5}
+            }
+          }
+        },{
         "type": "text",
+        "from": {
+          "data": "tooltip"
+        },
         "properties": {
           "update": {
-            "fill": {"value": "black"},
-            "text": {"field": {"parent": "datum.name"}},
-            "x": {"value": 10},
-            "y": {"value": 10}
+            "fill": {
+              "value": "black"
+            },
+            "text": {
+              "template": "{{datum.name}}:{{datum.value}}"
+            },
+            "x": {"value": 0},
+            "y": {"field": "rank", "mult": 10}
           }
         }
       }]
