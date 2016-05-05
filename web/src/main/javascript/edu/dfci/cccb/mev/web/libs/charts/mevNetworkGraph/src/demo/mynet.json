@@ -27,7 +27,7 @@
         {
           "type": "formula",
           "field": "ff_x",
-          "expr": "hoverNode.x > 650 ? hoverNode.x - 260 : hoverNode.x + 10"
+          "expr": "hoverNode.x > (width - 100) ? hoverNode.x - 80 : hoverNode.x + 10"
         },
         {
           "type": "formula",
@@ -49,21 +49,47 @@
       "name": "tooltip",
       "values": [
         {
-          "name": "name"
+          "name": "name",
+          "label": "Name"
         },
         {
-          "name": "index"
+          "name": "index",
+          "label": "Index"
         },
         {
-          "name": "group"
+          "name": "group",
+          "label": "Group"
         }
       ],
       "transform": [{
+        "type": "formula",
+        "expr": "if(datum.label, datum.label, datum.name)",
+        "field": "label"
+      },{
         "type": "formula",
         "expr": "if(hoverNode.datum, hoverNode.datum[datum.name], null)",
         "field": "value"
       },{
         "type": "rank"
+      },{
+        "type": "formula",
+        "expr": "if(hoverNode.datum, length(hoverNode.datum[datum.name])+length(datum.label), 0)",
+        "field": "length"
+      }]
+    },{
+      "name": "tooltip_summary",
+      "source": "tooltip",
+      "transform": [{
+        "type": "aggregate",
+        "summarize": [{
+          "field": "*",
+          "ops": ["count"],
+          "as": ["count"]
+        },{
+          "field": "length",
+          "ops": "max",
+          "as": "longest"
+        }]
       }]
     },
     {
@@ -169,17 +195,18 @@
       },
       "marks": [{
         "type": "rect",
+        "from": {"data": "tooltip_summary"},
         "properties": {
-            "update": {
-              "width": {"value": 250},
-              "height": {"value": 80},
-              "fill": {"value": "#ffa"},
-              "fillOpacity": {"value": 0.85},
-              "stroke": {"value": "#aaa"},
-              "strokeWidth": {"value": 0.5}
-            }
+          "update": {
+            "width": {"field": "longest", "mult": 10},
+            "height": {"field": "count", "mult": 13, "offset": 5},
+            "fill": {"value": "#ffa"},
+            "fillOpacity": {"value": 0.85},
+            "stroke": {"value": "#aaa"},
+            "strokeWidth": {"value": 0.5}
           }
-        },{
+        }
+      },{
         "type": "text",
         "from": {
           "data": "tooltip"
@@ -190,10 +217,10 @@
               "value": "black"
             },
             "text": {
-              "template": "{{datum.name}}:{{datum.value}}"
+              "template": "{{datum.label}}: {{datum.value}}"
             },
-            "x": {"value": 0},
-            "y": {"field": "rank", "mult": 10}
+            "x": {"value": 5},
+            "y": {"field": "rank", "mult": 13}
           }
         }
       }]
