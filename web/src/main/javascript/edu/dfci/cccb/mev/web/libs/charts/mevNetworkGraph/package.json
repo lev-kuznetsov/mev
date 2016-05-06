@@ -13,6 +13,7 @@
   "author": "apartensky",
   "license": "ISC",
   "dependencies": {
+    "lodash": "^4.11.2",
     "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
     "mui": "file:../../mui",
     "steal": "^0.13.2"

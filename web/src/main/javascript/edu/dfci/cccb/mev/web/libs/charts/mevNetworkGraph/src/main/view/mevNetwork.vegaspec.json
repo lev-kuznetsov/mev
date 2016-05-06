@@ -5,14 +5,10 @@
 
   "data": [
     {
-      "name": "edges",
-      "url": "data/miserables.json",
-      "format": {"type": "json", "property": "links"}
+      "name": "edges"
     },
     {
       "name": "nodes",
-      "url": "data/miserables.json",
-      "format": {"type": "json", "property": "nodes"},
       "transform": [{
         "type": "force",
         "links": "edges",
@@ -35,26 +31,12 @@
           "expr": "hoverNode.y > 400 ? hoverNode.y - 10 : hoverNode.y + 20"
         }],
       "modify": [{
-        "type": "toggle",
-        "signal": "hoverNode"
-      }]
+          "type": "toggle",
+          "signal": "hoverNode"
+        }]
     },
     {
       "name": "tooltip",
-      "values": [
-        {
-          "name": "name",
-          "label": "Name"
-        },
-        {
-          "name": "index",
-          "label": "Index"
-        },
-        {
-          "name": "group",
-          "label": "Group"
-        }
-      ],
       "transform": [{
         "type": "formula",
         "expr": "if(datum.label, datum.label, datum.name)",
@@ -70,7 +52,8 @@
         "expr": "if(hoverNode.datum, length(hoverNode.datum[datum.name])+length(datum.label), 0)",
         "field": "length"
       }]
-    },{
+    },
+    {
       "name": "tooltip_summary",
       "source": "tooltip",
       "transform": [{
@@ -85,22 +68,21 @@
           "as": "longest"
         }]
       }]
-    },
-    {
-      "name": "hello",
-      "values": ["hello"]
     }
   ],
   "signals": [{
     "name": "hoverNode",
     "init": {},
-    "streams": [{
-      "type": "@node:mouseover",
-      "expr": "{ datum: eventItem().datum, x: eventX(), y: eventY() }"
-    },{
-      "type": "@node:mouseout",
-      "expr": "{}"
-    }]
+    "streams": [
+      {
+        "type": "@node:mouseover",
+        "expr": "{ datum: eventItem().datum, x: eventX(), y: eventY() }"
+      },
+      {
+        "type": "@node:mouseout",
+        "expr": "{}"
+      }
+    ]
   }],
   "scales": [
     {
@@ -116,18 +98,11 @@
         "data": "nodes", "field": "group"
       },
       "range": "category20"
-    },
-    {
-      "name": "weight",
-      "type": "linear",
-      "domain": {
-        "data": "edges", "field": "value"
-      },
-      "range": [1, 10]
     }
   ],
   "marks": [
     {
+      "name": "edge",
       "type": "path",
       "from": {
         "data": "edges",
@@ -141,10 +116,8 @@
       "properties": {
         "update": {
           "path": {"field": "layout_path"},
-          "stroke": {"value": "#ccc"},
-          "strokeWidth": {"scale": "weight", "field": "value"}
-        },
-        "hover": {"stroke": {"value": "#000"}}
+          "stroke": {"value": "#ccc"}
+        }
       }
     },
     {
@@ -153,7 +126,7 @@
       "from": {"data": "nodes"},
       "properties": {
         "enter": {
-          "shape": {"scale": "shapes", "field": "group"},
+          "shape": {"scale": "shapes", "field": "color"},
           "fill": {"scale": "colors", "field": "group"},
           "fillOpacity": {"value": 0.5},
           "stroke": {"value": "steelblue"}

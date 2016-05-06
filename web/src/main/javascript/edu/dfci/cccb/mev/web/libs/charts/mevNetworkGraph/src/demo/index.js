@@ -1,5 +1,5 @@
-define(["mui", "d3", "vega", "./barchart_demo.spec.json", "./force.spec.json", "./mynet.json"],
-function(ng, d3, vg, barchartJson, networkJson, mynetJson){"use strict";
+define(["mui", "d3", "vega", "mev-network-graph", "./data/miserables.json", "./barchart_demo.spec.json", "./force.spec.json", "./mynet.json"],
+function(ng, d3, vg, mevNetworkGraph, miserablesJson, barchartJson, networkJson, mynetJson){"use strict";
     var demo = ng.module("mev-network-graph-demo", arguments, arguments)
         .controller("DemoCtrl", ["$scope", function($scope){
 
@@ -20,6 +20,13 @@ function(ng, d3, vg, barchartJson, networkJson, mynetJson){"use strict";
             parse(mynetJson, "network-svg", "svg");
             parse(mynetJson, "network-canvas");
 
+            $scope.mevNetworkGraphConfig = {
+                renderer: 'canvas',
+                edge: {
+                    field: "links"
+                },
+                data: miserablesJson
+            }
         }]);
 
     ng.element(document).ready(function(){
