@@ -20,13 +20,40 @@ function(ng, d3, vg, mevNetworkGraph, miserablesJson, barchartJson, networkJson,
             parse(mynetJson, "network-svg", "svg");
             parse(mynetJson, "network-canvas");
 
-            $scope.mevNetworkGraphConfig = {
+            $scope.mevNetworkGraph = {
                 renderer: 'canvas',
                 edge: {
                     field: "links"
                 },
                 data: miserablesJson
+            };
+            $scope.mevNetworkGraphColor = {
+                renderer: 'canvas',
+                edge: {
+                    field: "links"
+                },
+                node: {
+                    color: {
+                        field: "group",
+                        scale: {
+                            "name": "colors",
+                            "type": "ordinal",
+                            "domain": {
+                                "data": "nodes", "field": "color"
+                            },
+                            "range": "category20"
+                        }
+                    },
+                    tooltip: {
+                        fields: [{
+                            "name": "name",
+                            "label": "Gene"
+                        }]
+                    }
+                },
+                data: miserablesJson
             }
+
         }]);
 
     ng.element(document).ready(function(){

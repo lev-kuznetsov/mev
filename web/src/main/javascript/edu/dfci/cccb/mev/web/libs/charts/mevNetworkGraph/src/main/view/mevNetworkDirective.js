@@ -132,17 +132,18 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                 _.assign(spec.marks.find(function(mark){
                     return mark.name === "node"
                 }).properties.update, {
-                    "strokeWidth": scope.config.node.color.scale
-                        ? { "scale": "weight", "field": "weight"}
-                        : { "value": scope.config.node.color.value }
+                    "stroke": scope.config.node.color.scale
+                        ? { "scale": scope.config.node.color.scale.name || "color", "field": "color"}
+                        : { "value": scope.config.node.color.value },
+                    "fill": scope.config.node.color.scale
+                        ? { "scale": scope.config.node.color.scale.name || "color", "field": "color"}
+                        : {"value": scope.config.node.color.value }
                 });
                 //node tooltip
                 _.assign(spec.data.find(function(data){
                     return data.name === "tooltip";
-                }),
-                {
-                    "values":
-                    scope.config.node.tooltip.fields
+                }), {
+                    "values": scope.config.node.tooltip.fields
                 });
 
                 scope.vm = {

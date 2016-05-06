@@ -84,22 +84,7 @@
       }
     ]
   }],
-  "scales": [
-    {
-      "name": "shapes",
-      "type": "ordinal",
-      "domain": {"data": "nodes", "field": "group"},
-      "range": "shapes"
-    },
-    {
-      "name": "colors",
-      "type": "ordinal",
-      "domain": {
-        "data": "nodes", "field": "group"
-      },
-      "range": "category20"
-    }
-  ],
+  "scales": [],
   "marks": [
     {
       "name": "edge",
@@ -126,10 +111,10 @@
       "from": {"data": "nodes"},
       "properties": {
         "enter": {
-          "shape": {"scale": "shapes", "field": "color"},
-          "fill": {"scale": "colors", "field": "group"},
-          "fillOpacity": {"value": 0.5},
-          "stroke": {"value": "steelblue"}
+          "shape": {"value": "circle"},
+          "stroke": {"value": "steelblue"},
+          "fill": {"value": "steelblue"},
+          "fillOpacity": {"value": 0.5}
         },
         "update": {
           "x": {"field": "layout_x"},
