@@ -10,8 +10,7 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
             controller: ["$scope", function(scope){
                 if(!scope.config.renderer)
                     scope.config.renderer = "canvas";
-
-                _.defaultsDeep(scope.config, {
+                var defaults = {
                     edge: {
                         field: "edges",
                         source: { field: "source" },
@@ -22,7 +21,7 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                                 "name": "weight",
                                 "type": "linear",
                                 "domain": {
-                                    "data": "edges", "field": "value"
+                                    "data": "edges", "field": "weight"
                                 },
                                 "range": [1, 10]
                             }
@@ -31,7 +30,7 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                     node: {
                         color: {
                             field: "group",
-                            value: "red"                             
+                            value: "red"
                         },
                         tooltip: {
                             fields: [
@@ -42,7 +41,20 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                             ]
                         }
                     }
-                });
+                };
+                if(scope.config.node && scope.config.node.color && scope.config.node.color.scale) {
+                    defaults.node.color.value = undefined;
+                    defaults.node.color.scale = {
+                        "name": "colors",
+                        "type": "ordinal",
+                        "domain": {
+                            "data": "nodes", "field": "color"
+                        },
+                        "range": "category20"
+                    };
+                }
+
+                _.defaultsDeep(scope.config, defaults);
 
                 var spec = specJson;
                 //set spec globals

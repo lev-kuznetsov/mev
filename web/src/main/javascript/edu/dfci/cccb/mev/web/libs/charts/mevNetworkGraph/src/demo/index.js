@@ -34,15 +34,7 @@ function(ng, d3, vg, mevNetworkGraph, miserablesJson, barchartJson, networkJson,
                 },
                 node: {
                     color: {
-                        field: "group",
-                        scale: {
-                            "name": "colors",
-                            "type": "ordinal",
-                            "domain": {
-                                "data": "nodes", "field": "color"
-                            },
-                            "range": "category20"
-                        }
+                        field: "group",  scale: {}
                     },
                     tooltip: {
                         fields: [{
