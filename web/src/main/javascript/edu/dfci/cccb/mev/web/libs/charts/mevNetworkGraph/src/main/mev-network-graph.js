@@ -1,4 +1,4 @@
 define(["mui",
-"./view/mevNetworkDirective", "ng-vega"], function(ng){
+"./view/mevNetworkDirective"], function(ng){
    return ng.module("mev-network-graph", arguments, arguments);
 });
