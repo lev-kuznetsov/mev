@@ -107,29 +107,58 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                 
                 //config nodes
                 //apply node interface to node rows
-                var nodes = scope.config.data.nodes.map(function(node){
-                    var newNode = node;
-                    if(scope.config.node.color && _.isUndefined(newNode.color))
-                        Object.defineProperty(newNode, "color", {
-                            enumerable: true,
-                            get: function(){return this[scope.config.node.color.field];},
-                            set: function(val){this[scope.config.node.color.field]=val;}
-                        });
-                    if(scope.config.node.shape && _.isUndefined(newNode.shape))
-                        Object.defineProperty(newNode, "shape", {
-                            enumerable: true,
-                            get: function(){return this[scope.config.node.shape.field];},
-                            set: function(val){this[scope.config.node.shape.field]=val;}
-                        });
-                    if(scope.config.node.size && _.isUndefined(newNode.size))
-                        Object.defineProperty(newNode, "size", {
-                            enumerable: true,
-                            get: function(){return this[scope.config.node.size.field];},
-                            set: function(val){this[scope.config.node.size.field]=val;}
-                        });
-                    return newNode;
+                var nodes;
+                if(scope.config.data.nodes){
+                    nodes = scope.config.data.nodes.map(function(node){
+                        var newNode = node;
+                        if(scope.config.node.color && _.isUndefined(newNode.color))
+                            Object.defineProperty(newNode, "color", {
+                                enumerable: true,
+                                get: function(){return this[scope.config.node.color.field];},
+                                set: function(val){this[scope.config.node.color.field]=val;}
+                            });
+                        if(scope.config.node.shape && _.isUndefined(newNode.shape))
+                            Object.defineProperty(newNode, "shape", {
+                                enumerable: true,
+                                get: function(){return this[scope.config.node.shape.field];},
+                                set: function(val){this[scope.config.node.shape.field]=val;}
+                            });
+                        if(scope.config.node.size && _.isUndefined(newNode.size))
+                            Object.defineProperty(newNode, "size", {
+                                enumerable: true,
+                                get: function(){return this[scope.config.node.size.field];},
+                                set: function(val){this[scope.config.node.size.field]=val;}
+                            });
+                        return newNode;
+                    });
+                }else{
+                    nodes = _.transform(scope.config.data[scope.config.edge.field], function(result, edge, index){
+                        var sourceFieldName = scope.config.edge.source.field;
+                        var source = edge[sourceFieldName];
+                        var  nodeIndex = result.hash[source];
+                        if(_.isUndefined(nodeIndex)){
+                            result.list.push({name: source});                             
+                            result.hash[source] = result.list.length - 1;
+                            edge[sourceFieldName] = result.list.length - 1;
+                        }else{
+                            edge[sourceFieldName] = nodeIndex;
+                        }
 
-                });
+                        var targetFieldName = scope.config.edge.target.field;
+                        var target = edge[targetFieldName];
+                        nodeIndex = result.hash[target];
+                        if(_.isUndefined(nodeIndex)){
+                            result.list.push({name: target});
+                            result.hash[target] = result.list.length - 1;
+                            edge[targetFieldName] = result.list.length - 1;
+                        }else{
+                            edge[targetFieldName] = nodeIndex;
+                        }
+                    }, {
+                        hash: {},
+                        list: []
+                    }).list;
+                }
                 //set data values
                 _.assign(spec.data.find(function(item){
                     return item.name === "nodes";
@@ -174,6 +203,7 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                         view.onSignal("hoverNode", function(event, item){
                             console.debug(event, item);
                             console.debug("activeNode", view.data("activeNode").values());
+                            console.debug("edge", view.data("activeNode").values());
                         });
                     });
                 }

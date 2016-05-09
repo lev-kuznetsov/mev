@@ -22,6 +22,16 @@
       }]
     },
     {
+      "name": "edges_transformed",
+      "source": "edges",
+      "transform": [
+        { "type": "lookup", "on": "nodes",
+          "keys": ["source", "target"],
+          "as":   ["_source", "_target"] },
+        { "type": "linkpath", "shape": "line" }
+      ]
+    },
+    {
       "name": "activeNode",
       "transform": [
         {
