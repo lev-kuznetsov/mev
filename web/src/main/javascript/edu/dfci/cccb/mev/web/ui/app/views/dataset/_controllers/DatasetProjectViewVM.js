@@ -66,13 +66,17 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 			// var targetState = "root"+node.nodeConfig.state.name;
 			// console.debug("ui:projectTree:nodeSelected $on", $event, node, $state, params, targetState);			
 			// $state.go(targetState, params);
-			if(node.nodeData.params && mevAnalysisTypes.all()[node.nodeData.params.analysisType])
+			if(node.nodeData.status && node.nodeData.status==="ERROR")
+				$state.go("root.dataset.analysisError",
+					{datasetId: dataset.id, analysisId: node.nodeData.name});
+			else if(node.nodeData.params && mevAnalysisTypes.all()[node.nodeData.params.analysisType]){
+				that.node = node;
 				if(node.nodeData.params.analysisType==="normalization")
 					$state.go("root.dataset.home", {datasetId: node.nodeData.params.exportName});
 				else
 					$state.go("root.dataset.analysisType"+"."+node.nodeData.params.analysisType,
-					{datasetId: node.nodeData.params.datasetName, analysisId: node.nodeData.name});
-			else if(node.nodeData.type && mevAnalysisTypes.all()[node.nodeData.type])
+						{datasetId: node.nodeData.params.datasetName, analysisId: node.nodeData.name});
+			} else if(node.nodeData.type && mevAnalysisTypes.all()[node.nodeData.type])
 				$state.go("root.dataset.analysisType"+"."+node.nodeData.type, 
 					{datasetId: dataset.id, analysisId: node.nodeData.name});
 			else
