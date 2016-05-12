@@ -9,6 +9,7 @@ define(["lodash"], function(_){ "use strict";
 		if(analysisType && _.isFunction(analysisType.modelDecorator))
 			analysisType.modelDecorator(analysis);
 		scope.barChartConfig = {
+			name: scope.analysis.name,
 			data: scope.analysis.result,
 			series: "Score",
 			x: {
