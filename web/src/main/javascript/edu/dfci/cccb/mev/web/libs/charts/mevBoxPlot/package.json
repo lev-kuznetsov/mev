@@ -15,7 +15,9 @@
   "dependencies": {
     "d3": "^3.5.16",
     "lodash": "^4.11.1",
+    "mev-chart-utils": "file:../mevChartUtils",
     "mui": "file:../../mui",
+    "save-svg-as-png": "^1.0.3",
     "steal": "^0.13.2",
     "system-text": "^0.1.0"
   },
