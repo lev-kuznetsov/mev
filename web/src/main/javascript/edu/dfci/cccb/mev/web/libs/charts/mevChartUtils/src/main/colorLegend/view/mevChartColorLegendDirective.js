@@ -55,7 +55,12 @@ define(["lodash", "d3", "./mevChartColorLegend.tpl.html", "./mevChartColorLegend
                        key.append("g").attr("class", "y axis").attr("transform", "translate(31,10)")
                            .call(yAxis)
                            .append("text").attr("y", h - marginv).attr("dy", ".71em").style("text-anchor", "end").text(config.label);
+                       
                    }
+               };
+               scope.saveAsConfig = {
+                   name: scope.config.chartConfig ? scope.config.chartConfig.name : "mev-chart.png",
+                   selector: 'nvd3 svg'
                };
                scope.$on("mui:charts:color:updated", function($event, source, color){
                    if(source!==scope.config){

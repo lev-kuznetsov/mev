@@ -12,10 +12,15 @@ define(["lodash"], function(_){
             throw new Error("DimConfig - no field specified: " + JSON.stringify(dimConfig));
     }
 
-    function mixinDimConfig(dimConfig){
+    function mixinDimConfig(dimConfig, chartConfig){
         if(!dimConfig)
             throw new Error("dimConfig is undefined " + JSON.stringify(dimConfig));
         mixinGetter(dimConfig);
+        if(chartConfig) {
+            _.extend(dimConfig, {
+                chartConfig: chartConfig
+            })
+        }
         return dimConfig;
     }
 
