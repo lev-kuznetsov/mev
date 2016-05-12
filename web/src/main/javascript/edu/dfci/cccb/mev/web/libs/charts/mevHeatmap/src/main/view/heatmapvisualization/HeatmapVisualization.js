@@ -1,7 +1,7 @@
-define(['mui', 'd3', 'jquery', "lodash",
+define(['mui', 'd3', 'jquery', "lodash", "./style/mev-heatmap.less",
         './lib/HeatmapVisualizationClass', './lib/generateParams', './directives/visHeatmap.tpl.html', "./directives/heatmapSettingsModalBody.tpl.html",
         '../colorBrewer/mevColorBrewer', '../alertService/mevHeatmapAlert', 'jquery-ui'], 
-function(angular, d3, jquery, _, HeatmapVisualizationClass, generateParams, heatmapTemplate, heatmapSettingTemplate){ "use strict";
+function(angular, d3, jquery, _, style, HeatmapVisualizationClass, generateParams, heatmapTemplate, heatmapSettingTemplate){ "use strict";
 	return angular.module('mevHeatmapVisualization', ['mevColorBrewer'])
 	.directive('mevHeatmapSettings',["mevD3colors", function(d3colors) {
         return {
@@ -222,7 +222,8 @@ function(angular, d3, jquery, _, HeatmapVisualizationClass, generateParams, heat
 
                     			d3.select(elems[0]).selectAll('svg').remove()
                 			}
-                			var svg = d3.select(elems[0]).append('svg'); 
+                			var svg = d3.select(elems[0]).append('svg');
+                            //svg.append("style").text(style.source);
                 			svg.attr('id', 'svg-Window-' + $scope.heatmapView.id);
 //                        	svg = d3.select(elems[0]).selectAll('#svg-Window-'+$scope.heatmapView.id);
                         	
