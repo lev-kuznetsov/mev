@@ -6,17 +6,18 @@ define(["mui", "./mevDotplot.tpl.html"], function(ng, template){ "use strict";
 				config: "=mevDotplot"
 			},
 			template: template,
-			controller: ["$scope", "mevDotplotNvd3Adaptor", "mevTooltipContent", "mevChartDimConfig", "mevChartColorDimConfig",
-				function(scope, mevDotplotNvd3Adaptor, mevTooltipContent, mevChartDimConfig, mevChartColorDimConfig){
+			controller: ["$scope", "mevDotplotNvd3Adaptor", "mevTooltipContent", "mevChartConfig", "mevChartDimConfig", "mevChartColorDimConfig",
+				function(scope, mevDotplotNvd3Adaptor, mevTooltipContent, mevChartConfig, mevChartDimConfig, mevChartColorDimConfig){
 					var input = scope.config.data;
-					var xConfig = mevChartDimConfig(scope.config.x);
-					var yConfig = mevChartDimConfig(scope.config.y);
-					var sizeConfig = mevChartDimConfig(scope.config.size);
-					var colorConfig = mevChartColorDimConfig(
-							mevChartDimConfig(scope.config.color),
-							input, function() {
-								scope.api.refresh();
-						});
+					mevChartConfig(_.extend(scope.config, {
+						onUpdateColor: function() {
+							scope.api.refresh();
+						} 
+					}));
+					var xConfig = scope.config.x;
+					var yConfig = scope.config.y;
+					var sizeConfig = scope.config.size;
+					var colorConfig = scope.config.color;
 
 					scope.data=mevDotplotNvd3Adaptor(scope.config, input);
 					scope.options = {
@@ -51,7 +52,9 @@ define(["mui", "./mevDotplot.tpl.html"], function(ng, template){ "use strict";
 						}
 					};
 				}],
-			link: function(scope, elem, attr, ctrl){}
+			link: function(scope, elem, attr, ctrl){
+				
+			}
 		};
 	};
 	directive.$name="mevDotplotDirective";
