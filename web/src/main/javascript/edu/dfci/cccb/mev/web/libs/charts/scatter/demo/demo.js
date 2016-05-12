@@ -10,6 +10,9 @@ function(ng, mevScatterPlot, lgg2json, limmaJson){
 		var _self = this;
 		$scope.data = "random";
 		$scope.vm={
+			scatterPlotConfig: {
+				name: "scatter-plot-demo"
+			},
 			logScaleX: false,
 			logScaleY: false,
 			zoomEnabled: false,

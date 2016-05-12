@@ -33,7 +33,8 @@
     "angular-nvd3": "~1.0.5",
     "crossfilter": "^1.3.12",
     "jquery": "~2.2.0",
-    "lodash": "^2.4.2",
+    "lodash": "^4.12.0",
+    "mev-chart-utils": "file:../mevChartUtils",
     "mui": "file:../../mui",
     "nvd3": "apartensky/nvd3#1.8.2+dotPlot.1",
     "system-text": "^0.1.0"

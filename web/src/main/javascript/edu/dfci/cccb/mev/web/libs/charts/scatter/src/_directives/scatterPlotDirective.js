@@ -3,13 +3,14 @@ define(["angular", "d3", "lodash", "crossfilter", "./scatterPlot.tpl.html"],
 function(angular, d3, _, crossfilter, template){"use strict";	
 	var ScatterPlotDirective = function ScatterPlotDirective(mevNvd3DataAdaptor){
 		return {
-			restrict: "EC",
+			restrict: "AEC",
 			scope: {
+				config: "=?mevScatterPlot",
 				input: "=mevInput",
 				selections: "=mevSelections",
 				xField: "@mevXField",
 				yField: "@mevYField",
-				fields: "=mevFields",				
+				fields: "=?mevFields",
 				idField: "@mevIdField",
 				logScaleX: "=",
 				logScaleY: "=",
@@ -21,11 +22,6 @@ function(angular, d3, _, crossfilter, template){"use strict";
 			link: function(scope, elm, attrs, ctrl){				
 				var _self = this;
 				scope.api=undefined;
-				scope.config={
-					// deepWatchDataDepth: 0,
-					// refreshDataOnly: false
-					// debounce: 100
-				};
 				if(!scope.fields)
 					scope.fields = [];
 				if(!_.includes(scope.fields, scope.xField))
@@ -47,6 +43,10 @@ function(angular, d3, _, crossfilter, template){"use strict";
 						}
 					});
 				}
+				scope.saveAsConfig = {
+					name: scope.config.name ? scope.config.name : "mev-scatter-chart.png",
+					selector: 'nvd3 svg'
+				};
 				scope.vm = {
 					refresh: function(){
 						scope.api.updateWithOptions(getOptions());

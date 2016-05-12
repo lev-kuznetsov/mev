@@ -5,7 +5,7 @@
     <body data-ng-controller="myCtrl">		
     	<!-- logX<input ng-model="vm.logScaleX" type="checkbox"/>
     	logY<input ng-model="vm.logScaleY" type="checkbox"/> -->
-        <div class="mev-scatter-plot" drag-action="'select'" 
+        <div mev-scatter-plot="vm.scatterPlotConfig" drag-action="'select'"
         	mev-input="vm.limma.results" 
         	mev-x-field="logFoldChange" 
         	mev-y-field="averageExpression"         	
