@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "angular-utils-pagination": "^0.10.0",
+    "mev-glyph-alt": "file:../mevGlyphAlt",
     "mui": "file:../../mui",
     "papaparse": "mholt/PapaParse",
     "steal": "^0.13.2",
