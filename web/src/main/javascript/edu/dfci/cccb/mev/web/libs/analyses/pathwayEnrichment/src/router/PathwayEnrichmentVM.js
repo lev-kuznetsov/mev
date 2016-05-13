@@ -51,7 +51,7 @@ define(["lodash"], function(_){ "use strict";
 		           'icon': ["<=", ">="],
 		           'datatype': "integer"
 		       },{
-		           'name': 'ID',
+		           'name': 'Gene Id',
 		           'field': "geneID",
 		           'icon': "search"
 		       },
