@@ -1,11 +1,11 @@
-define(["lodash"], function(_){
-   var directive = function($timeout){
+define(["lodash"], function(_){"use strict";
+   var directive = function(){
        return {
            restrict: "A",
            scope: {
                config: "@mevGlyphAlt"
            },
-           link: function(scope, elm, attr){
+           link: function(scope, elm){
                var domElm = elm.get(0);
                scope.glyphAlt = {
                    width: function(){
@@ -21,7 +21,7 @@ define(["lodash"], function(_){
                        return domElm.offsetParent!==null;
                    }
                };
-               scope.$watch(scope.glyphAlt.isInView.bind(scope.glyphAlt), function(newVal, oldVal){
+               scope.$watch(scope.glyphAlt.isInView.bind(scope.glyphAlt), function(newVal){
                    if(newVal===true)
                        if(!scope.glyphAlt.hasDims())
                            elm.text(scope.config);
@@ -33,6 +33,6 @@ define(["lodash"], function(_){
    };
    directive.$name="mevGlyphAlt";
    directive.$provider="directive";
-   directive.$inject=["$timeout"];
+   directive.$inject=[];
    return directive;
 });

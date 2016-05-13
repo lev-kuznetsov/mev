@@ -1,4 +1,4 @@
-define(["mui", "d3"], function(ng, d3){
+define(["mui", "d3", "./svgSaveAs.less"], function(ng, d3){
     var directive = function mevSvgSaveAsDirective(mevSvgSaveAs){
         return {
             restrict: "AEC",
