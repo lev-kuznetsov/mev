@@ -15,18 +15,16 @@
                             heatmapView: "=",
                             isItOpen: "@"
                         },
-                        controller: ["$scope", function($scope){
-                            $scope.analysisTypes = mevAnalysisTypes.all();
-                        	$scope.$on("ui:resultsTable:pageChanged", function($event, pageResults){
-                				var control = _.find($scope.project.dataset.column.selections, function(selection){return selection.name===$scope.analysis.params.controlName;});
-                	        	var experiment = _.find($scope.project.dataset.column.selections, function(selection){return selection.name===$scope.analysis.params.experimentName;});
-                				$scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData($scope.project.dataset, pageResults, 
+                        controller: ["$scope", function(scope){
+                            scope.analysisTypes = mevAnalysisTypes.all();
+                        	scope.$on("ui:resultsTable:pageChanged", function($event, pageResults){
+                				var control = _.find(scope.project.dataset.column.selections, function(selection){return selection.name===scope.analysis.params.controlName;});
+                	        	var experiment = _.find(scope.project.dataset.column.selections, function(selection){return selection.name===scope.analysis.params.experimentName;});
+                				scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, pageResults, 
                 						[control, experiment],
-                						$scope.analysis.randomId);
+                						scope.analysis.randomId);
                 			});
-                        }],
-                        link: function (scope, elem, attrs) {                        	
-                                                        
+
                             scope.headers = [{
                                 'name': 'ID',
                                 'field': "id",
@@ -44,12 +42,12 @@
                                 'field': "logFoldChange",
                                 'icon': [">=", "<="]
                             }]
-                            
+
                             scope.$on("ui:resultsTable:filteredResults", function($event, filteredResults){
-                            	scope.filteredResults = filteredResults;
-                            	scope.applyToHeatmap(filteredResults);
+                                scope.filteredResults = filteredResults;
+                                scope.applyToHeatmap(filteredResults);
                             });
-                            
+
                             scope.selectionParams = {
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16)
@@ -73,7 +71,7 @@
                             scope.addSelections = function () {
 
                                 var keys = scope.filteredResults.map(projection.ids);
-                                
+
                                 var selectionData = {
                                     name: scope.selectionParams.name,
                                     properties: {
@@ -112,7 +110,7 @@
                             scope.exportSelection = function () {
 
                                 var keys = scope.filteredResults.map(projection.ids);
-                                
+
                                 var selectionData = {
                                     name: scope.exportParams.name,
                                     properties: {
@@ -143,13 +141,17 @@
                                     });
 
                             };
-                            
+
                             scope.applyToHeatmap = function (filteredResults) {
                                 var labels = filteredResults.map(projection.ids);
                                 scope.heatmapView = scope.heatmapView.applyFilter("row", labels);
                             };
 
 
+                        }],
+                        link: function (scope, elem, attrs) {                        	
+                                                        
+                            
                         }
 
                     };

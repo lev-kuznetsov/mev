@@ -24,13 +24,13 @@
 		</div>
 		<div class="tab-pane active results-body" id="table" >			
 			<div class="results-top" id="{{'voom-' + analysis.randomId + '-svg-holder'}}">
-				<d3-Box-Plot-Visualization data="DatasetAnalysisVM.boxPlotGenes"></d3-Box-Plot-Visualization>
+				<mev-boxplot data="DatasetAnalysisVM.boxPlotGenes"></mev-boxplot>
 			</div>
 			<div class="results-bottom">				
-				<results-table-ag data="DatasetAnalysisVM.analysis.results" headers="DatasetAnalysisVM.headers" ordering="P.Value" 
+				<mev-results-table data="DatasetAnalysisVM.analysis.results" headers="DatasetAnalysisVM.headers" ordering="P.Value"
 					on-filter="DatasetAnalysisVM.udpateFilteredView(filteredResults)" 
-					on-paged="DatasetAnalysisVM.updatePageView(pageResults)"></results-table-ag>
-<!-- 			<results-table id="DatasetAnalysisVM.heatmapView.id" data="DatasetAnalysisVM.analysis.results" headers="DatasetAnalysisVM.headers" ordering="-value" ></results-table> -->
+					on-paged="DatasetAnalysisVM.updatePageView(pageResults)"
+					mev-save-as="{name: DatasetAnalysisVM.analysis.name}"></mev-results-table>
 			</div>
 			
 		</div>

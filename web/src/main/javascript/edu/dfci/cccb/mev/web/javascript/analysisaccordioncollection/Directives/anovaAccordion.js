@@ -16,54 +16,54 @@
                             heatmapView: "=",
                             isItOpen: '@'
                         },
-                        link: function (scope) {                        	
-                        	//variable to remove embedded pair information
-                        	scope.filteredResults = undefined;
-                        	scope.cleanData = expandEmbedded(scope.analysis.results);                        	
-                        	scope.headers = [{
-	                                'name': 'ID',
-	                                'field': "id",
-	                                'icon': "search"
-	                            },{
-	                            	'name': 'Partner A',
-	                            	'field': 'partnerA',
-	                            	'icon': "search"
-	                            },{
-	                            	'name': 'Partner B',
-	                            	'field': 'partnerB',
-	                            	'icon': "search"
-	                            },{
-	                                'name': 'P-Value',
-	                                'field': "pValue",
-	                                'icon': "<=",
-	                                'default': 0.05
-	                            },{
-	                            	'name': 'Pairwise LFC',
-	                            	'field': 'lfc',
-	                            	'icon': ["<=", ">="]
-	                            }
-	                        ];
-                            
+                        controller: ["$scope", function(scope){
+                            //variable to remove embedded pair information
+                            scope.filteredResults = undefined;
+                            scope.cleanData = expandEmbedded(scope.analysis.results);
+                            scope.headers = [{
+                                'name': 'ID',
+                                'field': "id",
+                                'icon': "search"
+                            },{
+                                'name': 'Partner A',
+                                'field': 'partnerA',
+                                'icon': "search"
+                            },{
+                                'name': 'Partner B',
+                                'field': 'partnerB',
+                                'icon': "search"
+                            },{
+                                'name': 'P-Value',
+                                'field': "pValue",
+                                'icon': "<=",
+                                'default': 0.05
+                            },{
+                                'name': 'Pairwise LFC',
+                                'field': 'lfc',
+                                'icon': ["<=", ">="]
+                            }
+                            ];
+
                             scope.viewGenes = function(filteredResults){
-                            	console.debug("anova viewGenes", filteredResults);                            	
-                            	scope.filteredResults = filteredResults;
+                                console.debug("anova viewGenes", filteredResults);
+                                scope.filteredResults = filteredResults;
 //                            	scope.cleanData = filteredResults;
-//                            	scope.filteredResults = tableFilter(scope.cleanData, filterParams);                        		 
-                            	scope.$emit("ui:anova:filteredResults", _.uniq(filteredResults, 'id'));                                
-                            	scope.applyToHeatmap(filteredResults);
-                        	}
+//                            	scope.filteredResults = tableFilter(scope.cleanData, filterParams);
+                                scope.$emit("ui:anova:filteredResults", _.uniq(filteredResults, 'id'));
+                                scope.applyToHeatmap(filteredResults);
+                            }
                             scope.viewPage = function(pageResults){
-                            	var groups = scope.analysis.params.data.map(function(selectionName){
-                					return _.find(scope.project.dataset.column.selections, function(selection){return selection.name===selectionName;});
-                				});
-                            	
-                            	pageResultsUniq = _.uniq(pageResults, 'id')
-                            	scope.$emit("ui:anova:pageResults", pageResultsUniq);
-                            	scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, pageResultsUniq, 
-                    	         		groups,
-                    	         		scope.analysis.randomId);
+                                var groups = scope.analysis.params.data.map(function(selectionName){
+                                    return _.find(scope.project.dataset.column.selections, function(selection){return selection.name===selectionName;});
+                                });
+
+                                pageResultsUniq = _.uniq(pageResults, 'id')
+                                scope.$emit("ui:anova:pageResults", pageResultsUniq);
+                                scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, pageResultsUniq,
+                                    groups,
+                                    scope.analysis.randomId);
                             };
-                                
+
                             scope.selectionParams = {
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16),
@@ -71,16 +71,16 @@
                             };
 
                             function traverse(results) {
-                            	                            	
+
                                 return results.map(projection.ids)
-                                //fix#945
-                                //the table shows a gene multiple times (once for each pairing set)
-                                //the heatmap, however, needs the unique gene id's
-                                .filter(function(value, index, array){
-                                	return array.indexOf(value) === index;
-                                });
+                                    //fix#945
+                                    //the table shows a gene multiple times (once for each pairing set)
+                                    //the heatmap, however, needs the unique gene id's
+                                    .filter(function(value, index, array){
+                                        return array.indexOf(value) === index;
+                                    });
                             }
-                            
+
 
                             scope.addSelections = function () {
 
@@ -106,8 +106,8 @@
                                         var header = "Heatmap Selection Addition";
 
                                         scope.selectionParams.color = '#' + Math
-                                            .floor(Math.random() * 0xFFFFFF << 0)
-                                            .toString(16)
+                                                .floor(Math.random() * 0xFFFFFF << 0)
+                                                .toString(16)
 
                                         alertService.success(message, header);
                                     },
@@ -125,7 +125,7 @@
                                 name: undefined,
                                 color: '#ffffff'
                             };
-                            
+
                             scope.exportSelection = function () {
 
                                 var keys = traverse(scope.filteredResults);
@@ -182,31 +182,34 @@
                                 });
 
                             };
-                            
+
                             function expandEmbedded(data){
-                            	//This function is supposed to expand the partner and ratio
-                            	// data into their own columns
-                            	
-                            	var expanded = []
-                            	
-                            	for (var gene = 0; gene < data.length; gene++){
-                            		
-                            		for (var pair = 0; pair < data[gene]['pairwise_log_fold_change'].length; pair++){
-                            			var cleanRow = {
-                            				"id": data[gene]['id'],
-                            				"pValue": data[gene]['pValue'],
-                            				"lfc": data[gene]['pairwise_log_fold_change'][pair]['ratio'],
-                            				'partnerA': data[gene]['pairwise_log_fold_change'][pair]['partnerA'],
-                            				'partnerB': data[gene]['pairwise_log_fold_change'][pair]['partnerB']
-                            			}
-                            			
-                            			expanded.push(cleanRow)
-                            		}
-                            		
-                            	}
-                            	
-                            	return expanded
+                                //This function is supposed to expand the partner and ratio
+                                // data into their own columns
+
+                                var expanded = []
+
+                                for (var gene = 0; gene < data.length; gene++){
+
+                                    for (var pair = 0; pair < data[gene]['pairwise_log_fold_change'].length; pair++){
+                                        var cleanRow = {
+                                            "id": data[gene]['id'],
+                                            "pValue": data[gene]['pValue'],
+                                            "lfc": data[gene]['pairwise_log_fold_change'][pair]['ratio'],
+                                            'partnerA': data[gene]['pairwise_log_fold_change'][pair]['partnerA'],
+                                            'partnerB': data[gene]['pairwise_log_fold_change'][pair]['partnerB']
+                                        }
+
+                                        expanded.push(cleanRow)
+                                    }
+
+                                }
+
+                                return expanded
                             }
+
+                        }],
+                        link: function (scope) {                        	
                         }
                     };
             }])
