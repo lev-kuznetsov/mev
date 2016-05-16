@@ -53,7 +53,7 @@ define(["lodash"], function(_){ "use strict";
 				},
 				{
 					'name': 'Adj. P-Value',
-					'field': "pValue",
+					'field': "adj.p",
 					'icon': "<="
 				}
 
