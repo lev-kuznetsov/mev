@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import lombok.Synchronized;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
@@ -52,6 +53,7 @@ public class ArrayListAnalyses extends AbstractAnalyses implements AutoCloseable
   }
 
   @Override
+  @Synchronized
   public void complete (Analysis result) throws AnalysisNotFoundException {
     for (Analysis analysis : analyses)
       if (analysis.name ().equals (result.name ())) {
@@ -82,6 +84,7 @@ public class ArrayListAnalyses extends AbstractAnalyses implements AutoCloseable
    * @see
    * edu.dfci.cccb.mev.dataset.domain.contract.Analyses#remove(java.lang.String) */
   @Override
+  @Synchronized
   public void remove (String name) throws AnalysisNotFoundException {
     for (Iterator<Analysis> analyses = this.analyses.iterator (); analyses.hasNext ();)
       if (analyses.next ().name ().equals (name)) {
