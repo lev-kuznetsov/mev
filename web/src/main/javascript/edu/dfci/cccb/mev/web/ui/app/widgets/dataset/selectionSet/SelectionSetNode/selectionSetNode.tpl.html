@@ -1,6 +1,9 @@
+<span class="btn-group btn-group-sm pull-left">
+	<span class="btn selection-color"  style="background-color: {{node.nodeData.properties.selectionColor}};"></span>
+</span>
 <span>{{node.nodeConfig.label || node.nodeData.name}}</span>
 <span class="btn-group btn-group-sm pull-right">
-	<div class="btn-group " dropdown >			
+	<div class="btn-group " dropdown >
 		<a ng-click="vm.delete($event)">
 			<span class="btn dropdown-toggle fa fa-close"></span>	    
 		</a>
