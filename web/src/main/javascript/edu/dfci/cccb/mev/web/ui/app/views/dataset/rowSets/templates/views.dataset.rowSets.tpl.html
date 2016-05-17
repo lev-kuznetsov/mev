@@ -33,7 +33,9 @@
 			<tr ng-repeat="selection in RowSetsViewVM.dataset.row.selections">
 				<td><input type="checkbox" ng-model="selection.setSelectionChecked" ng-true-value="true" ng-false-value="false">
 				<a href="" ui-sref="root.dataset.rowSet({setId: selection.name})">{{selection.name}}</a></td>
-				<td bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>
+				<td bgcolor="{{selection.properties.selectionColor}}">
+					<a href="" ui-sref="root.dataset.rowSets.edit({setId: selection.name})"><span class="fa fa-edit fa-inverse pull-right"></span></a>
+				</td>
 				<td>{{selection.properties.selectionDescription}}</td>								
 			 </tr>
 			</table>
