@@ -76,11 +76,14 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 				else
 					$state.go("root.dataset.analysisType"+"."+node.nodeData.params.analysisType,
 						{datasetId: node.nodeData.params.datasetName, analysisId: node.nodeData.name});
-			} else if(node.nodeData.type && mevAnalysisTypes.all()[node.nodeData.type])
-				$state.go("root.dataset.analysisType"+"."+node.nodeData.type, 
+			} else if(node.nodeData.type && mevAnalysisTypes.all()[node.nodeData.type]){
+				$state.go("root.dataset.analysisType"+"."+node.nodeData.type,
 					{datasetId: dataset.id, analysisId: node.nodeData.name});
-			else
+				that.node = node;
+			} else {
 				node.activate();
+				that.node = node;
+			}
 		});
 		
 		$scope.$on("root.dataset.selectionSet.delete", function($event, dimension, selection){
@@ -88,7 +91,24 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 			dataset.selection.delete({datasetName: dataset.id, dimension: dimension, selectionName: selection.name}).$promise.then(function(){
 				dataset.resetSelections(dimension);
 			});
+		});
 
+		$scope.$on("root.dataset.analysis.delete", function($event, analysis){
+			console.debug("analysis nodeDeleted", analysis, $event);
+			dataset.analysis.delete({datasetName: dataset.id, analysisName: analysis.name}).$promise.then(function(){
+				console.debug(that, that.node, $stateParams, $state);
+				_.remove(dataset.analyses, function(item){
+					return item.name==analysis.name;
+				});
+				_.remove(dataset.dashboardItems, function(item){
+					return item.name===analysis.name;
+				});
+				//dataset.loadAnalyses();
+				$scope.$broadcast("ui:projectTree:dataChanged");
+				$scope.$broadcast("ui:dashboard:removeItem", {name: analysis.name});
+				if($state.$current.locals.globals.analysis && $state.$current.locals.globals.analysis.name === analysis.name)
+					$state.go("root.dataset.home", {datasetId: dataset.id});
+			});
 		});
 
 		AnalysisEventBus.onAnalysisStarted($scope, function(type, name, data){

@@ -21,12 +21,18 @@ define(["lodash"], function(_){
 						return $state.includes("root.dataset.home");
 					},
 					existsInDashboard: function(){
-						return _.find(DashboardItems, {name: scope.node.nodeData.name}) ? true : false;
+						return _.find(new DashboardItems(), {name: scope.node.nodeData.name}) ? true : false;
 					},
 					getDisplayName: function(){
 						if(scope.node.parent)
 							return scope.node.nodeData.name.replace(scope.node.parent.nodeData.name+".", "");
 						return scope.node.nodeData.name;
+					},
+					delete: function(e){
+						console.debug("selectionSetNode onClick", e);
+						if(confirm("Delete analysis '"+scope.node.nodeData.name+"'?"))
+							$rootScope.$broadcast("root.dataset.analysis.delete", scope.node.nodeData);
+						e.stopPropagation();
 					}
 				};
 			}
