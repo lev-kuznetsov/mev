@@ -1,7 +1,7 @@
-define(["ng", "lodash"], 
+define(["mui", "lodash", "./edit/views.dataset.columnSets.edit.module"],
 function(ng, _){
 	
-	var module=ng.module("mui.views.dataset.columnSets", []);
+	var module=ng.module("mui.views.dataset.columnSets", arguments, arguments);
 	
 	module.config(['$stateProvider', '$urlRouterProvider',
 	   	     	function($stateProvider, $urlRouterProvider){	     				
