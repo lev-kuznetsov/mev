@@ -106,9 +106,24 @@ public class SelectionController {
 
   @RequestMapping (value = "/selection", method = POST)
   @ResponseStatus (OK)
-  public void saveSelection (@RequestBody Selection selection) {
+  public void addSelection (@RequestBody Selection selection) {
     if (log.isDebugEnabled ())
       log.debug ("Adding selection " + selection);
+    dimension.selections ().put (selection);
+  }
+
+  @RequestMapping (value = "/selection", method = PUT)
+  @ResponseStatus (OK)
+  public void updateSelection (@RequestBody Selection selection) {
+    if (log.isDebugEnabled ())
+      log.debug ("Updating selection " + selection);
+
+    try {
+      dimension.selections().remove(selection.name());
+    } catch (SelectionNotFoundException e) {
+      if (log.isDebugEnabled ())
+        log.debug (String.format("Selection %s not found, will add new", selection));
+    }
     dimension.selections ().put (selection);
   }
   

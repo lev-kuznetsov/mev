@@ -217,6 +217,10 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     			'method': 'POST',
     			'url':"/dataset/:datasetName/:dimension/selection/",
     		},
+			'put':{
+				'method': 'PUT',
+				'url':"/dataset/:datasetName/:dimension/selection/",
+			},
     		'export':{
     			'method': 'POST',
     			'url':"/dataset/:datasetName/:dimension/selection/export",
@@ -237,6 +241,13 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
             });
             return result;
         };
+		SelectionResource.put=function(params, data, callback){
+			var result = resource.put(params, data, callback);
+			result.$promise.then(function(response){
+				$rootScope.$broadcast("mui:dataset:selections:added", params.dimension, params, data, response);
+			});
+			return result;
+		};
     	SelectionResource.getAll=function(params, data, callback){
     		var result = resource.getAll(params, data, callback);
     		result.$promise.then(function(response){
