@@ -16,12 +16,14 @@ package edu.dfci.cccb.mev.dataset.domain.simple;
 
 import static edu.dfci.cccb.mev.dataset.domain.support.LifecycleUtilities.destroy;
 
+import java.io.Closeable;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import lombok.SneakyThrows;
 import lombok.Synchronized;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
@@ -86,11 +88,22 @@ public class ArrayListAnalyses extends AbstractAnalyses implements AutoCloseable
   @Override
   @Synchronized
   public void remove (String name) throws AnalysisNotFoundException {
-    for (Iterator<Analysis> analyses = this.analyses.iterator (); analyses.hasNext ();)
-      if (analyses.next ().name ().equals (name)) {
+    for (Iterator<Analysis> analyses = this.analyses.iterator (); analyses.hasNext ();){
+      Analysis target = analyses.next();
+      if (target.name ().equals (name)) {
+        try{
+          if(target instanceof AutoCloseable)
+            ((AutoCloseable)target).close();
+          else if(target instanceof Closeable)
+            ((Closeable)target).close();
+        }catch(Exception e){
+          log.error(String.format("Failed to close analysis %s", name), e);
+        }
         analyses.remove ();
         return;
       }
+    }
+
     throw new AnalysisNotFoundException ().name (name);
   }
 
