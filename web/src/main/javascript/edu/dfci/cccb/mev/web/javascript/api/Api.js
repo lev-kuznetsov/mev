@@ -109,7 +109,11 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
                 	'method': 'PUT',
                 	'url': '/dataset/:datasetName'+
                 		'/analyze/:analysisType/:analysisName'
-                }
+                },
+				'delete': {
+					'method': 'DELETE',
+					'url': '/dataset/:datasetName/analysis/:analysisName'
+				}
                 
 			});    	    	
 
