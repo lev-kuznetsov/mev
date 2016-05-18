@@ -9,8 +9,7 @@ function(ng, _, ngColorPicker,
 	module.config(['$stateProvider', 'SelectionSetResolverProvider', 'SelectionSetsEditOnEnterProvider',
 		function($stateProvider, SelectionSetResolverProvider, SelectionSetsEditOnEnterProvider) {
 
-			$stateProvider.state("root.dataset.rowSets.edit", {
-					url: "/edit/{name}",
+			$stateProvider.state("root.dataset.rowSets.edit", {					
 					parent: "root.dataset.rowSets",
 					params: {
 						setId: undefined
