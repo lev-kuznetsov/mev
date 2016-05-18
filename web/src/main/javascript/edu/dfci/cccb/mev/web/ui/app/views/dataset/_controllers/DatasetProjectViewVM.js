@@ -92,7 +92,9 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 				dataset.resetSelections(dimension);
 			});
 		});
-
+		$scope.$on("mui:error:sessionTimeout", function($event, error){
+			$state.go("root.dataset.home.sessionTimeout", {datasetId: dataset.id})
+		});
 		$scope.$on("root.dataset.analysis.delete", function($event, analysis){
 			console.debug("analysis nodeDeleted", analysis, $event);
 			dataset.analysis.delete({datasetName: dataset.id, analysisName: analysis.name}).$promise.then(function(){
