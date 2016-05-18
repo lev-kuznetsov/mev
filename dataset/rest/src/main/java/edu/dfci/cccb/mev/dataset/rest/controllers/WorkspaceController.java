@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -36,6 +37,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
@@ -87,5 +90,13 @@ public class WorkspaceController {
                           this.workspace instanceof ScopedObject
                                                                 ? (Workspace) ((ScopedObject) this.workspace).getTargetObject ()
                                                                 : this.workspace;
+  }
+
+  @RequestMapping(method = GET, value="/session/close")
+  @ResponseStatus(OK)
+  public void closeSession(){
+    ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+    HttpSession session = attributes.getRequest().getSession(true);
+    session.invalidate();
   }
 }
