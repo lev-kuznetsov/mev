@@ -12,10 +12,13 @@ define(
                                     '$routeParams',
                                     'alertService',
                                     'GoogleDriveResourceService',
-                                    function($scope, $http, $routeParams, alertService, DriveResource) {
+                                    '$state',
+                                    function($scope, $http, $routeParams, alertService, DriveResource, $state) {
                                         
                                         $('#loading').modal('hide');
-                                        
+                                        $scope.$on("mui:error:sessionTimeout", function(){
+                                            $state.go(".sessionTimeout");
+                                        });
                                         $scope.userUploads = [];
 
                                         $scope.loadUploads = function() {

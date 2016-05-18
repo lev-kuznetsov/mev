@@ -1,6 +1,9 @@
-define(["ng", "./_controllers/DatasetsVM"], 
+define(["mui",
+	"./_controllers/DatasetsVM",
+	"../../widgets/presets/widgets.presets.module",
+	"./session/views.datasets.session.module"],
 function(ng, DatasetsVM){
-	var module = ng.module("mui.views.datasets", ["mui.widgets.presets"]);
+	var module = ng.module("mui.views.datasets", arguments, arguments);
 	module.config(['$stateProvider', '$urlRouterProvider',
 	     	function($stateProvider, $urlRouterProvider){	     						
 	     		$stateProvider.state("root.datasets", {
@@ -12,6 +15,6 @@ function(ng, DatasetsVM){
 	     			displayName: "datasets"
 	     		});
 	}]);
-	module.controller("DatasetsVM", DatasetsVM);
+	// module.controller("DatasetsVM", DatasetsVM);
 	return module;
 });
