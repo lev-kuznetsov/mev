@@ -10,6 +10,7 @@ define(["lodash"], function(_){ "use strict";
 			if(analysisType && _.isFunction(analysisType.modelDecorator))
 				analysisType.modelDecorator(analysis);
 			$scope.dotPlotConfig = {
+				name: this.analysis.name,
 				data: this.analysis.results,
 				series: "Counts"
 			}
@@ -52,7 +53,7 @@ define(["lodash"], function(_){ "use strict";
 				},
 				{
 					'name': 'Adj. P-Value',
-					'field': "pValue",
+					'field': "adj.p",
 					'icon': "<="
 				}
 

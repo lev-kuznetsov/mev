@@ -1,4 +1,4 @@
-define([], function(){
+define(["./selectionSetNode.less"], function(){
 	var selectionSetNode = function($rootScope){
 		return {
 			scope: {

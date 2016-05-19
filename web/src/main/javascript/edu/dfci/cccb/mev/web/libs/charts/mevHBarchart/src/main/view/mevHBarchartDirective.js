@@ -6,16 +6,18 @@ define(["lodash", "./mevHBarchart.tpl.html"], function(_, template){"use strict"
 				config: "=mevHbarchart"
 			},
 			template: template,
-			controller: ["$scope", "mevBarchartNvd3Adaptor", "mevTooltipContent", "mevChartDimConfig", "mevChartColorDimConfig",
-				function(scope, mevBarchartNvd3Adaptor, mevTooltipContent, mevChartDimConfig, mevChartColorDimConfig){
+			controller: ["$scope", "mevBarchartNvd3Adaptor", "mevTooltipContent", "mevChartConfig", "mevChartDimConfig", "mevChartColorDimConfig",
+				function(scope, mevBarchartNvd3Adaptor, mevTooltipContent, mevChartConfig, mevChartDimConfig, mevChartColorDimConfig){
 					var input = scope.config.data;
-					var xConfig = mevChartDimConfig(scope.config.x);
-					var yConfig = mevChartDimConfig(scope.config.y);
-					var zConfig = mevChartColorDimConfig(
-						mevChartDimConfig(scope.config.z),
-						input, function() {
+					scope.config.z.display="color";
+					mevChartConfig(scope.config, {
+						onUpdateColor: function() {
 							scope.api.refresh();
-						});
+						} 
+					});
+					var xConfig = scope.config.x;
+					var yConfig = scope.config.y;
+					var zConfig = scope.config.z;
 
 					scope.data=mevBarchartNvd3Adaptor(scope.config, input);
 					scope.options = {

@@ -23,10 +23,11 @@
 	</div>
 	<div class="results-body">	
 		<div class="results-top">
-			<d3-Box-Plot-Visualization data="boxPlotGenes"></d3-Box-Plot-Visualization>
+			<mev-boxplot data="boxPlotGenes"></mev-boxplot>
 		</div>
 		<div class="results-bottom">
-			<results-table data="analysis.results" headers="headers" ordering="pValue"></results-table>
+			<mev-results-table data="analysis.results" headers="headers" ordering="pValue"
+							   mev-save-as="{name: analysis.name}"></mev-results-table>
 		</div>						
 	</div>
 </div>	

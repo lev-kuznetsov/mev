@@ -9,7 +9,8 @@
 			<div class="results-header clearfix"></div>
 			<div class="results-body">
 				<div mev-enrichment-dotplot="dotPlotConfig"></div>
-				<mev-results-table data="DatasetAnalysisVM.analysis.results" headers="headers" ordering="pValue" on-filter="viewGenes(filteredResults)"></mev-results-table>
+				<mev-results-table data="DatasetAnalysisVM.analysis.results" headers="headers" ordering="pValue" on-filter="viewGenes(filteredResults)"
+								   mev-save-as="{name: DatasetAnalysisVM.analysis.name}"></mev-results-table>
 			</div>
 		</div>
 	</div>

@@ -10,6 +10,7 @@ define(["ng",
         "./selectionSets/views.dataset.selectionSets.module",
         "./analysis/views.dataset.analysis.module",
         "./analyses/views.dataset.analyses.module",
+        "./session/views.dataset.session.module",
         "mev-analysis",
         "mev-bs-modal",
         "mevPathwayEnrichment",
@@ -65,7 +66,7 @@ function(ng,
 			   	     		footerUrl: "app/views/dataset/_templates/dataset.footer.tpl.html",
 			   	     	},
 	   	     			resolve:{
-	   	     				datasetResource: ["$stateParams", "DatasetResourceService", "$q", "$http", function($stateParams, DatasetResourceService, $q, $http){
+	   	     				datasetResource: ["$state", "$stateParams", "DatasetResourceService", "$q", "$http", function($state, $stateParams, DatasetResourceService, $q, $http){
 	   	     					
 		   	     				var datasetResource = DatasetResourceService.get({
 		   	     					datasetName: $stateParams.datasetId
@@ -75,6 +76,7 @@ function(ng,
 		   	     				}, function(error){
 	//	   	     					downloadFailure();
 		   	     					console.debug("**** Failed to Load Dataset", $stateParams.datasetId, error);
+									$state.go("root.datasets.sessionTimeout");
 		   	     				});	   	     					
 		   	     				return datasetResource.$promise;		   	     				
 	   	     				}],

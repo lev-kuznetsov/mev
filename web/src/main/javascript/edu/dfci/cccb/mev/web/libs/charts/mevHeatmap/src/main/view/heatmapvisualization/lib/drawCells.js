@@ -1,4 +1,4 @@
-define(['./cellFilter', 'd3', "jquery"], function(cellFilter, d3, $){
+define(['./cellFilter', 'd3', "jquery", "save-svg-as-png"], function(cellFilter, d3, $, saveSvgAsPng){
 	
 	//drawCells !View, !shownCells, !scales, Array [String], -> null
 	//	draws cells on heatmapvisualization object
@@ -174,13 +174,31 @@ define(['./cellFilter', 'd3', "jquery"], function(cellFilter, d3, $){
         	height: 50,
         	width: 50
         });
-        var div = fo.append('xhtml:div');
-        div.append("p")
-        // .html("<span class=\"glyphicon glyphicon-cog\"></span>")
-        .html("<a>settings</a>")
-        .on("click", function(d, i){
+        var divSettings = fo.append('xhtml:div');
+		divSettings.classed("tools", true);
+        var linkSettings = divSettings.append("span")
+		.on("click", function(d, i){
 			$('#settingsModal-'+self.view.id).modal('show');
-		});;        
-		
+		})
+		.append("a")
+        .html("<span class=\"glyphicon glyphicon-cog\"></span>")
+		var linkSettingsDom = linkSettings[0][0];
+		if(linkSettingsDom.offsetParent && (linkSettingsDom.offsetWidth===0 || linkSettingsDom.offsetHeight===0))
+			linkSettings.text("settings");
+
+		var linkSave = divSettings.append("span")
+		.on("click", function(d, i){
+			saveSvgAsPng.saveSvgAsPng(self.DOM.svg[0][0], self.view.dataset.id + "-" + self.view.note + ".png", {
+				selectorRemap: function(s) {
+					return s.replace('mev-heatmap ', '');
+				}
+			})
+		})
+		.append("a")
+		.html("<span class=\"glyphicon glyphicon-floppy-save\"></span>")
+
+		var linkSaveDom = linkSave[0][0];
+		if(linkSettingsDom.offsetParent && (linkSaveDom.offsetWidth===0 || linkSaveDom.offsetHeight===0))
+			linkSave.text("save");
 	};
 });

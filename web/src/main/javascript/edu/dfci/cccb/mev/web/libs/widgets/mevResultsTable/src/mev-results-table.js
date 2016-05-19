@@ -1,4 +1,4 @@
-define(["mui", "angular-utils-pagination", "./style/mevResultsTable.less",
+define(["mui", "angular-utils-pagination", "mev-glyph-alt", "./style/mevResultsTable.less",
 	"./view/mevResultsTableDirective",
 	"./view/mevResultsTableDefaults",
 	"./view/mevResultsTableFilter",

@@ -26,8 +26,9 @@ import edu.dfci.cccb.mev.pe.domain.PathwayEnrichment.PathwayEnrichmentParameters
             + "EntrezList = lapply (na.omit (geneList), function (GS, GStoEG_map) GStoEG_map[[GS]][1], GStoEG_map = GStoEG_map);\n"
             + "enrichPways <- enrichPathway (gene = EntrezList, minGSSize = minGSSize, organism = organism,"
             + "                              pvalueCutoff = pvalueCutoff, pAdjustMethod = pAdjustMethod, readable = T);\n"
-            + "summary (enrichPways);\n" +
-            "}",
+            + "sum <- summary (enrichPways);\n"
+            + "if (is.list (sum)) sum else stop (paste ('enrichPathway invalid return value ', jsonlite::toJSON (as.list (sum))));" +
+         "}",
     synchronize = true)
 @Accessors (fluent = true, chain = true)
 public class PathwayEnrichmentBuilder extends AbstractDispatchedRAnalysisBuilder<PathwayEnrichmentBuilder, PathwayEnrichment> {

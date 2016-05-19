@@ -1,4 +1,4 @@
-define(['mui', 'd3'], function(ng, d3){
+define(['mui', 'd3', "../style/boxplot.less", "save-svg-as-png"], function(ng, d3, style, saveSvgAsPng){
 
     return angular.module('mev-d3-boxplot', [])
         //.service('GroupBuilder')
@@ -134,9 +134,9 @@ define(['mui', 'd3'], function(ng, d3){
                                 'height': height + margin.top + margin.bottom,
                                 'id': "svg-" + id
                             });
-
+                       
                         var svg = d3.select('svg#svg-' + id);
-
+                        // svg.append("style").text(style.source.replace(/[\[]*[.]*mev-boxplot[\]]*/g, ""));
                         svg.append('g').attr('id', 'quantiles' + id);
 
                         var quantiles = d3.select('g#quantiles' + id);
@@ -158,7 +158,38 @@ define(['mui', 'd3'], function(ng, d3){
 
                         this.drawLabels(svg, params.data[0].groups);
 
+                        this.drawTools(svg);
 
+                    },
+                    drawTools: function(svg){
+                        var fo = svg.append("foreignObject").attr({
+                            x: svg.attr("width")-30,
+                            y: 0,
+                            height: 50,
+                            width: 50
+                        });
+
+                        var divSave = fo.append('xhtml:div');
+                        var link = divSave.append("div")
+                            // .html("<span class=\"glyphicon glyphicon-cog\"></span>")
+                            .append("a")
+                            .html("<span class=\"glyphicon glyphicon-floppy-save\"></span>")
+                        divSave.on("click", function(d, i){
+                            console.debug(element, ng.element(element[0][0]).scope());
+                            var name = ng.element(element[0][0]).scope
+                                ? ng.element(element[0][0]).scope().analysis
+                                    ? ng.element(element[0][0]).scope().analysis.name + '-boxplot.png'
+                                    : "mev-boxplot.png"
+                                : "mev-boxplot.png"
+                            saveSvgAsPng.saveSvgAsPng(svg[0][0], name, {
+                                selectorRemap: function(s) {
+                                    return s.replace('mev-boxplot ', '');
+                                }
+                            })
+                        });
+                        var linkDom = link[0][0];
+                        if(linkDom.offsetWidth===0 || linkDom.offsetHeight===0)
+                            link.text("save");
                     },
                     clear: function () {
                         element.selectAll('*').remove();

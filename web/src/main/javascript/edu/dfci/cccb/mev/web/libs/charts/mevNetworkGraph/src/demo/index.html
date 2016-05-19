@@ -1,0 +1,16 @@
+<html>
+<head>
+    <script src="../../node_modules/mev-steal-bootstrap/src/mev-steal-bootstrap.js"></script>
+    <script>
+        live("../../package.json!npm", "src/demo/index");
+    </script>
+</head>
+<body ng-controller="DemoCtrl">
+    <div id="barchart"></div>
+    <div id="network-svg"></div>
+    <div id="network-canvas"></div>
+    <div mev-network-graph="mevNetworkGraph" ></div>
+    <div mev-network-graph="mevNetworkGraphColor" ></div>
+    <div mev-network-graph="mevNetworkGraphEdgesOnly" ></div>
+</body>
+</html>

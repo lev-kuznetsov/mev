@@ -30,7 +30,6 @@ define(["ng",
        'js/analysisaccordioncollection/AnalysisAccordionCollection',
        'js/analysismodalcollection/AnalysisModalCollection',
        'js/viewCollection/ViewCollection',
-       'js/geneboxplotvisualization/GeneBoxPlotVisualization',
        'js/orefine/OrefineBridge',
        'mainmenu',
        "geods",
@@ -70,7 +69,6 @@ define(["ng",
 	                            	     'Mev.AnalysisModalCollection',
 	                            	     'Mev.ViewCollection',
 	                            	     'Mev.MainMenuModule',
-	                            	     'Mev.GeneBoxPlotVisualization',
 	                            	     'Mev.GeodsModule',
 	                            	     'Mev.ClinicalSummary',
 	                            	     'Mev.CohortAnalysis'
@@ -105,6 +103,7 @@ define(["ng",
 				sidemenuUrl: "app/views/contact/templates/contact.sidemenu.tpl.html"
 			}
 		})
+			
 //		.state("root.issues", {
 //			url: "/issues",
 //			templateUrl: "app/views/issues/templates/issues.tpl.html",
@@ -146,7 +145,19 @@ define(["ng",
 	}])
 	.config(["paginationTemplateProvider", function(paginationTemplateProvider){
 		paginationTemplateProvider.setPath('/container/vendor/mbAngularUtils/pagination/dirPagination.tpl.html');
-	}])	
+	}])
+	.config(["$httpProvider", function($httpProvider){
+		$httpProvider.interceptors.push(function($q, $rootScope) {
+			return {
+				responseError: function(rejection) {
+					console.log("rejection", rejection);
+					if(_.includes(rejection.data, "DatasetNotFoundException"))
+						$rootScope.$broadcast("mui:error:sessionTimeout", rejection);						
+					return $q.reject(rejection);
+				}
+			};
+		});
+	}])
 	.run(["$rootScope", "$state", "$stateParams",
 	function ($rootScope, $state, $stateParams) {
 		

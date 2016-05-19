@@ -1,0 +1,26 @@
+<div tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="dismiss()" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Edit Selection {{selectionSet.name}}</h3>
+            </div>
+            <div class="modal-body">
+
+                <form role="form">
+                    <div class="form-group">
+                        <!--<label for="color" class="control-label">Color</label>-->
+                        <!--<input id="color" colorpicker colorpicker-parent="true" colorpicker-position="right" type="text" ng-model="selectionSet.properties.color" />-->
+                        <color-picker id="color" ng-model="selectionSet.properties.selectionColor"></color-picker>
+                    </div>
+
+                    <!--button ng-click="testInit()">hehe</button-->
+                    <a class="btn btn-success btn-block" ng-click="save()" aria-hidden="true">Save</a>
+                    <a class="btn btn-info btn-block" ng-click="dismiss()" aria-hidden="true">Cancel</a>
+                </form>
+
+
+            </div>
+        </div>
+
+</div>

@@ -9,6 +9,9 @@
   .controls{
     padding-top: 5px;
     flex: 3 0 @chart-control-width;
+    >div{
+      margin-bottom: 10px;
+    }
     .inlineGroup{
       label{
         display: inline-block;
@@ -26,7 +29,6 @@
       }
     }
 
-
     .btn-group {
       > label{
         display: inline-block;
@@ -35,6 +37,11 @@
         clear: initial;
         &:after {
           content: "";
+        }
+        &.btn{
+          a, .glyphicon{
+            color: inherit;
+          }
         }
       }
     }

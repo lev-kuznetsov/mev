@@ -54,7 +54,8 @@ define(["angular", "lodash"], function(ng, _){
 		_self.selectNgModules = function(deps){
 			return deps.filter(function(dep){
 				//all strings should be considered module names
-				if(dep instanceof String || typeof dep === "string")
+				if((dep instanceof String || typeof dep === "string")
+				&& dep.charAt(0)!=="<")
 					return true;
 				
 				//if has the require array and a provider function -> assume AngularJS module

@@ -9,6 +9,7 @@ define(["lodash"], function(_){ "use strict";
 			if(analysisType && _.isFunction(analysisType.modelDecorator))
 				analysisType.modelDecorator(analysis);
 			scope.dotPlotConfig = {
+				name: scope.analysis.name,
 				data: scope.analysis.result,
 				series: "Counts"
 			}
@@ -50,7 +51,7 @@ define(["lodash"], function(_){ "use strict";
 		           'icon': ["<=", ">="],
 		           'datatype': "integer"
 		       },{
-		           'name': 'ID',
+		           'name': 'Gene Id',
 		           'field': "geneID",
 		           'icon': "search"
 		       },

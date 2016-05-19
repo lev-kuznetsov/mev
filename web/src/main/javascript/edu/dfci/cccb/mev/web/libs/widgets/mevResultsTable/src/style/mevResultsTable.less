@@ -1,3 +1,32 @@
-.mev-topfilter-button{
-	display: inline-block;
+.mev-flex-push-right{
+	margin-left: auto;
+	margin-right: 0;
+}
+mev-results-table,
+[mev-results-table]{
+	.mev-topfilter-button{
+		display: inline-block;
+	}
+	.tools{
+		float: none;
+	}
+	.mev-results-table-toolbar{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		> * {
+			flex-grow: 0;
+			margin-right: 10px;
+			&.btn-group{
+				margin-top: 20px;
+				margin-bottom: 20px;
+				.btn {
+					padding: 6px 12px;
+				}
+			}
+		}
+	}
+
+
 }
