@@ -37,7 +37,7 @@ public class PresetsRestConfigurationTest extends WebMvcConfigurerAdapter{
   @Bean (name="tcgaPresetRoot")
   public URL tcgaPresetRoot() throws IOException{    
     log.info ("**** TEST Prests Root Config ****");
-    return (new ClassPathResource ("tcga/")).getURL ();
+    return (new ClassPathResource ("tcga2/")).getURL ();
   }
 
   @Inject @Bean

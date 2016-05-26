@@ -2,6 +2,8 @@ package edu.dfci.cccb.mev.test.presets.domain;
 
 import javax.inject.Inject;
 
+import edu.dfci.cccb.mev.presets.contract.Preset;
+import edu.dfci.cccb.mev.presets.contract.exceptions.PresetNotFoundException;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +24,13 @@ public class TestPresetsValuesLoader {
   
   @Test @Ignore
   public void testLoadAll () throws PresetException {
-    loader.loadAll (presets);   
+    loader.loadAll (presets);
+  }
+
+  @Test @Ignore
+  public void testLoadOne () throws PresetException, PresetNotFoundException {
+    Preset preset = presets.get("UNC_KIRP_AgilentG4502A_07_3_l3");
+    loader.load (preset);
   }
 
 }

@@ -9,7 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreType;
 public interface PresetDescriptor {
   String name();
   URL dataUrl();
-  URL columnUrl();  
+  URL columnUrl();
+  URL columnSourceUrl();
   URL rowUrl();
   URL dataRootUrl();
   String relativeDataPath();

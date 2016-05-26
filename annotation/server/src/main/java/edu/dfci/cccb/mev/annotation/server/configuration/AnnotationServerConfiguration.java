@@ -33,7 +33,39 @@ import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
                                                                       Controller.class,
                                                                       ControllerAdvice.class,
                                                                       RestController.class }))
-@Import({AnnotationProjectManagerConfiguration.class})
 @ToString
 public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
+
+  private @Inject Workspace workspace;
+  private @Inject FileProjectManager sessionProjectManager;
+  private @Inject @Named("presets-dataset-builder") PresetDatasetBuilder builder;  
+  private @Inject org.springframework.core.env.Environment environment;
+  private @Inject ProbeAnnotationPlatforms annotationPlatforms;
+  private @Inject PresetDimensionBuilder dimensionBuilder;
+
+  @Bean
+  @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+  @Inject
+  public static FileProjectManager sessionProjectManager (
+          Workspace workspace,
+          @Named("presets-dataset-builder") PresetDatasetBuilder builder,
+          PresetDimensionBuilder dimensionBuilder,
+          ProbeAnnotationPlatforms annotationPlatforms) throws IOException, SQLException {
+    FileProjectManager projectManager = new FileProjectManager ();
+    projectManager.setWorkspaceDir (new SessionWorkspaceDir ());
+    projectManager.setWorkspace (workspace);
+    projectManager.setDatasetBuilder (builder);
+    projectManager.setDimensionBuilder (dimensionBuilder);
+    projectManager.setProbeAnnotationPlatforms (annotationPlatforms);
+    return projectManager;
+  }
+
+
+  @PostConstruct
+  public void setProjectmanagerSingleton () throws IOException, SQLException {
+    ProjectManager.setSingleton (sessionProjectManager);
+  }
+  
+  
+
 }

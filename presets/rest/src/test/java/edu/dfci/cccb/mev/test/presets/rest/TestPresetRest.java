@@ -38,7 +38,7 @@ public class TestPresetRest {
     //Preset preset = new TcgaPresetMetafile ("BRCA.MDA_RPPA_Core.Level_3.tsv", "BRCA/Level_3", disease, diseaseName, platform, platformName)
     assertNotNull (tcgaPresets);
     assertNotNull( tcgaPresets.list ());
-    assertEquals(2, tcgaPresets.list ().size ());
+    assertEquals(21, tcgaPresets.list ().size ());
     
   }
 

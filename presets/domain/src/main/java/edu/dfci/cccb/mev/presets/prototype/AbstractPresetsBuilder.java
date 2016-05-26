@@ -30,17 +30,5 @@ public abstract class AbstractPresetsBuilder implements PresetsBuilder{
 //    return result;
 //  }
 
-  @Override
-  public List<Preset> getAll(URL data) throws PresetException{
-    TsvReader reader = new TsvReaderMetaModel ();
-    reader.init (data);
-    
-    List<Preset> result = new ArrayList<Preset> ();
-    for(Object[] row : reader.readAll ())      
-      result.add(createPreset (row));
-    
-    return result;
-  }
-
   
 }

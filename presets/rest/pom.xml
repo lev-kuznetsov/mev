@@ -10,6 +10,9 @@
 	<artifactId>mev-presets-rest</artifactId>
 	<name>MeV PREloaded DataSETS - REST</name>
 
+	<properties>
+		<jetty.version>8.1.13.v20130916</jetty.version>
+	</properties>
 	<dependencies>
 		<!-- Mev IO -->
 		<dependency>
@@ -77,6 +80,14 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Servlet API -->
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>${jetty.version}</version>
+			<optional>true</optional>
+		</dependency>
 		<!-- Hibernate -->
 
 		<dependency>
@@ -110,12 +121,6 @@
 
 	</dependencies>
 	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>false</filtering>
-			</resource>
-		</resources>
 		<plugins>
 			<plugin>
 		        <groupId>org.apache.maven.plugins</groupId>

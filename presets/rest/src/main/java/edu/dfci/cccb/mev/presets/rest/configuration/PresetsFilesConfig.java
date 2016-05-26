@@ -10,6 +10,8 @@ import java.net.URL;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import edu.dfci.cccb.mev.presets.tcga.TcgaPresetMetafileJson;
+import edu.dfci.cccb.mev.presets.tcga.TcgaPresetsBuilderJson;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -72,12 +74,12 @@ public class PresetsFilesConfig {
   @Scope(value=SCOPE_PROTOTYPE, proxyMode=NO)
   @Named("tcgaPreset")
   public Preset tcgaPreset(){
-    return new TcgaPresetMetafile ();
+    return new TcgaPresetMetafileJson();
   }
   
   @Bean
   public TcgaPresetsBuilder getTcgaPresetsBuilder(){
-    return new TcgaPresetsBuilder ();
+    return new TcgaPresetsBuilderJson();
   }
   
   @Inject
