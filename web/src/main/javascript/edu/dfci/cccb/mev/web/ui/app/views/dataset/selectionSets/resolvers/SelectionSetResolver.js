@@ -5,9 +5,7 @@ define(["mui"], function(mui){
            console.debug("resolve selectionSet", reset);
            return reset.$promise.then(function(){
                if($stateParams.setId==="new"){
-                   var selectionSet1 = {name: "new", type: dimension};
-                   console.debug("selectionSet1", selectionSet1);
-                   return selectionSet1;
+                   return {name: "new", type: dimension};
                }
 
 
