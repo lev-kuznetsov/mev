@@ -1,5 +1,5 @@
-define(['q', 'jsLru'], function(q, jsLru){
-	return function ValueStore(dataset, $http, $rootScope){
+define(['lodash', 'q', 'jsLru'], function(_, q, jsLru){
+	return function ValueStore(dataset, source, $rootScope){
     	var self = this;    	
     	var lruCache = new jsLru(5);
     	//init swap
@@ -9,7 +9,7 @@ define(['q', 'jsLru'], function(q, jsLru){
 		}
 		
     	function fetchDataValues(){    		
-    		var valuesPromise = $http.get('/dataset/'+dataset.id+'/data/values', {params: {format: "binary"}, responseType: "arraybuffer", headers: {"Accept": "application/octet-stream"}})
+    		var valuesPromise = source.get()
 			.then(function(values){
 				var ab = values.data;     				
  				var dataview = new DataView(ab);
@@ -18,7 +18,9 @@ define(['q', 'jsLru'], function(q, jsLru){
  				dataset.dataview = dataview; 		
  				$rootScope.$broadcast("mui:model:dataset:values:loaded");
  				return ab;
- 			});
+ 			})["catch"](function(e){
+				throw e;
+			});
 			return valuesPromise;
     	}
     	
@@ -75,10 +77,10 @@ define(['q', 'jsLru'], function(q, jsLru){
     		
         }
         
-        return {        	
-        	getByKey: getByKey,  
+        return _.assign(this, {
+        	getByKey: getByKey,
         	getSome: getSome,
         	getDict: getDict
-        };
+        });
     };
 });

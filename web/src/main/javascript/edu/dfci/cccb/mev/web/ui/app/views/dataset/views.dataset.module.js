@@ -98,7 +98,11 @@ function(ng,
 	   	     						return project.dataset;
 	   	     					});	   	     					
 	   	     				}]	   	     				
-	   	     			}
+	   	     			},
+						onExit: ["dataset", function(dataset){
+							console.log("closing " + dataset.id);
+							dataset.close();
+						}]
 	   	     		})
 	   	     		.state("root.dataset.home", {		   	     		
 	   	     			parent: "root.dataset",

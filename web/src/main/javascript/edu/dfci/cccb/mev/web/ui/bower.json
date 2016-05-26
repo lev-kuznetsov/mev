@@ -18,8 +18,8 @@
     "tests"
   ],
   "dependencies": {
-    "pouchdb": "~5.1.0",
-    "angular-utils-ui-breadcrumbs": "~0.2.2"    
+    "pouchdb": "~5.3.2",
+    "angular-utils-ui-breadcrumbs": "~0.2.2"
   },
   "system": {
     "meta": {
