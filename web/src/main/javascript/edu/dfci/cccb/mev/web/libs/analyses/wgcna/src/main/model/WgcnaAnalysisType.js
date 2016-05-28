@@ -1,11 +1,11 @@
-define(["lodash",
+define(["lodash", "../router/WgcnaState.tpl.html",
     "mev-analysis/src/type/model/AnalysisType",
     "mev-analysis/src/params/model/AnalysisParamsFactory",
     "mev-analysis/src/params/model/select/SelectParam",
     "mev-analysis/src/params/model/decimal/DecimalParam",
     "mev-analysis/src/params/model/integer/IntegerParam",
     "mev-analysis/src/params/model/selectionSet/SelectionSetParam"
-], function(_,
+], function(_, template,
             AnalsysType,
             AnalysisParamsFactory,
             SelectParam,
@@ -17,7 +17,8 @@ define(["lodash",
         var wgcnaType = new MevAnalysisType({
             id: "wgcna",
             name: "WGCNA",
-
+            viewModel: "WgcnaVM",
+            template: template,
             params: mevAnalysisParams([
                 new SelectParam({
                     "id": "distMethod",

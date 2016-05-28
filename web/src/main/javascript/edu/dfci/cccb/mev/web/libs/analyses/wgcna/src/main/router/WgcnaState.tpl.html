@@ -1,7 +1,6 @@
-<!-- <project-analysis-parameters parameters="WgcnaVM.analysis.params"></project-analysis-parameters> -->
 <div class="column-wrapper">
     <ul class="nav nav-tabs column-header" id="importTabs">
-        <li id="table_tab" class="active"><a href="#table" data-toggle="tab" target="_self">{{WgcnaVM.analysis.name}}</a></li>
+        <li id="table_tab" class="active"><a href="#table" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}}</a></li>
         <div class="action-menu" mui-paste="action-menu"></div>
     </ul>
 
@@ -11,17 +10,17 @@
                 <!--      	<div class="btn-toolbar" role="toolbar" mui-yank="action-menu"> -->
                 <div class="btn-toolbar" role="toolbar" >
                     <div class="btn-group">
-                        <btn-create-selection mui-target="Top" mui-analysis="WgcnaVM.analysis"
-                                              mui-dataset="WgcnaVM.project.dataset" mui-items="WgcnaVM.getSelection()" mui-key-name="id" mui-dimension="column">
-                        </btn-create-selection><!--
-			            --><btn-export-selection mui-target="Top" mui-analysis="WgcnaVM.analysis"
-                                                 mui-dataset="WgcnaVM.project.dataset" mui-items="WgcnaVM.getSelection()" mui-key-name="id" mui-dimension="column">
+                        <!--<btn-create-selection mui-target="Top" mui-analysis="WgcnaVM.analysis"-->
+                                              <!--mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.getSelection()" mui-key-name="id" mui-dimension="column">-->
+                        <!--</btn-create-selection>-->
+			            <!--<btn-export-selection mui-target="Top" mui-analysis="WgcnaVM.analysis"-->
+                                                 <!--mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.getSelection()" mui-key-name="id" mui-dimension="column">-->
                     </btn-export-selection>
                     </div>
                 </div>
             </div>
             <div class="results-body">
-                <div mev-network-graph="WgcnaVM.mevNetworkWgcna" ></div>
+                <div mev-network-graph="DatasetAnalysisVM.mevNetworkWgcna" ></div>
             </div>
         </div>
     </div>
