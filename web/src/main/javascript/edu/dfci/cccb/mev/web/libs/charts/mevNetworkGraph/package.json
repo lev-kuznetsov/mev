@@ -18,7 +18,7 @@
     "lodash": "^4.11.2",
     "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
     "mui": "file:../../mui",
-    "ng-vega": "^1.3.2",
+    "ng-vega": "apartensky/ng-vega#v1.3.2+stealjs",
     "steal": "^0.13.2",
     "vega": "^2.5.2"
   },
