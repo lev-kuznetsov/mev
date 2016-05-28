@@ -1,4 +1,4 @@
-define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, vg, specJson){
+define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json", "./mevNetwork.tpl.html"], function(_, d3, vg, specJson, template){
     var directive = function mevNetworkDirective(){
         return {
             restrict: "AEC",
@@ -6,7 +6,7 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                 config: "=mevNetworkGraph"
             },
             // template: "<div vega spec=\"vm.spec\"  vega-renderer=\"renderer\"></div>",
-            template: "<div></div>",
+            template: template,
             controller: ["$scope", function(scope){
                 if(!scope.config.renderer)
                     scope.config.renderer = "canvas";
@@ -188,15 +188,22 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                 });
 
                 scope.vm = {
-                    spec: spec
+                    spec: spec,
+                    saveAsConfig: {
+                        name: scope.config.name ? scope.config.name : "mev-network-graph.png",
+                        selector: '.vega svg'
+                    }
                 };
+
+
                 console.debug("spec", spec);
             }],
             link: function(scope, elm, attr, ctrl){
                 function parse(spec, renderer) {
+                    var vgElm = elm.find(".vega-container");
                     vg.parse.spec(spec, function(error, chart) {
                         var view = chart({
-                            el: elm[0],
+                            el: vgElm[0],
                             renderer: renderer || "canvas"
                         }).update();
 
