@@ -280,6 +280,14 @@
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
+    <!-- WGCNA -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-wgcna-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
     <!-- Servlet -->
 
     <dependency>
@@ -616,8 +624,11 @@
             source ("http://bioconductor.org/biocLite.R");
             sapply (c ("topGO", "org.Hs.eg.db", "org.Mm.eg.db",
                        "limma", "DESeq", "edgeR", "ReactomePA",
-                       "metagenomeSeq", "DESeq2"), function (lib)
+                       "metagenomeSeq", "DESeq2", "impute", "preprocessCore"), function (lib)
               if (!requireNamespace (lib)) biocLite (lib));
+            sapply (c ("WGCNA"), function (lib)
+              if (!requireNamespace (lib))
+                install.packages (lib, repos="http://cran.rstudio.com"));
           </onInitialize>
           <configure>
             <workdir>${mev.java.io.tmpdir}/Rserve</workdir>
@@ -631,7 +642,8 @@
             assign ("mwd", "${project.basedir}", e = .GlobalEnv);
             library (injectoR);
             library (topGO);
-            library (RProtoBuf)
+            library (RProtoBuf);
+            library (WGCNA);
             source ("../dataset/domain/src/main/r/json.R");
           </onRequest>
         </configuration>
