@@ -23,7 +23,7 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                                 "domain": {
                                     "data": "edges", "field": "weight"
                                 },
-                                "range": [1, 10]
+                                "range": [1, 2]
                             }
                         }
                     },
@@ -207,7 +207,7 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                         });
                     });
                 }
-                parse(scope.vm.spec, scope.renderer);
+                parse(scope.vm.spec, scope.config.renderer);
             }
         }
     };
