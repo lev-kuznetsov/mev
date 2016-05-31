@@ -10,7 +10,7 @@ define([], function(){
 			this.key = scope.muiKeyName || "id";
 			this.dimension = scope.muiDimension || "row";
 			this.getId = function(){
-				return "selectionAdd" + self.analysis.name + self.target; 
+				return ("selectionAdd" + self.analysis.name + self.target).replace(/.*(?=#[^\s]+$)/, '').replace(/\./, '');
 			};
 			this.selectionParams={};
 			this.addSelections = function (filteredResults) {

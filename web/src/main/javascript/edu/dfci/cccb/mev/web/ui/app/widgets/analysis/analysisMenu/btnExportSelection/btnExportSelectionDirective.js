@@ -11,7 +11,7 @@ define([], function(){
 			this.dimension = scope.muiDimension || "row";
 			this.contextLevel = scope.contextLevel || "bottom";
 			this.getId = function(){
-				return "selectionExport" + self.analysis.name + self.target; 
+				return ("selectionExport" + self.analysis.name + self.target).replace(/.*(?=#[^\s]+$)/, '').replace(/\./, '');;
 			};
 			this.exportParams={
 					name: undefined,
