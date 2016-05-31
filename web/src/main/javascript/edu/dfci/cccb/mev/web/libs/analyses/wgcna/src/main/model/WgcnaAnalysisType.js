@@ -47,7 +47,8 @@ define(["lodash", "../router/WgcnaState.tpl.html",
                     "displayName": "Sample Set",
                     "display": "name",
                     "bound": "keys",
-                    "required": true
+                    "required": true,
+                    "allowAll": "root"
                 }),
                 new mevSelectionSetParam({
                     "id": "geneList",
@@ -55,7 +56,8 @@ define(["lodash", "../router/WgcnaState.tpl.html",
                     "displayName": "Gene Set",
                     "display": "name",
                     "bound": "keys",
-                    "required": true
+                    "required": true,
+                    "allowAll": "root"
                 })
             ])
         });
