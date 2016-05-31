@@ -26,7 +26,29 @@ define(["lodash"], function(_){ "use strict";
                 },
                 data: _self.analysis.result
             };
+            var nodes = _.reduce(_self.analysis.result.edges, function(result, item){
+                if(!result.map[item.from]){
+                    result.map[item.from] = {
+                        id: item.from
+                    };
+                    result.list.push(result.map[item.from]);
+                }
 
+                if(!result.map[item.to]){
+                    result.map[item.to] = {
+                        id: item.to
+                    };
+                    result.list.push(result.map[item.to]);
+                }
+
+                return result;
+            }, {
+                map: {},
+                list: []
+            });
+            _self.getSelection=function(){
+                return nodes.list;
+            }
         };
         factory.$inject=["$scope", "project", "analysis"];
         return factory;
