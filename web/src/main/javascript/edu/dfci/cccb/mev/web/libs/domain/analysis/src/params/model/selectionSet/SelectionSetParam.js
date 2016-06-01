@@ -11,6 +11,11 @@ define(["lodash", "../select/SelectParam"], function(_, SelectParam){
 				)
 			);
 
+			this.validate = function (values){
+				if(this.max)
+					if(this.value && _.isArray(this.value.keys) && this.value.keys.length > this.max)
+						return this.id + " size may not exceed " + this.max;
+			};
 		};
 	}
 	SelectionSetParamFactory.$name="mevSelectionSetParam";
