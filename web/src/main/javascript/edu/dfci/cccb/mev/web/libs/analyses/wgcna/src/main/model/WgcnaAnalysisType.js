@@ -57,7 +57,8 @@ define(["lodash", "../router/WgcnaState.tpl.html",
                     "display": "name",
                     "bound": "keys",
                     "required": true,
-                    "allowAll": "root"
+                    "allowAll": "root",
+                    "max": 1000
                 })
             ])
         });
