@@ -1,7 +1,7 @@
 {
-  "width": 450,
-  "height": 400,
-  "padding": {"top":0, "bottom":0, "left":0, "right":0},
+  "width": 500,
+  "height": 450,
+  "padding": {"top":10, "bottom":30, "left":10, "right":10},
 
   "data": [
     {
@@ -101,7 +101,7 @@
       "properties": {
         "update": {
           "path": {"field": "layout_path"},
-          "stroke": {"value": "#ccc"}
+          "stroke": {"value": "#999"}
         }
       }
     },
@@ -114,15 +114,15 @@
           "shape": {"value": "circle"},
           "stroke": {"value": "steelblue"},
           "fill": {"value": "steelblue"},
-          "fillOpacity": {"value": 0.5}
+          "fillOpacity": {"value": 0.8}
         },
         "update": {
           "x": {"field": "layout_x"},
           "y": {"field": "layout_y"},
-          "fillOpacity": {"value": 0.5}
+          "fillOpacity": {"value": 0.8}
         },
         "hover": {
-          "fillOpacity": {"value": 0.8}
+          "fillOpacity": {"value": 1.0}
         }
       }
     },
