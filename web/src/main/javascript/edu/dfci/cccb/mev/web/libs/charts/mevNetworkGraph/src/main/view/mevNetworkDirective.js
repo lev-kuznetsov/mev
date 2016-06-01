@@ -66,22 +66,29 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json", "./mevNetwork.tpl.
                 //apply edge interface to edge rows
                 var edges = scope.config.data[scope.config.edge.field].map(function(edge){
                     var newEdge = edge;
+                    newEdge.s = (edge.s || edge[scope.config.edge.source.field]);
+                    newEdge.t = (edge.t || edge[scope.config.edge.target.field]);
                     if(scope.config.edge.source && _.isUndefined(newEdge.source))
                         Object.defineProperty(newEdge, "source", {
                             enumerable: true,
-                            get: function(){
+                            get: function () {
                                 return this[scope.config.edge.source.field];
                             },
-                            set: function(val){return this[scope.config.edge.source.field]=val}
+                            set: function (val) {
+                                return this[scope.config.edge.source.field] = val
+                            }
                         });
                     if(scope.config.edge.target && _.isUndefined(newEdge.target))
                         Object.defineProperty(newEdge, "target", {
                             enumerable: true,
-                            get: function(){
+                            get: function () {
                                 return this[scope.config.edge.target.field];
                             },
-                            set: function(val){return this[scope.config.edge.target.field]=val}
+                            set: function (val) {
+                                return this[scope.config.edge.target.field] = val
+                            }
                         });
+
                     if(scope.config.edge.weight && _.isUndefined(newEdge.weight))
                         Object.defineProperty(newEdge, "weight", {
                             enumerable: true,
@@ -132,12 +139,12 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json", "./mevNetwork.tpl.
                         return newNode;
                     });
                 }else{
-                    nodes = _.transform(scope.config.data[scope.config.edge.field], function(result, edge, index){
+                    nodes = _.transform(edges, function(result, edge, index){
                         var sourceFieldName = scope.config.edge.source.field;
-                        var source = edge[sourceFieldName];
+                        var source = edge.s;
                         var  nodeIndex = result.hash[source];
                         if(_.isUndefined(nodeIndex)){
-                            result.list.push({name: source});                             
+                            result.list.push({name: edge.s});
                             result.hash[source] = result.list.length - 1;
                             edge[sourceFieldName] = result.list.length - 1;
                         }else{
@@ -145,10 +152,10 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json", "./mevNetwork.tpl.
                         }
 
                         var targetFieldName = scope.config.edge.target.field;
-                        var target = edge[targetFieldName];
+                        var target = edge.t;
                         nodeIndex = result.hash[target];
                         if(_.isUndefined(nodeIndex)){
-                            result.list.push({name: target});
+                            result.list.push({name: edge.t});
                             result.hash[target] = result.list.length - 1;
                             edge[targetFieldName] = result.list.length - 1;
                         }else{
