@@ -20,7 +20,13 @@
                 </div>
             </div>
             <div class="results-body">
-                <div mev-network-graph="DatasetAnalysisVM.mevNetworkWgcna" ></div>
+                <div >
+                    <div mev-network-graph="DatasetAnalysisVM.mevNetworkWgcna" ></div>
+                </div>
+                <div >
+                    <mev-results-table data="DatasetAnalysisVM.analysis.result.edges" headers="DatasetAnalysisVM.headers" ordering="pValue"
+                                       mev-save-as="{name: analysis.name}"></mev-results-table>
+                </div>
             </div>
         </div>
     </div>

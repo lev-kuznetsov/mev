@@ -16,6 +16,7 @@
     "lodash": "^4.13.1",
     "mev-analysis": "file:../../domain/analysis",
     "mev-network-graph": "file:../../charts/mevNetworkGraph",
+    "mev-results-table": "file:../../widgets/mevResultsTable",
     "mui": "file:../../mui",
     "steal": "^0.13.2",
     "system-text": "^0.1.0"

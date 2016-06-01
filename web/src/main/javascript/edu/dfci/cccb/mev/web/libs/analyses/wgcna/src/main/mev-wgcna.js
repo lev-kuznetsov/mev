@@ -1,4 +1,4 @@
-define(["mui", "mev-analysis", "mev-network-graph",
+define(["mui", "mev-analysis", "mev-network-graph", "mev-results-table",
 "./model/WgcnaAnalysisType",
 "./router/WgcnaState",
 "./router/WgcnaVM"],
