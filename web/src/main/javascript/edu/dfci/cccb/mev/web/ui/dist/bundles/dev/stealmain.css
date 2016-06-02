@@ -1019,6 +1019,18 @@ cirvle.selected {
 
 /*mev-pca@0.0.0#src/style/pcaAnalysis.less!$less*/
 
+/*mev-analysis@0.0.1#src/type/view/startForm/AnalysisStartForm.less!$less*/
+mev-analysis-start-form .errors,
+.mev-analysis-start-form .errors,
+[mev-analysis-start-form] .errors {
+  padding-bottom: 10px;
+}
+mev-analysis-start-form .errors > .error,
+.mev-analysis-start-form .errors > .error,
+[mev-analysis-start-form] .errors > .error {
+  padding: 4px;
+}
+
 /*mev-results-table@0.0.1#src/style/mevResultsTable.less!$less*/
 .mev-flex-push-right {
   margin-left: auto;
@@ -1109,6 +1121,22 @@ mev-boxplot line.int-lines,
 .mev-boxplot line.int-lines,
 [mev-boxplot] line.int-lines {
   stroke-dasharray: 7, 5;
+}
+
+/*mev-network-graph@0.0.1#src/main/view/mevNetwork.less!$less*/
+.mev-network-graph-tooltip {
+  position: absolute;
+  border: solid 1px #aaa;
+  background-color: #ffa;
+  padding: 2px;
+  font-size: .8em;
+}
+.mev-network-graph-tooltip .mev-tooltip-field label {
+  font-family: sans-serif;
+  margin: 0px;
+}
+.mev-network-graph-tooltip .mev-tooltip-field label::after {
+  content: ":";
 }
 
 /*app/widgets/dataset/selectionSet/SelectionSetNode/selectionSetNode.less!$less*/
