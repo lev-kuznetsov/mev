@@ -16,10 +16,12 @@
     "d3": "^3.5.17",
     "jquery": "^2.2.3",
     "lodash": "^4.11.2",
+    "mev-chart-utils": "file:../mevChartUtils",
     "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
     "mui": "file:../../mui",
-    "ng-vega": "^1.3.2",
+    "ng-vega": "apartensky/ng-vega#v1.3.2+stealjs",
     "steal": "^0.13.2",
+    "system-text": "^0.1.0",
     "vega": "^2.5.2"
   },
   "devDependencies": {
@@ -28,6 +30,10 @@
   "system": {
     "map": {
       "vega": "vega#./vega.min.js"
+    },
+    "ext": {
+      "html": "system-text",
+      "json": "systemjs-plugin-json"
     }
   }
 }

@@ -45,6 +45,7 @@
     "mev-scatter-plot": "file:../libs/charts/scatter",
     "mev-steal-bootstrap": "file:../libs/utils/steal-bootstrap",
     "mev-topgo": "file:../libs/analyses/topgo",
+    "mev-wgcna": "file:../libs/analyses/wgcna",
     "mevPathwayEnrichment": "file:../libs/analyses/pathwayEnrichment",
     "mui": "file:../libs/mui",
     "ng-grid": "apartensky/ui-grid#2.0.14+npmfix",

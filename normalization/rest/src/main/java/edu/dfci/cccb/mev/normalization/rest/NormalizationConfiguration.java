@@ -15,12 +15,12 @@ public class NormalizationConfiguration {
 
   @Bean
   @Scope ("prototype")
-  public NormalizationBuilder builder () {
+  public NormalizationBuilder normalizationBuilder() {
     return new NormalizationBuilder ();
   }
 
   @Bean
-  public AnalysisPathVariableMethodArgumentResolver<Normalization> resolver () {
+  public AnalysisPathVariableMethodArgumentResolver<Normalization> normalizationResolver () {
     return new AnalysisPathVariableMethodArgumentResolver<> (Normalization.class);
   }
 }

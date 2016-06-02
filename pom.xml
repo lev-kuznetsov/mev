@@ -45,6 +45,7 @@
     <module>gsea</module>
     <module>normalization</module>
     <module>edger</module>
+    <module>wgcna</module>
     <module>web</module>
 
   </modules>

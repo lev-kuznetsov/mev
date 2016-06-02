@@ -1,5 +1,20 @@
 <div ng-if="!DatasetAnalysisVM.analysis">Loading ...</div>
-<div ng-if="DatasetAnalysisVM.analysis && DatasetAnalysisVM.analysis.status==='ERROR'">Problem while running analysis: {{DatasetAnalysisVM.analysis.name}}
-	<div>Parameters: <span class="mev-error-message">{{DatasetAnalysisVM.analysis.params}}</span></div>
-	<div>Error: <span class="mev-error-message">{{DatasetAnalysisVM.analysis.error}}</span></div>
+<div ng-if="DatasetAnalysisVM.analysis && DatasetAnalysisVM.analysis.status==='ERROR'" class="column-wrapper">
+	<ul class="nav nav-tabs column-header" id="analysisTabs">
+		<li id="table_tab" class="active"><a href="#table" data-toggle="tab" target="_self" >{{DatasetAnalysisVM.analysis.name}}</a></li>
+	</ul>
+
+	<div class="tab-content column-body">
+		<div class="tab-pane active results-wrapper" id="table" >
+			<div class="results-header clearfix">
+			</div>
+			<div class="results-body">
+				<div >Problem while running analysis: {{DatasetAnalysisVM.analysis.name}}
+					<div>Parameters: <span class="mev-error-message">{{DatasetAnalysisVM.analysis.params}}</span></div>
+					<div>Error: <span class="mev-error-message">{{DatasetAnalysisVM.analysis.error}}</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>

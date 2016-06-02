@@ -1,4 +1,4 @@
-define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, vg, specJson){
+define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json", "./mevNetwork.tpl.html", "./mevNetwork.less"], function(_, d3, vg, specJson, template){
     var directive = function mevNetworkDirective(){
         return {
             restrict: "AEC",
@@ -6,7 +6,7 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                 config: "=mevNetworkGraph"
             },
             // template: "<div vega spec=\"vm.spec\"  vega-renderer=\"renderer\"></div>",
-            template: "<div></div>",
+            template: template,
             controller: ["$scope", function(scope){
                 if(!scope.config.renderer)
                     scope.config.renderer = "canvas";
@@ -23,8 +23,14 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                                 "domain": {
                                     "data": "edges", "field": "weight"
                                 },
-                                "range": [1, 10]
+                                "range": [1, 2]
                             }
+                        },
+                        tooltip: {
+                            fields: [{
+                                name: "weight",
+                                label: "Weight"
+                            }]
                         }
                     },
                     node: {
@@ -66,22 +72,29 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                 //apply edge interface to edge rows
                 var edges = scope.config.data[scope.config.edge.field].map(function(edge){
                     var newEdge = edge;
+                    newEdge.s = (edge.s || edge[scope.config.edge.source.field]);
+                    newEdge.t = (edge.t || edge[scope.config.edge.target.field]);
                     if(scope.config.edge.source && _.isUndefined(newEdge.source))
                         Object.defineProperty(newEdge, "source", {
                             enumerable: true,
-                            get: function(){
+                            get: function () {
                                 return this[scope.config.edge.source.field];
                             },
-                            set: function(val){return this[scope.config.edge.source.field]=val}
+                            set: function (val) {
+                                return this[scope.config.edge.source.field] = val
+                            }
                         });
                     if(scope.config.edge.target && _.isUndefined(newEdge.target))
                         Object.defineProperty(newEdge, "target", {
                             enumerable: true,
-                            get: function(){
+                            get: function () {
                                 return this[scope.config.edge.target.field];
                             },
-                            set: function(val){return this[scope.config.edge.target.field]=val}
+                            set: function (val) {
+                                return this[scope.config.edge.target.field] = val
+                            }
                         });
+
                     if(scope.config.edge.weight && _.isUndefined(newEdge.weight))
                         Object.defineProperty(newEdge, "weight", {
                             enumerable: true,
@@ -132,12 +145,12 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                         return newNode;
                     });
                 }else{
-                    nodes = _.transform(scope.config.data[scope.config.edge.field], function(result, edge, index){
+                    nodes = _.transform(edges, function(result, edge, index){
                         var sourceFieldName = scope.config.edge.source.field;
-                        var source = edge[sourceFieldName];
+                        var source = edge.s;
                         var  nodeIndex = result.hash[source];
                         if(_.isUndefined(nodeIndex)){
-                            result.list.push({name: source});                             
+                            result.list.push({name: edge.s});
                             result.hash[source] = result.list.length - 1;
                             edge[sourceFieldName] = result.list.length - 1;
                         }else{
@@ -145,10 +158,10 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                         }
 
                         var targetFieldName = scope.config.edge.target.field;
-                        var target = edge[targetFieldName];
+                        var target = edge.t;
                         nodeIndex = result.hash[target];
                         if(_.isUndefined(nodeIndex)){
-                            result.list.push({name: target});
+                            result.list.push({name: edge.t});
                             result.hash[target] = result.list.length - 1;
                             edge[targetFieldName] = result.list.length - 1;
                         }else{
@@ -188,15 +201,22 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                 });
 
                 scope.vm = {
-                    spec: spec
+                    spec: spec,
+                    saveAsConfig: {
+                        name: scope.config.name ? scope.config.name : "mev-network-graph.png",
+                        selector: '.vega svg'
+                    }
                 };
+
+
                 console.debug("spec", spec);
             }],
             link: function(scope, elm, attr, ctrl){
                 function parse(spec, renderer) {
+                    var vgElm = elm.find(".vega-container");
                     vg.parse.spec(spec, function(error, chart) {
                         var view = chart({
-                            el: elm[0],
+                            el: vgElm[0],
                             renderer: renderer || "canvas"
                         }).update();
 
@@ -205,9 +225,28 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json"], function(_, d3, v
                             console.debug("activeNode", view.data("activeNode").values());
                             console.debug("edge", view.data("activeNode").values());
                         });
+
+                        view.onSignal("hoverEdge", function(signal, item){
+                            console.debug(event, item);
+                            scope.$apply(function(scope) {
+                                if(scope.config.edge.tooltip)
+                                    scope.$emit("mev:network:edge:active:toggle", signal, item, view);
+                            });
+                        });
                     });
                 }
-                parse(scope.vm.spec, scope.renderer);
+                parse(scope.vm.spec, scope.config.renderer);
+                scope.$on("mev:network:edge:active:toggle", function(event, signal, item, view){
+                    scope.vm.edgeTooltip = {
+                        item: item,
+                        position: {
+                            top: item.y + view._el.offsetTop + 10,
+                            left: item.x + view._el.offsetLeft + 10,
+                        },
+                        config: scope.config.edge.tooltip
+                    };
+                    var tooltip = elm.find(".mev-network-graph-tooltip");
+                });
             }
         }
     };

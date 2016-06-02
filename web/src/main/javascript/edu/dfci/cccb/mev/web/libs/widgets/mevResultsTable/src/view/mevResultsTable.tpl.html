@@ -1,5 +1,5 @@
 <ng-form id="filterForm" name="filterForm" class="filterForm">
-	<table>	
+	<table>
 		<thead>		
 			<tr ng-if="pagination  || top ">
 				<td colspan="{{headers.length}}">
@@ -52,6 +52,11 @@
 					<a ng-if="header.click" href="#" ng-click="header.click(row[header.field], row)">{{row[header.field]}}</a>
 					<input type="checkbox" ng-if="header.check" ng-model="row.isChecked" ng-change="selectRow(header.field, row, header.check)">	
 					<span ng-if="!header.link && !header.click" >{{row[header.field] | mevTextOrNumber:5:header }}</span>
+				</td>
+			</tr>
+			<tr ng-if="vm.filteredResults.length==0">
+				<td colspan="{{headers.length}}">
+					No data to display.
 				</td>
 			</tr>
 		</tbody>

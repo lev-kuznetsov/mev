@@ -17,11 +17,11 @@ define(["lodash", "../view/defaultTemplate/analysis.default.tpl.html", "./Analys
 			start: function(params){
 				return AnalysisLauncher.start.apply(this, arguments);
 			}, 
-			validate: function(){			
-				return _.reduce(this.params, function(errors, param, key){
+			validate: function(values){
+				return _.reduce(this.params, function(errors, param, key, params){
 
 					if(_.isFunction(param.validate)){
-						var error = param.validate();
+						var error = param.validate(values || params.getValues());
 						if(error)
 							errors.push(error);
 					}
