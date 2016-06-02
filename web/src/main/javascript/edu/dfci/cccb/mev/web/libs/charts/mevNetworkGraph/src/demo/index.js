@@ -2,7 +2,7 @@ define(["mui", "d3", "vega", "mev-network-graph", "./data/miserables.json", "./d
 function(ng, d3, vg, mevNetworkGraph, miserablesJson, miserablesEdgesJson, barchartJson, networkJson, mynetJson){"use strict";
     var demo = ng.module("mev-network-graph-demo", arguments, arguments)
         .controller("DemoCtrl", ["$scope", function($scope){
-
+            $scope.vm = {};
             function parse(spec, id, renderer) {
                 vg.parse.spec(spec, function(error, chart) {
                     var view = chart({
@@ -15,11 +15,30 @@ function(ng, d3, vg, mevNetworkGraph, miserablesJson, miserablesEdgesJson, barch
                        console.debug("activeNode", view.data("activeNode").values());
                        console.debug("edges_transformed", view.data("edges_transformed").values());
                     });
+                    view.onSignal("hoverEdge", function(event, item){
+                        console.debug(event, item);
+                        console.debug("activeEdge", view.data("activeEdge"));
+                        $scope.$apply(function(scope) {
+                            scope.$emit("edge:active:toggle", { event: event, item:  item, view: view });
+                        });
+                    });
                 });
             }
             // parse(barchartJson, "barchart");
-            parse(mynetJson, "network-svg", "svg");
+            parse(networkJson, "network-svg", "svg");
             parse(mynetJson, "network-canvas");
+
+            $scope.$on("edge:active:toggle", function(event, item){
+                $scope.vm.activeEdge = item.item;
+                var tooltip = ng.element(".edge-tooltip");
+                tooltip.css({
+                    position: "absolute",
+                    border: "solid 5px black",
+                    "background-color": "red",
+                    top: item.view._el.offsetTop + item.item.y,
+                    left: item.view._el.offsetLeft + item.item.x
+                });
+            });
 
             $scope.mevNetworkGraph = {
                 renderer: 'canvas',
