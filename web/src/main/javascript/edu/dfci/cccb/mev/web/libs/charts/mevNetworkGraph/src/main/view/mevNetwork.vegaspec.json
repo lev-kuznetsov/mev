@@ -73,17 +73,28 @@
   "signals": [{
     "name": "hoverNode",
     "init": {},
-    "streams": [
-      {
-        "type": "@node:mouseover",
-        "expr": "{ datum: eventItem().datum, x: eventX(), y: eventY() }"
-      },
-      {
-        "type": "@node:mouseout",
-        "expr": "{}"
-      }
-    ]
-  }],
+    "streams": [{
+          "type": "@node:mouseover",
+          "expr": "{ datum: eventItem().datum, x: eventX(), y: eventY() }"
+        },
+        {
+          "type": "@node:mouseout",
+          "expr": "{}"
+        }
+      ]
+    },
+    {
+      "name": "hoverEdge",
+      "init": {},
+      "streams": [
+        {
+          "type": "@edge:mouseover",
+          "expr": "{ datum: eventItem().datum, x: eventX(), y: eventY() }"
+        },
+        {"type": "@edge:mouseout","expr": "{}"}
+      ]
+    }
+  ],
   "scales": [],
   "marks": [
     {
@@ -102,7 +113,8 @@
         "update": {
           "path": {"field": "layout_path"},
           "stroke": {"value": "#999"}
-        }
+        },
+        "hover": {"stroke": {"value": "#000"}}
       }
     },
     {

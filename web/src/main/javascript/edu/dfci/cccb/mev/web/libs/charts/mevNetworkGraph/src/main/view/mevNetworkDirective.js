@@ -1,4 +1,4 @@
-define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json", "./mevNetwork.tpl.html"], function(_, d3, vg, specJson, template){
+define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json", "./mevNetwork.tpl.html", "./mevNetwork.less"], function(_, d3, vg, specJson, template){
     var directive = function mevNetworkDirective(){
         return {
             restrict: "AEC",
@@ -25,6 +25,12 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json", "./mevNetwork.tpl.
                                 },
                                 "range": [1, 2]
                             }
+                        },
+                        tooltip: {
+                            fields: [{
+                                name: "weight",
+                                label: "Weight"
+                            }]
                         }
                     },
                     node: {
@@ -219,9 +225,28 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json", "./mevNetwork.tpl.
                             console.debug("activeNode", view.data("activeNode").values());
                             console.debug("edge", view.data("activeNode").values());
                         });
+
+                        view.onSignal("hoverEdge", function(signal, item){
+                            console.debug(event, item);
+                            scope.$apply(function(scope) {
+                                if(scope.config.edge.tooltip)
+                                    scope.$emit("mev:network:edge:active:toggle", signal, item, view);
+                            });
+                        });
                     });
                 }
                 parse(scope.vm.spec, scope.config.renderer);
+                scope.$on("mev:network:edge:active:toggle", function(event, signal, item, view){
+                    scope.vm.edgeTooltip = {
+                        item: item,
+                        position: {
+                            top: item.y + view._el.offsetTop + 10,
+                            left: item.x + view._el.offsetLeft + 10,
+                        },
+                        config: scope.config.edge.tooltip
+                    };
+                    var tooltip = elm.find(".mev-network-graph-tooltip");
+                });
             }
         }
     };

@@ -27,4 +27,10 @@
     </div>
     <div class="footer">
     </div>
+    <div class="mev-network-graph-tooltip" ng-style="{display: (vm.edgeTooltip.item.datum ? 'block' : 'none'),  top: vm.edgeTooltip.position.top, left: vm.edgeTooltip.position.left}">
+        <div class="mev-tooltip-field" ng-repeat="field in vm.edgeTooltip.config.fields">
+            <label>{{field.label || field.name}}</label>
+            <span>{{vm.edgeTooltip.item.datum[field.name]}}</span>
+        </div>
+    </div>
 </div>
