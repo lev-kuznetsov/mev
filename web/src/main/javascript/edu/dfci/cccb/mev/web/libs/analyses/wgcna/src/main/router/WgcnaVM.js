@@ -47,9 +47,20 @@ define(["lodash"], function(_){ "use strict";
                 data: _self.analysis.result
             };
             _self.getSelection=function(){
-                return nodes.list;
+                return _self.filteredGenes || nodes.list;
             }
-
+            function getFilteredGenes(edges){
+                return _.values(_.transform(edges, function(hash, item, key, edges){
+                    if(!hash[item.t])
+                        hash[item.t]={id: item.t};
+                    if(!hash[item.s])
+                        hash[item.s]={id: item.s};
+                    return hash;
+                }, {}));
+            }
+            _self.getFilteredEdges=function(filteredResults){
+                _self.filteredGenes = getFilteredGenes(filteredResults);
+            };
             _self.headers = [
                 {
                     'name': 'From',

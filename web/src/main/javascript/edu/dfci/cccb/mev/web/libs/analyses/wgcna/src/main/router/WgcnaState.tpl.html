@@ -25,7 +25,7 @@
                 </div>
                 <div >
                     <mev-results-table data="DatasetAnalysisVM.analysis.result.edges" headers="DatasetAnalysisVM.headers" ordering="pValue"
-                                       mev-save-as="{name: analysis.name}"></mev-results-table>
+                                       mev-save-as="{name: analysis.name}" on-filter="DatasetAnalysisVM.getFilteredEdges(filteredResults)"></mev-results-table>
                 </div>
             </div>
         </div>
