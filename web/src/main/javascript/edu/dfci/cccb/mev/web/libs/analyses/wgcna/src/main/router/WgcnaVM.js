@@ -51,10 +51,10 @@ define(["lodash"], function(_){ "use strict";
             }
             function getFilteredGenes(edges){
                 return _.values(_.transform(edges, function(hash, item, key, edges){
-                    if(!hash[item.t])
-                        hash[item.t]={id: item.t};
-                    if(!hash[item.s])
-                        hash[item.s]={id: item.s};
+                    if(!hash[item.to])
+                        hash[item.to]={id: item.to};
+                    if(!hash[item.from])
+                        hash[item.from]={id: item.from};
                     return hash;
                 }, {}));
             }
@@ -64,11 +64,11 @@ define(["lodash"], function(_){ "use strict";
             _self.headers = [
                 {
                     'name': 'From',
-                    'field': "s",
+                    'field': "from",
                     'icon': "search",
                 },{
                     'name': 'To',
-                    'field': "t",
+                    'field': "to",
                     'icon': "search",
                 },{
                     'name': 'Method',

@@ -13,24 +13,24 @@
             </label>
         </div>
 
-        <!--<label class="break">Selections</label>-->
-        <!--<table class="table table-condensed" ng-if="selections && selections.length>0">-->
-        <!--<tr ng-repeat="selection in selections">-->
-        <!--<td>-->
-        <!--<input type="checkbox" ng-model="selection.checked" ng-change="vm.updateSelection(selection)" ng-true-value="true" ng-false-value="false">-->
-        <!--{{selection.name}}-->
-        <!--</td>-->
-        <!--<td style="width: 20px" bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>-->
-        <!--<td>{{selection.properties.selectionDescription}}</td>-->
-        <!--</tr>-->
-        <!--</table>-->
+        <label class="break">Selections</label>
+        <table class="table table-condensed" ng-if="config.selections && config.selections.length>0">
+            <tr ng-repeat="selection in config.selections">
+                <td>
+                    <input type="checkbox" ng-model="selection.checked" ng-change="vm.updateSelection(selection)" ng-true-value="true" ng-false-value="false">
+                    {{selection.name}}
+                </td>
+                <td style="width: 20px" bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>
+                <td>{{selection.properties.selectionDescription}}</td>
+            </tr>
+        </table>
     </div>
     <div class="footer">
     </div>
-    <div class="mev-network-graph-tooltip" ng-style="{display: (vm.edgeTooltip.item.datum ? 'block' : 'none'),  top: vm.edgeTooltip.position.top, left: vm.edgeTooltip.position.left}">
-        <div class="mev-tooltip-field" ng-repeat="field in vm.edgeTooltip.config.fields">
+    <div class="mev-network-graph-tooltip" ng-style="{display: (vm.tooltip.item.datum ? 'block' : 'none'),  top: vm.tooltip.position.top, left: vm.tooltip.position.left}">
+        <div class="mev-tooltip-field" ng-repeat="field in vm.tooltip.config.fields">
             <label>{{field.label || field.name}}</label>
-            <span>{{vm.edgeTooltip.item.datum[field.name]}}</span>
+            <span>{{vm.tooltip.item.datum[field.name]}}</span>
         </div>
     </div>
 </div>
