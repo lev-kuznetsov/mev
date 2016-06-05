@@ -1,7 +1,7 @@
 {
-  "width": 500,
+  "width": 600,
   "height": 450,
-  "padding": {"top":10, "bottom":30, "left":10, "right":100},
+  "padding": {"top":10, "bottom":30, "left":10, "right":200},
 
   "data": [
     {
@@ -16,6 +16,9 @@
         "charge": -80,
         "iterations": 1000
       }]
+    },
+    {
+      "name": "selections"
     }
   ],
   "signals": [{
@@ -43,8 +46,13 @@
       ]
     }
   ],
-  "scales": [],
-  "legends": [],
+  "scales": [{
+      "name": "selections",
+      "type": "ordinal",
+      "domain": {"data": "selections", "field": "name"},
+      "range": {"data": "selections", "field": "color"}
+    }],
+  "legends": [{"fill": "selections","orient": "right"}],
   "marks": [
     {
       "name": "edge",

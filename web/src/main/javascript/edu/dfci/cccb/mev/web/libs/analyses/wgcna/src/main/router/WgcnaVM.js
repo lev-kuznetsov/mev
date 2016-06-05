@@ -44,6 +44,7 @@ define(["lodash"], function(_){ "use strict";
                         }]
                     }
                 },
+                selections: project.dataset.row.selections,
                 data: _self.analysis.result
             };
             _self.getSelection=function(){

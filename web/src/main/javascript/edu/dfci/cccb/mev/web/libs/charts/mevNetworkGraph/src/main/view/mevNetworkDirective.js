@@ -94,7 +94,7 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json", "./mevNetwork.tpl.
                 };
                 if(scope.config.node && scope.config.node.color && scope.config.node.color.field){
 
-                    if(scope.config.node.color.field==="groupx") {
+                    if(scope.config.node.color.field==="group") {
                         //if color field is "group" assume we are displaying user selections
                         //we'll generate the color scale based on selection colors if they exist
                         defaults.node.color.scale = {
@@ -223,6 +223,7 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json", "./mevNetwork.tpl.
                     //config nodes
                     //apply node interface to node rows
                     var checkedSelections = getCheckedSelections(scope.config.selections);
+                    data.selections = [{name: "none", color: "steelblue"}];
                     data.nodes.forEach(function(node){
                         var groups = _.cloneDeep(checkedSelections);
                         node.groups = node.groups || [];
@@ -245,31 +246,48 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json", "./mevNetwork.tpl.
                         }
                         if(node.groups.length === 0){
                             node.group = "none";
+                            node.color = "steelblue";
                         }else{
                             node.group = _.orderBy(node.groups).join("+");
-                            // if(!scope.config.node.color.scale.domain.find(function(groupName){
-                            //         return groupName === node.group;
-                            //     })){
-                            //     if(node.groups.length === 1){
-                            //         var group = groups.find(function(group){
-                            //             return group.name === node.groups[0];
-                            //         });
-                            //         scope.config.node.color.scale.domain.unshift(node.group);
-                            //         scope.config.node.color.scale.range.unshift(group.properties.selectionColor);
-                            //     }else{
-                            //         scope.config.node.color.scale.domain.unshift(node.group)
-                            //         scope.config.node.color.scale.range.unshift(randomColor());
-                            //     }
-                            // }
+                            if(!scope.config.node.color.scale.domain.find(function(groupName){
+                                    return groupName === node.group;
+                                })){
+                                if(node.groups.length === 1){
+                                    var group = groups.find(function(group){
+                                        return group.name === node.groups[0];
+                                    });
+                                    scope.config.node.color.scale.domain.unshift(node.group);
+                                    scope.config.node.color.scale.range.unshift(group.properties.selectionColor);
+                                    data.selections.unshift({name: node.group, color: group.properties.selectionColor});
+                                }else{
+                                    var color = randomColor();
+                                    scope.config.node.color.scale.domain.unshift(node.group)
+                                    scope.config.node.color.scale.range.unshift(color);
+                                    data.selections.unshift({name: node.group, color: color});
+                                }
+                            }
+
+                            if(node.groups.length === 1){
+                                var group = groups.find(function(group){
+                                    return group.name === node.groups[0];
+                                });
+                                node.group = node.groups[0];
+                                node.color = group.properties.selectionColor;
+                            }else{
+                                var existingGroupIndex = _.findIndex(scope.config.node.color.scale.domain, function(groupName){
+                                    return groupName === node.group;
+                                });
+                                node.color = scope.config.node.color.scale.range[existingGroupIndex];
+                            }
 
                         }
 
-                        if(scope.config.node.color && _.isUndefined(node.color))
-                            Object.defineProperty(node, "color", {
-                                enumerable: true,
-                                get: function(){return this[scope.config.node.color.field];},
-                                set: function(val){this[scope.config.node.color.field]=val;}
-                            });
+                        // if(scope.config.node.color && _.isUndefined(node.color))
+                        //     Object.defineProperty(node, "color", {
+                        //         enumerable: true,
+                        //         get: function(){return this[scope.config.node.color.field];},
+                        //         set: function(val){this[scope.config.node.color.field]=val;}
+                        //     });
                         if(scope.config.node.shape && _.isUndefined(node.shape))
                             Object.defineProperty(node, "shape", {
                                 enumerable: true,
@@ -291,22 +309,42 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json", "./mevNetwork.tpl.
                     }), {
                         values: data.nodes
                     });
+                    _.assign(spec.data.find(function(item){
+                        return item.name === "selections";
+                    }), {
+                        values: _.orderBy(data.selections, function(selection){
+                          if(selection.name==="none")
+                              return "zzzzzzzzzzzzzzz";
+                          else
+                              return selection.name;
+                        })
+                    });
                     //color: set scale
                     if(scope.config.node.color.scale){
                         spec.scales.push(scope.config.node.color.scale);
-                        spec.legends.push(scope.config.node.color.legend);
+                        // spec.legends.push(scope.config.node.color.legend);
                     }
                     //color: set marks
                     _.assign(spec.marks.find(function(mark){
                         return mark.name === "node"
-                    }).properties.update, {
-                        "stroke": scope.config.node.color.scale
-                            ? { "scale": scope.config.node.color.scale.name || "color", "field": "color"}
-                            : { "value": scope.config.node.color.value },
-                        "fill": scope.config.node.color.scale
-                            ? { "scale": scope.config.node.color.scale.name || "color", "field": "color"}
-                            : {"value": scope.config.node.color.value }
-                    });
+                    }).properties.update,
+                        // {
+                        //     "stroke": scope.config.node.color.scale
+                        //         ? { "scale": scope.config.node.color.scale.name || "color", "field": "color"}
+                        //         : { "value": scope.config.node.color.value },
+                        //     "fill": scope.config.node.color.scale
+                        //         ? { "scale": scope.config.node.color.scale.name || "color", "field": "color"}
+                        //         : {"value": scope.config.node.color.value }
+                        // }
+                        {
+                            "stroke": {
+                                "field": "color"
+                            },
+                            "fill": {
+                                "field": "color"
+                            }
+                        }
+                    );
                     //node tooltip
                     _.assign(spec.data.find(function(data){
                         return data.name === "tooltip";
@@ -361,6 +399,7 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json", "./mevNetwork.tpl.
                                     scope.$emit("mev:network:edge:active:toggle", signal, item, view);
                             });
                         });
+                        scope.vm.view.update();
                     });
                 }
                 parse(scope.vm.buildSpec(), scope.config.renderer);
@@ -396,8 +435,13 @@ define(["lodash", "d3", "vega", "./mevNetwork.vegaspec.json", "./mevNetwork.tpl.
                         var newNode = _.find(_.find(spec.data, {"name": "nodes"}).values, function(newNode){
                            return node.name === newNode.name;
                         });
-                        return newNode.group;
+                        return newNode.color;
                     });
+                    scope.vm.view.data("selections")
+                        .remove(function(selection){
+                            return true;
+                        })
+                        .insert(_.find(spec.data, {"name": "selections"}).values);
                     scope.vm.view.update();
                 }
 
