@@ -1,4 +1,4 @@
-define(['extend', "lodash"], function(extend, _){
+define(['extend', "lodash"], function(extend, _){"use strict";
 
 	//Constructor :: Object -> $Function [View]
     //  Constructor function for new view that takes Object of type dataset and
@@ -68,11 +68,16 @@ define(['extend', "lodash"], function(extend, _){
 	        return stats;
 	    }
 	    
-	    if(params.labels.column.keys.length < self.dataset.column.keys.length || params.labels.row.keys.length < self.dataset.row.keys.length){
+	    if(params.labels.column.keys.length < self.dataset.column.keys.length  || params.labels.row.keys.length < self.dataset.row.keys.length){
 	        var stats = getStats(params);
 	        _.assign(params.expression, stats);
-	    }
-
+	    }else if(!_.isNumber(dataset.expression.avg) || isNaN(dataset.expression.avg)
+			|| !_.isNumber(dataset.expression.min) || isNaN(dataset.expression.min)
+			|| !_.isNumber(dataset.expression.max || isNaN(dataset.expression.max))){
+			var stats = getStats(params);
+			_.assign(params.expression, stats);
+			_.assign(dataset.expression, stats);
+		}
 	    self.refresh = function(){
 	    	var stats = getStats(self);
 	        _.assign(self.expression, stats);	    		
