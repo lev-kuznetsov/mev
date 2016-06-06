@@ -26,7 +26,8 @@ define(["lodash", "mev-analysis/src/type/model/AnalysisType",
                     new SelectParam({
                         "id": "method",
                         "displayName": "Method",
-                        "options": ["fdr", "holm", "hochberg", "BH", "BY", "bonferroni", "none"]
+                        "options": ["fdr", "holm", "hochberg", "BH", "BY", "bonferroni", "none"],
+                        "value": "fdr"
                     })])
             });
             edgerType.start=function() {
