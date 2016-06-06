@@ -46,7 +46,7 @@ function(_, mevAnalsysType,
 			params: mevAnalysisParams([
 				new MevParentAnalysisParam({
 					"id": "parent",
-					"type": ["LIMMA Differential Expression Analysis", "t-Test Analysis", "voom", "DESeq Differential Expression Analysis"],
+					"type": ["LIMMA Differential Expression Analysis", "t-Test Analysis", "voom", "DESeq Differential Expression Analysis", "edger"],
 					"display": "name",
 					"required": true
 				}), 
