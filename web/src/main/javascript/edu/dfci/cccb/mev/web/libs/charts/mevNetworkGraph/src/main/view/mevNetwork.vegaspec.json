@@ -1,7 +1,7 @@
 {
-  "width": 500,
+  "width": 600,
   "height": 450,
-  "padding": {"top":10, "bottom":30, "left":10, "right":10},
+  "padding": {"top":10, "bottom":30, "left":10, "right":200},
 
   "data": [
     {
@@ -18,56 +18,7 @@
       }]
     },
     {
-      "name": "activeNode",
-      "transform": [
-        {
-          "type": "formula",
-          "field": "ff_x",
-          "expr": "hoverNode.x > (width - 100) ? hoverNode.x - 80 : hoverNode.x + 10"
-        },
-        {
-          "type": "formula",
-          "field": "ff_y",
-          "expr": "hoverNode.y > 400 ? hoverNode.y - 10 : hoverNode.y + 20"
-        }],
-      "modify": [{
-          "type": "toggle",
-          "signal": "hoverNode"
-        }]
-    },
-    {
-      "name": "tooltip",
-      "transform": [{
-        "type": "formula",
-        "expr": "if(datum.label, datum.label, datum.name)",
-        "field": "label"
-      },{
-        "type": "formula",
-        "expr": "if(hoverNode.datum, hoverNode.datum[datum.name], null)",
-        "field": "value"
-      },{
-        "type": "rank"
-      },{
-        "type": "formula",
-        "expr": "if(hoverNode.datum, length(hoverNode.datum[datum.name])+length(datum.label), 0)",
-        "field": "length"
-      }]
-    },
-    {
-      "name": "tooltip_summary",
-      "source": "tooltip",
-      "transform": [{
-        "type": "aggregate",
-        "summarize": [{
-          "field": "*",
-          "ops": ["count"],
-          "as": ["count"]
-        },{
-          "field": "length",
-          "ops": "max",
-          "as": "longest"
-        }]
-      }]
+      "name": "selections"
     }
   ],
   "signals": [{
@@ -95,7 +46,13 @@
       ]
     }
   ],
-  "scales": [],
+  "scales": [{
+      "name": "selections",
+      "type": "ordinal",
+      "domain": {"data": "selections", "field": "name"},
+      "range": {"data": "selections", "field": "color"}
+    }],
+  "legends": [{"fill": "selections","orient": "right"}],
   "marks": [
     {
       "name": "edge",
@@ -137,47 +94,6 @@
           "fillOpacity": {"value": 1.0}
         }
       }
-    },
-    {
-      "type": "group",
-      "from": {"data": "activeNode"},
-      "properties": {
-        "update": {
-          "x": {"field": "ff_x"},
-          "y": {"field": "ff_y"}
-        }
-      },
-      "marks": [{
-        "type": "rect",
-        "from": {"data": "tooltip_summary"},
-        "properties": {
-          "update": {
-            "width": {"field": "longest", "mult": 10},
-            "height": {"field": "count", "mult": 13, "offset": 5},
-            "fill": {"value": "#ffa"},
-            "fillOpacity": {"value": 0.85},
-            "stroke": {"value": "#aaa"},
-            "strokeWidth": {"value": 0.5}
-          }
-        }
-      },{
-        "type": "text",
-        "from": {
-          "data": "tooltip"
-        },
-        "properties": {
-          "update": {
-            "fill": {
-              "value": "black"
-            },
-            "text": {
-              "template": "{{datum.label}}: {{datum.value}}"
-            },
-            "x": {"value": 5},
-            "y": {"field": "rank", "mult": 13}
-          }
-        }
-      }]
     }
   ]
 }

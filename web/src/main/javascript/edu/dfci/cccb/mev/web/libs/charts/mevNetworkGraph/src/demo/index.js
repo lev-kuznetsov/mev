@@ -69,7 +69,13 @@ function(ng, d3, vg, mevNetworkGraph, miserablesJson, miserablesEdgesJson, barch
             $scope.mevNetworkGraphEdgesOnly = {
                 renderer: 'canvas',
                 edge: {
-                    field: "links"
+                    field: "links",
+                    source: {
+                        field: "source"
+                    },
+                    target: {
+                        field: "target"
+                    }
                 },
                 node: {
                     color: {
