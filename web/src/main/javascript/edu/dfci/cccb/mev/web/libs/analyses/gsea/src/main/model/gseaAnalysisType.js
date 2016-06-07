@@ -16,7 +16,7 @@ function(_, mevAnalsysType,
 	DecimalParam,
 	ParentAnalysisParam,
 	AnnotationFieldParam){ "use strict";
-	function gseaAnalysisType(MevAnalysisType, mevAnalysisParams, MevParentAnalysisParam, MevAnnotationFieldParam, mevAnnotationRepository, $q){
+	function gseaAnalysisType(MevAnalysisType, mevAnalysisParams, MevParentAnalysisParam, MevAnnotationFieldParam, mevAnnotationRepository, mevAnalysisLocator, $q){
 
 		var limmaParam = Object.create(
 			new MevParentAnalysisParam({
@@ -35,8 +35,6 @@ function(_, mevAnalsysType,
 			"id": "geneSymbolField",
 			"dimension": "row",
 			"name": "Gene Symbol Mapping",
-			"display": "name",
-			"bound": "name",
 			"value": "Symbol"
 		});
 
@@ -46,17 +44,14 @@ function(_, mevAnalsysType,
 			params: mevAnalysisParams([
 				new MevParentAnalysisParam({
 					"id": "parent",
-					"type": ["LIMMA Differential Expression Analysis", "t-Test Analysis", "voom", "DESeq Differential Expression Analysis"],
+					"type": ["LIMMA Differential Expression Analysis", "t-Test Analysis", "voom", "DESeq Differential Expression Analysis", "edger"],
 					"display": "name",
 					"required": true
 				}), 
 				new MevAnnotationFieldParam({
 					"id": "geneSymbolField",
 					"dimension": "row",
-					"name": "Gene Symbol Mapping",
-					"display": "name",
-					"bound": "name",
-					"value": "Symbol"
+					"name": "Gene Symbol Mapping"
 				}),
 				new SelectParam({	
 					"id": "pAdjustMethod",
@@ -83,10 +78,13 @@ function(_, mevAnalsysType,
 
 		function prepareParams(params){
 			// "name":"vvv","organism":"human","pAdjustMethod":"fdr","minGSSize":20,"adjValueCutoff":0.05,"limma":
-			return prepareLimmaResult(params.parent.results, params.geneSymbolField).then(function(limmaResults){
+			var limma = mevAnalysisLocator.find({name: params.parent.name});
+			if(!limma)
+				throw new Error("Could not find parent Limma analysis for: " + JSON.stringify(params.parent));
+			return prepareLimmaResult(limma.results, params.geneSymbolField).then(function(limmaResults){
 				return {
 					name: params.parent.name+"."+params.name,
-					organism: params.parent.params.species,
+					organism: limma.params.species,
 					pAdjustMethod: params.pAdjustMethod,
 					minGSSize: params.minGSSize,
 					adjValueCutoff: params.adjValueCutoff,
@@ -173,7 +171,7 @@ function(_, mevAnalsysType,
 		return gseaType;
 	
 	}	
-	gseaAnalysisType.$inject=["mevAnalysisType", "mevAnalysisParams", "mevParentAnalysisParam", "mevAnnotationFieldParam", "mevAnnotationRepository", "$q"];
+	gseaAnalysisType.$inject=["mevAnalysisType", "mevAnalysisParams", "mevParentAnalysisParam", "mevAnnotationFieldParam", "mevAnnotationRepository", "mevAnalysisLocator", "$q"];
 	gseaAnalysisType.$name="mevGseaAnalysisType";
 	gseaAnalysisType.$provider="factory";
 	return gseaAnalysisType;

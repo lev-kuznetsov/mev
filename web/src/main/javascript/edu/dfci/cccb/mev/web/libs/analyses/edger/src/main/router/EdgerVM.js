@@ -63,15 +63,15 @@ define(["lodash"], function(_){ "use strict";
                     'step': 0.01
                 }];
             if(this.analysis.results && this.analysis.results.length>0)
-                if(this.analysis.results[0].FWER)
+                if(!_.isUndefined(this.analysis.results[0].FWER))
                     this.headers.push({
-                        'name': 'FWER',
+                        'name': 'P-Adjust (FWER)',
                         'field': "FWER",
                         'icon': [">=", "<="]
                     });
-                else if(this.analysis.results[0].FDR)
+                else if(!_.isUndefined(this.analysis.results[0].FDR))
                     this.headers.push({
-                        'name': 'FDR',
+                        'name': 'P-Adjust (FDR)',
                         'field': "FDR",
                         'icon': [">=", "<="]
                     });

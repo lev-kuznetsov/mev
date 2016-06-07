@@ -34,11 +34,9 @@ define(["../router/HclState.tpl.html",
 				new SelectParam({
 					"id": "dimension",
 					"displayName": "Clustering Dimension",
-					"options": [{display: "column", bound: "column"}, {display: "row", bound: "row"}],
-					"value": {display: "column", bound: "column"},
+					"options": ["column", "row"],
+					"value": "column",
 					"required": true,
-					"display": "display",					
-					"bound": "bound",					
 					"allowAll": true
 				}),
 				new mevSelectionSetParam({

@@ -6,7 +6,13 @@ define(["lodash", "../select/SelectParam", "../BaseParam"], function(_, SelectPa
 				_.assign(this, spec, {
 						type: "select",
 						options: function(){
-							return mevAnnotationsLocator.find(spec.dimension).getFields();
+							return mevAnnotationsLocator.find(spec.dimension).getFields().then(function(options){
+								return _.isArray(options)
+									? options.map(function(option){
+										return option.name;
+									})
+									: undefined;
+							});
 						},
 						refreshListeners: ["openRefine:loadedAnnotations:"+spec.dimension]
 					})
