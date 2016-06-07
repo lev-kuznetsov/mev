@@ -18,7 +18,7 @@ define(["lodash"], function(_){
             _.extend(colorConfig, {
                 sync: true,
                 min: 0,
-                max: colorConfig.get(_.maxBy(data, colorConfig.get)),
+                max: data.length>0 ? colorConfig.get(_.maxBy(data, colorConfig.get)) : 0,
                 updateColor: function(color){
                     updateColor.call(this, color);
                     $rootScope.$broadcast("mui:charts:color:updated", this, this.colors);
