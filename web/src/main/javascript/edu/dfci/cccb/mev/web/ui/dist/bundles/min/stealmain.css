@@ -24,10 +24,10 @@
 
 /*mev-heatmap@0.0.1#src/main/view/heatmapvisualization/style/mev-heatmap.less!$less*/
 mev-heatmap svg .tools span{margin-left:4px}#heatmap-Legend,#selectionCircle{cursor:pointer}#selectionCircle:hover{fill:red}div.d3tooltip{position:relative;text-align:left;width:100%;height:100%;padding:2px;font:12px sans-serif;border:none}div.d3tooltip a{cursor:pointer;background-color:#18bc9c;padding:2px 4px;color:#fff;z-index:1060}div.d3tooltip a:hover{background-color:#3498DB}
-/*mev-boxplot@0.0.1#src/main/style/boxplot.less!$less*/
-.mev-boxplot a,[mev-boxplot] a,mev-boxplot a{cursor:pointer}.mev-boxplot line,[mev-boxplot] line,mev-boxplot line{fill:#fff;stroke:#000;stroke-width:1.5px}.mev-boxplot line.int-lines,[mev-boxplot] line.int-lines,mev-boxplot line.int-lines{stroke-dasharray:7,5}
 /*mev-network-graph@0.0.1#src/main/view/mevNetwork.less!$less*/
 .mev-network-graph-tooltip{position:absolute;border:1px solid #aaa;background-color:#ffa;padding:2px;font-size:.8em}.mev-network-graph-tooltip .mev-tooltip-field label{font-family:sans-serif;margin:0}.mev-network-graph-tooltip .mev-tooltip-field label::after{content:":"}
+/*mev-boxplot@0.0.1#src/main/style/boxplot.less!$less*/
+.mev-boxplot a,[mev-boxplot] a,mev-boxplot a{cursor:pointer}.mev-boxplot line,[mev-boxplot] line,mev-boxplot line{fill:#fff;stroke:#000;stroke-width:1.5px}.mev-boxplot line.int-lines,[mev-boxplot] line.int-lines,mev-boxplot line.int-lines{stroke-dasharray:7,5}
 /*app/widgets/dataset/selectionSet/SelectionSetNode/selectionSetNode.less!$less*/
 [selection-set-node] .selection-color,selection-set-node .selection-color{width:10px;height:10px;margin:5px 0}
 /*app/widgets/analysis/any/style/widgets.analysis.any.less!$less*/

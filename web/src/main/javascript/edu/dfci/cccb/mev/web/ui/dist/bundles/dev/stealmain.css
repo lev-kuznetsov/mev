@@ -1104,6 +1104,22 @@ div.d3tooltip a:hover {
   background-color: #3498DB;
 }
 
+/*mev-network-graph@0.0.1#src/main/view/mevNetwork.less!$less*/
+.mev-network-graph-tooltip {
+  position: absolute;
+  border: solid 1px #aaa;
+  background-color: #ffa;
+  padding: 2px;
+  font-size: .8em;
+}
+.mev-network-graph-tooltip .mev-tooltip-field label {
+  font-family: sans-serif;
+  margin: 0px;
+}
+.mev-network-graph-tooltip .mev-tooltip-field label::after {
+  content: ":";
+}
+
 /*mev-boxplot@0.0.1#src/main/style/boxplot.less!$less*/
 mev-boxplot a,
 .mev-boxplot a,
@@ -1121,22 +1137,6 @@ mev-boxplot line.int-lines,
 .mev-boxplot line.int-lines,
 [mev-boxplot] line.int-lines {
   stroke-dasharray: 7, 5;
-}
-
-/*mev-network-graph@0.0.1#src/main/view/mevNetwork.less!$less*/
-.mev-network-graph-tooltip {
-  position: absolute;
-  border: solid 1px #aaa;
-  background-color: #ffa;
-  padding: 2px;
-  font-size: .8em;
-}
-.mev-network-graph-tooltip .mev-tooltip-field label {
-  font-family: sans-serif;
-  margin: 0px;
-}
-.mev-network-graph-tooltip .mev-tooltip-field label::after {
-  content: ":";
 }
 
 /*app/widgets/dataset/selectionSet/SelectionSetNode/selectionSetNode.less!$less*/
