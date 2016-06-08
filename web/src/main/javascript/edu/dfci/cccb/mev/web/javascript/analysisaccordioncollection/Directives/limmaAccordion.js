@@ -46,13 +46,13 @@
 	                               {
 	                                   'name': 'P-Value',
 	                                   'field': "pValue",
-	                                   'icon': "<=",
+	                                   'icon': ["<=", ">="],
 	                                   'default': 0.05
 	                               },
 	                               {
 	                                   'name': 'q-Value',
 	                                   'field': "qValue",
-	                                   'icon': "<="
+	                                   'icon': ["<=", ">="]
 	                               }
 	                           ];
 	                    	
