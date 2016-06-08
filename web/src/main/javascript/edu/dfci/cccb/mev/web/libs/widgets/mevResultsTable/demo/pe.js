@@ -26,13 +26,13 @@ define(["mui",
 	       {
 	           'name': 'P-Value',
 	           'field': "pValue",
-	           'icon': "<=",
+	           'icon': ["<=", ">="],
 	           'default': 0.05
 	       },
 	       {
 	           'name': 'Q-Value',
 	           'field': "qValue",
-	           'icon': "<="
+	           'icon': ["<=", ">="]
 	       }
 	   ];
 	   scope.viewGenes = function (filteredResults){        	
