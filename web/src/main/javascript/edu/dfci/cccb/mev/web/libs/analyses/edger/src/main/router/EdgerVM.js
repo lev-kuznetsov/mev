@@ -1,5 +1,5 @@
 define(["lodash"], function(_){ "use strict";
-    function EdgerVM(mevBoxplotService, mevAnalysisTypes, mevGseaAnalysisType, mevPcaAnalysisType, mevHclAnalysisType){
+    function EdgerVM(mevBoxplotService, mevAnalysisTypes, mevGseaAnalysisType, mevPcaAnalysisType, mevHclAnalysisType, mevWgcnaAnalysisType){
         function factory($scope, project, analysis) {
             var _self = this;
             this.analysisId=analysis.name;
@@ -67,13 +67,13 @@ define(["lodash"], function(_){ "use strict";
                     this.headers.push({
                         'name': 'P-Adjust (FWER)',
                         'field': "FWER",
-                        'icon': [">=", "<="]
+                        'icon': ["<=", ">="]
                     });
                 else if(!_.isUndefined(this.analysis.results[0].FDR))
                     this.headers.push({
                         'name': 'P-Adjust (FDR)',
                         'field': "FDR",
-                        'icon': [">=", "<="]
+                        'icon': ["<=", ">="]
                     });
 
             this.udpateFilteredView = function (filteredResults) {
@@ -108,7 +108,7 @@ define(["lodash"], function(_){ "use strict";
         factory.$inject=["$scope", "project", "analysis"];
         return factory;
     }
-    EdgerVM.$inject=["mevBoxplotService", "mevAnalysisTypes", "mevGseaAnalysisType", "mevPcaAnalysisType", "mevHclAnalysisType"];
+    EdgerVM.$inject=["mevBoxplotService", "mevAnalysisTypes", "mevGseaAnalysisType", "mevPcaAnalysisType", "mevHclAnalysisType", "mevWgcnaAnalysisType"];
     EdgerVM.$name="EdgerVMFactory";
     EdgerVM.$provider="factory";
     return EdgerVM;

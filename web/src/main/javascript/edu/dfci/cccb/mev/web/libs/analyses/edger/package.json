@@ -21,6 +21,7 @@
     "mev-hcl": "file:../../domain/hcl",
     "mev-pca": "file:../../domain/pca",
     "mev-results-table": "file:../../widgets/mevResultsTable",
+    "mev-wgcna": "file:../wgcna",
     "mui": "file:../../mui",
     "steal": "^0.13.2",
     "system-text": "^0.1.0"
