@@ -8,7 +8,7 @@ define([], function($filter){ "use strict";
                         fractionSize=0;
                 if(Math.abs(input)>1000)                         
                     return Number.parseFloat(input).toExponential(fractionSize);
-                else if(Math.abs(input)<0.001)
+                else if(Math.abs(input)<0.001 && input !== 0)
                     return Number.parseFloat(input).toExponential(fractionSize);
                 else
                     return $filter('number')(input, fractionSize);
