@@ -10,6 +10,6 @@ public class EdgeEntry {
   private @JsonProperty ("logFC") double logFc;
   private @JsonProperty ("logCPM") double logCpm;
   private @JsonProperty ("PValue") double pValue;
-  private @JsonProperty (value = "FWER", required = false) Integer fwer;
-  private @JsonProperty (value = "FDR", required = false) Integer fdr;
+  private @JsonProperty (value = "FWER", required = false) Double fwer;
+  private @JsonProperty (value = "FDR", required = false) Double fdr;
 }

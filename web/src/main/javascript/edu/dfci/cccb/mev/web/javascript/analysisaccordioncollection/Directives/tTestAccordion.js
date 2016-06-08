@@ -32,7 +32,7 @@
                             },{
                                 'name': 'P-Value',
                                 'field': "pValue",
-                                'icon': "<=",
+                                'icon': ["<=", ">="],
                                 'default': 0.05,
                                 'max': 0.05,
                                 'min': 0.00,

@@ -48,13 +48,13 @@ define(["lodash"], function(_){ "use strict";
 				{
 					'name': 'P-Value',
 					'field': "pValue",
-					'icon': "<=",
+					'icon': ["<=", ">="],
 					'default': 0.05
 				},
 				{
 					'name': 'Adj. P-Value',
 					'field': "adj.p",
-					'icon': "<="
+					'icon': ["<=", ">="]
 				}
 
 			];

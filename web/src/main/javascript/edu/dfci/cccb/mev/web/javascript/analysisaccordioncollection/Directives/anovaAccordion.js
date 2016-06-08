@@ -35,12 +35,12 @@
                             },{
                                 'name': 'P-Value',
                                 'field': "pValue",
-                                'icon': "<=",
+                                'icon': ["<=", ">="],
                                 'default': 0.05
                             },{
                                 'name': 'Pairwise LFC',
                                 'field': 'lfc',
-                                'icon': ["<=", ">="]
+                                'icon': [">=", "<="]
                             }
                             ];
 

@@ -1,10 +1,12 @@
 define(["mui", "mev-edger", "./edger_mock.json",
     "mev-dataset/src/main/dataset/lib/AnalysisClass",
+    "mev-gsea", "mev-pca", "mev-hcl", "mev-wgcna",
     "mev-mock",
     "bootstrap", "bootstrap/dist/css/bootstrap.min.css"], function(ng, mevEdger, edgerJson, AnalysisClass){"use strict";
     var demo = ng.module("mev-edger-demo", arguments, arguments)
-    .controller("demoCtrl", ["$scope", "mevEdgerAnalysisType", function(scope, mevEdgerAnalysisType){
+    .controller("demoCtrl", ["$scope", "mevEdgerAnalysisType", "mevAnalysisTypes", function(scope, mevEdgerAnalysisType, mevAnalysisTypes){
         scope.analysisType = mevEdgerAnalysisType;
+        scope.analysisTypes = mevAnalysisTypes;
     }])
     .run(["$state", "mevMockProject", function($state, mevMockProject){
         mevMockProject.dataset.analyses.push(new AnalysisClass(edgerJson));

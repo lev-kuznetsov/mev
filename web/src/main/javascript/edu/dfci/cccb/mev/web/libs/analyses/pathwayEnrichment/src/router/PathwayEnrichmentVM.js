@@ -35,16 +35,16 @@ define(["lodash"], function(_){ "use strict";
 		       },{
 		           'name': 'P-Value',
 		           'field': "pvalue",
-		           'icon': "<=",
+		           'icon': ["<=", ">="],
 		           'default': "0.05"
 		       },{
 		           'name': 'P-Adjust',
 		           'field': "p.adjust",
-		           'icon': "<="
+		           'icon': ["<=", ">="]
 		       },{
 		           'name': 'q-Value',
 		           'field': "qvalue",
-		           'icon': "<="
+		           'icon': ["<=", ">="]
 		       },{
 		           'name': 'Count',
 		           'field': "Count",
