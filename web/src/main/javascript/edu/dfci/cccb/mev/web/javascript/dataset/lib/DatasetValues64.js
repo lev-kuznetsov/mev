@@ -21,22 +21,9 @@ define(['lodash', 'q', 'jsLru'], function(_, q, jsLru){
  			})["catch"](function(e){
 				throw e;
 			});
-			fetchDataValues64();
 			return valuesPromise;
     	}
-
-		function fetchDataValues64(){
-			var deferred = q.defer();
-			var worker = new Worker('/container/javascript/dataset/lib/DatasetValuesWorker.js');
-			worker.postMessage({id: dataset.id});
-			worker.onmessage = function(e) {
-				console.debug("worker done", e)
-				self.ready=true;
-				deferred.resolve(e);
-			};
-			return deferred.promise;
-		}
-
+    	
     	function getItemIndex(r, c){
         	return dataset.column.keys.length * r + c;    	
         }        
@@ -47,7 +34,7 @@ define(['lodash', 'q', 'jsLru'], function(_, q, jsLru){
         }
     	function getByIndex(index){
     		if(dataset.dataview){
-    			return dataset.dataview.getFloat32((index)*Float32Array.BYTES_PER_ELEMENT, false);
+    			return dataset.dataview.getFloat64((index)*Float64Array.BYTES_PER_ELEMENT, false);
     		}
     	}
         function getByKey(labelPair){        	

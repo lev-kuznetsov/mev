@@ -3,7 +3,7 @@
 importScripts("//cdn.jsdelivr.net/pouchdb/5.1.0/pouchdb.min.js");
 importScripts("/container/vendor/q/q.js");
 var e;
-self.chunkSize = 10e6;
+self.chunkSize = 1e9;
 self.itemsPerChunk = this.chunkSize / Float64Array.BYTES_PER_ELEMENT;
 function chunkName(index){
 	return "chunk"+index;
@@ -18,16 +18,17 @@ addEventListener("message", function(_e){
 //			["catch"](function(e){
 //				console.debug("worker db get error", e);
 				e=_e;
-				return fetchDataValues(e.data)
-				.then(chunkDataValues)
-				["catch"](function(e){
-					throw e;
-				})
-				.then(saveDataValues)
-				.then(done)
-//				["catch"](function(e){
-//					throw e;
-//				});
+				return exists(e.data)
+					.then(fetchDataValues)
+					.then(chunkDataValues)
+					["catch"](function(e){
+						throw e;
+					})
+					.then(saveDataValues)
+					.then(done)
+	//				["catch"](function(e){
+	//					throw e;
+	//				});
 //			}).then(function(response){
 //				console.debug("worker db response", response);
 //				ready(response);
@@ -37,6 +38,20 @@ addEventListener("message", function(_e){
 //	console.debug("worker: message", self, e.data, e.data.id);
 //	self.postMessage("Echo: "+e.data);
 });
+
+function exists(dataset){
+	var db = new PouchDB(dataset.id);
+	return db.getAttachment("values64", "chunk0")
+		.then(function(values){
+			throw new Error("Dataset " + dataset.id + " already exists: " + JSON.stringify(values));
+		})
+		["catch"](function(e){
+			if(e.status === 404)
+				return dataset;
+			else
+				throw e;
+		});
+}
 
 function fetchDataValues(dataset){
 	var deferred = Q.defer();
@@ -52,7 +67,7 @@ function fetchDataValues(dataset){
 //			return ab;
 //	});
 
-	load('/dataset/'+dataset.id+'/data/values?format=binary', "arraybuffer", "application/octet-stream", function(xhr){
+	load('/dataset/'+dataset.id+'/data/values?format=binary64', "arraybuffer", "application/octet-stream", function(xhr){
 		console.debug("worker, loaded data", xhr);
 		deferred.resolve(xhr.response);
 	});
@@ -77,7 +92,7 @@ function chunkDataValues(values){
 
 function saveDataValues(chunks){
 	console.debug("worker swap: chunks", chunks);
-	var doc = {_id: "values", _attachments: chunks};
+	var doc = {_id: "values64", _attachments: chunks};
 	var db = new PouchDB(e.data.id);
 //	console.debug("worker worker db", db);
 	return db.put(doc)
