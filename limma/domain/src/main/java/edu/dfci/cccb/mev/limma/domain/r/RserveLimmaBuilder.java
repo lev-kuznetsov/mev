@@ -73,7 +73,7 @@ import edu.dfci.cccb.mev.limma.domain.simple.SimpleEntry;
     
     + "unname(apply(result,1,function(x)"
     + "  list(id=unname(x[1]),logFoldChange=as.numeric(unname(x[2])),averageExpression=as.numeric(unname(x[3])),"
-    + "       pValue=as.numeric(unname(x[5])),t=as.numeric(unname(x[4])),qValue=as.numeric(unname(x[6])))))" +
+    + "       pValue=as.numeric(unname(x[5])),t=as.numeric(unname(x[4])),qValue=as.numeric(unname(x[6])), logPValue=log(as.numeric(unname(x[5]))) )))" +
     "}")
 public class RserveLimmaBuilder extends AbstractDispatchedRAnalysisBuilder<LimmaBuilder, Limma> implements LimmaBuilder {
 

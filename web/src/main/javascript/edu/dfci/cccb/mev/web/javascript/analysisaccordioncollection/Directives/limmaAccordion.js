@@ -20,7 +20,7 @@
                         controller: ["$scope", function($scope){
 
                             $scope.analysisTypes = mevAnalysisTypes.all();
-                            $scope.fields = ["logFoldChange", "averageExpression", "pValue"];
+                            $scope.fields = ["logFoldChange", "averageExpression", "logPValue"];
 	                    	$scope.headers = [
 								//this row just shows the row index, doesn't use any data from the row
 	//              								{
