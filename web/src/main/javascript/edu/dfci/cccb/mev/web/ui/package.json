@@ -103,6 +103,11 @@
       "pouchdb": {
         "format": "global"
       },
+      "worker-pouch": {
+        "deps": [
+          "pouchdb"
+        ]
+      },
       "jquery-ui": {
         "deps": [
           "jquery"

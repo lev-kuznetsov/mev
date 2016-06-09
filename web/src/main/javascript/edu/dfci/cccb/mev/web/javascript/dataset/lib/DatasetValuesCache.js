@@ -2,7 +2,7 @@ define(['lodash', 'pouchdb', 'blob-util'], function(_, PouchDB, blobUtil){
     return function DatasetValueSourceCache(source){
         var cache = {
             get: function(){
-                var db = new PouchDB(source.id);
+                var db = new PouchDB(source.id,  {adapter: 'worker'});
                 return db.getAttachment("values", "all")
                     ["catch"](function(e){
                         if(e.status===404){
@@ -17,7 +17,9 @@ define(['lodash', 'pouchdb', 'blob-util'], function(_, PouchDB, blobUtil){
                                         }
                                     }
                                 };
-                                db.put(doc)
+                                setTimeout(function(){
+                                    db.put(doc);
+                                }, 60e3);
                                 return response;
                             })["catch"](function(e){
                                 throw e;
