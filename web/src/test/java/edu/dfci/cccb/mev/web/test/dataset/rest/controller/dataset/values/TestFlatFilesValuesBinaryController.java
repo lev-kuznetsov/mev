@@ -86,10 +86,10 @@ public class TestFlatFilesValuesBinaryController {
     workspace.put (mockDataset);
   }
   
-  @Test @Ignore
+  @Test
   public void test () throws Exception {
     @SuppressWarnings("unused")
-    MvcResult mvcResult = this.mockMvc.perform(get("/dataset/mock_set/data/values").param ("format", "binary")
+    MvcResult mvcResult = this.mockMvc.perform(get("/dataset/mock_set/data/values").param ("format", "binary64")
                                      .session (mockHttpSession)
                                      .accept("application/octet-stream"))            
      .andExpect (status ().isOk ())
