@@ -5,7 +5,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-show="datasetsByStatus.active.length>0" ng-repeat="row in datasets">
+    <tr ng-show="datasetsByStatus.active.length>0" ng-repeat="row in datasetsByStatus.active">
         <!--  <td><a href="#/dataset/{{row}}"> <i class="icon-file"></i> {{row}}</a></td> -->
         <td><a href="#/dataset/{{row}}" ui-sref="root.dataset.home({datasetId: row.id})"> <i class="icon-file"></i> {{row.id}}</a></td>
     <tr>
@@ -21,7 +21,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="row in datasets">
+    <tr ng-repeat="row in datasetsByStatus.inactive">
         <!--  <td><a href="#/dataset/{{row}}"> <i class="icon-file"></i> {{row}}</a></td> -->
         <td><a href="#/dataset/{{row}}" ui-sref="root.dataset.home({datasetId: row.id})"> <i class="icon-file"></i> {{row.id}}</a></td>
     <tr>
