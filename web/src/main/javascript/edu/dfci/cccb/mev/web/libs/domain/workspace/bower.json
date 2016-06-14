@@ -1,0 +1,33 @@
+{
+  "name": "mev-workspace",
+  "description": "",
+  "main": "src/main/mev-workspace.js",
+  "authors": [
+    "apartensky"
+  ],
+  "license": "ISC",
+  "homepage": "github.com/dfci-cccb/mev",
+  "moduleType": [
+    "amd"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pouchdb": "~5.4.1",
+    "pouchdb-all-dbs": "~1.0.1"
+  },
+  "system": {
+    "meta": {
+      "pouchdb-all-dbs": {
+        "deps": [
+          "pouchdb"
+        ]
+      }
+    }
+  }
+}
