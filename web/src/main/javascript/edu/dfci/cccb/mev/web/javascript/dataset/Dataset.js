@@ -8,7 +8,7 @@ define(['angular',
 function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){ "use strict";
 	
 	return angular.module('Mev.Dataset', ['Mev.Api'])
-	.factory('DatasetFactory', ['AnalysisResourceService', 'SelectionResourceService', "$q", "$http", '$rootScope', 'mevAnalysisEventBus', "DashboardItems",
+	.factory('DatasetFactory', ['mevAnalysisRest', 'SelectionResourceService', "$q", "$http", '$rootScope', 'mevAnalysisEventBus', "DashboardItems",
 		"mevAnnotationRepository", "DatasetResourceService", "mevDb",
 	 function(AnalysisResourceService, SelectionResourceService, $q, $http, $rootScope, analysisEventBus, DashboardItems, 
 	 	MevAnnotationRepository, DatasetResourceService, mevDb){
