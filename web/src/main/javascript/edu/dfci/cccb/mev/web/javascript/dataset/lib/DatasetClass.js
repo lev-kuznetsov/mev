@@ -33,7 +33,7 @@ function( datasetStatistics, selectionSort, selectionHelpers, expressionModule,
 	//Constructor :: [String], [DatasetResponseObj] -> $Function [Dataset]
     //  Function that constructs base dataset object without angular module
     //  dependent behaviors.
-	return function(datasetName, datasetRespObj, $http, $rootScope){
+	return function(datasetName, datasetRespObj, $http, $rootScope, mevDb){
 	    
 	    if (!datasetName){
 	        throw TypeError('datasetName parameter not defined');
@@ -49,7 +49,7 @@ function( datasetStatistics, selectionSort, selectionHelpers, expressionModule,
 		this.id = datasetName;
 		
 		this.datasetName = datasetName;
-		this.valueStore = new DatasetValues(this, new DatasetValuesCache(new DatasetValuesSourceHttp($http, this.id)), $rootScope);
+		this.valueStore = new DatasetValues(this, new DatasetValuesCache(new DatasetValuesSourceHttp($http, this.id), mevDb), $rootScope);
 		this.expression = {
 			values: datasetRespObj.values,
 			data: {

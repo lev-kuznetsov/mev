@@ -39,9 +39,13 @@ addEventListener("message", function(_e){
 //	self.postMessage("Echo: "+e.data);
 });
 
+function formatDocId(path, id){
+	return id + "/" + path;
+}
+
 function exists(dataset){
-	var db = new PouchDB(dataset.id);
-	return db.getAttachment("values64", "chunk0")
+	var db = new PouchDB("mev");
+	return db.getAttachment(formatDocId("values64", dataset.id ), "chunk0")
 		.then(function(values){
 			throw new Error("Dataset " + dataset.id + " already exists: " + JSON.stringify(values));
 		})
@@ -92,8 +96,8 @@ function chunkDataValues(values){
 
 function saveDataValues(chunks){
 	console.debug("worker swap: chunks", chunks);
-	var doc = {_id: "values64", _attachments: chunks};
-	var db = new PouchDB(e.data.id);
+	var doc = {_id: formatDocId("values64", e.data.id ), _attachments: chunks};
+	var db = new PouchDB("mev");
 //	console.debug("worker worker db", db);
 	return db.put(doc)
 	["catch"](function(err){

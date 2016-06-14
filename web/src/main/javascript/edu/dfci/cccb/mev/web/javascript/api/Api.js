@@ -1,11 +1,18 @@
-define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dataset/lib/AnalysisClass'], function (angular, _, angularResource, AnalysisEventBus, AnalysisClass) {
+define ([ 'angular', 'lodash', 'angular-resource', '../dataset/lib/AnalysisClass'], function (angular, _, angularResource, AnalysisClass) {
 	
     return angular
     .module ('Mev.Api', ['ngResource'])
-    .service('AnalysisEventBus', AnalysisEventBus)
-    .service ('DatasetResourceService', ['$resource', '$q', '$http', '$rootScope',
-                                             function ($resource, $q, $http, $rootScope) {
-    	 
+    // .service('AnalysisEventBus', AnalysisEventBus)
+	.service('DatasetResourceCache', ["mevDb", function(mevDb){
+		this.get = function(datasetId){
+			return mevDb.getDataset(datasetId);
+		};
+		this.put = function(dataset){
+			return mevDb.putDataset(dataset);
+		}
+	}])
+    .service ('DatasetResourceService', ['$resource', '$q', '$http', '$rootScope', 'DatasetResourceCache',
+                                             function ($resource, $q, $http, $rootScope, DatasetResourceCache) {
     	var resource = $resource('/dataset/:datasetName/data',{format: "json"},
             {
                 'get': {method:'GET'},
@@ -22,17 +29,37 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
     	var DatasetResource = Object.create(resource);       	 
     	
     	DatasetResource.get = function(params, data, callback){
-    		var dataset = resource.get(params, data, callback);    		
-    		return dataset;
+			var deferred = $q.defer();
+			var cache = {
+				$promise: deferred.promise,
+				$resolved: false
+			};
+			var cachePromise = DatasetResourceCache.get(params.datasetName)
+				.catch(function(e){
+					if(e.status === 404){
+						_.assign(cache, resource.get(params, data, callback))
+						return cache.$promise.then(function(response){
+							DatasetResourceCache.put(_.assign(response, {id: params.datasetName}));
+							return response;
+						});
+					}
+				}).then(function(response){
+					return deferred.resolve(
+						_.extend(response, {
+							$promise: cache.$promise
+						})
+					);
+				});
+    		return cache;
     	 };
-    	 DatasetResource.getAll = function(params, data, callback){
+    	DatasetResource.getAll = function(params, data, callback){
             var datasetsResource = resource.getAll(params, data, callback);
             datasetsResource.$promise.then(function(response){
                 $rootScope.$broadcast("mev:datasets:list:refreshed", response);
             });
             return datasetsResource;
          };
-         DatasetResource.subset = function(params, data, callback){        
+        DatasetResource.subset = function(params, data, callback){
             data.name = params.datasetName + "--" + data.name;    
             var datasetsResource = resource.subset(params, data, callback);            
             datasetsResource.$promise.then(function(response){
@@ -48,8 +75,23 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
             })
             return datasetsResource;
          };
-
-    	 return DatasetResource;
+		DatasetResource.uploadFile = function(file){
+			var formdata = new FormData;
+			formdata.append('upload', file);
+			formdata.append('name', file.name);
+			var xhr = new XMLHttpRequest();
+			xhr.upload.addEventListener("progress", function(e) {
+				return;
+			});
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					DatasetResource.getAll();
+				};
+			};
+			xhr.open("POST", "/dataset", true);
+			xhr.send(formdata);
+		}
+    	return DatasetResource;
     }])
     .service('GoogleDriveResourceService', ['$resource', function($resource){
         	return $resource('/import/google',
@@ -63,7 +105,7 @@ define ([ 'angular', 'lodash', 'angular-resource', './AnalysisEventBus', '../dat
 				}
 			});
         }])
-    .service ('AnalysisResourceService', ['$resource', '$http','$routeParams', "$timeout", 'AnalysisEventBus', 
+    .service ('AnalysisResourceService', ['$resource', '$http','$routeParams', "$timeout", 'mevAnalysisEventBus',
                                           function ($resource, $http, $routeParams, $timeout, analysisEventBus) {
     		
     	var transformRequest = [function(data, headers){

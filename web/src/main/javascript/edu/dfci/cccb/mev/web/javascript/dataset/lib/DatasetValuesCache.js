@@ -1,24 +1,15 @@
-define(['lodash', 'pouchdb', 'blob-util'], function(_, PouchDB, blobUtil){
-    return function DatasetValueSourceCache(source){
+define(['lodash', 'pouchdb', 'blob-util', 'mev-domain-common'], function(_, PouchDB, blobUtil){
+    return function DatasetValueSourceCache(source, mevDb){
         var cache = {
             get: function(){
-                var db = new PouchDB(source.id,  {adapter: 'worker'});
-                return db.getAttachment("values", "all")
+                // var db = new PouchDB(source.id,  {adapter: 'worker'});
+                return mevDb.getDatasetValues(source.id)
                     ["catch"](function(e){
                         if(e.status===404){
                             return source.get().then(function(response){
-                                var doc = {
-                                    _id: "values",
-                                    _attachments: {
-                                        "all": {
-                                            data: new Blob([response.data]),
-                                            type: "application/octet-stream",
-                                            content_type : "application/octet-stream"
-                                        }
-                                    }
-                                };
                                 setTimeout(function(){
-                                    db.put(doc);
+                                    mevDb.putDatasetValues(new Blob([response.data]));
+                                    // db.put(doc);
                                 }, 60e3);
                                 return response;
                             })["catch"](function(e){

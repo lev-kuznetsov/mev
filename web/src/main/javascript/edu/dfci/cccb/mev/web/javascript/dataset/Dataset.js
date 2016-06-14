@@ -1,16 +1,17 @@
-define(['angular', 
+define(['angular',
         './lib/DatasetClass',
         './lib/loadAnalyses',
         './lib/setSelections',
-        './lib/resetSelections',        
-        'api/Api'], 
+        './lib/resetSelections',
+        'api/Api',
+		'mev-domain-common'],
 function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){ "use strict";
 	
 	return angular.module('Mev.Dataset', ['Mev.Api'])
-	.factory('DatasetFactory', ['AnalysisResourceService', 'SelectionResourceService', "$q", "$http", '$rootScope', 'AnalysisEventBus', "DashboardItems", 
-		"mevAnnotationRepository", "DatasetResourceService",
+	.factory('DatasetFactory', ['AnalysisResourceService', 'SelectionResourceService', "$q", "$http", '$rootScope', 'mevAnalysisEventBus', "DashboardItems",
+		"mevAnnotationRepository", "DatasetResourceService", "mevDb",
 	 function(AnalysisResourceService, SelectionResourceService, $q, $http, $rootScope, analysisEventBus, DashboardItems, 
-	 	MevAnnotationRepository, DatasetResourceService){
+	 	MevAnnotationRepository, DatasetResourceService, mevDb){
 	    
 	    //DatasetFactory :: [String], [DatasetResponseObj] -> [Dataset]
 	    //  Function that takes dataset name and dataset response object and returns
@@ -18,7 +19,7 @@ function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){ "u
 		return function(datasetName, datasetResponseObj){
 		    
 		    
-				var dataset = new DatasetClass(datasetName, datasetResponseObj, $http, $rootScope);				
+				var dataset = new DatasetClass(datasetName, datasetResponseObj, $http, $rootScope, mevDb);
 				
 				dataset.analysis = AnalysisResourceService;
 				console.debug("api:AnalysisResourceService", AnalysisResourceService, dataset.analysis);
