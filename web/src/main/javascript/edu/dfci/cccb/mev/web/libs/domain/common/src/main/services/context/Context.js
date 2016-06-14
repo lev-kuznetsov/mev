@@ -1,7 +1,8 @@
 define(["lodash"], function(_){ "use strict";
-	function ngcomponent($state){
+	function ngcomponent($state, $stateParams){
 		_.extend(this, {
 			root: function(){
+				console.log($stateParams);
 				return $state.$current.locals.globals.project;
 			},
 			current: function(){
@@ -18,12 +19,14 @@ define(["lodash"], function(_){ "use strict";
 			get: function(level){
 				if(level === "root")
 					return this.root();
+				else if(level === "dataset")
+					return this.root().dataset;
 				else
 					return this.current();
 			}
 		});					
 	}
-	ngcomponent.$inject=["$state"];
+	ngcomponent.$inject=["$state", "$stateParams"];
 	ngcomponent.$name="mevContext";
 	ngcomponent.$provider="service";
 	return ngcomponent;	
