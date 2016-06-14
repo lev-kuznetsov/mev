@@ -1,9 +1,9 @@
 define(
-        ['jquery', 'angular', 'd3', 'notific8', 'api/Api', 'alertservice/AlertService', 'angular-route'],
-        function($, angular, d3) {
+        ['jquery', 'angular', 'd3', 'mev-workspace', 'notific8', 'api/Api', 'alertservice/AlertService', 'angular-route', 'mev-workspace'],
+        function($, angular, d3, mevWorkspace) {
 
             return angular
-                    .module('myApp.controllers', ['Mev.Api', 'Mev.AlertService'])
+                    .module('myApp.controllers', ['Mev.Api', 'Mev.AlertService', 'mev-workspace'])
                     .controller(
                             'ImportsCtrl',
                             [
@@ -13,40 +13,34 @@ define(
                                     'alertService',
                                     'GoogleDriveResourceService',
                                     '$state',
-                                    function($scope, $http, $routeParams, alertService, DriveResource, $state) {
+                                    'mevWorkspace',
+                                    function($scope, $http, $routeParams, alertService, DriveResource, $state, mevWorkspace) {
                                         
                                         $('#loading').modal('hide');
                                         $scope.$on("mui:error:sessionTimeout", function(){
                                             $state.go(".sessionTimeout");
                                         });
                                         $scope.userUploads = [];
-
+                                        
                                         $scope.loadUploads = function() {
+                                            
+                                            mevWorkspace.getDatasets()
+                                                .then(function(dbs){
+                                                    $scope.userUploads = dbs;
+                                                })
+                                                .catch(function(e){
+                                                    var message = "Could not upload datasets. If "
+                                                        + "problem persists, please contact us.";
 
-                                            $http({
-                                                method : 'GET',
-                                                url : '/dataset',
-                                                params : {
-                                                    format : 'json'
-                                                }
-                                            })
-                                            .success(function(data, status, headers, config) {
-                                                  $scope.userUploads = data; 
-                                                  
-                                             })
-                                             .error(function(data, status, headers, config) {
-                                                        var message = "Could not upload datasets. If "
-                                                            + "problem persists, please contact us.";
+                                                    var header = "Heatmap Update Problem (Error Code: "
+                                                        + JSON.stringify(e)
+                                                        + ")";
 
-                                                        var header = "Heatmap Update Problem (Error Code: "
-                                                            + status
-                                                            + ")";
-
-                                                        alertService
-                                                            .error(
-                                                                    message,
-                                                                    header);
-                                              });
+                                                    alertService
+                                                        .error(
+                                                            message,
+                                                            header);
+                                                });
                                         };
                                         
 
