@@ -1,5 +1,5 @@
 define(["mui", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/lib/AnalysisClass"], function(ng, AnalysisEventBus, AnalysisClass){
-    function AnalysisRest($resource, $http, $timeout, analysisEventBus) { "use strict";
+    function AnalysisRest($resource, $http, $timeout, $q, analysisEventBus, mevDb, mevWorkspace) { "use strict";
             
         var transformRequest = [function(data, headers){
             console.log("transformRequest", data);
@@ -53,11 +53,47 @@ define(["mui", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/li
             });             
 
         var AnalysisResource = Object.create(resource);
+        AnalysisResource.getAll=function(params, data, callback){
+
+            var deferred = $q.defer();
+            var cache = [];
+            cache.$promise = deferred.promise;
+            cache.$resolved = false;
+
+            mevWorkspace.getDataset(params.datasetName)
+                .then(function(dataset){
+                    if(dataset && dataset.isActive){
+                        return resource.getAll(params, data, callback).$promise
+                    }else{
+                        return [];
+                    }
+                })
+                .then(function(remote){
+                    return mevDb.getAnalyses(params.datasetName)
+                        .then(function(local){
+                            var all = {
+                                names: _.union(remote.names, local)
+                            };
+                            deferred.resolve(all);
+                            return all;
+                        });
+                })
+                .catch(function(e){
+                    console.error("Error fetching dataset list: ", params, e);
+                    deferred.reject(e);
+                    throw new Error("Error fetching dataset list: " + JSON.stringify(e));
+                });
+
+            return cache;
+        };
+        AnalysisResource.get = function(params, data, callback){
+            
+        }
         AnalysisResource.post=postWrapper("post");
         AnalysisResource.postf=postWrapper("postf");
         AnalysisResource.post3=postWrapper("post3");
         AnalysisResource.put=postWrapper("put");
-
+        
         function postWrapper(methodName){
             return function(params, data, callback){
                 
@@ -97,6 +133,7 @@ define(["mui", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/li
                                     ng.extend(analysis.params, allParams);
                                 else
                                     analysis.params = allParams;
+                                mevDb.putAnalysis(allParams.datasetName, analysis);
                                 if(prevResponse.status === "ERROR"){                                    
                                     console.error("PollAnalysis error", analysis.name, analysis);                               
                                     analysisEventBus.analysisFailed(params, data, analysis);    
@@ -127,7 +164,7 @@ define(["mui", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/li
         return AnalysisResource;        
         
     }
-    AnalysisRest.$inject=["$resource", "$http", "$timeout", "mevAnalysisEventBus"];
+    AnalysisRest.$inject=["$resource", "$http", "$timeout", "$q", "mevAnalysisEventBus", "mevDb", "mevWorkspace"];
     AnalysisRest.$name="mevAnalysisRest";
     AnalysisRest.$provider="service";
     return AnalysisRest;

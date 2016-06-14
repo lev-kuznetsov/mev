@@ -1,4 +1,4 @@
-define(["lodash", "pouchdb"], function(_, PouchDB){
+define(["lodash"], function(_){"use strict";
     var service = function($http, $q, mevDb){
 
         function getDatasets(){
@@ -23,7 +23,7 @@ define(["lodash", "pouchdb"], function(_, PouchDB){
             var allDbsPromise = $q.all([localDbsPromise, remoteDbsPromise])
                 .then(function(dbs){
                     var local = dbs[0];
-                    var remote = dbs[1]
+                    var remote = dbs[1];
                     console.debug("workspace local", local);
                     console.debug("workspace remote", remote);
                     var active = remote.map(function(name){
@@ -65,12 +65,21 @@ define(["lodash", "pouchdb"], function(_, PouchDB){
                 });
             });
         }
+        function getDataset(datasetId){
+            return getDatasets()
+                .then(function(datasets){
+                    return datasets.find(function(dataset){
+                        return dataset.id === datasetId;
+                    })
+                })
+        }
         this.getDatasets = getDatasets;
         this.getActiveDatasets = getActiveDatasets;
         this.getInactiveDatasets = getInactiveDatasets;
+        this.getDataset = getDataset;
     };
     service.$inject=["$http", "$q", "mevDb"];
-    service.$name="mevWorkspace"
+    service.$name="mevWorkspace";
     service.$provider="service";
     return service;
 });

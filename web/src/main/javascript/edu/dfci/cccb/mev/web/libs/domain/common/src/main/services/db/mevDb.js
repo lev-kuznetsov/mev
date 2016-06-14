@@ -66,7 +66,48 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
             };
             db.put(doc);
         }
+        function getAnalyses(datasetId){
+            return db.allDocs()
+                .then(function(result){
+                    return result.rows.filter(function(doc){
+                        return doc.id.indexOf(formatDocId(["analysis"], datasetId))>-1;
+                    });
+                })
+                .then(function(docs){
+                    return docs.map(function(doc){
+                        return doc.id.replace(formatDocId(["analysis"], datasetId), "").replace("/", "");
+                    });
+                });
+            // db.get(formatDocId(["analysis"], datasetId))
+            //     .then(function(docs){
+            //         return docs.map(function(doc){
+            //             return doc.name;
+            //         });
+            //     });
+        }
+        function getAnalysis(datasetId, analysisId){
+            return db.get(formatDocId(["analysis", analysisId], datasetId));
+        }
+        function putAnalysis(datasetId, analysis){
+            return getAnalysis(datasetId, analysis.name)
+                .catch(function(e){
+                    if(e.status === 404)
+                        return _.assign(analysis, {
+                            _id: formatDocId(["analysis", analysis.name], datasetId)
+                        });
+                    else
+                        throw new Error("Error putting analysis" + JSON.stringify(e));
+                })
+                .then(function(doc){
+                    analysis._rev = doc._rev;
+                    return db.put(JSON.parse(JSON.stringify(analysis)));
+                })
+                .catch(function(e){
+                    console.error("Error saving analysis locally:" , datasetId, analysis, e);
+                    throw new Error("Error saving analysis locally:" + JSON.stringify(e));
+                })
 
+        }
         return {
             getDataset: getDataset,
             putDataset: putDataset,
@@ -74,6 +115,9 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
             getDatasetValues: getDatasetValues,
             putDatasetValues: putDatasetValues,
             getDatasetValues64: getDatasetValues64,
+            getAnalysis: getAnalysis,
+            putAnalysis: putAnalysis,
+            getAnalyses: getAnalyses
         }
     };
 
