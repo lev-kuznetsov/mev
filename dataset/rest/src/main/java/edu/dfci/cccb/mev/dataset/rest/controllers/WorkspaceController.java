@@ -17,6 +17,7 @@ package edu.dfci.cccb.mev.dataset.rest.controllers;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -25,6 +26,10 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.*;
+import edu.dfci.cccb.mev.dataset.domain.fs.DatasetBuilderFlatFile;
+import edu.dfci.cccb.mev.dataset.rest.assembly.binary.MultipartBinaryInput;
+import edu.dfci.cccb.mev.io.implementation.TemporaryFile;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -41,13 +46,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetBuilderException;
-import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDatasetNameException;
-import edu.dfci.cccb.mev.dataset.domain.contract.InvalidDimensionTypeException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Workspace;
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.MultipartTsvInput;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
 /**
  * @author levk
@@ -68,14 +69,31 @@ public class WorkspaceController {
 
   @RequestMapping (value = "/dataset", method = POST, consumes = "multipart/form-data")
   @ResponseStatus (OK)
-  public void upload (@RequestParam ("upload") MultipartFile upload) throws DatasetBuilderException,
+  public void upload (@RequestParam("name") String name, @RequestParam ("upload") MultipartFile upload) throws DatasetBuilderException,
                                                                     InvalidDatasetNameException,
                                                                     InvalidDimensionTypeException {
-    log.warn (new Exception ("STACK TRACE"));
     Dataset dataset = builder.build (new MultipartTsvInput (upload));
     if (log.isDebugEnabled ())
       log.debug ("Uploaded " + dataset);
     workspace.put (dataset);
+  }
+
+
+  @RequestMapping (value = "/import/binary", method = POST, consumes = "multipart/form-data")
+  @ResponseStatus (OK)
+  public void upload (
+          @RequestParam("name") String name,
+          @RequestParam("rows") List<String> rows,
+          @RequestParam("columns") List<String> columns,
+//          @RequestParam("selections") List<Selection> selections,
+          MultipartHttpServletRequest req) throws DatasetException,
+          IOException {
+    DatasetBuilderFlatFile builder = new DatasetBuilderFlatFile();
+    log.debug (String.format("Offline %s, %s, %s", name, rows, columns));
+    MultipartFile upload = req.getFile("upload");
+    RawInput input = new MultipartBinaryInput(upload);
+    Dataset dataset = builder.build(input, name, columns, rows);
+    workspace.put(dataset);
   }
 
   @RequestMapping (method = RequestMethod.POST, value = "/import/google/{id}/load")
