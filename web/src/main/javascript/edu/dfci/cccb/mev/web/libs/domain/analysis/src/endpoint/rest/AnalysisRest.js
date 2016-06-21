@@ -65,7 +65,9 @@ define(["mui", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/li
                     if(dataset && dataset.isActive){
                         return resource.getAll(params, data, callback).$promise
                     }else{
-                        return [];
+                        return {
+                            names: []
+                        };
                     }
                 })
                 .then(function(remote){
@@ -86,9 +88,38 @@ define(["mui", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/li
 
             return cache;
         };
-        AnalysisResource.get = function(params, data, callback){
-            
-        }
+        AnalysisResource.get = function(params, callback){
+            var deferred = $q.defer();
+            var cache = {
+                $promise: deferred.promise,
+                $resolve: false
+            };
+
+            mevDb.getAnalysis(params.datasetName, params.analysisName)
+                .catch(function(e){
+                    if(e.status===404)
+                        return resource.get(params).$promise
+                            .then(function(response){
+                                if(response.status!=="IN_PROGRESS")
+                                    mevDb.putAnalysis(params.datasetName, response);
+                                return response;
+                            });
+                    else
+                        throw new Error("Error retrieving analysis from cache: " + JSON.stringify(params));
+                })
+                .then(function(doc){
+                    if(callback)
+                        callback(doc);
+                    deferred.resolve(doc);
+                })
+                .catch(function(e){
+                    console.log("Error getting analysis: ", e);
+                    deferred.reject(e);
+                    throw new Error("Error getting analysis: " + JSON.stringify(e));
+                });
+
+            return cache;
+        };
         AnalysisResource.post=postWrapper("post");
         AnalysisResource.postf=postWrapper("postf");
         AnalysisResource.post3=postWrapper("post3");
