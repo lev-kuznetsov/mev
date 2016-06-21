@@ -23,7 +23,10 @@
     <tbody>
     <tr ng-repeat="row in datasetsByStatus.inactive">
         <!--  <td><a href="#/dataset/{{row}}"> <i class="icon-file"></i> {{row}}</a></td> -->
-        <td><a href="#/dataset/{{row}}" ui-sref="root.dataset.home({datasetId: row.id})"> <i class="icon-file"></i> {{row.id}}</a></td>
+        <td>
+            <a href="#/dataset/{{row}}" ui-sref="root.dataset.home({datasetId: row.id})"> <i class="icon-file"></i> {{row.id}}</a>
+            <a ng-click="vm.activate(row)">activate</a>
+        </td>
     <tr>
     </tbody>
 </table>
