@@ -21,13 +21,22 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                         throw new Error("Error updating db" + JSON.stringify(e));
                 })
                 .then(function(doc){
+                    dataset._id = dataset.id;
                     dataset._rev = doc._rev;
-                    dataset.$promise = undefined;
-                    return db.put(JSON.parse(JSON.stringify(dataset)));
+                    var clean = JSON.parse(JSON.stringify(dataset));
+                    clean.$promise = undefined;
+                    clean._annotations = undefined;
+                    clean.values=[];
+                    clean.analyses=[];
+                    return db.put(clean);
                 })
                 .catch(function(e){
-                    console.error("Error saving dataset locally:" + JSON.stringify(dataset), e)
-                    throw new Error("Error saving dataset locally:" + JSON.stringify(e));
+                    if(e.status===409)
+                        putDataset(dataset);
+                    else{
+                        console.error("Error saving dataset locally:", e, dataset);
+                        throw e;
+                    }
                 })
         }
         function getDatasets(){
@@ -51,7 +60,7 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
             return db.getAttachment(formatDocId("values", datasetId), "all");
         }
         function getDatasetValues64(datasetId){
-            return db.getAttachment(formatDocId("values64", datasetId), "all");
+            return db.getAttachment(formatDocId("values64", datasetId), "chunk0");
         }
         function putDatasetValues(blob){
             var doc = {
@@ -103,9 +112,13 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                     return db.put(JSON.parse(JSON.stringify(analysis)));
                 })
                 .catch(function(e){
-                    console.error("Error saving analysis locally:" , datasetId, analysis, e);
-                    throw new Error("Error saving analysis locally:" + JSON.stringify(e));
-                })
+                    if(e.status===409)
+                        putAnalysis(datasetId, analysis);
+                    else{
+                        console.error("Error saving analysis locally:" , datasetId, analysis, e);
+                        throw e;
+                    }
+                });
 
         }
         return {
