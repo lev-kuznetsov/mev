@@ -20,11 +20,13 @@ function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){ "u
 		    
 		    
 				var dataset = new DatasetClass(datasetName, datasetResponseObj, $http, $rootScope, mevDb);
-				
+
+
 				dataset.analysis = AnalysisResourceService;
 				console.debug("api:AnalysisResourceService", AnalysisResourceService, dataset.analysis);
 				dataset.selection = SelectionResourceService;
 
+				dataset.mevDb = mevDb;
 				dataset.$q = $q;				
 				dataset.analysisEventBus = analysisEventBus;
 				analysisEventBus.onAnalysisSuccess($rootScope, function(analysis){
