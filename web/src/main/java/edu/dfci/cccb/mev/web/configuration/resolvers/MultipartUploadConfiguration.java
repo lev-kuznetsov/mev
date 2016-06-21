@@ -34,7 +34,7 @@ public class MultipartUploadConfiguration {
 
   @Bean
   public MultipartResolver multipartResolver () {
-    final long DEFAULT_MAX_UPLOAD_SIZE = 1024L * 1024L * 100; // 10Mb
+    final long DEFAULT_MAX_UPLOAD_SIZE = 1024L * 1024L * 200; // 200Mb
 
     //TODO: find a better way to bypass Spring controllers for OpenRefine
     CommonsMultipartResolver resolver = new CommonsMultipartResolver (){
