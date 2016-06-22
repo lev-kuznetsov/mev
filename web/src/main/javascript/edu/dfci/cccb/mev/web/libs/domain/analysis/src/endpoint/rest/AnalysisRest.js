@@ -127,6 +127,17 @@ define(["mui", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/li
         
         function postWrapper(methodName){
             return function(params, data, callback){
+                        if (params.analysisName && params.analysisName.toLowerCase().indexOf(params.analysisType.toLowerCase()) > -1) {
+                            //do not prefix analysis name with type - name already contains the type
+                        } else if (data.name && data.name.toLowerCase().indexOf(params.analysisType.toLowerCase()) > -1) {
+                            //do not prefix analysis name with type - name already contains the type
+                        } else {
+                            if (params.analysisName)
+                                params.analysisName = params.analysisType + "_" + params.analysisName;
+                            if (data.name)
+                                data.name = params.analysisType + "_" + data.name;
+
+                        }
                 
                 var result = resource[methodName](params, data, callback);
                 
@@ -152,7 +163,10 @@ define(["mui", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/li
                         function poll(prevResponse, wait){
                             if(prevResponse.status && prevResponse.status === "IN_PROGRESS"){                               
                                 $timeout(function(){
-                                    var pollParams = {datasetName: allParams.datasetName, analysisName: allParams.analysisName};
+                                            var pollParams = {
+                                                datasetName: allParams.datasetName,
+                                                analysisName: allParams.analysisName
+                                            };
                                     AnalysisResource.get(pollParams,
                                         function(newResponse){      
                                             poll(newResponse, 5000);
@@ -174,7 +188,7 @@ define(["mui", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/li
                                 }
                                 
                             }
-                        }
+                        };
                         
 //                      analysisEventBus.analysisStarted(response);
                         analysisEventBus.analysisStarted(allParams.analysisType, allParams.analysisName, new AnalysisClass(response));
