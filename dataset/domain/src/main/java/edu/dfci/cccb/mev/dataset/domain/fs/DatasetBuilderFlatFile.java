@@ -33,7 +33,9 @@ public class DatasetBuilderFlatFile extends AbstractDatasetBuilder{
   public Dataset build (RawInput binary,
                         String datasetName,
                         List<String> columnList,
-                        List<String> rowList) throws DatasetException {
+                        List<String> rowList,
+                        List<Selection> columnSelections,
+                        List<Selection> rowSelections) throws DatasetException {
     try{
       File dataFile = new File(new TemporaryFolder("-binary"), datasetName);
       Files.copy(binary.input (), dataFile.toPath());
@@ -46,22 +48,25 @@ public class DatasetBuilderFlatFile extends AbstractDatasetBuilder{
 
       Dimension rows = new SimpleDimension(Dimension.Type.ROW, rowList, new ArrayListSelections(), new AbstractAnnotation() {});
       Dimension columns = new SimpleDimension(Dimension.Type.COLUMN, columnList, new ArrayListSelections(), new AbstractAnnotation() {});
+      for(Selection selection : rowSelections)
+        rows.selections().put(selection);
+      for(Selection selection : columnSelections)
+        columns.selections().put(selection);
 
+      Values values = new FlatFileValues (dataFile,
+              rowKeys,
+              columnKeys ,
+              rowKeys.size (),
+              columnKeys.size ());
 
-      Values values = new FlatFileValues (dataFile, 
-                                                rowKeys, 
-                                                columnKeys ,
-                                                rowKeys.size (),
-                                                columnKeys.size ());
-            
       return aggregate (datasetName, values, super.analyses (), columns, rows);
-      
+
     }catch(IOException | DatasetBuilderException | InvalidDatasetNameException e){
       throw new DatasetException ("Error while building dataset name="+datasetName
-                                 +",input"+ binary
-                                 +",columns"+ columnList +",rowSelection"+ rowList, e);
-    }  
-    
+              +",input"+ binary
+              +",columns"+ columnList +",rowSelection"+ rowList, e);
+    }
+
   }
 
   @Override
