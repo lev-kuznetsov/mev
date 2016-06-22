@@ -102,10 +102,18 @@ define(['angular', 'lodash', 'angular-resource', '../dataset/lib/AnalysisClass']
                                     var formdata = new FormData();
                                     formdata.append('name', dataset.id);
                                     formdata.append('rows', dataset.row.keys);
+                                    formdata.append('rowSelections', JSON.stringify(dataset.row.selections));
+                                    // formdata.append('rowSelections', new Blob([JSON.parse(JSON.stringify(dataset.row.selections))],
+                                    //     {
+                                    //         type: "application/json"
+                                    //     })
+                                    // );
                                     formdata.append('columns', dataset.column.keys);
+                                    formdata.append('columnSelections', JSON.stringify(dataset.column.selections));
 
                                     formdata.append('upload', values);
                                     var xhr = new XMLHttpRequest();
+
                                     xhr.upload.addEventListener("progress", function (e) {
                                         return;
                                     });
