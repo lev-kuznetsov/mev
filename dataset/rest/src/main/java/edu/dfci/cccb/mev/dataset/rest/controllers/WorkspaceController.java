@@ -26,6 +26,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.dfci.cccb.mev.dataset.domain.contract.*;
 import edu.dfci.cccb.mev.dataset.domain.fs.DatasetBuilderFlatFile;
 import edu.dfci.cccb.mev.dataset.rest.assembly.binary.MultipartBinaryInput;
@@ -61,7 +62,7 @@ public class WorkspaceController {
 
   private @Getter @Setter @Inject Workspace workspace;
   private @Getter @Setter @Inject DatasetBuilder builder;
-
+  private @Inject ObjectMapper mapper;
   @RequestMapping (value = "/dataset", method = GET)
   public List<String> list () {
     return workspace.list ();
@@ -85,14 +86,21 @@ public class WorkspaceController {
           @RequestParam("name") String name,
           @RequestParam("rows") List<String> rows,
           @RequestParam("columns") List<String> columns,
-//          @RequestParam("selections") List<Selection> selections,
+          @RequestParam("rowSelections") String jsonRowSelections,
+          @RequestParam("columnSelections") String jsonColumnSelections,
           MultipartHttpServletRequest req) throws DatasetException,
           IOException {
-    DatasetBuilderFlatFile builder = new DatasetBuilderFlatFile();
     log.debug (String.format("Offline %s, %s, %s", name, rows, columns));
     MultipartFile upload = req.getFile("upload");
     RawInput input = new MultipartBinaryInput(upload);
-    Dataset dataset = builder.build(input, name, columns, rows);
+    Selection[] rowSelections = mapper.readValue(jsonRowSelections, Selection[].class);
+    Selection[] columnSelections = mapper.readValue(jsonColumnSelections, Selection[].class);
+
+    DatasetBuilderFlatFile builder = new DatasetBuilderFlatFile();
+    Dataset dataset = builder.build(input, name, columns, rows,
+            Arrays.asList(columnSelections),
+            Arrays.asList(rowSelections));
+
     workspace.put(dataset);
   }
 
