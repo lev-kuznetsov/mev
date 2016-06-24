@@ -1,5 +1,5 @@
 define(["./WorkspaceList.tpl.html"], function(tempalte){
-    var directive = function(mevWorkspace, DatasetResource){
+    var directive = function(mevWorkspace, DatasetResource, mevAnnotationRepository){
         return {
             restrict: "EAC",
             template: tempalte,
@@ -27,11 +27,17 @@ define(["./WorkspaceList.tpl.html"], function(tempalte){
                     updateDatasetList();
                 });
                 updateDatasetList();
+                scope.$on("mev:dataset:activated", function(event, dataset) {
+                    var row = new mevAnnotationRepository("row");
+                    row.import(dataset.id, "row");
+                    var column = new mevAnnotationRepository("column");
+                    column.import(dataset.id, "column");
+                });
             }
         }
     }
     directive.$name = "mevWorkspaceList";
     directive.$provider = "directive";
-    directive.$inject=["mevWorkspace", "DatasetResourceService"];
+    directive.$inject=["mevWorkspace", "DatasetResourceService", "mevAnnotationRepository"];
     return directive;
 });
