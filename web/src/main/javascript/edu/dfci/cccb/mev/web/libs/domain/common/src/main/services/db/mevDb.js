@@ -121,6 +121,28 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                 });
 
         }
+        function putAnnotations(datasetId, dimension, blob){
+            var doc = {
+                _id: formatDocId(["annotations", dimension], datasetId),
+                _attachments: {
+                    "all": {
+                        data: blob,
+                        type: "application/octet-stream",
+                        content_type : "application/octet-stream"
+                    }
+                }
+            };
+            db.put(doc)
+                .catch(function(e){
+                    if(e.status===409)
+                        putAnnotations(datasetId, dimension, blob);
+                    else
+                        throw e;
+                });
+        }
+        function getAnnotations(datasetId, dimension){
+            return db.getAttachment(formatDocId(["annotations", dimension], datasetId), "all");
+        }
         return {
             getDataset: getDataset,
             putDataset: putDataset,
@@ -130,7 +152,9 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
             getDatasetValues64: getDatasetValues64,
             getAnalysis: getAnalysis,
             putAnalysis: putAnalysis,
-            getAnalyses: getAnalyses
+            getAnalyses: getAnalyses,
+            putAnnotations: putAnnotations,
+            getAnnotations: getAnnotations
         }
     };
 
