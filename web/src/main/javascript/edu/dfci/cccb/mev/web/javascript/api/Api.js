@@ -119,13 +119,14 @@ define(['angular', 'lodash', 'angular-resource', '../dataset/lib/AnalysisClass']
                                     });
                                     xhr.onreadystatechange = function () {
                                         if (xhr.readyState == 4 && xhr.status == 200) {
+                                            $rootScope.$broadcast("mev:dataset:activated", dataset);
                                             DatasetResource.getAll();
                                         }
                                         ;
                                     };
                                     xhr.open("POST", "/import/binary", true);
                                     xhr.send(formdata);
-                                });
+                                });                                
                         });
                 }
                 return DatasetResource;
