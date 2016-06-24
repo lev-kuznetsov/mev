@@ -41,8 +41,12 @@ public class MultipartUploadConfiguration {
       @Override
       public boolean isMultipart(HttpServletRequest request){        
         if(request.getServletPath().startsWith ("/annotations")){
-          //Let OpenRefine handle parsing of the multipart request
-          return false;
+          if(request.getServletPath().endsWith("/row/import") || request.getServletPath().endsWith("/column/import"))
+            //annotation import is handled by AnnotationConroller
+            return super.isMultipart (request);
+          else
+            //Let OpenRefine handle parsing of the multipart request
+            return false;
         }else{
           return super.isMultipart (request);
         }
