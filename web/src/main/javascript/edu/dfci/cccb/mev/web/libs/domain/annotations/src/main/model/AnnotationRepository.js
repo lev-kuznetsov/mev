@@ -1,10 +1,18 @@
 define([], function(){
-	var AnnotationRepository = function($q, AnnotationFieldsResource, AnnotationValuesResource, AnnotationProjectIdResource){
+	var AnnotationRepository = function(
+		$rootScope,
+		$q,
+		AnnotationFieldsResource,
+		AnnotationValuesResource,
+		AnnotationProjectIdResource,
+		AnnotationExportResource,
+		mevDb){
 
 		var current = {};
 
-		return function(dimention){
-				//private members		
+		return function(dimension){
+				//private members
+			var _self = this;
 			var _projectId=false;
 			var _fieldNameToIndexMap={};	
 			var _columns;	
@@ -22,7 +30,7 @@ define([], function(){
 			}
 			
 			function _isOld(){				
-				var _projectIdPromise = AnnotationProjectIdResource.get(dimention).then(function(data){
+				var _projectIdPromise = AnnotationProjectIdResource.get(dimension).then(function(data){
 					if(_projectId && _projectId!==data.project){
 						return true;
 					}else{
@@ -35,22 +43,42 @@ define([], function(){
 			}
 
 			//init local variables after data promise is resolved
-			var _fieldsPromise = AnnotationFieldsResource.get(dimention);
-			var _valuesPromise = AnnotationValuesResource.get(dimention);		
+			var _fieldsPromise = AnnotationFieldsResource.get(dimension);
+			var _valuesPromise = AnnotationValuesResource.get(dimension);		
 
 			var _initPromise=$q.all({
 				columns:  _fieldsPromise,
 				rows: _valuesPromise
 			});
 			_fieldsPromise.then(_init);
-
+			function saveAnnotations(project, dimension){
+				var datasetId = project.metadata.customMetadata.datasetName;
+				dimension = dimension || project.metadata.customMetadata.dimension.toLowerCase();
+				console.debug("loaded column annotations", project, datasetId, dimension);
+				return _self.export(datasetId, dimension)
+					.then(function(blob){
+						return mevDb.putAnnotations(datasetId, dimension, blob);
+					})
+					.catch(function(e){
+						console.error("Error saving annotations: ", datasetId, dimension);
+						throw e;
+					});
+			}
+			$rootScope.$on("openRefine:loadedAnnotations:row", function(event, project){
+				console.debug("loaded row annotations", project);
+				return saveAnnotations(project);
+			});
+			$rootScope.$on("openRefine:loadedAnnotations:column", function(event, project) {
+				console.debug("loaded column annotations", project);
+				return saveAnnotations(project);
+			});
 			//public methods
 			this.getFields=function(){
 				var deffered = $q.deffer;
 				return _isOld().then(function(isOld){					
 					if(isOld){						
-						_fieldsPromise = AnnotationFieldsResource.get(dimention);
-						_valuesPromise = AnnotationValuesResource.get(dimention);		
+						_fieldsPromise = AnnotationFieldsResource.get(dimension);
+						_valuesPromise = AnnotationValuesResource.get(dimension);		
 						_initPromise=$q.all({
 							columns:  _fieldsPromise,
 							rows: _valuesPromise
@@ -146,12 +174,43 @@ define([], function(){
 					return map;
 				});
 			};
+
+			this.export = function(datasetId, dimension){
+				return AnnotationExportResource.export(datasetId, dimension)
+					.then(function(response){
+						console.debug(response);
+						return new Blob([response.data], {
+							type: 'application/x-gzip'
+						});
+					})
+					.catch(function(e){
+						throw e
+					});
+			};
+			this.import = function(datasetId, dimension){
+				mevDb.getAnnotations(datasetId, dimension)
+					.then(function(blob){
+						return AnnotationExportResource.import(datasetId, dimension, blob);
+					})
+					.catch(function(e){
+						console.error("Error importing annotatinos", datasetId, dimension);
+						throw e;
+					})
+			}
+			
 		};
 	};
 		
 
 	AnnotationRepository.$name="mevAnnotationRepository";	
-	AnnotationRepository.$inject=["$q", "AnnotationFieldsResource", "AnnotationValuesResource", "AnnotationProjectIdResource"];
+	AnnotationRepository.$inject=[
+		"$rootScope",
+		"$q",
+		"AnnotationFieldsResource",
+		"AnnotationValuesResource",
+		"AnnotationProjectIdResource",
+		"AnnotationExportResource",
+		"mevDb"];
 	AnnotationRepository.$provider="factory";
 	return AnnotationRepository;
 });
