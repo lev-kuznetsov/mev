@@ -89,14 +89,19 @@ function(ng,
 			   	     					return project;
 			   	     				});	   	     					
 	   	     				}],	
-	   	     				dataset: ["$state", "$stateParams", "project", 
+	   	     				dataset: ["$state", "$stateParams", "project", "mevAnnotationRepository",
 	   	     				function($state, $stateParams, project){
 	   	     					console.info("***resolving dataset", $stateParams.datasetId, $stateParams, $state, project);
-	   	     					return project.dataset
-	   	     					.loadAnalyses().then(function(){
-	   	     						console.info("***resolved dataset", project.dataset);
-	   	     						return project.dataset;
-	   	     					});	   	     					
+	   	     					return project.dataset.loadAnalyses()
+									.then(function(){
+										console.info("***resolved dataset", project.dataset);
+										return project.dataset;
+									})
+									.then(function(dataset){
+										dataset.getAnnotations("column").export(dataset.id, "column");
+										dataset.getAnnotations("row").export(dataset.id, "row");
+										return dataset;
+									});
 	   	     				}]	   	     				
 	   	     			},
 						onExit: ["dataset", function(dataset){
