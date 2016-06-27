@@ -53,7 +53,10 @@ define([], function(){
 			_fieldsPromise.then(_init);
 			function saveAnnotations(project, dimension){
 				var datasetId = project.metadata.customMetadata.datasetName;
-				dimension = dimension || project.metadata.customMetadata.dimension.toLowerCase();
+				dimension = dimension || project.metadata.customMetadata.dimension
+					? project.metadata.customMetadata.dimension.toLowerCase()
+					: undefined;
+				;
 				console.debug("loaded column annotations", project, datasetId, dimension);
 				return _self.export(datasetId, dimension)
 					.then(function(blob){
@@ -76,9 +79,9 @@ define([], function(){
 			this.getFields=function(){
 				var deffered = $q.deffer;
 				return _isOld().then(function(isOld){					
-					if(isOld){						
+					if(isOld){
 						_fieldsPromise = AnnotationFieldsResource.get(dimension);
-						_valuesPromise = AnnotationValuesResource.get(dimension);		
+						_valuesPromise = AnnotationValuesResource.get(dimension);
 						_initPromise=$q.all({
 							columns:  _fieldsPromise,
 							rows: _valuesPromise
