@@ -98,8 +98,23 @@ function(ng,
 										return project.dataset;
 									})
 									.then(function(dataset){
-										dataset.getAnnotations("column").export(dataset.id, "column");
-										dataset.getAnnotations("row").export(dataset.id, "row");
+										var mockORefineProject = {
+											metadata: {
+												customMetadata: {
+													datasetName: dataset.id
+												}
+											}
+										};
+										function handleNotFound(e){
+											if(e.name === "AnnotationNotFoundOnServer")
+												;//this is ok, annotations may not have been uploaded yet
+											else
+												throw e;
+										}
+										dataset.getAnnotations("column").saveAnnotations(mockORefineProject)
+											.catch(handleNotFound);
+										dataset.getAnnotations("row").saveAnnotations(mockORefineProject)
+											.catch(handleNotFound);
 										return dataset;
 									});
 	   	     				}]	   	     				

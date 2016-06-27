@@ -1,5 +1,19 @@
 define(["lodash"], function(_){ "use strict";
     var component = function($http, $q, $stateParams, AnnotationProjectIdResource){
+        function AnnotationNotFoundOnServerError() {
+            var temp = Error.apply(this, arguments);
+            temp.name = this.name = 'AnnotationNotFoundOnServer';
+            this.stack = temp.stack;
+            this.message = temp.message;
+        }
+        //inherit prototype using ECMAScript 5 (IE 9+)
+        AnnotationNotFoundOnServerError.prototype = Object.create(Error.prototype, {
+            constructor: {
+                value: AnnotationNotFoundOnServerError,
+                writable: true,
+                configurable: true
+            }
+        });
         var source = {
             export: function(datasetId, dimension){
                 datasetId = $stateParams.datasetId || datasetId;
@@ -8,8 +22,8 @@ define(["lodash"], function(_){ "use strict";
                 return AnnotationProjectIdResource.get(dimension, datasetId)
                     .then(function(response){
                         if(response.project<=0){
-                            console.error("Could not find " + dimension + "for dataset " + datasetId + " at " + url);
-                            throw new Error("Could not find " + dimension + "for dataset " + datasetId + " at " + url);
+                            // console.error("Could not find " + dimension + " annotations for dataset " + datasetId + " at " + url);
+                            throw new AnnotationNotFoundOnServerError("Could not find " + dimension + " annotations for dataset " + datasetId + " at " + url);
                         }
                         return $http.post(url,
                             {},
