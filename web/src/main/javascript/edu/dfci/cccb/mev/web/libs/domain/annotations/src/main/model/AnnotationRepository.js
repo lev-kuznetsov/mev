@@ -17,7 +17,7 @@ define([], function(){"use strict";
 			var _fieldsPromise;
 			var _valuesPromise;
 			var _initPromise;
-
+            var _dimension = dimension;
 			function _createFieldNameToIndexMap(columns){	
 				_columns=columns;
 				for(var i=0;i<columns.length;i++){				
@@ -58,19 +58,15 @@ define([], function(){"use strict";
 			};
 
 			_self.saveAnnotations = function(project, dimension){
-				var datasetId = project.name || project.metadata.customMetadata.datasetName;
-				dimension = dimension || project.metadata.customMetadata.dimension
+				var datasetId = project.metadata.customMetadata.datasetName;
+				dimension = dimension || _dimension || (project.metadata.customMetadata.dimension
 					? project.metadata.customMetadata.dimension.toLowerCase()
-					: undefined;
+					: undefined);
 				console.debug("loaded column annotations", project, datasetId, dimension);
 				return _self.export(datasetId, dimension)
 					.then(function(blob){
 						return mevDb.putAnnotations(datasetId, dimension, blob);
 					})
-					.catch(function(e){
-						console.error("Error saving annotations: ", datasetId, dimension);
-						throw e;
-					});
 			}
 			$rootScope.$on("openRefine:loadedAnnotations:row", function(event, project){
 				console.debug("loaded row annotations", project);
