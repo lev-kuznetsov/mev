@@ -26,7 +26,7 @@ define(['jquery', 'angular'], function(jquery, angular){
 			console.debug("loadedProject", theProject);
 			if(theProject.metadata.customMetadata.dimension==="COLUMN")
 				rootScope.$broadcast("openRefine:loadedAnnotations:column", theProject);
-			else
+			else if(theProject.metadata.customMetadata.dimension==="ROW")
 				rootScope.$broadcast("openRefine:loadedAnnotations:row", theProject);
 		},
 		openDataset: function(dataset){
