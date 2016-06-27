@@ -5,7 +5,7 @@ define(["lodash"], function(_){ "use strict";
                 datasetId = $stateParams.datasetId || datasetId;
 
                 var url="/annotations/"+datasetId+"/annotation/"+dimension+"/new/dataset/command/core/export-project/"+datasetId+".google-refine.tar.gz";
-                return AnnotationProjectIdResource.get(dimension)
+                return AnnotationProjectIdResource.get(dimension, datasetId)
                     .then(function(response){
                         if(response.project<=0){
                             console.error("Could not find " + dimension + "for dataset " + datasetId + " at " + url);
