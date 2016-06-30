@@ -10,7 +10,7 @@ define(['lodash', 'pouchdb', 'blob-util', 'mev-domain-common'], function(_, Pouc
                                 setTimeout(function(){
                                     mevDb.putDatasetValues(new Blob([response.data]));
                                     // db.put(doc);
-                                }, 60e3);
+                                }, 10e3);
                                 return response;
                             })["catch"](function(e){
                                 throw e;
