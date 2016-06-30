@@ -25,6 +25,14 @@ function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){ "u
 				dataset.analysis = AnalysisResourceService;
 				console.debug("api:AnalysisResourceService", AnalysisResourceService, dataset.analysis);
 				dataset.selection = SelectionResourceService;
+				dataset.deleteSelection = function(dimension, name){
+					_.remove(dataset[dimension].selections, function(selection){
+						return name === selection.name;
+					});
+					dataset.selection.delete({datasetName: dataset.id, dimension: dimension, selectionName: name}).$promise.then(function(){
+						dataset.resetSelections(dimension);
+					});
+				};
 
 				dataset.mevDb = mevDb;
 				dataset.$q = $q;				

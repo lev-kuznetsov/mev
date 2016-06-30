@@ -89,9 +89,7 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 		
 		$scope.$on("root.dataset.selectionSet.delete", function($event, dimension, selection){
 			console.debug("nodeDeleted", selection, $event);
-			dataset.selection.delete({datasetName: dataset.id, dimension: dimension, selectionName: selection.name}).$promise.then(function(){
-				dataset.resetSelections(dimension);
-			});
+			dataset.deleteSelection(dimension, selection.name);
 		});
 		$scope.$on("mui:error:sessionTimeout", function($event, error){
 			$state.go("root.dataset.home.sessionTimeout", {datasetId: dataset.id})
@@ -168,7 +166,10 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
       	    	$scope.$broadcast("ui:projectTree:dataChanged");
       	    });      	        	        	    
          });
-		
+		$scope.$on('mui:dataset:selections:deleted', function(event, dimensionType, params, response){
+      	    	$scope.$broadcast("ui:projectTree:dataChanged");
+         });
+
 		_.forEach(project.dataset.dashboardItems, function(item){
 			if(item.launch && 
 			!_.find(project.dataset.analyses, function(analysis){return analysis.name === item.launch.analysisName;})){
