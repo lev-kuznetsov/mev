@@ -88,6 +88,59 @@ define(["mui", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/li
 
             return cache;
         };
+        AnalysisResource.delete=function(params, data, callback){
+
+            var deferred = $q.defer();
+            var cache = [];
+            cache.$promise = deferred.promise;
+            cache.$resolved = false;
+            mevWorkspace.getDataset(params.datasetName)
+                .then(function(dataset){
+                    if(dataset && dataset.isActive){
+                        return resource.getAll(params, data, callback).$promise
+                            .then(function(remoteResponse){
+                                if(_.includes(remoteResponse.names, params.analysisName)){
+                                    return resource.delete(params).$promise
+                                        .then(function(deleteResponse){
+                                            console.debug("deleteResponse", deleteResponse);
+                                            deleteResponse.status = 200;
+                                            return deleteResponse;
+                                        })
+                                        .catch(function(e){
+                                            if(e.status === 404)
+                                                return e;
+                                            else
+                                                throw e;
+                                        });
+                                }else{
+                                    return {
+                                        status: 404
+                                    }
+                                }
+                            })
+                    }else{
+                        return {
+                            status: 200
+                        };
+                    }
+                })
+                .then(function(remote){
+                    if(remote && (remote.status === 200 || remote.status === 404))
+                        return mevDb.deleteAnalysis(params.datasetName, params.analysisName);
+                    return remote;
+                })
+                .then(function(deleteResult){
+                    deferred.resolve(deleteResult);
+                })
+                .catch(function(e){
+                    console.error("Error deleting analysis: ", params, e);
+                    deferred.reject(e);
+                    throw new Error("Error deleting analysis : " + JSON.stringify(e));
+                });
+
+            return cache;
+        };
+
         AnalysisResource.get = function(params, callback){
             var deferred = $q.defer();
             var cache = {

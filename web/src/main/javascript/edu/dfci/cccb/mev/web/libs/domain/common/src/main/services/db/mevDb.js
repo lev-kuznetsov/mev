@@ -121,6 +121,14 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                 });
 
         }
+        function deleteAnalysis(datasetId, analysisName){
+            return getAnalysis(datasetId, analysisName)
+                .then(function(doc){
+                    return db.remove(doc);
+                });
+        }
+
+
         function putAnnotations(datasetId, dimension, blob){
             var doc = {
                 _id: formatDocId(["annotations", dimension], datasetId),
@@ -153,6 +161,7 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
             getAnalysis: getAnalysis,
             putAnalysis: putAnalysis,
             getAnalyses: getAnalyses,
+            deleteAnalysis: deleteAnalysis,
             putAnnotations: putAnnotations,
             getAnnotations: getAnnotations
         }
