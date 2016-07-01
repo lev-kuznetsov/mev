@@ -23,9 +23,15 @@
     <tbody>
     <tr ng-repeat="row in datasetsByStatus.inactive">
         <!--  <td><a href="#/dataset/{{row}}"> <i class="icon-file"></i> {{row}}</a></td> -->
-        <td>
-            <a href="#/dataset/{{row}}" ui-sref="root.dataset.home({datasetId: row.id})"> <i class="icon-file"></i> {{row.id}}</a>
-            <a ng-click="vm.activate(row)">activate</a>
+        <td >
+            <span>{{row.id}}</span>
+            <a href="" ng-click="vm.activate(row)" title="activate" class="btn btn-xs">
+                <i class="glyphicon glyphicon-cloud-upload"></i>
+            </a>
+            <a href="#/dataset/{{row}}" ui-sref="root.dataset.home({datasetId: row.id})" title="view readonly" class="btn btn-xs">
+                <i class="glyphicon glyphicon-eye-open"></i>
+            </a>
+
         </td>
     <tr>
     </tbody>

@@ -1,4 +1,4 @@
-define(["./WorkspaceList.tpl.html"], function(tempalte){
+define(["./WorkspaceList.tpl.html", "./WorkspaceList.less"], function(tempalte){
     var directive = function(mevWorkspace, DatasetResource, mevAnnotationRepository){
         return {
             restrict: "EAC",
