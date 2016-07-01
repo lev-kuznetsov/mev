@@ -65,6 +65,9 @@ define(["lodash"], function(_){"use strict";
                 });
             });
         }
+        function deleteDataset(datasetId){
+            return mevDb.deleteDataset(datasetId);
+        }
         function getDataset(datasetId){
             return getDatasets()
                 .then(function(datasets){
@@ -76,6 +79,7 @@ define(["lodash"], function(_){"use strict";
         this.getDatasets = getDatasets;
         this.getActiveDatasets = getActiveDatasets;
         this.getInactiveDatasets = getInactiveDatasets;
+        this.deleteDataset = deleteDataset;
         this.getDataset = getDataset;
     };
     service.$inject=["$http", "$q", "mevDb"];

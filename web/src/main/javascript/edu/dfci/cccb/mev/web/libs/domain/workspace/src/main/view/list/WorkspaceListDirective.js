@@ -21,6 +21,11 @@ define(["./WorkspaceList.tpl.html", "./WorkspaceList.less"], function(tempalte){
                 scope.vm={
                     activate: function(dataset){
                         DatasetResource.activate(dataset);
+                    },
+                    delete: function(datasetId){
+                        if(confirm("Delete dataset '"+datasetId+"'?"))
+                            return mevWorkspace.deleteDataset(datasetId)
+                                .then(updateDatasetList);
                     }
                 };
                 scope.$on("mev:datasets:list:refreshed", function(){

@@ -75,6 +75,32 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
             };
             db.put(doc);
         }
+        function _removeDocByRow(doc){
+            return db.remove(doc.id, doc.value.rev);
+            // console.debug("remove", doc);
+        }
+        function _getAllDatasetDocs(datasetId){
+            return db.allDocs({
+                    startKey: datasetId,
+                    endKey: datasetId+"\uffff"
+                })
+                .then(function(docs){
+                    _.remove(docs.rows, function(row){
+                        return row.id !== datasetId && row.id.indexOf(datasetId+"/") !== 0;
+                    })
+                    return docs;
+                });
+        }
+        function deleteDataset(datasetId){
+            return _getAllDatasetDocs(datasetId)
+                .then(function(docs){
+                    return docs.rows.forEach(_removeDocByRow);
+                });
+            // return getDataset(datasetId)
+            //     .then(_removeDoc)
+            //     .finally(getDatasetValues.bind(datasetId))
+            //     .finally(getDatasetValues64.bind(datasetId));
+        }
         function getAnalyses(datasetId){
             return db.allDocs()
                 .then(function(result){
@@ -154,6 +180,7 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
         return {
             getDataset: getDataset,
             putDataset: putDataset,
+            deleteDataset: deleteDataset,
             getDatasets: getDatasets,
             getDatasetValues: getDatasetValues,
             putDatasetValues: putDatasetValues,
