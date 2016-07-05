@@ -42,9 +42,13 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
         function getDatasets(){
             // return db.allDocs({startKey: "dataset::", endKey: "dataset::\uFFFF;"});
             return db.allDocs().then(function(result){
-                return _.uniq(result.rows.map(function(doc){
-                    return doc.id.split("/")[0];
-                }));
+                return _.uniq(result.rows
+                    .filter(function(doc){
+                        return doc.id.indexOf("/values64") > -1;
+                    }).map(function(doc){
+                        return doc.id.split("/")[0];
+                    })
+                );
             });
         }
         function formatDocId(path, datasetId){
@@ -94,7 +98,14 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
         function deleteDataset(datasetId){
             return _getAllDatasetDocs(datasetId)
                 .then(function(docs){
-                    return docs.rows.forEach(_removeDocByRow);
+                    return db.bulkDocs(
+                        docs.rows.map(function(row){
+                            return {
+                                _id: row.id,
+                                _rev: row.value.rev,
+                                _deleted: true
+                            }
+                        }));
                 });
             // return getDataset(datasetId)
             //     .then(_removeDoc)
