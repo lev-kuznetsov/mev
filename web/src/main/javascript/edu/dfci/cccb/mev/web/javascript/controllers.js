@@ -46,15 +46,15 @@ define(
 
                                         $scope.googleDrive = undefined;
                                         
-                                        DriveResource.get({
-                                        	
-                                        }, function(response){
-                                        	$scope.googleDrive = response;
-                                        }, function(error){
-                                        	console.log(error)
-                                        	alertService.error("Couldn't pull Google Drive information!",
-                                        			"Google Drive Error")
-                                        })
+                                        // DriveResource.get({
+                                        //
+                                        // }, function(response){
+                                        // 	$scope.googleDrive = response;
+                                        // }, function(error){
+                                        // 	console.log(error)
+                                        // 	alertService.error("Couldn't pull Google Drive information!",
+                                        // 			"Google Drive Error")
+                                        // })
 
                                         $scope.loadUploads();
                                         
