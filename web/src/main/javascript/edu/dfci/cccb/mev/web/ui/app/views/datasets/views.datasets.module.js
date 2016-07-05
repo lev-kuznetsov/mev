@@ -8,7 +8,7 @@ function(ng, DatasetsVM, tutorialsTemplate, googleTemplate){
 	var module = ng.module("mui.views.datasets", arguments, arguments);
 	module.config(['$stateProvider', '$urlRouterProvider',
 	     	function($stateProvider, $urlRouterProvider){
-				$urlRouterProvider.when("/datasets", "/datasets/tutorials");
+				$urlRouterProvider.when("/datasets", "/datasets/tcga");
 	     		$stateProvider
 					.state("root.datasetsOld", {
 						url: "/datasetsOld",
