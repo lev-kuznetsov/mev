@@ -1,7 +1,7 @@
 define(["bowser"], function(bowser){"use strict";
    var service = function(){
        this.db = {
-           enabled: bowser.chrome && bowser.version > 43 || bowser.firefox
+           enabled: !bowser.chrome || bowser.chrome && bowser.version > 43   
         };
    };
     service.$inject=[];

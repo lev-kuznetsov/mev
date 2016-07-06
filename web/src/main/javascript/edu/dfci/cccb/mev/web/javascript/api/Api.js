@@ -36,7 +36,7 @@ define(['angular', 'lodash', 'angular-resource', '../dataset/lib/AnalysisClass']
                     };
                     var cachePromise = DatasetResourceCache.get(params.datasetName)
                         .catch(function (e) {
-                            if (e.status === 404) {
+                            if (e.status === 404 || e.status === 501) {
                                 _.assign(cache, resource.get(params, data, callback))
                                 return cache.$promise.then(function (response) {
                                     DatasetResourceCache.put(_.assign(response, {id: params.datasetName}));
@@ -355,6 +355,12 @@ define(['angular', 'lodash', 'angular-resource', '../dataset/lib/AnalysisClass']
                         })
                         .then(function (remote) {
                             return mevDb.getDataset(params.datasetName)
+                                .catch(function(e){
+                                    if(e.status === 501)
+                                        return undefined;
+                                    else
+                                        throw e;
+                                })
                                 .then(function (dataset) {
                                     var remoteAndLocal = dataset
                                         ? _.unionBy(

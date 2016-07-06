@@ -9,9 +9,9 @@ function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){ "u
 	
 	return angular.module('Mev.Dataset', ['Mev.Api'])
 	.factory('DatasetFactory', ['mevAnalysisRest', 'SelectionResourceService', "$q", "$http", '$rootScope', 'mevAnalysisEventBus', "DashboardItems",
-		"mevAnnotationRepository", "DatasetResourceService", "mevDb",
+		"mevAnnotationRepository", "DatasetResourceService", "mevDb", "mevSettings",
 	 function(AnalysisResourceService, SelectionResourceService, $q, $http, $rootScope, analysisEventBus, DashboardItems, 
-	 	MevAnnotationRepository, DatasetResourceService, mevDb){
+	 	MevAnnotationRepository, DatasetResourceService, mevDb, mevSettings){
 	    
 	    //DatasetFactory :: [String], [DatasetResponseObj] -> [Dataset]
 	    //  Function that takes dataset name and dataset response object and returns
@@ -19,7 +19,7 @@ function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){ "u
 		return function(datasetName, datasetResponseObj){
 		    
 		    
-				var dataset = new DatasetClass(datasetName, datasetResponseObj, $http, $rootScope, mevDb);
+				var dataset = new DatasetClass(datasetName, datasetResponseObj, $http, $rootScope, mevDb, mevSettings);
 
 
 				dataset.analysis = AnalysisResourceService;

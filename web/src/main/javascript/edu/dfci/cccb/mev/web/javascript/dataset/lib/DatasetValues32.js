@@ -1,5 +1,5 @@
 define(['lodash', 'q', 'jsLru'], function(_, q, jsLru){
-	return function ValueStore(dataset, source, $rootScope){
+	return function ValueStore(dataset, source, $rootScope, mevSettings){
     	var self = this;    	
     	var lruCache = new jsLru(5);
     	//init swap
@@ -21,7 +21,8 @@ define(['lodash', 'q', 'jsLru'], function(_, q, jsLru){
  			})["catch"](function(e){
 				throw e;
 			});
-			fetchDataValues64();
+			if(mevSettings.db.enabled)
+				fetchDataValues64();
 			return valuesPromise;
     	}
 

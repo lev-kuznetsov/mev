@@ -1,5 +1,5 @@
 define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
-    var service = function mevDbService(mevContext){
+    var service = function mevDbService(mevContext, mevSettings, $q){
         var db = new PouchDB("mev", {adapter: 'worker'});
         function ensureDataset(){
             var dataset = mevContext.get("dataset");
@@ -8,7 +8,16 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
             return dataset;
         }
         function getDataset(datasetId){
-            return db.get(datasetId);
+            if(mevSettings.db.enabled)
+                return db.get(datasetId);
+            else{
+                var deferred = $q.defer();
+                deferred.reject({
+                    status: 501,
+                    message: "Local db is disabled"
+                });
+                return deferred.promise;
+            }
         }
         function putDataset(dataset){
             return getDataset(dataset.id)
@@ -18,7 +27,7 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                           _id: dataset.id
                         });
                     else
-                        throw new Error("Error updating db" + JSON.stringify(e));
+                        throw e;
                 })
                 .then(function(doc){
                     dataset._id = dataset.id;
@@ -33,6 +42,8 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                 .catch(function(e){
                     if(e.status===409)
                         putDataset(dataset);
+                    else if(e.status === 501)
+                        console.warn("Warning saving dataset locally", e);
                     else{
                         console.error("Error saving dataset locally:", e, dataset);
                         throw e;
@@ -41,15 +52,18 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
         }
         function getDatasets(){
             // return db.allDocs({startKey: "dataset::", endKey: "dataset::\uFFFF;"});
-            return db.allDocs().then(function(result){
-                return _.uniq(result.rows
-                    .filter(function(doc){
-                        return doc.id.indexOf("/values64") > -1;
-                    }).map(function(doc){
-                        return doc.id.split("/")[0];
-                    })
-                );
-            });
+            if(mevSettings.db.enabled)
+                return db.allDocs().then(function(result){
+                    return _.uniq(result.rows
+                        .filter(function(doc){
+                            return doc.id.indexOf("/values64") > -1;
+                        }).map(function(doc){
+                            return doc.id.split("/")[0];
+                        })
+                    );
+                });
+            else
+                return $q.when([]);
         }
         function formatDocId(path, datasetId){
             datasetId = datasetId
@@ -60,13 +74,27 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                 : path
             return datasetId + "/" + path;
         }
+        function _rejectDisabled(){
+            var deferred = $q.defer();
+            deferred.reject({
+                status: 404,
+                message: "Local db is disabled"
+            });
+            return deferred.promise;
+        }
         function getDatasetValues(datasetId){
+            if(!mevSettings.db.enabled)
+                _rejectDisabled();
             return db.getAttachment(formatDocId("values", datasetId), "all");
         }
         function getDatasetValues64(datasetId){
+            if(!mevSettings.db.enabled)
+                _rejectDisabled();
             return db.getAttachment(formatDocId("values64", datasetId), "chunk0");
         }
         function putDatasetValues(blob){
+            if(!mevSettings.db.enabled)
+                return;
             var doc = {
                 _id: formatDocId("values"),
                 _attachments: {
@@ -113,6 +141,9 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
             //     .finally(getDatasetValues64.bind(datasetId));
         }
         function getAnalyses(datasetId){
+            if(!mevSettings.db.enabled)
+                return $q.when([]);
+
             return db.allDocs()
                 .then(function(result){
                     return result.rows.filter(function(doc){
@@ -132,9 +163,14 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
             //     });
         }
         function getAnalysis(datasetId, analysisId){
+            if(!mevSettings.db.enabled)
+                return _rejectDisabled();
             return db.get(formatDocId(["analysis", analysisId], datasetId));
         }
         function putAnalysis(datasetId, analysis){
+            if(!mevSettings.db.enabled)
+                return _rejectDisabled();
+
             return getAnalysis(datasetId, analysis.name)
                 .catch(function(e){
                     if(e.status === 404)
@@ -167,6 +203,9 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
 
 
         function putAnnotations(datasetId, dimension, blob){
+            if(!mevSettings.db.enabled)
+                return;
+
             var doc = {
                 _id: formatDocId(["annotations", dimension], datasetId),
                 _attachments: {
@@ -207,6 +246,6 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
 
     service.$name="mevDb";
     service.$provider="service";
-    service.$inject=["mevContext"];
+    service.$inject=["mevContext", "mevSettings", "$q"];
     return service;
 });

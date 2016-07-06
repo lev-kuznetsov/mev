@@ -5,7 +5,7 @@ define(['lodash', 'pouchdb', 'blob-util', 'mev-domain-common'], function(_, Pouc
                 // var db = new PouchDB(source.id,  {adapter: 'worker'});
                 return mevDb.getDatasetValues(source.id)
                     ["catch"](function(e){
-                        if(e.status===404){
+                        if(e.status===404 || e.status === 501){
                             return source.get().then(function(response){
                                 setTimeout(function(){
                                     mevDb.putDatasetValues(new Blob([response.data]));
