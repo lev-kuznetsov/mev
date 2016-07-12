@@ -1,4 +1,5 @@
 "use strict";
-define(["./TestContext.spec"], function(){
+define(["./TestContext.spec",
+"./TestDbSizeLimit"], function(){
 
 });
