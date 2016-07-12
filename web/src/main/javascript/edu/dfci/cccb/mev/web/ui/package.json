@@ -61,6 +61,7 @@
     "gulp-jasmine-browser": "^1.0.0",
     "gulp-util": "^3.0.7",
     "steal-tools": "^0.13.3",
+    "system-parse-amd": "dfci-cccb/system-parse-amd#0.0.2+ignoreQuoted",
     "system-text": "^0.1.0",
     "systemjs-plugin-json": "^0.1.0"
   },
