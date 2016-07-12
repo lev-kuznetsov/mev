@@ -32,12 +32,12 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                 .then(function(doc){
                     dataset._id = dataset.id;
                     dataset._rev = doc._rev;
-                    var clean = JSON.parse(JSON.stringify(dataset));
-                    clean.$promise = undefined;
-                    clean._annotations = undefined;
-                    clean.values=[];
-                    clean.analyses=[];
-                    return db.put(clean);
+                    var clone = _.cloneDeep(dataset);
+                    clone.$promise = undefined;
+                    clone._annotations = undefined;
+                    clone.values=[];
+                    clone.analyses=[];
+                    return db.put(JSON.parse(JSON.stringify(clone)));
                 })
                 .catch(function(e){
                     if(e.status===409)
