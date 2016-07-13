@@ -50,6 +50,6 @@ define(["ng"], function(ng){
 			}
 		};
 	};
-	AnalysisLogDirective.$inject=["AnalysisEventBus", "alertService"];
+	AnalysisLogDirective.$inject=["mevAnalysisEventBus", "alertService"];
 	return AnalysisLogDirective;
 });

@@ -1,5 +1,7 @@
-define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expressionModule', "./DatasetValues32"], 
-		function( datasetStatistics, selectionSort, selectionHelpers, expressionModule, DatasetValues){
+define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expressionModule',
+	"./DatasetValues32", "./DatasetValuesSourceHttp", "./DatasetValuesCache"],
+function( datasetStatistics, selectionSort, selectionHelpers, expressionModule,
+		  DatasetValues, DatasetValuesSourceHttp, DatasetValuesCache){
 	"use strict";    
     //inverter :: [a] --> Object
     //  Function to invert an array into an object with properties of names
@@ -31,7 +33,7 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 	//Constructor :: [String], [DatasetResponseObj] -> $Function [Dataset]
     //  Function that constructs base dataset object without angular module
     //  dependent behaviors.
-	return function(datasetName, datasetRespObj, $http, $rootScope){
+	return function(datasetName, datasetRespObj, $http, $rootScope, mevDb, mevSettings){
 	    
 	    if (!datasetName){
 	        throw TypeError('datasetName parameter not defined');
@@ -47,7 +49,7 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 		this.id = datasetName;
 		
 		this.datasetName = datasetName;
-		this.valueStore = new DatasetValues(this, $http, $rootScope);
+		this.valueStore = new DatasetValues(this, new DatasetValuesCache(new DatasetValuesSourceHttp($http, this.id), mevDb), $rootScope, mevSettings);
 		this.expression = {
 			values: datasetRespObj.values,
 			data: {
@@ -137,6 +139,12 @@ define(['./datasetStatistics', './selectionSort', './selectionHelpers', './expre
 		
 		this.analyses = datasetRespObj.analyses || [];
 
+		this.close = function(){
+			delete this.valuesBuffer;
+			delete this.dataview;
+			delete this.valueStore;
+			delete this.expression
+		};
 
 	};
 	

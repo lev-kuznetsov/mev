@@ -34,15 +34,19 @@ public class MultipartUploadConfiguration {
 
   @Bean
   public MultipartResolver multipartResolver () {
-    final long DEFAULT_MAX_UPLOAD_SIZE = 1024L * 1024L * 100; // 10Mb
+    final long DEFAULT_MAX_UPLOAD_SIZE = 1024L * 1024L * 200; // 200Mb
 
     //TODO: find a better way to bypass Spring controllers for OpenRefine
     CommonsMultipartResolver resolver = new CommonsMultipartResolver (){
       @Override
       public boolean isMultipart(HttpServletRequest request){        
         if(request.getServletPath().startsWith ("/annotations")){
-          //Let OpenRefine handle parsing of the multipart request
-          return false;
+          if(request.getServletPath().endsWith("/row/import") || request.getServletPath().endsWith("/column/import"))
+            //annotation import is handled by AnnotationConroller
+            return super.isMultipart (request);
+          else
+            //Let OpenRefine handle parsing of the multipart request
+            return false;
         }else{
           return super.isMultipart (request);
         }

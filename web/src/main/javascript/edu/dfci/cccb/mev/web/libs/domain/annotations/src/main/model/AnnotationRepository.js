@@ -1,61 +1,86 @@
-define([], function(){
-	var AnnotationRepository = function($q, AnnotationFieldsResource, AnnotationValuesResource, AnnotationProjectIdResource){
+define([], function(){"use strict";
+	var AnnotationRepository = function(
+		$rootScope,
+		$q,
+		AnnotationFieldsResource,
+		AnnotationValuesResource,
+		AnnotationProjectIdResource,
+		AnnotationExportResource,
+		mevDb){
 
-		var current = {};
-
-		return function(dimention){
-				//private members		
+		return function(dimension){
+				//private members
+			var _self = this;
 			var _projectId=false;
 			var _fieldNameToIndexMap={};	
-			var _columns;	
+			var _columns;
+			var _fieldsPromise;
+			var _valuesPromise;
+			var _initPromise;
+            var _dimension = dimension;
 			function _createFieldNameToIndexMap(columns){	
 				_columns=columns;
 				for(var i=0;i<columns.length;i++){				
 					_fieldNameToIndexMap[columns[i].name]=i;
 					columns[i].idx=i;
 				}
-			}
-			function _init(data){
-				_createFieldNameToIndexMap(data);	
 				console.debug("AnnotationRepository", _fieldNameToIndexMap);
-				return data;
+				return columns;
 			}
 			
 			function _isOld(){				
-				var _projectIdPromise = AnnotationProjectIdResource.get(dimention).then(function(data){
+				return AnnotationProjectIdResource.get(dimension).then(function(data){
 					if(_projectId && _projectId!==data.project){
+                        //client-server project ids don't match -- need to reload
+						return true;
+					}else if(!_projectId){
+                        //client project id is not defined -- need to reload
+						_projectId = data.project;
 						return true;
 					}else{
-						_projectId = data.project;
-						return false;
-					}
-				});	
-
-				return _projectIdPromise;	
+                        return false;
+                    }
+				});
 			}
 
-			//init local variables after data promise is resolved
-			var _fieldsPromise = AnnotationFieldsResource.get(dimention);
-			var _valuesPromise = AnnotationValuesResource.get(dimention);		
+			_self.loadAnnotations = function(reload){
+				if(_initPromise && !reload) return _initPromise;
 
-			var _initPromise=$q.all({
-				columns:  _fieldsPromise,
-				rows: _valuesPromise
+				//init local variables after data promise is resolved
+				_fieldsPromise = AnnotationFieldsResource.get(dimension);
+				_valuesPromise = AnnotationValuesResource.get(dimension);
+				_initPromise=$q.all({
+					columns:  _fieldsPromise,
+					rows: _valuesPromise
+				});
+				_fieldsPromise.then(_createFieldNameToIndexMap);
+				return _initPromise;
+			};
+
+			_self.saveAnnotations = function(project, dimension){
+				var datasetId = project.metadata.customMetadata.datasetName;
+				dimension = dimension || _dimension || (project.metadata.customMetadata.dimension
+					? project.metadata.customMetadata.dimension.toLowerCase()
+					: undefined);
+				console.debug("loaded column annotations", project, datasetId, dimension);
+				return _self.export(datasetId, dimension)
+					.then(function(blob){
+						return mevDb.putAnnotations(datasetId, dimension, blob);
+					})
+			}
+			$rootScope.$on("openRefine:loadedAnnotations:row", function(event, project){
+				console.debug("loaded row annotations", project);
+				return _self.saveAnnotations(project);
 			});
-			_fieldsPromise.then(_init);
-
+			$rootScope.$on("openRefine:loadedAnnotations:column", function(event, project) {
+				console.debug("loaded column annotations", project);
+				return _self.saveAnnotations(project);
+			});
 			//public methods
-			this.getFields=function(){
-				var deffered = $q.deffer;
+			_self.getFields=function(){
 				return _isOld().then(function(isOld){					
-					if(isOld){						
-						_fieldsPromise = AnnotationFieldsResource.get(dimention);
-						_valuesPromise = AnnotationValuesResource.get(dimention);		
-						_initPromise=$q.all({
-							columns:  _fieldsPromise,
-							rows: _valuesPromise
-						});						
-						_fieldsPromise.then(_init);
+					if(isOld){
+						_self.loadAnnotations(true);
 					}
 					return _fieldsPromise.then(function(){
 						return _columns;
@@ -63,8 +88,8 @@ define([], function(){
 				});
 			};
 
-			this.getDataKeyVal=function(fields){			
-				return _initPromise.then(function(data){
+			_self.getDataKeyVal=function(fields){
+				return _self.loadAnnotations().then(function(data){
 					var results=[];
 					//at this point the only error is if the Annotations have not been loaded. 
 					//so just return an empty array
@@ -92,8 +117,8 @@ define([], function(){
 				});
 			};
 			
-			this.getDataTable=function(fields){			
-				return _initPromise.then(function(data){
+			_self.getDataTable=function(fields){
+				return _self.loadAnnotations().then(function(data){
 					var results=[];
 					//at this point the only error is if the Annotations have not been loaded. 
 					//so just return an empty array
@@ -121,9 +146,9 @@ define([], function(){
 				});
 			};
 
-			this.getMapping = function(field, key){			
+			_self.getMapping = function(field, key){
 
-				return _initPromise.then(function(data){
+				return _self.loadAnnotations().then(function(data){
 					//if key is not supplied - assume the first column is the row id				
 					var fromIndex = key ? _fieldNameToIndexMap[key] : 
 						(_fieldNameToIndexMap["probeset_id"] ? _fieldNameToIndexMap["probeset_id"] : 6);
@@ -146,12 +171,43 @@ define([], function(){
 					return map;
 				});
 			};
+
+			_self.export = function(datasetId, dimension){
+				return AnnotationExportResource.export(datasetId, dimension)
+					.then(function(response){
+						console.debug(response);
+						return new Blob([response.data], {
+							type: 'application/x-gzip'
+						});
+					})
+					.catch(function(e){
+						throw e
+					});
+			};
+			_self.import = function(datasetId, dimension){
+				mevDb.getAnnotations(datasetId, dimension)
+					.then(function(blob){
+						return AnnotationExportResource.import(datasetId, dimension, blob);
+					})
+					.catch(function(e){
+						console.error("Error importing annotatinos", datasetId, dimension);
+						throw e;
+					})
+			}
+			
 		};
 	};
 		
 
 	AnnotationRepository.$name="mevAnnotationRepository";	
-	AnnotationRepository.$inject=["$q", "AnnotationFieldsResource", "AnnotationValuesResource", "AnnotationProjectIdResource"];
+	AnnotationRepository.$inject=[
+		"$rootScope",
+		"$q",
+		"AnnotationFieldsResource",
+		"AnnotationValuesResource",
+		"AnnotationProjectIdResource",
+		"AnnotationExportResource",
+		"mevDb"];
 	AnnotationRepository.$provider="factory";
 	return AnnotationRepository;
 });

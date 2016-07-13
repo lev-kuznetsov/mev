@@ -89,16 +89,40 @@ function(ng,
 			   	     					return project;
 			   	     				});	   	     					
 	   	     				}],	
-	   	     				dataset: ["$state", "$stateParams", "project", 
+	   	     				dataset: ["$state", "$stateParams", "project", "mevAnnotationRepository",
 	   	     				function($state, $stateParams, project){
 	   	     					console.info("***resolving dataset", $stateParams.datasetId, $stateParams, $state, project);
-	   	     					return project.dataset
-	   	     					.loadAnalyses().then(function(){
-	   	     						console.info("***resolved dataset", project.dataset);
-	   	     						return project.dataset;
-	   	     					});	   	     					
+	   	     					return project.dataset.loadAnalyses()
+									.then(function(){
+										console.info("***resolved dataset", project.dataset);
+										return project.dataset;
+									})
+									.then(function(dataset){
+										var mockORefineProject = {
+											metadata: {
+												customMetadata: {
+													datasetName: dataset.id
+												}
+											}
+										};
+										function handleNotFound(e){
+											if(e.name === "AnnotationNotFoundOnServer")
+												;//this is ok, annotations may not have been uploaded yet
+											else
+												throw e;
+										}
+										dataset.getAnnotations("column").saveAnnotations(mockORefineProject)
+											.catch(handleNotFound);
+										dataset.getAnnotations("row").saveAnnotations(mockORefineProject)
+											.catch(handleNotFound);
+										return dataset;
+									});
 	   	     				}]	   	     				
-	   	     			}
+	   	     			},
+						onExit: ["dataset", function(dataset){
+							console.log("closing " + dataset.id);
+							dataset.close();
+						}]
 	   	     		})
 	   	     		.state("root.dataset.home", {		   	     		
 	   	     			parent: "root.dataset",

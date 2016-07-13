@@ -359,7 +359,9 @@ define(
                                                         "uploads",
                                                         function(newVal, oldVal) {
                                                             if (oldVal != undefined) {
-                                                                scope.datasets = newVal
+                                                                scope.datasets = newVal.map(function(dataset){
+                                                                    return dataset.id;
+                                                                });
                                                             }
                                                         })
 
@@ -368,7 +370,7 @@ define(
                             }])
                     .directive(
                             'uploadDrag',
-                            [ function(){
+                            [ "DatasetResourceService", function(DatasetResource){
 
                                 return {
                                     restrict : 'C',
@@ -396,45 +398,9 @@ define(
                                                                         .push(input.files[i]);
 
                                                                 if (files.length == input.files.length) {
-                                                                    files
-                                                                            .map(function(file) {
-
-                                                                                var formdata = new FormData;
-                                                                                formdata
-                                                                                        .append(
-                                                                                                'upload',
-                                                                                                file);
-                                                                                formdata
-                                                                                        .append(
-                                                                                                'name',
-                                                                                                file.name);
-                                                                                var xhr = new XMLHttpRequest();
-
-                                                                                xhr.upload
-                                                                                        .addEventListener(
-                                                                                                "progress",
-                                                                                                function(e) {
-                                                                                                    return;
-                                                                                                });
-
-                                                                                xhr.onreadystatechange = function() {
-                                                                                    if (xhr.readyState == 4
-                                                                                            && xhr.status == 200) {
-
-                                                                                        scope
-                                                                                                .loadUploads();
-
-                                                                                    };
-                                                                                };
-
-                                                                                xhr
-                                                                                        .open(
-                                                                                                "POST",
-                                                                                                "/dataset",
-                                                                                                true);
-                                                                                xhr
-                                                                                        .send(formdata);
-                                                                            });
+                                                                    files.map(function(file){
+                                                                        DatasetResource.uploadFile(file);
+                                                                    });                                                                    
                                                                 };
                                                             };
 

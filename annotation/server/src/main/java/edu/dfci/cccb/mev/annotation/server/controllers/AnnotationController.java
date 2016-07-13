@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.refine.ProjectMetadata;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
@@ -39,6 +40,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.support.WebApplicationObjectSupport;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -230,7 +232,7 @@ public class AnnotationController extends WebApplicationObjectSupport {
                             HttpServletRequest request, HttpServletResponse response) throws ServletException,
                                          IOException,
                                          DatasetNotFoundException, InvalidDimensionTypeException {
-  
+
     Dataset sourceHeatmap = workspace.get (heatmapId);
     Dataset destHeatmap = workspace.get (destId);
     long sourceProjectId = projectManager.getProjectID (sourceHeatmap.name () + dimension);
@@ -245,7 +247,29 @@ public class AnnotationController extends WebApplicationObjectSupport {
     projectManager.copyProject (sourceProjectId, destProjectId, heatmapId, destHeatmap, dim);
   }
 
-  
+  @RequestMapping (method = POST, value = { "/"
+          + DATASET_URL_ELEMENT + "/annotation/"
+          + DIMENSION_URL_ELEMENT
+          + "/import"}, consumes = "multipart/form-data")
+  @ResponseStatus (OK)
+  public void importProject (@PathVariable (DATASET_MAPPING_NAME) final String heatmapId,
+                             @PathVariable (DIMENSION_MAPPING_NAME) final String dimension,
+                             @RequestParam ("upload") MultipartFile upload
+//                             MultipartHttpServletRequest req
+  ) throws ServletException,
+                                         IOException,
+                                         DatasetNotFoundException, InvalidDimensionTypeException {
+//    MultipartFile upload = req.getFile("upload");
+    long projectId = Project.generateID();
+    projectManager.save(true);
+    projectManager.importProject(projectId, upload.getInputStream(), true);
+    projectManager.loadProjectMetadata(projectId);
+    ProjectMetadata pm = projectManager.getProjectMetadata(projectId);
+    pm.updateModified();
+    projectManager.save(true);
+  }
+
+
   @RequestMapping (method = { GET, POST, PUT, DELETE }, value = { "/"
                                                                   + DATASET_URL_ELEMENT + "/annotation/"
                                                                   + DIMENSION_URL_ELEMENT

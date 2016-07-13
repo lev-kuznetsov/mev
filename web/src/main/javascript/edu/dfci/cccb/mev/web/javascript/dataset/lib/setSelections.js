@@ -8,7 +8,7 @@ define([], function(){
         
         self[dimension].selections = selections;
         self.selections[dimension] = selections;
-        
+        self.mevDb.putDataset(self);
         return null;
         
     }

@@ -1,0 +1,40 @@
+<table class="table table-hover table-condensed">
+    <thead>
+    <tr>
+        <th>Your datasets</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-show="datasetsByStatus.active.length>0" ng-repeat="row in datasetsByStatus.active">
+        <!--  <td><a href="#/dataset/{{row}}"> <i class="icon-file"></i> {{row}}</a></td> -->
+        <td><a href="#/dataset/{{row}}" ui-sref="root.dataset.home({datasetId: row.id})"> <i class="icon-file"></i> {{row.id}}</a></td>
+    <tr>
+    <tr ng-show="datasetsByStatus.active.length<=0">
+    <td>Use the button above to upoload your data or import a TCGA dataset on the right</td>
+    <tr>
+    </tbody>
+</table>
+<table ng-show="datasetsByStatus.inactive.length>0" class="table table-hover table-condensed">
+    <thead>
+    <tr>
+        <th>Inactive datasets</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="row in datasetsByStatus.inactive">
+        <!--  <td><a href="#/dataset/{{row}}"> <i class="icon-file"></i> {{row}}</a></td> -->
+        <td >
+            <span>{{row.id}}</span>
+            <a href="" ng-click="vm.activate(row)" title="activate" class="btn btn-xs">
+                <i class="glyphicon glyphicon-cloud-upload"></i>
+            </a>
+            <a href="#/dataset/{{row}}" ui-sref="root.dataset.home({datasetId: row.id})" title="view readonly" class="btn btn-xs">
+                <i class="glyphicon glyphicon-eye-open"></i>
+            </a>
+            <a href="" ng-click="vm.delete(row.id)" title="delete" class="btn btn-xs">
+                <i class="fa fa-close"></i>
+            </a>
+        </td>
+    <tr>
+    </tbody>
+</table>

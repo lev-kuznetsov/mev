@@ -48,7 +48,7 @@ define(["ng", "lodash"], function(ng, _){
 //				return templateUrl;
 //			},
 			controllerAs: "DatasetAnalysisVM",
-			controller: ["$scope", "AnalysisEventBus",  function($scope, AnalysisEventBus){
+			controller: ["$scope", "mevAnalysisEventBus",  function($scope, AnalysisEventBus){
 				console.debug("anyAnalysis ctrl:", $scope);
 				var project = resolveProject($state);
 				var analysis = resolveAnalysis($scope.anyAnalysis);
@@ -188,6 +188,6 @@ define(["ng", "lodash"], function(ng, _){
 		};
 	};
 	AnyAnalysisDirective.$name="anyAnalysisDirective";
-	AnyAnalysisDirective.$inject=["AnalysisTypes", "$state", "$resolve", "$injector", "AnalysisEventBus", "mevAnalysisTypes", "$compile"];
+	AnyAnalysisDirective.$inject=["AnalysisTypes", "$state", "$resolve", "$injector", "mevAnalysisEventBus", "mevAnalysisTypes", "$compile"];
 	return AnyAnalysisDirective;
 });

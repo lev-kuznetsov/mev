@@ -46,6 +46,7 @@
     "mev-steal-bootstrap": "file:../libs/utils/steal-bootstrap",
     "mev-topgo": "file:../libs/analyses/topgo",
     "mev-wgcna": "file:../libs/analyses/wgcna",
+    "mev-workspace": "file:../libs/domain/workspace",
     "mevPathwayEnrichment": "file:../libs/analyses/pathwayEnrichment",
     "mui": "file:../libs/mui",
     "ng-grid": "apartensky/ui-grid#2.0.14+npmfix",
@@ -60,6 +61,7 @@
     "gulp-jasmine-browser": "^1.0.0",
     "gulp-util": "^3.0.7",
     "steal-tools": "^0.13.3",
+    "system-parse-amd": "dfci-cccb/system-parse-amd#0.0.2+ignoreQuoted",
     "system-text": "^0.1.0",
     "systemjs-plugin-json": "^0.1.0"
   },
@@ -102,6 +104,11 @@
       },
       "pouchdb": {
         "format": "global"
+      },
+      "worker-pouch": {
+        "deps": [
+          "pouchdb"
+        ]
       },
       "jquery-ui": {
         "deps": [
