@@ -26,7 +26,8 @@
         <td >
             <span>{{row.id}}</span>
             <a href="" ng-click="vm.activate(row)" title="activate" class="btn btn-xs">
-                <i class="glyphicon glyphicon-cloud-upload"></i>
+                <i ng-hide="row.status==='activating'" class="glyphicon glyphicon-cloud-upload"></i>
+                <i ng-show="row.status==='activating'" class="fa fa-spinner fa-spin"></i>
             </a>
             <a href="#/dataset/{{row}}" ui-sref="root.dataset.home({datasetId: row.id})" title="view readonly" class="btn btn-xs">
                 <i class="glyphicon glyphicon-eye-open"></i>

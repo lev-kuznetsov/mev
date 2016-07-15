@@ -1,5 +1,5 @@
 define(["lodash"], function(_){"use strict";
-    var service = function($http, $q, mevDb){
+    var service = function($http, $q, mevDb, DatasetResource){
 
         function getDatasets(){
 
@@ -65,6 +65,9 @@ define(["lodash"], function(_){"use strict";
                 });
             });
         }
+        function activateDataset(dataset){
+            return DatasetResource.activate(dataset);
+        }
         function deleteDataset(datasetId){
             return mevDb.deleteDataset(datasetId);
         }
@@ -79,10 +82,11 @@ define(["lodash"], function(_){"use strict";
         this.getDatasets = getDatasets;
         this.getActiveDatasets = getActiveDatasets;
         this.getInactiveDatasets = getInactiveDatasets;
+        this.activateDataset = activateDataset;
         this.deleteDataset = deleteDataset;
         this.getDataset = getDataset;
     };
-    service.$inject=["$http", "$q", "mevDb"];
+    service.$inject=["$http", "$q", "mevDb", "DatasetResourceService"];
     service.$name="mevWorkspace";
     service.$provider="service";
     return service;
