@@ -53,7 +53,8 @@
     "notific8": "^2.3.1",
     "nvd3": "apartensky/nvd3#1.8.2+dotPlot.1",
     "q": "^1.4.1",
-    "steal": "^0.13.2"
+    "steal": "^0.13.2",
+    "ui-router-extras": "^0.1.2"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
