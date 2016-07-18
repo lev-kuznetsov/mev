@@ -30,14 +30,16 @@ define(["lodash"], function(_){"use strict";
                         return {
                             id: name,
                             name: name,
-                            isActive: true
+                            isActive: true,
+                            getStatus: mevDb.getStatus.bind(mevDb, name)
                         }
                     });
                     var inactive = _.difference(local, remote).map(function(name){
                         return {
                             id: name,
                             name: name,
-                            isActive: false
+                            isActive: false,
+                            getStatus: mevDb.getStatus.bind(mevDb, name)
                         }
                     });
 

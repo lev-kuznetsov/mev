@@ -27,6 +27,13 @@ define(["./WorkspaceList.tpl.html", "./WorkspaceList.less"], function(tempalte){
                         if(confirm("Delete dataset '"+datasetId+"'?"))
                             return mevWorkspace.deleteDataset(datasetId)
                                 .then(updateDatasetList);
+                    },
+                    showStatus: function(row){
+                        var status = row.getStatus();
+                        return status;
+                    },
+                    isSaved: function(row){
+                        return row.getStatus()==="saved";
                     }
                 };
                 scope.$on("mev:datasets:list:refreshed", function(){
