@@ -18,14 +18,12 @@ addEventListener("message", function(_e){
 //			["catch"](function(e){
 //				console.debug("worker db get error", e);
 				e=_e;
-				return exists(e.data)
+				var ret = exists(e.data)
 					.then(fetchDataValues)
 					.then(chunkDataValues)
-					["catch"](function(e){
-						throw e;
-					})
 					.then(saveDataValues)
 					.then(done)
+					.catch(done);
 	//				["catch"](function(e){
 	//					throw e;
 	//				});

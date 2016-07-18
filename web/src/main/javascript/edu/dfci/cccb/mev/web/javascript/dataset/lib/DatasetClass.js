@@ -49,7 +49,18 @@ function( datasetStatistics, selectionSort, selectionHelpers, expressionModule,
 		this.id = datasetName;
 		
 		this.datasetName = datasetName;
-		this.valueStore = new DatasetValues(this, new DatasetValuesCache(new DatasetValuesSourceHttp($http, this.id), mevDb), $rootScope, mevSettings);
+		this.valueStore = new DatasetValues(
+			this,
+			new DatasetValuesCache(
+				new DatasetValuesSourceHttp(
+					$http,
+					this.id
+				),
+				mevDb
+			),
+			$rootScope,
+			mevSettings,
+			mevDb);
 		this.expression = {
 			values: datasetRespObj.values,
 			data: {
