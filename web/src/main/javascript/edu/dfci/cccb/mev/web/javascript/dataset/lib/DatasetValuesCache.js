@@ -8,7 +8,7 @@ define(['lodash', 'pouchdb', 'blob-util', 'mev-domain-common'], function(_, Pouc
                         if(e.status===404 || e.status === 501){
                             return source.get().then(function(response){
                                 setTimeout(function(){
-                                    mevDb.putDatasetValues(new Blob([response.data]));
+                                    mevDb.putDatasetValues(new Blob([response.data]), source.id);
                                     // db.put(doc);
                                 }, 10e3);
                                 return response;
