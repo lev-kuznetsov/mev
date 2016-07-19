@@ -17,11 +17,14 @@ define(["lodash"], function(_){ "use strict";
 				return this.level || "root";
 			},
 			get: function(level){
+				var root = this.root();
 				if(level === "root")
-					return this.root();
-				else if(level === "dataset")
-					return this.root().dataset;
-				else
+					return root;
+				else if(level === "dataset"){
+					return root
+						? root.dataset
+						: undefined;
+				}else
 					return this.current();
 			}
 		});					
