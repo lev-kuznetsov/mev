@@ -41,9 +41,12 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 			
 		}
 		function filterDatasetNames(datasetNames){
-			return datasetNames.filter(function(item){
+			var filteredNames = datasetNames.filter(function(item){
 				return item.indexOf(that.parentDatasetName)===0;
 			});
+			if(filteredNames.length === 0)
+				filteredNames.push(dataset.id);
+			return filteredNames;
 		}
 		function switchDataset(){
 			$state.go("root.dataset.home", {datasetId: that.curDatasetName});

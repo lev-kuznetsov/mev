@@ -7,7 +7,16 @@
     <tbody>
     <tr ng-show="datasetsByStatus.active.length>0" ng-repeat="row in datasetsByStatus.active">
         <!--  <td><a href="#/dataset/{{row}}"> <i class="icon-file"></i> {{row}}</a></td> -->
-        <td><a href="#/dataset/{{row}}" ui-sref="root.dataset.home({datasetId: row.id})"> <i class="icon-file"></i> {{row.id}}</a></td>
+        <td>
+            <a href="#/dataset/{{row}}" ui-sref="root.dataset.home({datasetId: row.id})">
+                <i class="icon-file"></i> {{row.id}}
+            </a>
+            &nbsp;
+            <span class="pull-right">
+                <i ng-show="vm.isSaved(row)" class="fa fa-check-circle"></i>
+                <i ng-hide="vm.isSaved(row)" class="fa fa-spinner fa-spin"></i>
+            </span>
+        </td>
     <tr>
     <tr ng-show="datasetsByStatus.active.length<=0">
     <td>Use the button above to upoload your data or import a TCGA dataset on the right</td>
@@ -26,7 +35,8 @@
         <td >
             <span>{{row.id}}</span>
             <a href="" ng-click="vm.activate(row)" title="activate" class="btn btn-xs">
-                <i class="glyphicon glyphicon-cloud-upload"></i>
+                <i ng-hide="row.status==='activating'" class="glyphicon glyphicon-cloud-upload"></i>
+                <i ng-show="row.status==='activating'" class="fa fa-spinner fa-spin"></i>
             </a>
             <a href="#/dataset/{{row}}" ui-sref="root.dataset.home({datasetId: row.id})" title="view readonly" class="btn btn-xs">
                 <i class="glyphicon glyphicon-eye-open"></i>

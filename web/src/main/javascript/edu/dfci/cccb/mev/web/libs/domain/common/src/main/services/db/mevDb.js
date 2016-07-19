@@ -1,5 +1,6 @@
 define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
-    var service = function mevDbService(mevContext, mevSettings, $q){
+    var service = function mevDbService(mevContext, mevSettings, $q, $rootScope, $timeout){
+        var _self = this;
         var db = new PouchDB("mev", {adapter: 'worker'});
         function ensureDataset(){
             var dataset = mevContext.get("dataset");
@@ -19,7 +20,7 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                 return deferred.promise;
             }
         }
-        function putDataset(dataset){
+        function putDataset(dataset, isRetry){
             return getDataset(dataset.id)
                 .catch(function(e){
                     if(e.status === 404)
@@ -37,11 +38,21 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                     clone._annotations = undefined;
                     clone.values=[];
                     clone.analyses=[];
-                    return db.put(JSON.parse(JSON.stringify(clone)));
+
+                    _firePutStarted(dataset.id, "dataset");
+                    return db.put(JSON.parse(JSON.stringify(clone)))
+                        .then(function(){
+                            _firePutCompleted(dataset.id, "dataset");
+                            return arguments[0];
+                        })
+                        .catch(function(){
+                            _firePutCompleted(dataset.id, "dataset");
+                            return arguments[0];
+                        });
                 })
                 .catch(function(e){
                     if(e.status===409)
-                        putDataset(dataset);
+                        putDataset(dataset, true);
                     else if(e.status === 501)
                         console.warn("Warning saving dataset locally", e);
                     else{
@@ -92,7 +103,10 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                 _rejectDisabled();
             return db.getAttachment(formatDocId("values64", datasetId), "chunk0");
         }
-        function putDatasetValues(blob){
+        function putDatasetValues(blob, datasetId){
+            _firePutStarted(
+                datasetId || ensureDataset().id,
+                "values");
             if(!mevSettings.db.enabled)
                 return;
             var doc = {
@@ -105,7 +119,13 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                     }
                 }
             };
-            db.put(doc);
+            db.put(doc)
+                .then(function(){
+                    _firePutCompleted(ensureDataset().id, "values");
+                })
+                .catch(function(){
+                    _firePutCompleted(ensureDataset().id, "values");
+                });
         }
         function _removeDocByRow(doc){
             return db.remove(doc.id, doc.value.rev);
@@ -167,9 +187,12 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                 return _rejectDisabled();
             return db.get(formatDocId(["analysis", analysisId], datasetId));
         }
-        function putAnalysis(datasetId, analysis){
+        function putAnalysis(datasetId, analysis, isRetry){
             if(!mevSettings.db.enabled)
                 return _rejectDisabled();
+
+            if(!isRetry)
+                $rootScope.$broadcast("mev:db:put:started", datasetId, analysis);
 
             return getAnalysis(datasetId, analysis.name)
                 .catch(function(e){
@@ -184,9 +207,12 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                     analysis._rev = doc._rev;
                     return db.put(JSON.parse(JSON.stringify(analysis)));
                 })
+                .then(function(){
+                    $rootScope.$broadcast("mev:db:put:completed", datasetId, analysis);
+                })
                 .catch(function(e){
                     if(e.status===409)
-                        putAnalysis(datasetId, analysis);
+                        putAnalysis(datasetId, analysis, true);
                     else{
                         console.error("Error saving analysis locally:" , datasetId, analysis, e);
                         throw e;
@@ -200,11 +226,20 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                     return db.remove(doc);
                 });
         }
+        function _firePutStarted(dataset, item){
+            $rootScope.$broadcast("mev:db:put:started", dataset, item);
+        }
+        function _firePutCompleted(dataset, item){
+            $timeout(function(){
+                $rootScope.$broadcast("mev:db:put:completed", dataset, item);
+            })
+        }
 
-
-        function putAnnotations(datasetId, dimension, blob){
+        function putAnnotations(datasetId, dimension, blob, isRetry){
             if(!mevSettings.db.enabled)
                 return;
+            if(!isRetry)
+                _firePutStarted(datasetId, dimension);
 
             var doc = {
                 _id: formatDocId(["annotations", dimension], datasetId),
@@ -219,14 +254,45 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
             db.put(doc)
                 .catch(function(e){
                     if(e.status===409)
-                        putAnnotations(datasetId, dimension, blob);
+                        putAnnotations(datasetId, dimension, blob, true);
                     else
                         throw e;
-                });
+                })
+                .then(_firePutCompleted.bind(_self, datasetId, dimension))
+                .catch(_firePutCompleted.bind(_self, datasetId, dimension));
         }
         function getAnnotations(datasetId, dimension){
             return db.getAttachment(formatDocId(["annotations", dimension], datasetId), "all");
         }
+        var status = {};
+        function getStatus(datasetId){
+            var keys = datasetId
+                ? _.filter(_.keys(status), function(key){
+                        return key.indexOf(datasetId) === 0;
+                    })
+                : _.keys(status);
+            var msg = "saved";
+            if(keys.length>0)
+                msg = "saving "
+                    + datasetId
+                        ? keys[0].replace(datasetId+":", "")
+                        : keys[0];
+
+            // console.debug("status msg", msg);
+            return msg;
+        }
+        function _formatStatusKey(dataset, item){
+            return dataset + ":" + item;
+        }
+        $rootScope.$on("mev:db:put:started", function(event, dataset, item){
+            status[_formatStatusKey(dataset, item)] = {
+                dataset: dataset,
+                item: item
+            };
+        });
+        $rootScope.$on("mev:db:put:completed", function(event, dataset, item){
+            delete status[_formatStatusKey(dataset, item)];
+        });
         return {
             getDataset: getDataset,
             putDataset: putDataset,
@@ -240,12 +306,21 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
             getAnalyses: getAnalyses,
             deleteAnalysis: deleteAnalysis,
             putAnnotations: putAnnotations,
-            getAnnotations: getAnnotations
+            getAnnotations: getAnnotations,
+            getStatus: getStatus,
+            firePutStarted: _firePutStarted,
+            firePutCompleted: _firePutCompleted,
+            onPutStarted: function(callback){
+                $rootScope.$on("mev:db:put:started", callback);
+            },
+            onPutCmopleted: function(callback){
+                $rootScope.$on("mev:db:put:cmopleted", callback);
+            }
         }
     };
 
     service.$name="mevDb";
     service.$provider="service";
-    service.$inject=["mevContext", "mevSettings", "$q"];
+    service.$inject=["mevContext", "mevSettings", "$q", "$rootScope", "$timeout"];
     return service;
 });

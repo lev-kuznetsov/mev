@@ -48,6 +48,15 @@ function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){ "u
 				dataset.resetSelections = resetSelections;
 				dataset.subset = DatasetResourceService.subset;
 				dataset.getAll = DatasetResourceService.getAll;
+				dataset.getIsActive = function(){
+					var _self = this;
+					return DatasetResourceService.getAll().$promise
+						.then(function(datasetNames){
+							return datasetNames.find(function(dataseName){
+								return dataseName===dataset.id;
+							})
+						});
+				};
 
 				dataset.getAnnotations=function(dimension){
 					if(!this._annotations)

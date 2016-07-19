@@ -2,7 +2,6 @@ define(["lodash"], function(_){ "use strict";
 	function ngcomponent($state, $stateParams){
 		_.extend(this, {
 			root: function(){
-				console.log($stateParams);
 				return $state.$current.locals.globals.project;
 			},
 			current: function(){
@@ -17,11 +16,14 @@ define(["lodash"], function(_){ "use strict";
 				return this.level || "root";
 			},
 			get: function(level){
+				var root = this.root();
 				if(level === "root")
-					return this.root();
-				else if(level === "dataset")
-					return this.root().dataset;
-				else
+					return root;
+				else if(level === "dataset"){
+					return root
+						? root.dataset
+						: undefined;
+				}else
 					return this.current();
 			}
 		});					

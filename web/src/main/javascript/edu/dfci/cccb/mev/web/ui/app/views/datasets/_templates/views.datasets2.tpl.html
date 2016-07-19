@@ -1,21 +1,18 @@
 <div class="row">
     <div class="col-md-3">
-
-        <div mev-dataset-upload></div>
-        <div mev-workspace-list></div>
-
+        <div ui-view="workspace">Loading ....</div>
     </div>
     <div class="col-md-9 ">
         <div class="column-wrapper">
             <ul class="nav nav-tabs column-header" id="importTabs">
-                <li id="tutorials_tab" ui-sref-active="active"><a ui-sref=".tutorials" >Tutorials</a></li>
-                <li id="tcga_tab" ui-sref-active="active"><a ui-sref=".tcga">Import TCGA Datasets</a></li>
-                <li id="geods_tab" ui-sref-active="active"><a ui-sref=".geods">Import GEO Datasets</a></li>
+                <li id="tcga_tab" ui-sref-active="active"><a ui-sref=".imports.tcga">Import TCGA Datasets</a></li>
+                <li id="geods_tab" ui-sref-active="active"><a ui-sref=".imports.geods">Import GEO Datasets</a></li>
                 <li id="google_tab" ui-sref-active="active" ng-show="googleDrive.signedIn"><a ui-sref=".google">Google
                     Drive</a></li>
+                <li id="tutorials_tab" ui-sref-active="active"><a ui-sref=".imports.tutorials" >Tutorials</a></li>
             </ul>
             <div class="tab-content column-body">
-                <div ui-view >Loading ....</div>
+                <div ui-view="imports">Loading ....</div>
             </div>
         </div>
     </div>
