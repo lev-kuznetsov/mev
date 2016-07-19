@@ -2,7 +2,6 @@ define(["lodash"], function(_){ "use strict";
 	function ngcomponent($state, $stateParams){
 		_.extend(this, {
 			root: function(){
-				console.log($stateParams);
 				return $state.$current.locals.globals.project;
 			},
 			current: function(){

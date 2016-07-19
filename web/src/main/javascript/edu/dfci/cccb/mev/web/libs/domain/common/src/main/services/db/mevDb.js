@@ -1,5 +1,6 @@
 define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
     var service = function mevDbService(mevContext, mevSettings, $q, $rootScope, $timeout){
+        var _self = this;
         var db = new PouchDB("mev", {adapter: 'worker'});
         function ensureDataset(){
             var dataset = mevContext.get("dataset");
@@ -40,7 +41,11 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
 
                     _firePutStarted(dataset.id, "dataset");
                     return db.put(JSON.parse(JSON.stringify(clone)))
-                        .done(function(){
+                        .then(function(){
+                            _firePutCompleted(dataset.id, "dataset");
+                            return arguments[0];
+                        })
+                        .catch(function(){
                             _firePutCompleted(dataset.id, "dataset");
                             return arguments[0];
                         });
@@ -115,7 +120,10 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                 }
             };
             db.put(doc)
-                .done(function(){
+                .then(function(){
+                    _firePutCompleted(ensureDataset().id, "values");
+                })
+                .catch(function(){
                     _firePutCompleted(ensureDataset().id, "values");
                 });
         }
@@ -250,9 +258,8 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                     else
                         throw e;
                 })
-                .done(function(){
-                    _firePutCompleted(datasetId, dimension);
-                });
+                .then(_firePutCompleted.bind(_self, datasetId, dimension))
+                .catch(_firePutCompleted.bind(_self, datasetId, dimension));
         }
         function getAnnotations(datasetId, dimension){
             return db.getAttachment(formatDocId(["annotations", dimension], datasetId), "all");
