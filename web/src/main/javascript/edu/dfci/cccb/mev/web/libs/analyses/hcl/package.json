@@ -13,7 +13,7 @@
   "author": "apartensky",
   "license": "ISC",
   "dependencies": {
-    "mev-analysis": "file:../analysis",
+    "mev-analysis": "file:../../domain/analysis",
     "mev-heatmap": "file:../../charts/mevHeatmap",
     "mui": "file:../../mui",
     "steal": "^0.15.0"
