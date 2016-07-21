@@ -1,8 +1,8 @@
-define(["mui", "pouchdb", "mev-domain-common",
+define(["mui", "pouchdb", "mev-domain-common", "mev-dataset", "angular-ui-router", "ui-router-extras",
     "./model/Workspace",
     "./router/WorkspaceState",
     "./router/WorkspaceStateInit",
     "./view/list/WorkspaceListDirective",
     "./view/upload/UploadDatasetDirective"], function(ng){
-    return ng.module("mev-workspace", arguments, arguments);
+    return ng.module("mev-workspace", ["ct.ui.router.extras"], arguments);
 });

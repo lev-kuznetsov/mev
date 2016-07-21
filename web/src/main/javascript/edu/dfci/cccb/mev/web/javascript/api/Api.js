@@ -283,7 +283,7 @@ define(['angular', 'lodash', 'angular-resource', '../dataset/lib/AnalysisClass']
                 return AnalysisResource;
 
             }])
-        .service('SelectionResourceService', ['$resource', '$routeParams', '$http', 'DatasetResourceService', '$rootScope',
+        .service('SelectionResourceService', ['$resource', '$routeParams', '$http', 'mevDatasetRest', '$rootScope',
             '$q', 'mevWorkspace', 'mevDb',
             function ($resource, $routeParams, $http, datasetResource, $rootScope, $q, mevWorkspace, mevDb) {
 

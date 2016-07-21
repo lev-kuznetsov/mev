@@ -67,7 +67,7 @@ function(ng,
 			   	     		footerUrl: "app/views/dataset/_templates/dataset.footer.tpl.html",
 			   	     	},
 	   	     			resolve:{
-	   	     				datasetResource: ["$state", "$stateParams", "DatasetResourceService", "$q", "$http", function($state, $stateParams, DatasetResourceService, $q, $http){
+	   	     				datasetResource: ["$state", "$stateParams", "mevDatasetRest", "$q", "$http", function($state, $stateParams, DatasetResourceService, $q, $http){
 	   	     					
 		   	     				var datasetResource = DatasetResourceService.get({
 		   	     					datasetName: $stateParams.datasetId
