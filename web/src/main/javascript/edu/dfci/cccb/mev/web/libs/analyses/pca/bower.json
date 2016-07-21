@@ -18,6 +18,7 @@
     "test",
     "tests"
   ],
-  "dependencies": {    
+  "dependencies": {
+    "pouchdb": "~5.4.5"
   }
 }

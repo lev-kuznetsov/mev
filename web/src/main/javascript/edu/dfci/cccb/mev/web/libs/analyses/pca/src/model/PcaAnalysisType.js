@@ -8,7 +8,6 @@ define(["../router/PcaState.tpl.html",
 			name: "PCA",
 			viewModel: "PcaStateVM",
 			template: template,
-
 			params: mevAnalysisParams([
 				// new MevParentAnalysisParam({
 				// 	"id": "limma",
@@ -32,7 +31,12 @@ define(["../router/PcaState.tpl.html",
 					"bound": "keys",
 					"required": true
 				})
-			])
+			]),
+			info: {
+				template: "Performs a principal components analysis on the given data matrix" +
+					"<p>Reference: <a href='https://stat.ethz.ch/R-manual/R- devel/library/stats/html/prcomp.html'>" +
+					"https://stat.ethz.ch/R-manual/R- devel/library/stats/html/prcomp.html</a></p>"
+			}
 		});
 		pcaType.start=function(){			
 			var paramValues = this.params.getValues();			
