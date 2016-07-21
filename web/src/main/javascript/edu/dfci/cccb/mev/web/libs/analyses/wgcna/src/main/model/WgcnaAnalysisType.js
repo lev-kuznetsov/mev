@@ -4,14 +4,16 @@ define(["lodash", "../router/WgcnaState.tpl.html",
     "mev-analysis/src/params/model/select/SelectParam",
     "mev-analysis/src/params/model/decimal/DecimalParam",
     "mev-analysis/src/params/model/integer/IntegerParam",
-    "mev-analysis/src/params/model/selectionSet/SelectionSetParam"
+    "mev-analysis/src/params/model/selectionSet/SelectionSetParam",
+    "./WgcnaInfo.tpl.html"
 ], function(_, template,
             AnalsysType,
             AnalysisParamsFactory,
             SelectParam,
             DecimalParam,
             IntegerParam,
-            selectionSetParam
+            selectionSetParam,
+            infoTemplate
             ){"use strict";
     function component(MevAnalysisType, mevAnalysisParams, mevSelectionSetParam){
         var wgcnaType = new MevAnalysisType({
@@ -60,7 +62,10 @@ define(["lodash", "../router/WgcnaState.tpl.html",
                     "allowAll": "root",
                     "max": 1000
                 })
-            ])
+            ]),
+            info: {
+                template: infoTemplate
+            }
         });
         wgcnaType.start=function(){
             var paramValues = this.params.getValues();

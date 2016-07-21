@@ -1,0 +1,21 @@
+{
+  "name": "mev-gsea",
+  "description": "",
+  "main": "src/main/mevGsea.module.js",
+  "authors": [
+    "apartensky"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/apartensky/mev",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pouchdb": "~5.4.5"
+  }
+}

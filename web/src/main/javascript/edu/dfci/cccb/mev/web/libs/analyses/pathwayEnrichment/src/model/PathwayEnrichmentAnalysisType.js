@@ -1,5 +1,5 @@
-define(["lodash", "../router/PathwayEnrichmentState.tpl.html", "./PathwayEnrichmentParams", "mev-analysis/src/type/model/AnalysisType"],	
-function(_, template){"use strict";
+define(["lodash", "../router/PathwayEnrichmentState.tpl.html", "./PathwayEnrichmentInfo.tpl.html", "./PathwayEnrichmentParams", "mev-analysis/src/type/model/AnalysisType"],
+function(_, template, infoTemplate){"use strict";
 	function PathwayEnrichmentAnalysisType(mevAnalysisType, mevPathwayEnrichmentParams){
 
 		return new mevAnalysisType({
@@ -44,6 +44,9 @@ function(_, template){"use strict";
 				if(analysis && analysis.result && analysis.result.length > 0)
 					if(!isPeRow(analysis.result[0]))
 						formatResults(analysis.result);
+			},
+			info: {
+				template: infoTemplate
 			}
 		});
 	

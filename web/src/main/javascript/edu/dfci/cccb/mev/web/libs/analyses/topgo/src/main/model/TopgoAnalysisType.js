@@ -87,6 +87,9 @@ define(["lodash", "../router/TopgoState.tpl.html", "mev-analysis/src/type/model/
                     if(analysis && analysis.results && analysis.results.length > 0)
                         if(!isPeRow(analysis.results[0]))
                             formatResults(analysis.results);
+                },
+                info: {
+                    template: "<p>Extract top GO terms from goana output or top KEGG pathways from kegga output.</p>"
                 }
             });
 

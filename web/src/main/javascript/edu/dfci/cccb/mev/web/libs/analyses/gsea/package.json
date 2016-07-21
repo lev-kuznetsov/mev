@@ -28,5 +28,14 @@
     "mev-hbarchart": "file:../../charts/mevHBarchart",
     "mev-results-table": "file:../../widgets/mevResultsTable",
     "mui": "file:../../mui"
+  },
+  "system": {
+    "ext": {
+      "html": "system-text"
+    },
+    "configDependencies": [
+      "bower.json!bower"
+    ]
   }
+
 }
