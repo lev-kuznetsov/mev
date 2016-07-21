@@ -22,14 +22,12 @@
     "angular-mocks": "^1.4.9",
     "jasmine-core": "^2.4.1",
     "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
-    "pouchdb": "^5.4.5",
-    "pouchdb-size": "^1.2.2",
     "q": "^1.4.1",
     "steal-jasmine": "0.0.2"
   },
   "system": {
-    "npmIgnore": [
-      "websql"
+    "configDependencies": [
+      "bower.json!bower"
     ]
   }
 }
