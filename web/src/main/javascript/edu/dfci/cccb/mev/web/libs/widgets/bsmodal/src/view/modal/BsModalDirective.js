@@ -8,8 +8,9 @@ define(["mui", "./BsModal.tpl.html"], function(ng, template){
                 bindid : '@',
                 header : '@',
                 test : '@',
-                func : '&'
-
+                func : '&',
+                headerHtml : '=',
+                hideClose : '@'
             },
             transclude : true,
             template : template,
@@ -32,14 +33,17 @@ define(["mui", "./BsModal.tpl.html"], function(ng, template){
         				}
         				console.debug("BSMODAL appaned", attrs.bindid);
     					rootElement.append(elem);
-            			
-            			
+
+                        var elemLabel = elem.find("#myModalLabel");
+                        if(scope.headerHtml){
+                            elemLabel.html(scope.headerHtml);
+                        }
             		}
             	};
             }
         };
     }
-    directive.$inject=["$compile"];
+    directive.$inject=[];
     directive.$name="mevBsModalDirective";
     return directive;
 
