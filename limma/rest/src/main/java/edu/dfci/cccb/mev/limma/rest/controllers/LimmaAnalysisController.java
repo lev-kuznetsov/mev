@@ -22,15 +22,16 @@ import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUES
 
 import javax.inject.Inject;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import lombok.experimental.Accessors;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
 import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
@@ -60,5 +61,24 @@ public class LimmaAnalysisController {
                 .experiment (dataset.dimension (COLUMN).selections ().get (experiment))
                 .control (dataset.dimension (COLUMN).selections ().get (control))
                 .buildAsync ();
+  }
+
+  @Accessors(fluent = true)
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class LimmaParams {
+    @JsonProperty @Getter String name;
+    @JsonProperty @Getter Selection experiment;
+    @JsonProperty @Getter Selection control;
+  }
+
+  @RequestMapping (value = "/analyze/limma/{name}", method = RequestMethod.PUT)
+  @ResponseStatus (OK)
+  public Analysis start (@RequestBody LimmaParams p) throws DatasetException {
+    return limma.name (p.name())
+            .dataset (dataset)
+            .experiment (p.experiment())
+            .control (p.control())
+            .buildAsync ();
   }
 }
