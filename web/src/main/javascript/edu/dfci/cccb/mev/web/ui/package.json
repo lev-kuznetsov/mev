@@ -38,6 +38,7 @@
     "mev-gsea": "file:../libs/analyses/gsea",
     "mev-hcl": "file:../libs/analyses/hcl",
     "mev-heatmap": "file:../libs/charts/mevHeatmap",
+    "mev-limma": "file:../libs/analyses/limma",
     "mev-normalization": "file:../libs/analyses/normalization",
     "mev-pca": "file:../libs/analyses/pca",
     "mev-project": "file:../libs/domain/project",
