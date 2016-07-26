@@ -2,6 +2,7 @@ define(["mui", "mev-bs-modal", "mev-domain-common", "angular-resource", "angular
 	"angular-ui-bootstrap",
 	"./params/view/text/TextParamDirective",
 	"./params/view/integer/IntegerParamDirective",
+	"./params/view/boolean/BooleanParamDirective",
 	"./params/view/selectionSet/SelectionSetParamDirective",
 	"./params/view/decimal/DecimalParamDirective",
 	"./params/view/label/ParamLabelDirective",
