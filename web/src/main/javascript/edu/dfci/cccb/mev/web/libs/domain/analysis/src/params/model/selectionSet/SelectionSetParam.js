@@ -1,7 +1,7 @@
-define(["lodash", "../select/SelectParam"], function(_, SelectParam){
+define(["lodash", "../select/SelectParam", "../BaseParam"], function(_, SelectParam, BaseParam){
 	"use strict";
 	function SelectionSetParamFactory(mevSelectionLocator){
-		return function(spec){
+		function SelectionSetParam(spec){
 
 			_.assign(this, new SelectParam(
 				_.assign(this, spec, {
@@ -17,6 +17,8 @@ define(["lodash", "../select/SelectParam"], function(_, SelectParam){
 						return this.id + " size may not exceed " + this.max;
 			};
 		};
+		SelectionSetParam.prototype = new BaseParam();
+		return SelectionSetParam;
 	}
 	SelectionSetParamFactory.$name="mevSelectionSetParam";
 	SelectionSetParamFactory.$provider="factory";

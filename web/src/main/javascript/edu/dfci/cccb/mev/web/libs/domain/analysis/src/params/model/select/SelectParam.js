@@ -1,5 +1,5 @@
-define(["lodash"], function(_){
-	return function SelectParam(spec){		
+define(["lodash", "../BaseParam"], function(_, BaseParam){
+	function SelectParam(spec){
 
 		var options = spec.options;
 		if(!_.isFunction(options)){			
@@ -9,4 +9,6 @@ define(["lodash"], function(_){
 		}		
 		_.assign(this, {type: "select"}, spec);
 	};
+	SelectParam.prototype = new BaseParam();
+	return SelectParam;
 });
