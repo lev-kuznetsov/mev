@@ -46,6 +46,7 @@
     "mev-scatter-plot": "file:../libs/charts/scatter",
     "mev-steal-bootstrap": "file:../libs/utils/steal-bootstrap",
     "mev-topgo": "file:../libs/analyses/topgo",
+    "mev-ttest": "file:../libs/analyses/ttest",
     "mev-wgcna": "file:../libs/analyses/wgcna",
     "mev-workspace": "file:../libs/domain/workspace",
     "mevPathwayEnrichment": "file:../libs/analyses/pathwayEnrichment",
