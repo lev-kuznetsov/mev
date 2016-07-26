@@ -38,7 +38,7 @@
                         </btn-create-selection><!--
 		            --><btn-export-selection mui-analysis="DatasetAnalysisVM.analysis"
                                              mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.filteredResults" >
-
+                        </btn-export-selection>
                     </div>
                 </div>
 
@@ -86,12 +86,6 @@
                 <h3 class="analysis-results-title">{{analysis.name}} Results</h3>
                 <div class="btn-toolbar pull-right" role="toolbar" >
                     <div class="btn-group">
-                        <a class="btn" data-target="#selectionAdd{{analysis.name}}Scatter" data-toggle="modal">
-                            Create Selections
-                        </a>
-                        <a class="btn" data-target="#exportDataset{{analysis.name}}Scatter" data-toggle="modal">
-                            New Dataset
-                        </a>
                         <btn-create-selection mui-analysis="DatasetAnalysisVM.analysis"
                                               mui-dataset="DatasetAnalysisVM.project.dataset"
                                               mui-items="DatasetAnalysisVM.scatterVm.selected.items"
