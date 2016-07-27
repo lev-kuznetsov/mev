@@ -1,5 +1,6 @@
-define(["mui"], function(ng){ "use strict";
-	function BaseParam(){
+define(["lodash"], function(_){ "use strict";
+	function BaseParam(spec){
+		_.assign(this, spec);
 		this.validate = function (){
 			if(this.required===true && !this.value)
 				return this.id + " is required";

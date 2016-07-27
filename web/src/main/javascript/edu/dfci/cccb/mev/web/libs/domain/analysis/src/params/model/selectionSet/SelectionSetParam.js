@@ -2,14 +2,10 @@ define(["lodash", "../select/SelectParam", "../BaseParam"], function(_, SelectPa
 	"use strict";
 	function SelectionSetParamFactory(mevSelectionLocator){
 		function SelectionSetParam(spec){
-
-			_.assign(this, new SelectParam(
-				_.assign(this, spec, {
-						type: "select",
-						options: mevSelectionLocator.find.bind(this, spec.dimension)
-					})
-				)
-			);
+			SelectParam.call(this, spec);
+			_.assign(this, {
+				options: mevSelectionLocator.find.bind(this, spec.dimension)
+			});
 
 			this.validate = function (values){
 				if(this.max)
@@ -17,7 +13,7 @@ define(["lodash", "../select/SelectParam", "../BaseParam"], function(_, SelectPa
 						return this.id + " size may not exceed " + this.max;
 			};
 		};
-		SelectionSetParam.prototype = new BaseParam();
+		SelectionSetParam.prototype = new SelectParam();
 		return SelectionSetParam;
 	}
 	SelectionSetParamFactory.$name="mevSelectionSetParam";
