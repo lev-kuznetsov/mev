@@ -250,7 +250,7 @@ define(["mui", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/li
                                             
                     }, function(response){
                         console.debug("AnalysisResource error", response);
-                        analysisEventBus.analysisFailed(params, data);
+                        analysisEventBus.analysisFailed(params, data, response);
                     }
                 );
                 
