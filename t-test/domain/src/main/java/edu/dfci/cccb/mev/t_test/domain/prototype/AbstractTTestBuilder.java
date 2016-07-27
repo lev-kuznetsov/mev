@@ -32,7 +32,7 @@ public abstract class AbstractTTestBuilder extends AbstractAnalysisBuilder<TTest
   private @Getter @Setter double pValue; //the user-specified p-value 
   
   protected AbstractTTestBuilder () {
-    super ("ttest");
+    super ("t-Test Analysis");
   }
   
   public static final String DATASET_FILENAME = "dataset.tsv";
