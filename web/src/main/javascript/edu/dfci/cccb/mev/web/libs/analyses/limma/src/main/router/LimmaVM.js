@@ -96,7 +96,17 @@ define(["lodash"], function(_){ "use strict";
                     return scope.filteredResults.map(function(item){
                         return item.id;
                     });
-            }
+            };
+            scope.analysis.getOriginalInputKeys = function(dimension){
+                if(dimension==="column"){
+                    var selectionNames = _.isObject(scope.analysis.params.control)
+                        ? [scope.analysis.params.experiment.name, scope.analysis.params.control.name]
+                        : [scope.analysis.params.experiment, scope.analysis.params.control]
+                    var keys = project.dataset.selections.unionByName("column", selectionNames);
+                    keys.displayName = selectionNames.join("+");
+                    return keys;
+                }
+            };
             scope.selectionParams = {
                 name: undefined,
                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16)
