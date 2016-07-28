@@ -8,4 +8,18 @@ The new web client MeV
 
 ===
 
-To build you need to have Java 7, maven 3.0+ and R 2.15 with limma and multtest packages installed from bioconductor. Once you have all of that, open a command line window at the source folder, type "mvn clean install" once that's done change folder to web and launch the application server: "cd web/; mvn jetty:run" After that point your browser to http://localhost:8080
+To build you need to have Java 7, maven 3.0+ and R 3.0+
+
+Check out source and from the target folder run the build command from the console:
+
+```mvn clean install```
+
+Then change to console directory to the web folder to install R packages and start the server:
+
+```mvn rserve:start jetty:run rserve:stop```
+
+This assumes ```R``` command is on the path, you may specify path via an environment variable like this:
+
+```R=/path/to/R mvn rserve:start jetty:run rserve:stop```
+
+You may now point your browser to ```http://localhost:8080```
