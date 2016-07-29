@@ -3,6 +3,7 @@ package edu.dfci.cccb.mev.voom.rest.controllers;
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_URL_ELEMENT;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
 import java.util.Collection;
@@ -10,6 +11,7 @@ import java.util.Collection;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,5 +48,22 @@ public class VoomController {
                .dataset (dataset)
                .name (params.name)
                .buildAsync ();
+  }
+
+  private static class VoomParamsPUT {
+    @JsonProperty String name;
+    @JsonProperty Selection experiment;
+    @JsonProperty Selection control;
+  }
+  
+  @RequestMapping (value = "/analyze/voom/{name}", method = PUT)
+  @ResponseStatus (OK)
+  public Analysis put (@RequestBody VoomParamsPUT params) throws DatasetException {
+    return voom.get ()
+            .experiment (params.experiment.keys())
+            .control (params.control.keys())
+            .dataset (dataset)
+            .name (params.name)
+            .buildAsync ();
   }
 }
