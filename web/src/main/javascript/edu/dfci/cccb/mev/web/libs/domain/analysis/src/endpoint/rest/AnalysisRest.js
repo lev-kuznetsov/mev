@@ -1,4 +1,4 @@
-define(["mui", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/lib/AnalysisClass"], function(ng, AnalysisEventBus, AnalysisClass){
+define(["mui", "lodash", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/lib/AnalysisClass"], function(ng, lodash, AnalysisEventBus, AnalysisClass){
     function AnalysisRest($resource, $http, $timeout, $q, analysisEventBus, mevDb, mevWorkspace) { "use strict";
             
         var transformRequest = [function(data, headers){
@@ -203,9 +203,9 @@ define(["mui", "../../events/AnalysisEventBus", "mev-dataset/src/main/dataset/li
                             data = {data: data};
                         var allParams = {
                             analysisName: params.analysisName || data.analysisName || params.name || data.name || response.name
-                        };                        
-                        ng.extend(allParams, params);                                              
-                        ng.extend(allParams, data);                        
+                        };
+                        _.assign(allParams, data);
+                        _.assign(allParams, params);
                         console.debug("AnalysisResource success", params, "data", data, "response", response);
                         var sessionStorageKey = allParams.datasetName+"."+allParams.analysisName;
                         console.debug("sessionStorageKey set", sessionStorageKey);
