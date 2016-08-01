@@ -48,7 +48,7 @@
     "mev-results-table": "file:../libs/widgets/mevResultsTable",
     "mev-scatter-plot": "file:../libs/charts/scatter",
     "mev-steal-bootstrap": "file:../libs/utils/steal-bootstrap",
-    "mev-time-function": "file:../libs/charts/mevTimeFunction",
+    "mev-survival": "file:../libs/analyses/survival",
     "mev-topgo": "file:../libs/analyses/topgo",
     "mev-ttest": "file:../libs/analyses/ttest",
     "mev-voom": "file:../libs/analyses/voom",

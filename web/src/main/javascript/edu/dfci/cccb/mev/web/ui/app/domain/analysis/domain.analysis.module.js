@@ -1,5 +1,5 @@
 define(["ng",
-        "./survival/domain.analsyis.survival.module",
+        // "./survival/domain.analsyis.survival.module",
         "./topgo/domain.analsyis.topgo.module",        
         "./genesd/domain.analysis.genesd.module",
         "./voom/domain.analysis.voom.module"],

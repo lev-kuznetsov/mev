@@ -199,6 +199,7 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 	};
 	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "mevDatasetRest", "dataset", "project", "mevAnalysisEventBus", "AnalysisTypes", "mevAnalysisTypes",
 	"mevPathwayEnrichmentAnalysisType", "mevGseaAnalysisType", "mevPcaAnalysisType", "mevHclAnalysisType", "mevTopgoAnalysisType", "mevNormalizationAnalysisType", "mevEdgerAnalysisType",
-	"mevWgcnaAnalysisType", "mevLimmaAnalysisType", "mevtTestAnalysisType", "mevAnovaAnalysisType", "mevDeseqAnalysisType", "mevVoomAnalysisType", "mevKmeansAnalysisType"];
+	"mevWgcnaAnalysisType", "mevLimmaAnalysisType", "mevtTestAnalysisType", "mevAnovaAnalysisType", "mevDeseqAnalysisType", "mevVoomAnalysisType", "mevKmeansAnalysisType",
+	"mevSurvivalAnalysisType"];
 	return DatasetProjectViewVM;
 });

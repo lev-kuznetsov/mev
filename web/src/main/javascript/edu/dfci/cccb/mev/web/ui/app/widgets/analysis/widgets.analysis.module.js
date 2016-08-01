@@ -1,7 +1,7 @@
 define(["ng", 
         "./limma/widgets.analysis.limma.module", 
         "./hcl/widgets.analysis.hcl.module", 
-        "./survival/widgets.analysis.survival.module",
+        // "./survival/widgets.analysis.survival.module",
         "./default/widgets.analysis.default.module",
         "./analysisModal/widgets.analysis.modal.module",
         "./analysisLog/widgets.analysis.log.module",
