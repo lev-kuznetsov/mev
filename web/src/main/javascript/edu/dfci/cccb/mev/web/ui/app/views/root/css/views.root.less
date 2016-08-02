@@ -54,6 +54,11 @@
 					div.row{
 						height: initial;
 						position: initial;
+						> div[class^='col-'],
+						> div[class*=' col-']{
+							height: initial;
+							position: initial;
+						}
 					}								
 					div[layout-column],
 					> div[class^='col-'], 
