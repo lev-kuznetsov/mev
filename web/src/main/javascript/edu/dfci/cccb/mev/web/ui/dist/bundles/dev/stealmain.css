@@ -1044,27 +1044,43 @@ mev-analysis-start-form .errors > .error,
 /*mev-analysis@0.0.1#src/type/view/modal/AnalysisStartModal.less!$less*/
 mev-analysis-start-modal .modal-header uib-accordion,
 .mev-analysis-start-modal .modal-header uib-accordion,
-[mev-analysis-start-modal] .modal-header uib-accordion {
+[mev-analysis-start-modal] .modal-header uib-accordion,
+mev-bs-modal.mev-analysis-start .modal-header uib-accordion {
   background-color: black;
 }
 mev-analysis-start-modal .modal-header uib-accordion .panel-group,
 .mev-analysis-start-modal .modal-header uib-accordion .panel-group,
-[mev-analysis-start-modal] .modal-header uib-accordion .panel-group {
+[mev-analysis-start-modal] .modal-header uib-accordion .panel-group,
+mev-bs-modal.mev-analysis-start .modal-header uib-accordion .panel-group {
   margin-bottom: 0px;
 }
 mev-analysis-start-modal .modal-header uib-accordion .panel-group .panel,
 .mev-analysis-start-modal .modal-header uib-accordion .panel-group .panel,
-[mev-analysis-start-modal] .modal-header uib-accordion .panel-group .panel {
+[mev-analysis-start-modal] .modal-header uib-accordion .panel-group .panel,
+mev-bs-modal.mev-analysis-start .modal-header uib-accordion .panel-group .panel {
   border: none;
   box-shadow: none;
 }
 mev-analysis-start-modal .modal-header uib-accordion .panel-group .panel .panel-heading,
 .mev-analysis-start-modal .modal-header uib-accordion .panel-group .panel .panel-heading,
-[mev-analysis-start-modal] .modal-header uib-accordion .panel-group .panel .panel-heading {
+[mev-analysis-start-modal] .modal-header uib-accordion .panel-group .panel .panel-heading,
+mev-bs-modal.mev-analysis-start .modal-header uib-accordion .panel-group .panel .panel-heading {
   background-color: transparent;
   padding-left: 0;
   padding-right: 0;
   padding-bottom: 0;
+}
+mev-analysis-start-modal .modal-header uib-accordion .panel-group .panel .panel-heading .panel-title,
+.mev-analysis-start-modal .modal-header uib-accordion .panel-group .panel .panel-heading .panel-title,
+[mev-analysis-start-modal] .modal-header uib-accordion .panel-group .panel .panel-heading .panel-title,
+mev-bs-modal.mev-analysis-start .modal-header uib-accordion .panel-group .panel .panel-heading .panel-title {
+  width: 100%;
+}
+mev-analysis-start-modal .modal-header uib-accordion .panel-group .panel .panel-body,
+.mev-analysis-start-modal .modal-header uib-accordion .panel-group .panel .panel-body,
+[mev-analysis-start-modal] .modal-header uib-accordion .panel-group .panel .panel-body,
+mev-bs-modal.mev-analysis-start .modal-header uib-accordion .panel-group .panel .panel-body {
+  padding-bottom: 0px;
 }
 
 /*mev-results-table@0.0.1#src/style/mevResultsTable.less!$less*/
@@ -10018,6 +10034,22 @@ cirvle.selected {
 .ag-fresh .ag-header-container {
   background: whitesmoke;
   border-bottom: 1px solid #808080;
+}
+.state-welcome .mev-sidebar .btn.btn-block {
+  margin-bottom: 15px;
+}
+.state-welcome .mev-sidebar .btn.btn-block:last-child {
+  margin-bottom: 0px;
+}
+.state-welcome .mev-body .mev-section {
+  margin-bottom: 30px;
+}
+.state-welcome .mev-body p > .mev-heading {
+  display: inline-block;
+  font-weight: bold;
+}
+.state-welcome .mev-body a {
+  color: #3498DB;
 }
 
 /*# sourceMappingURL=stealmain.css.map */
