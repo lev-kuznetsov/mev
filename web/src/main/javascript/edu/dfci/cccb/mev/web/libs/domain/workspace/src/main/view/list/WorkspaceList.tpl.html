@@ -19,14 +19,16 @@
         </td>
     <tr>
     <tr ng-show="datasetsByStatus.active.length<=0">
-    <td>Use the button above to upoload your data or import a TCGA dataset on the right</td>
+    <td><a ui-sref="root.datasets.imports.upload">Upload</a> your data file (tsv)
+        or import a curated <a ui-sref="root.datasets.imports.tcga">TCGA</a>
+        or <a ui-sref="root.datasets.imports.geods">GEO</a> dataset</td>
     <tr>
     </tbody>
 </table>
 <table ng-show="datasetsByStatus.inactive.length>0" class="table table-hover table-condensed">
     <thead>
     <tr>
-        <th>Inactive datasets</th>
+        <th>Offline datasets</th>
     </tr>
     </thead>
     <tbody>
