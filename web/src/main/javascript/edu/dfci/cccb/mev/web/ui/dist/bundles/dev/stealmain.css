@@ -8901,6 +8901,11 @@ nav .btn-breadcrumb .btn.btn-info:hover:not(:last-child):before {
     height: initial;
     position: initial;
   }
+  .fixed-header.fixed-footer #main-wrapper > div div.row div.row > div[class^='col-'],
+  .fixed-header.fixed-footer #main-wrapper > div div.row div.row > div[class*=' col-'] {
+    height: initial;
+    position: initial;
+  }
   .fixed-header.fixed-footer #main-wrapper > div div.row div[layout-column],
   .fixed-header.fixed-footer #main-wrapper > div div.row > div[class^='col-'],
   .fixed-header.fixed-footer #main-wrapper > div div.row > div[class*=' col-'] {
