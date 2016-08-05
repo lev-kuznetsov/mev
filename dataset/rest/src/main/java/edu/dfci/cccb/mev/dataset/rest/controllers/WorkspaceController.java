@@ -19,23 +19,36 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.google.refine.io.FileProjectManager;
 import edu.dfci.cccb.mev.dataset.domain.contract.*;
 import edu.dfci.cccb.mev.dataset.domain.fs.DatasetBuilderFlatFile;
+import edu.dfci.cccb.mev.dataset.domain.fs.IFlatFileValues;
 import edu.dfci.cccb.mev.dataset.rest.assembly.binary.MultipartBinaryInput;
 import edu.dfci.cccb.mev.io.implementation.TemporaryFile;
+import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.tools.tar.TarOutputStream;
 import org.springframework.aop.scope.ScopedObject;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,7 +75,8 @@ public class WorkspaceController {
 
   private @Getter @Setter @Inject Workspace workspace;
   private @Getter @Setter @Inject DatasetBuilder builder;
-  private @Inject ObjectMapper mapper;
+  private @Inject @Named("RestJsonObjectMapper") ObjectMapper mapper;
+  private @Inject FileProjectManager projectManager;
   @RequestMapping (value = "/dataset", method = GET)
   public List<String> list () {
     return workspace.list ();
@@ -102,6 +116,85 @@ public class WorkspaceController {
             Arrays.asList(rowSelections));
 
     workspace.put(dataset);
+  }
+    private void zipAnnotations(String name, String dimension, ZipOutputStream zout) throws DatasetNotFoundException, IOException {
+        Dataset dataset = workspace.get(name);
+        long projectId = projectManager.getProjectID (dataset.name () + dimension);
+        if(projectId > -1){
+            File annotations = new TemporaryFile();
+            TarOutputStream tos = new TarOutputStream(new FileOutputStream(annotations));
+            projectManager.exportProject(projectId, tos);
+            tos.flush();
+            tos.close();
+            zout.putNextEntry(new ZipEntry(String.format("annotations_%s.tar.gz", dimension)));
+            IOUtils.copy(new FileInputStream(annotations), zout);
+            zout.closeEntry();
+        }
+    }
+
+
+  @RequestMapping (value = "/export/zip", method = POST, consumes = "multipart/form-data")
+  @ResponseStatus (OK)
+  public byte[] export (
+          @RequestParam("name") String name,
+          @RequestParam("rows") List<String> rows,
+          @RequestParam("columns") List<String> columns,
+          @RequestParam("rowSelections") String jsonRowSelections,
+          @RequestParam("columnSelections") String jsonColumnSelections,
+          @RequestParam("analyses") String[] analyses,
+          HttpServletResponse response) throws DatasetException,
+          IOException {
+          log.info (String.format("Offline %s, %s, %s, %s", name, rows, columns, analyses));
+
+          //creating byteArray stream, make it bufforable and passing this buffor to ZipOutputStream
+          ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+          BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
+          ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputStream);
+
+          //nw zip entry for dataset
+          Dataset dataset = workspace.get(name);
+          zipOutputStream.putNextEntry(new ZipEntry("dataset.json"));
+          IOUtils.copy(new ByteArrayInputStream(mapper.writeValueAsBytes(dataset)), zipOutputStream);
+          zipOutputStream.closeEntry();
+
+          zipAnnotations(name, "row", zipOutputStream);
+          zipAnnotations(name, "column", zipOutputStream);
+
+          if(dataset.values() instanceof IFlatFileValues){
+              IFlatFileValues values = (IFlatFileValues)dataset.values();
+              zipOutputStream.putNextEntry(new ZipEntry("values.bin"));
+              InputStream valuesIs = values.asInputStream();
+              IOUtils.copy(valuesIs, zipOutputStream);
+              zipOutputStream.closeEntry();
+              zipOutputStream.flush();
+              valuesIs.close();
+          }
+
+          //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
+          int i=0;
+          for(String analysis : analyses){
+            InputStream analysisOs = new ByteArrayInputStream(analysis.getBytes(StandardCharsets.UTF_8));
+            zipOutputStream.putNextEntry(new ZipEntry(String.format("analysis_%d.json", i)));
+            JsonNode analysisJson = mapper.readTree(analysis);
+            IOUtils.copy(analysisOs, zipOutputStream);
+            zipOutputStream.closeEntry();
+            zipOutputStream.flush();
+            analysisOs.close();
+            i++;
+          }     
+          zipOutputStream.flush();
+          zipOutputStream.close();
+
+          byte[] ret = byteArrayOutputStream.toByteArray();
+          IOUtils.closeQuietly(bufferedOutputStream);
+          IOUtils.closeQuietly(byteArrayOutputStream);
+
+          response.setContentLength(ret.length);
+          response.setContentType("application/zip"); //or something more generic...
+          response.setHeader("Accept-Ranges", "bytes");
+          response.setStatus(HttpServletResponse.SC_OK);
+          response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
+          return ret;
   }
 
   @RequestMapping (method = RequestMethod.POST, value = "/import/google/{id}/load")
