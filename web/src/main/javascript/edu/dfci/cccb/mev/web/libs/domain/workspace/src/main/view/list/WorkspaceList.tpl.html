@@ -12,6 +12,10 @@
                 <i class="icon-file"></i> {{row.id}}
             </a>
             &nbsp;
+            <a href="" ng-click="vm.export(row)" title="activate" class="btn btn-xs">
+                <i class="fa fa-file-archive-o"></i>
+            </a>
+            &nbsp;
             <span class="pull-right">
                 <i ng-show="vm.isSaved(row)" class="fa fa-check-circle"></i>
                 <i ng-hide="vm.isSaved(row)" class="fa fa-spinner fa-spin"></i>

@@ -182,6 +182,12 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
             //         });
             //     });
         }
+        function getAnalysesAll(datasetId){
+            return getAnalyses(datasetId)
+                .then(function(analysisNames){
+                    return $q.all(analysisNames.map(getAnalysis.bind(null, datasetId)));
+                });
+        }
         function getAnalysis(datasetId, analysisId){
             if(!mevSettings.db.enabled)
                 return _rejectDisabled();
@@ -304,6 +310,7 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
             getAnalysis: getAnalysis,
             putAnalysis: putAnalysis,
             getAnalyses: getAnalyses,
+            getAnalysesAll: getAnalysesAll,
             deleteAnalysis: deleteAnalysis,
             putAnnotations: putAnnotations,
             getAnnotations: getAnnotations,

@@ -116,6 +116,48 @@ define([], function(){
                         });
                 });
         }
+        DatasetResource.export = function(dataset){
+            return mevDb.getDataset(dataset.id)
+                .then(function(dataset){
+                    return mevDb.getAnalysesAll(dataset.id)
+                        .then(function(analyses){
+                            var formdata = new FormData();
+                            formdata.append('name', dataset.id);
+                            formdata.append('rows', dataset.row.keys);
+                            formdata.append('rowSelections', JSON.stringify(dataset.row.selections));
+                            // formdata.append('rowSelections', new Blob([JSON.parse(JSON.stringify(dataset.row.selections))],
+                            //     {
+                            //         type: "application/json"
+                            //     })
+                            // );
+                            formdata.append('columns', dataset.column.keys);
+                            formdata.append('columnSelections', JSON.stringify(dataset.column.selections));
+
+                            analyses.forEach(function(analysis){
+                                formdata.append('analyses', JSON.stringify(analysis));
+                            });
+                            var xhr = new XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (e) {
+                                return;
+                            });
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState == 4 && xhr.status == 200) {
+                                    $rootScope.$broadcast("mev:dataset:exported", dataset);
+                                    var blob = new Blob([xhr.response], {type: "octet/stream"});
+                                    var fileName = "test.zip";
+                                    saveAs(blob, fileName);
+                                }
+                                ;
+                            };
+
+                            xhr.open("POST", "/export/zip", true);
+                            xhr.responseType = "arraybuffer";
+                            xhr.setRequestHeader("Accept", "application/octet-stream");
+                            xhr.send(formdata);
+                        });
+                });
+        }
+
         return DatasetResource;
     }
     DatasetRest.$inject=['$resource', '$q', '$http', '$rootScope', "mevDb"];
