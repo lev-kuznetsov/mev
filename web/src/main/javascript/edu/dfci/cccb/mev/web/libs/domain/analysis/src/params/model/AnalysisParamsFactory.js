@@ -11,11 +11,19 @@ define(["lodash", "./name/NameParam"], function(_, NameParam){ "use strict";
 
 				params.getValues = function(){				
 					var result = {};
-					return _.reduce(this, function(result, item, key){					
-						result[item.id]=item.getValue ? item.getValue() : (item.value && item.bound ? item.value[item.bound] : item.value);
+					return _.reduce(this, function(result, item, key){
+						if(item.checkConstraint())
+							result[item.id] = item.getValue
+								? item.getValue()
+								: (item.value && item.bound
+									? item.value[item.bound]
+									: item.value);
 						return result;
 					}, result);				
-				};				
+				};
+				_.forEach(params, function(param){
+					param.params = params;
+				})
 				params.validate = validate;
 				return params;
 			}	

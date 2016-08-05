@@ -44,7 +44,7 @@ function(_, mevAnalsysType,
 			params: mevAnalysisParams([
 				new MevParentAnalysisParam({
 					"id": "parent",
-					"type": ["LIMMA Differential Expression Analysis", "t-Test Analysis", "voom", "DESeq Differential Expression Analysis", "edger"],
+					"type": ["LIMMA Differential Expression Analysis", "t-Test Analysis", "ttest", "voom", "DESeq Differential Expression Analysis", "edger"],
 					"display": "name",
 					"required": true
 				}), 
@@ -168,6 +168,11 @@ function(_, mevAnalsysType,
 				if(!isPeRow(analysis.result[0]))
 					formatResults(analysis.result);
 		};
+		gseaType.info = {
+			template: "<p>Gene Set Enrichment Analysis of Reactome Pathway (gsePathway).</p>" +
+				"<p></p>Reference: <a href='https://bioconductor.org/packages/release/bioc/html/ReactomePA.html'>" +
+				"https://bioconductor.org/packages/release/bioc/html/ReactomePA.html</a></p>"
+		}
 		return gseaType;
 	
 	}	

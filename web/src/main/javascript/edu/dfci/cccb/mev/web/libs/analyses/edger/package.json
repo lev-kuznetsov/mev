@@ -18,8 +18,8 @@
     "mev-analysis": "file:../../domain/analysis",
     "mev-boxplot": "file:../../charts/mevBoxPlot",
     "mev-gsea": "file:../gsea",
-    "mev-hcl": "file:../../domain/hcl",
-    "mev-pca": "file:../../domain/pca",
+    "mev-hcl": "file:../hcl",
+    "mev-pca": "file:../pca",
     "mev-results-table": "file:../../widgets/mevResultsTable",
     "mev-wgcna": "file:../wgcna",
     "mui": "file:../../mui",
@@ -35,6 +35,9 @@
   "system": {
     "ext": {
       "html": "system-text"
-    }
+    },
+    "configDependencies": [
+      "bower.json!bower"
+    ]
   }
 }

@@ -13,8 +13,11 @@ define(["lodash"], function(_){
 				if(context.type){
 					var selections = [];
 					if(context.params && context.params.control && context.params.experiment ){
+						var name = _.isObject(context.params.control)
+							? context.params.experiment.name + "+" + context.params.control.name
+							: context.params.experiment + "+" + context.params.control
 						var unionSet = {
-							name: context.params.experiment + "+" + context.params.control,
+							name: name,
 							keys: []
 						};
 						_.transform(mevContext.root().dataset.selections[dimension], function(result, selection, index){

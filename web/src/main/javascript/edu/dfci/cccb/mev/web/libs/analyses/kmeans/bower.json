@@ -1,0 +1,23 @@
+{
+  "name": "mev-kmeans",
+  "description": "mev kmeans analysis",
+  "main": "src/main/mev-kmeans.js",
+  "authors": [
+    "apartensky"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/apartensky/mev",
+  "moduleType": [
+    "amd"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pouchdb": "~5.4.5"
+  }
+}

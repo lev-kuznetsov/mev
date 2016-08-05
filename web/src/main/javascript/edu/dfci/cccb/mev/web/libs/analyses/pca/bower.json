@@ -1,0 +1,24 @@
+{
+  "name": "mev-pca",
+  "description": "mev pca",
+  "main": "src/pca.module",
+  "authors": [
+    "apartensky <apartensky@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [
+    "amd"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pouchdb": "~5.4.5"
+  }
+}

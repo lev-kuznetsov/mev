@@ -1,0 +1,14 @@
+<html>
+	<head>
+		<script src="../node_modules/steal/steal.js?demo/live.js"></script>
+	</head>
+    <body ng-controller="pcaDemoCtrl">
+		<div class="mev-analysis-start-modal" mev-analysis-type="vm.analysisType"></div>
+		<a class="mev-analysis-start-button" mev-analysis-type="vm.analysisType"></a>
+    	<select ng-model="vm.curResult" ng-change="vm.showResult()">
+    		<option ng-repeat="(key, value) in vm.results">{{key}}</option>
+    	</select><br><br>
+        <div mev-pca-analysis="analysis.result" mev-selections="analysis.dataset.column.selections" cur-selection="vm.curSelection"></div>
+		<div ui-view>Loading ...</div>
+    </body>    
+</html>

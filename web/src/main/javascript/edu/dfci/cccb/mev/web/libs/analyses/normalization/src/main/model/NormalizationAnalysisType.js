@@ -1,8 +1,9 @@
 define(["lodash", "mev-analysis/src/type/model/AnalysisType",
         "mev-analysis/src/params/model/AnalysisParamsFactory",
-        "mev-analysis/src/params/model/select/SelectParam"
+        "mev-analysis/src/params/model/select/SelectParam",
+    "./NormalizationInfo.tpl.html"
     ],
-    function(_, mevAnalysisType, AnalysisParamsFactory, SelectParam){"use strict";
+    function(_, mevAnalysisType, AnalysisParamsFactory, SelectParam, infoTemplate){"use strict";
         function NormalizationAnalysisType(mevAnalysisType, mevAnalysisParams, mevContext, $q, $http){
 
             var normalizationType = new mevAnalysisType({
@@ -42,6 +43,9 @@ define(["lodash", "mev-analysis/src/type/model/AnalysisType",
                             mevContext.get("root").dataset.getAll();
                         });
                     }
+                },
+                info: {
+                    template: infoTemplate
                 }
             });
             function prepareParams(paramValues){

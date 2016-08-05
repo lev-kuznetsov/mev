@@ -3,8 +3,7 @@ define(["lodash", "../select/SelectParam", "../BaseParam"], function(_, SelectPa
 	function ParentAnalysisParamFactory(mevAnalysisLocator){
 		function ParentAnalysisParam(spec){
 
-			_.assign(this, new SelectParam(
-				_.assign(this, spec, {
+			_.assign(this, spec, {
 						type: "select",
 						options: function(type){
 							var analyses = mevAnalysisLocator.find.call(this, type); 
@@ -21,11 +20,9 @@ define(["lodash", "../select/SelectParam", "../BaseParam"], function(_, SelectPa
 							}	
 						}.bind(this),
 						display: "name"				
-					})
-				)
-			);
+					});
 		}
-		ParentAnalysisParam.prototype = new BaseParam();
+		ParentAnalysisParam.prototype = new SelectParam();
 		return ParentAnalysisParam;
 	}
 	ParentAnalysisParamFactory.$name="mevParentAnalysisParam";

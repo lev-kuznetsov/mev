@@ -29,7 +29,7 @@ define(["./UploadDataset.tpl.html"], function(template){
         };
     };
     directive.$name="mevDatasetUpload";
-    directive.$inject=["DatasetResourceService"];
+    directive.$inject=["mevDatasetRest"];
     directive.$provider="directive";
     return directive;
 });

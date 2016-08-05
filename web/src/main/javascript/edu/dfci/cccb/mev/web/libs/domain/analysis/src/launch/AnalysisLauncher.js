@@ -6,7 +6,7 @@ define(["lodash"], function(_){"use strict";
 			var dataParams = data || AnalysisType.params.getValues();
 
 			if(!urlParams) urlParams = {};
-			_.extend(urlParams, {
+			_.defaults(urlParams, {
 				datasetName : project.dataset.datasetName, 
 				analysisType : AnalysisType.id
 			});

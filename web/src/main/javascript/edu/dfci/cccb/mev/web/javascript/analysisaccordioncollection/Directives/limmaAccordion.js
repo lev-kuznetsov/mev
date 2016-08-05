@@ -4,9 +4,9 @@
     define(["mui", "lodash", "crossfilter", "mev-scatter-plot"], function (ng, _, crossfilter, mevScatterPlot) {
         return function (module) {
 
-            module.directive('limmaAccordion', ['tableResultsFilter', 'alertService', 'projectionService', 'pathService', 'BoxPlotService',
+            module.directive('limmaAccordion', ['alertService', 'projectionService', 'pathService', 'mevBoxplotService',
                 "$window", "$timeout", "mevAnalysisTypes",
-                function (tableFilter, alertService, projection, paths, BoxPlotService, $window, $timeout, mevAnalysisTypes) {
+                function (alertService, projection, paths, BoxPlotService, $window, $timeout, mevAnalysisTypes) {
                     return {
                         restrict: 'E',
                         templateUrl: paths.module + '/templates/limmaAccordion.tpl.html',
@@ -94,23 +94,6 @@
 
                             };
 
-                            
-                        }],
-                        link: function (scope) {
-                            
-                            
-                            ng.element('#scatterPlotTab').click(function (e) {
-                                $timeout(function() {
-                                    var evt = $window.document.createEvent('UIEvents'); 
-                                    evt.initUIEvent('resize', true, false, $window, 0); 
-                                    $window.dispatchEvent(evt);
-                                });
-                                    // e.preventDefault()
-                                    // ng.element(this).tab('show')                                                                    
-                                    // ng.element(window).trigger('resize'); // Added this line to force NVD3 to redraw the chart
-                                    // scope.$apply();
-                            })                 
-                            
                             // scope.filteredResults = undefined;
                             scope.analysis.getFilteredKeys = function(dimension){
                                 if(dimension==="row")
@@ -122,7 +105,7 @@
                                 name: undefined,
                                 color: '#' + Math.floor(Math.random() * 0xFFFFFF << 0).toString(16)
                             };
-                            
+
                             scope.addSelections = function () {
 
                                 var userselections = scope.filteredResults.map(projection.ids);
@@ -173,24 +156,24 @@
                                         keys: userselections
                                     };
                                     scope.project.dataset.selection.post({
-                                        datasetName: scope.project.dataset.datasetName,
-                                        dimension: "row"
+                                            datasetName: scope.project.dataset.datasetName,
+                                            dimension: "row"
 
-                                    }, selectionData,
-                                    function (response) {
-                                        scope.project.dataset.resetSelections('row');
-                                        var message = "Added " + scope.selectionParams.name + " as new Selection!";
-                                        var header = "Heatmap Selection Addition";
+                                        }, selectionData,
+                                        function (response) {
+                                            scope.project.dataset.resetSelections('row');
+                                            var message = "Added " + scope.selectionParams.name + " as new Selection!";
+                                            var header = "Heatmap Selection Addition";
 
-                                        alertService.success(message, header);
-                                    },
-                                    function (data, status, headers, config) {
-                                        var message = "Couldn't add new selection. If " + "problem persists, please contact us.";
+                                            alertService.success(message, header);
+                                        },
+                                        function (data, status, headers, config) {
+                                            var message = "Couldn't add new selection. If " + "problem persists, please contact us.";
 
-                                        var header = "Selection Addition Problem (Error Code: " + status + ")";
+                                            var header = "Selection Addition Problem (Error Code: " + status + ")";
 
-                                        alertService.error(message, header);
-                                    });
+                                            alertService.error(message, header);
+                                        });
                                 },
                                 exportSelection: function(){
 
@@ -205,27 +188,27 @@
                                     };
 
                                     scope.project.dataset.selection.export({
-                                        datasetName: scope.project.dataset.datasetName,
-                                        dimension: "row"
+                                            datasetName: scope.project.dataset.datasetName,
+                                            dimension: "row"
 
-                                    }, selectionData,
-                                    function (response) {
-                                        scope.project.dataset.resetSelections('row');
-                                        var message = "Added " + scope.exportParams.name + " as new Dataset!";
-                                        var header = "New Dataset Export";
+                                        }, selectionData,
+                                        function (response) {
+                                            scope.project.dataset.resetSelections('row');
+                                            var message = "Added " + scope.exportParams.name + " as new Dataset!";
+                                            var header = "New Dataset Export";
 
-                                        alertService.success(message, header);
-                                    },
-                                    function (data, status, headers, config) {
-                                        var message = "Couldn't export new dataset. If " + "problem persists, please contact us.";
+                                            alertService.success(message, header);
+                                        },
+                                        function (data, status, headers, config) {
+                                            var message = "Couldn't export new dataset. If " + "problem persists, please contact us.";
 
-                                        var header = "New Dataset Export Problem (Error Code: " + status + ")";
+                                            var header = "New Dataset Export Problem (Error Code: " + status + ")";
 
-                                        alertService.error(message, header);
-                                    });
+                                            alertService.error(message, header);
+                                        });
                                 }
                             };
-                            scope.$on("mev.scatterPlot.selection", function($event, selected){                 
+                            scope.$on("mev.scatterPlot.selection", function($event, selected){
                                 scope.scatterVm.selected = selected;
                             });
 
@@ -233,7 +216,7 @@
                                 name: undefined,
                                 color: '#ffffff'
                             };
-                            
+
                             scope.exportSelection = function () {
 
                                 var keys = scope.filteredResults.map(projection.ids);
@@ -267,6 +250,21 @@
                                     });
 
                             };
+                        }],
+                        link: function (scope) {
+                            
+                            
+                            ng.element('#scatterPlotTab').click(function (e) {
+                                $timeout(function() {
+                                    var evt = $window.document.createEvent('UIEvents'); 
+                                    evt.initUIEvent('resize', true, false, $window, 0); 
+                                    $window.dispatchEvent(evt);
+                                });
+                                    // e.preventDefault()
+                                    // ng.element(this).tab('show')                                                                    
+                                    // ng.element(window).trigger('resize'); // Added this line to force NVD3 to redraw the chart
+                                    // scope.$apply();
+                            })
 	                        
                             
                         }

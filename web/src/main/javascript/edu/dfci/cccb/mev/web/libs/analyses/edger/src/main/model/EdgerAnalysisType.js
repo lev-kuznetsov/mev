@@ -1,9 +1,10 @@
 define(["lodash", "mev-analysis/src/type/model/AnalysisType",
         "mev-analysis/src/params/model/AnalysisParamsFactory",
         "mev-analysis/src/params/model/select/SelectParam",
-        "mev-analysis/src/params/model/selectionSet/SelectionSetParam"
+        "mev-analysis/src/params/model/selectionSet/SelectionSetParam",
+        "./EdgerInfo.tpl.html"
     ],
-    function(_, mevAnalysisType, AnalysisParamsFactory, SelectParam){"use strict";
+    function(_, mevAnalysisType, AnalysisParamsFactory, SelectParam, SelectionSetParam, infoTemplate){"use strict";
         function EdgerAnalysisType(mevAnalysisType, mevAnalysisParams, mevSelectionSetParam){
 
             var edgerType = new mevAnalysisType({
@@ -28,7 +29,10 @@ define(["lodash", "mev-analysis/src/type/model/AnalysisType",
                         "displayName": "Method",
                         "options": ["fdr", "holm", "hochberg", "BH", "BY", "bonferroni", "none"],
                         "value": "fdr"
-                    })])
+                    })]),
+                info: {
+                    template: infoTemplate
+                }
             });
             edgerType.start=function() {
                 var _self = this;

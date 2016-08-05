@@ -30,6 +30,9 @@
   "system": {
     "ext": {
       "html": "system-text"
-    }
+    },
+    "configDependencies": [
+      "bower.json!bower"
+    ]
   }
 }

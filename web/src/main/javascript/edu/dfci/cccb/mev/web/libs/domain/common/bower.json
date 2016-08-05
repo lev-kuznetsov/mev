@@ -1,0 +1,16 @@
+{
+  "name": "mev-domain-common",
+  "description": "",
+  "main": "src/main/mev-domain-common.js",
+  "authors": [
+    "apartensky"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/apartensky/mev",
+  "moduleType": [
+    "amd"
+  ],
+  "dependencies": {
+    "pouchdb": "~5.4.5"
+  }
+}

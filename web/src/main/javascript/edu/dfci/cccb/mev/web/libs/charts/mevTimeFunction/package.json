@@ -1,0 +1,32 @@
+{
+  "name": "mev-time-function",
+  "version": "0.0.1",
+  "description": "mev time function chart",
+  "main": "src/main/mev-time-function.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfc-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "dependencies": {
+    "d3": "^3.5.16",
+    "lodash": "^4.14.1",
+    "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
+    "mui": "file:../../mui",
+    "steal": "^0.13.2",
+    "system-text": "^0.1.0"
+  },
+  "system": {
+    "ext": {
+      "html": "system-text",
+      "json": "systemjs-plugin-json"
+    }
+  },
+  "devDependencies": {
+    "systemjs-plugin-json": "^0.1.0"
+  }
+}

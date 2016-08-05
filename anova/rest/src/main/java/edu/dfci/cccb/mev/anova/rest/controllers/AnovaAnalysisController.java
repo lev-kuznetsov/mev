@@ -4,13 +4,19 @@ import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethod
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver.DIMENSION_URL_ELEMENT;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
 import javax.inject.Inject;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import edu.dfci.cccb.mev.dataset.domain.contract.Selection;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import lombok.experimental.Accessors;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,6 +54,29 @@ public class AnovaAnalysisController {
                .pValue (pValue)
                .multipleTestCorrectionFlag (multTestCorrection)
                .buildAsync ();
+  }
+
+
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Accessors(fluent=true)
+  public static class AnovaDTO{
+    @JsonProperty
+    @Getter private String name;
+    @JsonProperty @Getter private double pValue;
+    @JsonProperty @Getter private boolean multTestCorrection;
+    @JsonProperty @Getter private String[] selections;
+  }
+  @RequestMapping (value = "/analyze/anova/{name}",
+          method = PUT)
+  @ResponseStatus (OK)
+  public Analysis putTwoSampleJson (@RequestBody AnovaDTO params) throws DatasetException {
+    return anovaBuilder.name (params.name())
+            .dataset (dataset)
+            .groupSelections (params.selections())
+            .pValue (params.pValue())
+            .multipleTestCorrectionFlag (params.multTestCorrection())
+            .buildAsync ();
   }
 
 }

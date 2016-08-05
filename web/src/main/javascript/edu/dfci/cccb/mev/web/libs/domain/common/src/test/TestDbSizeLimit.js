@@ -115,8 +115,8 @@ define(["steal-jasmine", "pouchdb", "q"], function(jasmineRequire, PouchDB, $q){
             jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
         });
         it("writes MBs", function(done){
-            var totalSize = 10e9;
-            var blobSize = 100e6;
+            var totalSize = 1e6;
+            var blobSize = 100e3;
             var numOfBlobs = Math.floor(totalSize/blobSize);
             _writeBlobs(totalSize, blobSize)
                 .then(function(){

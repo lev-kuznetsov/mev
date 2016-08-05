@@ -20,7 +20,7 @@ define(["lodash", "../view/defaultTemplate/analysis.default.tpl.html", "./Analys
 			validate: function(values){
 				return _.reduce(this.params, function(errors, param, key, params){
 
-					if(_.isFunction(param.validate)){
+					if(_.isFunction(param.validate) && param.checkConstraint()){
 						var error = param.validate(values || params.getValues());
 						if(error)
 							errors.push(error);

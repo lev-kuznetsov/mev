@@ -1,0 +1,23 @@
+{
+  "name": "mev-normalization",
+  "description": "mev dataset normalization",
+  "main": "src/main/mev-normalization.js",
+  "authors": [
+    "apartens"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/apartensky/mev",
+  "moduleType": [
+    "amd"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pouchdb": "~5.4.5"
+  }
+}

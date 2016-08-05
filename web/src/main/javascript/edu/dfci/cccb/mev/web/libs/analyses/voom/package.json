@@ -1,0 +1,46 @@
+{
+  "name": "mev-voom",
+  "version": "0.0.1",
+  "description": "mev voom analysis",
+  "main": "src/main/mev-voom.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "dependencies": {
+    "angular-ui-router": "^0.2.18",
+    "lodash": "^4.13.1",
+    "mev-analysis": "file:../../domain/analysis",
+    "mev-boxplot": "file:../../charts/mevBoxPlot",
+    "mev-bs-modal": "file:../../widgets/bsmodal",
+    "mev-gsea": "file:../gsea",
+    "mev-hcl": "file:../hcl",
+    "mev-heatmap": "file:../../charts/mevHeatmap",
+    "mev-pca": "file:../pca",
+    "mev-results-table": "file:../../widgets/mevResultsTable",
+    "mev-wgcna": "file:../wgcna",
+    "mui": "file:../../mui",
+    "steal": "^0.13.2",
+    "system-text": "^0.1.0"
+  },
+  "devDependencies": {
+    "angular-ui-bootstrap": "^0.14.3",
+    "bootstrap": "^3.3.6",
+    "mev-mock": "file:../../domain/mock",
+    "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
+    "systemjs-plugin-json": "^0.1.0"
+  },
+  "system": {
+    "ext": {
+      "html": "system-text"
+    },
+    "configDependencies": [
+      "bower.json!bower"
+    ]
+  }
+}

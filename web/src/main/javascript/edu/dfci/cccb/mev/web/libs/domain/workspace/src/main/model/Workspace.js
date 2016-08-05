@@ -88,7 +88,7 @@ define(["lodash"], function(_){"use strict";
         this.deleteDataset = deleteDataset;
         this.getDataset = getDataset;
     };
-    service.$inject=["$http", "$q", "mevDb", "DatasetResourceService"];
+    service.$inject=["$http", "$q", "mevDb", "mevDatasetRest"];
     service.$name="mevWorkspace";
     service.$provider="service";
     return service;

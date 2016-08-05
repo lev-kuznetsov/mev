@@ -28,7 +28,7 @@ define([], function(){"use strict";
 
                //init
                _checkActive();
-               var intervalPromise = $interval(_checkActive, 30e3);
+               var intervalPromise = $interval(_checkActive, 11*60e3);
                var contextListener = $rootScope.$watch(mevContext.get.bind(mevContext, "dataset"), function(newVal, oldVal){
                    _self.dataset = newVal;
                    _checkActive();

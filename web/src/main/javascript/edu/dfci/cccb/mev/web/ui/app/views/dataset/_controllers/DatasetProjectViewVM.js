@@ -144,12 +144,26 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 //			});			
         });
         AnalysisEventBus.onAnalysisFailure($scope, function(type, name, data){
-				var analysis = data.response;
-				var found = _.findIndex(dataset.analyses, function(analysis){ return analysis.name===name; });
+				var found = _.findIndex(dataset.analyses, function(analysis){
+					return analysis.name===name;
+				});
 				if(found > -1){
-					dataset.analyses[found] = analysis;					
-				}else {					
-					dataset.analyses.push(analysis);
+					if(data.response.type){
+						dataset.analyses[found] = data.response;
+					}else{
+						var analysis = dataset.analyses[found];
+						analysis.status = "ERROR";
+						if(_.isNumber(data.response.status)){
+							analysis.error = data.response.data;
+							analysis.httpResponse = data.response;
+						}
+					}
+
+				}else {
+					if(data.response && data.response.type)
+						dataset.analyses.push(data.response);
+					else
+						console.error("Invalid analysis error response", type, name, data);
 				}
 				$scope.$broadcast("ui:projectTree:dataChanged");
 //			});			
@@ -183,8 +197,9 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 		});
 
 	};
-	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "DatasetResourceService", "dataset", "project", "mevAnalysisEventBus", "AnalysisTypes", "mevAnalysisTypes",
+	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "mevDatasetRest", "dataset", "project", "mevAnalysisEventBus", "AnalysisTypes", "mevAnalysisTypes",
 	"mevPathwayEnrichmentAnalysisType", "mevGseaAnalysisType", "mevPcaAnalysisType", "mevHclAnalysisType", "mevTopgoAnalysisType", "mevNormalizationAnalysisType", "mevEdgerAnalysisType",
-	"mevWgcnaAnalysisType"];
+	"mevWgcnaAnalysisType", "mevLimmaAnalysisType", "mevtTestAnalysisType", "mevAnovaAnalysisType", "mevDeseqAnalysisType", "mevVoomAnalysisType", "mevKmeansAnalysisType",
+	"mevSurvivalAnalysisType"];
 	return DatasetProjectViewVM;
 });

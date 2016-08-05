@@ -22,7 +22,14 @@ define(["ng",
 		"mev-topgo",
 		"mev-normalization",
 		"mev-edger",
-		"mev-wgcna"],
+		"mev-wgcna",
+		"mev-limma",
+		"mev-ttest",
+		"mev-anova",
+		"mev-deseq",
+		"mev-voom",
+		"mev-kmeans",
+		"mev-survival"],
 function(ng,
 		PouchDB,
 		DatasetViewVM, 
@@ -67,7 +74,7 @@ function(ng,
 			   	     		footerUrl: "app/views/dataset/_templates/dataset.footer.tpl.html",
 			   	     	},
 	   	     			resolve:{
-	   	     				datasetResource: ["$state", "$stateParams", "DatasetResourceService", "$q", "$http", function($state, $stateParams, DatasetResourceService, $q, $http){
+	   	     				datasetResource: ["$state", "$stateParams", "mevDatasetRest", "$q", "$http", function($state, $stateParams, DatasetResourceService, $q, $http){
 	   	     					
 		   	     				var datasetResource = DatasetResourceService.get({
 		   	     					datasetName: $stateParams.datasetId

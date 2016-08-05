@@ -1,4 +1,4 @@
-define([], function(){
+define(["lodash"], function(_){
 	"use strict";
 	var BtnCreateSelectionDirective = function BtnCreateSelectionDirective(alertService){
 		function BtnCreateSelectionVM(scope){
@@ -15,7 +15,11 @@ define([], function(){
 			this.selectionParams={};
 			this.addSelections = function (filteredResults) {
 				
-                var keys = filteredResults.map(function(item){return item[self.key];});                
+                var keys = _.isObject(filteredResults[0])
+					? filteredResults.map(function(item){
+						return item[self.key];
+					})
+					: filteredResults;
                 var selectionData = {
                     name: self.selectionParams.name,
                     properties: {
