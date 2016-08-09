@@ -1,4 +1,4 @@
-define([], function(){
+define(["lodash"], function(_){
     var DatasetRest = function ($resource, $q, $http, $rootScope, mevDb) {
         var resource = $resource('/dataset/:datasetName/data', {format: "json"},
             {
@@ -116,6 +116,31 @@ define([], function(){
                         });
                 });
         }
+        function formatDatasetName(name){
+            return _.endsWith(name, ".zip")
+                ? name.substring(0, name.length-4)
+                : name;
+        }
+        DatasetResource.importZip = function(file){
+            return mevDb.deleteDataset(formatDatasetName(file.name))
+                .then(function(){
+                    var formdata = new FormData;
+                    formdata.append('upload', file);
+                    formdata.append('name', file.name);
+                    var xhr = new XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function (e) {
+                        return;
+                    });
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            DatasetResource.getAll();
+                        }
+                        ;
+                    };
+                    xhr.open("POST", "/import/zip", true);
+                    xhr.send(formdata);
+                });
+        };
         DatasetResource.export = function(dataset){
             return mevDb.getDataset(dataset.id)
                 .then(function(dataset){
@@ -144,7 +169,7 @@ define([], function(){
                                 if (xhr.readyState == 4 && xhr.status == 200) {
                                     $rootScope.$broadcast("mev:dataset:exported", dataset);
                                     var blob = new Blob([xhr.response], {type: "octet/stream"});
-                                    var fileName = "test.zip";
+                                    var fileName = dataset.id+".zip";
                                     saveAs(blob, fileName);
                                 }
                                 ;
