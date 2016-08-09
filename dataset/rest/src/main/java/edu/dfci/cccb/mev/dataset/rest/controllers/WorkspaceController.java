@@ -17,13 +17,12 @@ package edu.dfci.cccb.mev.dataset.rest.controllers;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -34,14 +33,16 @@ import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.google.refine.ProjectMetadata;
 import com.google.refine.io.FileProjectManager;
+import com.google.refine.model.Project;
 import edu.dfci.cccb.mev.dataset.domain.contract.*;
 import edu.dfci.cccb.mev.dataset.domain.fs.DatasetBuilderFlatFile;
 import edu.dfci.cccb.mev.dataset.domain.fs.IFlatFileValues;
+import edu.dfci.cccb.mev.dataset.domain.zip.DatasetBuilderZip;
+import edu.dfci.cccb.mev.dataset.domain.zip.OpenRefineAnnotation;
 import edu.dfci.cccb.mev.dataset.rest.assembly.binary.MultipartBinaryInput;
 import edu.dfci.cccb.mev.io.implementation.TemporaryFile;
-import edu.dfci.cccb.mev.io.implementation.TemporaryFolder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -62,7 +63,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import edu.dfci.cccb.mev.dataset.rest.assembly.tsv.MultipartTsvInput;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
 /**
  * @author levk
@@ -93,6 +93,17 @@ public class WorkspaceController {
     workspace.put (dataset);
   }
 
+    private void importAnnotations(File file) throws IOException {
+        try(FileInputStream fin = new FileInputStream(file)){
+            long projectId = Project.generateID();
+            projectManager.save(true);
+            projectManager.importProject(projectId, fin, true);
+            projectManager.loadProjectMetadata(projectId);
+            ProjectMetadata pm = projectManager.getProjectMetadata(projectId);
+            pm.updateModified();
+            projectManager.save(true);
+        }
+    }
 
   @RequestMapping (value = "/import/binary", method = POST, consumes = "multipart/form-data")
   @ResponseStatus (OK)
@@ -117,12 +128,45 @@ public class WorkspaceController {
 
     workspace.put(dataset);
   }
+
+    @RequestMapping (value = "/import/zip", method = POST, consumes = "multipart/form-data")
+    @ResponseStatus (OK)
+    public void uploadZip (
+            @RequestParam("name") String name,
+            @RequestParam ("upload") MultipartFile upload) throws IOException, DatasetException {
+
+        RawInput input = new MultipartBinaryInput(upload);
+//        File zipfile = new TemporaryFile();
+//        OutputStream zipos = new FileOutputStream(zipfile);
+//        IOUtils.copy(input.input(), zipos);
+//        zipos.close();
+        DatasetBuilderZip builder = new DatasetBuilderZip().setMapper(mapper);
+        Dataset dataset = builder.build(input);
+
+        Annotation columnAnnotation = dataset.dimension(Dimension.Type.COLUMN).annotation();
+        if(columnAnnotation instanceof OpenRefineAnnotation)
+            importAnnotations(
+                    ((OpenRefineAnnotation)columnAnnotation).file()
+            );
+
+        Annotation rowAnnotation = dataset.dimension(Dimension.Type.ROW).annotation();
+        if(rowAnnotation instanceof OpenRefineAnnotation)
+            importAnnotations(
+                    ((OpenRefineAnnotation)rowAnnotation).file()
+            );
+
+        if(workspace.list().contains(dataset.name()))
+            workspace.remove(dataset.name());
+        workspace.put(dataset);
+    }
+
     private void zipAnnotations(String name, String dimension, ZipOutputStream zout) throws DatasetNotFoundException, IOException {
         Dataset dataset = workspace.get(name);
         long projectId = projectManager.getProjectID (dataset.name () + dimension);
         if(projectId > -1){
             File annotations = new TemporaryFile();
-            TarOutputStream tos = new TarOutputStream(new FileOutputStream(annotations));
+            GZIPOutputStream gos = new GZIPOutputStream(new FileOutputStream(annotations));
+            TarOutputStream tos = new TarOutputStream(gos);
             projectManager.exportProject(projectId, tos);
             tos.flush();
             tos.close();
@@ -193,7 +237,7 @@ public class WorkspaceController {
           response.setContentType("application/zip"); //or something more generic...
           response.setHeader("Accept-Ranges", "bytes");
           response.setStatus(HttpServletResponse.SC_OK);
-          response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
+          response.addHeader("Content-Disposition", String.format("attachment; filename=\"%s.zip\"", name));
           return ret;
   }
 
