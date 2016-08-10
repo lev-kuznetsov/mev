@@ -37,6 +37,7 @@
     "mev-deseq": "file:../libs/analyses/deseq",
     "mev-domain-common": "file:../libs/domain/common",
     "mev-edger": "file:../libs/analyses/edger",
+    "mev-google-analytics": "file:../libs/utils/mev-google-analytics",
     "mev-gsea": "file:../libs/analyses/gsea",
     "mev-hcl": "file:../libs/analyses/hcl",
     "mev-heatmap": "file:../libs/charts/mevHeatmap",

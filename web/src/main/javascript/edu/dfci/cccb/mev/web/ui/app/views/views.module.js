@@ -1,4 +1,4 @@
-define(["ng", "angular-ui-router", 
+define(["ng", "angular-ui-router", "mev-google-analytics",
         "./root/views.root.module",        
         "./import/views.import.module",
         "./dataset/views.dataset.module",        
