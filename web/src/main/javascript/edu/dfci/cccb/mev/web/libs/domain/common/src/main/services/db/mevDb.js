@@ -249,7 +249,7 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
             if(!isRetry)
                 _firePutStarted(datasetId, dimension);
 
-            var doc = {
+            var annotation = {
                 _id: formatDocId(["annotations", dimension], datasetId),
                 _attachments: {
                     "all": {
@@ -259,7 +259,15 @@ define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
                     }
                 }
             };
-            db.put(doc)
+            db.get(formatDocId(["annotations", dimension], datasetId))
+                .catch(function(e){
+                    if(e.status === 404)
+                        return annotation;
+                })
+                .then(function(doc){
+                    annotation._rev = doc._rev;
+                    return db.put(annotation);
+                })
                 .catch(function(e){
                     if(e.status===409)
                         putAnnotations(datasetId, dimension, blob, true);
