@@ -1,5 +1,5 @@
 define(["./WorkspaceList.tpl.html", "./WorkspaceList.less"], function(tempalte){
-    var directive = function(mevWorkspace, mevAnnotationRepository){
+    var directive = function(mevWorkspace, mevAnnotationRepository, $timeout){
         return {
             restrict: "EAC",
             template: tempalte,
@@ -36,7 +36,12 @@ define(["./WorkspaceList.tpl.html", "./WorkspaceList.less"], function(tempalte){
                         return row.getStatus()==="saved";
                     },
                     export: function(dataset){
+                        this.exportStatus[dataset.id] = true;
                         mevWorkspace.exportDataset(dataset);
+                    },
+                    exportStatus: {},
+                    getExportStatus: function(datasetId){
+                        return this.exportStatus[datasetId];
                     }
                 };
                 scope.$on("mev:datasets:list:refreshed", function(){
@@ -50,11 +55,16 @@ define(["./WorkspaceList.tpl.html", "./WorkspaceList.less"], function(tempalte){
                     var column = new mevAnnotationRepository("column");
                     column.import(dataset.id, "column");
                 });
+                scope.$on("mev:dataset:exported", function(event, dataset){
+                    $timeout(function(){
+                        scope.vm.exportStatus[dataset.id] = false;
+                    });
+                });
             }
         }
     }
     directive.$name = "mevWorkspaceList";
     directive.$provider = "directive";
-    directive.$inject=["mevWorkspace", "mevAnnotationRepository"];
+    directive.$inject=["mevWorkspace", "mevAnnotationRepository", "$timeout"];
     return directive;
 });
