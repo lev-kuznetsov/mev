@@ -8,6 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import javax.inject.Inject;
 
+import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationProjectManagerConfiguration;
+import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfiguration;
+import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 import lombok.extern.log4j.Log4j;
 
 import org.junit.Before;
@@ -54,6 +57,8 @@ import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
                                PersistenceConfiguration.class, 
                                ContainerConfigurations.class, 
                                DatasetRestConfiguration.class,
+        AnnotationProjectManagerConfiguration.class,
+                               PresetsRestConfiguration.class,
                                ProbeAnnotationsPersistanceConfigTest.class})
 public class TestDataSubsetEndpoint {
 

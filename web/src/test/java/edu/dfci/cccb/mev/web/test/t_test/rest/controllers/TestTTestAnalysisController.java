@@ -9,6 +9,10 @@ import java.util.Properties;
 
 import javax.inject.Inject;
 
+import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationProjectManagerConfiguration;
+import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfiguration;
+import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
+import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
 import lombok.extern.log4j.Log4j;
 
 import org.junit.Before;
@@ -63,6 +67,9 @@ import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
                                PersistenceConfiguration.class, 
                                ContainerConfigurations.class, 
                                DatasetRestConfiguration.class,
+                               AnnotationProjectManagerConfiguration.class,
+                               PresetsRestConfiguration.class,
+                               ProbeAnnotationsPersistanceConfigTest.class,
                                TTestRestConfiguration.class})
 public class TestTTestAnalysisController {
 
