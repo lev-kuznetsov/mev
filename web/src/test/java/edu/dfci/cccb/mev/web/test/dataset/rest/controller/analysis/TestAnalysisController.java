@@ -1,10 +1,13 @@
 package edu.dfci.cccb.mev.web.test.dataset.rest.controller.analysis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationProjectManagerConfiguration;
+import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfiguration;
 import edu.dfci.cccb.mev.dataset.domain.contract.*;
 import edu.dfci.cccb.mev.dataset.domain.mock.MockTsvInput;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysis;
 import edu.dfci.cccb.mev.dataset.rest.configuration.DatasetRestConfiguration;
+import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
 import edu.dfci.cccb.mev.web.configuration.DispatcherConfiguration;
 import edu.dfci.cccb.mev.web.configuration.PersistenceConfiguration;
@@ -41,6 +44,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         PersistenceConfiguration.class,
         ContainerConfigurations.class,
         DatasetRestConfiguration.class,
+        AnnotationProjectManagerConfiguration.class,
+        PresetsRestConfiguration.class,
         ProbeAnnotationsPersistanceConfigTest.class})
 public class TestAnalysisController {
 

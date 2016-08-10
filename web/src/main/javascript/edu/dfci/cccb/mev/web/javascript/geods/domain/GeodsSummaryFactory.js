@@ -1,4 +1,4 @@
-define(["geods/domain/GeodsSummary", 
+define(["geods/domain/GeodsSummary",
         "geods/domain/GeodsSearchResult"], 
 function(GeodsSummary, GeodsSearchResult){
 	var GeodsSummaryFactory = function(MevGeodsSummaryResourceSrvc, MevGeodsSearchResourceSrvc, MevGeodsImportSrvc, $q){
@@ -14,14 +14,18 @@ function(GeodsSummary, GeodsSearchResult){
 						return data.result[_data.result.uids[0]];
 					}), MevGeodsImportSrvc);			
 		};
-		this.search=function(keywords){
+		this.search=function(keywords, page, max){
 			var self=this;
+			var itemsPerPage = max || 20;
+			var pageNum = page || 0;
 			self.accumulator={};
 			self.accumulator.uids=null;
 			self.accumulator.summaries=null;
 			return new GeodsSearchResult(					
 					MevGeodsSearchResourceSrvc.get({
-						term: "gds[Entry Type] AND ("+keywords+")"
+						term: "gds[Entry Type] AND ("+keywords+")",
+						retmax: itemsPerPage,
+						retstart: itemsPerPage * pageNum
 					}).$promise
 					.then(function(data){
 						var uids = [];

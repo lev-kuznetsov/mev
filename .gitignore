@@ -5,6 +5,7 @@
 **.war
 **.ear
 **.zip
+!dataset/domain/src/test/resources/edu/dfci/cccb/mev/dataset/domain/zip/*
 
 # Test Third-Party Javascript Libraries #
 src/**/html/**/lib/*

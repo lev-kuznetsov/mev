@@ -35,7 +35,6 @@ import com.google.refine.process.Process;
 import com.google.refine.util.ParsingUtilities;
 
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
-import freemarker.template.utility.NullArgumentException;
 
 public class ViewPresetSampleAnnotationsCommand extends Command {
 
@@ -48,7 +47,7 @@ public class ViewPresetSampleAnnotationsCommand extends Command {
     try {
         Properties options = ParsingUtilities.parseUrlParameters(request);
         if(!options.containsKey ("import-preset"))
-          throw new NullArgumentException ("import-preset");
+          throw new ServletException ("import-preset");
         
         String datasetName = options.getProperty ("import-preset");
         long projectID = Project.generateID();

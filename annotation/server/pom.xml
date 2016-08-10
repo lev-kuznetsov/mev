@@ -56,19 +56,13 @@
 
 		<dependency>
 			<groupId>edu.dfci.cccb</groupId>
-			<artifactId>mev-dataset-rest</artifactId>
-			<version>BAYLIE-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>edu.dfci.cccb</groupId>
-			<artifactId>mev-dataset-client</artifactId>
-			<version>BAYLIE-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>edu.dfci.cccb</groupId>
 			<artifactId>mev-presets-domain</artifactId>
+			<version>BAYLIE-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>edu.dfci.cccb</groupId>
+			<artifactId>mev-configuration-rest</artifactId>
 			<version>BAYLIE-SNAPSHOT</version>
 		</dependency>
 

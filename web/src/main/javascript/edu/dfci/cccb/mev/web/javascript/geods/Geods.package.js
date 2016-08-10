@@ -3,5 +3,6 @@ define(['angular',
         'geods/import/GeodsImportCtrl', 
         'geods/import/GeodsImport.directives',
         'geods/services/MevGeodsSummaryResourceSrvc',
-        'geods/services/MevGeodsSummaryFactory'], function(angular, module){
+        'geods/services/MevGeodsSummaryFactory',
+        'geods/import/geodsimport.less'], function(angular, module){
 });

@@ -1679,6 +1679,26 @@ selection-set-node .selection-color,
 
 /*# sourceMappingURL=jquery.notific8.css.map */
 
+/*geods/import/geodsimport.less!$less*/
+.geo_import_container .current-page-label {
+  margin: 0px 0px 0px 5px;
+  display: inline-block;
+  float: right;
+  padding: 7px 5px;
+  font-size: 12px;
+}
+.geo_import_container .current-page-label ::after {
+  content: ":";
+}
+.geo_import_container .pagination {
+  margin: 0px;
+  float: right;
+}
+.geo_import_container .pagination > li > a {
+  margin-left: initial;
+  padding: 3px 3px;
+}
+
 /*less/boot.less!$less*/
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
