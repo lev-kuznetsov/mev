@@ -33,7 +33,6 @@ import edu.dfci.cccb.mev.dataset.domain.simple.SimpleSelection;
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
-import freemarker.template.utility.NullArgumentException;
 
 public class ImportPresetDatasetCommand extends Command {
   final static protected Logger logger = LoggerFactory.getLogger("ImportPresetDatasetCommand");
@@ -58,18 +57,18 @@ public class ImportPresetDatasetCommand extends Command {
       
 //      final String sSamples = request.getParameter ("samples");
 //      if(sSamples==null)
-//        throw new NullArgumentException ("samples filter parameter not provided");
+//        throw new ServletException ("samples filter parameter not provided");
       
 //      final List<String> samples = Arrays.asList (sSamples.split (","));
       final List<String> samples = (List<String>) request.getSession ().getAttribute ("samples");      
       if(samples.size ()<=0)
-        throw new NullArgumentException ("samples filter size is 0");
+        throw new ServletException ("samples filter size is 0");
       final Selection samplesSelection = new SimpleSelection ("samples", new Properties (), samples);
       
 //      final String samplesProjectName=request.getParameter ("samplesprojname");
       final String samplesProjectName=(String) request.getSession().getAttribute("samplesprojname");
       if(samplesProjectName==null)
-        throw new NullArgumentException ("samplesProjectName parameter not provided");
+        throw new ServletException ("samplesProjectName parameter not provided");
       
       RowVisitor visitor = new RowVisitor () {
         Column theIdColumn;
