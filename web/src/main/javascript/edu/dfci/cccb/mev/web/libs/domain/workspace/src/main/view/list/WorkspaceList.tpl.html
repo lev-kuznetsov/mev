@@ -13,7 +13,7 @@
             </a>
             &nbsp;
             <a href="" ng-click="vm.export(row)" title="activate" class="btn btn-xs">
-                <i class="fa fa-file-archive-o"></i>
+                <i ng-class="{'fa fa-file-archive-o': !vm.getExportStatus(row.id), 'fa fa-spinner fa-spin': vm.getExportStatus(row.id)}"></i>
             </a>
             &nbsp;
             <span class="pull-right">
