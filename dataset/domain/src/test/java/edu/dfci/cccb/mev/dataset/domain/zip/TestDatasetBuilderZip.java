@@ -30,7 +30,7 @@ public class TestDatasetBuilderZip {
     public void init() throws URISyntaxException {
         mapper = new ObjectMapper();
         builder = new DatasetBuilderZip().setMapper(new ObjectMapper());
-        inputUri = TestDatasetBuilderZip.class.getResource("/edu/dfci/cccb/mev/dataset/domain/zip/mouse_test_data.tsv.zip").toURI();
+        inputUri = TestDatasetBuilderZip.class.getResource("mouse_test_data.tsv.zip").toURI();
     }
 
     @Test

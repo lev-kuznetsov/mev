@@ -24,7 +24,7 @@ public class TestDatasatZipHelper {
     @Before
     public void init() throws URISyntaxException {
         helper = new DatasetZipHelper();
-        inputUri = TestDatasetBuilderZip.class.getResource("/edu/dfci/cccb/mev/dataset/domain/zip/mouse_test_data.tsv.zip").toURI();
+        inputUri = TestDatasetBuilderZip.class.getResource("mouse_test_data.tsv.zip").toURI();
     }
 
     @Test
