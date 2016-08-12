@@ -1,5 +1,5 @@
 define(["lodash"], function(_){
-    var run = function($rootScope, $window, mevGaTracker, mevAnalysisEventBus){
+    var run = function($rootScope, $window, mevGaTracker, mevAnalysisEventBus, $state, $stateParams, mevContext){
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
             mevGaTracker.pageView("view")
         });
@@ -32,8 +32,12 @@ define(["lodash"], function(_){
                     value: value
                 }
             }
-
-
+        }
+        function appendAnalysisInfo(event){
+            var analysis = mevContext.get();
+            if(analysis.params && analysis.params.analysisType)
+                event.category += ":analysis:"+analysis.params.analysisType;
+            return event;
         }
         $rootScope.$on("mev:dataset:activated", function(event, dataset){
             mevGaTracker.event(parseEvent(event, dataset.id));
@@ -48,10 +52,10 @@ define(["lodash"], function(_){
             mevGaTracker.event(parseEvent(event, file.name));
         });
         $rootScope.$on("mui:dataset:selections:added", function(event, dimension){
-            mevGaTracker.event(parseEvent(event, dimension));
+            mevGaTracker.event(appendAnalysisInfo(parseEvent(event, dimension)));
         });
         $rootScope.$on("mui:dataset:selections:deleted", function(event, dimension){
-            mevGaTracker.event(parseEvent(event, dimension));
+            mevGaTracker.event(appendAnalysisInfo(parseEvent(event, dimension)));
         })
 
         $rootScope.$on("mev:workspace:imports:geo:search:started", function(event, keywords){
@@ -85,7 +89,7 @@ define(["lodash"], function(_){
         //     mevGaTracker.pageView(page);
         // });
     };
-    run.$inject=["$rootScope", "$window", "mevGaTracker", "mevAnalysisEventBus"];
+    run.$inject=["$rootScope", "$window", "mevGaTracker", "mevAnalysisEventBus", "$state", "$stateParams", "mevContext"];
     run.$provider="run";
     return run;
 });
