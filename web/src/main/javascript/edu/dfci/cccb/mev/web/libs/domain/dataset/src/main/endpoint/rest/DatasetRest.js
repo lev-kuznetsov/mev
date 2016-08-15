@@ -74,6 +74,7 @@ define(["lodash"], function(_){
             });
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
+                    $rootScope.$broadcast("mev:dataset:uploaded", file);
                     DatasetResource.getAll();
                 }
                 ;
@@ -133,6 +134,7 @@ define(["lodash"], function(_){
                     });
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState == 4 && xhr.status == 200) {
+                            $rootScope.$broadcast("mev:dataset:imported", file);
                             DatasetResource.getAll();
                         }
                         ;

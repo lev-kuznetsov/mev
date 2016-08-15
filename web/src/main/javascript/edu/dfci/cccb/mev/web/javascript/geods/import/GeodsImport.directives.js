@@ -12,14 +12,14 @@ function(angular,
 		GeodsSummaryViewModel){
 	
 	angularModule.directive('mevGeodsImportDirective', 
-	['MevGeodsSummaryFactory', '$modal', '$location', 'MevGeodsSearchResourceSrvc',
-	function(MevGeodsSummaryFactory, $modal, $location, MevGeodsSearchResourceSrvc){
+	['MevGeodsSummaryFactory', '$modal', '$location', 'MevGeodsSearchResourceSrvc', '$rootScope',
+	function(MevGeodsSummaryFactory, $modal, $location, MevGeodsSearchResourceSrvc, $rootScope){
 		return {
 			scope:{},
 			restrict: 'EAC',			
 			templateUrl: angularModule.path+"import/geodsimport.tpl.html",
 			link: function(scope, elm, attr, nullCtrl){
-				scope.vm = new GeodsSummaryViewModel(MevGeodsSummaryFactory, scope, $modal, $location);
+				scope.vm = new GeodsSummaryViewModel(MevGeodsSummaryFactory, scope, $modal, $location, $rootScope);
 			}
 		};
 	}])

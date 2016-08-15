@@ -47,25 +47,6 @@
                     </table>
                 </div>
             </div>
-
-            <bsmodal bindid="{{'selectionAdd' + analysis.name}}" func="" header="Add New Selection for {{analysis.name}}">
-
-                <div class="row">
-
-                    <form-group>
-                        <form>
-                            Name: <input type="text" class="input-small" ng-model="selectionParams.name">
-                            </form>
-                    </form-group>
-
-                </div>
-
-                <div class="row">
-	   <span class="btn btn-success pull-right" ng-click="addSelections()" data-dismiss="modal" aria-hidden="true">
-          Create Selections
-       </span>
-                </div>
-            </bsmodal>
         </div>
         <div class="tab-pane" id="heatmap">
             <mev-heatmap mev-dataset='DatasetAnalysisVM.project.dataset' mev-heatmap-view='DatasetAnalysisVM.heatmapView'></mev-heatmap>

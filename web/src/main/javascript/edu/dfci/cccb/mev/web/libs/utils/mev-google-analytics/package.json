@@ -1,0 +1,21 @@
+{
+  "name": "mev-google-analytics",
+  "version": "0.0.1",
+  "description": "mev google analytics",
+  "main": "src/main/mev-google-analytics.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "dependencies": {
+    "angular-ui-router": "^0.3.1",
+    "lodash": "^4.0.1",
+    "mui": "file:../../mui",
+    "steal": "^0.13.2"
+  }
+}

@@ -244,7 +244,7 @@ define(["mui", "lodash", "../../events/AnalysisEventBus", "mev-dataset/src/main/
                         };
                         
 //                      analysisEventBus.analysisStarted(response);
-                        analysisEventBus.analysisStarted(allParams.analysisType, allParams.analysisName, new AnalysisClass(response));
+                        analysisEventBus.analysisStarted(allParams.analysisType, allParams, new AnalysisClass(response));
                         poll(response, 500);
                         
                                             

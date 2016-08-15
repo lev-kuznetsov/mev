@@ -1,6 +1,6 @@
 "use strict";
 define(["mui", "./BsModal.tpl.html"], function(ng, template){
-    function directive(){
+    function directive($rootScope){
     	 return {
             restrict : 'E',
             scope : {
@@ -38,12 +38,19 @@ define(["mui", "./BsModal.tpl.html"], function(ng, template){
                         if(scope.headerHtml){
                             elemLabel.html(scope.headerHtml);
                         }
+                        //not making use of this event right now, comment it
+                        // var elemModal = elem.find(".modal");
+                        // elem.on('shown.bs.modal', function () {
+                        //     scope.$apply(function(){
+                        //         $rootScope.$broadcast("mui:modal:shown", scope.bindid, scope.header);
+                        //     });
+                        // });
             		}
             	};
             }
         };
     }
-    directive.$inject=[];
+    directive.$inject=["$rootScope"];
     directive.$name="mevBsModalDirective";
     return directive;
 

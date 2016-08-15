@@ -31,23 +31,3 @@
 <!-- 		</div>		 -->
 	</div>
 </div>
-
-
-<bsmodal bindid="exportDataset{{DatasetAnalysisVM.analysis.name}}Bottom" func="" header="Export New Dataset for {{DatasetAnalysisVM.analysis.name}}">
-
-	<div class="row">
-	
-		<form-group>
-			<form>
-				Name: <input type="text" class="input-small" ng-model="exportParams.name">
-			<form>
-		</form-group>
-	
-	</div>
-	
-	<div class="row">			
-              <a class="btn btn-success pull-right" ng-click="exportSelection(filteredResultsBottom)" data-dismiss="modal" aria-hidden="true">
-                Export New Dataset
-              </a> 
-          </div>
-</bsmodal>

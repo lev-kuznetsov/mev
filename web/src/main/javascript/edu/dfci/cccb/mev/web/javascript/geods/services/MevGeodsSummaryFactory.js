@@ -10,8 +10,8 @@ function(angular,
 		GeodsSummaryFactory){
 	
 	angularModule.service('MevGeodsSummaryFactory', 
-		 ["MevGeodsSummaryResourceSrvc", "MevGeodsImportSrvc", "MevGeodsSearchResourceSrvc", "$q",
-		 function(MevGeodsSummaryResourceSrvc, MevGeodsImportSrvc, MevGeodsSearchResourceSrvc, $q){
-			return new GeodsSummaryFactory(MevGeodsSummaryResourceSrvc, MevGeodsSearchResourceSrvc, MevGeodsImportSrvc, $q);
+		 ["MevGeodsSummaryResourceSrvc", "MevGeodsImportSrvc", "MevGeodsSearchResourceSrvc", "$q", "$rootScope",
+		 function(MevGeodsSummaryResourceSrvc, MevGeodsImportSrvc, MevGeodsSearchResourceSrvc, $q, $rootScope){
+			return new GeodsSummaryFactory(MevGeodsSummaryResourceSrvc, MevGeodsSearchResourceSrvc, MevGeodsImportSrvc, $q, $rootScope);
 		}]);
 });
