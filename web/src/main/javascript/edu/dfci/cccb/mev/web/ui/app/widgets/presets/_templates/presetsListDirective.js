@@ -1,9 +1,10 @@
-define(["ng"], function(ng){
+define(["./presetsList.tpl.html"], function(template){
 	"use strict";
 	var PresetsListDirective = function PresetsListDirective(TcgaPreset, PresetsListVM){
 		return {			
 			restrict: 'EA',
-			templateUrl: 'app/widgets/presets/_templates/presetsList.tpl.html',
+			// templateUrl: 'app/widgets/presets/_templates/presetsList.tpl.html',
+			template: template,
 //			cotroller: 'PresetsListVM',
 //			cotrollerAs: 'PresetsListVM',
 			link: {
@@ -16,5 +17,7 @@ define(["ng"], function(ng){
 		};
 	};
 	PresetsListDirective.$inject=['TcgaPreset', 'PresetsListVM'];
+	PresetsListDirective.$name="presetsList";
+	PresetsListDirective.$provider="directive";
 	return PresetsListDirective;
 });

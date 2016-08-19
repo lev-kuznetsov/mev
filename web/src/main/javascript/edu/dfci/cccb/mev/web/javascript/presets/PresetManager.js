@@ -1,4 +1,4 @@
-define(['jquery', 'angular'], function (jquery, angular){
+define(['jquery', 'mui'], function (jquery, angular, template){
 	angular.module('Mev.PresetManager', ["mui.domain.presets.tcga"])		
 		.controller('PresetManagerController', ['$scope', '$element', '$attrs', function($scope, $element, $attrs){			
 			$scope.gridOptions = { 
@@ -31,7 +31,9 @@ define(['jquery', 'angular'], function (jquery, angular){
 					};										
 				},
 				restrict: 'EA',
-				templateUrl: '/container/view/elements/presets/presetList'
+				templateUrl: '/container/view/elements/presets/presetList',
+				template: template
+					
 			};
 		}]);
 });
