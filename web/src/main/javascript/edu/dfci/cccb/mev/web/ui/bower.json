@@ -29,6 +29,9 @@
           "angular"
         ]
       },
+      "pouchdb": {
+        "format": "global"
+      },
       "worker-pouch": {
         "deps": [
           "pouchdb"
