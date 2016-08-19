@@ -1,14 +1,21 @@
 define(["mui",
 	"./_controllers/DatasetsVM",
+	"./_templates/views.datasets2.tpl.html",
 	"./_templates/views.datasets.tutorials.tpl.html",
 	"./_templates/views.datasets.google.tpl.html",
 	"./_templates/views.datasets.upload.tpl.html",
 	"./_templates/views.datasets.geods.tpl.html",
 	"./_templates/views.datasets.imports.tpl.html",
 	"../../widgets/presets/widgets.presets.module",
-	"./session/views.datasets.session.module"],
-function(ng, DatasetsVM, tutorialsTemplate, googleTemplate, uploadTemplate, geodsTemplate, importsTemplate){
-	var module = ng.module("mui.views.datasets", arguments, arguments);
+	"./session/views.datasets.session.module",		
+		'ng-grid',
+		'blob-util',
+		'ag-grid',
+		'crossfilter',
+		'blueimp-canvas-to-blob',
+		"geods"],
+function(ng, DatasetsVM, datasetsTemplate, tutorialsTemplate, googleTemplate, uploadTemplate, geodsTemplate, importsTemplate){
+	var module = ng.module("mui.views.datasets", ["Mev.GeodsModule","ngGrid"], arguments);
 	module.config(['$stateProvider', '$urlRouterProvider',
 	     	function($stateProvider, $urlRouterProvider){
 				$urlRouterProvider.when("/datasets", "/datasets/workspace");
@@ -25,7 +32,8 @@ function(ng, DatasetsVM, tutorialsTemplate, googleTemplate, uploadTemplate, geod
 						url: "/datasets",
 						parent: "root",
 						displayName: "datasets",
-						templateUrl: "app/views/datasets/_templates/views.datasets2.tpl.html",
+						template: datasetsTemplate,
+						// templateUrl: "app/views/dat	asets/_templates/views.datasets2.tpl.html",
 						// deepStateRedirect: {
 						// 	default: {
 						// 		state: "root.datasets.workspace"
@@ -34,6 +42,7 @@ function(ng, DatasetsVM, tutorialsTemplate, googleTemplate, uploadTemplate, geod
 						redirectTo: "root.datasets.imports.upload"
 					})
 					.state("root.datasets.imports", {
+						url: "	",
 						parent: "root.datasets",
 						displayName: false,
 						views: {
