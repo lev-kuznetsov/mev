@@ -29,5 +29,7 @@ define(['ng'], function (ng){
 			};
 		};
 		PresetListVMFactory.$inject=[];
+	    PresetListVMFactory.$name="PresetsListVM";
+	    PresetListVMFactory.$provider="factory";
 		return PresetListVMFactory;
 });
