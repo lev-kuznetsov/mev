@@ -1,6 +1,6 @@
 define(["ng", 
-        "./limma/widgets.analysis.limma.module", 
-        "./hcl/widgets.analysis.hcl.module", 
+        // "./limma/widgets.analysis.limma.module",
+        // "./hcl/widgets.analysis.hcl.module",
         // "./survival/widgets.analysis.survival.module",
         "./default/widgets.analysis.default.module",
         "./analysisModal/widgets.analysis.modal.module",
@@ -8,10 +8,10 @@ define(["ng",
         "./analysisMenu/widgets.analysis.menu.module",
         "./any/widgets.analysis.any.module",
         "./analysisNode/widgets.analysis.analysisNode.module",
-        "./topgo/widgets.analysis.topgo.module",
+        // "./topgo/widgets.analysis.topgo.module",
         "./genesd/widgets.analysis.genesd.module",
         "./histogram/widgets.analysis.histogram.module",        
-        "./voom/widgets.analysis.voom.module"
+        // "./voom/widgets.analysis.voom.module"
         ], 
 function(ng, AnalyisEventBus){
 	var module = ng.module("mui.widgets.analysis", arguments)

@@ -28,7 +28,7 @@ define(["ng", "lodash",
 	                                                      "mui.views.dataset.analysis.genesd",
 	                                                      "mui.views.dataset.analysis.genemad",
 	                                                      // "mui.views.dataset.analysis.voom",
-	                                                      "Mev.AnalysisAccordionCollection",
+	                                                      // "Mev.AnalysisAccordionCollection",
 	                                                      "mev-pca"]);
 	module.config(["$stateProvider", "$urlRouterProvider", "AnalysisTypes", function($stateProvider, $urlRouterProvider, AnalysisTypes){				
 		$stateProvider		
@@ -99,9 +99,6 @@ define(["ng", "lodash",
 		});
 	}]);
 	
-	module.config(["resultsTableDefaultsProvider", function(resultsTableDefaultsProvider){
-		resultsTableDefaultsProvider.setOrdering("pValue");
-	}]);
 	module.controller("AnalysisDefaultVM", ["$scope", "analysis", function($scope, analysis){
 		this.analysis=analysis;
 	}]);
