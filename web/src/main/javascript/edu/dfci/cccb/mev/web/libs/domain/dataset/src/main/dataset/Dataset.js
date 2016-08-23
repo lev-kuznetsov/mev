@@ -7,7 +7,7 @@ define(['mui',
 function(angular, DatasetClass,loadAnalyses, setSelections, resetSelections){
 	
 
-	return angular.module('Mev.Dataset', [])
+	return angular.module('Mev.DatasetMock', [])
 	//.factory('DatasetFactory', ['AnalysisResourceService', 'SelectionResourceService', "$q", "$http", '$rootScope', 'AnalysisEventBus', "DashboardItems",
 	.factory('DatasetFactory', ["$q", "$http", '$rootScope', 
 	 function($q, $http, $rootScope, AnalysisResourceService, SelectionResourceService, analysisEventBus, DashboardItems){
