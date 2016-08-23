@@ -1,4 +1,4 @@
-define(["ng", "lodash", "./ImportVM", "mev-workspace"],
+define(["ng", "lodash", "./ImportVM"],
 		function(ng, _, ImportVM, mevWorkspace){
 			var module = ng.module("mui.views.import", arguments, arguments);
 			module.config(['$stateProvider', '$urlRouterProvider',

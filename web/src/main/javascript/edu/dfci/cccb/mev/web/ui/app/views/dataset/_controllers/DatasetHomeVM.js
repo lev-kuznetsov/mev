@@ -22,6 +22,8 @@ define(["ng"], function(ng){
         });
 
 	};
+    DatasetHomeVM.$name="DatasetHomeVM";
+    DatasetHomeVM.$provider="controller";
 	DatasetHomeVM.$inject=["$scope", "$stateParams", "$state", "dataset", "project"];
 	return DatasetHomeVM;
 });

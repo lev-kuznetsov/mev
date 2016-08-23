@@ -1,17 +1,9 @@
-define(["ng", "lodash", 
-        // "./hcl/views.dataset.analysis.hcl.module",
+define(["ng", "lodash",
         "./kmeans/views.dataset.analysis.kmeans.module",
-        // "./fisher/views.dataset.analysis.fisher.module",
-        // "./anova/views.dataset.analysis.anova.module",
-        // "./limma/views.dataset.analysis.limma.module",
-        // "./deseq/views.dataset.analysis.deseq.module",
         "./nmf/views.dataset.analysis.nmf.module",
-        // "./survival/views.dataset.analysis.survival.module",
-        // "./topgo/views.dataset.analysis.topgo.module",
         "./histogram/views.dataset.analysis.histogram.module",
         "./genesd/views.dataset.analysis.genesd.module",
         "./genemad/views.dataset.analysis.genemad.module",
-        // "./voom/views.dataset.analysis.voom.module",
         "mev-pca"
         ], function(ng, _){
 	var module = ng.module("mui.views.dataset.analysis", ["mui.widgets.analysis", 

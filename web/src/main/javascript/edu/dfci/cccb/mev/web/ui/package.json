@@ -13,7 +13,7 @@
     "angular-resource": "^1.4.8",
     "angular-route": "^1.4.8",
     "angular-ui-bootstrap": "^0.14.3",
-    "angular-ui-router": "^0.2.15",
+    "angular-ui-router": "0.3.1",
     "angular-utils-pagination": "^0.9.4",
     "blob-util": "^1.1.2",
     "blueimp-canvas-to-blob": "^3.1.0",
@@ -90,7 +90,6 @@
       "mainmenu": "../javascript/mainmenu/MainMenu.module.js",
       "geods": "../javascript/geods/Geods.package.js",
       "geods/*": "../javascript/geods/*.js",
-      "js/*": "../javascript/*.js",
       "colorbrewer/*": "../javascript/colorbrewer/*.js",
       "extend": "../javascript/extend.js",
       "alertservice/*": "../javascript/alertservice/*.js",
@@ -98,7 +97,10 @@
       "dataset/*": "../javascript/dataset/*.js",
       "heatmapvisualization/*": "../javascript/heatmapvisualization/*.js",
       "dendogram/*": "../javascript/dendogram/*.js",
-      "jsLru": "../vendor/rsms/js-lru/lru.js"
+      "jsLru": "../vendor/rsms/js-lru/lru.js",
+      "js/orefine/*": "../javascript/orefine/*.js",
+      "js/project/*": "../javascript/project/*.js",
+      "js/alertservice/*": "../javascript/alertservice/*.js"
     },
     "map": {
       "ng": "mui",
@@ -128,6 +130,16 @@
         "deps": [
           "jquery"
         ]
+      },
+      "ui-router-extras": {
+        "deps": [
+          "angular-ui-router"
+        ]
+      },
+      "oclazyload": {
+       "deps": [
+         "ui-router-extras"
+       ]
       }
     }
   },

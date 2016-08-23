@@ -1,20 +1,15 @@
-define(["ng", 
-        // "./limma/widgets.analysis.limma.module",
-        // "./hcl/widgets.analysis.hcl.module",
-        // "./survival/widgets.analysis.survival.module",
+define(["ng",
         "./default/widgets.analysis.default.module",
         "./analysisModal/widgets.analysis.modal.module",
         "./analysisLog/widgets.analysis.log.module",
         "./analysisMenu/widgets.analysis.menu.module",
         "./any/widgets.analysis.any.module",
         "./analysisNode/widgets.analysis.analysisNode.module",
-        // "./topgo/widgets.analysis.topgo.module",
         "./genesd/widgets.analysis.genesd.module",
-        "./histogram/widgets.analysis.histogram.module",        
-        // "./voom/widgets.analysis.voom.module"
+        "./histogram/widgets.analysis.histogram.module"
         ], 
 function(ng, AnalyisEventBus){
-	var module = ng.module("mui.widgets.analysis", arguments)
+	var module = ng.module("mui.widgets.analysis", arguments, arguments)
 	.constant("AnalysisTypes", {
 			"Hierarchical Clustering": {
 				shortName: "hcl",

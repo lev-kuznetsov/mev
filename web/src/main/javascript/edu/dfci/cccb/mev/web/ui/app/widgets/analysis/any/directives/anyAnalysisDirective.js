@@ -1,4 +1,4 @@
-define(["ng", "lodash"], function(ng, _){
+define(["mui", "lodash"], function(ng, _){
 	"use strict";
 	var AnyAnalysisDirective = function AnyAnalysisDirective(AnalysisTypes, $state, $resolve, $injector, AnalysisEventBus, mevAnalysisTypes, $compile){
 		
