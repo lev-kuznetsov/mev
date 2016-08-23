@@ -1,6 +1,5 @@
-define(["ng", 
+define(["mui",
         "pouchdb",
-        "./_controllers/DatasetViewVM", 
         "./_controllers/DatasetProjectViewVM",
         "./_controllers/DatasetHomeVM",
         "./_controllers/DatasetHeatmapVMFactory",
@@ -12,8 +11,14 @@ define(["ng",
         "./analyses/views.dataset.analyses.module",
         "./session/views.dataset.session.module",
 		"js/project/Project",
+		"js/alertservice/AlertService",
 		'js-data-angular',
 		"../../domain/domain.module",
+		"../../widgets/analysis/widgets.analysis.module",
+		'ag-grid',
+		'crossfilter',
+		'blueimp-canvas-to-blob',
+		"notific8",
         "mev-analysis",
         "mev-bs-modal",
         "mevPathwayEnrichment",
@@ -35,19 +40,13 @@ define(["ng",
 		"mev-survival"],
 function(ng,
 		PouchDB,
-		DatasetViewVM, 
 		DatasetProjectViewVM,
 		DatasetHomeVM,
 		DatasetHeatmapVMFactory,
 		AnnotationsViewVM
 		){	"use strict";
 	var module=ng.module("mui.views.dataset", arguments, arguments);
-	
-	module.controller("DatasetViewVM", DatasetViewVM);	
-	module.controller("DatasetProjectViewVM", DatasetProjectViewVM);
-	module.controller("DatasetHomeVM", DatasetHomeVM);	
-	module.factory("DatasetHeatmapVMFactory", DatasetHeatmapVMFactory);	
-	module.controller("AnnotationsViewVM", AnnotationsViewVM);	
+	module.controller("AnnotationsViewVM", AnnotationsViewVM);
 	module.config(['$stateProvider', '$urlRouterProvider',
 	   	     	function($stateProvider, $urlRouterProvider){					
 	   	     		$stateProvider	  

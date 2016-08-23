@@ -10,9 +10,6 @@ define(["mui",
 	"./session/views.datasets.session.module",		
 		'ng-grid',
 		'blob-util',
-		'ag-grid',
-		'crossfilter',
-		'blueimp-canvas-to-blob',
 		"geods"],
 function(ng, DatasetsVM, datasetsTemplate, tutorialsTemplate, googleTemplate, uploadTemplate, geodsTemplate, importsTemplate){
 	var module = ng.module("mui.views.datasets", ["Mev.GeodsModule","ngGrid"], arguments);
@@ -42,7 +39,7 @@ function(ng, DatasetsVM, datasetsTemplate, tutorialsTemplate, googleTemplate, up
 						redirectTo: "root.datasets.imports.upload"
 					})
 					.state("root.datasets.imports", {
-						url: "	",
+						url: "",
 						parent: "root.datasets",
 						displayName: false,
 						views: {

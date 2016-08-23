@@ -7,8 +7,6 @@ define(["mui",
 	"app/views/root/views.root.module",
 	"app/views/import/views.import.module",
 	"app/views/welcome/views.welcome.module",
-	// "app/domain/presets/domain.presets.module",
-	// "app/widgets/presets/widgets.presets.module",
 	"app/widgets/widgets.module",
 	"app/utils/utils.module",
 
@@ -17,27 +15,11 @@ define(["mui",
 
 	'ui-router-extras',
 	'oclazyload',
-
-	'js/directives',
-	'js/services',
-	'js/controllers',
-	'js/setmanager/SetManager',
-	// 'js/heatmap/Heatmap',
-	// 'js/heatmapvisualization/HeatmapVisualization',
-	// 'js/analysisaccordioncollection/AnalysisAccordionCollection',
-	// 'js/analysismodalcollection/AnalysisModalCollection',
-	// 'js/viewCollection/ViewCollection',
 	'js/orefine/OrefineBridge',
-	'mainmenu',
-	"js/clinicalSummary/ClinicalSummary.package",
-	'js/cohortanalysis/CohortAnalysis',
-	'js/setmanager/SetManager',
-	// 'js/presets/PresetManager',
-	'js/mainpanel/MainPanel'
-
+	'mainmenu'
 ], function(ng){
 	"use strict";
-	return ng.module("ngbootstrap-app", arguments, arguments)
+	return ng.module("ngbootstrap-app", ["ct.ui.router.extras"], arguments)
 		.config(['$stateProvider', '$urlRouterProvider',
 			function($stateProvider, $urlRouterProvider){
 
