@@ -18,7 +18,6 @@
     "tests"
   ],
   "dependencies": {
-    "angular-utils-ui-breadcrumbs": "~0.2.2",
     "pouchdb": "~5.4.1",
     "worker-pouch": "worker-pouch-ti#~1.0.4"
   },

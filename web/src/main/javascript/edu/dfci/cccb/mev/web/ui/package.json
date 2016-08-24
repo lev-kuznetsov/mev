@@ -63,7 +63,8 @@
     "oclazyload": "^1.0.9",
     "q": "^1.4.1",
     "steal": "^0.13.2",
-    "ui-router-extras": "^0.1.2"
+    "ui-router-extras": "^0.1.2",
+    "angular-utils-ui-breadcrumbs": "apartensky/angularUtils-uiBreadcrumbs#0.2.2+futureStates"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
