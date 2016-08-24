@@ -63,18 +63,23 @@ define(["mui",
 //		})
 				;
 			}])
-		.config(["$futureStateProvider", function ($futureStateProvider) {
-			$futureStateProvider.stateFactory("lazy", ["$animate", "$timeout", "$ocLazyLoad", "futureState",
-				function($$animateJS, $timeout, $ocLazyLoad, futureState){
+		.config(["$futureStateProvider", "$$animateJsProvider", function ($futureStateProvider, $$AnimateJsProvider) {
+			$futureStateProvider.stateFactory("lazy", ["$timeout", "$ocLazyLoad", "futureState",
+				function($timeout, $ocLazyLoad, futureState){
 					return $timeout(function () {
 						return System.import(futureState.src).then(function (module) {
 							console.log("heavy imported", arguments);
-							return $ocLazyLoad.load([module])
-								.then(function () {
-									console.log("heavy loaded", arguments);
-								})
-								.catch(function (e) {
-									throw e;
+							return $ocLazyLoad.inject(["ng",])
+								.then(function(){
+									console.log("loaded ng", arguments);
+									ng.module("ng").provider("$$animateJs", $$AnimateJsProvider);
+									return $ocLazyLoad.load([module])
+										.then(function () {
+											console.log("heavy loaded", arguments);
+										})
+										.catch(function (e) {
+											throw e;
+										});
 								});
 						}).catch(function (e) {
 							throw e;
