@@ -91,15 +91,29 @@ define(["mui",
 				type: "lazy",
 				stateName: 'root.datasets',
 				src: 'app/views/datasets/views.datasets.module',
-				url: "/datasets"
+				url: "/datasets",
+				displayName: "datasets"
 			});
 			$futureStateProvider.futureState({
+				type: "lazy",
+				stateName: "root.abstractDataset",
+				src: 'app/views/dataset/views.dataset.module',
 				parent: "root",
+				"abstract": true,
+				url: "/dataset",
+				breadcrumbProxy: "root.datasets",
+				displayName: "datasets",
+				template: "<ui-view></ui-view>"
+			});
+			$futureStateProvider.futureState({
 				type: "lazy",
 				stateName: 'root.dataset',
 				src: 'app/views/dataset/views.dataset.module',
-				url: "/dataset"
+				parent: "root.abstractDataset",
+				"abstract": true,
+				url: "/:datasetId/"
 			});
+
 		}])
 		.config(function($provide) {
 //	    $provide.decorator('$httpBackend', function($delegate) {
@@ -160,10 +174,10 @@ define(["mui",
 				$rootScope.$on('$stateChangeSuccess',
 					function(event, toState, toParams, fromState, fromParams){
 						$(".page-loading").addClass("hidden");
+						if (toState.redirectTo) {
+							$state.go(toState.redirectTo, toParams);
+						}
 					});
-
-
-
 			}]);
 
 });
