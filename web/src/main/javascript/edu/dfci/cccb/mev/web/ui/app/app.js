@@ -63,18 +63,34 @@ define(["mui",
 //		})
 				;
 			}])
-		.config(["$futureStateProvider", "$$animateJsProvider", function ($futureStateProvider, $$AnimateJsProvider) {
-			$futureStateProvider.stateFactory("lazy", ["$timeout", "$ocLazyLoad", "futureState",
-				function($timeout, $ocLazyLoad, futureState){
-					return $timeout(function () {
-						return System.import(futureState.src).then(function (module) {
+		.service("mevFetchSrc", ["$ocLazyLoad", function($ocLazyLoad){
+			var self = this;
+			self.sources={};
+			this.fetch = function(src, $$AnimateJsProvider){
+				if(self.sources[src])
+					return self.sources[src].promise;
+
+				var source = self.sources[src]={
+					status: "importing",
+					promise: System.import(src)
+						.then(function (module) {
+							_.assign(self.sources[src], {
+								status: "imported",
+								module: module,
+							});
 							console.log("heavy imported", arguments);
 							return $ocLazyLoad.inject(["ng",])
 								.then(function(){
 									console.log("loaded ng", arguments);
 									ng.module("ng").provider("$$animateJs", $$AnimateJsProvider);
+									_.assign(self.sources[src], {
+										status: "loading"
+									});
 									return $ocLazyLoad.load([module])
 										.then(function () {
+											_.assign(self.sources[src], {
+												status: "completed"
+											});
 											console.log("heavy loaded", arguments);
 										})
 										.catch(function (e) {
@@ -84,36 +100,45 @@ define(["mui",
 						}).catch(function (e) {
 							throw e;
 						})
-					});
+				};
+				return source.promise;
+			}
+		}])
+		.config(["$futureStateProvider", "$$animateJsProvider", function ($futureStateProvider, $$AnimateJsProvider) {
+			$futureStateProvider.stateFactory("lazy", ["mevFetchSrc", "futureState",
+				function(mevFetchSrc, futureState){
+					return mevFetchSrc.fetch(futureState.src, $$AnimateJsProvider)
+						.catch(function(e){
+							throw e;
+						})
 				}]);
-			$futureStateProvider.futureState({
-				parent: "root",
-				type: "lazy",
-				stateName: 'root.datasets',
-				src: 'app/views/datasets/views.datasets.module',
-				url: "/datasets",
-				displayName: "datasets"
-			});
-			$futureStateProvider.futureState({
-				type: "lazy",
-				stateName: "root.abstractDataset",
-				src: 'app/views/dataset/views.dataset.module',
-				parent: "root",
-				"abstract": true,
-				url: "/dataset",
-				breadcrumbProxy: "root.datasets",
-				displayName: "datasets",
-				template: "<ui-view></ui-view>"
-			});
-			$futureStateProvider.futureState({
-				type: "lazy",
-				stateName: 'root.dataset',
-				src: 'app/views/dataset/views.dataset.module',
-				parent: "root.abstractDataset",
-				"abstract": true,
-				url: "/:datasetId/"
-			});
-
+				$futureStateProvider.futureState({
+					parent: "root",
+					type: "lazy",
+					stateName: 'root.datasets',
+					src: 'app/views/datasets/views.datasets.module',
+					url: "/datasets",
+					displayName: "datasets"
+				});
+				$futureStateProvider.futureState({
+					type: "lazy",
+					stateName: "root.abstractDataset",
+					src: 'app/views/dataset/views.dataset.module',
+					parent: "root",
+					"abstract": true,
+					url: "/dataset",
+					breadcrumbProxy: "root.datasets",
+					displayName: "datasets",
+					template: "<ui-view></ui-view>"
+				});
+				$futureStateProvider.futureState({
+					type: "lazy",
+					stateName: 'root.dataset',
+					src: 'app/views/dataset/views.dataset.module',
+					parent: "root.abstractDataset",
+					"abstract": true,
+					url: "/:datasetId/"
+				});
 		}])
 		.config(function($provide) {
 //	    $provide.decorator('$httpBackend', function($delegate) {
