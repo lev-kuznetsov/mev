@@ -17,19 +17,8 @@
 	</script>
   	<meta http-equiv="content-type" content="text/html; charset=UTF8">
 	<meta charset="utf-8">  <!-- it's important for d3.js -->
-    <link rel="apple-touch-icon" sizes="57x57" href="/container/images/favicon/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/container/images/favicon/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/container/images/favicon/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/container/images/favicon/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/container/images/favicon/apple-touch-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/container/images/favicon/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/container/images/favicon/apple-touch-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/container/images/favicon/apple-touch-icon-152x152.png">
-    <link rel="icon" type="image/png" href="/container/images/favicon/favicon-196x196.png" sizes="196x196">
-    <link rel="icon" type="image/png" href="/container/images/favicon/favicon-160x160.png" sizes="160x160">
-    <link rel="icon" type="image/png" href="/container/images/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="apple-touch-icon" sizes="32x32" href="/container/images/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" href="/container/images/favicon/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/container/images/favicon/favicon-16x16.png" sizes="16x16">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/container/images/mstile-144x144.png">
 
@@ -52,14 +41,56 @@
     <link href="/container/ui/bower_components/jquery-ui/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css"/> 
 	<link href="/container/ui/css/ui.css" rel="stylesheet" type="text/css"/>  
 	<!-- <link href="/container/ui/less/boot.less" rel="stylesheet/less" type="text/css"/> -->
-  <script src="/container/ui/node_modules/mev-steal-bootstrap/src/mev-steal-bootstrap.js"></script>
-  <script>        
-    var steal = getConfig("/container/ui/", "stealmain", 9999, "steallive");
-    start(steal);
-  </script>   
+    <style>
+          .mev-splash{
+              width: 267px;
+              height: 254px;
+              position: absolute;
+              top:0;
+              bottom: 0;
+              left: 0;
+              right: 0;
+
+              margin: 100px auto;
+              display: flex;
+              flex-direction: column;
+          }
+          .mev-splash > img,
+          .mev-splash > div {
+              flex-grow: 1;
+              align-self: center;
+          }
+          .mev-splash > div > span{
+              margin-left: 20px;
+          }
+    </style>
   </head>
   <body>
 <!--    <mev-main-menu></mev-main-menu> -->
-   <ui-view/>
+   <ui-view>
+       <div class="mev-splash">
+           <img src="/container/images/favicon/mev_logo.png"/>
+           <div>
+               <span>loading ... <i id="loading_percent"></i>
+                   <!--<i class="fa fa-spinner fa-spin"></i>-->
+               </span>
+           </div>
+       </div>
+   </ui-view>
+    <script src="/container/ui/node_modules/mev-steal-bootstrap/src/mev-steal-bootstrap.js"></script>
+    <script>
+        var steal = getConfig("/container/ui/", "stealmain", 9999, "steallive");
+        start(steal);
+    </script>
+    <script >
+        var elmProgress = document.getElementById("loading_percent");
+        document.addEventListener("mev:load:progress", function(event){
+
+            elmProgress.textContent = Math.floor(event.detail.percent) + "%";
+            if(event.detail.percent===100)
+                elmProgress.innerHTML = elmProgress.innerHTML + " <i class=\"fa fa-spinner fa-spin\"></i>";
+
+        });
+    </script>
   </body>
 </html>
