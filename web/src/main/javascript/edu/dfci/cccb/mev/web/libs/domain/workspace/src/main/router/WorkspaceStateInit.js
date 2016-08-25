@@ -37,12 +37,6 @@ define([], function() {"use strict";
                 // all states preloaded, now start listening for url changes.
                 $urlRouter.listen();
             });
-            $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState) {
-                if (toState.redirectTo) {
-                    event.preventDefault();
-                    $state.go(toState.redirectTo, toParams);
-                }
-            });
         };
         run.$inject = ['$rootScope', '$state', '$stickyState', '$q', '$urlRouter'];
         run.$provider="run";

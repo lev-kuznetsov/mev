@@ -1,4 +1,4 @@
-define(["mui", "pouchdb", "mev-domain-common", "mev-dataset", "angular-ui-router", "ui-router-extras",
+define(["mui", "pouchdb", "mev-domain-common", "mev-dataset", "mev-annotations", "angular-ui-router", "ui-router-extras",
     "./model/Workspace",
     "./router/WorkspaceState",
     "./router/WorkspaceStateInit",

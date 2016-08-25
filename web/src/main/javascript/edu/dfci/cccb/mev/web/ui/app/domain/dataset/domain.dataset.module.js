@@ -1,6 +1,6 @@
 define(["ng", "./dashboard/domain.dataset.dashboard.module"], 
 function(ng, project){
-	var module = ng.module("mui.domain.dataset", arguments);
+	var module = ng.module("mui.domain.dataset", arguments, arguments);
 	var DatasetFactory = function DatasetFactory(DS){
 			return DS.defineResource({
 				name: 'Dataset',

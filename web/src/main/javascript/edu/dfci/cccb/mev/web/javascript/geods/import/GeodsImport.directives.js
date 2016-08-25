@@ -1,4 +1,4 @@
-define(['angular', 
+define(['angular', "./geodsimport.tpl.html",
         'geods/Geods.module', 
         'geods/import/GeodsImportCtrl', 
         'geods/domain/GeodsSummaryViewModel', 
@@ -6,7 +6,8 @@ define(['angular',
         'geods/services/MevGeodsSearchResourceSrvc',
         'geods/services/MevGeodsSummaryFactory',
         "angular-ui-bootstrap"], 
-function(angular, 
+function(angular,
+		importTemplate,
 		angularModule, 
 		GeodsImportCtrl, 
 		GeodsSummaryViewModel){
@@ -17,7 +18,8 @@ function(angular,
 		return {
 			scope:{},
 			restrict: 'EAC',			
-			templateUrl: angularModule.path+"import/geodsimport.tpl.html",
+			// templateUrl: angularModule.path+"import/geodsimport.tpl.html",
+			template: importTemplate,
 			link: function(scope, elm, attr, nullCtrl){
 				scope.vm = new GeodsSummaryViewModel(MevGeodsSummaryFactory, scope, $modal, $location, $rootScope);
 			}

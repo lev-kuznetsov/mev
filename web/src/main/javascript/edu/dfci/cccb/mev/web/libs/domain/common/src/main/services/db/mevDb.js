@@ -1,7 +1,11 @@
-define(["lodash", "pouchdb"], function(_, PouchDB){"use strict";
+define(["lodash", "pouchdb", "worker-pouch"], function(_, PouchDB){"use strict";
     var service = function mevDbService(mevContext, mevSettings, $q, $rootScope, $timeout){
         var _self = this;
-        var db = new PouchDB("mev", {adapter: 'worker'});
+        var pouchdb = (window && window.PouchDB)
+                ? window.PouchDB
+                : PouchDB
+
+        var db = new pouchdb("mev", {adapter: 'worker'});
         function ensureDataset(){
             var dataset = mevContext.get("dataset");
             if(!dataset)

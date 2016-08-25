@@ -25,5 +25,6 @@ define(["ng"], function(ng){
 	};
 	DatasetHeatmapVMFactory.$inject=[];
 	DatasetHeatmapVMFactory.$name="DatasetHeatmapVMFactory";
+	DatasetHeatmapVMFactory.$provider="factory";
 	return DatasetHeatmapVMFactory;
 });

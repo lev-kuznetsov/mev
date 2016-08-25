@@ -3,6 +3,8 @@ define(["ng"], function(ng){
 		this.dataset=dataset;
 		this.annotations=annotations;
 	};
-	AnnotationsViewVM.$inject=["dataset", "annotations"];	
+	AnnotationsViewVM.$name="AnnotationsViewVM";
+	AnnotationsViewVM.$inject=["dataset", "annotations"];
+	AnnotationsViewVM.$provider="controller";
 	return AnnotationsViewVM;
 });

@@ -28,6 +28,11 @@
   "system": {
     "configDependencies": [
       "bower.json!bower"
-    ]
+    ],
+    "meta": {
+      "worker-pouch": {
+        "deps": ["pouchdb"]
+      }
+    }
   }
 }

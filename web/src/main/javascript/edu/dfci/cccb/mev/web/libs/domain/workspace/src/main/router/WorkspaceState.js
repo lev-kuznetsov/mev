@@ -6,7 +6,7 @@ define([], function() {
                 .state("root.datasets.workspace", {
                     url: "/workspace",
                     parent: "root.datasets",
-                    displayName: "datasets",
+                    displayName: false,
                     views: {
                         "workspace@root.datasets": {
                             template: "<div mev-workspace-list></div>"

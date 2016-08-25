@@ -13,7 +13,7 @@
     "angular-resource": "^1.4.8",
     "angular-route": "^1.4.8",
     "angular-ui-bootstrap": "^0.14.3",
-    "angular-ui-router": "^0.2.15",
+    "angular-ui-router": "0.3.1",
     "angular-utils-pagination": "^0.9.4",
     "blob-util": "^1.1.2",
     "blueimp-canvas-to-blob": "^3.1.0",
@@ -60,9 +60,11 @@
     "ng-grid": "apartensky/ui-grid#2.0.14+npmfix",
     "notific8": "^2.3.1",
     "nvd3": "apartensky/nvd3#1.8.2+dotPlot.1",
+    "oclazyload": "^1.0.9",
     "q": "^1.4.1",
     "steal": "^0.13.2",
-    "ui-router-extras": "^0.1.2"
+    "ui-router-extras": "^0.1.2",
+    "angular-utils-ui-breadcrumbs": "apartensky/angularUtils-uiBreadcrumbs#0.2.2+futureStates"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -78,6 +80,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "system": {
+    "bundle": [
+      "app/views/datasets/views.datasets.module",
+      "app/views/dataset/views.dataset.module"
+    ],
     "configDependencies": [
       "bower.json!bower"
     ],
@@ -85,7 +91,6 @@
       "mainmenu": "../javascript/mainmenu/MainMenu.module.js",
       "geods": "../javascript/geods/Geods.package.js",
       "geods/*": "../javascript/geods/*.js",
-      "js/*": "../javascript/*.js",
       "colorbrewer/*": "../javascript/colorbrewer/*.js",
       "extend": "../javascript/extend.js",
       "alertservice/*": "../javascript/alertservice/*.js",
@@ -93,7 +98,10 @@
       "dataset/*": "../javascript/dataset/*.js",
       "heatmapvisualization/*": "../javascript/heatmapvisualization/*.js",
       "dendogram/*": "../javascript/dendogram/*.js",
-      "jsLru": "../vendor/rsms/js-lru/lru.js"
+      "jsLru": "../vendor/rsms/js-lru/lru.js",
+      "js/orefine/*": "../javascript/orefine/*.js",
+      "js/project/*": "../javascript/project/*.js",
+      "js/alertservice/*": "../javascript/alertservice/*.js"
     },
     "map": {
       "ng": "mui",
@@ -123,6 +131,16 @@
         "deps": [
           "jquery"
         ]
+      },
+      "ui-router-extras": {
+        "deps": [
+          "angular-ui-router"
+        ]
+      },
+      "oclazyload": {
+       "deps": [
+         "ui-router-extras"
+       ]
       }
     }
   },

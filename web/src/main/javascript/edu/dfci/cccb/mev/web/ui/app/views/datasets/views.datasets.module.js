@@ -1,16 +1,24 @@
 define(["mui",
 	"./_controllers/DatasetsVM",
+	"./_templates/views.datasets2.tpl.html",
 	"./_templates/views.datasets.tutorials.tpl.html",
 	"./_templates/views.datasets.google.tpl.html",
 	"./_templates/views.datasets.upload.tpl.html",
 	"./_templates/views.datasets.geods.tpl.html",
 	"./_templates/views.datasets.imports.tpl.html",
 	"../../widgets/presets/widgets.presets.module",
-	"./session/views.datasets.session.module"],
-function(ng, DatasetsVM, tutorialsTemplate, googleTemplate, uploadTemplate, geodsTemplate, importsTemplate){
-	var module = ng.module("mui.views.datasets", arguments, arguments);
-	module.config(['$stateProvider', '$urlRouterProvider',
-	     	function($stateProvider, $urlRouterProvider){
+	"./session/views.datasets.session.module",
+		"mev-bs-modal",
+		"mev-workspace",
+		'js-data-angular',
+		"../../domain/domain.module",
+		'ng-grid',
+		'blob-util',
+		"geods"],
+function(ng, DatasetsVM, datasetsTemplate, tutorialsTemplate, googleTemplate, uploadTemplate, geodsTemplate, importsTemplate){
+	var module = ng.module("mui.views.datasets", ["Mev.GeodsModule","ngGrid"], arguments);
+	module.config(['$stateProvider', '$urlRouterProvider', "$$animateJsProvider",
+	     	function($stateProvider, $urlRouterProvider, $$animateJsProvider){
 				$urlRouterProvider.when("/datasets", "/datasets/workspace");
 	     		$stateProvider
 					.state("root.datasetsOld", {
@@ -25,15 +33,11 @@ function(ng, DatasetsVM, tutorialsTemplate, googleTemplate, uploadTemplate, geod
 						url: "/datasets",
 						parent: "root",
 						displayName: "datasets",
-						templateUrl: "app/views/datasets/_templates/views.datasets2.tpl.html",
-						// deepStateRedirect: {
-						// 	default: {
-						// 		state: "root.datasets.workspace"
-						// 	}
-						// }
+						template: datasetsTemplate,
 						redirectTo: "root.datasets.imports.upload"
 					})
 					.state("root.datasets.imports", {
+						url: "",
 						parent: "root.datasets",
 						displayName: false,
 						views: {
@@ -42,7 +46,12 @@ function(ng, DatasetsVM, tutorialsTemplate, googleTemplate, uploadTemplate, geod
 							}
 						},
 						sticky: true,
-						
+						onEnter: ["mevFetchSrc", function(mevFetchSrc) {
+							return mevFetchSrc.fetch("app/views/datasets/views.datasets.module", $$animateJsProvider)
+								.catch(function(e){
+									throw e;
+								});
+						}]
 					})
 					.state("root.datasets.imports.tutorials", {
 						url: "/tutorials",

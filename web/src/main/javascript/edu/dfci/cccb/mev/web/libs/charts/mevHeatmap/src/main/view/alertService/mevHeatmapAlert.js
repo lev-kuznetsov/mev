@@ -1,4 +1,4 @@
-define(["mui", "notific8"], function(ng, notific8){
+define(["mui", "jquery"], function(ng, $){
 	function component(){
 		return {
 			success : function (message, header, callback, params) {

@@ -1,6 +1,6 @@
 define(["ng", "lodash"], function(ng, _){
 	var module = ng.module("mui.views.dataset.analysis.genesd", [])	
-	.factory("GeneSDVMFactory", ["$stateParams", "SigGenes", "alertService", function($stateParams, SigGenes, alertService){
+	.factory("GeneSDVMFactory", ["$stateParams", "SigGenes", function($stateParams, SigGenes){
 		
 		return function GeneSDVMFactory($scope, $stateParams, project, analysis){
 			var _self=this;

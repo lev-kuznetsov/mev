@@ -11,6 +11,14 @@
     "amd"
   ],
   "dependencies": {
-    "pouchdb": "~5.4.5"
+    "pouchdb": "~5.4.5",
+    "worker-pouch": "worker-pouch-ti#~1.0.4"
+  },
+  "system": {
+    "meta": {
+      "worker-pouch": {
+        "deps": ["pouchdb"]
+      }
+    }
   }
 }

@@ -7,5 +7,7 @@ define([], function(){
 		});
 	};
 	TcgaPreset.$inject=["DS"];
+	TcgaPreset.$name="TcgaPreset";
+	TcgaPreset.$provider="factory";
 	return TcgaPreset;
 });
