@@ -62,6 +62,8 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
                                                             return NaN;
                                                           else if ("null".equals (value))
                                                             return NaN;
+                                                          else if ("x".equals (value))
+                                                            return NaN;
                                                           else
                                                             return next.execute (value,
                                                                                  context);
@@ -97,11 +99,20 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
   protected SuperCsvParser (CsvListReader reader) throws DatasetBuilderException {
     this.reader = reader;
     try {
-      header = reader.getHeader (true);      
+      String tmpHeader[] = reader.getHeader (true);
       List<String> firstDataLine = reader.read ();
+      if(tmpHeader.length == firstDataLine.size()-1){
+        header = new String[firstDataLine.size()];
+        header[0] = "id";
+        for(int i=0; i<tmpHeader.length; i++)
+          header[i+1]=tmpHeader[i];
+      }else{
+        header = tmpHeader;
+      }
+
       processors = new CellProcessor[header.length];
       //use LinkedHashMap to preserve the order of keys
-      Map<String, Double> firstProcessedLine = new LinkedHashMap<> ();      
+      Map<String, Double> firstProcessedLine = new LinkedHashMap<> ();
       for (int index = 1; index < header.length; index++){
         try {
           firstProcessedLine.put (header[index],
