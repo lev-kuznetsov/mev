@@ -10,6 +10,7 @@ define(["mui",
 	"./session/views.datasets.session.module",
 		"mev-bs-modal",
 		"mev-workspace",
+		"mev-domain-common",
 		'js-data-angular',
 		"../../domain/domain.module",
 		'ng-grid',
@@ -34,7 +35,10 @@ function(ng, DatasetsVM, datasetsTemplate, tutorialsTemplate, googleTemplate, up
 						parent: "root",
 						displayName: "datasets",
 						template: datasetsTemplate,
-						redirectTo: "root.datasets.imports.upload"
+						redirectTo: "root.datasets.imports.upload",
+						data: {
+							headerUrl: "app/views/datasets/_templates/views.datasets.header.tpl.html"
+						},
 					})
 					.state("root.datasets.imports", {
 						url: "",

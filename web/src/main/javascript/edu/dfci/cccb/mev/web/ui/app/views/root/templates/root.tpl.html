@@ -1,6 +1,8 @@
 <div class="outermost-wrapper " ng-class="RootCtrl.getCss()">
 
-	<main-menu></main-menu>
+	<main-menu>
+		<span ng-if="$state.current.data && $state.current.data.headerUrl" ng-include src="$state.current.data.headerUrl"></span>
+	</main-menu>
 	
 	<aside ng-if="$state.current.data && $state.current.data.sidemenuUrl" id="sidemenu-container" ng-class="{shrink: RootCtrl.isSideMenuCollapse()}">	
 			<div ng-include src="$state.current.data.sidemenuUrl"></div>
