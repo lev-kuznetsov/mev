@@ -74,6 +74,7 @@ function(ng,
 		   	     		data: {
 			   	     		sidemenuUrl: "app/views/dataset/_templates/dataset.sidemenu.accordion.tpl.html",
 			   	     		footerUrl: "app/views/dataset/_templates/dataset.footer.tpl.html",
+							headerUrl: "app/views/dataset/_templates/dataset.header.tpl.html"
 			   	     	},
 	   	     			resolve:{
 	   	     				datasetResource: ["$state", "$stateParams", "mevDatasetRest", "$q", "$http", function($state, $stateParams, DatasetResourceService, $q, $http){

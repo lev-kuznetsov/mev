@@ -6893,6 +6893,14 @@ d3-Box-Plot-Visualization line.int-lines {
   margin-left: 0;
   margin-top: -5;
 }
+.navbar-nav > li > span {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  line-height: 20px;
+  color: #fff;
+  position: relative;
+  display: block;
+}
 .navbar-nav .github {
   font-size: 28px;
   padding-top: 6px;
