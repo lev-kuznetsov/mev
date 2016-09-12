@@ -6688,10 +6688,10 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'ag-grid',
-            'version': '2.3.7',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/ag-grid/package.json',
-            'main': 'dist/ag-grid.min.js',
+            'name': 'angular',
+            'version': '1.4.10',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/angular/package.json',
+            'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -6704,17 +6704,17 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'angular',
-            'version': '1.4.10',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/angular/package.json',
-            'main': 'index.js',
+            'name': 'ag-grid',
+            'version': '2.3.7',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/ag-grid/package.json',
+            'main': 'dist/ag-grid.min.js',
             'globalBrowser': {},
             'browser': {}
         },
         {
-            'name': 'angular-resource',
-            'version': '1.5.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/angular-resource/package.json',
+            'name': 'angular-nvd3',
+            'version': '1.0.5',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/angular-nvd3/package.json',
             'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
@@ -6724,6 +6724,14 @@ define('package.json!npm', [
             'version': '1.0.10',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/angular-color-picker/package.json',
             'main': 'angular-color-picker.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'angular-resource',
+            'version': '1.5.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/angular-resource/package.json',
+            'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -6739,14 +6747,6 @@ define('package.json!npm', [
             'name': 'angular-ui-bootstrap',
             'version': '0.14.3',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/angular-ui-bootstrap/package.json',
-            'main': 'index.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
-            'name': 'angular-nvd3',
-            'version': '1.0.5',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/angular-nvd3/package.json',
             'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
@@ -6768,18 +6768,18 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'blueimp-canvas-to-blob',
-            'version': '3.1.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/blueimp-canvas-to-blob/package.json',
-            'main': './js/canvas-to-blob.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
             'name': 'blob-util',
             'version': '1.2.0',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/blob-util/package.json',
             'main': 'lib/index.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'blueimp-canvas-to-blob',
+            'version': '3.1.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/blueimp-canvas-to-blob/package.json',
+            'main': './js/canvas-to-blob.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -7245,17 +7245,17 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'angular-utils-ui-breadcrumbs',
-            'version': '0.2.2',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/angular-utils-ui-breadcrumbs/package.json',
-            'main': 'index.js',
+            'name': 'gulp',
+            'version': '3.9.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/package.json',
             'globalBrowser': {},
             'browser': {}
         },
         {
-            'name': 'gulp',
-            'version': '3.9.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/package.json',
+            'name': 'angular-utils-ui-breadcrumbs',
+            'version': '0.2.2',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/angular-utils-ui-breadcrumbs/package.json',
+            'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -7306,10 +7306,10 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'mev-mock',
-            'version': '0.0.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/liver/node_modules/mev-mock/package.json',
-            'main': 'src/main/mev-mock.js',
+            'name': 'js-data-http',
+            'version': '2.1.2',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/js-data-angular/node_modules/js-data-http/package.json',
+            'main': './dist/js-data-http.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -7322,10 +7322,10 @@ define('package.json!npm', [
             'browser': { 'bluebird': 'lie' }
         },
         {
-            'name': 'angular-ui-router',
-            'version': '0.2.18',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-analysis/node_modules/angular-ui-router/package.json',
-            'main': 'release/angular-ui-router.js',
+            'name': 'mev-mock',
+            'version': '0.0.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/liver/node_modules/mev-mock/package.json',
+            'main': 'src/main/mev-mock.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -7338,18 +7338,18 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'lodash',
-            'version': '4.14.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-anova/node_modules/lodash/package.json',
-            'main': 'lodash.js',
+            'name': 'angular-ui-router',
+            'version': '0.2.18',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-analysis/node_modules/angular-ui-router/package.json',
+            'main': 'release/angular-ui-router.js',
             'globalBrowser': {},
             'browser': {}
         },
         {
-            'name': 'js-data-http',
-            'version': '2.1.2',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/js-data-angular/node_modules/js-data-http/package.json',
-            'main': './dist/js-data-http.js',
+            'name': 'lodash',
+            'version': '4.14.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-anova/node_modules/lodash/package.json',
+            'main': 'lodash.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -7532,17 +7532,17 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'deprecated',
-            'version': '0.0.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/deprecated/package.json',
-            'main': './index.js',
+            'name': 'chalk',
+            'version': '1.1.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/chalk/package.json',
             'globalBrowser': {},
             'browser': {}
         },
         {
-            'name': 'chalk',
-            'version': '1.1.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/chalk/package.json',
+            'name': 'deprecated',
+            'version': '0.0.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/deprecated/package.json',
+            'main': './index.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -7655,17 +7655,17 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'lodash.once',
-            'version': '3.0.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-jasmine-browser/node_modules/lodash.once/package.json',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
             'name': 'lazypipe',
             'version': '1.0.1',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-jasmine-browser/node_modules/lazypipe/package.json',
             'main': './index.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'lodash.once',
+            'version': '3.0.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-jasmine-browser/node_modules/lodash.once/package.json',
             'globalBrowser': {},
             'browser': {}
         },
@@ -7678,17 +7678,17 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'portfinder',
-            'version': '0.4.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-jasmine-browser/node_modules/portfinder/package.json',
-            'main': './lib/portfinder',
+            'name': 'serve-favicon',
+            'version': '2.3.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-jasmine-browser/node_modules/serve-favicon/package.json',
             'globalBrowser': {},
             'browser': {}
         },
         {
-            'name': 'serve-favicon',
-            'version': '2.3.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-jasmine-browser/node_modules/serve-favicon/package.json',
+            'name': 'portfinder',
+            'version': '0.4.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-jasmine-browser/node_modules/portfinder/package.json',
+            'main': './lib/portfinder',
             'globalBrowser': {},
             'browser': {}
         },
@@ -7812,17 +7812,17 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'object-assign',
-            'version': '3.0.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/object-assign/package.json',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
             'name': 'replace-ext',
             'version': '0.0.1',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/replace-ext/package.json',
             'main': './index.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'object-assign',
+            'version': '3.0.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/object-assign/package.json',
             'globalBrowser': {},
             'browser': {}
         },
@@ -7835,12 +7835,12 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'bluebird',
-            'version': '1.2.4',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/blob-util/node_modules/pouchdb-promise/node_modules/bluebird/package.json',
-            'main': './js/main/bluebird.js',
+            'name': 'axios',
+            'version': '0.5.4',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/js-data-angular/node_modules/js-data-http/node_modules/axios/package.json',
+            'main': 'index.js',
             'globalBrowser': {},
-            'browser': {}
+            'browser': { 'axios#lib/adapters/http.js': 'axios#lib/adapters/xhr.js' }
         },
         {
             'name': 'lie',
@@ -7851,18 +7851,10 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'angular-nvd3',
-            'version': '1.0.6',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-gsea/node_modules/mev-hbarchart/node_modules/angular-nvd3/package.json',
-            'main': 'index.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
-            'name': 'browser-filesaver',
-            'version': '1.1.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-scatter-plot/node_modules/mev-chart-utils/node_modules/browser-filesaver/package.json',
-            'main': 'FileSaver.js',
+            'name': 'bluebird',
+            'version': '1.2.4',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/blob-util/node_modules/pouchdb-promise/node_modules/bluebird/package.json',
+            'main': './js/main/bluebird.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -7875,10 +7867,26 @@ define('package.json!npm', [
             'browser': {}
         },
         {
+            'name': 'angular-nvd3',
+            'version': '1.0.6',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-gsea/node_modules/mev-hbarchart/node_modules/angular-nvd3/package.json',
+            'main': 'index.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
             'name': 'blueimp-canvas-to-blob',
             'version': '3.3.0',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-scatter-plot/node_modules/mev-chart-utils/node_modules/blueimp-canvas-to-blob/package.json',
             'main': './js/canvas-to-blob.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'browser-filesaver',
+            'version': '1.1.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-scatter-plot/node_modules/mev-chart-utils/node_modules/browser-filesaver/package.json',
+            'main': 'FileSaver.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -7903,14 +7911,6 @@ define('package.json!npm', [
             },
             'globalBrowser': {},
             'browser': {}
-        },
-        {
-            'name': 'axios',
-            'version': '0.5.4',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/js-data-angular/node_modules/js-data-http/node_modules/axios/package.json',
-            'main': 'index.js',
-            'globalBrowser': {},
-            'browser': { 'axios#lib/adapters/http.js': 'axios#lib/adapters/xhr.js' }
         },
         {
             'name': 'd3',
@@ -7997,18 +7997,18 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'flagged-respawn',
-            'version': '0.3.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/liftoff/node_modules/flagged-respawn/package.json',
-            'main': 'index.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
             'name': 'findup-sync',
             'version': '0.3.0',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/liftoff/node_modules/findup-sync/package.json',
             'main': 'lib/findup-sync',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'flagged-respawn',
+            'version': '0.3.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/liftoff/node_modules/flagged-respawn/package.json',
+            'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -8122,18 +8122,18 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'core-js',
-            'version': '1.2.6',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-jasmine-browser/node_modules/babel-polyfill/node_modules/core-js/package.json',
-            'main': 'index.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
             'name': 'vinyl',
             'version': '0.4.6',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/vinyl/package.json',
             'main': './index.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'core-js',
+            'version': '1.2.6',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-jasmine-browser/node_modules/babel-polyfill/node_modules/core-js/package.json',
+            'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -8250,19 +8250,19 @@ define('package.json!npm', [
             'browser': {}
         },
         {
+            'name': 'depd',
+            'version': '1.1.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-jasmine-browser/node_modules/express/node_modules/depd/package.json',
+            'globalBrowser': {},
+            'browser': 'lib/browser/index.js'
+        },
+        {
             'name': 'debug',
             'version': '2.2.0',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-jasmine-browser/node_modules/express/node_modules/debug/package.json',
             'main': './node.js',
             'globalBrowser': {},
             'browser': './browser.js'
-        },
-        {
-            'name': 'depd',
-            'version': '1.1.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-jasmine-browser/node_modules/express/node_modules/depd/package.json',
-            'globalBrowser': {},
-            'browser': 'lib/browser/index.js'
         },
         {
             'name': 'escape-html',
@@ -8456,6 +8456,13 @@ define('package.json!npm', [
             'browser': 'index.js'
         },
         {
+            'name': 'get-stdin',
+            'version': '4.0.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/get-stdin/package.json',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
             'name': 'meow',
             'version': '3.7.0',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/meow/package.json',
@@ -8467,13 +8474,6 @@ define('package.json!npm', [
             'version': '1.0.0',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/gulplog/node_modules/glogg/package.json',
             'main': 'index.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
-            'name': 'get-stdin',
-            'version': '4.0.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/get-stdin/package.json',
             'globalBrowser': {},
             'browser': {}
         },
@@ -8514,16 +8514,16 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'lodash.escape',
+            'name': 'lodash.keys',
             'version': '3.1.2',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/lodash.template/node_modules/lodash.escape/package.json',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/lodash.template/node_modules/lodash.keys/package.json',
             'globalBrowser': {},
             'browser': {}
         },
         {
-            'name': 'lodash.keys',
+            'name': 'lodash.escape',
             'version': '3.1.2',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/lodash.template/node_modules/lodash.keys/package.json',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/lodash.template/node_modules/lodash.escape/package.json',
             'globalBrowser': {},
             'browser': {}
         },
@@ -8566,10 +8566,10 @@ define('package.json!npm', [
             'browser': { 'immediate#nextTick': '@empty' }
         },
         {
-            'name': 'd3-geo-projection',
-            'version': '0.2.16',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/package.json',
-            'main': 'index.js',
+            'name': 'nvd3',
+            'version': '1.8.2',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-gsea/node_modules/mev-hbarchart/node_modules/angular-nvd3/node_modules/nvd3/package.json',
+            'main': 'build/nv.d3.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -8598,18 +8598,18 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'topojson',
-            'version': '1.6.26',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/topojson/package.json',
-            'main': 'server.js',
+            'name': 'd3-cloud',
+            'version': '1.2.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-cloud/package.json',
+            'main': 'index.js',
             'globalBrowser': {},
-            'browser': 'build/topojson.js'
+            'browser': {}
         },
         {
-            'name': 'nvd3',
-            'version': '1.8.2',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-gsea/node_modules/mev-hbarchart/node_modules/angular-nvd3/node_modules/nvd3/package.json',
-            'main': 'build/nv.d3.js',
+            'name': 'd3-geo-projection',
+            'version': '0.2.16',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/package.json',
+            'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -8629,25 +8629,17 @@ define('package.json!npm', [
             }
         },
         {
+            'name': 'topojson',
+            'version': '1.6.26',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/topojson/package.json',
+            'main': 'server.js',
+            'globalBrowser': {},
+            'browser': 'build/topojson.js'
+        },
+        {
             'name': 'vega-dataflow',
             'version': '1.4.3',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/vega-dataflow/package.json',
-            'main': 'src/index.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
-            'name': 'd3-cloud',
-            'version': '1.2.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-cloud/package.json',
-            'main': 'index.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
-            'name': 'vega-expression',
-            'version': '1.2.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/vega-expression/package.json',
             'main': 'src/index.js',
             'globalBrowser': {},
             'browser': {}
@@ -8657,6 +8649,14 @@ define('package.json!npm', [
             'version': '1.1.0',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/vega-event-selector/package.json',
             'main': 'index.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'vega-expression',
+            'version': '1.2.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/vega-expression/package.json',
+            'main': 'src/index.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -8693,17 +8693,17 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'ansi-regex',
-            'version': '2.0.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/chalk/node_modules/has-ansi/node_modules/ansi-regex/package.json',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
             'name': 'glob',
             'version': '5.0.15',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/liftoff/node_modules/findup-sync/node_modules/glob/package.json',
             'main': 'glob.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'ansi-regex',
+            'version': '2.0.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/chalk/node_modules/has-ansi/node_modules/ansi-regex/package.json',
             'globalBrowser': {},
             'browser': {}
         },
@@ -8748,18 +8748,18 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'unique-stream',
-            'version': '1.0.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-stream/node_modules/unique-stream/package.json',
-            'main': 'index.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
             'name': 'gaze',
             'version': '0.5.2',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-watcher/node_modules/gaze/package.json',
             'main': 'lib/gaze',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'unique-stream',
+            'version': '1.0.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-stream/node_modules/unique-stream/package.json',
+            'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -8943,6 +8943,13 @@ define('package.json!npm', [
             'browser': {}
         },
         {
+            'name': 'map-obj',
+            'version': '1.0.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/meow/node_modules/map-obj/package.json',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
             'name': 'normalize-package-data',
             'version': '2.3.5',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/meow/node_modules/normalize-package-data/package.json',
@@ -8951,9 +8958,9 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'map-obj',
-            'version': '1.0.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/meow/node_modules/map-obj/package.json',
+            'name': 'object-assign',
+            'version': '4.0.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/meow/node_modules/object-assign/package.json',
             'globalBrowser': {},
             'browser': {}
         },
@@ -8961,13 +8968,6 @@ define('package.json!npm', [
             'name': 'read-pkg-up',
             'version': '1.0.1',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/meow/node_modules/read-pkg-up/package.json',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
-            'name': 'object-assign',
-            'version': '4.0.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/meow/node_modules/object-assign/package.json',
             'globalBrowser': {},
             'browser': {}
         },
@@ -8993,16 +8993,16 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'lodash.isarray',
-            'version': '3.0.4',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/lodash.template/node_modules/lodash.keys/node_modules/lodash.isarray/package.json',
+            'name': 'lodash.isarguments',
+            'version': '3.0.6',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/lodash.template/node_modules/lodash.keys/node_modules/lodash.isarguments/package.json',
             'globalBrowser': {},
             'browser': {}
         },
         {
-            'name': 'lodash.isarguments',
-            'version': '3.0.6',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/lodash.template/node_modules/lodash.keys/node_modules/lodash.isarguments/package.json',
+            'name': 'lodash.isarray',
+            'version': '3.0.4',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/lodash.template/node_modules/lodash.keys/node_modules/lodash.isarray/package.json',
             'globalBrowser': {},
             'browser': {}
         },
@@ -9078,19 +9078,19 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'sync-request',
-            'version': '2.2.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/sync-request/package.json',
-            'globalBrowser': {},
-            'browser': './browser.js'
-        },
-        {
             'name': 'request',
             'version': '2.72.0',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/package.json',
             'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
+        },
+        {
+            'name': 'sync-request',
+            'version': '2.2.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/sync-request/package.json',
+            'globalBrowser': {},
+            'browser': './browser.js'
         },
         {
             'name': 'd3-queue',
@@ -9117,17 +9117,17 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'camelcase',
-            'version': '2.1.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/yargs/node_modules/camelcase/package.json',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
             'name': 'shapefile',
             'version': '0.3.1',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/topojson/node_modules/shapefile/package.json',
             'main': 'index.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'camelcase',
+            'version': '2.1.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/yargs/node_modules/camelcase/package.json',
             'globalBrowser': {},
             'browser': {}
         },
@@ -9216,6 +9216,14 @@ define('package.json!npm', [
             'browser': {}
         },
         {
+            'name': 'globule',
+            'version': '0.1.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-watcher/node_modules/gaze/node_modules/globule/package.json',
+            'main': 'lib/globule',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
             'name': 'brace-expansion',
             'version': '1.1.2',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-stream/node_modules/minimatch/node_modules/brace-expansion/package.json',
@@ -9228,14 +9236,6 @@ define('package.json!npm', [
             'version': '0.1.1',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-stream/node_modules/glob2base/node_modules/find-index/package.json',
             'main': 'index.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
-            'name': 'globule',
-            'version': '0.1.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-watcher/node_modules/gaze/node_modules/globule/package.json',
-            'main': 'lib/globule',
             'globalBrowser': {},
             'browser': {}
         },
@@ -9327,14 +9327,6 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'aws-sign2',
-            'version': '0.6.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/aws-sign2/package.json',
-            'main': 'index.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
             'name': 'quote-stream',
             'version': '1.0.2',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/quote-stream/package.json',
@@ -9351,10 +9343,10 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'bl',
-            'version': '1.1.2',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/bl/package.json',
-            'main': 'bl.js',
+            'name': 'static-module',
+            'version': '1.3.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/package.json',
+            'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -9367,14 +9359,6 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'combined-stream',
-            'version': '1.0.5',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/combined-stream/package.json',
-            'main': './lib/combined_stream',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
             'name': 'extend',
             'version': '3.0.0',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/extend/package.json',
@@ -9383,9 +9367,17 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'static-module',
-            'version': '1.3.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/package.json',
+            'name': 'bl',
+            'version': '1.1.2',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/bl/package.json',
+            'main': 'bl.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'forever-agent',
+            'version': '0.6.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/forever-agent/package.json',
             'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
@@ -9399,25 +9391,9 @@ define('package.json!npm', [
             'browser': './lib/browser'
         },
         {
-            'name': 'is-typedarray',
-            'version': '1.0.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/is-typedarray/package.json',
-            'main': 'index.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
-            'name': 'hawk',
-            'version': '3.1.3',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/hawk/package.json',
-            'main': 'lib/index.js',
-            'globalBrowser': {},
-            'browser': './lib/browser.js'
-        },
-        {
-            'name': 'forever-agent',
-            'version': '0.6.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/forever-agent/package.json',
+            'name': 'aws-sign2',
+            'version': '0.6.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/aws-sign2/package.json',
             'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
@@ -9431,6 +9407,38 @@ define('package.json!npm', [
             'browser': {}
         },
         {
+            'name': 'combined-stream',
+            'version': '1.0.5',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/combined-stream/package.json',
+            'main': './lib/combined_stream',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'hawk',
+            'version': '3.1.3',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/hawk/package.json',
+            'main': 'lib/index.js',
+            'globalBrowser': {},
+            'browser': './lib/browser.js'
+        },
+        {
+            'name': 'isstream',
+            'version': '0.1.2',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/isstream/package.json',
+            'main': 'isstream.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'is-typedarray',
+            'version': '1.0.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/is-typedarray/package.json',
+            'main': 'index.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
             'name': 'http-signature',
             'version': '1.1.1',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/http-signature/package.json',
@@ -9439,10 +9447,10 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'isstream',
-            'version': '0.1.2',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/isstream/package.json',
-            'main': 'isstream.js',
+            'name': 'json-stringify-safe',
+            'version': '5.0.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/json-stringify-safe/package.json',
+            'main': 'stringify.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -9458,14 +9466,6 @@ define('package.json!npm', [
             'version': '1.4.7',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/node-uuid/package.json',
             'main': './uuid.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
-            'name': 'json-stringify-safe',
-            'version': '5.0.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/json-stringify-safe/package.json',
-            'main': 'stringify.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -9532,6 +9532,13 @@ define('package.json!npm', [
             'browser': {}
         },
         {
+            'name': 'then-request',
+            'version': '2.2.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/sync-request/node_modules/then-request/package.json',
+            'globalBrowser': {},
+            'browser': './browser.js'
+        },
+        {
             'name': 'wordwrap',
             'version': '0.0.3',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/topojson/node_modules/optimist/node_modules/wordwrap/package.json',
@@ -9554,13 +9561,6 @@ define('package.json!npm', [
             'main': 'build/queue.js',
             'globalBrowser': {},
             'browser': {}
-        },
-        {
-            'name': 'then-request',
-            'version': '2.2.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/sync-request/node_modules/then-request/package.json',
-            'globalBrowser': {},
-            'browser': './browser.js'
         },
         {
             'name': 'strip-ansi',
@@ -9598,26 +9598,18 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'balanced-match',
-            'version': '0.3.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-stream/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match/package.json',
-            'main': 'index.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
-            'name': 'concat-map',
-            'version': '0.0.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-stream/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map/package.json',
-            'main': 'index.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
             'name': 'lodash',
             'version': '1.0.2',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-watcher/node_modules/gaze/node_modules/globule/node_modules/lodash/package.json',
             'main': './dist/lodash.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'glob',
+            'version': '3.1.21',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-watcher/node_modules/gaze/node_modules/globule/node_modules/glob/package.json',
+            'main': 'glob.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -9630,10 +9622,18 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'glob',
-            'version': '3.1.21',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-watcher/node_modules/gaze/node_modules/globule/node_modules/glob/package.json',
-            'main': 'glob.js',
+            'name': 'balanced-match',
+            'version': '0.3.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-stream/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match/package.json',
+            'main': 'index.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'concat-map',
+            'version': '0.0.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-stream/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map/package.json',
+            'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -9680,16 +9680,16 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'repeating',
-            'version': '2.0.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/meow/node_modules/redent/node_modules/indent-string/node_modules/repeating/package.json',
+            'name': 'path-type',
+            'version': '1.1.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/meow/node_modules/read-pkg-up/node_modules/read-pkg/node_modules/path-type/package.json',
             'globalBrowser': {},
             'browser': {}
         },
         {
-            'name': 'path-type',
-            'version': '1.1.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/meow/node_modules/read-pkg-up/node_modules/read-pkg/node_modules/path-type/package.json',
+            'name': 'repeating',
+            'version': '2.0.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/meow/node_modules/redent/node_modules/indent-string/node_modules/repeating/package.json',
             'globalBrowser': {},
             'browser': {}
         },
@@ -9742,20 +9742,20 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'readable-stream',
-            'version': '1.0.34',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/node_modules/readable-stream/package.json',
-            'main': 'readable.js',
-            'globalBrowser': {},
-            'browser': { 'util': '@empty' }
-        },
-        {
             'name': 'quote-stream',
             'version': '0.0.0',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/node_modules/quote-stream/package.json',
             'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
+        },
+        {
+            'name': 'readable-stream',
+            'version': '1.0.34',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/node_modules/readable-stream/package.json',
+            'main': 'readable.js',
+            'globalBrowser': {},
+            'browser': { 'util': '@empty' }
         },
         {
             'name': 'shallow-copy',
@@ -9861,6 +9861,14 @@ define('package.json!npm', [
             'browser': {}
         },
         {
+            'name': 'assert-plus',
+            'version': '0.2.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/http-signature/node_modules/assert-plus/package.json',
+            'main': './assert.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
             'name': 'jsprim',
             'version': '1.2.2',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/http-signature/node_modules/jsprim/package.json',
@@ -9869,10 +9877,10 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'assert-plus',
-            'version': '0.2.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/http-signature/node_modules/assert-plus/package.json',
-            'main': './assert.js',
+            'name': 'sshpk',
+            'version': '1.8.3',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/http-signature/node_modules/sshpk/package.json',
+            'main': 'lib/index.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -9907,14 +9915,6 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'sshpk',
-            'version': '1.8.3',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/http-signature/node_modules/sshpk/package.json',
-            'main': 'lib/index.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
             'name': 'promise',
             'version': '7.1.1',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/sync-request/node_modules/then-request/node_modules/promise/package.json',
@@ -9931,10 +9931,9 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'graceful-fs',
-            'version': '1.2.3',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-watcher/node_modules/gaze/node_modules/globule/node_modules/glob/node_modules/graceful-fs/package.json',
-            'main': 'graceful-fs.js',
+            'name': 'invert-kv',
+            'version': '1.0.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/yargs/node_modules/os-locale/node_modules/lcid/node_modules/invert-kv/package.json',
             'globalBrowser': {},
             'browser': {}
         },
@@ -9942,6 +9941,14 @@ define('package.json!npm', [
             'name': 'number-is-nan',
             'version': '1.0.0',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/yargs/node_modules/string-width/node_modules/code-point-at/node_modules/number-is-nan/package.json',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'graceful-fs',
+            'version': '1.2.3',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-watcher/node_modules/gaze/node_modules/globule/node_modules/glob/node_modules/graceful-fs/package.json',
+            'main': 'graceful-fs.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -9954,25 +9961,18 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'sigmund',
-            'version': '1.0.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-watcher/node_modules/gaze/node_modules/globule/node_modules/minimatch/node_modules/sigmund/package.json',
-            'main': 'sigmund.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
-            'name': 'invert-kv',
-            'version': '1.0.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/yargs/node_modules/os-locale/node_modules/lcid/node_modules/invert-kv/package.json',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
             'name': 'lru-cache',
             'version': '2.7.3',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-watcher/node_modules/gaze/node_modules/globule/node_modules/minimatch/node_modules/lru-cache/package.json',
             'main': 'lib/lru-cache.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'sigmund',
+            'version': '1.0.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-watcher/node_modules/gaze/node_modules/globule/node_modules/minimatch/node_modules/sigmund/package.json',
+            'main': 'sigmund.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -9995,13 +9995,6 @@ define('package.json!npm', [
             'name': 'pinkie',
             'version': '2.0.4',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/meow/node_modules/read-pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules/pinkie/package.json',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
-            'name': 'is-finite',
-            'version': '1.0.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/meow/node_modules/redent/node_modules/indent-string/node_modules/repeating/node_modules/is-finite/package.json',
             'globalBrowser': {},
             'browser': {}
         },
@@ -10035,18 +10028,9 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'esprima',
-            'version': '1.1.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/node_modules/escodegen/node_modules/esprima/package.json',
-            'main': 'esprima.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
-            'name': 'estraverse',
-            'version': '1.5.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/node_modules/escodegen/node_modules/estraverse/package.json',
-            'main': 'estraverse.js',
+            'name': 'is-finite',
+            'version': '1.0.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/gulp-util/node_modules/dateformat/node_modules/meow/node_modules/redent/node_modules/indent-string/node_modules/repeating/node_modules/is-finite/package.json',
             'globalBrowser': {},
             'browser': {}
         },
@@ -10063,6 +10047,22 @@ define('package.json!npm', [
             'version': '0.1.43',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/node_modules/escodegen/node_modules/source-map/package.json',
             'main': './lib/source-map.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'esprima',
+            'version': '1.1.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/node_modules/escodegen/node_modules/esprima/package.json',
+            'main': 'esprima.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'estraverse',
+            'version': '1.5.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/node_modules/escodegen/node_modules/estraverse/package.json',
+            'main': 'estraverse.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -10123,6 +10123,14 @@ define('package.json!npm', [
             'browser': {}
         },
         {
+            'name': 'graceful-readlink',
+            'version': '1.0.1',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/har-validator/node_modules/commander/node_modules/graceful-readlink/package.json',
+            'main': 'index.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
             'name': 'ansi-styles',
             'version': '2.2.1',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/har-validator/node_modules/chalk/node_modules/ansi-styles/package.json',
@@ -10130,9 +10138,9 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'graceful-readlink',
-            'version': '1.0.1',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/har-validator/node_modules/commander/node_modules/graceful-readlink/package.json',
+            'name': 'generate-object-property',
+            'version': '1.2.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/node_modules/generate-object-property/package.json',
             'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
@@ -10150,14 +10158,6 @@ define('package.json!npm', [
             'version': '2.0.0',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/node_modules/jsonpointer/package.json',
             'main': './jsonpointer',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
-            'name': 'generate-object-property',
-            'version': '1.2.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/node_modules/generate-object-property/package.json',
-            'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -10218,6 +10218,14 @@ define('package.json!npm', [
             'browser': {}
         },
         {
+            'name': 'jsbn',
+            'version': '0.1.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/http-signature/node_modules/sshpk/node_modules/jsbn/package.json',
+            'main': 'index.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
             'name': 'tweetnacl',
             'version': '0.13.3',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/http-signature/node_modules/sshpk/node_modules/tweetnacl/package.json',
@@ -10227,14 +10235,6 @@ define('package.json!npm', [
                 'buffer': '@empty',
                 'crypto': '@empty'
             }
-        },
-        {
-            'name': 'jsbn',
-            'version': '0.1.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/http-signature/node_modules/sshpk/node_modules/jsbn/package.json',
-            'main': 'index.js',
-            'globalBrowser': {},
-            'browser': {}
         },
         {
             'name': 'jodid25519',
@@ -10272,14 +10272,6 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'amdefine',
-            'version': '1.0.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/node_modules/escodegen/node_modules/source-map/node_modules/amdefine/package.json',
-            'main': './amdefine.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
             'name': 'esprima',
             'version': '1.0.4',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/node_modules/static-eval/node_modules/escodegen/node_modules/esprima/package.json',
@@ -10296,6 +10288,14 @@ define('package.json!npm', [
             'browser': {}
         },
         {
+            'name': 'amdefine',
+            'version': '1.0.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/node_modules/escodegen/node_modules/source-map/node_modules/amdefine/package.json',
+            'main': './amdefine.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
             'name': 'source-map',
             'version': '0.5.6',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/node_modules/static-eval/node_modules/escodegen/node_modules/source-map/package.json',
@@ -10304,18 +10304,18 @@ define('package.json!npm', [
             'browser': {}
         },
         {
-            'name': 'object-keys',
-            'version': '0.4.0',
-            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/node_modules/through2/node_modules/xtend/node_modules/object-keys/package.json',
-            'main': 'index.js',
-            'globalBrowser': {},
-            'browser': {}
-        },
-        {
             'name': 'is-property',
             'version': '1.0.2',
             'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/datalib/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/node_modules/generate-object-property/node_modules/is-property/package.json',
             'main': 'is-property.js',
+            'globalBrowser': {},
+            'browser': {}
+        },
+        {
+            'name': 'object-keys',
+            'version': '0.4.0',
+            'fileUrl': 'file:/home/antony/git/mev2/mev/web/src/main/javascript/edu/dfci/cccb/mev/web/ui/node_modules/mev-wgcna/node_modules/mev-network-graph/node_modules/vega/node_modules/d3-geo-projection/node_modules/brfs/node_modules/static-module/node_modules/through2/node_modules/xtend/node_modules/object-keys/package.json',
+            'main': 'index.js',
             'globalBrowser': {},
             'browser': {}
         },
@@ -35425,16 +35425,148 @@ define('app/views/root/controllers/RootCtrl', [], function () {
         'sidepanelSrvc'
     ];
     RootCtrl.$name = 'RootCtrl';
+    RootCtrl.$provider = 'controller';
     return RootCtrl;
+});
+/*mev-google-analytics@0.0.1#src/main/router/mevGaRun*/
+define('mev-google-analytics@0.0.1#src/main/router/mevGaRun', ['lodash'], function (_) {
+    var run = function ($rootScope, $window, mevGaTracker, $state, $stateParams) {
+        $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+            mevGaTracker.pageView('view');
+        });
+        $rootScope.$on('openRefine:loadedAnnotations', function (event, project) {
+            var page = _.get(project, 'metadata.name');
+            if (page)
+                mevGaTracker.pageView(page);
+        });
+        function parseEvent(event, label, value) {
+            var re = /(mev|mui)(:dataset|:workspace)/g;
+            var result = re.exec(event.name);
+            if (!result) {
+                console.warning('Failed to parse GA event', event, label);
+                return {
+                    category: event.name,
+                    action: 'fired',
+                    label: label,
+                    value: value
+                };
+            } else {
+                var action = event.name.substring(re.lastIndex);
+                if (action.charAt(0) === ':')
+                    action = action.substring(1);
+                return {
+                    category: result[0],
+                    action: action,
+                    label: label,
+                    value: value
+                };
+            }
+        }
+        function appendAnalysisInfo(event) {
+            var analysis = $state.$current.path[$state.$current.path.length - 1].locals.globals.analysis || {};
+            if (analysis.params && analysis.params.analysisType)
+                event.category += ':analysis:' + analysis.params.analysisType;
+            return event;
+        }
+        $rootScope.$on('mev:dataset:activated', function (event, dataset) {
+            mevGaTracker.event(parseEvent(event, dataset.id));
+        });
+        $rootScope.$on('mev:dataset:exported', function (event, dataset) {
+            mevGaTracker.event(parseEvent(event, dataset.id));
+        });
+        $rootScope.$on('mev:dataset:imported', function (event, file) {
+            mevGaTracker.event(parseEvent(event, file.name));
+        });
+        $rootScope.$on('mev:dataset:uploaded', function (event, file) {
+            mevGaTracker.event(parseEvent(event, file.name));
+        });
+        $rootScope.$on('mui:dataset:selections:added', function (event, dimension) {
+            mevGaTracker.event(appendAnalysisInfo(parseEvent(event, dimension)));
+        });
+        $rootScope.$on('mui:dataset:selections:deleted', function (event, dimension) {
+            mevGaTracker.event(appendAnalysisInfo(parseEvent(event, dimension)));
+        });
+        $rootScope.$on('mev:workspace:imports:geo:search:started', function (event, keywords) {
+            mevGaTracker.event(parseEvent(event, keywords));
+        });
+        $rootScope.$on('mev:workspace:imports:geo:search:notfound', function (event, keywords) {
+            mevGaTracker.event(parseEvent(event, keywords));
+        });
+        $rootScope.$on('mev:workspace:imports:geo:search:found', function (event, keywords, count) {
+            mevGaTracker.event(parseEvent(event, keywords, count));
+        });
+        function analysisEvent(type, status) {
+            return {
+                category: 'mev:dataset:analysis',
+                action: type,
+                label: type + ':' + status
+            };
+        }
+        $rootScope.$on('event:analysis:start', function (type, name, data) {
+            mevGaTracker.event(analysisEvent(type, 'start'));
+        });
+        $rootScope.$on('event:analysis:success', function (type, name, data) {
+            mevGaTracker.event(analysisEvent(type, 'success'));
+        });
+        $rootScope.$on('event:analysis:failure', function (type, name, data) {
+            mevGaTracker.event(analysisEvent(type, 'failure'));
+        });
+    };
+    run.$inject = [
+        '$rootScope',
+        '$window',
+        'mevGaTracker',
+        '$state',
+        '$stateParams'
+    ];
+    run.$provider = 'run';
+    return run;
+});
+/*mev-google-analytics@0.0.1#src/main/service/mevGaTracker*/
+define('mev-google-analytics@0.0.1#src/main/service/mevGaTracker', [], function () {
+    var service = function ($state, $stateParams) {
+        var _self = this;
+        _self.pageView = function (page) {
+            if (ga && page) {
+                var pageRoot = $state.$current.name.split('.').join('/').replace('root', '');
+                if ($stateParams && $stateParams.analysisType)
+                    pageRoot += '/' + $stateParams.analysisType;
+                if (!_.startsWith(page, '/'))
+                    pageRoot += '/';
+                ga('set', 'page', pageRoot + page);
+                ga('send', 'pageview');
+            }
+        };
+        _self.event = function (event) {
+            if (ga && event) {
+                ga('send', 'event', event.category, event.action, event.label, event.value);
+            }
+        };
+    };
+    service.$inject = [
+        '$state',
+        '$stateParams'
+    ];
+    service.$provider = 'service';
+    service.$name = 'mevGaTracker';
+    return service;
+});
+/*mev-google-analytics@0.0.1#src/main/mev-google-analytics*/
+define('mev-google-analytics@0.0.1#src/main/mev-google-analytics', [
+    'mui',
+    './router/mevGaRun',
+    './service/mevGaTracker'
+], function (ng) {
+    return ng.module('mev-google-analytics', arguments, arguments);
 });
 /*app/views/root/views.root.module*/
 define('app/views/root/views.root.module', [
     'ng',
     'lodash',
-    './controllers/RootCtrl'
+    './controllers/RootCtrl',
+    'mev-google-analytics'
 ], function (ng, _, RootCtrl) {
-    var module = ng.module('mui.views.root', ['mui.widgets.common']);
-    module.controller(RootCtrl.$name, RootCtrl);
+    var module = ng.module('mui.views.root', ['mui.widgets.common'], arguments);
     return module;
 });
 /*app/views/import/ImportVM*/
