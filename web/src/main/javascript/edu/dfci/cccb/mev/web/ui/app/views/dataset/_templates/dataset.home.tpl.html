@@ -1,9 +1,21 @@
 <div class="column-wrapper">
 	<ul class="nav nav-tabs column-header" id="importTabs">
 		<li id="dashboard_tab" class="active"><a href="#dashboard" data-toggle="tab" target="_self">Dashboard</a></li>
+		<div class="action-menu" mui-paste="action-menu"></div>
 	</ul>	
 	<div class="tab-content column-body">
-		<div class="tab-pane active" id="dashboard">
+		<div class="tab-pane active results-wrapper" id="dashboard">
+			<div class="results-header clearfix">
+				<!--      	<div class="btn-toolbar" role="toolbar" mui-yank="action-menu"> -->
+				<div class="btn-toolbar pull-right" role="toolbar" mui-yank="action-menu">
+					<div class="btn-group">
+						<a class="btn btn-success " href="/dataset/{{DatasetHomeVM.project.dataset.datasetName}}/data/?format=tsv" download='{{DatasetHomeVM.getDownloadFileName()}}'>
+							Dataset TSV
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="results-body">
 				<mui-dashboard dashboard-items="DatasetHomeVM.project.dataset.dashboardItems" h-stretch-items="false" mui-context="{project: DatasetHomeVM.project, heatmapView: DatasetHomeVM.heatmapView}">
 				<!-- 	<mui-dashboard-item name="hi" title="hi ;)" content-width="500" content-height="200">hello</mui-dashboard-item> -->
 				<!-- 	<mui-dashboard-item name="myturn"  title="my turn" content-width="500" content-height="200">Ee-ee-ee-ee</mui-dashboard-item> -->
@@ -31,7 +43,7 @@
 <!-- 						</mui-dashboard-item>	 -->
 
 				</mui-dashboard>
-
+			</div>
 		</div>				
 	</div>
 </div>
