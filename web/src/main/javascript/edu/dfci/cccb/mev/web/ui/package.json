@@ -101,7 +101,8 @@
       "jsLru": "../vendor/rsms/js-lru/lru.js",
       "js/orefine/*": "../javascript/orefine/*.js",
       "js/project/*": "../javascript/project/*.js",
-      "js/alertservice/*": "../javascript/alertservice/*.js"
+      "js/alertservice/*": "../javascript/alertservice/*.js",
+      "js/setmanager/*": "../javascript/setmanager/*.js"
     },
     "map": {
       "ng": "mui",

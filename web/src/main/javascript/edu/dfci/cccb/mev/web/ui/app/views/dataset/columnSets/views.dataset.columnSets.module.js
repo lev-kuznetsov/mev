@@ -3,7 +3,7 @@ define(["mui", "lodash",
 	"../selectionSets/views.dataset.selectionSets.module"],
 function(ng, _){
 	
-	var module=ng.module("mui.views.dataset.columnSets", arguments, arguments);
+	var module=ng.module("mui.views.dataset.columnSets", ["Mev.SetManager"], arguments);
 	
 	module.config(['$stateProvider', 'SelectionSetResolverProvider',
 	   	     	function($stateProvider, SelectionSetResolverProvider){
