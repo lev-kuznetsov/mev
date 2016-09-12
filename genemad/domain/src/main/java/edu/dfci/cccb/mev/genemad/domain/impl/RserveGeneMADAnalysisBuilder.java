@@ -27,7 +27,7 @@ public class RserveGeneMADAnalysisBuilder extends AbstractDispatchedRAnalysisBui
     return new SimpleGeneMADAnalysis (this.name(), this.type(), dtoResult);
   }
   
-  @Callback
+  @Callback(Callback.CallbackType.FAIL)
   private void cb () {
 	  log.error ("RserveGeneMADAnalysisBuilder ERROR: "+error);
   }

@@ -1,8 +1,6 @@
 define(["mui",
     "./router/mevGaRun",
-    "./service/mevGaStateTracker.js",
-    "./service/mevGaPageTracker.js",
-    "./service/mevGaTracker.js"
+    "./service/mevGaTracker"
 ], function(ng){
     return ng.module("mev-google-analytics", arguments, arguments);
 });

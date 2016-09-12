@@ -1,5 +1,5 @@
 define(["lodash"], function(_){
-    var run = function($rootScope, $window, mevGaTracker, mevAnalysisEventBus, $state, $stateParams, mevContext){
+    var run = function($rootScope, $window, mevGaTracker, $state, $stateParams){
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
             mevGaTracker.pageView("view")
         });
@@ -34,7 +34,7 @@ define(["lodash"], function(_){
             }
         }
         function appendAnalysisInfo(event){
-            var analysis = mevContext.get();
+            var analysis = $state.$current.path[$state.$current.path.length-1].locals.globals.analysis || {};
             if(analysis.params && analysis.params.analysisType)
                 event.category += ":analysis:"+analysis.params.analysisType;
             return event;
@@ -75,13 +75,13 @@ define(["lodash"], function(_){
                 label: type+":"+status
             }
         }
-        mevAnalysisEventBus.onAnalysisStarted($rootScope, function(type, name, data){
+        $rootScope.$on("event:analysis:start", function(type, name, data){
             mevGaTracker.event(analysisEvent(type, "start"));
         });
-        mevAnalysisEventBus.onAnalysisSuccess($rootScope, function(type, name, data){
+        $rootScope.$on("event:analysis:success", function(type, name, data){
             mevGaTracker.event(analysisEvent(type, "success"));
         });
-        mevAnalysisEventBus.onAnalysisFailure($rootScope, function(type, name, data){
+        $rootScope.$on("event:analysis:failure", function(type, name, data){
             mevGaTracker.event(analysisEvent(type, "failure"));
         });
         // $rootScope.$on("mui:modal:shown", function(event, id, header){
@@ -89,7 +89,7 @@ define(["lodash"], function(_){
         //     mevGaTracker.pageView(page);
         // });
     };
-    run.$inject=["$rootScope", "$window", "mevGaTracker", "mevAnalysisEventBus", "$state", "$stateParams", "mevContext"];
+    run.$inject=["$rootScope", "$window", "mevGaTracker", "$state", "$stateParams"];
     run.$provider="run";
     return run;
 });
