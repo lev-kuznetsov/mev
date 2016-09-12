@@ -1,5 +1,5 @@
 define(['jquery','mui'], function(jquery, ng){
-	ng.module( 'Mev.SetManager', ["mevDomainCommon"])
+	return ng.module( 'Mev.SetManager', ["mevDomainCommon"])
 		.directive('selectionSetManager', [function (){
 			  return {				  		  
 				  scope: {
