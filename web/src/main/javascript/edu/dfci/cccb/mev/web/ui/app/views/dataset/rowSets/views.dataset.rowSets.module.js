@@ -1,6 +1,7 @@
-define(["ng", "lodash",
+define(["mui", "lodash",
 	"./edit/views.dataset.rowSets.edit.module",
-	"../selectionSets/views.dataset.selectionSets.module"],
+	"../selectionSets/views.dataset.selectionSets.module",
+	"js/setmanager/SetManager"],
 function(ng, _){
 	
 	var module=ng.module("mui.views.dataset.rowSets", arguments, arguments);

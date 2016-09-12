@@ -1,5 +1,5 @@
-define(['jquery','angular'], function(jquery, angular){
-	angular.module( 'Mev.SetManager', ["mevDomainCommon"])
+define(['jquery','mui'], function(jquery, ng){
+	return ng.module( 'Mev.SetManager', ["mevDomainCommon"])
 		.directive('selectionSetManager', [function (){
 			  return {				  		  
 				  scope: {
@@ -42,8 +42,8 @@ define(['jquery','angular'], function(jquery, angular){
 			};
 		}])		
 		.controller('SelectionSetManagerCtl', 
-	    ['$scope', '$element', '$attrs', '$routeParams', '$http', 'alertService', "mevContext",
-		function($scope, $element, $attrs, $routeParams, $http, alertService, mevContext){
+	    ['$scope', '$element', '$attrs', '$routeParams', '$http', 'alertService', "mevContext", "$rootScope",
+		function($scope, $element, $attrs, $routeParams, $http, alertService, mevContext, $rootScope){
 			
 			$scope.sayHelloCtl = function() {
 				alert($scope.heatmapId + ":" + $scope.dataset.selections.column.values.length + ":" + $scope.$id);
@@ -83,25 +83,27 @@ define(['jquery','angular'], function(jquery, angular){
 			$scope.getSelected = getSelected;
 			
 			function pushNewSelection(dimension, selectedSets){
-			    $http({
-                    method:"POST", 
-               url:"/dataset/" + ($routeParams.datasetName || $scope.heatmapData.id) + "/" 
-                + dimension
-                + "/selection/",
-               data:{
-                   name: $scope.selectionParams[dimension].name,
-                   properties: {
-                       selectionDescription: '',
-                           selectionColor: '#'+('00000'+(Math.random()*0xFFFFFF<<0)).toString(16).substr(-6),                     
-                       },
-                        keys: selectedSets
-                    }
-               })
+				var selection = {
+					name: $scope.selectionParams[dimension].name,
+					properties: {
+						selectionDescription: '',
+						selectionColor: '#'+('00000'+(Math.random()*0xFFFFFF<<0)).toString(16).substr(-6),
+					},
+					keys: selectedSets
+				};
+
+				$http({
+                   method:"POST",
+				   url:"/dataset/" + ($routeParams.datasetName || $scope.heatmapData.id) + "/"
+					+ dimension
+					+ "/selection/",
+				   data: selection
+				})
                .success(function(response){
                         $scope.$emit('SeletionAddedEvent', dimension);
                         var message = "Added selection with name " + $scope.selectionParams[dimension].name + ".";
                         var header = "Heatmap Selection Addition";
-                         
+				   		$rootScope.$broadcast("mui:dataset:selections:added", dimension.toLowerCase(), selection);
                         alertService.success(message,header);
                })
                .error(function(data, status, headers, config) {
