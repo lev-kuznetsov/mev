@@ -1,0 +1,7 @@
+Sample	Status	days_to_death
+YEW1_Control	Control	80
+YEW2_Control	Control	79
+YEW3_Control	Control	81 
+YEW4_Treated	Treated	10
+YEW5_Treated	Treated	12
+YEW6_Treated	Treated	12

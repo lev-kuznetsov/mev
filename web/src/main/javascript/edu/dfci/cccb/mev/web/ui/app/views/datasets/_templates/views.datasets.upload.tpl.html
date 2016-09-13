@@ -4,6 +4,20 @@
     </div>
     <div class="col-md-9">
         <h4>Upload a dataset</h4>
-        <p>Use the Upload button to upload a tab-delimited (tsv) data file. You can also import an MeV dataset that you have previously exported as a zip archive</p>
+        <p>Use the Upload button to upload a tab-delimited (tsv) data file.  The first row is assumed to contain headers and the first column contains the feature names (i.e. gene names).
+            Here is an example <a href="/container/ui/data/raw_count_matrix.rand.primary.counts.tsv">RNASeq read count file</a>
+            and an example of <a target="_blank" href="/container/ui/data/metadata.txt">metadata file</a> (metadata.txt) that can loaded once entered into the platform.</p>
+
+        <h4>MeV Dataset Archive</h4>
+        <p>You can download the entire MeV dataset as a ZIP archive by clicking the <span class="text-success"><i class="fa fa-file-archive-o text-success"></i> icon</span> next to the dataset name. This archive will contain the original data as well as any analyses and annotations.</p>
+        <p>The MeV archive can be uploaded back into MeV for viewing or continued analysis. To do so use the Upload button.</p>
+
+        <h4>Note on Data Storage</h4>
+        <p>MeV does not store your data on the server beyond the duration of your session. Once your session times out - all your data is deleted from the server.</p>
+        <p>Your dataset and analyses are saved to the browser's local storage on your computer. You will find them under "Offline Datatasets" section below "Your Datasets"</p>
+        <p>You may activate an offline dataset for viewing or further analysis by clicking the <span class="text-success"><i class="glyphicon glyphicon-cloud-upload"></i> icon</span> next to the offline dataset</p>
+        <p>Please note, the amount of disk space available to save offline datasets is determined by your browser. If this disk quota is exceeded the browser will delete the offline datasets.</p>
+        <p>To ensure your MeV dataset is saved indefinitely you may download it to your machine as a zip archive.</p>
+
     </div>
 </div>
