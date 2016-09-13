@@ -10,7 +10,27 @@ define(["lodash", "./UploadDataset.tpl.html"], function(_, template){
                 elButton.click(function() {
                     elInput.click();
                 });
-
+                
+                scope.vm = {
+                    isInProgress: false,
+                    progress: function(progress, event){
+                        scope.$apply(function(){
+                            scope.vm.percent = progress;
+                            if(progress>=100)
+                                scope.vm.isInProgress = false;
+                            else
+                                scope.vm.isInProgress = true;
+                        })
+                    }
+                };
+                scope.$on("mev:dataset:upload:started", function(){
+                    scope.vm.isInProgress = true;
+                    scope.$apply();
+                });
+                scope.$on("mev:dataset:uploaded", function(){
+                    scope.vm.isInProgress = false;
+                    scope.$apply();
+                });
                 elInput.on(
                     "change",
                     function() {

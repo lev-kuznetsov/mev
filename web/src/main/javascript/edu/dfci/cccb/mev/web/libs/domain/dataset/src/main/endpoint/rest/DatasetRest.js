@@ -64,15 +64,19 @@ define(["lodash"], function(_){
             })
             return datasetsResource;
         };
-        DatasetResource.uploadFile = function (file) {
+        DatasetResource.uploadFile = function (file, progressCallback) {
             var formdata = new FormData;
             formdata.append('upload', file);
             formdata.append('name', file.name);
             var xhr = new XMLHttpRequest();
-            xhr.upload.addEventListener("progress", function (e) {
-                return;
-            });
+            if(progressCallback)
+                xhr.upload.onprogress = function (event) {
+                   console.debug("upload", event);
+                   if(event.lengthComputable)
+                       progressCallback(Math.floor(event.loaded/event.total*100), event)
+                };
             xhr.onreadystatechange = function () {
+                console.debug("xhr", xhr);
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     $rootScope.$broadcast("mev:dataset:uploaded", file);
                     DatasetResource.getAll();
@@ -81,6 +85,7 @@ define(["lodash"], function(_){
             };
             xhr.open("POST", "/dataset", true);
             xhr.send(formdata);
+            $rootScope.$broadcast("mev:dataset:upload:started", file);
         };
         DatasetResource.activate = function(dataset){
             return mevDb.getDataset(dataset.id)
