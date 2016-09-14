@@ -11,6 +11,10 @@ define(["lodash"], function(_){
                 'subset': {
                     url: '/dataset/:datasetName/data/subset/export',
                     method: "POST"
+                },
+                'delete': {
+                    url: '/dataset/:datasetName',
+                    method: "DELETE"
                 }
             });
         var DatasetResource = Object.create(resource);
@@ -204,6 +208,17 @@ define(["lodash"], function(_){
                         });
                 });
         }
+        DatasetResource.delete = function (params, data, callback) {
+            var datasetsResource = resource.delete(params, data, callback);
+            datasetsResource.$promise
+                .then(function (response) {
+                    DatasetResource.getAll();
+                })
+                .catch(function(e){
+                    throw e;
+                });
+            return datasetsResource;
+        };
 
         return DatasetResource;
     }
