@@ -20,7 +20,7 @@ define(["../router/HclState.tpl.html",
 				new SelectParam({
 					"id": "metric",
 					"displayName": "Distance Metric",
-					"options": ["euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"],
+					"options": ["euclidean", "maximum", "manhattan", "canberra", "binary", "pearson", "correlation", "spearman"],
 					"value": "euclidean",
 					"required": true
 				}),
