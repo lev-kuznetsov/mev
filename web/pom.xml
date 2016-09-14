@@ -914,6 +914,7 @@
 	                    <include>ui/fonts/**</include>
 	                    <include>ui/less/**</include>
                         <include>ui/app/**</include>
+                        <include>ui/data/**</include>
                         <include>ui/node_modules/*/*</include>
                         <include>ui/node_modules/mev-steal-bootstrap/**/*</include>
                       </includes>                      
