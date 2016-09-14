@@ -84,6 +84,11 @@ define(["lodash"], function(_){"use strict";
                     })
                 })
         }
+        function deactivate(datasetId){
+            return DatasetResource.delete({
+                datasetName: datasetId
+            }).$promise;
+        }
         this.getDatasets = getDatasets;
         this.getActiveDatasets = getActiveDatasets;
         this.getInactiveDatasets = getInactiveDatasets;
@@ -91,6 +96,7 @@ define(["lodash"], function(_){"use strict";
         this.deleteDataset = deleteDataset;
         this.getDataset = getDataset;
         this.exportDataset = exportDataset;
+        this.deactivate = deactivate;
     };
     service.$inject=["$http", "$q", "mevDb", "mevDatasetRest"];
     service.$name="mevWorkspace";
