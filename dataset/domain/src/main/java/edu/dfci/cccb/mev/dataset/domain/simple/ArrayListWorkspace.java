@@ -85,6 +85,14 @@ public class ArrayListWorkspace extends AbstractWorkspace implements AutoCloseab
     };
   }
 
+  private boolean hasSubsets(Dataset dataset){
+    for(String name : list()){
+      if(name.startsWith(dataset.name()+"--"))
+        return true;
+    }
+    return false;
+  }
+
   /* (non-Javadoc)
    * @see edu.dfci.cccb.mev.dataset.domain.Workspace#remove(java.lang.String) */
   @Override
@@ -95,7 +103,8 @@ public class ArrayListWorkspace extends AbstractWorkspace implements AutoCloseab
       if (dataset.name ().equals (name)) {
         datasets.remove ();
         try {
-          destroy (new Exception ("Failure to destroy dataset on removal from workspace"), dataset);
+          if(!hasSubsets(dataset))
+            destroy (new Exception ("Failure to destroy dataset on removal from workspace"), dataset);
         } catch (Exception e) {
           log.warn (e);
         }
