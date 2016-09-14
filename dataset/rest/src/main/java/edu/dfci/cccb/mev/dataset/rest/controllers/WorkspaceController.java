@@ -14,7 +14,9 @@
  */
 package edu.dfci.cccb.mev.dataset.rest.controllers;
 
+import static edu.dfci.cccb.mev.dataset.rest.resolvers.DatasetPathVariableMethodArgumentResolver.DATASET_URL_ELEMENT;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -51,6 +53,7 @@ import lombok.extern.log4j.Log4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.tools.tar.TarOutputStream;
 import org.springframework.aop.scope.ScopedObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -262,4 +265,11 @@ public class WorkspaceController {
     HttpSession session = attributes.getRequest().getSession(true);
     session.invalidate();
   }
+
+    @RequestMapping (value="/dataset/" + DATASET_URL_ELEMENT, method = DELETE)
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteByName (@PathVariable("dataset") String name) throws DatasetNotFoundException {
+        log.info ("Deleting dataset " + name);
+        workspace.remove(name);
+    }
 }

@@ -11,6 +11,10 @@ define(["lodash"], function(_){
                 'subset': {
                     url: '/dataset/:datasetName/data/subset/export',
                     method: "POST"
+                },
+                'delete': {
+                    url: '/dataset/:datasetName',
+                    method: "DELETE"
                 }
             });
         var DatasetResource = Object.create(resource);
@@ -64,23 +68,34 @@ define(["lodash"], function(_){
             })
             return datasetsResource;
         };
-        DatasetResource.uploadFile = function (file) {
+        DatasetResource.uploadFile = function (file, cbProgress, cbCompleted) {
             var formdata = new FormData;
             formdata.append('upload', file);
             formdata.append('name', file.name);
             var xhr = new XMLHttpRequest();
-            xhr.upload.addEventListener("progress", function (e) {
-                return;
-            });
+            if(cbProgress)
+                xhr.upload.onprogress = function (event) {
+                   console.debug("upload", event);
+                   if(event.lengthComputable)
+                       cbProgress(Math.floor(event.loaded/event.total*100), event);
+                };
             xhr.onreadystatechange = function () {
+                console.debug("xhr", xhr);
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    $rootScope.$broadcast("mev:dataset:uploaded", file);
+                    $rootScope.$apply(
+                        $rootScope.$broadcast.bind($rootScope, "mev:dataset:uploaded", file)
+                    );
+                    if(cbCompleted) cbCompleted();
                     DatasetResource.getAll();
                 }
                 ;
             };
             xhr.open("POST", "/dataset", true);
             xhr.send(formdata);
+            // $rootScope.$broadcast("mev:dataset:upload:started", file);
+            $rootScope.$apply(
+                $rootScope.$broadcast.bind($rootScope, "mev:dataset:upload:started", file)
+            );
         };
         DatasetResource.activate = function(dataset){
             return mevDb.getDataset(dataset.id)
@@ -122,25 +137,34 @@ define(["lodash"], function(_){
                 ? name.substring(0, name.length-4)
                 : name;
         }
-        DatasetResource.importZip = function(file){
+        DatasetResource.importZip = function(file, cbProgress, cbCompleted){
             return mevDb.deleteDataset(formatDatasetName(file.name))
                 .then(function(){
                     var formdata = new FormData;
                     formdata.append('upload', file);
                     formdata.append('name', file.name);
                     var xhr = new XMLHttpRequest();
-                    xhr.upload.addEventListener("progress", function (e) {
-                        return;
-                    });
+                    if(cbProgress)
+                        xhr.upload.onprogress = function (event) {
+                            console.debug("upload", event);
+                            if(event.lengthComputable)
+                                cbProgress(Math.floor(event.loaded/event.total*100), event);
+                        };
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState == 4 && xhr.status == 200) {
-                            $rootScope.$broadcast("mev:dataset:imported", file);
+                            $rootScope.$apply(
+                                $rootScope.$broadcast.bind($rootScope, "mev:dataset:imported", file)
+                            );
+                            if(cbCompleted) cbCompleted();
                             DatasetResource.getAll();
                         }
                         ;
                     };
                     xhr.open("POST", "/import/zip", true);
                     xhr.send(formdata);
+                    $rootScope.$apply(
+                        $rootScope.$broadcast.bind($rootScope, "mev:dataset:import:started", file)
+                    )
                 });
         };
         DatasetResource.export = function(dataset){
@@ -184,6 +208,17 @@ define(["lodash"], function(_){
                         });
                 });
         }
+        DatasetResource.delete = function (params, data, callback) {
+            var datasetsResource = resource.delete(params, data, callback);
+            datasetsResource.$promise
+                .then(function (response) {
+                    DatasetResource.getAll();
+                })
+                .catch(function(e){
+                    throw e;
+                });
+            return datasetsResource;
+        };
 
         return DatasetResource;
     }

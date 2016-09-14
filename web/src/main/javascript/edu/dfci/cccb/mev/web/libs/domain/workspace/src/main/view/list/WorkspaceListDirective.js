@@ -28,6 +28,11 @@ define(["./WorkspaceList.tpl.html", "./WorkspaceList.less"], function(tempalte){
                             return mevWorkspace.deleteDataset(datasetId)
                                 .then(updateDatasetList);
                     },
+                    deactivate: function(datasetId){
+                        if(confirm("Deactivate dataset '"+datasetId+"'?"))
+                            return mevWorkspace.deactivate(datasetId)
+                                .then(updateDatasetList);
+                    },
                     showStatus: function(row){
                         var status = row.getStatus();
                         return status;
