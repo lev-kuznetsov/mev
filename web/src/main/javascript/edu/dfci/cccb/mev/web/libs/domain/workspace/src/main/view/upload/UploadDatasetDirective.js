@@ -12,25 +12,30 @@ define(["lodash", "./UploadDataset.tpl.html"], function(_, template){
                 });
                 
                 scope.vm = {
-                    isInProgress: false,
-                    progress: function(progress, event){
+                    status: "idle",
+
+                    uploadProgress: function(progress, event){
                         scope.$apply(function(){
                             scope.vm.percent = progress;
                             if(progress>=100)
-                                scope.vm.isInProgress = false;
+                                scope.vm.status = "processing";
                             else
-                                scope.vm.isInProgress = true;
+                                scope.vm.status = "uploading";
                         })
+                    },
+                    completed: function(event){
+                        scope.vm.status="idle";
                     }
                 };
-                scope.$on("mev:dataset:upload:started", function(){
-                    scope.vm.isInProgress = true;
-                    scope.$apply();
-                });
-                scope.$on("mev:dataset:uploaded", function(){
-                    scope.vm.isInProgress = false;
-                    scope.$apply();
-                });
+
+                //not needed since using callback, but could be used in future
+                // scope.$on("mev:dataset:uploaded", function(){
+                //     scope.vm.status = "idle";
+                // });
+                // scope.$on("mev:dataset:imported", function(){
+                //     scope.vm.status = "idle";
+                // });
+
                 elInput.on(
                     "change",
                     function() {
@@ -41,9 +46,9 @@ define(["lodash", "./UploadDataset.tpl.html"], function(_, template){
                             if (files.length == input.files.length) {
                                 files.map(function(file){
                                     if(_.endsWith(file.name, ".zip"))
-                                        DatasetResource.importZip(file);
+                                        DatasetResource.importZip(file, scope.vm.uploadProgress, scope.vm.completed);
                                     else
-                                        DatasetResource.uploadFile(file);
+                                        DatasetResource.uploadFile(file, scope.vm.uploadProgress, scope.vm.completed);
                                 });
                             }
                         }
