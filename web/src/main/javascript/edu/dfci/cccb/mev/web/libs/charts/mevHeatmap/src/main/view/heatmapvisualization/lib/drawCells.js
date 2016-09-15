@@ -120,9 +120,12 @@ define(['./cellFilter', 'd3', "jquery", "save-svg-as-png"], function(cellFilter,
 		//Legend stuff
 		var rands = d3.range(0, 100);
 		
-		
+		var legendYOffset = 10;
+		var legendHeight = 220;
+		var legendBottom = legendYOffset + legendHeight;
+
 		var labelYScale = d3.scale.linear().domain([0, rands.length-1])
-			.range([300, 80]);
+			.range([legendBottom, legendYOffset]);
 		
 		var labelColorScale = d3.scale.linear().domain([0, rands.length-1])
 			.range([self.view.expression.min, self.view.expression.max]);
@@ -170,7 +173,7 @@ define(['./cellFilter', 'd3', "jquery", "save-svg-as-png"], function(cellFilter,
         
         var fo = self.DOM.legend.append("foreignObject").attr({
         	x: 30,
-        	y: 305,
+        	y: legendBottom + 5,
         	height: 50,
         	width: 50
         });
