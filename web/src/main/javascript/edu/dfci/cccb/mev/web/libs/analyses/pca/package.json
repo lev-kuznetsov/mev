@@ -19,8 +19,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "steal": "^0.12.9",
-    "steal-tools": "^0.12.4",
+    "steal": "^0.13.2",
+    "steal-tools": "^0.13.3",
     "system-text": "^0.1.0",
     "systemjs-plugin-json": "^0.1.0",
     "angular-ui-bootstrap": "^0.14.3",
