@@ -2,6 +2,8 @@ MultiExperiment Viewer
 
 ===
 
+[![Join the chat at https://gitter.im/dfci-cccb/mev](https://badges.gitter.im/dfci-cccb/mev.svg)](https://gitter.im/dfci-cccb/mev?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 The new web client MeV
  
 [![Build Status](https://travis-ci.org/dfci-cccb/mev.svg?branch=master)](https://travis-ci.org/dfci-cccb/mev)
