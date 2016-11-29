@@ -24,7 +24,7 @@ define(["lodash", "mev-analysis/src/type/model/AnalysisType",
                     new SelectParam({
                         "id": "type",
                         "displayName": "Type",
-                        "options": ["one sample", "two sample"],
+                        "options": ["two sample"],
                         "value": "two sample"
                     }),
                     new mevSelectionSetParam({
