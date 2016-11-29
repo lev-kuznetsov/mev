@@ -78,7 +78,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "linklocal link -r && linklocal list -r | bulk -c 'npm install --production'",
+    "dev": "linklocal link -r && linklocal list -r | bulk -c 'npm install'",
     "prepublish": "if [[ $NODE_ENV != 'production' ]]; then npm run dev; fi"
   },
   "system": {
