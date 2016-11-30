@@ -98,7 +98,10 @@ define(function(require){
 
 				scope.$on("mev.scatterPlot.selection", function($event, selected){					
 					scope.vm.selected = selected;
-					scope.curSelection = scope.vm.selected.items;
+					scope.curSelection.length = 0;
+					scope.vm.selected.items.map(function(item){
+						scope.curSelection.push(item);
+					});
 					console.debug("pca selection", scope.vm.bar);
 				});
 
