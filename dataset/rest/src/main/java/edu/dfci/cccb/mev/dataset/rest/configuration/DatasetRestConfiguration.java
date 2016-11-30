@@ -88,33 +88,14 @@ import edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgum
 @Import ({ DatasetDomainBuildersConfiguration.class })
 public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
 
-  private final LoadingCache<String, Workspace> googleWorkspaces =
-                                                                   CacheBuilder.newBuilder ()
-                                                                               .maximumSize (Long.MAX_VALUE)
-                                                                               .expireAfterWrite (Long.MAX_VALUE,
-                                                                                                  TimeUnit.DAYS)
-                                                                               .build (new CacheLoader<String, Workspace> () {
-
-                                                                                 @Override
-                                                                                 public Workspace load (String arg0) throws Exception {
-                                                                                   return nonCloseableProxy (new ArrayListWorkspace ());
-                                                                                 }
-                                                                               });
-
   // Domain conversational objects
 
   @Bean
   @Scope (value = SCOPE_SESSION, proxyMode = INTERFACES)
   public Workspace workspace () {
-    log.debug ("Supplying " + (SecurityContext.userSignedIn () ? "Google" : "regular") + " workspace");
-    if (SecurityContext.userSignedIn ())
-      try {
-        return googleWorkspaces.get (SecurityContext.getCurrentUser ().getId ());
-      } catch (ExecutionException e) {
-        throw new RuntimeException (e);
-      }
-    else
-      return new ArrayListWorkspace ();
+      Workspace workspace = new ArrayListWorkspace ();
+      log.info ("Supplying  workspace " + System.identityHashCode(workspace));
+      return workspace;
   }
 
   @Bean
