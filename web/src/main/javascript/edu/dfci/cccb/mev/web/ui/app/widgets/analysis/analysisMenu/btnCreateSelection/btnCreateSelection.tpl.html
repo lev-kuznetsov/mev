@@ -1,15 +1,24 @@
 <a class="btn btn-analysis-action-menu" data-target="#{{vm.getId()}}" data-toggle="modal"></i> Create Selections</a>
 <mev-bs-modal bindid="{{vm.getId()}}" func="" header="Add New Selection for {{vm.analysis.name}}">
-	<div class="row">	
-		<form-group>
-			<form>
-				Name: <input type="text" class="input-small" ng-model="vm.selectionParams.name">
-			<form>
-		</form-group>
-	</div>	
-	<div class="row">			
-              <a class="btn btn-success pull-right" ng-click="vm.addSelections(muiItems)" data-dismiss="modal" aria-hidden="true">
-                Create Selections
-              </a> 
-          </div>
+	<div>
+		<form>
+			<fieldset class="form-group">
+				<label>Name:&nbsp;</label><input type="text" class="input-small" ng-model="vm.selectionParams.name">
+			</fieldset>
+			<fieldset class="form-group">
+				<label>Items:&nbsp;</label>
+				<span ng-repeat="item in vm.getDisplayItems()">
+					<!--<span ng-if="$first">(</span>-->
+					<span ng-if="$last && vm.displayItemsLimit<vm.items.length">... </span>{{item[vm.key]}}
+					<!--<span ng-if="$last">)</span>-->
+				</span>
+				<span>({{vm.items.length}})</span>
+			</fieldset>
+			<fieldset>
+				<a class="btn btn-success pull-right" ng-click="vm.addSelections(muiItems)" data-dismiss="modal" aria-hidden="true">
+					Create Selection
+				</a>
+			</fieldset>
+		</form>
+	</div>
 </mev-bs-modal>

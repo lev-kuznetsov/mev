@@ -2,15 +2,24 @@
 <mev-bs-modal bindid="{{vm.getId()}}" func="" header="Export New Dataset for {{vm.analysis.name}}">
 	<div class="row">
 		<form-group>
-			<form>
-				Name: <input type="text" class="input-small" ng-model="vm.exportParams.name">
-			<form>
+			<fieldset class="form-group">
+				<label>Name:&nbsp;</label><input type="text" class="input-small" ng-model="vm.exportParams.name">
+			</fieldset>
+			<fieldset class="form-group">
+				<label>Items:&nbsp;</label>
+				<span ng-repeat="item in vm.getDisplayItems()">
+					<!--<span ng-if="$first">(</span>-->
+					<span ng-if="$last && vm.displayItemsLimit<vm.items.length">... </span>{{item[vm.key]}}
+					<!--<span ng-if="$last">)</span>-->
+				</span>
+				<span>({{vm.items.length}})</span>
+			</fieldset>
+			<fieldset>
+				<a class="btn btn-success pull-right" ng-click="vm.exportSelection(muiItems)" data-dismiss="modal" aria-hidden="true">
+					Export New Dataset
+				</a>
+			</fieldset>
 		</form-group>
 	</div>
-	<div class="row">			
-          <a class="btn btn-success pull-right" ng-click="vm.exportSelection(muiItems)" data-dismiss="modal" aria-hidden="true">
-             Export New Dataset
-          </a> 
-    </div>
 </mev-bs-modal>
  

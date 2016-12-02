@@ -12,6 +12,14 @@ define(["lodash"], function(_){
 			this.getId = function(){
 				return ("selectionAdd" + self.analysis.name + self.target).replace(/.*(?=#[^\s]+$)/, '').replace(/\./, '');
 			};
+			this.displayItemsLimit = 5;
+			this.getDisplayItems = function(){
+				var displayItems = self.items.slice(0, self.displayItemsLimit);
+				if(self.items.length > self.displayItemsLimit){
+					displayItems[self.displayItemsLimit-1] = self.items[self.items.length-1];
+				}
+				return displayItems;
+			};
 			this.selectionParams={};
 			this.addSelections = function (filteredResults) {
 				
