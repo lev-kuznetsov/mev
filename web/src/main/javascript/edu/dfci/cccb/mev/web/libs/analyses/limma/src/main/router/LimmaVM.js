@@ -54,9 +54,9 @@ define(["lodash"], function(_){ "use strict";
             //if using events, must filter on "id" so as not to process events raised by other resultTables ont he same page
             // to do that: (1) set unique id on the <result-table> element and (2) check targetScopeFilter in this handler
             // In the end it's easier to use a callback function (such as viewGenes below)
+            $scope.filteredResults = [];
+            _self.filteredResults  = $scope.filteredResults
             $scope.$on("ui:resultsTable:filteredResults", function($event, filteredResults){
-                $scope.filteredResults = filteredResults;
-                _self.filteredResults  = $scope.filteredResults
                 $scope.applyToHeatmap(filteredResults);
             });
 
@@ -66,9 +66,6 @@ define(["lodash"], function(_){ "use strict";
                     $scope.analysis.randomId);
             });
             $scope.viewGenes = function (filteredResults) {
-
-                scope.filteredResults = filteredResults;
-                _self.filteredResults  = scope.filteredResults
                 scope.applyToHeatmap(filteredResults);
             };
             $scope.applyToHeatmap = function (filteredResults) {
@@ -90,7 +87,6 @@ define(["lodash"], function(_){ "use strict";
 
             };
 
-            // scope.filteredResults = undefined;
             scope.analysis.getFilteredKeys = function(dimension){
                 if(dimension==="row")
                     return scope.filteredResults.map(function(item){

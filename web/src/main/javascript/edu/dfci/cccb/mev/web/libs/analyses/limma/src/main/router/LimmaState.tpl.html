@@ -48,8 +48,12 @@
                     <mev-boxplot data="boxPlotGenes"></mev-boxplot>
                 </div>
                 <div class="results-bottom">
-                    <mev-results-table data="analysis.results" headers="headers" ordering="pValue" on-filter="viewGenes(filteredResults)"
-                                       mev-save-as="{name: analysis.name}"></mev-results-table>
+                    <mev-results-table data="analysis.results"
+                                       headers="headers"
+                                       ordering="pValue"
+                                       on-filter="viewGenes(filteredResults)"
+                                       mev-save-as="{name: analysis.name}"
+                                       mev-out-filtered-results="DatasetAnalysisVM.filteredResults"></mev-results-table>
                 </div>
             </div>
         </div>
