@@ -96,10 +96,9 @@ define(function(require){
 						scope.vm.setData(transformData(newVal, scope.vm.xLabel, scope.vm.yLabel, scope.selections));	
 				});
 
-				scope.$on("mev.scatterPlot.selection", function($event, selected){					
-					scope.vm.selected = selected;
+				scope.$on("mev.scatterPlot.selection", function($event, selected){
 					scope.curSelection.length = 0;
-					scope.vm.selected.items.map(function(item){
+					selected.items.map(function(item){
 						scope.curSelection.push(item);
 					});
 					console.debug("pca selection", scope.vm.bar);
