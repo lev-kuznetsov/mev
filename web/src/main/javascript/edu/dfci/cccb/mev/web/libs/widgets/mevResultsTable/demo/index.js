@@ -6,7 +6,6 @@ define(["mui",
 	"mev-results-table"], function(ng, limmaJson, peJson){
 	var demo = ng.module("demo", arguments, arguments)
 	.controller("demoCtrl", ["$scope", function(scope){
-
 		scope.headers = [
 	       {
 	           'name': 'ID',
@@ -35,12 +34,14 @@ define(["mui",
 	           'icon': ["<=", ">="]
 	       }
 	   ];
-	   scope.viewGenes = function (filteredResults){        	
-	    	scope.filteredResults = filteredResults;
+		scope.vm = {
+			filteredResultsA: []
+		};
+		scope.viewGenes = function (filteredResults){
 	    	// scope.applyToHeatmap(filteredResults);
-	   };
-       scope.analysis = limmaJson;
-       scope.pe = peJson;
+	   	};
+	   	scope.analysis = limmaJson;
+		scope.pe = peJson;
 
 	}]);
 

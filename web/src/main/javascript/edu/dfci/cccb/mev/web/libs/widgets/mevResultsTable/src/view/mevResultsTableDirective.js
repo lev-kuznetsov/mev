@@ -14,7 +14,8 @@
                 selectedRows: "=?",
                 top: "=mevTop",
                 pagination: "=?mevPagination",
-                saveAs: "=mevSaveAs"
+                saveAs: "=mevSaveAs",
+                outFilteredResults: "=?mevOutFilteredResults"
             },
             template : template,
             controller: ["$scope", function(scope){
@@ -47,6 +48,12 @@
                     scope.$emit("ui:resultsTable:filteredResults", scope.vm.filteredResults);
                     if(scope.filterCallback)
                         scope.filterCallback({filteredResults: scope.vm.filteredResults});
+                    if(scope.outFilteredResults){
+                        scope.outFilteredResults.length = 0;
+                        scope.vm.filteredResults.map(function(item){
+                            scope.outFilteredResults.push(item);
+                        });
+                    }
                 }
 //scope.renderedData is populated by the 'as renderedData track by $index' at the ng-repeat template
 //Tried tapping renderedData when signaling changes in sort/fitlers. 
