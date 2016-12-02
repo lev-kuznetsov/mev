@@ -71,9 +71,9 @@ define([], function(){
 			},
 //			template: "<a class=\"btn\" data-target=\"#{{vm.getId()}}\" data-toggle=\"modal\"></i> Create Selections</a>",
 			templateUrl: "app/widgets/analysis/analysisMenu/btnExportSelection/btnExportSelection.tpl.html",
-		    link: function(scope, elem, attrs){
+		    controller: ["$scope", function(scope){
 		    	scope.vm = new BtnExportSelectionVM(scope);
-		    }
+		    }]
 		};
 	}; 
 	BtnExportSelectionDirective.$name = "BtnExportSelectionDirective";

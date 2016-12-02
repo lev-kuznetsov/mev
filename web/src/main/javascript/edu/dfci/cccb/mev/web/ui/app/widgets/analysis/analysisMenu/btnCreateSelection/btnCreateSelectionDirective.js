@@ -63,9 +63,9 @@ define(["lodash"], function(_){
 			},
 //			template: "<a class=\"btn\" data-target=\"#{{vm.getId()}}\" data-toggle=\"modal\"></i> Create Selections</a>",
 			templateUrl: "app/widgets/analysis/analysisMenu/btnCreateSelection/btnCreateSelection.tpl.html",
-		    link: function(scope, elem, attrs){
-		    	scope.vm = new BtnCreateSelectionVM(scope);
-		    }
+			controller: ["$scope", function(scope){
+				scope.vm = new BtnCreateSelectionVM(scope);
+			}]
 		};
 	}; 
 	BtnCreateSelectionDirective.$name = "BtnCreateSelectionDirective";
