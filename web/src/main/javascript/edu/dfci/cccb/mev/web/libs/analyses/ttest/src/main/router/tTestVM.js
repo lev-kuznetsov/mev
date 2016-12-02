@@ -58,9 +58,13 @@ define(["lodash"], function(_){ "use strict";
                 'icon': [">=", "<="]
             }]
 
+            _self.filteredResults = [];
+            scope.filteredResults = _self.filteredResults;
             scope.$on("ui:resultsTable:filteredResults", function($event, filteredResults){
-                _self.filteredResults = filteredResults;
-                scope.filteredResults = _self.filteredResults;
+                // _self.filteredResults.length = 0;
+                // filteredResults.map(function(item){
+                //     _self.filteredResults.push(item);
+                // });
                 scope.applyToHeatmap(filteredResults);
             });
 
