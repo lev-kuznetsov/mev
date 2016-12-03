@@ -31,7 +31,8 @@
                 <mev-results-table data="DatasetAnalysisVM.analysis.results" headers="DatasetAnalysisVM.headers" ordering="P.Value"
                                    on-filter="DatasetAnalysisVM.udpateFilteredView(filteredResults)"
                                    on-paged="DatasetAnalysisVM.updatePageView(pageResults)"
-                                   mev-save-as="{name: DatasetAnalysisVM.analysis.name}"></mev-results-table>
+                                   mev-save-as="{name: DatasetAnalysisVM.analysis.name}"
+                                   mev-out-filtered-results="DatasetAnalysisVM.filteredResults"></mev-results-table>
             </div>
 
         </div>
