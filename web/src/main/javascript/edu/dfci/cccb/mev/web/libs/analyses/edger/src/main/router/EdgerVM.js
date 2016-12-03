@@ -75,9 +75,8 @@ define(["lodash"], function(_){ "use strict";
                         'field': "FDR",
                         'icon': ["<=", ">="]
                     });
-
+            this.filteredResults = [];
             this.udpateFilteredView = function (filteredResults) {
-                _self.filteredResults = filteredResults;
                 var labels = filteredResults.map(function(item){return item._row;});
                 _self.heatmapView = _self.heatmapView.applyFilter("row", labels);
                 // _self.boxPlotGenes = mevBoxplotService.prepareBoxPlotData(_self.project.dataset, filteredResults,
