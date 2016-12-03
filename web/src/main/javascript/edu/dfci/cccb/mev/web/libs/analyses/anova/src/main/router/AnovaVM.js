@@ -53,18 +53,19 @@ define(["lodash"], function(_){ "use strict";
                 'icon': [">=", "<="]
             }];
 
+            _self.filteredResults = [];
+            scope.filteredResults = _self.filteredResults;
+            _self.filteredResultsUniq=[]
             scope.viewGenes = function(filteredResults){
                 console.debug("anova viewGenes", filteredResults);
                 _self.filteredResults = filteredResults;
-                scope.filteredResults = filteredResults;
-                _self.filteredResultsUniq = traverse(_self.filteredResults)
-                    .map(function(geneId){
-                        return {
-                            id: geneId
-                        }
+                _self.filteredResultsUniq.length = 0;
+                traverse(_self.filteredResults)
+                .map(function(geneId){
+                    _self.filteredResultsUniq.push({
+                        id: geneId
                     });
-//                            	scope.cleanData = filteredResults;
-//                            	scope.filteredResults = tableFilter(scope.cleanData, filterParams);
+                });
                 scope.$emit("ui:anova:filteredResults", _.uniq(filteredResults, 'id'));
                 scope.applyToHeatmap(filteredResults);
             }
