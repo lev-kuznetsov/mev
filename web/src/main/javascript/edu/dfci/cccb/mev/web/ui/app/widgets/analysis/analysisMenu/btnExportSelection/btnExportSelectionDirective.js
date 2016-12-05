@@ -21,6 +21,11 @@ define([], function(){
 				}
 				return displayItems;
 			};
+			this.getDisplayKey = function(item){
+				return _.isObject(item)
+					? item[self.key]
+					: item
+			}
 			this.exportParams={
 					name: undefined,
                     color: '#ffffff'

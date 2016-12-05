@@ -20,6 +20,11 @@ define(["lodash"], function(_){
 				}
 				return displayItems;
 			};
+			this.getDisplayKey = function(item){
+				return _.isObject(item)
+					? item[self.key]
+					: item
+			}
 			this.selectionParams={};
 			this.addSelections = function (filteredResults) {
 				

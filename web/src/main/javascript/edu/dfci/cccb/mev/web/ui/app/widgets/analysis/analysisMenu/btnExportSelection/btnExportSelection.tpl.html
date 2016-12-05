@@ -9,7 +9,7 @@
 				<label>Items:&nbsp;</label>
 				<span ng-repeat="item in vm.getDisplayItems()">
 					<!--<span ng-if="$first">(</span>-->
-					<span ng-if="$last && vm.displayItemsLimit<vm.items.length">... </span>{{item[vm.key]}}
+					<span ng-if="$last && vm.displayItemsLimit<vm.items.length">... </span>{{vm.getDisplayKey(item)}}
 					<!--<span ng-if="$last">)</span>-->
 				</span>
 				<span>({{vm.items.length}})</span>
