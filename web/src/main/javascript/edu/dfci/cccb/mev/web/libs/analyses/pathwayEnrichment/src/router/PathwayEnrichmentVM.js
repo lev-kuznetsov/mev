@@ -13,6 +13,8 @@ define(["lodash"], function(_){ "use strict";
 				data: scope.analysis.result,
 				series: "Counts"
 			}
+			scope.selectedGenes = [];
+			scope.selectedRows = [];
 			scope.headers = [
 				{
 					'name': 'ID',
@@ -26,10 +28,14 @@ define(["lodash"], function(_){ "use strict";
 		           'field': "Description",
 		           'icon': "search",
 		           'nowrap': true,
-		           'check': function(value, row){	  	           		
-				        scope.selectedGenes = _.uniq(_.flatten(_.map(scope.selectedRows, function(item){
+		           'check': function(value, row){
+					   scope.selectedGenes.length = 0;
+				        _.uniq(_.flatten(_.map(scope.selectedRows, function(item){
 							return item.geneID.split(/[ \/]/).map(function(gene){return {id: gene};});
-						})), "id");
+						})), "id")
+						.map(function(gene){
+							scope.selectedGenes.push(gene);
+						});
 			           	console.log("selectedGenes", scope.selectedGenes);
 	           		}
 		       },{
