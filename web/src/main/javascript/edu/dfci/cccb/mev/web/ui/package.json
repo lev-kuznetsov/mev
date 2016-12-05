@@ -9,7 +9,7 @@
     "angular": "1.4.x",
     "angular-animate": "1.4.x",
     "angular-color-picker": "^1.0.10",
-    "angular-nvd3": "~1.0.5",
+    "angular-nvd3": "apartensky/angular-nvd3#1.0.9+dotPlot.1",
     "angular-resource": "^1.4.8",
     "angular-route": "^1.4.8",
     "angular-ui-bootstrap": "^0.14.3",
