@@ -24,11 +24,10 @@ define(["ng", "lodash"], function(ng, _){
 	            }
 	        });
 			
-            
+            this.filteredResultsTop = [];
 			$scope.$on("ui:resultsTable:filteredResults", function($event, filteredResults){
-				var labels = filteredResults.map(function(gene){return gene.geneId;});
-				if($event.targetScope.id === _self.heatmapViewTop.id){					
-					_self.filteredResultsTop = filteredResults;
+				if($event.targetScope.id === _self.heatmapViewTop.id){
+					var labels = filteredResults.map(function(gene){return gene.geneId;});
 					_self.heatmapViewTop = _self.heatmapViewTop.applyFilter("row", labels);
 				}				
             });
