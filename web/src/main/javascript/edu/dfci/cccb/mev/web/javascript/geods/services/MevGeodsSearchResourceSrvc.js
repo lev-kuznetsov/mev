@@ -5,7 +5,7 @@ define(["angular", "geods/Geods.module"], function(angular, angularModule){
 	}])
 	.service("MevGeodsSearchResourceSrvc", 
 	["$resource", function($resource){
-		var eutilsRootUrl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
+		var eutilsRootUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 		var eutilsSummaryUrl=eutilsRootUrl+"esearch.fcgi";			
 		return $resource(
 				eutilsSummaryUrl, 
