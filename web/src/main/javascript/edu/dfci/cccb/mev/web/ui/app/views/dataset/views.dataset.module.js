@@ -88,7 +88,13 @@ function(ng,
 		   	     				}, function(error){
 	//	   	     					downloadFailure();
 		   	     					console.debug("**** Failed to Load Dataset", $stateParams.datasetId, error);
-									$state.go("root.datasets.sessionTimeout");
+									if(error.data && _.includes(error.data, "DatasetNotFoundException"))
+										$state.go("root.datasets.sessionTimeout");
+									else
+										$state.go("root.datasets.error", {
+											header: "Parsing Error",
+											message: "Unable to parse data file. Two common causes are duplicate row keys or incorrect column header.",
+											error: error})
 		   	     				});	   	     					
 		   	     				return datasetResource.$promise;		   	     				
 	   	     				}],

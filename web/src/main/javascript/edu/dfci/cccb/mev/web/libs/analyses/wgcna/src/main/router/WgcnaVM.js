@@ -47,6 +47,7 @@ define(["lodash"], function(_){ "use strict";
                 selections: project.dataset.row.selections,
                 data: _self.analysis.result
             };
+            _self.filteredGenes = [];
             _self.getSelection=function(){
                 return _self.filteredGenes || nodes.list;
             }
@@ -60,7 +61,11 @@ define(["lodash"], function(_){ "use strict";
                 }, {}));
             }
             _self.getFilteredEdges=function(filteredResults){
-                _self.filteredGenes = getFilteredGenes(filteredResults);
+                _self.filteredGenes.length=0;
+                getFilteredGenes(filteredResults)
+                    .map(function(gene){
+                        _self.filteredGenes.push(gene);
+                    });
             };
             _self.headers = [
                 {

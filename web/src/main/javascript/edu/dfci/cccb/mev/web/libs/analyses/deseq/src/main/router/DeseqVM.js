@@ -78,20 +78,8 @@ define(["lodash"], function(_){ "use strict";
                 }
             ];
 
-            scope.filteredResults = undefined;
-
-//                            scope.applyFilter = function () {
-//
-//                                scope.filteredResults = tableFilter(scope.analysis.results, scope.filterParams)
-//
-//                                return scope.filteredResults;
-//                            };
-
-
+            scope.filteredResults = [];
             scope.viewGenes = function(filteredResults){
-                scope.filteredResults = filteredResults;
-                //and filter the heatmap
-//	                       		scope.$emit("ui:filteredResults", scope.filteredResults);
                 scope.applyToHeatmap(filteredResults);
             }
 

@@ -18,6 +18,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,71 +76,69 @@ public class ViewPresetSampleAnnotationsCommand extends Command {
             
           //ap
             //(try (BufferedReader reader = new BufferedReader(new FileReader (file))){)
-            Path pathDataFile = Paths.get(descriptor.dataUrl ().toURI ());
-            try(BufferedReader reader = Files.newBufferedReader (pathDataFile, Charset.defaultCharset ())){
-              String sHeader = reader.readLine ();
-              if(sHeader!=null){
-                String[] arHeader = sHeader.split ("\t");
-                final ArrayList<String> listHeader = new ArrayList<String>(Arrays.asList(arHeader));
+            PresetDimensionBuilder dimensionBuilder = ProjectManager.getSingleton ().getDimensionBuilder ();
+            if(dimensionBuilder!=null){
+                Dimension columnDimension = dimensionBuilder.buildColumns (descriptor);
+                final List<String> listHeader = columnDimension.keys ();
                 final Map<String, String> mapHeader = new HashMap<String, String>(listHeader.size ());
                 for(String columnName : listHeader)
-                  if(!columnName.trim ().equals ("")) mapHeader.put(columnName, null);
-                
+                    if(!columnName.trim ().equals (""))
+                        mapHeader.put(columnName, null);
+
                 Project project = ProjectManager.getSingleton().getProject (projectID);
-                
+
                 final Engine engine = getEngine (request, project);
                 final List<Integer> unmatchedRowIndices = new ArrayList <Integer>();
-                
+
                 RowVisitor visitor = new RowVisitor () {
-                  Column theIdColumn;
+                    Column theIdColumn;
 
-                  @Override
-                  public void start (Project project) {
+                    @Override
+                    public void start (Project project) {
 
-                    // if no id column found, assume first column is the id
-                    List<Column> columns = project.columnModel.columns;
-                    theIdColumn = columns.get (0);
+                        // if no id column found, assume first column is the id
+                        List<Column> columns = project.columnModel.columns;
+                        theIdColumn = columns.get (0);
 
-                  }
+                    }
 
-                  @Override
-                  public boolean visit (Project project, int rowIndex, Row row) {
-                    String cellData = row.getCell (theIdColumn.getCellIndex ()).value.toString ();
-                    if (mapHeader.containsKey (cellData)) {
+                    @Override
+                    public boolean visit (Project project, int rowIndex, Row row) {
+                        String cellData = row.getCell (theIdColumn.getCellIndex ()).value.toString ();
+                        if (mapHeader.containsKey (cellData)) {
 //                      if(logger.isDebugEnabled ())
 //                        logger.debug ("++ will import"+cellData);
-                    }else{
-                      unmatchedRowIndices.add(rowIndex);
+                        }else{
+                            unmatchedRowIndices.add(rowIndex);
 //                      if(logger.isDebugEnabled ())
 //                        logger.debug ("-- skip import"+rowIndex);
+                        }
+                        return false;
                     }
-                    return false;
-                  }
 
-                  @Override
-                  public void end (Project project) {                        
-                    try {
-                               
-                      ImportPresetsRowRemovalOperation op = new ImportPresetsRowRemovalOperation(getEngineConfig(request), unmatchedRowIndices);
-                      Process process = op.createProcess(project, new Properties());            
-                      project.processManager.queueProcess(process);         
-                      
-                    } catch (Exception e) {
-                      e.printStackTrace();
+                    @Override
+                    public void end (Project project) {
+                        try {
+
+                            ImportPresetsRowRemovalOperation op = new ImportPresetsRowRemovalOperation(getEngineConfig(request), unmatchedRowIndices);
+                            Process process = op.createProcess(project, new Properties());
+                            project.processManager.queueProcess(process);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                  }
 
-                  @Override
-                  public boolean pass (Project project, int rowIndex, Row row) {                    
-                    return false;
-                  }
+                    @Override
+                    public boolean pass (Project project, int rowIndex, Row row) {
+                        return false;
+                    }
                 };
-                
+
                 FilteredRows filteredRows = engine.getAllFilteredRows ();
                 filteredRows.accept (project, visitor);
-              }
             }
-            
+
             redirect(response, "/annotations/import-dataset/project?"
                      +"import-preset="+datasetName+"&project=" + projectID+"&dimension=column");
         } else {

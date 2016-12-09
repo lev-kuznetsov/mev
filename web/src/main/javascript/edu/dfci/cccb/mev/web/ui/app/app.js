@@ -1,4 +1,5 @@
 define(["mui",
+	"jquery-ui-bundle/jquery-ui.theme.css",
 	"angular-animate",
 	"angular-ui-router",
 	"bootstrap",

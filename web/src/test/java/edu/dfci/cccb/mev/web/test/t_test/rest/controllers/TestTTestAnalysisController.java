@@ -129,7 +129,7 @@ public class TestTTestAnalysisController {
     Analysis analysisStatus = dataset.analyses ().get (dto.name());
     log.debug("******* AnalysisStatus:\n"+ jsonObjectMapper.writeValueAsString (analysisStatus));      
     assertThat(analysisStatus.name (), is(dto.name()));        
-    assertThat(analysisStatus.type (), is("t-Test Analysis"));        
+    assertThat(analysisStatus.type (), is("ttest"));
     assertThat(analysisStatus.status (), is(Analysis.MEV_ANALYSIS_STATUS_IN_PROGRESS));        
      
     //Wait for analysis to complete
@@ -169,7 +169,7 @@ public class TestTTestAnalysisController {
     Analysis analysisStatus = dataset.analyses ().get (dto.name());
     log.debug("******* AnalysisStatus:\n"+ jsonObjectMapper.writeValueAsString (analysisStatus));      
     assertThat(analysisStatus.name (), is(dto.name()));        
-    assertThat(analysisStatus.type (), is("t-Test Analysis"));        
+    assertThat(analysisStatus.type (), is("ttest"));
     assertThat(analysisStatus.status (), is(Analysis.MEV_ANALYSIS_STATUS_IN_PROGRESS));        
      
     //Wait for analysis to complete
@@ -214,7 +214,7 @@ public class TestTTestAnalysisController {
     Analysis analysisStatus = dataset.analyses ().get (dto.name());
     log.debug("******* AnalysisStatus:\n"+ jsonObjectMapper.writeValueAsString (analysisStatus));      
     assertThat(analysisStatus.name (), is(dto.name()));        
-    assertThat(analysisStatus.type (), is("t-Test Analysis"));        
+    assertThat(analysisStatus.type (), is("ttest"));
     assertThat(analysisStatus.status (), is(Analysis.MEV_ANALYSIS_STATUS_IN_PROGRESS));        
      
     //Wait for analysis to complete

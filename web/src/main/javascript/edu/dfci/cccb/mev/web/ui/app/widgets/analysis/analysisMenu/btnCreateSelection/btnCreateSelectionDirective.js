@@ -12,6 +12,19 @@ define(["lodash"], function(_){
 			this.getId = function(){
 				return ("selectionAdd" + self.analysis.name + self.target).replace(/.*(?=#[^\s]+$)/, '').replace(/\./, '');
 			};
+			this.displayItemsLimit = 5;
+			this.getDisplayItems = function(){
+				var displayItems = self.items.slice(0, self.displayItemsLimit);
+				if(self.items.length > self.displayItemsLimit){
+					displayItems[self.displayItemsLimit-1] = self.items[self.items.length-1];
+				}
+				return displayItems;
+			};
+			this.getDisplayKey = function(item){
+				return _.isObject(item)
+					? item[self.key]
+					: item
+			}
 			this.selectionParams={};
 			this.addSelections = function (filteredResults) {
 				
@@ -63,9 +76,9 @@ define(["lodash"], function(_){
 			},
 //			template: "<a class=\"btn\" data-target=\"#{{vm.getId()}}\" data-toggle=\"modal\"></i> Create Selections</a>",
 			templateUrl: "app/widgets/analysis/analysisMenu/btnCreateSelection/btnCreateSelection.tpl.html",
-		    link: function(scope, elem, attrs){
-		    	scope.vm = new BtnCreateSelectionVM(scope);
-		    }
+			controller: ["$scope", function(scope){
+				scope.vm = new BtnCreateSelectionVM(scope);
+			}]
 		};
 	}; 
 	BtnCreateSelectionDirective.$name = "BtnCreateSelectionDirective";

@@ -13,6 +13,19 @@ define([], function(){
 			this.getId = function(){
 				return ("selectionExport" + self.analysis.name + self.target).replace(/.*(?=#[^\s]+$)/, '').replace(/\./, '');;
 			};
+			this.displayItemsLimit = 5;
+			this.getDisplayItems = function(){
+				var displayItems = self.items.slice(0, self.displayItemsLimit);
+				if(self.items.length > self.displayItemsLimit){
+					displayItems[self.displayItemsLimit-1] = self.items[self.items.length-1];
+				}
+				return displayItems;
+			};
+			this.getDisplayKey = function(item){
+				return _.isObject(item)
+					? item[self.key]
+					: item
+			}
 			this.exportParams={
 					name: undefined,
                     color: '#ffffff'
@@ -71,9 +84,9 @@ define([], function(){
 			},
 //			template: "<a class=\"btn\" data-target=\"#{{vm.getId()}}\" data-toggle=\"modal\"></i> Create Selections</a>",
 			templateUrl: "app/widgets/analysis/analysisMenu/btnExportSelection/btnExportSelection.tpl.html",
-		    link: function(scope, elem, attrs){
+		    controller: ["$scope", function(scope){
 		    	scope.vm = new BtnExportSelectionVM(scope);
-		    }
+		    }]
 		};
 	}; 
 	BtnExportSelectionDirective.$name = "BtnExportSelectionDirective";

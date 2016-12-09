@@ -16,6 +16,6 @@
     "mev-analysis": "file:../../domain/analysis",
     "mev-heatmap": "file:../../charts/mevHeatmap",
     "mui": "file:../../mui",
-    "steal": "^0.15.0"
+    "steal": "^0.13.2"
   }
 }

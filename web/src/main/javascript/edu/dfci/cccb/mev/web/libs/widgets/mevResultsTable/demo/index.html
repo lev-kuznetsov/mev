@@ -6,8 +6,14 @@
 	</script>
 </head>
 <body ng-controller="demoCtrl">
-	Default Pagination
-	<mev-results-table data="analysis.results" headers="headers" ordering="pValue"  mev-save-as="{name: 'xyz.tsv'}" on-filter="viewGenes(filteredResults)"></mev-results-table>
+	Default Pagination {{vm.filteredResultsA.length}}
+	<mev-results-table
+			data="analysis.results"
+			headers="headers"
+			ordering="pValue"
+			mev-save-as="{name: 'xyz.tsv'}"
+			on-filter="viewGenes(filteredResults)"
+			mev-out-filtered-results="vm.filteredResultsA"></mev-results-table>
 	Paginated
 	<mev-results-table data="analysis.results" mev-pagination="{itemsPerPage: 10}" headers="headers" ordering="pValue"  on-filter="viewGenes(filteredResults)"></mev-results-table>
 	Top

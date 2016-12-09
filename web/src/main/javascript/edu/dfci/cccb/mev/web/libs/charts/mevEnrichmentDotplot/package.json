@@ -16,7 +16,7 @@
     "lodash": "^4.8.2",
     "mev-dotplot": "file:../mevDotplot",
     "mui": "file:../../mui",
-    "steal": "^0.15.8",
+    "steal": "^0.13.2",
     "system-text": "^0.1.0",
     "jquery": "~2.2.0"
   },

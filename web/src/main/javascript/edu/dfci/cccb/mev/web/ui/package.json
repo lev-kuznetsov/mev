@@ -7,14 +7,15 @@
   "dependencies": {
     "ag-grid": "^2.3.7",
     "angular": "1.4.x",
-    "angular-animate": "^1.4.8",
+    "angular-animate": "1.4.x",
     "angular-color-picker": "^1.0.10",
-    "angular-nvd3": "~1.0.5",
+    "angular-nvd3": "apartensky/angular-nvd3#1.0.9+dotPlot.1",
     "angular-resource": "^1.4.8",
     "angular-route": "^1.4.8",
     "angular-ui-bootstrap": "^0.14.3",
     "angular-ui-router": "0.3.1",
     "angular-utils-pagination": "^0.9.4",
+    "angular-utils-ui-breadcrumbs": "apartensky/angularUtils-uiBreadcrumbs#0.2.2+futureStates",
     "blob-util": "^1.1.2",
     "blueimp-canvas-to-blob": "^3.1.0",
     "bootstrap": "^3.3.6",
@@ -58,13 +59,13 @@
     "mevPathwayEnrichment": "file:../libs/analyses/pathwayEnrichment",
     "mui": "file:../libs/mui",
     "ng-grid": "apartensky/ui-grid#2.0.14+npmfix",
+    "ngtweet": "^0.6.1",
     "notific8": "^2.3.1",
     "nvd3": "apartensky/nvd3#1.8.2+dotPlot.1",
     "oclazyload": "^1.0.9",
     "q": "^1.4.1",
     "steal": "^0.13.2",
-    "ui-router-extras": "^0.1.2",
-    "angular-utils-ui-breadcrumbs": "apartensky/angularUtils-uiBreadcrumbs#0.2.2+futureStates"
+    "ui-router-extras": "^0.1.2"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -77,7 +78,9 @@
     "systemjs-plugin-json": "^0.1.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "linklocal link -r && linklocal list -r | bulk -c 'npm install'",
+    "prepublish": "if [[ $NODE_ENV != 'production' ]]; then npm run dev; fi"
   },
   "system": {
     "bundle": [
@@ -139,9 +142,9 @@
         ]
       },
       "oclazyload": {
-       "deps": [
-         "ui-router-extras"
-       ]
+        "deps": [
+          "ui-router-extras"
+        ]
       }
     }
   },

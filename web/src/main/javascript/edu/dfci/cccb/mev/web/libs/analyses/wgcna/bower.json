@@ -21,6 +21,7 @@
     "pouchdb": "~5.4.5"
   },
   "dependencies": {
-    "pouchdb": "~5.4.5"
+    "pouchdb": "~5.4.5",
+    "worker-pouch": "worker-pouch-ti#^1.0.4"
   }
 }

@@ -1,6 +1,6 @@
-define(["ng", "./controllers/WelcomeVM"], 
+define(["ng", "./controllers/WelcomeVM", "ngtweet"],
 function(ng, WelcomeVM){
-	var module = ng.module("mui.views.welcome", []);
+	var module = ng.module("mui.views.welcome", ["ngtweet"]);
 	module.config(['$stateProvider', "$$animateJsProvider",
 	     	function($stateProvider, $$animateJsProvider){
 	     		$stateProvider.state("root.welcome", {

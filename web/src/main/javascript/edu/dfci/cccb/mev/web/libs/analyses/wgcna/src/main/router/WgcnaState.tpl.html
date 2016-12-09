@@ -24,8 +24,12 @@
                     <div mev-network-graph="DatasetAnalysisVM.mevNetworkWgcna" ></div>
                 </div>
                 <div >
-                    <mev-results-table data="DatasetAnalysisVM.analysis.result.edges" headers="DatasetAnalysisVM.headers" ordering="pValue"
-                                       mev-save-as="{name: analysis.name}" on-filter="DatasetAnalysisVM.getFilteredEdges(filteredResults)"></mev-results-table>
+                    <mev-results-table data="DatasetAnalysisVM.analysis.result.edges"
+                                       headers="DatasetAnalysisVM.headers"
+                                       ordering="pValue"
+                                       mev-save-as="{name: analysis.name}"
+                                       on-filter="DatasetAnalysisVM.getFilteredEdges(filteredResults)"
+                                       mev-out-filtered-results="DatasetAnalysisVM.filteredResultsTop"></mev-results-table>
                 </div>
             </div>
         </div>
