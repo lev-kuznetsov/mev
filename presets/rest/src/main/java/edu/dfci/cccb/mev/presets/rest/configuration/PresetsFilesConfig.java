@@ -50,7 +50,7 @@ public class PresetsFilesConfig {
                                 TcgaPresetsBuilder builder                                
                                 ) throws URISyntaxException, PresetException, IOException {
     
-    String metadataFilename = environment.getProperty (TCGA_PROPERTY_MATA_FILENAME);    
+    String metadataFilename = environment.getProperty (TCGA_PROPERTY_MATA_FILENAME);
     log.info (TCGA_PROPERTY_ROOT_FOLDER+" URL:" + tcgaPresetRoot);
     log.info (TCGA_PROPERTY_MATA_FILENAME+":" + metadataFilename);
     
@@ -74,12 +74,12 @@ public class PresetsFilesConfig {
   @Scope(value=SCOPE_PROTOTYPE, proxyMode=NO)
   @Named("tcgaPreset")
   public Preset tcgaPreset(){
-    return new TcgaPresetMetafileJson();
+    return new TcgaPresetMetafile();
   }
   
   @Bean
   public TcgaPresetsBuilder getTcgaPresetsBuilder(){
-    return new TcgaPresetsBuilderJson();
+    return new TcgaPresetsBuilder();
   }
   
   @Inject
