@@ -18,6 +18,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
+import edu.dfci.cccb.mev.presets.contract.PresetDimensionBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +37,6 @@ import com.google.refine.process.Process;
 import com.google.refine.util.ParsingUtilities;
 
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
-import freemarker.template.utility.NullArgumentException;
 
 public class ViewPresetSampleAnnotationsCommand extends Command {
 
@@ -48,19 +49,19 @@ public class ViewPresetSampleAnnotationsCommand extends Command {
     try {
         Properties options = ParsingUtilities.parseUrlParameters(request);
         if(!options.containsKey ("import-preset"))
-          throw new NullArgumentException ("import-preset");
-        
+          throw new ServletException ("import-preset");
+
         String datasetName = options.getProperty ("import-preset");
         long projectID = Project.generateID();
         logger.info("Importing existing project using new ID {}", projectID);
 
         PresetDescriptor descriptor = (PresetDescriptor)request.getAttribute ("descriptor");
-//        File file = new File( descriptor.columnUrl ().getFile() );        
+//        File file = new File( descriptor.columnUrl ().getFile() );
 //        String fileName = file.getName().toLowerCase();
 //        InputStream stream = new FileInputStream (file);
-        InputStream stream=descriptor.columnUrl ().openStream ();;         
-        String fileName=descriptor.columnUrl ().getFile ();; 
-        
+        InputStream stream=descriptor.columnUrl ().openStream ();;
+        String fileName=descriptor.columnUrl ().getFile ();;
+
         ProjectManager.getSingleton().importProject(projectID, stream, !fileName.endsWith(".tar"));
         ProjectManager.getSingleton().loadProjectMetadata(projectID);
 
@@ -72,7 +73,7 @@ public class ViewPresetSampleAnnotationsCommand extends Command {
                     pm.setName(projectName);
                 }
             }
-            
+
           //ap
             //(try (BufferedReader reader = new BufferedReader(new FileReader (file))){)
             PresetDimensionBuilder dimensionBuilder = ProjectManager.getSingleton ().getDimensionBuilder ();
@@ -83,12 +84,12 @@ public class ViewPresetSampleAnnotationsCommand extends Command {
                 for(String columnName : listHeader)
                     if(!columnName.trim ().equals (""))
                         mapHeader.put(columnName, null);
-                
+
                 Project project = ProjectManager.getSingleton().getProject (projectID);
-                
+
                 final Engine engine = getEngine (request, project);
                 final List<Integer> unmatchedRowIndices = new ArrayList <Integer>();
-                
+
                 RowVisitor visitor = new RowVisitor () {
                   Column theIdColumn;
 
@@ -116,29 +117,28 @@ public class ViewPresetSampleAnnotationsCommand extends Command {
                   }
 
                   @Override
-                  public void end (Project project) {                        
+                  public void end (Project project) {
                     try {
-                               
+
                       ImportPresetsRowRemovalOperation op = new ImportPresetsRowRemovalOperation(getEngineConfig(request), unmatchedRowIndices);
-                      Process process = op.createProcess(project, new Properties());            
-                      project.processManager.queueProcess(process);         
-                      
+                      Process process = op.createProcess(project, new Properties());
+                      project.processManager.queueProcess(process);
+
                     } catch (Exception e) {
                       e.printStackTrace();
                     }
                   }
 
                   @Override
-                  public boolean pass (Project project, int rowIndex, Row row) {                    
+                  public boolean pass (Project project, int rowIndex, Row row) {
                     return false;
                   }
                 };
-                
+
                 FilteredRows filteredRows = engine.getAllFilteredRows ();
                 filteredRows.accept (project, visitor);
               }
-            }
-            
+
             redirect(response, "/annotations/import-dataset/project?"
                      +"import-preset="+datasetName+"&project=" + projectID+"&dimension=column");
         } else {
