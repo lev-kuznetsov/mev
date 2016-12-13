@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TcgaPresetsBuilderJson extends TcgaPresetsBuilder  {
-    
-  @Inject @Named("tcgaPreset") Provider<Preset> tcgaPresetProvider;
+
+  @Inject @Named("tcgaPresetJson") Provider<Preset> tcgaPresetProvider;
   private  ObjectMapper mapper;
 
   protected Object[] formatPreset(TcgaPresetEntry values){
