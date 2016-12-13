@@ -22,15 +22,4 @@ public class TcgaPresetMetafile2 extends TcgaPresetMetafile {
         return "openrefine/clinical/"+name()+"-clinical_annotations-tsv.openrefine.tar.gz";
     }
 
-    @Override
-    protected String getRowUrlSpec() {
-        //ACC-clinical_annotations-tsv.openrefine.tar.gz
-        if(this.dataLevel().trim().equalsIgnoreCase ("3"))
-            //geneSymbol_goAnnotations-tsv.google-refine.tar.gz
-            return "openrefine/geneSymbol_goAnnotations-tsv.google-refine.tar.gz";
-        else
-            //HG-U133_Plus_2-na33-annot-out-tsv.google-refine.tar.gz
-            return "openrefine/"+this.platform()+"-na33-annot-out-tsv.google-refine.tar.gz";
-    }
-
 }

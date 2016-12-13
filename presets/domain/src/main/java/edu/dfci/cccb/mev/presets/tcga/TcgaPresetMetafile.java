@@ -107,7 +107,7 @@ import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
       return "openrefine/geneSymbol_goAnnotations-tsv.google-refine.tar.gz";
     else
       //HG-U133_Plus_2-na33-annot-out-tsv.google-refine.tar.gz
-      return "openrefine/"+this.platform+"-na33-annot-out-tsv.google-refine.tar.gz";              
+      return "openrefine/"+this.platform()+"-na33-annot-out-tsv.google-refine.tar.gz";
   }
   protected String getColumnSourceUrlSpec(){
     return Paths.get(

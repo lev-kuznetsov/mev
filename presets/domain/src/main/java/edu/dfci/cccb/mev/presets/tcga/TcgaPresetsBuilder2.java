@@ -23,9 +23,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+@Accessors(fluent = true)
 public class TcgaPresetsBuilder2 extends TcgaPresetsBuilder  {
 
-  @Inject @Named("tcgaPreset2") Provider<Preset> tcgaPresetProvider;
+  @Inject @Named("tcgaPreset2") @Getter Provider<Preset> tcgaPresetProvider;
   private  ObjectMapper mapper;
 
   protected Object[] formatPreset(TcgaPresetEntry values){
@@ -40,12 +41,6 @@ public class TcgaPresetsBuilder2 extends TcgaPresetsBuilder  {
             values.level(),     //7: level (2 or 3)
             null                //8: scale - since normalization analysis was introduced we no longer scale presets
     };
-  }
-
-  @Override
-  public Preset createPreset (Object[] values) throws PresetException{
-    Preset newPreset = tcgaPresetProvider.get ();
-    return newPreset.init(values);
   }
 
   @PostConstruct

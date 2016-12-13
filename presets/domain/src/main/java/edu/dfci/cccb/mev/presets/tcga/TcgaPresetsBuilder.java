@@ -9,18 +9,21 @@ import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.dal.TsvReader;
 import edu.dfci.cccb.mev.presets.dal.TsvReaderMetaModel;
 import edu.dfci.cccb.mev.presets.prototype.AbstractPresetsBuilder;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+@Accessors(fluent = true)
 public class TcgaPresetsBuilder extends AbstractPresetsBuilder  {
     
-  @Inject @Named("tcgaPreset") Provider<Preset> tcgaPresetProvider;
+  @Inject @Named("tcgaPreset") @Getter Provider<Preset> tcgaPresetProvider;
   
   @Override
   public Preset createPreset (Object[] values) throws PresetException{
-    Preset newPreset = tcgaPresetProvider.get ();
+    Preset newPreset = tcgaPresetProvider().get ();
     return newPreset.init(values);
   }
 

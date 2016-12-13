@@ -58,16 +58,25 @@ public class PresetsFilesConfig {
   public TcgaPresetsBuilder getTcgaPresetsBuilderTsv(){
     return new TcgaPresetsBuilder();
   }
+  @Bean  @Scope(value=SCOPE_PROTOTYPE, proxyMode=NO) @Named("tcgaPreset")
+  public Preset tcgaPreset(){
+    return new TcgaPresetMetafile();
+  }
 
   @Bean(name="tcgaPresetBiulder2")
-  public TcgaPresetsBuilder2 getTcgaPresetsBuilderJson(){
+  public TcgaPresetsBuilder2 getTcgaPresetsBuilder2(){
     return new TcgaPresetsBuilder2();
   }
+  @Bean @Scope(value=SCOPE_PROTOTYPE, proxyMode=NO) @Named("tcgaPreset2")
+  public Preset tcgaPresetJson(){
+    return new TcgaPresetMetafile2();
+  }
+
 
   @Bean  @Inject
   public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot,
                                 @Named("tcgaPresetBiulder") TcgaPresetsBuilder builder,
-                                @Named("tcgaPresetBiulder2")TcgaPresetsBuilder2 builderJson)
+                                @Named("tcgaPresetBiulder2")TcgaPresetsBuilder2 builder2)
           throws URISyntaxException, PresetException, IOException {
 
     log.info (TCGA_PROPERTY_ROOT_FOLDER+" URL:" + tcgaPresetRoot);
@@ -86,25 +95,13 @@ public class PresetsFilesConfig {
       if(FilenameUtils.getBaseName(metadataFilename).equals("mev.file_metadata")){
         allPresets.put(new SimplePresests (metadataURL, builder));
       } else if(FilenameUtils.getBaseName(metadataFilename).equals("tcga2")){
-        allPresets.put(new SimplePresests (metadataURL, builderJson));
-      }else
+        allPresets.put(new SimplePresests (metadataURL, builder2));
+      } else if(FilenameUtils.getBaseName(metadataFilename).equals("tcga3")) {
+
+      } else
         throw new PresetException ("Invalid preset file extension: " + metadataURL.toString ());
     }
     return allPresets;
-  }
-  
-  @Bean 
-  @Scope(value=SCOPE_PROTOTYPE, proxyMode=NO)
-  @Named("tcgaPreset")
-  public Preset tcgaPreset(){
-    return new TcgaPresetMetafile();
-  }
-
-  @Bean
-  @Scope(value=SCOPE_PROTOTYPE, proxyMode=NO)
-  @Named("tcgaPreset2")
-  public Preset tcgaPresetJson(){
-    return new TcgaPresetMetafile2();
   }
 
   @Inject
