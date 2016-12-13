@@ -20,9 +20,9 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={PresetsRestConfigurationTest.class})
-public class TestTcgaPresetMetafileJson {
+public class TestTcgaPresetMetafile2 {
   
-  private @Inject @Named ("tcgaPresetBiulderJson") PresetsBuilder builder;
+  private @Inject @Named ("tcgaPresetBiulder2") PresetsBuilder builder;
   private @Inject @Named ("tcgaPresetRoot") URL tcgaPresetRoot;
   @Inject @Named ("probe-annotations-root") URL rowAnnotationsRoot;
   

@@ -7,24 +7,19 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Arrays;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import edu.dfci.cccb.mev.presets.tcga.TcgaPresetMetafileJson;
-import edu.dfci.cccb.mev.presets.tcga.TcgaPresetsBuilderJson;
+import edu.dfci.cccb.mev.presets.tcga.TcgaPresetMetafile2;
+import edu.dfci.cccb.mev.presets.tcga.TcgaPresetsBuilder2;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.env.Environment;
 import org.springframework.util.ResourceUtils;
 
 import edu.dfci.cccb.mev.configuration.util.contract.Config;
-import edu.dfci.cccb.mev.configuration.util.simple.SimpleConfig;
 import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.Presets;
@@ -59,20 +54,20 @@ public class PresetsFilesConfig {
     return metadataURL;
   }
 
-  @Bean(name="tcgaPresetBiulderTsv")
+  @Bean(name="tcgaPresetBiulder")
   public TcgaPresetsBuilder getTcgaPresetsBuilderTsv(){
     return new TcgaPresetsBuilder();
   }
 
-  @Bean(name="tcgaPresetBiulderJson")
-  public TcgaPresetsBuilderJson getTcgaPresetsBuilderJson(){
-    return new TcgaPresetsBuilderJson();
+  @Bean(name="tcgaPresetBiulder2")
+  public TcgaPresetsBuilder2 getTcgaPresetsBuilderJson(){
+    return new TcgaPresetsBuilder2();
   }
 
   @Bean  @Inject
   public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot,
-                                @Named("tcgaPresetBiulderTsv") TcgaPresetsBuilder builder,
-                                @Named("tcgaPresetBiulderJson")TcgaPresetsBuilderJson builderJson)
+                                @Named("tcgaPresetBiulder") TcgaPresetsBuilder builder,
+                                @Named("tcgaPresetBiulder2")TcgaPresetsBuilder2 builderJson)
           throws URISyntaxException, PresetException, IOException {
 
     log.info (TCGA_PROPERTY_ROOT_FOLDER+" URL:" + tcgaPresetRoot);
@@ -88,9 +83,9 @@ public class PresetsFilesConfig {
       log.info (TCGA_PROPERTY_MATA_FILENAME+":" + metadataFilename);
       URL metadataURL = getMetadataURL(tcgaPresetRoot, metadataFilename);
 
-      if(FilenameUtils.getExtension(metadataFilename).equals("tsv")){
+      if(FilenameUtils.getBaseName(metadataFilename).equals("mev.file_metadata")){
         allPresets.put(new SimplePresests (metadataURL, builder));
-      } else if(FilenameUtils.getExtension(metadataFilename).equals("json")){
+      } else if(FilenameUtils.getBaseName(metadataFilename).equals("tcga2")){
         allPresets.put(new SimplePresests (metadataURL, builderJson));
       }else
         throw new PresetException ("Invalid preset file extension: " + metadataURL.toString ());
@@ -107,9 +102,9 @@ public class PresetsFilesConfig {
 
   @Bean
   @Scope(value=SCOPE_PROTOTYPE, proxyMode=NO)
-  @Named("tcgaPresetJson")
+  @Named("tcgaPreset2")
   public Preset tcgaPresetJson(){
-    return new TcgaPresetMetafileJson();
+    return new TcgaPresetMetafile2();
   }
 
   @Inject

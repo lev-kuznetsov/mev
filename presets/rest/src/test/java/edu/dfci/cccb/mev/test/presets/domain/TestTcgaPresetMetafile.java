@@ -24,7 +24,7 @@ import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfiguratio
 @ContextConfiguration(classes={PresetsRestConfigurationTest.class})
 public class TestTcgaPresetMetafile {
   
-  private @Inject @Named ("tcgaPresetBiulderTsv") PresetsBuilder builder;
+  private @Inject @Named ("tcgaPresetBiulder") PresetsBuilder builder;
   private @Inject @Named ("tcgaPresetRoot") URL tcgaPresetRoot;
   @Inject @Named ("probe-annotations-root") URL rowAnnotationsRoot;
   

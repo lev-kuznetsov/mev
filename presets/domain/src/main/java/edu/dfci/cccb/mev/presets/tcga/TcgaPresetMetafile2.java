@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 /**
  * Created by antony on 5/23/16.
  */
-public class TcgaPresetMetafileJson extends TcgaPresetMetafile {
+public class TcgaPresetMetafile2 extends TcgaPresetMetafile {
 
 
     @Override
