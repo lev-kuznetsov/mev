@@ -65,7 +65,7 @@ public class PresetsFilesConfig {
 
   @Bean(name="tcgaPresetBiulder2")
   public TcgaPresetsBuilder2 getTcgaPresetsBuilder2(){
-    return new TcgaPresetsBuilder2();
+    return new TcgaPresetsBuilder2(TcgaPresetMetafile2.TcgaPresetEntry.class);
   }
   @Bean @Scope(value=SCOPE_PROTOTYPE, proxyMode=NO) @Named("tcgaPreset2")
   public Preset tcgaPresetJson(){
