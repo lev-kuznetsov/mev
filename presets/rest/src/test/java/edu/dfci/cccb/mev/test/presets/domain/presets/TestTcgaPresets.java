@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.test.presets.domain;
+package edu.dfci.cccb.mev.test.presets.domain.presest;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -41,52 +41,52 @@ import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfiguratio
 public class TestTcgaPresets {
 
   @Inject Presets tcgaPresets;
-  @Inject @Named("tcgaPreset") Provider<Preset> presetProvider;
-  @Inject PresetsBuilder builder;
+  Provider<Preset> presetProvider;
+  @Inject @Named("tcgaPresetBiulder") PresetsBuilder builder;
   List<Preset> expectedPresets;
   
   @Before
   public void checkPresetsLoaded() throws PresetException{
     assertNotNull(tcgaPresets);
     expectedPresets = new ArrayList<Preset> (8);
-    Object[] values3 = {"ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv","ACC/Level_3","ACC","Adrenocortical carcinoma","IlluminaHiSeq_miRNASeq","Illumina HiSeq 2000 miRNA Sequencing","Level_3", "normal"};    
-    expectedPresets.add (presetProvider.get().init(values3));
-    Object[] values6 = {"BRCA.IlluminaHiSeq_RNASeq.Level_3.Expression-Gene.RPKM.tsv","BRCA/Level_3","BRCA","Breast invasive carcinoma","IlluminaHiSeq_RNASeq","Illumina HiSeq 2000 RNA Sequencing","Level_3", "normal"};
-    expectedPresets.add (presetProvider.get().init(values6));
+//    Object[] values3 = {"ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv","ACC/Level_3","ACC","Adrenocortical carcinoma","IlluminaHiSeq_miRNASeq","Illumina HiSeq 2000 miRNA Sequencing","Level_3", "normal"};
+//    expectedPresets.add (presetProvider.get().init(values3));
+//    Object[] values6 = {"BRCA.IlluminaHiSeq_RNASeq.Level_3.Expression-Gene.RPKM.tsv","BRCA/Level_3","BRCA","Breast invasive carcinoma","IlluminaHiSeq_RNASeq","Illumina HiSeq 2000 RNA Sequencing","Level_3", "normal"};
+//    expectedPresets.add (presetProvider.get().init(values6));
   }
-   
-  @Test @Ignore
-  public void testGet () throws PresetNotFoundException, PresetException {
-    Preset actuall = tcgaPresets.get ("BRCA.IlluminaHiSeq_RNASeq.Level_3.Expression-Gene.RPKM.tsv");
-    
-    assertNotNull (actuall);
-    
-    Object[] values = {"BRCA.IlluminaHiSeq_RNASeq.Level_3.Expression-Gene.RPKM.tsv","BRCA/Level_3","BRCA","Breast invasive carcinoma","IlluminaHiSeq_RNASeq","Illumina HiSeq 2000 RNA Sequencing","Level_3","normal"};    
-    Preset expected = presetProvider.get().init (values );
-    log.info ("actual:"+actuall.toString ());
-    log.info ("expect:"+expected.toString ());    
-    assertThat (expected, equalTo(actuall));
-    
-  }
-  
-  @Test @Ignore
+
+  @Test
   public void testGetDataFile () throws PresetNotFoundException, PresetException {
     Preset preset = tcgaPresets.get ("ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv");
     assertNotNull (preset);
-    
+
     PresetDescriptor descriptor = preset.descriptor ();
     File checkFile = new File( descriptor.dataUrl ().getFile() );
     assertTrue(checkFile.exists ());
   }
 
-  @Test @Ignore
+  @Test
   public void testGetColumnFile () throws PresetNotFoundException, PresetException {
     Preset preset = tcgaPresets.get ("ACC.IlluminaHiSeq_miRNASeq.Level_3.Expression-miRNA.readsPerMillionMapped.tsv");
     assertNotNull (preset);
-    
+
     PresetDescriptor descriptor = preset.descriptor ();
     File checkFile = new File( descriptor.columnUrl ().getFile() );
     assertTrue(checkFile.exists ());
+  }
+
+  @Test @Ignore
+  public void testGet () throws PresetNotFoundException, PresetException {
+    Preset actuall = tcgaPresets.get ("BRCA.IlluminaHiSeq_RNASeq.Level_3.Expression-Gene.RPKM.tsv");
+    
+    assertNotNull (actuall);
+
+    Object[] values = {"BRCA.IlluminaHiSeq_RNASeq.Level_3.Expression-Gene.RPKM.tsv","BRCA/Level_3","BRCA","Breast invasive carcinoma","IlluminaHiSeq_RNASeq","Illumina HiSeq 2000 RNA Sequencing","Level_3","normal"};
+    Preset expected = presetProvider.get().init (values );
+    log.info ("actual:"+actuall.toString ());
+    log.info ("expect:"+expected.toString ());
+    assertThat (expected, equalTo(actuall));
+
   }
   
   @Test @Ignore

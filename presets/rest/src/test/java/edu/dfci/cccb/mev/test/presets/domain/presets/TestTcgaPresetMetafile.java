@@ -1,28 +1,30 @@
-package edu.dfci.cccb.mev.test.presets.domain;
+package edu.dfci.cccb.mev.test.presets.domain.presest;
+
+import static org.junit.Assert.assertEquals;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetDescriptor;
 import edu.dfci.cccb.mev.presets.contract.PresetsBuilder;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfigurationTest;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={PresetsRestConfigurationTest.class})
-public class TestTcgaPresetMetafile2 {
+public class TestTcgaPresetMetafile {
   
-  private @Inject @Named ("tcgaPresetBiulder2") PresetsBuilder builder;
+  private @Inject @Named ("tcgaPresetBiulder") PresetsBuilder builder;
   private @Inject @Named ("tcgaPresetRoot") URL tcgaPresetRoot;
   @Inject @Named ("probe-annotations-root") URL rowAnnotationsRoot;
   
@@ -42,7 +44,7 @@ public class TestTcgaPresetMetafile2 {
     assertEquals (expectedDataURL, descriptor.dataUrl ());
     
     
-    URL expectedColumnURL = new URL(tcgaPresetRoot, "openrefine/clinical/presetname-clinical_annotations-tsv.openrefine.tar.gz");
+    URL expectedColumnURL = new URL(tcgaPresetRoot, "openrefine/clinical/NS-clinical_annotations-tsv.openrefine.tar.gz");
     assertEquals (expectedColumnURL, descriptor.columnUrl ());
   
     URL expectedRowURL = new URL(rowAnnotationsRoot, "openrefine/HS-na33-annot-out-tsv.google-refine.tar.gz");    
