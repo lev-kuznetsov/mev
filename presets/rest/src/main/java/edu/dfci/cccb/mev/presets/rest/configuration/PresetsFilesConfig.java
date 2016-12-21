@@ -1,8 +1,6 @@
 package edu.dfci.cccb.mev.presets.rest.configuration;
 
-import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
-import static org.springframework.context.annotation.ScopedProxyMode.NO;
-
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -11,22 +9,18 @@ import java.net.URL;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import edu.dfci.cccb.mev.presets.tcga.TcgaPresetMetafile2;
-import edu.dfci.cccb.mev.presets.tcga.TcgaPresetsBuilder2;
+import edu.dfci.cccb.mev.presets.tcga.*;
+import org.apache.commons.configuration.FileSystem;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 import org.springframework.util.ResourceUtils;
 
 import edu.dfci.cccb.mev.configuration.util.contract.Config;
 import edu.dfci.cccb.mev.io.utils.CCCPHelpers;
-import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.Presets;
 import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.simple.SimplePresests;
-import edu.dfci.cccb.mev.presets.tcga.TcgaPresetMetafile;
-import edu.dfci.cccb.mev.presets.tcga.TcgaPresetsBuilder;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -56,27 +50,31 @@ public class PresetsFilesConfig {
 
   @Bean(name="tcgaPresetBiulder")
   public TcgaPresetsBuilder getTcgaPresetsBuilderTsv(){
-    return new TcgaPresetsBuilder();
-  }
-  @Bean  @Scope(value=SCOPE_PROTOTYPE, proxyMode=NO) @Named("tcgaPreset")
-  public Preset tcgaPreset(){
-    return new TcgaPresetMetafile();
+    return new TcgaPresetsBuilder(TcgaPresetMetafile.class);
   }
 
   @Bean(name="tcgaPresetBiulder2")
-  public TcgaPresetsBuilder2 getTcgaPresetsBuilder2(){
-    return new TcgaPresetsBuilder2(TcgaPresetMetafile2.TcgaPresetEntry.class);
+  public TcgaPresetsBuilderJson getTcgaPresetsBuilder2(){
+    return new TcgaPresetsBuilderJson(TcgaPresetMetafile2.class);
   }
-  @Bean @Scope(value=SCOPE_PROTOTYPE, proxyMode=NO) @Named("tcgaPreset2")
-  public Preset tcgaPresetJson(){
-    return new TcgaPresetMetafile2();
+
+  @Bean(name="tcgaPresetBiulder3")
+  public TcgaPresetsBuilderJson getTcgaPresetsBuilder3(){
+    return new TcgaPresetsBuilderJson(TcgaPresetMetafile3.class);
+  }
+
+  @Bean(name="tcgaPresetBiulderFS")
+  public TcgaPresetsBuilderFS getTcgaPresetsBuilderFS(){
+    return new TcgaPresetsBuilderFS(TcgaPresetMetafileFS.class);
   }
 
 
-  @Bean  @Inject
+  @Bean
   public Presets getTcgaPresets(@Named("tcgaPresetRoot") URL tcgaPresetRoot,
                                 @Named("tcgaPresetBiulder") TcgaPresetsBuilder builder,
-                                @Named("tcgaPresetBiulder2")TcgaPresetsBuilder2 builder2)
+                                @Named("tcgaPresetBiulder2")TcgaPresetsBuilderJson builder2,
+                                @Named("tcgaPresetBiulder3")TcgaPresetsBuilderJson builder3,
+                                @Named("tcgaPresetBiulderFS")TcgaPresetsBuilderFS builderFs)
           throws URISyntaxException, PresetException, IOException {
 
     log.info (TCGA_PROPERTY_ROOT_FOLDER+" URL:" + tcgaPresetRoot);
@@ -97,8 +95,10 @@ public class PresetsFilesConfig {
       } else if(FilenameUtils.getBaseName(metadataFilename).equals("tcga2")){
         allPresets.put(new SimplePresests (metadataURL, builder2));
       } else if(FilenameUtils.getBaseName(metadataFilename).equals("tcga3")) {
-
-      } else
+        allPresets.put(new SimplePresests (metadataURL, builder3));
+      } else if(metadataFilename.endsWith("/")) {
+        allPresets.put(new SimplePresests (metadataURL, builderFs));
+      }else
         throw new PresetException ("Invalid preset file extension: " + metadataURL.toString ());
     }
     return allPresets;

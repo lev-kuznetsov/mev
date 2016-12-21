@@ -12,9 +12,9 @@ import java.nio.file.Paths;
 /**
  * Created by antony on 5/23/16.
  */
-public class TcgaPresetMetafile2 extends TcgaPresetMetafile {
+public class TcgaPresetMetafile3 extends TcgaPresetMetafile {
 
-    public TcgaPresetMetafile2(URL tcgaPresetRoot, URL rowAnnotationsRoot){
+    public TcgaPresetMetafile3(URL tcgaPresetRoot, URL rowAnnotationsRoot){
         super(tcgaPresetRoot, rowAnnotationsRoot);
     }
 

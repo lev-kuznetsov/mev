@@ -20,9 +20,9 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={PresetsRestConfigurationTest.class})
-public class TestTcgaPresetMetafile2 {
+public class TestTcgaPresetMetafileFS {
   
-  private @Inject @Named ("tcgaPresetBiulder2") PresetsBuilder builder;
+  private @Inject @Named ("tcgaPresetBiulderFS") PresetsBuilder builder;
   private @Inject @Named ("tcgaPresetRoot") URL tcgaPresetRoot;
   @Inject @Named ("probe-annotations-root") URL rowAnnotationsRoot;
   
@@ -33,19 +33,18 @@ public class TestTcgaPresetMetafile2 {
   
   @Test
   public void testGetDescriptor () throws PresetException, MalformedURLException  {
-    
-    Preset preset = builder.createPreset (new Object[]{"presetname", "filename.tsv", "path/of/file", "NS", "Nothing Serious", "HS", "HiSeq", "Level2", "log"});
+    Preset preset = builder.createPreset (new Object[]{"20150821-COAD-RNAseqGene-median_length_normalized.txt", "20150821-COAD-RNAseqGene-median_length_normalized.txt", "path/of/file", "NS", "Nothing Serious", "HS", "HiSeq", "3", "log"});
      
     PresetDescriptor descriptor = preset.descriptor ();
     
-    URL expectedDataURL = new URL(tcgaPresetRoot, "tcga_data/path/of/file/filename.tsv");    
+    URL expectedDataURL = new URL(tcgaPresetRoot, "tcga_cleaned_datasets/path/of/file/20150821-COAD-RNAseqGene-median_length_normalized.txt");
     assertEquals (expectedDataURL, descriptor.dataUrl ());
     
     
-    URL expectedColumnURL = new URL(tcgaPresetRoot, "openrefine/clinical/presetname-clinical_annotations-tsv.openrefine.tar.gz");
+    URL expectedColumnURL = new URL(tcgaPresetRoot, "openrefine/clinical/tcga_cleaned_datasets/NS-clinical_annotations-tsv.openrefine.tar.gz");
     assertEquals (expectedColumnURL, descriptor.columnUrl ());
   
-    URL expectedRowURL = new URL(rowAnnotationsRoot, "openrefine/HS-na33-annot-out-tsv.google-refine.tar.gz");    
+    URL expectedRowURL = new URL(rowAnnotationsRoot, "openrefine/geneSymbol_goAnnotations-tsv.google-refine.tar.gz");
     assertEquals (expectedRowURL, descriptor.rowUrl ());
   
   }

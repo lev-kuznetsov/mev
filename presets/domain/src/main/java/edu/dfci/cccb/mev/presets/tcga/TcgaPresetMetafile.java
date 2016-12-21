@@ -19,14 +19,13 @@ import edu.dfci.cccb.mev.presets.contract.exceptions.PresetException;
 import edu.dfci.cccb.mev.presets.prototype.AbstractTcgaPreset;
 import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
 
+
 @Accessors(fluent=true)
 @EqualsAndHashCode
 @ToString
-  public class TcgaPresetMetafile extends AbstractTcgaPreset {
+public class TcgaPresetMetafile extends AbstractTcgaPreset {
 
-  @JsonIgnore(value=true) private @Setter  @Inject @Named ("tcgaPresetRoot") URL tcgaPresetRoot;
-  @JsonIgnore(value=true) private @Setter  @Inject @Named ("probe-annotations-root") URL rowAnnotationsRoot;  
-  @JsonIgnore(value=true) private String filename;
+  @JsonIgnore(value=true) private @Getter String filename;
   @JsonIgnore(value=true) private @Getter(AccessLevel.PROTECTED) String path;
   @JsonProperty(value="name") private @Getter String name;
   @JsonProperty(value="disease") private @Getter String disease;
@@ -37,9 +36,12 @@ import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
   private @Getter String scale;
   //@Getter(onMethod = @_ (@JsonProperty (value="platformName")) 
   @JsonIgnore private @Getter PresetDescriptor descriptor;
-  
-  public TcgaPresetMetafile(){}
-  
+
+  public TcgaPresetMetafile(URL tcgaPresetRoot, URL rowAnnotationsRoot){
+    super.tcgaPresetRoot(tcgaPresetRoot);
+    super.rowAnnotationsRoot(rowAnnotationsRoot);
+  }
+
   @Override
   public Preset init(Object[] values) throws PresetException{
       return values.length == 8
@@ -75,7 +77,7 @@ import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
     this.platformName=platformName;
     this.dataLevel=dataLevel;
     this.scale=scale;
-    this.descriptor = new SimplePresetDescriptor ("PRESET-"+name,tcgaPresetRoot, getDataUrlSpec (), getColumnUrlSpec (), rowAnnotationsRoot, getRowUrlSpec (), getColumnSourceUrlSpec());
+    this.descriptor = new SimplePresetDescriptor ("PRESET-"+name,tcgaPresetRoot(), getDataUrlSpec (), getColumnUrlSpec (), rowAnnotationsRoot(), getRowUrlSpec (), getColumnSourceUrlSpec());
     return this;
   }
 
@@ -89,7 +91,7 @@ import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
     this.platformName=platformName;
     this.dataLevel=dataLevel;
     this.scale=scale;
-    this.descriptor = new SimplePresetDescriptor ("PRESET-"+name,tcgaPresetRoot, getDataUrlSpec (), getColumnUrlSpec (), rowAnnotationsRoot, getRowUrlSpec (), getColumnSourceUrlSpec());
+    this.descriptor = new SimplePresetDescriptor ("PRESET-"+name,tcgaPresetRoot(), getDataUrlSpec (), getColumnUrlSpec (), rowAnnotationsRoot(), getRowUrlSpec (), getColumnSourceUrlSpec());
     return this;
   }
    
@@ -102,7 +104,7 @@ import edu.dfci.cccb.mev.presets.simple.SimplePresetDescriptor;
   }
   protected String getRowUrlSpec() {
     //ACC-clinical_annotations-tsv.openrefine.tar.gz
-    if(this.dataLevel.trim().equalsIgnoreCase ("level_3"))
+    if(this.dataLevel.trim().equalsIgnoreCase ("level_3") || this.dataLevel.trim().equalsIgnoreCase ("3"))
       //geneSymbol_goAnnotations-tsv.google-refine.tar.gz
       return "openrefine/geneSymbol_goAnnotations-tsv.google-refine.tar.gz";
     else
