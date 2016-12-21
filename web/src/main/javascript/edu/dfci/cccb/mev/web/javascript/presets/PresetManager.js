@@ -5,7 +5,7 @@ define(['jquery', 'mui'], function (jquery, angular, template){
 					data: 'presets',
 					columnDefs: [{field: 'name', displayName: 'Dataset', enableCellEdit: false, width:'40%',
 									cellTemplate: '<div><div class="ngCellText"><a data-toggle="modal" role="button" data-target="#import-presets-modal" href="" ng-click="showImportPreset(row.getProperty(\'name\'))">{{row.getProperty(col.field)}}</a></div></div>'},
-					             {field:'diseaseName', displayName:'Desease Name', enableCellEdit: false, visible: false},
+					             {field:'disease', displayName:'Desease Name', enableCellEdit: false, visible: false},
 					             {field:'dataLevel', displayName:'Data Level', enableCellEdit: false, width:'10%'},			                     
 			                     {field:'platformName', displayName:'Platform', enableCellEdit: false, width:'45%'}
 			                     ],
