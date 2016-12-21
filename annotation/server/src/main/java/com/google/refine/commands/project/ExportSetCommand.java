@@ -47,6 +47,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.refine.ProjectManager;
+import com.google.refine.ProjectMetadata;
 import com.google.refine.browsing.Engine;
 import com.google.refine.browsing.FilteredRows;
 import com.google.refine.browsing.RowVisitor;
@@ -102,21 +103,32 @@ public class ExportSetCommand extends Command {
       RowVisitor visitor = new RowVisitor () {
         Column theIdColumn;
 
-        @Override
-        public void start (Project project) {
+        private String getKeyColumnName(ProjectMetadata metadata){
+          return metadata.getCustomMetadata("keyColumnName").toString();
+        }
 
-          // if no id column found, assume first column is the id
+        private Column getKeyColumn(Project project, String ... keys) {
+          String keyColumnName = getKeyColumnName(project.getMetadata());
           List<Column> columns = project.columnModel.columns;
-          theIdColumn = columns.get (0);
-
+          Column theIdColumn = columns.get (0);
+          project.getMetadata().getCustomMetadata("keyColumnName");
           for (Column column : columns) {
             String name = column.getName ();
-            if (name.equalsIgnoreCase ("annotationId") || name.equalsIgnoreCase ("id")) {
+            for(String key : keys)
+              if(name.equalsIgnoreCase(key))
+                theIdColumn = column;
+            if (!keyColumnName.isEmpty() && name.equalsIgnoreCase(keyColumnName)) {
               theIdColumn = column;
               break;
             }
           }
+          return theIdColumn;
         }
+        @Override
+        public void start (Project project) {
+          theIdColumn = project.getKeyColumn("annotationId", "id");
+        }
+
 
         @Override
         public boolean visit (Project project, int rowIndex, Row row) {

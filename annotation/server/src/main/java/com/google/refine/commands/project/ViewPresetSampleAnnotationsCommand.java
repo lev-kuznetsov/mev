@@ -96,10 +96,7 @@ public class ViewPresetSampleAnnotationsCommand extends Command {
                   @Override
                   public void start (Project project) {
 
-                    // if no id column found, assume first column is the id
-                    List<Column> columns = project.columnModel.columns;
-                    theIdColumn = columns.get (0);
-
+                    theIdColumn = project.getKeyColumn();
                   }
 
                   @Override

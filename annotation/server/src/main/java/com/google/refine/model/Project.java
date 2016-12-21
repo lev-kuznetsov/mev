@@ -128,6 +128,31 @@ public class Project {
         return ProjectManager.getSingleton().getProjectMetadata(id);
     }
 
+    private String getKeyColumnName(ProjectMetadata metadata){
+        return metadata.getCustomMetadata("keyColumnName").toString();
+    }
+
+    public Column getKeyColumn(String ... keys) {
+
+        List<Column> columns = this.columnModel.columns;
+        // if no id column found, assume first column is the id
+        Column theIdColumn = columns.get (0);
+        String keyColumnName = getKeyColumnName(this.getMetadata());
+
+        for (Column column : columns) {
+            String name = column.getName ();
+            for(String key : keys)
+                if(name.equalsIgnoreCase(key))
+                    theIdColumn = column;
+            if (!keyColumnName.isEmpty() && name.equalsIgnoreCase(keyColumnName)) {
+                theIdColumn = column;
+                break;
+            }
+        }
+        return theIdColumn;
+    }
+
+
     public void saveToOutputStream(OutputStream out, Pool pool) throws IOException {
         for (OverlayModel overlayModel : overlayModels.values()) {
             try {

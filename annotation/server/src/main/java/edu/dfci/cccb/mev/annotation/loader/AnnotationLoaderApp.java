@@ -34,7 +34,8 @@ public class AnnotationLoaderApp {
         JSONArray fileRecords = new JSONArray ();
         JSONUtilities.safePut (retrievalRecord, "files", fileRecords);
 
-        InputStream stream = new URL("file:///home/antony/mev/data/tcga2/tcga_data/UNC_UCEC_AgilentG4502A_07_3_l3/annotation.tsv").openStream();
+//        InputStream stream = new URL("file:///home/antony/mev/data/tcga2/tcga_data/UNC_UCEC_AgilentG4502A_07_3_l3/annotation.tsv").openStream();
+        InputStream stream = new URL("file:///home/antony/work/danafarber/mev/prod-server/data/tcga/tcga_cleaned_datasets/LUAD/20150821-LUAD-RNAseqGene-Clinical.txt").openStream();
         String encoding = "UTF-8";
 
         //save file
@@ -96,7 +97,6 @@ public class AnnotationLoaderApp {
         JSONObject retrievalRecord = new JSONObject ();
         JSONUtilities.safePut (config, "retrievalRecord", retrievalRecord);
         JSONUtilities.safePut (config, "state", "loading-raw-data");
-
 
         importData(job, retrievalRecord );
 
