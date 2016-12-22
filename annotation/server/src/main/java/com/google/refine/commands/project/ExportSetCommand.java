@@ -103,27 +103,6 @@ public class ExportSetCommand extends Command {
       RowVisitor visitor = new RowVisitor () {
         Column theIdColumn;
 
-        private String getKeyColumnName(ProjectMetadata metadata){
-          return metadata.getCustomMetadata("keyColumnName").toString();
-        }
-
-        private Column getKeyColumn(Project project, String ... keys) {
-          String keyColumnName = getKeyColumnName(project.getMetadata());
-          List<Column> columns = project.columnModel.columns;
-          Column theIdColumn = columns.get (0);
-          project.getMetadata().getCustomMetadata("keyColumnName");
-          for (Column column : columns) {
-            String name = column.getName ();
-            for(String key : keys)
-              if(name.equalsIgnoreCase(key))
-                theIdColumn = column;
-            if (!keyColumnName.isEmpty() && name.equalsIgnoreCase(keyColumnName)) {
-              theIdColumn = column;
-              break;
-            }
-          }
-          return theIdColumn;
-        }
         @Override
         public void start (Project project) {
           theIdColumn = project.getKeyColumn("annotationId", "id");

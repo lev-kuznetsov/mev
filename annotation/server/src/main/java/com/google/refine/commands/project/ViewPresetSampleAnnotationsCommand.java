@@ -95,7 +95,6 @@ public class ViewPresetSampleAnnotationsCommand extends Command {
 
                   @Override
                   public void start (Project project) {
-
                     theIdColumn = project.getKeyColumn();
                   }
 

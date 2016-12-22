@@ -103,17 +103,7 @@ public class ViewPresetRowAnnotationsCommand extends Command {
 
                 @Override
                 public void start (Project project) {
-
-                  // if no id column found, assume first column is the id
-                  List<Column> columns = project.columnModel.columns;
-                  
-                  theIdColumn = project.columnModel.getColumnByName ("probeset_id");
-                  if(theIdColumn==null){
-                    theIdColumn = project.columnModel.getColumnByName ("Symbol");  
-                  }
-                  if(theIdColumn==null){
-                    theIdColumn = columns.get (0);  
-                  }
+                  theIdColumn = project.getKeyColumn("Symbol", "probeset_id");
                 }
 
                 @Override
