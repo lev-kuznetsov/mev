@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
+import lombok.NoArgsConstructor;
 import org.supercsv.comment.CommentMatcher;
 import org.supercsv.io.CsvListReader;
 import org.supercsv.prefs.CsvPreference.Builder;
@@ -34,17 +35,20 @@ import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractParserFactory;
  * @author levk
  * 
  */
+@NoArgsConstructor
 public class SuperCsvParserFactory extends AbstractParserFactory {
 
   private char quoteChar = '"';
   private int separatorChar = '\t';
   private String endOfLineSymbols = "\n";
   private Collection<Pattern> commentRegExpressions = new ArrayList<> ();
-
+  private SuperCsvParser.RowIdParser rowIdParser;
   {
-    commentRegExpressions ("[\t ]+#[.]+", "[\\! ].+", "[\\^ ].+","[#].+");
+    commentRegExpressions ("[\t ]+#[.]+", "[\\! ].+", "[\\^ ].+","[#].+", "[\\?].+");
   }
-
+  public SuperCsvParserFactory(SuperCsvParser.RowIdParser rowIdParser){
+    this.rowIdParser=rowIdParser;
+  }
   public SuperCsvParserFactory quoteChar (char quoteChar) {
     this.quoteChar = quoteChar;
     return this;
@@ -93,6 +97,6 @@ public class SuperCsvParserFactory extends AbstractParserFactory {
                                                           return true;
                                                       return false;
                                                     }
-                                                  }).build ()));
+                                                  }).build ()), rowIdParser);
   }
 }
