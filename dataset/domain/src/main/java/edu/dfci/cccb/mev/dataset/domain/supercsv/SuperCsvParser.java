@@ -106,47 +106,46 @@ public class SuperCsvParser extends AbstractParser implements Closeable {
   private Iterator<Entry<String, Double>> currentRow;
   private final Map<String, Integer> rows = new LinkedHashMap<String, Integer> ();
   private final Map<String, Integer> columns = new LinkedHashMap<String, Integer> ();
-  private void init(CsvListReader reader) throws InputContentStreamException {
-    this.reader = reader;
-    try {
-        String tmpHeader[] = reader.getHeader (true);
-        List<String> firstDataLine = reader.read ();
-        if(tmpHeader.length == firstDataLine.size()-1){
-            header = new String[firstDataLine.size()];
-            header[0] = "id";
-            for(int i=0; i<tmpHeader.length; i++)
-                header[i+1]=tmpHeader[i];
-        }else{
-            header = tmpHeader;
-        }
-
-        processors = new CellProcessor[header.length];
-        //use LinkedHashMap to preserve the order of keys
-        Map<String, Double> firstProcessedLine = new LinkedHashMap<> ();
-        for (int index = 1; index < header.length; index++){
-            try {
-                firstProcessedLine.put (header[index],
-                        (Double) DOUBLE_CELL_PROCESSOR.execute (firstDataLine.get (index), null));
-                processors[index] = DOUBLE_CELL_PROCESSOR;
-                columns.put (header[index], columns.size ());
-            } catch (SuperCsvCellProcessorException e) {
-                processors[index] = IGNORE_CELL_PROCESSOR;
-            }
-        }
-        processors[0] = ROW_ID_PROCESSOR;
-        currentRowName = parseRowId(firstDataLine.get (0));
-        rows.put (currentRowName, rows.size ());
-        currentRow = firstProcessedLine.entrySet ().iterator ();
-    } catch (IOException e) {
-        throw new InputContentStreamException (e);
-    }
-  }
+  
   protected SuperCsvParser (CsvListReader reader) throws DatasetBuilderException {
-      init(reader);
+      this(reader, null);
   }
   protected SuperCsvParser (CsvListReader reader, RowIdParser rowIdParser) throws DatasetBuilderException {
-        this.rowIdParser = rowIdParser;
-        init(reader);
+      this.rowIdParser = rowIdParser;
+      this.reader = reader;
+      try {
+          String tmpHeader[] = reader.getHeader (true);
+          List<String> firstDataLine = reader.read ();
+          if(tmpHeader.length == firstDataLine.size()-1){
+              header = new String[firstDataLine.size()];
+              header[0] = "id";
+              for(int i=0; i<tmpHeader.length; i++)
+                  header[i+1]=tmpHeader[i];
+          }else{
+              header = tmpHeader;
+          }
+
+          processors = new CellProcessor[header.length];
+          //use LinkedHashMap to preserve the order of keys
+          Map<String, Double> firstProcessedLine = new LinkedHashMap<> ();
+          for (int index = 1; index < header.length; index++){
+              try {
+                  firstProcessedLine.put (header[index],
+                          (Double) DOUBLE_CELL_PROCESSOR.execute (firstDataLine.get (index), null));
+                  processors[index] = DOUBLE_CELL_PROCESSOR;
+                  columns.put (header[index], columns.size ());
+              } catch (SuperCsvCellProcessorException e) {
+                  processors[index] = IGNORE_CELL_PROCESSOR;
+              }
+          }
+          processors[0] = ROW_ID_PROCESSOR;
+          currentRowName = parseRowId(firstDataLine.get (0));
+          rows.put (currentRowName, rows.size ());
+          currentRow = firstProcessedLine.entrySet ().iterator ();
+      } catch (IOException e) {
+          throw new InputContentStreamException (e);
+      }
+
   }
   /* (non-Javadoc)
    * @see
