@@ -33,13 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.google.refine.model;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
@@ -129,7 +123,10 @@ public class Project {
     }
 
     private String getKeyColumnName(ProjectMetadata metadata){
-        return metadata.getCustomMetadata("keyColumnName").toString();
+        Serializable keyColumnName = metadata.getCustomMetadata("keyColumnName");
+        return keyColumnName==null
+                ? ""
+                : keyColumnName.toString();
     }
 
     public Column getKeyColumn(String ... keys) {
