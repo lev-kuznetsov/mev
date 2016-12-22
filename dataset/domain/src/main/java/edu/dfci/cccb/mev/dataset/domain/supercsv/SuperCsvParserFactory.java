@@ -44,7 +44,7 @@ public class SuperCsvParserFactory extends AbstractParserFactory {
   private Collection<Pattern> commentRegExpressions = new ArrayList<> ();
   private SuperCsvParser.RowIdParser rowIdParser;
   {
-    commentRegExpressions ("[\t ]+#[.]+", "[\\! ].+", "[\\^ ].+","[#].+", "[\\?].+");
+    commentRegExpressions ("[\t ]+#[.]+", "[\\! ].+", "[\\^ ].+","[#].+");
   }
   public SuperCsvParserFactory(SuperCsvParser.RowIdParser rowIdParser){
     this.rowIdParser=rowIdParser;
@@ -53,7 +53,10 @@ public class SuperCsvParserFactory extends AbstractParserFactory {
     this.quoteChar = quoteChar;
     return this;
   }
-
+  @Override
+  public void addCommentRegExpression(String regex){
+    this.commentRegExpressions.add (compile (regex));
+  }
   public SuperCsvParserFactory separatorChar (int separatorChar) {
     this.separatorChar = separatorChar;
     return this;

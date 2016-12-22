@@ -66,12 +66,14 @@ public class PresetsLoaderConfiguration {
 
   @Bean
   public ParserFactory tsvParserFactory () {
-    return new SuperCsvParserFactory(new SuperCsvParser.RowIdParser() {
+    SuperCsvParserFactory factory = new SuperCsvParserFactory(new SuperCsvParser.RowIdParser() {
       @Override
       public String parse(String value) {
         return value.substring(0, value.indexOf("|"));
       }
     });
+    factory.addCommentRegExpression("[\\?].+");
+    return factory;
   }
   
   
