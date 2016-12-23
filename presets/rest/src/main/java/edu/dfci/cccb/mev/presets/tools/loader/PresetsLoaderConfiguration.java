@@ -69,7 +69,10 @@ public class PresetsLoaderConfiguration {
     SuperCsvParserFactory factory = new SuperCsvParserFactory(new SuperCsvParser.RowIdParser() {
       @Override
       public String parse(String value) {
-        return value.substring(0, value.indexOf("|"));
+        int index = value.indexOf("|");
+        return index >= 0
+          ? value.substring(0, index)
+          : value;
       }
     });
     factory.addCommentRegExpression("[\\?].+");
