@@ -17,7 +17,7 @@ define(['ng'], function (ng){
 						],
 						groups: ['disease'],
 						groupsCollapsedByDefault: true,
-						sortInfo: { fields: ['diseaseName', 'dataLevelNorm'], directions: ['asc', 'asc'] },
+						sortInfo: { fields: ['disease', 'dataLevelNorm'], directions: ['asc', 'asc'] },
 						showFilter: true,
 						selectWithCheckboxOnly: true ,
 						enableRowSelection: false
