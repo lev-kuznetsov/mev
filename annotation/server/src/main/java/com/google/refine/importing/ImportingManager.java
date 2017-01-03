@@ -154,7 +154,11 @@ public class ImportingManager {
 
   static synchronized public File getImportDir () {
     if (importDir == null) {
-      File tempDir = servlet.getTempDir ();
+      File tempDir;
+      if(servlet == null)
+        tempDir = new File(System.getProperty("java.io.tmpdir"));
+      else
+        tempDir = servlet.getTempDir ();
       importDir = tempDir == null ? new File (".import-temp") : new File (tempDir, "import");
 
       if (importDir.exists ()) {

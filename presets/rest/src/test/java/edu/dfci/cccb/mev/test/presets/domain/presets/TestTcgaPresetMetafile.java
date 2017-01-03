@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.test.presets.domain;
+package edu.dfci.cccb.mev.test.presets.domain.presets;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,7 +24,7 @@ import edu.dfci.cccb.mev.test.presets.rest.configuration.PresetsRestConfiguratio
 @ContextConfiguration(classes={PresetsRestConfigurationTest.class})
 public class TestTcgaPresetMetafile {
   
-  private @Inject PresetsBuilder builder;
+  private @Inject @Named ("tcgaPresetBiulder") PresetsBuilder builder;
   private @Inject @Named ("tcgaPresetRoot") URL tcgaPresetRoot;
   @Inject @Named ("probe-annotations-root") URL rowAnnotationsRoot;
   
@@ -36,7 +36,7 @@ public class TestTcgaPresetMetafile {
   @Test
   public void testGetDescriptor () throws PresetException, MalformedURLException  {
     
-    Preset preset = builder.createPreset (new Object[]{"filename.tsv", "path/of/file", "NS", "Nothing Serious", "HS", "HiSeq", "Level2", "log"});
+    Preset preset = builder.createPreset (new Object[]{"presetname", "filename.tsv", "path/of/file", "NS", "Nothing Serious", "HS", "HiSeq", "Level2", "log"});
      
     PresetDescriptor descriptor = preset.descriptor ();
     
@@ -44,7 +44,7 @@ public class TestTcgaPresetMetafile {
     assertEquals (expectedDataURL, descriptor.dataUrl ());
     
     
-    URL expectedColumnURL = new URL(tcgaPresetRoot, "openrefine/clinical/NS-clinical_annotations-tsv.openrefine.tar.gz");    
+    URL expectedColumnURL = new URL(tcgaPresetRoot, "openrefine/clinical/NS-clinical_annotations-tsv.openrefine.tar.gz");
     assertEquals (expectedColumnURL, descriptor.columnUrl ());
   
     URL expectedRowURL = new URL(rowAnnotationsRoot, "openrefine/HS-na33-annot-out-tsv.google-refine.tar.gz");    

@@ -1,4 +1,4 @@
-package edu.dfci.cccb.mev.test.presets.domain;
+package edu.dfci.cccb.mev.test.presets.domain.presets;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.core.Is.*;

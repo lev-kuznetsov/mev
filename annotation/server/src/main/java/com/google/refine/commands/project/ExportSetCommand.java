@@ -47,6 +47,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.refine.ProjectManager;
+import com.google.refine.ProjectMetadata;
 import com.google.refine.browsing.Engine;
 import com.google.refine.browsing.FilteredRows;
 import com.google.refine.browsing.RowVisitor;
@@ -104,19 +105,9 @@ public class ExportSetCommand extends Command {
 
         @Override
         public void start (Project project) {
-
-          // if no id column found, assume first column is the id
-          List<Column> columns = project.columnModel.columns;
-          theIdColumn = columns.get (0);
-
-          for (Column column : columns) {
-            String name = column.getName ();
-            if (name.equalsIgnoreCase ("annotationId") || name.equalsIgnoreCase ("id")) {
-              theIdColumn = column;
-              break;
-            }
-          }
+          theIdColumn = project.getKeyColumn("annotationId", "id");
         }
+
 
         @Override
         public boolean visit (Project project, int rowIndex, Row row) {

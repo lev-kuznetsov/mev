@@ -33,13 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.google.refine.model;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
@@ -127,6 +121,34 @@ public class Project {
     public ProjectMetadata getMetadata() {
         return ProjectManager.getSingleton().getProjectMetadata(id);
     }
+
+    private String getKeyColumnName(ProjectMetadata metadata){
+        Serializable keyColumnName = metadata.getCustomMetadata("keyColumnName");
+        return keyColumnName==null
+                ? ""
+                : keyColumnName.toString();
+    }
+
+    public Column getKeyColumn(String ... keys) {
+
+        List<Column> columns = this.columnModel.columns;
+        // if no id column found, assume first column is the id
+        Column theIdColumn = columns.get (0);
+        String keyColumnName = getKeyColumnName(this.getMetadata());
+
+        for (Column column : columns) {
+            String name = column.getName ();
+            for(String key : keys)
+                if(name.equalsIgnoreCase(key))
+                    theIdColumn = column;
+            if (!keyColumnName.isEmpty() && name.equalsIgnoreCase(keyColumnName)) {
+                theIdColumn = column;
+                break;
+            }
+        }
+        return theIdColumn;
+    }
+
 
     public void saveToOutputStream(OutputStream out, Pool pool) throws IOException {
         for (OverlayModel overlayModel : overlayModels.values()) {

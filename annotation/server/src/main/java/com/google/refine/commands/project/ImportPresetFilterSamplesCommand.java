@@ -51,18 +51,7 @@ public class ImportPresetFilterSamplesCommand extends Command {
 
         @Override
         public void start (Project project) {
-
-          // if no id column found, assume first column is the id
-          List<Column> columns = project.columnModel.columns;
-          theIdColumn = columns.get (0);
-
-          for (Column column : columns) {
-            String name = column.getName ();
-            if (name.equalsIgnoreCase ("annotationId") || name.equalsIgnoreCase ("id")) {
-              theIdColumn = column;
-              break;
-            }
-          }
+            theIdColumn = project.getKeyColumn("annotationId", "id");
         }
 
         @Override

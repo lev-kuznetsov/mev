@@ -75,19 +75,7 @@ public class ImportPresetDatasetCommand extends Command {
 
         @Override
         public void start (Project project) {
-
-          // if no id column found, assume first column is the id
-          List<Column> columns = project.columnModel.columns;
-          theIdColumn = columns.get (0);
-
-          for (Column column : columns) {
-            String name = column.getName ();
-            if (name.equalsIgnoreCase ("annotationId") || name.equalsIgnoreCase ("id") 
-                    || name.equalsIgnoreCase ("probeset_id") || name.equalsIgnoreCase ("symbol")) {
-              theIdColumn = column;
-              break;
-            }
-          }
+          theIdColumn = project.getKeyColumn("annotationId", "id", "probeset_id", "symbol");
         }
 
         @Override

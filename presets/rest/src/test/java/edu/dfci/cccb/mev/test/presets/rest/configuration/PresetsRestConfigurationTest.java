@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
 
+import edu.dfci.cccb.mev.presets.rest.configuration.PresetHSQLConfig;
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.context.annotation.Bean;
@@ -28,7 +29,7 @@ import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPe
 @Log4j
 @Profile("test")
 @Configuration
-@Import ({DatasetDomainBuildersConfiguration.class, PresetsRestConfiguration.class, ProbeAnnotationsPersistanceConfigTest.class})
+@Import ({DatasetDomainBuildersConfiguration.class, PresetsRestConfiguration.class, ProbeAnnotationsPersistanceConfigTest.class, PresetHSQLConfig.class})
 public class PresetsRestConfigurationTest extends WebMvcConfigurerAdapter{
 
 //  @Inject Environment environment;
