@@ -55,6 +55,7 @@
     "mev-ttest": "file:../libs/analyses/ttest",
     "mev-voom": "file:../libs/analyses/voom",
     "mev-wgcna": "file:../libs/analyses/wgcna",
+    "mev-genemad": "file:../libs/analyses/genemad",
     "mev-workspace": "file:../libs/domain/workspace",
     "mevPathwayEnrichment": "file:../libs/analyses/pathwayEnrichment",
     "mui": "file:../libs/mui",
