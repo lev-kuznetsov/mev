@@ -36,6 +36,8 @@
     "lodash": "^4.12.0",
     "mev-analysis": "file:../../domain/analysis",
     "mev-scatter-plot": "file:../../charts/scatter",
+    "mev-analysis": "file:../../domain/analysis",
+    "mev-limma": "file:../../analyses/limma",
     "mui": "file:../../mui"
   },
   "system": {
