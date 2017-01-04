@@ -63,7 +63,8 @@ define(function(require){
 			scope: {
 				pcaAnalysis: "=mevPcaAnalysis",
 				selections: "=mevSelections",
-				curSelection: "="
+				curSelection: "=",
+				curGroups: "=mevCurGroups"
 			},
 			controller: ["$scope", function(scope){				
 				scope.vm = {
@@ -103,7 +104,13 @@ define(function(require){
 					});
 					console.debug("pca selection", scope.vm.bar);
 				});
-
+				scope.$on("mev.scatterPlot.groups.updated", function($event, groups){
+					scope.curGroups.length = 0;
+					groups.map(function(group){
+						scope.curGroups.push(group)
+					});
+					console.debug("pca groups", groups);
+				})
 			}]
 		};
 	};
