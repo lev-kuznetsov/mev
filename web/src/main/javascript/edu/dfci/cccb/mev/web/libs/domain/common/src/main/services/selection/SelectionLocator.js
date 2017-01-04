@@ -1,6 +1,6 @@
 define(["lodash"], function(_){
 	function mevSelectionLocator(mevContext){		
-		this.find = function(dimension, level){
+		this.find = function(dimension, level, param){
 			var context = mevContext.current() || mevContext.root();
 			if(level)
 				context = mevContext.get(level);
@@ -46,6 +46,12 @@ define(["lodash"], function(_){
 								keys: filteredKeys
 							});
 						}
+					}
+					if(param && param.id==="experiment" && context.getExperiment){
+						selections.push(context.getExperiment());
+					}
+					if(param && param.id==="control" && context.getControl){
+						selections.push(context.getControl());
 					}
 					return selections;
 				}else{

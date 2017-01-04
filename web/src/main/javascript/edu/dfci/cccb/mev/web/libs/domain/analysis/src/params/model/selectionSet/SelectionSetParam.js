@@ -4,7 +4,7 @@ define(["lodash", "../select/SelectParam", "../BaseParam"], function(_, SelectPa
 		function SelectionSetParam(spec){
 			SelectParam.call(this, spec);
 			_.assign(this, {
-				options: mevSelectionLocator.find.bind(this, spec.dimension)
+				options: mevSelectionLocator.find.bind(this, spec.dimension, undefined, this)
 			});
 
 			this.validate = function (values){
