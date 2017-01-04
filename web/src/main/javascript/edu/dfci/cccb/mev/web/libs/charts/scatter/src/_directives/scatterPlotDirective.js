@@ -85,6 +85,7 @@ function(angular, d3, _, crossfilter, template){"use strict";
 					updateGroup: function(){
 						this.selectionMode.setGroups();
 						updateData(scope.input, undefined, true);
+						scope.$emit("mev.scatterPlot.groups.updated", _.clone(getCheckedGroups(),true));
 					},
 					updateXAxis: function(){				
 						if(scope.xField === scope.yField)
@@ -140,7 +141,7 @@ function(angular, d3, _, crossfilter, template){"use strict";
 							? getCheckedGroups()
 							: getCheckedSelections();
 
-					scope.data = mevNvd3DataAdaptor.transform(newData, scope.xField, scope.yField, scope.idField, newSelections, 1000);	
+					scope.data = mevNvd3DataAdaptor.transform(newData, scope.xField, scope.yField, scope.idField, newSelections, 1000);
 					scope.inputData = scope.data;
 
 					if(scope.useCrossfilter){
