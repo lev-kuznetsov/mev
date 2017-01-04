@@ -31,8 +31,31 @@ function(angular, d3, _, crossfilter, template){"use strict";
 
 				function getCheckedSelections(){
 					if(!_.isArray(scope.selections))
-						scope.selections = [];				
+						scope.selections = [];
 					return _.filter(scope.selections, function(s){return s.checked;});
+				}
+				function getCheckedGroups(){
+					if(!_.isArray(scope.selections))
+						scope.selections = [];
+					return _.transform(scope.selections, function(groups, s, index){
+						if(s.group==="experiment")
+							groups[0].keys = _.union(groups[0].keys, s.keys)
+						else if(s.group==="control")
+							groups[1].keys = _.union(groups[1].keys, s.keys)
+					}, [{
+						"name": "experiment",
+						"keys": [],
+						"properties": {
+							"selectionColor": "green"
+						}
+					},
+					{
+						"name": "control",
+						"keys": [],
+						"properties": {
+							"selectionColor": "blue"
+						}
+					}]);
 				}
 				function findField(fixedFieldName){
 					var targetField = fixedFieldName === "xField" ? "yField" : "xField";
@@ -59,6 +82,10 @@ function(angular, d3, _, crossfilter, template){"use strict";
 					updateSelection: function(){
 						updateData();
 					},
+					updateGroup: function(){
+						this.selectionMode.setGroups();
+						updateData(scope.input, undefined, true);
+					},
 					updateXAxis: function(){				
 						if(scope.xField === scope.yField)
 							findField("xField");
@@ -70,6 +97,26 @@ function(angular, d3, _, crossfilter, template){"use strict";
 							findField("yField");
 						updateData();	
 						updateOptions();
+					},
+					selectionMode: {
+						_MODE_GROUPS: "groups",
+						_MODE_SELECTIONS: "selections",
+						value: "selections",
+						get: function () {
+							return this.value;
+						},
+						setGroups: function () {
+							this.value = this._MODE_GROUPS;
+						},
+						setSelections: function () {
+							this.value = this._MODE_SELECTIONS;
+						},
+						isGroup: function () {
+							return this.value === this._MODE_GROUPS
+						},
+						isSelections: function () {
+							return this.value === this._MODE_SELECTIONS
+						}
 					}
 				};
 				var _svg, _brush, _chart;
@@ -86,9 +133,12 @@ function(angular, d3, _, crossfilter, template){"use strict";
 					scope.inputData = ctrl.generateData(2,3);					
 				}	
 				var xf, xfxDim, xfyDim;			
-				function updateData(newData, newSelections){
+				function updateData(newData, newSelections, isGroups){
 					if(!newData) newData = scope.input;
-					if(!newSelections) newSelections = getCheckedSelections();
+					if(!newSelections)
+						newSelections = isGroups
+							? getCheckedGroups()
+							: getCheckedSelections();
 
 					scope.data = mevNvd3DataAdaptor.transform(newData, scope.xField, scope.yField, scope.idField, newSelections, 1000);	
 					scope.inputData = scope.data;

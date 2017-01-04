@@ -37,11 +37,21 @@
 		<table class="table table-condensed" ng-if="selections && selections.length>0">		
 			<tr ng-repeat="selection in selections">	
 				<td>
-					<input type="checkbox" ng-model="selection.checked" ng-change="vm.updateSelection(selection)" ng-true-value="true" ng-false-value="false">
-					{{selection.name}}
+					<!--<input type="checkbox" ng-model="selection.checked" ng-change="vm.updateSelection(selection)" ng-true-value="true" ng-false-value="false">-->
+					<button type="button" class="btn btn-primary btn-xs" ng-model="selection.checked" ng-change="vm.updateSelection(selection)"
+							uib-btn-checkbox
+							ng-style="{'background-color':selection.properties.selectionColor, 'border-color': selection.properties.selectionColor}">
+						{{selection.name}}
+					</button>
 				</td>
-				<td style="width: 20px" bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>
-				<td>{{selection.properties.selectionDescription}}</td>								
+				<!--<td style="width: 20px" bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>-->
+				<!--<td>{{selection.properties.selectionDescription}}</td>-->
+				<td>
+					<div class="btn-group btn-group-xs">
+						<label class="btn btn-success" ng-model="selection.group" ng-change="vm.updateGroup(selection)" uib-btn-radio="'experiment'" uncheckable>experiment</label>
+						<label class="btn btn-info" ng-model="selection.group" ng-change="vm.updateGroup(selection)" uib-btn-radio="'control'" uncheckable>control</label>
+					</div>
+				</td>
 			</tr>
 		</table>
 	</div>
