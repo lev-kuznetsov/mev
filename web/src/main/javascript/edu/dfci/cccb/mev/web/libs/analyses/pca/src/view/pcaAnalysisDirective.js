@@ -107,7 +107,12 @@ define(function(require){
 				scope.$on("mev.scatterPlot.groups.updated", function($event, groups){
 					scope.curGroups.length = 0;
 					groups.map(function(group){
-						scope.curGroups.push(group)
+						_.assign(group.selection, {
+							name: group.selections.map(function(s){
+								return s.name;
+							}).join("+")
+						});
+						scope.curGroups.push(group.selection);
 					});
 					console.debug("pca groups", groups);
 				})
