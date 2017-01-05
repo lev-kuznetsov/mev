@@ -33,7 +33,7 @@ function(angular, d3, _, crossfilter, template){"use strict";
 				function getCheckedSelections(){
 					if(!_.isArray(scope.vm.selections))
 						scope.vm.selections = [];
-					return _.filter(scope.selections, function(s){return s.checked;});
+					return _.filter(scope.vm.selections, function(s){return s.checked;});
 				}
 				function createGroupSelections(groups, options){
 					_.defaults(options = options || {}, {
