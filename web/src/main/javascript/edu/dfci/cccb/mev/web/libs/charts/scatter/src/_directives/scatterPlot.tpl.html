@@ -34,8 +34,8 @@
 		</div>
 
 	    <label class="break">Selections</label>		
-		<table class="table table-condensed" ng-if="selections && selections.length>0">		
-			<tr ng-repeat="selection in selections">	
+		<table class="table table-condensed" ng-if="selections && vm.selections.length>0">
+			<tr ng-repeat="selection in vm.selections">
 				<td>
 					<!--<input type="checkbox" ng-model="selection.checked" ng-change="vm.updateSelection(selection)" ng-true-value="true" ng-false-value="false">-->
 					<button type="button" class="btn btn-primary btn-xs" ng-model="selection.checked" ng-change="vm.updateSelection(selection)"
