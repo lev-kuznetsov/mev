@@ -12,6 +12,7 @@ function(angular, d3, _, crossfilter, template){"use strict";
 				yField: "@mevYField",
 				fields: "=?mevFields",
 				idField: "@mevIdField",
+				selectionGroups: "=mevSelectionGroups",
 				logScaleX: "=",
 				logScaleY: "=",
 				dragAction: "=",
@@ -38,22 +39,32 @@ function(angular, d3, _, crossfilter, template){"use strict";
 					if(!_.isArray(scope.selections))
 						scope.selections = [];
 					return _.transform(scope.selections, function(groups, s, index){
-						if(s.group==="experiment")
-							groups[0].keys = _.union(groups[0].keys, s.keys)
-						else if(s.group==="control")
-							groups[1].keys = _.union(groups[1].keys, s.keys)
+						var group = s.group==="experiment"
+							? groups[0]
+							: s.group==="control"
+								? groups[1]
+								: undefined;
+						if(group){
+							group.keys = _.union(group.keys, s.keys)
+							group.selections.push(s);
+							group.name=group.selections.map(function(s){
+								return s.name;
+							}).join("+");
+						}
 					}, [{
-						"name": "experiment",
-						"keys": [],
-						"properties": {
-							"selectionColor": "green"
+						name: "experiment",
+						keys: [],
+						selections: [],
+						properties: {
+							selectionColor: "green"
 						}
 					},
 					{
-						"name": "control",
-						"keys": [],
-						"properties": {
-							"selectionColor": "blue"
+						name: "control",
+						selections: [],
+						keys: [],
+						properties: {
+							selectionColor: "blue"
 						}
 					}]);
 				}
