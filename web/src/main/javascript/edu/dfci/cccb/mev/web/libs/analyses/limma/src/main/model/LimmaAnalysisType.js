@@ -17,7 +17,8 @@ define(["lodash", "mev-analysis/src/type/model/AnalysisType",
                         "displayName": "Experiment",
                         "dimension": "column",
                         "display": "name",
-                        "required": true
+                        "required": true,
+                        "disjoint": "control"
                     }),
                     new mevSelectionSetParam({
                         "id": "control",
@@ -30,17 +31,6 @@ define(["lodash", "mev-analysis/src/type/model/AnalysisType",
                     template: infoTemplate
                 }
             });
-            limmaType.validate=function(values){
-                var errors = this.parent.validate.call(this, values);
-                var intersect = _.intersection(values["control"].keys, values["experiment"].keys);
-                if(intersect.length > 0)
-                    errors.push("Experiment and Control must be disjoint sets but have "
-                        + intersect.length
-                        + " in common: "
-                        + intersect.slice(0, 9).join(",")
-                        + (intersect.length>10 ? "..." : ""));
-                return errors;
-            };
             limmaType.start=function() {
                 var _self = this;
                 var params = this.params.getValues();
