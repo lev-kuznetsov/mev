@@ -1,5 +1,5 @@
 define(["lodash"], function(_){ "use strict";
-	function PcaStateVMFactory(mevAnalysisTypes, mevLimmaAnalysisType){
+	function PcaStateVMFactory(mevAnalysisTypes, mevLimmaAnalysisType, mevEdgerAnalysisType){
 		function factory(scope, project, analysis){
 			var _self = this;
 			this.project = project;
@@ -28,7 +28,7 @@ define(["lodash"], function(_){ "use strict";
 		factory.$inject=["$scope", "project", "analysis"];		
 		return factory;
 	}	
-	PcaStateVMFactory.$inject=["mevAnalysisTypes", "mevLimmaAnalysisType"];
+	PcaStateVMFactory.$inject=["mevAnalysisTypes", "mevLimmaAnalysisType", "mevEdgerAnalysisType"];
 	PcaStateVMFactory.$name="PcaStateVMFactory";
 	PcaStateVMFactory.$provider="factory";
 	return PcaStateVMFactory;

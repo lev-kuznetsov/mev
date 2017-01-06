@@ -6,7 +6,8 @@ define(["mui", "mev-scatter-plot",
 	"angular-ui-router",
 	"mev-analysis",
 	"mev-domain-common",
-	"mev-limma"
+	"mev-limma",
+	"mev-edger"
 ], function(ng){
 	return ng.module("mev-pca", arguments, arguments);
 });
