@@ -208,6 +208,10 @@ function(angular, d3, _, crossfilter, template){"use strict";
 					}
 				});
 
+				scope.$watchCollection("selections", function(selections){
+					scope.vm.selections = _.cloneDeep(selections);
+				});
+
 				function updateOptions(){
 					scope.options = getOptions();
 				}
