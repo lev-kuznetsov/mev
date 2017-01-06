@@ -17,7 +17,8 @@ define(["lodash", "mev-analysis/src/type/model/AnalysisType",
                         "displayName": "Experiment",
                         "dimension": "column",
                         "display": "name",
-                        "required": true
+                        "required": true,
+                        "disjoint": "control"
                     }),
                     new mevSelectionSetParam({
                         "id": "control",
