@@ -25,6 +25,11 @@ define(["lodash", "./name/NameParam"], function(_, NameParam){ "use strict";
 					param.params = params;
 				})
 				params.validate = validate;
+				params.getById = function(id){
+					return _.find(this, function(param){
+						return param.id===id;
+					});
+				};
 				return params;
 			}	
 			else{
@@ -34,7 +39,10 @@ define(["lodash", "./name/NameParam"], function(_, NameParam){ "use strict";
 							return o.getValue ? o.getValue() : o.value;
 						});				
 					},
-					validate: validate
+					validate: validate,
+					getById: function(id){
+						return this[id];
+					}
 				});
 				tmp[nameParam.id]=nameParam;
 				var ret = _.assign(tmp, params);						
