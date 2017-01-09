@@ -53,6 +53,12 @@ define(["lodash"], function(_){
 					if(param && param.id==="control" && context.getControl){
 						selections.push(context.getControl());
 					}
+					if(context.getSelections){
+						context.getSelections().map(function(selection){
+							selection.selected=selection.checked || selection.selected;
+							selections.push(selection);
+						});
+					}
 					return selections;
 				}else{
 					return mevContext.root().dataset.selections[dimension];
