@@ -39,6 +39,7 @@
     "mev-limma": "file:../../analyses/limma",
     "mev-edger": "file:../../analyses/edger",
     "mev-voom": "file:../../analyses/voom",
+    "mev-ttest": "file:../../analyses/ttest",
     "mui": "file:../../mui"
   },
   "system": {
