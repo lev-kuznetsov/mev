@@ -103,7 +103,9 @@ function(angular, d3, _, crossfilter, template){"use strict";
 					},
 					dragAction: "select",
 					updateSelection: function(){
-						updateData();
+						var checkedSelections = getCheckedSelections();
+						updateData(checkedSelections);
+						scope.$emit("mev.scatterPlot.selections.updated", checkedSelections);
 					},
 					updateGroup: function(){
 						var checkedGroups = getCheckedGroups();
