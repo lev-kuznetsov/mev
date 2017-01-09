@@ -38,6 +38,7 @@
     "mev-scatter-plot": "file:../../charts/scatter",
     "mev-limma": "file:../../analyses/limma",
     "mev-edger": "file:../../analyses/edger",
+    "mev-voom": "file:../../analyses/voom",
     "mui": "file:../../mui"
   },
   "system": {
