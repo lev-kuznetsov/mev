@@ -41,6 +41,7 @@
     "mev-voom": "file:../../analyses/voom",
     "mev-ttest": "file:../../analyses/ttest",
     "mev-deseq": "file:../../analyses/deseq",
+    "mev-anova": "file:../../analyses/anova",
     "mui": "file:../../mui"
   },
   "system": {

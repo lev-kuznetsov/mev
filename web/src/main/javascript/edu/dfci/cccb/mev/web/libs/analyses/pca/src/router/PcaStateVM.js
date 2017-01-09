@@ -1,11 +1,13 @@
 define(["lodash"], function(_){ "use strict";
-	function PcaStateVMFactory(mevAnalysisTypes, mevLimmaAnalysisType, mevEdgerAnalysisType, mevVoomAnalysisType, mevtTestAnalysisType, mevDeseqAnalysisType){
+	function PcaStateVMFactory(mevAnalysisTypes, mevLimmaAnalysisType, mevEdgerAnalysisType, mevVoomAnalysisType,
+							   mevtTestAnalysisType, mevDeseqAnalysisType, mevAnovaAnalysisType){
 		function factory(scope, project, analysis){
 			var _self = this;
 			this.project = project;
 			this.analysis = analysis;
 			this.curSelection = [];
 			this.curGroups = [];
+			this.curSelections = [];
 			this.analysisTypes = mevAnalysisTypes.all();
 		  	this.getSelection=function(){
 		  		return _self.curSelection;
@@ -16,6 +18,9 @@ define(["lodash"], function(_){ "use strict";
 			this.analysis.getControl=function(){
 				return _self.curGroups[1];;
 			};
+			this.analysis.getSelections=function(){
+				return _self.curSelections;
+			}
 		  	scope.sizeChanged=function(){
 	    		console.debug("pca resize");
 	    		window.dispatchEvent(new Event('resize'));
@@ -28,7 +33,8 @@ define(["lodash"], function(_){ "use strict";
 		factory.$inject=["$scope", "project", "analysis"];		
 		return factory;
 	}	
-	PcaStateVMFactory.$inject=["mevAnalysisTypes", "mevLimmaAnalysisType", "mevEdgerAnalysisType", "mevVoomAnalysisType", "mevtTestAnalysisType", "mevDeseqAnalysisType"];
+	PcaStateVMFactory.$inject=["mevAnalysisTypes", "mevLimmaAnalysisType", "mevEdgerAnalysisType", "mevVoomAnalysisType",
+		"mevtTestAnalysisType", "mevDeseqAnalysisType", "mevAnovaAnalysisType"];
 	PcaStateVMFactory.$name="PcaStateVMFactory";
 	PcaStateVMFactory.$provider="factory";
 	return PcaStateVMFactory;

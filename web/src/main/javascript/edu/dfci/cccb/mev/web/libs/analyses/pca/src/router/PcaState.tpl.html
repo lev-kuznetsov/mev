@@ -21,6 +21,7 @@
 								  <li role="menuitem"><a class="mev-analysis-start-button" mev-analysis-type="DatasetAnalysisVM.analysisTypes['voom']" mev-context-level="bottom">voom</a></li>
 								  <li role="menuitem"><a class="mev-analysis-start-button" mev-analysis-type="DatasetAnalysisVM.analysisTypes['ttest']" mev-context-level="bottom">ttest</a></li>
 								  <li role="menuitem"><a class="mev-analysis-start-button" mev-analysis-type="DatasetAnalysisVM.analysisTypes['deseq']" mev-context-level="bottom">deseq</a></li>
+								  <li role="menuitem"><a class="mev-analysis-start-button" mev-analysis-type="DatasetAnalysisVM.analysisTypes['anova']" mev-context-level="bottom">anova</a></li>
 							  </ul>
 						</span>
 			            <btn-create-selection mui-target="Top" mui-analysis="DatasetAnalysisVM.analysis" 
@@ -36,7 +37,9 @@
 				<div mev-pca-analysis="DatasetAnalysisVM.analysis"
 					 mev-selections="DatasetAnalysisVM.project.dataset.column.selections"
 					 cur-selection="DatasetAnalysisVM.curSelection"
-					mev-cur-groups="DatasetAnalysisVM.curGroups"></div>
+					 mev-cur-groups="DatasetAnalysisVM.curGroups"
+					 mev-cur-selections="DatasetAnalysisVM.curSelections"
+				></div>
 <!-- 				<nvd3 options="DatasetAnalysisVM.options" data="DatasetAnalysisVM.data"></nvd3> -->
 <!-- 				<d3-Scatterplot data="DatasetAnalysisVM.pc.data" selected="DatasetAnalysisVM.selectionParams.samples" width="600" height="400"></d3-Scatterplot> -->
 			</div>
