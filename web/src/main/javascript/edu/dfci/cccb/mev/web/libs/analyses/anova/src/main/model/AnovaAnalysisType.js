@@ -32,7 +32,7 @@ define(["lodash", "mev-analysis/src/type/model/AnalysisType",
                         "dimension": "column",
                         "display": "name",
                         "multiselect": true,
-                        "bound": "name"
+                        "disjoint": true
                     })
                 ]),
                 info: {
@@ -42,6 +42,10 @@ define(["lodash", "mev-analysis/src/type/model/AnalysisType",
             AnovaType.start=function() {
                 var _self = this;
                 var params = this.params.getValues();
+                var selectionNames = params.selections.map(function(selection){
+                    return selection.name;
+                })
+                params.selections = selectionNames;
                 params.type=undefined;
                 _self.parent.start.call(_self, _self, params, {}, "put");
             };
