@@ -1,7 +1,0 @@
-<script style="display:none;" type="text/ng-template"  id="tree_item_renderer.html"><project-node node="data" name="data.nodeData.name || data.nodeName"></project-node>
-	<ul role="group" class="nodeItem">
- 			<li ng-repeat="data in data.nodes" ng-include="'tree_item_renderer.html'" role="treeitem" class="nodeItem" ng-class="{parent_li: data.nodes.length>0}" ></li>
-	</ul></script>
-<ul class="tree" class="nodeItem">
-	<li ng-repeat="data in tree" ng-include="script_id" role="tree" class="nodeItem" ng-class="{parent_li: data.nodes.length>0}"></li>
-</ul>

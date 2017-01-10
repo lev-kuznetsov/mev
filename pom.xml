@@ -4,284 +4,38 @@
 
   <groupId>edu.dfci.cccb</groupId>
   <artifactId>mev</artifactId>
-  <version>BAYLIE-SNAPSHOT</version>
-  <packaging>pom</packaging>
+  <version>DANA-SNAPSHOT</version>
+  <packaging>war</packaging>
 
-  <name>MultiExperiment Viewer</name>
-  <url>http://github.com/dfci-cccb/mev</url>
-
-  <modules>
-
-    <!-- Support modules -->
-
-    <module>testutil</module>
-    <module>io</module>
-    <module>math</module>
-    <module>r</module>
-
-    <!-- MeV modules -->
-
-    <module>configuration</module>
-    <module>dataset</module>
-    <module>annotation</module>
-    <module>hcl</module>
-    <module>limma</module>
-    <module>presets</module>
-    <module>geods</module>
-    <module>kmeans</module>
-    <module>t-test</module>
-    <module>anova</module>
-    <module>stats</module>
-    <module>deseq</module>
-    <module>nmf</module>
-    <module>survival</module>
-    <module>topgo</module>
-    <module>pca</module>
-    <module>histogram</module>
-    <module>genesd</module>
-    <module>genemad</module>
-    <module>voom</module>
-    <module>pathway-enrichment</module>
-    <module>gsea</module>
-    <module>normalization</module>
-    <module>web</module>
-
-  </modules>
+  <name>mev</name>
+  <url>http://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-    <java.source.version>1.7</java.source.version>
-    <java.target.version>1.7</java.target.version>
-
-    <org.slf4j.version>1.7.2</org.slf4j.version>
-    <log4j.version>1.2.17</log4j.version>
-    <log4j2.version>2.0-beta9</log4j2.version>
-    <lombok.version>1.12.6</lombok.version>
-    <lambdaj.version>2.3.3</lambdaj.version>
-    <spring.version>4.0.3.RELEASE</spring.version>
-    <jackson.version>2.2.2</jackson.version>
-    <junit.version>4.11</junit.version>
-	<aws.java.sdk.version>1.9.6</aws.java.sdk.version>
-    <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
-    <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
-
-    <!-- MEV Defaults -->
-    <mev.Rscript>Rscript</mev.Rscript>
-    <mev.java.io.tmpdir>${java.io.tmpdir}</mev.java.io.tmpdir>
-    <mev.extraClasspath>${basedir}/target/classes/</mev.extraClasspath>	
-    <h2.version>1.3.174</h2.version>
-    <org.hsqldb.version>2.3.0</org.hsqldb.version>
-    <mev.hsqldb.textdb.allow_full_path>true</mev.hsqldb.textdb.allow_full_path>    
-    <MEV_HOME>.</MEV_HOME>
-    <archaius.fixedDelayPollingScheduler.delayMills>60000</archaius.fixedDelayPollingScheduler.delayMills>
-    <archaius.fixedDelayPollingScheduler.initialDelayMills>0</archaius.fixedDelayPollingScheduler.initialDelayMills>
   </properties>
 
-  <profiles>
-    <profile>
-      <id>test</id>
-      <properties>
-        <mev.spring_profiles_active>test</mev.spring_profiles_active>
-      </properties>
-    </profile>
-    <profile>
-      <id>embedded</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <mev.spring_profiles_active>embedded</mev.spring_profiles_active>
-      </properties>
-    </profile>
-    <profile>
-      <id>local</id>
-      <properties>
-        <mev.spring_profiles_active>local</mev.spring_profiles_active>
-        <mev.extraClasspath>${user.home}/mev/config</mev.extraClasspath>
-        <MEV_HOME>${user.home}/mev/</MEV_HOME>
-        <MEV_CONFIG_DIR>${MEV_HOME}/config</MEV_CONFIG_DIR>
-      </properties>
-    </profile>
-    <profile>
-    	<id>aws-config</id>    	
-    	<properties>
-    		<MEV_CONFIG_BUCKET>mev-config</MEV_CONFIG_BUCKET>
-    	</properties>
-    </profile>
-    <profile>
-      <id>perf</id>
-      <properties>
-        <mev.spring_profiles_active>perf</mev.spring_profiles_active>
-      </properties>
-    </profile>
-    <profile>
-      <id>prod</id>
-      <properties>
-        <mev.spring_profiles_active>prod</mev.spring_profiles_active>
-        <mev.java.io.tmpdir>/var/lib/mev/work</mev.java.io.tmpdir>
-        <mev.Rscript>nice -20 /var/lib/mev/lib/R-2.15.3/bin/Rscript</mev.Rscript>
-       	<mev.extraClasspath>/var/lib/mev/config</mev.extraClasspath>
-       	<MEV_CONFIG_DIR>/var/lib/mev/config</MEV_CONFIG_DIR>
-      </properties>
-    </profile>
-    <profile>
-      <id>aws</id>
-      <properties>
-        <mev.spring_profiles_active>aws</mev.spring_profiles_active>
-        <mev.Rscript>nice -20 /usr/local/lib64/R/bin/Rscript</mev.Rscript>
-       	<mev.extraClasspath>/opt/mev/config</mev.extraClasspath>
-      </properties>      
-    </profile>
-  </profiles>
-
-  <dependencies>
-
-    <!-- Google Guava -->
-
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>15.0</version>
-    </dependency>
-
-    <!-- Java Tuples -->
-
-    <dependency>
-      <groupId>org.javatuples</groupId>
-      <artifactId>javatuples</artifactId>
-      <version>1.2</version>
-    </dependency>
-
-    <!-- @Inject -->
-
-    <dependency>
-      <groupId>javax.inject</groupId>
-      <artifactId>javax.inject</artifactId>
-      <version>1</version>
-    </dependency>
-
-    <!-- Logging -->
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>${org.slf4j.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
-      <version>${org.slf4j.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>${org.slf4j.version}</version>
-    </dependency>
-
-    <!-- Log4j -->
-    <!-- <dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-api</artifactId> 
-      <version>${log4j2.version}</version> </dependency> <dependency> <groupId>org.apache.logging.log4j</groupId> 
-      <artifactId>log4j-core</artifactId> <version>${log4j2.version}</version> 
-      </dependency> <dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-1.2-api</artifactId> 
-      <version>${log4j2.version}</version> </dependency> -->
-
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>${log4j.version}</version>
-    </dependency>
-
-    <!-- Code generation -->
-
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.googlecode.lambdaj</groupId>
-      <artifactId>lambdaj</artifactId>
-      <version>${lambdaj.version}</version>
-    </dependency>
-
-    <!-- IO Utils -->
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.4</version>
-    </dependency>
-
-    <!-- JUnit -->
-
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit-dep</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.databene</groupId>
-      <artifactId>contiperf</artifactId>
-      <version>2.2.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>edu.dfci.cccb</groupId>
-      <artifactId>mev-test-util</artifactId>
-      <version>BAYLIE-SNAPSHOT</version>
-    </dependency>
-
-  </dependencies>
-
-  <dependencyManagement>
-
-    <dependencies>
-
-      <dependency>
-        <groupId>javax</groupId>
-        <artifactId>javaee-web-api</artifactId>
-        <version>6.0</version>
-        <scope>provided</scope>
-      </dependency>
-
-    </dependencies>
-
-  </dependencyManagement>
-
   <build>
-
     <plugins>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin.version}</version>
+        <version>3.0</version>
         <configuration>
-          <source>${java.source.version}</source>
-          <target>${java.target.version}</target>
-          <showDeprecation>true</showDeprecation>
-          <showWarnings>true</showWarnings>
-          <fork>true</fork>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.wildfly.plugins</groupId>
+        <artifactId>wildfly-maven-plugin</artifactId>
+        <version>1.1.0.Beta1</version>
       </plugin>
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>${maven-source-plugin.version}</version>
+        <version>2.2.1</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -294,40 +48,66 @@
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.16</version>
-        <dependencies>
-          <dependency>
-            <groupId>org.apache.maven.surefire</groupId>
-            <artifactId>surefire-junit47</artifactId>
-            <version>2.12</version>
-          </dependency>
-        </dependencies>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.6</version>
         <configuration>
-          <systemPropertyVariables>
-            <edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>${mev.Rscript}</edu.dfci.cccb.mev.r.mock.cli.CliRScriptEngine.rScriptExecutable>
-            <spring_profiles_active>test</spring_profiles_active>
-            <spring.profiles.active>test</spring.profiles.active>
-            <textdb.allow_full_path>true</textdb.allow_full_path>
-          </systemPropertyVariables>
-          <excludedGroups>edu.dfci.cccb.mev.testing.junit.groups.MevIntegrationTestMarker</excludedGroups>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.2</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
-
   </build>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.elasticsearch.client</groupId>
+      <artifactId>transport</artifactId>
+      <version>5.1.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.fabric8</groupId>
+      <artifactId>fabric8-cdi</artifactId>
+      <version>2.2.190</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.rosuda.REngine</groupId>
+      <artifactId>Rserve</artifactId>
+      <version>1.8.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.4.193</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>7.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>2.8.5</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.8.5</version>
+      <!-- <scope>test</scope> -->
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 </project>

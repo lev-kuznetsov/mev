@@ -1,2 +1,0 @@
-http://www2.ebi.ac.uk/ego/QuickGO?mode=display&entry=GO:0008150
-http://www2.ebi.ac.uk/ego/QuickGO?mode=display&entry=[*TAG*]

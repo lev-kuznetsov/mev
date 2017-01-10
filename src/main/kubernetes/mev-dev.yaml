@@ -1,0 +1,110 @@
+# Rserve replicator
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: mev-rserve
+spec:
+  replicas: 1
+  selector:
+    app: mev-rserve
+  template:
+    metadata:
+      labels:
+        app: mev-rserve
+    spec:
+      containers:
+      - image: cccb/mev-rserve:2017-01-05
+        name: mev-rserve
+        ports:
+        - containerPort: 6311
+---
+
+# Rserve service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mev-rserve
+spec:
+  ports:
+  - port: 6311
+  selector:
+    app: mev-rserve
+  type: NodePort
+---
+
+# ElasticSearch replicator
+# Taken from https://github.com/kubernetes/kubernetes/
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: es
+  labels:
+    component: elasticsearch
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: elasticsearch
+    spec:
+      serviceAccount: elasticsearch
+      containers:
+      - name: es
+        securityContext:
+          capabilities:
+            add:
+              - IPC_LOCK
+        image: quay.io/pires/docker-elasticsearch-kubernetes:5.1.1_1
+        env:
+        - name: KUBERNETES_CA_CERTIFICATE_FILE
+          value: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: "CLUSTER_NAME"
+          value: "myesdb"
+        - name: "DISCOVERY_SERVICE"
+          value: "elasticsearch"
+        - name: NODE_MASTER
+          value: "true"
+        - name: NODE_DATA
+          value: "true"
+        - name: HTTP_ENABLE
+          value: "true"
+        ports:
+        - containerPort: 9200
+          name: http
+          protocol: TCP
+        - containerPort: 9300
+          name: transport
+          protocol: TCP
+---
+
+# ElasticSearch service
+# Mostly taken from https://github.com/kubernetes/kubernetes/
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+  labels:
+    component: elasticsearch
+spec:
+  type: NodePort
+  selector:
+    component: elasticsearch
+  ports:
+  - name: http
+    port: 9200
+    protocol: TCP
+  - name: transport
+    port: 9300
+    protocol: TCP
+---
+
+# ElasticSearch service account
+# Taken from https://github.com/kubernetes/kubernetes/
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: elasticsearch

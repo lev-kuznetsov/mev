@@ -1,4 +1,0 @@
-genome-species	genome-version	gene_symbol	gene_desc	chr_location	strand	refseq_accn
-Homo sapiens	hg19	DDR1|MIR4640	discoidin domain receptor tyrosine kinase 1|microRNA 4640	chr6p21.3	0	NP_001189450|NP_001189451|NP_001189452|NP_001945|NP_054699|NP_054700
-Homo sapiens	hg19	RFC2	replication factor C (activator 1) 2, 40kDa	chr7q11.23	0	NP_002905|NP_852136
-Homo sapiens	hg19	HSPA6	heat shock 70kDa protein 6 (HSP70B')	chr1q23	0	NP_002146

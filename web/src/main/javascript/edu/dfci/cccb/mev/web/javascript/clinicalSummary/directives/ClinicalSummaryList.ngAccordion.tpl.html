@@ -1,5 +1,0 @@
-<accordion class="clinicalSummaryAccordion" id="clinicalSummaryAccordion" close-others="false" ng-repeat="summaryColumn in viewModel.getSummaries()">	
-		<accordion-group ng-repeat="summary in summaryColumn" heading="{{viewModel.getTitle(summary)}}" is-open="isAccordionOpen" ng-init="isAccordionOpen=false;" >
-			<mev-clinical-summary summary="summary"></mev-clinical-summary>
-		</accordion-group>
-</accordion>

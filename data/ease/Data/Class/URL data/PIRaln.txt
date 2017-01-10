@@ -1,2 +1,0 @@
-http://pir.georgetown.edu/pirwww/dbinfo/piraln.html
-http://pir.georgetown.edu/cgi-bin/pirwww/nbrfget?uid=[*TAG*]&db=A

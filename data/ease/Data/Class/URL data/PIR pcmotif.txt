@@ -1,2 +1,0 @@
-http://pir.georgetown.edu/gfserver/pc_format.html
-http://us.expasy.org/cgi-bin/prosite-search-ac?[*TAG*]

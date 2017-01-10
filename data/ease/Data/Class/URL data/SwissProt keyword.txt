@@ -1,2 +1,0 @@
-http://us.expasy.org/sprot/
-http://us.expasy.org/cgi-bin/get-entries?KW=[*TERM*]
