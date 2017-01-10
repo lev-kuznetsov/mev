@@ -11,21 +11,38 @@ define(["lodash", "../select/SelectParam", "../BaseParam"], function(_, SelectPa
 				if(this.max)
 					if(this.value && _.isArray(this.value.keys) && this.value.keys.length > this.max)
 						return this.id + " size may not exceed " + this.max;
-				if(this.disjoint)
-					if(this.value && _.isArray(this.value.keys)){
-						var disjointTarget = values[this.disjoint];
-						if(disjointTarget && _.isArray(disjointTarget.keys)){
-							var intersect = _.intersection(disjointTarget.keys, this.value.keys);
+				if(this.disjoint){
+					if(_.isString(this.disjoint))
+						if(this.value && _.isArray(this.value.keys)){
+							var disjointTarget = values[this.disjoint];
+							if(disjointTarget && _.isArray(disjointTarget.keys)){
+								var intersect = _.intersection(disjointTarget.keys, this.value.keys);
+								if(intersect.length > 0)
+									return this.id + " and " + this.disjoint + " must be disjoint sets but have "
+										+ intersect.length
+										+ " element in common: "
+										+ intersect.slice(0, 9).join(",")
+										+ (intersect.length>10 ? "..." : "");
+
+
+							}
+						}
+					if(this.multiselect){
+						var value = this.getValue();
+						if(_.isArray(value)){
+							var selectionKeySets = value.map(function(selection){
+								return selection.keys;
+							});
+							var intersect = _.intersection.apply(null, selectionKeySets);
 							if(intersect.length > 0)
-								return this.id + " and " + this.disjoint + " must be disjoint sets but have "
+								return "Selections  must be disjoint sets but have "
 									+ intersect.length
 									+ " element in common: "
 									+ intersect.slice(0, 9).join(",")
 									+ (intersect.length>10 ? "..." : "");
-
-
 						}
 					}
+				}
 
 			};
 		};
