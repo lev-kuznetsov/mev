@@ -26,22 +26,21 @@
 package edu.dfci.cccb.mev.dataset;
 
 import static java.lang.String.valueOf;
-import static java.util.stream.Collectors.toMap;
-import static java.util.stream.StreamSupport.stream;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.io.IOException;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
-import javax.ws.rs.GET;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.POST;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.fabric8.annotations.Path;
+import io.searchbox.client.JestClient;
+import io.searchbox.core.Bulk;
+import io.searchbox.core.Index;
+import io.searchbox.core.Search;
+import io.searchbox.core.SearchResult;
 
 /**
  * Annotations
@@ -57,11 +56,11 @@ public class Annotations {
   /**
    * ElasticSearch
    */
-//  TransportClient es;
+  JestClient es;
   /**
-   * Insert cache
+   * Index cache
    */
-  final Map <String, Map <String, String>> cache = new HashMap <> ();
+  final Bulk.Builder bulk = new Bulk.Builder ().defaultType ("annotation");
 
   /**
    * @param dimension
@@ -84,40 +83,19 @@ public class Annotations {
    */
   @JsonAnySetter
   public void add (String key, Map <String, String> properties) {
-    cache.computeIfAbsent (key, x -> new HashMap <> ()).putAll (properties);
+    bulk.addAction (new Index.Builder (properties).id (key).build ());
   }
 
   /**
    * @param spec
-   * @return matches
+   * @return search result JSON object as returned by the ES
+   * @throws IOException
    */
   @Path ("query")
   @POST
-  public Map <String, Map <String, ?>> search (String spec) {
-//    SearchHits s = es.prepareSearch (index).setQuery (wrapperQuery (spec)).get ().getHits ();
-//    return stream (s.spliterator (), false).collect (toMap (SearchHit::getId, h -> {
-//      return h.fields ().entrySet ().stream ().collect (toMap (e -> e.getKey (), e -> {
-//        Map <String, Object> v = new HashMap <String, Object> ();
-//        v.put ("name", e.getValue ().getName ());
-//        v.put ("values", e.getValue ().getValues ());
-//        return v;
-//      }));
-//    }));
-    return new HashMap<> ();
-  }
-
-  /**
-   * @return names property names
-   * @throws ExecutionException
-   * @throws InterruptedException
-   */
-  @Path ("names")
-  @GET
-  @JsonValue
-  public List <String> names () throws InterruptedException, ExecutionException {
-//    System.out.println (es.admin ().indices ().getMappings (new GetMappingsRequest ().indices (index)).get ().mappings ());
-
-    // TODO: implement
-    return new ArrayList <> ();
+  public String search (String spec) throws IOException {
+    SearchResult r = es.execute (new Search.Builder (spec).addIndex (index).build ());
+    if (r.getResponseCode () > 299) throw new InternalServerErrorException (r.getErrorMessage ());
+    else return r.getJsonString ();
   }
 }

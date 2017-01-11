@@ -27,11 +27,17 @@ package edu.dfci.cccb.mev.dataset;
 
 import static java.lang.String.valueOf;
 
+import java.io.IOException;
+
 import javax.inject.Inject;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
 import javax.ws.rs.InternalServerErrorException;
+
+import io.searchbox.client.JestClient;
+import io.searchbox.core.BulkResult;
+import io.searchbox.indices.DeleteIndex;
 
 /**
  * Index
@@ -43,35 +49,32 @@ public class Index {
   /**
    * ELasticSearch
    */
-//  private @Inject TransportClient es;
+  private @Inject JestClient es;
 
   /**
    * @param dimension
    */
   @PostLoad
   void inject (Dimension dimension) {
-//    dimension.annotations.es = es;
+    dimension.annotations.es = es;
   }
 
   /**
    * @param dimension
+   * @throws IOException
    */
   @PostPersist
-  void index (Dimension dimension) {
-    if (!dimension.annotations.cache.isEmpty ()) {
-//      BulkRequestBuilder b = es.prepareBulk ();
-      String i = valueOf (dimension.id);
-//      dimension.annotations.cache.forEach ( (k, p) -> b.add (es.prepareIndex (i, "annotation", k).setSource (p)));
-//      BulkResponse r = b.get ();
-//      if (r.hasFailures ()) throw new InternalServerErrorException (r.buildFailureMessage ());
-    }
+  void index (Dimension dimension) throws IOException {
+    BulkResult r = es.execute (dimension.annotations.bulk.defaultIndex (valueOf (dimension.id)).build ());
+    if (r.getResponseCode () > 299) throw new InternalServerErrorException (r.getErrorMessage ());
   }
 
   /**
    * @param dimension
+   * @throws IOException
    */
   @PostRemove
-  void remove (Dimension dimension) {
-//    es.admin ().indices ().delete (new DeleteIndexRequest (valueOf (dimension.id)));
+  void remove (Dimension dimension) throws IOException {
+    es.execute (new DeleteIndex.Builder (valueOf (dimension.id)).build ());
   }
 }

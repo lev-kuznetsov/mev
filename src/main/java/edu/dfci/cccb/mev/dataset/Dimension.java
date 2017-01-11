@@ -105,7 +105,7 @@ public class Dimension {
    */
   @Path ("annotations")
   public Annotations annotations () {
-    return new Annotations (this);
+    return annotations;
   }
 
   /**

@@ -27,8 +27,12 @@ package edu.dfci.cccb.mev.context;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Produces;
+import javax.inject.Singleton;
 
 import io.fabric8.cdi.Services;
+import io.searchbox.client.JestClient;
+import io.searchbox.client.JestClientFactory;
+import io.searchbox.client.config.HttpClientConfig;
 
 /**
  * ElasticSearch
@@ -43,15 +47,14 @@ public class ElasticSearch {
    * @return es client
    */
   @Produces
-//  @Singleton
-  static String es () {
+  @Singleton
+  static JestClient es () {
+    // Workaround, see https://github.com/fabric8io/fabric8/issues/6699
     String endpoint = Services.toServiceUrl ("elasticsearch", null, null, null, false);
-    // TransportClient es = new PreBuiltTransportClient (EMPTY);
-    // InetSocketAddress a =
-    // new InetSocketAddress (endpoint.substring (endpoint.lastIndexOf ('/') +
-    // 1, endpoint.lastIndexOf (':')),
-    // valueOf (endpoint.substring (endpoint.lastIndexOf (':') + 1)));
-    // es.addTransportAddresses (new InetSocketTransportAddress (a));
-    return "";
+
+    JestClientFactory factory = new JestClientFactory ();
+    factory.setHttpClientConfig (new HttpClientConfig.Builder (endpoint).multiThreaded (true).build ());
+
+    return factory.getObject ();
   }
 }
