@@ -23,7 +23,7 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 
 # This is an iterative image, do not add stuff to this definition,
-# delete all content after this comment and start a new with
+# delete all content after this comment and start new with
 # FROM docker.io/cccb/mev-rserve:<current>
 
 FROM debian:testing

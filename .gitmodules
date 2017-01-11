@@ -1,0 +1,3 @@
+[submodule "src/main/kubernetes/elasticsearch"]
+	path = src/main/kubernetes/elasticsearch
+	url = https://github.com/pires/kubernetes-elasticsearch-cluster

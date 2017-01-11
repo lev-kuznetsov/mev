@@ -48,7 +48,7 @@ public class R {
    * @throws RserveException
    */
   @Produces
-  static RConnection r (@ServiceName ("mev-rserve") String endpoint) throws RserveException {
+  static RConnection r (@ServiceName ("rserve") String endpoint) throws RserveException {
     return new RConnection (endpoint.substring (endpoint.lastIndexOf ('/') + 1, endpoint.lastIndexOf (':')),
                             valueOf (endpoint.substring (endpoint.lastIndexOf (':') + 1))) {
       @Override

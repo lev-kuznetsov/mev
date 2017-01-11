@@ -28,7 +28,6 @@ package edu.dfci.cccb.mev.dataset;
 import static java.lang.String.valueOf;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.StreamSupport.stream;
-import static org.elasticsearch.index.query.QueryBuilders.wrapperQuery;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,11 +37,6 @@ import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-
-import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsRequest;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -63,7 +57,7 @@ public class Annotations {
   /**
    * ElasticSearch
    */
-  TransportClient es;
+//  TransportClient es;
   /**
    * Insert cache
    */
@@ -100,15 +94,16 @@ public class Annotations {
   @Path ("query")
   @POST
   public Map <String, Map <String, ?>> search (String spec) {
-    SearchHits s = es.prepareSearch (index).setQuery (wrapperQuery (spec)).get ().getHits ();
-    return stream (s.spliterator (), false).collect (toMap (SearchHit::getId, h -> {
-      return h.fields ().entrySet ().stream ().collect (toMap (e -> e.getKey (), e -> {
-        Map <String, Object> v = new HashMap <String, Object> ();
-        v.put ("name", e.getValue ().getName ());
-        v.put ("values", e.getValue ().getValues ());
-        return v;
-      }));
-    }));
+//    SearchHits s = es.prepareSearch (index).setQuery (wrapperQuery (spec)).get ().getHits ();
+//    return stream (s.spliterator (), false).collect (toMap (SearchHit::getId, h -> {
+//      return h.fields ().entrySet ().stream ().collect (toMap (e -> e.getKey (), e -> {
+//        Map <String, Object> v = new HashMap <String, Object> ();
+//        v.put ("name", e.getValue ().getName ());
+//        v.put ("values", e.getValue ().getValues ());
+//        return v;
+//      }));
+//    }));
+    return new HashMap<> ();
   }
 
   /**
@@ -120,7 +115,7 @@ public class Annotations {
   @GET
   @JsonValue
   public List <String> names () throws InterruptedException, ExecutionException {
-    System.out.println (es.admin ().indices ().getMappings (new GetMappingsRequest ().indices (index)).get ().mappings ());
+//    System.out.println (es.admin ().indices ().getMappings (new GetMappingsRequest ().indices (index)).get ().mappings ());
 
     // TODO: implement
     return new ArrayList <> ();

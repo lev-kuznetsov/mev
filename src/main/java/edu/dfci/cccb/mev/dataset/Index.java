@@ -33,11 +33,6 @@ import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
 import javax.ws.rs.InternalServerErrorException;
 
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.bulk.BulkRequestBuilder;
-import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.client.transport.TransportClient;
-
 /**
  * Index
  * 
@@ -48,14 +43,14 @@ public class Index {
   /**
    * ELasticSearch
    */
-  private @Inject TransportClient es;
+//  private @Inject TransportClient es;
 
   /**
    * @param dimension
    */
   @PostLoad
   void inject (Dimension dimension) {
-    dimension.annotations.es = es;
+//    dimension.annotations.es = es;
   }
 
   /**
@@ -64,11 +59,11 @@ public class Index {
   @PostPersist
   void index (Dimension dimension) {
     if (!dimension.annotations.cache.isEmpty ()) {
-      BulkRequestBuilder b = es.prepareBulk ();
+//      BulkRequestBuilder b = es.prepareBulk ();
       String i = valueOf (dimension.id);
-      dimension.annotations.cache.forEach ( (k, p) -> b.add (es.prepareIndex (i, "annotation", k).setSource (p)));
-      BulkResponse r = b.get ();
-      if (r.hasFailures ()) throw new InternalServerErrorException (r.buildFailureMessage ());
+//      dimension.annotations.cache.forEach ( (k, p) -> b.add (es.prepareIndex (i, "annotation", k).setSource (p)));
+//      BulkResponse r = b.get ();
+//      if (r.hasFailures ()) throw new InternalServerErrorException (r.buildFailureMessage ());
     }
   }
 
@@ -77,6 +72,6 @@ public class Index {
    */
   @PostRemove
   void remove (Dimension dimension) {
-    es.admin ().indices ().delete (new DeleteIndexRequest (valueOf (dimension.id)));
+//    es.admin ().indices ().delete (new DeleteIndexRequest (valueOf (dimension.id)));
   }
 }

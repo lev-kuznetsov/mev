@@ -35,6 +35,6 @@ metadata:
     spec:
       containers:
       - name: web
-        image: docker.io/cccb/web
+        image: docker.io/cccb/mev-web:2017-01-11
         ports:
         - containerPort: 8080

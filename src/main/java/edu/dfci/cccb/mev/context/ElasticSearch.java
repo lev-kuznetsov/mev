@@ -25,18 +25,8 @@
  */
 package edu.dfci.cccb.mev.context;
 
-import static java.lang.Integer.valueOf;
-import static org.elasticsearch.common.settings.Settings.EMPTY;
-
-import java.net.InetSocketAddress;
-
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Produces;
-import javax.inject.Singleton;
-
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
 import io.fabric8.cdi.Services;
 
@@ -53,14 +43,15 @@ public class ElasticSearch {
    * @return es client
    */
   @Produces
-  @Singleton
-  static TransportClient es () {
-    String endpoint = Services.toServiceUrl ("elasticsearch", null, "http", null, false);
-    TransportClient es = new PreBuiltTransportClient (EMPTY);
-    InetSocketAddress a =
-        new InetSocketAddress (endpoint.substring (endpoint.lastIndexOf ('/') + 1, endpoint.lastIndexOf (':')),
-                               valueOf (endpoint.substring (endpoint.lastIndexOf (':') + 1)));
-    es.addTransportAddresses (new InetSocketTransportAddress (a));
-    return es;
+//  @Singleton
+  static String es () {
+    String endpoint = Services.toServiceUrl ("elasticsearch", null, null, null, false);
+    // TransportClient es = new PreBuiltTransportClient (EMPTY);
+    // InetSocketAddress a =
+    // new InetSocketAddress (endpoint.substring (endpoint.lastIndexOf ('/') +
+    // 1, endpoint.lastIndexOf (':')),
+    // valueOf (endpoint.substring (endpoint.lastIndexOf (':') + 1)));
+    // es.addTransportAddresses (new InetSocketTransportAddress (a));
+    return "";
   }
 }

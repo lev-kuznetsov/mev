@@ -15,6 +15,7 @@
   </properties>
 
   <build>
+    <finalName>mev</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -59,12 +60,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.elasticsearch.client</groupId>
-      <artifactId>transport</artifactId>
-      <version>5.1.1</version>
-    </dependency>
-
-    <dependency>
       <groupId>io.fabric8</groupId>
       <artifactId>fabric8-cdi</artifactId>
       <version>2.2.190</version>
@@ -74,12 +69,6 @@
       <groupId>org.rosuda.REngine</groupId>
       <artifactId>Rserve</artifactId>
       <version>1.8.1</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <version>1.4.193</version>
     </dependency>
 
     <dependency>
@@ -100,7 +89,7 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>2.8.5</version>
-      <!-- <scope>test</scope> -->
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
