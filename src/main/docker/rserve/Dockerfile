@@ -39,16 +39,33 @@ RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 
-ADD install.R /tmp/install.R
-
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     build-essential autoconf r-base r-base-dev r-recommended \
   && echo 'options (repos = "http://cran.rstudio.com/", download.file.method = "libcurl")' >> /etc/R/Rprofile.site \
+  && echo "source ('http://bioconductor.org/biocLite.R');" >> /tmp/install.R \
+  && echo "biocLite (c ('topGO', 'org.Hs.eg.db', 'org.Mm.eg.db', 'limma', 'DESeq', 'edgeR', 'ReactomePA', 'metagenomeSeq', 'DESeq2', 'impute', 'preprocessCore'));" >> /tmp/install.R \
+  && echo "install.packages (c ('Rserve', 'rafalib', 'amap'));" >> /tmp/install.R \
   && Rscript /tmp/install.R \
+  && echo "fileio enable" >> /etc/Rserve.conf \
+  && echo "workdir.clean enable" >> /etc/Rserve.conf \
+  && echo "log.io enable" >> /etc/Rserve.conf \
+  && echo "daemon disable" >> /etc/Rserve.conf \
+  && echo "remote enable" >> /etc/Rserve.conf \
+  && echo "[supervisord]" >> /etc/supervisord.conf \
+  && echo "nodaemon=true" >> /etc/supervisord.conf \
+  && echo "user=root" >> /etc/supervisord.conf \
+  && echo "logfile=/var/log/supervisord.log" >> /etc/supervisord.conf \
+  && echo "pidfile=/var/run/supervisord.pid" >> /etc/supervisord.conf \
+  && echo "logfile_maxbytes=50MB" >> /etc/supervisord.conf \
+  && echo "logfile_backups=10" >> /etc/supervisord.conf \
+  && echo "" >> /etc/supervisord.conf \
+  && echo "[program:rserve]" >> /etc/supervisord.conf \
+  && echo "command=R -e \"Rserve::Rserve(debug=TRUE,args='--no-save')\"" >> /etc/supervisord.conf \
+  && echo "stdout_logfile = /var/log/rserve.log" >> /etc/supervisord.conf \
+  && echo "" >> /etc/supervisord.conf \
   && rm -rf /tmp/* /var/lib/apt/lists/*
 
-ADD Rserv.conf /etc/Rserv.conf
 ADD supervisord.conf /etc/supervisord.conf
 
 EXPOSE 6311
