@@ -22,35 +22,19 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
-# This is an iterative image, do not add stuff to this definition,
-# delete all content after this comment and start a new with
-# FROM docker.io/cccb/mev-rserve:<current>
+# FIXME
+# The product of this should be tagged docker.io/cccb/mev-web:`date +'%Y-%m-%d`
+# the image updated in src/main/kubernetes/web-worker, image pushed
+# to dockerhub, docker stuff can be done by the maven plugin
 
-FROM debian:testing
+FROM jboss/wildfly
 
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends locales wget ca-certificates supervisor \
-  && rm -rf /var/lib/apt/lists/*
+# TODO
+# Eventually add custom configuration here
+#ADD standalone.xml /opt/wildfly/standalone/configuration/
 
-RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
-  && locale-gen en_US.utf8 \
-  && /usr/sbin/update-locale LANG=en_US.UTF-8
-
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-
-ADD install.R /tmp/install.R
-
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
-    build-essential autoconf r-base r-base-dev r-recommended \
-  && echo 'options (repos = "http://cran.rstudio.com/", download.file.method = "libcurl")' >> /etc/R/Rprofile.site \
-  && Rscript /tmp/install.R \
-  && rm -rf /tmp/* /var/lib/apt/lists/*
-
-ADD Rserv.conf /etc/Rserv.conf
-ADD supervisord.conf /etc/supervisord.conf
-
-EXPOSE 6311
-
-CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
+# FIXME
+# Copy the war from target/; I should really use the docker maven
+# plugin which will copy whatever is in this folder to some place
+# in target/ then build and push the image from there
+ADD mev.war /opt/jboss/wildfly/standalone/deployments/
