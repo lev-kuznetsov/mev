@@ -1,23 +1,10 @@
 [MultiExperiment Viewer](http://mev.tm4.org) [![Build Status](https://travis-ci.org/dfci-cccb/mev.svg?branch=master)](https://travis-ci.org/dfci-cccb/mev)
-<!-- The following thoughts should really be saved as wiki pages -->
-===
 
-To run locally install [kubectl](https://kubernetes.io/docs/user-guide/prereqs/) and [minikube](https://kubernetes.io/docs/getting-started-guides/minikube/#installation) then follow minikube instructions to start up a cluster. Pull the source, feed the cluster definition to kubernetes and open the web application:
-```
-git clone https://github.com/dfci-cccb/mev
-kubectl create -f src/main/kubernetes
-minikube service mev
-```
-The last instruction will eventually open the web application in a new default browser window (the first time may take a while as all the container images need to be pulled down)
-
-Provisioned cluster does not retain data, all content will be destroyed with the cluster. To tear down all services run
-```
-kubectl delete -f src/main/kubernetes
-```
+[Launching locally](LOCAL.md)
 
 ===
 
-Hacking is a bit more involved the development workflow is to forego creating a new docker image for every change in the application. The application expects to run inside kubernetes environment, system environment must be set up correctly to enable it to run outside kubernetes
+Hacking is a bit more involved if development cycle is to forego creating a new docker image for every change in the application. The application expects to run inside kubernetes environment, system environment must be set up accordingly to enable it to run outside kubernetes
 
 This will set up the environment variables pointing to the Rserve pod
 ```
@@ -28,7 +15,7 @@ export RSERVE_SERVICE_PORT="$(minikube service rserve --url | awk -F":" '{print 
 This will set up the environment variables pointing to the ElasticSearch cluster
 ```
 export ELASTICSEARCH_SERVICE_HOST="$(minikube service elasticsearch --url | awk -F":" '{print $2}' | sed 's/\///g')"
-export ES_DATA_SERVICE_PORT_TRANSPORT="$(minikube service elastic search --url | awk -F":" '{print $3}')"
+export ELASTICSEARCH_SERVICE_PORT="$(minikube service elasticsearch --url | awk -F":" '{print $3}')"
 ```
 
 Then you can run the web application via ```mvn wildfly:run``` and point your browser to ```localhost:8080```
@@ -56,4 +43,4 @@ All kubernetes definitions included in the source are aimed at development; in p
 
 Rserve deployment definition calls for a single replica, which is to ease development, obviously the number of replicas should be at least 2 or higher to ensure a running worker up at all times. The number of simultaneously executing analyses **per running web application container** is governed by the number of threads in the ExecutorService bean as defined in edu.cccb.mev.context.Concurrency (number of available processors as of this writing.) Deployment elasticity should be handled through ```kubectl autoscale``` directives. Autoscaling the cluster should be handled by the cloud provider, not the application
 
-Data retention in cluster environment is a complex problem so any data retention services such as database and ElasticSearch should ideally not be a part of kubernetes cluster and instead be provisioned by the cloud provider and the web application containers linked to these services
+Data retention in cluster environment is a complex problem so any data retention services such as database and ElasticSearch should ideally not be a part of kubernetes cluster and instead be provisioned by the cloud provider and the web application containers linked to these services. ElasticSearch is easily added via environment variables as above. Currently persistence.xml defines JPA for an H2 database which is what wildfly provides by default, as the code base was moving closer to production my plan was to add PostgreSQL (or whatever else is provided by AWS or Google) to the dev deployment, change the hibernate drivers to that and configure default datasource via wildfly configuration mechanisms - provide standalone.xml for the docker image and add <commands/> element to the maven plugin. There may be easier avenues
