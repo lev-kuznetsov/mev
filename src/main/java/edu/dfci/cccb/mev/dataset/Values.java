@@ -30,6 +30,7 @@ import static java.util.stream.Collectors.toMap;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 import javax.transaction.Transactional;
 import javax.ws.rs.POST;
@@ -91,10 +92,14 @@ public class Values {
   @Transactional
   @PUT
   public void bind (Map <String, Map <String, Double>> values) {
-    // FIXME if the annotations property is before the values property in a full
-    // dataset JSON the annotations get wiped here
-    Dimension row = dimensions.compute ("row", (x, y) -> new Dimension ()),
-        column = dimensions.compute ("column", (x, y) -> new Dimension ());
+    BiFunction<String, Dimension, Dimension> q = (x, d) -> {
+      if (d != null) {
+        d.keys.clear ();
+        return d;
+      } else return new Dimension ();
+    };
+    Dimension row = dimensions.compute ("row", q),
+        column = dimensions.compute ("column", q);
     this.values.clear ();
     values.forEach ( (r, e) -> {
       row.keys.add (r);

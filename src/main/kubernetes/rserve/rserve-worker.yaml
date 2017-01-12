@@ -31,7 +31,7 @@ metadata:
   template:
     metadata:
       labels:
-        app: rserve
+        component: rserve
     spec:
       containers:
       - name: rserve

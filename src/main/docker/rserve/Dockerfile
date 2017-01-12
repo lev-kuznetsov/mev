@@ -66,8 +66,6 @@ RUN apt-get update \
   && echo "" >> /etc/supervisord.conf \
   && rm -rf /tmp/* /var/lib/apt/lists/*
 
-ADD supervisord.conf /etc/supervisord.conf
-
 EXPOSE 6311
 
 CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]

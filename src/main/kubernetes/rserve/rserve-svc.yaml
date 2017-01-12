@@ -26,9 +26,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: rserve
+  labels:
+    component: rserve
 spec:
   ports:
   - port: 6311
   selector:
-    app: rserve
+    component: rserve
   type: NodePort
