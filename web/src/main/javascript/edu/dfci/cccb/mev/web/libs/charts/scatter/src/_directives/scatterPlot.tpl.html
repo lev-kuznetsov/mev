@@ -45,7 +45,9 @@
 				<tr ng-repeat="selection in vm.selections">
 					<td class="mev-control">
 						<!--<input type="checkbox" ng-model="selection.checked" ng-change="vm.updateSelection(selection)" ng-true-value="true" ng-false-value="false">-->
-						<button type="button" class="btn btn-primary btn-xs" ng-model="selection.checked" ng-change="vm.updateSelection(selection)"
+						<button type="button" class="btn btn-primary btn-xs"
+								ng-model="selection.checked"
+								ng-change="vm.updateSelection(selection)"
 								uib-btn-checkbox
 								ng-style="{'background-color':selection.properties.selectionColor, 'border-color': selection.properties.selectionColor}">
 							{{selection.name}}
@@ -55,14 +57,24 @@
 					<!--<td>{{selection.properties.selectionDescription}}</td>-->
 					<td class="mev-control">
 						<div class="btn-group btn-group-xs">
-							<!--<label class="btn btn-success" ng-model="selection.group" ng-change="vm.updateGroup(selection)" uib-btn-radio="'experiment'" uncheckable>experiment</label>-->
-							<input type="radio" ng-model="selection.group" value="experiment" ng-change="vm.updateGroup(selection)" >
+							<label class="btn" ng-model="selection.group" ng-change="vm.updateGroup(selection)" uib-btn-radio="'experiment'" uncheckable></label>
+							<!--<input type="checkbox"-->
+								   <!--ng-model="selection.group"-->
+								   <!--ng-change="vm.updateGroup(selection)"-->
+								   <!--ng-true-value="experiment" ng-false-value="null"-->
+							<!--/>-->
+							<!--ng-click="vm.uncheckGroup($event, selection)"-->
 						</div>
 					</td>
 					<td class="mev-control">
 						<div class="btn-group btn-group-xs">
-							<!--<label class="btn btn-info" ng-model="selection.group" ng-change="vm.updateGroup(selection)" uib-btn-radio="'control'" uncheckable>control</label>-->
-							<input type="radio" ng-model="selection.group" value="control" ng-change="vm.updateGroup(selection)" >
+							<label class="btn" ng-model="selection.group" ng-change="vm.updateGroup(selection)" uib-btn-radio="'control'" uncheckable></label>
+							<!--<input type="checkbox"-->
+								   <!--ng-model="selection.group"-->
+								   <!--ng-change="vm.updateGroup(selection)"-->
+								   <!--ng-true-value="control" ng-false-value="null"-->
+							<!--/>-->
+							<!--ng-click="vm.uncheckGroup($event, selection)"-->
 						</div>
 					</td>
 				</tr>

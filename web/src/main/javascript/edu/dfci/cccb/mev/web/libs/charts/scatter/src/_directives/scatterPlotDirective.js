@@ -112,6 +112,11 @@ function(angular, d3, _, crossfilter, template){"use strict";
 						updateData(scope.input, createGroupSelections(checkedGroups));
 						scope.$emit("mev.scatterPlot.groups.updated", checkedGroups);
 					},
+					uncheckGroup: function($event, selection){
+						if(selection.group===$event.target.value){
+							delete selection.group;
+						}
+					},
 					updateXAxis: function(){				
 						if(scope.xField === scope.yField)
 							findField("xField");
