@@ -67,9 +67,14 @@
     input,select,table {
       display: inline-block;
       float: left;
+      > thead > tr > th.mev-control-label{
+        font-size: 14px;
+      }
+      > tbody > tr > td.mev-control{
+        align-items: center;
+        vertical-align: middle;
+      }
     }
-
-
   }
   .body{
     flex: 7 7 @chart-body-width;
