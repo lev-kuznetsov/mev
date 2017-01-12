@@ -28,16 +28,16 @@ package edu.dfci.cccb.mev.dataset;
 import static java.lang.String.valueOf;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.POST;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-
 import io.fabric8.annotations.Path;
+import io.searchbox.action.BulkableAction;
 import io.searchbox.client.JestClient;
-import io.searchbox.core.Bulk;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
@@ -60,7 +60,7 @@ public class Annotations {
   /**
    * Index cache
    */
-  final Bulk.Builder bulk = new Bulk.Builder ().defaultType ("annotation");
+  final List <BulkableAction <?>> bulk = new ArrayList <> ();
 
   /**
    * @param dimension
@@ -81,9 +81,8 @@ public class Annotations {
    * @param key
    * @param properties
    */
-  @JsonAnySetter
   public void add (String key, Map <String, String> properties) {
-    bulk.addAction (new Index.Builder (properties).id (key).build ());
+    bulk.add (new Index.Builder (properties).id (key).build ());
   }
 
   /**

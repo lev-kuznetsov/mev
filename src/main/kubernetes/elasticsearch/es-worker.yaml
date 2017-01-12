@@ -1,0 +1,85 @@
+# The MIT License (MIT)
+# Copyright (c) 2017 Dana-Farber Cancer Institute
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation
+# files (the "Software"), to deal in the Software without
+# restriction, including without limitation the rights to use,
+# copy, modify, merge, publish, distribute, sublicense, and/or
+# sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following
+# conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+# HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: es-client
+  labels:
+    component: elasticsearch
+    role: client
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: elasticsearch
+        role: client
+      annotations:
+        pod.beta.kubernetes.io/init-containers: '[
+          {
+          "name": "sysctl",
+            "image": "busybox",
+            "imagePullPolicy": "IfNotPresent",
+            "command": ["sysctl", "-w", "vm.max_map_count=262144"],
+            "securityContext": {
+              "privileged": true
+            }
+          }
+        ]'
+    spec:
+      containers:
+      - name: es-client
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - IPC_LOCK
+        image: quay.io/pires/docker-elasticsearch-kubernetes:5.1.1_1
+        imagePullPolicy: Always
+        env:
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: "CLUSTER_NAME"
+          value: "myesdb"
+        - name: HTTP_ENABLE
+          value: "true"
+        - name: "ES_JAVA_OPTS"
+          value: "-Xms256m -Xmx256m"
+        ports:
+        - containerPort: 9200
+          name: http
+          protocol: TCP
+        - containerPort: 9300
+          name: transport
+          protocol: TCP
+        volumeMounts:
+        - name: storage
+          mountPath: /data
+      volumes:
+          - emptyDir:
+              medium: ""
+            name: "storage"

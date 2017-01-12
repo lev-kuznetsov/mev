@@ -36,6 +36,7 @@ import javax.persistence.PostRemove;
 import javax.ws.rs.InternalServerErrorException;
 
 import io.searchbox.client.JestClient;
+import io.searchbox.core.Bulk;
 import io.searchbox.core.BulkResult;
 import io.searchbox.indices.DeleteIndex;
 
@@ -45,7 +46,6 @@ import io.searchbox.indices.DeleteIndex;
  * @author levk
  */
 public class Index {
-
   /**
    * ELasticSearch
    */
@@ -65,8 +65,11 @@ public class Index {
    */
   @PostPersist
   void index (Dimension dimension) throws IOException {
-    BulkResult r = es.execute (dimension.annotations.bulk.defaultIndex (valueOf (dimension.id)).build ());
-    if (r.getResponseCode () > 299) throw new InternalServerErrorException (r.getErrorMessage ());
+    if (!dimension.annotations.bulk.isEmpty ()) {
+      BulkResult r =
+          es.execute (new Bulk.Builder ().defaultIndex (valueOf (dimension.id)).defaultType ("annotation").build ());
+      if (r.getResponseCode () > 299) throw new InternalServerErrorException (r.getErrorMessage ());
+    }
   }
 
   /**

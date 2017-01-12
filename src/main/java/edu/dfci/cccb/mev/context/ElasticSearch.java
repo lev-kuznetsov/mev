@@ -50,7 +50,8 @@ public class ElasticSearch {
   @Singleton
   static JestClient es () {
     // Workaround, see https://github.com/fabric8io/fabric8/issues/6699
-    String endpoint = Services.toServiceUrl ("elasticsearch", null, null, null, false);
+    String endpoint = Services.toServiceUrl ("elasticsearch", "http", "http", null, false);
+    // endpoint = endpoint.replaceAll ("tcp", "http");
 
     JestClientFactory factory = new JestClientFactory ();
     factory.setHttpClientConfig (new HttpClientConfig.Builder (endpoint).multiThreaded (true).build ());
