@@ -63,7 +63,9 @@ define(function(require){
 			scope: {
 				pcaAnalysis: "=mevPcaAnalysis",
 				selections: "=mevSelections",
-				curSelection: "="
+				curSelection: "=",
+				curGroups: "=mevCurGroups",
+				curSelections: "=mevCurSelections"
 			},
 			controller: ["$scope", function(scope){				
 				scope.vm = {
@@ -103,7 +105,25 @@ define(function(require){
 					});
 					console.debug("pca selection", scope.vm.bar);
 				});
-
+				scope.$on("mev.scatterPlot.groups.updated", function($event, groups){
+					scope.curGroups.length = 0;
+					groups.map(function(group){
+						_.assign(group.selection, {
+							name: group.selections.map(function(s){
+								return s.name;
+							}).join("+")
+						});
+						scope.curGroups.push(group.selection);
+					});
+					console.debug("pca groups", groups);
+				})
+				scope.$on("mev.scatterPlot.selections.updated", function($event, selections){
+					scope.curSelections.length = 0;
+					selections.map(function(selection){
+						scope.curSelections.push(selection);
+					});
+					console.debug("pca selections", scope.curSelections);
+				})
 			}]
 		};
 	};

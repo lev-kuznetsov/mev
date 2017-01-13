@@ -3,7 +3,6 @@ define(["ng", "lodash",
         "./nmf/views.dataset.analysis.nmf.module",
         "./histogram/views.dataset.analysis.histogram.module",
         "./genesd/views.dataset.analysis.genesd.module",
-        "./genemad/views.dataset.analysis.genemad.module",
         "mev-pca"
         ], function(ng, _){
 	var module = ng.module("mui.views.dataset.analysis", ["mui.widgets.analysis", 
@@ -18,7 +17,7 @@ define(["ng", "lodash",
 	                                                      // "mui.views.dataset.analysis.topgo",
 	                                                      "mui.views.dataset.analysis.histogram",
 	                                                      "mui.views.dataset.analysis.genesd",
-	                                                      "mui.views.dataset.analysis.genemad",
+	                                                      // "mui.views.dataset.analysis.genemad",
 	                                                      // "mui.views.dataset.analysis.voom",
 	                                                      // "Mev.AnalysisAccordionCollection",
 	                                                      "mev-pca"]);

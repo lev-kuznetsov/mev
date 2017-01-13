@@ -18,8 +18,11 @@ define(["mui", "lodash"], function(ng, _){
 			if(_.isString(analysis)){
 				return mevAnalysisTypes.get(analysis) || AnalysisTypes[analysis];
 			}else if(_.isObject(analysis)){
-				return mevAnalysisTypes.get(analysis.type) || AnalysisTypes[analysis.type];
-			}else if($scope && $scope.anyAnalysisLaunch && $scope.anyAnalysisLaunch.analysisType){					
+				if(analysis.params && analysis.params.analysisType && mevAnalysisTypes.get(analysis.params.analysisType))
+					return mevAnalysisTypes.get(analysis.params.analysisType);
+				else
+					return mevAnalysisTypes.get(analysis.type) || AnalysisTypes[analysis.type];
+			}else if($scope && $scope.anyAnalysisLaunch && $scope.anyAnalysisLaunch.analysisType){
 				return mevAnalysisTypes.get($scope.anyAnalysisLaunch.analysisType) || AnalysisTypes[AnalysisTypes.reverseLookup[$scope.anyAnalysisLaunch.analysisType]];
 			}
 		}

@@ -1,6 +1,6 @@
 <form role="form">	
   <div class="errors" ng-if="!isValid">
-  	<p class="error bg-warning text-warning" ng-repeat="error in errors">{{error}}</p>
+  	<p class="error bg-warning " ng-repeat="error in errors">{{error}}</p>
   </div>
   <div ng-repeat="param in analysisType.params" class="mev-any-parameter" mev-param="param"></div>	
 	<a class="btn btn-success btn-block" ng-click="start()" aria-hidden="true">Analyze</a>

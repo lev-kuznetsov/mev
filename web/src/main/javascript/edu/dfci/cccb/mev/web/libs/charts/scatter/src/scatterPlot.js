@@ -1,4 +1,4 @@
-define(["mui", "jquery", "d3", "nvd3", "angular-nvd3", "lodash", "mev-chart-utils",
+define(["mui", "jquery", "d3", "nvd3", "angular-nvd3", "lodash", "mev-chart-utils", "angular-ui-bootstrap",
 	"./_directives/scatterPlotDirective", 
 	"./services/adaptors/Nvd3DataAdaptor",
 	"nvd3/build/nv.d3.css!", "./style/scatter.less!"], 
