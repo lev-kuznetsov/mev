@@ -23,7 +23,9 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.tools.serialization;
+package edu.dfci.cccb.mev.tools.jackson;
+
+import static java.util.stream.Collectors.toMap;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,14 +44,18 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
+import edu.dfci.cccb.mev.dataset.Dataset;
+import edu.dfci.cccb.mev.dataset.literal.Literal;
+import edu.dfci.cccb.mev.workspace.Item;
+
 /**
- * TSV handler for Map<String, Map<String, String>>
+ * Dataset TSV handler. Note that the reader type is {@link Item}, anything
+ * uploaded to an item slot with TSV content header is assumed to be a dataset
  * 
  * @author levk
  */
 @Provider
-public class StringMapTsvHandler implements TsvMessageBodyReader <Map <String, Map <String, Double>>>,
-    TsvMessaageBodyWriter <Map <String, Map <String, Double>>> {
+public class DatasetTsvHandler implements TsvMessageBodyReader <Item>, TsvMessaageBodyWriter <Dataset> {
   /**
    * Schema
    */
@@ -59,7 +65,7 @@ public class StringMapTsvHandler implements TsvMessageBodyReader <Map <String, M
    */
   private @Inject CsvMapper mapper;
   /**
-   * Type
+   * Dataset type
    */
   private final TypeReference <Map <String, Map <String, Double>>> type =
       new TypeReference <Map <String, Map <String, Double>>> () {};
@@ -73,11 +79,12 @@ public class StringMapTsvHandler implements TsvMessageBodyReader <Map <String, M
    * java.io.InputStream)
    */
   @Override
-  public Map <String, Map <String, Double>> readFrom (Class <Map <String, Map <String, Double>>> type, Type genericType,
-                                                      Annotation[] annotations, MediaType mediaType,
-                                                      MultivaluedMap <String, String> httpHeaders, InputStream in)
+  public Item readFrom (Class <Item> type, Type genericType, Annotation[] annotations, MediaType mediaType,
+                        MultivaluedMap <String, String> httpHeaders, InputStream in)
       throws IOException, WebApplicationException {
-    return readFrom (mapper.readerFor (this.type).with (schema), in);
+    Literal d = new Literal ();
+    d.bind (readFrom (mapper.readerFor (this.type).with (schema), in));
+    return d;
   }
 
   /*
@@ -89,9 +96,12 @@ public class StringMapTsvHandler implements TsvMessageBodyReader <Map <String, M
    * java.io.OutputStream)
    */
   @Override
-  public void writeTo (Map <String, Map <String, Double>> t, Class <?> type, Type genericType, Annotation[] annotations,
-                       MediaType mediaType, MultivaluedMap <String, Object> httpHeaders, OutputStream out)
+  public void writeTo (Dataset t, Class <?> type, Type genericType, Annotation[] annotations, MediaType mediaType,
+                       MultivaluedMap <String, Object> httpHeaders, OutputStream out)
       throws IOException, WebApplicationException {
-    writeTo (mapper.writerFor (this.type).with (schema), t, out);
+    writeTo (mapper.writerFor (this.type).with (schema),
+             t.values ().query (t.dimensions ().entrySet ().stream ().collect (toMap (e -> e.getKey (),
+                                                                                      e -> e.getValue ().keys ()))),
+             out);
   }
 }

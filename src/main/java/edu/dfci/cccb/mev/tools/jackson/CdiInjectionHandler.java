@@ -25,60 +25,38 @@
  */
 package edu.dfci.cccb.mev.tools.jackson;
 
-import javax.inject.Singleton;
+import static java.util.stream.StreamSupport.stream;
+import static javax.enterprise.inject.spi.CDI.current;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
+import java.lang.annotation.Annotation;
+
+import javax.inject.Qualifier;
+
+import com.fasterxml.jackson.databind.BeanProperty;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.InjectableValues;
 
 /**
- * Rserve protocol mapper
+ * CDI {@link InjectableValues}
  * 
  * @author levk
  */
-@Singleton
-public class RserveMapper extends ObjectMapper {
+public class CdiInjectionHandler extends InjectableValues {
 
-  /**
-   * Serialization details
-   */
-  private static final long serialVersionUID = 1L;
-
-  /**
+  /*
+   * (non-Javadoc)
    * 
+   * @see
+   * com.fasterxml.jackson.databind.InjectableValues#findInjectableValue(java.
+   * lang.Object, com.fasterxml.jackson.databind.DeserializationContext,
+   * com.fasterxml.jackson.databind.BeanProperty, java.lang.Object)
    */
-  public RserveMapper () {
-    this (new RserveFactory ());
-  }
-
-  /**
-   * @param jf
-   */
-  public RserveMapper (RserveFactory jf) {
-    super (jf);
-    setInjectableValues (new CdiInjectionHandler ());
-    registerModule (new SimpleModule () {
-      private static final long serialVersionUID = 1L;
-
-      {
-        addSerializer (new RserveDatasetSerializer ());
-      }
-    });
-  }
-
-  /**
-   * @param src
-   */
-  public RserveMapper (RserveMapper src) {
-    super (src);
-  }
-
   @Override
-  public RserveMapper copy () {
-    return new RserveMapper (this);
-  }
-
-  @Override
-  public RserveFactory getFactory () {
-    return (RserveFactory) _jsonFactory;
+  public Object findInjectableValue (Object valueId, DeserializationContext ctxt, BeanProperty forProperty,
+                                     Object beanInstance) {
+    return current ().select (forProperty.getMember ().getRawType (),
+                              stream (forProperty.getMember ().annotations ().spliterator (), true).filter (a -> {
+                                return a.annotationType ().isAnnotationPresent (Qualifier.class);
+                              }).toArray (Annotation[]::new)).get ();
   }
 }

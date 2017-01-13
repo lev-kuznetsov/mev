@@ -23,33 +23,32 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.analysis;
+package edu.dfci.cccb.mev.analysis.r.hclust;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static javax.persistence.CascadeType.ALL;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import java.util.List;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Marks a field or a single argument method to inject with the environment
- * value after running code
+ * Tree branch
  * 
  * @author levk
  */
-@Retention (RUNTIME)
-@Target ({ FIELD, METHOD })
-public @interface Resolve {
-
+@Entity
+public class Branch extends Node {
   /**
-   * @return name of environment variable to resolve, if left blank default to
-   *         name of annotated member
+   * Children
    */
-  String value () default "";
-
+  private @JsonProperty @OneToMany (cascade = ALL) List <Node> children;
   /**
-   * @return whether resolution is required
+   * Distance
    */
-  boolean required () default false;
+  private @JsonProperty @Column @Basic double distance;
 }

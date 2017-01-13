@@ -24,7 +24,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
- * JSON
+ * Jackson details
  * 
  * @author levk
  */

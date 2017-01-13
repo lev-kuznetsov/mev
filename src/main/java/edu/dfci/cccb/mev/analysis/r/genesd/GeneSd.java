@@ -23,81 +23,73 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.dataset;
+package edu.dfci.cccb.mev.analysis.r.genesd;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY;
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.GenerationType.AUTO;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
-import javax.websocket.server.PathParam;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import javax.ws.rs.PUT;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import edu.dfci.cccb.mev.workspace.Item;
+import edu.dfci.cccb.mev.analysis.Define;
+import edu.dfci.cccb.mev.analysis.Resolve;
+import edu.dfci.cccb.mev.analysis.r.R;
+import edu.dfci.cccb.mev.analysis.r.R.Adapter;
+import edu.dfci.cccb.mev.dataset.Dataset;
+import io.fabric8.annotations.Path;
 
 /**
- * Dataset
+ * Gene SD analysis
  * 
  * @author levk
  */
 @Entity
-@Inheritance
-public abstract class Dataset extends Item {
+@JsonInclude (NON_EMPTY)
+@R ("dataset <- to.data.frame (dataset);\n"
+    + "gene.mad = sort (apply (as.matrix (dataset), 1, sd), decreasing = TRUE);\n" + "result <- as.list (gene.mad);")
+public class GeneSd extends Adapter {
+  /**
+   * Identifier
+   */
+  private @Id @GeneratedValue (strategy = AUTO) long id;
+  /**
+   * Dataset
+   */
+  private @Define @OneToOne (cascade = ALL) Dataset dataset;
+  /**
+   * Result
+   */
+  private @Resolve @ElementCollection Map <String, Double> result;
 
   /**
-   * Default chunk size
+   * @param dataset
    */
-  private static final int DEFAULT_CHUNK_SIZE = 1 << 18; // Less than 1<<31
-
-  /**
-   * Dimensions
-   */
-  private @OneToMany (cascade = ALL) Map <String, Dimension> dimensions = new HashMap <> ();
-  /**
-   * Chunk size
-   */
-  private @Column @Basic int chunk = DEFAULT_CHUNK_SIZE;
-  /**
-   * Value buffers
-   */
-  private @OneToMany (cascade = ALL) @OrderColumn List <Buffer> values = new ArrayList <> ();
-
-  /**
-   * @return values
-   */
-  @Path ("values")
-  @JsonIgnore
-  public synchronized Values values () {
-    return new Values (dimensions, values, chunk);
+  @PUT
+  @Path ("dataset")
+  @JsonProperty (required = false)
+  public void dataset (Dataset dataset) {
+    this.dataset = dataset;
   }
 
   /**
-   * @param dimension
-   *          name
-   * @return dimension
-   */
-  @Path ("{dimension}")
-  @JsonIgnore
-  public Dimension dimension (@PathParam ("dimension") String dimension) {
-    return dimensions.get (dimension);
-  }
-
-  /**
-   * @return dimension names
+   * @return result
    */
   @GET
-  public Map <String, Dimension> dimensions () {
-    return dimensions;
+  @Path ("result")
+  @JsonIgnore
+  public Map <String, Double> result () {
+    return result;
   }
 }

@@ -23,33 +23,56 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.analysis;
+package edu.dfci.cccb.mev.analysis.r.gsea;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY;
+import static javax.persistence.GenerationType.AUTO;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Marks a field or a single argument method to inject with the environment
- * value after running code
+ * GSEA result entry
  * 
  * @author levk
  */
-@Retention (RUNTIME)
-@Target ({ FIELD, METHOD })
-public @interface Resolve {
-
+@JsonInclude (NON_EMPTY)
+@Entity
+public class GseaEntry {
   /**
-   * @return name of environment variable to resolve, if left blank default to
-   *         name of annotated member
+   * Identifier
    */
-  String value () default "";
-
+  private @Id @GeneratedValue (strategy = AUTO) long id;
   /**
-   * @return whether resolution is required
+   * Description
    */
-  boolean required () default false;
+  private @JsonProperty String description;
+  /**
+   * Set size
+   */
+  private @JsonProperty int size;
+  /**
+   * Entrichment score
+   */
+  private @JsonProperty double enrichmentScore;
+  /**
+   * NES
+   */
+  private @JsonProperty double nes;
+  /**
+   * p-value
+   */
+  private @JsonProperty double pValue;
+  /**
+   * p adjust
+   */
+  private @JsonProperty double pAdjust;
+  /**
+   * q-value
+   */
+  private @JsonProperty double qValue;
 }

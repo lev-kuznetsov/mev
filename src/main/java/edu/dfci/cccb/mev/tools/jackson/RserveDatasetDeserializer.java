@@ -23,33 +23,39 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.analysis;
+package edu.dfci.cccb.mev.tools.jackson;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.io.IOException;
+import java.util.Map;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+
+import edu.dfci.cccb.mev.dataset.Dataset;
+import edu.dfci.cccb.mev.dataset.literal.Literal;
 
 /**
- * Marks a field or a single argument method to inject with the environment
- * value after running code
+ * Rserve protocol dataset deserializer
  * 
  * @author levk
  */
-@Retention (RUNTIME)
-@Target ({ FIELD, METHOD })
-public @interface Resolve {
+public class RserveDatasetDeserializer extends JsonDeserializer <Dataset> {
 
-  /**
-   * @return name of environment variable to resolve, if left blank default to
-   *         name of annotated member
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.fasterxml.jackson.databind.JsonDeserializer#deserialize(com.fasterxml.
+   * jackson.core.JsonParser,
+   * com.fasterxml.jackson.databind.DeserializationContext)
    */
-  String value () default "";
-
-  /**
-   * @return whether resolution is required
-   */
-  boolean required () default false;
+  @Override
+  public Dataset deserialize (JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    Dataset d = new Literal ();
+    d.values ().bind (p.readValueAs (new TypeReference <Map <String, Map <String, Double>>> () {}));
+    return d;
+  }
 }

@@ -43,6 +43,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
+import org.rosuda.REngine.REngineException;
 import org.rosuda.REngine.Rserve.RConnection;
 import org.rosuda.REngine.Rserve.protocol.REXPFactory;
 
@@ -119,10 +120,14 @@ public class Rserve {
         Resolve v = f.getAnnotation (Resolve.class);
         String n = "".equals (v.value ()) ? f.getName () : v.value ();
         if (!f.isAccessible ()) f.setAccessible (true);
-        REXPFactory q = new REXPFactory (r.get (n, null, true));
-        byte[] b = new byte[q.getBinaryLength ()];
-        q.getBinaryRepresentation (b, 0);
-        f.set (analysis, mapper.readerFor (mapper.constructType (f.getGenericType ())).readValue (b));
+        try {
+          REXPFactory q = new REXPFactory (r.get (n, null, true));
+          byte[] b = new byte[q.getBinaryLength ()];
+          q.getBinaryRepresentation (b, 0);
+          f.set (analysis, mapper.readerFor (mapper.constructType (f.getGenericType ())).readValue (b));
+        } catch (REngineException e) {
+          if (v.required ()) throw e;
+        }
         return null;
       }), of (c.getDeclaredMethods ()).filter (m -> {
         return m.isAnnotationPresent (Resolve.class);
@@ -130,10 +135,14 @@ public class Rserve {
         Resolve v = m.getAnnotation (Resolve.class);
         String n = "".equals (v.value ()) ? m.getName () : v.value ();
         if (!m.isAccessible ()) m.setAccessible (true);
-        REXPFactory q = new REXPFactory (r.get (n, null, true));
-        byte[] b = new byte[q.getBinaryLength ()];
-        q.getBinaryRepresentation (b, 0);
-        m.invoke (analysis, mapper.readerFor (mapper.constructType (m.getGenericParameterTypes ()[0])).readValue (b));
+        try {
+          REXPFactory q = new REXPFactory (r.get (n, null, true));
+          byte[] b = new byte[q.getBinaryLength ()];
+          q.getBinaryRepresentation (b, 0);
+          m.invoke (analysis, mapper.readerFor (mapper.constructType (m.getGenericParameterTypes ()[0])).readValue (b));
+        } catch (REngineException e) {
+          if (v.required ()) throw e;
+        }
         return null;
       })).flatMap (x -> x))).flatMap (x -> x).reduce ( () -> null, (f, s) -> () -> {
         f.call ();

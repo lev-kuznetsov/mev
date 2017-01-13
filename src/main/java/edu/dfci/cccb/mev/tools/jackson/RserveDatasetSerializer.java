@@ -23,33 +23,39 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.analysis;
+package edu.dfci.cccb.mev.tools.jackson;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static java.util.stream.Collectors.toMap;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import java.io.IOException;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+
+import edu.dfci.cccb.mev.dataset.Dataset;
 
 /**
- * Marks a field or a single argument method to inject with the environment
- * value after running code
+ * Rserve dataset serializer
  * 
  * @author levk
  */
-@Retention (RUNTIME)
-@Target ({ FIELD, METHOD })
-public @interface Resolve {
+public class RserveDatasetSerializer extends JsonSerializer <Dataset> {
 
-  /**
-   * @return name of environment variable to resolve, if left blank default to
-   *         name of annotated member
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.fasterxml.jackson.databind.JsonSerializer#serialize(java.lang.Object,
+   * com.fasterxml.jackson.core.JsonGenerator,
+   * com.fasterxml.jackson.databind.SerializerProvider)
    */
-  String value () default "";
-
-  /**
-   * @return whether resolution is required
-   */
-  boolean required () default false;
+  @Override
+  public void serialize (Dataset value, JsonGenerator gen, SerializerProvider serializers)
+      throws IOException, JsonProcessingException {
+    serializers.defaultSerializeValue (value.values ().query (value.dimensions ().entrySet ().stream ().collect (toMap (e -> e.getKey (),
+                                                                                                                        e -> e.getValue ().keys ()))),
+                                       gen);
+  }
 }

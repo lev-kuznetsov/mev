@@ -23,33 +23,33 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.analysis;
+package edu.dfci.cccb.mev.tools.jackson;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import javax.ws.rs.ext.ContextResolver;
+import javax.ws.rs.ext.Provider;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Marks a field or a single argument method to inject with the environment
- * value after running code
+ * {@link ObjectMapper} provider for JAX-RS
  * 
  * @author levk
  */
-@Retention (RUNTIME)
-@Target ({ FIELD, METHOD })
-public @interface Resolve {
+@Provider
+public class JaxrsObjectMapperProvider implements ContextResolver <ObjectMapper> {
 
   /**
-   * @return name of environment variable to resolve, if left blank default to
-   *         name of annotated member
+   * Mapper
    */
-  String value () default "";
+  private final ObjectMapper mapper = new ObjectMapper ().setInjectableValues (new CdiInjectionHandler ());
 
-  /**
-   * @return whether resolution is required
+  /*
+   * (non-Javadoc)
+   * 
+   * @see javax.ws.rs.ext.ContextResolver#getContext(java.lang.Class)
    */
-  boolean required () default false;
+  @Override
+  public ObjectMapper getContext (Class <?> type) {
+    return mapper;
+  }
 }

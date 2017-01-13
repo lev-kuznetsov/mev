@@ -23,33 +23,37 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.analysis;
+package edu.dfci.cccb.mev.dataset.literal;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.util.Map;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import javax.persistence.Entity;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import edu.dfci.cccb.mev.dataset.Dataset;
 
 /**
- * Marks a field or a single argument method to inject with the environment
- * value after running code
+ * Loaded dataset
  * 
  * @author levk
  */
-@Retention (RUNTIME)
-@Target ({ FIELD, METHOD })
-public @interface Resolve {
+@Entity
+public class Literal extends Dataset {
 
   /**
-   * @return name of environment variable to resolve, if left blank default to
-   *         name of annotated member
+   * @param values
    */
-  String value () default "";
+  @JsonProperty (value = "values", required = false)
+  public void bind (Map <String, Map <String, Double>> values) {
+    values ().bind (values);
+  }
 
   /**
-   * @return whether resolution is required
+   * @param annotations
    */
-  boolean required () default false;
+  @JsonProperty (value = "annotations", required = false)
+  public void annotate (Map <String, Map <String, Map <String, String>>> annotations) {
+    annotations.forEach ( (d, a) -> dimension (d).annotate (a));
+  }
 }

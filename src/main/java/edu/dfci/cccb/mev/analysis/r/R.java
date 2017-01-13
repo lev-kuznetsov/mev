@@ -59,5 +59,6 @@ public @interface R {
    */
   @MappedSuperclass
   @EntityListeners (Rserve.class)
+  @R ("to.data.frame <- function (x) as.data.frame (do.call (rbind, x));")
   public abstract class Adapter extends Analysis {}
 }

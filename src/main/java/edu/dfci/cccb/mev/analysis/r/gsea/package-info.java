@@ -23,33 +23,9 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.analysis;
-
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
 /**
- * Marks a field or a single argument method to inject with the environment
- * value after running code
+ * GSEA analysis
  * 
  * @author levk
  */
-@Retention (RUNTIME)
-@Target ({ FIELD, METHOD })
-public @interface Resolve {
-
-  /**
-   * @return name of environment variable to resolve, if left blank default to
-   *         name of annotated member
-   */
-  String value () default "";
-
-  /**
-   * @return whether resolution is required
-   */
-  boolean required () default false;
-}
+package edu.dfci.cccb.mev.analysis.r.gsea;

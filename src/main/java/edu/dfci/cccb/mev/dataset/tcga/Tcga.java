@@ -23,33 +23,34 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.analysis;
+package edu.dfci.cccb.mev.dataset.tcga;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import javax.persistence.Entity;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import edu.dfci.cccb.mev.dataset.Dataset;
 
 /**
- * Marks a field or a single argument method to inject with the environment
- * value after running code
+ * TCGA dataset
  * 
  * @author levk
  */
-@Retention (RUNTIME)
-@Target ({ FIELD, METHOD })
-public @interface Resolve {
+@Entity
+public class Tcga extends Dataset {
 
   /**
-   * @return name of environment variable to resolve, if left blank default to
-   *         name of annotated member
+   * @param tumor
+   * @param platform
+   * @param level
+   * @return TCGA
    */
-  String value () default "";
-
-  /**
-   * @return whether resolution is required
-   */
-  boolean required () default false;
+  // Factory method necause JPA requires default constructor
+  @JsonCreator
+  public static Tcga tcga (@JsonProperty ("tumor") String tumor, @JsonProperty ("platform") String platform,
+                           @JsonProperty ("level") int level) {
+    // TODO stub
+    throw new UnsupportedOperationException ();
+  }
 }

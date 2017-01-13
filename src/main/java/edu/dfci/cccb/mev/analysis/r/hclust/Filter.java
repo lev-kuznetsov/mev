@@ -23,33 +23,52 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.analysis;
+package edu.dfci.cccb.mev.analysis.r.hclust;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static javax.persistence.GenerationType.AUTO;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import java.util.List;
+
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Marks a field or a single argument method to inject with the environment
- * value after running code
+ * Key set wrapper
  * 
  * @author levk
  */
-@Retention (RUNTIME)
-@Target ({ FIELD, METHOD })
-public @interface Resolve {
+@Entity
+public class Filter {
+  /**
+   * Identifier
+   */
+  private @Id @GeneratedValue (strategy = AUTO) long id;
+  /**
+   * Keys
+   */
+  private @ElementCollection List <String> keys;
 
   /**
-   * @return name of environment variable to resolve, if left blank default to
-   *         name of annotated member
+   * @return keys
    */
-  String value () default "";
+  @JsonValue
+  public List <String> keys () {
+    return keys;
+  }
 
   /**
-   * @return whether resolution is required
+   * @param keys
+   * @return filter
    */
-  boolean required () default false;
+  @JsonCreator
+  public static Filter filter (List <String> keys) {
+    Filter f = new Filter ();
+    f.keys = keys;
+    return f;
+  }
 }

@@ -23,33 +23,32 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.analysis;
+package edu.dfci.cccb.mev.analysis.r.limma;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static javax.persistence.GenerationType.AUTO;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Marks a field or a single argument method to inject with the environment
- * value after running code
+ * Limma result entry
  * 
  * @author levk
  */
-@Retention (RUNTIME)
-@Target ({ FIELD, METHOD })
-public @interface Resolve {
-
+@Entity
+public class LimmaEntry {
   /**
-   * @return name of environment variable to resolve, if left blank default to
-   *         name of annotated member
+   * Identifier
    */
-  String value () default "";
-
-  /**
-   * @return whether resolution is required
-   */
-  boolean required () default false;
+  private @Id @GeneratedValue (strategy = AUTO) long id;
+  private @JsonProperty @Column @Basic double logFc;
+  private @JsonProperty @Column @Basic double averageExpression;
+  private @JsonProperty @Column @Basic double pValue;
+  private @JsonProperty @Column @Basic double qValue;
+  private @JsonProperty @Column @Basic double t;
 }

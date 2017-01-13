@@ -23,33 +23,40 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.analysis;
+package edu.dfci.cccb.mev.dataset.reference;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static javax.persistence.CascadeType.ALL;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import edu.dfci.cccb.mev.dataset.Dataset;
 
 /**
- * Marks a field or a single argument method to inject with the environment
- * value after running code
+ * Reference to another dataset within the project
  * 
  * @author levk
  */
-@Retention (RUNTIME)
-@Target ({ FIELD, METHOD })
-public @interface Resolve {
+@Entity
+public class Reference extends Dataset {
+  /**
+   * Target
+   */
+  @OneToOne (cascade = ALL) Dataset target;
 
   /**
-   * @return name of environment variable to resolve, if left blank default to
-   *         name of annotated member
+   * @param name
+   * @param db
+   * @return reference
    */
-  String value () default "";
-
-  /**
-   * @return whether resolution is required
-   */
-  boolean required () default false;
+  @JsonCreator
+  public static Reference reference (@JsonProperty ("name") String name, @JacksonInject EntityManager db) {
+    // TODO stub
+    throw new UnsupportedOperationException ();
+  }
 }

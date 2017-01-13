@@ -24,6 +24,8 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
+ * Limma analysis
+ * 
  * @author levk
  */
-package edu.dfci.cccb.mev.tools.serialization;
+package edu.dfci.cccb.mev.analysis.r.limma;

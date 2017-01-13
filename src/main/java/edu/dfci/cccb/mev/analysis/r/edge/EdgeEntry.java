@@ -5,8 +5,8 @@
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
- * restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or
+ * restriction, including without limitation the rights to use, 
+ * copy, modify, merge, publish, distribute, sublicense, and/or 
  * sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
@@ -23,62 +23,53 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.tools.jackson;
+package edu.dfci.cccb.mev.analysis.r.edge;
 
-import javax.inject.Singleton;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import static javax.persistence.GenerationType.AUTO;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Rserve protocol mapper
+ * Edge result entry
  * 
  * @author levk
  */
-@Singleton
-public class RserveMapper extends ObjectMapper {
+@JsonInclude (NON_EMPTY)
+@Entity
+public class EdgeEntry {
 
   /**
-   * Serialization details
+   * Identifier
    */
-  private static final long serialVersionUID = 1L;
+  private @Id @GeneratedValue (strategy = AUTO) long id;
 
   /**
-   * 
+   * Log FC
    */
-  public RserveMapper () {
-    this (new RserveFactory ());
-  }
-
+  private @JsonProperty @Column @Basic double logFc;
   /**
-   * @param jf
+   * Log CPM
    */
-  public RserveMapper (RserveFactory jf) {
-    super (jf);
-    setInjectableValues (new CdiInjectionHandler ());
-    registerModule (new SimpleModule () {
-      private static final long serialVersionUID = 1L;
-
-      {
-        addSerializer (new RserveDatasetSerializer ());
-      }
-    });
-  }
-
+  private @JsonProperty @Column @Basic double logCpm;
   /**
-   * @param src
+   * p-value
    */
-  public RserveMapper (RserveMapper src) {
-    super (src);
-  }
-
-  @Override
-  public RserveMapper copy () {
-    return new RserveMapper (this);
-  }
-
-  @Override
-  public RserveFactory getFactory () {
-    return (RserveFactory) _jsonFactory;
-  }
+  private @JsonProperty @Column @Basic double pValue;
+  /**
+   * FWER
+   */
+  private @JsonProperty @Column @Basic double fwer;
+  /**
+   * FDR
+   */
+  private @JsonProperty @Column @Basic double fdr;
 }
