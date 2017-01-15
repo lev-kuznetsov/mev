@@ -23,52 +23,39 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.analysis.r.example;
+package edu.dfci.cccb.mev.beans;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
+import javax.ejb.Stateless;
+import javax.enterprise.inject.Produces;
+import javax.inject.Singleton;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import edu.dfci.cccb.mev.analysis.Define;
-import edu.dfci.cccb.mev.analysis.Resolve;
-import edu.dfci.cccb.mev.analysis.r.Adapter;
-import edu.dfci.cccb.mev.analysis.r.R;
+import io.fabric8.cdi.Services;
+import io.searchbox.client.JestClient;
+import io.searchbox.client.JestClientFactory;
+import io.searchbox.client.config.HttpClientConfig;
 
 /**
- * Example
+ * ElasticSearch
  * 
  * @author levk
  */
-@R ("c <- b + a")
-@Entity
-public class Example extends Adapter {
+@Stateless
+public class ElasticSearch {
 
-  private @Define @Column @Basic int a;
-  private @Define @Column @Basic int b = 1;
-  private @Resolve @Column @Basic int c;
+  /**
+   * @param es
+   * @return es client
+   */
+  @Produces
+  @Singleton
+  static JestClient es () {
+    // Workaround, see https://github.com/fabric8io/fabric8/issues/6699
+    String endpoint = Services.toServiceUrl ("elasticsearch", "http", "http", null, false);
+    // endpoint = endpoint.replaceAll ("tcp", "http");
 
-  @PUT
-  @Path ("a")
-  @JsonProperty (required = false)
-  public void a (int a) {
-    this.a = a;
-  }
+    JestClientFactory factory = new JestClientFactory ();
+    factory.setHttpClientConfig (new HttpClientConfig.Builder (endpoint).multiThreaded (true).build ());
 
-  @PUT
-  @Path ("b")
-  @JsonProperty (required = false)
-  public void b (int b) {
-    this.b = b;
-  }
-
-  @GET
-  @Path ("c")
-  public int c () {
-    return c;
+    return factory.getObject ();
   }
 }

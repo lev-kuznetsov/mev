@@ -23,62 +23,31 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.tools.jackson;
+package edu.dfci.cccb.mev.beans;
 
+import static com.fasterxml.jackson.dataformat.csv.CsvSchema.emptySchema;
+
+import javax.ejb.Stateless;
+import javax.enterprise.inject.Produces;
 import javax.inject.Singleton;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 /**
- * Rserve protocol mapper
+ * Serialization
  * 
  * @author levk
  */
-@Singleton
-public class RserveMapper extends ObjectMapper {
+@Stateless
+public class Serialization {
 
   /**
-   * Serialization details
+   * TSV mapper
    */
-  private static final long serialVersionUID = 1L;
-
+  static @Produces @Singleton CsvMapper mapper = new CsvMapper ();
   /**
-   * 
+   * TSV schema
    */
-  public RserveMapper () {
-    this (new RserveFactory ());
-  }
-
-  /**
-   * @param jf
-   */
-  public RserveMapper (RserveFactory jf) {
-    super (jf);
-    setInjectableValues (new CdiInjectionHandler ());
-    registerModule (new SimpleModule () {
-      private static final long serialVersionUID = 1L;
-
-      {
-        addSerializer (new RserveDatasetSerializer ());
-      }
-    });
-  }
-
-  /**
-   * @param src
-   */
-  public RserveMapper (RserveMapper src) {
-    super (src);
-  }
-
-  @Override
-  public RserveMapper copy () {
-    return new RserveMapper (this);
-  }
-
-  @Override
-  public RserveFactory getFactory () {
-    return (RserveFactory) _jsonFactory;
-  }
+  static @Produces @Singleton CsvSchema schema = emptySchema ().withHeader ().withColumnSeparator ('\t');
 }

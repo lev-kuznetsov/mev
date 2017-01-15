@@ -23,7 +23,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.tools.jackson;
+package edu.dfci.cccb.mev.tools.jackson.tsv;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,13 +43,13 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 /**
- * TSV handler for Map<String, Map<String, String>>
+ * TSV reader for Map<String, Map<String, Double>>
  * 
  * @author levk
  */
 @Provider
-public class StringMapTsvHandler implements TsvMessageBodyReader <Map <String, Map <String, Double>>>,
-    TsvMessaageBodyWriter <Map <String, Map <String, Double>>> {
+public class DoubleMapTsvHandler implements TsvMessaageBodyWriter <Map <String, Map <String, Double>>>,
+    TsvMessageBodyReader <Map <String, Map <String, Double>>> {
   /**
    * Schema
    */

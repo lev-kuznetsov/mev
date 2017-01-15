@@ -23,7 +23,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.context;
+package edu.dfci.cccb.mev.beans;
 
 import static java.lang.Runtime.getRuntime;
 import static java.util.concurrent.TimeUnit.MINUTES;

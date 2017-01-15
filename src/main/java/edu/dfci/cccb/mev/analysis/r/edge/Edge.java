@@ -26,7 +26,6 @@
 package edu.dfci.cccb.mev.analysis.r.edge;
 
 import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.GenerationType.AUTO;
 
 import java.util.List;
 import java.util.Map;
@@ -35,8 +34,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.ws.rs.GET;
@@ -47,8 +44,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.dfci.cccb.mev.analysis.Define;
 import edu.dfci.cccb.mev.analysis.Resolve;
+import edu.dfci.cccb.mev.analysis.r.Adapter;
 import edu.dfci.cccb.mev.analysis.r.R;
-import edu.dfci.cccb.mev.analysis.r.R.Adapter;
 import edu.dfci.cccb.mev.dataset.Dataset;
 import io.fabric8.annotations.Path;
 
@@ -56,7 +53,7 @@ import io.fabric8.annotations.Path;
  * @author levk
  */
 @Entity
-@R ("library ('edgeR');\n" + "dataset <- to.data.frame (dataset);\n" + "samples <- colnames (dataset);\n"
+@R ("library ('edgeR');\n" + "dataset <- as.data.frame (dataset);\n" + "samples <- colnames (dataset);\n"
     + "if (!(experiment %in% samples) || !(control %in% samples)) {\n"
     + "  stop ('Could not find samples corresponding to the desired contrast');\n" + "}\n"
     + "CurrMtx <- dataset[, c (experiment, control)];\n"
@@ -73,10 +70,6 @@ import io.fabric8.annotations.Path;
     + "                  function (e, n) setNames (list (logFc = e[1], logCpm = e[2], pValue = e[3], fdr = e[4]), n),"
     + "                  c ('logFc', 'logCpm', 'pValue', sapply (colnames (result), tolower)[4]))")
 public class Edge extends Adapter {
-  /**
-   * Identifier
-   */
-  private @Id @GeneratedValue (strategy = AUTO) long id;
   /**
    * Dataset
    */

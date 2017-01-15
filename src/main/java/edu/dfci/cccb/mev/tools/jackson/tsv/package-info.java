@@ -23,39 +23,9 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.context;
-
-import javax.ejb.Stateless;
-import javax.enterprise.inject.Produces;
-import javax.inject.Singleton;
-
-import io.fabric8.cdi.Services;
-import io.searchbox.client.JestClient;
-import io.searchbox.client.JestClientFactory;
-import io.searchbox.client.config.HttpClientConfig;
-
 /**
- * ElasticSearch
+ * TSV jackson details
  * 
  * @author levk
  */
-@Stateless
-public class ElasticSearch {
-
-  /**
-   * @param es
-   * @return es client
-   */
-  @Produces
-  @Singleton
-  static JestClient es () {
-    // Workaround, see https://github.com/fabric8io/fabric8/issues/6699
-    String endpoint = Services.toServiceUrl ("elasticsearch", "http", "http", null, false);
-    // endpoint = endpoint.replaceAll ("tcp", "http");
-
-    JestClientFactory factory = new JestClientFactory ();
-    factory.setHttpClientConfig (new HttpClientConfig.Builder (endpoint).multiThreaded (true).build ());
-
-    return factory.getObject ();
-  }
-}
+package edu.dfci.cccb.mev.tools.jackson.tsv;

@@ -23,39 +23,38 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.tools.jackson;
+package edu.dfci.cccb.mev.beans;
 
-import static java.util.stream.Collectors.toMap;
+import static java.lang.Integer.valueOf;
 
-import java.io.IOException;
+import javax.enterprise.inject.Produces;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
+import org.rosuda.REngine.Rserve.RConnection;
+import org.rosuda.REngine.Rserve.RserveException;
 
-import edu.dfci.cccb.mev.dataset.Dataset;
+import io.fabric8.annotations.ServiceName;
 
 /**
- * Rserve dataset serializer
+ * R context
  * 
  * @author levk
  */
-public class RserveDatasetSerializer extends JsonSerializer <Dataset> {
+public class R {
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * com.fasterxml.jackson.databind.JsonSerializer#serialize(java.lang.Object,
-   * com.fasterxml.jackson.core.JsonGenerator,
-   * com.fasterxml.jackson.databind.SerializerProvider)
+  /**
+   * @param endpoint
+   *          rserve service endpoint
+   * @return Rserve connection
+   * @throws RserveException
    */
-  @Override
-  public void serialize (Dataset value, JsonGenerator gen, SerializerProvider serializers)
-      throws IOException, JsonProcessingException {
-    serializers.defaultSerializeValue (value.values ().query (value.dimensions ().entrySet ().stream ().collect (toMap (e -> e.getKey (),
-                                                                                                                        e -> e.getValue ().keys ()))),
-                                       gen);
+  @Produces
+  static RConnection r (@ServiceName ("rserve") String endpoint) throws RserveException {
+    return new RConnection (endpoint.substring (endpoint.lastIndexOf ('/') + 1, endpoint.lastIndexOf (':')),
+                            valueOf (endpoint.substring (endpoint.lastIndexOf (':') + 1))) {
+      @Override
+      public boolean close () {
+        return super.close ();
+      }
+    };
   }
 }

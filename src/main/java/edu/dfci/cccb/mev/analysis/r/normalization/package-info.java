@@ -23,52 +23,9 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.analysis.r.example;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import edu.dfci.cccb.mev.analysis.Define;
-import edu.dfci.cccb.mev.analysis.Resolve;
-import edu.dfci.cccb.mev.analysis.r.Adapter;
-import edu.dfci.cccb.mev.analysis.r.R;
-
 /**
- * Example
+ * Normalization analysis
  * 
  * @author levk
  */
-@R ("c <- b + a")
-@Entity
-public class Example extends Adapter {
-
-  private @Define @Column @Basic int a;
-  private @Define @Column @Basic int b = 1;
-  private @Resolve @Column @Basic int c;
-
-  @PUT
-  @Path ("a")
-  @JsonProperty (required = false)
-  public void a (int a) {
-    this.a = a;
-  }
-
-  @PUT
-  @Path ("b")
-  @JsonProperty (required = false)
-  public void b (int b) {
-    this.b = b;
-  }
-
-  @GET
-  @Path ("c")
-  public int c () {
-    return c;
-  }
-}
+package edu.dfci.cccb.mev.analysis.r.normalization;

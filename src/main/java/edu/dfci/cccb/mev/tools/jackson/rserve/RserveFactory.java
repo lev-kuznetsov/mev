@@ -23,10 +23,10 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.tools.jackson;
+package edu.dfci.cccb.mev.tools.jackson.rserve;
 
 import static com.fasterxml.jackson.core.format.MatchStrength.INCONCLUSIVE;
-import static edu.dfci.cccb.mev.tools.jackson.RserveParser.NULL;
+import static edu.dfci.cccb.mev.tools.jackson.rserve.RserveParser.NULL;
 import static java.nio.ByteOrder.LITTLE_ENDIAN;
 import static org.rosuda.REngine.Rserve.protocol.RTalk.DT_LARGE;
 import static org.rosuda.REngine.Rserve.protocol.RTalk.DT_SEXP;
@@ -103,7 +103,7 @@ public class RserveFactory extends JsonFactory {
 
   @Override
   public RserveParser createParser (byte[] data, int offset, int len) throws IOException, JsonParseException {
-    return new RserveParser (data, offset);
+    return new RserveParser (data, offset, _objectCodec);
   }
 
   @Override

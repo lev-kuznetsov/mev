@@ -30,19 +30,25 @@ import static edu.dfci.cccb.mev.analysis.State.FAILED;
 import static edu.dfci.cccb.mev.analysis.State.RUNNING;
 import static edu.dfci.cccb.mev.analysis.State.STARTING;
 import static edu.dfci.cccb.mev.tools.concurrent.CheckedCompletableFuture.callAsync;
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Stream.empty;
 import static java.util.stream.Stream.of;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Stream;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
-import javax.persistence.EntityManager;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
+import org.rosuda.REngine.REXP;
+import org.rosuda.REngine.REXPString;
 import org.rosuda.REngine.REngineException;
 import org.rosuda.REngine.Rserve.RConnection;
 import org.rosuda.REngine.Rserve.protocol.REXPFactory;
@@ -52,7 +58,7 @@ import edu.dfci.cccb.mev.analysis.Define;
 import edu.dfci.cccb.mev.analysis.Error;
 import edu.dfci.cccb.mev.analysis.Resolve;
 import edu.dfci.cccb.mev.analysis.State;
-import edu.dfci.cccb.mev.tools.jackson.RserveMapper;
+import edu.dfci.cccb.mev.tools.jackson.rserve.RserveMapper;
 
 /**
  * Rserve analysis runner
@@ -65,10 +71,6 @@ public class Rserve {
    * Executor
    */
   private @Inject ExecutorService executor;
-  /**
-   * Database
-   */
-  private @Inject EntityManager db;
   /**
    * Object mapper
    */
@@ -109,11 +111,25 @@ public class Rserve {
         q.parseREXP (mapper.writeValueAsBytes (m.invoke (analysis)), 0);
         r.assign (n, q.getREXP ());
         return null;
-      })).flatMap (x -> x)), (Stream <Callable <Void>>) base (analysis.getClass ()).filter (c -> {
-        return c.isAnnotationPresent (R.class);
-      }).map (c -> (Callable <Void>) () -> {
-        r.voidEval (c.getAnnotation (R.class).value ());
-        return null;
+      })).flatMap (x -> x)), (Stream <Callable <Void>>) base (analysis.getClass ()).map (c -> (Callable <Void>) () -> {
+        Rscript z = c.getAnnotation (Rscript.class);
+        R l = c.getAnnotation (R.class);
+        StringBuffer s = new StringBuffer ();
+        if (z != null) {
+          InputStream i = getClass ().getResourceAsStream (z.value ());
+          if (i == null) throw new IOException ("Unable to find script " + z.value ());
+          s.append (new BufferedReader (new InputStreamReader (i)).lines ().parallel ().filter (g -> {
+            return !g.startsWith ("#") && !"".equals (g.trim ());
+          }).collect (joining ("\n")));
+        }
+        if (l != null) s.append (l.value ());
+        if (!"".equals (s.toString ().trim ())) {
+          REXP v = r.eval ("tryCatch({{" + s.toString () + "};NULL},warning=function(e)NULL,error=function(e)e)");
+          if (v.isNull ()) return null;
+          else if (v.inherits ("error"))
+            throw new REngineException (r, ((REXPString) v.asList ().get ("message")).asString ());
+          else throw new RuntimeException ("Unrecognized return object from Rserve " + v.toDebugString ());
+        } else return null;
       }), (Stream <Callable <Void>>) base (analysis.getClass ()).flatMap (c -> of (of (c.getDeclaredFields ()).filter (f -> {
         return f.isAnnotationPresent (Resolve.class);
       }).map (f -> (Callable <Void>) () -> {
@@ -121,6 +137,7 @@ public class Rserve {
         String n = "".equals (v.value ()) ? f.getName () : v.value ();
         if (!f.isAccessible ()) f.setAccessible (true);
         try {
+          System.out.println (r.get (n, null, true).toDebugString ());
           REXPFactory q = new REXPFactory (r.get (n, null, true));
           byte[] b = new byte[q.getBinaryLength ()];
           q.getBinaryRepresentation (b, 0);
@@ -181,9 +198,6 @@ public class Rserve {
         return null;
       }).whenComplete ( (x, e) -> {
         r.close ();
-        db.merge (analysis);
-        if (e instanceof RuntimeException) throw (RuntimeException) e;
-        else if (e instanceof java.lang.Error) throw (java.lang.Error) e;
       });
     }
   }

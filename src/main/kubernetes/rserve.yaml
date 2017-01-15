@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
       - name: rserve
-        image: docker.io/cccb/mev-rserve:2017-01-05
+        image: docker.io/cccb/mev-rserve:2017-01-14
         ports:
         - containerPort: 6311
 ---

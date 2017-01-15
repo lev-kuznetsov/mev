@@ -27,14 +27,11 @@ package edu.dfci.cccb.mev.analysis.r.genesd;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY;
 import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.GenerationType.AUTO;
 
 import java.util.Map;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -45,8 +42,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.dfci.cccb.mev.analysis.Define;
 import edu.dfci.cccb.mev.analysis.Resolve;
+import edu.dfci.cccb.mev.analysis.r.Adapter;
 import edu.dfci.cccb.mev.analysis.r.R;
-import edu.dfci.cccb.mev.analysis.r.R.Adapter;
 import edu.dfci.cccb.mev.dataset.Dataset;
 import io.fabric8.annotations.Path;
 
@@ -57,13 +54,9 @@ import io.fabric8.annotations.Path;
  */
 @Entity
 @JsonInclude (NON_EMPTY)
-@R ("dataset <- to.data.frame (dataset);\n"
+@R ("dataset <- as.data.frame (dataset);\n"
     + "gene.mad = sort (apply (as.matrix (dataset), 1, sd), decreasing = TRUE);\n" + "result <- as.list (gene.mad);")
 public class GeneSd extends Adapter {
-  /**
-   * Identifier
-   */
-  private @Id @GeneratedValue (strategy = AUTO) long id;
   /**
    * Dataset
    */

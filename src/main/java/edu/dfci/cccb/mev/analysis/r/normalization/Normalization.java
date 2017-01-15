@@ -23,52 +23,75 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.analysis.r.example;
+package edu.dfci.cccb.mev.analysis.r.normalization;
+
+import static javax.persistence.CascadeType.ALL;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.dfci.cccb.mev.analysis.Define;
 import edu.dfci.cccb.mev.analysis.Resolve;
 import edu.dfci.cccb.mev.analysis.r.Adapter;
-import edu.dfci.cccb.mev.analysis.r.R;
+import edu.dfci.cccb.mev.analysis.r.Rscript;
+import edu.dfci.cccb.mev.dataset.Dataset;
+import io.fabric8.annotations.Path;
 
 /**
- * Example
+ * Normalization analysis
  * 
  * @author levk
  */
-@R ("c <- b + a")
+@Rscript ("/normalization.R") // in src/main/r
 @Entity
-public class Example extends Adapter {
+public class Normalization extends Adapter {
+  /**
+   * Dataset
+   */
+  private @Define @OneToOne (cascade = ALL) Dataset dataset;
+  /**
+   * Method
+   */
+  private @Define @Column @Basic String method = "deseq";
+  /**
+   * Result
+   */
+  private @Resolve @OneToOne (cascade = ALL) Dataset normalized;
 
-  private @Define @Column @Basic int a;
-  private @Define @Column @Basic int b = 1;
-  private @Resolve @Column @Basic int c;
-
+  /**
+   * @param dataset
+   */
   @PUT
-  @Path ("a")
+  @Path ("dataset")
   @JsonProperty (required = false)
-  public void a (int a) {
-    this.a = a;
+  public void dataset (Dataset dataset) {
+    this.dataset = dataset;
   }
 
+  /**
+   * @param method
+   */
   @PUT
-  @Path ("b")
+  @Path ("method")
   @JsonProperty (required = false)
-  public void b (int b) {
-    this.b = b;
+  public void method (String method) {
+    this.method = method;
   }
 
+  /**
+   * @return result
+   */
   @GET
-  @Path ("c")
-  public int c () {
-    return c;
+  @Path ("result")
+  @JsonIgnore
+  public Dataset result () {
+    return normalized;
   }
 }

@@ -23,31 +23,9 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.context;
-
-import static com.fasterxml.jackson.dataformat.csv.CsvSchema.emptySchema;
-
-import javax.ejb.Stateless;
-import javax.enterprise.inject.Produces;
-import javax.inject.Singleton;
-
-import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-
 /**
- * Serialization
+ * Rserve jackson details
  * 
  * @author levk
  */
-@Stateless
-public class Serialization {
-
-  /**
-   * TSV mapper
-   */
-  static @Produces @Singleton CsvMapper mapper = new CsvMapper ();
-  /**
-   * TSV schema
-   */
-  static @Produces @Singleton CsvSchema schema = emptySchema ().withHeader ().withColumnSeparator ('\t');
-}
+package edu.dfci.cccb.mev.tools.jackson.rserve;

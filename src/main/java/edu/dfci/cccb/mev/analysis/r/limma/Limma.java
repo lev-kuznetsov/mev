@@ -26,15 +26,12 @@
 package edu.dfci.cccb.mev.analysis.r.limma;
 
 import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.GenerationType.AUTO;
 
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.ws.rs.PUT;
@@ -43,8 +40,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.dfci.cccb.mev.analysis.Define;
 import edu.dfci.cccb.mev.analysis.Resolve;
+import edu.dfci.cccb.mev.analysis.r.Adapter;
 import edu.dfci.cccb.mev.analysis.r.R;
-import edu.dfci.cccb.mev.analysis.r.R.Adapter;
 import edu.dfci.cccb.mev.dataset.Dataset;
 import io.fabric8.annotations.Path;
 
@@ -54,14 +51,13 @@ import io.fabric8.annotations.Path;
  * @author levk
  */
 @Entity
-@R ("library(limma);\n" + "run.limma<-function(in.mtx, Experiment=NA, Control=NA){\n"
-    + "  CurrMtx=in.mtx;\n" + "  CurrMtx=in.mtx[,Experiment];\n"
-    + "  CurrMtx=cbind(CurrMtx, in.mtx[,Control]);\n"
+@R ("library(limma);\n" + "dataset <- as.data.frame (dataset);\n"
+    + "run.limma<-function(in.mtx, Experiment=NA, Control=NA){\n" + "  CurrMtx=in.mtx;\n"
+    + "  CurrMtx=in.mtx[,Experiment];\n" + "  CurrMtx=cbind(CurrMtx, in.mtx[,Control]);\n"
     + "  Tissue=array(NA, dim=c(1,length(colnames(CurrMtx))));\n" + "  Tissue[1:length(Experiment)]='Experiment';\n"
     + "  Tissue[(length(Experiment)+1):length(colnames(CurrMtx))]='Control';\n"
     + "  Tissue=factor(Tissue,levels=c('Experiment','Control'));\n" + "  design=model.matrix(~0+Tissue);\n"
-    + "  colnames(design)=c('Experiment', 'Control');\n"
-    + "  fit<-lmFit(CurrMtx, design);\n" + "  efit<-eBayes(fit);\n"
+    + "  colnames(design)=c('Experiment', 'Control');\n" + "  fit<-lmFit(CurrMtx, design);\n" + "  efit<-eBayes(fit);\n"
     + "  contrast.matrix=makeContrasts(ExpvsContr=Experiment-Control, levels=design);\n"
     + "  fit<-eBayes(contrasts.fit(fit, contrast.matrix[,'ExpvsContr']));\n"
     + "  result_full=topTable(fit, adjust='fdr', number=dim(CurrMtx)[1]);\n" + "  return(result_full);\n" + "};\n"
@@ -91,10 +87,6 @@ import io.fabric8.annotations.Path;
     + "  list(id=unname(x[1]),logFc=as.numeric(unname(x[2])),averageExpression=as.numeric(unname(x[3])),"
     + "       pValue=as.numeric(unname(x[5])),t=as.numeric(unname(x[4])),qValue=as.numeric(unname(x[6])))))")
 public class Limma extends Adapter {
-  /**
-   * Identifier
-   */
-  private @Id @GeneratedValue (strategy = AUTO) long id;
   /**
    * Dataset
    */

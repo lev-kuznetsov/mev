@@ -23,7 +23,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.tools.jackson;
+package edu.dfci.cccb.mev.tools.jackson.tsv;
 
 import static java.util.Spliterator.CONCURRENT;
 import static java.util.Spliterators.spliteratorUnknownSize;

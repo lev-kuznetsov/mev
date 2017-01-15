@@ -27,15 +27,12 @@ package edu.dfci.cccb.mev.analysis.r.gsea;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY;
 import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.GenerationType.AUTO;
 
 import java.util.Map;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -46,8 +43,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.dfci.cccb.mev.analysis.Define;
 import edu.dfci.cccb.mev.analysis.Resolve;
+import edu.dfci.cccb.mev.analysis.r.Adapter;
 import edu.dfci.cccb.mev.analysis.r.R;
-import edu.dfci.cccb.mev.analysis.r.R.Adapter;
 import edu.dfci.cccb.mev.analysis.r.limma.LimmaEntry;
 import io.fabric8.annotations.Path;
 
@@ -56,7 +53,7 @@ import io.fabric8.annotations.Path;
  */
 @Entity
 @JsonInclude (NON_EMPTY)
-@R ("dataset <- to.data.frame (dataset);\n" + "library (org.Hs.eg.db);\n" + "library (ReactomnePA);\n"
+@R ("dataset <- as.data.frame (dataset);\n" + "library (org.Hs.eg.db);\n" + "library (ReactomnePA);\n"
     + "GStoEG_map <- as.list (org.Hs.eg.ALIAS2EG);\n" + "absMax <- function (x) x[which.max (abs (x))];\n"
     + "CurrData <- na.omit (limma);\n" +
 
@@ -70,10 +67,6 @@ import io.fabric8.annotations.Path;
 // FIXME organism used to be a parameter but it wasn't used in the script, I
 // think the script assumes human
 public class Gsea extends Adapter {
-  /**
-   * Identifier
-   */
-  private @Id @GeneratedValue (strategy = AUTO) long id;
   /**
    * Limma result
    */

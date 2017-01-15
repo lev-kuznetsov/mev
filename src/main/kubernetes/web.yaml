@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: docker.io/cccb/mev-web:2017-01-13
+        image: docker.io/cccb/mev-web:2017-01-15
         ports:
         - containerPort: 8080
 ---

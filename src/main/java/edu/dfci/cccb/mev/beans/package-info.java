@@ -23,23 +23,9 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.context;
-
-import javax.ejb.Stateless;
-import javax.enterprise.inject.Produces;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 /**
- * Persistence context
+ * Context
  * 
  * @author levk
  */
-@Stateless
-public class Persistence {
-
-  /**
-   * Manager
-   */
-  static @PersistenceContext @Produces EntityManager db;
-}
+package edu.dfci.cccb.mev.beans;

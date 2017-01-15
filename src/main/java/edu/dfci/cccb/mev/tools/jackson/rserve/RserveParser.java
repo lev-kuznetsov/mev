@@ -23,7 +23,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.tools.jackson;
+package edu.dfci.cccb.mev.tools.jackson.rserve;
 
 import static com.fasterxml.jackson.core.JsonToken.END_ARRAY;
 import static com.fasterxml.jackson.core.JsonToken.END_OBJECT;
@@ -115,12 +115,14 @@ public class RserveParser extends ParserMinimalBase {
       return currentName;
     }
   };
+  private final ObjectCodec oc;
 
   /**
    * @param content
    *          tokens
    */
   private RserveParser (Iterable <Token <?>> content) {
+    oc = null;
     ioError = null;
     rtError = null;
     this.content = content.iterator ();
@@ -137,7 +139,8 @@ public class RserveParser extends ParserMinimalBase {
    * @param offset
    *          starting offset
    */
-  public RserveParser (byte[] ct, int offset) {
+  public RserveParser (byte[] ct, int offset, ObjectCodec oc) {
+    this.oc = oc;
     IOException ioError = null;
     RuntimeException rtError = null;
     List <Token <?>> content = null;
@@ -145,6 +148,7 @@ public class RserveParser extends ParserMinimalBase {
       try {
         REXPFactory factory = new REXPFactory ();
         factory.parseREXP (ct, offset);
+        System.out.println (factory.getREXP ());
         content = parse (factory.getREXP ());
       } catch (REXPMismatchException e) {
         ioError = new IOException (e);
@@ -295,7 +299,7 @@ public class RserveParser extends ParserMinimalBase {
 
   @Override
   public ObjectCodec getCodec () {
-    throw new UnsupportedOperationException ();
+    return oc;
   }
 
   @Override

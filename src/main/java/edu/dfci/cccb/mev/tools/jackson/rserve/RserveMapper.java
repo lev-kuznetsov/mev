@@ -23,38 +23,66 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.context;
+package edu.dfci.cccb.mev.tools.jackson.rserve;
 
-import static java.lang.Integer.valueOf;
+import javax.inject.Singleton;
 
-import javax.enterprise.inject.Produces;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
-import org.rosuda.REngine.Rserve.RConnection;
-import org.rosuda.REngine.Rserve.RserveException;
-
-import io.fabric8.annotations.ServiceName;
+import edu.dfci.cccb.mev.dataset.Dataset;
+import edu.dfci.cccb.mev.tools.jackson.CdiInjectionHandler;
 
 /**
- * R context
+ * Rserve protocol mapper
  * 
  * @author levk
  */
-public class R {
+@Singleton
+public class RserveMapper extends ObjectMapper {
 
   /**
-   * @param endpoint
-   *          rserve service endpoint
-   * @return Rserve connection
-   * @throws RserveException
+   * Serialization details
    */
-  @Produces
-  static RConnection r (@ServiceName ("rserve") String endpoint) throws RserveException {
-    return new RConnection (endpoint.substring (endpoint.lastIndexOf ('/') + 1, endpoint.lastIndexOf (':')),
-                            valueOf (endpoint.substring (endpoint.lastIndexOf (':') + 1))) {
-      @Override
-      public boolean close () {
-        return super.close ();
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * 
+   */
+  public RserveMapper () {
+    this (new RserveFactory ());
+  }
+
+  /**
+   * @param jf
+   */
+  public RserveMapper (RserveFactory jf) {
+    super (jf);
+    setInjectableValues (new CdiInjectionHandler ());
+    registerModule (new SimpleModule () {
+      private static final long serialVersionUID = 1L;
+
+      {
+        addSerializer (Dataset.class, new RserveDatasetSerializer ());
+        addDeserializer (Dataset.class, new RserveDatasetDeserializer ());
       }
-    };
+    });
+  }
+
+  /**
+   * @param src
+   */
+  public RserveMapper (RserveMapper src) {
+    super (src);
+  }
+
+  @Override
+  public RserveMapper copy () {
+    return new RserveMapper (this);
+  }
+
+  @Override
+  public RserveFactory getFactory () {
+    return (RserveFactory) _jsonFactory;
   }
 }

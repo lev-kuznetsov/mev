@@ -23,39 +23,18 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.tools.jackson;
+package edu.dfci.cccb.mev.analysis.r;
 
-import java.io.IOException;
-import java.util.Map;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-
-import edu.dfci.cccb.mev.dataset.Dataset;
-import edu.dfci.cccb.mev.dataset.literal.Literal;
+import edu.dfci.cccb.mev.analysis.Analysis;
 
 /**
- * Rserve protocol dataset deserializer
+ * R analysis adapter
  * 
  * @author levk
  */
-public class RserveDatasetDeserializer extends JsonDeserializer <Dataset> {
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * com.fasterxml.jackson.databind.JsonDeserializer#deserialize(com.fasterxml.
-   * jackson.core.JsonParser,
-   * com.fasterxml.jackson.databind.DeserializationContext)
-   */
-  @Override
-  public Dataset deserialize (JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-    Dataset d = new Literal ();
-    d.values ().bind (p.readValueAs (new TypeReference <Map <String, Map <String, Double>>> () {}));
-    return d;
-  }
-}
+@MappedSuperclass
+@EntityListeners (Rserve.class)
+public abstract class Adapter extends Analysis {}

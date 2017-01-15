@@ -31,10 +31,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import javax.persistence.EntityListeners;
-import javax.persistence.MappedSuperclass;
-
-import edu.dfci.cccb.mev.analysis.Analysis;
 import edu.dfci.cccb.mev.analysis.Execute;
 
 /**
@@ -51,14 +47,4 @@ public @interface R {
    * @return R code
    */
   String value ();
-
-  /**
-   * R analysis adapter
-   * 
-   * @author levk
-   */
-  @MappedSuperclass
-  @EntityListeners (Rserve.class)
-  @R ("to.data.frame <- function (x) as.data.frame (do.call (rbind, x));")
-  public abstract class Adapter extends Analysis {}
 }

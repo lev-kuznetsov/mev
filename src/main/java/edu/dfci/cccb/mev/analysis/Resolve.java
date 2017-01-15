@@ -51,5 +51,5 @@ public @interface Resolve {
   /**
    * @return whether resolution is required
    */
-  boolean required () default false;
+  boolean required () default true;
 }

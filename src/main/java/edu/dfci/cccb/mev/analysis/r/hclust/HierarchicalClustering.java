@@ -26,16 +26,15 @@
 package edu.dfci.cccb.mev.analysis.r.hclust;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY;
+import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Stream.of;
 import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.GenerationType.AUTO;
 
 import java.util.Map;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.ws.rs.BadRequestException;
@@ -49,8 +48,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.dfci.cccb.mev.analysis.Define;
 import edu.dfci.cccb.mev.analysis.Resolve;
+import edu.dfci.cccb.mev.analysis.r.Adapter;
 import edu.dfci.cccb.mev.analysis.r.R;
-import edu.dfci.cccb.mev.analysis.r.R.Adapter;
 import edu.dfci.cccb.mev.dataset.Dataset;
 import io.fabric8.annotations.Path;
 
@@ -61,7 +60,7 @@ import io.fabric8.annotations.Path;
  */
 @Entity
 @JsonInclude (NON_EMPTY)
-@R ("dataset <- to.data.frame (dataset);\n" + "hc2n <- function (hc, flat = FALSE) {\n" + "  dist <- 0;\n"
+@R ("dataset <- as.data.frame (dataset);\n" + "hc2n <- function (hc, flat = FALSE) {\n" + "  dist <- 0;\n"
     + "  if (is.null (hc$labels)) labels <- seq(along = hc$order) else labels <- hc$labels;\n"
     + "  putparenthesis <- function (i) {\n" + "    j <- hc$merge[i, 1];\n" + "    k <- hc$merge[i, 2];\n"
     + "    if (j < 0) {\n" + "      left <- labels[-j];\n"
@@ -76,14 +75,9 @@ import io.fabric8.annotations.Path;
     + "  else list (distance = n$dist, children = list (l (n$left), l (n$right)));\n"
     + "if(is.null(dimension) || length(dimension)==0) dimension = list('row', 'column')\n"
     + "runHcl <- function (dimension, filter){" + "  d <- if (dimension == 'row') dataset else t (dataset);\n"
-    + "  d <- d[filter,];\n"
-    + "  l (hc2n (stats::hclust (cluster::daisy (d, m = metric), method = linkage)));\n" + "};\n"
-    + "for (dim in names (dimensions)) assign (dim, runHcl (dim, dimensions[dim]));")
+    + "  d <- d[filter,];\n" + "  l (hc2n (stats::hclust (cluster::daisy (d, m = metric), method = linkage)));\n"
+    + "};\n" + "for (dim in names (dimensions)) assign (dim, runHcl (dim, dimensions[dim]));")
 public class HierarchicalClustering extends Adapter {
-  /**
-   * Identifier
-   */
-  private @Id @GeneratedValue (strategy = AUTO) long id;
   /**
    * Dataset
    */
@@ -91,11 +85,11 @@ public class HierarchicalClustering extends Adapter {
   /**
    * Method
    */
-  private @Define @Column @Basic String method;
+  private @Define @Column @Basic String method = "eu";
   /**
    * Linkage
    */
-  private @Define @Column @Basic String linkage;
+  private @Define @Column @Basic String linkage = "complete";
   /**
    * Dimension name to dimension key set filter
    */
@@ -117,6 +111,7 @@ public class HierarchicalClustering extends Adapter {
   @JsonProperty (required = false)
   public void dataset (Dataset dataset) {
     this.dataset = dataset;
+    this.dimensions = of (dataset.dimension ("column")).collect (toMap (d -> "column", d -> Filter.filter (d.keys ())));
   }
 
   /**

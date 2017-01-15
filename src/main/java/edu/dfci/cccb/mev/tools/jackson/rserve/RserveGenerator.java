@@ -23,7 +23,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.tools.jackson;
+package edu.dfci.cccb.mev.tools.jackson.rserve;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -34,8 +34,8 @@ import java.util.Stack;
 
 import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.REXPDouble;
+import org.rosuda.REngine.REXPGenericVector;
 import org.rosuda.REngine.REXPInteger;
-import org.rosuda.REngine.REXPList;
 import org.rosuda.REngine.REXPLogical;
 import org.rosuda.REngine.REXPMismatchException;
 import org.rosuda.REngine.REXPNull;
@@ -134,7 +134,7 @@ public class RserveGenerator extends GeneratorBase {
 
   @Override
   public void writeEndArray () throws IOException {
-    writeRexp (new REXPList (new RList (stack.pop ().values)));
+    writeRexp (new REXPGenericVector (new RList (stack.pop ().values)));
   }
 
   @Override
@@ -145,8 +145,8 @@ public class RserveGenerator extends GeneratorBase {
   @Override
   public void writeEndObject () throws IOException {
     Frame f = stack.pop ();
-    writeRexp (new REXPList (new RList (f.values.toArray (new REXP[f.values.size ()]),
-                                        f.names.toArray (new String[f.names.size ()]))));
+    writeRexp (new REXPGenericVector (new RList (f.values.toArray (new REXP[f.values.size ()]),
+                                                 f.names.toArray (new String[f.names.size ()]))));
   }
 
   @Override
