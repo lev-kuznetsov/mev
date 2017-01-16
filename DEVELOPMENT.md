@@ -16,17 +16,17 @@ Then you can run the web application via ```mvn wildfly:run``` and point your br
 
 During development of a new analysis type it may be beneficial to install R or system packages, it's possible to open an R shell to the pod
 ```
-kubectl exec -it $(kubectl get pod --selector app=rserve --output jsonpath={.items[*].metadata.name}) -- R --no-save
+kubectl exec -it $(kubectl get pod --selector component=rserve --output jsonpath={.items[*].metadata.name}) -- R --no-save
 ```
 
-Shaping a running container does not change the underlying image, any changes made will be destroyed with the container.  A new image is required to save changes. The following will create a template for the docker file:
+It's also possible to follow the Rserve log in the same way
+```
+kubectl exec -it $(kubectl get pod --selector component=rserve --output jsonpath={.items[*].metadata.name}) -- tail -f /var/log/rserve.log
+```
 
+Shaping a running container does not change the underlying image, any changes made will be destroyed with the container.  A new image is required to save changes. Edit the docker file in src/main/docker/rserve basing on the previous image, build and tag the image
 ```
-print "FROM $(kubectl get pod --selector app=rserve --output jsonpath='{.items[0].spec.containers[?(@.name == "rserve")].image}')\n\nRUN R --no-save -e \"source('http://bioconductor.org/biocLite.R');install.packages(c());biocLite(c())\" && rm -rf /tmp/*\n"
-```
-Build and tag the image
-```
-docker build -t docker.io/cccb/mev-rserve:`date +"%Y-%m-%d"` .
+mvn docker:build@rserve
 ```
 
 Change the image worker deployment definition in src/main/kubernetes/rserve/rserve-worker.yaml, after everything is satisfactory don't forget to push the image up to dockerhub
