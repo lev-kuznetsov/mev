@@ -14,8 +14,7 @@ before_install:
 - docker ps -a
 
 env:
-- RSERVE_SERVICE_HOST="127.0.0.1"
-- RSERVE_SERVICE_PORT="6311"
+- RSERVE_SERVICE_HOST="127.0.0.1" RSERVE_SERVICE_PORT="6311"
 
 script:
 - mvn verify
