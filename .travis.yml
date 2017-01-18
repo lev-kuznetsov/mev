@@ -1,12 +1,21 @@
-before_install:
-    - sudo apt-get update
-    - sudo apt-get install r-base r-cran-dbi libxml2-dev
-    - pushd /tmp; wget http://cran.r-project.org/src/contrib/Archive/RSQLite/RSQLite_0.11.4.tar.gz; echo "install.packages('/tmp/RSQLite_0.11.4.tar.gz', repos = NULL, type='source')" | sudo R --no-save; popd
-    - sudo echo "source(\"http://bioconductor.org/biocLite.R\");biocLite(\"limma\")" | sudo R --no-save
-    - sudo echo "source(\"http://bioconductor.org/biocLite.R\");biocLite(\"multtest\")" | sudo R --no-save
-    - sudo echo "source(\"http://bioconductor.org/biocLite.R\");biocLite(\"DESeq\")" | sudo R --no-save
-    - sudo echo "source(\"http://bioconductor.org/biocLite.R\");biocLite(\"topGO\");biocLite(\"org.Hs.eg.db\");biocLite(\"org.Mm.eg.db\");biocLite(\"org.Rn.eg.db\")" | sudo R --no-save
+sudo: required
+
 language: java
 jdk:
-    - oraclejdk7
-    - openjdk7
+- openjdk7
+
+services:
+- docker
+
+before_install:
+- docker pull cccb/mev-rserve
+- docker run -p 6311:6311 cccb/mev-rserve
+# TODO: elastic search setup
+- docker ps -a
+
+env:
+- RSERVE_SERVICE_HOST="127.0.0.1"
+- RSERVE_SERVICE_PORT="6311"
+
+script:
+- mvn verify

@@ -36,6 +36,9 @@ import edu.dfci.cccb.mev.analysis.Execute;
 /**
  * Classpath script loader
  * 
+ * Note that only full line comments are supported; a comment line must start
+ * with the hashmark (<tt>#</tt>) character as the first character in line
+ * 
  * @author levk
  */
 @Retention (RUNTIME)

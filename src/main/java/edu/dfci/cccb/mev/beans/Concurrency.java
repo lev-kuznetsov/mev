@@ -27,6 +27,7 @@ package edu.dfci.cccb.mev.beans;
 
 import static java.lang.Runtime.getRuntime;
 import static java.util.concurrent.TimeUnit.MINUTES;
+import static javax.transaction.Status.STATUS_MARKED_ROLLBACK;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -96,21 +97,12 @@ public class Concurrency {
         super.afterExecute (r, t);
         try {
           UserTransaction ut = (UserTransaction) new InitialContext ().lookup ("java:comp/UserTransaction");
-          ut.commit ();
+          if (ut.getStatus () == STATUS_MARKED_ROLLBACK) ut.rollback ();
+          else ut.commit ();
         } catch (SystemException | NamingException | IllegalStateException | SecurityException | HeuristicMixedException
             | HeuristicRollbackException | RollbackException e) {
           throw new RuntimeException (e);
         }
-      }
-
-      /*
-       * (non-Javadoc)
-       * 
-       * @see java.util.concurrent.ThreadPoolExecutor#toString()
-       */
-      @Override
-      public String toString () {
-        return "tx executor";
       }
     };
   }

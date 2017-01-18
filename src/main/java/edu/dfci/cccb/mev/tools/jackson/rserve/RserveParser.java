@@ -148,7 +148,6 @@ public class RserveParser extends ParserMinimalBase {
       try {
         REXPFactory factory = new REXPFactory ();
         factory.parseREXP (ct, offset);
-        System.out.println (factory.getREXP ());
         content = parse (factory.getREXP ());
       } catch (REXPMismatchException e) {
         ioError = new IOException (e);

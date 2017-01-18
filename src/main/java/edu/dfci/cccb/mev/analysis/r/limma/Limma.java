@@ -34,8 +34,10 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.dfci.cccb.mev.analysis.Define;
@@ -132,5 +134,15 @@ public class Limma extends Adapter {
   @JsonProperty (required = false)
   public void control (List <String> control) {
     this.control = control;
+  }
+
+  /**
+   * @return result
+   */
+  @GET
+  @Path ("result")
+  @JsonIgnore
+  public Map <String, LimmaEntry> result () {
+    return result;
   }
 }

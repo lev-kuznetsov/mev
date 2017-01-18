@@ -53,9 +53,8 @@ import io.fabric8.annotations.Path;
  */
 @Entity
 @JsonInclude (NON_EMPTY)
-@R ("dataset <- as.data.frame (dataset);\n" + "library (org.Hs.eg.db);\n" + "library (ReactomnePA);\n"
-    + "GStoEG_map <- as.list (org.Hs.eg.ALIAS2EG);\n" + "absMax <- function (x) x[which.max (abs (x))];\n"
-    + "CurrData <- na.omit (limma);\n" +
+@R ("library (org.Hs.eg.db);\n" + "library (ReactomnePA);\n" + "GStoEG_map <- as.list (org.Hs.eg.ALIAS2EG);\n"
+    + "absMax <- function (x) x[which.max (abs (x))];\n" + "CurrData <- na.omit (limma);\n" +
 
     "EntrezData <- lapply (limma[, 'SYMBOL'], function (GS) {\n"
     + "  list (EntrezID = GStoEG_map[[GS]][1], logFC = absMax (limma[limma[, 'SYMBOL]==GS, 'logFC'])))\n" + "});\n"

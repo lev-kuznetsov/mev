@@ -51,6 +51,7 @@ import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.REXPString;
 import org.rosuda.REngine.REngineException;
 import org.rosuda.REngine.Rserve.RConnection;
+import org.rosuda.REngine.Rserve.RserveException;
 import org.rosuda.REngine.Rserve.protocol.REXPFactory;
 
 import edu.dfci.cccb.mev.analysis.Analysis;
@@ -116,7 +117,7 @@ public class Rserve {
         R l = c.getAnnotation (R.class);
         StringBuffer s = new StringBuffer ();
         if (z != null) {
-          InputStream i = getClass ().getResourceAsStream (z.value ());
+          InputStream i = c.getClass ().getResourceAsStream (z.value ());
           if (i == null) throw new IOException ("Unable to find script " + z.value ());
           s.append (new BufferedReader (new InputStreamReader (i)).lines ().parallel ().filter (g -> {
             return !g.startsWith ("#") && !"".equals (g.trim ());
@@ -137,13 +138,12 @@ public class Rserve {
         String n = "".equals (v.value ()) ? f.getName () : v.value ();
         if (!f.isAccessible ()) f.setAccessible (true);
         try {
-          System.out.println (r.get (n, null, true).toDebugString ());
           REXPFactory q = new REXPFactory (r.get (n, null, true));
           byte[] b = new byte[q.getBinaryLength ()];
           q.getBinaryRepresentation (b, 0);
           f.set (analysis, mapper.readerFor (mapper.constructType (f.getGenericType ())).readValue (b));
         } catch (REngineException e) {
-          if (v.required ()) throw e;
+          if (v.required ()) throw new RserveException (r, "Unable to resolve " + n, e);
         }
         return null;
       }), of (c.getDeclaredMethods ()).filter (m -> {
@@ -158,14 +158,13 @@ public class Rserve {
           q.getBinaryRepresentation (b, 0);
           m.invoke (analysis, mapper.readerFor (mapper.constructType (m.getGenericParameterTypes ()[0])).readValue (b));
         } catch (REngineException e) {
-          if (v.required ()) throw e;
+          if (v.required ()) throw new RserveException (r, "Unable to resolve " + n, e);
         }
         return null;
       })).flatMap (x -> x))).flatMap (x -> x).reduce ( () -> null, (f, s) -> () -> {
         f.call ();
         return s.call ();
       }), executor).thenRun ( () -> analysis.transition (COMPLETED)).exceptionally (e -> {
-        e.printStackTrace ();
         analysis.transition (FAILED);
         try {
           base (analysis.getClass ()).flatMap (c -> {
