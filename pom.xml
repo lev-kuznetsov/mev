@@ -78,12 +78,14 @@
         <version>1.1.0.Beta1</version>
         <executions>
           <execution>
+            <id>before-test</id>
             <phase>pre-integration-test</phase>
             <goals>
               <goal>start</goal>
             </goals>
           </execution>
           <execution>
+            <id>after-test</id>
             <phase>post-integration-test</phase>
             <goals>
               <goal>stop</goal>
