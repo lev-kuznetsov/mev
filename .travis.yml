@@ -8,8 +8,8 @@ services:
 - docker
 
 before_install:
-- docker pull cccb/mev-rserve
-- docker run -p 6311:6311 cccb/mev-rserve
+- "docker pull $(cat src/main/kubernetes/rserve.yaml | grep 'image: ' | awk -F'image: ' '{print $2}')"
+- "docker run -d -p 6311:6311 $(cat src/main/kubernetes/rserve.yaml | grep 'image: ' | awk -F'image: ' '{print $2}')"
 # TODO: elastic search setup
 - docker ps -a
 

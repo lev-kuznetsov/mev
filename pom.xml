@@ -39,7 +39,6 @@
               <imageName>docker.io/cccb/mev-web</imageName>
               <imageTags>
                 <imageTag>${maven.build.timestamp}</imageTag>
-                <imageTag>latest</imageTag>
               </imageTags>
               <dockerDirectory>src/main/docker/web</dockerDirectory>
               <resources>
@@ -57,7 +56,6 @@
               <imageName>docker.io/cccb/mev-rserve</imageName>
               <imageTags>
                 <imageTag>${maven.build.timestamp}</imageTag>
-                <imageTag>latest</imageTag>
               </imageTags>
               <dockerDirectory>src/main/docker/rserve</dockerDirectory>
             </configuration>
