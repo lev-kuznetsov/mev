@@ -88,7 +88,7 @@
             <id>after-test</id>
             <phase>post-integration-test</phase>
             <goals>
-              <goal>stop</goal>
+              <goal>shutdown</goal>
             </goals>
           </execution>
         </executions>
