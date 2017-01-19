@@ -23,36 +23,52 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.tools.jackson;
+package edu.dfci.cccb.mev.analysis.r.kmeans;
 
-import static com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY;
+import static javax.persistence.GenerationType.AUTO;
 
-import javax.ws.rs.ext.ContextResolver;
-import javax.ws.rs.ext.Provider;
+import java.util.List;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * {@link ObjectMapper} provider for JAX-RS
+ * Cluster
  * 
  * @author levk
  */
-@Provider
-public class JaxrsObjectMapperProvider implements ContextResolver <ObjectMapper> {
+@Entity
+public class Cluster {
+  /**
+   * Identifier
+   */
+  private @Id @GeneratedValue (strategy = AUTO) long id;
+  /**
+   * Keys
+   */
+  private @ElementCollection List <String> keys;
 
   /**
-   * Mapper
+   * @return keys
    */
-  private final ObjectMapper mapper =
-      new ObjectMapper ().setInjectableValues (new CdiInjectionHandler ()).enable (ACCEPT_SINGLE_VALUE_AS_ARRAY);
+  @JsonValue
+  public List <String> keys () {
+    return keys;
+  }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see javax.ws.rs.ext.ContextResolver#getContext(java.lang.Class)
+  /**
+   * @param keys
+   * @return cluster
    */
-  @Override
-  public ObjectMapper getContext (Class <?> type) {
-    return mapper;
+  @JsonCreator
+  public static Cluster cluster (List <String> keys) {
+    Cluster c = new Cluster ();
+    c.keys = keys;
+    return c;
   }
 }

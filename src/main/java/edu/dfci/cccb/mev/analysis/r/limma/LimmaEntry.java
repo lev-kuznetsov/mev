@@ -46,9 +46,24 @@ public class LimmaEntry {
    * Identifier
    */
   private @Id @GeneratedValue (strategy = AUTO) long id;
+  /**
+   * Log fold change
+   */
   private @JsonProperty @Column @Basic double logFc;
+  /**
+   * Average expression
+   */
   private @JsonProperty @Column @Basic double averageExpression;
+  /**
+   * p-value
+   */
   private @JsonProperty @Column @Basic double pValue;
+  /**
+   * q-value
+   */
   private @JsonProperty @Column @Basic double qValue;
+  /**
+   * t
+   */
   private @JsonProperty @Column @Basic double t;
 }

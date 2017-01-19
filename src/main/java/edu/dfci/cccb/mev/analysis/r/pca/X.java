@@ -23,36 +23,52 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.tools.jackson;
+package edu.dfci.cccb.mev.analysis.r.pca;
 
-import static com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY;
+import static javax.persistence.GenerationType.AUTO;
 
-import javax.ws.rs.ext.ContextResolver;
-import javax.ws.rs.ext.Provider;
+import java.util.Map;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * {@link ObjectMapper} provider for JAX-RS
+ * X
  * 
  * @author levk
  */
-@Provider
-public class JaxrsObjectMapperProvider implements ContextResolver <ObjectMapper> {
+@Entity
+public class X {
+  /**
+   * Identifier
+   */
+  private @Id @GeneratedValue (strategy = AUTO) long id;
+  /**
+   * X
+   */
+  private @ElementCollection Map <String, Double> x;
 
   /**
-   * Mapper
+   * @return x
    */
-  private final ObjectMapper mapper =
-      new ObjectMapper ().setInjectableValues (new CdiInjectionHandler ()).enable (ACCEPT_SINGLE_VALUE_AS_ARRAY);
+  @JsonValue
+  public Map <String, Double> x () {
+    return x;
+  }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see javax.ws.rs.ext.ContextResolver#getContext(java.lang.Class)
+  /**
+   * @param x
+   * @return x
    */
-  @Override
-  public ObjectMapper getContext (Class <?> type) {
-    return mapper;
+  @JsonCreator
+  public static X x (Map <String, Double> x) {
+    X r = new X ();
+    r.x = x;
+    return r;
   }
 }

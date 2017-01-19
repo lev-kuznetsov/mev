@@ -25,6 +25,8 @@
  */
 package edu.dfci.cccb.mev.tools.jackson.rserve;
 
+import static com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY;
+
 import javax.inject.Singleton;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,6 +61,7 @@ public class RserveMapper extends ObjectMapper {
   public RserveMapper (RserveFactory jf) {
     super (jf);
     setInjectableValues (new CdiInjectionHandler ());
+    enable (ACCEPT_SINGLE_VALUE_AS_ARRAY);
     registerModule (new SimpleModule () {
       private static final long serialVersionUID = 1L;
 

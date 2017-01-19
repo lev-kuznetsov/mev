@@ -117,7 +117,7 @@ public class Rserve {
         R l = c.getAnnotation (R.class);
         StringBuffer s = new StringBuffer ();
         if (z != null) {
-          InputStream i = c.getClass ().getResourceAsStream (z.value ());
+          InputStream i = c.getResourceAsStream (z.value ());
           if (i == null) throw new IOException ("Unable to find script " + z.value ());
           s.append (new BufferedReader (new InputStreamReader (i)).lines ().parallel ().filter (g -> {
             return !g.startsWith ("#") && !"".equals (g.trim ());

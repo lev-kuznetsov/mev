@@ -23,36 +23,59 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.tools.jackson;
+package edu.dfci.cccb.mev.analysis.r.pathwayenrich;
 
-import static com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY;
+import static javax.persistence.GenerationType.AUTO;
 
-import javax.ws.rs.ext.ContextResolver;
-import javax.ws.rs.ext.Provider;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * {@link ObjectMapper} provider for JAX-RS
+ * Pathway enrichment result entry
  * 
  * @author levk
  */
-@Provider
-public class JaxrsObjectMapperProvider implements ContextResolver <ObjectMapper> {
-
+@Entity
+public class PathwayEnrichmentEntry {
   /**
-   * Mapper
+   * Identifier
    */
-  private final ObjectMapper mapper =
-      new ObjectMapper ().setInjectableValues (new CdiInjectionHandler ()).enable (ACCEPT_SINGLE_VALUE_AS_ARRAY);
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see javax.ws.rs.ext.ContextResolver#getContext(java.lang.Class)
+  private @Id @GeneratedValue (strategy = AUTO) long id;
+  /**
+   * Description
    */
-  @Override
-  public ObjectMapper getContext (Class <?> type) {
-    return mapper;
-  }
+  private @Column @Basic @JsonProperty String description;
+  /**
+   * Gene ration
+   */
+  private @Column @Basic @JsonProperty String geneRatio;
+  /**
+   * BG ration
+   */
+  private @Column @Basic @JsonProperty String bgRatio;
+  /**
+   * p-value
+   */
+  private @Column @Basic @JsonProperty double pValue;
+  /**
+   * p adjustment
+   */
+  private @Column @Basic @JsonProperty double pAdjust;
+  /**
+   * q-value
+   */
+  private @Column @Basic @JsonProperty double qValue;
+  /**
+   * Gene ID
+   */
+  private @Column @Basic @JsonProperty String geneId;
+  /**
+   * Count
+   */
+  private @Column @Basic @JsonProperty int count;
 }

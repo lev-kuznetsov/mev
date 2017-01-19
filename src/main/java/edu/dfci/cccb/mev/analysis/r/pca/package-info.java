@@ -23,36 +23,9 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package edu.dfci.cccb.mev.tools.jackson;
-
-import static com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY;
-
-import javax.ws.rs.ext.ContextResolver;
-import javax.ws.rs.ext.Provider;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
- * {@link ObjectMapper} provider for JAX-RS
+ * PCA analysis
  * 
  * @author levk
  */
-@Provider
-public class JaxrsObjectMapperProvider implements ContextResolver <ObjectMapper> {
-
-  /**
-   * Mapper
-   */
-  private final ObjectMapper mapper =
-      new ObjectMapper ().setInjectableValues (new CdiInjectionHandler ()).enable (ACCEPT_SINGLE_VALUE_AS_ARRAY);
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see javax.ws.rs.ext.ContextResolver#getContext(java.lang.Class)
-   */
-  @Override
-  public ObjectMapper getContext (Class <?> type) {
-    return mapper;
-  }
-}
+package edu.dfci.cccb.mev.analysis.r.pca;
