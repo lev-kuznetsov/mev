@@ -34,6 +34,12 @@
   <dependencies>
 
     <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-storage</artifactId>
+      <version>0.6.0</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <version>${spring.version}</version>
@@ -263,7 +269,7 @@
       <artifactId>mev-gsea-rest</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
-    
+
     <!-- Normalization -->
 
     <dependency>
@@ -602,14 +608,17 @@
         <configuration>
           <rserveSource>https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/Rserve/1.8-1/Rserve_1.8-1.tar.gz</rserveSource>
           <onInitialize>
-            sapply (c ("NMF", "RProtoBuf", "injectoR", "rafalib"), function (lib)
-              if (!requireNamespace (lib))
-                install.packages (lib, repos="http://cran.rstudio.com"));
-            source ("http://bioconductor.org/biocLite.R");
-            sapply (c ("topGO", "org.Hs.eg.db", "org.Mm.eg.db",
-                       "limma", "DESeq", "edgeR", "ReactomePA",
-                       "metagenomeSeq", "DESeq2"), function (lib)
-              if (!requireNamespace (lib)) biocLite (lib));
+            sapply (c ("NMF", "RProtoBuf", "injectoR",
+            "rafalib"), function (lib)
+            if (!requireNamespace (lib))
+            install.packages (lib, repos="http://cran.rstudio.com"));
+            source
+            ("http://bioconductor.org/biocLite.R");
+            sapply (c ("topGO",
+            "org.Hs.eg.db", "org.Mm.eg.db",
+            "limma", "DESeq", "edgeR", "ReactomePA",
+            "metagenomeSeq", "DESeq2"), function (lib)
+            if (!requireNamespace (lib)) biocLite (lib));
           </onInitialize>
           <configure>
             <workdir>${mev.java.io.tmpdir}/Rserve</workdir>
@@ -620,10 +629,12 @@
           <onRequest>
             .libPaths (c ("${project.build.directory}/rserve",
             .libPaths ()));
-            assign ("mwd", "${project.basedir}", e = .GlobalEnv);
+            assign ("mwd", "${project.basedir}", e =
+            .GlobalEnv);
             library (injectoR);
             library (topGO);
-            library (RProtoBuf)
+            library
+            (RProtoBuf)
             source ("../dataset/domain/src/main/r/json.R");
           </onRequest>
         </configuration>
@@ -689,17 +700,17 @@
                   </action>
                 </pluginExecution>
                 <pluginExecution>
-                	<pluginExecutionFilter>
-                		<groupId>org.apache.maven.plugins</groupId>
-                		<artifactId>maven-clean-plugin</artifactId>
-                		<versionRange>[2.4.1,)</versionRange>
-                		<goals>
-                			<goal>clean</goal>
-                		</goals>
-                	</pluginExecutionFilter>
-                	<action>
-                		<ignore></ignore>
-                	</action>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <versionRange>[2.4.1,)</versionRange>
+                    <goals>
+                      <goal>clean</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
                 </pluginExecution>
               </pluginExecutions>
             </lifecycleMappingMetadata>
@@ -787,45 +798,45 @@
               </filesets>
             </configuration>
           </plugin>
-<!--           <plugin> -->
-<!--             <groupId>com.pyx4j</groupId> -->
-<!--             <artifactId>maven-junction-plugin</artifactId> -->
-<!--             <version>1.0.3</version> -->
-<!--             <executions> -->
-<!--               <execution> -->
-<!--                 <phase>process-resources</phase> -->
-<!--                 <goals> -->
-<!--                   <goal>link</goal> -->
-<!--                 </goals> -->
-<!--               </execution> -->
-<!--             </executions> -->
-<!--             <configuration> -->
-<!--               <links> -->
-<!--                 <link> -->
-<!--                   add allowLinking="true" to Tomcat's conf/Context.xml; --> 
-<!--                     also, disable update in Edit Configuration on frame deactiviation  -->
-<!--                   <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/javascript</dst> -->
-<!--                   <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/javascript</src> -->
-<!--                 </link> -->
-<!--                 <link> -->
-<!--                   <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/libs</dst> -->
-<!--                   <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/libs</src> -->
-<!--                 </link> -->
-<!--                 <link> -->
-<!--                   <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/mock</dst> -->
-<!--                   <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/mock</src> -->
-<!--                 </link> -->
-<!--                 <link> -->
-<!--                   <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/ui</dst> -->
-<!--                   <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/ui</src> -->
-<!--                 </link> -->
-<!--                 <link> -->
-<!--                   <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/vendor</dst> -->
-<!--                   <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/vendor</src> -->
-<!--                 </link> -->
-<!--               </links> -->
-<!--             </configuration> -->
-<!--           </plugin> -->
+          <!-- <plugin> -->
+          <!-- <groupId>com.pyx4j</groupId> -->
+          <!-- <artifactId>maven-junction-plugin</artifactId> -->
+          <!-- <version>1.0.3</version> -->
+          <!-- <executions> -->
+          <!-- <execution> -->
+          <!-- <phase>process-resources</phase> -->
+          <!-- <goals> -->
+          <!-- <goal>link</goal> -->
+          <!-- </goals> -->
+          <!-- </execution> -->
+          <!-- </executions> -->
+          <!-- <configuration> -->
+          <!-- <links> -->
+          <!-- <link> -->
+          <!-- add allowLinking="true" to Tomcat's conf/Context.xml; -->
+          <!-- also, disable update in Edit Configuration on frame deactiviation -->
+          <!-- <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/javascript</dst> -->
+          <!-- <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/javascript</src> -->
+          <!-- </link> -->
+          <!-- <link> -->
+          <!-- <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/libs</dst> -->
+          <!-- <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/libs</src> -->
+          <!-- </link> -->
+          <!-- <link> -->
+          <!-- <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/mock</dst> -->
+          <!-- <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/mock</src> -->
+          <!-- </link> -->
+          <!-- <link> -->
+          <!-- <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/ui</dst> -->
+          <!-- <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/ui</src> -->
+          <!-- </link> -->
+          <!-- <link> -->
+          <!-- <dst>${project.build.outputDirectory}/edu/dfci/cccb/mev/web/vendor</dst> -->
+          <!-- <src>${basedir}/src/main/javascript/edu/dfci/cccb/mev/web/vendor</src> -->
+          <!-- </link> -->
+          <!-- </links> -->
+          <!-- </configuration> -->
+          <!-- </plugin> -->
         </plugins>
       </build>
     </profile>
@@ -884,25 +895,25 @@
                       <filtering>false</filtering>
                       <includes>
                         <include>javascript/**</include>
-	                    <include>libs/*</include>
-	                    <include>mock/**</include>	                    
-	                    <include>vendor/**</include>
-	                    <include>ui/*.*</include>
-	                    <include>ui/bower_components/**</include>
-	                    <include>ui/css/**</include>
-	                    <include>ui/dist/**</include>
-	                    <include>ui/fonts/**</include>
-	                    <include>ui/less/**</include>
+                        <include>libs/*</include>
+                        <include>mock/**</include>
+                        <include>vendor/**</include>
+                        <include>ui/*.*</include>
+                        <include>ui/bower_components/**</include>
+                        <include>ui/css/**</include>
+                        <include>ui/dist/**</include>
+                        <include>ui/fonts/**</include>
+                        <include>ui/less/**</include>
                         <include>ui/app/**</include>
                         <include>ui/node_modules/*/*</include>
                         <include>ui/node_modules/mev-steal-bootstrap/**/*</include>
-                      </includes>                      
-                    </resource>                    
+                      </includes>
+                    </resource>
                   </resources>
                 </configuration>
               </execution>
             </executions>
-          </plugin>          
+          </plugin>
         </plugins>
       </build>
     </profile>
