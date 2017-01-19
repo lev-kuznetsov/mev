@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.google.api.Google;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import edu.dfci.cccb.mev.dataset.rest.google.SecurityContext;
@@ -52,5 +53,13 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
         userCookieGenerator.removeCookie (response);
     }
     return true;
+  }
+
+  @Override
+  public void postHandle (HttpServletRequest request,
+                          HttpServletResponse response,
+                          Object handler,
+                          ModelAndView modelAndView) throws Exception {
+    SecurityContext.remove ();
   }
 }
