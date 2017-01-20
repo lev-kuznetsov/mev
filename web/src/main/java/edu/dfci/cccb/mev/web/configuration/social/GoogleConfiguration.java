@@ -27,6 +27,7 @@ import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -168,11 +169,15 @@ public class GoogleConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  public Storage storage (@Named ("gcloud-config") ArchaiusConfig config) throws InvalidKeySpecException,
-                                                                         NoSuchAlgorithmException {
+  @Lazy
+  @Scope (proxyMode = ScopedProxyMode.INTERFACES)
+  public Storage storage (@Named ("gcloud-config") Config config) throws InvalidKeySpecException,
+                                                                 NoSuchAlgorithmException {
+    String k = config.getProperty ("gcloud.private.key");
+    if (k == null)
+      return null;
     PrivateKey key = KeyFactory.getInstance ("RSA")
-                               .generatePrivate (new PKCS8EncodedKeySpec (config.getProperty ("gcloud.private.key")
-                                                                                .getBytes ()));
+                               .generatePrivate (new PKCS8EncodedKeySpec (k.getBytes ()));
     return StorageOptions.newBuilder ()
                          .setProjectId (config.getProperty ("gcloud.project.id"))
                          .setCredentials (new ServiceAccountCredentials (config.getProperty ("gcloud.client.id"),
