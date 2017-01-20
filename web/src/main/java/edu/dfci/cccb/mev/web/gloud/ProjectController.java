@@ -60,7 +60,7 @@ public class ProjectController {
           Entity e = a.getEntity ();
           if (e.getType () == Type.USER)
             if (emails.contains (((User) e).getEmail ()))
-              projects.add (mapper.readValue (b.get ("project.json").getContent (), Project.class)
+              projects.add (mapper.readValue (b.get ("mev.json").getContent (), Project.class)
                                   .bucket (b.getName ()));
         }
 

@@ -22,6 +22,8 @@ import java.security.PrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 
+import javax.inject.Named;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -166,7 +168,8 @@ public class GoogleConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  public Storage storage (ArchaiusConfig config) throws InvalidKeySpecException, NoSuchAlgorithmException {
+  public Storage storage (@Named ("gcloud-config") ArchaiusConfig config) throws InvalidKeySpecException,
+                                                                         NoSuchAlgorithmException {
     PrivateKey key = KeyFactory.getInstance ("RSA")
                                .generatePrivate (new PKCS8EncodedKeySpec (config.getProperty ("gcloud.private.key")
                                                                                 .getBytes ()));
