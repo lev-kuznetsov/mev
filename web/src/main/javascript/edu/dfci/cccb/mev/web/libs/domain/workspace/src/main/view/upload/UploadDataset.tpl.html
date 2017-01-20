@@ -1,0 +1,8 @@
+<button class="btn btn-block btn-danger">
+    <span ng-show="vm.status==='idle'">Upload</span>
+    <span ng-show="vm.status==='uploading'">Upload {{vm.percent}}%</span>
+    <span ng-show="vm.status==='processing'">Processing <i class="fa fa-spinner fa-spin"></i></span>
+</button>
+<input id="upload-input" type="file" size="chars" multiple >
+
+

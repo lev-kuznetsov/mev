@@ -1,0 +1,38 @@
+<div class="column-wrapper genemad">
+    <ul class="nav nav-tabs column-header" id="importTabs">
+        <li id="genesd_top_tab" class="active"><a href="#genesd_top" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}} High</a></li>
+        <!-- 		<li id="heatmap_tab"><a href="#heatmap" data-toggle="tab" target="_self">Heatmap</a></li> -->
+        <div class="action-menu" mui-paste="action-menu"></div>
+    </ul>
+
+    <div class="tab-content column-body">
+        <div class="tab-pane active results-wrapper" id="genesd_top" >
+            <div class="results-header clearfix">
+                <!--      	<div class="btn-toolbar" role="toolbar" mui-yank="action-menu"> -->
+                <div class="btn-toolbar" role="toolbar" >
+                    <div class="btn-group">
+                        <btn-create-selection mui-target="Top" mui-analysis="DatasetAnalysisVM.analysis"
+                                              mui-dataset="dataset" mui-items="DatasetAnalysisVM.filteredResultsTop" mui-key-name="geneId">
+                        </btn-create-selection><!--
+			            --><btn-export-selection mui-target="Top" mui-analysis="DatasetAnalysisVM.analysis"
+                                                 mui-dataset="dataset" mui-items="DatasetAnalysisVM.filteredResultsTop" mui-key-name="geneId">
+                    </btn-export-selection>
+                    </div>
+                </div>
+            </div>
+            <div class="results-body">
+                <mev-results-table id="DatasetAnalysisVM.heatmapViewTop.id"
+                                   mev-top="{options: [20, 50, 100, 500], current: 20}"
+                                   data="DatasetAnalysisVM.sigGenesTop"
+                                   headers="DatasetAnalysisVM.headers"
+                                   ordering="value"
+                                   mev-save-as="{name: DatasetAnalysisVM.analysis.name}"
+                                   mev-out-filtered-results="DatasetAnalysisVM.filteredResultsTop"></mev-results-table>
+                <mev-heatmap mev-dataset='DatasetAnalysisVM.project.dataset' mev-heatmap-view='DatasetAnalysisVM.heatmapViewTop'></mev-heatmap>
+
+            </div>
+        </div>
+        <!-- 		<div class="tab-pane results-wrapper" id="heatmap" >									 -->
+        <!-- 		</div>		 -->
+    </div>
+</div>

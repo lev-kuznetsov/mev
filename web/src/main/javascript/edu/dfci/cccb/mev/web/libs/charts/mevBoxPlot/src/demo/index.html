@@ -1,0 +1,13 @@
+<html>
+<head>
+    <script src="../../node_modules/mev-steal-bootstrap/src/mev-steal-bootstrap.js"></script>
+    <script>
+        live("../../package.json!npm", "src/demo/index");
+    </script>
+</head>
+<body ng-controller="demoCtrl">
+<!--<d3-Box-Plot-Visualization data="DatasetAnalysisVM.boxPlotGenes"></d3-Box-Plot-Visualization>-->
+<a mev-svg-save-as="{name: 'boxplot-demo', selector: 'mev-boxplot svg'}">save</a>
+<mev-boxplot data="mockData"></mev-boxplot>
+</body>
+</html>

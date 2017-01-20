@@ -1,0 +1,21 @@
+{
+  "name": "mev-hcl",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/main/mev-hcl.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "dependencies": {
+    "mev-analysis": "file:../../domain/analysis",
+    "mev-heatmap": "file:../../charts/mevHeatmap",
+    "mui": "file:../../mui",
+    "steal": "^0.13.2"
+  }
+}

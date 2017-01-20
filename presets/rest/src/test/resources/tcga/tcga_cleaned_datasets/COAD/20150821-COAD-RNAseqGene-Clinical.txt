@@ -1,0 +1,11 @@
+patient_id	SampleID	years_to_birth	vital_status	days_to_death	days_to_last_followup	tumor_tissue_site	pathologic_stage	pathology_T_stage	pathology_N_stage	pathology_M_stage	gender	date_of_initial_pathologic_diagnosis	days_to_last_known_alive	radiation_therapy	histological_type	residual_tumor	number_of_lymph_nodes	race	ethnicity
+TCGA-AA-3841	TCGA-AA-3841-01A-01R-0905-07	66	0	NA	1124	colon	stage iia	t3	n0	m0	male	2009	NA	no	colon adenocarcinoma	r0	0	NA	NA
+TCGA-AA-3866	TCGA-AA-3866-01A-01R-1022-07	78	0	NA	518	colon	stage i	t2	n0	m0	female	2006	NA	no	colon adenocarcinoma	r0	0	NA	NA
+TCGA-AA-3870	TCGA-AA-3870-01A-01R-1022-07	71	0	NA	912	colon	stage iv	t3	n2	m1	female	2009	NA	NA	colon adenocarcinoma	r0	5	NA	NA
+TCGA-AA-3939	TCGA-AA-3939-01A-01R-1022-07	83	0	NA	395	colon	stage iia	t3	n0	m0	male	2009	NA	no	colon adenocarcinoma	r0	0	NA	NA
+TCGA-AA-3941	TCGA-AA-3941-01A-01R-1022-07	84	0	NA	730	colon	stage iva	t4	n1b	m1a	female	2010	NA	no	colon adenocarcinoma	r0	3	NA	NA
+TCGA-AA-3968	TCGA-AA-3968-01A-01R-1022-07	55	0	NA	669	colon	stage i	t2	n0	m0	female	2008	NA	no	colon adenocarcinoma	r0	0	NA	NA
+TCGA-AA-3970	TCGA-AA-3970-01A-01R-1022-07	65	0	NA	1096	colon	stage iia	t3	n0	m0	male	2009	NA	no	colon adenocarcinoma	r0	0	NA	NA
+TCGA-AA-3977	TCGA-AA-3977-01A-01R-1022-07	65	0	NA	761	colon	NA	t2	n0	NA	male	2009	NA	no	colon adenocarcinoma	NA	0	NA	NA
+TCGA-AA-3979	TCGA-AA-3979-01A-01R-1022-07	84	0	NA	730	colon	stage iia	t3	n0	m0	male	2010	NA	no	colon adenocarcinoma	r0	0	NA	NA
+TCGA-AA-3980	TCGA-AA-3980-01A-02R-1022-07	89	0	NA	822	colon	stage i	t2	n0	m0	female	2009	NA	no	colon adenocarcinoma	NA	0	NA	NA

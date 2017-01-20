@@ -13,12 +13,9 @@ define([], function () {
                             heatmapView: "=",
                             isItOpen: "@"
                         },
-                        controller: ["$scope", "mevAnalysisTypes", function($scope, mevAnalysisTypes){
-                            $scope.analysisTypes = mevAnalysisTypes.all();                
-                        }],
-                        link: function (scope) {            
+                        controller: ["$scope", "mevAnalysisTypes", function(scope, mevAnalysisTypes){
+                            scope.analysisTypes = mevAnalysisTypes.all();
 
-                            
                             scope.analysis.getFilteredKeys = function(dimension){
                                 if(dimension==="row")
                                     return scope.filteredResults.map(function(item){
@@ -59,16 +56,16 @@ define([], function () {
                                 {
                                     'name': 'P-Value',
                                     'field': "pValue",
-                                    'icon': "<=",
+                                    'icon': ["<=", ">="],
                                     'default': 0.05
                                 },
                                 {
                                     'name': 'q-Value',
                                     'field': "qValue",
-                                    'icon': "<="
+                                    'icon': ["<=", ">="]
                                 }
                             ];
-                            
+
                             scope.filteredResults = undefined;
 
 //                            scope.applyFilter = function () {
@@ -77,21 +74,21 @@ define([], function () {
 //
 //                                return scope.filteredResults;
 //                            };
-                            
-                            
+
+
                             scope.viewGenes = function(filteredResults){
-	                       		 scope.filteredResults = filteredResults;
-	                       		 //and filter the heatmap
-//	                       		scope.$emit("ui:filteredResults", scope.filteredResults);	                       	
-	                       		 scope.applyToHeatmap(filteredResults);
-	                       	}
-                            
+                                scope.filteredResults = filteredResults;
+                                //and filter the heatmap
+//	                       		scope.$emit("ui:filteredResults", scope.filteredResults);
+                                scope.applyToHeatmap(filteredResults);
+                            }
+
                             scope.viewPage = function(pageResults){
-                				var control = _.find(scope.project.dataset.column.selections, function(selection){return selection.name===scope.analysis.params.control;});
-                				var experiment = _.find(scope.project.dataset.column.selections, function(selection){return selection.name===scope.analysis.params.experiment;});                				
-                				scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, pageResults, 
-                						[control, experiment], 
-                						scope.analysis.randomId);
+                                var control = _.find(scope.project.dataset.column.selections, function(selection){return selection.name===scope.analysis.params.control;});
+                                var experiment = _.find(scope.project.dataset.column.selections, function(selection){return selection.name===scope.analysis.params.experiment;});
+                                scope.boxPlotGenes = BoxPlotService.prepareBoxPlotData(scope.project.dataset, pageResults,
+                                    [control, experiment],
+                                    scope.analysis.randomId);
                             }
 
                             scope.selectionParams = {
@@ -134,9 +131,13 @@ define([], function () {
                             };
 
                             scope.applyToHeatmap = function (filteredResults) {
-                            	var labels = filteredResults.map(projection.ids);;
-                            	scope.heatmapView = scope.heatmapView.applyFilter("row", labels);                              
-                          };
+                                var labels = filteredResults.map(projection.ids);;
+                                scope.heatmapView = scope.heatmapView.applyFilter("row", labels);
+                            };
+
+                        }],
+                        link: function (scope) {            
+
                         }
 
                     };

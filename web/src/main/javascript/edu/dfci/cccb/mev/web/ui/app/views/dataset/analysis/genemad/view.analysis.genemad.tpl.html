@@ -22,7 +22,13 @@
 		      	</div>
 			</div>
 			<div class="results-body">													
-				<mev-results-table id="DatasetAnalysisVM.heatmapViewTop.id" mev-top="{options: [20, 50, 100, 500], current: 20}" data="DatasetAnalysisVM.sigGenesTop.data" headers="DatasetAnalysisVM.sigGenesTop.headers" ordering="value" ></mev-results-table>
+				<mev-results-table id="DatasetAnalysisVM.heatmapViewTop.id"
+								   mev-top="{options: [20, 50, 100, 500], current: 20}"
+								   data="DatasetAnalysisVM.sigGenesTop.data"
+								   headers="DatasetAnalysisVM.sigGenesTop.headers"
+								   ordering="value"
+								   mev-save-as="{name: DatasetAnalysisVM.analysis.name}"
+								   mev-out-filtered-results="DatasetAnalysisVM.filteredResultsTop"></mev-results-table>
 				<mev-heatmap mev-dataset='DatasetAnalysisVM.project.dataset' mev-heatmap-view='DatasetAnalysisVM.heatmapViewTop'></mev-heatmap>
 
 			</div>				

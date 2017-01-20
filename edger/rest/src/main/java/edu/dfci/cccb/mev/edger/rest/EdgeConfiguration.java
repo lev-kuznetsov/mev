@@ -15,12 +15,12 @@ public class EdgeConfiguration {
 
   @Bean
   @Scope ("prototype")
-  EdgeBuilder builder () {
+  EdgeBuilder edgeBuilder () {
     return new EdgeBuilder ();
   }
 
   @Bean
-  AnalysisPathVariableMethodArgumentResolver<Edge> resolver () {
+  AnalysisPathVariableMethodArgumentResolver<Edge> edgeResolver () {
     return new AnalysisPathVariableMethodArgumentResolver<> (Edge.class);
   }
 }

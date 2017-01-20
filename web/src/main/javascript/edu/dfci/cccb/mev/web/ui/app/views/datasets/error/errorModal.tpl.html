@@ -1,0 +1,21 @@
+<div tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="dismiss()" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Error: {{vm.header}}</h3>
+        </div>
+        <div class="modal-body">
+
+            <form role="form">
+                <div class="btn-gruop">
+                    <label>{{vm.message}}</label>
+                </div>
+                <a class="btn btn-info btn-block" ng-click="vm.dismiss()" aria-hidden="true">OK</a>
+            </form>
+
+
+        </div>
+    </div>
+
+</div>

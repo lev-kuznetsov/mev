@@ -1,0 +1,149 @@
+[
+  {
+    "center": "UNC",
+    "disease": "LGG",
+    "platform": "AgilentG4502A_07_3",
+    "level": "3",
+    "location": "UNC_LGG_AgilentG4502A_07_3_l3"
+  },
+  {
+    "center": "UNC",
+    "disease": "BRCA",
+    "platform": "AgilentG4502A_07_3",
+    "level": "3",
+    "location": "UNC_BRCA_AgilentG4502A_07_3_l3"
+  },
+  {
+    "center": "UNC",
+    "disease": "BRCA",
+    "platform": "IlluminaHiSeq_RNASeq",
+    "level": "3",
+    "location": "UNC_BRCA_IlluminaHiSeq_RNASeq_l3"
+  },
+  {
+    "center": "UNC",
+    "disease": "COAD",
+    "platform": "AgilentG4502A_07_3",
+    "level": "3",
+    "location": "UNC_COAD_AgilentG4502A_07_3_l3"
+  },
+  {
+    "center": "BI",
+    "disease": "GBM",
+    "platform": "HT_HG-U133A",
+    "level": "2",
+    "location": "BI_GBM_HT_HG-U133A_l2"
+  },
+  {
+    "center": "BI",
+    "disease": "GBM",
+    "platform": "HT_HG-U133A",
+    "level": "3",
+    "location": "BI_GBM_HT_HG-U133A_l3"
+  },
+  {
+    "center": "UNC",
+    "disease": "GBM",
+    "platform": "AgilentG4502A_07_2",
+    "level": "3",
+    "location": "UNC_GBM_AgilentG4502A_07_2_l3"
+  },
+  {
+    "center": "UNC",
+    "disease": "KIRC",
+    "platform": "AgilentG4502A_07_3",
+    "level": "3",
+    "location": "UNC_KIRC_AgilentG4502A_07_3_l3"
+  },
+  {
+    "center": "UNC",
+    "disease": "KIRP",
+    "platform": "AgilentG4502A_07_3",
+    "level": "3",
+    "location": "UNC_KIRP_AgilentG4502A_07_3_l3"
+  },
+  {
+    "center": "UNC",
+    "disease": "LUAD",
+    "platform": "AgilentG4502A_07_3",
+    "level": "3",
+    "location": "UNC_LUAD_AgilentG4502A_07_3_l3"
+  },
+  {
+    "center": "UNC",
+    "disease": "LUSC",
+    "platform": "AgilentG4502A_07_3",
+    "level": "2",
+    "location": "UNC_LUSC_AgilentG4502A_07_3_l2"
+  },
+  {
+    "center": "BI",
+    "disease": "LUSC",
+    "platform": "HT_HG-U133A",
+    "level": "2",
+    "location": "BI_LUSC_HT_HG-U133A_l2"
+  },
+  {
+    "center": "BI",
+    "disease": "LUSC",
+    "platform": "HT_HG-U133A",
+    "level": "3",
+    "location": "BI_LUSC_HT_HG-U133A_l3"
+  },
+  {
+    "center": "UNC",
+    "disease": "LUSC",
+    "platform": "AgilentG4502A_07_3",
+    "level": "3",
+    "location": "UNC_LUSC_AgilentG4502A_07_3_l3"
+  },
+  {
+    "center": "UNC",
+    "disease": "OV",
+    "platform": "AgilentG4502A_07_2",
+    "level": "2",
+    "location": "UNC_OV_AgilentG4502A_07_2_l2"
+  },
+  {
+    "center": "BI",
+    "disease": "OV",
+    "platform": "HT_HG-U133A",
+    "level": "2",
+    "location": "BI_OV_HT_HG-U133A_l2"
+  },
+  {
+    "center": "UNC",
+    "disease": "OV",
+    "platform": "AgilentG4502A_07_3",
+    "level": "3",
+    "location": "UNC_OV_AgilentG4502A_07_3_l3"
+  },
+  {
+    "center": "UNC",
+    "disease": "OV",
+    "platform": "AgilentG4502A_07_2",
+    "level": "3",
+    "location": "UNC_OV_AgilentG4502A_07_2_l3"
+  },
+  {
+    "center": "BI",
+    "disease": "OV",
+    "platform": "HT_HG-U133A",
+    "level": "3",
+    "location": "BI_OV_HT_HG-U133A_l3"
+  },
+  {
+    "center": "UNC",
+    "disease": "READ",
+    "platform": "AgilentG4502A_07_3",
+    "level": "3",
+    "location": "UNC_READ_AgilentG4502A_07_3_l3"
+  },
+  {
+    "center": "UNC",
+    "disease": "UCEC",
+    "platform": "AgilentG4502A_07_3",
+    "level": "3",
+    "location": "UNC_UCEC_AgilentG4502A_07_3_l3"
+  }
+]

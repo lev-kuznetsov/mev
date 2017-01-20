@@ -6,6 +6,7 @@
 				<a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['gsea']" mev-context-level="bottom">GSEA</a>
             	<a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['pca']" mev-context-level="bottom" >PCA</a>
             	<a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['hcl']" mev-context-level="bottom">HCL</a>
+            	<a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['wgcna']" mev-context-level="bottom">WGCNA</a>
 	             <a class="btn" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
 	               <i class="icon-white icon-download"></i> Download
 	             </a><a class="btn" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
@@ -23,10 +24,11 @@
 	</div>
 	<div class="results-body">	
 		<div class="results-top">
-			<d3-Box-Plot-Visualization data="boxPlotGenes"></d3-Box-Plot-Visualization>
+			<mev-boxplot data="boxPlotGenes"></mev-boxplot>
 		</div>
 		<div class="results-bottom">
-			<results-table data="analysis.results" headers="headers" ordering="pValue"></results-table>
+			<mev-results-table data="analysis.results" headers="headers" ordering="pValue"
+							   mev-save-as="{name: analysis.name}"></mev-results-table>
 		</div>						
 	</div>
 </div>	

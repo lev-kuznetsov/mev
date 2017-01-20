@@ -1,0 +1,14 @@
+<html>
+<head>
+    <script src="../../../node_modules/mev-steal-bootstrap/src/mev-steal-bootstrap.js"></script>
+    <script>
+        live("../../../package.json!npm", "src/demo/mynet/index");
+    </script>
+</head>
+<body ng-controller="DemoCtrl">
+svg
+<div vega spec="network"  vega-renderer="'svg'"></div>
+canvas
+<div vega spec="network" vega-data="" vega-renderer="'canvas'"></div>
+</body>
+</html>

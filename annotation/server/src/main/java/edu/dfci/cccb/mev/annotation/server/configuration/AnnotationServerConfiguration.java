@@ -11,12 +11,8 @@ import javax.inject.Named;
 
 import lombok.ToString;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.ComponentScan.Filter;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,10 +42,15 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
   private @Inject org.springframework.core.env.Environment environment;
   private @Inject ProbeAnnotationPlatforms annotationPlatforms;
   private @Inject PresetDimensionBuilder dimensionBuilder;
-  
+
   @Bean
-  @Scope (value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-  public FileProjectManager sessionProjectManager () throws IOException, SQLException {
+  @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+  @Inject
+  public static FileProjectManager sessionProjectManager (
+          Workspace workspace,
+          @Named("presets-dataset-builder") PresetDatasetBuilder builder,
+          PresetDimensionBuilder dimensionBuilder,
+          ProbeAnnotationPlatforms annotationPlatforms) throws IOException, SQLException {
     FileProjectManager projectManager = new FileProjectManager ();
     projectManager.setWorkspaceDir (new SessionWorkspaceDir ());
     projectManager.setWorkspace (workspace);
@@ -61,7 +62,7 @@ public class AnnotationServerConfiguration extends WebMvcConfigurerAdapter {
 
 
   @PostConstruct
-  public void setProjectmanagerSingleton () {
+  public void setProjectmanagerSingleton () throws IOException, SQLException {
     ProjectManager.setSingleton (sessionProjectManager);
   }
   

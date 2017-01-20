@@ -1,0 +1,39 @@
+{
+  "name": "mev-network-graph",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/main/mev-network-graph.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "dependencies": {
+    "d3": "^3.5.17",
+    "jquery": "^2.2.3",
+    "lodash": "^4.11.2",
+    "mev-chart-utils": "file:../mevChartUtils",
+    "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
+    "mui": "file:../../mui",
+    "ng-vega": "apartensky/ng-vega#v1.3.2+stealjs",
+    "steal": "^0.13.2",
+    "system-text": "^0.1.0",
+    "vega": "^2.5.2"
+  },
+  "devDependencies": {
+    "systemjs-plugin-json": "^0.1.0"
+  },
+  "system": {
+    "map": {
+      "vega": "vega#./vega.min.js"
+    },
+    "ext": {
+      "html": "system-text",
+      "json": "systemjs-plugin-json"
+    }
+  }
+}

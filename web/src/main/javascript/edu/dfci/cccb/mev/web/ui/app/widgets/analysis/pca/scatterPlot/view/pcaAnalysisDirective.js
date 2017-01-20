@@ -1,6 +1,5 @@
 define(function(require){
 	"use strict";
-//	require("../style/pcaAnalysis.less!");
 	var ng = require("angular");
 	var _ = require("lodash");
 	var d3 = require("d3");

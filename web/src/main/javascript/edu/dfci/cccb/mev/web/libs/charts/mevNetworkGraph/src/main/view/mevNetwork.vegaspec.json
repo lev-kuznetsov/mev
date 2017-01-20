@@ -1,0 +1,99 @@
+{
+  "width": 600,
+  "height": 450,
+  "padding": {"top":10, "bottom":30, "left":10, "right":200},
+
+  "data": [
+    {
+      "name": "edges"
+    },
+    {
+      "name": "nodes",
+      "transform": [{
+        "type": "force",
+        "links": "edges",
+        "linkDistance": 70,
+        "charge": -80,
+        "iterations": 1000
+      }]
+    },
+    {
+      "name": "selections"
+    }
+  ],
+  "signals": [{
+    "name": "hoverNode",
+    "init": {},
+    "streams": [{
+          "type": "@node:mouseover",
+          "expr": "{ datum: eventItem().datum, x: eventX(), y: eventY() }"
+        },
+        {
+          "type": "@node:mouseout",
+          "expr": "{}"
+        }
+      ]
+    },
+    {
+      "name": "hoverEdge",
+      "init": {},
+      "streams": [
+        {
+          "type": "@edge:mouseover",
+          "expr": "{ datum: eventItem().datum, x: eventX(), y: eventY() }"
+        },
+        {"type": "@edge:mouseout","expr": "{}"}
+      ]
+    }
+  ],
+  "scales": [{
+      "name": "selections",
+      "type": "ordinal",
+      "domain": {"data": "selections", "field": "name"},
+      "range": {"data": "selections", "field": "color"}
+    }],
+  "legends": [{"fill": "selections","orient": "right"}],
+  "marks": [
+    {
+      "name": "edge",
+      "type": "path",
+      "from": {
+        "data": "edges",
+        "transform": [
+          { "type": "lookup", "on": "nodes",
+            "keys": ["source", "target"],
+            "as":   ["_source", "_target"] },
+          { "type": "linkpath", "shape": "line" }
+        ]
+      },
+      "properties": {
+        "update": {
+          "path": {"field": "layout_path"},
+          "stroke": {"value": "#999"}
+        },
+        "hover": {"stroke": {"value": "#000"}}
+      }
+    },
+    {
+      "name": "node",
+      "type": "symbol",
+      "from": {"data": "nodes"},
+      "properties": {
+        "enter": {
+          "shape": {"value": "circle"},
+          "stroke": {"value": "steelblue"},
+          "fill": {"value": "steelblue"},
+          "fillOpacity": {"value": 0.8}
+        },
+        "update": {
+          "x": {"field": "layout_x"},
+          "y": {"field": "layout_y"},
+          "fillOpacity": {"value": 0.8}
+        },
+        "hover": {
+          "fillOpacity": {"value": 1.0}
+        }
+      }
+    }
+  ]
+}

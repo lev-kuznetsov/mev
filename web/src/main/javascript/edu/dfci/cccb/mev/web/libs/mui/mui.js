@@ -13,6 +13,7 @@ define(["angular", "lodash"], function(ng, _){
 				constant: "constant",
 				animation: "animation",
 				config: "config",
+				run: "run",
 				decorator: "decorator"
 		};
 		
@@ -27,7 +28,7 @@ define(["angular", "lodash"], function(ng, _){
 			var provider = func.provider || func.$provider;
 			func.provider = provider;
 
-			if(provider!=="config" && !func.$name)
+			if(provider!=="config" && provider!=="run" && !func.$name)
 				throw new MevError("Compnent name not specified for func "+func.name);			
 
 			if(provider){
@@ -54,7 +55,8 @@ define(["angular", "lodash"], function(ng, _){
 		_self.selectNgModules = function(deps){
 			return deps.filter(function(dep){
 				//all strings should be considered module names
-				if(dep instanceof String || typeof dep === "string")
+				if((dep instanceof String || typeof dep === "string")
+				&& dep.charAt(0)!=="<")
 					return true;
 				
 				//if has the require array and a provider function -> assume AngularJS module
@@ -94,7 +96,7 @@ define(["angular", "lodash"], function(ng, _){
 		_self.register = function(func){
 			var provider = _self.inferProvider(func);
 						
-			if(provider==="config")
+			if(provider==="config" || provider==="run")
 				return this[provider](func);
 			else{
 				var name = _self.formatComponentName(func);

@@ -1,0 +1,46 @@
+<!-- <project-analysis-parameters parameters="DatasetAnalysisVM.analysis.params"></project-analysis-parameters> -->
+<div class="column-wrapper">
+	<ul class="nav nav-tabs column-header" id="importTabs">
+		<li id="table_tab" class="active"><a href="#table" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}}</a></li>
+		<li id="heatmap_tab"><a href="#heatmap" class="pull-left" data-toggle="tab" target="_self">Heatmap</a></li>
+		<div class="action-menu" mui-paste="action-menu"></div>
+	</ul>
+
+	<div class="tab-content column-body results-wrapper">
+		<div class="results-header clearfix">
+			<div class="btn-toolbar" role="toolbar" mui-yank="action-menu">
+				<div class="btn-group">
+					<a class="btn" mev-analysis-start-button mev-analysis-type="DatasetAnalysisVM.analysisTypes['gsea']" mev-context-level="bottom">GSEA</a>
+					<a class="btn" mev-analysis-start-button mev-analysis-type="DatasetAnalysisVM.analysisTypes['pca']" mev-context-level="bottom" >PCA</a>
+					<a class="btn" mev-analysis-start-button mev-analysis-type="DatasetAnalysisVM.analysisTypes['hcl']" mev-context-level="bottom">HCL</a>
+					<a class="btn" mev-analysis-start-button mev-analysis-type="DatasetAnalysisVM.analysisTypes['wgcna']" mev-context-level="bottom">WGCNA</a>
+					<btn-create-selection mui-target="Top" mui-analysis="DatasetAnalysisVM.analysis"
+										  mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.filteredResults" mui-key-name="_row">
+					</btn-create-selection><!--
+		            --><btn-export-selection mui-target="Top" mui-analysis="DatasetAnalysisVM.analysis"
+											 mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.filteredResults" mui-key-name="_row">
+				</btn-export-selection>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane active results-body" id="table" >
+			<div class="results-top" id="{{'edger-' + analysis.randomId + '-svg-holder'}}">
+				<mev-boxplot data="DatasetAnalysisVM.boxPlotGenes"></mev-boxplot>
+			</div>
+			<div class="results-bottom">
+				<mev-results-table id="DatasetAnalysisVM.heatmapView.id" data="DatasetAnalysisVM.analysis.results" headers="DatasetAnalysisVM.headers" ordering="-value"
+								   on-filter="DatasetAnalysisVM.udpateFilteredView(filteredResults)"
+								   on-paged="DatasetAnalysisVM.updatePageView(pageResults)"
+								   mev-pagination="{itemsPerPage: 20}"
+								   mev-save-as="{name: DatasetAnalysisVM.analysis.name}"
+								   mev-out-filtered-results="DatasetAnalysisVM.filteredResults"
+				                   ></mev-results-table>
+			</div>
+
+		</div>
+		<div class="tab-pane" id="heatmap">
+			<mev-heatmap mev-dataset='DatasetAnalysisVM.project.dataset' mev-heatmap-view='DatasetAnalysisVM.heatmapView'></mev-heatmap>
+		</div>
+
+	</div>
+</div>

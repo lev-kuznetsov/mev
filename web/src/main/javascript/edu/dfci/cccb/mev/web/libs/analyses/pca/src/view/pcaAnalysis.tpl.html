@@ -1,0 +1,11 @@
+<div class="pca-scatter-plot">		
+	<div mev-scatter-plot="{name: pcaAnalysis.name}" drag-action="'select'"
+    	mev-input="pcaAnalysis.x" 
+    	mev-x-field="{{vm.fields[0]}}" 
+    	mev-y-field="{{vm.fields[1]}}" 
+    	mev-fields="vm.fields"
+    	log-scale-x="vm.logScaleX" 
+    	log-scale-y="vm.logScaleY" 
+    	mev-selections="selections">
+    </div>		
+</div>

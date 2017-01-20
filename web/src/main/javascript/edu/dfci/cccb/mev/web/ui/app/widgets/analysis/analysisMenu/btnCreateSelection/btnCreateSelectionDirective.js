@@ -1,4 +1,4 @@
-define([], function(){
+define(["lodash"], function(_){
 	"use strict";
 	var BtnCreateSelectionDirective = function BtnCreateSelectionDirective(alertService){
 		function BtnCreateSelectionVM(scope){
@@ -10,12 +10,29 @@ define([], function(){
 			this.key = scope.muiKeyName || "id";
 			this.dimension = scope.muiDimension || "row";
 			this.getId = function(){
-				return "selectionAdd" + self.analysis.name + self.target; 
+				return ("selectionAdd" + self.analysis.name + self.target).replace(/.*(?=#[^\s]+$)/, '').replace(/\./, '');
 			};
+			this.displayItemsLimit = 5;
+			this.getDisplayItems = function(){
+				var displayItems = self.items.slice(0, self.displayItemsLimit);
+				if(self.items.length > self.displayItemsLimit){
+					displayItems[self.displayItemsLimit-1] = self.items[self.items.length-1];
+				}
+				return displayItems;
+			};
+			this.getDisplayKey = function(item){
+				return _.isObject(item)
+					? item[self.key]
+					: item
+			}
 			this.selectionParams={};
 			this.addSelections = function (filteredResults) {
 				
-                var keys = filteredResults.map(function(item){return item[self.key];});                
+                var keys = _.isObject(filteredResults[0])
+					? filteredResults.map(function(item){
+						return item[self.key];
+					})
+					: filteredResults;
                 var selectionData = {
                     name: self.selectionParams.name,
                     properties: {
@@ -59,9 +76,9 @@ define([], function(){
 			},
 //			template: "<a class=\"btn\" data-target=\"#{{vm.getId()}}\" data-toggle=\"modal\"></i> Create Selections</a>",
 			templateUrl: "app/widgets/analysis/analysisMenu/btnCreateSelection/btnCreateSelection.tpl.html",
-		    link: function(scope, elem, attrs){
-		    	scope.vm = new BtnCreateSelectionVM(scope);
-		    }
+			controller: ["$scope", function(scope){
+				scope.vm = new BtnCreateSelectionVM(scope);
+			}]
 		};
 	}; 
 	BtnCreateSelectionDirective.$name = "BtnCreateSelectionDirective";

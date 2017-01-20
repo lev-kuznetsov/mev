@@ -1,0 +1,36 @@
+{
+  "width": 800,
+  "height": 500,
+  "padding": {"top":0, "bottom":0, "left":0, "right":0},
+  "data": [
+    {
+      "name": "fixed",
+      "modify": [
+        {"type": "toggle", "signal": "dblclick", "field": "id"}
+      ]
+    },
+    {
+      "name": "edges",
+      "url": "data/miserables.json",
+      "format": {"type": "json", "property": "links"}
+    },
+    {
+      "name": "nodes",
+      "url": "data/miserables.json",
+      "format": {"type": "json", "property": "nodes"},
+      "transform": [
+        {
+          "type": "force",
+          "size": [800, 500],
+          "links": "edges",
+          "linkDistance": 30,
+          "linkStrength": 0.5,
+          "charge": -80,
+          "interactive": true,
+          "fixed": "fixed",
+          "active": {"signal": "active"}
+        }
+      ]
+    }
+  ]
+}

@@ -42,4 +42,5 @@ public class SimpleEntry implements Entry {
   private @Getter @JsonProperty double pValue;
   private @Getter @JsonProperty double qValue;
   private @Getter @JsonProperty double t;
+  private @Getter @JsonProperty double logPValue;
 }

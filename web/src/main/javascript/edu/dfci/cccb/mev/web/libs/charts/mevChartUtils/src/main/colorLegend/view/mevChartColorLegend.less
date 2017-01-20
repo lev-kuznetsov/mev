@@ -1,0 +1,23 @@
+.chart{
+  .legend,
+  .mev-chart-color-legend,
+  [mev-chart-color-legend]{
+    display: flex;
+    flex-direction: column;
+    > input, select{
+      max-width: 50%;
+      margin-bottom: 10px;
+    }
+    .axis text {
+      font: 10px sans-serif;
+    }
+    .axis line, .axis path {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+    svg{
+      display: block;
+    }
+  }
+}

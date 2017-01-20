@@ -7,13 +7,15 @@
   "dependencies": {
     "ag-grid": "^2.3.7",
     "angular": "1.4.x",
-    "angular-animate": "^1.4.8",
-    "angular-nvd3": "~1.0.5",
+    "angular-animate": "1.4.x",
+    "angular-color-picker": "^1.0.10",
+    "angular-nvd3": "apartensky/angular-nvd3#1.0.9+dotPlot.1",
     "angular-resource": "^1.4.8",
     "angular-route": "^1.4.8",
     "angular-ui-bootstrap": "^0.14.3",
-    "angular-ui-router": "^0.2.15",
+    "angular-ui-router": "0.3.1",
     "angular-utils-pagination": "^0.9.4",
+    "angular-utils-ui-breadcrumbs": "apartensky/angularUtils-uiBreadcrumbs#0.2.2+futureStates",
     "blob-util": "^1.1.2",
     "blueimp-canvas-to-blob": "^3.1.0",
     "bootstrap": "^3.3.6",
@@ -26,30 +28,45 @@
     "js-data": "^2.8.2",
     "js-data-angular": "^3.1.0",
     "liver": "file:../libs/utils/liver",
-    "lodash": "^2.4.1",
+    "lodash": "^4.11.1",
     "mev-analysis": "file:../libs/domain/analysis",
     "mev-annotations": "file:../libs/domain/annotations",
+    "mev-anova": "file:../libs/analyses/anova",
     "mev-bootstrap-theme": "file:../libs/theme/mev-bootstrap-theme",
     "mev-bs-modal": "file:../libs/widgets/bsmodal",
     "mev-dataset": "file:../libs/domain/dataset",
+    "mev-deseq": "file:../libs/analyses/deseq",
     "mev-domain-common": "file:../libs/domain/common",
-    "mev-gsea": "file:../libs/domain/gsea",
-    "mev-hcl": "file:../libs/domain/hcl",
+    "mev-edger": "file:../libs/analyses/edger",
+    "mev-google-analytics": "file:../libs/utils/mev-google-analytics",
+    "mev-gsea": "file:../libs/analyses/gsea",
+    "mev-hcl": "file:../libs/analyses/hcl",
     "mev-heatmap": "file:../libs/charts/mevHeatmap",
+    "mev-kmeans": "file:../libs/analyses/kmeans",
+    "mev-limma": "file:../libs/analyses/limma",
     "mev-normalization": "file:../libs/analyses/normalization",
-    "mev-pca": "file:../libs/domain/pca",
+    "mev-pca": "file:../libs/analyses/pca",
     "mev-project": "file:../libs/domain/project",
     "mev-results-table": "file:../libs/widgets/mevResultsTable",
     "mev-scatter-plot": "file:../libs/charts/scatter",
     "mev-steal-bootstrap": "file:../libs/utils/steal-bootstrap",
+    "mev-survival": "file:../libs/analyses/survival",
     "mev-topgo": "file:../libs/analyses/topgo",
-    "mevPathwayEnrichment": "file:../libs/domain/pathwayEnrichment",
+    "mev-ttest": "file:../libs/analyses/ttest",
+    "mev-voom": "file:../libs/analyses/voom",
+    "mev-wgcna": "file:../libs/analyses/wgcna",
+    "mev-genemad": "file:../libs/analyses/genemad",
+    "mev-workspace": "file:../libs/domain/workspace",
+    "mevPathwayEnrichment": "file:../libs/analyses/pathwayEnrichment",
     "mui": "file:../libs/mui",
     "ng-grid": "apartensky/ui-grid#2.0.14+npmfix",
+    "ngtweet": "^0.6.1",
     "notific8": "^2.3.1",
     "nvd3": "apartensky/nvd3#1.8.2+dotPlot.1",
+    "oclazyload": "^1.0.9",
     "q": "^1.4.1",
-    "steal": "^0.13.2"
+    "steal": "^0.13.2",
+    "ui-router-extras": "^0.1.2"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -57,13 +74,20 @@
     "gulp-jasmine-browser": "^1.0.0",
     "gulp-util": "^3.0.7",
     "steal-tools": "^0.13.3",
+    "system-parse-amd": "dfci-cccb/system-parse-amd#0.0.2+ignoreQuoted",
     "system-text": "^0.1.0",
     "systemjs-plugin-json": "^0.1.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "linklocal link -r && linklocal list -r | bulk -c 'npm install'",
+    "prepublish": "if [[ $NODE_ENV != 'production' ]]; then npm run dev; fi"
   },
   "system": {
+    "bundle": [
+      "app/views/datasets/views.datasets.module",
+      "app/views/dataset/views.dataset.module"
+    ],
     "configDependencies": [
       "bower.json!bower"
     ],
@@ -71,7 +95,6 @@
       "mainmenu": "../javascript/mainmenu/MainMenu.module.js",
       "geods": "../javascript/geods/Geods.package.js",
       "geods/*": "../javascript/geods/*.js",
-      "js/*": "../javascript/*.js",
       "colorbrewer/*": "../javascript/colorbrewer/*.js",
       "extend": "../javascript/extend.js",
       "alertservice/*": "../javascript/alertservice/*.js",
@@ -79,7 +102,11 @@
       "dataset/*": "../javascript/dataset/*.js",
       "heatmapvisualization/*": "../javascript/heatmapvisualization/*.js",
       "dendogram/*": "../javascript/dendogram/*.js",
-      "jsLru": "../vendor/rsms/js-lru/lru.js"
+      "jsLru": "../vendor/rsms/js-lru/lru.js",
+      "js/orefine/*": "../javascript/orefine/*.js",
+      "js/project/*": "../javascript/project/*.js",
+      "js/alertservice/*": "../javascript/alertservice/*.js",
+      "js/setmanager/*": "../javascript/setmanager/*.js"
     },
     "map": {
       "ng": "mui",
@@ -100,9 +127,24 @@
       "pouchdb": {
         "format": "global"
       },
+      "worker-pouch": {
+        "deps": [
+          "pouchdb"
+        ]
+      },
       "jquery-ui": {
         "deps": [
           "jquery"
+        ]
+      },
+      "ui-router-extras": {
+        "deps": [
+          "angular-ui-router"
+        ]
+      },
+      "oclazyload": {
+        "deps": [
+          "ui-router-extras"
         ]
       }
     }

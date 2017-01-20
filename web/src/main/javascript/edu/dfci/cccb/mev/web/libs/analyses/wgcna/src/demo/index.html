@@ -1,0 +1,19 @@
+<html>
+<head>
+    <script src="../../node_modules/mev-steal-bootstrap/src/mev-steal-bootstrap.js"></script>
+    <script>
+        live("../../package.json!npm", "src/demo/index", 8012);
+    </script>
+</head>
+<body ng-controller="demoCtrl">
+    <mev-bs-modal bindid="wgcnaModal" header="WGCNA Analysis">
+        <div class="mev-analysis-start-form" mev-analysis-type="mevWgcnaAnalysisType"></div>
+    </mev-bs-modal>
+    <a mev-bs-modal-trigger="#wgcnaModal">wgcna</a>
+    <div class="mev-analysis-start-modal" mev-analysis-type="mevWgcnaAnalysisType"></div>
+    <a class="mev-analysis-start-button" mev-analysis-type="mevWgcnaAnalysisType"></a>
+    <div ui-view>
+        Loading ...
+    </div>
+</body>
+</html>

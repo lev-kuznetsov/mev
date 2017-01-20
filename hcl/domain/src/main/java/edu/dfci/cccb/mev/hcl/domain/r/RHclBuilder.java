@@ -26,6 +26,7 @@ import edu.dfci.cccb.mev.hcl.domain.prototype.AbstractHcl.CHclResult;
 import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHcl;
 
 @R ("function (dataset, metric, linkage, dimension) {"
+    + "library(amap);\n"
     + "hc2n <- function (hc, flat = FALSE) {\n"
     + "  dist <- 0;\n"
     + "  if (is.null (hc$labels)) labels <- seq(along = hc$order) else labels <- hc$labels;\n"
@@ -53,7 +54,7 @@ import edu.dfci.cccb.mev.hcl.domain.simple.SimpleHcl;
     + "if(is.null(dimension) || length(dimension)==0) dimension = list(\"row\", \"column\")\n"      
     + "runHcl <- function(dimension){"
     + "  d <- if (dimension == 'row') dataset else t (dataset);\n"
-    + "  l (hc2n (stats::hclust (cluster::daisy (d, m = metric), method = linkage)));\n"
+    + "  l (hc2n (stats::hclust (amap::Dist(d, m=metric), method = linkage)));\n"
     + "};\n"
     + "result<-list();\n"
     + "for (dim in dimension) result[[dim]] <- runHcl(dim);\n" 

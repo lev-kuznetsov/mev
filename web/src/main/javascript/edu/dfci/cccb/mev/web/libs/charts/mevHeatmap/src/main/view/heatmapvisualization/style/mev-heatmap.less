@@ -1,0 +1,39 @@
+mev-heatmap{
+	svg {
+		.tools{
+			span {
+				margin-left: 4px;
+			}
+		}
+	}
+}
+#heatmap-Legend{
+	cursor: pointer;
+}
+#selectionCircle{
+	cursor: pointer;
+	&:hover{
+		fill: #ff0000;
+	}
+}	
+div.d3tooltip {
+  position: relative;	
+  text-align: left;	
+  width: 100%;	
+  height: 100%;		
+  padding: 2px;	
+  font: 12px sans-serif;	  
+  border: none;  
+ /*  pointer-events: none;	This line needs to be removed */
+ a{
+ 	cursor: pointer;
+ 	background-color: #18bc9c;
+  	padding: 2px 4px;
+  	color: white;
+  	z-index: 1060;
+  	&:hover{
+  		background-color: #3498DB;
+  	}
+
+ }
+}

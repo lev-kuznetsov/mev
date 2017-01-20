@@ -1,0 +1,15 @@
+<html>
+<head>
+    <script src="../../node_modules/mev-steal-bootstrap/src/mev-steal-bootstrap.js"></script>
+    <script>
+        live("../../package.json!npm", "src/demo/index", 8012);
+    </script>
+</head>
+<body ng-controller="demoCtrl">
+<div class="mev-analysis-start-modal" mev-analysis-type="analysisType"></div>
+<a class="mev-analysis-start-button" mev-analysis-type="analysisType"></a>
+<div ui-view>
+    Loading ...
+</div>
+</body>
+</html>

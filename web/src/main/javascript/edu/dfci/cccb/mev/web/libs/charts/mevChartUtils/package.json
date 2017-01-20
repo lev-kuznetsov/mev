@@ -1,0 +1,25 @@
+{
+  "name": "mev-chart-utils",
+  "version": "0.0.1",
+  "description": "mev chart utils",
+  "main": "src/main/mev-chart-utils.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "dependencies": {
+    "blueimp-canvas-to-blob": "^3.3.0",
+    "browser-filesaver": "^1.1.1",
+    "d3": "^3.5.16",
+    "lodash": "^4.11.1",
+    "mev-glyph-alt": "file:../../widgets/mevGlyphAlt",
+    "mui": "file:../../mui",
+    "save-svg-as-png": "^1.0.3",
+    "steal": "^0.13.2"
+  }
+}

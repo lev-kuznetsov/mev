@@ -1,4 +1,4 @@
-define(["ng", 
+define(["mui",
         "./directives/dashboardDirective", 
         "./directives/dashboardItemDirective", 
         "./directives/dashboardItemAddDirective",

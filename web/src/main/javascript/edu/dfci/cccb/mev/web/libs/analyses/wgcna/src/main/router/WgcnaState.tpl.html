@@ -1,0 +1,37 @@
+<div class="column-wrapper">
+    <ul class="nav nav-tabs column-header" id="importTabs">
+        <li id="table_tab" class="active"><a href="#table" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}}</a></li>
+        <div class="action-menu" mui-paste="action-menu"></div>
+    </ul>
+
+    <div class="tab-content column-body">
+        <div class="tab-pane active results-wrapper" id="table" >
+            <div class="results-header clearfix">
+                <!--      	<div class="btn-toolbar" role="toolbar" mui-yank="action-menu"> -->
+                <div class="btn-toolbar" role="toolbar" >
+                    <div class="btn-group">
+                        <btn-create-selection mui-target="Top" mui-analysis="DatasetAnalysisVM.analysis"
+                                              mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.getSelection()" mui-key-name="id" mui-dimension="row">
+                        </btn-create-selection><!--
+			            --><btn-export-selection mui-target="Top" mui-analysis="DatasetAnalysisVM.analysis"
+                                                 mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.getSelection()" mui-key-name="id" mui-dimension="row">
+                    </btn-export-selection>
+                    </div>
+                </div>
+            </div>
+            <div class="results-body">
+                <div >
+                    <div mev-network-graph="DatasetAnalysisVM.mevNetworkWgcna" ></div>
+                </div>
+                <div >
+                    <mev-results-table data="DatasetAnalysisVM.analysis.result.edges"
+                                       headers="DatasetAnalysisVM.headers"
+                                       ordering="pValue"
+                                       mev-save-as="{name: analysis.name}"
+                                       on-filter="DatasetAnalysisVM.getFilteredEdges(filteredResults)"
+                                       mev-out-filtered-results="DatasetAnalysisVM.filteredResultsTop"></mev-results-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

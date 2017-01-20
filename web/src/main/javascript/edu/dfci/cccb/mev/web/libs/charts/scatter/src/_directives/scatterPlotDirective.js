@@ -1,16 +1,18 @@
 "use strict";
 define(["angular", "d3", "lodash", "crossfilter", "./scatterPlot.tpl.html"], 
-function(angular, d3, _, crossfilter, template){"use strict";	
+function(angular, d3, _, crossfilter, template){"use strict";
 	var ScatterPlotDirective = function ScatterPlotDirective(mevNvd3DataAdaptor){
 		return {
-			restrict: "EC",
+			restrict: "AEC",
 			scope: {
+				config: "=?mevScatterPlot",
 				input: "=mevInput",
 				selections: "=mevSelections",
 				xField: "@mevXField",
 				yField: "@mevYField",
-				fields: "=mevFields",				
+				fields: "=?mevFields",
 				idField: "@mevIdField",
+				selectionGroups: "=mevSelectionGroups",
 				logScaleX: "=",
 				logScaleY: "=",
 				dragAction: "=",
@@ -21,22 +23,61 @@ function(angular, d3, _, crossfilter, template){"use strict";
 			link: function(scope, elm, attrs, ctrl){				
 				var _self = this;
 				scope.api=undefined;
-				scope.config={
-					// deepWatchDataDepth: 0,
-					// refreshDataOnly: false
-					// debounce: 100
-				};
 				if(!scope.fields)
 					scope.fields = [];
-				if(!_.contains(scope.fields, scope.xField))
+				if(!_.includes(scope.fields, scope.xField))
 					scope.fields.push(scope.xField);
-				if(!_.contains(scope.fields, scope.yField))
+				if(!_.includes(scope.fields, scope.yField))
 					scope.fields.push(scope.yField);
 
 				function getCheckedSelections(){
-					if(!_.isArray(scope.selections))
-						scope.selections = [];				
-					return _.filter(scope.selections, function(s){return s.checked;});
+					if(!_.isArray(scope.vm.selections))
+						scope.vm.selections = [];
+					return _.filter(scope.vm.selections, function(s){return s.checked;});
+				}
+				function createGroupSelections(groups, options){
+					_.defaults(options = options || {}, {
+						formatName: function(group){
+							return group.name
+						},
+						getColor: function(group){
+							return group.color;
+						}
+					});
+					return groups.map(function(group){
+						group.selection = {
+							name:  options.formatName(group),
+							keys: _.uniq(_.flatten(group.selections.map(function(selection){
+								return selection.keys;
+							}))),
+							properties: {
+								selectionColor: options.getColor(group)
+							}
+						};
+						return _.cloneDeep(group.selection);
+					});
+				}
+				function getCheckedGroups() {
+					if (!_.isArray(scope.vm.selections))
+						scope.vm.selections = [];
+					console.debug("elm", elm);
+					return _.transform(scope.vm.selections,
+						function(groups, s, index){
+							var group = _.find(groups, {name: s.group});
+							if(group){
+								group.selections.push(s);
+							}
+						},
+						[{
+							name: "experiment",
+							selections: [],
+							color: "green"
+						},
+						{
+							name: "control",
+							selections: [],
+							color: "blue"
+						}]);
 				}
 				function findField(fixedFieldName){
 					var targetField = fixedFieldName === "xField" ? "yField" : "xField";
@@ -47,7 +88,12 @@ function(angular, d3, _, crossfilter, template){"use strict";
 						}
 					});
 				}
+				scope.saveAsConfig = {
+					name: scope.config.name ? scope.config.name : "mev-scatter-chart.png",
+					selector: 'nvd3 svg'
+				};
 				scope.vm = {
+					selections: _.cloneDeep(scope.selections),
 					refresh: function(){
 						scope.api.updateWithOptions(getOptions());
 						// scope.api.refrsh();
@@ -57,7 +103,19 @@ function(angular, d3, _, crossfilter, template){"use strict";
 					},
 					dragAction: "select",
 					updateSelection: function(){
-						updateData();
+						var checkedSelections = getCheckedSelections();
+						updateData(scope.input, checkedSelections);
+						scope.$emit("mev.scatterPlot.selections.updated", checkedSelections);
+					},
+					updateGroup: function(){
+						var checkedGroups = getCheckedGroups();
+						updateData(scope.input, createGroupSelections(checkedGroups));
+						scope.$emit("mev.scatterPlot.groups.updated", checkedGroups);
+					},
+					uncheckGroup: function($event, selection){
+						if(selection.group===$event.target.value){
+							delete selection.group;
+						}
 					},
 					updateXAxis: function(){				
 						if(scope.xField === scope.yField)
@@ -70,6 +128,26 @@ function(angular, d3, _, crossfilter, template){"use strict";
 							findField("yField");
 						updateData();	
 						updateOptions();
+					},
+					selectionMode: {
+						_MODE_GROUPS: "groups",
+						_MODE_SELECTIONS: "selections",
+						value: "selections",
+						get: function () {
+							return this.value;
+						},
+						setGroups: function () {
+							this.value = this._MODE_GROUPS;
+						},
+						setSelections: function () {
+							this.value = this._MODE_SELECTIONS;
+						},
+						isGroup: function () {
+							return this.value === this._MODE_GROUPS
+						},
+						isSelections: function () {
+							return this.value === this._MODE_SELECTIONS
+						}
 					}
 				};
 				var _svg, _brush, _chart;
@@ -88,9 +166,10 @@ function(angular, d3, _, crossfilter, template){"use strict";
 				var xf, xfxDim, xfyDim;			
 				function updateData(newData, newSelections){
 					if(!newData) newData = scope.input;
-					if(!newSelections) newSelections = getCheckedSelections();
+					if(!newSelections)
+						newSelections = getCheckedSelections();
 
-					scope.data = mevNvd3DataAdaptor.transform(newData, scope.xField, scope.yField, scope.idField, newSelections, 1000);	
+					scope.data = mevNvd3DataAdaptor.transform(newData, scope.xField, scope.yField, scope.idField, newSelections, 1000);
 					scope.inputData = scope.data;
 
 					if(scope.useCrossfilter){
@@ -134,6 +213,10 @@ function(angular, d3, _, crossfilter, template){"use strict";
 						scope.api.updateWithOptions(scope.options);
 						// scope.api.updateWithOptions(scope.options);
 					}
+				});
+
+				scope.$watchCollection("selections", function(selections){
+					scope.vm.selections = _.cloneDeep(selections);
 				});
 
 				function updateOptions(){

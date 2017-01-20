@@ -27,7 +27,7 @@ define(["lodash", "./SelectParam.tpl.html"], function(_, template){
 					scope.setValue(options);
 				}
 				scope.setOptions = function setOptions(){	
-					var theOptions = scope.param.options();
+					var theOptions = scope.param.getOptions();
 					if(_.isFunction(theOptions.then)){
 						theOptions.then(function(options){
 							scope.param.optionsx = options;
@@ -35,7 +35,7 @@ define(["lodash", "./SelectParam.tpl.html"], function(_, template){
 					}else{						
 						decorateOptions(theOptions);
 						scope.setValue(theOptions);
-						scope.$watch(function(){return scope.param.options();}, function(newv, oldv){
+						scope.$watch(function(){return scope.param.getOptions();}, function(newv, oldv){
 							if(!newv) return;
 							if(_.isEqual(newv, oldv)) return;
 							if(newv === oldv) return;

@@ -1,10 +1,13 @@
-define(["ng", "lodash"], 
+define(["mui", "lodash",
+	"./edit/views.dataset.rowSets.edit.module",
+	"../selectionSets/views.dataset.selectionSets.module",
+	"js/setmanager/SetManager"],
 function(ng, _){
 	
-	var module=ng.module("mui.views.dataset.rowSets", []);
+	var module=ng.module("mui.views.dataset.rowSets", arguments, arguments);
 	
-	module.config(['$stateProvider', '$urlRouterProvider',
-	   	     	function($stateProvider, $urlRouterProvider){	     				
+	module.config(['$stateProvider', 'SelectionSetResolverProvider',
+	   	     	function($stateProvider, SelectionSetResolverProvider){
 	   	     		$stateProvider	   	     		
 	   	     		.state("root.dataset.rowSets", {
 	   	     			url: "rowSets",
@@ -30,23 +33,10 @@ function(ng, _){
 	   	     			controller: "SelectionSetViewVM",
 	   	     			controllerAs: "RowSetViewVM",
 	   	     			resolve:{
-	   	     				selectionSet: ["$stateParams", "dataset", function($stateParams, dataset){
-	   	     					var reset = dataset.resetSelections("row");
-	   	     					console.debug("resolve RowSet", reset);
-	   	     					
-	   	     					return reset.$promise.then(function(){
-		   	     					var rowSet = _.find(dataset.row.selections, function(selection){
-		   	     						return selection.name === $stateParams.setId; 
-		   	     					});
-		   	     					
-		   	     					if(!rowSet){
-		   	     						rowSet = {name: "new", type: "row"};
-		   	     					}
-		   	     					
-		   	     					console.debug("resolved RowSet", rowSet);
-		   	     					return rowSet;
-	   	     					});	   	     						   	     				
-	   	     				}]
+							dimension: function(){
+								return "row";
+							},
+							selectionSet: SelectionSetResolverProvider.$get()
 	   	     			}
 	   	     		}
 	   	     	);

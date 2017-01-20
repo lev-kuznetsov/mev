@@ -49,7 +49,12 @@ define(["angular"], function(angular){
 		var MSG_ANALYSIS_LOADED_ALL="event:analysis:all";
 		this.analysisLoadedAll = function(analyses){
 			analyses.forEach(function(analysis){
-				var analysisType = mevAnalysisTypes.get(analysis.params.analysisType || analysis.type || analysis.params.type);
+				var type;
+				if(analysis.params)
+					type = analysis.params.analysisType || analysis.params.type
+				else
+					type = analysis.type
+				var analysisType = mevAnalysisTypes.get(type);
 				if(analysisType && _.isFunction(analysisType.modelDecorator))
 					analysisType.modelDecorator(analysis);
 			})

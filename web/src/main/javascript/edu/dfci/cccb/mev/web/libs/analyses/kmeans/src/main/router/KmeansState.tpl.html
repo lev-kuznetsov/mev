@@ -1,0 +1,57 @@
+<!-- <project-analysis-parameters parameters="DatasetAnalysisVM.analysis.params"></project-analysis-parameters> -->
+<div class="column-wrapper">
+    <ul class="nav nav-tabs column-header" id="importTabs">
+        <li id="clusters_tab" class="active"><a href="#clusters" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}}</a></li>
+        <li id="heatmap_tab"><a href="#heatmap" data-toggle="tab" target="_self">Heatmap</a></li>
+        <div class="action-menu" mui-paste="action-menu"></div>
+    </ul>
+
+    <div class="tab-content column-body">
+        <div class="tab-pane active" id="clusters" >
+            <div  class="results-wrapper">
+                <div class="results-header clearfix">
+
+                    <h3 class="analysis-results-title">{{analysis.name}} Results</h3>
+                    <div class="btn-toolbar" role="toolbar" mui-yank="action-menu">
+                        <div class="btn-group">
+                            <a class="btn btn-success pull-right" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
+                                <i class="icon-white icon-download"></i> Download
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="results-body">
+                    <table class="table table-striped table-bordered table-condensed">
+                        <thead>
+                        <tr>
+                            <th>Cluster Size</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="cluster in analysis.clusters">
+                            <td>
+                                Size: {{cluster.length}}
+                                <!--<a class="btn btn-info pull-right" ng-click="loadSelections(cluster)" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">-->
+                                    <!--<span class="glyphicon glyphicon-plus" style="color:white"></span> Add Selection-->
+                                <!--</a>-->
+                                <btn-create-selection class="pull-right" mui-target="kmeans-cluster-{{DatasetAnalysisVM.analysis.name}}-{{$index}}"
+                                                      mui-analysis="DatasetAnalysisVM.analysis"
+                                                      mui-dataset="DatasetAnalysisVM.project.dataset"
+                                                      mui-items="cluster"
+                                                      mui-dimension="{{DatasetAnalysisVM.analysis.dimension}}"
+                                                      mev-out-filtered-results="cluster">
+                                </btn-create-selection>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="heatmap">
+            <mev-heatmap mev-dataset='DatasetAnalysisVM.project.dataset' mev-heatmap-view='DatasetAnalysisVM.heatmapView'></mev-heatmap>
+        </div>
+
+    </div>
+</div>

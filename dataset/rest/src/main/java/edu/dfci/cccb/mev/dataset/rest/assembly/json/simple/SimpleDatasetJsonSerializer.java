@@ -109,10 +109,12 @@ public class SimpleDatasetJsonSerializer extends JsonSerializer<Dataset> {
       
       for (Value oValue : (Iterable<Value>) values) {
         double value = oValue.value ();
-        min = min > value ? value : min;
-        max = max < value ? value : max;
-        sum += value;
-        count++;
+        if (doCount (value)) {
+          min = min > value ? value : min;
+          max = max < value ? value : max;
+          sum += value;
+          count++;
+        }
         if(!values.skipJson ()){          
           jgen.writeStartObject ();
           jgen.writeStringField ("row", oValue.row ());

@@ -3,8 +3,7 @@ define(["mui", "mev-enrichment-barchart", "./topgo_dummy.json"], function(ng, mo
 	
 	app.controller('MainCtrl', ["$scope", "mevEnrichmentDataAdaptor", function($scope, mevEnrichmentDataAdaptor) {
 		$scope.config={
-			data: mevEnrichmentDataAdaptor(topgoJson.results),
-			series: "Counts"
+			data: mevEnrichmentDataAdaptor(topgoJson.results)
 		};
 	}]);
 

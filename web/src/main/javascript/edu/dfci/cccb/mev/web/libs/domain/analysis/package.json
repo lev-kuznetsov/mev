@@ -23,10 +23,12 @@
   },
   "dependencies": {
     "angular-resource": "^1.5.0",
+    "angular-ui-bootstrap": "^0.14.3",
     "angular-ui-router": "^0.2.18",
     "lodash": "^4.0.1",
     "mev-bs-modal": "file:../../widgets/bsmodal",
     "mev-domain-common": "file:../common",
+    "mev-workspace": "file:../workspace",
     "mui": "file:../../mui",
     "system-text": "^0.1.0"
   },

@@ -1,6 +1,6 @@
 define(["ng", "lodash"], function(ng, _){
 	var module = ng.module("mui.views.dataset.analysis.genesd", [])	
-	.factory("GeneSDVMFactory", ["$stateParams", "SigGenes", "alertService", function($stateParams, SigGenes, alertService){
+	.factory("GeneSDVMFactory", ["$stateParams", "SigGenes", function($stateParams, SigGenes){
 		
 		return function GeneSDVMFactory($scope, $stateParams, project, analysis){
 			var _self=this;
@@ -24,11 +24,10 @@ define(["ng", "lodash"], function(ng, _){
 	            }
 	        });
 			
-            
+            this.filteredResultsTop = [];
 			$scope.$on("ui:resultsTable:filteredResults", function($event, filteredResults){
-				var labels = filteredResults.map(function(gene){return gene.geneId;});
-				if($event.targetScope.id === _self.heatmapViewTop.id){					
-					_self.filteredResultsTop = filteredResults;
+				if($event.targetScope.id === _self.heatmapViewTop.id){
+					var labels = filteredResults.map(function(gene){return gene.geneId;});
 					_self.heatmapViewTop = _self.heatmapViewTop.applyFilter("row", labels);
 				}				
             });

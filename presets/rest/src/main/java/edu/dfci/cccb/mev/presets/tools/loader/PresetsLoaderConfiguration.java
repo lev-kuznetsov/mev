@@ -1,6 +1,8 @@
 package edu.dfci.cccb.mev.presets.tools.loader;
 
 import static org.springframework.context.annotation.FilterType.ANNOTATION;
+
+import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
@@ -23,7 +25,11 @@ import edu.dfci.cccb.mev.dataset.domain.supercsv.SuperCsvParserFactory;
 import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
 
 @Configuration
-@ComponentScan(value="edu.dfci.cccb.mev.presets", includeFilters = @Filter (type = ANNOTATION, value = {Component.class }))
+@ComponentScan(
+        value="edu.dfci.cccb.mev.presets",
+        includeFilters = @Filter (type = ANNOTATION, value = {Component.class }),
+        excludeFilters=@Filter(type=ANNOTATION, value = {Configuration.class })
+)
 //@PropertySources({
 //@PropertySource ("classpath:/presets.properties"),
 //@PropertySource (value="classpath:/presets-${spring_profiles_active}.properties",ignoreResourceNotFound=true)
@@ -60,7 +66,17 @@ public class PresetsLoaderConfiguration {
 
   @Bean
   public ParserFactory tsvParserFactory () {
-    return new SuperCsvParserFactory ();
+    SuperCsvParserFactory factory = new SuperCsvParserFactory(new SuperCsvParser.RowIdParser() {
+      @Override
+      public String parse(String value) {
+        int index = value.indexOf("|");
+        return index >= 0
+          ? value.substring(0, index)
+          : value;
+      }
+    });
+    factory.addCommentRegExpression("[\\?].+");
+    return factory;
   }
   
   

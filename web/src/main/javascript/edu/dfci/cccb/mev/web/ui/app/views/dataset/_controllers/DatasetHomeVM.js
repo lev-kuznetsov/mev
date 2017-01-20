@@ -1,4 +1,4 @@
-define(["ng"], function(ng){
+define(["ng", "lodash"], function(ng, _){
 	var DatasetHomeVM=function DatasetViewVM($scope, $stateParams, $state, dataset, project){
 		that=this;
 		this.project=project;
@@ -20,8 +20,15 @@ define(["ng"], function(ng){
                 avg: dataset.expression.avg,
             }
         });
+        this.getDownloadFileName = function(){
+            return _.endsWith(project.dataset.datasetName, ".tsv")
+                ? project.dataset.datasetName
+                : project.dataset.datasetName + ".tsv";
+        }
 
 	};
+    DatasetHomeVM.$name="DatasetHomeVM";
+    DatasetHomeVM.$provider="controller";
 	DatasetHomeVM.$inject=["$scope", "$stateParams", "$state", "dataset", "project"];
 	return DatasetHomeVM;
 });

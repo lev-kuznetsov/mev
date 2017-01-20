@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import edu.dfci.cccb.mev.presets.contract.Presets;
 import lombok.experimental.Accessors;
 import edu.dfci.cccb.mev.presets.contract.Preset;
 import edu.dfci.cccb.mev.presets.contract.PresetsBuilder;
@@ -39,6 +40,12 @@ public class SimplePresests extends AbstractPresets {
     if(index>=0)
       list.remove (index);
     list.add (preset);
+  }
+
+  @Override
+  public void put(Presets presets) {
+    for(Preset preset : presets.getAll())
+      this.put(preset);
   }
 
   @Override

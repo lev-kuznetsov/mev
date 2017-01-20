@@ -176,8 +176,9 @@ public class GoogleConfiguration extends WebMvcConfigurerAdapter {
                                                                          config.getProperty ("gcloud.client.email"),
                                                                          key,
                                                                          config.getProperty ("gcloud.private.key.id"),
-                                                                         asList ("")))
-                         .build ().getService ();
+                                                                         asList ("https://www.googleapis.com/auth/devstorage.read_only")))
+                         .build ()
+                         .getService ();
   }
 
   /* (non-Javadoc)

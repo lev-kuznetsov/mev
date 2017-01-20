@@ -1,11 +1,11 @@
-define(['jquery', 'angular'], function (jquery, angular){
+define(['jquery', 'mui'], function (jquery, angular, template){
 	angular.module('Mev.PresetManager', ["mui.domain.presets.tcga"])		
 		.controller('PresetManagerController', ['$scope', '$element', '$attrs', function($scope, $element, $attrs){			
 			$scope.gridOptions = { 
 					data: 'presets',
 					columnDefs: [{field: 'name', displayName: 'Dataset', enableCellEdit: false, width:'40%',
 									cellTemplate: '<div><div class="ngCellText"><a data-toggle="modal" role="button" data-target="#import-presets-modal" href="" ng-click="showImportPreset(row.getProperty(\'name\'))">{{row.getProperty(col.field)}}</a></div></div>'},
-					             {field:'diseaseName', displayName:'Desease Name', enableCellEdit: false, visible: false},
+					             {field:'disease', displayName:'Desease Name', enableCellEdit: false, visible: false},
 					             {field:'dataLevel', displayName:'Data Level', enableCellEdit: false, width:'10%'},			                     
 			                     {field:'platformName', displayName:'Platform', enableCellEdit: false, width:'45%'}
 			                     ],
@@ -31,7 +31,9 @@ define(['jquery', 'angular'], function (jquery, angular){
 					};										
 				},
 				restrict: 'EA',
-				templateUrl: '/container/view/elements/presets/presetList'
+				templateUrl: '/container/view/elements/presets/presetList',
+				template: template
+					
 			};
 		}]);
 });

@@ -1,0 +1,196 @@
+{
+  "width": 500,
+  "height": 500,
+  "padding": {"top":0, "bottom":0, "left":0, "right":0},
+
+  "data": [
+    {
+      "name": "edges",
+      "url": "../data/miserables.json",
+      "format": {"type": "json", "property": "links"}
+    },
+    {
+      "name": "nodes",
+      "url": "../data/miserables.json",
+      "format": {"type": "json", "property": "nodes"},
+      "transform": [{
+        "type": "force",
+        "links": "edges",
+        "linkDistance": 70,
+        "charge": -80,
+        "iterations": 1000
+      }]
+    },
+    {
+      "name": "activeNode",
+      "transform": [
+        {
+          "type": "formula",
+          "field": "ff_x",
+          "expr": "hoverNode.x > 650 ? hoverNode.x - 260 : hoverNode.x + 10"
+        },
+        {
+          "type": "formula",
+          "field": "ff_y",
+          "expr": "hoverNode.y > 400 ? hoverNode.y - 10 : hoverNode.y + 20"
+        }
+      ],
+      "modify": [{
+        "type": "toggle",
+        "signal": "hoverNode"
+      }]
+    },
+    {
+      "name": "tooltip",
+      "values": [{
+        "fields": [
+            {
+              "name": "name"
+            },
+            {
+              "name": "index"
+            },
+            {
+              "name": "group"
+            }
+          ]
+      }]
+    },
+    {
+      "name": "hello",
+      "values": ["hello"]
+    }
+  ],
+  "signals": [{
+    "name": "hoverNode",
+    "init": {},
+    "streams": [{
+      "type": "@node:mouseover",
+      "expr": "{ datum: eventItem().datum, x: eventX(), y: eventY() }"
+    },{
+      "type": "@node:mouseout",
+      "expr": "{}"
+    }]
+  },{
+    "name": "tooltip",
+    "init": {
+      "config": {
+        "fields": [
+          {
+            "name": "name"
+          },
+          {
+            "name": "index"
+          },
+          {
+            "name": "group"
+          }
+        ]
+      }
+    },
+    "expr": ""
+  }],
+  "scales": [
+    {
+      "name": "shapes",
+      "type": "ordinal",
+      "domain": {"data": "nodes", "field": "group"},
+      "range": "shapes"
+    },
+    {
+      "name": "colors",
+      "type": "ordinal",
+      "domain": {
+        "data": "nodes", "field": "group"
+      },
+      "range": "category20"
+    }
+  ],
+  "marks": [
+    {
+      "type": "path",
+      "from": {
+        "data": "edges",
+        "transform": [
+          { "type": "lookup", "on": "nodes",
+            "keys": ["source", "target"],
+            "as":   ["_source", "_target"] },
+          { "type": "linkpath", "shape": "line" }
+        ]
+      },
+      "properties": {
+        "update": {
+          "path": {"field": "layout_path"},
+          "stroke": {"value": "#ccc"},
+          "strokeWidth": {"value": 2}
+        },
+        "hover": {"stroke": {"value": "#000"}}
+      }
+    },
+    {
+      "name": "node",
+      "type": "symbol",
+      "from": {"data": "nodes"},
+      "properties": {
+        "enter": {
+          "shape": {"scale": "shapes", "field": "group"},
+          "fill": {"scale": "colors", "field": "group"},
+          "fillOpacity": {"value": 0.5},
+          "stroke": {"value": "steelblue"}
+        },
+        "update": {
+          "x": {"field": "layout_x"},
+          "y": {"field": "layout_y"},
+          "fillOpacity": {"value": 0.5}
+        },
+        "hover": {
+          "fillOpacity": {"value": 0.8}
+        }
+      }
+    },
+    {
+      "type": "group",
+      "from": {"data": "activeNode"},
+      "properties": {
+        "update": {
+          "width": {"value": 250},
+          "height": {"value": 80},
+          "fill": {"value": "#ffa"},
+          "fillOpacity": {"value": 0.85},
+          "stroke": {"value": "#aaa"},
+          "strokeWidth": {"value": 0.5},
+          "x": {"field": "ff_x"},
+          "y": {"field": "ff_y"}
+        }
+      },
+      "marks": [{
+        "type": "text",
+        "properties": {
+          "update": {
+            "fill": {"value": "black"},
+            "text": {"field": {"parent": "datum.name"}},
+            "x": {"value": 10},
+            "y": {"value": 10}
+          }
+        }
+      },{
+        "type": "text",
+        "from": {
+          "data": "activeNode",
+          "transform": [{
+            "type": "formula",
+            "field": "fields",
+            "expr": "tooltip.config.fields.map(function(field, index){ return { label: field.label || field.name, value: datum[field.name], index: index }; })"
+          }]
+        },
+        "properties": {
+          "update": {
+            "fill": {"value": "black"},
+            "text": {"template": "{{label}}: {{value}}"}},
+            "x": {"field": "index", "mult": 10},
+            "y": {"value": 10}
+          }
+        }]
+    }
+  ]
+}

@@ -36,7 +36,7 @@ public class FlatFileValuesBinaryMessageConverter extends AbstractHttpMessageCon
    * 
    */
   public FlatFileValuesBinaryMessageConverter () {
-    super (MediaType.APPLICATION_OCTET_STREAM);
+    super (MediaType.valueOf("application/x.dfci.cccb.mev.dataset.binary64"));
   }
 
   /* (non-Javadoc)

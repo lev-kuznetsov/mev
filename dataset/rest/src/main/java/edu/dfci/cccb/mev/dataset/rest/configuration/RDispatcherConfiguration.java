@@ -71,7 +71,9 @@ public class RDispatcherConfiguration {
 //      config.setProperty ("rserve.concurrency", "2");
 //    log.info ("RDispatcher with concurrency " + config.getInt ("rserve.concurrency"));    
 //    return config.getInt ("rserve.concurrency");
-    return Integer.parseInt (config().getProperty ("rserve.concurrency",  "2"));
+    int concurrency = Integer.parseInt (config().getProperty ("rserve.concurrency",  "2"));
+    log.info ("RDispatcher with concurrency " + concurrency);
+    return concurrency;
   }
 
   @Bean
@@ -109,7 +111,7 @@ public class RDispatcherConfiguration {
     };
   }
 
-  @Bean
+  @Bean (name="RserveJsonObjectMapper")
   @Rserve
   public ObjectMapper mapper (@Rserve Collection<Module> modules) {
     return new ObjectMapper ().registerModules (modules);

@@ -21,24 +21,21 @@ import static edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMeth
 import static edu.dfci.cccb.mev.dataset.rest.resolvers.DimensionPathVariableMethodArgumentResolver.DIMENSION_URL_ELEMENT;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST;
 
 import javax.inject.Inject;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import edu.dfci.cccb.mev.dataset.domain.contract.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import lombok.experimental.Accessors;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dimension;
 import edu.dfci.cccb.mev.kmeans.domain.contract.KMeans;
 import edu.dfci.cccb.mev.kmeans.domain.contract.KMeansBuilder;
 
@@ -74,6 +71,26 @@ public class KMeansAnalysisController {
                      .metric (metric)
                      .dataset (dataset)
                      .buildAsync ();
+  }
+
+  @Accessors(fluent = true)
+  public static class KmeansParamsDTO{
+    @JsonProperty @Getter private String name;
+    @JsonProperty @Getter private String dimension;
+    @JsonProperty @Getter private Integer k;
+    @JsonProperty @Getter private String metric;
+    @JsonProperty @Getter private Integer iterations;
+  }
+
+  @RequestMapping(value="/analyze/kmeans/{name}", method = PUT)
+  public Analysis put(final @RequestBody KmeansParamsDTO params) throws InvalidDimensionTypeException{
+    Dimension.Type type = Dimension.Type.from(params.dimension());
+    Dimension dimension = dataset.dimension(type);
+    return kmeans.name (params.name()).k (params.k())
+            .dimension (dimension)
+            .metric (params.metric())
+            .dataset (dataset)
+            .buildAsync (); 
   }
 
   @RequestMapping (value = "/analysis/" + ANALYSIS_URL_ELEMENT + "/kmeans",

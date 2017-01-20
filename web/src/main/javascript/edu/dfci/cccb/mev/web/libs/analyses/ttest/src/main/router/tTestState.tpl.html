@@ -1,0 +1,51 @@
+<!-- <project-analysis-parameters parameters="DatasetAnalysisVM.analysis.params"></project-analysis-parameters> -->
+<div class="column-wrapper">
+    <ul class="nav nav-tabs column-header" id="importTabs">
+        <li id="table_tab" class="active"><a href="#table" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}}</a></li>
+        <li id="heatmap_tab"><a href="#heatmap" class="pull-left" data-toggle="tab" target="_self">Heatmap</a></li>
+        <div class="action-menu" mui-paste="action-menu"></div>
+    </ul>
+
+    <div class="tab-content column-body">
+        <div class="tab-pane active" id="table" >
+            <!--<t-Test-Accordion analysis="DatasetAnalysisVM.analysis" project="DatasetAnalysisVM.project" heatmap-view='DatasetAnalysisVM.heatmapView' is-it-open="isOpen"></t-Test-Accordion>-->
+            <div  class="results-wrapper" id="tTestResultsTable" >
+                <div class="results-header clearfix">
+                    <!--      	<div class="btn-toolbar" role="toolbar" > -->
+                    <div class="btn-toolbar" role="toolbar" mui-yank="action-menu">
+                        <div class="btn-group">
+                            <a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['gsea']" mev-context-level="bottom">GSEA</a>
+                            <a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['pca']" mev-context-level="bottom" >PCA</a>
+                            <a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['hcl']" mev-context-level="bottom">HCL</a>
+                            <a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['wgcna']" mev-context-level="bottom">WGCNA</a>
+                            <a class="btn" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
+                                <i class="icon-white icon-download"></i> Download
+                            </a>
+                            <btn-create-selection mui-analysis="DatasetAnalysisVM.analysis"
+                                                  mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.filteredResults" >
+                            </btn-create-selection><!--
+                        --><btn-export-selection mui-analysis="DatasetAnalysisVM.analysis"
+                                                 mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.filteredResults" >
+                            </btn-export-selection>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="results-body">
+                    <div class="results-top">
+                        <mev-boxplot data="boxPlotGenes"></mev-boxplot>
+                    </div>
+                    <div class="results-bottom">
+                        <mev-results-table data="analysis.results" headers="headers" ordering="pValue"
+                                           mev-save-as="{name: analysis.name}" mev-out-filtered-results="DatasetAnalysisVM.filteredResults"></mev-results-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="heatmap">
+            <mev-heatmap mev-dataset='DatasetAnalysisVM.project.dataset' mev-heatmap-view='DatasetAnalysisVM.heatmapView'></mev-heatmap>
+        </div>
+    </div>
+</div>
+
+

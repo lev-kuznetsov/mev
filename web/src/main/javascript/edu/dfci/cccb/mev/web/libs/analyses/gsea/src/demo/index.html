@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../../node_modules/mev-steal-bootstrap/src/mev-steal-bootstrap.js"></script>
+    <script>
+        live("../../package.json!npm", "src/demo/index");
+    </script>
+</head>
+<body ng-controller="demoCtrl">
+<mev-bs-modal bindid="gseaModal" header="GSEA Analysis">
+    <div class="mev-analysis-start-form" mev-analysis-type="analysisType"></div>
+</mev-bs-modal>
+<a mev-bs-modal-trigger="#gseaModal">gsea</a>
+<div class="mev-analysis-start-modal" mev-analysis-type="analysisType"></div>
+<a class="mev-analysis-start-button" mev-analysis-type="analysisType"></a>
+<div ui-view>
+    Loading ...
+</div>
+</body>
+</html>

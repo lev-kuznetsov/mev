@@ -1,0 +1,7029 @@
+{
+  "name": "edger_s1s2",
+  "type": "edger",
+  "status": "SUCCESS",
+  "error": null,
+  "results": [
+    {
+      "_row": "HNRNPA1P48",
+      "logFC": 2.4163,
+      "logCPM": 3.0036,
+      "PValue": 1.7383E-6,
+      "FDR": 0.0017
+    },
+    {
+      "_row": "PVRL2",
+      "logFC": 5.6753,
+      "logCPM": 1.9816,
+      "PValue": 6.1813E-6,
+      "FDR": 0.0031
+    },
+    {
+      "_row": "CTC-207P7.1",
+      "logFC": 5.5071,
+      "logCPM": 1.8808,
+      "PValue": 0.0,
+      "FDR": 0.0143
+    },
+    {
+      "_row": "LDB1",
+      "logFC": 1.5008,
+      "logCPM": 3.4113,
+      "PValue": 1.0E-4,
+      "FDR": 0.0333
+    },
+    {
+      "_row": "PARK2",
+      "logFC": -5.1003,
+      "logCPM": 1.7128,
+      "PValue": 3.0E-4,
+      "FDR": 0.0587
+    },
+    {
+      "_row": "INTS1",
+      "logFC": 1.0923,
+      "logCPM": 4.2624,
+      "PValue": 4.0E-4,
+      "FDR": 0.0587
+    },
+    {
+      "_row": "AC007682.3",
+      "logFC": 1.8727,
+      "logCPM": 2.6571,
+      "PValue": 6.0E-4,
+      "FDR": 0.0845
+    },
+    {
+      "_row": "RP11-875O11.2",
+      "logFC": 1.4497,
+      "logCPM": 3.0272,
+      "PValue": 0.002,
+      "FDR": 0.2235
+    },
+    {
+      "_row": "AC005740.6",
+      "logFC": -2.3377,
+      "logCPM": 2.1136,
+      "PValue": 0.002,
+      "FDR": 0.2235
+    },
+    {
+      "_row": "ARHGEF11",
+      "logFC": -2.5907,
+      "logCPM": 1.9302,
+      "PValue": 0.0029,
+      "FDR": 0.2627
+    },
+    {
+      "_row": "TREH",
+      "logFC": -1.3803,
+      "logCPM": 3.1187,
+      "PValue": 0.0031,
+      "FDR": 0.2627
+    },
+    {
+      "_row": "RP11-216L13.17",
+      "logFC": -2.2552,
+      "logCPM": 2.0695,
+      "PValue": 0.0034,
+      "FDR": 0.2627
+    },
+    {
+      "_row": "CREBRF",
+      "logFC": 1.4589,
+      "logCPM": 2.8541,
+      "PValue": 0.0034,
+      "FDR": 0.2627
+    },
+    {
+      "_row": "ESYT2",
+      "logFC": -0.773,
+      "logCPM": 4.5791,
+      "PValue": 0.0054,
+      "FDR": 0.3465
+    },
+    {
+      "_row": "ARHGEF5",
+      "logFC": 2.0322,
+      "logCPM": 2.2822,
+      "PValue": 0.0055,
+      "FDR": 0.3465
+    },
+    {
+      "_row": "MIR4738",
+      "logFC": -2.1681,
+      "logCPM": 2.0253,
+      "PValue": 0.0056,
+      "FDR": 0.3465
+    },
+    {
+      "_row": "CTB-114C7.3",
+      "logFC": -1.7216,
+      "logCPM": 2.5628,
+      "PValue": 0.0067,
+      "FDR": 0.3615
+    },
+    {
+      "_row": "RNU7-92P",
+      "logFC": -1.6709,
+      "logCPM": 2.5342,
+      "PValue": 0.0067,
+      "FDR": 0.3615
+    },
+    {
+      "_row": "NREP-AS1",
+      "logFC": -1.0799,
+      "logCPM": 3.4752,
+      "PValue": 0.0069,
+      "FDR": 0.3615
+    },
+    {
+      "_row": "RP11-556G22.3",
+      "logFC": 4.5361,
+      "logCPM": 1.3929,
+      "PValue": 0.0085,
+      "FDR": 0.367
+    },
+    {
+      "_row": "RPL9P16",
+      "logFC": -4.4264,
+      "logCPM": 1.3919,
+      "PValue": 0.0085,
+      "FDR": 0.367
+    },
+    {
+      "_row": "C14orf142",
+      "logFC": 1.1444,
+      "logCPM": 3.1445,
+      "PValue": 0.0085,
+      "FDR": 0.367
+    },
+    {
+      "_row": "RP5-921G16.1",
+      "logFC": 2.4918,
+      "logCPM": 1.7741,
+      "PValue": 0.0087,
+      "FDR": 0.367
+    },
+    {
+      "_row": "RP11-404K5.1",
+      "logFC": 1.5976,
+      "logCPM": 2.6269,
+      "PValue": 0.0088,
+      "FDR": 0.367
+    },
+    {
+      "_row": "RP11-18F14.1",
+      "logFC": -0.6619,
+      "logCPM": 5.0974,
+      "PValue": 0.0103,
+      "FDR": 0.4078
+    },
+    {
+      "_row": "RNA5SP394",
+      "logFC": 0.8217,
+      "logCPM": 4.011,
+      "PValue": 0.0106,
+      "FDR": 0.4078
+    },
+    {
+      "_row": "OR6C69P",
+      "logFC": 0.931,
+      "logCPM": 3.5965,
+      "PValue": 0.0113,
+      "FDR": 0.4092
+    },
+    {
+      "_row": "AC100757.1",
+      "logFC": 1.1429,
+      "logCPM": 3.1386,
+      "PValue": 0.0115,
+      "FDR": 0.4092
+    },
+    {
+      "_row": "RP11-24B13.2",
+      "logFC": 3.0147,
+      "logCPM": 1.5963,
+      "PValue": 0.013,
+      "FDR": 0.4488
+    },
+    {
+      "_row": "RP3-437C15.1",
+      "logFC": -1.4313,
+      "logCPM": 2.6535,
+      "PValue": 0.016,
+      "FDR": 0.5152
+    },
+    {
+      "_row": "ZNF419",
+      "logFC": -1.2895,
+      "logCPM": 2.685,
+      "PValue": 0.016,
+      "FDR": 0.5152
+    },
+    {
+      "_row": "OR7E39P",
+      "logFC": -0.8602,
+      "logCPM": 3.727,
+      "PValue": 0.0169,
+      "FDR": 0.5271
+    },
+    {
+      "_row": "NPIPB1P",
+      "logFC": 1.326,
+      "logCPM": 2.6893,
+      "PValue": 0.0195,
+      "FDR": 0.5917
+    },
+    {
+      "_row": "RP11-443N24.1",
+      "logFC": 0.6196,
+      "logCPM": 4.7947,
+      "PValue": 0.0211,
+      "FDR": 0.6214
+    },
+    {
+      "_row": "RP11-284H19.1",
+      "logFC": 0.9897,
+      "logCPM": 3.239,
+      "PValue": 0.0227,
+      "FDR": 0.6489
+    },
+    {
+      "_row": "RP11-383I23.2",
+      "logFC": -0.6011,
+      "logCPM": 4.6717,
+      "PValue": 0.0266,
+      "FDR": 0.7372
+    },
+    {
+      "_row": "CCL24",
+      "logFC": 1.7136,
+      "logCPM": 2.1156,
+      "PValue": 0.0313,
+      "FDR": 0.8364
+    },
+    {
+      "_row": "RP11-659P15.2",
+      "logFC": 4.142,
+      "logCPM": 1.2408,
+      "PValue": 0.0327,
+      "FDR": 0.8364
+    },
+    {
+      "_row": "DZIP1L",
+      "logFC": -4.0297,
+      "logCPM": 1.2382,
+      "PValue": 0.0327,
+      "FDR": 0.8364
+    },
+    {
+      "_row": "RP11-673C5.2",
+      "logFC": -1.3472,
+      "logCPM": 2.3526,
+      "PValue": 0.0352,
+      "FDR": 0.8645
+    },
+    {
+      "_row": "ST14",
+      "logFC": 0.4682,
+      "logCPM": 5.6095,
+      "PValue": 0.0363,
+      "FDR": 0.8645
+    },
+    {
+      "_row": "RN7SL692P",
+      "logFC": -0.4248,
+      "logCPM": 6.2029,
+      "PValue": 0.0364,
+      "FDR": 0.8645
+    },
+    {
+      "_row": "MIR4757",
+      "logFC": 0.3337,
+      "logCPM": 9.9238,
+      "PValue": 0.0386,
+      "FDR": 0.8645
+    },
+    {
+      "_row": "SCRT2",
+      "logFC": -1.7659,
+      "logCPM": 1.8241,
+      "PValue": 0.0392,
+      "FDR": 0.8645
+    },
+    {
+      "_row": "CARKD",
+      "logFC": 0.9409,
+      "logCPM": 3.098,
+      "PValue": 0.0397,
+      "FDR": 0.8645
+    },
+    {
+      "_row": "RP4-534N18.2",
+      "logFC": 0.8537,
+      "logCPM": 3.3249,
+      "PValue": 0.0398,
+      "FDR": 0.8645
+    },
+    {
+      "_row": "RP11-701P16.1",
+      "logFC": -2.5091,
+      "logCPM": 1.4638,
+      "PValue": 0.0416,
+      "FDR": 0.8733
+    },
+    {
+      "_row": "RNU4-69P",
+      "logFC": -0.8672,
+      "logCPM": 3.2433,
+      "PValue": 0.042,
+      "FDR": 0.8733
+    },
+    {
+      "_row": "AL590822.1",
+      "logFC": 0.48,
+      "logCPM": 5.348,
+      "PValue": 0.0429,
+      "FDR": 0.8745
+    },
+    {
+      "_row": "RP11-298J23.8",
+      "logFC": -0.7923,
+      "logCPM": 3.5119,
+      "PValue": 0.0445,
+      "FDR": 0.8885
+    },
+    {
+      "_row": "NLRC5",
+      "logFC": -1.4877,
+      "logCPM": 2.1106,
+      "PValue": 0.0474,
+      "FDR": 0.9289
+    },
+    {
+      "_row": "PITRM1",
+      "logFC": 0.4182,
+      "logCPM": 5.8338,
+      "PValue": 0.05,
+      "FDR": 0.9606
+    },
+    {
+      "_row": "MIR1224",
+      "logFC": 0.3026,
+      "logCPM": 11.372,
+      "PValue": 0.0571,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CCDC92",
+      "logFC": 1.0319,
+      "logCPM": 2.713,
+      "PValue": 0.0593,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTD-2370N5.3",
+      "logFC": -1.3327,
+      "logCPM": 2.1973,
+      "PValue": 0.0602,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TRIM22",
+      "logFC": -1.2522,
+      "logCPM": 2.1595,
+      "PValue": 0.0602,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GRAMD1C",
+      "logFC": 0.4455,
+      "logCPM": 5.2892,
+      "PValue": 0.0611,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RHEBP1",
+      "logFC": 1.7332,
+      "logCPM": 1.7173,
+      "PValue": 0.0625,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SGOL1-AS1",
+      "logFC": 3.8992,
+      "logCPM": 1.1601,
+      "PValue": 0.0644,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP1-29C18.8",
+      "logFC": 3.8955,
+      "logCPM": 1.1583,
+      "PValue": 0.0644,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL162424.2",
+      "logFC": 3.8955,
+      "logCPM": 1.1583,
+      "PValue": 0.0644,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RPL6P29",
+      "logFC": 3.8955,
+      "logCPM": 1.1583,
+      "PValue": 0.0644,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL17P",
+      "logFC": -3.7909,
+      "logCPM": 1.1593,
+      "PValue": 0.0644,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MUC17",
+      "logFC": -3.7909,
+      "logCPM": 1.1593,
+      "PValue": 0.0644,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SPRR2C",
+      "logFC": -2.0139,
+      "logCPM": 1.6528,
+      "PValue": 0.0698,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC000123.4",
+      "logFC": 0.8718,
+      "logCPM": 2.9314,
+      "PValue": 0.0707,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-255A11.4",
+      "logFC": 0.4477,
+      "logCPM": 5.0316,
+      "PValue": 0.0727,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TTTY2",
+      "logFC": -1.4127,
+      "logCPM": 2.2407,
+      "PValue": 0.0734,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-617I14.1",
+      "logFC": 2.5258,
+      "logCPM": 1.3962,
+      "PValue": 0.0736,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL391994.1",
+      "logFC": -2.3229,
+      "logCPM": 1.392,
+      "PValue": 0.0736,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU1-49P",
+      "logFC": -0.3616,
+      "logCPM": 6.1944,
+      "PValue": 0.0803,
+      "FDR": 1.0
+    },
+    {
+      "_row": "IGHV3OR16-10",
+      "logFC": 0.8021,
+      "logCPM": 3.0255,
+      "PValue": 0.0849,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ACTBP2",
+      "logFC": 0.272,
+      "logCPM": 13.1341,
+      "PValue": 0.0853,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PANX3",
+      "logFC": -0.2806,
+      "logCPM": 9.1227,
+      "PValue": 0.0875,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-21M24.3",
+      "logFC": 1.2894,
+      "logCPM": 2.0742,
+      "PValue": 0.0876,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC005606.1",
+      "logFC": 0.2887,
+      "logCPM": 8.2067,
+      "PValue": 0.0894,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PIWIL1",
+      "logFC": 0.8253,
+      "logCPM": 2.9093,
+      "PValue": 0.0916,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MUC15",
+      "logFC": 0.6986,
+      "logCPM": 3.2397,
+      "PValue": 0.0916,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-891P",
+      "logFC": 0.3791,
+      "logCPM": 5.5766,
+      "PValue": 0.0918,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC010970.1",
+      "logFC": 0.2679,
+      "logCPM": 11.1437,
+      "PValue": 0.0926,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CYP1A2",
+      "logFC": -0.5967,
+      "logCPM": 3.8864,
+      "PValue": 0.0945,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ASB17",
+      "logFC": -0.6538,
+      "logCPM": 3.7846,
+      "PValue": 0.0977,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL583784.1",
+      "logFC": -0.7042,
+      "logCPM": 3.2623,
+      "PValue": 0.098,
+      "FDR": 1.0
+    },
+    {
+      "_row": "BACH1",
+      "logFC": -0.6604,
+      "logCPM": 3.5695,
+      "PValue": 0.0991,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AP001626.2",
+      "logFC": 0.3105,
+      "logCPM": 6.7604,
+      "PValue": 0.101,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LA16c-358B7.3",
+      "logFC": -1.1236,
+      "logCPM": 2.2379,
+      "PValue": 0.1042,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CR762481.3",
+      "logFC": 0.4213,
+      "logCPM": 5.0067,
+      "PValue": 0.1045,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TTTY10",
+      "logFC": 0.3833,
+      "logCPM": 5.2819,
+      "PValue": 0.1055,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-140C18.2",
+      "logFC": 0.2493,
+      "logCPM": 15.2294,
+      "PValue": 0.114,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PCYOX1L",
+      "logFC": 1.9233,
+      "logCPM": 1.5309,
+      "PValue": 0.1146,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HRH4",
+      "logFC": -1.8708,
+      "logCPM": 1.5908,
+      "PValue": 0.1146,
+      "FDR": 1.0
+    },
+    {
+      "_row": "C8orf82",
+      "logFC": 1.082,
+      "logCPM": 2.2435,
+      "PValue": 0.1207,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-190G13.4",
+      "logFC": -0.2807,
+      "logCPM": 7.1314,
+      "PValue": 0.1217,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTA-941F9.9",
+      "logFC": 0.3569,
+      "logCPM": 5.4843,
+      "PValue": 0.1251,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LINC00701",
+      "logFC": -0.6245,
+      "logCPM": 3.5657,
+      "PValue": 0.1252,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC007364.1",
+      "logFC": 0.9514,
+      "logCPM": 2.5004,
+      "PValue": 0.1269,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC069155.1",
+      "logFC": 3.6026,
+      "logCPM": 1.0731,
+      "PValue": 0.1272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ZNF699",
+      "logFC": 3.598,
+      "logCPM": 1.0709,
+      "PValue": 0.1272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC083855.5",
+      "logFC": 3.598,
+      "logCPM": 1.0709,
+      "PValue": 0.1272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OR7C2",
+      "logFC": 3.598,
+      "logCPM": 1.0709,
+      "PValue": 0.1272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTD-2144E22.6",
+      "logFC": -3.4942,
+      "logCPM": 1.0717,
+      "PValue": 0.1272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-498M5.2",
+      "logFC": -3.4942,
+      "logCPM": 1.0717,
+      "PValue": 0.1272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RAI14",
+      "logFC": -3.493,
+      "logCPM": 1.071,
+      "PValue": 0.1272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HSP90AA1",
+      "logFC": -3.4928,
+      "logCPM": 1.071,
+      "PValue": 0.1272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL762P",
+      "logFC": -3.4917,
+      "logCPM": 1.0704,
+      "PValue": 0.1272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL777P",
+      "logFC": -3.4892,
+      "logCPM": 1.0691,
+      "PValue": 0.1272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PPAN",
+      "logFC": -3.4892,
+      "logCPM": 1.0691,
+      "PValue": 0.1272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RER1",
+      "logFC": -3.4892,
+      "logCPM": 1.0691,
+      "PValue": 0.1272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NICN1-AS1",
+      "logFC": -3.4892,
+      "logCPM": 1.0691,
+      "PValue": 0.1272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "IER2",
+      "logFC": 2.3094,
+      "logCPM": 1.3193,
+      "PValue": 0.1289,
+      "FDR": 1.0
+    },
+    {
+      "_row": "hsa-mir-4539",
+      "logFC": 0.7584,
+      "logCPM": 2.9986,
+      "PValue": 0.1364,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PTP4A1P5",
+      "logFC": -0.9331,
+      "logCPM": 2.3914,
+      "PValue": 0.1369,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR3686",
+      "logFC": 0.7523,
+      "logCPM": 2.8045,
+      "PValue": 0.1392,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP1-13D10.3",
+      "logFC": -0.2782,
+      "logCPM": 6.7577,
+      "PValue": 0.1426,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OR52N4",
+      "logFC": 1.1707,
+      "logCPM": 2.1598,
+      "PValue": 0.1464,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC137932.5",
+      "logFC": -0.9979,
+      "logCPM": 2.4248,
+      "PValue": 0.1526,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RPS27P29",
+      "logFC": -0.8562,
+      "logCPM": 2.6517,
+      "PValue": 0.1528,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CBWD1",
+      "logFC": -1.0911,
+      "logCPM": 1.9272,
+      "PValue": 0.1535,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ADAMTS12",
+      "logFC": -0.724,
+      "logCPM": 2.9018,
+      "PValue": 0.1606,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AP2S1",
+      "logFC": 0.2389,
+      "logCPM": 8.0445,
+      "PValue": 0.1641,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-167P22.3",
+      "logFC": -0.251,
+      "logCPM": 7.0683,
+      "PValue": 0.1696,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RPS23P4",
+      "logFC": -0.2208,
+      "logCPM": 10.0878,
+      "PValue": 0.1701,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC092660.1",
+      "logFC": -0.2603,
+      "logCPM": 6.716,
+      "PValue": 0.1711,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-835P",
+      "logFC": 0.6366,
+      "logCPM": 3.0033,
+      "PValue": 0.1813,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LINC00492",
+      "logFC": -1.5319,
+      "logCPM": 1.4633,
+      "PValue": 0.1855,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-16B9.1",
+      "logFC": 0.5517,
+      "logCPM": 3.4495,
+      "PValue": 0.1952,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CRNN",
+      "logFC": 0.2055,
+      "logCPM": 10.5037,
+      "PValue": 0.1996,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-69H7.3",
+      "logFC": 0.3128,
+      "logCPM": 5.1934,
+      "PValue": 0.2006,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC009413.2",
+      "logFC": -0.3455,
+      "logCPM": 4.6619,
+      "PValue": 0.2063,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-641A6.2",
+      "logFC": -0.227,
+      "logCPM": 7.153,
+      "PValue": 0.2088,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PTMAP4",
+      "logFC": 0.2949,
+      "logCPM": 5.3023,
+      "PValue": 0.2096,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-778D9.12",
+      "logFC": -0.2418,
+      "logCPM": 6.5609,
+      "PValue": 0.2144,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL71P",
+      "logFC": -0.9711,
+      "logCPM": 1.8797,
+      "PValue": 0.2208,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ATG2A",
+      "logFC": 2.0641,
+      "logCPM": 1.2406,
+      "PValue": 0.2229,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AMBP",
+      "logFC": -1.8692,
+      "logCPM": 1.2401,
+      "PValue": 0.2229,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-319G9.5",
+      "logFC": 0.8952,
+      "logCPM": 2.1602,
+      "PValue": 0.2253,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MPV17L2",
+      "logFC": -0.1917,
+      "logCPM": 10.455,
+      "PValue": 0.2321,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GAPDHP32",
+      "logFC": 1.4187,
+      "logCPM": 1.5942,
+      "PValue": 0.2341,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL191P",
+      "logFC": 0.2284,
+      "logCPM": 6.515,
+      "PValue": 0.2353,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RYK",
+      "logFC": 0.1936,
+      "logCPM": 8.9884,
+      "PValue": 0.2402,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-616M22.9",
+      "logFC": -0.4043,
+      "logCPM": 3.997,
+      "PValue": 0.2437,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-11C20.1",
+      "logFC": 0.1855,
+      "logCPM": 10.7027,
+      "PValue": 0.2461,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTD-2532D12.5",
+      "logFC": 1.0717,
+      "logCPM": 1.9781,
+      "PValue": 0.2503,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TTC21B",
+      "logFC": 3.2259,
+      "logCPM": 0.9794,
+      "PValue": 0.2522,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GINS4",
+      "logFC": 3.2236,
+      "logCPM": 0.9783,
+      "PValue": 0.2522,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-323I15.5",
+      "logFC": 3.2228,
+      "logCPM": 0.978,
+      "PValue": 0.2522,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KLHDC8A",
+      "logFC": 3.2228,
+      "logCPM": 0.978,
+      "PValue": 0.2522,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KRT18P27",
+      "logFC": 3.2225,
+      "logCPM": 0.9778,
+      "PValue": 0.2522,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CHD8",
+      "logFC": 3.2225,
+      "logCPM": 0.9778,
+      "PValue": 0.2522,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SETD2",
+      "logFC": -3.1206,
+      "logCPM": 0.9784,
+      "PValue": 0.2522,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-473O4.1",
+      "logFC": -3.1199,
+      "logCPM": 0.978,
+      "PValue": 0.2522,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-54O7.10",
+      "logFC": -3.1185,
+      "logCPM": 0.9773,
+      "PValue": 0.2522,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP1-272J12.1",
+      "logFC": -3.118,
+      "logCPM": 0.977,
+      "PValue": 0.2522,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RASSF7",
+      "logFC": -3.1174,
+      "logCPM": 0.9767,
+      "PValue": 0.2522,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-84C10.3",
+      "logFC": -3.1169,
+      "logCPM": 0.9765,
+      "PValue": 0.2522,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR4637",
+      "logFC": 0.5414,
+      "logCPM": 3.1154,
+      "PValue": 0.2554,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FHL2",
+      "logFC": 0.1889,
+      "logCPM": 8.6824,
+      "PValue": 0.2567,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL662800.2",
+      "logFC": 0.18,
+      "logCPM": 9.9287,
+      "PValue": 0.2656,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HOXC12",
+      "logFC": 0.1825,
+      "logCPM": 9.0623,
+      "PValue": 0.2671,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-513D5.5",
+      "logFC": 0.5896,
+      "logCPM": 2.6579,
+      "PValue": 0.2673,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CDY23P",
+      "logFC": 0.2113,
+      "logCPM": 6.7316,
+      "PValue": 0.27,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MTND4P15",
+      "logFC": -0.52,
+      "logCPM": 3.2186,
+      "PValue": 0.275,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP3-340B19.2",
+      "logFC": 0.1753,
+      "logCPM": 10.3102,
+      "PValue": 0.2753,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AP001462.6",
+      "logFC": -0.9916,
+      "logCPM": 1.7139,
+      "PValue": 0.276,
+      "FDR": 1.0
+    },
+    {
+      "_row": "DNAJB7",
+      "logFC": -0.3823,
+      "logCPM": 3.9822,
+      "PValue": 0.2764,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-145M4.3",
+      "logFC": -0.1965,
+      "logCPM": 7.1609,
+      "PValue": 0.2768,
+      "FDR": 1.0
+    },
+    {
+      "_row": "STRAP",
+      "logFC": -0.1776,
+      "logCPM": 9.3055,
+      "PValue": 0.2794,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-284P",
+      "logFC": 0.4139,
+      "logCPM": 3.6682,
+      "PValue": 0.283,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KRT18P19",
+      "logFC": -0.4069,
+      "logCPM": 3.8465,
+      "PValue": 0.283,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ECHS1",
+      "logFC": -0.306,
+      "logCPM": 4.905,
+      "PValue": 0.2868,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GUSBP2",
+      "logFC": 0.3335,
+      "logCPM": 4.4693,
+      "PValue": 0.2877,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-638L3.2",
+      "logFC": -1.3171,
+      "logCPM": 1.3927,
+      "PValue": 0.2949,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-304L19.11",
+      "logFC": 0.5441,
+      "logCPM": 2.7726,
+      "PValue": 0.2954,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NDNL2",
+      "logFC": 0.788,
+      "logCPM": 2.1173,
+      "PValue": 0.3017,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CLDN10-AS1",
+      "logFC": 0.1613,
+      "logCPM": 12.9276,
+      "PValue": 0.3077,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR511-1",
+      "logFC": -0.1927,
+      "logCPM": 6.77,
+      "PValue": 0.3078,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-483E23.5",
+      "logFC": -0.5739,
+      "logCPM": 2.8261,
+      "PValue": 0.3085,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PIEZO1",
+      "logFC": -0.1588,
+      "logCPM": 13.2039,
+      "PValue": 0.315,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FAM177A1P1",
+      "logFC": -0.1898,
+      "logCPM": 6.8081,
+      "PValue": 0.3188,
+      "FDR": 1.0
+    },
+    {
+      "_row": "IFNK",
+      "logFC": -0.5149,
+      "logCPM": 2.9288,
+      "PValue": 0.3332,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP3-523E19.2",
+      "logFC": -0.5659,
+      "logCPM": 2.5972,
+      "PValue": 0.3346,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-12D24.7",
+      "logFC": 0.3262,
+      "logCPM": 4.1206,
+      "PValue": 0.3446,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-693I21.1",
+      "logFC": -0.7701,
+      "logCPM": 2.3214,
+      "PValue": 0.3451,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-451B8.1",
+      "logFC": 0.2873,
+      "logCPM": 4.2934,
+      "PValue": 0.347,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-468E2.5",
+      "logFC": -0.1561,
+      "logCPM": 8.8249,
+      "PValue": 0.348,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SKA3",
+      "logFC": 1.2374,
+      "logCPM": 1.5304,
+      "PValue": 0.351,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HCG4P7",
+      "logFC": 0.345,
+      "logCPM": 3.5312,
+      "PValue": 0.3513,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-722P11.4",
+      "logFC": 0.2424,
+      "logCPM": 4.851,
+      "PValue": 0.3543,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-47A8.5",
+      "logFC": -0.1464,
+      "logCPM": 11.8529,
+      "PValue": 0.356,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KLHL26",
+      "logFC": 0.1531,
+      "logCPM": 8.7369,
+      "PValue": 0.358,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CDKL1",
+      "logFC": -0.2117,
+      "logCPM": 5.4556,
+      "PValue": 0.3598,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTC-467M3.2",
+      "logFC": 0.1447,
+      "logCPM": 12.4949,
+      "PValue": 0.3605,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HNRNPUL2",
+      "logFC": 0.153,
+      "logCPM": 8.6662,
+      "PValue": 0.3607,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FFAR2",
+      "logFC": 0.1454,
+      "logCPM": 11.4199,
+      "PValue": 0.3608,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HCG22",
+      "logFC": -0.207,
+      "logCPM": 5.7049,
+      "PValue": 0.3658,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-204C16.4",
+      "logFC": 0.1497,
+      "logCPM": 8.8118,
+      "PValue": 0.3679,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PARD3",
+      "logFC": 0.2761,
+      "logCPM": 4.4125,
+      "PValue": 0.3776,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ZBED3-AS1",
+      "logFC": -0.1921,
+      "logCPM": 5.9541,
+      "PValue": 0.3782,
+      "FDR": 1.0
+    },
+    {
+      "_row": "BX119957.2",
+      "logFC": 0.1438,
+      "logCPM": 9.4488,
+      "PValue": 0.3786,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FBXO33",
+      "logFC": 1.7661,
+      "logCPM": 1.158,
+      "PValue": 0.3787,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CSF2RB",
+      "logFC": 1.766,
+      "logCPM": 1.1579,
+      "PValue": 0.3787,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CXCL9",
+      "logFC": 1.7654,
+      "logCPM": 1.1582,
+      "PValue": 0.3787,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC023385.1",
+      "logFC": -0.1413,
+      "logCPM": 10.2759,
+      "PValue": 0.3794,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-789C2.1",
+      "logFC": 0.2531,
+      "logCPM": 4.2662,
+      "PValue": 0.3832,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FECHP1",
+      "logFC": 0.4757,
+      "logCPM": 3.1432,
+      "PValue": 0.3867,
+      "FDR": 1.0
+    },
+    {
+      "_row": "VAX2",
+      "logFC": 0.1421,
+      "logCPM": 8.9791,
+      "PValue": 0.3879,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL555P",
+      "logFC": 0.1855,
+      "logCPM": 5.9335,
+      "PValue": 0.3891,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC100832.1",
+      "logFC": 1.0451,
+      "logCPM": 1.6558,
+      "PValue": 0.3962,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP1-39G22.7",
+      "logFC": -0.8238,
+      "logCPM": 1.6537,
+      "PValue": 0.3962,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NUCB2",
+      "logFC": -0.4174,
+      "logCPM": 3.2152,
+      "PValue": 0.3963,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TOM1L1",
+      "logFC": -0.5658,
+      "logCPM": 2.115,
+      "PValue": 0.3978,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PGAM5",
+      "logFC": 0.1326,
+      "logCPM": 13.0716,
+      "PValue": 0.4015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR512-1",
+      "logFC": 0.2465,
+      "logCPM": 4.5098,
+      "PValue": 0.4017,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-495P10.1",
+      "logFC": -0.1836,
+      "logCPM": 5.6197,
+      "PValue": 0.4018,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC005014.5",
+      "logFC": -0.2154,
+      "logCPM": 5.064,
+      "PValue": 0.4049,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL208P",
+      "logFC": 0.1322,
+      "logCPM": 11.1317,
+      "PValue": 0.4069,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FP885535.1",
+      "logFC": 0.1584,
+      "logCPM": 6.847,
+      "PValue": 0.4073,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KRT18P29",
+      "logFC": -0.1875,
+      "logCPM": 5.8842,
+      "PValue": 0.4124,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC093850.1",
+      "logFC": -0.1298,
+      "logCPM": 11.7989,
+      "PValue": 0.4134,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TNP1",
+      "logFC": -0.159,
+      "logCPM": 6.6403,
+      "PValue": 0.4141,
+      "FDR": 1.0
+    },
+    {
+      "_row": "IP6K1",
+      "logFC": 0.2176,
+      "logCPM": 5.1091,
+      "PValue": 0.4157,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OLFM1",
+      "logFC": 0.1281,
+      "logCPM": 13.5926,
+      "PValue": 0.4171,
+      "FDR": 1.0
+    },
+    {
+      "_row": "EFCAB14P1",
+      "logFC": -0.1318,
+      "logCPM": 9.3112,
+      "PValue": 0.4222,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TRAJ42",
+      "logFC": -0.181,
+      "logCPM": 5.4901,
+      "PValue": 0.4333,
+      "FDR": 1.0
+    },
+    {
+      "_row": "UNCX",
+      "logFC": -0.6922,
+      "logCPM": 1.77,
+      "PValue": 0.4335,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ZSCAN16",
+      "logFC": -0.6915,
+      "logCPM": 1.7692,
+      "PValue": 0.4335,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TAB3P1",
+      "logFC": -0.1315,
+      "logCPM": 8.52,
+      "PValue": 0.4343,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-332H18.5",
+      "logFC": -0.1277,
+      "logCPM": 9.0383,
+      "PValue": 0.4382,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNA5SP37",
+      "logFC": -0.1319,
+      "logCPM": 8.0187,
+      "PValue": 0.4441,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KCTD5",
+      "logFC": 0.1422,
+      "logCPM": 7.0134,
+      "PValue": 0.4442,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-203P23.2",
+      "logFC": 0.1217,
+      "logCPM": 9.7133,
+      "PValue": 0.4527,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PPA2",
+      "logFC": -0.119,
+      "logCPM": 11.0544,
+      "PValue": 0.4555,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC079199.2",
+      "logFC": 1.2835,
+      "logCPM": 1.3195,
+      "PValue": 0.458,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SH3KBP1",
+      "logFC": 1.2812,
+      "logCPM": 1.3185,
+      "PValue": 0.458,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ZCCHC13",
+      "logFC": -1.0751,
+      "logCPM": 1.3186,
+      "PValue": 0.458,
+      "FDR": 1.0
+    },
+    {
+      "_row": "DYNC2H1",
+      "logFC": -1.0728,
+      "logCPM": 1.3195,
+      "PValue": 0.458,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6ATAC8P",
+      "logFC": -1.072,
+      "logCPM": 1.3191,
+      "PValue": 0.458,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC007292.4",
+      "logFC": 0.6352,
+      "logCPM": 2.3558,
+      "PValue": 0.4597,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-639F1.2",
+      "logFC": 0.1731,
+      "logCPM": 5.5044,
+      "PValue": 0.4598,
+      "FDR": 1.0
+    },
+    {
+      "_row": "IGLV3-17",
+      "logFC": -0.3459,
+      "logCPM": 3.1798,
+      "PValue": 0.4629,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SNORD83A",
+      "logFC": -0.1172,
+      "logCPM": 10.6192,
+      "PValue": 0.4642,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PLEKHA2",
+      "logFC": -0.1158,
+      "logCPM": 11.4521,
+      "PValue": 0.4665,
+      "FDR": 1.0
+    },
+    {
+      "_row": "DNAJA1P6",
+      "logFC": -0.2368,
+      "logCPM": 4.075,
+      "PValue": 0.4715,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CADM4",
+      "logFC": -0.1174,
+      "logCPM": 9.5649,
+      "PValue": 0.4717,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC010729.1",
+      "logFC": 0.1199,
+      "logCPM": 8.6968,
+      "PValue": 0.4725,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ADAD1P2",
+      "logFC": 0.1155,
+      "logCPM": 10.2787,
+      "PValue": 0.4726,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC104651.3",
+      "logFC": 0.1134,
+      "logCPM": 12.7187,
+      "PValue": 0.4732,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SNORD67",
+      "logFC": 0.1123,
+      "logCPM": 12.772,
+      "PValue": 0.4774,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RAD52",
+      "logFC": 0.1897,
+      "logCPM": 5.1328,
+      "PValue": 0.4778,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL422P",
+      "logFC": 0.1182,
+      "logCPM": 8.825,
+      "PValue": 0.4783,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTC-431G16.3",
+      "logFC": -0.1149,
+      "logCPM": 9.2166,
+      "PValue": 0.4846,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PERP",
+      "logFC": -0.2188,
+      "logCPM": 4.1538,
+      "PValue": 0.4855,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GUCA1B",
+      "logFC": 0.3668,
+      "logCPM": 2.9242,
+      "PValue": 0.4899,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNA5SP480",
+      "logFC": -0.1184,
+      "logCPM": 8.108,
+      "PValue": 0.4952,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU7-108P",
+      "logFC": -0.1347,
+      "logCPM": 6.5683,
+      "PValue": 0.4958,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PSME2",
+      "logFC": 0.3498,
+      "logCPM": 2.9771,
+      "PValue": 0.5002,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTD-2643I7.1",
+      "logFC": -0.1065,
+      "logCPM": 12.0985,
+      "PValue": 0.5014,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RPL23AP6",
+      "logFC": 2.7154,
+      "logCPM": 0.8794,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KRT18P34",
+      "logFC": 2.7154,
+      "logCPM": 0.8794,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-690I21.2",
+      "logFC": 2.7154,
+      "logCPM": 0.8794,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OR5J1P",
+      "logFC": 2.7154,
+      "logCPM": 0.8794,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-323N12.5",
+      "logFC": 2.7144,
+      "logCPM": 0.8789,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-236P13.1",
+      "logFC": 2.7134,
+      "logCPM": 0.8784,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL729P",
+      "logFC": 2.7134,
+      "logCPM": 0.8784,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-263K19.8",
+      "logFC": 2.7131,
+      "logCPM": 0.8783,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTC-224D3.1",
+      "logFC": 2.7131,
+      "logCPM": 0.8783,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CREB5",
+      "logFC": 2.7131,
+      "logCPM": 0.8783,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HMGN1P38",
+      "logFC": -2.6158,
+      "logCPM": 0.8787,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PWWP2AP1",
+      "logFC": -2.6151,
+      "logCPM": 0.8783,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "C9orf153",
+      "logFC": -2.6143,
+      "logCPM": 0.8779,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "DCAF11",
+      "logFC": -2.6138,
+      "logCPM": 0.8777,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SLC4A7",
+      "logFC": -2.6138,
+      "logCPM": 0.8777,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "JAK3",
+      "logFC": -2.6132,
+      "logCPM": 0.8774,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-250H24.6",
+      "logFC": -2.6132,
+      "logCPM": 0.8774,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR27B",
+      "logFC": -2.6132,
+      "logCPM": 0.8774,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-142C4.6",
+      "logFC": -2.6132,
+      "logCPM": 0.8774,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC007773.3",
+      "logFC": -2.6132,
+      "logCPM": 0.8774,
+      "PValue": 0.5015,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MCU",
+      "logFC": -0.1076,
+      "logCPM": 10.671,
+      "PValue": 0.5017,
+      "FDR": 1.0
+    },
+    {
+      "_row": "C16orf52",
+      "logFC": -0.1224,
+      "logCPM": 7.26,
+      "PValue": 0.5021,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NFIX",
+      "logFC": -0.3092,
+      "logCPM": 3.3904,
+      "PValue": 0.5037,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC067718.1",
+      "logFC": -0.1054,
+      "logCPM": 13.7915,
+      "PValue": 0.5042,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC098650.1",
+      "logFC": -0.1055,
+      "logCPM": 12.7509,
+      "PValue": 0.5047,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL035610.2",
+      "logFC": -0.2263,
+      "logCPM": 3.9914,
+      "PValue": 0.5058,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PF4V1",
+      "logFC": 0.1044,
+      "logCPM": 12.9165,
+      "PValue": 0.5089,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CLIC3",
+      "logFC": 0.1086,
+      "logCPM": 8.5011,
+      "PValue": 0.5178,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ZNF501",
+      "logFC": -0.1029,
+      "logCPM": 10.9006,
+      "PValue": 0.5198,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TCEB1P23",
+      "logFC": 0.2753,
+      "logCPM": 3.4677,
+      "PValue": 0.5249,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KRTAP10-8",
+      "logFC": 0.1059,
+      "logCPM": 8.1776,
+      "PValue": 0.5373,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RPP21",
+      "logFC": -0.097,
+      "logCPM": 17.0435,
+      "PValue": 0.5382,
+      "FDR": 1.0
+    },
+    {
+      "_row": "UBE2E1",
+      "logFC": 0.1004,
+      "logCPM": 9.4943,
+      "PValue": 0.5385,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CR774188.1",
+      "logFC": -0.1033,
+      "logCPM": 8.4207,
+      "PValue": 0.5426,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNA5SP36",
+      "logFC": 0.1017,
+      "logCPM": 8.7441,
+      "PValue": 0.5431,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC073569.1",
+      "logFC": 0.0971,
+      "logCPM": 10.7468,
+      "PValue": 0.5436,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-575L7.2",
+      "logFC": 0.0946,
+      "logCPM": 12.564,
+      "PValue": 0.5499,
+      "FDR": 1.0
+    },
+    {
+      "_row": "YIF1B",
+      "logFC": -0.0963,
+      "logCPM": 9.7128,
+      "PValue": 0.5538,
+      "FDR": 1.0
+    },
+    {
+      "_row": "BHMT2",
+      "logFC": -0.1682,
+      "logCPM": 4.8839,
+      "PValue": 0.5544,
+      "FDR": 1.0
+    },
+    {
+      "_row": "C1orf110",
+      "logFC": 0.093,
+      "logCPM": 12.1807,
+      "PValue": 0.5571,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ITGB2",
+      "logFC": 0.1024,
+      "logCPM": 7.538,
+      "PValue": 0.5642,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-439C15.5",
+      "logFC": 0.0911,
+      "logCPM": 10.9119,
+      "PValue": 0.5687,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HNRNPA3P9",
+      "logFC": -0.0914,
+      "logCPM": 10.2051,
+      "PValue": 0.5708,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-295P22.2",
+      "logFC": 0.0919,
+      "logCPM": 9.6347,
+      "PValue": 0.5718,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TFAMP1",
+      "logFC": 0.0896,
+      "logCPM": 11.3314,
+      "PValue": 0.5736,
+      "FDR": 1.0
+    },
+    {
+      "_row": "UBE2Q2P6",
+      "logFC": -0.0888,
+      "logCPM": 12.185,
+      "PValue": 0.5752,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-242C24.3",
+      "logFC": -0.3277,
+      "logCPM": 2.9055,
+      "PValue": 0.5762,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-557C18.4",
+      "logFC": 0.309,
+      "logCPM": 2.9031,
+      "PValue": 0.5762,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CXCR3",
+      "logFC": -0.1383,
+      "logCPM": 5.3125,
+      "PValue": 0.5762,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CR759848.2",
+      "logFC": 0.0881,
+      "logCPM": 11.9185,
+      "PValue": 0.5786,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OPCML-IT1",
+      "logFC": -0.0882,
+      "logCPM": 11.6552,
+      "PValue": 0.5788,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AP000253.1",
+      "logFC": 0.0917,
+      "logCPM": 8.8806,
+      "PValue": 0.5824,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PHLDA1",
+      "logFC": -0.0866,
+      "logCPM": 12.3727,
+      "PValue": 0.5843,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTAGE13P",
+      "logFC": -0.4121,
+      "logCPM": 2.36,
+      "PValue": 0.5869,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-286N22.10",
+      "logFC": -0.087,
+      "logCPM": 10.4556,
+      "PValue": 0.5882,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ZNRF4",
+      "logFC": 0.7554,
+      "logCPM": 1.7151,
+      "PValue": 0.5884,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ABCE1",
+      "logFC": 0.7554,
+      "logCPM": 1.7161,
+      "PValue": 0.5884,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTD-2254N19.1",
+      "logFC": 0.2857,
+      "logCPM": 3.004,
+      "PValue": 0.5941,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-439L8.4",
+      "logFC": 0.1123,
+      "logCPM": 6.186,
+      "PValue": 0.5948,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP5-1033K19.2",
+      "logFC": 0.0999,
+      "logCPM": 7.1295,
+      "PValue": 0.5957,
+      "FDR": 1.0
+    },
+    {
+      "_row": "DENND5B",
+      "logFC": -0.0845,
+      "logCPM": 10.4675,
+      "PValue": 0.5989,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TP53BP2",
+      "logFC": 0.4042,
+      "logCPM": 2.4299,
+      "PValue": 0.6007,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OR4F14P",
+      "logFC": 0.165,
+      "logCPM": 4.4971,
+      "PValue": 0.6045,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TBC1D4",
+      "logFC": 0.208,
+      "logCPM": 3.9171,
+      "PValue": 0.6054,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SMARCC2",
+      "logFC": -0.1872,
+      "logCPM": 4.2629,
+      "PValue": 0.6095,
+      "FDR": 1.0
+    },
+    {
+      "_row": "DUX4",
+      "logFC": 0.667,
+      "logCPM": 1.8252,
+      "PValue": 0.6152,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-146F11.3",
+      "logFC": 0.6652,
+      "logCPM": 1.8256,
+      "PValue": 0.6152,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-349G13.1",
+      "logFC": -0.4454,
+      "logCPM": 1.8254,
+      "PValue": 0.6152,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OR10G7",
+      "logFC": 0.079,
+      "logCPM": 12.8713,
+      "PValue": 0.6172,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-459D22.2",
+      "logFC": -0.1537,
+      "logCPM": 4.848,
+      "PValue": 0.6218,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL135901.1",
+      "logFC": 0.372,
+      "logCPM": 2.566,
+      "PValue": 0.6248,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OR4F28P",
+      "logFC": -0.0773,
+      "logCPM": 12.0604,
+      "PValue": 0.626,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TRAJ54",
+      "logFC": 0.0883,
+      "logCPM": 6.9626,
+      "PValue": 0.6264,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC005197.2",
+      "logFC": 1.3939,
+      "logCPM": 1.0721,
+      "PValue": 0.6272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HIST2H3D",
+      "logFC": 1.391,
+      "logCPM": 1.0713,
+      "PValue": 0.6272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ITGAL",
+      "logFC": 1.3904,
+      "logCPM": 1.0705,
+      "PValue": 0.6272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SRCIN1",
+      "logFC": 1.3904,
+      "logCPM": 1.0705,
+      "PValue": 0.6272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-757G1.6",
+      "logFC": -1.2011,
+      "logCPM": 1.0709,
+      "PValue": 0.6272,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RIPK2",
+      "logFC": 0.0769,
+      "logCPM": 10.7439,
+      "PValue": 0.6306,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP1-137D17.1",
+      "logFC": 0.1317,
+      "logCPM": 4.697,
+      "PValue": 0.6345,
+      "FDR": 1.0
+    },
+    {
+      "_row": "BX294158.4",
+      "logFC": 0.157,
+      "logCPM": 3.7074,
+      "PValue": 0.6356,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TRIM10",
+      "logFC": 0.0749,
+      "logCPM": 12.0708,
+      "PValue": 0.6367,
+      "FDR": 1.0
+    },
+    {
+      "_row": "IGHVIII-13-1",
+      "logFC": -0.076,
+      "logCPM": 10.1544,
+      "PValue": 0.6373,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-331N16.1",
+      "logFC": 0.0786,
+      "logCPM": 8.3316,
+      "PValue": 0.6418,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GAPDHP40",
+      "logFC": -0.0733,
+      "logCPM": 13.0194,
+      "PValue": 0.6429,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CALCOCO2",
+      "logFC": -0.0741,
+      "logCPM": 10.1785,
+      "PValue": 0.6459,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NRBF2",
+      "logFC": -0.0721,
+      "logCPM": 13.8054,
+      "PValue": 0.6478,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-554D15.1",
+      "logFC": -0.0738,
+      "logCPM": 9.9389,
+      "PValue": 0.6492,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TAF8",
+      "logFC": -0.2302,
+      "logCPM": 3.3526,
+      "PValue": 0.6502,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-701H24.7",
+      "logFC": -0.0915,
+      "logCPM": 6.2884,
+      "PValue": 0.6524,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NPR1",
+      "logFC": 0.0713,
+      "logCPM": 11.6745,
+      "PValue": 0.6538,
+      "FDR": 1.0
+    },
+    {
+      "_row": "APOC4",
+      "logFC": -0.0708,
+      "logCPM": 11.9198,
+      "PValue": 0.6558,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-367G6.3",
+      "logFC": -0.0705,
+      "logCPM": 11.0277,
+      "PValue": 0.6587,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-644F5.10",
+      "logFC": 0.0705,
+      "logCPM": 9.9985,
+      "PValue": 0.663,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR3132",
+      "logFC": 0.0685,
+      "logCPM": 12.4933,
+      "PValue": 0.6655,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SYT12",
+      "logFC": 0.1292,
+      "logCPM": 4.878,
+      "PValue": 0.6663,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RBM19",
+      "logFC": 0.0671,
+      "logCPM": 14.8377,
+      "PValue": 0.6705,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ADAM15",
+      "logFC": -0.0672,
+      "logCPM": 11.9458,
+      "PValue": 0.6719,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-377D9.3",
+      "logFC": 0.0672,
+      "logCPM": 11.7464,
+      "PValue": 0.6723,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC140481.8",
+      "logFC": 0.1872,
+      "logCPM": 3.9626,
+      "PValue": 0.6723,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OMG",
+      "logFC": -0.1182,
+      "logCPM": 4.9522,
+      "PValue": 0.6782,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SMIM3",
+      "logFC": -0.0642,
+      "logCPM": 12.2475,
+      "PValue": 0.6854,
+      "FDR": 1.0
+    },
+    {
+      "_row": "EFNA3",
+      "logFC": -0.1805,
+      "logCPM": 2.9997,
+      "PValue": 0.686,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LINC01105",
+      "logFC": 0.348,
+      "logCPM": 2.2392,
+      "PValue": 0.6877,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTB-36H16.2",
+      "logFC": 0.145,
+      "logCPM": 4.0764,
+      "PValue": 0.6893,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ANTXRLP1",
+      "logFC": 0.9859,
+      "logCPM": 1.2405,
+      "PValue": 0.6903,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-517A5.7",
+      "logFC": 0.9842,
+      "logCPM": 1.2402,
+      "PValue": 0.6903,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP1-13P20.6",
+      "logFC": 0.9836,
+      "logCPM": 1.2405,
+      "PValue": 0.6903,
+      "FDR": 1.0
+    },
+    {
+      "_row": "C14orf132",
+      "logFC": -0.7768,
+      "logCPM": 1.2417,
+      "PValue": 0.6903,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SNORD79",
+      "logFC": -0.7761,
+      "logCPM": 1.239,
+      "PValue": 0.6903,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LHFPL3-AS1",
+      "logFC": -0.776,
+      "logCPM": 1.2412,
+      "PValue": 0.6903,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SF1",
+      "logFC": -0.0645,
+      "logCPM": 9.4609,
+      "PValue": 0.6943,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-607P23.1",
+      "logFC": -0.0643,
+      "logCPM": 9.5415,
+      "PValue": 0.6948,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ABHD17AP6",
+      "logFC": -0.0627,
+      "logCPM": 10.7628,
+      "PValue": 0.6956,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-497E19.1",
+      "logFC": 0.445,
+      "logCPM": 2.2813,
+      "PValue": 0.7006,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SNRPGP1",
+      "logFC": -0.0609,
+      "logCPM": 11.4318,
+      "PValue": 0.702,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTD-3064H18.2",
+      "logFC": -0.0614,
+      "logCPM": 10.4979,
+      "PValue": 0.7025,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GNAT3",
+      "logFC": 0.0663,
+      "logCPM": 8.1137,
+      "PValue": 0.7027,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ZNF886P",
+      "logFC": 0.0634,
+      "logCPM": 8.6077,
+      "PValue": 0.7078,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FTH1P14",
+      "logFC": -0.0615,
+      "logCPM": 9.1231,
+      "PValue": 0.7104,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC023992.1",
+      "logFC": -0.059,
+      "logCPM": 11.5539,
+      "PValue": 0.711,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PRRT2",
+      "logFC": -0.1052,
+      "logCPM": 4.603,
+      "PValue": 0.7112,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-463O12.3",
+      "logFC": -0.0569,
+      "logCPM": 11.806,
+      "PValue": 0.7202,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-318K15.2",
+      "logFC": -0.0614,
+      "logCPM": 8.3969,
+      "PValue": 0.7207,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SHISA5",
+      "logFC": -0.0562,
+      "logCPM": 13.1859,
+      "PValue": 0.7222,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CLDN10",
+      "logFC": -0.2664,
+      "logCPM": 2.4629,
+      "PValue": 0.7224,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AP002498.1",
+      "logFC": 0.0565,
+      "logCPM": 10.3461,
+      "PValue": 0.7257,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MBD3L2",
+      "logFC": -0.0841,
+      "logCPM": 5.5062,
+      "PValue": 0.7263,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AKAP2",
+      "logFC": 0.0553,
+      "logCPM": 12.8064,
+      "PValue": 0.7265,
+      "FDR": 1.0
+    },
+    {
+      "_row": "EEF1A1P37",
+      "logFC": 0.7773,
+      "logCPM": 1.3945,
+      "PValue": 0.7298,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HMGB3P12",
+      "logFC": 0.7761,
+      "logCPM": 1.3932,
+      "PValue": 0.7298,
+      "FDR": 1.0
+    },
+    {
+      "_row": "COX11",
+      "logFC": 0.0539,
+      "logCPM": 12.2079,
+      "PValue": 0.734,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RPL29P30",
+      "logFC": -0.0544,
+      "logCPM": 10.0968,
+      "PValue": 0.7367,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CHRM4",
+      "logFC": -0.0559,
+      "logCPM": 9.1349,
+      "PValue": 0.7368,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-8L8.2",
+      "logFC": -0.0531,
+      "logCPM": 11.4124,
+      "PValue": 0.7391,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SRPRB",
+      "logFC": -0.3126,
+      "logCPM": 2.5654,
+      "PValue": 0.7404,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-88H12.2",
+      "logFC": -0.0523,
+      "logCPM": 10.5931,
+      "PValue": 0.7449,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MRPS18A",
+      "logFC": -0.0625,
+      "logCPM": 6.4263,
+      "PValue": 0.7459,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FAM200B",
+      "logFC": -0.0522,
+      "logCPM": 9.5175,
+      "PValue": 0.7505,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SIK2",
+      "logFC": 0.0509,
+      "logCPM": 10.7054,
+      "PValue": 0.7505,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-1038P",
+      "logFC": 0.0508,
+      "logCPM": 10.6465,
+      "PValue": 0.7515,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-68I18.2",
+      "logFC": 0.0503,
+      "logCPM": 11.191,
+      "PValue": 0.7528,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC061975.5",
+      "logFC": -0.0492,
+      "logCPM": 12.8345,
+      "PValue": 0.7559,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTD-2378E21.1",
+      "logFC": 0.6565,
+      "logCPM": 1.5333,
+      "PValue": 0.7575,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CLSTN3",
+      "logFC": -0.4313,
+      "logCPM": 1.532,
+      "PValue": 0.7575,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TRIM60P9Y",
+      "logFC": 0.0617,
+      "logCPM": 6.7612,
+      "PValue": 0.7612,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TIA1",
+      "logFC": -0.2502,
+      "logCPM": 2.7452,
+      "PValue": 0.7624,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTC-510F12.2",
+      "logFC": 0.1951,
+      "logCPM": 2.7458,
+      "PValue": 0.7624,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR4706",
+      "logFC": -0.0847,
+      "logCPM": 5.3115,
+      "PValue": 0.7635,
+      "FDR": 1.0
+    },
+    {
+      "_row": "UBXN2A",
+      "logFC": -0.0522,
+      "logCPM": 7.9636,
+      "PValue": 0.7655,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC096633.1",
+      "logFC": -0.158,
+      "logCPM": 2.8234,
+      "PValue": 0.7686,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR150",
+      "logFC": -0.0483,
+      "logCPM": 9.528,
+      "PValue": 0.7689,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SRP72P2",
+      "logFC": 0.046,
+      "logCPM": 13.0266,
+      "PValue": 0.7712,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CD68",
+      "logFC": 0.0462,
+      "logCPM": 11.393,
+      "PValue": 0.7719,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-484D2.4",
+      "logFC": -0.0461,
+      "logCPM": 11.2296,
+      "PValue": 0.7727,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-617J18.1",
+      "logFC": -0.0457,
+      "logCPM": 10.8502,
+      "PValue": 0.7756,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-977G19.11",
+      "logFC": -0.0452,
+      "logCPM": 12.2256,
+      "PValue": 0.7758,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC007405.4",
+      "logFC": -0.046,
+      "logCPM": 9.9591,
+      "PValue": 0.7767,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MFSD12",
+      "logFC": 0.5723,
+      "logCPM": 1.6569,
+      "PValue": 0.7783,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TERF2",
+      "logFC": 0.5684,
+      "logCPM": 1.6557,
+      "PValue": 0.7783,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC106869.2",
+      "logFC": -0.0441,
+      "logCPM": 12.0951,
+      "PValue": 0.7813,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-2F20.1",
+      "logFC": -0.0966,
+      "logCPM": 4.3802,
+      "PValue": 0.7815,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MYO5BP2",
+      "logFC": 0.0442,
+      "logCPM": 11.2468,
+      "PValue": 0.7816,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LINC00163",
+      "logFC": -0.0437,
+      "logCPM": 14.7764,
+      "PValue": 0.782,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RPL21P66",
+      "logFC": -0.0433,
+      "logCPM": 10.348,
+      "PValue": 0.7881,
+      "FDR": 1.0
+    },
+    {
+      "_row": "COX19",
+      "logFC": -0.0425,
+      "logCPM": 12.34,
+      "PValue": 0.7888,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-1E11.1",
+      "logFC": -0.044,
+      "logCPM": 9.1703,
+      "PValue": 0.7895,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HSPA7",
+      "logFC": 0.042,
+      "logCPM": 13.4249,
+      "PValue": 0.7903,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MBD3L4",
+      "logFC": -0.0826,
+      "logCPM": 5.2711,
+      "PValue": 0.7919,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SIVA1",
+      "logFC": 0.5064,
+      "logCPM": 1.773,
+      "PValue": 0.7948,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR4672",
+      "logFC": -0.2795,
+      "logCPM": 1.7735,
+      "PValue": 0.7948,
+      "FDR": 1.0
+    },
+    {
+      "_row": "XRCC6P3",
+      "logFC": -0.0424,
+      "logCPM": 9.8156,
+      "PValue": 0.7952,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NPPA",
+      "logFC": -0.0429,
+      "logCPM": 8.7278,
+      "PValue": 0.7993,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GTSF1",
+      "logFC": -0.064,
+      "logCPM": 5.3663,
+      "PValue": 0.8019,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-93B14.5",
+      "logFC": -0.0411,
+      "logCPM": 9.2792,
+      "PValue": 0.8046,
+      "FDR": 1.0
+    },
+    {
+      "_row": "POLR2KP2",
+      "logFC": 0.0408,
+      "logCPM": 9.0302,
+      "PValue": 0.8076,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MAP1A",
+      "logFC": 0.038,
+      "logCPM": 14.1899,
+      "PValue": 0.8098,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RPS16P5",
+      "logFC": 0.038,
+      "logCPM": 10.5432,
+      "PValue": 0.8124,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KPNA5",
+      "logFC": -0.0383,
+      "logCPM": 10.3541,
+      "PValue": 0.8127,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SEPT2",
+      "logFC": 0.0371,
+      "logCPM": 13.5196,
+      "PValue": 0.8141,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NT5C3AP1",
+      "logFC": -0.0597,
+      "logCPM": 5.1772,
+      "PValue": 0.8171,
+      "FDR": 1.0
+    },
+    {
+      "_row": "DUS3L",
+      "logFC": 0.2604,
+      "logCPM": 2.0237,
+      "PValue": 0.8193,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LARP1",
+      "logFC": 0.0361,
+      "logCPM": 12.2583,
+      "PValue": 0.8198,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ENO4",
+      "logFC": -0.0359,
+      "logCPM": 10.1611,
+      "PValue": 0.8241,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU1-106P",
+      "logFC": 0.0357,
+      "logCPM": 10.8668,
+      "PValue": 0.8241,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FAM64A",
+      "logFC": -0.035,
+      "logCPM": 12.626,
+      "PValue": 0.8251,
+      "FDR": 1.0
+    },
+    {
+      "_row": "STYXL1",
+      "logFC": 0.0353,
+      "logCPM": 11.0808,
+      "PValue": 0.8256,
+      "FDR": 1.0
+    },
+    {
+      "_row": "IGSF9B",
+      "logFC": -0.0347,
+      "logCPM": 14.7893,
+      "PValue": 0.8259,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ACE3P",
+      "logFC": 0.0354,
+      "logCPM": 10.0956,
+      "PValue": 0.827,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PRUNE2",
+      "logFC": -0.0347,
+      "logCPM": 11.6769,
+      "PValue": 0.8275,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RFPL3S",
+      "logFC": -0.0347,
+      "logCPM": 11.3783,
+      "PValue": 0.8279,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-421B23.2",
+      "logFC": -0.0343,
+      "logCPM": 11.7152,
+      "PValue": 0.8295,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR4280",
+      "logFC": -0.0353,
+      "logCPM": 9.6175,
+      "PValue": 0.8309,
+      "FDR": 1.0
+    },
+    {
+      "_row": "IGKV1-39",
+      "logFC": 0.0362,
+      "logCPM": 8.679,
+      "PValue": 0.8314,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-460P",
+      "logFC": -0.0337,
+      "logCPM": 10.9962,
+      "PValue": 0.833,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTD-2324A24.2",
+      "logFC": -0.1429,
+      "logCPM": 3.5164,
+      "PValue": 0.8349,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ARID1A",
+      "logFC": 0.0512,
+      "logCPM": 5.7203,
+      "PValue": 0.8361,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-164J13.1",
+      "logFC": 0.0328,
+      "logCPM": 12.2721,
+      "PValue": 0.8364,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP5-996D20.3",
+      "logFC": -0.249,
+      "logCPM": 2.1982,
+      "PValue": 0.8371,
+      "FDR": 1.0
+    },
+    {
+      "_row": "IGHEP2",
+      "logFC": 0.241,
+      "logCPM": 2.197,
+      "PValue": 0.8371,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-100M12.3",
+      "logFC": -0.0325,
+      "logCPM": 11.7187,
+      "PValue": 0.8382,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-7N14.1",
+      "logFC": -0.0323,
+      "logCPM": 12.3338,
+      "PValue": 0.8385,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-59D5__B.3",
+      "logFC": 0.0662,
+      "logCPM": 5.0144,
+      "PValue": 0.8406,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PLXNB2",
+      "logFC": -0.2208,
+      "logCPM": 2.2769,
+      "PValue": 0.8443,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CD320",
+      "logFC": -0.0321,
+      "logCPM": 9.4621,
+      "PValue": 0.8458,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ACTL7A",
+      "logFC": -0.0319,
+      "logCPM": 9.8092,
+      "PValue": 0.8459,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP13-212L9.1",
+      "logFC": -0.0322,
+      "logCPM": 9.5263,
+      "PValue": 0.8465,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PP13439",
+      "logFC": 0.0297,
+      "logCPM": 12.7117,
+      "PValue": 0.8513,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LINC00467",
+      "logFC": -0.0307,
+      "logCPM": 9.6025,
+      "PValue": 0.8517,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FAM166A",
+      "logFC": 0.0299,
+      "logCPM": 10.7148,
+      "PValue": 0.8525,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RPL12P1",
+      "logFC": -0.0306,
+      "logCPM": 9.5288,
+      "PValue": 0.8529,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FOXJ2",
+      "logFC": 0.0297,
+      "logCPM": 9.9732,
+      "PValue": 0.8554,
+      "FDR": 1.0
+    },
+    {
+      "_row": "DNAJB2",
+      "logFC": -0.1744,
+      "logCPM": 2.4253,
+      "PValue": 0.8564,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CACNA1S",
+      "logFC": -0.1378,
+      "logCPM": 3.8131,
+      "PValue": 0.8564,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ZNF669",
+      "logFC": -0.1097,
+      "logCPM": 3.876,
+      "PValue": 0.86,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL636P",
+      "logFC": 0.0339,
+      "logCPM": 6.0411,
+      "PValue": 0.8626,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-70F11.8",
+      "logFC": 0.0277,
+      "logCPM": 10.1604,
+      "PValue": 0.8641,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR34A",
+      "logFC": -0.0268,
+      "logCPM": 13.5403,
+      "PValue": 0.8654,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL798P",
+      "logFC": -0.1385,
+      "logCPM": 2.5568,
+      "PValue": 0.8663,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP5-1070G24.2",
+      "logFC": 0.108,
+      "logCPM": 4.0004,
+      "PValue": 0.868,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-538I12.2",
+      "logFC": -0.0265,
+      "logCPM": 11.3758,
+      "PValue": 0.8685,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MYH15",
+      "logFC": -0.0371,
+      "logCPM": 6.6278,
+      "PValue": 0.8697,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-263K4.1",
+      "logFC": 0.027,
+      "logCPM": 9.1336,
+      "PValue": 0.873,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC016821.1",
+      "logFC": -0.1938,
+      "logCPM": 2.6542,
+      "PValue": 0.8745,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR4691",
+      "logFC": -0.0251,
+      "logCPM": 10.663,
+      "PValue": 0.876,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL88P",
+      "logFC": -0.025,
+      "logCPM": 11.0679,
+      "PValue": 0.8765,
+      "FDR": 1.0
+    },
+    {
+      "_row": "IL15",
+      "logFC": -0.0439,
+      "logCPM": 4.968,
+      "PValue": 0.8775,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-352G18.2",
+      "logFC": -0.0241,
+      "logCPM": 12.1252,
+      "PValue": 0.8797,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PSMA6P4",
+      "logFC": 0.0246,
+      "logCPM": 9.8802,
+      "PValue": 0.8803,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-347C12.2",
+      "logFC": -0.0242,
+      "logCPM": 10.6234,
+      "PValue": 0.8806,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NHS",
+      "logFC": -0.0237,
+      "logCPM": 12.8959,
+      "PValue": 0.8809,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SNF8",
+      "logFC": -0.0243,
+      "logCPM": 9.3686,
+      "PValue": 0.8835,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-356J5.4",
+      "logFC": -0.023,
+      "logCPM": 12.1328,
+      "PValue": 0.8849,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL592528.1",
+      "logFC": -0.0232,
+      "logCPM": 10.9377,
+      "PValue": 0.8851,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC074366.3",
+      "logFC": 0.0231,
+      "logCPM": 10.4531,
+      "PValue": 0.8866,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PSMG3-AS1",
+      "logFC": 0.0225,
+      "logCPM": 13.3479,
+      "PValue": 0.8868,
+      "FDR": 1.0
+    },
+    {
+      "_row": "YJEFN3",
+      "logFC": 0.0346,
+      "logCPM": 6.0796,
+      "PValue": 0.8877,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OR4A4P",
+      "logFC": -0.0222,
+      "logCPM": 13.0869,
+      "PValue": 0.8887,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-153M7.5",
+      "logFC": 0.0246,
+      "logCPM": 8.2207,
+      "PValue": 0.8888,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LINC00877",
+      "logFC": -0.0223,
+      "logCPM": 11.8967,
+      "PValue": 0.8888,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SKP91",
+      "logFC": 0.0219,
+      "logCPM": 10.3377,
+      "PValue": 0.8927,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR191",
+      "logFC": 0.0215,
+      "logCPM": 11.5488,
+      "PValue": 0.893,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RAB11FIP2",
+      "logFC": -0.0651,
+      "logCPM": 4.4441,
+      "PValue": 0.8935,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-814P",
+      "logFC": 0.021,
+      "logCPM": 11.2814,
+      "PValue": 0.8958,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTB-5E10.3",
+      "logFC": -0.0202,
+      "logCPM": 14.2824,
+      "PValue": 0.8982,
+      "FDR": 1.0
+    },
+    {
+      "_row": "EEF1A1P5",
+      "logFC": -0.0224,
+      "logCPM": 8.3599,
+      "PValue": 0.8983,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PMF1-BGLAP",
+      "logFC": 0.02,
+      "logCPM": 10.5541,
+      "PValue": 0.9016,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LINC01151",
+      "logFC": -0.0194,
+      "logCPM": 13.4906,
+      "PValue": 0.9024,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR548AG1",
+      "logFC": 0.02,
+      "logCPM": 9.4706,
+      "PValue": 0.9031,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ATP2A3",
+      "logFC": 0.0188,
+      "logCPM": 9.2393,
+      "PValue": 0.9101,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TMEM161B",
+      "logFC": -0.0183,
+      "logCPM": 9.5258,
+      "PValue": 0.9129,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL355531.1",
+      "logFC": -0.0174,
+      "logCPM": 9.0233,
+      "PValue": 0.9198,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ADAM1B",
+      "logFC": -0.0161,
+      "logCPM": 10.9142,
+      "PValue": 0.9204,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU4-14P",
+      "logFC": -0.0156,
+      "logCPM": 12.6135,
+      "PValue": 0.9215,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CPOX",
+      "logFC": -0.0163,
+      "logCPM": 9.4374,
+      "PValue": 0.9232,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-672L10.1",
+      "logFC": 0.0162,
+      "logCPM": 9.6591,
+      "PValue": 0.9235,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC005082.1",
+      "logFC": -0.0145,
+      "logCPM": 11.2896,
+      "PValue": 0.9277,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR4262",
+      "logFC": -0.0164,
+      "logCPM": 8.4441,
+      "PValue": 0.9279,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP1-241P17.1",
+      "logFC": -0.0145,
+      "logCPM": 10.9003,
+      "PValue": 0.9289,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LGALSL",
+      "logFC": -0.0138,
+      "logCPM": 12.927,
+      "PValue": 0.9308,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP5-1031D4.2",
+      "logFC": 0.0142,
+      "logCPM": 10.192,
+      "PValue": 0.9313,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TRAC",
+      "logFC": -0.0137,
+      "logCPM": 10.0209,
+      "PValue": 0.9337,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TRAJ8",
+      "logFC": -0.0133,
+      "logCPM": 11.4083,
+      "PValue": 0.9338,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC102953.4",
+      "logFC": -0.0129,
+      "logCPM": 11.848,
+      "PValue": 0.9355,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-167P22.5",
+      "logFC": -0.0186,
+      "logCPM": 6.6732,
+      "PValue": 0.9362,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-468H14.1",
+      "logFC": -0.0133,
+      "logCPM": 9.0241,
+      "PValue": 0.9402,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LBP",
+      "logFC": 0.0116,
+      "logCPM": 13.8195,
+      "PValue": 0.9415,
+      "FDR": 1.0
+    },
+    {
+      "_row": "USP17L24",
+      "logFC": 0.0124,
+      "logCPM": 9.5752,
+      "PValue": 0.9426,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-459O16.7",
+      "logFC": 0.0099,
+      "logCPM": 11.8129,
+      "PValue": 0.9504,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OFD1P1Y",
+      "logFC": -0.0096,
+      "logCPM": 11.315,
+      "PValue": 0.9526,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-715G18.3",
+      "logFC": 0.0091,
+      "logCPM": 12.6192,
+      "PValue": 0.9544,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NONO",
+      "logFC": -0.0085,
+      "logCPM": 12.1535,
+      "PValue": 0.9575,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RASA2-IT1",
+      "logFC": 0.0093,
+      "logCPM": 9.2373,
+      "PValue": 0.9575,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP1-104O17.3",
+      "logFC": -0.0092,
+      "logCPM": 9.4544,
+      "PValue": 0.9579,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CYSTM1",
+      "logFC": -0.0081,
+      "logCPM": 14.1622,
+      "PValue": 0.9592,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTD-2659N19.10",
+      "logFC": 0.0184,
+      "logCPM": 6.3223,
+      "PValue": 0.9607,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-356J5.12",
+      "logFC": -0.0064,
+      "logCPM": 10.1539,
+      "PValue": 0.9698,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MMP2",
+      "logFC": 0.0062,
+      "logCPM": 11.5025,
+      "PValue": 0.9698,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNA5SP385",
+      "logFC": -0.0057,
+      "logCPM": 13.4601,
+      "PValue": 0.9712,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC060226.1",
+      "logFC": 0.005,
+      "logCPM": 11.482,
+      "PValue": 0.9754,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AP000445.2",
+      "logFC": -0.005,
+      "logCPM": 11.8334,
+      "PValue": 0.9756,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HYPK",
+      "logFC": -0.005,
+      "logCPM": 9.995,
+      "PValue": 0.9769,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU1-22P",
+      "logFC": 0.0032,
+      "logCPM": 10.7594,
+      "PValue": 0.9847,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NANOGP2",
+      "logFC": -0.0028,
+      "logCPM": 12.0139,
+      "PValue": 0.9867,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TMEM178A",
+      "logFC": -0.0026,
+      "logCPM": 13.6584,
+      "PValue": 0.9869,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LSR",
+      "logFC": -0.0015,
+      "logCPM": 11.6144,
+      "PValue": 0.993,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LACC1",
+      "logFC": 0.0015,
+      "logCPM": 11.2718,
+      "PValue": 0.9934,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GALNT14",
+      "logFC": -0.0016,
+      "logCPM": 10.0527,
+      "PValue": 0.9939,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RPL7L1P13",
+      "logFC": 0.0011,
+      "logCPM": 11.9417,
+      "PValue": 0.995,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CAPN13",
+      "logFC": 0.001,
+      "logCPM": 12.8202,
+      "PValue": 0.9954,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL694P",
+      "logFC": -8.0E-4,
+      "logCPM": 11.5431,
+      "PValue": 0.9966,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC105921.5",
+      "logFC": -8.0E-4,
+      "logCPM": 12.0592,
+      "PValue": 0.9967,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TRNAU1AP",
+      "logFC": -4.0E-4,
+      "logCPM": 11.3632,
+      "PValue": 0.9986,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CDKN2AIPNLP3",
+      "logFC": 2.0E-4,
+      "logCPM": 13.3456,
+      "PValue": 0.9993,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PALM2-AKAP2",
+      "logFC": 0.4815,
+      "logCPM": 1.3176,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-115P21.1",
+      "logFC": 0.4799,
+      "logCPM": 1.3181,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU7-181P",
+      "logFC": 0.4778,
+      "logCPM": 1.3196,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC006116.22",
+      "logFC": -0.266,
+      "logCPM": 1.3179,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-157B13.7",
+      "logFC": 0.4064,
+      "logCPM": 1.4636,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RPL27A",
+      "logFC": -0.1887,
+      "logCPM": 1.4625,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-523H24.3",
+      "logFC": -0.1865,
+      "logCPM": 1.4611,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SYNRG",
+      "logFC": -0.0049,
+      "logCPM": 6.4989,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HLA-E",
+      "logFC": 0.0149,
+      "logCPM": 4.6784,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC092170.1",
+      "logFC": -0.3745,
+      "logCPM": 1.9292,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-330P",
+      "logFC": 0.1183,
+      "logCPM": 1.8795,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CYTH3",
+      "logFC": 0.114,
+      "logCPM": 2.1558,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-710F7.3",
+      "logFC": -0.0525,
+      "logCPM": 1.9274,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GS1-21A4.2",
+      "logFC": -0.0473,
+      "logCPM": 1.9303,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNA5SP331",
+      "logFC": 0.0109,
+      "logCPM": 5.6181,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL845450.2",
+      "logFC": -0.0059,
+      "logCPM": 5.7424,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC007679.3",
+      "logFC": 0.0596,
+      "logCPM": 3.0004,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TP53TG5",
+      "logFC": -0.0062,
+      "logCPM": 6.1979,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-259G18.1",
+      "logFC": 1.9193,
+      "logCPM": 0.7719,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-400N13.1",
+      "logFC": 1.9193,
+      "logCPM": 0.7719,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-849F2.7",
+      "logFC": 1.9193,
+      "logCPM": 0.7719,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CAMKK2",
+      "logFC": 1.9193,
+      "logCPM": 0.7719,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PPIH",
+      "logFC": 1.9193,
+      "logCPM": 0.7719,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC117401.1",
+      "logFC": 1.9183,
+      "logCPM": 0.7714,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CBX3P8",
+      "logFC": 1.9183,
+      "logCPM": 0.7714,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SNRPF",
+      "logFC": 1.9183,
+      "logCPM": 0.7714,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-27K13.3",
+      "logFC": 1.9183,
+      "logCPM": 0.7714,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-180C16.1",
+      "logFC": 1.9183,
+      "logCPM": 0.7714,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-112J1.2",
+      "logFC": 1.9183,
+      "logCPM": 0.7714,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC011841.4",
+      "logFC": 1.9182,
+      "logCPM": 0.7714,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HNRNPA1P2",
+      "logFC": 1.9182,
+      "logCPM": 0.7714,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ARHGEF7",
+      "logFC": 1.9182,
+      "logCPM": 0.7714,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NAT6",
+      "logFC": 1.9182,
+      "logCPM": 0.7714,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-157E21.2",
+      "logFC": 1.9182,
+      "logCPM": 0.7714,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TTC32",
+      "logFC": 1.9182,
+      "logCPM": 0.7714,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CSNK2A1",
+      "logFC": 1.9182,
+      "logCPM": 0.7714,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-665P",
+      "logFC": 1.9182,
+      "logCPM": 0.7714,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NTNG1",
+      "logFC": -1.8333,
+      "logCPM": 0.7716,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "METTL4",
+      "logFC": -1.8333,
+      "logCPM": 0.7716,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TTF2",
+      "logFC": -1.8326,
+      "logCPM": 0.7712,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-241F15.7",
+      "logFC": -1.8326,
+      "logCPM": 0.7712,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-263I1.1",
+      "logFC": -1.8326,
+      "logCPM": 0.7712,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL99P",
+      "logFC": -1.832,
+      "logCPM": 0.7709,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ZBTB5",
+      "logFC": -1.832,
+      "logCPM": 0.7709,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNF6P1",
+      "logFC": -1.832,
+      "logCPM": 0.7709,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTB-25B13.13",
+      "logFC": -1.832,
+      "logCPM": 0.7709,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KIAA0100",
+      "logFC": -1.832,
+      "logCPM": 0.7709,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CEACAMP5",
+      "logFC": -1.832,
+      "logCPM": 0.7709,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR598",
+      "logFC": -1.832,
+      "logCPM": 0.7709,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-154H12.3",
+      "logFC": 0.8829,
+      "logCPM": 0.9787,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP1-127L4.7",
+      "logFC": 0.8822,
+      "logCPM": 0.9791,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "EXT1",
+      "logFC": 0.8817,
+      "logCPM": 0.9782,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LMO2",
+      "logFC": 0.8813,
+      "logCPM": 0.9775,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-545P6.2",
+      "logFC": 0.8798,
+      "logCPM": 0.978,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CR753328.2",
+      "logFC": -0.695,
+      "logCPM": 0.9769,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SPATS2L",
+      "logFC": -0.695,
+      "logCPM": 0.978,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP3-486I3.5",
+      "logFC": -0.4043,
+      "logCPM": 1.1573,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "UBE2L5P",
+      "logFC": -0.4041,
+      "logCPM": 1.1585,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL592170.2",
+      "logFC": -0.4031,
+      "logCPM": 1.1589,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LINC00333",
+      "logFC": -0.2293,
+      "logCPM": 1.8767,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-666A1.7",
+      "logFC": 0.1988,
+      "logCPM": 2.4985,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC021818.1",
+      "logFC": -0.1642,
+      "logCPM": 2.0694,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HIST4H4",
+      "logFC": -0.1363,
+      "logCPM": 1.5973,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MRPL44",
+      "logFC": 0.1103,
+      "logCPM": 1.9764,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-69C17.4",
+      "logFC": -0.1082,
+      "logCPM": 2.6828,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL685P",
+      "logFC": 0.108,
+      "logCPM": 1.2417,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "DOK5",
+      "logFC": 0.105,
+      "logCPM": 1.3929,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "IFT20",
+      "logFC": 0.1032,
+      "logCPM": 1.2408,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AF241726.4",
+      "logFC": 0.0998,
+      "logCPM": 1.0712,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KCNJ12",
+      "logFC": 0.099,
+      "logCPM": 1.0707,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-758P",
+      "logFC": -0.0989,
+      "logCPM": 2.3198,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SH2D1A",
+      "logFC": -0.0958,
+      "logCPM": 1.7155,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MYO1H",
+      "logFC": -0.0939,
+      "logCPM": 1.7148,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LINC00341",
+      "logFC": 0.0868,
+      "logCPM": 0.8786,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR219-1",
+      "logFC": 0.0868,
+      "logCPM": 0.8786,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FKBP1B",
+      "logFC": 0.0868,
+      "logCPM": 0.8786,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "DOCK6",
+      "logFC": 0.0863,
+      "logCPM": 0.8779,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OR2L8",
+      "logFC": 0.0862,
+      "logCPM": 0.8778,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR4712",
+      "logFC": 0.0856,
+      "logCPM": 0.8781,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC007879.3",
+      "logFC": 0.085,
+      "logCPM": 0.8785,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU7-147P",
+      "logFC": -0.0769,
+      "logCPM": 1.8269,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "DNAJC14",
+      "logFC": -0.0725,
+      "logCPM": 1.8248,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "WI2-1959D15.1",
+      "logFC": -0.0722,
+      "logCPM": 3.2467,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PDCL3P1",
+      "logFC": -0.0664,
+      "logCPM": 1.8246,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC068831.3",
+      "logFC": 0.0649,
+      "logCPM": 3.0935,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CECR5",
+      "logFC": 0.0511,
+      "logCPM": 2.7975,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RIPK1",
+      "logFC": -0.05,
+      "logCPM": 4.2374,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-399D6.2",
+      "logFC": 0.0498,
+      "logCPM": 2.6889,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-328N19.1",
+      "logFC": -0.0378,
+      "logCPM": 2.6556,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-16C18.3",
+      "logFC": 0.0301,
+      "logCPM": 3.3633,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "USP17L18",
+      "logFC": 0.0269,
+      "logCPM": 2.4966,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL358781.1",
+      "logFC": 0.0256,
+      "logCPM": 2.4298,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-286E11.2",
+      "logFC": 0.0207,
+      "logCPM": 3.8679,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC018359.3",
+      "logFC": 0.0146,
+      "logCPM": 3.1205,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HTR7P1",
+      "logFC": -0.0113,
+      "logCPM": 2.2009,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "YWHAQP9",
+      "logFC": -0.0048,
+      "logCPM": 2.1983,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CACNA1F",
+      "logFC": 9.0E-4,
+      "logCPM": 7.6652,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-751P",
+      "logFC": 6.0E-4,
+      "logCPM": 3.0686,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "COX6B1P5",
+      "logFC": 0.0,
+      "logCPM": 10.4089,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LAPTM4B",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ADH5P2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MMGT1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL031601.4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-482M8.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL139396.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-755O11.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TRIM51FP",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OR2AG1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL353751.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FAM117B",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-981P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KCNG3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PSTPIP1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TIMM23",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTD-2281E23.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KLRC1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SPRY4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-700F16.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "UBOX5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RBPMS2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FAM206BP",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP5-930J4.5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "UBQLN4P1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-5A19.5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-561B11.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "USP17L11",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-67M1.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "APOL5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU7-26P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-10G12.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-326K13.4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AP000911.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AQP7P3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC003973.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "YPEL2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-38J22.6",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-1084A12.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-247I13.8",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KATNBL1P4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP1-223E5.4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-141M3.5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SLIT2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HNRNPA1P14",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TMEM72",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RPS27P16",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC245389.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-26M5.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "IGHV3OR16-12",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PANX2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-525J21.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "YPEL1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SKP187",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-409K20.6",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TUBB2B",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP5-890O3.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "THEMIS2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "DCAF13P3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "POU4F3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LA16c-306E5.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "YWHAG",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MTND1P35",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC005618.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RBPJP5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "Z98881.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-338K13.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTC-523E23.6",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-266O8.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GS1-166A23.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP3-340N1.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-79P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-506M12.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SLC13A3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC020910.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC127032.6",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC130689.5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PDLIM1P2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ZEB2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PRELID2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-759L5.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-409O11.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SIAH2-AS1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC074389.6",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-6N17.4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-666A8.11",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-1022P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ARL13B",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC139099.6",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ADAMTS9-AS2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP3-449M8.9",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SAP30BP",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-161H23.9",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-354A14.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP3-430N8.10",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "URI1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC015815.6",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-428G5.7",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-325E5.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GOLGA6L5P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AIG1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "hsa-mir-466",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KLKP1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-172E9.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SIX5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-1C8.6",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OR6C70",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LL0XNC01-16G2.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-361A23.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNA5SP180",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL769P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-267M23.4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-671M22.4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "THADA",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "XXYLT1-AS2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-473O4.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-350G24.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU1-112P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-180C1.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MYCLP2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OR6S1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-598F7.5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC016629.7",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC003988.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MTERFD3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CGB",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-622O11.5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "COL17A1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-1184P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PCDHB2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC022819.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-719C20.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FEM1AP4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP1-79C4.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC233299.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AP000235.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-305L7.5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-112N13.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RPL5P30",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "STK11IP",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CDY22P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PGR",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU4ATAC11P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TDRD6",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC013275.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KRTAP1-3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PRAMEF21",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC010547.9",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-530P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-807H7.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC005307.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ADARB2-AS1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-397P13.7",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "VN1R34P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-644F5.15",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FAM169B",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RFC3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LINC00945",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC100817.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-1097P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP3-348I23.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AF250324.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-424I19.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-67H2.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-989F5.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-503C24.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-28H5.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NUDT4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ELOVL2-AS1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTD-3239E11.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-146P2.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GPR33",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HBEGF",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "POTEB2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "E2F3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PRKCE",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP1-92C8.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-254B13.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LINC01087",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NRGN",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MCM3AP",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-723O4.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MELK",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-434D12.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MAGEA13P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-760D2.12",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTC-296K1.4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GMCL1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-57A19.5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "DDB2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC244517.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-524D16__A.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTD-2127H9.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC027320.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ANKRD34A",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC073136.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FAM102B",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-626G11.4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ADIRF-AS1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-726G23.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ANKRD20A14P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SNX2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP4-769N13.7",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-430H10.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC104088.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "EXOC1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC007246.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RBM22P6",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MT-TM",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC004901.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LY6G6F",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "USP3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-24M17.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CICP6",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ITGA6",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR4484",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ZYEWIM5P1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC010877.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MAD1L1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ITM2B",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RPL15P2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LINC00226",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SPDYE2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC105242.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTD-3049M7.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTC-512J12.7",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-34F13.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "EMG1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CCDC33",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KIAA2013",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "EEF1DP1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GNA14",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "DEFB103B",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MEGF8",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-817P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL250P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-547P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LILRB3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-23D5.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HCCAT5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-603B24.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-253D19.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HIST1H2APS6",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL649P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PHKA2-AS1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TWISTNB",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GATSL1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "WNT3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "LBH",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CNN2P1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-44D15.6",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "XXyac-YM21GA2.4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GREM1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU7-12P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR4448",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC067805.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC022819.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AGGF1P1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-1136J12.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR548AK",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ANKRD52",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC016723.4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ZNF705C",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PPIAP31",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CLEC1B",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-756G12.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SCARB1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-365F18.5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-761N21.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "BLOC1S5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-456A14.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-90P5.7",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "FAM127A",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTC-229L21.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-1134I14.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP3-326I13.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU6-670P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTD-2313J17.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "GRIK1-AS2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-755F10.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ZDHHC24",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CHDH",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ZNF346",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC016910.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR632",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC002366.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RN7SL519P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RAB5B",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-133N21.10",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-94H6.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TCTN2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-438H8.8",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ZNF800",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNA5SP299",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTB-25B13.9",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-446E9.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-404P21.8",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "VPS9D1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KIF3C",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC007682.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PACSIN3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RBM44",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU1-92P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-398E10.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNU1-117P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RPL34P3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "C3orf30",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RNA5SP24",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "HSD11B2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "REG3G",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-341G2.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MIR571",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OGFR",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SNORA42",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "TBC1D10C",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "IGHV1OR16-1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-435B5.5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CDC37L1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SLC8A1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AP000679.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CAPN3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL391538.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "MAGIX",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SALL3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC061975.4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KLHL2P1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-288L9.4",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "KRT121P",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC120045.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CTD-2134P3.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "CALCR",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC138688.6",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL445256.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-2E11.8",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AL136380.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-678B3.3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "ILF2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "NMUR2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-613D13.8",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "OR10D3",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP4-559A3.7",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-820I16.1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "IQCH-AS1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "DPPA5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RELL1",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "SNORD115-14",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "AC005008.2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "RP11-60I3.5",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "USH1C",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    },
+    {
+      "_row": "PTBP2",
+      "logFC": 0.0,
+      "logCPM": 0.6559,
+      "PValue": 1.0,
+      "FDR": 1.0
+    }
+  ],
+  "params": {
+    "name": "edger_s1s2",
+    "experiment": {
+      "name": "s1",
+      "properties": {
+        "selectionColor": "#501fa4",
+        "selectionDescription": ""
+      },
+      "keys": [
+        "YEW1_Control",
+        "YEW2_Control",
+        "YEW4_Treated"
+      ]
+    },
+    "control": {
+      "name": "s2",
+      "properties": {
+        "selectionColor": "#a90f7",
+        "selectionDescription": ""
+      },
+      "keys": [
+        "YEW3_Control",
+        "YEW5_Treated",
+        "YEW6_Treated"
+      ]
+    },
+    "method": "fdr"
+  }
+}

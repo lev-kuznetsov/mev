@@ -1,5 +1,5 @@
-define(['q', 'jsLru'], function(q, jsLru){
-	return function ValueStore(dataset, $http, $rootScope){
+define(['lodash', 'q', 'jsLru'], function(_, q, jsLru){
+	return function ValueStore(dataset, source, $rootScope, mevSettings, mevDb){
     	var self = this;    	
     	var lruCache = new jsLru(5);
     	//init swap
@@ -9,7 +9,7 @@ define(['q', 'jsLru'], function(q, jsLru){
 		}
 		
     	function fetchDataValues(){    		
-    		var valuesPromise = $http.get('/dataset/'+dataset.id+'/data/values', {params: {format: "binary"}, responseType: "arraybuffer", headers: {"Accept": "application/octet-stream"}})
+    		var valuesPromise = source.get()
 			.then(function(values){
 				var ab = values.data;     				
  				var dataview = new DataView(ab);
@@ -18,10 +18,37 @@ define(['q', 'jsLru'], function(q, jsLru){
  				dataset.dataview = dataview; 		
  				$rootScope.$broadcast("mui:model:dataset:values:loaded");
  				return ab;
- 			});
+ 			})["catch"](function(e){
+				throw e;
+			});
+			if(mevSettings.db.enabled)
+				fetchDataValues64();
 			return valuesPromise;
     	}
-    	
+
+		function fetchDataValues64(){
+			var deferred = q.defer();
+			var worker = new Worker('/container/javascript/dataset/lib/DatasetValuesWorker.js');
+			worker.postMessage({id: dataset.id});
+			mevDb.firePutStarted(dataset.id, "values64");
+			worker.onmessage = function(e) {
+				console.debug("worker done", e)
+				self.ready=true;
+				deferred.resolve(e);
+				mevDb.firePutCompleted(dataset.id, "values64");
+			};
+			worker.onerror = function(e){
+				console.debug("worker error", e)
+				self.ready=true;
+				deferred.reject(e);
+				mevDb.firePutCompleted(dataset.id, "values64");
+			}
+			return deferred.promise
+				.done(function(){
+					mevDb.firePutCompleted(dataset.id, "values64");
+				});
+		}
+
     	function getItemIndex(r, c){
         	return dataset.column.keys.length * r + c;    	
         }        
@@ -75,10 +102,10 @@ define(['q', 'jsLru'], function(q, jsLru){
     		
         }
         
-        return {        	
-        	getByKey: getByKey,  
+        return _.assign(this, {
+        	getByKey: getByKey,
         	getSome: getSome,
         	getDict: getDict
-        };
+        });
     };
 });

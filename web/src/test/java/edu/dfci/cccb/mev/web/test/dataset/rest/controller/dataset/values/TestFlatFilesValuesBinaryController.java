@@ -10,6 +10,10 @@ import java.nio.ByteBuffer;
 
 import javax.inject.Inject;
 
+import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationProjectManagerConfiguration;
+import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfiguration;
+import edu.dfci.cccb.mev.presets.rest.configuration.PresetsRestConfiguration;
+import edu.dfci.cccb.mev.test.annotation.server.configuration.ProbeAnnotationsPersistanceConfigTest;
 import lombok.extern.log4j.Log4j;
 
 import org.hamcrest.core.IsEqual;
@@ -49,9 +53,12 @@ import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={DispatcherConfiguration.class, 
-  PersistenceConfiguration.class, 
-  ContainerConfigurations.class, 
-  DatasetRestConfiguration.class})
+        PersistenceConfiguration.class,
+        ContainerConfigurations.class,
+        DatasetRestConfiguration.class,
+        AnnotationProjectManagerConfiguration.class,
+        PresetsRestConfiguration.class,
+        ProbeAnnotationsPersistanceConfigTest.class})
 public class TestFlatFilesValuesBinaryController {
 
   @Inject WebApplicationContext applicationContext;
@@ -86,10 +93,10 @@ public class TestFlatFilesValuesBinaryController {
     workspace.put (mockDataset);
   }
   
-  @Test @Ignore
+  @Test
   public void test () throws Exception {
     @SuppressWarnings("unused")
-    MvcResult mvcResult = this.mockMvc.perform(get("/dataset/mock_set/data/values").param ("format", "binary")
+    MvcResult mvcResult = this.mockMvc.perform(get("/dataset/mock_set/data/values").param ("format", "binary64")
                                      .session (mockHttpSession)
                                      .accept("application/octet-stream"))            
      .andExpect (status ().isOk ())

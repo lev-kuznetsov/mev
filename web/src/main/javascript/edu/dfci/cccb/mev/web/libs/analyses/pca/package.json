@@ -1,0 +1,55 @@
+{
+  "name": "mev-pca",
+  "version": "0.0.0",
+  "description": "mev pca",
+  "main": "src/pca.module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "system": {
+    "configDependencies": [
+      "bower.json!bower",
+      "live-reload"
+    ],
+    "ext": {
+      "html": "system-text",
+      "json": "systemjs-plugin-json"
+    }
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "steal": "^0.13.2",
+    "steal-tools": "^0.13.3",
+    "system-text": "^0.1.0",
+    "systemjs-plugin-json": "^0.1.0",
+    "angular-ui-bootstrap": "^0.14.3",
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.1.4",
+    "mev-mock": "file:../../domain/mock",
+    "angular": "^1.4.8",
+    "angular-ui-router": "^0.2.18"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "d3": "^3.5.13",
+    "lodash": "^4.12.0",
+    "mev-analysis": "file:../../domain/analysis",
+    "mev-scatter-plot": "file:../../charts/scatter",
+    "mev-limma": "file:../../analyses/limma",
+    "mev-edger": "file:../../analyses/edger",
+    "mev-voom": "file:../../analyses/voom",
+    "mev-ttest": "file:../../analyses/ttest",
+    "mev-deseq": "file:../../analyses/deseq",
+    "mev-anova": "file:../../analyses/anova",
+    "mui": "file:../../mui"
+  },
+  "system": {
+    "ext": {
+      "html": "system-text"
+    },
+    "configDependencies": [
+      "bower.json!bower"
+    ]
+  }
+}

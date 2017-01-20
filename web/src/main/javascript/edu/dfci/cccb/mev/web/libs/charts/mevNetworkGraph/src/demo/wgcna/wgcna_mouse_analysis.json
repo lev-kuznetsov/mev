@@ -1,0 +1,992 @@
+{
+  "name": "wgcna_test",
+  "type": "wgcna",
+  "status": "SUCCESS",
+  "error": null,
+  "params": {
+    "name": "wgcna_test",
+    "sampleList": null,
+    "geneList": null,
+    "distMethod": "euclidean",
+    "WeightFilter": 0.5,
+    "sizeLimit": 1000,
+    "log": true
+  },
+  "result": {
+    "edges": [
+      {
+        "from": "Actb",
+        "to": "Cars",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8117
+      },
+      {
+        "from": "Actb",
+        "to": "Gzmb",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5964
+      },
+      {
+        "from": "Actb",
+        "to": "Ly6e",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5359
+      },
+      {
+        "from": "Actg1",
+        "to": "Aldoa",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.595
+      },
+      {
+        "from": "Actg1",
+        "to": "Card11",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5431
+      },
+      {
+        "from": "Actg1",
+        "to": "Cars",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5921
+      },
+      {
+        "from": "Actg1",
+        "to": "Chuk",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8936
+      },
+      {
+        "from": "Actg1",
+        "to": "Dmpk",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.9056
+      },
+      {
+        "from": "Actg1",
+        "to": "Fut7",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.9123
+      },
+      {
+        "from": "Actg1",
+        "to": "Gzmb",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6294
+      },
+      {
+        "from": "Actg1",
+        "to": "Gzmc",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6555
+      },
+      {
+        "from": "Actg1",
+        "to": "Lcp1",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6967
+      },
+      {
+        "from": "Actg1",
+        "to": "Ldha",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5157
+      },
+      {
+        "from": "Actg1",
+        "to": "Ly6e",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7325
+      },
+      {
+        "from": "Actg1",
+        "to": "Mtf2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.849
+      },
+      {
+        "from": "Actg1",
+        "to": "Orc2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6825
+      },
+      {
+        "from": "Actg1",
+        "to": "Pdcl3",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8899
+      },
+      {
+        "from": "Actg1",
+        "to": "Plek",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.732
+      },
+      {
+        "from": "Actg1",
+        "to": "Sell",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5511
+      },
+      {
+        "from": "Actg1",
+        "to": "St3gal2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8429
+      },
+      {
+        "from": "Actg1",
+        "to": "Syngr2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.607
+      },
+      {
+        "from": "Aldoa",
+        "to": "Eef1a1",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7167
+      },
+      {
+        "from": "Aldoa",
+        "to": "Eif4a1",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8864
+      },
+      {
+        "from": "Aldoa",
+        "to": "Fut7",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5132
+      },
+      {
+        "from": "Aldoa",
+        "to": "Lcp1",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5514
+      },
+      {
+        "from": "Aldoa",
+        "to": "Myh9",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5526
+      },
+      {
+        "from": "Aldoa",
+        "to": "Pdcl3",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5877
+      },
+      {
+        "from": "Atp5b",
+        "to": "Chuk",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6883
+      },
+      {
+        "from": "Atp5b",
+        "to": "Gnb2l1",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5821
+      },
+      {
+        "from": "Atp5b",
+        "to": "Lcp1",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7674
+      },
+      {
+        "from": "Atp5b",
+        "to": "Ldha",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6658
+      },
+      {
+        "from": "Atp5b",
+        "to": "Mtf2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7242
+      },
+      {
+        "from": "Atp5b",
+        "to": "Pdcl3",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5895
+      },
+      {
+        "from": "Atp5b",
+        "to": "Plek",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7529
+      },
+      {
+        "from": "Atp5b",
+        "to": "Tagln2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7204
+      },
+      {
+        "from": "Card11",
+        "to": "Eif4a1",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5504
+      },
+      {
+        "from": "Card11",
+        "to": "Fut7",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7639
+      },
+      {
+        "from": "Card11",
+        "to": "Gzmc",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5949
+      },
+      {
+        "from": "Card11",
+        "to": "Ly6e",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5507
+      },
+      {
+        "from": "Card11",
+        "to": "Orc2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5985
+      },
+      {
+        "from": "Card11",
+        "to": "St3gal2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8361
+      },
+      {
+        "from": "Card11",
+        "to": "Syngr2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5848
+      },
+      {
+        "from": "Cars",
+        "to": "Chuk",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5538
+      },
+      {
+        "from": "Cars",
+        "to": "Dmpk",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6626
+      },
+      {
+        "from": "Cars",
+        "to": "Fut7",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6081
+      },
+      {
+        "from": "Cars",
+        "to": "Gzmb",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8826
+      },
+      {
+        "from": "Cars",
+        "to": "Gzmc",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6493
+      },
+      {
+        "from": "Cars",
+        "to": "Ly6e",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.885
+      },
+      {
+        "from": "Cars",
+        "to": "Mtf2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6631
+      },
+      {
+        "from": "Cars",
+        "to": "Orc2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8271
+      },
+      {
+        "from": "Cars",
+        "to": "Plek",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6986
+      },
+      {
+        "from": "Cars",
+        "to": "St3gal2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5487
+      },
+      {
+        "from": "Cars",
+        "to": "Syngr2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7252
+      },
+      {
+        "from": "Cfl1",
+        "to": "Gzmb",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.576
+      },
+      {
+        "from": "Cfl1",
+        "to": "Ly6e",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.535
+      },
+      {
+        "from": "Cfl1",
+        "to": "Orc2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6091
+      },
+      {
+        "from": "Cfl1",
+        "to": "Syngr2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6019
+      },
+      {
+        "from": "Chuk",
+        "to": "Dmpk",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.711
+      },
+      {
+        "from": "Chuk",
+        "to": "Fut7",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7151
+      },
+      {
+        "from": "Chuk",
+        "to": "Lcp1",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8705
+      },
+      {
+        "from": "Chuk",
+        "to": "Ldha",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7126
+      },
+      {
+        "from": "Chuk",
+        "to": "Ly6e",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6029
+      },
+      {
+        "from": "Chuk",
+        "to": "Mtf2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.9535
+      },
+      {
+        "from": "Chuk",
+        "to": "Orc2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5564
+      },
+      {
+        "from": "Chuk",
+        "to": "Pdcl3",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.9629
+      },
+      {
+        "from": "Chuk",
+        "to": "Plek",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8643
+      },
+      {
+        "from": "Chuk",
+        "to": "St3gal2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6553
+      },
+      {
+        "from": "Chuk",
+        "to": "Syngr2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5516
+      },
+      {
+        "from": "Dmpk",
+        "to": "Fut7",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8437
+      },
+      {
+        "from": "Dmpk",
+        "to": "Gzmb",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7307
+      },
+      {
+        "from": "Dmpk",
+        "to": "Gzmc",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7927
+      },
+      {
+        "from": "Dmpk",
+        "to": "Ly6e",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7476
+      },
+      {
+        "from": "Dmpk",
+        "to": "Mtf2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6659
+      },
+      {
+        "from": "Dmpk",
+        "to": "Orc2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6741
+      },
+      {
+        "from": "Dmpk",
+        "to": "Pdcl3",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6699
+      },
+      {
+        "from": "Dmpk",
+        "to": "Plek",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5591
+      },
+      {
+        "from": "Dmpk",
+        "to": "Sell",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7407
+      },
+      {
+        "from": "Dmpk",
+        "to": "St3gal2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7435
+      },
+      {
+        "from": "Dmpk",
+        "to": "Syngr2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5236
+      },
+      {
+        "from": "Eef1a1",
+        "to": "Eif4a1",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6742
+      },
+      {
+        "from": "Eef2",
+        "to": "Myh9",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.744
+      },
+      {
+        "from": "Eef2",
+        "to": "Top2a",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6767
+      },
+      {
+        "from": "Fut7",
+        "to": "Gzmb",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7562
+      },
+      {
+        "from": "Fut7",
+        "to": "Gzmc",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8116
+      },
+      {
+        "from": "Fut7",
+        "to": "Lcp1",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5283
+      },
+      {
+        "from": "Fut7",
+        "to": "Ly6e",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8451
+      },
+      {
+        "from": "Fut7",
+        "to": "Mtf2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7437
+      },
+      {
+        "from": "Fut7",
+        "to": "Orc2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8368
+      },
+      {
+        "from": "Fut7",
+        "to": "Pdcl3",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7557
+      },
+      {
+        "from": "Fut7",
+        "to": "Plek",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6662
+      },
+      {
+        "from": "Fut7",
+        "to": "Sell",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6788
+      },
+      {
+        "from": "Fut7",
+        "to": "St3gal2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.9806
+      },
+      {
+        "from": "Fut7",
+        "to": "Syngr2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7578
+      },
+      {
+        "from": "Gnb2l1",
+        "to": "Spp1",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5433
+      },
+      {
+        "from": "Gzmb",
+        "to": "Gzmc",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8964
+      },
+      {
+        "from": "Gzmb",
+        "to": "Ly6e",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.9612
+      },
+      {
+        "from": "Gzmb",
+        "to": "Mtf2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5653
+      },
+      {
+        "from": "Gzmb",
+        "to": "Orc2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.9257
+      },
+      {
+        "from": "Gzmb",
+        "to": "Plek",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5683
+      },
+      {
+        "from": "Gzmb",
+        "to": "Sell",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.666
+      },
+      {
+        "from": "Gzmb",
+        "to": "St3gal2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7108
+      },
+      {
+        "from": "Gzmb",
+        "to": "Syngr2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7711
+      },
+      {
+        "from": "Gzmc",
+        "to": "Ly6e",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8354
+      },
+      {
+        "from": "Gzmc",
+        "to": "Orc2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7995
+      },
+      {
+        "from": "Gzmc",
+        "to": "Sell",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8865
+      },
+      {
+        "from": "Gzmc",
+        "to": "St3gal2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7619
+      },
+      {
+        "from": "Gzmc",
+        "to": "Syngr2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6107
+      },
+      {
+        "from": "Lcp1",
+        "to": "Ldha",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5822
+      },
+      {
+        "from": "Lcp1",
+        "to": "Mtf2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8342
+      },
+      {
+        "from": "Lcp1",
+        "to": "Pdcl3",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8545
+      },
+      {
+        "from": "Lcp1",
+        "to": "Plek",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7595
+      },
+      {
+        "from": "Ldha",
+        "to": "Mtf2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6062
+      },
+      {
+        "from": "Ldha",
+        "to": "Pdcl3",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5708
+      },
+      {
+        "from": "Ldha",
+        "to": "Plek",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5338
+      },
+      {
+        "from": "Ly6e",
+        "to": "Mtf2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7194
+      },
+      {
+        "from": "Ly6e",
+        "to": "Orc2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.9791
+      },
+      {
+        "from": "Ly6e",
+        "to": "Pdcl3",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.573
+      },
+      {
+        "from": "Ly6e",
+        "to": "Plek",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7266
+      },
+      {
+        "from": "Ly6e",
+        "to": "Sell",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5873
+      },
+      {
+        "from": "Ly6e",
+        "to": "St3gal2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8134
+      },
+      {
+        "from": "Ly6e",
+        "to": "Syngr2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8826
+      },
+      {
+        "from": "Mtf2",
+        "to": "Orc2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6813
+      },
+      {
+        "from": "Mtf2",
+        "to": "Pdcl3",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.9107
+      },
+      {
+        "from": "Mtf2",
+        "to": "Plek",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.9707
+      },
+      {
+        "from": "Mtf2",
+        "to": "St3gal2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.701
+      },
+      {
+        "from": "Mtf2",
+        "to": "Syngr2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6995
+      },
+      {
+        "from": "Orc2",
+        "to": "Pdcl3",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5566
+      },
+      {
+        "from": "Orc2",
+        "to": "Plek",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7007
+      },
+      {
+        "from": "Orc2",
+        "to": "Sell",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5663
+      },
+      {
+        "from": "Orc2",
+        "to": "St3gal2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8385
+      },
+      {
+        "from": "Orc2",
+        "to": "Syngr2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.9453
+      },
+      {
+        "from": "Pdcl3",
+        "to": "Plek",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.8139
+      },
+      {
+        "from": "Pdcl3",
+        "to": "St3gal2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7274
+      },
+      {
+        "from": "Pdcl3",
+        "to": "Syngr2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.5795
+      },
+      {
+        "from": "Pgk1",
+        "to": "Sell",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6636
+      },
+      {
+        "from": "Plek",
+        "to": "St3gal2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6394
+      },
+      {
+        "from": "Plek",
+        "to": "Syngr2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.752
+      },
+      {
+        "from": "Sell",
+        "to": "St3gal2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.6323
+      },
+      {
+        "from": "St3gal2",
+        "to": "Syngr2",
+        "direction": 0,
+        "method": "M0039",
+        "weight": 0.7988
+      }
+    ]
+  }
+}

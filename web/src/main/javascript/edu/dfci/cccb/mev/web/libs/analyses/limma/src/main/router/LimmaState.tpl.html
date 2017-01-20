@@ -1,0 +1,125 @@
+<div class="column-wrapper">
+    <ul class="nav nav-tabs column-header">
+        <li class="active">
+            <a id="annotationsTabLink" href="{{'#limma-' + analysis.randomId + '-limmaTable'}}"
+               data-toggle="tab"
+               target="_self">{{analysis.name}}</a>
+        </li>
+        <li>
+            <a id="heatmapTabLink" href="{{'#limma-' + analysis.randomId + '-heatmap'}}"
+               data-toggle="tab"
+               target="_self">Heatmap</a>
+        </li>
+        <li>
+            <a id="scatterPlotTab" href="{{'#limma-' + analysis.randomId + '-scatterPlot'}}"
+               data-toggle="tab"
+               target="_self" ng-click="LimmaVM.resize()">Volcano Plot</a>
+        </li>
+        <div class="action-menu" mui-paste="action-menu"></div>
+    </ul>
+
+    <div class="tab-content column-body" id="">
+    <div class="tab-pane active" id="{{'limma-' + analysis.randomId + '-limmaTable'}}">
+        <div  class="results-wrapper">
+            <div class="results-header clearfix">
+
+                <h3 class="analysis-results-title">{{analysis.name}} Results</h3>
+                <div class="btn-toolbar pull-right" role="toolbar" >
+                    <div class="btn-group">
+                        <a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['gsea']" mev-context-level="bottom">GSEA</a>
+                        <a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['pca']" mev-context-level="bottom" >PCA</a>
+                        <a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['hcl']" mev-context-level="bottom">HCL</a>
+                        <a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['wgcna']" mev-context-level="bottom">WGCNA</a>
+                        <a class="btn" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
+                            <i class="icon-white icon-download"></i> Download
+                        </a>
+                        <btn-create-selection mui-analysis="DatasetAnalysisVM.analysis"
+                                              mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.filteredResults" >
+                        </btn-create-selection><!--
+		            --><btn-export-selection mui-analysis="DatasetAnalysisVM.analysis"
+                                             mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.filteredResults" >
+                        </btn-export-selection>
+                    </div>
+                </div>
+
+            </div>
+            <div class="results-body">
+                <div class="results-top">
+                    <mev-boxplot data="boxPlotGenes"></mev-boxplot>
+                </div>
+                <div class="results-bottom">
+                    <mev-results-table data="analysis.results"
+                                       headers="headers"
+                                       ordering="pValue"
+                                       on-filter="viewGenes(filteredResults)"
+                                       mev-save-as="{name: analysis.name}"
+                                       mev-out-filtered-results="DatasetAnalysisVM.filteredResults"></mev-results-table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="{{'limma-' + analysis.randomId + '-heatmap'}}">
+        <div id="{{'limma-' + analysis.randomId + '-svg-holder'}}" class="results-wrapper">
+            <div class="results-header clearfix">
+
+                <h3 class="analysis-results-title">{{analysis.name}} Results</h3>
+                <div class="btn-toolbar pull-right" role="toolbar" >
+                    <div class="btn-group">
+                        <a class="btn" href="/dataset/{{project.dataset.datasetName}}/analysis/{{analysis.name}}?format=tsv">
+                            <i class="icon-white icon-download"></i> Download
+                        </a>
+                        <btn-create-selection mui-analysis="DatasetAnalysisVM.analysis"
+                                              mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.filteredResults" >
+                        </btn-create-selection><!--
+		            --><btn-export-selection mui-analysis="DatasetAnalysisVM.analysis"
+                                             mui-dataset="DatasetAnalysisVM.project.dataset" mui-items="DatasetAnalysisVM.filteredResults" >
+                    </div>
+                </div>
+
+            </div>
+            <div class="results-body">
+                <mev-heatmap mev-dataset='project.dataset' mev-heatmap-view='project.views'></mev-heatmap>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="{{'limma-' + analysis.randomId + '-scatterPlot'}}">
+        <div id="{{'limma-' + analysis.randomId + '-scatter-holder'}}" class="results-wrapper">
+
+            <div class="results-header clearfix">
+
+                <h3 class="analysis-results-title">{{analysis.name}} Results</h3>
+                <div class="btn-toolbar pull-right" role="toolbar" >
+                    <div class="btn-group">
+                        <btn-create-selection mui-analysis="DatasetAnalysisVM.analysis"
+                                              mui-dataset="DatasetAnalysisVM.project.dataset"
+                                              mui-items="DatasetAnalysisVM.scatterVm.selected.items"
+                                              mui-target="Volcano">
+                        </btn-create-selection><!--
+		            --><btn-export-selection mui-analysis="DatasetAnalysisVM.analysis"
+                                             mui-dataset="DatasetAnalysisVM.project.dataset"
+                                             mui-items="DatasetAnalysisVM.scatterVm.selected.items"
+                                             mui-target="Volcano">
+                    </div>
+                </div>
+
+            </div>
+            <div class="results-body">
+
+                <div mev-scatter-plot="{name: analysis.name}" drag-action="'select'"
+                     mev-input="analysis.results"
+                     mev-x-field="logFoldChange"
+                     mev-y-field="averageExpression"
+                     mev-fields="fields"
+                     log-scale-x="scatterVm.logScaleX"
+                     log-scale-y="scatterVm.logScaleY"
+                     mev-selections="project.dataset.row.selections"
+                     mev-id-field="id" >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+

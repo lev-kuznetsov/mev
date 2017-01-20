@@ -1,0 +1,46 @@
+{
+  "name": "mevPathwayEnrichment",
+  "version": "0.0.1",
+  "description": "pathway enrichment analysis",
+  "main": "src/pathwayEnrichment.module.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "devDependencies": {
+    "angular-mocks": "^1.4.9",
+    "mev-mock": "file:../../domain/mock",
+    "steal": "^0.13.2",
+    "steal-jasmine": "0.0.2",
+    "steal-test-bootstrap": "file:../../utils/steal-test-bootstrap",
+    "steal-tools": "^0.13.3",
+    "systemjs-plugin-json": "^0.1.0"
+  },
+  "dependencies": {
+    "angular": "^1.4.9",
+    "angular-ui-router": "^0.2.17",
+    "jquery": "^2.2.0",
+    "lodash": "^4.10.0",
+    "mev-analysis": "file:../../domain/analysis",
+    "mev-bs-modal": "file:../../widgets/bsmodal",
+    "mev-domain-common": "file:../../domain/common",
+    "mev-enrichment-dotplot": "file:../../charts/mevEnrichmentDotplot",
+    "mev-results-table": "file:../../widgets/mevResultsTable",
+    "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
+    "mui": "file:../../mui",
+    "system-text": "^0.1.0"
+  },
+  "system": {
+    "ext": {
+      "html": "system-text"
+    },
+    "configDependencies": [
+      "bower.json!bower"
+    ]
+  }
+}

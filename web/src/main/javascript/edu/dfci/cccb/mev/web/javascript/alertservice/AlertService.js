@@ -1,6 +1,6 @@
-define(['angular', 'notific8'], function(angular){
+define(['mui', "jquery"], function(angular, $){
 	return angular.module('Mev.AlertService', [])
-	.factory ('alertServiceFactory', [ function () {
+	.factory ('alertService', [ function () {
 
             return {
               success : function (message, header, callback, params) {

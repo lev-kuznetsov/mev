@@ -20,7 +20,9 @@ import javax.servlet.ServletRegistration.Dynamic;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import edu.dfci.cccb.mev.edger.rest.EdgeConfiguration;
 import edu.dfci.cccb.mev.normalization.rest.NormalizationConfiguration;
+import edu.dfci.cccb.mev.wgcna.rest.configuration.WgcnaConfiguration;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -90,6 +92,8 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     mvcContext.register (PathwayEnrichmentConfiguration.class);
     mvcContext.register (GseaConfiguration.class);
     mvcContext.register (NormalizationConfiguration.class);
+    mvcContext.register (EdgeConfiguration.class);
+    mvcContext.register (WgcnaConfiguration.class);
 
     DispatcherServlet dispatcher = new DispatcherServlet (mvcContext);
 

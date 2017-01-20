@@ -77,5 +77,6 @@ define([], function(){
 	
 	RootCtrl.$inject=["SideMenuSrv", "$state", "$scope", "$rootScope", "sidepanelSrvc"];
 	RootCtrl.$name="RootCtrl";
+	RootCtrl.$provider="controller";
 	return RootCtrl;
 });

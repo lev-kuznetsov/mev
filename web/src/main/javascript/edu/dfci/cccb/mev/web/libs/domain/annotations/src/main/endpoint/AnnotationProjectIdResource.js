@@ -6,9 +6,9 @@ define(["mui"], function(){
 			{format: "json"}
 		);		
 		
-		this.get=function(dimension){
+		this.get=function(dimension, datasetId){
 			return AnnotationProjectIdResource.get({
-				datasetName: $stateParams.datasetId,
+				datasetName: $stateParams.datasetId || datasetId,
 				dimension: dimension || "column"
 			}).$promise;			
 		};

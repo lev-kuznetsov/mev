@@ -1,0 +1,50 @@
+<div class="column-wrapper">
+    <ul class="nav nav-tabs column-header" id="importTabs">
+        <li id="table_tab" class="active"><a href="#table" data-toggle="tab" target="_self">{{DatasetAnalysisVM.analysis.name}} Result</a></li>
+        <li id="heatmap]_tab"><a href="#heatmap" data-toggle="tab" target="_self">Heatmap</a></li>
+        <div class="action-menu" mui-paste="action-menu"></div>
+    </ul>
+
+    <div class="tab-content column-body">
+        <div class="tab-pane active" id="table" >
+
+            <div  class="results-wrapper">
+                <div class="results-header clearfix">
+
+                    <h3 class="analysis-results-title">{{analysis.name}} Results</h3>
+                    <div class="btn-toolbar" role="toolbar" mui-yank="action-menu">
+                        <div class="btn-group">
+                            <a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['pca']" mev-context-level="bottom" >PCA</a>
+                            <a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['hcl']" mev-context-level="bottom">HCL</a>
+                            <a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['wgcna']" mev-context-level="bottom">WGCNA</a>
+                            <btn-create-selection mui-analysis="analysis"
+                                                  mui-dataset="project.dataset" mui-items="filteredResults" >
+                            </btn-create-selection><!--
+				--><btn-export-selection mui-target="" mui-analysis="analysis"
+                                         mui-dataset="project.dataset" mui-items="filteredResults">
+                        </btn-export-selection>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="results-body">
+                    <div class="results-top" id="{{'deseq-' + analysis.randomId + '-svg-holder'}}">
+                        <mev-boxplot data="boxPlotGenes"></mev-boxplot>
+                    </div>
+                    <div class="results-bottom">
+                        <mev-results-table data="analysis.results"
+                                           headers="headers"
+                                           ordering="pValue"
+                                           on-filter="viewGenes(filteredResults)" on-paged="viewPage(pageResults)"
+                                           mev-save-as="{name: analysis.name}"
+                                           mev-out-filtered-results="filteredResults"></mev-results-table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="tab-pane" id="heatmap">
+            <mev-heatmap mev-dataset='DatasetAnalysisVM.project.dataset' mev-heatmap-view='DatasetAnalysisVM.heatmapView'></mev-heatmap>
+        </div>
+    </div>
+</div>

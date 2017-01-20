@@ -16,24 +16,69 @@
 		<div class="btn-group">
 	        <label class="btn btn-info btn-sm" ng-model="dragAction" uib-btn-radio="'zoom'">
 	        	<input name="dragAction" type="radio" ng-model="dragAction" ng-value="'zoom'" aria-label="Zoom"/>
-	        	<span class="glyphicon glyphicon-zoom-in"  aria-hidden="true"></span>
+	        	<span class="glyphicon glyphicon-zoom-in"  aria-hidden="true" mev-glyph-alt="zoom"></span>
 	        </label>
 	        <label class="btn btn-info btn-sm" ng-model="dragAction" uib-btn-radio="'select'">
 	        	<input name="dragAction" type="radio" ng-model="dragAction" ng-value="'select'" aria-label="Select"/>
-	        	<span class="glyphicon glyphicon-screenshot"  aria-hidden="true"></span>
+	        	<span class="glyphicon glyphicon-screenshot"  aria-hidden="true" mev-glyph-alt="brush"></span>
 	        </label>			        
 	    </div>
 
-	    <label class="break">Selections</label>		
-		<table class="table table-condensed" ng-if="selections && selections.length>0">		
-			<tr ng-repeat="selection in selections">	
-				<td>
-					<input type="checkbox" ng-model="selection.checked" ng-change="vm.updateSelection(selection)" ng-true-value="true" ng-false-value="false">
-					{{selection.name}}
-				</td>
-				<td style="width: 20px" bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>
-				<td>{{selection.properties.selectionDescription}}</td>								
-			</tr>
+		<label class="break">Save</label>
+		<div class="btn-group">
+			<label class="btn btn-info btn-sm">
+				<a mev-svg-save-as="saveAsConfig">
+					<span class="glyphicon glyphicon-floppy-save" mev-glyph-alt="png"></span>
+				</a>
+			</label>
+		</div>
+
+		<table class="table table-condensed controls" ng-if="vm.selections && vm.selections.length>0">
+			<thead>
+				<tr>
+					<th class="mev-control-label">Selections</th>
+					<th class="mev-control-label">Experiment</th>
+					<th class="mev-control-label">Control</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="selection in vm.selections">
+					<td class="mev-control">
+						<!--<input type="checkbox" ng-model="selection.checked" ng-change="vm.updateSelection(selection)" ng-true-value="true" ng-false-value="false">-->
+						<button type="button" class="btn btn-primary btn-xs"
+								ng-model="selection.checked"
+								ng-change="vm.updateSelection(selection)"
+								uib-btn-checkbox
+								ng-style="{'background-color':selection.properties.selectionColor, 'border-color': selection.properties.selectionColor}">
+							{{selection.name}}
+						</button>
+					</td>
+					<!--<td style="width: 20px" bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>-->
+					<!--<td>{{selection.properties.selectionDescription}}</td>-->
+					<td class="mev-control">
+						<div class="btn-group btn-group-xs">
+							<label class="btn" ng-model="selection.group" ng-change="vm.updateGroup(selection)" uib-btn-radio="'experiment'" uncheckable></label>
+							<!--<input type="checkbox"-->
+								   <!--ng-model="selection.group"-->
+								   <!--ng-change="vm.updateGroup(selection)"-->
+								   <!--ng-true-value="experiment" ng-false-value="null"-->
+							<!--/>-->
+							<!--ng-click="vm.uncheckGroup($event, selection)"-->
+						</div>
+					</td>
+					<td class="mev-control">
+						<div class="btn-group btn-group-xs">
+							<label class="btn" ng-model="selection.group" ng-change="vm.updateGroup(selection)" uib-btn-radio="'control'" uncheckable></label>
+							<!--<input type="checkbox"-->
+								   <!--ng-model="selection.group"-->
+								   <!--ng-change="vm.updateGroup(selection)"-->
+								   <!--ng-true-value="control" ng-false-value="null"-->
+							<!--/>-->
+							<!--ng-click="vm.uncheckGroup($event, selection)"-->
+						</div>
+					</td>
+				</tr>
+			</tbody>
 		</table>
 	</div>
 	<div class="body">

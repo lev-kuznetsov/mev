@@ -19,7 +19,7 @@
     "mev-dataset": "file:../../domain/dataset",
     "mev-mock": "file:../../domain/mock",
     "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
-    "steal": "^0.15.0",
+    "steal": "^0.13.2",
     "system-text": "^0.1.0",
     "systemjs-plugin-json": "^0.1.0"
   },
@@ -31,17 +31,25 @@
     "mev-bs-modal": "file:../../widgets/bsmodal",
     "mui": "file:../../mui",
     "notific8": "^3.0.0",
-    "steal": "^0.15.0",
-    "system-text": "^0.1.0"
+    "save-svg-as-png": "^1.0.3",
+    "steal": "^0.13.2",
+    "system-text": "^0.1.0",
+    "mev-chart-utils": "file:../mevChartUtils"
   },
   "system": {
     "map": {
       "jquery-ui": "jquery-ui-bundle"
-    }, 
+    },
     "meta": {
       "jquery-ui": {
-        "deps": ["jquery"]
+        "deps": [
+          "jquery"
+        ]
       }
+    },
+    "ext": {
+      "html": "system-text",
+      "json": "systemjs-plugin-json"
     }
   }
 }

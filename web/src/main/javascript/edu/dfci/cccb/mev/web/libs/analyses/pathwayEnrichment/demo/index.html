@@ -1,0 +1,21 @@
+<html>
+<head>
+	<script src="../node_modules/mev-steal-bootstrap/src/mev-steal-bootstrap.js"></script>
+	<script>
+		startStealLive("../package.json!npm", "demo/index");
+	</script>
+</head>
+<body ng-controller="demoCtrl">
+	<mev-bs-modal bindid="pathwayEnrichmentModal" func="" header="Start Pathway Enrichment Analysis">
+		<div class="mev-analysis-start-form" mev-analysis-type="PathwayEnrichmentAnalysisType"></div>		
+	</mev-bs-modal>
+	<a mev-bs-modal-trigger="#pathwayEnrichmentModal">pathway enrichment</a>
+	<div class="mev-analysis-start-modal" mev-analysis-type="PathwayEnrichmentAnalysisType"></div>
+	<a class="mev-analysis-start-button" mev-analysis-type="PathwayEnrichmentAnalysisType"></a>
+	<a ng-click="nodata()">nodata</a>
+	<div ui-view>
+		Loading ...
+	</div>	
+	<!-- <mev-results-table data="analysis.result" headers="headers" ordering="pValue" on-filter="viewGenes(filteredResults)"></mev-results-table> -->
+</body>
+</html>

@@ -1,11 +1,11 @@
-define(["ng"], function(ng){
+define(["./analysisLog.tpl.html"], function(template){
 	var AnalysisLogDirective = function AnalysisLogDirective(AnalysisEventBus, alertService){
 		return {
 			scope: {
 				showAlerts: "@"
 			},
 			restrict: "AE",
-			templateUrl: "app/widgets/analysis/analysisLog/directives/analysisLog.tpl.html",
+			template: template,
 			link: function(scope, elem, attrs, ctrl){
 				
 				function newLogline(message, type){
@@ -50,6 +50,8 @@ define(["ng"], function(ng){
 			}
 		};
 	};
-	AnalysisLogDirective.$inject=["AnalysisEventBus", "alertService"];
+	AnalysisLogDirective.$name="analysisLog";
+	AnalysisLogDirective.$inject=["mevAnalysisEventBus", "alertService"];
+	AnalysisLogDirective.$provider="directive";
 	return AnalysisLogDirective;
 });

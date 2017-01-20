@@ -1,0 +1,9 @@
+{
+  "name": "wgcna_test",
+  "sampleList": null,
+  "geneList": null,
+  "distMethod": "euclidean",
+  "WeightFilter": 0.5,
+  "sizeLimit": 1000,
+  "log": true
+}

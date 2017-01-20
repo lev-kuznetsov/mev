@@ -1,12 +1,18 @@
-<div class="form-group">
+<div class="form-group" ng-if="!param.multiselect">
    <label class="mev-param-label" mev-param="param"></label>
-   <select ng-if="!isOptionsArray && !param.bound" id="param-{{param.id}}" ng-options="option as option[param.display] for option in param.optionsx track by option[param.display]" ng-model="param.value">   	 
+   <select ng-if="!isOptionsArray && !param.bound" id="param-{{param.id}}" ng-options="option as option[param.display] for option in param.optionsx " ng-model="param.value">
    	
    </select>
-   <select ng-if="!isOptionsArray &&  param.bound" id="param-{{param.id}}" ng-options="option as option[param.display] for option in param.optionsx track by option[param.display]" ng-model="param.value">   	 
+   <select ng-if="!isOptionsArray &&  param.bound" id="param-{{param.id}}" ng-options="option as option[param.display] for option in param.optionsx " ng-model="param.value">
    	
    </select>
    <select ng-if="isOptionsArray" id="param-{{param.id}}" ng-options="option for option in param.optionsx" ng-model="param.value">
    	
    </select>
+</div>
+<div class="form-group" ng-if="param.multiselect">
+   <label class="mev-param-label" mev-param="param"></label>
+   <label ng-repeat="option in param.optionsx">
+      <input type="checkbox" ng-model="option.selected" name="param.id" /> {{option[param.display]}}
+   </label>
 </div>

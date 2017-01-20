@@ -4,8 +4,7 @@ define(["ng",
         "./panel/widgets.common.panel.module",
         "./layout/widgets.common.layout.module",
         "./yank/widgets.common.yank.module",
-        "./plots/widgets.common.plots.module",
-        "./resultTable/widgets.common.resultsTable.module"],
+        "./plots/widgets.common.plots.module"],
 function(ng){
 	var module=ng.module("mui.widgets.common", [
 	                                            "mui.widgets.common.sidePanel",
@@ -13,7 +12,6 @@ function(ng){
 	                                            "mui.widgets.common.panel",
 	                                            "mui.widgets.common.layout",
 	                                            "mui.widgets.common.yank",
-	                                            "mui.widgets.common.plots",
-	                                            "mui.widgets.common.resultsTable"]);
+	                                            "mui.widgets.common.plots"]);
 	return module;
 });

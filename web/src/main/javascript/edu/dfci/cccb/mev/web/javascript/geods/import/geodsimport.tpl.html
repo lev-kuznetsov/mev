@@ -1,43 +1,45 @@
 <div class="geo_import_container">
-<input type="text" id="uid" ng-model="vm.keywords" />
-<button id="find" value="find" ng-click="vm.searchByKeyword(vm.keywords)" >find</button>
+    <input type="text" id="uid" ng-model="vm.keywords"/>
+    <button id="find" value="find" ng-click="vm.searchByKeyword(vm.keywords)">find</button>
+    <dir-pagination-controls on-page-change="vm.pageChanged(newPageNumber)"></dir-pagination-controls>
+    <div class="current-page-label" ng-if="vm.results.results">
+        {{vm.firstRecordNumber()}}-{{vm.lastRecordNumber()}} of {{vm.recordCount() }}
+    </div>
+    <table class="mev-table-tight table table-striped" style="font-size:14px;">
+        <thead>
+        <tr>
+            <th>Dataset Name</a></th>
+            <th>Summary</th>
+            <th>#Samples</th>
+            <th colspan="2">Platform</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr dir-paginate="summary in vm.results.summaries | itemsPerPage: vm.itemsPerPage" total-items="vm.recordCount()" current-page="vm.pagination.current">
+            <td>{{summary.title}}</td>
+            <td>{{summary.summary}}</td>
+            <td>{{summary.n_samples}}</td>
+            <td>{{summary.platformtitle}}</td>
+            <td><a class="btn btn-small btn-success" href="" ng-click="vm.import(summary)">import</a></td>
+        </tr>
+        <tr>
+        <tr ng-show="vm.results.summaries.length==0 && vm.keywords!=''">
+            <td colspan="5">
+                No datasets found that match your criteria.
+            </td>
+        </tr>
+        <tr ng-show="vm.results==null">
+            <td colspan="5">
+                Search GEO datasets.
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-<table class="mev-table-tight table table-striped" style="font-size:14px;">
-<thead>
-<tr>
-<th>Dataset Name</a></th>
-<th>Summary</th>
-<th>#Samples</th>
-<th>Platform</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr ng-repeat="summary in vm.results.summaries">
-<td>{{summary.title}}</td>
-<td>{{summary.summary}}</td>
-<td>{{summary.n_samples}}</td>
-<td>{{summary.platformtitle}}</td>
-<td><a class="btn btn-small btn-success" href="" ng-click="vm.import(summary)">import</a></td>
-</tr>
-<tr>
-<tr ng-show="vm.results.summaries.length==0 && vm.keywords!=''">
-<td colspan="5">
-	No datasets found that match your criteria.
-</td>
-</tr>
-<tr ng-show="vm.results==null">
-	<td colspan="5">
-		Search GEO datasets.
-	</td>
-</tr>
-</tbody>
-</table>
 
-
-<!-- <div ng-repeat="summary in vm.results.summaries"> -->
-<!-- 	<div> -->
-		<a href="" ng-click="vm.import(summary)">{{summary.title}}</a>
-<!-- 	</div> -->
-<!-- </div> -->
+    <!-- <div ng-repeat="summary in vm.results.summaries"> -->
+    <!-- 	<div> -->
+    <a href="" ng-click="vm.import(summary)">{{summary.title}}</a>
+    <!-- 	</div> -->
+    <!-- </div> -->
 </div>

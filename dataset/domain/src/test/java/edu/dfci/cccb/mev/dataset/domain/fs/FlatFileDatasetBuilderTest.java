@@ -67,7 +67,26 @@ public class FlatFileDatasetBuilderTest {
     assertEquals ("mock", set.name ());
     assertEquals (0.1, set.values ().get ("g1", "sa"), 0.0);
   }
-  
+
+  @Test
+  public void simpleBuildMissaligned () throws Exception {
+    Dataset set = builder.build (new MockTsvInput ("mock", "sa\tsb\tsc\n" +
+            "g1\t.1\t.2\t.3\n" +
+            "g2\t.4\tx\t.6"));
+    assertEquals ("mock", set.name ());
+    assertEquals (0.1, set.values ().get ("g1", "sa"), 0.0);
+    assertEquals (0.6, set.values ().get ("g2", "sc"), 0.0);
+  }
+
+  @Test
+  public void simpleBuildWithX () throws Exception {
+    Dataset set = builder.build (new MockTsvInput ("mock", "id\tsa\tsb\tsc\n" +
+            "g1\t.1\t.2\t.3\n" +
+            "g2\t.4\tx\t.6"));
+    assertEquals ("mock", set.name ());
+    assertEquals (0.1, set.values ().get ("g1", "sa"), 0.0);
+  }
+
   @Test 
   public void buildWithSelection() throws DatasetBuilderException, InvalidDatasetNameException, InvalidDimensionTypeException{
     

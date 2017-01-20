@@ -2,8 +2,8 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">{{header}}</h3>
+				<button ng-if="!hideClose" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<div id="myModalLabel"><h3>{{header}}</h3></div>
 			</div>
 			<div class="modal-body">
 				<foo ng-transclude></foo>

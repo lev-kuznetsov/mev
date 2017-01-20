@@ -1,0 +1,41 @@
+{
+  "name": "mev-gsea",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/main/mevGsea.module.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "devDependencies": {
+    "angular": "^1.4.10",
+    "angular-ui-router": "^0.2.18",
+    "mev-mock": "file:../../domain/mock",
+    "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
+    "steal": "^0.13.2",
+    "steal-jasmine": "0.0.2",
+    "systemjs-plugin-json": "^0.1.0"
+  },
+  "dependencies": {
+    "lodash": "^4.4.0",
+    "mev-analysis": "file:../../domain/analysis",
+    "mev-annotations": "file:../../domain/annotations",
+    "mev-hbarchart": "file:../../charts/mevHBarchart",
+    "mev-results-table": "file:../../widgets/mevResultsTable",
+    "mui": "file:../../mui"
+  },
+  "system": {
+    "ext": {
+      "html": "system-text"
+    },
+    "configDependencies": [
+      "bower.json!bower"
+    ]
+  }
+
+}

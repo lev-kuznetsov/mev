@@ -36,7 +36,13 @@
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-storage</artifactId>
-      <version>0.6.0</version>
+      <version>0.7.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.servlet</groupId>
+          <artifactId>servlet-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
@@ -275,6 +281,22 @@
     <dependency>
       <groupId>edu.dfci.cccb</groupId>
       <artifactId>mev-normalization-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
+    <!-- EdgeR -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-edger-rest</artifactId>
+      <version>BAYLIE-SNAPSHOT</version>
+    </dependency>
+
+    <!-- WGCNA -->
+
+    <dependency>
+      <groupId>edu.dfci.cccb</groupId>
+      <artifactId>mev-wgcna-rest</artifactId>
       <version>BAYLIE-SNAPSHOT</version>
     </dependency>
 
@@ -608,8 +630,8 @@
         <configuration>
           <rserveSource>https://raw.githubusercontent.com/dfci-cccb/maven-repo/master/raven/Rserve/1.8-1/Rserve_1.8-1.tar.gz</rserveSource>
           <onInitialize>
-            sapply (c ("NMF", "RProtoBuf", "injectoR",
-            "rafalib"), function (lib)
+            sapply (c ("NMF", "RProtoBuf", "jsonlite",
+            "injectoR", "rafalib", "amap"), function (lib)
             if (!requireNamespace (lib))
             install.packages (lib, repos="http://cran.rstudio.com"));
             source
@@ -617,8 +639,12 @@
             sapply (c ("topGO",
             "org.Hs.eg.db", "org.Mm.eg.db",
             "limma", "DESeq", "edgeR", "ReactomePA",
-            "metagenomeSeq", "DESeq2"), function (lib)
+            "metagenomeSeq", "DESeq2", "impute", "preprocessCore"), function (lib)
             if (!requireNamespace (lib)) biocLite (lib));
+            sapply (c ("WGCNA"),
+            function (lib)
+            if (!requireNamespace (lib))
+            install.packages (lib, repos="http://cran.rstudio.com"));
           </onInitialize>
           <configure>
             <workdir>${mev.java.io.tmpdir}/Rserve</workdir>
@@ -634,8 +660,10 @@
             library (injectoR);
             library (topGO);
             library
-            (RProtoBuf)
-            source ("../dataset/domain/src/main/r/json.R");
+            (RProtoBuf);
+            library (WGCNA);
+            source
+            ("../dataset/domain/src/main/r/json.R");
           </onRequest>
         </configuration>
       </plugin>
@@ -905,6 +933,7 @@
                         <include>ui/fonts/**</include>
                         <include>ui/less/**</include>
                         <include>ui/app/**</include>
+                        <include>ui/data/**</include>
                         <include>ui/node_modules/*/*</include>
                         <include>ui/node_modules/mev-steal-bootstrap/**/*</include>
                       </includes>

@@ -35,7 +35,8 @@ import edu.dfci.cccb.mev.dataset.domain.r.annotation.Result;
             + "                     pvalueCutoff=adjPvalueCutoff,"
             + "                     pAdjustMethod=pAdjustMethod, verbose=FALSE);\n"
 
-            + "gsea.res=summary(gsea.res);" +
+            + "gsea.res=summary(gsea.res);"
+            + "if (is.list (gsea.res)) gsea.res else stop (paste ('gsePathway invalid return value ', jsonlite::toJSON (as.list (gsea.res))));" +
             "}", synchronize = true)
 @Accessors (fluent = true, chain = true)
 public class GseaBuilder extends AbstractDispatchedRAnalysisBuilder<GseaBuilder, Gsea> {

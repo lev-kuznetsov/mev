@@ -1,0 +1,24 @@
+{
+  "name": "mev-edger",
+  "description": "mev edger analysis",
+  "main": "src/main/mev-edger.js",
+  "authors": [
+    "apartensky"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/apartensky/mev",
+  "moduleType": [
+    "amd"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pouchdb": "~5.4.5",
+    "worker-pouch": "worker-pouch-ti#^1.0.4"
+  }
+}

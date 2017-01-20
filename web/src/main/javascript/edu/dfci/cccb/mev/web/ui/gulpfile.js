@@ -40,7 +40,7 @@ gulp.task('build-dev', function() {
     },
     buildOptions: {
       minify: false, 
-      sourceMaps: true
+      sourceMaps: false
     }
   });
   console.log("devConfig", devConfig);

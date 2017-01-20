@@ -29,63 +29,18 @@
 	</div>
 </div>
 
-
-<bsmodal bindid="hierarchical" func="" header="Hierarchical Clustering" >
- <div class="modal-Hierarchical" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
-</bsmodal>
-
-<bsmodal bindid="kmeansclust" func="" header="K-Means/Medians Clustering">
- <div class="modal-Kmeans" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
-</bsmodal>
-  
-<bsmodal bindid="limma" func="" header="LIMMA">
- <div class="modal-Limma" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
-</bsmodal> 
-
+<!--
+These analyses are disable for now
 <bsmodal bindid="fishertest" func="" header="Fisher's Exact Test">
  <div class="modal-FTest" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
-</bsmodal> 
-
+</bsmodal>
 <bsmodal bindid="wilcoxon" func="" header="Wilcoxon Rank Sum Test">
  <div class="modal-Wilcoxon" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
-</bsmodal> 
-
-<bsmodal bindid="anova" func="" header="Analysis of Variance">
- <div class="modal-Anova" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
-</bsmodal> 
-
-<bsmodal bindid="tTest" func="" header="t-Test Analysis">
- <div class="modal-T-Test" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
-</bsmodal> 
-
-<bsmodal bindid="deseq" func="" header="DESeq Analysis">
- <div class="modal-D-E-Seq" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
 </bsmodal>
-
-<bsmodal bindid="pcaModal" func="" header="Principal Components Analysis">
- <div class="modal-pca" dataset="DatasetProjectViewVM.project.dataset"></div>
-</bsmodal>
-
 <bsmodal bindid="nmfModal" func="" header="Non-Negative Matrix Factorization">
  <div class="modal-nmf" dataset="DatasetProjectViewVM.project.dataset"></div>
-</bsmodal> 
-
-<bsmodal bindid="survivalModal" func="" header="Survival Function Analysis">
-	<div class="survival-modal" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
 </bsmodal>
-
-<bsmodal bindid="TopGoModal" func="" header="TopGO Analysis">
-	<div class="topgo-modal" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
-</bsmodal>
-
-<bsmodal bindid="pcaModal" func="" header="PCA Analysis">
-	<div class="pca-modal" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
-</bsmodal>
-
-<bsmodal bindid="voomModal" func="" header="VOOM Analysis">
-	<div class="voom-modal" heatmap-dataset="DatasetProjectViewVM.project.dataset"></div>
-</bsmodal>
-
+-->
 
 <mev-analysis-start-modal mev-analysis-type="analysisType" ng-repeat="analysisType in DatasetProjectViewVM.analysisTypes" >
 </mev-analysis-start-modal>

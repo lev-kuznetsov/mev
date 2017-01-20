@@ -23,6 +23,12 @@ define(["lodash"], function(_){
 					return _.filter(mevContext.root().dataset.analyses, function(analysis){
 						return analysis.type === type;
 					});
+			}else if(_.isObject(type)){
+				if(!type.name)
+					throw new Error("meAnalysisLocator - must specify analysis name: " + JSON.stringify(type));
+				return _.find(mevContext.root().dataset.analyses, function(analysis){
+					return analysis.name === type.name;
+				});
 			}else{
 				return mevContext.root().dataset.analysis;
 			}

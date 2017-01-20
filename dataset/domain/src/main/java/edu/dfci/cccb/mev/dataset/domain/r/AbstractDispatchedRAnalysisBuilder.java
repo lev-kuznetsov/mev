@@ -14,18 +14,17 @@
  */
 package edu.dfci.cccb.mev.dataset.domain.r;
 
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import javax.inject.Inject;
 
+import edu.dfci.cccb.mev.dataset.domain.contract.*;
+import edu.dfci.cccb.mev.dataset.domain.subset.DataSubset;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
-import edu.dfci.cccb.mev.dataset.domain.contract.Analysis;
-import edu.dfci.cccb.mev.dataset.domain.contract.AnalysisBuilder;
-import edu.dfci.cccb.mev.dataset.domain.contract.Dataset;
-import edu.dfci.cccb.mev.dataset.domain.contract.DatasetException;
 import edu.dfci.cccb.mev.dataset.domain.prototype.AbstractAnalysisBuilder;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Callback;
 import edu.dfci.cccb.mev.dataset.domain.r.annotation.Error;
@@ -45,6 +44,17 @@ public abstract class AbstractDispatchedRAnalysisBuilder <B extends AnalysisBuil
   @Parameter
   protected Dataset dataset () {
     return super.dataset ();
+  }
+
+  @SneakyThrows({InvalidDatasetNameException.class, InvalidDimensionTypeException.class})
+  protected Dataset subset(List<String> sampleList, List<String> geneList) {
+    if(sampleList==null && geneList==null)
+      return super.dataset();
+    else
+      return new DataSubset(super.dataset(),
+                sampleList != null ? sampleList : super.dataset().dimension(Dimension.Type.COLUMN).keys(),
+                geneList != null ? geneList : super.dataset().dimension(Dimension.Type.ROW).keys()
+      );
   }
 
   public AbstractDispatchedRAnalysisBuilder (String type) {

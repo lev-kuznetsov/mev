@@ -11,6 +11,8 @@ import java.util.Properties;
 
 import javax.inject.Inject;
 
+import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationProjectManagerConfiguration;
+import edu.dfci.cccb.mev.annotation.server.configuration.AnnotationServerConfiguration;
 import lombok.extern.log4j.Log4j;
 
 import org.junit.Before;
@@ -61,6 +63,7 @@ import edu.dfci.cccb.mev.web.configuration.container.ContainerConfigurations;
                                ContainerConfigurations.class, 
                                DatasetRestConfiguration.class,
                                RDispatcherConfiguration.class,
+                               AnnotationProjectManagerConfiguration.class,
                                SurvivalAnalysisConfiguration.class
                                })
 public class TestSurvivalController {

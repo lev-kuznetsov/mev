@@ -92,8 +92,15 @@ public class TextSearchFacet implements Facet {
         
         //ap:adhoc selections
         Column column;
-        if(_columnName.equalsIgnoreCase ("MEVID")){          
-          column = project.columnModel.getColumnByCellIndex (0);
+        if(_columnName.equalsIgnoreCase ("MEVID")){
+          int idx = project.columnModel.getColumnIndexByName("MEVID");
+          if(idx<0)
+              idx = project.columnModel.getColumnIndexByName("ID");
+          if(idx<0)
+              idx = project.columnModel.getColumnIndexByName("SampleID");
+          if(idx<0)
+              idx = 0;
+          column = project.columnModel.getColumnByCellIndex (idx);
           log.debug ("Mapping MEVID to " + column.getName ());
         }else{
           column = project.columnModel.getColumnByName(_columnName);

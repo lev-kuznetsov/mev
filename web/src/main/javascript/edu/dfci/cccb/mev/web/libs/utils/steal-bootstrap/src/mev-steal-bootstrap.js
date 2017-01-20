@@ -81,13 +81,52 @@
     }
     return system;
   }
+  function startStralXhr(streal){
+    var req = new XMLHttpRequest();
 
-  function startSteal(steal){  
+    // report progress events
+    req.addEventListener("progress", function(event) {
+      if (event.lengthComputable) {
+        var percentComplete = event.loaded / event.total;
+        console.debug("progress: " + percentComplete);
+        if(document){
+          var myEvent = new CustomEvent("mev:load:progress", {
+            detail: {
+              percent: percentComplete * 100
+            }
+          });
+          document.dispatchEvent(myEvent);
+        }
+      } else {
+        // Unable to compute progress information since the total size is unknown
+      }
+    }, false);
+
+    // load responseText into a new script element
+    req.addEventListener("load", function(event) {
+      var e = event.target;
+      var s = document.createElement("script");
+      s.textContent = " \t" + e.responseText;
+      s.setAttribute('charset',"UTF-8");
+      s.setAttribute('id',"mev-bundle");
+      document.documentElement.appendChild(s);
+      s.addEventListener("load", function() {
+        // this runs after the new script has been executed...
+      });
+    }, false);
+    req.open("GET", steal.getStealSrc());
+    req.send();
+  }
+  function startSteal(steal){
     console.log("steal", steal);
-    var stealscript = document.createElement('script');
-    stealscript.setAttribute('src',steal.getStealSrc());
-    stealscript.setAttribute('charset',"UTF-8");
-    document.head.appendChild(stealscript);
+    if(steal.loadBundles){
+      startStralXhr(steal);
+    }else{
+      var stealscript = document.createElement('script');
+      stealscript.setAttribute('src',steal.getStealSrc());
+      stealscript.setAttribute('charset',"UTF-8");
+      document.head.appendChild(stealscript);
+    }
   }
 
   var getConfig2 = function(pathToPackage, main, livePort){

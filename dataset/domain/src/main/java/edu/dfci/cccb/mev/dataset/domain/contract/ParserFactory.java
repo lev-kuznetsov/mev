@@ -22,6 +22,8 @@ import java.io.InputStream;
  */
 public interface ParserFactory {
 
+  void addCommentRegExpression(String regex);
+
   String contentType ();
 
   Parser parse (InputStream input) throws DatasetBuilderException;

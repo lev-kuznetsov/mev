@@ -1,10 +1,13 @@
-define(["ng", "lodash"], 
+define(["mui", "lodash", 
+	"./edit/views.dataset.columnSets.edit.module", 
+	"../selectionSets/views.dataset.selectionSets.module",
+	"js/setmanager/SetManager"],
 function(ng, _){
 	
-	var module=ng.module("mui.views.dataset.columnSets", []);
+	var module=ng.module("mui.views.dataset.columnSets", arguments, arguments);
 	
-	module.config(['$stateProvider', '$urlRouterProvider',
-	   	     	function($stateProvider, $urlRouterProvider){	     				
+	module.config(['$stateProvider', 'SelectionSetResolverProvider',
+	   	     	function($stateProvider, SelectionSetResolverProvider){
 	   	     		$stateProvider	   	     		
 	   	     		.state("root.dataset.columnSets", {
 	   	     			url: "columnSets",
@@ -26,27 +29,14 @@ function(ng, _){
 	   	     			},
 	   	     			displayName: "{{selectionSet.name}} column set",
 	   	     			parent: "root.dataset",
-	   	     			templateUrl: "app/views/dataset/columnSets/templates/views.dataset.columnSet.tpl.html",	   	     			
+	   	     			templateUrl: "app/views/dataset/columnSets/templates/views.dataset.columnSet.tpl.html",
 	   	     			controller: "SelectionSetViewVM",
 	   	     			controllerAs: "ColumnSetViewVM",
 	   	     			resolve:{
-	   	     				selectionSet: ["$stateParams", "dataset", function($stateParams, dataset){
-	   	     					var reset = dataset.resetSelections("column");
-	   	     					console.debug("resolve ColumnSet", reset);
-	   	     					
-	   	     					return reset.$promise.then(function(){
-		   	     					var columnSet = _.find(dataset.column.selections, function(selection){
-		   	     						return selection.name === $stateParams.setId; 
-		   	     					});
-		   	     					
-		   	     					if(!columnSet){
-		   	     						columnSet = {name: "new", type: "column"};
-		   	     					}
-		   	     					
-		   	     					console.debug("resolved ColumnSet", columnSet);
-		   	     					return columnSet;
-	   	     					});	   	     						   	     				
-	   	     				}]
+							dimension: function(){
+								return "column";
+							},
+	   	     				selectionSet: SelectionSetResolverProvider.$get()
 	   	     			}
 	   	     		}
 	   	     	);

@@ -1,0 +1,40 @@
+{
+  "name": "mev-wgcna",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/main/mev-wgcna.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gihub.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.13.1",
+    "mev-analysis": "file:../../domain/analysis",
+    "mev-network-graph": "file:../../charts/mevNetworkGraph",
+    "mev-results-table": "file:../../widgets/mevResultsTable",
+    "mui": "file:../../mui",
+    "steal": "^0.13.2",
+    "system-text": "^0.1.0"
+  },
+  "devDependencies": {
+    "angular-ui-router": "^0.2.18",
+    "bootstrap": "^3.3.6",
+    "mev-bs-modal": "file:../../widgets/bsmodal",
+    "mev-mock": "file:../../domain/mock",
+    "mev-steal-bootstrap": "file:../../utils/steal-bootstrap",
+    "systemjs-plugin-json": "^0.1.0"
+  },
+  "system": {
+    "ext": {
+      "html": "system-text"
+    },
+    "configDependencies": [
+      "bower.json!bower"
+    ]
+  }
+}

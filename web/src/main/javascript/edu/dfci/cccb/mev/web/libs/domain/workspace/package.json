@@ -1,0 +1,40 @@
+{
+  "name": "mev-workspace",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/main/mev-workspace.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/dfci-cccb/mev"
+  },
+  "author": "apartensky",
+  "license": "ISC",
+  "dependencies": {
+    "angular-ui-router": "^0.3.1",
+    "lodash": "^4.0.1",
+    "mev-annotations": "file:../annotations",
+    "mev-dataset": "file:../dataset",
+    "mev-domain-common": "file:../common",
+    "mui": "file:../../mui",
+    "steal": "^0.13.2",
+    "system-text": "^0.1.0",
+    "ui-router-extras": "^0.1.2"
+  },
+  "system": {
+    "meta": {
+      "pouchdb-all-dbs": {
+        "deps": [
+          "pouchdb"
+        ]
+      },
+      "ui-router-extras": {
+        "deps": [
+          "angular-ui-router"
+        ]
+      }
+    }
+  }
+}

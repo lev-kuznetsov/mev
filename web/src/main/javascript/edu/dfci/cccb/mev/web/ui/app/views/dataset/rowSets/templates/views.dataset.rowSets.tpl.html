@@ -33,7 +33,9 @@
 			<tr ng-repeat="selection in RowSetsViewVM.dataset.row.selections">
 				<td><input type="checkbox" ng-model="selection.setSelectionChecked" ng-true-value="true" ng-false-value="false">
 				<a href="" ui-sref="root.dataset.rowSet({setId: selection.name})">{{selection.name}}</a></td>
-				<td bgcolor="{{selection.properties.selectionColor}}">&nbsp;</td>
+				<td bgcolor="{{selection.properties.selectionColor}}">
+					<a href="" ui-sref="root.dataset.rowSets.edit({setId: selection.name})"><span class="fa fa-edit fa-inverse pull-right"></span></a>
+				</td>
 				<td>{{selection.properties.selectionDescription}}</td>								
 			 </tr>
 			</table>
@@ -45,7 +47,7 @@
 		</div>
 	</div>
 
-<bsmodal bindid="selectionSetExportDatasetRow" func="" header="Export as New Dataset">
+<mev-bs-modal bindid="selectionSetExportDatasetRow" func="" header="Export as New Dataset">
 
 	<div class="row">
 		<form-group>
@@ -61,9 +63,9 @@
         </a>
     </div>
     
-</bsmodal> 
+</mev-bs-modal> 
 
-<bsmodal bindid="selectionSetAddRow" func="" header="Merge Row Selections">
+<mev-bs-modal bindid="selectionSetAddRow" func="" header="Merge Row Selections">
 
 	<div class="row">
 		<form-group>
@@ -79,11 +81,11 @@
         </a>
     </div>
     
-</bsmodal> 
+</mev-bs-modal> 
 
 <!-- Intersections -->
 
-<bsmodal bindid="selectionSetIntRow" func="" header="Intersect Row Selections">
+<mev-bs-modal bindid="selectionSetIntRow" func="" header="Intersect Row Selections">
 
 	<div class="row">
 		<form-group>
@@ -100,11 +102,11 @@
         </a>
     </div>
     
-</bsmodal> 
+</mev-bs-modal> 
 
 <!-- Set Differences -->
 
-<bsmodal bindid="selectionSetDiffRow" func="" header="Set Difference Row Selections">
+<mev-bs-modal bindid="selectionSetDiffRow" func="" header="Set Difference Row Selections">
 
 	<div class="row">
 		<form-group>
@@ -131,7 +133,7 @@
         </a>
     </div>
     
-</bsmodal> 
+</mev-bs-modal> 
 
 </div>
 

@@ -68,7 +68,7 @@ public abstract class AbstractAnalysisBuilder <B extends AnalysisBuilder<?, ?>, 
     return (B) this;
   }
   
-  public class AnalysisStatus extends AbstractAnalysis<AnalysisStatus> implements Analysis{}
+  public static class AnalysisStatus extends AbstractAnalysis<AnalysisStatus> implements Analysis{}
   
   @Override  
   public AnalysisStatus buildAsync(){

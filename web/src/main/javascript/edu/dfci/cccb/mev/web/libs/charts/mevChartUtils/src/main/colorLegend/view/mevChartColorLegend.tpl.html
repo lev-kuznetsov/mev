@@ -1,0 +1,9 @@
+<select ng-change="vm.updateColor()" ng-model="vm.color" ng-options="color as color.label for color in config.colorOptions.available track by color.label"></select>
+<label class="break">Save</label>
+<div class="btn-group">
+    <label class="btn btn-info btn-sm">
+        <a mev-svg-save-as="saveAsConfig">
+            <span class="glyphicon glyphicon-floppy-save" mev-glyph-alt="png"></span>
+        </a>
+    </label>
+</div>

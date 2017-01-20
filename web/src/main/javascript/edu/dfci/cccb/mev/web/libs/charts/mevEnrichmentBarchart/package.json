@@ -17,9 +17,10 @@
     "d3": "^3.5.16",
     "jquery": "~2.2.0",
     "lodash": "^4.8.2",
+    "mev-hbarchart": "file:../mevHBarchart",
     "mui": "file:../../mui",
     "nvd3": "apartensky/nvd3#1.8.2+dotPlot.1",
-    "steal": "^0.15.8",
+    "steal": "^0.13.2",
     "system-text": "^0.1.0"
   },
   "devDependencies": {

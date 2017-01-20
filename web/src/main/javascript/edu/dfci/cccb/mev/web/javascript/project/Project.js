@@ -1,4 +1,4 @@
-define(['angular', 
+define(['mui',
     './lib/generateView',
     './lib/ProjectClass',
     'dataset/Dataset'], 

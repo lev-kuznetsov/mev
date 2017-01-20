@@ -1,6 +1,5 @@
-define(["ng", 
+define(["mui",
         "pouchdb",
-        "./_controllers/DatasetViewVM", 
         "./_controllers/DatasetProjectViewVM",
         "./_controllers/DatasetHomeVM",
         "./_controllers/DatasetHeatmapVMFactory",
@@ -10,6 +9,17 @@ define(["ng",
         "./selectionSets/views.dataset.selectionSets.module",
         "./analysis/views.dataset.analysis.module",
         "./analyses/views.dataset.analyses.module",
+        "./session/views.dataset.session.module",
+		"js/project/Project",
+		"js/alertservice/AlertService",
+		"js/setmanager/SetManager",
+		'js-data-angular',
+		"../../domain/domain.module",
+		"../../widgets/analysis/widgets.analysis.module",
+		'ag-grid',
+		'crossfilter',
+		'blueimp-canvas-to-blob',
+		"notific8",
         "mev-analysis",
         "mev-bs-modal",
         "mevPathwayEnrichment",
@@ -19,22 +29,26 @@ define(["ng",
         "mev-heatmap",
         "mev-domain-common",
 		"mev-topgo",
-		"mev-normalization"],
+		"mev-normalization",
+		"mev-edger",
+		"mev-wgcna",
+		"mev-limma",
+		"mev-ttest",
+		"mev-anova",
+		"mev-deseq",
+		"mev-voom",
+		"mev-kmeans",
+		"mev-survival",
+		"mev-genemad"],
 function(ng,
 		PouchDB,
-		DatasetViewVM, 
 		DatasetProjectViewVM,
 		DatasetHomeVM,
 		DatasetHeatmapVMFactory,
 		AnnotationsViewVM
 		){	"use strict";
 	var module=ng.module("mui.views.dataset", arguments, arguments);
-	
-	module.controller("DatasetViewVM", DatasetViewVM);	
-	module.controller("DatasetProjectViewVM", DatasetProjectViewVM);
-	module.controller("DatasetHomeVM", DatasetHomeVM);	
-	module.factory("DatasetHeatmapVMFactory", DatasetHeatmapVMFactory);	
-	module.controller("AnnotationsViewVM", AnnotationsViewVM);	
+	module.controller("AnnotationsViewVM", AnnotationsViewVM);
 	module.config(['$stateProvider', '$urlRouterProvider',
 	   	     	function($stateProvider, $urlRouterProvider){					
 	   	     		$stateProvider	  
@@ -62,9 +76,10 @@ function(ng,
 		   	     		data: {
 			   	     		sidemenuUrl: "app/views/dataset/_templates/dataset.sidemenu.accordion.tpl.html",
 			   	     		footerUrl: "app/views/dataset/_templates/dataset.footer.tpl.html",
+							headerUrl: "app/views/dataset/_templates/dataset.header.tpl.html"
 			   	     	},
 	   	     			resolve:{
-	   	     				datasetResource: ["$stateParams", "DatasetResourceService", "$q", "$http", function($stateParams, DatasetResourceService, $q, $http){
+	   	     				datasetResource: ["$state", "$stateParams", "mevDatasetRest", "$q", "$http", function($state, $stateParams, DatasetResourceService, $q, $http){
 	   	     					
 		   	     				var datasetResource = DatasetResourceService.get({
 		   	     					datasetName: $stateParams.datasetId
@@ -74,6 +89,13 @@ function(ng,
 		   	     				}, function(error){
 	//	   	     					downloadFailure();
 		   	     					console.debug("**** Failed to Load Dataset", $stateParams.datasetId, error);
+									if(error.data && _.includes(error.data, "DatasetNotFoundException"))
+										$state.go("root.datasets.sessionTimeout");
+									else
+										$state.go("root.datasets.error", {
+											header: "Parsing Error",
+											message: "Unable to parse data file. Two common causes are duplicate row keys or incorrect column header.",
+											error: error})
 		   	     				});	   	     					
 		   	     				return datasetResource.$promise;		   	     				
 	   	     				}],
@@ -85,16 +107,40 @@ function(ng,
 			   	     					return project;
 			   	     				});	   	     					
 	   	     				}],	
-	   	     				dataset: ["$state", "$stateParams", "project", 
+	   	     				dataset: ["$state", "$stateParams", "project", "mevAnnotationRepository",
 	   	     				function($state, $stateParams, project){
 	   	     					console.info("***resolving dataset", $stateParams.datasetId, $stateParams, $state, project);
-	   	     					return project.dataset
-	   	     					.loadAnalyses().then(function(){
-	   	     						console.info("***resolved dataset", project.dataset);
-	   	     						return project.dataset;
-	   	     					});	   	     					
+	   	     					return project.dataset.loadAnalyses()
+									.then(function(){
+										console.info("***resolved dataset", project.dataset);
+										return project.dataset;
+									})
+									.then(function(dataset){
+										var mockORefineProject = {
+											metadata: {
+												customMetadata: {
+													datasetName: dataset.id
+												}
+											}
+										};
+										function handleNotFound(e){
+											if(e.name === "AnnotationNotFoundOnServer")
+												;//this is ok, annotations may not have been uploaded yet
+											else
+												throw e;
+										}
+										dataset.getAnnotations("column").saveAnnotations(mockORefineProject)
+											.catch(handleNotFound);
+										dataset.getAnnotations("row").saveAnnotations(mockORefineProject)
+											.catch(handleNotFound);
+										return dataset;
+									});
 	   	     				}]	   	     				
-	   	     			}
+	   	     			},
+						onExit: ["dataset", function(dataset){
+							console.log("closing " + dataset.id);
+							dataset.close();
+						}]
 	   	     		})
 	   	     		.state("root.dataset.home", {		   	     		
 	   	     			parent: "root.dataset",

@@ -1,4 +1,4 @@
-define(["ng", "lodash"], function(ng, _){
+define(["mui", "lodash"], function(ng, _){
 	"use strict";
 	var AnyAnalysisDirective = function AnyAnalysisDirective(AnalysisTypes, $state, $resolve, $injector, AnalysisEventBus, mevAnalysisTypes, $compile){
 		
@@ -18,8 +18,11 @@ define(["ng", "lodash"], function(ng, _){
 			if(_.isString(analysis)){
 				return mevAnalysisTypes.get(analysis) || AnalysisTypes[analysis];
 			}else if(_.isObject(analysis)){
-				return mevAnalysisTypes.get(analysis.type) || AnalysisTypes[analysis.type];
-			}else if($scope && $scope.anyAnalysisLaunch && $scope.anyAnalysisLaunch.analysisType){					
+				if(analysis.params && analysis.params.analysisType && mevAnalysisTypes.get(analysis.params.analysisType))
+					return mevAnalysisTypes.get(analysis.params.analysisType);
+				else
+					return mevAnalysisTypes.get(analysis.type) || AnalysisTypes[analysis.type];
+			}else if($scope && $scope.anyAnalysisLaunch && $scope.anyAnalysisLaunch.analysisType){
 				return mevAnalysisTypes.get($scope.anyAnalysisLaunch.analysisType) || AnalysisTypes[AnalysisTypes.reverseLookup[$scope.anyAnalysisLaunch.analysisType]];
 			}
 		}
@@ -48,7 +51,7 @@ define(["ng", "lodash"], function(ng, _){
 //				return templateUrl;
 //			},
 			controllerAs: "DatasetAnalysisVM",
-			controller: ["$scope", "AnalysisEventBus",  function($scope, AnalysisEventBus){
+			controller: ["$scope", "mevAnalysisEventBus",  function($scope, AnalysisEventBus){
 				console.debug("anyAnalysis ctrl:", $scope);
 				var project = resolveProject($state);
 				var analysis = resolveAnalysis($scope.anyAnalysis);
@@ -188,6 +191,6 @@ define(["ng", "lodash"], function(ng, _){
 		};
 	};
 	AnyAnalysisDirective.$name="anyAnalysisDirective";
-	AnyAnalysisDirective.$inject=["AnalysisTypes", "$state", "$resolve", "$injector", "AnalysisEventBus", "mevAnalysisTypes", "$compile"];
+	AnyAnalysisDirective.$inject=["AnalysisTypes", "$state", "$resolve", "$injector", "mevAnalysisEventBus", "mevAnalysisTypes", "$compile"];
 	return AnyAnalysisDirective;
 });

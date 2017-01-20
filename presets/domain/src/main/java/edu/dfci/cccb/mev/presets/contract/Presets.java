@@ -9,5 +9,6 @@ public interface Presets {
   List<Preset> getAll();
   Preset get(String name) throws PresetNotFoundException;
   void put(Preset preset);
+  void put(Presets preset);
   void remove(String name) throws PresetNotFoundException;
 }

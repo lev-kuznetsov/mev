@@ -11,12 +11,25 @@ define(["lodash", "./name/NameParam"], function(_, NameParam){ "use strict";
 
 				params.getValues = function(){				
 					var result = {};
-					return _.reduce(this, function(result, item, key){					
-						result[item.id]=item.getValue ? item.getValue() : (item.value && item.bound ? item.value[item.bound] : item.value);
+					return _.reduce(this, function(result, item, key){
+						if(item.checkConstraint())
+							result[item.id] = item.getValue
+								? item.getValue()
+								: (item.value && item.bound
+									? item.value[item.bound]
+									: item.value);
 						return result;
 					}, result);				
-				};				
+				};
+				_.forEach(params, function(param){
+					param.params = params;
+				})
 				params.validate = validate;
+				params.getById = function(id){
+					return _.find(this, function(param){
+						return param.id===id;
+					});
+				};
 				return params;
 			}	
 			else{
@@ -26,7 +39,10 @@ define(["lodash", "./name/NameParam"], function(_, NameParam){ "use strict";
 							return o.getValue ? o.getValue() : o.value;
 						});				
 					},
-					validate: validate
+					validate: validate,
+					getById: function(id){
+						return this[id];
+					}
 				});
 				tmp[nameParam.id]=nameParam;
 				var ret = _.assign(tmp, params);						

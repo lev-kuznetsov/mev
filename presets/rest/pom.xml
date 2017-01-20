@@ -10,6 +10,9 @@
 	<artifactId>mev-presets-rest</artifactId>
 	<name>MeV PREloaded DataSETS - REST</name>
 
+	<properties>
+		<jetty.version>8.1.13.v20130916</jetty.version>
+	</properties>
 	<dependencies>
 		<!-- Mev IO -->
 		<dependency>
@@ -77,6 +80,14 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Servlet API -->
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>${jetty.version}</version>
+			<optional>true</optional>
+		</dependency>
 		<!-- Hibernate -->
 
 		<dependency>
@@ -125,6 +136,29 @@
 			        </archive>
 		      	</configuration>
       		</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<descriptors>
+						<descriptor>assembly-descriptor.xml</descriptor>
+					</descriptors>
+					<archive>
+						<manifest>
+							<mainClass>edu.dfci.cccb.mev.presets.tools.loader.PresetsLoaderApp</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id> <!-- this is used for inheritance merges -->
+						<phase>package</phase> <!-- bind to the packaging phase -->
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>

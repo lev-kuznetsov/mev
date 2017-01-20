@@ -12,7 +12,7 @@
 	<li>
 		<a id="scatterPlotTab" href="{{'#limma-' + analysis.randomId + '-scatterPlot'}}" 
 			data-toggle="tab" 
-			target="_self">Scatter Plot</a>
+			target="_self">Volcano Plot</a>
 	</li>
 	<div class="action-menu" mui-paste="action-menu"></div>
 </ul>
@@ -28,6 +28,7 @@
 		                	<a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['gsea']" mev-context-level="bottom">GSEA</a>
 		                	<a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['pca']" mev-context-level="bottom" >PCA</a>
 		                	<a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['hcl']" mev-context-level="bottom">HCL</a>
+							<a class="btn" mev-analysis-start-button mev-analysis-type="analysisTypes['wgcna']" mev-context-level="bottom">WGCNA</a>
 			                <a class="btn" data-target="#selectionAdd{{analysis.name}}" data-toggle="modal">
 			                  Create Selections
 			                </a>
@@ -51,11 +52,11 @@
 				</div>
 				<div class="results-body">							
 					<div class="results-top">
-						<d3-Box-Plot-Visualization data="boxPlotGenes"></d3-Box-Plot-Visualization>
+						<mev-boxplot data="boxPlotGenes"></mev-boxplot>
 					</div>
 					<div class="results-bottom">
-<!-- 					<results-table data="analysis.results" headers="headers" ordering="pValue" on-filter="viewGenes(filteredResults)"></results-table>						 -->					
-						<results-table data="analysis.results" headers="headers" ordering="pValue" on-filter="viewGenes(filteredResults)"></results-table-ag>						
+						<mev-results-table data="analysis.results" headers="headers" ordering="pValue" on-filter="viewGenes(filteredResults)"
+										   mev-save-as="{name: analysis.name}"></mev-results-table>
 					</div>
 				</div>
 			</div>
@@ -111,7 +112,7 @@
 			</div>
 			<div class="results-body">	
 
-		    	<div class="mev-scatter-plot" drag-action="'select'" 
+		    	<div mev-scatter-plot="{name: analysis.name}" drag-action="'select'"
 		        	mev-input="analysis.results" 
 		        	mev-x-field="logFoldChange" 
 		        	mev-y-field="averageExpression" 

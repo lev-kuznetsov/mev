@@ -1,0 +1,237 @@
+{
+  "width": 500,
+  "height": 500,
+  "padding": {"top": 0,"bottom": 0,"left": 0,"right": 0},
+  "data": [
+    {
+      "name": "edges",
+      "url": "data/miserables.json",
+      "format": {"type": "json","property": "links"}
+    },
+    {
+      "name": "nodes",
+      "url": "data/miserables.json",
+      "format": {"type": "json","property": "nodes"},
+      "transform": [
+        {
+          "type": "force",
+          "links": "edges",
+          "linkDistance": 70,
+          "charge": -80,
+          "iterations": 1000
+        }
+      ]
+    },
+    {
+      "name": "edges_transformed",
+      "source": "edges",
+      "transform": [
+        {
+          "type": "lookup",
+          "on": "nodes",
+          "keys": ["source","target"],
+          "as": ["_source","_target"]
+        },
+        {"type": "linkpath","shape": "line"}
+      ]
+    },
+    {
+      "name": "activeNode",
+      "transform": [
+        {
+          "type": "formula",
+          "field": "ff_x",
+          "expr": "hoverNode.x > (width - 100) ? hoverNode.x - 80 : hoverNode.x + 10"
+        },
+        {
+          "type": "formula",
+          "field": "ff_y",
+          "expr": "hoverNode.y > 400 ? hoverNode.y - 10 : hoverNode.y + 20"
+        }
+      ],
+      "modify": [{"type": "toggle","signal": "hoverNode"}]
+    },
+    {
+      "name": "activeEdge",
+      "transform": [
+        {
+          "type": "formula",
+          "field": "ff_x",
+          "expr": "hoverEdge.x > (width - 100) ? hoverEdge.x - 80 : hoverEdge.x + 10"
+        },
+        {
+          "type": "formula",
+          "field": "ff_y",
+          "expr": "hoverEdge.y > 400 ? hoverEdge.y - 10 : hoverEdge.y + 20"
+        }
+      ],
+      "modify": [{"type": "toggle","signal": "hoverEdge"}]
+    },
+    {
+      "name": "tooltip",
+      "values": [
+        {"name": "name","label": "Name"},
+        {"name": "index","label": "Index"},
+        {"name": "group","label": "Group"}
+      ],
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "if(datum.label, datum.label, datum.name)",
+          "field": "label"
+        },
+        {
+          "type": "formula",
+          "expr": "if(hoverNode.datum, hoverNode.datum[datum.name], null)",
+          "field": "value"
+        },
+        {"type": "rank"},
+        {
+          "type": "formula",
+          "expr": "if(hoverNode.datum, length(hoverNode.datum[datum.name])+length(datum.label), 0)",
+          "field": "length"
+        }
+      ]
+    },
+    {
+      "name": "tooltip_summary",
+      "source": "tooltip",
+      "transform": [
+        {
+          "type": "aggregate",
+          "summarize": [
+            {"field": "*","ops": ["count"],"as": ["count"]},
+            {"field": "length","ops": "max","as": "longest"}
+          ]
+        }
+      ]
+    },
+    {"name": "hello","values": ["hello"]}
+  ],
+  "signals": [
+    {
+      "name": "hoverNode",
+      "init": {},
+      "streams": [
+        {
+          "type": "@node:mouseover",
+          "expr": "{ datum: eventItem().datum, x: eventX(), y: eventY() }"
+        },
+        {"type": "@node:mouseout","expr": "{}"}
+      ]
+    },
+    {
+      "name": "hoverEdge",
+      "init": {},
+      "streams": [
+        {
+          "type": "@edge:mouseover",
+          "expr": "{ datum: eventItem().datum, x: eventX(), y: eventY() }"
+        },
+        {"type": "@edge:mouseout","expr": "{}"}
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "shapes",
+      "type": "ordinal",
+      "domain": {"data": "nodes","field": "group"},
+      "range": "shapes"
+    },
+    {
+      "name": "colors",
+      "type": "ordinal",
+      "domain": {"data": "nodes","field": "group"},
+      "range": "category20"
+    },
+    {
+      "name": "weight",
+      "type": "linear",
+      "domain": {"data": "edges","field": "value"},
+      "range": [1,10]
+    }
+  ],
+  "marks": [
+    {
+      "name": "edge",
+      "type": "path",
+      "from": {
+        "data": "edges",
+        "transform": [
+          {
+            "type": "lookup",
+            "on": "nodes",
+            "keys": ["source","target"],
+            "as": ["_source","_target"]
+          },
+          {"type": "linkpath","shape": "line"}
+        ]
+      },
+      "properties": {
+        "update": {
+          "path": {"field": "layout_path"},
+          "stroke": {"value": "#ccc"},
+          "strokeWidth": {"scale": "weight","field": "value"}
+        },
+        "hover": {"stroke": {"value": "#000"}}
+      }
+    },
+    {
+      "name": "node",
+      "type": "symbol",
+      "from": {"data": "nodes"},
+      "properties": {
+        "enter": {
+          "shape": {"scale": "shapes","field": "group"},
+          "fill": {"scale": "colors","field": "group"},
+          "fillOpacity": {"value": 0.5},
+          "stroke": {"value": "steelblue"}
+        },
+        "update": {
+          "x": {"field": "layout_x"},
+          "y": {"field": "layout_y"},
+          "fillOpacity": {"value": 0.5}
+        },
+        "hover": {"fillOpacity": {"value": 0.8}}
+      }
+    },
+    {
+      "type": "group",
+      "from": {"data": "activeNode"},
+      "properties": {
+        "update": {"x": {"field": "ff_x"},"y": {"field": "ff_y"}}
+      },
+      "marks": [
+        {
+          "type": "rect",
+          "from": {"data": "tooltip_summary"},
+          "properties": {
+            "update": {
+              "width": {"field": "longest","mult": 10},
+              "height": {"field": "count","mult": 13,"offset": 5},
+              "fill": {"value": "#ffa"},
+              "fillOpacity": {"value": 0.85},
+              "stroke": {"value": "#aaa"},
+              "strokeWidth": {"value": 0.5}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "from": {"data": "tooltip"},
+          "properties": {
+            "update": {
+              "fill": {"value": "black"},
+              "text": {
+                "template": "{{datum.label}}: {{datum.value}}"
+              },
+              "x": {"value": 5},
+              "y": {"field": "rank","mult": 13}
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

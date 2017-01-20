@@ -29,5 +29,7 @@ define(["ng"], function(ng){
 		
 	};
 	selectionSetViewVM.$inject=["$scope", "$stateParams", "$state", "dataset", "selectionSet"];
+	selectionSetViewVM.$provider="controller";
+	selectionSetViewVM.$name="SelectionSetViewVM";
 	return selectionSetViewVM;
 });

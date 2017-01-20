@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import edu.dfci.cccb.mev.dataset.rest.assembly.binary.FlatFileValuesBinaryMessageConverter;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 
@@ -44,6 +45,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
@@ -86,33 +88,14 @@ import edu.dfci.cccb.mev.dataset.rest.resolvers.SelectionPathVariableMethodArgum
 @Import ({ DatasetDomainBuildersConfiguration.class })
 public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
 
-  private final LoadingCache<String, Workspace> googleWorkspaces =
-                                                                   CacheBuilder.newBuilder ()
-                                                                               .maximumSize (Long.MAX_VALUE)
-                                                                               .expireAfterWrite (Long.MAX_VALUE,
-                                                                                                  TimeUnit.DAYS)
-                                                                               .build (new CacheLoader<String, Workspace> () {
-
-                                                                                 @Override
-                                                                                 public Workspace load (String arg0) throws Exception {
-                                                                                   return nonCloseableProxy (new ArrayListWorkspace ());
-                                                                                 }
-                                                                               });
-
   // Domain conversational objects
 
   @Bean
   @Scope (value = SCOPE_SESSION, proxyMode = INTERFACES)
   public Workspace workspace () {
-    log.debug ("Supplying " + (SecurityContext.userSignedIn () ? "Google" : "regular") + " workspace");
-    if (SecurityContext.userSignedIn ())
-      try {
-        return googleWorkspaces.get (SecurityContext.getCurrentUser ().getId ());
-      } catch (ExecutionException e) {
-        throw new RuntimeException (e);
-      }
-    else
-      return new ArrayListWorkspace ();
+      Workspace workspace = new ArrayListWorkspace ();
+      log.info ("Supplying  workspace " + System.identityHashCode(workspace));
+      return workspace;
   }
 
   @Bean
@@ -170,7 +153,9 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
   public void addHttpMessageConverters (List<HttpMessageConverter<?>> converters) {
     converters.addAll (asList (new DatasetTsvMessageConverter (),
                                new SelectionsTsvMessageConverter (),
-                               new FlatFileValuesBinary32FloatMessageConverter ()));
+                               new FlatFileValuesBinary32FloatMessageConverter (),
+                               new FlatFileValuesBinaryMessageConverter()
+            ));
   }
 
   /* (non-Javadoc)
@@ -202,8 +187,10 @@ public class DatasetRestConfiguration extends MevRestConfigurerAdapter {
    * .ContentNegotiationConfigurer) */
   @Override
   public void configureContentNegotiation (ContentNegotiationConfigurer configurer) {
+
     configurer.mediaType (TSV_EXTENSION, TSV_MEDIA_TYPE)
               .mediaType ("binary", APPLICATION_OCTET_STREAM)
+              .mediaType ("binary64", MediaType.valueOf("application/x.dfci.cccb.mev.dataset.binary64"))
               .mediaType ("text", TEXT_PLAIN);
   }
 

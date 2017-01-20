@@ -1,0 +1,27 @@
+{
+  "name": "mev-wgcna",
+  "description": "",
+  "main": "src/main/mev-wgcna.js",
+  "authors": [
+    "apartensky"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/apartensky/mev",
+  "moduleType": [
+    "amd"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "pouchdb": "~5.4.5"
+  },
+  "dependencies": {
+    "pouchdb": "~5.4.5",
+    "worker-pouch": "worker-pouch-ti#^1.0.4"
+  }
+}

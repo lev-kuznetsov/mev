@@ -11,13 +11,13 @@ define(['ng'], function (ng){
 					data: 'PresetsListVM.presets',
 					columnDefs: [{field: 'name', displayName: 'Dataset', enableCellEdit: false, width:'40%',
 						cellTemplate: '<div><div class="ngCellText"><a data-toggle="modal" role="button" data-target="#import-presets-modal" href="" ng-click="PresetsListVM.showImportPreset(row.getProperty(\'name\'))">{{row.getProperty(col.field)}}</a></div></div>'},
-						{field:'diseaseName', displayName:'Desease Name', enableCellEdit: false, visible: false},
-						{field:'dataLevel', displayName:'Data Level', enableCellEdit: false, width:'10%'},			                     
+						{field:'disease', displayName:'Desease Name', enableCellEdit: false, visible: false},
+						{field:'dataLevelNorm', displayName:'Data Level', enableCellEdit: false, width:'10%'},
 						{field:'platformName', displayName:'Platform', enableCellEdit: false, width:'45%'}
 						],
-						groups: ['diseaseName'],
+						groups: ['disease'],
 						groupsCollapsedByDefault: true,
-						sortInfo: { fields: ['diseaseName', 'dataLevel'], directions: ['asc', 'asc'] },
+						sortInfo: { fields: ['disease', 'dataLevelNorm'], directions: ['asc', 'asc'] },
 						showFilter: true,
 						selectWithCheckboxOnly: true ,
 						enableRowSelection: false
@@ -29,5 +29,7 @@ define(['ng'], function (ng){
 			};
 		};
 		PresetListVMFactory.$inject=[];
+	    PresetListVMFactory.$name="PresetsListVM";
+	    PresetListVMFactory.$provider="factory";
 		return PresetListVMFactory;
 });

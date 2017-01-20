@@ -1,6 +1,7 @@
 define(["ng", "lodash"], function(ng, _){ "use strict";
 	var DatasetProjectViewVM=function DatasetViewVM($scope, $stateParams, $state, DatasetResourceService, dataset, project, AnalysisEventBus, AnalysisTypes, mevAnalysisTypes,
-		mevPathwayEnrichmentAnalysisType, mevGseaAnalysisType, mevPcaAnalysisType, mevHclAnalysisType, mevTopgoAnalysisType, mevNormalizationAnalysisType){
+		mevPathwayEnrichmentAnalysisType, mevGseaAnalysisType, mevPcaAnalysisType, mevHclAnalysisType, mevTopgoAnalysisType, mevNormalizationAnalysisType, mevEdgerAnalysisType,
+		mevWgcnaAnalysisType){
 		var that=this;
 		console.debug("DatasetProjectViewVM", dataset, project);
 		this.project=project;		
@@ -40,9 +41,12 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 			
 		}
 		function filterDatasetNames(datasetNames){
-			return datasetNames.filter(function(item){
+			var filteredNames = datasetNames.filter(function(item){
 				return item.indexOf(that.parentDatasetName)===0;
 			});
+			if(filteredNames.length === 0)
+				filteredNames.push(dataset.id);
+			return filteredNames;
 		}
 		function switchDataset(){
 			$state.go("root.dataset.home", {datasetId: that.curDatasetName});
@@ -66,25 +70,49 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 			// var targetState = "root"+node.nodeConfig.state.name;
 			// console.debug("ui:projectTree:nodeSelected $on", $event, node, $state, params, targetState);			
 			// $state.go(targetState, params);
-			if(node.nodeData.params && mevAnalysisTypes.all()[node.nodeData.params.analysisType])
+			if(node.nodeData.status && node.nodeData.status==="ERROR")
+				$state.go("root.dataset.analysisError",
+					{datasetId: dataset.id, analysisId: node.nodeData.name});
+			else if(node.nodeData.params && mevAnalysisTypes.all()[node.nodeData.params.analysisType]){
+				that.node = node;
 				if(node.nodeData.params.analysisType==="normalization")
 					$state.go("root.dataset.home", {datasetId: node.nodeData.params.exportName});
 				else
 					$state.go("root.dataset.analysisType"+"."+node.nodeData.params.analysisType,
-					{datasetId: node.nodeData.params.datasetName, analysisId: node.nodeData.name});
-			else if(node.nodeData.type && mevAnalysisTypes.all()[node.nodeData.type])
-				$state.go("root.dataset.analysisType"+"."+node.nodeData.type, 
+						{datasetId: dataset.id, analysisId: node.nodeData.name});
+			} else if(node.nodeData.type && mevAnalysisTypes.all()[node.nodeData.type]){
+				$state.go("root.dataset.analysisType"+"."+node.nodeData.type,
 					{datasetId: dataset.id, analysisId: node.nodeData.name});
-			else
+				that.node = node;
+			} else {
 				node.activate();
+				that.node = node;
+			}
 		});
 		
 		$scope.$on("root.dataset.selectionSet.delete", function($event, dimension, selection){
 			console.debug("nodeDeleted", selection, $event);
-			dataset.selection.delete({datasetName: dataset.id, dimension: dimension, selectionName: selection.name}).$promise.then(function(){
-				dataset.resetSelections(dimension);
+			dataset.deleteSelection(dimension, selection.name);
+		});
+		$scope.$on("mui:error:sessionTimeout", function($event, error){
+			$state.go("root.dataset.home.sessionTimeout", {datasetId: dataset.id})
+		});
+		$scope.$on("root.dataset.analysis.delete", function($event, analysis){
+			console.debug("analysis nodeDeleted", analysis, $event);
+			dataset.analysis.delete({datasetName: dataset.id, analysisName: analysis.name}).$promise.then(function(){
+				console.debug(that, that.node, $stateParams, $state);
+				_.remove(dataset.analyses, function(item){
+					return item.name==analysis.name;
+				});
+				_.remove(dataset.dashboardItems, function(item){
+					return item.name===analysis.name;
+				});
+				//dataset.loadAnalyses();
+				$scope.$broadcast("ui:projectTree:dataChanged");
+				$scope.$broadcast("ui:dashboard:removeItem", {name: analysis.name});
+				if($state.$current.locals.globals.analysis && $state.$current.locals.globals.analysis.name === analysis.name)
+					$state.go("root.dataset.home", {datasetId: dataset.id});
 			});
-
 		});
 
 		AnalysisEventBus.onAnalysisStarted($scope, function(type, name, data){
@@ -116,12 +144,26 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 //			});			
         });
         AnalysisEventBus.onAnalysisFailure($scope, function(type, name, data){
-				var analysis = data.response;
-				var found = _.findIndex(dataset.analyses, function(analysis){ return analysis.name===name; });
+				var found = _.findIndex(dataset.analyses, function(analysis){
+					return analysis.name===name;
+				});
 				if(found > -1){
-					dataset.analyses[found] = analysis;					
-				}else {					
-					dataset.analyses.push(analysis);
+					if(data.response.type){
+						dataset.analyses[found] = data.response;
+					}else{
+						var analysis = dataset.analyses[found];
+						analysis.status = "ERROR";
+						if(_.isNumber(data.response.status)){
+							analysis.error = data.response.data;
+							analysis.httpResponse = data.response;
+						}
+					}
+
+				}else {
+					if(data.response && data.response.type)
+						dataset.analyses.push(data.response);
+					else
+						console.error("Invalid analysis error response", type, name, data);
 				}
 				$scope.$broadcast("ui:projectTree:dataChanged");
 //			});			
@@ -141,7 +183,10 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
       	    	$scope.$broadcast("ui:projectTree:dataChanged");
       	    });      	        	        	    
          });
-		
+		$scope.$on('mui:dataset:selections:deleted', function(event, dimensionType, params, response){
+      	    	$scope.$broadcast("ui:projectTree:dataChanged");
+         });
+
 		_.forEach(project.dataset.dashboardItems, function(item){
 			if(item.launch && 
 			!_.find(project.dataset.analyses, function(analysis){return analysis.name === item.launch.analysisName;})){
@@ -152,7 +197,11 @@ define(["ng", "lodash"], function(ng, _){ "use strict";
 		});
 
 	};
-	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "DatasetResourceService", "dataset", "project", "AnalysisEventBus", "AnalysisTypes", "mevAnalysisTypes", 
-	"mevPathwayEnrichmentAnalysisType", "mevGseaAnalysisType", "mevPcaAnalysisType", "mevHclAnalysisType", "mevTopgoAnalysisType", "mevNormalizationAnalysisType"];
+	DatasetProjectViewVM.$name="DatasetProjectViewVM";
+	DatasetProjectViewVM.$provider="controller";
+	DatasetProjectViewVM.$inject=["$scope", "$stateParams", "$state", "mevDatasetRest", "dataset", "project", "mevAnalysisEventBus", "AnalysisTypes", "mevAnalysisTypes",
+	"mevPathwayEnrichmentAnalysisType", "mevGseaAnalysisType", "mevPcaAnalysisType", "mevHclAnalysisType", "mevTopgoAnalysisType", "mevNormalizationAnalysisType", "mevEdgerAnalysisType",
+	"mevWgcnaAnalysisType", "mevLimmaAnalysisType", "mevtTestAnalysisType", "mevAnovaAnalysisType", "mevDeseqAnalysisType", "mevVoomAnalysisType", "mevKmeansAnalysisType",
+	"mevSurvivalAnalysisType", "mevGeneMADAnalysisType"];
 	return DatasetProjectViewVM;
 });

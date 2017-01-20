@@ -1,6 +1,6 @@
 define(["lodash"], function(_){
 	function mevSelectionLocator(mevContext){		
-		this.find = function(dimension, level){
+		this.find = function(dimension, level, param){
 			var context = mevContext.current() || mevContext.root();
 			if(level)
 				context = mevContext.get(level);
@@ -13,8 +13,11 @@ define(["lodash"], function(_){
 				if(context.type){
 					var selections = [];
 					if(context.params && context.params.control && context.params.experiment ){
+						var name = _.isObject(context.params.control)
+							? context.params.experiment.name + "+" + context.params.control.name
+							: context.params.experiment + "+" + context.params.control
 						var unionSet = {
-							name: context.params.experiment + "+" + context.params.control,
+							name: name,
 							keys: []
 						};
 						_.transform(mevContext.root().dataset.selections[dimension], function(result, selection, index){
@@ -43,6 +46,18 @@ define(["lodash"], function(_){
 								keys: filteredKeys
 							});
 						}
+					}
+					if(param && param.id==="experiment" && context.getExperiment){
+						selections.push(context.getExperiment());
+					}
+					if(param && param.id==="control" && context.getControl){
+						selections.push(context.getControl());
+					}
+					if(context.getSelections){
+						context.getSelections().map(function(selection){
+							selection.selected=selection.checked || selection.selected;
+							selections.push(selection);
+						});
 					}
 					return selections;
 				}else{
