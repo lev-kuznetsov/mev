@@ -1,0 +1,37 @@
+{
+  "name": "mev",
+  "version": "4.0.0-SNAPSHOT",
+  "description": "MultiViewer Viewer",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dfci-cccb/mev.git"
+  },
+  "author": "cccb",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dfci-cccb/mev/issues"
+  },
+  "homepage": "https://github.com/dfci-cccb/mev#readme",
+  "devDependencies": {
+    "ts-loader": "^2.0.0",
+    "typescript": "^2.1.5",
+    "webpack": "^2.2.0"
+  },
+  "dependencies": {
+    "@angular/common": "^2.4.4",
+    "@angular/compiler": "^2.4.4",
+    "@angular/core": "^2.4.4",
+    "@angular/forms": "^2.4.4",
+    "@angular/http": "^2.4.4",
+    "@angular/platform-browser": "^2.4.4",
+    "@angular/platform-browser-dynamic": "^2.4.4",
+    "@angular/router": "^3.4.4",
+    "core-js": "^2.4.1",
+    "reflect-metadata": "^0.1.9",
+    "rxjs": "^5.0.3",
+    "zone.js": "^0.7.6"
+  }
+}
