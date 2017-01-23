@@ -137,6 +137,36 @@ public class Limma extends Adapter {
   }
 
   /**
+   * @return dataset
+   */
+  @GET
+  @Path ("dataset")
+  @JsonIgnore
+  public Dataset dataset () {
+    return dataset;
+  }
+
+  /**
+   * @return experiment
+   */
+  @GET
+  @Path ("experiment")
+  @JsonIgnore
+  public List <String> experiment () {
+    return experiment;
+  }
+
+  /**
+   * @return control
+   */
+  @GET
+  @Path ("control")
+  @JsonIgnore
+  public List <String> control () {
+    return control;
+  }
+
+  /**
    * @return result
    */
   @GET

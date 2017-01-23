@@ -30,8 +30,8 @@ import static edu.dfci.cccb.mev.analysis.State.FAILED;
 import static edu.dfci.cccb.mev.analysis.State.RUNNING;
 import static edu.dfci.cccb.mev.analysis.State.STARTING;
 import static edu.dfci.cccb.mev.tools.concurrent.CheckedCompletableFuture.callAsync;
+import static edu.dfci.cccb.mev.tools.reflection.Classes.base;
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Stream.empty;
 import static java.util.stream.Stream.of;
 
 import java.io.BufferedReader;
@@ -199,16 +199,5 @@ public class Rserve {
         r.close ();
       });
     }
-  }
-
-  /**
-   * @param root
-   * @return stream of all superclasses and implemented interfaces in descending
-   *         order
-   */
-  private static Stream <Class <?>> base (Class <?> root) {
-    return root == null ? empty ()
-                        : of (base (root.getSuperclass ()), of (root.getInterfaces ()).flatMap (Rserve::base),
-                              of (root)).flatMap (x -> x);
   }
 }
