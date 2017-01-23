@@ -100,7 +100,7 @@
         <configuration>
           <failOnMissingWebXml>false</failOnMissingWebXml>
           <packagingIncludes>
-            WEB-INF/**,index.html,bundle.js,static/**
+            WEB-INF/**,*.html,**/*.html,bundle.js
           </packagingIncludes>
         </configuration>
       </plugin>

@@ -37,9 +37,13 @@ import 'rxjs';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Root } from './root';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
+import { Root } from './workspace/root';
+
+/**
+ * Main bootstrap module
+ */
 @NgModule({
   imports: [BrowserModule],
   declarations: [Root],

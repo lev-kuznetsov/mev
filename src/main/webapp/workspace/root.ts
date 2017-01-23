@@ -28,6 +28,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'mev',
-  template: 'Hello World'
+  templateUrl: 'root.html'
 })
 export class Root { }
