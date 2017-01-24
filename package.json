@@ -1,8 +1,9 @@
 {
   "name": "mev",
   "version": "4.0.0-SNAPSHOT",
-  "description": "MultiViewer Viewer",
+  "description": "Multi-experiment Viewer",
   "scripts": {
+    "package": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

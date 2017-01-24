@@ -25,9 +25,10 @@
  */
 
 import { Component } from '@angular/core';
+import { Selections } from './selections';
 
 @Component({
   selector: 'mev',
-  templateUrl: 'root.html'
+  template: '<selections></selections>'
 })
 export class Root { }

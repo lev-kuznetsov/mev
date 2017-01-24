@@ -40,13 +40,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { Root } from './workspace/root';
+import { Selections, Row, Column, Selection } from './workspace/selections';
 
 /**
  * Main bootstrap module
  */
 @NgModule({
   imports: [BrowserModule],
-  declarations: [Root],
+  declarations: [Root, Selections, Row, Column, Selection],
   bootstrap: [Root]
 })
 export class Mev { }
