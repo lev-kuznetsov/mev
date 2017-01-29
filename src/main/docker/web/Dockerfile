@@ -22,19 +22,6 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
-# FIXME
-# The product of this should be tagged docker.io/cccb/mev-web:`date +'%Y-%m-%d`
-# the image updated in src/main/kubernetes/web-worker, image pushed
-# to dockerhub, docker stuff can be done by the maven plugin
-
 FROM jboss/wildfly
 
-# TODO
-# Eventually add custom configuration here
-#ADD standalone.xml /opt/wildfly/standalone/configuration/
-
-# FIXME
-# Copy the war from target/; I should really use the docker maven
-# plugin which will copy whatever is in this folder to some place
-# in target/ then build and push the image from there
 ADD mev.war /opt/jboss/wildfly/standalone/deployments/

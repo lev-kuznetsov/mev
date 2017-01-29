@@ -8,7 +8,7 @@
   <packaging>war</packaging>
 
   <name>mev</name>
-  <url>http://maven.apache.org</url>
+  <url>http://mev.tm4.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -136,31 +136,6 @@
             <phase>generate-sources</phase>
           </execution>
         </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.eclipse.m2e</groupId>
-        <artifactId>lifecycle-mapping</artifactId>
-        <version>1.0.0</version>
-        <configuration>
-          <lifecycleMappingMetadata>
-            <pluginExecutions>
-              <pluginExecution>
-                <pluginExecutionFilter>
-                  <groupId>com.github.eirslett</groupId>
-                  <artifactId>frontend-maven-plugin</artifactId>
-                  <version>1.3</version>
-                  <goals>
-                    <goal>webpack</goal>
-                  </goals>
-                </pluginExecutionFilter>
-                <action>
-                  <ignore />
-                </action>
-              </pluginExecution>
-            </pluginExecutions>
-          </lifecycleMappingMetadata>
-        </configuration>
       </plugin>
     </plugins>
   </build>

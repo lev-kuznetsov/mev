@@ -65,16 +65,12 @@ export class Dimension {
       this._changed.next(this.saved);
     }
   }
-
-  private names(): string[] {
-    return Object.keys(this.saved);
-  }
 }
 
 @Component({
   selector: 'row',
   template: `
-    <selection *ngFor="let s of names()"
+    <selection *ngFor="let s of saved | keys"
       [name]="s"
       [color]="saved[s].color"
       [keys]="saved[s].keys">
@@ -85,7 +81,7 @@ export class Row extends Dimension { }
 @Component({
   selector: 'column',
   template: `
-    <selection *ngFor="let s of names()"
+    <selection *ngFor="let s of saved | keys"
       [name]="s"
       [color]="saved[s].color"
       [keys]="saved[s].keys">

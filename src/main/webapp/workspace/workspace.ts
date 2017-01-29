@@ -24,34 +24,11 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import 'core-js/es6';
-import 'core-js/es7/reflect';
-import 'zone.js/dist/zone';
-import '@angular/platform-browser';
-import '@angular/platform-browser-dynamic';
-import '@angular/core';
-import '@angular/common';
-import '@angular/http';
-import '@angular/router';
-import 'rxjs';
+import { Component } from '@angular/core';
+import { Project } from './project';
 
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-import { Workspace } from './workspace/workspace';
-import { Keys } from './tools/pipes';
-import { Project } from './workspace/project';
-import { Selections, Row, Column, Selection } from './workspace/selections';
-
-/**
- * Main bootstrap module
- */
-@NgModule({
-  imports: [BrowserModule],
-  declarations: [Workspace, Selections, Row, Column, Selection, Keys, Project],
-  bootstrap: [Workspace]
+@Component({
+  selector: 'mev',
+  template: '<project></project>'
 })
-export class Mev { }
-
-platformBrowserDynamic().bootstrapModule(Mev);
+export class Workspace { }

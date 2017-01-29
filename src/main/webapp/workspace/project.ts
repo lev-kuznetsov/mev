@@ -28,7 +28,7 @@ import { Component } from '@angular/core';
 import { Selections } from './selections';
 
 @Component({
-  selector: 'mev',
+  selector: 'project',
   template: '<selections></selections>'
 })
-export class Root { }
+export class Project { }

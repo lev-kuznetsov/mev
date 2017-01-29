@@ -24,34 +24,14 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import 'core-js/es6';
-import 'core-js/es7/reflect';
-import 'zone.js/dist/zone';
-import '@angular/platform-browser';
-import '@angular/platform-browser-dynamic';
-import '@angular/core';
-import '@angular/common';
-import '@angular/http';
-import '@angular/router';
-import 'rxjs';
-
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-import { Workspace } from './workspace/workspace';
-import { Keys } from './tools/pipes';
-import { Project } from './workspace/project';
-import { Selections, Row, Column, Selection } from './workspace/selections';
+import { Pipe, PipeTransform } from '@angular/core';
 
 /**
- * Main bootstrap module
+ * Object keys pipe (to use in ngFor expressions)
  */
-@NgModule({
-  imports: [BrowserModule],
-  declarations: [Workspace, Selections, Row, Column, Selection, Keys, Project],
-  bootstrap: [Workspace]
-})
-export class Mev { }
-
-platformBrowserDynamic().bootstrapModule(Mev);
+@Pipe({ name: 'keys' })
+export class Keys implements PipeTransform {
+  transform(value: any, args?: any[]): any[] {
+    return Object.keys(value);
+  }
+}
