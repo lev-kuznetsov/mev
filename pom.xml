@@ -76,6 +76,11 @@
         <groupId>org.wildfly.plugins</groupId>
         <artifactId>wildfly-maven-plugin</artifactId>
         <version>1.1.0.Beta1</version>
+        <configuration>
+          <commands>
+            <command>/subsystem=logging/console-handler=CONSOLE:write-attribute(name=level,value=DEBUG)</command>
+          </commands>
+        </configuration>
         <executions>
           <execution>
             <id>before-test</id>

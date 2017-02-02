@@ -44,6 +44,7 @@ import java.util.stream.Stream;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
+import javax.persistence.EntityManager;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
@@ -52,7 +53,8 @@ import org.rosuda.REngine.REXPString;
 import org.rosuda.REngine.REngineException;
 import org.rosuda.REngine.Rserve.RConnection;
 import org.rosuda.REngine.Rserve.RserveException;
-import org.rosuda.REngine.Rserve.protocol.REXPFactory;
+
+import com.fasterxml.jackson.databind.JavaType;
 
 import edu.dfci.cccb.mev.analysis.Analysis;
 import edu.dfci.cccb.mev.analysis.Define;
@@ -80,6 +82,10 @@ public class Rserve {
    * Rserve
    */
   private @Inject Provider <RConnection> r;
+  /**
+   * Persistence
+   */
+  private @Inject EntityManager db;
 
   /**
    * Launches the analysis if it is in {@link State#STARTING} state
@@ -98,9 +104,7 @@ public class Rserve {
         Define d = f.getAnnotation (Define.class);
         String n = "".equals (d.value ()) ? f.getName () : d.value ();
         if (!f.isAccessible ()) f.setAccessible (true);
-        REXPFactory q = new REXPFactory ();
-        q.parseREXP (mapper.writeValueAsBytes (f.get (analysis)), 0);
-        r.assign (n, q.getREXP ());
+        r.assign (n, mapper.writerFor (mapper.constructType (f.getGenericType ())).mapValue (f.get (analysis)));
         return null;
       }), of (c.getDeclaredMethods ()).filter (m -> {
         return m.isAnnotationPresent (Define.class);
@@ -108,9 +112,8 @@ public class Rserve {
         Define d = m.getAnnotation (Define.class);
         String n = "".equals (d.value ()) ? m.getName () : d.value ();
         if (!m.isAccessible ()) m.setAccessible (true);
-        REXPFactory q = new REXPFactory ();
-        q.parseREXP (mapper.writeValueAsBytes (m.invoke (analysis)), 0);
-        r.assign (n, q.getREXP ());
+        JavaType t = mapper.constructType (m.getGenericReturnType ());
+        r.assign (n, mapper.writerFor (t).mapValue (m.invoke (analysis)));
         return null;
       })).flatMap (x -> x)), (Stream <Callable <Void>>) base (analysis.getClass ()).map (c -> (Callable <Void>) () -> {
         Rscript z = c.getAnnotation (Rscript.class);
@@ -138,10 +141,8 @@ public class Rserve {
         String n = "".equals (v.value ()) ? f.getName () : v.value ();
         if (!f.isAccessible ()) f.setAccessible (true);
         try {
-          REXPFactory q = new REXPFactory (r.get (n, null, true));
-          byte[] b = new byte[q.getBinaryLength ()];
-          q.getBinaryRepresentation (b, 0);
-          f.set (analysis, mapper.readerFor (mapper.constructType (f.getGenericType ())).readValue (b));
+          JavaType t = mapper.constructType (f.getGenericType ());
+          f.set (analysis, mapper.readerFor (t).mapExpression (r.get (n, null, true)));
         } catch (REngineException e) {
           if (v.required ()) throw new RserveException (r, "Unable to resolve " + n, e);
         }
@@ -153,10 +154,8 @@ public class Rserve {
         String n = "".equals (v.value ()) ? m.getName () : v.value ();
         if (!m.isAccessible ()) m.setAccessible (true);
         try {
-          REXPFactory q = new REXPFactory (r.get (n, null, true));
-          byte[] b = new byte[q.getBinaryLength ()];
-          q.getBinaryRepresentation (b, 0);
-          m.invoke (analysis, mapper.readerFor (mapper.constructType (m.getGenericParameterTypes ()[0])).readValue (b));
+          JavaType t = mapper.constructType (m.getGenericParameterTypes ()[0]);
+          m.invoke (analysis, mapper.readerFor (t).mapExpression (r.get (n, null, true)));
         } catch (REngineException e) {
           if (v.required ()) throw new RserveException (r, "Unable to resolve " + n, e);
         }
@@ -197,6 +196,9 @@ public class Rserve {
         return null;
       }).whenComplete ( (x, e) -> {
         r.close ();
+        db.merge (analysis);
+        if (e instanceof RuntimeException) throw (RuntimeException) e;
+        else if (e instanceof java.lang.Error) throw (java.lang.Error) e;
       });
     }
   }

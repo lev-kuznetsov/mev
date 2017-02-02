@@ -29,7 +29,14 @@ import static com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_SINGL
 
 import javax.inject.Singleton;
 
+import com.fasterxml.jackson.core.FormatSchema;
+import com.fasterxml.jackson.core.PrettyPrinter;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationConfig;
+import com.fasterxml.jackson.databind.InjectableValues;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import edu.dfci.cccb.mev.dataset.Dataset;
@@ -87,5 +94,103 @@ public class RserveMapper extends ObjectMapper {
   @Override
   public RserveFactory getFactory () {
     return (RserveFactory) _jsonFactory;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.fasterxml.jackson.databind.ObjectMapper#_newWriter(com.fasterxml.
+   * jackson.databind.SerializationConfig,
+   * com.fasterxml.jackson.databind.JavaType,
+   * com.fasterxml.jackson.core.PrettyPrinter)
+   */
+  @Override
+  protected RserveWriter _newWriter (SerializationConfig config, JavaType rootType, PrettyPrinter pp) {
+    return new RserveWriter (this, config, rootType, pp);
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.fasterxml.jackson.databind.ObjectMapper#writerFor(java.lang.Class)
+   */
+  @Override
+  public RserveWriter writerFor (Class <?> rootType) {
+    return _newWriter (getSerializationConfig (), ((rootType == null) ? null : _typeFactory.constructType (rootType)),
+                       /* PrettyPrinter */null);
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.fasterxml.jackson.databind.ObjectMapper#writerFor(com.fasterxml.jackson
+   * .databind.JavaType)
+   */
+  @Override
+  public RserveWriter writerFor (JavaType rootType) {
+    return _newWriter (getSerializationConfig (), rootType, /* PrettyPrinter */null);
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.fasterxml.jackson.databind.ObjectMapper#writerFor(com.fasterxml.jackson
+   * .core.type.TypeReference)
+   */
+  @Override
+  public RserveWriter writerFor (TypeReference <?> rootType) {
+    return _newWriter (getSerializationConfig (), ((rootType == null) ? null : _typeFactory.constructType (rootType)),
+                       /* PrettyPrinter */null);
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.fasterxml.jackson.databind.ObjectMapper#_newReader(com.fasterxml.
+   * jackson.databind.DeserializationConfig,
+   * com.fasterxml.jackson.databind.JavaType, java.lang.Object,
+   * com.fasterxml.jackson.core.FormatSchema,
+   * com.fasterxml.jackson.databind.InjectableValues)
+   */
+  @Override
+  protected RserveReader _newReader (DeserializationConfig config, JavaType valueType, Object valueToUpdate,
+                                     FormatSchema schema, InjectableValues injectableValues) {
+    return new RserveReader (this, config, valueType, valueToUpdate, schema, injectableValues);
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.fasterxml.jackson.databind.ObjectMapper#readerFor(java.lang.Class)
+   */
+  @Override
+  public RserveReader readerFor (Class <?> type) {
+    return _newReader (getDeserializationConfig (), _typeFactory.constructType (type), null, null, _injectableValues);
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.fasterxml.jackson.databind.ObjectMapper#readerFor(com.fasterxml.jackson
+   * .databind.JavaType)
+   */
+  @Override
+  public RserveReader readerFor (JavaType type) {
+    return _newReader (getDeserializationConfig (), type, null, null, _injectableValues);
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.fasterxml.jackson.databind.ObjectMapper#readerFor(com.fasterxml.jackson
+   * .core.type.TypeReference)
+   */
+  @Override
+  public RserveReader readerFor (TypeReference <?> type) {
+    return _newReader (getDeserializationConfig (), _typeFactory.constructType (type), null, null, _injectableValues);
   }
 }
