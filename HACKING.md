@@ -49,7 +49,7 @@ From here you can query your project with a `GET` request to `/p/bar` which will
   }
 }
 ```
-And you can retrieve your result stored in the `c` field via `/p/bar/baz/c`. This is a simple analysis and unless you're super quick about fetching analysis state it'll be completed, but you may see `RUNNING` there instead and the result field will not be filled in. In case an error happens, an `error` field will be present with a string message of what may have gone wrong
+And you can retrieve your result stored in the `c` field via `/p/bar/baz/c`. This is a simple analysis and unless you're super quick about fetching analysis state it'll be completed, but you may see `RUNNING` there instead and the result field will not be filled in. In case an error happens, `error` field will be present with a string message of what may have gone wrong
 
 During development of a new analysis type it may be beneficial to install R or system packages, it's possible to open an R shell to the pod
 ```
@@ -66,4 +66,4 @@ Shaping a running container does not change the underlying image, any changes ma
 mvn docker:build@rserve
 ```
 
-Change the image worker deployment definition in src/main/kubernetes/rserve/rserve-worker.yaml, after everything is satisfactory don't forget to push the image up to dockerhub
+Change the image worker deployment definition in src/main/kubernetes/rserve.yaml, after everything is satisfactory don't forget to push the image up to dockerhub
